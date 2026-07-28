@@ -1,0 +1,41 @@
+id: ohio-waterwells-allen
+title: Allen County, OH water-well-log census (Ohio DNR)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: waterwells --county Allen
+  connector_ref: watermark.hydrology.connectors.ohio_waterwells
+  source: >-
+    Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05
+    (contractor completion/sealing logs), public ArcGIS MapServer (layer 0)
+  external_url: https://waterwells.ohiodnr.gov/
+license: Ohio public record
+access_tier: public
+# The Allen-County census is Lima's (its county); a peer site adds its own county
+# sibling (e.g. ohio-waterwells-champaign, site:urbana) rather than sharing this one.
+site_scope: site:lima
+storage:
+- relpath: reference/ohio-waterwells/allen.csv
+  media_type: text/csv
+  lfs: false
+refresh:
+  cadence: annual
+  ttl_days: 365
+provenance: connector
+schema_ref: watermark.hydrology.connectors.ohio_waterwells.WaterWellInventory
+tags:
+- waterwells
+- groundwater
+- ohio-dnr
+- aquifer
+- drawdown
+notes: >-
+  Every ODNR-logged water well in Allen County, OH (the Lima reference build) — 6,864
+  wells, one CSV row each: use type, aquifer, total depth, static water level, reported
+  test yield, casing, coordinates (verbatim from the DNR MapServer; a blank field is an
+  empty cell). The groundwater peer of the surface-water supply model and the empirical
+  basis for the aquifer-parameter / well-drawdown thread (the "area well concerns"). There
+  is NO pumping-water-level column, so specific capacity / transmissivity / a drawdown cone
+  are [inference], never measured. Owner/name/street columns are not ingested (private-
+  resident PII). Ohio only. See data/reference/ohio-waterwells/README.md.

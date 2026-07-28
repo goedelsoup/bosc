@@ -13,6 +13,9 @@ access_tier: public
 # owned by the Maumee basin, not the whole network — a Scioto/Great-Miami point does not share it (#1251).
 site_scope: basin:maumee
 storage:
+- relpath: reference/hydrology/aquifer-properties.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: reference/hydrology/bosc-stormwater-discharge.yaml
   media_type: application/x-yaml
   lfs: false

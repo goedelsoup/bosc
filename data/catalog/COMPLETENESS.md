@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-28T12:31:18.348041+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-07-28T13:30:56.175081+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **127** catalogued datasets — **126** reviewed.
-- **127** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **128** catalogued datasets — **127** reviewed.
+- **128** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -70,6 +70,7 @@ Snapshot reconciled: **2026-07-28T12:31:18.348041+00:00**. Regenerate with `wate
 | reference | odot | 1 | 1 | 0 | 0 |
 | reference | oepa | 3 | 3 | 0 | 0 |
 | reference | ohio-water-withdrawal | 1 | 1 | 0 | 0 |
+| reference | ohio-waterwells | 1 | 1 | 0 | 0 |
 | reference | orc | 2 | 2 | 0 | 0 |
 | reference | periplus | 1 | 1 | 0 | 0 |
 | reference | pjm | 1 | 1 | 0 | 0 |
@@ -96,7 +97,7 @@ Snapshot reconciled: **2026-07-28T12:31:18.348041+00:00**. Regenerate with `wate
 | fort-wayne | 41 | 33 | 8 |
 | greenville | 49 | 41 | 8 |
 | hamilton-middletown | 50 | 43 | 7 |
-| lima | 98 | 94 | 4 |
+| lima | 99 | 95 | 4 |
 | mansfield | 49 | 42 | 7 |
 | new-albany | 48 | 41 | 7 |
 | ottawa | 50 | 42 | 8 |

@@ -1381,3 +1381,78 @@ def reaches(
         )
         path = reach_geometry.write_reach_network(centerlines, target)
         wrote(path)
+
+
+@app.command(name="drawdown")
+def drawdown_cmd(
+    material: str | None = typer.Option(
+        None, "--material", help="Aquifer material to screen (default: the dominant one)."
+    ),
+    makeup_mgd: float = typer.Option(
+        3.92, "--makeup-mgd", help="Hypothetical groundwater pumping stress (MGD)."
+    ),
+) -> None:
+    """Groundwater aquifer characterization + a Theis drawdown screen (the well-drawdown thread).
+
+    Reduces the active site's ODNR well-log census (data/reference/ohio-waterwells/) to per-material
+    aquifer parameters — static water level, reported yield, a literature-K x census-thickness
+    transmissivity BRACKET [inference] — then runs a Theis cone for a HYPOTHETICAL groundwater
+    pumping stress (default: the campus cooling makeup, which is actually drawn from municipal
+    SURFACE water). Its strongest result is the inverse: pumping a hyperscale load from the
+    low-transmissivity limestone aquifer DEWATERS it — corroborating the municipal-water reality
+    and bounding the residents' "area well concerns." Everything is [inference], never a headline.
+    """
+    from watermark.hydrology import aquifer as aq
+    from watermark.hydrology import drawdown as dd
+
+    settings = get_settings()
+    params = aq.load_aquifer_parameters(settings=settings)
+    if params is None:
+        console.print(
+            "[yellow]No well-log census for the active site — run "
+            "`watermark waterwells` first (Ohio only).[/]"
+        )
+        raise typer.Exit(1)
+
+    table = Table("aquifer", "wells", "conf", "static ft", "yield gpm", "T ft^2/day [inference]")
+    for m in params.materials:
+        swl = m.static_water_level_ft
+        yld = m.test_yield_gpm
+        t = m.transmissivity_ft2_day
+        table.add_row(
+            m.material,
+            str(m.well_count),
+            m.confinement,
+            f"{swl.value:g}" if swl else "—",
+            f"{yld.value:g}" if yld else "—",
+            f"{t.low_or_value:g}-{t.high_or_value:g}" if t else "—",
+        )
+    console.print(table)
+    console.print(
+        f"[bold]{params.well_count}[/] logged wells in {params.county} "
+        f"([green]{params.domestic_well_count} domestic[/])."
+    )
+    for f in aq.aquifer_findings(params):
+        console.print(f"[{'green' if f.ok else 'yellow'}]{escape(str(f))}[/]")
+
+    scen = dd.cooling_makeup_scenario(params, makeup_mgd=makeup_mgd, material=material)
+    result = dd.load_drawdown(scenario=scen, settings=settings)
+    if result is None:
+        return
+    verdict = "[red]DEWATERS[/]" if result.dewaters else "[green]sustainable[/]"
+    s = result.drawdown_at_well_ft
+    r0 = result.radius_of_influence_ft
+    console.print(
+        f"\n[bold]Drawdown screen[/] — {result.material} aquifer, hypothetical "
+        f"{scen.pumping_mgd.value:g} MGD: {verdict}. Apex drawdown "
+        f"{s.low_or_value:g}-{s.high_or_value:g} ft (b={result.saturated_thickness_ft:g} ft); "
+        f"radius of influence {r0.value:g} ft; "
+        f"{result.affected_domestic_wells} domestic wells within it."
+    )
+    for f in dd.drawdown_findings(result):
+        console.print(f"[{'green' if f.ok else 'red'}]{escape(str(f))}[/]")
+    console.print(
+        r"[dim]Q is a HYPOTHETICAL groundwater stress \[inference] — the campus draws municipal "
+        r"surface water; no withdrawal permit is on record \[open]. The cone is a screen, "
+        "never a headline.[/]"
+    )
