@@ -101,7 +101,11 @@ class BalancingAuthorityProfile(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     ba: str  # "PJM Interconnection"
-    eia_source: str = "EIA-930 hourly grid monitor, annual demand (connector)"
+    # Names the route the figure actually comes from — the DAILY region-data sum, not the
+    # hourly monitor (#1644 review). `derive_grid_profile` always overwrites this, so the
+    # default only survives on a hand-authored profile, which is exactly the profile that
+    # can't afford provenance naming a route it never read.
+    eia_source: str = "EIA-930 daily demand sum, annual (connector)"
     annual_load_gwh: ProvenancedValue  # connector (EIA-930)
 
 

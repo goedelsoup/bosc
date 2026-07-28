@@ -24,7 +24,7 @@ from watermark.grid.eia861 import (
     _reduce_short_form,
     fetch_utility_retail,
 )
-from watermark.grid.interchange import fetch_ba_annual_load
+from watermark.grid.interchange import Eia930Error, fetch_ba_annual_load
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = REPO_ROOT / "tests" / "fixtures" / "economics"
@@ -201,6 +201,47 @@ def test_pjm_annual_load_offline(econ_settings: Settings) -> None:
     assert load.asof == "2024"  # the data year, for staleness (#1107 / G1/#1644)
 
 
+def test_partial_year_is_refused_as_an_annual_total(
+    econ_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A truncated response must not go out cited "annual demand" under a year-stamped asof.
+
+    The A2/#1638 guard only rejects an EMPTY response, so a short year — a mid-year
+    `eia930_year`, a capped page, a hiccup — summed to a plausible number and was published as
+    the annual total. The `asof` marker G1 added makes that claim machine-readable, which makes
+    an unchecked one worse than none: a short year understates the BA denominator and inflates
+    every campus share struck against it (#1644 review).
+    """
+    import watermark.grid.interchange as interchange
+
+    monkeypatch.setattr(
+        interchange,
+        "cached_get",
+        lambda *_a, **_k: {"ba": "PJM", "year": 2024, "days": 200, "annual_demand_mwh": 4.4e8},
+    )
+    with pytest.raises(Eia930Error) as exc:
+        fetch_ba_annual_load(ba="PJM", year=2024, settings=econ_settings)
+    assert "200 days" in str(exc.value) and "366" in str(exc.value)  # 2024 is a leap year
+
+
+def test_full_year_day_count_is_leap_aware(
+    econ_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """365 days is complete for a common year and one short for a leap year — a fixed constant
+    would either reject every leap year or wave through a missing leap day."""
+    import watermark.grid.interchange as interchange
+
+    def _payload(year: int, days: int) -> dict[str, object]:
+        return {"ba": "PJM", "year": year, "days": days, "annual_demand_mwh": 8.15e8}
+
+    monkeypatch.setattr(interchange, "cached_get", lambda *_a, **_k: _payload(2023, 365))
+    assert fetch_ba_annual_load(ba="PJM", year=2023, settings=econ_settings).asof == "2023"
+
+    monkeypatch.setattr(interchange, "cached_get", lambda *_a, **_k: _payload(2024, 365))
+    with pytest.raises(Eia930Error):  # 2024 needs 366 — the missing leap day is caught
+        fetch_ba_annual_load(ba="PJM", year=2024, settings=econ_settings)
+
+
 # --- G1/#1644: the EIA-861 data year rides on every value ------------------------------------
 
 
@@ -262,11 +303,48 @@ def test_bundled_price_citation_names_its_cohort(econ_settings: Settings) -> Non
     assert "COHORT PRICE" in cite
     assert "not the utility's all-sector average" in cite.lower()
     assert "industrial" in cite.lower() and "data-center" in cite.lower()
-    # The reader is pointed at the figure that IS all-sector, not just warned off this one.
-    assert "ELEC.PRICE.<state>-ALL.A" in cite
+    # The reader is pointed at the figure that IS all-sector, not just warned off this one —
+    # by its real series id, not a `<state>` placeholder nobody can look up (#1644 review).
+    assert "ELEC.PRICE.OH-ALL.A" in cite
+    assert "<state>" not in cite
     # The cohort claim has to be true of the number: a residential-skewed cohort in a
     # restructured state runs above the all-sector rate, not at it.
     assert up.avg_price_cents_kwh.value > 15.0
+
+
+def test_cohort_citation_points_at_the_utilitys_own_state_series(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The comparison series is templated by the utility's OWN state, not fixed to Ohio —
+    otherwise the Fort Wayne (Indiana) profile would send a reader to an Ohio price."""
+    import watermark.grid.eia861 as eia861
+
+    def _in_zip(_settings: Settings, year: int) -> bytes:
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "States"
+        for _ in range(3):
+            ws.append(["header"])
+        ws.append(
+            _sales_row(9324, "Indiana Michigan Power Co", "Bundled", "IN", 1_000, 10_000, 100)
+        )
+        buf = io.BytesIO()
+        wb.save(buf)
+        zbuf = io.BytesIO()
+        with zipfile.ZipFile(zbuf, "w") as z:
+            z.writestr(f"Sales_Ult_Cust_{year}.xlsx", buf.getvalue())
+        return zbuf.getvalue()
+
+    monkeypatch.setattr(eia861, "_ensure_zip", _in_zip)
+    up = fetch_utility_retail(
+        utility_number=9324,
+        state="IN",
+        year=2024,
+        settings=Settings(data_dir=tmp_path, econ_offline=False),
+    )
+    assert up.avg_price_cents_kwh is not None
+    cite = up.avg_price_cents_kwh.citation or ""
+    assert "ELEC.PRICE.IN-ALL.A" in cite and "OH-ALL" not in cite
 
 
 def test_short_form_price_is_not_mislabelled_as_a_skewed_cohort(

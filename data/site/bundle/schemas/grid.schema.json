@@ -9,7 +9,7 @@
           "type": "string"
         },
         "eia_source": {
-          "default": "EIA-930 hourly grid monitor, annual demand (connector)",
+          "default": "EIA-930 daily demand sum, annual (connector)",
           "title": "Eia Source",
           "type": "string"
         },

@@ -16,6 +16,7 @@ name** (``type`` / ``value`` / ``period``), never by index.
 
 from __future__ import annotations
 
+import calendar
 import json
 from pathlib import Path
 from typing import Any, cast
@@ -279,6 +280,21 @@ def fetch_ba_annual_load(
         raise Eia930Error(
             f"EIA-930 daily-demand payload for {payload['ba']} {payload['year']} is empty/zero — "
             "refusing to report a zero annual load"
+        )
+    # A PARTIAL year is not an annual total (#1644 review). The A2 guard above only rejects an
+    # empty response, so a truncated one — a mid-year `eia930_year`, a capped page, a hiccup —
+    # summed to a plausible-looking number, and the value went out cited "annual demand" with
+    # `asof` asserting that year. That marker makes the claim machine-readable, which makes an
+    # unchecked one worse than none: a short year understates the BA denominator and inflates
+    # every campus share struck against it. Require the calendar year's full day count.
+    expected_days = 366 if calendar.isleap(int(payload["year"])) else 365
+    if int(payload["days"]) != expected_days:
+        raise Eia930Error(
+            f"EIA-930 daily demand for {payload['ba']} {payload['year']} covers "
+            f"{payload['days']} days, not the {expected_days} of that calendar year — refusing "
+            "to report a partial sum as an annual total (an incomplete year understates the BA "
+            "denominator and inflates every campus share taken against it). Re-pull, or point "
+            "WATERMARK_EIA930_YEAR at the latest COMPLETE year."
         )
     return ProvenancedValue.from_connector(
         round(payload["annual_demand_mwh"] / 1000.0, 1),

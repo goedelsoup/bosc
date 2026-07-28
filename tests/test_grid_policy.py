@@ -79,6 +79,26 @@ def test_federal_output_sources(grid_settings: Settings) -> None:
     assert 10.0 < out.us_avg_retail_price_cents_kwh.value < 16.0
 
 
+def test_a_projection_is_not_dated_like_an_observation(grid_settings: Settings) -> None:
+    """`asof` says when a quantity WAS true, so the two measured LBNL/DOE figures carry their
+    2023 observation year — undated beside a 2025 EIA value, they read as equally current.
+
+    The 2028 projection stays undated on purpose (#1644 review). Its target year is not a
+    vintage: `asof=2028` would assert data that does not exist yet, and the report's 2024
+    publication year would read as a measurement made then. A projection's currency is its
+    report, which the citation already names — here, no marker is the honest answer, and a
+    sweep that "fixed" every null would be the wrong fix.
+    """
+    out = derive_federal_backdrop(settings=grid_settings).output
+    assert out.datacenter_use_2023_twh.asof == "2023"
+    assert out.datacenter_share_pct_2023.asof == "2023"
+    assert out.datacenter_share_pct_2028_proj.asof is None
+    # The live EIA pulls carry their own, later series vintage — the whole point of dating the
+    # pair above is that the reader can see the federal backdrop mixes them.
+    assert out.us_net_generation_twh.asof is not None
+    assert out.us_net_generation_twh.asof > out.datacenter_use_2023_twh.asof
+
+
 def test_campus_vs_us_datacenter_share_links_facility_draw(grid_settings: Settings) -> None:
     fb = derive_federal_backdrop(settings=grid_settings)
     power = derive_power_basis(settings=grid_settings)
