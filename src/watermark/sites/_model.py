@@ -647,6 +647,10 @@ class SiteProfile(BaseModel):
     # geometry, NOT the design-storm label above nor the toxics bbox below. ``None`` = no such
     # layer for this site (the merge emits nothing rather than reading another site's geometry).
     corridor_geo_relpath: str | None = None
+    # Construction-dewatering wellfield CSV (relative to settings.data_dir), for the
+    # `watermark.hydrology.dewatering` cone-of-impact model. Present ONLY for a site with a
+    # committed wellfield (Lima today); a site without one carries no dewatering cone.
+    dewatering_wellfield_relpath: str | None = None
 
     # --- Per-site onboard reach outputs (point-specific writes; relative to data_dir) ----
     # The point-specific connector outputs `watermark onboard` writes. Lima keeps its legacy

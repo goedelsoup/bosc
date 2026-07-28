@@ -20,6 +20,7 @@ composite is a bound on concurrency, not a metered figure.
 from __future__ import annotations
 
 import csv
+import io
 from datetime import date
 from math import sqrt
 from pathlib import Path
@@ -29,13 +30,10 @@ from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
 from watermark.connectors import to_float, to_str
+from watermark.hydrology._geo import haversine_ft
 from watermark.hydrology.aquifer import load_aquifer_properties
 from watermark.hydrology.connectors import ohio_waterwells as oww
-from watermark.hydrology.drawdown import (
-    _haversine_ft,
-    cooper_jacob_drawdown,
-    radius_of_influence_ft,
-)
+from watermark.hydrology.drawdown import cooper_jacob_drawdown, radius_of_influence_ft
 from watermark.hydrology.model import HydroFinding, ProvenancedValue
 from watermark.logging import get_logger
 
@@ -151,17 +149,21 @@ class DewateringImpact(BaseModel):
 # --- load -------------------------------------------------------------------------------
 
 
-def _dewatering_path(settings: Settings) -> Path:
-    return settings.data_dir / "reference" / "ohio-waterwells" / "lima-campus-dewatering.csv"
+def _dewatering_path(settings: Settings) -> Path | None:
+    """The active site's committed dewatering wellfield CSV, or ``None`` if it has none."""
+    from watermark.sites import active_profile
+
+    relpath = active_profile(settings).dewatering_wellfield_relpath
+    return settings.data_dir / relpath if relpath else None
 
 
 def load_dewatering_wells(
     path: Path | None = None, *, settings: Settings | None = None
 ) -> list[DewateringWell]:
-    """Load the committed campus dewatering wellfield, sorted by record number."""
+    """Load the active site's committed dewatering wellfield, sorted by record number."""
     settings = settings or get_settings()
     path = path or _dewatering_path(settings)
-    if not path.is_file():
+    if path is None or not path.is_file():
         return []
     wells = [
         DewateringWell(
@@ -178,7 +180,7 @@ def load_dewatering_wells(
             longitude=to_float(row.get("longitude") or None),
             latitude=to_float(row.get("latitude") or None),
         )
-        for row in csv.DictReader(path.read_text(encoding="utf-8").splitlines())
+        for row in csv.DictReader(io.StringIO(path.read_text(encoding="utf-8")))
     ]
     wells.sort(key=lambda w: w.record_no)
     return wells
@@ -197,14 +199,23 @@ def _k_band(
 
 
 def well_cone(
-    well: DewateringWell, *, asof: date, settings: Settings | None = None
+    well: DewateringWell,
+    *,
+    asof: date,
+    props: dict[str, dict[str, Any]] | None = None,
+    settings: Settings | None = None,
 ) -> WellCone | None:
-    """One well's cone of impact: transmissivity + radius of influence, bracketed by K."""
+    """One well's cone of impact: transmissivity + radius of influence, bracketed by K.
+
+    ``props`` is the literature aquifer table; a caller looping over many wells passes it once
+    (loaded via :func:`load_aquifer_properties`) rather than re-reading it per well.
+    """
     settings = settings or get_settings()
     b = well.saturated_thickness_ft
     if b is None or well.test_rate_gpm is None:
         return None
-    props = load_aquifer_properties(settings=settings)
+    if props is None:
+        props = load_aquifer_properties(settings=settings)
     k_lo, k_geo, k_hi, sy = _k_band(well, props)
     t_days = well.operating_days(asof)
     lit_cite = "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material"
@@ -240,11 +251,16 @@ def composite_drawdown_at(
     *,
     asof: date,
     band: KBand = "central",
+    props: dict[str, dict[str, Any]] | None = None,
     settings: Settings | None = None,
 ) -> float:
-    """Superimposed Cooper-Jacob drawdown (ft) at a point from every well in the field."""
+    """Superimposed Cooper-Jacob drawdown (ft) at a point from every well in the field.
+
+    ``props`` is the literature aquifer table; pass it once when calling in a loop.
+    """
     settings = settings or get_settings()
-    props = load_aquifer_properties(settings=settings)
+    if props is None:
+        props = load_aquifer_properties(settings=settings)
     total = 0.0
     for w in wells:
         b = w.saturated_thickness_ft
@@ -252,7 +268,7 @@ def composite_drawdown_at(
             continue
         k_lo, k_geo, k_hi, sy = _k_band(w, props)
         k = {"low": k_lo, "central": k_geo, "high": k_hi}[band]
-        r = max(_haversine_ft(lat, lon, w.latitude, w.longitude), 0.5)
+        r = max(haversine_ft(lat, lon, w.latitude, w.longitude), 0.5)
         total += cooper_jacob_drawdown(
             w.test_rate_gpm * GPM_TO_FT3_DAY, k * b, sy, r, w.operating_days(asof)
         )
@@ -268,13 +284,19 @@ def compute_dewatering_impact(
     settings: Settings | None = None,
 ) -> DewateringImpact:
     """Assemble the wellfield's cone of impact + its superimposed drawdown on census wells."""
+    from watermark.sites import active_profile
+
     settings = settings or get_settings()
+    props = load_aquifer_properties(settings=settings)  # loaded once, threaded through both helpers
+    county = active_profile(settings).county_name.split(" County")[0].strip()
     located = [w for w in wells if w.latitude is not None and w.longitude is not None]
     clat = sum(w.latitude for w in located) / len(located) if located else 0.0  # type: ignore[misc]
     clon = sum(w.longitude for w in located) / len(located) if located else 0.0  # type: ignore[misc]
 
     cones = [
-        c for c in (well_cone(w, asof=asof, settings=settings) for w in wells) if c is not None
+        c
+        for c in (well_cone(w, asof=asof, props=props, settings=settings) for w in wells)
+        if c is not None
     ]
     total_gpm = sum(w.test_rate_gpm or 0.0 for w in wells)
 
@@ -290,7 +312,7 @@ def compute_dewatering_impact(
             or c.longitude is None
         ):
             continue
-        if _haversine_ft(clat, clon, c.latitude, c.longitude) > 2 * 5280:  # screen within 2 mi
+        if haversine_ft(clat, clon, c.latitude, c.longitude) > 2 * 5280:  # screen within 2 mi
             continue
         # Composite drawdown vs K is NON-monotonic at a fixed distance (low K = deep but short
         # reach -> ~0 far away; high K = shallow but long reach), so the central value can lie
@@ -298,10 +320,13 @@ def compute_dewatering_impact(
         band_keys: tuple[KBand, ...] = ("low", "central", "high")
         bands = [
             composite_drawdown_at(
-                located, c.latitude, c.longitude, asof=asof, band=b, settings=settings
+                located, c.latitude, c.longitude, asof=asof, band=b, props=props, settings=settings
             )
             for b in band_keys
         ]
+        # Gate on the CENTRAL best-estimate: the "impacted (>1 ft)" list stays honest. Gating on
+        # max-of-bands would list wells whose central estimate is well below threshold and only
+        # cross at the extreme literature-K end; the per-well bracket (low/high) carries that.
         s_mid = bands[1]
         if s_mid <= threshold_ft:
             continue
@@ -310,7 +335,7 @@ def compute_dewatering_impact(
                 object_id=str(c.object_id),
                 well_use=c.well_use,
                 aquifer_type=c.aquifer_type,
-                distance_ft=round(_haversine_ft(clat, clon, c.latitude, c.longitude), 0),
+                distance_ft=round(haversine_ft(clat, clon, c.latitude, c.longitude), 0),
                 composite_drawdown_ft=ProvenancedValue.derived(
                     round(s_mid, 1),
                     "ft",
@@ -323,7 +348,7 @@ def compute_dewatering_impact(
     impacted.sort(key=lambda w: w.composite_drawdown_ft.value, reverse=True)
 
     return DewateringImpact(
-        county="Allen",
+        county=county,
         well_count=len(wells),
         active_count=sum(1 for w in wells if w.active),
         total_capacity_mgd=round(total_gpm * 1440.0 / 1e6, 2),
@@ -344,12 +369,15 @@ def compute_dewatering_impact(
 def load_dewatering_impact(
     *, asof: date, settings: Settings | None = None
 ) -> DewateringImpact | None:
-    """Load the committed wellfield + county census and compute the cone of impact."""
+    """Load the active site's committed wellfield + its county census; compute the cone of impact."""
+    from watermark.sites import active_profile
+
     settings = settings or get_settings()
     wells = load_dewatering_wells(settings=settings)
     if not wells:
         return None
-    census_path = settings.data_dir / "reference" / "ohio-waterwells" / "allen.csv"
+    slug = oww.county_slug(active_profile(settings).county_name)
+    census_path = settings.data_dir / "reference" / "ohio-waterwells" / f"{slug}.csv"
     census = (
         oww.read_inventory(census_path, settings=settings).wells if census_path.is_file() else []
     )

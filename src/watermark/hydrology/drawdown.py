@@ -25,12 +25,13 @@ The radius of influence is the Cooper-Jacob zero-drawdown intercept
 
 from __future__ import annotations
 
-from math import asin, cos, exp, radians, sin, sqrt
+from math import exp, sqrt
 from math import log as ln
 
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
+from watermark.hydrology._geo import haversine_ft
 from watermark.hydrology.aquifer import AquiferParameters
 from watermark.hydrology.connectors import ohio_waterwells as oww
 from watermark.hydrology.model import HydroFinding, ProvenancedValue
@@ -42,7 +43,6 @@ log = get_logger(__name__)
 _FT3_PER_GAL = 1.0 / 7.480519480519  # ft^3 per US gallon
 _FT3_DAY_PER_MGD = 1_000_000.0 * _FT3_PER_GAL  # ~133,680.6 ft^3/day per MGD
 _FT_PER_MILE = 5280.0
-_EARTH_RADIUS_FT = 20_902_231.0  # mean Earth radius in feet
 
 # Default pumping-well radius (ft) at which the peak (cone-apex) drawdown is reported. Theis
 # diverges as r -> 0, so a physical borehole radius is used, not 0.
@@ -106,15 +106,6 @@ def cooper_jacob_drawdown(
     if arg <= 1.0:  # at or beyond the radius of influence
         return 0.0
     return q_ft3_day / (4.0 * 3.141592653589793 * t_ft2_day) * ln(arg)
-
-
-def _haversine_ft(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    """Great-circle distance in feet between two lon/lat points."""
-    p1, p2 = radians(lat1), radians(lat2)
-    dphi = radians(lat2 - lat1)
-    dlmb = radians(lon2 - lon1)
-    a = sin(dphi / 2) ** 2 + cos(p1) * cos(p2) * sin(dlmb / 2) ** 2
-    return 2.0 * _EARTH_RADIUS_FT * asin(sqrt(a))
 
 
 # --- models -----------------------------------------------------------------------------
@@ -252,7 +243,7 @@ def _count_affected_domestic(
             continue
         if w.latitude is None or w.longitude is None:
             continue
-        if _haversine_ft(lat, lon, w.latitude, w.longitude) <= radius_ft:
+        if haversine_ft(lat, lon, w.latitude, w.longitude) <= radius_ft:
             n += 1
     return n
 
