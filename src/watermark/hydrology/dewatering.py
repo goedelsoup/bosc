@@ -61,6 +61,7 @@ _FT_PER_DEG_LAT = 364_000.0
 DATASET_ASOF = date(2026, 7, 28)
 
 KBand = Literal["low", "central", "high"]
+GradientPosition = Literal["down-gradient", "up-gradient", "cross-gradient"]
 
 
 def _aquifer_key(aquifer: str | None, props: dict[str, dict[str, Any]]) -> str:
@@ -151,8 +152,10 @@ class ImpactedWell(BaseModel):
     composite_drawdown_ft: ProvenancedValue  # sum of every well's cone at this point
     available_column_ft: float | None = None  # total depth - static level (the buffer before dry)
     column_consumed_frac: float | None = None  # drawdown / available column (>=1 => dewatered)
-    goes_dry: bool = False  # the composite drawdown meets/exceeds the well's own available column
-    gradient_position: str | None = None  # down-gradient | up-gradient | cross-gradient
+    # Tri-state: True/False when the well's column is known, None when it is unknown (never claim a
+    # well is safe when its depth/static level is unrecorded).
+    goes_dry: bool | None = None
+    gradient_position: GradientPosition | None = None
 
 
 class HydraulicGradient(BaseModel):
@@ -408,7 +411,7 @@ def compute_hydraulic_gradient(
     )
 
 
-def _gradient_position(east: float, north: float, flow_bearing_deg: float) -> str:
+def _gradient_position(east: float, north: float, flow_bearing_deg: float) -> GradientPosition:
     """Classify a well offset ``(east, north)`` relative to the down-gradient flow direction."""
     dist = sqrt(east * east + north * north)
     if dist < 1.0:
@@ -481,7 +484,8 @@ def compute_dewatering_impact(
         # would push past its OWN available column (``goes_dry``) is included even below the 1 ft gate.
         s_mid = bands[1]
         column = _available_column_ft(c)
-        goes_dry = column is not None and s_mid >= column
+        # Tri-state: None when the column is unknown (don't claim "safe" on a well we can't judge).
+        goes_dry = (s_mid >= column) if column is not None else None
         if s_mid <= threshold_ft and not goes_dry:
             continue
         east, north = _enu_ft(clat, clon, c.latitude, c.longitude)
@@ -594,8 +598,9 @@ def dewatering_findings(impact: DewateringImpact) -> list[HydroFinding]:
             ok=len(impact.impacted_wells) == 0,  # a surfaced impact, not an error
             detail=(
                 f"{len(impact.impacted_wells)} domestic census wells fall inside the composite cone "
-                f"with >1 ft of [inference] drawdown ({over5} with >5 ft; worst ~{worst:g} ft) - the "
-                "population a wellfield of this size could measurably draw down."
+                f"with more than {_AFFECTED_THRESHOLD_FT:g} ft of [inference] drawdown -- or enough to "
+                f"dewater a shallow well ({over5} over 5 ft; worst ~{worst:g} ft) - the population a "
+                "wellfield of this size could measurably draw down."
             ),
         ),
         HydroFinding(

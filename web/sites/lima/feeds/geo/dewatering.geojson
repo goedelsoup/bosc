@@ -1349,7 +1349,7 @@
         "distance_ft": 2599.0,
         "aquifer": "SAND & GRAVEL",
         "available_column_ft": null,
-        "goes_dry": false,
+        "goes_dry": null,
         "gradient_position": "down-gradient",
         "tag": "inference"
       }
