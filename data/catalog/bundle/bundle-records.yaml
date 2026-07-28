@@ -24,6 +24,7 @@ depends_on:
 - hydrology-low-flow-7q10
 - hydrology-reaches
 - hydrology-wbd
+- ohio-waterwells-allen
 - rsei-inventory
 - usaspending
 refresh:
@@ -172,5 +173,17 @@ notes: >-
   attribution at all instead of inheriting the reference build's. All six fields are projected at
   the feed seam from inputs already declared above — the committed `parcels.defense.yaml` scan is
   unchanged and no new committed upstream is added.
+  The `drawdown` feed (contract 1.37.0) is the groundwater well-drawdown screen — a Theis cone of
+  depression (`watermark.hydrology.drawdown.DrawdownResult`, exported as its own already-provenanced
+  model like `grid`/`rsei`) over the ODNR well-log census + the literature aquifer parameters. It
+  carries the `[inference]` apex drawdown (transmissivity-bracketed), the radius of influence + the
+  count of domestic census wells within it, the Cooper-Jacob cone profile the AquiferSection figure
+  reads, and the hypothetical-pumping scenario + caveats — its headline the inverse finding that a
+  hyperscale groundwater stress DEWATERS the low-transmissivity limestone aquifer, corroborating the
+  campus's reliance on municipal surface water. It adds the committed `ohio-waterwells-allen` well-log
+  census as a declared upstream (slug-scoped; a peer reads its own county census), alongside the
+  `hydrology` bundle's `aquifer-properties` table already declared. Reference-gated by construction:
+  `load_drawdown` returns None without a committed census + a resolvable cooling basis, so the feed
+  self-skips elsewhere.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
