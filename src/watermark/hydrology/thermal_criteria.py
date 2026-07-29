@@ -32,6 +32,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict, PrivateAttr, model_validator
 
 from watermark.config import get_settings
+from watermark.hydrology.units import f_to_c
 from watermark.logging import get_logger
 
 if TYPE_CHECKING:
@@ -45,8 +46,13 @@ _RIS_TOLERANCES_RELPATH = "thermal/great-lakes-ris-thermal-tolerances.yaml"
 
 
 def fahrenheit_to_celsius(f: float) -> float:
-    """Convert °F to °C, rounded to 0.1 — reproduces Ohio's published (Celsius) parenthetical."""
-    return round((f - 32.0) * 5.0 / 9.0, 1)
+    """Convert °F to °C, rounded to 0.1 — reproduces Ohio's published (Celsius) parenthetical.
+
+    The conversion itself lives once in :func:`watermark.hydrology.units.f_to_c` (shared with the
+    ECHO DMR effluent-temperature reduction, which reports under °F parameter 00011); only the
+    rounding to the rule's printed precision is this rule-specific wrapper's job.
+    """
+    return round(f_to_c(f), 1)
 
 
 def _parse_span(value: str | None) -> tuple[float, float] | None:

@@ -35,24 +35,52 @@ the fraction of the rejection that would exhaust the whole capacity.
   whose flow is < 5% of the receiving 7Q10 is exempt from the thermal-mixing-zone rule) is wired
   directly as a regulatory off-ramp — surfaced whether or not it applies.
 
-Zone selection (Lima's Ottawa River → ``lake_erie_basin_general``) and the live effluent-temperature
-validation (ECHO DMR) are **Phase-3** (#1718) concerns: this module reads the table's
-``default_zone_hint`` and degrades to a stated design ambient when the gage carries no 00010.
+Zone selection (Lima's Ottawa River → ``lake_erie_basin_general``) reads the table's
+``default_zone_hint`` unless a profile pins one.
+
+**Phase 3 (#1718) — facility wiring + ECHO-DMR validation.** The screen no longer models only the
+site's own cooling facilities against a stated design ambient. Three additions, all grounded in the
+permittees' own reported record (EPA ECHO DMR, :mod:`watermark.hydrology.connectors.echo_dmr`):
+
+1. **The corridor's permitted dischargers are screened too**, on the same reach, at the same design
+   low flows, against the same criterion — but their heat load is **observed, not modeled**:
+   ``rho*cp*Q_reported*(T_effluent_reported - T_ambient)`` from the outfall's own DMR temperature
+   and flow. On the Ottawa at Lima that is the Lima Refinery (OH0002623), PCS Nitrogen (OH0002615)
+   and the Lima WWTP (OH0026069). The refinery reports a **32.2 °C** peak daily-maximum effluent
+   at ~3.7 MGD into a reach whose 7Q10 is 0.2 cfs: at the design condition the Ottawa below the
+   outfall *is* the effluent, ~2.8 °C above Ohio's own daily-maximum criterion, and outfall 001
+   carries **no numeric thermal limit**.
+2. **The cooling archetypes are screened as explicit scenarios** rather than one conservative bound:
+   ``once_through`` (the whole rejection reaches the water — the definition), ``evaporative_blowdown``
+   (only the blowdown carries sensible heat; the rest leaves as latent heat to the air, and the
+   blowdown temperature is calibrated to the corridor's own observed industrial effluent), and the
+   Phase-2 ``conservative_bound``. All three exceed the reach's thermal capacity by 1-3 orders of
+   magnitude, which is what makes the finding robust to the heat-partition assumption *quantitatively*
+   instead of rhetorically.
+3. **The design ambient gains an observed rung.** A permit that requires upstream/downstream river
+   monitoring reports the receiving water's own temperature (Lima's WWTP outfall 901,
+   "Downstream Monitoring", 24.0 °C peak) — a permittee-reported measurement of this very reach,
+   better evidence than the zone's seasonal-average criterion standing in as a design ambient. It
+   ranks below a live NWIS 00010 reading and above the reference fallback, and it *lowers* the
+   screened severity (more headroom, ~3x more thermal capacity) — the screen is calibrated by the
+   record, not defended against it. ``build_screen(dmr=False)`` restores the Phase-2 behaviour.
 """
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, NamedTuple
 
+import httpx
 import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology import cooling_models, units
-from watermark.hydrology.connectors import nwis
+from watermark.hydrology.connectors import echo, echo_dmr, nwis
 from watermark.hydrology.connectors._cache import HydroOfflineError
+from watermark.hydrology.connectors.echo_dmr import EchoDmrError, OutfallThermal, ThermalDmrRecord
 from watermark.hydrology.cooling_models import CoolingParams
-from watermark.hydrology.lowflow import low_flow_context, low_flow_for
+from watermark.hydrology.lowflow import _normalize, low_flow_context, low_flow_for
 from watermark.hydrology.model import ProvenancedValue, SourceKind
 from watermark.hydrology.thermal_criteria import (
     RisSpecies,
@@ -101,6 +129,45 @@ _DRY = {CoolingModelType.CLOSED_LOOP_DRY, CoolingModelType.OFF}
 # How many Great Lakes RIS thermal anchors to carry as biological context (most sensitive first).
 _RIS_ANCHORS = 8
 
+# --- Phase-3 (#1718) DMR validation ----------------------------------------
+# The reported-record window the screen validates against. **Fixed**, not "now"-relative: the
+# committed screen artifact has to regenerate byte-stable, and a rolling window would silently
+# re-rank the corridor between runs. May-Oct is the Ohio EPA regulatory summer window
+# (``lowflow.OEPA_SUMMER_MONTHS``, NPDES permit 2PH00006 Part II) — the season the peak-summer
+# daily-maximum criterion binds in, and the only season a thermal observation is design-relevant.
+# Advance both when a newer complete warm season is on the reported record (and re-record the
+# connector fixtures); the CLI's --dmr-start/--dmr-end override them for an ad-hoc read.
+DMR_WINDOW_START = "2024-05-01"
+DMR_WINDOW_END = "2024-10-31"
+
+# Rows on the screen, split by where the heat load COMES FROM (not by sector). A ``data_center``
+# row's load is MODELLED from the disclosed IT load (``cooling_models.reject_heat_load``); a
+# ``permitted_discharger`` row's is OBSERVED from the permittee's own reported effluent temperature
+# x reported flow. They are screened identically from there on — same reach, same design low flows,
+# same criterion — but must never be conflated: one is an inference about a facility that is not
+# yet discharging, the other is a measurement. The observed cohort is the corridor's industrial
+# dischargers *and* the POTW that shares the reach (``facility_type`` keeps them distinguishable).
+KIND_DATA_CENTER = "data_center"
+KIND_PERMITTED = "permitted_discharger"
+
+# Cooling scenarios (#1718). The Phase-2 screen carried ONE heat load — the whole condenser
+# rejection — as a deliberately conservative bound. Phase 3 keeps that as the upper bound and adds
+# the two physically-distinct archetypes, so the §316(a) number is reported per partition instead
+# of resting on the bound alone.
+SCENARIO_BOUND = "conservative_bound"
+SCENARIO_ONCE_THROUGH = "once_through"
+SCENARIO_EVAPORATIVE = "evaporative_blowdown"
+
+# Verdicts for the derived-vs-observed cross-check.
+_VERDICT_CONSERVATIVE = "conservative"  # the model runs hotter than the corridor's observed record
+_VERDICT_CONSISTENT = "consistent"  # within the tolerance below
+_VERDICT_UNDERSTATED = "understated"  # the model runs COOLER than what is actually reported
+_VERDICT_UNVALIDATED = "unvalidated"  # no observed analog on the reach
+# How close a derived effluent temperature has to sit to the observed analog to read "consistent".
+# 2 degC — the spread between the corridor's own reported outfalls (27.8-32.2 degC daily max), so
+# the tolerance is set by the observed data rather than picked to make the model look good.
+_CALIBRATION_TOLERANCE_C = 2.0
+
 
 # --- Models ----------------------------------------------------------------
 class ThermalFlowScreen(BaseModel):
@@ -125,6 +192,14 @@ class ThermalFlowScreen(BaseModel):
     mixed_c: ProvenancedValue | None  # ambient + delta_t (None when unbounded)
     exceedance_factor: float | None  # reject_heat / thermal_capacity (None when capacity 0)
     capacity_fraction: float | None  # thermal_capacity / reject_heat (None when reject 0)
+    # The share of the reach's temperature headroom the fully-mixed rise consumes — the
+    # **dilution-corrected** peer of ``exceedance_factor`` and, where it is computable, what
+    # ``flag`` is set from. ``exceedance_factor`` divides by the reach's design flow alone, so it
+    # overstates a discharge whose own flow dominates the reach (a 12.8 MGD POTW into a 0.2 cfs
+    # 7Q10 reads ~26x "over capacity" while its fully-mixed temperature sits 4 degC *under* the
+    # criterion). Ohio's criterion is a TEMPERATURE, so the temperature is the test.
+    headroom_fraction: float | None = None  # delta_t / (daily_max - ambient)
+    mixed_over_criterion: bool | None = None  # None when the mixed temperature is unbounded
     flag: str  # "exceedance" | "approach" | "ok" | "no_capacity"
     note: str | None = None
 
@@ -142,6 +217,93 @@ class RisThresholdCheck(BaseModel):
     exceeded: bool | None  # None when the mixed temperature is unbounded (exceeded by construction)
 
 
+class DmrThermalObservation(BaseModel):
+    """A permittee's own reported effluent-temperature record on the screened reach (#1718).
+
+    Every figure is verbatim from EPA ECHO's effluent-chart service, reduced to °C by its
+    **reported** unit — ICIS carries temperature under 00010 (°C) *and* 00011 (°F) and this
+    corridor uses both. ``effluent_c`` is the peak **daily maximum**, matching the form of Ohio's
+    numeric criterion. ``monitor_only`` records the permit that requires temperature monitoring
+    but sets no numeric thermal limit — a cited absence, and on the Ottawa the common case.
+    ``instream_c`` is the permit's own upstream/downstream river station where it has one: an
+    observed *receiving-water* temperature, categorically different from an effluent reading.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    npdes_id: str
+    permit_name: str | None = None
+    window: str
+    outfall: str | None = None
+    monitoring_location: str | None = None
+    parameter_code: str | None = None  # 00010 (degC) | 00011 (degF)
+    reported_unit: str | None = None
+    n_obs: int = 0
+    effluent_c: ProvenancedValue | None = None  # peak reported daily maximum
+    mean_monthly_avg_c: float | None = None
+    flow: ProvenancedValue | None = None  # the same outfall's reported monthly-average flow, MGD
+    permitted_limit_c: ProvenancedValue | None = None  # warm-season numeric daily-max ceiling
+    permitted_limit_outfall: str | None = None
+    limit_seasonal: bool = False
+    monitor_only: bool = True
+    reported_exceedances: int = 0  # rows ECHO itself flagged (never computed here)
+    over_criterion: bool | None = None  # peak daily max at/over the Ohio daily-max criterion
+    over_permitted_limit: bool | None = None
+    instream_c: ProvenancedValue | None = None
+    instream_station: str | None = None  # "<outfall> (<monitoring location>)"
+    note: str | None = None
+
+
+class ThermalCalibration(BaseModel):
+    """The derived-vs-observed cross-check the phase exists to produce (#1718).
+
+    Reads a modelled facility's derived effluent temperature against the corridor's own observed
+    industrial effluent (the nearest available analog — the campus holds no discharge permit, so
+    there is nothing of its own to read against) and records the design ambient against the
+    reach's observed in-stream temperature. ``verdict`` is about the MODEL, not the facility:
+    ``conservative`` means the screen runs hotter than the record, which is the defensible
+    direction; ``understated`` would mean the record is hotter than the screen and the screen
+    needs revisiting.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    basis: str
+    modeled_effluent_c: float | None = None
+    observed_effluent_c: float | None = None
+    observed_source: str | None = None  # "NPDES OH0002623 outfall 001 (Lima Refinery)"
+    delta_c: float | None = None  # modelled - observed
+    verdict: str = _VERDICT_UNVALIDATED
+    design_ambient_c: float | None = None
+    observed_instream_c: float | None = None
+    ambient_delta_c: float | None = None  # design ambient - observed in-stream
+    note: str | None = None
+
+
+class ThermalScenario(BaseModel):
+    """One cooling archetype's in-stream heat load, screened at the reach's design low flows.
+
+    The Phase-2 screen carried a single conservative bound (the whole condenser rejection reaching
+    the water). A scenario makes the **heat partition** explicit instead: ``instream_heat_mw`` is
+    what actually enters the stream under this archetype, and ``instream_fraction`` is its share of
+    the condenser rejection. The point of running all three is that they span two orders of
+    magnitude of partition and *all* exceed the reach's capacity — the robustness claim, quantified.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    scenario: str  # conservative_bound | once_through | evaporative_blowdown
+    basis: str
+    reject_heat_mw: ProvenancedValue | None = None  # the condenser rejection (same in every case)
+    instream_heat_mw: ProvenancedValue | None = None  # the share that reaches the receiving water
+    instream_fraction: float | None = None
+    discharge_flow: ProvenancedValue | None = None  # the discharge carrying it, MGD
+    effluent_c: ProvenancedValue | None = None  # the modelled discharge temperature
+    flow_screens: list[ThermalFlowScreen] = []
+    flag: str = "context"
+    note: str | None = None
+
+
 class ThermalDischargeScreen(BaseModel):
     """One facility's cooling heat load read against its receiving reach's temperature WQS + RIS."""
 
@@ -149,11 +311,20 @@ class ThermalDischargeScreen(BaseModel):
 
     facility: str
     facility_key: str
-    cooling_model: str  # the resolved archetype
+    # `data_center` (heat load MODELLED from the disclosed IT load) or `industrial` (heat load
+    # OBSERVED from the permittee's own reported effluent temperature x flow) — #1718.
+    kind: str = KIND_DATA_CENTER
+    npdes_id: str | None = None
+    facility_type: str | None = None  # ECHO's POTW / NON-POTW, for an observed discharger
+    cooling_model: str | None = None  # the resolved archetype (None for an industrial discharger)
     method_disclosed: bool  # False for the `unknown` archetype — the flag is qualified
 
     # The screened heat load (condenser rejection; ranged with the disclosed IT-load span).
     reject_heat_mw: ProvenancedValue | None
+    # The heat actually screened into the reach: the condenser rejection for a modelled facility
+    # (the conservative once-through-equivalent bound), the reported-record heat load for an
+    # industrial one. Distinct fields so a measurement is never displayed as an inference.
+    instream_heat_mw: ProvenancedValue | None = None
 
     # Receiving reach + the Ohio temperature threshold at the peak-summer design period.
     receiving_water: str | None = None
@@ -168,6 +339,13 @@ class ThermalDischargeScreen(BaseModel):
 
     flow_screens: list[ThermalFlowScreen] = []
     ris_checks: list[RisThresholdCheck] = []
+
+    # Per-archetype heat-partition scenarios (#1718) — data-center rows only.
+    scenarios: list[ThermalScenario] = []
+    # The permittee-reported record behind (industrial) or alongside (data-center) this row.
+    dmr: DmrThermalObservation | None = None
+    # The derived-vs-observed cross-check — data-center rows only.
+    calibration: ThermalCalibration | None = None
 
     # OAC 3745-1-06 (O)(5): a closed-cycle blowdown < 5% of the receiving 7Q10 is exempt from the
     # thermal-mixing-zone rule. Surfaced whether or not it applies (None = not a closed-cycle case).
@@ -190,6 +368,16 @@ class ThermalDischargeInventory(BaseModel):
     def flagged(self) -> list[ThermalDischargeScreen]:
         """Facilities whose heat load overwhelms the reach (the ``critical`` band)."""
         return [s for s in self.screens if s.flag == "critical"]
+
+    @property
+    def modelled(self) -> list[ThermalDischargeScreen]:
+        """The site's own cooling facilities (heat load derived from the disclosed IT load)."""
+        return [s for s in self.screens if s.kind == KIND_DATA_CENTER]
+
+    @property
+    def observed(self) -> list[ThermalDischargeScreen]:
+        """The corridor's permitted dischargers (heat load from their own reported DMRs)."""
+        return [s for s in self.screens if s.kind == KIND_PERMITTED]
 
 
 # --- Physics ---------------------------------------------------------------
@@ -246,24 +434,36 @@ def _resolve_ambient(
     period_index: int,
     gage: str | None,
     *,
+    instream: ProvenancedValue | None = None,
     settings: Settings,
 ) -> ProvenancedValue | None:
     """Background receiving-water temperature (degC) at the design period, on a provenance ladder.
 
-    1. The site's abstraction gage's live NWIS ``00010`` peak (``connector``) — the issue's
-       directive. Degrades quietly (offline replay, or a gage with no temperature block).
-    2. The zone's seasonal-**average** temperature criterion at the design period, as a stated
+    1. The site's abstraction gage's live NWIS ``00010`` peak (``connector``) — a continuous,
+       independent instrument. Degrades quietly (offline replay, or a gage with no temperature
+       block — most small gages, including the Ottawa's, report only discharge).
+    2. The **reach's own reported in-stream monitoring** (#1718): where an NPDES permit on this
+       reach requires upstream/downstream river monitoring, the permittee reports the receiving
+       water's temperature month by month (Lima's WWTP outfall 901). A permittee-reported
+       measurement of this very reach in the design season beats a criterion standing in for one.
+    3. The zone's seasonal-**average** temperature criterion at the design period, as a stated
        ``reference`` design ambient (the temperature the reach is expected to sit at in the design
        season per Ohio's own standard) — always available, fully cited.
     Returns ``None`` only when the zone prints no average either (nothing to stand on).
     """
     if gage:
+        # A live-service failure degrades to the next rung exactly as an offline replay does: a
+        # USGS outage (the Ottawa gage's 00010 request answers 503) must not take the whole screen
+        # down when two cited fallbacks are standing right behind it.
         try:
             observed = nwis.observed_water_temperature(gage, settings=settings)
-        except HydroOfflineError:
+        except (HydroOfflineError, httpx.HTTPError) as exc:
+            log.info("thermal.nwis_ambient_unavailable", gage=gage, error=str(exc))
             observed = None
         if observed is not None:
             return observed
+    if instream is not None:
+        return instream
     avg = zone.average_c(period_index)
     if avg is None:
         return None
@@ -306,6 +506,274 @@ def _design_flows(
         out.append(("summer 30Q10", _design_flow_pv(summer, "summer 30Q10", q7)))
     out.sort(key=lambda t: t[1].value)
     return out
+
+
+# --- Corridor NPDES cohort + reported thermal record (#1718) ----------------
+class CorridorPermit(NamedTuple):
+    """An NPDES permit on the site's receiving reach, plus how its receiving water was resolved.
+
+    The same two-rung ladder :mod:`watermark.hydrology.toxics` resolves a discharger's receiving
+    water on, so the heat-side and chemical-side screens can never disagree about who is on the
+    reach: ECHO's own cited receiving water first (``connector``), else membership in the site's
+    industrial-corridor coordinate box with **no** cited receiving water at all (``assumption``,
+    flagged as the inference it is). A permit ECHO cites to a *different* water body is excluded
+    outright — never re-pointed onto this reach to pad the cohort.
+    """
+
+    npdes_id: str
+    name: str
+    facility_type: str | None
+    receiving_water: str
+    source: SourceKind
+    citation: str
+
+
+def _corridor_permits(settings: Settings) -> list[CorridorPermit]:
+    """Every NPDES permit on the active site's receiving reach, from the committed ECHO inventory.
+
+    Per-site by construction: the basin inventory file comes from ``SiteProfile.basin`` (via
+    :data:`watermark.hydrology.connectors.echo.BASINS`) and the corridor box from
+    ``SiteProfile.toxic_corridor_bbox``, so a peer site reads its own basin and its own corridor —
+    or, with neither registered, an empty cohort (degrade, don't break).
+    """
+    prof = active_profile(settings)
+    receiving = prof.receiving_water_name or ""
+    basin = echo.BASINS.get(prof.basin)
+    if basin is None or not receiving:
+        return []
+    path = settings.reference_dir / "echo" / f"{basin.file_stem}.all-npdes.yaml"
+    if not path.is_file():
+        return []
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    lat_min, lat_max, lon_min, lon_max = prof.toxic_corridor_bbox
+    permits: list[CorridorPermit] = []
+    for row in data.get("facilities") or []:
+        npdes = str(row.get("npdes_id") or "").strip()
+        lat, lon = row.get("latitude"), row.get("longitude")
+        if not npdes or lat is None or lon is None:
+            continue
+        if not (lat_min <= lat <= lat_max and lon_min <= lon <= lon_max):
+            continue
+        cited = row.get("receiving_water")
+        if cited and _normalize(str(cited)) != _normalize(receiving):
+            continue  # ECHO cites a different water body — not this reach
+        source: SourceKind = "connector" if cited else "assumption"
+        citation = (
+            f"EPA ECHO {npdes} — {cited}"
+            if cited
+            else (
+                f"within the {receiving} industrial corridor at {prof.place} (coordinate cluster "
+                f"{lat_min}-{lat_max}N, {abs(lon_max)}-{abs(lon_min)}W); receiving water not "
+                "independently cited in ECHO"
+            )
+        )
+        permits.append(
+            CorridorPermit(
+                npdes_id=npdes,
+                name=str(row.get("name") or npdes),
+                facility_type=(str(row["facility_type"]) if row.get("facility_type") else None),
+                receiving_water=receiving,
+                source=source,
+                citation=citation,
+            )
+        )
+    permits.sort(key=lambda p: p.npdes_id)
+    return permits
+
+
+def _thermal_records(
+    permits: list[CorridorPermit], *, start: str, end: str, settings: Settings
+) -> dict[str, ThermalDmrRecord]:
+    """Pull each corridor permit's reported temperature record; a permit that can't be read is skipped.
+
+    Offline (no cache/fixture) and an ECHO error both degrade to "no record for this permit" —
+    the screen then reports the discharger as uncharacterized rather than crashing the whole run
+    on one permit, exactly as the ambient ladder degrades.
+    """
+    records: dict[str, ThermalDmrRecord] = {}
+    for permit in permits:
+        try:
+            records[permit.npdes_id] = echo_dmr.fetch_thermal_record(
+                permit.npdes_id, start_date=start, end_date=end, settings=settings
+            )
+        except (HydroOfflineError, EchoDmrError, httpx.HTTPError) as exc:
+            log.info("thermal.dmr_unavailable", npdes=permit.npdes_id, error=str(exc))
+    return records
+
+
+class InstreamAmbient(NamedTuple):
+    """The reach's observed in-stream temperature, and which permit's station reported it."""
+
+    value: ProvenancedValue
+    station: str
+    npdes_id: str
+
+
+def _instream_ambient(records: dict[str, ThermalDmrRecord]) -> InstreamAmbient | None:
+    """The warmest reported **in-stream** temperature on the reach, as a connector design ambient.
+
+    A permit's upstream/downstream river station measures the receiving water itself. The warmest
+    daily maximum across the corridor's stations in the window is the design-relevant (peak-summer)
+    figure. Returns ``(value, station label)``, or ``None`` when no permit on the reach carries an
+    in-stream station.
+    """
+    best: tuple[str, ThermalDmrRecord, OutfallThermal] | None = None
+    for npdes, record in sorted(records.items()):
+        outfall = record.warmest_instream
+        if outfall is None or outfall.temperature.peak_daily_max_c is None:
+            continue
+        peak = outfall.temperature.peak_daily_max_c
+        if best is None or peak > (best[2].temperature.peak_daily_max_c or -273.0):
+            best = (npdes, record, outfall)
+    if best is None:
+        return None
+    npdes, record, outfall = best
+    temp = outfall.temperature
+    station = f"{npdes} outfall {outfall.outfall} ({outfall.monitoring_location})"
+    value = ProvenancedValue.from_connector(
+        temp.peak_daily_max_c or 0.0,
+        "degC",
+        citation=(
+            f"peak reported daily-maximum in-stream temperature, EPA ECHO DMR {station}, "
+            f"{record.window} — the receiving water's own monitored temperature. It is a "
+            "permit-required station DOWNSTREAM of that plant's own outfall, so it is a measured "
+            "in-stream temperature, not an undisturbed upstream background"
+        ),
+        asof=temp.asof,
+        confidence="medium",
+    )
+    return InstreamAmbient(value=value, station=station, npdes_id=npdes)
+
+
+def _corridor_analog(
+    records: dict[str, ThermalDmrRecord], permits: list[CorridorPermit]
+) -> tuple[float, str] | None:
+    """The warmest reported **effluent** temperature on the reach — the modelling analog.
+
+    The campus holds no discharge permit, so its blowdown temperature has no observation of its
+    own. The corridor's own warmest reported industrial effluent is the nearest thing on the
+    record; it calibrates the evaporative scenario and grades the modelled effluent temperature.
+    An analog by construction, never the campus's own figure.
+    """
+    names = {p.npdes_id: p.name for p in permits}
+    best: tuple[float, str] | None = None
+    for npdes, record in sorted(records.items()):
+        outfall = record.primary_effluent
+        if outfall is None or outfall.temperature.peak_daily_max_c is None:
+            continue
+        peak = outfall.temperature.peak_daily_max_c
+        if best is None or peak > best[0]:
+            best = (
+                peak,
+                f"NPDES {npdes} outfall {outfall.outfall} ({names.get(npdes, record.name or npdes)})",
+            )
+    return best
+
+
+def _observation(
+    permit: CorridorPermit,
+    record: ThermalDmrRecord,
+    *,
+    criterion_c: float | None,
+) -> DmrThermalObservation:
+    """Reduce one permit's reported thermal record to the screen's observation block."""
+    outfall = record.primary_effluent
+    instream = record.warmest_instream
+    obs = DmrThermalObservation(
+        npdes_id=record.npdes_id,
+        permit_name=record.name or permit.name,
+        window=record.window,
+    )
+    # The permitted numeric ceiling can sit on a *different* outfall than the warmest reported one
+    # (the Lima Refinery's outfall 003 carries an 85 degF daily max; outfall 001, the one that
+    # actually discharges, carries none), so it is resolved across the permit and labelled.
+    limited = [o for o in record.effluent if o.temperature.limit_daily_max_c is not None]
+    if limited:
+        tightest = min(limited, key=lambda o: o.temperature.limit_daily_max_c or 0.0)
+        limit_c = tightest.temperature.limit_daily_max_c
+        obs.permitted_limit_outfall = tightest.outfall
+        obs.limit_seasonal = tightest.temperature.limit_seasonal
+        obs.permitted_limit_c = ProvenancedValue.from_document(
+            limit_c or 0.0,
+            "degC",
+            (
+                f"NPDES {record.npdes_id} outfall {tightest.outfall} permitted daily-maximum "
+                f"temperature limit, reported via EPA ECHO DMR ({record.window})"
+                + (
+                    " — seasonal; the warm-season ceiling"
+                    if tightest.temperature.limit_seasonal
+                    else ""
+                )
+            ),
+            confidence="high",
+        )
+
+    if instream is not None and instream.temperature.peak_daily_max_c is not None:
+        obs.instream_station = f"outfall {instream.outfall} ({instream.monitoring_location})"
+        obs.instream_c = ProvenancedValue.from_connector(
+            instream.temperature.peak_daily_max_c,
+            "degC",
+            citation=(
+                f"peak reported daily-maximum in-stream temperature, EPA ECHO DMR "
+                f"{record.npdes_id} {obs.instream_station}, {record.window}"
+            ),
+            asof=instream.temperature.asof,
+            confidence="medium",
+        )
+
+    if outfall is None:
+        obs.monitor_only = obs.permitted_limit_c is None
+        obs.note = (
+            f"NPDES {record.npdes_id} reports no effluent temperature in {record.window} — a "
+            "cited absence (the permit is not thermally monitored at an effluent outfall in this "
+            "window), never read as 'no thermal discharge'"
+        )
+        return obs
+
+    temp = outfall.temperature
+    obs.outfall = outfall.outfall
+    obs.monitoring_location = temp.monitoring_location
+    obs.parameter_code = temp.parameter_code
+    obs.reported_unit = temp.reported_unit
+    obs.n_obs = temp.n_obs
+    obs.mean_monthly_avg_c = temp.mean_monthly_avg_c
+    obs.monitor_only = obs.permitted_limit_c is None
+    obs.reported_exceedances = temp.reported_exceedances
+    if temp.peak_daily_max_c is not None:
+        obs.effluent_c = ProvenancedValue.from_connector(
+            temp.peak_daily_max_c,
+            "degC",
+            citation=(
+                f"peak reported daily-maximum effluent temperature, EPA ECHO DMR "
+                f"{record.npdes_id} outfall {outfall.outfall} (parameter {temp.parameter_code}, "
+                f"reported in {temp.reported_unit or 'an unstated unit'}), {record.window}"
+            ),
+            asof=temp.asof,
+            confidence="high",
+        )
+        if criterion_c is not None:
+            obs.over_criterion = temp.peak_daily_max_c >= criterion_c
+        if obs.permitted_limit_c is not None:
+            obs.over_permitted_limit = temp.peak_daily_max_c >= obs.permitted_limit_c.value
+    if outfall.flow_mean_mgd is not None:
+        obs.flow = ProvenancedValue.from_connector(
+            outfall.flow_mean_mgd,
+            "MGD",
+            citation=(
+                f"mean reported monthly-average flow, EPA ECHO DMR {record.npdes_id} outfall "
+                f"{outfall.outfall} (parameter {echo_dmr.FLOW_PARAM}) over "
+                f"{outfall.n_flow_months} month(s), {record.window}"
+            ),
+            asof=temp.asof,
+            confidence="high",
+        )
+    if obs.monitor_only:
+        obs.note = (
+            f"NPDES {record.npdes_id} monitors effluent temperature at outfall {outfall.outfall} "
+            "but ECHO carries NO numeric thermal limit for it — the discharge temperature is "
+            "reported, not capped"
+        )
+    return obs
 
 
 # --- Facility heat + discharge ---------------------------------------------
@@ -397,8 +865,26 @@ def _screen_flow(
     ambient: ProvenancedValue,
     headroom: float,
     discharge_cfs: float,
+    *,
+    basis: str = "conservative once-through-equivalent screen",
 ) -> ThermalFlowScreen:
-    """Screen the heat load against the daily-max criterion at one design low flow."""
+    """Screen the heat load against the daily-max criterion at one design low flow.
+
+    ``reject`` is the heat that reaches the receiving water under whatever partition the caller
+    has already applied — the whole condenser rejection for the conservative bound, the blowdown's
+    sensible heat for the evaporative scenario, or a permittee's reported-record heat load for an
+    industrial discharger. ``basis`` names that partition in the derived value's citation so a
+    stored ΔT always says which read produced it.
+
+    **The flag is the temperature test, not the heat test** (#1718). Ohio's criterion is a
+    daily-maximum *temperature*, so where the fully-mixed temperature is computable the flag comes
+    from how much of the reach's headroom the rise consumes (``headroom_fraction``), which accounts
+    for the discharge's own flow in the mixing denominator. ``exceedance_factor`` — the loading
+    ratio against the reach's design flow alone — stays as the cross-facility magnitude, but on its
+    own it declares a large, barely-warm discharge an exceedance when its mixed temperature sits
+    comfortably under the criterion. Only where the mixed temperature is unbounded (zero design
+    flow, or a rise past the liquid-water range) does the loading ratio drive the flag.
+    """
     capacity = thermal_capacity_mw(flow.value, headroom)
     factor = round(reject.value / capacity, 2) if capacity > 0 else None
     frac = round(capacity / reject.value, 6) if reject.value > 0 else None
@@ -407,6 +893,9 @@ def _screen_flow(
     delta_pv: ProvenancedValue | None = None
     mixed_pv: ProvenancedValue | None = None
     note: str | None = None
+    headroom_fraction: float | None = None
+    over: bool | None = None
+    flag = "no_capacity" if capacity <= 0 else _flag(factor)
     if capacity <= 0.0:
         note = (
             f"{label} = {flow.value:g} cfs: no thermal assimilative capacity"
@@ -415,8 +904,8 @@ def _screen_flow(
         )
     elif rise is not None and ambient.value + rise <= _LIQUID_CEILING_C:
         cite = (
-            f"{reject.value:g} MW rejected / (rho*cp*({flow.value:g} + {discharge_cfs:.2g} cfs)) "
-            "fully mixed — conservative once-through-equivalent screen (no plume/mixing-zone credit)"
+            f"{reject.value:g} MW to water / (rho*cp*({flow.value:g} + {discharge_cfs:.2g} cfs)) "
+            f"fully mixed — {basis} (no plume/mixing-zone credit)"
         )
         delta_pv = ProvenancedValue.derived(round(rise, 1), "degC", citation=cite, confidence="low")
         mixed_pv = ProvenancedValue.derived(
@@ -425,6 +914,9 @@ def _screen_flow(
             citation=f"design ambient {ambient.value:g} + {round(rise, 1):g} degC in-stream rise",
             confidence="low",
         )
+        headroom_fraction = round(rise / headroom, 3)
+        over = headroom_fraction >= _EXCEEDANCE
+        flag = _flag(headroom_fraction)
     else:
         note = (
             f"in-stream rise exceeds the liquid-water range at {label} = {flow.value:g} cfs — the "
@@ -439,7 +931,9 @@ def _screen_flow(
         mixed_c=mixed_pv,
         exceedance_factor=factor,
         capacity_fraction=frac,
-        flag=("no_capacity" if capacity <= 0 else _flag(factor)),
+        headroom_fraction=headroom_fraction,
+        mixed_over_criterion=over,
+        flag=flag,
         note=note,
     )
 
@@ -517,15 +1011,480 @@ def _facility_detail(
     )
 
 
+# --- Cooling scenarios (#1718) ---------------------------------------------
+def _heat_mw(flow_mgd: float, delta_c: float) -> float:
+    """Sensible heat (MW) a discharge of ``flow_mgd`` carries at ``delta_c`` above ambient."""
+    return _RHO_CP_MJ_PER_M3_C * units.mgd_to_cfs(flow_mgd) * _CFS_TO_M3S * delta_c
+
+
+def _scenario_screens(
+    heat: ProvenancedValue,
+    ambient: ProvenancedValue,
+    headroom: float,
+    flows: list[tuple[str, ProvenancedValue]],
+    discharge_cfs: float,
+    basis: str,
+) -> tuple[list[ThermalFlowScreen], str]:
+    """Screen one scenario's in-stream heat at every design low flow; return the screens + flag."""
+    screens = [
+        _screen_flow(label, flow, heat, ambient, headroom, discharge_cfs, basis=basis)
+        for label, flow in flows
+    ]
+    computed = any(s.flag == "exceedance" and s.exceedance_factor is not None for s in screens)
+    if computed:
+        flag = "critical"
+    elif any(s.flag in ("approach", "no_capacity") for s in screens):
+        flag = "elevated"
+    else:
+        flag = "context"
+    return screens, flag
+
+
+def _scenarios(
+    fac: SiteFacility,
+    model: CoolingModelType,
+    reject: ProvenancedValue,
+    ambient: ProvenancedValue,
+    headroom: float,
+    flows: list[tuple[str, ProvenancedValue]],
+    pinned_discharge_mgd: float,
+    analog: tuple[float, str] | None,
+    settings: Settings,
+) -> list[ThermalScenario]:
+    """The heat-partition scenarios for one modelled facility (#1718).
+
+    ``conservative_bound`` is the Phase-2 read kept as the upper bound. ``once_through`` is the
+    archetype where the partition question does not arise — the condenser water *is* the discharge,
+    so the whole rejection reaches the stream, and its effluent rise falls straight out of the
+    withdrawal ``cooling_models`` already derives. ``evaporative_blowdown`` is the realistic
+    tower case: the latent heat of evaporation leaves to the atmosphere and only the **blowdown**
+    carries sensible heat downstream, at a temperature calibrated to the corridor's own reported
+    industrial effluent (``analog``). Each scenario is omitted, never guessed, when its inputs are
+    not on the record: no disclosed blowdown or no observed analog and the evaporative scenario
+    simply does not appear.
+    """
+    out: list[ThermalScenario] = []
+    pinned_cfs = units.mgd_to_cfs(pinned_discharge_mgd)
+    bound_screens, bound_flag = _scenario_screens(
+        reject,
+        ambient,
+        headroom,
+        flows,
+        pinned_cfs,
+        "the whole condenser rejection treated as reaching the water",
+    )
+    bound_rise = instream_delta_t_c(reject.value, pinned_cfs) if pinned_discharge_mgd > 0 else None
+    out.append(
+        ThermalScenario(
+            scenario=SCENARIO_BOUND,
+            basis=(
+                "Upper bound: the entire condenser heat rejection reaches the receiving water at "
+                f"the pinned {model.value} archetype's discharge flow. Physically generous for any "
+                "closed-cycle archetype (a tower rejects most of it to the air) — carried so the "
+                "other scenarios are read against a stated ceiling, not against nothing."
+            ),
+            reject_heat_mw=reject,
+            instream_heat_mw=reject,
+            instream_fraction=1.0,
+            discharge_flow=(
+                ProvenancedValue.derived(
+                    round(pinned_discharge_mgd, 2),
+                    "MGD",
+                    citation=f"the {model.value} archetype's discharge to the receiving water",
+                    confidence="low",
+                )
+                if pinned_discharge_mgd > 0
+                else None
+            ),
+            effluent_c=(
+                ProvenancedValue.derived(
+                    round(ambient.value + bound_rise, 1),
+                    "degC",
+                    citation=(
+                        f"design ambient {ambient.value:g} + the whole {reject.value:g} MW "
+                        f"rejection carried by {pinned_discharge_mgd:g} MGD of discharge"
+                    ),
+                    confidence="low",
+                )
+                if bound_rise is not None and ambient.value + bound_rise <= _LIQUID_CEILING_C
+                else None
+            ),
+            flow_screens=bound_screens,
+            flag=bound_flag,
+        )
+    )
+
+    # --- once-through: the whole rejection, carried by the whole withdrawal -----------------
+    ot_basis = cooling_models.get(CoolingModelType.ONCE_THROUGH).derive(
+        fac, CoolingParams(), settings
+    )
+    ot_mgd = ot_basis.makeup_demand.value
+    ot_cfs = units.mgd_to_cfs(ot_mgd)
+    ot_rise = instream_delta_t_c(reject.value, ot_cfs)
+    ot_screens, ot_flag = _scenario_screens(
+        reject,
+        ambient,
+        headroom,
+        flows,
+        ot_cfs,
+        "once-through: the condenser water IS the discharge",
+    )
+    out.append(
+        ThermalScenario(
+            scenario=SCENARIO_ONCE_THROUGH,
+            basis=(
+                "Once-through: the cooling water passes the condenser once and returns to the "
+                "stream warmed, so the whole rejection reaches the receiving water by definition "
+                "— but it arrives diluted in the whole withdrawal, which itself dwarfs the design "
+                "low flow. The reach below the outfall is then effectively the discharge."
+            ),
+            reject_heat_mw=reject,
+            instream_heat_mw=reject,
+            instream_fraction=1.0,
+            discharge_flow=ot_basis.makeup_demand,
+            effluent_c=(
+                ProvenancedValue.derived(
+                    round(ambient.value + ot_rise, 1),
+                    "degC",
+                    citation=(
+                        f"design ambient {ambient.value:g} + the condenser rise of "
+                        f"{reject.value:g} MW over the {ot_mgd:,.0f} MGD once-through withdrawal"
+                    ),
+                    confidence="low",
+                )
+                if ot_rise is not None
+                else None
+            ),
+            flow_screens=ot_screens,
+            flag=ot_flag,
+        )
+    )
+
+    # --- evaporative blowdown: only the blowdown's sensible heat ----------------------------
+    if fac.blowdown_mgd and analog is not None:
+        analog_c, analog_src = analog
+        delta = round(analog_c - ambient.value, 2)
+        if delta > 0.0:
+            instream = _heat_mw(fac.blowdown_mgd, delta)
+            heat_pv = ProvenancedValue.derived(
+                round(instream, 3),
+                "MW",
+                citation=(
+                    f"rho*cp x {fac.blowdown_mgd:g} MGD blowdown x ({analog_c:g} - "
+                    f"{ambient.value:g}) degC — the sensible heat the blowdown carries at the "
+                    f"corridor's own observed effluent temperature ({analog_src}). The latent "
+                    "heat of evaporation leaves to the atmosphere and is not screened here."
+                ),
+                confidence="low",
+            )
+            blow_cfs = units.mgd_to_cfs(fac.blowdown_mgd)
+            screens, flag = _scenario_screens(
+                heat_pv,
+                ambient,
+                headroom,
+                flows,
+                blow_cfs,
+                "evaporative tower: only the blowdown's sensible heat reaches the water",
+            )
+            out.append(
+                ThermalScenario(
+                    scenario=SCENARIO_EVAPORATIVE,
+                    basis=(
+                        "Evaporative tower: most of the rejection leaves as latent heat of "
+                        "evaporation to the atmosphere; only the blowdown carries sensible heat "
+                        f"downstream. Its temperature is CALIBRATED to {analog_src} — an observed "
+                        "corridor analog, not a figure for this facility, which holds no discharge "
+                        "permit of its own."
+                    ),
+                    reject_heat_mw=reject,
+                    instream_heat_mw=heat_pv,
+                    instream_fraction=(
+                        round(instream / reject.value, 4) if reject.value > 0 else None
+                    ),
+                    discharge_flow=ProvenancedValue.from_document(
+                        fac.blowdown_mgd,
+                        "MGD",
+                        fac.blowdown_citation or "disclosed cooling blowdown",
+                    ),
+                    effluent_c=ProvenancedValue.derived(
+                        round(analog_c, 1),
+                        "degC",
+                        citation=(
+                            f"blowdown temperature taken from the corridor's observed effluent "
+                            f"analog ({analog_src}) — an [inference] by analogy"
+                        ),
+                        confidence="low",
+                    ),
+                    flow_screens=screens,
+                    flag=flag,
+                )
+            )
+    return out
+
+
+def _calibration(
+    scenarios: list[ThermalScenario],
+    ambient: ProvenancedValue,
+    analog: tuple[float, str] | None,
+    instream: InstreamAmbient | None,
+    reference_ambient: float | None,
+) -> ThermalCalibration:
+    """Grade the modelled effluent temperature against the corridor's observed record (#1718)."""
+    once_through = next(
+        (s for s in scenarios if s.scenario == SCENARIO_ONCE_THROUGH and s.effluent_c), None
+    )
+    modeled = once_through.effluent_c.value if once_through and once_through.effluent_c else None
+    observed = analog[0] if analog else None
+    delta = round(modeled - observed, 2) if (modeled is not None and observed is not None) else None
+    if delta is None:
+        verdict = _VERDICT_UNVALIDATED
+    elif delta > _CALIBRATION_TOLERANCE_C:
+        verdict = _VERDICT_CONSERVATIVE
+    elif delta < -_CALIBRATION_TOLERANCE_C:
+        verdict = _VERDICT_UNDERSTATED
+    else:
+        verdict = _VERDICT_CONSISTENT
+
+    ambient_delta: float | None = None
+    ambient_note = ""
+    if instream is not None and reference_ambient is not None:
+        ambient_delta = round(reference_ambient - instream.value.value, 2)
+        ambient_note = (
+            f" The reach's own reported in-stream temperature ({instream.station}) is "
+            f"{abs(ambient_delta):g} degC {'below' if ambient_delta >= 0 else 'above'} the "
+            "reference design ambient the criteria table supplies, so the observed rung is the "
+            "one used."
+        )
+    if verdict == _VERDICT_UNVALIDATED:
+        note = (
+            "No permitted discharger on this reach reports an effluent temperature in the window, "
+            "so the derived effluent temperature has no observed analog to be read against — the "
+            "screen stands on the criteria alone and the cross-check is an [open] gap."
+        ) + ambient_note
+    else:
+        note = (
+            f"The modelled once-through effluent runs {abs(delta or 0.0):g} degC "
+            f"{'above' if (delta or 0.0) >= 0 else 'BELOW'} the corridor's warmest observed "
+            f"industrial effluent — {verdict}."
+        ) + ambient_note
+    return ThermalCalibration(
+        basis=(
+            "Derived once-through effluent temperature vs the warmest reported effluent "
+            "temperature among the permitted dischargers on the same reach (EPA ECHO DMR). The "
+            "campus holds no discharge permit, so the corridor analog is the closest observation "
+            "on the record; a `conservative` verdict means the SCREEN runs hotter than the record."
+        ),
+        modeled_effluent_c=modeled,
+        observed_effluent_c=observed,
+        observed_source=analog[1] if analog else None,
+        delta_c=delta,
+        verdict=verdict,
+        design_ambient_c=ambient.value,
+        observed_instream_c=instream.value.value if instream else None,
+        ambient_delta_c=ambient_delta,
+        note=note,
+    )
+
+
+# --- Industrial dischargers (observed heat load, #1718) ---------------------
+def _industrial_detail(
+    permit: CorridorPermit,
+    obs: DmrThermalObservation,
+    heat: ProvenancedValue | None,
+    flow_screens: list[ThermalFlowScreen],
+    flag: str,
+    criterion_c: float | None,
+) -> str:
+    """A one-line summary of a permitted discharger's reported thermal record vs the criterion."""
+    if obs.effluent_c is None:
+        return (
+            f"{permit.name} (NPDES {permit.npdes_id}): no effluent temperature reported in "
+            f"{obs.window} — thermal load uncharacterized [{flag}]."
+        )
+    over = (
+        f", {round(obs.effluent_c.value - (criterion_c or 0.0), 1):g} degC OVER the "
+        f"{criterion_c:g} degC daily-maximum criterion"
+        if obs.over_criterion and criterion_c is not None
+        else ""
+    )
+    limit = (
+        f"permitted daily-max limit {obs.permitted_limit_c.value:g} degC"
+        f" (outfall {obs.permitted_limit_outfall})"
+        if obs.permitted_limit_c is not None
+        else "NO numeric thermal limit on record"
+    )
+    if heat is None:
+        return (
+            f"{permit.name} (NPDES {permit.npdes_id}): reports {obs.effluent_c.value:g} degC peak "
+            f"daily-max effluent{over}; {limit}; "
+            + (
+                f"no reported flow at outfall {obs.outfall}, so the heat load is not derivable"
+                if obs.flow is None
+                else "no net heat load above the design ambient"
+            )
+            + f" [{flag}]."
+        )
+    # Lead with the in-stream temperature the criterion is actually written against; the capacity
+    # ratio follows as magnitude. Preferring the worst *computable* mixed temperature keeps a
+    # 12 MGD, barely-warm discharge from reading like a hot one on the loading ratio alone.
+    worst = max(
+        (fs for fs in flow_screens if fs.mixed_c is not None),
+        key=lambda fs: fs.mixed_c.value if fs.mixed_c else 0.0,
+        default=None,
+    )
+    if worst is not None and worst.mixed_c is not None:
+        verdict = "OVER" if worst.mixed_over_criterion else "under"
+        against = f"{verdict} the {criterion_c:g} degC criterion" if criterion_c else verdict
+        outcome = (
+            f"fully mixed at {worst.flow_label} the reach reaches {worst.mixed_c.value:g} degC — "
+            f"{against} ({(worst.headroom_fraction or 0.0) * 100:.0f}% of the reach's headroom"
+            + (
+                f", {_format_factor(worst.exceedance_factor)} its loading capacity)"
+                if worst.exceedance_factor is not None
+                else ")"
+            )
+        )
+    else:
+        outcome = "no thermal assimilative capacity at design low flow"
+    return (
+        f"{permit.name} (NPDES {permit.npdes_id}): reports {obs.effluent_c.value:g} degC peak "
+        f"daily-max effluent at {obs.flow.value if obs.flow else 0:g} MGD{over}; {limit}. "
+        f"Reported-record heat load ~{heat.value:g} MW — {outcome} [{flag}]."
+    )
+
+
+def _screen_industrial(
+    permit: CorridorPermit,
+    record: ThermalDmrRecord,
+    *,
+    receiving: str,
+    ambient: ProvenancedValue,
+    headroom: float,
+    flows: list[tuple[str, ProvenancedValue]],
+    criterion_c: float | None,
+    tolerances: ThermalToleranceTable,
+    ambient_npdes: str | None = None,
+) -> ThermalDischargeScreen:
+    """Screen one permitted discharger's **reported** heat load against the reach's criterion.
+
+    The heat load is measured, not modelled: ``rho*cp*Q_reported*(T_reported - T_ambient)`` from
+    the outfall's own DMR temperature and flow. A reported effluent COOLER than the design ambient
+    carries no net heat at the design condition and is reported as such (never a negative load),
+    and an outfall with a temperature but no flow is reported without a load rather than paired
+    with some other outfall's flow.
+
+    ``ambient_npdes`` names the permit whose in-stream station supplied the design ambient. When
+    that is *this* permit the read is partly circular — the station sits downstream of this
+    plant's own outfall, so the "background" it measures already carries this discharge's heat —
+    and the screen says so on the row rather than presenting an independent comparison.
+    """
+    obs = _observation(permit, record, criterion_c=criterion_c)
+    heat: ProvenancedValue | None = None
+    flow_screens: list[ThermalFlowScreen] = []
+    ris_checks: list[RisThresholdCheck] = []
+    if obs.effluent_c is not None and obs.flow is not None:
+        delta = round(obs.effluent_c.value - ambient.value, 2)
+        if delta > 0.0:
+            heat = ProvenancedValue.derived(
+                round(_heat_mw(obs.flow.value, delta), 3),
+                "MW",
+                citation=(
+                    f"rho*cp x {obs.flow.value:g} MGD reported effluent flow x "
+                    f"({obs.effluent_c.value:g} - {ambient.value:g}) degC above the design "
+                    f"ambient — the reported-record heat load of NPDES {permit.npdes_id} "
+                    f"outfall {obs.outfall} (EPA ECHO DMR, {obs.window})"
+                ),
+                confidence="medium",
+            )
+            flow_screens = [
+                _screen_flow(
+                    label,
+                    flow,
+                    heat,
+                    ambient,
+                    headroom,
+                    units.mgd_to_cfs(obs.flow.value),
+                    basis="reported-record heat load (permittee's own DMR temperature x flow)",
+                )
+                for label, flow in flows
+            ]
+            binding = flow_screens[0] if flow_screens else None
+            ris_checks = _ris_checks(
+                tolerances, binding.mixed_c.value if (binding and binding.mixed_c) else None
+            )
+        else:
+            obs.note = (
+                f"NPDES {permit.npdes_id}: reported peak effluent ({obs.effluent_c.value:g} degC) "
+                f"is at or below the design ambient ({ambient.value:g} degC) — no net heat load at "
+                "the design condition, so no capacity ratio is computed"
+            )
+
+    if ambient_npdes == permit.npdes_id and obs.instream_c is not None:
+        circular = (
+            f"The design ambient for this screen is this permit's OWN in-stream station "
+            f"({obs.instream_station}), which sits downstream of its outfall — so the heat load "
+            "below is measured against water this discharge has already warmed, and is a floor."
+        )
+        obs.note = f"{obs.note} {circular}" if obs.note else circular
+
+    if obs.effluent_c is None:
+        flag = "uncharacterized"
+    elif heat is None and obs.flow is None:
+        flag = "elevated" if obs.over_criterion else "context"
+    elif heat is None:
+        flag = "context"
+    elif any(fs.flag == "exceedance" and fs.exceedance_factor is not None for fs in flow_screens):
+        flag = "critical"
+    elif any(fs.flag in ("approach", "no_capacity") for fs in flow_screens):
+        flag = "elevated"
+    else:
+        flag = "context"
+
+    return ThermalDischargeScreen(
+        facility=permit.name,
+        facility_key=permit.npdes_id,
+        kind=KIND_PERMITTED,
+        npdes_id=permit.npdes_id,
+        facility_type=permit.facility_type,
+        cooling_model=None,
+        method_disclosed=True,  # the discharge itself is on the record, whatever cools it
+        reject_heat_mw=None,  # no condenser model — the load is measured, not derived from IT
+        instream_heat_mw=heat,
+        receiving_water=receiving,
+        receiving_water_source=permit.source,
+        ambient_c=ambient,
+        headroom_c=headroom,
+        discharge_flow=obs.flow,
+        flow_screens=flow_screens,
+        ris_checks=ris_checks,
+        dmr=obs,
+        flag=flag,
+        detail=_industrial_detail(permit, obs, heat, flow_screens, flag, criterion_c),
+    )
+
+
 # --- Build -----------------------------------------------------------------
-def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
-    """Screen the active site's cooling facilities against their receiving reach's thermal WQS.
+def build_screen(
+    settings: Settings | None = None,
+    *,
+    dmr: bool = True,
+    dmr_start: str = DMR_WINDOW_START,
+    dmr_end: str = DMR_WINDOW_END,
+) -> ThermalDischargeInventory:
+    """Screen the active site's cooling facilities — and its reach's permitted dischargers.
 
     Each disclosed facility's condenser heat rejection (``cooling_models.reject_heat_load``) is
     carried into the site's receiving water at its cited design low flows (1Q10 / 7Q10 / summer
     30Q10) and read against the Ohio daily-maximum temperature criterion for the reach's zone and
     the Great Lakes RIS biological tolerances. The facility flag rolls the per-flow capacity
     exceedances up (``critical`` = a computed daily-max exceedance = a §316(a)/mixing-zone trigger).
+
+    With ``dmr`` (the default, #1718) the screen also reads the reach's **reported record** from
+    EPA ECHO over ``dmr_start..dmr_end``: every NPDES permit on the reach is screened on its own
+    reported effluent temperature x flow, the reach's in-stream monitoring supplies an observed
+    design ambient, and each modelled facility gains its heat-partition scenarios plus a
+    derived-vs-observed calibration. ``dmr=False`` is the pure-offline Phase-2 read: no connector
+    call, the stated reference design ambient, no scenarios, no observations.
     """
     settings = settings or get_settings()
     prof = active_profile(settings)
@@ -533,8 +1492,8 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
     tolerances = load_thermal_tolerances(settings=settings)
 
     receiving = prof.receiving_water_name or None
-    # Zone selection is a Phase-3 (#1718) SiteProfile knob; until then read the table's hint
-    # (Lima's Ottawa River -> lake_erie_basin_general). Forward-compatible: prefer a profile field.
+    # Zone selection reads a profile pin when a site sets one, else the table's hint (Lima's
+    # Ottawa River -> lake_erie_basin_general).
     zone_id = getattr(prof, "temperature_zone_id", None) or table.default_zone_hint
     zone = table.zone(zone_id)
     period_index = _peak_summer_period(zone, table) if zone else None
@@ -543,9 +1502,21 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
         table.periods[period_index].label if (period_index is not None and table.periods) else None
     )
 
+    # The reported record for the reach: the corridor cohort, its DMR temperature series, the
+    # observed in-stream ambient, and the warmest observed effluent (the modelling analog).
+    permits = _corridor_permits(settings) if dmr else []
+    records = (
+        _thermal_records(permits, start=dmr_start, end=dmr_end, settings=settings)
+        if permits
+        else {}
+    )
+    instream = _instream_ambient(records) if records else None
+    analog = _corridor_analog(records, permits) if records else None
+
     daily_max_pv: ProvenancedValue | None = None
     ambient: ProvenancedValue | None = None
     headroom: float | None = None
+    reference_ambient: float | None = None
     if zone and period_index is not None and daily_max is not None:
         daily_max_pv = ProvenancedValue.from_reference(
             daily_max,
@@ -553,7 +1524,14 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
             citation=f"{zone.rule} daily-maximum temperature criterion, {design_period}",
             confidence="high",
         )
-        ambient = _resolve_ambient(zone, period_index, prof.abstraction_gage, settings=settings)
+        reference_ambient = zone.average_c(period_index)
+        ambient = _resolve_ambient(
+            zone,
+            period_index,
+            prof.abstraction_gage,
+            instream=instream.value if instream else None,
+            settings=settings,
+        )
         if ambient is not None:
             headroom = round(daily_max - ambient.value, 2)
 
@@ -579,6 +1557,8 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
 
         flow_screens: list[ThermalFlowScreen] = []
         ris_checks: list[RisThresholdCheck] = []
+        scenarios: list[ThermalScenario] = []
+        calibration: ThermalCalibration | None = None
         blowdown_exempt: bool | None = None
         blowdown_note: str | None = None
         if (
@@ -596,6 +1576,22 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
             mixed = binding.mixed_c.value if (binding and binding.mixed_c) else None
             ris_checks = _ris_checks(tolerances, mixed)
             blowdown_exempt, blowdown_note = _blowdown_exemption(fac, model, q7)
+            # The heat-partition scenarios + the derived-vs-observed cross-check (#1718). A dry /
+            # no-discharge archetype rejects its heat to the air, so there is no partition to
+            # explore and no effluent temperature to calibrate — scenarios are omitted.
+            if dmr and model not in _DRY:
+                scenarios = _scenarios(
+                    fac,
+                    model,
+                    reject,
+                    ambient,
+                    headroom,
+                    flows,
+                    discharge_mgd,
+                    analog,
+                    settings,
+                )
+                calibration = _calibration(scenarios, ambient, analog, instream, reference_ambient)
 
         flag = _facility_flag(
             reject, receiving, model, discharge_cfs, flow_screens, blowdown_exempt
@@ -606,9 +1602,11 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
             ThermalDischargeScreen(
                 facility=fac.name,
                 facility_key=fac.key or fac.name,
+                kind=KIND_DATA_CENTER,
                 cooling_model=model.value,
                 method_disclosed=(model != CoolingModelType.UNKNOWN),
                 reject_heat_mw=reject,
+                instream_heat_mw=reject,
                 receiving_water=receiving,
                 receiving_water_source=("document" if q7 else None) if receiving else None,
                 zone_id=zone_id if zone else None,
@@ -620,12 +1618,42 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
                 discharge_flow=discharge_pv,
                 flow_screens=flow_screens,
                 ris_checks=ris_checks,
+                scenarios=scenarios,
+                calibration=calibration,
                 blowdown_exempt=blowdown_exempt,
                 blowdown_exempt_note=blowdown_note,
                 flag=flag,
                 detail=detail,
             )
         )
+
+    # The reach's permitted dischargers, screened on their own reported record (#1718).
+    if receiving is not None and ambient is not None and headroom is not None:
+        for permit in permits:
+            record = records.get(permit.npdes_id)
+            if record is None:
+                continue
+            industrial = _screen_industrial(
+                permit,
+                record,
+                receiving=receiving,
+                ambient=ambient,
+                headroom=headroom,
+                flows=flows,
+                criterion_c=daily_max,
+                tolerances=tolerances,
+                ambient_npdes=instream.npdes_id if instream else None,
+            )
+            screens.append(
+                industrial.model_copy(
+                    update={
+                        "zone_id": zone_id if zone else None,
+                        "zone_rule": zone.rule if zone else None,
+                        "design_period": design_period,
+                        "daily_max_c": daily_max_pv,
+                    }
+                )
+            )
 
     order = {
         "critical": 0,
@@ -635,14 +1663,29 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
         "context": 4,
         "uncharacterized": 5,
     }
-    screens.sort(
-        key=lambda s: (order.get(s.flag, 9), -(s.reject_heat_mw.value if s.reject_heat_mw else 0.0))
-    )
 
+    def _rank(s: ThermalDischargeScreen) -> tuple[int, int, float]:
+        """Worst flag first; within a flag, modelled facilities before observed dischargers,
+        then by the heat that actually reaches the water (largest first)."""
+        heat = s.reject_heat_mw or s.instream_heat_mw
+        return (
+            order.get(s.flag, 9),
+            0 if s.kind == KIND_DATA_CENTER else 1,
+            -(heat.value if heat is not None else 0.0),
+        )
+
+    screens.sort(key=_rank)
+
+    monitor_only = [s for s in screens if s.dmr is not None and s.dmr.monitor_only and s.dmr.n_obs]
+    over_criterion = [s for s in screens if s.dmr is not None and s.dmr.over_criterion]
     meta: dict[str, Any] = {
-        "subject": "Data-center cooling heat load vs receiving-water temperature WQS / CWA §316(a)",
+        "subject": (
+            "Cooling + industrial heat load vs receiving-water temperature WQS / CWA §316(a), "
+            "validated against the reported (ECHO DMR) effluent-temperature record"
+        ),
         "source": (
-            "watermark.hydrology.cooling_models (condenser heat rejection) x Ohio EPA cited design "
+            "watermark.hydrology.cooling_models (condenser heat rejection) x EPA ECHO DMR "
+            "effluent temperature (parameters 00010/00011) + flow (50050) x Ohio EPA cited design "
             "low flows (data/reference/hydrology/low-flow-7q10.yaml) x Ohio temperature criteria "
             "(data/reference/wqs/ohio-temperature-criteria.yaml) x Great Lakes RIS tolerances "
             "(data/reference/thermal/great-lakes-ris-thermal-tolerances.yaml, EPA-833-F-23-007)"
@@ -653,14 +1696,31 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
         "zone_rule": zone.rule if zone else None,
         "design_period": design_period,
         "daily_max_c": daily_max,
+        "ambient_c": ambient.value if ambient else None,
+        "ambient_source": ambient.source if ambient else None,
+        "reference_ambient_c": reference_ambient,
         "facility_count": len(screens),
+        "modelled_count": sum(1 for s in screens if s.kind == KIND_DATA_CENTER),
+        "industrial_count": sum(1 for s in screens if s.kind == KIND_PERMITTED),
         "critical_count": sum(1 for s in screens if s.flag == "critical"),
+        # The reported-record read (#1718).
+        "dmr_window": f"{dmr_start}..{dmr_end}" if dmr else None,
+        "corridor_permits": len(permits),
+        "corridor_permits_with_thermal_record": sum(
+            1 for s in screens if s.dmr is not None and s.dmr.n_obs > 0
+        ),
+        "observed_instream_station": instream.station if instream else None,
+        "observed_instream_c": instream.value.value if instream else None,
+        "observed_effluent_analog": analog[1] if analog else None,
+        "observed_effluent_analog_c": analog[0] if analog else None,
+        "monitor_only_permits": [s.npdes_id for s in monitor_only],
+        "permits_over_daily_max_criterion": [s.npdes_id for s in over_criterion],
         "caveats": [
-            "The heat load is the CONDENSER heat rejection (IT x cooling overhead) — a "
-            "conservative, once-through-equivalent bound that treats the full rejection as "
-            "reaching the receiving water. An evaporative tower rejects most of it to the "
-            "atmosphere; the finding leans on the capacity ratio, which is robust to this "
-            "partition (even a small in-stream fraction exceeds the tiny capacity).",
+            "A MODELLED (data-center) row's heat load is the CONDENSER heat rejection (IT x "
+            "cooling overhead) — an inference about a facility that is not yet discharging. An "
+            "INDUSTRIAL row's is the permittee's own reported effluent temperature x reported "
+            "flow — a measurement. They are screened identically from there on but never "
+            "conflated; read `kind` before quoting a number.",
             "Fully-mixed, design-low-flow, order-of-magnitude: no CORMIX plume model, no "
             "mixing-zone credit, no decay. T_mixed above the daily-max criterion flags the need "
             "for a permit-level thermal / CWA §316(a) analysis, NOT an automatic violation.",
@@ -668,12 +1728,25 @@ def build_screen(settings: Settings | None = None) -> ThermalDischargeInventory:
             "design flow (the Ottawa 1Q10) or an ambient already at the criterion the capacity is "
             "0 — any heat load exceeds by construction (no Inf ΔT, mirroring the toxics screen).",
             "The design ambient is a live NWIS 00010 reading where the gage carries one, else the "
-            "zone's seasonal-average temperature criterion (a stated design ambient). RIS "
-            "tolerances are the Great Lakes biological limits for a §316(a) balanced-indigenous-"
-            "community read, [reference] (federal guidance, not law).",
+            "reach's own reported in-stream (upstream/downstream) DMR monitoring, else the zone's "
+            "seasonal-average temperature criterion as a stated design ambient. An in-stream "
+            "station sits downstream of that plant's own outfall, so it is a measured in-stream "
+            "temperature, not an undisturbed upstream background.",
+            "Cooling scenarios span the heat PARTITION, not uncertainty in the load: "
+            "`once_through` sends the whole rejection to the stream by definition, "
+            "`evaporative_blowdown` sends only the blowdown's sensible heat (the rest leaves as "
+            "latent heat to the air) at a temperature CALIBRATED to an observed corridor analog — "
+            "an [inference] by analogy, never this facility's own figure. "
+            "`conservative_bound` is the Phase-2 ceiling.",
+            "Reported DMR values are verbatim from the permittee's submissions via ECHO and "
+            "reduced to degC by their REPORTED unit (00011 is Fahrenheit, 00010 Celsius); an "
+            "exceedance count is ECHO's own determination, never computed here by comparing a "
+            "value to a limit. A permit with no numeric thermal limit is recorded as "
+            "monitor-only — a cited absence, not a clean bill of health.",
             "The OAC 3745-1-06 (O)(5) closed-cycle-blowdown exemption (blowdown < 5% of the 7Q10) "
-            "is evaluated and surfaced. Zone selection and live effluent-temperature (DMR) "
-            "validation are Phase-3 (#1718) concerns.",
+            "is evaluated and surfaced whether or not it applies. RIS tolerances are the Great "
+            "Lakes biological limits for a §316(a) balanced-indigenous-community read, "
+            "[reference] (federal guidance, not law).",
         ],
     }
     return ThermalDischargeInventory(meta=meta, screens=screens)

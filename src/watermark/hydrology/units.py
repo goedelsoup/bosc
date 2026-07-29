@@ -49,3 +49,16 @@ def sqmi_to_acres(sqmi: float) -> float:
 def acre_mm_to_mg(mm: float, acres: float) -> float:
     """A depth (mm) spread over a surface (acres) -> volume (million gallons)."""
     return mm * acres * MG_PER_ACRE_MM
+
+
+def f_to_c(f: float) -> float:
+    """Degrees Fahrenheit -> degrees Celsius (exact, unrounded).
+
+    The thermal stack reads temperature from two sources that disagree on unit: Ohio's
+    published criteria tables print °F (:mod:`watermark.hydrology.thermal_criteria`), and an
+    NPDES permittee reports effluent temperature under ICIS parameter **00011** in °F or
+    **00010** in °C (:mod:`watermark.hydrology.connectors.echo_dmr`). Both reduce through
+    this one conversion so a criterion and an observation can never drift apart on rounding.
+    Callers that need the rule's own rounded (Celsius) parenthetical round to 0.1 themselves.
+    """
+    return (f - 32.0) * 5.0 / 9.0

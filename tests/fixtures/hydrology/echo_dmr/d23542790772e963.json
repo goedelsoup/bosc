@@ -1,0 +1,23 @@
+{
+  "payload": {
+    "Results": {
+      "Message": "Success",
+      "SourceId": "OH0026069",
+      "EPASystem": "ICP",
+      "RegistryId": "110000760659",
+      "Statute": "CWA",
+      "CWPName": "LIMA WWTP",
+      "CWPStreet": "1200 FORT AMANDA RD",
+      "CWPCity": "LIMA",
+      "CWPState": "OH",
+      "CWPZip": "45804",
+      "CWPPermitStatusDesc": "Effective",
+      "CWPMajorMinorStatusFlag": "M",
+      "CWPPermitTypeDesc": "NPDES Individual Permit",
+      "CWPCurrentSNCStatus": null,
+      "StartDate": "05/01/2024",
+      "EndDate": "10/31/2024",
+      "PermFeatures": []
+    }
+  }
+}

@@ -662,3 +662,206 @@ def test_lima_wwtp_reports_effluent_exceedances(hydro_settings: Settings) -> Non
     assert hg.limit == pytest.approx(3.5)
     assert hg.exceedance_pct == pytest.approx(91.0)
     assert [v.code for v in hg.violations] == ["E90"]
+
+
+# --- Effluent temperature (#1718, thermal-discharge validation) -------------------------------
+def _temp_row(
+    *,
+    value: float | None,
+    period_end: str = "2024-07-31",
+    stat_base_code: str = "DD",
+    unit: str | None = None,
+    std_unit: str | None = "deg F",
+    limit: float | None = None,
+    limit_unit: str | None = None,
+) -> echo_dmr.DmrRow:
+    """A temperature DmrRow shaped like ECHO's (value mirrored into DMRValueStdUnits)."""
+    return echo_dmr.DmrRow(
+        period_end=period_end,
+        value=value,
+        unit=unit,
+        std_value=value,
+        std_unit=std_unit,
+        qualifier=None,
+        stat_base=None,
+        stat_base_code=stat_base_code,
+        limit=limit,
+        limit_type=None,
+        limit_unit=limit_unit,
+        exceedance_pct=None,
+        nodi=None if value is not None else "C",
+        violations=[],
+    )
+
+
+def _temp_param(
+    rows: list[echo_dmr.DmrRow],
+    *,
+    outfall: str = "001",
+    code: str = echo_dmr.TEMP_PARAM_F,
+    location: str | None = "Effluent Gross",
+) -> echo_dmr.DmrParameter:
+    return echo_dmr.DmrParameter(
+        outfall=outfall,
+        outfall_type="External Outfall",
+        parameter_code=code,
+        parameter_desc="Temperature, water",
+        monitoring_location=location,
+        rows=rows,
+    )
+
+
+def test_temperature_converts_by_reported_unit_not_by_assumption() -> None:
+    """00011 is Fahrenheit and 00010 Celsius — a screen that assumed one would be ~18 degC out."""
+    assert echo_dmr._temp_c(_temp_row(value=86.0), echo_dmr.TEMP_PARAM_F) == pytest.approx(30.0)
+    celsius = _temp_row(value=25.4, std_unit="deg C")
+    assert echo_dmr._temp_c(celsius, echo_dmr.TEMP_PARAM_C) == pytest.approx(25.4)
+    # A present-but-unrecognized unit is DROPPED, never read as if it were already Celsius.
+    assert echo_dmr._temp_c(_temp_row(value=86.0, std_unit="kelvin"), echo_dmr.TEMP_PARAM_F) is None
+    # No unit signal at all: the parameter code's definitional unit stands in.
+    bare = _temp_row(value=86.0, std_unit=None, unit=None)
+    assert echo_dmr._temp_c(bare, echo_dmr.TEMP_PARAM_F) == pytest.approx(30.0)
+    assert echo_dmr._temp_c(bare, echo_dmr.TEMP_PARAM_C) == pytest.approx(86.0)
+
+
+def test_temperature_series_separates_daily_max_from_monthly_average() -> None:
+    """Ohio's criterion is a DAILY MAXIMUM, so the two stat bases must not be pooled."""
+    series = echo_dmr.temperature_series(
+        _temp_param(
+            [
+                _temp_row(value=90.0, stat_base_code="DD", period_end="2024-08-31"),
+                _temp_row(value=86.0, stat_base_code="MK", period_end="2024-08-31"),
+                _temp_row(value=82.0, stat_base_code="DD", period_end="2024-09-30"),
+                _temp_row(value=78.0, stat_base_code="MK", period_end="2024-09-30"),
+            ]
+        )
+    )
+    assert series is not None
+    assert series.n_obs == 4
+    assert series.peak_daily_max_c == pytest.approx(32.22, abs=0.01)  # 90 degF
+    assert series.peak_daily_max_period == "2024-08-31"
+    assert series.peak_monthly_avg_c == pytest.approx(30.0, abs=0.01)  # 86 degF
+    assert series.instream is False
+    assert series.monitor_only is True  # no numeric limit on any row
+
+
+def test_temperature_series_reports_the_warm_season_limit_ceiling() -> None:
+    """An Ohio thermal limit is seasonal; the warm-season ceiling is what binds at design."""
+    series = echo_dmr.temperature_series(
+        _temp_param(
+            [
+                _temp_row(value=None, limit=72.0, limit_unit="deg F", period_end="2024-05-31"),
+                _temp_row(value=None, limit=85.0, limit_unit="deg F", period_end="2024-07-31"),
+            ]
+        )
+    )
+    assert series is not None
+    assert series.limit_daily_max_c == pytest.approx(29.44, abs=0.01)  # 85 degF, not the 72
+    assert series.limit_seasonal is True
+    assert series.monitor_only is False
+    assert series.n_obs == 0  # monitored, nothing reported — distinct from "not monitored"
+
+
+def test_temperature_series_marks_an_instream_station() -> None:
+    series = echo_dmr.temperature_series(
+        _temp_param(
+            [_temp_row(value=24.0, std_unit="deg C")],
+            outfall="901",
+            code=echo_dmr.TEMP_PARAM_C,
+            location="Downstream Monitoring",
+        )
+    )
+    assert series is not None and series.instream is True
+
+
+def test_temperature_series_ignores_a_non_temperature_parameter() -> None:
+    flow = _flow_param({"2024-07-31": 3.6})
+    assert echo_dmr.temperature_series(flow) is None
+
+
+def test_thermal_record_pairs_each_outfall_with_its_own_flow(hydro_settings: Settings) -> None:
+    """The Lima Refinery (OH0002623) — the Ottawa corridor's warmest reported discharger.
+
+    Reports temperature under 00011 (degF) at 11 outfalls; outfall 001 is the warmest and the
+    one that actually flows. The heat load needs the SAME outfall's flow, never a plant-wide one.
+    """
+    record = echo_dmr.fetch_thermal_record(
+        "OH0002623", start_date="2024-05-01", end_date="2024-10-31", settings=hydro_settings
+    )
+    assert record.name == "LIMA REFINERY"
+    assert record.instream == []  # no upstream/downstream temperature station on this permit
+    primary = record.primary_effluent
+    assert primary is not None
+    assert primary.outfall == "001"
+    assert primary.temperature.parameter_code == echo_dmr.TEMP_PARAM_F
+    assert primary.temperature.reported_unit == "deg F"
+    assert primary.temperature.peak_daily_max_c == pytest.approx(32.22, abs=0.01)  # 90 degF
+    assert primary.flow_mean_mgd == pytest.approx(3.7, abs=0.01)
+    # The numeric thermal limit sits on a DIFFERENT outfall (003) than the one that discharges;
+    # 001 itself is monitor-only, which is the finding the screen surfaces.
+    assert primary.temperature.monitor_only is True
+    limited = {o.outfall for o in record.effluent if o.temperature.limit_daily_max_c is not None}
+    assert limited == {"003"}
+
+
+def test_thermal_record_reads_the_celsius_permit_and_its_instream_station(
+    hydro_settings: Settings,
+) -> None:
+    """Lima's WWTP (OH0026069) reports 00010 (degC) AND a downstream river station — the
+    observed receiving-water temperature the thermal screen's design ambient reads off."""
+    record = echo_dmr.fetch_thermal_record(
+        "OH0026069", start_date="2024-05-01", end_date="2024-10-31", settings=hydro_settings
+    )
+    primary = record.primary_effluent
+    assert primary is not None and primary.outfall == "001"
+    assert primary.temperature.parameter_code == echo_dmr.TEMP_PARAM_C
+    assert primary.temperature.peak_daily_max_c == pytest.approx(25.4, abs=0.01)
+    assert primary.flow_mean_mgd == pytest.approx(12.77, abs=0.01)
+    instream = record.warmest_instream
+    assert instream is not None
+    assert instream.outfall == "901"
+    assert instream.instream is True
+    assert instream.temperature.peak_daily_max_c == pytest.approx(24.0, abs=0.01)
+
+
+def test_thermal_record_is_empty_for_a_permit_that_reports_no_temperature(
+    hydro_settings: Settings,
+) -> None:
+    """A cited absence: the permit exists and answers, and reports no temperature at all."""
+    record = echo_dmr.fetch_thermal_record(
+        "OHGC02549", start_date="2024-05-01", end_date="2024-10-31", settings=hydro_settings
+    )
+    assert record.name == "JOINT SYSTEMS MANUFACTURING CENTER"
+    assert record.outfalls == []
+    assert record.primary_effluent is None
+
+
+def test_thermal_record_keeps_a_monitored_but_unreported_outfall(hydro_settings: Settings) -> None:
+    """Superior Forge (OH0095346) monitors temperature and reported no value in the window —
+    'monitored, nothing reported' is a different finding from 'not monitored'."""
+    record = echo_dmr.fetch_thermal_record(
+        "OH0095346", start_date="2024-05-01", end_date="2024-10-31", settings=hydro_settings
+    )
+    assert [o.outfall for o in record.outfalls] == ["001"]
+    assert record.outfalls[0].temperature.n_obs == 0
+    assert record.primary_effluent is None  # nothing reported -> nothing to screen
+
+
+def test_parameter_filter_keeps_the_unfiltered_cache_key_stable(hydro_settings: Settings) -> None:
+    """Adding the ECHO parameter filter must not re-key the existing whole-chart fixtures."""
+    from watermark.hydrology.connectors._cache import cache_key
+
+    unfiltered = cache_key(
+        {
+            "_service": "get_effluent_chart",
+            "output": "JSON",
+            "p_id": "IN0032191",
+            "start_date": "01/01/2023",
+            "end_date": "12/31/2023",
+        }
+    )
+    chart = echo_dmr.fetch_effluent_chart(
+        "IN0032191", start_date="2023-01-01", end_date="2023-12-31", settings=hydro_settings
+    )
+    assert chart.npdes_id == "IN0032191"  # replayed from the pre-existing fixture
+    assert (hydro_settings.hydro_fixtures_dir / "echo_dmr" / f"{unfiltered}.json").is_file()
