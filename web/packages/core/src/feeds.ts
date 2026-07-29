@@ -580,7 +580,9 @@ export interface ThermalDmrObservation {
   permitted_limit_c?: ProvenancedValue | null;
   permitted_limit_outfall?: string | null;
   limit_seasonal?: boolean;
-  monitor_only?: boolean;
+  /** `true` = monitored but uncapped on the reporting outfall; `null` = the permit reports no
+   *  temperature at all, so nothing is asserted about a monitoring requirement. */
+  monitor_only?: boolean | null;
   reported_exceedances?: number; // ECHO's own determination, never computed here
   over_criterion?: boolean | null;
   over_permitted_limit?: boolean | null;

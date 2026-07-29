@@ -633,11 +633,16 @@ def _thermal_screen(settings: Settings) -> ThermalDischargeInventory | None:
     a peer export would otherwise inherit the reference site's corridor — its river, its zone, its
     permittees — as if they were its own. The artifact says which site it was built for; that is
     the honest gate, and it keeps working the day a second site commits one (the file is then
-    slug-scoped by whatever writes it). ``None`` (feed skipped) when there is no screen or it
-    belongs to another site.
+    slug-scoped by whatever writes it).
+
+    ``None`` (feed skipped) when there is no screen, it belongs to another site, or it screened no
+    facilities. That last case is the #1364 present-but-empty rule the sibling object feeds already
+    carry (``GridProfile.has_real_denominators`` / ``has_material_load``): a screen whose corridor
+    cohort came back empty would otherwise ship as a ``count == 1`` shell — a manifest row and a
+    page that render a criterion and a river with nothing screened against them.
     """
     inv = load_thermal_screen(settings.reference_dir)
-    if inv is None or inv.meta.get("site") != settings.site:
+    if inv is None or inv.meta.get("site") != settings.site or not inv.screens:
         return None
     return inv
 

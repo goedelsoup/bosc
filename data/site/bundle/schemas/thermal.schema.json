@@ -2,7 +2,7 @@
   "$defs": {
     "DmrThermalObservation": {
       "additionalProperties": false,
-      "description": "A permittee's own reported effluent-temperature record on the screened reach (#1718).\n\nEvery figure is verbatim from EPA ECHO's effluent-chart service, reduced to °C by its\n**reported** unit — ICIS carries temperature under 00010 (°C) *and* 00011 (°F) and this\ncorridor uses both. ``effluent_c`` is the peak **daily maximum**, matching the form of Ohio's\nnumeric criterion. ``monitor_only`` records the permit that requires temperature monitoring\nbut sets no numeric thermal limit — a cited absence, and on the Ottawa the common case.\n``instream_c`` is the permit's own upstream/downstream river station where it has one: an\nobserved *receiving-water* temperature, categorically different from an effluent reading.",
+      "description": "A permittee's own reported effluent-temperature record on the screened reach (#1718).\n\nEvery figure is verbatim from EPA ECHO's effluent-chart service, reduced to °C by its\n**reported** unit — ICIS carries temperature under 00010 (°C) *and* 00011 (°F) and this\ncorridor uses both. ``effluent_c`` is the peak **daily maximum**, matching the form of Ohio's\nnumeric criterion. ``monitor_only`` records the permit that requires temperature monitoring\nbut sets no numeric thermal limit — a cited absence, and on the Ottawa the common case. It is\n``None``, never ``True``, for a permit that reports no temperature at all: \"monitors but is not\ncapped\" is a claim about a monitoring requirement we have no record of, and asserting it off a\nfield default would contradict ``meta.monitor_only_permits`` (which counts only permits with a\nreported record).\n``instream_c`` is the permit's own upstream/downstream river station where it has one: an\nobserved *receiving-water* temperature, categorically different from an effluent reading.",
       "properties": {
         "npdes_id": {
           "title": "Npdes Id",
@@ -140,9 +140,16 @@
           "type": "boolean"
         },
         "monitor_only": {
-          "default": true,
-          "title": "Monitor Only",
-          "type": "boolean"
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Monitor Only"
         },
         "reported_exceedances": {
           "default": 0,

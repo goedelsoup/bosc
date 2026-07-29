@@ -20,6 +20,9 @@ export const dilution = buildDilution();
 // The heat side of the same cooling load (#1719). `null` for a site with no committed screen, so
 // the beat below self-skips rather than asserting another river's temperature standard.
 export const thermal = buildThermal();
+// Null-safe: a genuine 0 MW still renders "0 MW"; a missing figure renders the "—" placeholder
+// rather than a fabricated zero.
+export const rejectMw = thermal?.modelled[0]?.reject_heat_mw?.value ?? null;
 export const fmtMult = (m) =>
   Number.isFinite(m) ? `${m >= 10 ? Math.round(m) : m.toFixed(1)}×` : "∞ (dry)";
 export const effluentCfs = dilution.discharge.wwtpCfs + dilution.discharge.campusFm2Cfs;
@@ -199,16 +202,18 @@ neither.
   </p>
   <p>
     For the {thermal.river} in this zone and season, that standard is a daily maximum of{" "}
-    <strong>{thermal.meta.daily_max_c} °C</strong> ({thermal.meta.zone_rule}). The river's own
-    reported temperature — measured at a permit-required in-stream station on this reach — runs{" "}
-    <strong>{thermal.meta.ambient_c} °C</strong>. The whole heat budget is the difference:{" "}
+    <strong>{thermal.meta.daily_max_c} °C</strong> ({thermal.meta.zone_rule}). The design ambient —{" "}
+    {thermal.ambientGrounded
+      ? "the river's own reported temperature, measured at a permit-required in-stream station on this reach"
+      : "the zone's seasonal-average criterion, standing in as a design ambient because no station on this reach reports one"}{" "}
+    — runs <strong>{thermal.meta.ambient_c} °C</strong>. The whole heat budget is the difference:{" "}
     <strong>{thermal.headroomC} °C</strong> of headroom, which at the drought flow Ohio permits at
     works out to about <strong>{thermal.capacityMw} MW</strong> of heat the river can absorb before
     it breaches the standard. A campus rejecting on the order of{" "}
-    {Math.round(thermal.modelled[0]?.reject_heat_mw?.value ?? 0)} MW of condenser heat does not fit
-    inside that budget under <em>any</em> of the three ways the heat could be partitioned — not even
-    the smallest, where only the tower blowdown reaches the water. <code>[inference]</code>, from
-    the disclosed IT load.
+    {rejectMw == null ? "—" : `${Math.round(rejectMw)} MW`} of condenser heat does not fit inside
+    that budget under <em>any</em> of the three ways the heat could be partitioned — not even the
+    smallest, where only the tower blowdown reaches the water. <code>[inference]</code>, from the
+    disclosed IT load.
   </p>
   <p>
     But the sharper finding is the one that needs no model at all. Of the permits already

@@ -2,7 +2,7 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it, vi } from "vitest";
-import type { ProvenancedValue, ThermalFlowScreen } from "./feeds";
+import type { ProvenancedValue, ThermalDischargeScreen, ThermalFlowScreen } from "./feeds";
 
 // `buildThermal` reads the bundle at call time; point WATERMARK_BUNDLE_DIR at a fixture and
 // re-import with a clean registry (the same harness dilution.test.ts / bundle.test.ts use).
@@ -96,7 +96,7 @@ afterAll(() => {
   for (const d of tmpDirs) rmSync(d, { recursive: true, force: true });
 });
 
-const CAMPUS = {
+const CAMPUS: ThermalDischargeScreen = {
   facility: "Shawnee Energy Campus",
   facility_key: "shawnee-energy-campus",
   kind: "data_center",
@@ -109,7 +109,7 @@ const CAMPUS = {
   flag: "critical",
   detail: "d",
 };
-const REFINERY = {
+const REFINERY: ThermalDischargeScreen = {
   facility: "LIMA REFINERY",
   facility_key: "OH0002623",
   kind: "permitted_discharger",
@@ -123,7 +123,7 @@ const REFINERY = {
   detail: "d",
 };
 /** A permit ECHO carries but that reports no temperature — a cited ABSENCE, not a zero. */
-const SILENT = {
+const SILENT: ThermalDischargeScreen = {
   facility: "OHGC02549",
   facility_key: "OHGC02549",
   kind: "permitted_discharger",
@@ -187,13 +187,37 @@ describe("buildThermal", () => {
     expect(t.mixedRows[0]).toMatchObject({ modelled: true, overCriterion: true, mixedC: 999.9 });
     expect(t.mixedRows[1]).toMatchObject({ modelled: false, overCriterion: true, mixedC: 31.9 });
     expect(t.unbounded).toEqual([]);
+    // SILENT contributes no bar and is recorded, so a surface can name the omission rather than
+    // letting a filtered chart read as the whole corridor.
+    expect(t.unresolved.map((s) => s.npdes_id)).toEqual(["OHGC02549"]);
+  });
+
+  it("records an unresolved OBSERVED row, not just an unbounded modelled one", async () => {
+    // The gap this guards: `unbounded` covers data_center rows only, so a permitted discharger the
+    // screen resolves no mixed temperature for would drop off the chart with nothing recording it.
+    const { buildThermal } = await loadThermal(makeBundle({ meta: META, screens: [CAMPUS, SILENT] }));
+    const t = buildThermal()!;
+    expect(t.unbounded).toEqual([]);
+    expect(t.unresolved.map((s) => s.facility_key)).toEqual(["OHGC02549"]);
+  });
+
+  it("refuses to pick a reach capacity when the rows disagree about it", async () => {
+    // Every row screens the same water at the same cited design flows, so their chronic screens
+    // must agree. Taking `screens[0]`'s would make the reach's capacity depend on row order and
+    // render a real modeling inconsistency as a settled figure.
+    const oddball: ThermalDischargeScreen = {
+      ...REFINERY,
+      flow_screens: [flow("7Q10", 0.9, 31.9, 4.2)],
+    };
+    const { buildThermal } = await loadThermal(makeBundle({ meta: META, screens: [CAMPUS, oddball] }));
+    expect(() => buildThermal()).toThrow(/disagree on the reach's 7Q10 screen/);
   });
 
   it("falls back to a modelled row's partitions when its own rise is off the liquid-water scale", async () => {
     // Lima's real shape: the whole condenser rejection into a 0.2 cfs design flow has NO mixed
     // temperature (the screen refuses to print a rise of hundreds of degrees), so a chart keyed on
     // the row alone would silently drop the largest load on the page.
-    const unboundedCampus = {
+    const unboundedCampus: ThermalDischargeScreen = {
       ...CAMPUS,
       flow_screens: [flow("7Q10", 0.2, null, 0.128)],
       scenarios: [
@@ -249,8 +273,8 @@ describe("buildThermal", () => {
 describe("warmestMixedC", () => {
   it("prefers the row's own chronic temperature and falls back to its hottest partition", async () => {
     const { warmestMixedC } = await loadThermal(makeBundle(null));
-    expect(warmestMixedC(REFINERY as never)).toBe(31.9);
-    const partitioned = {
+    expect(warmestMixedC(REFINERY)).toBe(31.9);
+    const partitioned: ThermalDischargeScreen = {
       ...CAMPUS,
       flow_screens: [flow("7Q10", 0.2, null, 0.128)],
       scenarios: [
@@ -268,9 +292,9 @@ describe("warmestMixedC", () => {
         },
       ],
     };
-    expect(warmestMixedC(partitioned as never)).toBe(34.0);
+    expect(warmestMixedC(partitioned)).toBe(34.0);
     // Nothing resolves ⇒ null, so a surface prints "—" rather than inventing a temperature.
-    expect(warmestMixedC(SILENT as never)).toBeNull();
+    expect(warmestMixedC(SILENT)).toBeNull();
   });
 });
 
