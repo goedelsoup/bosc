@@ -141,7 +141,9 @@ def test_route_storm_network_warns_on_orphan_catchment_and_reach() -> None:
     assert any("ghost-reach" in w and "reach" in w for w in rn.warnings)
 
 
-def test_short_tc_catchment_drops_the_whole_network_onto_one_finer_grid() -> None:
+def test_short_tc_catchment_drops_the_whole_network_onto_one_finer_grid(
+    hydro_settings: Settings,
+) -> None:
     """WS-10 / #1610: superposing at a confluence needs ONE clock.
 
     The SCS unit-duration rule (D <= 0.133*Tc) refines the step for a small, fast catchment. If
@@ -150,13 +152,17 @@ def test_short_tc_catchment_drops_the_whole_network_onto_one_finer_grid() -> Non
     """
     nodes, table = _two_tributary_dag()
     table.catchments["head-b"] = _catchment(6000, 78, 0.3)  # a fast catchment: 0.133*Tc = 0.04 hr
-    rn = hr.route_storm_network(nodes, table, return_period_yr=25, storm_depth_in=4.0)
+    rn = hr.route_storm_network(
+        nodes, table, return_period_yr=25, storm_depth_in=4.0, settings=hydro_settings
+    )
     assert rn.dt_hr == pytest.approx(0.1 / 3)  # the coarsest sub-multiple of 0.1 under 0.0399
     assert any("one time grid" in w for w in rn.warnings)
     assert len(rn.times_hr) == len(rn.outlet_hydrograph_cfs) == len(rn.summed_hydrograph_cfs)
     assert rn.times_hr[0] == pytest.approx(0.1 / 3, abs=1e-4)  # stored to 4 decimals
     # The committed loop's catchments are all slow (Tc >= 2 hr), so it stays on the 0.1-hr grid.
-    slow = hr.route_storm_network(*_two_tributary_dag(), return_period_yr=25, storm_depth_in=4.0)
+    slow = hr.route_storm_network(
+        *_two_tributary_dag(), return_period_yr=25, storm_depth_in=4.0, settings=hydro_settings
+    )
     assert slow.dt_hr == pytest.approx(0.1)
     assert not any("one time grid" in w for w in slow.warnings)
 

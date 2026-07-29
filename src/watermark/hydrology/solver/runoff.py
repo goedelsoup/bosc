@@ -236,6 +236,7 @@ def simulate_runoff(
         runoff_depth_in=round(float(cum_excess[-1]), 4),
         curve_number=round(effective_cn, 1),
         tc_hr=round(tc_hr, 3),
+        dt_hr=dt_hr,  # the exact unit duration, UNROUNDED — times_hr is rounded for display
         amc=amc,  # str param, validated against the Hydrograph Literal at construction
         runoff_method=runoff_method,
     )

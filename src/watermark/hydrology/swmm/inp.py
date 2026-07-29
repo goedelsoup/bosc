@@ -38,13 +38,30 @@ def _hhmm(hours: float) -> str:
     return f"{total_min // 60:d}:{total_min % 60:02d}"
 
 
+def _require_whole_minute_step(dt_hr: float) -> None:
+    """Reject a time step SWMM's ``H:MM`` timestamps cannot express (see _hyetograph_lines)."""
+    minutes = dt_hr * 60.0
+    if dt_hr <= 0 or abs(minutes - round(minutes)) > 1e-9:
+        raise ValueError(
+            f"SWMM deck time step must be a positive whole number of minutes, got dt_hr={dt_hr!r} "
+            f"({minutes:g} min) — SWMM timestamps are H:MM, so a fractional-minute step would "
+            "collide successive rows onto the same label"
+        )
+
+
 def _hyetograph_lines(ts_name: str, depth_in: float, dt_hr: float) -> list[str]:
     """SWMM TIMESERIES lines of rainfall intensity (in/hr) for the design storm.
 
     Six decimals, not four: once the Type-II central burst is resolved at its published 6-minute
     intensity (#1610) rather than smeared across the hour, per-line rounding at 1e-4 in/hr leaks
     a visible fraction of the storm depth out of the deck.
+
+    ``dt_hr`` must be a whole number of minutes. SWMM timestamps are ``H:MM``, so a fractional
+    step (e.g. the 0.025 hr = 1.5 min the SCS unit-duration rule can produce for a fast catchment)
+    would round successive rows onto colliding minute labels and silently mis-time the storm —
+    a corrupt deck rather than a loud failure. Both public builders route through here.
     """
+    _require_whole_minute_step(dt_hr)
     _, _, incremental = scs_type_ii_hyetograph(depth_in, dt_hr=dt_hr)
     lines = []
     for i, inc in enumerate(incremental.tolist()):
@@ -54,6 +71,7 @@ def _hyetograph_lines(ts_name: str, depth_in: float, dt_hr: float) -> list[str]:
 
 
 def _header(end_hr: float, dt_hr: float, *, infiltration: str = "HORTON") -> str:
+    _require_whole_minute_step(dt_hr)  # the RAINGAGES interval is an H:MM label too
     rg_interval = _hhmm(dt_hr)
     return f"""[OPTIONS]
 FLOW_UNITS           CFS

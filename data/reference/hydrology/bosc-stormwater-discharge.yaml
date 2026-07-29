@@ -151,12 +151,12 @@ caveats:
   upper bounds and the confluence peak a lower bound; reaches between the outfall
   and the confluence see intermediate, larger peaks (the at-outfall peak-to-7Q10 ratio,
   unattenuated, is the headline erosion signal this routing does not soften).
-- Peaks run on the SCS unit-hydrograph peak factor 484 (the standard-hydrograph value;
-  `SiteProfile.uh_peak_factor` overrides it per site). The factor is a TERRAIN property
-  — NEH-630 Ch. 16 puts flat/swampy ground, which the Black Swamp lake plain is, nearer
-  300, which would put the design-storm post-development peak at 350 cfs instead of
-  500 (~30% lower). Runoff VOLUME — and so the detention deficit — is unchanged by
-  the peak factor; only the rate is. No calibrated peak factor is on record for this
-  catchment, and the post-development condition is graded and storm-sewered (which
-  argues back toward the standard value), so the reported peaks stay on the cited
-  default and this is the bracket, not a correction.
+- 'Peaks run on the SCS unit-hydrograph peak factor 484 — the cited standard-hydrograph
+  default; no per-site factor is declared on `SiteProfile.uh_peak_factor`. The factor
+  is a TERRAIN property, not a universal constant: NEH-630 Ch. 16 spans ~100 (wetland
+  storage) through 300 (flat/swampy) to ~600 (steep). The published flat end, 300,
+  would put the design-storm post-development peak at 350 cfs instead of 500 (~30%
+  lower). Runoff VOLUME — and so the detention deficit — is unchanged by the peak
+  factor; only the rate is. This is the published sensitivity BRACKET around the resolved
+  factor, not a correction to it: moving a site off its resolved factor needs a calibrated
+  or cited terrain basis for that catchment, recorded on the profile.'

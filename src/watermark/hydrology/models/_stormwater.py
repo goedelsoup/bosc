@@ -75,6 +75,11 @@ class Hydrograph(BaseModel):
     runoff_depth_in: float
     curve_number: float  # the effective CN the chain ran on (AMC-adjusted when amc != "II")
     tc_hr: float = 0.0  # time of concentration the unit hydrograph ran on (impervious-shortened)
+    # The EXACT step the series was computed on — the SCS unit duration, which the D <= 0.133*Tc
+    # rule refines below the requested step for a short-Tc catchment (#1610). Carried explicitly
+    # because ``times_hr`` is rounded for display: a caller re-deriving the step from it (to route
+    # the series, or to size a padding tail) would inherit that rounding and mis-lag the reach.
+    dt_hr: float = 0.1
     amc: Literal["I", "II", "III"] = "II"  # antecedent moisture condition; "III" = wet
     # How the excess rainfall was computed: "composite_cn" applies the CN equation to one
     # (area-weighted composite) CN; "weighted_runoff" is the TR-55 method — run each cover's CN
