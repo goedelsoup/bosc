@@ -14,13 +14,11 @@ import json
 from pathlib import Path
 from typing import Any
 
-import pytest
 import yaml
 
 from watermark.config import Settings
 from watermark.site.corpus_index import _line_count, _target_id, build_corpus_index
 from watermark.site.corpus_mirror import Mirror, MirrorLink, MirrorNode
-from watermark.site.export import export_bundle
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -170,16 +168,8 @@ def test_rows_sorted_by_id() -> None:
 
 
 # --- integration: a real Lima bundle -------------------------------------------------------
-@pytest.fixture(scope="module")
-def bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    out = tmp_path_factory.mktemp("corpus-index-bundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data")
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
-    return out
-
-
+# `lima_bundle` is conftest's session-wide, cross-worker export (#1773) — this module reads one
+# feed off it, so it must never pay for an export of its own.
 def _corpus_index(bundle: Path) -> list[dict[str, Any]]:
     manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
     ref = next(f for f in manifest["feeds"] if f["name"] == "corpus-index")
@@ -187,15 +177,15 @@ def _corpus_index(bundle: Path) -> list[dict[str, Any]]:
     return json.loads((bundle / ref["path"]).read_text(encoding="utf-8"))
 
 
-def test_feed_always_emitted_at_contract_version(bundle: Path) -> None:
-    manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
+def test_feed_always_emitted_at_contract_version(lima_bundle: Path) -> None:
+    manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["contract_version"] == _CV
-    nodes = _corpus_index(bundle)
+    nodes = _corpus_index(lima_bundle)
     assert len(nodes) > 0  # the mirror is never empty (site anchor + hypothesis lenses)
 
 
-def test_every_node_carries_kind_and_degree(bundle: Path) -> None:
-    nodes = _corpus_index(bundle)
+def test_every_node_carries_kind_and_degree(lima_bundle: Path) -> None:
+    nodes = _corpus_index(lima_bundle)
     kinds = {
         "site",
         "entity",
@@ -217,8 +207,8 @@ def test_every_node_carries_kind_and_degree(bundle: Path) -> None:
     assert sum(n["kind"] == "hypothesis" for n in nodes) == 3
 
 
-def test_freshness_present_on_the_committed_sourced_nodes(bundle: Path) -> None:
-    nodes = _corpus_index(bundle)
+def test_freshness_present_on_the_committed_sourced_nodes(lima_bundle: Path) -> None:
+    nodes = _corpus_index(lima_bundle)
     # Entities + concepts derive from committed files, so many carry a real last-commit date
     # (unless git history is unavailable — then all-null is the honest degradation, not a crash).
     dated = [n for n in nodes if n["updated"]]

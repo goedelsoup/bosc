@@ -16,7 +16,6 @@ from typing import Any
 import pytest
 
 from watermark.config import Settings
-from watermark.site.export import export_bundle
 from watermark.site.facts import (
     _project_air_scenarios,
     _project_consumer_energy,
@@ -187,16 +186,8 @@ def test_bare_repo_path_citation_is_lifted_into_source() -> None:
 
 
 # --- integration: a real Lima bundle -------------------------------------------------------
-@pytest.fixture(scope="module")
-def bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    out = tmp_path_factory.mktemp("facts-bundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data")
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
-    return out
-
-
+# `lima_bundle` is conftest's session-wide, cross-worker export (#1773) — this module reads one
+# feed off it, so it must never pay for an export of its own.
 def _facts(bundle: Path) -> list[dict[str, Any]]:
     manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
     ref = next(f for f in manifest["feeds"] if f["name"] == "facts")
@@ -208,21 +199,21 @@ def _facts(bundle: Path) -> list[dict[str, Any]]:
     return json.loads(text)
 
 
-def test_facts_feed_emitted_at_contract_version(bundle: Path) -> None:
-    manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
+def test_facts_feed_emitted_at_contract_version(lima_bundle: Path) -> None:
+    manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["contract_version"] == _CV
-    facts = _facts(bundle)
+    facts = _facts(lima_bundle)
     assert len(facts) > 0
 
 
-def test_every_subject_predicate_is_unique(bundle: Path) -> None:
-    facts = _facts(bundle)
+def test_every_subject_predicate_is_unique(lima_bundle: Path) -> None:
+    facts = _facts(lima_bundle)
     keys = [(f["subject"], f["predicate"]) for f in facts]
     assert len(keys) == len(set(keys)), "duplicate (subject, predicate) survived dedup"
 
 
-def test_no_fabricated_pages_and_statuses_are_grammar(bundle: Path) -> None:
-    facts = _facts(bundle)
+def test_no_fabricated_pages_and_statuses_are_grammar(lima_bundle: Path) -> None:
+    facts = _facts(lima_bundle)
     assert all(f["evidence"]["page"] is None for f in facts)  # Lima's PVs carry no page
     assert all(f["status"] in {"verified", "inference", "reference", "open"} for f in facts)
     # `verified` is derived, never asserted independently of source_kind.
@@ -232,9 +223,9 @@ def test_no_fabricated_pages_and_statuses_are_grammar(bundle: Path) -> None:
         )
 
 
-def test_motivating_generator_example_resolves(bundle: Path) -> None:
+def test_motivating_generator_example_resolves(lima_bundle: Path) -> None:
     """genset_count x genset_rating → backup MW, both [verified] off the air permit (#1587)."""
-    facts = {(f["subject"], f["predicate"]): f for f in _facts(bundle)}
+    facts = {(f["subject"], f["predicate"]): f for f in _facts(lima_bundle)}
     count = facts[("facility:lima", "genset_count")]
     rating = facts[("facility:lima", "genset_rating")]
     assert count["status"] == "verified" and rating["status"] == "verified"

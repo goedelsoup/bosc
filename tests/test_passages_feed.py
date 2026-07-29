@@ -10,13 +10,11 @@ source PDF can't be opened. One integration test exports a real Lima bundle and 
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-import pytest
-
 from watermark.config import Settings
-from watermark.site.export import export_bundle
 from watermark.site.feeds import PassageItem
 from watermark.site.passages import (
     _published_pdf_entries,
@@ -189,18 +187,9 @@ def test_committed_passages_round_trip(tmp_path: Path) -> None:
 
 
 # --- integration: the real Lima export -----------------------------------------------------
-@pytest.fixture(scope="module")
-def lima_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    out = tmp_path_factory.mktemp("passages") / "b"
-    export_bundle(
-        Settings(data_dir=REPO_ROOT / "data"),
-        out_dir=out,
-        generated_at="2026-01-01T00:00:00+00:00",
-        skip_embeddings=True,
-    )
-    return out
-
-
+# `lima_bundle` / `site_bundle` are conftest's session-wide, cross-worker exports (#1773). The
+# shared export always passes `skip_embeddings=True`, which is what the empty-`passage-embeddings`
+# assertion below reads.
 def _feed_ref(bundle: Path, name: str) -> dict[str, Any]:
     manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["contract_version"] == _CV
@@ -243,17 +232,8 @@ def test_reference_export_emits_passages_and_embeddings_feeds(lima_bundle: Path)
     assert emb_ref["count"] == 0
 
 
-def test_sibling_site_has_no_published_pdf_passages(
-    tmp_path_factory: pytest.TempPathFactory,
-) -> None:
+def test_sibling_site_has_no_published_pdf_passages(site_bundle: Callable[[str], Path]) -> None:
     """A peer with no published documents of its own still emits the feed (schema-stable), empty —
     the global allowlist is Lima-anchored, so a sibling's passages set degrades cleanly."""
-    out = tmp_path_factory.mktemp("fwpassages") / "b"
-    export_bundle(
-        Settings(data_dir=REPO_ROOT / "data", site="fort-wayne"),
-        out_dir=out,
-        generated_at="2026-01-01T00:00:00+00:00",
-        skip_embeddings=True,
-    )
-    ref = _feed_ref(out, "passages")
+    ref = _feed_ref(site_bundle("fort-wayne"), "passages")
     assert ref["count"] == 0

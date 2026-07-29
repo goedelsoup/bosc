@@ -11,12 +11,11 @@ guards: the reference build emits the feed with `reference` provenance, the defi
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from pathlib import Path
 
 import pytest
 
-from watermark.config import Settings
-from watermark.site.export import export_bundle
 from watermark.site.feeds import CONTRACT_VERSION
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -44,18 +43,7 @@ def test_contract_version_bumped() -> None:
     assert CONTRACT_VERSION == "1.40.0"
 
 
-@pytest.fixture(scope="module")
-def lima_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    out = tmp_path_factory.mktemp("seasonalfield") / "b"
-    export_bundle(
-        Settings(data_dir=REPO_ROOT / "data"),
-        out_dir=out,
-        generated_at="2026-01-01T00:00:00+00:00",
-        skip_embeddings=True,
-    )
-    return out
-
-
+# `lima_bundle` / `site_bundle` are conftest's session-wide, cross-worker exports (#1773).
 def _field(bundle: Path) -> dict:
     manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
     ref = next((f for f in manifest["feeds"] if f["name"] == "water-seasonal-field"), None)
@@ -123,15 +111,9 @@ def test_growing_season_reads_against_the_tighter_summer_floor(lima_bundle: Path
     assert field["summer_multiple"] is not None
 
 
-def test_sibling_site_has_no_seasonal_field(tmp_path_factory: pytest.TempPathFactory) -> None:
+def test_sibling_site_has_no_seasonal_field(site_bundle: Callable[[str], Path]) -> None:
     """Reference-site gated like `routed-hydrograph`: a peer carries no seasonal field (its
     scenario + Ottawa low flows are Lima's, not the peer's) (#1236)."""
-    out = tmp_path_factory.mktemp("fwseasonal") / "b"
-    export_bundle(
-        Settings(data_dir=REPO_ROOT / "data", site="fort-wayne"),
-        out_dir=out,
-        generated_at="2026-01-01T00:00:00+00:00",
-        skip_embeddings=True,
-    )
+    out = site_bundle("fort-wayne")
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
     assert "water-seasonal-field" not in {f["name"] for f in manifest["feeds"]}

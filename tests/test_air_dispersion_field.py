@@ -10,13 +10,10 @@ AERMOD binary is absent (as it is in CI).
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from pathlib import Path
 
-import pytest
-
 from watermark.air.aermod.engine import parse_plotfile
-from watermark.config import Settings
-from watermark.site.export import export_bundle
 from watermark.site.feeds import CONTRACT_VERSION, DispersionField, DispersionGeoRef, DispersionGrid
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -93,18 +90,7 @@ def test_degraded_run_grids_to_empty_values_not_fabricated() -> None:
     assert [p.naaqs_ug_m3 for p in field.periods] == [188.0, 100.0]
 
 
-@pytest.fixture(scope="module")
-def lima_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    out = tmp_path_factory.mktemp("dispfield") / "b"
-    export_bundle(
-        Settings(data_dir=REPO_ROOT / "data"),
-        out_dir=out,
-        generated_at="2026-01-01T00:00:00+00:00",
-        skip_embeddings=True,
-    )
-    return out
-
-
+# `lima_bundle` / `site_bundle` are conftest's session-wide, cross-worker exports (#1773).
 def test_reference_export_emits_the_field_feed(lima_bundle: Path) -> None:
     """The reference build ships `air-dispersion-field` with real geometry, geo_ref and NAAQS
     lines — `assumption`-provenanced, degrading to empty `values` when AERMOD is absent (CI)."""
@@ -129,14 +115,8 @@ def test_reference_export_emits_the_field_feed(lima_bundle: Path) -> None:
         assert any(p["naaqs_ug_m3"] is not None for p in row["periods"])
 
 
-def test_sibling_site_has_no_field_feed(tmp_path_factory: pytest.TempPathFactory) -> None:
+def test_sibling_site_has_no_field_feed(site_bundle: Callable[[str], Path]) -> None:
     """Reference-site gated like `routed-hydrograph`: a peer carries no field feed (#1232)."""
-    out = tmp_path_factory.mktemp("fwfield") / "b"
-    export_bundle(
-        Settings(data_dir=REPO_ROOT / "data", site="fort-wayne"),
-        out_dir=out,
-        generated_at="2026-01-01T00:00:00+00:00",
-        skip_embeddings=True,
-    )
+    out = site_bundle("fort-wayne")
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
     assert "air-dispersion-field" not in {f["name"] for f in manifest["feeds"]}

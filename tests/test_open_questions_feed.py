@@ -14,10 +14,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-import pytest
-
-from watermark.config import Settings
-from watermark.site.export import export_bundle
 from watermark.site.open_questions import (
     _lens_labels,
     _project_hypothesis_cells,
@@ -135,16 +131,8 @@ def test_dedup_on_id() -> None:
 
 
 # --- integration: a real Lima bundle -------------------------------------------------------
-@pytest.fixture(scope="module")
-def bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    out = tmp_path_factory.mktemp("open-questions-bundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data")
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
-    return out
-
-
+# `lima_bundle` is conftest's session-wide, cross-worker export (#1773) — this module reads one
+# feed off it, so it must never pay for an export of its own.
 def _open_questions(bundle: Path) -> list[dict[str, Any]]:
     manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
     ref = next(f for f in manifest["feeds"] if f["name"] == "open-questions")
@@ -152,22 +140,22 @@ def _open_questions(bundle: Path) -> list[dict[str, Any]]:
     return json.loads((bundle / ref["path"]).read_text(encoding="utf-8"))
 
 
-def test_feed_emitted_at_contract_version(bundle: Path) -> None:
-    manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
+def test_feed_emitted_at_contract_version(lima_bundle: Path) -> None:
+    manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["contract_version"] == _CV
-    questions = _open_questions(bundle)
+    questions = _open_questions(lima_bundle)
     assert len(questions) > 0
 
 
-def test_every_question_carries_provenance(bundle: Path) -> None:
-    questions = _open_questions(bundle)
+def test_every_question_carries_provenance(lima_bundle: Path) -> None:
+    questions = _open_questions(lima_bundle)
     # "with provenance" (the issue's Done): every open question names a real source.
     assert all(q["source"] for q in questions)
     assert all(q["question"] and q["detail"] for q in questions)
 
 
-def test_both_origins_resolve_with_their_own_fields(bundle: Path) -> None:
-    questions = _open_questions(bundle)
+def test_both_origins_resolve_with_their_own_fields(lima_bundle: Path) -> None:
+    questions = _open_questions(lima_bundle)
     leads = [q for q in questions if q["origin"] == "lead"]
     hyps = [q for q in questions if q["origin"] == "hypothesis"]
     assert leads and hyps  # Lima carries both an open board and open matrix threads
