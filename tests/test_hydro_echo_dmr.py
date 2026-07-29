@@ -865,3 +865,48 @@ def test_parameter_filter_keeps_the_unfiltered_cache_key_stable(hydro_settings: 
     )
     assert chart.npdes_id == "IN0032191"  # replayed from the pre-existing fixture
     assert (hydro_settings.hydro_fixtures_dir / "echo_dmr" / f"{unfiltered}.json").is_file()
+
+
+def test_a_value_under_an_unscreened_statistic_is_counted_but_not_screened() -> None:
+    """ "Reported under a statistic we don't read" must stay distinguishable from "not reported".
+
+    Ohio's criterion is a daily maximum, so only the DD/MK rows can be screened against it —
+    but folding a reported weekly average into `n_obs == 0` would make data that IS on the
+    record read as absent.
+    """
+    series = echo_dmr.temperature_series(
+        _temp_param(
+            [
+                _temp_row(value=88.0, stat_base_code="WA"),  # weekly average — not screened
+                _temp_row(value=84.0, stat_base_code="DB"),  # daily minimum — not screened
+            ]
+        )
+    )
+    assert series is not None
+    assert series.n_obs == 2  # both are on the record
+    assert series.n_unscreened_obs == 2
+    assert series.peak_daily_max_c is None and series.mean_monthly_avg_c is None
+    assert series.screenable is False  # nothing a daily-maximum criterion can be read against
+
+
+def test_screenable_not_n_obs_selects_the_outfall_to_screen() -> None:
+    """An outfall whose only values are unscreened must not become the primary effluent."""
+    record = echo_dmr.thermal_record(
+        echo_dmr.EffluentChart(
+            npdes_id="OH9999999",
+            name="TEST",
+            permit_type=None,
+            permit_status=None,
+            major_minor=None,
+            snc_status=None,
+            start_date="2024-05-01",
+            end_date="2024-10-31",
+            parameters=[
+                _temp_param([_temp_row(value=88.0, stat_base_code="WA")], outfall="001"),
+                _temp_param([_temp_row(value=90.0, stat_base_code="DD")], outfall="002"),
+            ],
+        )
+    )
+    assert {o.outfall for o in record.outfalls} == {"001", "002"}
+    primary = record.primary_effluent
+    assert primary is not None and primary.outfall == "002"  # not 001, despite both having n_obs

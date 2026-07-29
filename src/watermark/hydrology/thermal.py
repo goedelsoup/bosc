@@ -670,13 +670,61 @@ def _corridor_analog(
     return best
 
 
+def _join_notes(*parts: str | None) -> str | None:
+    """Join note sentences with proper terminal punctuation between them.
+
+    The notes are assembled from independent clauses written at different points in the screen,
+    so concatenating them raw runs two sentences together ("…reported, not capped The design
+    ambient…"). Each part gets a full stop before the next begins.
+    """
+    kept = [p.strip() for p in parts if p and p.strip()]
+    if not kept:
+        return None
+    return " ".join(p if p.endswith((".", "!", "?")) else f"{p}." for p in kept)
+
+
+def _absence_note(permit: CorridorPermit, record: ThermalDmrRecord, *, available: bool) -> str:
+    """Why a permit on the reach carries no screenable effluent temperature.
+
+    Three distinguishable absences, and collapsing them would misreport the evidence: the
+    record could not be **read** at all (offline with no fixture, or an ECHO error — a gap in
+    OUR pull, not in the permit); the permit **reports nothing** under either temperature
+    parameter; or it reported values under a statistic this screen does not use (neither a
+    daily maximum nor a monthly average), which is data on the record that simply cannot be
+    read against a daily-maximum criterion.
+    """
+    if not available:
+        return (
+            f"NPDES {permit.npdes_id}: its reported record could not be read for "
+            f"{record.window} (no cached/committed ECHO response, or the service refused) — a "
+            "gap in this pull, NOT a finding about the permit; re-run online to resolve it."
+        )
+    unscreened = sum(o.temperature.n_unscreened_obs for o in record.effluent)
+    if unscreened:
+        return (
+            f"NPDES {permit.npdes_id} reported {unscreened} effluent temperature value(s) in "
+            f"{record.window}, but none under a daily-maximum or monthly-average statistic — "
+            "there is nothing here that can be read against a daily-maximum criterion."
+        )
+    return (
+        f"NPDES {permit.npdes_id} reports no effluent temperature in {record.window} — a "
+        "cited absence (the permit is not thermally monitored at an effluent outfall in this "
+        "window), never read as 'no thermal discharge'."
+    )
+
+
 def _observation(
     permit: CorridorPermit,
     record: ThermalDmrRecord,
     *,
     criterion_c: float | None,
+    available: bool = True,
 ) -> DmrThermalObservation:
-    """Reduce one permit's reported thermal record to the screen's observation block."""
+    """Reduce one permit's reported thermal record to the screen's observation block.
+
+    ``available`` is ``False`` when the permit's record could not be pulled at all, so the
+    absence is attributed to this pull rather than to the permit.
+    """
     outfall = record.primary_effluent
     instream = record.warmest_instream
     obs = DmrThermalObservation(
@@ -723,11 +771,7 @@ def _observation(
 
     if outfall is None:
         obs.monitor_only = obs.permitted_limit_c is None
-        obs.note = (
-            f"NPDES {record.npdes_id} reports no effluent temperature in {record.window} — a "
-            "cited absence (the permit is not thermally monitored at an effluent outfall in this "
-            "window), never read as 'no thermal discharge'"
-        )
+        obs.note = _absence_note(permit, record, available=available)
         return obs
 
     temp = outfall.temperature
@@ -737,7 +781,11 @@ def _observation(
     obs.reported_unit = temp.reported_unit
     obs.n_obs = temp.n_obs
     obs.mean_monthly_avg_c = temp.mean_monthly_avg_c
-    obs.monitor_only = obs.permitted_limit_c is None
+    # `monitor_only` is a property of the outfall that actually discharges, NOT of the permit:
+    # the Lima Refinery carries an 85 degF daily-max limit on outfall 003 (which did not
+    # discharge in the window) while outfall 001 — the one screened here — carries none. Reading
+    # the permit-wide limit as this outfall's cap would report a ceiling that does not bind it.
+    obs.monitor_only = temp.limit_daily_max_c is None and temp.limit_monthly_avg_c is None
     obs.reported_exceedances = temp.reported_exceedances
     if temp.peak_daily_max_c is not None:
         obs.effluent_c = ProvenancedValue.from_connector(
@@ -753,7 +801,11 @@ def _observation(
         )
         if criterion_c is not None:
             obs.over_criterion = temp.peak_daily_max_c >= criterion_c
-        if obs.permitted_limit_c is not None:
+        # Compare against a permit limit ONLY where the limit governs this same outfall. A limit
+        # set on a different outfall is real and worth surfacing (it is kept, with its outfall
+        # named) but reading this outfall's temperature against it would assert a permit-limit
+        # exceedance that has not occurred — `None` is the honest answer, not `True`.
+        if obs.permitted_limit_c is not None and obs.permitted_limit_outfall == outfall.outfall:
             obs.over_permitted_limit = temp.peak_daily_max_c >= obs.permitted_limit_c.value
     if outfall.flow_mean_mgd is not None:
         obs.flow = ProvenancedValue.from_connector(
@@ -768,10 +820,16 @@ def _observation(
             confidence="high",
         )
     if obs.monitor_only:
+        elsewhere = (
+            f", though outfall {obs.permitted_limit_outfall} of the same permit does carry one "
+            f"({obs.permitted_limit_c.value:g} degC) — a limit that does not bind this discharge"
+            if obs.permitted_limit_c is not None
+            else ""
+        )
         obs.note = (
             f"NPDES {record.npdes_id} monitors effluent temperature at outfall {outfall.outfall} "
             "but ECHO carries NO numeric thermal limit for it — the discharge temperature is "
-            "reported, not capped"
+            f"reported, not capped{elsewhere}."
         )
     return obs
 
@@ -1364,6 +1422,7 @@ def _screen_industrial(
     criterion_c: float | None,
     tolerances: ThermalToleranceTable,
     ambient_npdes: str | None = None,
+    available: bool = True,
 ) -> ThermalDischargeScreen:
     """Screen one permitted discharger's **reported** heat load against the reach's criterion.
 
@@ -1377,8 +1436,13 @@ def _screen_industrial(
     that is *this* permit the read is partly circular — the station sits downstream of this
     plant's own outfall, so the "background" it measures already carries this discharge's heat —
     and the screen says so on the row rather than presenting an independent comparison.
+
+    ``available`` is ``False`` when the permit's record could not be pulled at all. The permit
+    still gets a row — dropping it would make the corridor look smaller than it is, and the
+    per-permit counts would stop reconciling — but the row is ``uncharacterized`` and says the
+    gap is in this pull, not in the permit.
     """
-    obs = _observation(permit, record, criterion_c=criterion_c)
+    obs = _observation(permit, record, criterion_c=criterion_c, available=available)
     heat: ProvenancedValue | None = None
     flow_screens: list[ThermalFlowScreen] = []
     ris_checks: list[RisThresholdCheck] = []
@@ -1416,7 +1480,7 @@ def _screen_industrial(
             obs.note = (
                 f"NPDES {permit.npdes_id}: reported peak effluent ({obs.effluent_c.value:g} degC) "
                 f"is at or below the design ambient ({ambient.value:g} degC) — no net heat load at "
-                "the design condition, so no capacity ratio is computed"
+                "the design condition, so no capacity ratio is computed."
             )
 
     if ambient_npdes == permit.npdes_id and obs.instream_c is not None:
@@ -1425,7 +1489,7 @@ def _screen_industrial(
             f"({obs.instream_station}), which sits downstream of its outfall — so the heat load "
             "below is measured against water this discharge has already warmed, and is a floor."
         )
-        obs.note = f"{obs.note} {circular}" if obs.note else circular
+        obs.note = _join_notes(obs.note, circular)
 
     if obs.effluent_c is None:
         flag = "uncharacterized"
@@ -1630,12 +1694,23 @@ def build_screen(
     # The reach's permitted dischargers, screened on their own reported record (#1718).
     if receiving is not None and ambient is not None and headroom is not None:
         for permit in permits:
+            # A permit whose record could not be read still gets a row. Dropping it would shrink
+            # the corridor silently — the reader would see a cohort of 3 where the reach holds 6,
+            # with no sign that the difference is a pull failure rather than an empty record — and
+            # `corridor_permits` would stop reconciling with the rows beneath it. The row says
+            # which it is (see `_absence_note`).
             record = records.get(permit.npdes_id)
-            if record is None:
-                continue
+            available = record is not None
             industrial = _screen_industrial(
                 permit,
-                record,
+                record
+                or ThermalDmrRecord(
+                    npdes_id=permit.npdes_id,
+                    name=permit.name,
+                    window=f"{dmr_start}..{dmr_end}",
+                    permit_status=None,
+                    snc_status=None,
+                ),
                 receiving=receiving,
                 ambient=ambient,
                 headroom=headroom,
@@ -1643,6 +1718,7 @@ def build_screen(
                 criterion_c=daily_max,
                 tolerances=tolerances,
                 ambient_npdes=instream.npdes_id if instream else None,
+                available=available,
             )
             screens.append(
                 industrial.model_copy(

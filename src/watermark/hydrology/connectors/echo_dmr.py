@@ -210,7 +210,8 @@ class DmrRow(BaseModel):
     limit_type: str | None  # ECHO LimitValueTypeDesc (Quantity1, Concentration1, ...)
     # The unit the LIMIT is expressed in (ECHO LimitUnitDesc) — carried separately from the
     # reported value's `unit` because a permit may set a limit in a unit the permittee does not
-    # report in. The temperature reduction converts a limit by THIS unit, never by the value's.
+    # report in. The temperature reduction prefers THIS unit and falls back to the reported
+    # value's standard/reported unit only when ECHO omits it (see `_limit_c`).
     limit_unit: str | None = None
     exceedance_pct: float | None
     nodi: str | None  # no-data-indicator code (non-null => no value reported)
@@ -335,7 +336,13 @@ class TemperatureSeries(BaseModel):
     parameter_code: str  # 00010 (degC) | 00011 (degF)
     parameter_desc: str | None
     reported_unit: str | None  # ECHO's unit verbatim ("deg F"/"deg C") — the conversion basis
-    n_obs: int  # reported (non-null) temperature values in the window, both stat bases
+    # Every reported (non-null, convertible) temperature value in the window, whatever its
+    # statistic. `n_unscreened_obs` is the share of those carrying a statistic this screen does
+    # not use (anything that is neither a daily maximum nor a monthly average): they are counted
+    # because "reported under a statistic we don't read" is a different finding from "not
+    # reported", and folding them into 0 would make data on the record look absent.
+    n_obs: int
+    n_unscreened_obs: int = 0
     peak_daily_max_c: float | None
     peak_daily_max_period: str | None  # ISO period end of the peak daily-max reading
     mean_daily_max_c: float | None
@@ -350,6 +357,15 @@ class TemperatureSeries(BaseModel):
     monitor_only: bool  # no numeric temperature limit on any row in the window
     reported_exceedances: int  # rows ECHO itself flagged (positive ExceedencePct / E-code)
     asof: str | None  # latest ISO period the series covers
+
+    @property
+    def screenable(self) -> bool:
+        """True when the series carries a value a temperature criterion can be read against.
+
+        Distinct from ``n_obs > 0``: a series whose only reported values sit under an unscreened
+        statistic has observations but nothing to screen.
+        """
+        return self.peak_daily_max_c is not None or self.mean_monthly_avg_c is not None
 
 
 class OutfallThermal(BaseModel):
@@ -409,7 +425,7 @@ class ThermalDmrRecord(BaseModel):
         Ties (and outfalls with no daily-max reading) fall back to the most-reported series, so
         a permit whose only temperature rows are monthly averages still resolves an outfall.
         """
-        eff = [o for o in self.effluent if o.temperature.n_obs > 0]
+        eff = [o for o in self.effluent if o.temperature.screenable]
         if not eff:
             return None
         return max(
@@ -419,7 +435,7 @@ class ThermalDmrRecord(BaseModel):
     @property
     def warmest_instream(self) -> OutfallThermal | None:
         """The in-stream station with the warmest reported daily maximum, if any."""
-        rows = [o for o in self.instream if o.temperature.n_obs > 0]
+        rows = [o for o in self.instream if o.temperature.screenable]
         if not rows:
             return None
         return max(
@@ -855,6 +871,7 @@ def temperature_series(param: DmrParameter) -> TemperatureSeries | None:
     code = param.parameter_code
     daily: list[tuple[str | None, float]] = []
     monthly: list[float] = []
+    unscreened = 0
     for row in param.rows:
         value = _temp_c(row, code)
         if value is None:
@@ -863,6 +880,12 @@ def temperature_series(param: DmrParameter) -> TemperatureSeries | None:
             daily.append((row.period_end, value))
         elif _is_monthly_avg(row):
             monthly.append(value)
+        else:
+            # A convertible value under some other statistic (a weekly average, a daily minimum,
+            # …). It cannot be read against a daily-maximum criterion, so it is not screened —
+            # but it IS on the record, and counting it keeps "reported under a statistic we
+            # don't use" distinguishable from "nothing reported".
+            unscreened += 1
 
     # Permit limits. ECHO repeats the limit on every row of the limit set, and an Ohio thermal
     # limit is typically SEASONAL (the Lima Refinery's outfall 003 runs 72-85 degF daily-max
@@ -890,7 +913,8 @@ def temperature_series(param: DmrParameter) -> TemperatureSeries | None:
         parameter_code=code,
         parameter_desc=param.parameter_desc,
         reported_unit=reported_unit,
-        n_obs=len(daily) + len(monthly),
+        n_obs=len(daily) + len(monthly) + unscreened,
+        n_unscreened_obs=unscreened,
         peak_daily_max_c=round(peak_daily[1], 2) if peak_daily else None,
         peak_daily_max_period=peak_daily[0] if peak_daily else None,
         mean_daily_max_c=_mean([v for _, v in daily]),

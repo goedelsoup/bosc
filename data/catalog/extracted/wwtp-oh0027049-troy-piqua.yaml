@@ -34,4 +34,4 @@ notes: 'Verbatim ECHO effluent-chart data for Piqua WWTP (OH0027049 / OEPA 1PD00
   ExceedencePct as a "37%" string the old parser dropped). Regenerable via `watermark dmr
   OH0027049 --design-flow 8.7 --out data/extracted/troy-piqua/wwtp-oh0027049.dmr.yaml`. Cited
   receiving-reach 7Q10 (24.0 cfs, GMR above Sidney, USGS 03261500) is in the fact sheet
-  extracted/oepa/troy-piqua/1PD00008.fs.npdes.yaml (#828).'
+  extracted/oepa/troy-piqua/1PD00008.fs.npdes.yaml (#828). Producer change (issue 1718): `echo_dmr` gained effluent-TEMPERATURE reduction (NPDES parameters 00010 degC / 00011 degF, daily-max vs monthly-average statistics, permit thermal limits, in-stream upstream/downstream stations) plus an optional server-side `parameter_code` filter on the chart pull. This document''s schema and content are UNCHANGED — `dmr_document()` still carries flow, overflow outfalls, seasonality and ECHO-flagged exceedances only; the temperature read is consumed directly by `watermark.hydrology.thermal` and lands in reference/hydrology/thermal-discharge-screen.yaml, not here.'

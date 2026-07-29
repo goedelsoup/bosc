@@ -27,6 +27,7 @@ meta:
   observed_effluent_analog: NPDES OH0002623 outfall 001 (LIMA REFINERY)
   observed_effluent_analog_c: 32.22
   monitor_only_permits:
+  - OH0002623
   - OH0002615
   - OH0026069
   permits_over_daily_max_criterion:
@@ -983,13 +984,16 @@ screens:
       high: null
     permitted_limit_outfall: '003'
     limit_seasonal: true
-    monitor_only: false
+    monitor_only: true
     reported_exceedances: 0
     over_criterion: true
-    over_permitted_limit: true
+    over_permitted_limit: null
     instream_c: null
     instream_station: null
-    note: null
+    note: NPDES OH0002623 monitors effluent temperature at outfall 001 but ECHO carries
+      NO numeric thermal limit for it — the discharge temperature is reported, not
+      capped, though outfall 003 of the same permit does carry one (29.44 degC) —
+      a limit that does not bind this discharge.
   calibration: null
   blowdown_exempt: null
   blowdown_exempt_note: null
@@ -1244,7 +1248,7 @@ screens:
     instream_station: null
     note: NPDES OH0002615 monitors effluent temperature at outfall 001 but ECHO carries
       NO numeric thermal limit for it — the discharge temperature is reported, not
-      capped
+      capped.
   calibration: null
   blowdown_exempt: null
   blowdown_exempt_note: null
@@ -1508,7 +1512,7 @@ screens:
     instream_station: outfall 901 (Downstream Monitoring)
     note: NPDES OH0026069 monitors effluent temperature at outfall 001 but ECHO carries
       NO numeric thermal limit for it — the discharge temperature is reported, not
-      capped The design ambient for this screen is this permit's OWN in-stream station
+      capped. The design ambient for this screen is this permit's OWN in-stream station
       (outfall 901 (Downstream Monitoring)), which sits downstream of its outfall
       — so the heat load below is measured against water this discharge has already
       warmed, and is a floor.
@@ -1585,7 +1589,7 @@ screens:
     instream_station: null
     note: NPDES OH0095346 reports no effluent temperature in 2024-05-01..2024-10-31
       — a cited absence (the permit is not thermally monitored at an effluent outfall
-      in this window), never read as 'no thermal discharge'
+      in this window), never read as 'no thermal discharge'.
   calibration: null
   blowdown_exempt: null
   blowdown_exempt_note: null
@@ -1657,7 +1661,7 @@ screens:
     instream_station: null
     note: NPDES OH0146552 reports no effluent temperature in 2024-05-01..2024-10-31
       — a cited absence (the permit is not thermally monitored at an effluent outfall
-      in this window), never read as 'no thermal discharge'
+      in this window), never read as 'no thermal discharge'.
   calibration: null
   blowdown_exempt: null
   blowdown_exempt_note: null
@@ -1729,7 +1733,7 @@ screens:
     instream_station: null
     note: NPDES OHGC02549 reports no effluent temperature in 2024-05-01..2024-10-31
       — a cited absence (the permit is not thermally monitored at an effluent outfall
-      in this window), never read as 'no thermal discharge'
+      in this window), never read as 'no thermal discharge'.
   calibration: null
   blowdown_exempt: null
   blowdown_exempt_note: null

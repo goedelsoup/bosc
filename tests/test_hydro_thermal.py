@@ -418,3 +418,58 @@ def test_no_dmr_read_restores_the_phase_2_screen() -> None:
     assert s.scenarios == []
     assert s.calibration is None
     assert s.dmr is None
+
+
+# --- Phase-3 review fixes ----------------------------------------------------------------------
+def test_a_limit_on_another_outfall_is_never_read_as_this_outfalls_exceedance() -> None:
+    """The Lima Refinery's only numeric thermal limit (85 degF) sits on outfall 003, which did not
+    discharge; outfall 001 — the one screened — carries none. Comparing 001's 32.2 degC against
+    003's ceiling would assert a permit-limit exceedance that has not occurred."""
+    s = _by_npdes(thermal.build_screen(_offline()), "OH0002623")
+    assert s.dmr is not None
+    assert s.dmr.outfall == "001"
+    assert s.dmr.permitted_limit_outfall == "003"  # the limit is kept, with its outfall named
+    assert s.dmr.permitted_limit_c is not None
+    assert s.dmr.over_permitted_limit is None  # not True — the limit does not bind this outfall
+    # ...and the outfall that actually discharges is monitor-only, which is the sharper finding.
+    assert s.dmr.monitor_only is True
+    assert s.dmr.note is not None
+    assert "does not bind this discharge" in s.dmr.note
+
+
+def test_notes_are_joined_as_sentences() -> None:
+    """Two independently-written clauses must not run together mid-sentence."""
+    assert thermal._join_notes("first clause", "second clause") == "first clause. second clause."
+    assert thermal._join_notes("already punctuated.", "next") == "already punctuated. next."
+    assert thermal._join_notes(None, "only one") == "only one."
+    assert thermal._join_notes(None, "") is None
+    # The live case: the monitor-only note and the circular-ambient note on the same row.
+    note = _by_npdes(thermal.build_screen(_offline()), "OH0026069").dmr
+    assert note is not None and note.note is not None
+    assert "not capped. The design ambient" in note.note
+
+
+def test_a_permit_whose_record_cannot_be_read_still_gets_a_row(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A pull failure must not shrink the corridor silently — the permit is reported as
+    uncharacterized, with the gap attributed to this pull rather than to the permit."""
+    from watermark.hydrology.connectors import echo_dmr
+
+    real = echo_dmr.fetch_thermal_record
+
+    def flaky(npdes_id: str, **kwargs: object) -> echo_dmr.ThermalDmrRecord:
+        if npdes_id == "OH0002615":
+            raise echo_dmr.EchoDmrError("simulated ECHO outage")
+        return real(npdes_id, **kwargs)  # type: ignore[arg-type]
+
+    monkeypatch.setattr(echo_dmr, "fetch_thermal_record", flaky)
+    inv = thermal.build_screen(_offline())
+    # Every permit on the reach still has a row, so the counts reconcile.
+    assert len(inv.observed) == inv.meta["corridor_permits"]
+    s = _by_npdes(inv, "OH0002615")
+    assert s.flag == "uncharacterized"
+    assert s.instream_heat_mw is None
+    assert s.dmr is not None and s.dmr.note is not None
+    assert "could not be read" in s.dmr.note
+    assert "NOT a finding about the permit" in s.dmr.note
