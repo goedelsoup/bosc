@@ -68,6 +68,20 @@ const doors: Door[] = [
     note: "release sites",
   },
 ];
+if (hasFeed("enclave")) {
+  // #1664 — present only where the site's facility is a federal installation. It sits in the
+  // environment hub because four of its five dimensions (land, water, wastewater, toxics) are,
+  // and because the RSEI county-scope severance it states belongs beside the RSEI door above.
+  doors.push({
+    id: "enclave",
+    kind: "Federal registers",
+    href: withSite("/environment/enclave"),
+    count: "—",
+    title: "The federal enclave",
+    desc: "The installation's own land, water systems, NPDES outfalls and toxics — assembled from the DoD and EPA registers that see a base the county instruments cannot.",
+    note: "off the county rolls",
+  });
+}
 if (hasFeed("air-dispersion-field")) {
   doors.push({
     id: "air",

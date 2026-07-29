@@ -1,7 +1,7 @@
 {
   "site": "troy-piqua",
-  "catalog_version": "5c2805046d994a2ffb13bcdafc92bc99af9fddcd8a81afbc28be70e1c4dd9a47",
-  "contract_version": "1.41.0",
+  "catalog_version": "bacc386b9ff3d8189e14332a8a89c1b16e668d8750f9684ffeea67b7ca7f861f",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:troy-piqua:7q10",
@@ -705,6 +705,22 @@
       "site": "troy-piqua",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:troy-piqua:enclave-federal-land",
+      "kind": "dataset",
+      "site": "troy-piqua",
+      "local_id": "enclave-federal-land",
+      "title": "Troy · Piqua Federal-Enclave Boundary — Miami County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:troy-piqua:enclave-profile",
+      "kind": "dataset",
+      "site": "troy-piqua",
+      "local_id": "enclave-profile",
+      "title": "Troy · Piqua Federal-Enclave Profile — Miami County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

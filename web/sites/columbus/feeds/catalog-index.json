@@ -1,7 +1,7 @@
 {
   "site": "columbus",
-  "catalog_version": "986e536abd2b54ca5bf916ee9e743fb2fa1eaf5fe9b2653c8b6960727bbc4db5",
-  "contract_version": "1.41.0",
+  "catalog_version": "96a5dbcf0544f4b6bf80088e21138aeeb4b91663ca3fc6062733eaa269d5b082",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:columbus:7q10",
@@ -689,6 +689,22 @@
       "site": "columbus",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:enclave-federal-land",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "enclave-federal-land",
+      "title": "Columbus Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:enclave-profile",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "enclave-profile",
+      "title": "Columbus Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

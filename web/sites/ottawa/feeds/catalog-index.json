@@ -1,7 +1,7 @@
 {
   "site": "ottawa",
-  "catalog_version": "c56da0a8dcfee7ca3c9e226affa088e0b2e0d03bc8b86bb90dfb896ad8154479",
-  "contract_version": "1.41.0",
+  "catalog_version": "9a3320c39506b29a80a7ac287326e2d8a0ecd784b5a88bf744483d5adbc28f69",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:ottawa:7q10",
@@ -705,6 +705,22 @@
       "site": "ottawa",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:enclave-federal-land",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "enclave-federal-land",
+      "title": "Ottawa Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:enclave-profile",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "enclave-profile",
+      "title": "Ottawa Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

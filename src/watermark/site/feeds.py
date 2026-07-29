@@ -35,8 +35,9 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 from watermark.sites import (
     CoolingModelType,
     DcEndUse,
+    FacilityKind,
     FacilityLifecycle,
-)  # the facility vocab (#1628)
+)  # the facility vocab (#1628 / #1664)
 
 # --- bundle contract version ---------------------------------------------------
 # Bumped per the back-compat policy in data/site/bundle/README.md: PATCH for additive
@@ -370,7 +371,21 @@ from watermark.sites import (
 #   the reference site's corridor; exported as its own already-provenanced model like `grid` /
 #   `drawdown` / `dewatering`, so no new model is defined here. One new feed → MINOR,
 #   back-compatible (a pre-1.41 bundle simply has no thermal screen to render).
-CONTRACT_VERSION = "1.41.0"
+# 1.42.0: the federal-enclave seam (#1664, epic #1659 ME-E) — two new feeds and one additive
+#   field. `enclave` (object) publishes a federal installation's OWN land / water / wastewater /
+#   power / toxics: the DoD MIRTA boundary measured against the acreage its grounding record
+#   states, its EPA SDWIS community water systems, its EPA ECHO NPDES discharges, an `[open]`
+#   electrical load, and — the point of the cluster — its own EPA RSEI/TRI row together with the
+#   plain statement of why the site's county backdrop cannot contain it (a straddling enclave
+#   reports TRI from the county the profile did NOT pick as its economic unit) and why even that
+#   row cannot carry the CERCLA mass. `geo/enclave` publishes the boundary as a map layer and is
+#   the second geometry signal the `places` domain activates on, so a site that will never have a
+#   county CAMA parcel is no longer structurally locked out of the domain. `FacilityItem` gains
+#   `kind` (`data_center` | `federal_installation`, defaulting to the former, so every existing
+#   row is unchanged) — a consumer must branch on it rather than read a `federal_installation`'s
+#   absent IT load as an undisclosed campus MW. Two new feeds + an optional field → MINOR,
+#   back-compatible (a pre-1.42 bundle simply has no enclave to render).
+CONTRACT_VERSION = "1.42.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -523,6 +538,13 @@ class FacilityItem(BaseModel):
     name: str  # display identity, e.g. "Shawnee Energy Campus"
     is_primary: bool  # the first/modeled campus (drives the water/power/air math)
     status: FacilityLifecycle  # investigation | confirmed | construction | live
+    # What KIND of facility this row is (#1664). Every row before the enclave seam was a
+    # `data_center`, which is the default, so this discriminates rather than reclassifies. A
+    # `federal_installation` row carries none of the data-center columns below (they are forbidden
+    # at the model level, not merely absent) — its land/water/wastewater/toxics live in the
+    # `enclave` feed. A consumer must branch on this rather than reading an all-null IT load as
+    # "a campus that hasn't disclosed its MW yet".
+    kind: FacilityKind = FacilityKind.DATA_CENTER
     operator: str | None = None
     operator_citation: str | None = None
     end_use: DcEndUse | None = None  # None ⇒ end use is [open] (never asserted — Lima's question)

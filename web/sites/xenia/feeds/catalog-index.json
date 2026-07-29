@@ -1,7 +1,7 @@
 {
   "site": "xenia",
-  "catalog_version": "9edbc192e1a72429f6fc4e3632a21a39e0d34ecb92258cfacc1f343c83b749f3",
-  "contract_version": "1.41.0",
+  "catalog_version": "d8909216ff2ceee05d384090509840a1759d68cce536a512b5f9021653a31d94",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:xenia:7q10",
@@ -705,6 +705,22 @@
       "site": "xenia",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:enclave-federal-land",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "enclave-federal-land",
+      "title": "Xenia Federal-Enclave Boundary — Greene County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:enclave-profile",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "enclave-profile",
+      "title": "Xenia Federal-Enclave Profile — Greene County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

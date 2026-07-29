@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
 # The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
 # the fresh-export assertions below pin it so a bump lands here in one place.
-_CV = "1.41.0"
+_CV = "1.42.0"
 # The per-site offline bundle (#727): the committed Lima bundle the frontend build reads
 # (`web/sites/<slug>/`, a full `watermark export` per registered site).
 FRONTEND_SAMPLE = REPO_ROOT / "web" / "sites" / "lima"
@@ -105,13 +105,21 @@ def test_all_schemas_are_valid_draft_2020_12(bundle: Path) -> None:
         Draft202012Validator.check_schema(json.loads(path.read_text(encoding="utf-8")))
 
 
-def test_committed_schemas_match_generated(bundle: Path) -> None:
-    """The committed schemas/ must equal what the models generate — else `watermark export`."""
-    generated = {p.name for p in (bundle / "schemas").glob("*.json")}
+def test_committed_schemas_match_generated(bundle: Path, wpafb_bundle: Path) -> None:
+    """The committed schemas/ must equal what the models generate — else `watermark export`.
+
+    Compared against the **union** of the reference build and the enclave-bearing build, not Lima
+    alone (#1664). The committed `schemas/` are the *network's* shared contract, and a feed can be
+    gated on evidence only one site has: `enclave` exists only where a `federal_installation`
+    facility is registered, so Lima can never generate its schema and a Lima-only comparison would
+    force an enclave-gated contract to go uncommitted. Adding a second producing bundle keeps the
+    guard's real job — catching drift between a model and its committed schema — intact.
+    """
+    produced = {p.name: p for b in (bundle, wpafb_bundle) for p in (b / "schemas").glob("*.json")}
     committed = {p.name for p in COMMITTED_SCHEMAS.glob("*.json")}
-    assert generated == committed, "committed schema set differs — run `watermark export`"
-    for name in generated:
-        gen = json.loads((bundle / "schemas" / name).read_text(encoding="utf-8"))
+    assert set(produced) == committed, "committed schema set differs — run `watermark export`"
+    for name, path in produced.items():
+        gen = json.loads(path.read_text(encoding="utf-8"))
         com = json.loads((COMMITTED_SCHEMAS / name).read_text(encoding="utf-8"))
         assert gen == com, f"schema drift in {name} — regenerate with `watermark export`"
 
@@ -183,16 +191,18 @@ def test_cross_feed_references_resolve(bundle: Path) -> None:
 
 
 # --- Readiness ↔ exporter feed-name coupling (#1631) ----------------------------------------
-def test_readiness_feed_names_are_produced_by_export(bundle: Path) -> None:
+def test_readiness_feed_names_are_produced_by_export(bundle: Path, wpafb_bundle: Path) -> None:
     """Every manifest feed name ``watermark.site.readiness`` keys a domain on must be a name the
     exporter actually produces (#1631). The two were decoupled string literals — renaming
     ``economics-demand-pressure`` in ``export.py`` without updating ``readiness.py`` would
     silently drop every site's facility to ``seeded`` with green tests. The Lima bundle activates
     all five domains, so its feed set must contain every readiness feed name (incl. the composed
-    ``geo/campus`` that ``export.py`` can't share as a literal)."""
+    ``geo/campus`` that ``export.py`` can't share as a literal). ``geo/enclave`` (#1664) is
+    activated by evidence Lima does not and cannot have — a registered federal installation — so
+    the WPAFB bundle joins the comparison rather than the guard being weakened to ignore it."""
     from watermark.site.readiness import READINESS_FEED_NAMES
 
-    produced = set(_feeds_by_name(bundle))
+    produced = set(_feeds_by_name(bundle)) | set(_feeds_by_name(wpafb_bundle))
     missing = READINESS_FEED_NAMES - produced
     assert not missing, (
         f"readiness keys on feeds the exporter no longer produces: {sorted(missing)} — a feed "
@@ -656,14 +666,19 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
 
 
 def test_wpafb_exports_at_case_tier(wpafb_bundle: Path) -> None:
-    """WPAFB's floor (economics-baseline, consumer-energy, rsei) is committed, and the #1397
-    primary-record ingest lifts ``record`` to ``live``: the US-EPA Sole Source Aquifer
-    designation (53 FR 15876) and the CERCLA §120 Federal Facility Agreement are two in-scope
-    ``permits-epa`` extractions clearing ``RECORD_LIVE_THRESHOLD`` — one above-floor domain live
-    over the floor is enough for ``case``. ``facility``/``places``/``story`` stay ``absent`` (no
-    disclosed SiteFacility, no committed campus geometry, not in ``STORY_SLUGS``), so this needs
-    its own test rather than the backdrop parametrize group (which asserts ``record`` stays
-    unscaffolded)."""
+    """WPAFB's floor (economics-baseline, consumer-energy, rsei, grid) is committed, and three
+    above-floor domains are live off real evidence.
+
+    ``record`` came first (#1397): the US-EPA Sole Source Aquifer designation (53 FR 15876) and
+    the CERCLA §120 Federal Facility Agreement are two in-scope ``permits-epa`` extractions
+    clearing ``RECORD_LIVE_THRESHOLD``. ``facility`` and ``places`` followed with the federal-
+    enclave seam (#1664), and neither is scaffolding: ``facility`` is the installation itself,
+    graded ``live`` because that same filed FFA is its instrument grounding (documentary depth,
+    #1630 — no IT load is invented for a base); ``places`` is the DoD MIRTA boundary, the only
+    land path an enclave off the county tax rolls can ever have. ``story`` stays ``absent`` —
+    WPAFB is not in ``STORY_SLUGS`` and nothing here changes that. The tier stays ``case``
+    (``reference`` needs all five). Its own test rather than the backdrop parametrize group,
+    which asserts everything above the floor stays unscaffolded."""
     out = wpafb_bundle
     manifest = _manifest(out)
     assert manifest["contract_version"] == _CV
@@ -672,10 +687,28 @@ def test_wpafb_exports_at_case_tier(wpafb_bundle: Path) -> None:
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
     assert domains["record"] == "live"
-    # Nothing else above the floor is scaffolded: no disclosed facility, no committed campus
-    # geometry, no registered story.
-    for absent_domain in ("facility", "places", "story"):
-        assert domains[absent_domain] == "absent", f"wpafb {absent_domain} must not scaffold"
+    assert domains["facility"] == "live"
+    assert domains["places"] == "live"
+    assert domains["story"] == "absent", "wpafb story must not scaffold"
+
+    # The facility is the ENCLAVE, not a data center: the `facility` feed row must say so, and
+    # the campus columns must be absent rather than null-as-undisclosed. Its enclave detail is a
+    # separate feed, and `geo/enclave` is the geometry that lifted `places`.
+    by_name = _feeds_by_name(out)
+    facilities = _rows(out, by_name["facility"])
+    assert [f["kind"] for f in facilities] == ["federal_installation"]
+    assert facilities[0]["it_load_mw"] is None
+    assert facilities[0]["cooling_model"] == "off"
+    assert "enclave" in by_name
+    assert "geo/enclave" in by_name
+    # No demand-pressure feed: an installation has no derivable campus load to size one against.
+    assert "economics-demand-pressure" not in by_name
+
+    # The toxics severance the enclave feed exists to state — the base reports TRI from a county
+    # this site's backdrop inventory does not cover.
+    enclave = json.loads((out / by_name["enclave"]["path"]).read_text(encoding="utf-8"))
+    assert enclave["toxics"]["scope_disagreement"] is True
+    assert enclave["toxics"]["tri_county_fips"] != enclave["toxics"]["site_rsei_fips"]
 
     # ``record`` is live because the site owns exactly its two real, in-scope agency records —
     # the SSA designation and the CERCLA FFA — not scaffolding: assert the records feed holds

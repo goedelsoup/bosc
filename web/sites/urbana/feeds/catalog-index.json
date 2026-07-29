@@ -1,7 +1,7 @@
 {
   "site": "urbana",
-  "catalog_version": "dff7e660e832d15a5f1e7c3daa0c21ebcb8b478153ccb09f8fe6c219f230fa3b",
-  "contract_version": "1.41.0",
+  "catalog_version": "8a2a471a2b85f5d270b79e99c6da98514769b7926c7ae9913803b4ac68949ea2",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:urbana:7q10",
@@ -697,6 +697,22 @@
       "site": "urbana",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:enclave-federal-land",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "enclave-federal-land",
+      "title": "Urbana Federal-Enclave Boundary — Champaign County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:enclave-profile",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "enclave-profile",
+      "title": "Urbana Federal-Enclave Profile — Champaign County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

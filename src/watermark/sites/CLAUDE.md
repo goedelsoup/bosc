@@ -31,6 +31,20 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   keywords with no spatial meaning at all. A fifth, editorial sense ("the corridor" as the
   story's subject area) lives in prose and report slugs and is never a modeled value. None of
   these constrains another — never substitute one for another or assume a shared extent.
+- **A `SiteFacility` is not necessarily a data center** (#1664). `kind` discriminates
+  `data_center` (every campus; the default, so nothing existing changed) from
+  `federal_installation` — a federal enclave like WPAFB, which carries a `FederalInstallation`
+  block *instead of* the IT-load / genset / cooling dimensions. Those are **forbidden at the
+  type level** for an installation and the cooling archetype is pinned `off`, so the campus
+  models cannot size a base as a campus. Read the narrower **`SiteProfile.campus`** (the primary
+  facility *if* it is a data center) in anything that models a campus — air dispatch, the
+  power/compute basis, the demand→price sensitivity, the basin activity card, the promotion
+  funnel — and keep `SiteProfile.facility` for "does this site have a documented facility at
+  all" (readiness, the facility feed). Before the enclave seam the two were the same thing, and
+  code that still assumes `facility is not None ⇒ there is a campus to size` is now wrong.
+  A `FederalInstallation` carries **identifiers, not figures**: its documented water/toxics
+  numbers are *projected* from `record_relpath` (a filed federal instrument) by
+  `watermark.enclave`, so a profile literal can never drift from the record.
 - **Only `PROFILE_SETTINGS_FIELDS` (`_model.py`) crosses into `Settings`.** `Settings`
   copies each of those knobs (`nwis_sites`, `rsei_fips`, `econ_fips`, `eia861_utility_number`,
   `eia_state`, the GIS URLs, `nasa_power_lat/lon`, `gnis_default_state`, `hydro_utm_epsg`,

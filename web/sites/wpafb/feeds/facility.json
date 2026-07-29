@@ -1,0 +1,28 @@
+[
+  {
+    "key": "wright-patterson-afb",
+    "name": "Wright-Patterson Air Force Base",
+    "is_primary": true,
+    "status": "live",
+    "kind": "federal_installation",
+    "operator": "United States Department of the Air Force",
+    "operator_citation": "CERCLA §120 Federal Facility Agreement, U.S. EPA Region V and the U.S. Department of the Air Force, executed 1991-03-31 — data/extracted/wpafb/cercla-ffa-1991.epa.yaml [verified]",
+    "end_use": null,
+    "end_use_citation": null,
+    "facility_type": null,
+    "it_load_mw": null,
+    "it_load_low_mw": null,
+    "it_load_high_mw": null,
+    "air_permit_citation": null,
+    "air_permit_relpath": null,
+    "it_load_citation": null,
+    "gross_floor_area_sqft": null,
+    "disclosed_investment_usd": null,
+    "disclosure_citation": null,
+    "cooling_model": "off",
+    "cooling_model_source": "assumption",
+    "cooling_model_citation": "not a data-center facility: a federal installation has no IT-load-driven cooling-water demand to derive, so the data-center cooling model reports an explicit zero rather than a bracket. The enclave's actual water is its two community water systems on the Miami Buried Valley Aquifer — see the installation record, data/extracted/wpafb/cercla-ffa-1991.epa.yaml",
+    "parcels_relpath": null,
+    "footprint_relpath": null
+  }
+]

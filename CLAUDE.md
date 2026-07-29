@@ -117,6 +117,16 @@ so it is *reconciled* with them, not a competing index (the `/ask` feed stays ca
   and `bosc-`-prefixed reference/extracted filenames are Lima-specific by convention — a
   new site supplies its own paths. (The `--site` callback writes `WATERMARK_SITE` to the env
   before the first `get_settings()`; that's the one sanctioned `os.environ` write.)
+  **A site's facility is not always a data center** (#1664): `SiteFacility.kind` also admits a
+  `federal_installation` (WPAFB), which carries a `FederalInstallation` block and has the
+  IT-load / genset / cooling dimensions **forbidden at the type level** so a base can't be sized
+  as a campus. Anything that models a campus reads the narrower `SiteProfile.campus`, not
+  `.facility`. Its land comes from the DoD **MIRTA** register (`watermark.connectors.federal`)
+  because a federal enclave is off the county tax rolls and will never appear in a CAMA parcel
+  layer, and its toxics row is reduced against **its own reporting county**, which for a
+  straddling base is not the site's `rsei_fips` — `watermark enclave` writes the committed set,
+  `watermark.enclave` assembles it, and every documented figure is *projected* from the enclave's
+  grounding record rather than re-keyed into the profile.
   Onboard a registered site with `watermark onboard <slug>` (`watermark.onboard`; runbook
   `docs/onboarding.md`): it scaffolds the per-site data dirs, runs the portable reach
   connectors (per-site point outputs are slug-scoped so Lima is never clobbered; basin-level
@@ -133,8 +143,8 @@ so it is *reconciled* with them, not a competing index (the `/ask` feed stays ca
   lands and falls when one dries up — never an onboard-time snapshot. The **floor is always
   pulled** (backdrop = the coordinate/FIPS/state-keyed connectors — economics-baseline,
   consumer-energy, RSEI); **above the floor triggers on evidence, never scaffolds** (facility on
-  a disclosed permit + its feed, places on committed campus/footprint geometry, record on
-  extracted `records`/`documents`, story on a registered story + leads). The frontend
+  a disclosed permit + its feed, places on committed campus/footprint **or federal-enclave**
+  geometry, record on extracted `records`/`documents`, story on a registered story + leads). The frontend
   (`web/packages/core/src/readiness.ts`) is a **thin reader** of the block: primary sections gate on their
   parent domain, leaf facets add a feed/registry check so an active domain never opens an empty
   page, and it surfaces a needs/leads board for the locked ones. `is_reference_site` survives

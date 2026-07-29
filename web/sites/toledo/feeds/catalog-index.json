@@ -1,7 +1,7 @@
 {
   "site": "toledo",
-  "catalog_version": "005918634a8d545120f94f5552fc95a865b8138bcd26a1f08275c2a4c324769e",
-  "contract_version": "1.41.0",
+  "catalog_version": "0c586e95b864f7663f8bff0a2ae3a1370f2201ca219c23b45a010159d17d5395",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:toledo:7q10",
@@ -705,6 +705,22 @@
       "site": "toledo",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:enclave-federal-land",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "enclave-federal-land",
+      "title": "Toledo Federal-Enclave Boundary — Lucas County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:enclave-profile",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "enclave-profile",
+      "title": "Toledo Federal-Enclave Profile — Lucas County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

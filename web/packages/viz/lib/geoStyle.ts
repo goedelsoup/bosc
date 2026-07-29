@@ -39,6 +39,9 @@ export function isGeoFeature(o: unknown): o is GeoFeature {
  *  watershed boundary draws first so it sits underneath as context. */
 export const LAYER_ORDER = [
   "watershed",
+  // The federal-enclave boundary (#1664) draws early, just above the watershed: it is the
+  // administrative extent everything else on a base sits inside, not a subject on top of them.
+  "enclave",
   "floodplain",
   "floodway",
   "corridor",
@@ -53,6 +56,7 @@ export const LAYER_ORDER = [
 
 export const LAYER_LABELS: Record<string, string> = {
   watershed: "Watershed boundary (USGS WBD)",
+  enclave: "Federal enclave (DoD MIRTA)",
   floodplain: "FEMA floodplain",
   floodway: "FEMA floodway",
   corridor: "Corridor study area",

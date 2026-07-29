@@ -100,7 +100,9 @@ def test_stack_params_from_profile_documents_disclosed_geometry(
         genset_stack_exit_temp_k=700.0,
         genset_stack_citation="manufacturer stack data sheet (test)",
     )
-    monkeypatch.setattr(inp, "active_profile", lambda _s: SimpleNamespace(facility=fac))
+    # `campus`, not `facility` (#1664): the AERMOD deck models a data-center campus, so it reads
+    # the accessor that excludes a federal installation (which has no genset fleet at all).
+    monkeypatch.setattr(inp, "active_profile", lambda _s: SimpleNamespace(campus=fac))
     stack = inp.stack_params_from_profile(air_settings)
     assert not stack.all_assumption
     for v in (stack.height_m, stack.diameter_m, stack.exit_velocity_ms, stack.exit_temp_k):

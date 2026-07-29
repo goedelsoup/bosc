@@ -1,7 +1,7 @@
 {
   "site": "greenville",
-  "catalog_version": "472ed8e1d51a0d46e9ae36e7d1efd0bc1b8a197d0428e86b712610162c91cb82",
-  "contract_version": "1.41.0",
+  "catalog_version": "ab19c013d1eeb143784bf0398cdfd4fec5957ed6eda298cf7db55c260102ed6b",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:greenville:7q10",
@@ -697,6 +697,22 @@
       "site": "greenville",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:enclave-federal-land",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "enclave-federal-land",
+      "title": "Greenville · Darke Co Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:enclave-profile",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "enclave-profile",
+      "title": "Greenville · Darke Co Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

@@ -60,6 +60,7 @@ def build_facility_feed(settings: Settings | None = None) -> list[FacilityItem] 
                 name=fac.name,
                 is_primary=(i == 0),
                 status=fac.status,
+                kind=fac.kind,
                 operator=fac.operator,
                 operator_citation=fac.operator_citation,
                 end_use=fac.end_use,

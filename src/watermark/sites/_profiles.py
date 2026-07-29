@@ -32,7 +32,9 @@ from watermark.sites._model import (
     CoolingModelType,
     DcEndUse,
     DischargeReach,
+    FacilityKind,
     FacilityLifecycle,
+    FederalInstallation,
     ItLoadGrounding,
     SiteFacility,
     SiteProfile,
@@ -1868,7 +1870,93 @@ _WPAFB = SiteProfile(
     supply_gage_secondary="03270500",  # [verified] Great Miami River at Dayton (the well-field mainstem)
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
     passby_secondary_cfs=0.0,  # [open]
-    facilities=(),  # [open] the DoD-cloud / GDIT-RSO data-center dimension is the research target (#442)
+    # The enclave itself is the facility (#1664). NOT the data-center dimension — the DoD-cloud /
+    # GDIT-RSO question stays the open research target (#442) and would be a SECOND, `data_center`
+    # facility if it ever lands. What is on the record today is the installation: 8,200 acres, its
+    # own two community water systems, its own two NPDES outfalls, and its own Superfund listing.
+    # Its electrical load is [open] and stays that way — the base is unmistakably a large power
+    # user, which is exactly why no figure may be invented for it.
+    facilities=(
+        SiteFacility(
+            name="Wright-Patterson Air Force Base",
+            key="wright-patterson-afb",
+            kind=FacilityKind.FEDERAL_INSTALLATION,
+            status=FacilityLifecycle.LIVE,  # [verified] MIRTA SITEOPERATIONALSTATUS "Act"
+            operator="United States Department of the Air Force",
+            operator_citation=(
+                "CERCLA §120 Federal Facility Agreement, U.S. EPA Region V and the U.S. Department "
+                "of the Air Force, executed 1991-03-31 — data/extracted/wpafb/"
+                "cercla-ffa-1991.epa.yaml [verified]"
+            ),
+            # Pinned `off` because there is no IT load to derive a cooling-water demand from — the
+            # base's water is potable supply from its own wells, not condenser cooling. This is a
+            # statement about the MODEL's scope, not a disclosure about the base, so it travels as
+            # an assumption; the SiteFacility validator requires `off` for a federal installation.
+            cooling_model=CoolingModelType.OFF,
+            cooling_model_source="assumption",
+            cooling_model_citation=(
+                "not a data-center facility: a federal installation has no IT-load-driven "
+                "cooling-water demand to derive, so the data-center cooling model reports an "
+                "explicit zero rather than a bracket. The enclave's actual water is its two "
+                "community water systems on the Miami Buried Valley Aquifer — see the "
+                "installation record, data/extracted/wpafb/cercla-ffa-1991.epa.yaml"
+            ),
+            installation=FederalInstallation(
+                component="U.S. Air Force",  # [verified] MIRTA SITEREPORTINGCOMPONENT "USAF"
+                agency="U.S. Department of Defense",  # [verified] EPA TRI asgn_agency "DOD"
+                register_name="Wright-Patterson Air Force Base",
+                register_citation=(
+                    "DoD MIRTA (Military Installations, Ranges, and Training Areas) site-boundary "
+                    "register, FEATURENAME 'Wright-Patterson Air Force Base' (SITEREPORTINGCOMPONENT "
+                    "USAF, STATENAMECODE OH) — the authoritative DoD boundary layer, published via "
+                    "Esri US Federal Data; boundaries encompass federally owned or otherwise "
+                    "managed lands per the Base Structure Report, planning-grade, not a survey "
+                    "[connector — watermark federal-land]"
+                ),
+                record_relpath="wpafb/cercla-ffa-1991.epa.yaml",
+                record_citation=(
+                    "CERCLA §120 Federal Facility Agreement (U.S. EPA Region V / U.S. Air Force, "
+                    "executed 1991-03-31), Findings of Fact: ~8,200 acres in Areas A/C and B over "
+                    "the Miami Buried Valley Aquifer; three well fields with 17 drinking-water "
+                    "supply wells; five air-stripping units; ≥58 waste-disposal sites; NPL listing "
+                    "1989-10-04, 54 Fed. Reg. 41021 [verified]"
+                ),
+                pwsids=("OH2903412", "OH2903312"),  # Area A, then Area B
+                pws_citation=(
+                    "EPA SDWIS (Envirofacts water_system) — OH2903412 'WRIGHT-PATTERSON AFB AREA A "
+                    "PWS' and OH2903312 'WRIGHT-PATTERSON AFB AREA B PWS', both active community "
+                    "water systems on GROUND WATER (the Miami Buried Valley Aquifer of the FFA "
+                    "Findings of Fact); cross-referenced from the SDWAIDs on both of the base's "
+                    "ECHO NPDES records [connector — watermark enclave]"
+                ),
+                npdes_permits=("OH0010243", "OH0105422"),
+                npdes_citation=(
+                    "EPA ECHO CWA facility records — OH0010243 'WRIGHT-PATTERSON AIR FORCE BASE' "
+                    "and OH0105422 'U.S. AIR FORCE WRIGHT-PATTERSON AIR FORCE BASE', both "
+                    "Effective NPDES individual permits, FacFederalAgencyName 'Defense: Air "
+                    "Force', Greene County OH (39057) [connector — watermark enclave]"
+                ),
+                # [open] — the installation's electrical load and raw-water withdrawal. Neither is
+                # disclosed by any instrument in the corpus; the grid stack carries the AES Ohio /
+                # PJM DAY backdrop with load_share=None rather than sizing the base.
+                tri_facility_id="45433SDDSFDEPAR",
+                tri_county_fips="39057",  # GREENE — NOT this site's rsei_fips/econ_fips (39113)
+                tri_county_name="Greene County, OH",
+                epa_registry_id="110001987958",  # EPA FRS; matches ECHO RegistryID on both permits
+                tri_citation=(
+                    "EPA TRI facility register (Envirofacts tri_facility): 45433SDDSFDEPAR 'U.S. "
+                    "DOD USAF WRIGHT-PATTERSON AFB OH', asgn_federal_ind 'F', asgn_agency 'DOD', "
+                    "county GREENE / state_county_fips_code 39057, EPA registry id 110001987958 "
+                    "[verified]"
+                ),
+            ),
+        ),
+    ),
+    # The enclave's own toxics row lives in Greene County (39057) — the county this profile did
+    # NOT pick as its economic/RSEI unit — so the county backdrop above misses the base by
+    # construction. This second, one-facility reduction reconciles them (#1664).
+    enclave_rsei_relpath="reference/rsei/wpafb/enclave.yaml",
+    federal_land_relpath="reference/wpafb/federal-land.geojson",
     serving_utility_citation="EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) serves both Greene and Montgomery counties, OH — the WPAFB-area LSE. [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
@@ -3714,7 +3802,9 @@ PER_SITE_OUTPUT_FIELDS: tuple[str, ...] = (
     "corridor_ddf_relpath",
     "baseline_relpath",
     "rsei_relpath",
+    "enclave_rsei_relpath",
     "consumer_energy_relpath",
     "demand_pressure_relpath",
     "grid_relpath",
+    "federal_land_relpath",
 )

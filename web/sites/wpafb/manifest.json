@@ -1,21 +1,27 @@
 {
   "site": "wpafb",
   "bundle_version": "1.0.0",
-  "contract_version": "1.41.0",
-  "generated_at": "2026-07-29T15:28:04+00:00",
-  "feed_count": 28,
-  "row_total": 436,
+  "contract_version": "1.42.0",
+  "generated_at": "2026-07-29T19:04:23+00:00",
+  "feed_count": 31,
+  "row_total": 441,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
-      "facility": "absent",
-      "places": "absent",
+      "facility": "live",
+      "places": "live",
       "record": "live",
       "story": "absent"
     }
   },
-  "facility": null,
+  "facility": {
+    "status": "live",
+    "count": 1,
+    "primary_name": "Wright-Patterson Air Force Base",
+    "primary_operator": "United States Department of the Air Force",
+    "primary_end_use": null
+  },
   "feeds": [
     {
       "name": "records",
@@ -146,6 +152,22 @@
       "count": 1
     },
     {
+      "name": "facility",
+      "path": "feeds/facility.json",
+      "media_type": "application/json",
+      "schema": "schemas/facility.schema.json",
+      "kind": "collection",
+      "count": 1
+    },
+    {
+      "name": "enclave",
+      "path": "feeds/enclave.json",
+      "media_type": "application/json",
+      "schema": "schemas/enclave.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
       "name": "network",
       "path": "feeds/network.json",
       "media_type": "application/json",
@@ -199,7 +221,15 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 51
+      "count": 53
+    },
+    {
+      "name": "geo/enclave",
+      "path": "feeds/geo/enclave.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 1
     },
     {
       "name": "facts",

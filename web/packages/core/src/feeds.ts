@@ -755,6 +755,108 @@ export interface RseiInventory {
   facilities: RseiFacility[];
 }
 
+/** One EPA SDWIS public water system the enclave runs itself (`bosc.connectors.federal.WaterSystem`). */
+export interface EnclaveWaterSystem {
+  pwsid: string;
+  name: string;
+  system_type?: string | null; // CWS / NTNCWS / TNCWS
+  source_type?: string | null; // GW / SW / GU
+  population_served?: number | null;
+  service_connections?: number | null;
+  owner_type?: string | null;
+  is_active?: boolean | null;
+}
+
+/** One EPA ECHO NPDES discharge the enclave holds itself (`bosc.connectors.federal.Discharge`). */
+export interface EnclaveDischarge {
+  npdes_id: string;
+  name: string;
+  registry_id?: string | null;
+  permit_status?: string | null;
+  permit_type?: string | null;
+  county?: string | null;
+  county_fips?: string | null;
+  federal_agency?: string | null;
+  design_flow_mgd?: number | null;
+  actual_average_flow_mgd?: number | null;
+  latitude?: number | null;
+  longitude?: number | null;
+}
+
+/**
+ * The `enclave` feed (`bosc.enclave.EnclaveProfile`, #1664) — a federal installation's OWN land,
+ * water, wastewater, power and toxics.
+ *
+ * Present only for a site whose primary facility is a `federal_installation`. Read it instead of
+ * the data-center columns of `facility`, and read `toxics.scope_note` before comparing anything
+ * here to the site's county `rsei` feed: a straddling enclave reports TRI from a different county
+ * than the site's economic unit, so the county backdrop does not contain it *by construction*.
+ */
+export interface EnclaveFeed {
+  meta: { subject?: string; registers?: string[]; grounding_record?: string; note?: string };
+  slug: string;
+  name: string;
+  component: string;
+  agency: string;
+  status: FacilityStatus;
+  record_relpath: string;
+  land?: {
+    register_name: string;
+    feature_name: string;
+    site_name: string;
+    operational_status: string;
+    is_joint_base: boolean;
+    register_acres: number;
+    parts?: number;
+    record_acres?: number | null;
+    // Negative ⇒ the register draws LESS land than the record describes. When
+    // `acreage_note` is set the two materially disagree and the boundary is a PARTIAL
+    // footprint — never render it as the installation's area.
+    acreage_delta_pct?: number | null;
+    acreage_note?: string | null;
+    relpath: string;
+    note?: string;
+  } | null;
+  water: {
+    systems: EnclaveWaterSystem[];
+    population_served?: number | null;
+    service_connections?: number | null;
+    supply_wells?: number | null;
+    well_fields?: number | null;
+    treatment_units?: number | null;
+    aquifer?: string | null;
+    withdrawal_mgd?: number | null;
+    withdrawal_citation?: string | null;
+  };
+  wastewater: {
+    discharges: EnclaveDischarge[];
+    reported_average_flow_mgd?: number | null;
+    reported_flow_note?: string;
+  };
+  power: { load_mw?: number | null; load_citation?: string | null; note?: string };
+  toxics: {
+    tri_facility_id?: string | null;
+    tri_county_fips?: string | null;
+    tri_county_name?: string | null;
+    epa_registry_id?: string | null;
+    rsei?: RseiFacility | null;
+    rsei_relpath?: string | null;
+    site_rsei_fips: string;
+    site_rsei_county_name: string;
+    scope_disagreement: boolean;
+    scope_note: string;
+    cercla_gap_note?: string;
+    npl_site_id?: string | null;
+    npl_listed_on?: string | null;
+    npl_citation?: string | null;
+    waste_disposal_sites?: number | null;
+    disposal_period?: string | null;
+    contaminants: string[];
+    statutory_authority?: string | null;
+  };
+  citations: string[];
+}
+
 /** A glossary concept (`bosc.site.feeds.ConceptItem`, issue #68). */
 export interface ConceptItem {
   slug: string;
@@ -1128,12 +1230,20 @@ export interface NodeActivity {
   summary?: string;
 }
 
-/** One disclosed data-center campus — the `facility` feed row (`bosc.site.feeds.FacilityItem`, #1628). */
+/** What KIND of facility a `facility` row describes (`bosc.sites.FacilityKind`, #1664). Defaults
+ *  to `data_center` — every row before the enclave seam — so this discriminates rather than
+ *  reclassifies. A `federal_installation` carries NONE of the data-center columns (they are
+ *  forbidden at the model level): read its land/water/wastewater/toxics off the `enclave` feed,
+ *  and never read its absent `it_load_mw` as a campus whose MW is merely undisclosed. */
+export type FacilityKind = "data_center" | "federal_installation";
+
+/** One disclosed facility — the `facility` feed row (`bosc.site.feeds.FacilityItem`, #1628/#1664). */
 export interface FacilityItem {
   key: string;
   name: string;
   is_primary: boolean;
   status: FacilityStatus;
+  kind?: FacilityKind;
   operator?: string | null;
   operator_citation?: string | null;
   end_use?: FacilityEndUse | null;

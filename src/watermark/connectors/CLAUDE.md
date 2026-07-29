@@ -19,3 +19,15 @@ Neutral, subsystem-agnostic connector plumbing. Defers to the root
   configuration arrives as explicit arguments from the calling subsystem.
 - Don't put a `fetch`'s HTTP call here — that lives in the connector. Keep this layer
   about caching and the offline contract only.
+- **`federal.py` is the exception that proves the "neutral plumbing" rule** — it *is* a
+  connector, and it lives here rather than under `hydrology/connectors/` because a federal
+  enclave is not a hydrology subject (#1664). It wraps three keyless, public-domain registers
+  that exist precisely because the county-scoped instruments the rest of the platform uses
+  cannot see a military base: **DoD MIRTA** (site boundaries — the enclave is off the county
+  tax rolls, so no CAMA parcel layer will ever carry it), **EPA SDWIS** (the base's own
+  community water systems), and **EPA ECHO CWA** (its own NPDES discharges). Fixtures live at
+  `tests/fixtures/federal/<connector>/`; the offline error is `FederalOfflineError`.
+  ECHO columns are selected **by ObjectName** against the verified `cwa_rest_services.metadata`
+  and mapped to their ColumnID — never by index, the same repo-wide ECHO rule as
+  `hydrology/connectors/echo.py`. Acreage is the one derived value and is measured from the
+  published geometry in the **site's own UTM zone**, never transcribed.

@@ -51,7 +51,7 @@ from watermark.logging import get_logger
 from watermark.sites import active_profile
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterator, Sequence
 
 log = get_logger(__name__)
 
@@ -324,11 +324,22 @@ def build_inventory(
     *,
     fips: str | None = None,
     county_name: str | None = None,
+    facility_ids: Sequence[str] | None = None,
 ) -> RseiInventory:
-    """Pull RSEI and reduce it to one county's facilities with rolled-up results."""
+    """Pull RSEI and reduce it to one county's facilities with rolled-up results.
+
+    ``facility_ids`` narrows the reduction further, to the named ``FacilityID``s **within** that
+    county (#1664). The county filter still applies first — the ids are a subset selector, not an
+    escape hatch — so a caller cannot accidentally pull an unrelated facility from another state
+    by id alone. This is what lets a **federal enclave** be reduced on its own terms: WPAFB
+    reports TRI from Greene County (39057) while its site profile's economic/RSEI unit is
+    Montgomery (39113), so its own row is unreachable from the county inventory and needs a
+    second, one-facility reduction rather than a widened county scope.
+    """
     settings = settings or get_settings()
     fips = fips or settings.rsei_fips
     county_name = county_name or active_profile(settings).county_name
+    wanted = {str(i).strip() for i in facility_ids} if facility_ids else None
     _ensure_source(settings)
 
     # media code -> reporting bucket (air/water/land/...)
@@ -352,6 +363,8 @@ def build_inventory(
     facilities: dict[str, RseiFacility] = {}
     for row in _iter_table(settings, "facility"):
         if row.get("FIPS") != fips:
+            continue
+        if wanted is not None and row.get("FacilityID") not in wanted:
             continue
         facilities[row["FacilityNumber"]] = RseiFacility(
             facility_id=row["FacilityID"],
@@ -449,17 +462,26 @@ def build_inventory(
 
     ranked = sorted(facilities.values(), key=lambda f: (-f.score, -f.pounds, f.name))
     n_scored = sum(1 for f in ranked if f.score > 0)
+    subject = f"RSEI toxic-release inventory — {county_name}"
+    inv_meta: dict[str, Any] = {
+        "subject": subject,
+        "source": _SOURCE,
+        "version": settings.rsei_version,
+        "county_fips": fips,
+        "facility_count": len(ranked),
+        "scored_facility_count": n_scored,
+        "join": "elements -> release -> submission -> facility (+ chemical, media)",
+        "caveats": _CAVEATS,
+    }
+    if wanted is not None:
+        # Record the selector, and which of its ids the release actually carries — a requested id
+        # RSEI does not know must show as a miss, not vanish into a short list.
+        found = {f.facility_id for f in ranked}
+        inv_meta["subject"] = f"{subject} — facility subset"
+        inv_meta["facility_id_filter"] = sorted(wanted)
+        inv_meta["facility_ids_not_found"] = sorted(wanted - found)
     return RseiInventory(
-        meta={
-            "subject": f"RSEI toxic-release inventory — {county_name}",
-            "source": _SOURCE,
-            "version": settings.rsei_version,
-            "county_fips": fips,
-            "facility_count": len(ranked),
-            "scored_facility_count": n_scored,
-            "join": "elements -> release -> submission -> facility (+ chemical, media)",
-            "caveats": _CAVEATS,
-        },
+        meta=inv_meta,
         county_fips=fips,
         county_name=county_name,
         facilities=ranked,
@@ -577,10 +599,14 @@ def inventory_path(settings: Settings) -> Path:
     return settings.data_dir / active_profile(settings).rsei_relpath
 
 
-def write_inventory(inv: RseiInventory, out_dir: Path) -> Path:
-    """Write the per-county inventory as deterministic YAML (no timestamp)."""
+def write_inventory(inv: RseiInventory, out_dir: Path, *, filename: str = "inventory.yaml") -> Path:
+    """Write the per-county inventory as deterministic YAML (no timestamp).
+
+    ``filename`` lets a second reduction share the directory without clobbering the county
+    inventory — the enclave subset lands beside it as ``enclave.yaml`` (#1664).
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
-    path = out_dir / "inventory.yaml"
+    path = out_dir / filename
     data = inv.model_dump(mode="json", exclude_none=True)
     path.write_text(
         yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=100), encoding="utf-8"

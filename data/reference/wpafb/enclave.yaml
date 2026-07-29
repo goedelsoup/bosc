@@ -1,0 +1,362 @@
+meta:
+  subject: Federal enclave — Wright-Patterson Air Force Base
+  registers:
+  - DoD MIRTA (site boundaries)
+  - EPA SDWIS (public water systems)
+  - EPA ECHO CWA (NPDES discharges)
+  - EPA RSEI/TRI (toxic releases)
+  grounding_record: wpafb/cercla-ffa-1991.epa.yaml
+  note: Documented figures are projected from the grounding record or carried verbatim from a named federal
+    register. Nothing is estimated; an undisclosed figure is null ([open]), never defaulted.
+slug: wpafb
+name: Wright-Patterson Air Force Base
+component: U.S. Air Force
+agency: U.S. Department of Defense
+status: live
+record_relpath: wpafb/cercla-ffa-1991.epa.yaml
+land:
+  register_name: DoD MIRTA (Military Installations, Ranges, and Training Areas)
+  feature_name: Wright-Patterson Air Force Base
+  site_name: Wright-Patterson Air Force Base
+  operational_status: Active
+  is_joint_base: false
+  register_acres: 5230.4
+  parts: 4
+  record_acres: 8200
+  acreage_delta_pct: -36.2
+  acreage_note: 'COVERAGE CAVEAT: the register''s polygon measures 5,230 acres — 36.2% less than the 8,200
+    acres the grounding record states, across 4 mapped part(s). The two are not reconciled here and neither
+    is adjusted toward the other: the record is the instrument for the enclave''s EXTENT, the register
+    only for where mapped land sits. Treat the boundary as a partial footprint, not the installation''s
+    area.'
+  relpath: reference/wpafb/federal-land.geojson
+  note: A federal enclave is off the county tax rolls and appears in no county CAMA parcel layer. This
+    boundary is the DoD's own site register — federally owned or otherwise managed land, planning-grade,
+    not a legal survey.
+water:
+  systems:
+  - pwsid: OH2903412
+    name: WRIGHT-PATTERSON AFB AREA A PWS
+    system_type: CWS
+    source_type: GW
+    population_served: 16551
+    service_connections: 479
+    owner_type: P
+    is_active: true
+  - pwsid: OH2903312
+    name: WRIGHT-PATTERSON AFB AREA B PWS
+    system_type: CWS
+    source_type: GW
+    population_served: 11034
+    service_connections: 545
+    owner_type: P
+    is_active: true
+  population_served: 27585
+  service_connections: 1024
+  supply_wells: 17
+  well_fields: 3
+  treatment_units: 5
+  aquifer: Miami Buried Valley Aquifer (upper + lower sand-and-gravel water-bearing zones)
+wastewater:
+  discharges:
+  - npdes_id: OH0010243
+    name: WRIGHT-PATTERSON AIR FORCE BASE
+    registry_id: '110001987958'
+    permit_status: Effective
+    permit_type: NPDES Individual Permit
+    county: GREENE COUNTY
+    county_fips: '39057'
+    federal_agency: 'Defense: Air Force'
+    latitude: 39.82125
+    longitude: -84.03529
+  - npdes_id: OH0105422
+    name: U.S. AIR FORCE WRIGHT-PATTERSON AIR FORCE BASE
+    registry_id: '110001987958'
+    permit_status: Effective
+    permit_type: NPDES Individual Permit
+    county: GREENE COUNTY
+    county_fips: '39057'
+    federal_agency: 'Defense: Air Force'
+    actual_average_flow_mgd: 1.152
+    latitude: 39.82125
+    longitude: -84.03529
+  reported_average_flow_mgd: 1.152
+  reported_flow_note: Sum of the reported average flows EPA ECHO carries for the enclave's own permits.
+    A permit ECHO leaves blank is omitted, never imputed — so this is a floor, not a total.
+power:
+  note: No instrument in the corpus discloses it, and none may be inferred from acreage or population.
+    The site's grid backdrop (serving utility, balancing authority, state denominators) still applies
+    and is carried with load_share null — the enclave is a real load the grid layer refuses to size.
+toxics:
+  tri_facility_id: 45433SDDSFDEPAR
+  tri_county_fips: '39057'
+  tri_county_name: Greene County, OH
+  epa_registry_id: '110001987958'
+  rsei:
+    facility_id: 45433SDDSFDEPAR
+    facility_number: '4318'
+    name: U.S. DOD USAF WRIGHT-PATTERSON AFB OH
+    parent_name: US DEPARTMENT OF DEFENSE
+    federal_facility: true
+    latitude: 39.81722
+    longitude: -84.03694
+    street: DEPARTMENT OF THE AIR FORCE WPAFB
+    city: WRIGHT PATTERSON AFB
+    state: OH
+    fips: '39057'
+    naics: '928110'
+    water_releases: false
+    score: 9862.6
+    cancer_score: 1045.9
+    noncancer_score: 8873.7
+    hazard: 1151653592.7
+    pounds: 1837521.2
+    pounds_by_media:
+      air: 1770571.2
+      offsite: 46737.0
+      potw: 19879.0
+      land: 334.0
+    first_year: 1994
+    last_year: 2022
+    years:
+    - year: 1994
+      score: 2574.6
+      cancer_score: 0.0
+      noncancer_score: 2574.6
+      hazard: 122309580.0
+      pounds: 166849.0
+    - year: 1999
+      score: 348.4
+      cancer_score: 0.0
+      noncancer_score: 348.4
+      hazard: 16200000.0
+      pounds: 90000.0
+    - year: 2000
+      score: 356.1
+      cancer_score: 0.0
+      noncancer_score: 356.1
+      hazard: 16560900.0
+      pounds: 92005.0
+    - year: 2001
+      score: 355.5
+      cancer_score: 0.0
+      noncancer_score: 355.5
+      hazard: 16577765.0
+      pounds: 95855.0
+    - year: 2002
+      score: 336.8
+      cancer_score: 1.2
+      noncancer_score: 335.7
+      hazard: 34717350.0
+      pounds: 88602.0
+    - year: 2003
+      score: 357.7
+      cancer_score: 1.2
+      noncancer_score: 356.6
+      hazard: 32405280.0
+      pounds: 93949.0
+    - year: 2004
+      score: 462.2
+      cancer_score: 1.2
+      noncancer_score: 461.1
+      hazard: 35126980.0
+      pounds: 121184.0
+    - year: 2005
+      score: 361.6
+      cancer_score: 1.2
+      noncancer_score: 360.6
+      hazard: 18553250.0
+      pounds: 94148.0
+    - year: 2006
+      score: 461.5
+      cancer_score: 1.2
+      noncancer_score: 460.5
+      hazard: 65222940.0
+      pounds: 123914.0
+    - year: 2007
+      score: 477.5
+      cancer_score: 1.1
+      noncancer_score: 476.5
+      hazard: 52025460.0
+      pounds: 123025.0
+    - year: 2008
+      score: 300.9
+      cancer_score: 4.1
+      noncancer_score: 296.9
+      hazard: 146344020.1
+      pounds: 88033.5
+    - year: 2009
+      score: 353.1
+      cancer_score: 4.1
+      noncancer_score: 349.2
+      hazard: 26932716.7
+      pounds: 90974.3
+    - year: 2010
+      score: 333.8
+      cancer_score: 22.7
+      noncancer_score: 311.3
+      hazard: 466481478.7
+      pounds: 98806.4
+    - year: 2011
+      score: 499.2
+      cancer_score: 46.8
+      noncancer_score: 453.3
+      hazard: 21774105.4
+      pounds: 119605.0
+    - year: 2012
+      score: 360.8
+      cancer_score: 39.8
+      noncancer_score: 321.4
+      hazard: 16453736.9
+      pounds: 84668.0
+    - year: 2013
+      score: 561.4
+      cancer_score: 121.5
+      noncancer_score: 441.8
+      hazard: 22973113.0
+      pounds: 116792.0
+    - year: 2014
+      score: 401.8
+      cancer_score: 79.9
+      noncancer_score: 323.0
+      hazard: 16731656.9
+      pounds: 85301.0
+    - year: 2015
+      score: 193.7
+      cancer_score: 46.6
+      noncancer_score: 148.4
+      hazard: 7895960.0
+      pounds: 38662.0
+    - year: 2016
+      score: 145.8
+      cancer_score: 53.1
+      noncancer_score: 95.3
+      hazard: 5335300.0
+      pounds: 24383.0
+    - year: 2017
+      score: 56.8
+      cancer_score: 56.8
+      noncancer_score: 3.0
+      hazard: 1115000.0
+      pounds: 59.0
+    - year: 2018
+      score: 71.5
+      cancer_score: 71.5
+      noncancer_score: 4.0
+      hazard: 1061000.0
+      pounds: 59.0
+    - year: 2019
+      score: 80.6
+      cancer_score: 80.6
+      noncancer_score: 4.3
+      hazard: 2008000.0
+      pounds: 103.0
+    - year: 2020
+      score: 123.7
+      cancer_score: 123.7
+      noncancer_score: 7.5
+      hazard: 1364000.0
+      pounds: 87.0
+    - year: 2021
+      score: 121.3
+      cancer_score: 121.3
+      noncancer_score: 12.1
+      hazard: 3648000.0
+      pounds: 304.0
+    - year: 2022
+      score: 166.3
+      cancer_score: 166.3
+      noncancer_score: 16.6
+      hazard: 1836000.0
+      pounds: 153.0
+    top_chemicals:
+    - chemical: Hydrochloric acid (acid aerosols including mists, vapors, gas, fog, and other airborne
+        forms of any particle size)
+      cas: 7647-01-0
+      toxicity_category: Non-carcinogen
+      score: 6645.3
+      pounds: 1734353.0
+    - chemical: Sulfuric acid (acid aerosols including mists, vapors, gas, fog, and other airborne forms
+        of any particle size)
+      cas: 7664-93-9
+      toxicity_category: Non-carcinogen
+      score: 2109.3
+      pounds: 46770.0
+    - chemical: Naphthalene
+      cas: 91-20-3
+      toxicity_category: Mixed
+      score: 549.3
+      pounds: 16956.0
+    - chemical: Benzene
+      cas: 71-43-2
+      toxicity_category: Carcinogen
+      score: 383.2
+      pounds: 2251.0
+    - chemical: Ethylbenzene
+      cas: 100-41-4
+      toxicity_category: Carcinogen
+      score: 113.5
+      pounds: 3246.0
+    - chemical: Mercury
+      cas: 7439-97-6
+      toxicity_category: Non-carcinogen
+      score: 33.2
+      pounds: 110.2
+    - chemical: Xylene (mixed isomers)
+      cas: 1330-20-7
+      toxicity_category: Non-carcinogen
+      score: 17.8
+      pounds: 9189.0
+    - chemical: Lead
+      cas: 7439-92-1
+      toxicity_category: Non-carcinogen
+      score: 11.2
+      pounds: 18048.0
+    top_water_chemicals: []
+  rsei_relpath: reference/rsei/wpafb/enclave.yaml
+  site_rsei_fips: '39113'
+  site_rsei_county_name: Montgomery County, OH
+  scope_disagreement: true
+  scope_note: The enclave reports TRI from Greene County, OH (39057); this site's toxics backdrop covers
+    Montgomery County, OH (39113). The county inventory therefore does not contain the installation —
+    it is out of scope by construction, not missing. The row below is a second, one-facility reduction
+    against the enclave's own reporting county; the site's economic/RSEI unit is unchanged.
+  cercla_gap_note: 'RSEI tracks TRI **reporting** — annual releases from a covered facility. It does not,
+    and cannot, carry the CERCLA mass: legacy waste-disposal sites, landfills, fire-training areas and
+    the resulting groundwater plume predate TRI (reporting began in 1987) and are not releases under it.
+    The enclave''s Superfund record is the instrument for that, and the two are complements, not alternatives
+    — neither is the base''s total contaminant footprint.'
+  npl_site_id: 0504939
+  npl_listed_on: '1989-10-04'
+  npl_citation: 54 Fed. Reg. 41021 (Oct. 4, 1989)
+  waste_disposal_sites: 58
+  disposal_period: 1920s to at least 1973
+  contaminants:
+  - tetrachloroethylene (PCE)
+  - trichloroethylene (TCE)
+  - carbon tetrachloride
+  - 1,1,1-trichloroethane
+  - chloroform
+  - 1,2-dichloroethylene
+  - toluene
+  statutory_authority: CERCLA/SARA Section 120(e)(1) & (e)(2), 42 U.S.C. 9620(e); RCRA Sections 6001,
+    3008(h), 3004(u) & (v); SARA Section 211, 10 U.S.C. 2701 et seq.
+citations:
+- 'CERCLA §120 Federal Facility Agreement (U.S. EPA Region V / U.S. Air Force, executed 1991-03-31), Findings
+  of Fact: ~8,200 acres in Areas A/C and B over the Miami Buried Valley Aquifer; three well fields with
+  17 drinking-water supply wells; five air-stripping units; ≥58 waste-disposal sites; NPL listing 1989-10-04,
+  54 Fed. Reg. 41021 [verified]'
+- DoD MIRTA (Military Installations, Ranges, and Training Areas) site-boundary register, FEATURENAME 'Wright-Patterson
+  Air Force Base' (SITEREPORTINGCOMPONENT USAF, STATENAMECODE OH) — the authoritative DoD boundary layer,
+  published via Esri US Federal Data; boundaries encompass federally owned or otherwise managed lands
+  per the Base Structure Report, planning-grade, not a survey [connector — watermark federal-land]
+- EPA SDWIS (Envirofacts water_system) — OH2903412 'WRIGHT-PATTERSON AFB AREA A PWS' and OH2903312 'WRIGHT-PATTERSON
+  AFB AREA B PWS', both active community water systems on GROUND WATER (the Miami Buried Valley Aquifer
+  of the FFA Findings of Fact); cross-referenced from the SDWAIDs on both of the base's ECHO NPDES records
+  [connector — watermark enclave]
+- 'EPA ECHO CWA facility records — OH0010243 ''WRIGHT-PATTERSON AIR FORCE BASE'' and OH0105422 ''U.S.
+  AIR FORCE WRIGHT-PATTERSON AIR FORCE BASE'', both Effective NPDES individual permits, FacFederalAgencyName
+  ''Defense: Air Force'', Greene County OH (39057) [connector — watermark enclave]'
+- 'EPA TRI facility register (Envirofacts tri_facility): 45433SDDSFDEPAR ''U.S. DOD USAF WRIGHT-PATTERSON
+  AFB OH'', asgn_federal_ind ''F'', asgn_agency ''DOD'', county GREENE / state_county_fips_code 39057,
+  EPA registry id 110001987958 [verified]'

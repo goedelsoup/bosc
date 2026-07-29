@@ -1,10 +1,10 @@
 {
   "site": "defiance",
   "bundle_version": "1.0.0",
-  "contract_version": "1.41.0",
-  "generated_at": "2026-07-29T15:15:54+00:00",
+  "contract_version": "1.42.0",
+  "generated_at": "2026-07-29T18:19:58+00:00",
   "feed_count": 27,
-  "row_total": 370,
+  "row_total": 372,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 51
+      "count": 53
     },
     {
       "name": "facts",

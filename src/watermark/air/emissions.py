@@ -58,7 +58,7 @@ def _load_ap42(settings: Settings) -> dict[str, Any]:
 
 def _engine_mw_from_profile(settings: Settings) -> ProvenancedValue | None:
     """The site's per-engine rated output, from its disclosed facility (or ``None``)."""
-    fac = active_profile(settings).facility
+    fac = active_profile(settings).campus
     if fac is None or fac.genset_mw is None or fac.air_permit_citation is None:
         # No facility, or a site-plan-grounded facility with no disclosed gensets / air permit —
         # no permit-grounded engine rating to base AP-42/permit factors on.
@@ -296,7 +296,7 @@ def _permit_path(settings: Settings) -> Path:
     silently resolve another site's relpath: it raises ``NotImplementedError`` (a caller with
     an out-of-band permit can still pass an explicit ``permit_path`` to ``permit_factors``).
     """
-    fac = active_profile(settings).facility
+    fac = active_profile(settings).campus
     relpath = fac.air_permit_relpath if fac is not None else None
     if relpath is None:
         raise NotImplementedError(
@@ -336,7 +336,7 @@ def load_nsr_caps(*, settings: Settings | None = None) -> dict[str, ProvenancedV
     skips the cap check; a permit-basis run raises via :func:`_permit_path`.
     """
     settings = settings or get_settings()
-    fac = active_profile(settings).facility
+    fac = active_profile(settings).campus
     if fac is None or fac.air_permit_relpath is None:
         return {}
     return nsr_caps(_permit_path(settings))
@@ -348,12 +348,13 @@ def load_emission_factors(
     load_regime: LoadRegime = "load",
     settings: Settings | None = None,
 ) -> GensetEmissionFactors | None:
-    """Profile-driven factor set for the active site, or ``None`` if it has no facility.
+    """Profile-driven factor set for the active site, or ``None`` if it has no campus.
 
-    Resolves the per-engine rating from the site's ``SiteFacility``; a site with no
-    disclosed facility (``SiteProfile.facility is None``) has no genset fleet to model,
-    so this returns ``None`` (grid-backdrop only, per the readiness layer). AP-42 has no
-    idle-load point — request ``load_regime="idle"`` only on the permit basis.
+    Resolves the per-engine rating from the site's data-center ``SiteFacility``; a site with no
+    disclosed campus (``SiteProfile.campus is None`` — no facility at all, or a
+    ``federal_installation``, which has no genset fleet by construction, #1664) returns ``None``
+    (grid-backdrop only, per the readiness layer). AP-42 has no idle-load point — request
+    ``load_regime="idle"`` only on the permit basis.
     """
     settings = settings or get_settings()
     engine_mw = _engine_mw_from_profile(settings)

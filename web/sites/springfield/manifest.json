@@ -1,10 +1,10 @@
 {
   "site": "springfield",
   "bundle_version": "1.0.0",
-  "contract_version": "1.41.0",
-  "generated_at": "2026-07-29T15:23:46+00:00",
+  "contract_version": "1.42.0",
+  "generated_at": "2026-07-29T18:27:58+00:00",
   "feed_count": 31,
-  "row_total": 390,
+  "row_total": 392,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 49
+      "count": 51
     },
     {
       "name": "facts",

@@ -153,10 +153,13 @@ def reliability_dispatch_scenario(
 
 
 def _fleet_size(settings: Settings) -> int:
-    fac = active_profile(settings).facility
+    # `campus`, not `facility` (#1664): a federal installation is a documented facility with no
+    # disclosed genset fleet at all, so it must land in the no-fleet branch rather than the
+    # "site-plan-grounded campus" one below, whose message would misdescribe it.
+    fac = active_profile(settings).campus
     if fac is None:
         raise ValueError(
-            f"site {settings.site!r} has no documented facility — no genset fleet to model"
+            f"site {settings.site!r} has no documented data-center campus — no genset fleet to model"
         )
     if fac.genset_count is None:
         raise ValueError(

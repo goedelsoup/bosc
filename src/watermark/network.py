@@ -103,12 +103,17 @@ class NodeToxics(BaseModel):
 
 
 class NodeActivity(BaseModel):
-    """The node's disclosed data-center activity (from the primary ``SiteProfile`` facility).
+    """The node's disclosed data-center activity (from the primary ``SiteProfile`` **campus**).
 
     Carries the primary campus's real-world lifecycle ``facility_status`` (#1628) so the pure
     basin/directory builders read it off the ``network`` feed instead of a hardcoded per-slug dict —
-    ``None`` when the site has no disclosed facility (the reader defaults to ``investigation``).
-    ``facility_count`` reflects the full multi-facility list.
+    ``None`` when the site has no disclosed campus (the reader defaults to ``investigation``).
+    ``facility_count`` counts the site's data-center campuses.
+
+    Data-center only, by construction (#1664): a ``federal_installation`` facility (WPAFB) is a
+    documented facility but not data-center activity, so it is excluded here rather than reported
+    as a campus with an ``[open]`` IT load. The enclave surfaces through the ``enclave`` feed and
+    the ``facility`` domain instead.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -370,7 +375,11 @@ def build_basin_network(
         base = _load_model(settings.data_dir / prof.baseline_relpath, EconomicBaseline)
         grid = _load_model(settings.data_dir / prof.grid_relpath, GridProfile)
         inv = _load_model(settings.data_dir / prof.rsei_relpath, RseiInventory)
-        facility = prof.facility
+        # `campus`, not `facility` (#1664): this card is the node's DATA-CENTER activity, and a
+        # federal installation is a facility that is emphatically not that. Counting WPAFB's
+        # enclave here would read as "disclosed data-center facility" on an Air Force base.
+        facility = prof.campus
+        dc_count = sum(1 for f in prof.facilities if f.is_data_center)
         nodes.append(
             WatershedNode(
                 slug=slug,
@@ -388,12 +397,12 @@ def build_basin_network(
                 toxics=_toxics_of(inv),
                 activity=NodeActivity(
                     has_disclosed_facility=facility is not None,
-                    facility_count=len(prof.facilities),
+                    facility_count=dc_count,
                     facility_status=facility.status if facility else None,
                     operator=facility.operator if facility else None,
                     end_use=facility.end_use if facility else None,
                     it_load_mw=facility.it_load_mw if facility else None,
-                    summary=_activity_summary(facility, len(prof.facilities)),
+                    summary=_activity_summary(facility, dc_count),
                 ),
             )
         )

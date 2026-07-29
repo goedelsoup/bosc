@@ -1,7 +1,7 @@
 {
   "site": "bryan",
-  "catalog_version": "91da15d07087132e93937384bb4ea678735909aebee3f222f6ad1ca751508fa4",
-  "contract_version": "1.41.0",
+  "catalog_version": "c51b52110e2370b92dbaca540680ae1c0df5e7693ed94863a1f2d8dc338aba2f",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:bryan:7q10",
@@ -705,6 +705,22 @@
       "site": "bryan",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:enclave-federal-land",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "enclave-federal-land",
+      "title": "Bryan Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:enclave-profile",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "enclave-profile",
+      "title": "Bryan Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

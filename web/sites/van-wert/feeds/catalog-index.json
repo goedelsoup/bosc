@@ -1,7 +1,7 @@
 {
   "site": "van-wert",
-  "catalog_version": "c1a137b1c3c1c010fea62b377d662e7cae70e02f6b3bb27d0e2d1a32740bdead",
-  "contract_version": "1.41.0",
+  "catalog_version": "716ac0155c56fa0cdd60e9a61d6956695420004735543a98aafffdf9aa30bc52",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:van-wert:7q10",
@@ -713,6 +713,22 @@
       "site": "van-wert",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:enclave-federal-land",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "enclave-federal-land",
+      "title": "Van Wert Federal-Enclave Boundary — Van Wert County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:enclave-profile",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "enclave-profile",
+      "title": "Van Wert Federal-Enclave Profile — Van Wert County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

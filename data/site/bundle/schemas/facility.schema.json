@@ -21,6 +21,10 @@
       "status": {
         "$ref": "#/$defs/FacilityLifecycle"
       },
+      "kind": {
+        "$ref": "#/$defs/FacilityKind",
+        "default": "data_center"
+      },
       "operator": {
         "anyOf": [
           {
@@ -265,6 +269,15 @@
         "enclave"
       ],
       "title": "DcEndUse",
+      "type": "string"
+    },
+    "FacilityKind": {
+      "description": "What KIND of thing a :class:`SiteFacility` describes (#1664, epic #1659 ME-E).\n\nThe model grew up around the **data center** — an IT load, a genset fleet, a cooling\narchetype — because that is the network's subject. But a watershed point can be dominated by\na facility that has none of those and still drives the water / power / discharge story: a\n**federal installation** (Wright-Patterson AFB) runs its own wells, its own wastewater\noutfalls, and its own load, and is invisible to every instrument the data-center model reads\n(no air-permit genset bank, no site plan, no county CAMA parcel).\n\n``federal_installation`` carries a :class:`FederalInstallation` block instead of the IT-load /\ngenset / cooling dimensions, and the data-center math refuses it by construction rather than\nmodeling a base as if it were a campus: the IT-load triple must be ``[open]``, the cooling\narchetype must be ``off`` (there is no IT-load-driven cooling-water demand to derive), and the\nper-archetype overrides must be unset. See :meth:`SiteFacility._installation_kind_consistent`.\n\nThis is a **kind**, not a grade: an installation is graded on the same documentary-depth\nrule as a campus (:attr:`SiteFacility.is_instrument_grounded`) — a filed federal instrument\n(a CERCLA §120 Federal Facility Agreement) grounds it the way an air permit grounds Lima.",
+      "enum": [
+        "data_center",
+        "federal_installation"
+      ],
+      "title": "FacilityKind",
       "type": "string"
     },
     "FacilityLifecycle": {

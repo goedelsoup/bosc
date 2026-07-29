@@ -84,7 +84,13 @@ from watermark.sites._model import (
     DcEndUse as DcEndUse,
 )
 from watermark.sites._model import (
+    FacilityKind as FacilityKind,
+)
+from watermark.sites._model import (
     FacilityLifecycle as FacilityLifecycle,
+)
+from watermark.sites._model import (
+    FederalInstallation as FederalInstallation,
 )
 from watermark.sites._model import (
     ItLoadGrounding as ItLoadGrounding,
@@ -295,7 +301,7 @@ def scaffold_profile_src(slug: str, *, basin: str = "maumee") -> str:
         elif name == "basin":
             value = repr(basin)
             comment = "  # TODO: confirm the basin"
-        elif name in PER_SITE_OUTPUT_FIELDS:
+        elif name in PER_SITE_OUTPUT_FIELDS and getattr(lima, name) is not None:
             value = repr(_slug_scope(getattr(lima, name), slug))  # pre-slug-scoped, collision-safe
         elif name in _GEOMETRY_RELPATH_FIELDS:
             stem = "reference" if name == "parcels_relpath" else "extracted"
