@@ -200,5 +200,22 @@ notes: >-
   declared above. Wells/rates/dates are `[verified]`; every drawdown is `[inference]`, bracketed.
   Site-gated by construction: `load_dewatering_impact` returns None without a committed
   `SiteProfile.dewatering_wellfield_relpath`, so both feeds self-skip elsewhere.
+  The `thermal` object feed (issue 1719, epic 1715 Phase 4, contract 1.41.0) is the receiving-water
+  temperature-rise / CWA section 316(a) screen — the third cooling axis, after volume
+  (`hydrology-scenarios`) and chemistry (the chemical-criteria toxics screen). It lifts the
+  committed `thermal-discharge-screen.yaml` (part of the `hydrology` entry already declared above,
+  written by `watermark thermal --offline --write`) into the bundle, so the export stays offline and
+  makes no ECHO/NWIS call and adds no new committed reference upstream. Each row reads one facility's
+  heat load against the reach's Ohio numeric temperature criterion (OAC 3745-1-35 Table 35-11, by
+  geographic zone) at the cited design low flows, carrying the fully-mixed temperature, the reach's
+  thermal assimilative capacity, the Great Lakes RIS tolerances crossed, and the OAC 3745-1-06 (O)(5)
+  closed-cycle-blowdown exemption. Rows carry `kind` — a `data_center` row's load is MODELLED from
+  the disclosed IT load (with its heat-partition scenarios and a derived-vs-observed calibration), a
+  `permitted_discharger` row's is the permittee's own ECHO-DMR reported effluent temperature times
+  reported flow — and the two are never conflated. Site-gated on the artifact's own `meta.site`
+  rather than the reference-site role, because the screen file is basin-shared and un-slugged: a peer
+  would otherwise inherit the reference site's river, zone criterion and permittees as its own. A
+  site-matched screen with no facility rows is dropped rather than shipped as a `count == 1` shell
+  (the issue-1364 present-but-empty rule the sibling object feeds carry).
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

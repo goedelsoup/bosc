@@ -103,6 +103,9 @@ const showBullet = t?.criterionC != null && bulletRows.length > 1;
 // A modelled facility whose whole condenser rejection is off the liquid-water scale has no bar of
 // its own — say so on the chart rather than letting the biggest load read as simply absent.
 const offScale = t?.unbounded ?? [];
+// Everything else the chart leaves out: permits the screen resolved no mixed temperature for.
+// Named so the chart is never read as the whole corridor.
+const notCharted = (t?.unresolved ?? []).filter((s) => !offScale.includes(s));
 
 const SCENARIO_LABELS: Record<string, string> = {
   conservative_bound: "Conservative bound",
@@ -207,6 +210,18 @@ const pctOf = (f: number | null | undefined): string =>
               rejection each cooling archetype actually sends to the water.
             </p>
           )}
+
+          {notCharted.length > 0 && (
+            <p class="card-meta">
+              The chart is not the whole corridor.{" "}
+              {notCharted.map((s) => s.npdes_id ?? s.facility).join(", ")}{" "}
+              {notCharted.length === 1 ? "carries" : "carry"} no bar because the screen resolves no
+              fully-mixed temperature for {notCharted.length === 1 ? "it" : "them"} — no reported
+              effluent temperature to screen, so nothing is asserted about{" "}
+              {notCharted.length === 1 ? "its" : "their"} heat either way. They stay in the corridor
+              permit count below.
+            </p>
+          )}
         </Fragment>
       )
     }
@@ -260,7 +275,11 @@ const pctOf = (f: number | null | undefined): string =>
                       </td>
                       <td>{d.flow?.value != null ? `${d.flow.value} MGD` : "—"}</td>
                       <td>
-                        {d.monitor_only ? (
+                        {/* null = the permit reports no temperature, so monitor-only is unknown
+                            rather than asserted (these rows don't reach this table anyway). */}
+                        {d.monitor_only == null ? (
+                          "—"
+                        ) : d.monitor_only ? (
                           <span class="monitor-only">monitor only</span>
                         ) : (
                           degC(d.permitted_limit_c?.value)

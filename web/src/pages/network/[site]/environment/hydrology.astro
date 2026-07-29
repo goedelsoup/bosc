@@ -11,11 +11,11 @@ import type {
   FacilityItem,
   ProvenancedValue,
   ScenarioResult,
-  ThermalScreenReport,
 } from "@watermark/core/feeds";
 import type { FigureStatData } from "@watermark/core/viz";
 import { withSite } from "@watermark/core/site";
 import { fmtRanged } from "@watermark/core/format";
+import { buildThermal } from "@watermark/core/thermal";
 
 const scenarios = hasFeed("hydrology-scenarios") ? loadFeed<ScenarioResult[]>("hydrology-scenarios") : [];
 
@@ -88,9 +88,10 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
 const hasGroundwater = hasFeed("drawdown") || hasFeed("dewatering");
 
 // The third cooling axis (#1719): this page screens the cooling load's VOLUME against the low
-// flow; the thermal page screens the same load's HEAT against Ohio's temperature criterion. The
-// headline is pulled from the feed so the teaser can never drift from the screen it links to.
-const thermal = hasFeed("thermal") ? loadFeed<ThermalScreenReport>("thermal") : null;
+// flow; the thermal page screens the same load's HEAT against Ohio's temperature criterion. Read
+// through the shared `buildThermal` derivation rather than the raw feed, so the headroom formula
+// lives in one place and this teaser can never disagree with the page it links to.
+const thermal = buildThermal();
 const thermalCritical = thermal?.meta.critical_count ?? 0;
 const thermalOverCriterion = thermal?.meta.permits_over_daily_max_criterion ?? [];
 ---
@@ -161,9 +162,7 @@ const thermalOverCriterion = thermal?.meta.permits_over_daily_max_criterion ?? [
             The screen above weighs the cooling load's <em>volume</em>. The same load also carries
             <strong> heat</strong>: cooling water leaves a plant warm, and Ohio writes a numeric
             temperature standard the {riverName} has only{" "}
-            {thermal.meta.daily_max_c != null && thermal.meta.ambient_c != null
-              ? `${(thermal.meta.daily_max_c - thermal.meta.ambient_c).toFixed(1)} °C`
-              : "a few degrees"}{" "}
+            {thermal.headroomC != null ? `${thermal.headroomC.toFixed(1)} °C` : "a few degrees"}{" "}
             of headroom against at design low flow. The thermal screen reads the modeled campus heat
             load <em>and</em> the corridor's own reported effluent temperatures against it, framed as
             <strong> CWA §316(a)</strong>

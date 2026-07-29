@@ -1581,7 +1581,7 @@ screens:
     permitted_limit_c: null
     permitted_limit_outfall: null
     limit_seasonal: false
-    monitor_only: true
+    monitor_only: null
     reported_exceedances: 0
     over_criterion: null
     over_permitted_limit: null
@@ -1653,7 +1653,7 @@ screens:
     permitted_limit_c: null
     permitted_limit_outfall: null
     limit_seasonal: false
-    monitor_only: true
+    monitor_only: null
     reported_exceedances: 0
     over_criterion: null
     over_permitted_limit: null
@@ -1725,7 +1725,7 @@ screens:
     permitted_limit_c: null
     permitted_limit_outfall: null
     limit_seasonal: false
-    monitor_only: true
+    monitor_only: null
     reported_exceedances: 0
     over_criterion: null
     over_permitted_limit: null

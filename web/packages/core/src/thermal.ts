@@ -102,6 +102,15 @@ export interface ThermalScreenModel {
    * `exceedance_factor` / `detail` instead.
    */
   unbounded: ThermalDischargeScreen[];
+  /**
+   * Every row — modelled *or* observed — that contributes no bar of its own to the criterion
+   * chart, because it resolves no mixed temperature at the chronic design flow (an unbounded
+   * rise, a reach with no cited chronic flow, or a permit carrying no screen at all).
+   *
+   * Kept so a surface can account for the gap explicitly. `mixedRows` is a filter, and a filtered
+   * chart that names no exclusions invites the reader to treat it as the whole cohort.
+   */
+  unresolved: ThermalDischargeScreen[];
   caveats: string[];
 }
 
@@ -156,12 +165,31 @@ export function buildThermal(slug?: string): ThermalScreenModel | null {
   const observed = screens.filter((s) => s.kind === "permitted_discharger");
   const reported = observed.filter((s) => s.dmr?.effluent_c?.value != null);
 
-  // The reach's capacity is a property of the REACH, not of any one row, so read it off whichever
-  // row carries the chronic flow screen — they all screen the same water.
-  const chronic = screens.map((s) => flowAt(s)).find((f) => f != null) ?? null;
+  // The reach's capacity is a property of the REACH, not of any one row: every row screens the
+  // same water at the same cited design flows, so their chronic screens must agree. Take the value
+  // only once that holds — reading it off `screens[0]` and trusting row order would let a genuine
+  // modeling inconsistency render as "the reach's capacity" depending on how the rows sorted.
+  const chronics = screens.map((s) => flowAt(s)).filter((f): f is ThermalFlowScreen => f != null);
+  const chronic = chronics[0] ?? null;
+  if (chronic != null) {
+    const disagree = chronics.find(
+      (f) =>
+        f.thermal_capacity_mw !== chronic.thermal_capacity_mw ||
+        f.design_flow.value !== chronic.design_flow.value,
+    );
+    if (disagree != null) {
+      throw new Error(
+        `thermal: rows disagree on the reach's ${CHRONIC_FLOW_LABEL} screen — ` +
+          `${chronic.design_flow.value} cfs / ${chronic.thermal_capacity_mw} MW vs ` +
+          `${disagree.design_flow.value} cfs / ${disagree.thermal_capacity_mw} MW. ` +
+          "They screen the same water, so this is a defect in the screen, not a display choice.",
+      );
+    }
+  }
 
   const mixedRows: ThermalMixedRow[] = [];
   const unbounded: ThermalDischargeScreen[] = [];
+  const unresolved: ThermalDischargeScreen[] = [];
   for (const s of screens) {
     const f = flowAt(s);
     const mixed = f?.mixed_c?.value;
@@ -180,10 +208,13 @@ export function buildThermal(slug?: string): ThermalScreenModel | null {
       });
       continue;
     }
-    // No plottable temperature for the row as a whole. For a modelled facility that is the
-    // *conservative bound* being off the liquid-water scale, not an absence of heat — so fall
-    // through to its partitions, each of which does resolve, and record the row as unbounded so
-    // the page can say why the whole-rejection bar is missing rather than quietly dropping it.
+    // No plottable temperature for the row as a whole. Every such row is recorded — an observed
+    // permit that resolves none is just as absent from the chart as a modelled one, and a chart
+    // that names no exclusions reads as the whole cohort.
+    unresolved.push(s);
+    // For a modelled facility this is the *conservative bound* being off the liquid-water scale,
+    // not an absence of heat — so fall through to its partitions, each of which does resolve, and
+    // record it as unbounded so the page can say why the whole-rejection bar is missing.
     if (s.kind !== "data_center" || s.scenarios.length === 0) continue;
     unbounded.push(s);
     for (const sc of s.scenarios) {
@@ -214,6 +245,7 @@ export function buildThermal(slug?: string): ThermalScreenModel | null {
     reported,
     mixedRows,
     unbounded,
+    unresolved,
     caveats: meta.caveats ?? [],
   };
 }

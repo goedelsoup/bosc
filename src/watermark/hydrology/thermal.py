@@ -224,7 +224,11 @@ class DmrThermalObservation(BaseModel):
     **reported** unit — ICIS carries temperature under 00010 (°C) *and* 00011 (°F) and this
     corridor uses both. ``effluent_c`` is the peak **daily maximum**, matching the form of Ohio's
     numeric criterion. ``monitor_only`` records the permit that requires temperature monitoring
-    but sets no numeric thermal limit — a cited absence, and on the Ottawa the common case.
+    but sets no numeric thermal limit — a cited absence, and on the Ottawa the common case. It is
+    ``None``, never ``True``, for a permit that reports no temperature at all: "monitors but is not
+    capped" is a claim about a monitoring requirement we have no record of, and asserting it off a
+    field default would contradict ``meta.monitor_only_permits`` (which counts only permits with a
+    reported record).
     ``instream_c`` is the permit's own upstream/downstream river station where it has one: an
     observed *receiving-water* temperature, categorically different from an effluent reading.
     """
@@ -245,7 +249,7 @@ class DmrThermalObservation(BaseModel):
     permitted_limit_c: ProvenancedValue | None = None  # warm-season numeric daily-max ceiling
     permitted_limit_outfall: str | None = None
     limit_seasonal: bool = False
-    monitor_only: bool = True
+    monitor_only: bool | None = None
     reported_exceedances: int = 0  # rows ECHO itself flagged (never computed here)
     over_criterion: bool | None = None  # peak daily max at/over the Ohio daily-max criterion
     over_permitted_limit: bool | None = None
@@ -770,7 +774,9 @@ def _observation(
         )
 
     if outfall is None:
-        obs.monitor_only = obs.permitted_limit_c is None
+        # No temperature record on any outfall, so there is nothing to call monitor-only: leave it
+        # `None` (unknown). Setting it True here would read as "monitors but is not capped" about a
+        # permit whose monitoring requirement we have no record of. The absence itself is the note.
         obs.note = _absence_note(permit, record, available=available)
         return obs
 
@@ -781,10 +787,11 @@ def _observation(
     obs.reported_unit = temp.reported_unit
     obs.n_obs = temp.n_obs
     obs.mean_monthly_avg_c = temp.mean_monthly_avg_c
-    # `monitor_only` is a property of the outfall that actually discharges, NOT of the permit:
-    # the Lima Refinery carries an 85 degF daily-max limit on outfall 003 (which did not
-    # discharge in the window) while outfall 001 — the one screened here — carries none. Reading
-    # the permit-wide limit as this outfall's cap would report a ceiling that does not bind it.
+    # `monitor_only` is a property of the screened outfall, NOT of the permit: the Lima Refinery
+    # carries an 85 degF daily-max limit on outfall 003 while outfall 001 — the one carrying the
+    # reported temperature screened here — carries none. Reading the permit-wide limit as this
+    # outfall's cap would report a ceiling that does not bind it. (What the record supports is that
+    # the limit sits elsewhere; it does not establish whether outfall 003 discharged.)
     obs.monitor_only = temp.limit_daily_max_c is None and temp.limit_monthly_avg_c is None
     obs.reported_exceedances = temp.reported_exceedances
     if temp.peak_daily_max_c is not None:
