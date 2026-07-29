@@ -64,10 +64,11 @@ _OUTFALL_MANNING_N = 0.013
 _OUTFALL_SLOPES_PCT: tuple[float, ...] = (0.3, 0.5, 1.0)
 _DISCHARGE_RETURN_PERIODS: tuple[int, ...] = (10, 25, 100)
 
-# The NEH-630 Ch. 16 flat/swampy-terrain SCS peak factor, used ONLY to state the peaks'
-# terrain sensitivity in the screen's caveats (#1610). The reported peaks run on the site's
-# resolved factor (`SiteProfile.uh_peak_factor`, else the cited 484); adopting 300 for a site
-# is a reviewed, separately-cited profile edit, not something this screen decides.
+# The flat/swampy end of NEH-630 Ch. 16's published SCS peak-factor range, used ONLY to state
+# the peaks' terrain sensitivity in the screen's caveats (#1610) — a published reference value,
+# not a claim about any site's landform. The reported peaks run on the site's resolved factor
+# (`SiteProfile.uh_peak_factor`, else the cited 484); adopting this end for a site is a reviewed,
+# separately-cited profile edit, not something this screen decides.
 _FLAT_TERRAIN_PEAK_FACTOR = 300.0
 
 
@@ -432,7 +433,9 @@ def _route_campus_outfall(
         return None
     # Route on the hydrograph's OWN step: the SCS unit-duration rule refines it below 0.1 hr for
     # a short-Tc catchment (#1610), and a mismatched routing dt would silently mis-lag the reach.
-    dt_hr = post.times_hr[0]
+    # Read the exact carried step, never `times_hr[0]` — that is rounded for display, and the
+    # rounding would propagate into the padding length, the Courant number, and the routed lag.
+    dt_hr = post.dt_hr
     headroom = round(_ROUTING_HEADROOM_HR / dt_hr)
     padded = np.concatenate([inflow, np.zeros(headroom, dtype=np.float64)])
     times = np.arange(1, padded.size + 1, dtype=np.float64) * dt_hr
@@ -550,10 +553,10 @@ def screen_campus_discharge(
         if rp == design_return_period_yr:
             design_post = post  # the at-outfall hydrograph routed to the confluence below
             # Terrain sensitivity of the SCS peak factor (WS-10 / #1610): the headline peaks run
-            # on the standard-hydrograph 484, but NEH-630 Ch. 16 puts flat/swampy ground — which
-            # the Black Swamp lake plain is, pre-development — nearer 300. Recomputed here only
-            # to state the bracket in the caveats; it never displaces the reported peak, and it
-            # leaves runoff VOLUME (the detention deficit) untouched.
+            # on the site's resolved factor, but NEH-630 Ch. 16's range spans ~100 to ~600.
+            # Recomputed at the published flat/swampy end only to state the bracket in the
+            # caveats — it never displaces the reported peak, asserts nothing about this site's
+            # terrain, and leaves runoff VOLUME (the detention deficit) untouched.
             design_post_flat = simulate_runoff(
                 area_acres=acres,
                 cn_parts=post_parts,
@@ -706,34 +709,52 @@ def screen_campus_discharge(
             "upper bounds and the confluence peak a lower bound; reaches between the outfall and "
             "the confluence see intermediate, larger peaks (the at-outfall peak-to-7Q10 ratio, "
             "unattenuated, is the headline erosion signal this routing does not soften).",
-            _peak_factor_caveat(resolved_peak_factor, design_post, design_post_flat),
+            _peak_factor_caveat(
+                resolved_peak_factor, prof.uh_peak_factor, design_post, design_post_flat
+            ),
         ],
     )
 
 
 def _peak_factor_caveat(
-    resolved: float, design_post: Hydrograph | None, design_post_flat: Hydrograph | None
+    resolved: float,
+    profile_factor: float | None,
+    design_post: Hydrograph | None,
+    design_post_flat: Hydrograph | None,
 ) -> str:
-    """The SCS peak factor's terrain sensitivity, stated on the design storm's own numbers."""
+    """The SCS peak factor's terrain sensitivity, stated on the design storm's own numbers.
+
+    Site-generic by construction: it names the *published* NEH-630 range and where the resolved
+    factor came from, and never asserts what THIS site's terrain is. Claiming a landform (and so
+    which end of the range applies) is a cited, reviewed `SiteProfile.uh_peak_factor` edit — a
+    screen that asserted it for every site would be fabricating terrain for the peers.
+    """
+    origin = (
+        f"declared for this site on `SiteProfile.uh_peak_factor` ({profile_factor:g})"
+        if profile_factor is not None
+        else "the cited standard-hydrograph default; no per-site factor is declared on "
+        "`SiteProfile.uh_peak_factor`"
+    )
     base = (
-        f"Peaks run on the SCS unit-hydrograph peak factor {resolved:g} (the standard-hydrograph "
-        "value; `SiteProfile.uh_peak_factor` overrides it per site). The factor is a TERRAIN "
-        "property — NEH-630 Ch. 16 puts flat/swampy ground, which the Black Swamp lake plain is, "
-        f"nearer {_FLAT_TERRAIN_PEAK_FACTOR:g}"
+        f"Peaks run on the SCS unit-hydrograph peak factor {resolved:g} — {origin}. The factor is "
+        "a TERRAIN property, not a universal constant: NEH-630 Ch. 16 spans ~100 (wetland "
+        f"storage) through {_FLAT_TERRAIN_PEAK_FACTOR:g} (flat/swampy) to ~600 (steep). The "
+        f"published flat end, {_FLAT_TERRAIN_PEAK_FACTOR:g}"
     )
     if design_post is not None and design_post_flat is not None and design_post.peak_cfs:
         drop = 100.0 * (1.0 - design_post_flat.peak_cfs / design_post.peak_cfs)
         base += (
-            f", which would put the design-storm post-development peak at "
+            f", would put the design-storm post-development peak at "
             f"{design_post_flat.peak_cfs:,.0f} cfs instead of {design_post.peak_cfs:,.0f} "
             f"(~{drop:.0f}% lower)"
         )
+    else:
+        base += " would lower the peak substantially"
     return (
         base + ". Runoff VOLUME — and so the detention deficit — is unchanged by the peak factor; "
-        "only the rate is. No calibrated peak factor is on record for this catchment, and the "
-        "post-development condition is graded and storm-sewered (which argues back toward the "
-        "standard value), so the reported peaks stay on the cited default and this is the "
-        "bracket, not a correction."
+        "only the rate is. This is the published sensitivity BRACKET around the resolved factor, "
+        "not a correction to it: moving a site off its resolved factor needs a calibrated or "
+        "cited terrain basis for that catchment, recorded on the profile."
     )
 
 

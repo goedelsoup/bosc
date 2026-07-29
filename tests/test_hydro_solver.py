@@ -175,11 +175,17 @@ def test_gamma_unit_hydrograph_tracks_the_tabulated_neh_curve() -> None:
     assert gamma[x == 1.0] == pytest.approx(1.0)  # the peak is at t = Tp by construction
 
 
-def test_peak_factor_conserves_volume_at_every_value() -> None:
+def test_peak_factor_conserves_volume_at_every_value(hydro_settings: Settings) -> None:
     # The defect this closes: rescaling ONE fixed dimensionless shape by a different peak factor
     # silently drops (or invents) runoff volume — a "flat basin" 300 would lose 38% of it. The
     # shape is solved from the factor instead, so volume reconciles with depth at any value.
-    common = {"area_acres": 200.0, "curve_number": 88.0, "tc_hr": 0.75, "storm_depth_in": 4.0}
+    common = {
+        "area_acres": 200.0,
+        "curve_number": 88.0,
+        "tc_hr": 0.75,
+        "storm_depth_in": 4.0,
+        "settings": hydro_settings,  # hermetic: the Ia ratio resolves off the fixture, not ambient
+    }
     for factor in (200.0, 300.0, 484.0, 600.0):
         h = simulate_runoff(**common, peak_factor=factor)
         # abs=1e-3: volume_acft is stored to 3 decimals, which is the only slack here.
@@ -213,16 +219,42 @@ def test_unit_duration_obeys_the_scs_rule_and_divides_the_requested_step() -> No
     assert unit_duration_hr(0.2, 0.1) == pytest.approx(0.025)  # a small paved catchment refines
 
 
-def test_short_tc_catchment_peaks_higher_under_the_unit_duration_rule() -> None:
+def test_short_tc_catchment_peaks_higher_under_the_unit_duration_rule(
+    hydro_settings: Settings,
+) -> None:
     # The bias the rule removes: pinning the unit duration at the 0.1-hr output step broadens the
     # unit hydrograph for a small paved catchment (Tp = D/2 + 0.6*Tc), flattening its peak.
-    common = {"area_acres": 3.0, "curve_number": 98.0, "tc_hr": 0.2, "storm_depth_in": 4.25}
-    refined = simulate_runoff(**common)
-    assert refined.times_hr[0] == pytest.approx(unit_duration_hr(0.2, 0.1))
-    assert refined.times_hr[0] < 0.1  # the returned series lands on the refined grid
+    common = {
+        "area_acres": 3.0,
+        "curve_number": 98.0,
+        "storm_depth_in": 4.25,
+        "settings": hydro_settings,  # hermetic: peak factor + Ia resolve off the fixture
+    }
+    refined = simulate_runoff(**common, tc_hr=0.2)
+    # dt_hr is the EXACT computed step; times_hr is rounded for display, so assert on dt_hr.
+    assert refined.dt_hr == pytest.approx(unit_duration_hr(0.2, 0.1))
+    assert refined.dt_hr < 0.1  # the returned series lands on the refined grid
     # A long-Tc basin is untouched — the sub-hourly burst never reaches its peak.
-    slow = simulate_runoff(area_acres=3.0, curve_number=98.0, tc_hr=8.0, storm_depth_in=4.25)
-    assert slow.times_hr[0] == pytest.approx(0.1)
+    slow = simulate_runoff(**common, tc_hr=8.0)
+    assert slow.dt_hr == pytest.approx(0.1)
+
+
+def test_hydrograph_carries_the_exact_step_not_the_rounded_display_time(
+    hydro_settings: Settings,
+) -> None:
+    # Tc 0.3 hr refines the unit duration to 0.1/3 = 0.0333... — a step `times_hr` (rounded to 4
+    # decimals for display) cannot represent. A caller re-deriving the step from times_hr[0] would
+    # inherit that rounding into its padding length, Courant number and routed lag, so the exact
+    # value is carried on the hydrograph instead.
+    h = simulate_runoff(
+        area_acres=3.0,
+        curve_number=98.0,
+        tc_hr=0.3,
+        storm_depth_in=4.25,
+        settings=hydro_settings,
+    )
+    assert h.dt_hr == pytest.approx(0.1 / 3, rel=1e-12)  # exact, unrounded
+    assert h.times_hr[0] != pytest.approx(h.dt_hr, rel=1e-12)  # display value HAS lost precision
 
 
 def test_excess_matches_closed_form() -> None:

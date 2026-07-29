@@ -48,6 +48,26 @@ def test_sanitary_inp_has_dwf_and_rdii() -> None:
     assert wwtp in text
 
 
+def test_deck_rejects_a_fractional_minute_time_step() -> None:
+    # SWMM timestamps are H:MM. The SCS unit-duration rule can produce a sub-6-minute step for a
+    # fast catchment (#1610) — e.g. 0.025 hr = 1.5 min — which would round successive rows onto
+    # colliding minute labels and silently mis-time the storm. Both public builders refuse it.
+    for dt_hr in (0.025, 0.1 / 7, 0.0):  # 1.5 min (the Tc 0.2 hr catchment), 0.857 min, zero
+        with pytest.raises(ValueError, match="whole number of minutes"):
+            inp.stormwater_inp(area_acres=100.0, pct_imperv=90.0, depth_in=4.0, dt_hr=dt_hr)
+        with pytest.raises(ValueError, match="whole number of minutes"):
+            inp.sanitary_inp(
+                base_mgd=2.5, sewershed_acres=300.0, rdii_r=0.05, depth_in=4.0, dt_hr=dt_hr
+            )
+    # A whole-minute step still builds — including a refined one, since not every refinement is
+    # fractional: 0.1/3 hr is exactly 2 minutes. The guard rejects unrepresentable, not sub-6-min.
+    for dt_hr in (0.1, 0.25, 0.1 / 3):
+        assert (
+            "[TIMESERIES]"
+            in inp.stormwater_inp(area_acres=100.0, pct_imperv=90.0, depth_in=4.0, dt_hr=dt_hr)[0]
+        )
+
+
 def test_hyetograph_timeseries_conserves_depth() -> None:
     # Sum of (intensity * dt) over the lines should recover the storm depth.
     dt = 0.1
