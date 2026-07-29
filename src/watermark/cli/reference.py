@@ -36,8 +36,9 @@ def npdes(
 
     This is the **refresh path** (#1698): the basin's curated receiving-water overlay
     (``reference/echo/curation/<basin>-wwtp.receiving-water.yaml``) is re-applied to the
-    fresh pull, so a re-pull never clobbers reviewed data. A correction that no longer
-    reconciles against live ECHO aborts the run and nothing is written.
+    fresh pull, so a re-pull never clobbers reviewed data. A correction that now *disagrees*
+    with live ECHO (``conflict``) or whose facility has vanished (``stale``) aborts the run
+    with nothing written; one ECHO has caught up with (``superseded``) just gets reported.
     """
     from watermark.hydrology.connectors import echo, echo_curation
 

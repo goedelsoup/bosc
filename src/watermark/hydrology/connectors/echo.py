@@ -570,9 +570,19 @@ def curate_inventory(
     Split out of :func:`write_inventory` so a refresh can be reconciled (and refused, on a
     conflict or a stale entry) *before* anything is written — see
     :mod:`watermark.hydrology.connectors.echo_curation`.
+
+    Curation scope comes from the HUC-8s this pull *queried* (``HucResult.huc8``), not from
+    the rows they returned: a subbasin that came back empty must still count as looked-at, or
+    a correction whose facility vanished would be written off as out-of-scope.
     """
     deduped = deduplicate(results)
-    return deduped, echo_curation.curate(deduped, basin, settings=settings)
+    curation = echo_curation.curate(
+        deduped,
+        basin,
+        queried_huc8s=frozenset(r.huc8 for r in results),
+        settings=settings,
+    )
+    return deduped, curation
 
 
 def write_inventory(
@@ -591,7 +601,8 @@ def write_inventory(
 
     The basin's curated receiving-water overlay is merged in before writing (pass an
     already-reconciled ``curated`` pair to reuse one from :func:`curate_inventory` rather
-    than reconciling twice). A correction that no longer reconciles against the pull raises
+    than reconciling twice). A correction that now *disagrees* with the pull (``conflict``)
+    or whose facility has vanished from it (``stale``) raises
     :class:`~watermark.hydrology.connectors.echo_curation.CurationError` and **nothing is
     written** — a re-pull must never quietly drop reviewed data (#1698).
     """

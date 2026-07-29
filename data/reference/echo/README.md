@@ -93,11 +93,19 @@ the ECHO value observed when it was reviewed. Two modes:
   independent regulatory document, and which nothing downstream screens on.
 
 **The overlay never overrides live ECHO silently.** If ECHO has moved off the reviewed
-`echo_value`, the pull *refuses to write* and names what changed — `superseded` (ECHO now
-supplies the same water; retire the entry), `conflict` (ECHO now supplies a different one;
-reconcile the document), or `stale` (the facility is gone from a pull that covered its
-subbasin; the permit was terminated or re-keyed). Each pull prints an outcome table and
-records the applied set in every emitted file's `meta.receiving_water_curation`.
+`echo_value`, the pull names what changed — and whether it can still write depends on what
+moved:
+
+- **`conflict`** (ECHO now supplies a *different* water) and **`stale`** (the facility is
+  gone from a pull that covered its subbasin — a terminated or re-keyed permit) **refuse the
+  write**. Nothing is emitted until a human reconciles the document against ECHO.
+- **`superseded`** (ECHO now supplies the *same* water itself) does **not** block: the
+  refresh completes normally, ECHO's own value stands in the field, the row carries no
+  curation provenance, and the run reports that the overlay entry is now redundant and can
+  be retired.
+
+Each pull prints an outcome table and records the applied set in every emitted file's
+`meta.receiving_water_curation`.
 
 Adding a basin's overlay is a new `curation/<basin>-wwtp.receiving-water.yaml` plus a
 catalog entry — no code change. A basin with no overlay pulls exactly as before.
