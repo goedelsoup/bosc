@@ -38,9 +38,11 @@ def test_storm_peaks_increase_with_return_period(hydro_settings: Settings) -> No
     assert peaks == sorted(peaks)  # monotonic in return period
     p2, p100 = rf.peak(2), rf.peak(100)
     assert p2 is not None and p100 is not None
-    # Transient surges of a few cfs — far larger than the sustained flow, but episodic.
-    assert 2.0 < p2.peak_cfs < 4.0
-    assert 5.0 < p100.peak_cfs < 8.0
+    # Transient surges of several cfs — far larger than the sustained flow, but episodic. The
+    # band is roughly 2.5x its pre-#1610 value: this catchment (Tc 0.2 hr) is where the smeared
+    # hourly hyetograph and the over-long unit duration understated the peak most.
+    assert 6.0 < p2.peak_cfs < 9.0
+    assert 15.0 < p100.peak_cfs < 20.0
     assert p100.peak_cfs > 100 * rf.mean_annual_cfs.value  # storm >> sustained
 
 

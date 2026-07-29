@@ -15,6 +15,25 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   decks for the real engine; don't blur the two.
 - The cited regulatory **7Q10** lives in `lowflow.py`; the NWIS observed minimum only
   sanity-checks it — don't substitute one for the other.
+- **The design-storm peak has three coupled knobs — don't touch one alone** (WS-10 / #1610).
+  (1) The **rainfall distribution** (`solver/rainfall.py`) is *built*, not tabulated: the NRCS
+  WinTR-20 algorithm published in NEH-630 Ch. 4 §630.0407, driven by the duration ratios embedded
+  in the standard Type II (fig. 4-46 col. 3), at its native 0.1-hr (6-minute) step. A 1-hour table
+  interpolated onto a 0.1-hr grid understates the central burst ~3x, which biases every short-Tc
+  catchment low. `build_distribution(ratios)` is the seam a site-specific NOAA Atlas-14 ratio set
+  plugs into — NEH-630 §630.0403 B(8) says the legacy Type II should be *discontinued* in Atlas-14
+  areas, and Lima's own committed Atlas-14 point gives a 60-min/24-hr ratio of 0.51 against Type
+  II's 0.454, so Type II still under-states this corridor's burst. (2) The **peak factor** sets the
+  dimensionless UH's SHAPE, not just its height: `peak_factor = 645.33 / K` where `K` is the area
+  under the curve, so `solver/runoff.py` solves the NEH-630 Ch. 16 gamma shape parameter from the
+  factor and volume is conserved at any value. Per-site via `SiteProfile.uh_peak_factor` (cited),
+  per-call via `simulate_runoff(peak_factor=)`, else the cited 484. **A flat-terrain 300 lowers the
+  peak ~30% and leaves runoff VOLUME untouched** — adopting one for a site is a reviewed, cited
+  profile edit, never a screen's own decision. (3) The **unit-rainfall duration** `D <= 0.133*Tc`
+  is not the output step: `simulate_runoff` refines `dt_hr` to an integer sub-multiple satisfying
+  it and returns the series on that finer grid. A caller superposing several catchments (the
+  confluence graph in `hydrograph_routing.py`) must therefore share ONE grid — it drops the whole
+  network to the finest step required and warns, rather than summing series on different clocks.
 - **Cooling is dispatched by archetype** (`cooling_models.py`, epic #1060): the
   `CoolingModelType` enum is keyed on physical **mechanism** — "open loop / closed
   loop" are ambiguous industry labels kept only as documented per-spec aliases.

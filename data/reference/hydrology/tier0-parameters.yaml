@@ -25,7 +25,11 @@ runoff:
     confidence: high
     note: >-
       Standard-hydrograph value, not universal: flat/swampy watersheds use ~300, steep ones up
-      to ~600. A calibrated basin should override via `simulate_runoff(peak_factor=...)`.
+      to ~600. Override per SITE via `SiteProfile.uh_peak_factor` (with its own citation), or
+      per CALL via `simulate_runoff(peak_factor=...)`; both beat this value. The factor sets the
+      dimensionless unit hydrograph's SHAPE, not just its height — `solver.runoff` solves the
+      NEH-630 Ch. 16 gamma shape parameter from it (m = 3.70 at 484) so runoff volume is
+      conserved at any factor, which rescaling one fixed curve would not do (WS-10 / #1610).
 
   # Initial abstraction as a fraction of maximum retention S: Ia = initial_abstraction_ratio * S.
   initial_abstraction_ratio:

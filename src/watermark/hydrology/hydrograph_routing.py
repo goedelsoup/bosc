@@ -38,7 +38,7 @@ from watermark.hydrology.model import (
     RoutedHydrographNetwork,
 )
 from watermark.hydrology.solver.routing import route_reach
-from watermark.hydrology.solver.runoff import simulate_runoff
+from watermark.hydrology.solver.runoff import simulate_runoff, unit_duration_hr
 from watermark.logging import get_logger
 
 log = get_logger(__name__)
@@ -103,6 +103,7 @@ def route_storm_network(
     site_label: str = "",
     dt_hr: float = _DEFAULT_DT_HR,
     duration_hr: float = _DEFAULT_DURATION_HR,
+    settings: Settings | None = None,
 ) -> RoutedHydrographNetwork:
     """Route one design storm's hydrographs down the topology and superpose at confluences (pure).
 
@@ -112,16 +113,30 @@ def route_storm_network(
     share one time grid (padded with a routing-headroom tail so a lagged peak is never clipped).
     Returns the routed outlet hydrograph, the naive summed (un-routed) hydrograph, and per-reach
     attenuation/lag.
+
+    ``dt_hr`` is the *requested* shared step. Superposition at a confluence requires ONE grid, so
+    if any catchment's time of concentration forces a finer SCS unit duration (#1610), the whole
+    network drops to the finest one required and says so in ``warnings`` — the alternative,
+    letting each catchment keep its own step, would sum series that are not on the same clock.
     """
     warnings: list[str] = []
 
     # 1. Local design-storm inflow at each contributing (catchment) node, on a shared horizon.
+    catchments = [(n.id, c) for n in nodes if (c := table.catchments.get(n.id)) is not None]
+    shared_dt_hr = min(
+        (unit_duration_hr(c.tc_hr.value, dt_hr) for _, c in catchments), default=dt_hr
+    )
+    if shared_dt_hr < dt_hr:
+        warnings.append(
+            f"a catchment's time of concentration requires an SCS unit duration below the "
+            f"requested dt={dt_hr:g} hr; the whole network is routed at dt={shared_dt_hr:g} hr so "
+            "the confluence superposition stays on one time grid"
+        )
+    dt_hr = shared_dt_hr
+
     local: dict[str, NDArray[np.float64]] = {}
     base_len = 0
-    for node in nodes:
-        catch = table.catchments.get(node.id)
-        if catch is None:
-            continue
+    for node_id, catch in catchments:
         hg = simulate_runoff(
             area_acres=catch.area_acres.value,
             curve_number=catch.curve_number.value,
@@ -129,9 +144,10 @@ def route_storm_network(
             storm_depth_in=storm_depth_in,
             dt_hr=dt_hr,
             duration_hr=duration_hr,
+            settings=settings,
         )
-        local[node.id] = np.asarray(hg.flows_cfs, dtype=np.float64)
-        base_len = max(base_len, local[node.id].size)
+        local[node_id] = np.asarray(hg.flows_cfs, dtype=np.float64)
+        base_len = max(base_len, local[node_id].size)
 
     # Report typo'd reaches.yaml keys (both blocks) instead of silently ignoring them: a
     # catchment/reach keyed to a non-existent node contributes nothing and is a data error.
@@ -315,6 +331,7 @@ def build_routed_hydrograph(
         return_period_yr=return_period_yr,
         storm_depth_in=storm.depth.value,
         site_label=active_profile(settings).place,
+        settings=settings,  # hermetic: the UH peak factor resolves off the passed settings
     )
 
 

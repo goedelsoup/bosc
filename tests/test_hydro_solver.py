@@ -15,8 +15,136 @@ from watermark.hydrology.solver.curve_number import (
     storage_s,
     weighted_excess_rainfall,
 )
-from watermark.hydrology.solver.rainfall import scs_type_ii_hyetograph
-from watermark.hydrology.solver.runoff import simulate_runoff
+from watermark.hydrology.solver.rainfall import (
+    _TYPE_II_DURATION_RATIOS,
+    build_distribution,
+    scs_type_ii_hyetograph,
+)
+from watermark.hydrology.solver.runoff import (
+    _CFS_HR_PER_IN_SQMI,
+    gamma_shape_for,
+    simulate_runoff,
+    unit_duration_hr,
+)
+
+# --------------------------------------------------------------------------------------
+# WS-10 / #1610 — design-storm peak fidelity: the rainfall distribution's own references.
+# --------------------------------------------------------------------------------------
+
+# NEH-630 Ch. 4 figure 4-63: the 25-yr duration ratios for Columbus, OH (WSO Airport), the
+# handbook's worked example for the 630.0407 construction :func:`build_distribution` implements.
+_NRCS_EXAMPLE_RATIOS: dict[float, float] = {
+    5 / 60: 0.1464,
+    10 / 60: 0.2252,
+    15 / 60: 0.2770,
+    30 / 60: 0.3919,
+    1.0: 0.5068,
+    2.0: 0.6014,
+    3.0: 0.6396,
+    6.0: 0.7568,
+    12.0: 0.8784,
+}
+# The cumulative rain ratios the handbook prints for that example (figures 4-65 through 4-69,
+# plus the step-8 value at hour 12), sampled across every segment of the construction.
+_NRCS_EXAMPLE_CRR: dict[float, float] = {
+    1.0: 0.0045,
+    6.0: 0.0608,
+    9.0: 0.1216,
+    10.0: 0.1594,
+    10.5: 0.1802,
+    10.6: 0.1818,
+    11.0: 0.1993,
+    11.4: 0.2349,
+    11.5: 0.2466,
+    11.6: 0.2657,
+    11.7: 0.2903,
+    11.8: 0.3270,
+    11.9: 0.3770,
+    12.0: 0.46081,
+    12.1: 0.6230,
+    12.5: 0.7534,
+    13.0: 0.8007,
+    15.0: 0.8784,
+    18.0: 0.9392,
+    20.0: 0.9685,
+    24.0: 1.0000,
+}
+
+# The legacy 1-hour Type-II table this module used before #1610 (NRCS Type II, hours 0..24).
+# Kept as the shape anchor: the reconstruction must reproduce it everywhere EXCEPT the central
+# burst, which is precisely the hour an hourly table cannot resolve.
+_LEGACY_HOURLY_TYPE_II: tuple[float, ...] = (
+    0.000, 0.011, 0.022, 0.035, 0.048, 0.063, 0.080, 0.098, 0.120, 0.147, 0.181, 0.235,
+    0.663, 0.772, 0.820, 0.850, 0.880, 0.898, 0.912, 0.926, 0.938, 0.948, 0.958, 0.974, 1.000,
+)  # fmt: skip
+
+# NEH-630 Table 16-1 (abridged) — the tabulated dimensionless unit hydrograph, q/Qp vs t/Tp.
+# The analytic gamma form the solver now uses must track it; the table's own area implies a peak
+# factor of ~476 rather than 484, which is why the tolerance below is a few percent and not zero.
+_NEH_TABLE_16_1: tuple[tuple[float, float], ...] = (
+    (0.0, 0.0), (0.1, 0.015), (0.2, 0.075), (0.3, 0.16), (0.4, 0.28), (0.5, 0.43), (0.6, 0.60),
+    (0.7, 0.77), (0.8, 0.89), (0.9, 0.97), (1.0, 1.0), (1.1, 0.98), (1.2, 0.92), (1.3, 0.84),
+    (1.4, 0.75), (1.5, 0.66), (1.6, 0.56), (1.8, 0.42), (2.0, 0.32), (2.2, 0.24), (2.4, 0.18),
+    (2.6, 0.13), (2.8, 0.098), (3.0, 0.075), (3.5, 0.036), (4.0, 0.018), (4.5, 0.009),
+)  # fmt: skip
+
+
+def test_distribution_reproduces_the_nrcs_worked_example() -> None:
+    # The construction is NEH-630 Ch. 4 section 630.0407; the handbook prints its own worked
+    # result for Columbus, OH. Reproducing that table to its published rounding is what makes
+    # this an implementation of a cited method rather than a curve we drew.
+    crr = build_distribution(_NRCS_EXAMPLE_RATIOS)
+    for hour, expected in _NRCS_EXAMPLE_CRR.items():
+        assert crr[round(hour * 10)] == pytest.approx(expected, abs=1e-4), f"hour {hour}"
+    assert crr[0] == 0.0 and crr[-1] == pytest.approx(1.0)
+    assert np.all(np.diff(crr) >= -1e-12)
+
+
+def test_type_ii_carries_its_published_duration_ratios() -> None:
+    # The point of building the curve from NEH-630 fig. 4-46's embedded ratios: the maximum
+    # nested window of each duration comes back out at the published depth. The legacy hourly
+    # table cannot — its 1-hour burst is 0.428 of the storm against a published 0.454.
+    crr = build_distribution(_TYPE_II_DURATION_RATIOS)
+    legacy = np.interp(np.arange(241) * 0.1, np.arange(25.0), _LEGACY_HOURLY_TYPE_II)
+
+    def max_window(curve: np.ndarray, hours: float) -> float:
+        n = round(hours * 10)
+        return float(np.max(curve[n:] - curve[:-n]))
+
+    for duration in (1.0, 2.0, 3.0, 6.0, 12.0):
+        assert max_window(crr, duration) == pytest.approx(
+            _TYPE_II_DURATION_RATIOS[duration], abs=5e-4
+        ), f"{duration} hr"
+    assert max_window(legacy, 1.0) == pytest.approx(0.428, abs=1e-3)  # the understated burst
+
+
+def test_type_ii_matches_the_legacy_hourly_table_away_from_the_burst() -> None:
+    # Fidelity check in the other direction: the reconstruction is the SAME distribution, so it
+    # must track the legacy hourly ordinates everywhere the hourly table was able to resolve.
+    crr = build_distribution(_TYPE_II_DURATION_RATIOS)
+    for hour, legacy in enumerate(_LEGACY_HOURLY_TYPE_II):
+        if hour == 12:  # the central-burst ordinate an hourly table necessarily misplaces
+            continue
+        assert crr[hour * 10] == pytest.approx(legacy, abs=0.025), f"hour {hour}"
+
+
+def test_fine_hyetograph_resolves_the_central_burst() -> None:
+    # The bias this fixes: a 1-hour table interpolated to 0.1 hr spreads the central burst as a
+    # constant hourly intensity, understating the sub-hourly intensity a short-Tc catchment
+    # responds to by ~3x.
+    _, _, incremental = scs_type_ii_hyetograph(4.0, dt_hr=0.1)
+    peak_intensity = float(incremental.max()) / 0.1
+    legacy_hourly_intensity = 0.428 * 4.0  # the legacy table's whole hour-11->12 block, in/hr
+    assert peak_intensity / legacy_hourly_intensity == pytest.approx(3.07, abs=0.1)
+
+
+def test_hyetograph_below_six_minutes_spreads_rather_than_invents_intensity() -> None:
+    # 6 minutes is the finest interval the published NRCS construction resolves. A finer step
+    # must spread that block at constant intensity — never manufacture a sharper one.
+    _, _, coarse = scs_type_ii_hyetograph(4.0, dt_hr=0.1)
+    _, _, fine = scs_type_ii_hyetograph(4.0, dt_hr=0.025)
+    assert float(fine.sum()) == pytest.approx(4.0)
+    assert float(fine.max()) / 0.025 == pytest.approx(float(coarse.max()) / 0.1, rel=1e-9)
 
 
 def test_hyetograph_conserves_mass() -> None:
@@ -24,6 +152,77 @@ def test_hyetograph_conserves_mass() -> None:
     assert cumulative[-1] == pytest.approx(4.0)
     assert float(incremental.sum()) == pytest.approx(4.0)
     assert np.all(np.diff(cumulative) >= -1e-9)  # monotonic non-decreasing
+
+
+def test_distribution_rejects_an_incomplete_ratio_set() -> None:
+    with pytest.raises(ValueError, match="needs ratios for durations"):
+        build_distribution({1.0: 0.454, 24.0: 1.0})
+
+
+# --------------------------------------------------------------------------------------
+# WS-10 / #1610 — the peak factor sets the SHAPE, and the SCS unit-duration rule.
+# --------------------------------------------------------------------------------------
+
+
+def test_gamma_unit_hydrograph_tracks_the_tabulated_neh_curve() -> None:
+    # The analytic form the solver builds at the standard 484 must be the NEH Table 16-1 curve.
+    m = gamma_shape_for(484.0)
+    assert m == pytest.approx(3.70, abs=0.01)
+    x = np.array([t for t, _ in _NEH_TABLE_16_1])
+    tabulated = np.array([q for _, q in _NEH_TABLE_16_1])
+    gamma = x**m * np.exp(m * (1.0 - x))
+    assert float(np.max(np.abs(gamma - tabulated))) < 0.07
+    assert gamma[x == 1.0] == pytest.approx(1.0)  # the peak is at t = Tp by construction
+
+
+def test_peak_factor_conserves_volume_at_every_value() -> None:
+    # The defect this closes: rescaling ONE fixed dimensionless shape by a different peak factor
+    # silently drops (or invents) runoff volume — a "flat basin" 300 would lose 38% of it. The
+    # shape is solved from the factor instead, so volume reconciles with depth at any value.
+    common = {"area_acres": 200.0, "curve_number": 88.0, "tc_hr": 0.75, "storm_depth_in": 4.0}
+    for factor in (200.0, 300.0, 484.0, 600.0):
+        h = simulate_runoff(**common, peak_factor=factor)
+        # abs=1e-3: volume_acft is stored to 3 decimals, which is the only slack here.
+        assert h.volume_acft == pytest.approx(h.runoff_depth_in / 12.0 * 200.0, abs=1e-3), factor
+
+
+def test_peak_factor_and_its_shape_are_locked_together() -> None:
+    # 645.33 cfs-hr is one inch over one square mile; the peak factor is that constant divided by
+    # the area under the dimensionless curve, which is what makes the two inseparable.
+    for factor in (100.0, 300.0, 484.0, 600.0):
+        m = gamma_shape_for(factor)
+        x = np.linspace(0.0, 400.0, 4_000_001)
+        with np.errstate(divide="ignore"):
+            curve = np.where(x > 0, np.exp(m * np.log(np.where(x > 0, x, 1.0)) + m * (1 - x)), 0.0)
+        assert _CFS_HR_PER_IN_SQMI / float(np.trapezoid(curve, x)) == pytest.approx(
+            factor, rel=1e-4
+        )
+    # A flatter factor spreads the same volume over a longer base, so its peak is lower.
+    assert gamma_shape_for(300.0) < gamma_shape_for(484.0) < gamma_shape_for(600.0)
+
+
+def test_unit_duration_obeys_the_scs_rule_and_divides_the_requested_step() -> None:
+    # D <= 0.133*Tc (NEH-630 Ch. 16), and D must stay an exact sub-multiple of the caller's step
+    # so a network routing several catchments on one grid is never handed off-grid samples.
+    for tc in (0.1, 0.2, 0.35, 0.6, 0.75, 1.0, 2.0, 8.0):
+        d = unit_duration_hr(tc, 0.1)
+        assert d <= 0.133 * tc + 1e-12 or d == 0.1
+        assert d <= 0.1
+        assert round(0.1 / d, 9) == round(round(0.1 / d), 9)  # 0.1 / D is an integer
+    assert unit_duration_hr(1.0, 0.1) == 0.1  # Tc >= 0.75 hr: the rule is already satisfied
+    assert unit_duration_hr(0.2, 0.1) == pytest.approx(0.025)  # a small paved catchment refines
+
+
+def test_short_tc_catchment_peaks_higher_under_the_unit_duration_rule() -> None:
+    # The bias the rule removes: pinning the unit duration at the 0.1-hr output step broadens the
+    # unit hydrograph for a small paved catchment (Tp = D/2 + 0.6*Tc), flattening its peak.
+    common = {"area_acres": 3.0, "curve_number": 98.0, "tc_hr": 0.2, "storm_depth_in": 4.25}
+    refined = simulate_runoff(**common)
+    assert refined.times_hr[0] == pytest.approx(unit_duration_hr(0.2, 0.1))
+    assert refined.times_hr[0] < 0.1  # the returned series lands on the refined grid
+    # A long-Tc basin is untouched — the sub-hourly burst never reaches its peak.
+    slow = simulate_runoff(area_acres=3.0, curve_number=98.0, tc_hr=8.0, storm_depth_in=4.25)
+    assert slow.times_hr[0] == pytest.approx(0.1)
 
 
 def test_excess_matches_closed_form() -> None:

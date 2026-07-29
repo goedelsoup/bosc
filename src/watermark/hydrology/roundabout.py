@@ -146,7 +146,11 @@ def derive_roundabout_flow(
     for rp in return_periods:
         depth = depths[rp]
         h = simulate_runoff(
-            area_acres=area, curve_number=curve_number, tc_hr=tc_hr, storm_depth_in=depth
+            area_acres=area,
+            curve_number=curve_number,
+            tc_hr=tc_hr,
+            storm_depth_in=depth,
+            settings=settings,
         )
         peaks.append(
             RoundaboutStormPeak(
