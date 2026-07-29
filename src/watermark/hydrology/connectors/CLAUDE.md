@@ -45,6 +45,27 @@ GIS, FEMA NFHL, ORC, LSC). Defers to the root [`CLAUDE.md`](../../../../CLAUDE.m
   write proceeds on upstream's own value and the run reports the entry as retirable.
   `mode: caveat` records a correction without touching the field. Reuse this
   shape for any other connector that needs a reviewed correction; don't invent a second one.
+- **Water temperature lives under TWO NPDES parameter codes, and a permit uses one or the
+  other** (`echo_dmr.py`, #1718): **00010** is degrees Celsius, **00011** degrees Fahrenheit.
+  Both are live in the same Lima corridor — the WWTP (OH0026069) reports 00010 while the Lima
+  Refinery (OH0002623) and PCS Nitrogen (OH0002615) report 00011 — so watching only the 00010
+  the epic named would have found *none* of the industrial dischargers. `fetch_thermal_record`
+  pulls both plus the flow (50050) and merges. Reduction rules: a value converts by **its own**
+  stated unit and a stated-but-unrecognized unit **drops** the row (never read as if it were
+  already °C); only a value with no unit label at all falls back to the parameter code's
+  definitional unit. Keep the daily-maximum ("DD") rows apart from the monthly averages ("MK") —
+  Ohio's criterion is itself a daily maximum. A numeric permit limit converts by
+  `LimitUnitDesc` (a permit may cap in a unit the permittee doesn't report in) and is
+  **seasonal**, so the reported figure is the warm-season ceiling with `limit_seasonal` set;
+  a permit with no numeric limit at all is `monitor_only` — a cited absence, not a clean bill.
+  An `Upstream/Downstream Monitoring` location is an **in-stream** (receiving-water) reading,
+  categorically different from an effluent one, and is never averaged in with one.
+- **`fetch_effluent_chart(parameter_code=...)` narrows the pull server-side.** A whole-permit
+  chart for a major industrial permit is enormous (the Lima Refinery's three-year chart is
+  ~19k DMR rows / 22 MB) — unreviewable as a committed fixture. ECHO accepts exactly **one**
+  code (a comma-separated list silently returns nothing), so a caller wanting several makes one
+  call per code and merges. The filter is added to the request only when set, so an unfiltered
+  pull keeps its existing cache key and the pre-#1718 fixtures stay valid.
 - Committed reference datasets a connector regenerates live under
   `data/reference/<source>/` (each with a README naming its source and gaps); raw
   responses cache under the git-ignored `data/cache/`.

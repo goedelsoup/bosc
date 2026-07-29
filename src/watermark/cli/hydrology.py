@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import typer
 from rich.markup import escape
 from rich.table import Table
@@ -13,6 +15,11 @@ from watermark.cli._base import (
     repo_fixtures_dir,
     wrote,
 )
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from watermark.hydrology.thermal import ThermalFlowScreen
 
 
 @app.command()
@@ -92,74 +99,173 @@ def basin_screen() -> None:
     )
 
 
-@app.command(name="thermal")
-def thermal_cmd() -> None:
-    """Screen the site's cooling heat load against its receiving reach's temperature WQS / §316(a).
+_THERMAL_FLAG_COLOR = {
+    # Neither `context` (heat load, no computed exceedance) nor `uncharacterized` (unscreened —
+    # no receiving water / no resolvable load) is a clean bill of health, so neither reads green.
+    "critical": "red",
+    "elevated": "yellow",
+    "exempt": "cyan",
+    "dry": "blue",
+    "context": "white",
+    "uncharacterized": "magenta",
+}
 
-    The heat-side peer of `watermark toxics`: carries each disclosed facility's condenser heat
-    rejection into the receiving water at its cited design low flows (1Q10 / 7Q10 / summer 30Q10)
-    and reads the fully-mixed in-stream temperature against Ohio's daily-maximum temperature
-    criterion and the Great Lakes RIS tolerances. Flags where a permit-level thermal / CWA
-    §316(a) analysis is warranted. Consumes the committed cooling / low-flow / criteria artifacts
-    (no network).
+
+def _thermal_flow_table(screens: Sequence[ThermalFlowScreen], title: str | None = None) -> Table:
+    """Render a list of `ThermalFlowScreen`s as the per-design-flow table."""
+    from watermark.hydrology import thermal
+
+    table = Table(
+        "design flow", "cfs", "capacity (MW)", "mixed degC", "% headroom", "x capacity", "flag",
+        title=title,
+    )  # fmt: skip
+    for fs in screens:
+        # `is not None`, not truthiness: a genuine 0 metric (the no-capacity row's 0% capacity
+        # fraction) is a value to show, not a blank.
+        factor = (
+            thermal._format_factor(fs.exceedance_factor)
+            if fs.exceedance_factor is not None
+            else "—"
+        )
+        headroom = f"{fs.headroom_fraction * 100:.0f}%" if fs.headroom_fraction is not None else "—"
+        fcolor = {"exceedance": "red", "no_capacity": "red", "approach": "yellow"}.get(
+            fs.flag, "green"
+        )
+        table.add_row(
+            fs.flow_label,
+            f"{fs.design_flow.value:g}",
+            f"{fs.thermal_capacity_mw:g}" if fs.thermal_capacity_mw is not None else "—",
+            f"{fs.mixed_c.value:g}" if fs.mixed_c else "—",
+            headroom,
+            factor,
+            f"[{fcolor}]{fs.flag}[/]",
+        )
+    return table
+
+
+@app.command(name="thermal")
+def thermal_cmd(
+    dmr: bool = typer.Option(
+        True,
+        "--dmr/--no-dmr",
+        help="Read the reach's reported ECHO DMR effluent-temperature record (#1718).",
+    ),
+    dmr_start: str | None = typer.Option(
+        None, "--dmr-start", help="DMR window start (ISO); defaults to the committed warm season."
+    ),
+    dmr_end: str | None = typer.Option(
+        None, "--dmr-end", help="DMR window end (ISO); defaults to the committed warm season."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached/fixture connector data only; never touch the network."
+    ),
+    write: bool = typer.Option(
+        False,
+        "--write",
+        help="Persist data/reference/hydrology/thermal-discharge-screen.yaml (else print only).",
+    ),
+) -> None:
+    """Screen the reach's heat load against its temperature WQS / CWA §316(a), vs the DMR record.
+
+    The heat-side peer of `watermark toxics`. Carries each disclosed cooling facility's condenser
+    heat rejection into the receiving water at its cited design low flows (1Q10 / 7Q10 / summer
+    30Q10) and reads the fully-mixed in-stream temperature against Ohio's daily-maximum
+    temperature criterion and the Great Lakes RIS tolerances — and, with `--dmr` (the default),
+    screens every NPDES permit on the same reach on its OWN reported effluent temperature x flow,
+    takes the design ambient from the reach's reported in-stream monitoring, and reports the
+    cooling heat-partition scenarios plus a derived-vs-observed calibration. Flags where a
+    permit-level thermal / CWA §316(a) analysis is warranted.
     """
     from watermark.hydrology import thermal
 
-    inv = thermal.build_screen(get_settings())
+    # `--offline` serves the COMMITTED fixtures, not just a warm local cache: regenerating the
+    # committed screen has to reproduce byte-for-byte on a clean checkout, and a plain
+    # `hydro_offline=True` with an empty `data/cache/` would silently write a screen with no
+    # reported record in it at all.
+    settings = get_settings()
+    if offline:
+        settings = Settings(
+            data_dir=settings.data_dir,
+            site=settings.site,
+            hydro_offline=True,
+            hydro_fixtures_dir=repo_fixtures_dir("hydrology"),
+        )
+    inv = thermal.build_screen(
+        settings,
+        dmr=dmr,
+        dmr_start=dmr_start or thermal.DMR_WINDOW_START,
+        dmr_end=dmr_end or thermal.DMR_WINDOW_END,
+    )
     m = inv.meta
     console.print(
         f"[bold]{escape(m['receiving_water'] or '—')}[/] · {escape(m['zone_rule'] or 'no zone')} · "
-        f"daily-max [bold]{m['daily_max_c']}[/] degC ({escape(m['design_period'] or '—')})"
+        f"daily-max [bold]{m['daily_max_c']}[/] degC ({escape(m['design_period'] or '—')}) · "
+        f"ambient [bold]{m['ambient_c']}[/] degC [dim]({m['ambient_source']})[/]"
     )
+    if m["observed_instream_station"]:
+        console.print(
+            f"[dim]Observed in-stream: {escape(str(m['observed_instream_station']))} = "
+            f"{m['observed_instream_c']} degC (reference design ambient "
+            f"{m['reference_ambient_c']} degC).[/]"
+        )
     for s in inv.screens:
-        # Neither `context` (heat load, no computed exceedance) nor `uncharacterized` (unscreened —
-        # no receiving water / no resolvable load) is a clean bill of health, so neither reads green.
-        color = {
-            "critical": "red",
-            "elevated": "yellow",
-            "exempt": "cyan",
-            "dry": "blue",
-            "context": "white",
-            "uncharacterized": "magenta",
-        }.get(s.flag, "white")
+        color = _THERMAL_FLAG_COLOR.get(s.flag, "white")
         # The condenser rejection carries its own provenance (value + range + [calc] tag) via
         # ProvenancedValue.__str__; escape it (the tag is bracketed) and drop the redundant "~".
-        reject = escape(str(s.reject_heat_mw)) if s.reject_heat_mw else "—"
-        console.print(
-            f"\n[{color}]{s.flag.upper()}[/] [bold]{escape(s.facility)}[/] "
-            f"[dim]({s.cooling_model}, {reject} rejected)[/]"
+        heat = s.reject_heat_mw or s.instream_heat_mw
+        basis = (
+            f"{s.cooling_model}, {escape(str(heat))} rejected"
+            if s.kind == thermal.KIND_DATA_CENTER
+            else f"NPDES {s.npdes_id}, "
+            + (f"{escape(str(heat))} reported-record load" if heat else "no derivable load")
         )
-        table = Table("design flow", "cfs", "capacity (MW)", "exceedance", "% exhausts cap", "flag")
-        for fs in s.flow_screens:
-            # `is not None`, not truthiness: a genuine 0 metric (the no-capacity row's 0% capacity
-            # fraction) is a value to show, not a blank.
-            factor = (
-                thermal._format_factor(fs.exceedance_factor)
-                if fs.exceedance_factor is not None
+        console.print(
+            f"\n[{color}]{s.flag.upper()}[/] [bold]{escape(s.facility)}[/] [dim]({basis})[/]"
+        )
+        if s.flow_screens:
+            console.print(_thermal_flow_table(s.flow_screens))
+        for scenario in s.scenarios:
+            scolor = _THERMAL_FLAG_COLOR.get(scenario.flag, "white")
+            share = (
+                f"{scenario.instream_fraction * 100:.3g}% of the rejection"
+                if scenario.instream_fraction is not None
                 else "—"
             )
-            frac = f"{fs.capacity_fraction * 100:.2g}%" if fs.capacity_fraction is not None else "—"
-            fcolor = {"exceedance": "red", "no_capacity": "red", "approach": "yellow"}.get(
-                fs.flag, "green"
+            console.print(
+                _thermal_flow_table(
+                    scenario.flow_screens,
+                    title=(
+                        f"[{scolor}]{scenario.scenario}[/] — "
+                        f"{scenario.instream_heat_mw.value if scenario.instream_heat_mw else 0:g} MW "
+                        f"to water ({share})"
+                    ),
+                )
             )
-            table.add_row(
-                fs.flow_label,
-                f"{fs.design_flow.value:g}",
-                f"{fs.thermal_capacity_mw:g}" if fs.thermal_capacity_mw is not None else "—",
-                factor,
-                frac,
-                f"[{fcolor}]{fs.flag}[/]",
-            )
-        console.print(table)
+        if s.calibration is not None and s.calibration.note:
+            console.print(f"[dim]calibration ({s.calibration.verdict}): [/]", end="")
+            console.print(escape(s.calibration.note), style="dim")
+        if s.dmr is not None and s.dmr.note:
+            console.print(escape(s.dmr.note), style="dim")
         if s.blowdown_exempt_note:
             console.print(escape(s.blowdown_exempt_note), style="dim")
         console.print(escape(s.detail), style="dim")
     console.print(
-        f"\n[bold]{m['facility_count']}[/] facilities, "
-        f"[red]{m['critical_count']} critical[/] (heat load overwhelms the reach — a §316(a) / "
-        "thermal-mixing-zone trigger). [dim]Conservative once-through-equivalent screen; "
-        "the capacity ratio is robust to the heat-partition assumption.[/]"
+        f"\n[bold]{m['modelled_count']}[/] modelled facilities + [bold]{m['industrial_count']}[/] "
+        f"permitted dischargers on the reach, [red]{m['critical_count']} critical[/] "
+        "(fully-mixed temperature over the daily-max criterion — a §316(a) / thermal-mixing-zone "
+        "trigger)."
     )
+    if m["dmr_window"]:
+        console.print(
+            f"[dim]Reported record {escape(str(m['dmr_window']))}: "
+            f"{m['corridor_permits_with_thermal_record']}/{m['corridor_permits']} permits report "
+            f"an effluent temperature; monitor-only (no numeric thermal limit): "
+            f"{escape(', '.join(m['monitor_only_permits']) or 'none')}; over the daily-max "
+            f"criterion: {escape(', '.join(m['permits_over_daily_max_criterion']) or 'none')}.[/]"
+        )
+    if write:
+        path = thermal.write_screen(inv, settings.reference_dir / "hydrology")
+        wrote(path)
 
 
 @app.command(name="cooling-reconcile")

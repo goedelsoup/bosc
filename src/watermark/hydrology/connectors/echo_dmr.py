@@ -31,6 +31,7 @@ from __future__ import annotations
 
 import math
 import time
+from collections.abc import Callable
 from datetime import date
 from typing import Any, cast
 
@@ -40,7 +41,7 @@ from pydantic import BaseModel, ConfigDict
 from watermark.config import Settings, get_settings
 from watermark.connectors import to_float, to_str
 from watermark.hydrology.connectors._cache import cached_get
-from watermark.hydrology.units import CFS_TO_MGD, mgd_to_cfs
+from watermark.hydrology.units import CFS_TO_MGD, f_to_c, mgd_to_cfs
 from watermark.logging import get_logger
 from watermark.provenance import Confidence, SourceKind
 
@@ -53,6 +54,16 @@ FLOW_PARAM = "50050"  # "Flow, in conduit or thru treatment plant" (the effluent
 # not specifically CSO (WS-25 / #1625).
 OVERFLOW_PARAM = "74063"
 
+# Effluent **temperature** — the thermal-discharge screen's observation (#1718, epic #1715 P3).
+# ICIS carries water temperature under TWO distinct parameter codes, and a permit reports under
+# one or the other, never both: 00010 in degrees Celsius and 00011 in degrees Fahrenheit. Both
+# are live in the same corridor — Lima's WWTP (OH0026069) reports 00010, while the Lima Refinery
+# (OH0002623) and PCS Nitrogen (OH0002615) report 00011 — so a screen that watched only the
+# 00010 the epic named would see *none* of the industrial dischargers it exists to screen.
+TEMP_PARAM_C = "00010"  # "Temperature, water deg. centigrade"
+TEMP_PARAM_F = "00011"  # "Temperature, water deg. fahrenheit"
+TEMP_PARAMS: tuple[str, str] = (TEMP_PARAM_C, TEMP_PARAM_F)
+
 # ECHO returns multiple stat-base rows per period (e.g. a monthly average and a daily
 # maximum). Only the monthly-average series is meaningful for the mean-flow / utilisation
 # computation; mixing in daily-max rows inflates both the mean and n_flow_months. Match it on
@@ -62,6 +73,25 @@ OVERFLOW_PARAM = "74063"
 # whenever ECHO returned only the long "Monthly Average" label (#1601).
 _MONTHLY_AVG_CODE = "MK"
 _MONTHLY_AVG_LABELS = frozenset({"MO AVG", "MONTHLY AVERAGE", "MONTHLY AVG"})
+
+# The **daily-maximum** stat base ("DD"), the peer selector for the temperature reduction. Ohio's
+# numeric temperature criterion is itself a *daily maximum* (OAC 3745-1-35 et al.), so the
+# design-relevant observation is the daily-max row, not the monthly average — a permit reports
+# both for the same period (Lima Refinery outfall 001, Jul-24: 86 degF MO AVG, 89 degF DAILY MX).
+_DAILY_MAX_CODE = "DD"
+_DAILY_MAX_LABELS = frozenset({"DAILY MX", "DAILY MAX", "DAILY MAXIMUM"})
+
+# Temperature units ECHO reports, normalized. A row whose unit is present but unrecognized is
+# dropped (never assumed °C), exactly as an unconvertible flow unit is; the parameter code's
+# definitional unit is the last resort, used only when there is no unit label at all.
+_DEG_C_UNITS = frozenset({"DEG C", "DEG. C", "DEGC", "DEGREES CENTIGRADE", "DEGREES CELSIUS", "C"})
+_DEG_F_UNITS = frozenset({"DEG F", "DEG. F", "DEGF", "DEGREES FAHRENHEIT", "F"})
+
+# ECHO's ``MonitoringLocationDesc`` for an in-stream (receiving-water) station rather than the
+# discharge itself. A permit may require upstream/downstream river monitoring — Lima's WWTP
+# reports outfall 901 "Downstream Monitoring" — which is an OBSERVED receiving-water temperature,
+# categorically different from an effluent reading and never averaged in with one.
+_INSTREAM_LOCATIONS = ("UPSTREAM", "DOWNSTREAM", "INTAKE", "AMBIENT", "BACKGROUND")
 
 # Flow (parameter 50050) is *usually* reported in MGD but not guaranteed — a permit may report
 # GPD or CFS — so the value is converted by its reported unit, never assumed MGD (#1601). A
@@ -178,6 +208,10 @@ class DmrRow(BaseModel):
     stat_base_code: str | None = None  # ECHO StatisticalBaseCode (stable; "MK" = monthly avg)
     limit: float | None
     limit_type: str | None  # ECHO LimitValueTypeDesc (Quantity1, Concentration1, ...)
+    # The unit the LIMIT is expressed in (ECHO LimitUnitDesc) — carried separately from the
+    # reported value's `unit` because a permit may set a limit in a unit the permittee does not
+    # report in. The temperature reduction converts a limit by THIS unit, never by the value's.
+    limit_unit: str | None = None
     exceedance_pct: float | None
     nodi: str | None  # no-data-indicator code (non-null => no value reported)
     violations: list[DmrViolation]  # ECHO-reported NPDESViolations (empty when none)
@@ -275,6 +309,122 @@ class FlowSeasonality(BaseModel):
     citation: str | None
     confidence: Confidence
     asof: str | None  # latest ISO period the series covers (data currency), None if unknown
+
+
+class TemperatureSeries(BaseModel):
+    """One outfall's reported temperature record, reduced to °C (#1718).
+
+    The observation the thermal-discharge screen (:mod:`watermark.hydrology.thermal`) validates
+    its derived effluent/mixed temperatures against. Every figure is the permittee's own
+    [verified] DMR value converted by its **reported** unit — °F (parameter 00011) and °C
+    (00010) both occur, so nothing here is assumed Celsius.
+
+    ``peak_daily_max_c`` is the design-relevant statistic: Ohio's numeric criterion is itself a
+    daily maximum, so the daily-max ("DD") rows are kept apart from the monthly averages ("MK")
+    rather than pooled. ``limit_*`` are populated only where ECHO carries a numeric permit
+    limit; ``monitor_only`` records the (common, and itself a finding) case where the permit
+    requires temperature monitoring but sets **no numeric thermal limit** at all.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    outfall: str
+    outfall_type: str | None
+    monitoring_location: str | None  # "Effluent Gross" | "Downstream Monitoring" | ...
+    instream: bool  # True for an upstream/downstream river station, not the discharge itself
+    parameter_code: str  # 00010 (degC) | 00011 (degF)
+    parameter_desc: str | None
+    reported_unit: str | None  # ECHO's unit verbatim ("deg F"/"deg C") — the conversion basis
+    n_obs: int  # reported (non-null) temperature values in the window, both stat bases
+    peak_daily_max_c: float | None
+    peak_daily_max_period: str | None  # ISO period end of the peak daily-max reading
+    mean_daily_max_c: float | None
+    peak_monthly_avg_c: float | None
+    mean_monthly_avg_c: float | None
+    # The warm-season ceiling where ECHO carries a numeric permit limit (Ohio thermal limits are
+    # typically seasonal, so the highest limit in the window is the one binding at the
+    # peak-summer design condition); `limit_seasonal` records that the limit varied.
+    limit_daily_max_c: float | None
+    limit_monthly_avg_c: float | None
+    limit_seasonal: bool
+    monitor_only: bool  # no numeric temperature limit on any row in the window
+    reported_exceedances: int  # rows ECHO itself flagged (positive ExceedencePct / E-code)
+    asof: str | None  # latest ISO period the series covers
+
+
+class OutfallThermal(BaseModel):
+    """One outfall's temperature series paired with its own reported flow (#1718).
+
+    The heat load a discharge carries is ``rho*cp*Q*(T_effluent - T_ambient)``, so the flow has
+    to come from the **same** outfall as the temperature — pairing a plant-wide flow with one
+    outfall's temperature would silently inflate the load. ``flow_*`` are ``None`` when the
+    permit reports temperature but no flow at this outfall (then no heat load is derivable, and
+    the screen says so rather than substituting another outfall's flow).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    outfall: str
+    monitoring_location: str | None
+    instream: bool
+    temperature: TemperatureSeries
+    n_flow_months: int
+    flow_mean_mgd: float | None  # mean of the monthly-average flow values
+    flow_max_mgd: float | None  # max monthly-average flow
+
+
+class ThermalDmrRecord(BaseModel):
+    """A permit's reported **temperature** record over a window — the thermal DMR read (#1718).
+
+    Built by :func:`thermal_record` from a temperature-filtered :class:`EffluentChart`. The
+    outfalls are split by monitoring location: an *effluent* station measures the discharge, an
+    *in-stream* one (upstream/downstream) measures the receiving water itself. An empty
+    ``outfalls`` list is the finding "this permit reports no temperature in the window" — a
+    cited absence, never read as "no thermal discharge".
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    npdes_id: str
+    name: str | None
+    window: str  # "YYYY-MM-DD..YYYY-MM-DD"
+    permit_status: str | None
+    snc_status: str | None
+    outfalls: list[OutfallThermal] = []
+
+    @property
+    def effluent(self) -> list[OutfallThermal]:
+        """Outfalls measuring the discharge itself (not a river station)."""
+        return [o for o in self.outfalls if not o.instream]
+
+    @property
+    def instream(self) -> list[OutfallThermal]:
+        """Upstream/downstream river stations — an observed *receiving-water* temperature."""
+        return [o for o in self.outfalls if o.instream]
+
+    @property
+    def primary_effluent(self) -> OutfallThermal | None:
+        """The effluent outfall with the warmest reported daily maximum (the binding one).
+
+        Ties (and outfalls with no daily-max reading) fall back to the most-reported series, so
+        a permit whose only temperature rows are monthly averages still resolves an outfall.
+        """
+        eff = [o for o in self.effluent if o.temperature.n_obs > 0]
+        if not eff:
+            return None
+        return max(
+            eff, key=lambda o: (o.temperature.peak_daily_max_c or -273.0, o.temperature.n_obs)
+        )
+
+    @property
+    def warmest_instream(self) -> OutfallThermal | None:
+        """The in-stream station with the warmest reported daily maximum, if any."""
+        rows = [o for o in self.instream if o.temperature.n_obs > 0]
+        if not rows:
+            return None
+        return max(
+            rows, key=lambda o: (o.temperature.peak_daily_max_c or -273.0, o.temperature.n_obs)
+        )
 
 
 class DischargeSummary(BaseModel):
@@ -387,6 +537,7 @@ def _parse_rows(dmrs: list[dict[str, Any]]) -> list[DmrRow]:
                 stat_base_code=to_str(dm.get("StatisticalBaseCode")),
                 limit=to_float(dm.get("LimitValueNmbr")),
                 limit_type=to_str(dm.get("LimitValueTypeDesc")),
+                limit_unit=to_str(dm.get("LimitUnitDesc")),
                 exceedance_pct=_pct_to_float(dm.get("ExceedencePct")),
                 nodi=to_str(dm.get("NODICode")),
                 violations=_parse_violations(dm.get("NPDESViolations")),
@@ -400,12 +551,23 @@ def fetch_effluent_chart(
     *,
     start_date: str,
     end_date: str,
+    parameter_code: str | None = None,
     settings: Settings | None = None,
 ) -> EffluentChart:
     """Fetch the reported effluent record for one NPDES permit over an ISO date window.
 
     ``start_date`` / ``end_date`` are ISO ``YYYY-MM-DD``; ECHO wants ``MM/DD/YYYY``, so
     they are converted here. Raises :class:`EchoDmrError` if ECHO returns no permit.
+
+    ``parameter_code`` narrows the pull to a single NPDES parameter **server-side** (ECHO's own
+    ``parameter_code`` filter). A whole-permit chart for a major industrial permit is enormous —
+    the Lima Refinery's three-year chart is ~19k DMR rows / 22 MB — while the thermal screen
+    needs only temperature and flow, so the filtered pull is what keeps that record cacheable
+    and its committed fixture reviewable. ECHO accepts exactly one code (a comma-separated list
+    silently returns nothing), so a caller wanting several makes one call per code and merges;
+    :func:`fetch_thermal_record` does. A permit that reports nothing under the requested code
+    comes back as a chart with no parameters — a cited absence, not an error. The filter is
+    added to the request only when set, so an unfiltered pull keeps its existing cache key.
     """
     settings = settings or get_settings()
     start = date.fromisoformat(start_date)
@@ -417,6 +579,7 @@ def fetch_effluent_chart(
             "p_id": npdes_id,
             "start_date": start.strftime("%m/%d/%Y"),
             "end_date": end.strftime("%m/%d/%Y"),
+            **({"parameter_code": parameter_code} if parameter_code else {}),
         },
     )
     if not res.get("CWPName") and not res.get("PermFeatures"):
@@ -589,6 +752,248 @@ def flow_seasonality(
         confidence="medium",
         asof=latest_period,
     )
+
+
+def _is_daily_max(row: DmrRow) -> bool:
+    """True for a daily-maximum DMR row (the peer of :func:`_is_monthly_avg`).
+
+    Prefers the stable ICIS ``StatisticalBaseCode`` ("DD"); falls back to the short/long
+    descriptor case-insensitively when ECHO omits the code.
+    """
+    if row.stat_base_code:
+        return _norm(row.stat_base_code) == _DAILY_MAX_CODE
+    return _norm(row.stat_base) in _DAILY_MAX_LABELS
+
+
+def _celsius_by_unit(value: float, unit: str) -> float | None:
+    """Reduce a temperature to °C by a **stated** unit label, or ``None`` if unrecognized.
+
+    A stated-but-unrecognized unit drops the value rather than reading it as if it were already
+    Celsius — the same discipline :func:`_flow_mgd` applies to an unconvertible flow unit.
+    """
+    unit_norm = _norm(unit)
+    if unit_norm in _DEG_C_UNITS:
+        return value
+    if unit_norm in _DEG_F_UNITS:
+        return f_to_c(value)
+    return None
+
+
+def _celsius_by_code(value: float, parameter_code: str) -> float | None:
+    """Reduce a temperature to °C by the parameter code's **definitional** unit.
+
+    The last resort, used only where ECHO attaches no unit label at all: 00010 is Celsius by
+    definition and 00011 Fahrenheit.
+    """
+    if parameter_code == TEMP_PARAM_C:
+        return value
+    if parameter_code == TEMP_PARAM_F:
+        return f_to_c(value)
+    return None
+
+
+def _temp_c(row: DmrRow, parameter_code: str) -> float | None:
+    """One temperature DMR row in °C: ECHO's standardized value first, then the reported one.
+
+    Whichever value is present governs, and its **own** unit label decides the conversion — so a
+    value carrying an unrecognized unit is dropped rather than silently falling through to the
+    parameter code's definitional unit, which would read a unit we do not understand as one we do.
+    """
+    for value, unit in ((row.std_value, row.std_unit), (row.value, row.unit)):
+        if value is None:
+            continue
+        stated = _norm(unit)
+        return (
+            _celsius_by_unit(value, stated) if stated else _celsius_by_code(value, parameter_code)
+        )
+    return None
+
+
+def _limit_c(row: DmrRow, parameter_code: str) -> float | None:
+    """One row's numeric temperature limit in °C, converted by the **limit's own** unit.
+
+    ECHO carries the limit's unit separately (``LimitUnitDesc``) — a permit can set a limit in a
+    unit the permittee does not report in — falling back to the reported value's unit and finally
+    to the parameter code's definitional one.
+    """
+    if row.limit is None:
+        return None
+    stated = _norm(row.limit_unit or row.std_unit or row.unit)
+    return (
+        _celsius_by_unit(row.limit, stated)
+        if stated
+        else _celsius_by_code(row.limit, parameter_code)
+    )
+
+
+def _is_instream(monitoring_location: str | None) -> bool:
+    """True when ECHO's monitoring location names a river station, not the discharge."""
+    loc = _norm(monitoring_location)
+    return any(token in loc for token in _INSTREAM_LOCATIONS)
+
+
+def _mean(values: list[float]) -> float | None:
+    return round(sum(values) / len(values), 2) if values else None
+
+
+def _limits_c(
+    rows: list[DmrRow], parameter_code: str, selector: Callable[[DmrRow], bool]
+) -> list[float]:
+    """Every numeric temperature limit on the selected rows, in °C."""
+    return [c for row in rows if selector(row) and (c := _limit_c(row, parameter_code)) is not None]
+
+
+def temperature_series(param: DmrParameter) -> TemperatureSeries | None:
+    """Reduce one temperature parameter's DMR rows to a :class:`TemperatureSeries`, or ``None``.
+
+    ``None`` when the parameter is not a temperature code at all. A temperature parameter that
+    reported no value in the window still yields a series (``n_obs == 0``) — "monitored, nothing
+    reported" is a different finding from "not monitored", and the screen distinguishes them.
+    """
+    if param.parameter_code not in TEMP_PARAMS:
+        return None
+    code = param.parameter_code
+    daily: list[tuple[str | None, float]] = []
+    monthly: list[float] = []
+    for row in param.rows:
+        value = _temp_c(row, code)
+        if value is None:
+            continue
+        if _is_daily_max(row):
+            daily.append((row.period_end, value))
+        elif _is_monthly_avg(row):
+            monthly.append(value)
+
+    # Permit limits. ECHO repeats the limit on every row of the limit set, and an Ohio thermal
+    # limit is typically SEASONAL (the Lima Refinery's outfall 003 runs 72-85 degF daily-max
+    # across a May-Oct window), so the reported figure is the **highest** limit in the window:
+    # the warm-season ceiling, which is the one that binds at the peak-summer design condition
+    # this screen evaluates. `limit_seasonal` records that it varied, so a single number is
+    # never mistaken for a year-round cap. A limit-free permit leaves both None.
+    limits_daily = _limits_c(param.rows, code, _is_daily_max)
+    limits_monthly = _limits_c(param.rows, code, _is_monthly_avg)
+    peak_daily = max(daily, key=lambda t: t[1], default=None)
+    exceedances = sum(
+        1
+        for row in param.rows
+        if (row.exceedance_pct is not None and row.exceedance_pct > 0.0)
+        or any(_is_effluent_violation(v) for v in row.violations)
+    )
+    reported_unit = next(
+        (row.unit or row.std_unit for row in param.rows if row.unit or row.std_unit), None
+    )
+    return TemperatureSeries(
+        outfall=param.outfall,
+        outfall_type=param.outfall_type,
+        monitoring_location=param.monitoring_location,
+        instream=_is_instream(param.monitoring_location),
+        parameter_code=code,
+        parameter_desc=param.parameter_desc,
+        reported_unit=reported_unit,
+        n_obs=len(daily) + len(monthly),
+        peak_daily_max_c=round(peak_daily[1], 2) if peak_daily else None,
+        peak_daily_max_period=peak_daily[0] if peak_daily else None,
+        mean_daily_max_c=_mean([v for _, v in daily]),
+        peak_monthly_avg_c=round(max(monthly), 2) if monthly else None,
+        mean_monthly_avg_c=_mean(monthly),
+        limit_daily_max_c=round(max(limits_daily), 2) if limits_daily else None,
+        limit_monthly_avg_c=round(max(limits_monthly), 2) if limits_monthly else None,
+        limit_seasonal=len(set(limits_daily)) > 1 or len(set(limits_monthly)) > 1,
+        monitor_only=not limits_daily and not limits_monthly,
+        reported_exceedances=exceedances,
+        asof=max((row.period_end for row in param.rows if row.period_end), default=None),
+    )
+
+
+def thermal_record(chart: EffluentChart) -> ThermalDmrRecord:
+    """Reduce a temperature-bearing chart to the per-outfall thermal read (#1718).
+
+    Each temperature parameter becomes one :class:`OutfallThermal`, paired with the *same
+    outfall's* reported monthly-average flow (parameter 50050) where the chart carries it. An
+    outfall reporting temperature under both codes keeps the series with more observations
+    (a permit switching units mid-window would otherwise double-count it).
+    """
+    by_outfall: dict[str, TemperatureSeries] = {}
+    for param in chart.parameters:
+        series = temperature_series(param)
+        if series is None:
+            continue
+        current = by_outfall.get(series.outfall)
+        if current is None or series.n_obs > current.n_obs:
+            by_outfall[series.outfall] = series
+
+    flows: dict[str, list[float]] = {}
+    for param in chart.series(FLOW_PARAM):
+        flows.setdefault(param.outfall, []).extend(
+            v for r in param.rows if _is_monthly_avg(r) and (v := _flow_mgd(r)) is not None
+        )
+
+    outfalls = [
+        OutfallThermal(
+            outfall=outfall,
+            monitoring_location=series.monitoring_location,
+            instream=series.instream,
+            temperature=series,
+            n_flow_months=len(flows.get(outfall) or []),
+            flow_mean_mgd=_mean(flows.get(outfall) or []),
+            flow_max_mgd=(round(max(flows[outfall]), 3) if flows.get(outfall) else None),
+        )
+        for outfall, series in sorted(by_outfall.items())
+    ]
+    return ThermalDmrRecord(
+        npdes_id=chart.npdes_id,
+        name=chart.name,
+        window=f"{chart.start_date}..{chart.end_date}",
+        permit_status=chart.permit_status,
+        snc_status=chart.snc_status,
+        outfalls=outfalls,
+    )
+
+
+def fetch_thermal_record(
+    npdes_id: str,
+    *,
+    start_date: str,
+    end_date: str,
+    settings: Settings | None = None,
+) -> ThermalDmrRecord:
+    """Pull one permit's reported temperature record (+ the matching flow) over a window.
+
+    Three narrow, individually-cached ECHO pulls rather than one whole-permit chart: parameter
+    00010 (°C) and 00011 (°F), then — only when the permit reports temperature at all —
+    parameter 50050 for the flow that turns a temperature into a heat load. Skipping the flow
+    pull for a permit with no temperature keeps a corridor sweep from recording a cache entry
+    (and a committed fixture) it will never read.
+    """
+    settings = settings or get_settings()
+    charts = [
+        fetch_effluent_chart(
+            npdes_id,
+            start_date=start_date,
+            end_date=end_date,
+            parameter_code=code,
+            settings=settings,
+        )
+        for code in TEMP_PARAMS
+    ]
+    parameters = [p for chart in charts for p in chart.parameters]
+    if parameters:
+        parameters += fetch_effluent_chart(
+            npdes_id,
+            start_date=start_date,
+            end_date=end_date,
+            parameter_code=FLOW_PARAM,
+            settings=settings,
+        ).parameters
+    merged = charts[0].model_copy(update={"parameters": parameters})
+    record = thermal_record(merged)
+    log.info(
+        "echo_dmr.thermal",
+        npdes=record.npdes_id,
+        outfalls=len(record.outfalls),
+        instream=len(record.instream),
+    )
+    return record
 
 
 def summarize_discharge(

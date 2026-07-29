@@ -61,6 +61,9 @@ storage:
 - relpath: reference/hydrology/theories.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: reference/hydrology/thermal-discharge-screen.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: reference/hydrology/tier0-parameters.yaml
   media_type: application/x-yaml
   lfs: false
@@ -84,4 +87,8 @@ tags:
 - routing
 notes: A mixed-provenance hydrology working set; each file carries its own per-quantity provenance
   tags — do not assert one source/license for the whole bundle. Includes the storm-hydrograph
-  routing pair (reaches.yaml geometry + the derived routed-hydrograph.yaml summary, #1184).
+  routing pair (reaches.yaml geometry + the derived routed-hydrograph.yaml summary, issue 1184) and
+  the derived thermal-discharge screen (thermal-discharge-screen.yaml, epic 1715 — modelled
+  cooling heat rejection AND the corridor's own ECHO-DMR-reported effluent temperatures, read
+  against the Ohio numeric temperature criteria; regenerate with `watermark thermal --offline
+  --write`).

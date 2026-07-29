@@ -19,3 +19,9 @@ When a new connector call or key is exercised, the offline cache miss raises
 as `hydrology/<connector>/<key>.json`. Fixtures are committed reference data — keep
 them minimal (just enough rows to exercise the code path) and don't hand-edit the
 recorded JSON. See [`../../src/watermark/hydrology/connectors/CLAUDE.md`](../../src/watermark/hydrology/connectors/CLAUDE.md).
+
+Keep a fixture small by narrowing the **request**, never by trimming the response — the
+recorded JSON is evidence and stays verbatim. For ECHO DMR that means the server-side
+`parameter_code` filter and a tight date window: the Lima Refinery's unfiltered
+three-year effluent chart is ~19k rows / 22 MB, while the temperature + flow parameters
+over one warm season are ~230 KB.

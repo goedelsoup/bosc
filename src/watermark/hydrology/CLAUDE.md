@@ -106,4 +106,33 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   into the finding + the gap's C2 records-request, but **never change the A3 `outcome` and never the
   sole basis for a re-archetype** (an air permit is not a discharge/withdrawal instrument). The Intel
   control carries both `corroborates`.
+- **The thermal screen has two kinds of row and they must never be conflated** (`thermal.py`,
+  epic #1715). It is the heat-side clone of the toxics screen — heat load → fully-mixed
+  temperature at the cited design low flows → Ohio's daily-maximum criterion
+  (`thermal_criteria.py`) plus the Great Lakes RIS tolerances → a CWA §316(a) / mixing-zone flag.
+  A **`data_center`** row's load is MODELLED (`cooling_models.reject_heat_load`, an inference
+  about a facility that is not yet discharging); a **`permitted_discharger`** row's is OBSERVED —
+  `rho*cp*Q_reported*(T_reported - T_ambient)` from that permit's own ECHO DMR record (#1718).
+  Same reach, same flows, same
+  criterion from there on; read `kind` before quoting a number. Three rules that are easy to get
+  wrong: (1) **the flag is the temperature test, not the heat test** — Ohio's criterion is a
+  daily maximum in °C, so where the mixed temperature is computable the flag comes from
+  `headroom_fraction` (which has the discharge's own flow in the mixing denominator); the
+  `exceedance_factor` loading ratio divides by the reach's design flow alone and on its own calls a
+  large, barely-warm discharge an exceedance (Lima's 12.8 MGD WWTP reads ~26x "over capacity" while
+  mixing to 4 °C *under* the criterion). (2) The **design ambient** ladder is live NWIS 00010 →
+  the reach's own reported in-stream (upstream/downstream) DMR station → the zone's seasonal-average
+  criterion as a stated design ambient; every rung degrades quietly, including on a live-service
+  HTTP failure. (3) **Cooling scenarios span the heat PARTITION, not load uncertainty**:
+  `once_through` sends the whole rejection downstream by definition, `evaporative_blowdown` sends
+  only the blowdown's sensible heat at a temperature CALIBRATED to an observed corridor analog (an
+  [inference] by analogy — the campus holds no discharge permit of its own), `conservative_bound`
+  is the ceiling. Running all three is what makes "robust to the partition" a number instead of a
+  claim. The cohort is per-site by construction (`SiteProfile.basin` → the ECHO basin inventory,
+  `toxic_corridor_bbox` → the corridor), resolved on the *same* receiving-water ladder as
+  `toxics.py`; a permit ECHO cites to a different water body is excluded, never re-pointed.
+  Committed to `data/reference/hydrology/thermal-discharge-screen.yaml`
+  by `watermark thermal --offline --write`, where `--offline` serves the committed **fixtures**
+  so the artifact regenerates byte-stable on a clean checkout — a bare `hydro_offline=True` with
+  an empty `data/cache/` silently writes a screen with no reported record in it.
 - Sync throughout (`httpx.Client`) to match the rest of the pipeline.

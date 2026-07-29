@@ -1,0 +1,23 @@
+{
+  "payload": {
+    "Results": {
+      "Message": "Success",
+      "SourceId": "OH0002615",
+      "EPASystem": "ICP",
+      "RegistryId": "110000547052",
+      "Statute": "CWA",
+      "CWPName": "PCS NITROGEN OHIO LP",
+      "CWPStreet": "1900 FORT AMANDA RD",
+      "CWPCity": "LIMA",
+      "CWPState": "OH",
+      "CWPZip": "45804",
+      "CWPPermitStatusDesc": "Effective",
+      "CWPMajorMinorStatusFlag": "M",
+      "CWPPermitTypeDesc": "NPDES Individual Permit",
+      "CWPCurrentSNCStatus": "Effluent - Monthly Average Limit",
+      "StartDate": "05/01/2024",
+      "EndDate": "10/31/2024",
+      "PermFeatures": []
+    }
+  }
+}
