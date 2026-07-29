@@ -54,8 +54,13 @@ GIS, FEMA NFHL, ORC, LSC). Defers to the root [`CLAUDE.md`](../../../../CLAUDE.m
   stated unit and a stated-but-unrecognized unit **drops** the row (never read as if it were
   already °C); only a value with no unit label at all falls back to the parameter code's
   definitional unit. Keep the daily-maximum ("DD") rows apart from the monthly averages ("MK") —
-  Ohio's criterion is itself a daily maximum. A numeric permit limit converts by
-  `LimitUnitDesc` (a permit may cap in a unit the permittee doesn't report in) and is
+  OAC 3745-1-35 Table 35-11 prints an **Average** row and a **Daily Maximum** row per zone, and
+  the screen reads the daily-max criterion, so the DD observation is the one that matches it.
+  A reported value under any *other* statistic is counted in `n_obs` (via `n_unscreened_obs`) but
+  never screened: "reported under a statistic we don't read" has to stay distinguishable from
+  "nothing reported", and `screenable` — not `n_obs > 0` — is what selects an outfall to screen.
+  A numeric permit limit converts by `LimitUnitDesc` where ECHO carries one, else by the
+  reported value's unit (a permit may cap in a unit the permittee doesn't report in) and is
   **seasonal**, so the reported figure is the warm-season ceiling with `limit_seasonal` set;
   a permit with no numeric limit at all is `monitor_only` — a cited absence, not a clean bill.
   An `Upstream/Downstream Monitoring` location is an **in-stream** (receiving-water) reading,

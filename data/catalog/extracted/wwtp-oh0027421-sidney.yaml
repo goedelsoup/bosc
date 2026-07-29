@@ -29,4 +29,4 @@ notes: 'Verbatim ECHO effluent-chart data for Sidney WWTP (OH0027421), outfall 0
   Great Miami River. Design 7.0 MGD; actual mean 4.01 MGD (2023 MO AVG, 57.3% utilization);
   max 6.181 MGD (MO AVG); overflow (CSO/SSO) outfalls: 1 (WS-25); no ECHO-flagged exceedances. Regenerable
   via `watermark dmr OH0027421 --design-flow 7.0 --out data/extracted/sidney/wwtp-oh0027421.dmr.yaml`.
-  NPDES fact sheet (cited 7Q10 + in-stream passby) tracked in #833.'
+  NPDES fact sheet (cited 7Q10 + in-stream passby) tracked in #833. Producer change (issue 1718): `echo_dmr` gained effluent-TEMPERATURE reduction (NPDES parameters 00010 degC / 00011 degF, daily-max vs monthly-average statistics, permit thermal limits, in-stream upstream/downstream stations) plus an optional server-side `parameter_code` filter on the chart pull. This document''s schema and content are UNCHANGED — `dmr_document()` still carries flow, overflow outfalls, seasonality and ECHO-flagged exceedances only; the temperature read is consumed directly by `watermark.hydrology.thermal` and lands in reference/hydrology/thermal-discharge-screen.yaml, not here.'
