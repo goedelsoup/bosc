@@ -1,15 +1,16 @@
 """Integrity tests for the typed content bundle (issue #53, Tier 1 / #62).
 
-Exports a full bundle to a temp dir off the committed corpus (hermetic, no network) and
-asserts the contract holds: every feed validates against its JSON Schema, the manifest is
-internally consistent, the committed schemas match what the models generate (drift guard),
-and cross-feed references resolve (the bundle's "no orphaned references" — the spirit of
-``tests/test_site_nav.py`` ported to the data tier).
+Reads a full bundle exported to a temp dir off the committed corpus (hermetic, no network —
+``conftest``'s shared per-site exports, #1773) and asserts the contract holds: every feed
+validates against its JSON Schema, the manifest is internally consistent, the committed schemas
+match what the models generate (drift guard), and cross-feed references resolve (the bundle's
+"no orphaned references" — the spirit of ``tests/test_site_nav.py`` ported to the data tier).
 """
 
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -18,7 +19,6 @@ from jsonschema.validators import Draft202012Validator
 
 from watermark.config import Settings
 from watermark.pipeline.corpus import relpath_in_scope
-from watermark.site.export import export_bundle
 from watermark.sites import effective_corpus_scope, get_profile
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -31,13 +31,15 @@ _CV = "1.40.0"
 FRONTEND_SAMPLE = REPO_ROOT / "web" / "sites" / "lima"
 
 
-@pytest.fixture(scope="module")
-def bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    """A freshly exported bundle, generated once for the module from the committed data."""
-    out = tmp_path_factory.mktemp("bundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data")
-    export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
-    return out
+@pytest.fixture(scope="session")
+def bundle(lima_bundle: Path) -> Path:
+    """The reference build's freshly exported bundle.
+
+    ``conftest``'s session-wide, cross-worker ``lima_bundle`` under this module's local name —
+    here ``bundle`` is the reference build and the siblings are named (``fort_wayne_bundle``,
+    ``urbana_bundle``, …), a vocabulary ~18 tests below already speak (#1773).
+    """
+    return lima_bundle
 
 
 def _manifest(bundle: Path) -> dict[str, Any]:
@@ -275,16 +277,12 @@ def test_grid_backdrop_feed_carries_the_cited_service_chain(bundle: Path) -> Non
 
 
 def test_grid_backdrop_is_present_for_a_facility_less_peer(
-    tmp_path_factory: pytest.TempPathFactory,
+    site_bundle: Callable[[str], Path],
 ) -> None:
     """The grid backdrop describes the *place*, not the campus — so a facility-less peer carries
     it with `load_share` null (#1642). This is why it can sit on the backdrop floor at all: a
     thin site gets the real electric-service chain rather than a lock."""
-    out = tmp_path_factory.mktemp("grid-peer") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site="toledo")  # no disclosed facility
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
+    out = site_bundle("toledo")  # no disclosed facility
     by_name = _feeds_by_name(out)
     assert "grid" in by_name, "a facility-less peer still carries its grid backdrop"
     grid = _rows(out, by_name["grid"])[0]
@@ -600,14 +598,9 @@ def test_wpafb_committed_bundle_is_fresh(wpafb_bundle: Path) -> None:
 # unrendered fixture files for these non-selectable sites (their bundles regenerate on promotion).
 @pytest.mark.parametrize("slug", ["toledo", "west-union"])
 def test_backdrop_staged_site_exports_at_backdrop_tier(
-    slug: str, tmp_path_factory: pytest.TempPathFactory
+    slug: str, site_bundle: Callable[[str], Path]
 ) -> None:
-    out = tmp_path_factory.mktemp(f"backdrop-{slug}") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site=slug)
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
-    manifest = _manifest(out)
+    manifest = _manifest(site_bundle(slug))
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
@@ -618,7 +611,7 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         assert domains[above_floor] == "absent", f"{slug} {above_floor} must not scaffold"
 
 
-def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
+def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None:
     """Findlay's floor (economics-baseline, consumer-energy, rsei) is committed. Two above-floor
     domains are live: ``record`` from the #1465 flood-mitigation-chain ingest (the FEMA Flood
     Mitigation Assistance $24M obligation + the USACE Blanchard-watershed feasibility Review Plan,
@@ -633,11 +626,7 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
     ``STORY_SLUGS``). ``places`` stays ``absent`` (no committed campus geometry), so this needs its
     own test rather than the backdrop parametrize group (which asserts ``record`` stays
     unscaffolded)."""
-    out = tmp_path_factory.mktemp("case-findlay") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site="findlay")
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
+    out = site_bundle("findlay")
     manifest = _manifest(out)
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
@@ -666,7 +655,7 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
     assert len(records) == 2
 
 
-def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
+def test_wpafb_exports_at_case_tier(wpafb_bundle: Path) -> None:
     """WPAFB's floor (economics-baseline, consumer-energy, rsei) is committed, and the #1397
     primary-record ingest lifts ``record`` to ``live``: the US-EPA Sole Source Aquifer
     designation (53 FR 15876) and the CERCLA §120 Federal Facility Agreement are two in-scope
@@ -675,11 +664,7 @@ def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) ->
     disclosed SiteFacility, no committed campus geometry, not in ``STORY_SLUGS``), so this needs
     its own test rather than the backdrop parametrize group (which asserts ``record`` stays
     unscaffolded)."""
-    out = tmp_path_factory.mktemp("case-wpafb") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site="wpafb")
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
+    out = wpafb_bundle
     manifest = _manifest(out)
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
@@ -705,7 +690,7 @@ def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) ->
     assert len(records) == 2
 
 
-def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
+def test_troy_piqua_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None:
     """Troy/Piqua's floor (economics-baseline, consumer-energy, rsei) is committed (#1481). The
     disclosed "Project Klondike" ``SiteFacility`` is SCREENING-only (a floor-area [inference]
     bracket, MW [open]) → ``facility`` grades ``seeded`` on documentary depth (#1630), NOT live.
@@ -717,11 +702,7 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     ``oepa/`` tree, leaving only the sub-threshold DMR). Its own test rather than the shared
     parametrize group above, since that group asserts ``record``/``facility`` stay fully
     unscaffolded."""
-    out = tmp_path_factory.mktemp("case-troy-piqua") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site="troy-piqua")
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
+    out = site_bundle("troy-piqua")
     manifest = _manifest(out)
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
@@ -751,7 +732,7 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     assert len(records) == 3
 
 
-def test_sidney_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
+def test_sidney_exports_at_backdrop_tier(site_bundle: Callable[[str], Path]) -> None:
     """Sidney's floor (economics-baseline, consumer-energy, rsei) is committed, and it carries the
     disclosed AWS "Project Galaxy" ``SiteFacility`` (#1378). But that facility is SCREENING-only —
     AWS discloses no floor area or interconnection figure, so the IT load is an investment-scaled
@@ -760,12 +741,7 @@ def test_sidney_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFactor
     and ``places``/``story`` absent, NOTHING above the floor is live: the honest tier is ``backdrop``,
     a floor plus a facility LEAD, not a ``case``. This is the #1630 downgrade — a screening-only
     facility seeds the domain and asks for the source (an air PTI / PJM filing), it doesn't lift it."""
-    out = tmp_path_factory.mktemp("backdrop-sidney") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site="sidney")
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
-    manifest = _manifest(out)
+    manifest = _manifest(site_bundle("sidney"))
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"sidney should be a Backdrop site, got {readiness}"
@@ -778,63 +754,44 @@ def test_sidney_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFactor
 
 
 @pytest.mark.parametrize("slug", ["coshocton", "piketon", "sandusky"])
-def test_stub_site_exports_at_stub_tier(
-    slug: str, tmp_path_factory: pytest.TempPathFactory
-) -> None:
-    out = tmp_path_factory.mktemp(f"stub-{slug}") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site=slug)
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
-    readiness = _manifest(out)["readiness"]
+def test_stub_site_exports_at_stub_tier(slug: str, site_bundle: Callable[[str], Path]) -> None:
+    readiness = _manifest(site_bundle(slug))["readiness"]
     assert readiness["tier"] == "stub", f"{slug} is profile-only, expected stub, got {readiness}"
     assert readiness["domains"]["backdrop"] != "live"
 
 
-@pytest.fixture(scope="module")
-def fort_wayne_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
+@pytest.fixture(scope="session")
+def fort_wayne_bundle(site_bundle: Callable[[str], Path]) -> Path:
     """A Fort Wayne bundle exported off the committed corpus — the sibling site used to
     prove per-site content scope (#762). Hermetic: no network, same committed data."""
-    out = tmp_path_factory.mktemp("fwbundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site="fort-wayne")
-    export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
-    return out
+    return site_bundle("fort-wayne")
 
 
-@pytest.fixture(scope="module")
-def urbana_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
+@pytest.fixture(scope="session")
+def urbana_bundle(site_bundle: Callable[[str], Path]) -> Path:
     """An Urbana bundle (#782's validation candidate) — a sibling with an **explicit**
     ``corpus_relpaths`` (``("urbana", "permits/highland55", "oepa/urbana")`` — its own slug plus the
     Highland55 land-assembly permit + OEPA prefixes, #1328), so it exercises a slug-plus-jurisdiction
     scope. Hermetic: no network, same committed data."""
-    out = tmp_path_factory.mktemp("urbanabundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site="urbana")
-    export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
-    return out
+    return site_bundle("urbana")
 
 
-@pytest.fixture(scope="module")
-def wpafb_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
+@pytest.fixture(scope="session")
+def wpafb_bundle(site_bundle: Callable[[str], Path]) -> Path:
     """A WPAFB bundle exported off the committed corpus — the network's federal-enclave site
     whose two ``permits-epa`` records (the SSA designation + the CERCLA FFA, #1397) lift ``record``
     to ``live`` / ``tier`` to ``case``. Backs the committed-bundle freshness guard below (#1660):
     the committed bundle silently drifted a full tier below its own evidence because no drift test
     covered it. Hermetic: no network, same committed data."""
-    out = tmp_path_factory.mktemp("wpafbbundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site="wpafb")
-    export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
-    return out
+    return site_bundle("wpafb")
 
 
-@pytest.fixture(scope="module")
-def springfield_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
+@pytest.fixture(scope="session")
+def springfield_bundle(site_bundle: Callable[[str], Path]) -> Path:
     """A Springfield bundle — a Mad River sibling that leaves ``corpus_relpaths`` unset (so it
     defaults to ``('springfield',)``) and has **no committed corpus**, exercising the #780
     *default* scope. Hermetic: no network, same committed data."""
-    out = tmp_path_factory.mktemp("springfieldbundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data", site="springfield")
-    export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
-    return out
+    return site_bundle("springfield")
 
 
 def _assert_corpus_feeds_lima_free(slug: str, bundle_dir: Path) -> None:

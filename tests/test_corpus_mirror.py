@@ -9,10 +9,12 @@ The projection must satisfy yidam's two hard ``graph-check`` rules — every nod
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 
 import yaml
 
+from tests.conftest import ExportedBundle
 from watermark.config import Settings
 from watermark.hypotheses import HYPOTHESES, HypothesisAssessment
 from watermark.site.corpus_mirror import (
@@ -428,22 +430,21 @@ def test_regenerate_mirror_writes_corpus_and_reports(tmp_path: Path) -> None:
     assert regen.lint_issues
 
 
-def test_export_skips_the_canonical_mirror_for_a_redirected_bundle(tmp_path: Path) -> None:
+def test_export_skips_the_canonical_mirror_for_a_redirected_bundle(
+    exported_bundle: Callable[[str], ExportedBundle],
+) -> None:
     """A redirected one-off export (``--out``, and every hermetic test) must NOT touch the
     repo's canonical .yidam/ mirror — the mirror regenerates only on ``watermark export`` with
-    no ``--out``. The BundleResult reflects the skip."""
-    from watermark.site.export import export_bundle
+    no ``--out``. The BundleResult reflects the skip.
 
-    settings = Settings(data_dir=REPO_ROOT / "data", site="lima")
-    result = export_bundle(
-        settings,
-        out_dir=tmp_path / "bundle",
-        generated_at="2026-01-01T00:00:00+00:00",
-        skip_embeddings=True,
-    )
-    assert result.mirror_nodes == 0
-    assert result.mirror_graph_issues == 0
-    assert result.mirror_reports_dir is None
+    Read off conftest's shared Lima export (#1773), which is itself ``out_dir``-redirected — so
+    this asserts the skip on the very bundle the rest of the suite consumes, instead of paying
+    for a second full export to make the same three assertions.
+    """
+    shared = exported_bundle("lima")
+    assert shared.mirror_nodes == 0
+    assert shared.mirror_graph_issues == 0
+    assert shared.mirror_reports_dir is None
 
 
 def test_build_mirror_over_the_real_lima_corpus_is_clean(tmp_path: Path) -> None:

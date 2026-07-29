@@ -15,12 +15,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-import pytest
-
-from watermark.config import Settings
 from watermark.site.corpus_mirror import Mirror, MirrorLink, MirrorNode, node_text
 from watermark.site.corpus_nodes import build_corpus_nodes
-from watermark.site.export import export_bundle
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -131,28 +127,23 @@ def test_rows_are_sorted_by_id() -> None:
     assert [r.id for r in rows] == sorted(r.id for r in rows)
 
 
-@pytest.fixture(scope="module")
-def bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    out = tmp_path_factory.mktemp("corpus-nodes-bundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data")
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
-    return out
-
-
+# --- integration: a real Lima bundle -------------------------------------------------------
+# `lima_bundle` is conftest's session-wide, cross-worker export (#1773) — this module reads one
+# feed off it, so it must never pay for an export of its own.
 def _manifest(bundle: Path) -> dict[str, Any]:
     return json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
 
 
-def test_feed_always_emitted_at_contract_version(bundle: Path) -> None:
-    manifest = _manifest(bundle)
+def test_feed_always_emitted_at_contract_version(lima_bundle: Path) -> None:
+    manifest = _manifest(lima_bundle)
     assert manifest["contract_version"] == _CV
     ref = next(f for f in manifest["feeds"] if f["name"] == "corpus-nodes")
     assert ref["media_type"] == "application/x-ndjson"
     assert ref["count"] > 0  # the mirror is never empty
     rows = [
-        json.loads(line) for line in (bundle / ref["path"]).read_text().splitlines() if line.strip()
+        json.loads(line)
+        for line in (lima_bundle / ref["path"]).read_text().splitlines()
+        if line.strip()
     ]
     assert len(rows) == ref["count"]
     # Every node carries a searchable text and its display kind; concept nodes carry a ref.

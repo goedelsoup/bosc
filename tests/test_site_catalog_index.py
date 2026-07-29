@@ -12,15 +12,11 @@ import json
 from pathlib import Path
 from typing import Any
 
-import pytest
-
-from watermark.config import Settings
 from watermark.site.catalog_index import (
     CATALOG_KINDS,
     FEED_BACKED_KINDS,
     build_catalog_index,
 )
-from watermark.site.export import export_bundle
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -156,16 +152,8 @@ def test_absent_and_empty_feeds_are_skipped() -> None:
 
 
 # --- integration: every atom resolves into its source feed ---------------------------------
-@pytest.fixture(scope="module")
-def bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    out = tmp_path_factory.mktemp("catalog-bundle") / "b"
-    settings = Settings(data_dir=REPO_ROOT / "data")
-    export_bundle(
-        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
-    )
-    return out
-
-
+# `lima_bundle` is conftest's session-wide, cross-worker export (#1773) — this module reads one
+# feed off it, so it must never pay for an export of its own.
 def _load(bundle: Path, feed_name: str, media_type: str) -> list[dict[str, Any]]:
     path = (
         bundle
@@ -178,13 +166,13 @@ def _load(bundle: Path, feed_name: str, media_type: str) -> list[dict[str, Any]]
     return json.loads(text)
 
 
-def test_catalog_index_feed_emitted_and_every_atom_resolves(bundle: Path) -> None:
-    manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
+def test_catalog_index_feed_emitted_and_every_atom_resolves(lima_bundle: Path) -> None:
+    manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["contract_version"] == _CV
     ref = next(f for f in manifest["feeds"] if f["name"] == "catalog-index")
     assert ref["kind"] == "object"
 
-    index = json.loads((bundle / ref["path"]).read_text(encoding="utf-8"))
+    index = json.loads((lima_bundle / ref["path"]).read_text(encoding="utf-8"))
     atoms = index["atoms"]
     assert index["site"] == "lima"
     assert len(atoms) > 0
@@ -215,6 +203,6 @@ def test_catalog_index_feed_emitted_and_every_atom_resolves(bundle: Path) -> Non
         if feed == "meetings":
             continue  # composite slug/{date} key, resolution covered by the builder unit tests
         if feed not in cache:
-            rows = _load(bundle, feed, media[feed])
+            rows = _load(lima_bundle, feed, media[feed])
             cache[feed] = {str(r.get(key_field[feed])) for r in rows}
         assert a["local_id"] in cache[feed], f"dangling atom {a['handle']}"
