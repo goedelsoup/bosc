@@ -217,5 +217,25 @@ notes: >-
   would otherwise inherit the reference site's river, zone criterion and permittees as its own. A
   site-matched screen with no facility rows is dropped rather than shipped as a `count == 1` shell
   (the issue-1364 present-but-empty rule the sibling object feeds carry).
+  The `enclave` object feed and the `geo/enclave` layer (issue 1664, epic 1659 ME-E, contract 1.42.0)
+  publish a FEDERAL INSTALLATION's own land / water / wastewater / power / toxics — the dimensions the
+  county-scoped instruments the rest of the bundle rests on structurally cannot see. Both lift committed
+  artifacts (`reference/<slug>/enclave.yaml` and `federal-land.geojson`, the `enclave-profile` and
+  `enclave-federal-land` entries, written by `watermark enclave`), so the export stays offline and makes
+  no register call. The object feed carries the DoD MIRTA boundary measured against the acreage the
+  enclave's grounding record states — a material disagreement ships as a `land.acreage_note` coverage
+  caveat, never a reconciled number — its EPA SDWIS community water systems, its EPA ECHO NPDES
+  discharges, an `[open]` electrical load, and its own EPA RSEI/TRI row together with the
+  `toxics.scope_note` stating why the site's county `rsei` backdrop cannot contain it (a straddling
+  enclave reports TRI from a county the profile did not pick as its economic unit) and the
+  `cercla_gap_note` stating why even that row cannot carry the CERCLA mass. Documented figures are
+  PROJECTED from the grounding record, never re-keyed, so they cannot drift from it. `geo/enclave` is
+  kept out of `geo/campus` because the two are different evidence (a parcel carries an owner, a situs
+  and a transfer date; this carries a reporting component and an operational status) and is the second
+  geometry signal the `places` readiness domain activates on — a site off the county tax rolls can never
+  produce a CAMA parcel, so `geo/campus` alone locked the domain out permanently. Both feeds are
+  enclave-gated by construction (`SiteFacility.kind = federal_installation`), so every other site
+  self-skips. `FacilityItem` also gains `kind` (`data_center` default), so a consumer branches on the
+  discriminant instead of reading an installation's absent IT load as an undisclosed campus MW.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

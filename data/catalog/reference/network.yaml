@@ -40,4 +40,8 @@ notes: topology.yaml is curated/cited; basin-network.yaml is the computed, regen
   this feed instead of a hardcoded per-slug dict; regenerate basin-network.yaml after a facilities change.
   Each node's `grid.avg_price_cents_kwh` is the EIA-861 bundled standard-service-offer COHORT price
   (#1644) — comparable node-to-node because every node reads the same cohort definition, but NOT an
-  all-sector average and NOT an industrial/data-center rate.
+  all-sector average and NOT an industrial/data-center rate. The `activity` block counts DATA-CENTER
+  campuses only (issue 1664) — it reads `SiteProfile.campus`, not `.facility`, so a `federal_installation`
+  facility (WPAFB's enclave) is excluded rather than reported as "disclosed data-center facility" with an
+  open IT load. A node's `facility_count` is therefore its campus count, not its facility count; the
+  enclave surfaces through the site bundle's own `enclave` feed instead.
