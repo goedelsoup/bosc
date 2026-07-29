@@ -4,97 +4,97 @@ site: Lima
 return_period_yr: 25
 storm_depth_in: 4.25
 dt_hr: 0.1
-routed_peak_cfs: 13566.748
-summed_peak_cfs: 14364.999
-peak_attenuation_pct: 5.56
-routed_time_to_peak_hr: 19.8
-summed_time_to_peak_hr: 17.0
+routed_peak_cfs: 14283.326
+summed_peak_cfs: 14674.214
+peak_attenuation_pct: 2.66
+routed_time_to_peak_hr: 20.2
+summed_time_to_peak_hr: 17.4
 lag_hr: 2.8
 reaches:
 - node_id: ottawa-head
   name: Ottawa River upstream of Lima
   length_ft: 82000.0
   slope: 0.001
-  inflow_peak_cfs: 12838.533
-  inflow_time_to_peak_hr: 17.3
-  outflow_peak_cfs: 12683.152
-  outflow_time_to_peak_hr: 19.2
-  attenuation_pct: 1.21
+  inflow_peak_cfs: 13478.604
+  inflow_time_to_peak_hr: 17.6
+  outflow_peak_cfs: 13348.476
+  outflow_time_to_peak_hr: 19.5
+  attenuation_pct: 0.97
   lag_hr: 1.9
   subreaches: 19
-  courant: 1.007
+  courant: 1.021
 - node_id: dug-run-head
   name: Dug Run (headwater)
   length_ft: 21000.0
   slope: 0.002
-  inflow_peak_cfs: 2531.323
-  inflow_time_to_peak_hr: 13.4
-  outflow_peak_cfs: 2487.52
-  outflow_time_to_peak_hr: 14.1
-  attenuation_pct: 1.73
-  lag_hr: 0.7
+  inflow_peak_cfs: 2916.538
+  inflow_time_to_peak_hr: 13.8
+  outflow_peak_cfs: 2859.035
+  outflow_time_to_peak_hr: 14.4
+  attenuation_pct: 1.97
+  lag_hr: 0.6
   subreaches: 6
-  courant: 1.004
+  courant: 1.041
 - node_id: pike-run-head
   name: Pike Run (headwater)
   length_ft: 38000.0
   slope: 0.0025
-  inflow_peak_cfs: 5392.886
-  inflow_time_to_peak_hr: 13.1
-  outflow_peak_cfs: 5251.507
-  outflow_time_to_peak_hr: 13.9
-  attenuation_pct: 2.62
+  inflow_peak_cfs: 6405.046
+  inflow_time_to_peak_hr: 13.4
+  outflow_peak_cfs: 6200.712
+  outflow_time_to_peak_hr: 14.2
+  attenuation_pct: 3.19
   lag_hr: 0.8
-  subreaches: 9
-  courant: 1.095
+  subreaches: 8
+  courant: 1.016
 - node_id: lima-abstraction
   name: Lima supply abstraction reach (cooling draw — unbuffered bound)
   length_ft: 12000.0
   slope: 0.001
-  inflow_peak_cfs: 12683.152
-  inflow_time_to_peak_hr: 19.2
-  outflow_peak_cfs: 12663.923
-  outflow_time_to_peak_hr: 19.5
-  attenuation_pct: 0.15
+  inflow_peak_cfs: 13348.476
+  inflow_time_to_peak_hr: 19.5
+  outflow_peak_cfs: 13331.623
+  outflow_time_to_peak_hr: 19.8
+  attenuation_pct: 0.13
   lag_hr: 0.3
   subreaches: 3
-  courant: 1.083
+  courant: 1.098
 - node_id: dug-run-confluence
   name: Dug Run -> Ottawa River
   length_ft: 6000.0
   slope: 0.0015
-  inflow_peak_cfs: 2487.52
-  inflow_time_to_peak_hr: 14.1
-  outflow_peak_cfs: 2466.572
-  outflow_time_to_peak_hr: 14.3
-  attenuation_pct: 0.84
+  inflow_peak_cfs: 2859.035
+  inflow_time_to_peak_hr: 14.4
+  outflow_peak_cfs: 2832.386
+  outflow_time_to_peak_hr: 14.6
+  attenuation_pct: 0.93
   lag_hr: 0.2
   subreaches: 2
-  courant: 1.048
+  courant: 1.085
 - node_id: pike-run-confluence
   name: Pike Run -> Ottawa River
   length_ft: 4000.0
   slope: 0.0015
-  inflow_peak_cfs: 5251.507
-  inflow_time_to_peak_hr: 13.9
-  outflow_peak_cfs: 5231.208
-  outflow_time_to_peak_hr: 14.0
-  attenuation_pct: 0.39
+  inflow_peak_cfs: 6200.712
+  inflow_time_to_peak_hr: 14.2
+  outflow_peak_cfs: 6174.636
+  outflow_time_to_peak_hr: 14.3
+  attenuation_pct: 0.42
   lag_hr: 0.1
   subreaches: 2
-  courant: 1.896
+  courant: 1.976
 - node_id: lima-reach
   name: Ottawa River at Lima (assimilative reach / USGS 04187100)
   length_ft: 20000.0
   slope: 0.001
-  inflow_peak_cfs: 13595.347
-  inflow_time_to_peak_hr: 19.3
-  outflow_peak_cfs: 13566.748
-  outflow_time_to_peak_hr: 19.8
-  attenuation_pct: 0.21
+  inflow_peak_cfs: 14310.589
+  inflow_time_to_peak_hr: 19.7
+  outflow_peak_cfs: 14283.326
+  outflow_time_to_peak_hr: 20.2
+  attenuation_pct: 0.19
   lag_hr: 0.5
   subreaches: 5
-  courant: 1.104
+  courant: 1.12
 warnings: []
-series_note: 723 timesteps at dt=0.1 hr omitted here; the full outlet + summed series ship in the site
+series_note: 667 timesteps at dt=0.1 hr omitted here; the full outlet + summed series ship in the site
   bundle's routed-hydrograph feed. Regenerate with `watermark basin-route --write`.

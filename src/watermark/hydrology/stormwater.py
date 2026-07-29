@@ -44,6 +44,7 @@ from watermark.hydrology.model import (
     StormRunoff,
 )
 from watermark.hydrology.solver.curve_number import cn_for, composite_cn
+from watermark.hydrology.solver.parameters import peak_factor as solver_peak_factor
 from watermark.hydrology.solver.parameters import round_sig
 from watermark.hydrology.solver.routing import route
 from watermark.hydrology.solver.runoff import simulate_runoff
@@ -62,6 +63,12 @@ log = get_logger(__name__)
 _OUTFALL_MANNING_N = 0.013
 _OUTFALL_SLOPES_PCT: tuple[float, ...] = (0.3, 0.5, 1.0)
 _DISCHARGE_RETURN_PERIODS: tuple[int, ...] = (10, 25, 100)
+
+# The NEH-630 Ch. 16 flat/swampy-terrain SCS peak factor, used ONLY to state the peaks'
+# terrain sensitivity in the screen's caveats (#1610). The reported peaks run on the site's
+# resolved factor (`SiteProfile.uh_peak_factor`, else the cited 484); adopting 300 for a site
+# is a reviewed, separately-cited profile edit, not something this screen decides.
+_FLAT_TERRAIN_PEAK_FACTOR = 300.0
 
 
 def _parcels_path(settings: Settings) -> Path:
@@ -173,14 +180,28 @@ def run_storm_scenario(
     # scenario's shorter Tc scales with its impervious fraction, sharpening the post peak.
     pre_tc = _scenario_tc_hr(0.0, settings=settings)
     post_tc = _scenario_tc_hr(post_imperv_frac, settings=settings)
-    pre = simulate_runoff(area_acres=acres, curve_number=pre_cn, tc_hr=pre_tc, storm_depth_in=depth)
+    pre = simulate_runoff(
+        area_acres=acres,
+        curve_number=pre_cn,
+        tc_hr=pre_tc,
+        storm_depth_in=depth,
+        settings=settings,
+    )
     if post_parts is not None:
         post = simulate_runoff(
-            area_acres=acres, cn_parts=post_parts, tc_hr=post_tc, storm_depth_in=depth
+            area_acres=acres,
+            cn_parts=post_parts,
+            tc_hr=post_tc,
+            storm_depth_in=depth,
+            settings=settings,
         )
     else:
         post = simulate_runoff(
-            area_acres=acres, curve_number=post_cn, tc_hr=post_tc, storm_depth_in=depth
+            area_acres=acres,
+            curve_number=post_cn,
+            tc_hr=post_tc,
+            storm_depth_in=depth,
+            settings=settings,
         )
 
     runoff = StormRunoff(
@@ -317,7 +338,6 @@ def _discharge_path(settings: Settings) -> Path:
 # Extra zero-padded tail (hr) so a routed reach's lag never clips the peak off the horizon
 # (mirrors watermark.hydrology.hydrograph_routing).
 _ROUTING_HEADROOM_HR = 24.0
-_ROUTING_DT_HR = 0.1
 
 
 class _ReachRouteKwargs(TypedDict, total=False):
@@ -410,9 +430,12 @@ def _route_campus_outfall(
     inflow = np.asarray(post.flows_cfs, dtype=np.float64)
     if inflow.size == 0 or float(inflow.max()) <= 0.0:
         return None
-    headroom = round(_ROUTING_HEADROOM_HR / _ROUTING_DT_HR)
+    # Route on the hydrograph's OWN step: the SCS unit-duration rule refines it below 0.1 hr for
+    # a short-Tc catchment (#1610), and a mismatched routing dt would silently mis-lag the reach.
+    dt_hr = post.times_hr[0]
+    headroom = round(_ROUTING_HEADROOM_HR / dt_hr)
     padded = np.concatenate([inflow, np.zeros(headroom, dtype=np.float64)])
-    times = np.arange(1, padded.size + 1, dtype=np.float64) * _ROUTING_DT_HR
+    times = np.arange(1, padded.size + 1, dtype=np.float64) * dt_hr
 
     outflow = padded
     total_len = 0.0
@@ -422,7 +445,7 @@ def _route_campus_outfall(
             outflow,
             length_ft=reach.length_ft.value,
             slope=reach.slope.value,
-            dt_hr=_ROUTING_DT_HR,
+            dt_hr=dt_hr,
             settings=settings,  # hermetic: resolve the Manning default off the passed settings
             **_reach_route_kwargs(reach),
         )
@@ -507,24 +530,55 @@ def screen_campus_discharge(
 
     peaks: list[DischargePeak] = []
     design_post: Hydrograph | None = None
+    design_post_flat: Hydrograph | None = None
     for rp in sorted({*return_periods, design_return_period_yr}):
         depth = _resolve_storm(rp, settings=settings, live=live).depth.value
         pre = simulate_runoff(
-            area_acres=acres, curve_number=pre_cn, tc_hr=pre_tc, storm_depth_in=depth
+            area_acres=acres,
+            curve_number=pre_cn,
+            tc_hr=pre_tc,
+            storm_depth_in=depth,
+            settings=settings,
         )
         post = simulate_runoff(
-            area_acres=acres, cn_parts=post_parts, tc_hr=post_tc, storm_depth_in=depth
+            area_acres=acres,
+            cn_parts=post_parts,
+            tc_hr=post_tc,
+            storm_depth_in=depth,
+            settings=settings,
         )
         if rp == design_return_period_yr:
             design_post = post  # the at-outfall hydrograph routed to the confluence below
+            # Terrain sensitivity of the SCS peak factor (WS-10 / #1610): the headline peaks run
+            # on the standard-hydrograph 484, but NEH-630 Ch. 16 puts flat/swampy ground — which
+            # the Black Swamp lake plain is, pre-development — nearer 300. Recomputed here only
+            # to state the bracket in the caveats; it never displaces the reported peak, and it
+            # leaves runoff VOLUME (the detention deficit) untouched.
+            design_post_flat = simulate_runoff(
+                area_acres=acres,
+                cn_parts=post_parts,
+                tc_hr=post_tc,
+                storm_depth_in=depth,
+                settings=settings,
+                peak_factor=_FLAT_TERRAIN_PEAK_FACTOR,
+            )
         # Conservative wet-antecedent bound: the same as-permitted cover split (and its shorter
         # post Tc) under AMC-III (ground already saturated by prior rain), which raises the peak
         # the 60-inch outfall and Dug Run's low flow have to absorb.
         post_wet = simulate_runoff(
-            area_acres=acres, cn_parts=post_parts, tc_hr=post_tc, storm_depth_in=depth, amc="III"
+            area_acres=acres,
+            cn_parts=post_parts,
+            tc_hr=post_tc,
+            storm_depth_in=depth,
+            amc="III",
+            settings=settings,
         )
         full = simulate_runoff(
-            area_acres=acres, curve_number=full_cn, tc_hr=full_tc, storm_depth_in=depth
+            area_acres=acres,
+            curve_number=full_cn,
+            tc_hr=full_tc,
+            storm_depth_in=depth,
+            settings=settings,
         )
         peaks.append(
             DischargePeak(
@@ -545,6 +599,7 @@ def screen_campus_discharge(
         for s in _OUTFALL_SLOPES_PCT
     ]
 
+    resolved_peak_factor = solver_peak_factor(settings=settings)
     seven_q10 = low_flow_for(footprint.receiving_water, settings=settings)
     ctx = low_flow_context(footprint.receiving_water, settings=settings)
     design_peak = next((p for p in peaks if p.return_period_yr == design_return_period_yr), None)
@@ -619,7 +674,10 @@ def screen_campus_discharge(
             f"time of concentration shortens with imperviousness (pre {pre_tc:g} hr -> "
             f"as-permitted {post_tc:g} hr -> full-buildout {full_tc:g} hr); "
             "peaks are AMC-II (average antecedent moisture) with a wet-antecedent (AMC-III) "
-            "conservative bound on the as-permitted post peak; outfall capacity = Manning "
+            "conservative bound on the as-permitted post peak; the design rainfall is the NRCS "
+            "Type-II 24-hr distribution built at its published 6-minute resolution (NEH-630 "
+            "Ch. 4 630.0407) and the unit hydrograph runs at the SCS unit duration "
+            f"D <= 0.133*Tc on the peak factor {resolved_peak_factor:g}; outfall capacity = Manning "
             "full-flow (n=0.013) across an assumed slope band; receiving 7Q10 cited from the "
             "OEPA NPDES fact sheet (2PH00006). The receiving-water peak is additionally routed "
             "down the cited reach chain to the Ottawa confluence (Tier-0 Muskingum-Cunge; see "
@@ -648,7 +706,34 @@ def screen_campus_discharge(
             "upper bounds and the confluence peak a lower bound; reaches between the outfall and "
             "the confluence see intermediate, larger peaks (the at-outfall peak-to-7Q10 ratio, "
             "unattenuated, is the headline erosion signal this routing does not soften).",
+            _peak_factor_caveat(resolved_peak_factor, design_post, design_post_flat),
         ],
+    )
+
+
+def _peak_factor_caveat(
+    resolved: float, design_post: Hydrograph | None, design_post_flat: Hydrograph | None
+) -> str:
+    """The SCS peak factor's terrain sensitivity, stated on the design storm's own numbers."""
+    base = (
+        f"Peaks run on the SCS unit-hydrograph peak factor {resolved:g} (the standard-hydrograph "
+        "value; `SiteProfile.uh_peak_factor` overrides it per site). The factor is a TERRAIN "
+        "property — NEH-630 Ch. 16 puts flat/swampy ground, which the Black Swamp lake plain is, "
+        f"nearer {_FLAT_TERRAIN_PEAK_FACTOR:g}"
+    )
+    if design_post is not None and design_post_flat is not None and design_post.peak_cfs:
+        drop = 100.0 * (1.0 - design_post_flat.peak_cfs / design_post.peak_cfs)
+        base += (
+            f", which would put the design-storm post-development peak at "
+            f"{design_post_flat.peak_cfs:,.0f} cfs instead of {design_post.peak_cfs:,.0f} "
+            f"(~{drop:.0f}% lower)"
+        )
+    return (
+        base + ". Runoff VOLUME — and so the detention deficit — is unchanged by the peak factor; "
+        "only the rate is. No calibrated peak factor is on record for this catchment, and the "
+        "post-development condition is graded and storm-sewered (which argues back toward the "
+        "standard value), so the reported peaks stay on the cited default and this is the "
+        "bracket, not a correction."
     )
 
 

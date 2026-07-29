@@ -24,6 +24,7 @@ from watermark.hydrology.solver import routing
 from watermark.hydrology.solver.curve_number import excess_rainfall
 from watermark.hydrology.solver.rainfall import scs_type_ii_hyetograph
 from watermark.hydrology.solver.runoff import simulate_runoff
+from watermark.sites import active_profile
 
 
 def _committed_table(settings: Settings) -> dict:
@@ -136,6 +137,33 @@ def test_peak_factor_override_beats_the_table(hydro_settings: Settings) -> None:
     steep = simulate_runoff(**common, peak_factor=600.0)
     flat = simulate_runoff(**common, peak_factor=300.0)
     assert flat.peak_cfs < tabled.peak_cfs < steep.peak_cfs
+
+
+def test_site_profile_peak_factor_beats_the_table(
+    hydro_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # WS-10 / #1610: the peak factor is also a TERRAIN property, so a site whose catchment is not
+    # the standard-hydrograph shape declares it on its profile. Precedence is explicit argument >
+    # site profile > cited table; a profile that declares nothing keeps the cited 484.
+    assert params.peak_factor(settings=hydro_settings) == pytest.approx(484.0)
+    profile = active_profile(hydro_settings)
+    monkeypatch.setattr(
+        params,
+        "active_profile",
+        lambda _settings: profile.model_copy(update={"uh_peak_factor": 300.0}),
+        raising=False,
+    )
+    assert params.peak_factor(settings=hydro_settings) == pytest.approx(300.0)
+    common = {
+        "area_acres": 200.0,
+        "curve_number": 88.0,
+        "tc_hr": 0.75,
+        "storm_depth_in": 4.0,
+        "settings": hydro_settings,
+    }
+    assert (
+        simulate_runoff(**common).peak_cfs < simulate_runoff(**common, peak_factor=484.0).peak_cfs
+    )
 
 
 def test_manning_n_override_beats_the_table(hydro_settings: Settings) -> None:

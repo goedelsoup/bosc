@@ -27,6 +27,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from watermark.config import Settings, get_settings
+from watermark.sites import active_profile
 
 # Documented defaults — the cited value hard-coded so a data_dir missing the reference file still
 # runs, and the anchor a coupling test pins the committed YAML to. See tier0-parameters.yaml for
@@ -88,7 +89,17 @@ def _resolve(settings: Settings | None) -> _Tier0Params | None:
 
 
 def peak_factor(*, settings: Settings | None = None) -> float:
-    """SCS dimensionless unit-hydrograph peak factor (``Qp = peak_factor * A / Tp``)."""
+    """SCS dimensionless unit-hydrograph peak factor (``Qp = peak_factor * A / Tp``).
+
+    The one exception to this module's "per-method physics constant" rule: the peak factor is
+    also a *terrain* property (NEH-630 Ch. 16 — ~300 on flat/swampy ground, ~600 on steep), so a
+    site whose catchment is not the standard-hydrograph shape declares it on its profile
+    (``SiteProfile.uh_peak_factor``). Precedence: an explicit ``simulate_runoff(peak_factor=)``
+    argument, then the site profile, then this cited reference value (484).
+    """
+    profile_factor = active_profile(settings or get_settings()).uh_peak_factor
+    if profile_factor is not None:
+        return profile_factor
     params = _resolve(settings)
     return params.peak_factor if params is not None else _DEFAULT_PEAK_FACTOR
 

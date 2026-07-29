@@ -3,18 +3,43 @@
 Turns a design-storm depth + curve number + basin parameters into a runoff
 hydrograph:
 
-    Tp = dt/2 + 0.6 * Tc           time to peak (hr)
+    D  = min(dt, 0.133 * Tc)       unit-rainfall duration (hr) — see below
+    Tp = D/2 + 0.6 * Tc            time to peak (hr)
     Qp = peak_factor * A / Tp      UH peak (cfs per inch of excess; A in sq mi)
 
-The dimensionless SCS unit hydrograph (q/Qp vs t/Tp) is scaled by ``(Tp, Qp)`` and
-convolved with the incremental excess rainfall. The peak factor (484 by convention) makes
-the hydrograph conserve volume (total flow volume == excess depth over the area). It is the
-cited Tier-0 constant in ``tier0-parameters.yaml``
-(:mod:`watermark.hydrology.solver.parameters`), overridable per call via ``peak_factor=``.
+The dimensionless SCS unit hydrograph (q/Qp vs t/Tp) is scaled by ``(Tp, Qp)`` and convolved
+with the incremental excess rainfall.
+
+**The peak factor sets the shape, not just the height (WS-10 / #1610).** The 484 convention is
+not a free multiplier: it is fixed by the standard dimensionless UH shape, through the identity
+``volume = Qp * Tp * K`` where ``K`` is the area under the dimensionless curve. One inch of
+excess over one square mile is 645.33 cfs-hr, so a peak factor and its shape are locked together
+by ``peak_factor = 645.33 / K``. Rescaling a *fixed* shape by a different peak factor therefore
+violates mass conservation (a "flat basin" factor of 300 would drop 38% of the runoff volume on
+the floor). The dimensionless curve is accordingly built here in its NEH-630 Ch. 16 gamma form,
+
+    q/Qp = (t/Tp)^m * exp(m * (1 - t/Tp)),
+
+with the shape parameter ``m`` solved from the requested peak factor so ``K(m) = 645.33 /
+peak_factor`` — m = 3.70 reproduces the standard 484 curve, m = 1.51 the flat-basin 300, m =
+5.60 the steep-basin 600. Volume is conserved for every peak factor by construction.
+
+The peak factor resolves, in precedence order: an explicit ``peak_factor=`` argument, then the
+active site profile's ``uh_peak_factor``, then the cited Tier-0 constant in
+``tier0-parameters.yaml`` (484) — see :mod:`watermark.hydrology.solver.parameters`.
+
+**The unit-rainfall duration is not the output time step.** SCS requires ``D <= 0.133 * Tc``;
+pinning ``D`` at the 0.1-hr output step broadens the unit hydrograph (and so understates the
+peak) for any catchment with ``Tc < 0.75 hr`` — which is every small paved one. ``D`` is
+therefore refined to an integer sub-multiple of the requested ``dt_hr`` that satisfies the rule,
+and the returned series lands on that finer grid (``dt_hr`` still divides it exactly, so a
+caller's own grid is preserved).
 """
 
 from __future__ import annotations
 
+import math
+from functools import lru_cache
 from typing import Literal
 
 import numpy as np
@@ -32,81 +57,99 @@ from watermark.hydrology.solver.parameters import peak_factor as _peak_factor
 from watermark.hydrology.solver.parameters import round_sig
 from watermark.hydrology.solver.rainfall import scs_type_ii_hyetograph
 
-# Dimensionless SCS unit hydrograph: t/Tp -> q/Qp (NEH-630 Table 16-1, abridged).
-_T_OVER_TP: tuple[float, ...] = (
-    0.0,
-    0.1,
-    0.2,
-    0.3,
-    0.4,
-    0.5,
-    0.6,
-    0.7,
-    0.8,
-    0.9,
-    1.0,
-    1.1,
-    1.2,
-    1.3,
-    1.4,
-    1.5,
-    1.6,
-    1.8,
-    2.0,
-    2.2,
-    2.4,
-    2.6,
-    2.8,
-    3.0,
-    3.5,
-    4.0,
-    4.5,
-    5.0,
-)
-_Q_OVER_QP: tuple[float, ...] = (
-    0.0,
-    0.015,
-    0.075,
-    0.16,
-    0.28,
-    0.43,
-    0.60,
-    0.77,
-    0.89,
-    0.97,
-    1.0,
-    0.98,
-    0.92,
-    0.84,
-    0.75,
-    0.66,
-    0.56,
-    0.42,
-    0.32,
-    0.24,
-    0.18,
-    0.13,
-    0.098,
-    0.075,
-    0.036,
-    0.018,
-    0.009,
-    0.004,
-)
-
 _SQFT_PER_ACRE = 43560.0
 _SEC_PER_HR = 3600.0
+_FT_PER_MILE = 5280.0
+# One inch of runoff over one square mile, in cfs-hr — the constant that ties the SCS peak
+# factor to its dimensionless shape (645.33 = 5280^2 / 12 / 3600).
+_CFS_HR_PER_IN_SQMI = _FT_PER_MILE**2 / 12.0 / _SEC_PER_HR
+
+# SCS unit-rainfall-duration rule: the excess-rainfall increment convolved with the UH must not
+# exceed 0.133 * Tc (NEH-630 Ch. 16 / TR-55), or the unit hydrograph is broadened and the peak
+# understated. 0.133 ~ Tp/(2*... ) is the handbook's rounded 2/15 of the time of concentration.
+_UNIT_DURATION_FRACTION_OF_TC = 0.133
+# Truncation of the gamma tail: enough ordinates to carry this share of the UH volume. The
+# ordinates are then renormalised to the exact volume, so the residue is a <0.1% uniform scale.
+_UH_VOLUME_CAPTURED = 0.999
+_UH_MAX_T_OVER_TP = 100.0  # hard guard for very low peak factors (long, flat recessions)
+
+
+def _gamma_volume_ratio(m: float) -> float:
+    """``K(m)`` — the area under ``(t/Tp)^m * exp(m*(1 - t/Tp))``, integrated over ``t/Tp``."""
+    return math.exp(m + math.lgamma(m + 1.0) - (m + 1.0) * math.log(m))
+
+
+@lru_cache(maxsize=32)
+def gamma_shape_for(peak_factor: float) -> float:
+    """The gamma UH shape parameter ``m`` whose dimensionless area conserves volume.
+
+    Solves ``645.33 / K(m) = peak_factor`` by bisection. ``K`` is strictly decreasing in ``m``,
+    so the root is unique; the bracket spans peak factors of roughly 25 (m -> 0) to 3,000.
+    """
+    if not math.isfinite(peak_factor) or peak_factor <= 0:
+        raise ValueError(f"peak factor must be finite and positive, got {peak_factor!r}")
+    lo, hi = 1e-4, 200.0
+    if (
+        not _CFS_HR_PER_IN_SQMI / _gamma_volume_ratio(lo)
+        <= peak_factor
+        <= (_CFS_HR_PER_IN_SQMI / _gamma_volume_ratio(hi))
+    ):
+        raise ValueError(
+            f"peak factor {peak_factor} is outside the representable SCS range "
+            f"({_CFS_HR_PER_IN_SQMI / _gamma_volume_ratio(lo):.0f}"
+            f"-{_CFS_HR_PER_IN_SQMI / _gamma_volume_ratio(hi):.0f})"
+        )
+    for _ in range(200):
+        mid = (lo + hi) / 2.0
+        if _CFS_HR_PER_IN_SQMI / _gamma_volume_ratio(mid) < peak_factor:
+            lo = mid
+        else:
+            hi = mid
+    return (lo + hi) / 2.0
+
+
+def unit_duration_hr(tc_hr: float, dt_hr: float) -> float:
+    """The SCS unit-rainfall duration ``D`` for a catchment, as a sub-multiple of ``dt_hr``.
+
+    ``D <= 0.133 * Tc`` is the SCS rule; ``D`` is additionally snapped to ``dt_hr / k`` for
+    integer ``k`` so the requested output grid stays a subset of the computed one (a caller
+    routing several catchments on one shared grid is never handed off-grid samples).
+    """
+    if tc_hr <= 0 or dt_hr <= 0:
+        raise ValueError("time of concentration and time step must both be positive")
+    required = _UNIT_DURATION_FRACTION_OF_TC * tc_hr
+    if required >= dt_hr:
+        return dt_hr
+    return dt_hr / math.ceil(dt_hr / required)
 
 
 def _unit_hydrograph(
-    area_sqmi: float, tc_hr: float, dt_hr: float, *, peak_factor: float
+    area_sqmi: float, tc_hr: float, d_hr: float, *, peak_factor: float
 ) -> NDArray[np.float64]:
-    """UH ordinates (cfs per inch of excess) at ``dt_hr`` spacing."""
-    tp = dt_hr / 2.0 + 0.6 * tc_hr
-    qp = peak_factor * area_sqmi / tp
-    n = int(np.ceil(5.0 * tp / dt_hr)) + 1  # the dimensionless curve tails out by t/Tp=5
-    t = np.arange(n, dtype=np.float64) * dt_hr
-    return qp * np.interp(t / tp, _T_OVER_TP, _Q_OVER_QP)
+    """UH ordinates (cfs per inch of excess) at ``d_hr`` spacing, for unit duration ``d_hr``.
+
+    The ordinates are renormalised so ``sum(uh) * d_hr`` is exactly the volume of one inch of
+    excess over ``area_sqmi`` — discretisation and tail truncation therefore cannot leak runoff
+    volume out of the convolution.
+    """
+    tp = d_hr / 2.0 + 0.6 * tc_hr
+    m = gamma_shape_for(peak_factor)
+    x_step = d_hr / tp
+    n = int(np.ceil(_UH_MAX_T_OVER_TP / x_step)) + 1
+    x = np.arange(n, dtype=np.float64) * x_step
+    with np.errstate(divide="ignore", invalid="ignore"):
+        shape = np.where(
+            x > 0.0, np.exp(m * np.log(np.where(x > 0.0, x, 1.0)) + m * (1.0 - x)), 0.0
+        )
+    # Trim the tail once it carries the target share of the volume (the ordinates decay
+    # exponentially, so this is a handful of Tp for any usable peak factor).
+    keep = int(np.searchsorted(np.cumsum(shape), _UH_VOLUME_CAPTURED * shape.sum())) + 1
+    shape = shape[: max(keep, 2)]
+    volume = _CFS_HR_PER_IN_SQMI * area_sqmi  # cfs-hr per inch of excess
+    total = float(shape.sum()) * d_hr
+    if total <= 0.0:  # pragma: no cover — guarded by the peak-factor bracket above
+        raise ValueError("degenerate unit hydrograph (zero volume)")
+    return shape * (volume / total)
 
 
 def simulate_runoff(
@@ -138,16 +181,27 @@ def simulate_runoff(
     and the ``amc`` it was run under, so a reader can tell whether a reported peak is
     wet-antecedent.
 
-    ``peak_factor`` (the SCS UH peak factor) defaults to the cited ``tier0-parameters.yaml``
-    value (484); pass it to override for a calibrated basin. The reported ``peak_cfs`` is stored
-    to 2 significant figures — a Tier-0 screen's inputs are ~2 sig figs, so a finer stored peak
-    would read as false confidence — while the full ``flows_cfs``/``times_hr`` series keeps its
-    precision (it feeds the volume and any downstream routing).
+    ``peak_factor`` (the SCS UH peak factor) defaults to the active site profile's
+    ``uh_peak_factor`` and then to the cited ``tier0-parameters.yaml`` value (484); pass it to
+    override for a calibrated basin. It sets the dimensionless UH's *shape*, not just its
+    height, so volume is conserved at any value (see the module docstring). The reported
+    ``peak_cfs`` is stored to 2 significant figures — a Tier-0 screen's inputs are ~2 sig figs,
+    so a finer stored peak would read as false confidence — while the full
+    ``flows_cfs``/``times_hr`` series keeps its precision (it feeds the volume and any
+    downstream routing).
+
+    ``dt_hr`` is the *requested* output step. The SCS unit-rainfall duration rule
+    (``D <= 0.133 * Tc``) refines it to ``dt_hr / k`` for a short-Tc catchment, and the returned
+    series lands on that finer grid — ``dt_hr`` still divides it exactly. Use
+    :func:`unit_duration_hr` to compute the grid a call will land on.
     """
     if (curve_number is None) == (cn_parts is None):
         raise ValueError("simulate_runoff needs exactly one of curve_number or cn_parts")
     pf = peak_factor if peak_factor is not None else _peak_factor(settings=settings)
     area_sqmi = area_acres / 640.0
+    # The unit-rainfall duration doubles as the computation step: the excess-rainfall increments
+    # convolved with the UH are by definition D-hour increments.
+    dt_hr = unit_duration_hr(tc_hr, dt_hr)
     _, cumulative, _ = scs_type_ii_hyetograph(storm_depth_in, dt_hr=dt_hr, duration_hr=duration_hr)
     runoff_method: Literal["composite_cn", "weighted_runoff"]
     if cn_parts is not None:

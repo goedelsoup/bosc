@@ -39,12 +39,17 @@ def _hhmm(hours: float) -> str:
 
 
 def _hyetograph_lines(ts_name: str, depth_in: float, dt_hr: float) -> list[str]:
-    """SWMM TIMESERIES lines of rainfall intensity (in/hr) for the design storm."""
+    """SWMM TIMESERIES lines of rainfall intensity (in/hr) for the design storm.
+
+    Six decimals, not four: once the Type-II central burst is resolved at its published 6-minute
+    intensity (#1610) rather than smeared across the hour, per-line rounding at 1e-4 in/hr leaks
+    a visible fraction of the storm depth out of the deck.
+    """
     _, _, incremental = scs_type_ii_hyetograph(depth_in, dt_hr=dt_hr)
     lines = []
     for i, inc in enumerate(incremental.tolist()):
         intensity = inc / dt_hr  # in per hr over this interval
-        lines.append(f"{ts_name}  {_hhmm(i * dt_hr)}  {intensity:.4f}")
+        lines.append(f"{ts_name}  {_hhmm(i * dt_hr)}  {intensity:.6f}")
     return lines
 
 

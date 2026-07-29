@@ -674,6 +674,13 @@ class SiteProfile(BaseModel):
     pre_tc_hr: float = 1.0
     post_tc_hr: float = 0.35
     roundabout_tc_hr: float = 0.2
+    # SCS unit-hydrograph peak factor for this site's catchments (WS-10 / #1610). ``None`` uses
+    # the cited standard-hydrograph 484 in ``tier0-parameters.yaml``; a site whose terrain is not
+    # that shape overrides here with a CITED value — NEH-630 Ch. 16 puts flat/swampy ground near
+    # 300 (as low as ~100 in true wetland storage) and steep ground near 600. It sets the
+    # dimensionless UH's shape, not just its height, so volume is conserved either way
+    # (`solver.runoff`). Read via `solver.parameters.peak_factor`, NOT baked into Settings.
+    uh_peak_factor: float | None = None
     noaa_fallback_24h_depth_in: dict[int, float]
     parcels_relpath: str  # relative to settings.data_dir
     footprint_relpath: str  # relative to settings.data_dir

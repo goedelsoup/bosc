@@ -8,11 +8,11 @@ meta:
 tier1:
   available: true
   detention:
-    pre_peak_cfs: 215.4
-    post_peak_cfs: 578.8
-    controlled_peak_cfs: 216.2
-    orifice_diam_ft: 5.49
-    required_storage_acft: 41.5
+    pre_peak_cfs: 168.6
+    post_peak_cfs: 657.1
+    controlled_peak_cfs: 168.6
+    orifice_diam_ft: 4.76
+    required_storage_acft: 44.8
     basin_area_acres: 13.6
     tier: tier1-swmm
   surcharge:
@@ -26,6 +26,8 @@ tier1:
         watch-american-ii-wwtp. CNA-2005 p3: 0.80 MGD plant reconstructed to new 1.2 MGD SBR.'
       confidence: high
       asof: null
+      low: null
+      high: null
     avg_design_flow:
       value: 1.2
       unit: MGD
@@ -34,6 +36,8 @@ tier1:
         watch-american-ii-wwtp. CNA-2005 p3: 0.80 MGD plant reconstructed to new 1.2 MGD SBR.'
       confidence: high
       asof: null
+      low: null
+      high: null
     peaking_factor:
       value: 3.0
       unit: ratio
@@ -41,47 +45,51 @@ tier1:
       citation: peak 3.6 / avg 1.2 MGD (American II, document-cited)
       confidence: medium
       asof: null
+      low: null
+      high: null
     headroom_mgd: 2.4
     wet_weather_peak:
-      value: 16.87
+      value: 18.56
       unit: MGD
       source: derived
-      citation: SWMM RDII (R=0.05, assumption) over 340 ac + 2.5 MGD campus dry base (FM-2, document),
-        25-yr storm
+      citation: SWMM RDII (R=0.05, assumption) over 340 ac + 2.5 MGD campus dry base (campus industrial
+        discharge, document), 25-yr storm
       confidence: medium
       asof: null
+      low: null
+      high: null
     exceeds: true
-    margin_mgd: -14.47
+    margin_mgd: -16.16
   surcharge_note: 'Campus sanitary routing: FM-1 → American Bath WWTP + American II WWTP; FM-2 → City
     of Lima WWTP. Receives campus flow but peak hydraulic capacity not cited (campus share not quantified):
-    American Bath WWTP, City of Lima WWTP. Excluded — no campus routing (FM-3 theorized): Shawnee II.'
+    American Bath WWTP, City of Lima WWTP. Excluded — no campus routing: Shawnee II.'
   decks:
   - name: pre
     filename: swmm/tier1-pre.inp
     reports_node: OUT1
-    sha256: 91b571506cbfb3256cc4a6613453b761e8deeb39edc7b23c34e7e0576530ef4e
-    peak_cfs: 215.44
+    sha256: 57eddb5f36c1b13d3f62a00c210b11897f821af8c3aebe5e4bff038aeb896ab8
+    peak_cfs: 168.62
     continuity_error_pct: 0.0
     note: pre-development (cropland) stormwater
   - name: post
     filename: swmm/tier1-post.inp
     reports_node: OUT1
-    sha256: 56c6cbdc6b692cede12c85fdf5cefe0a3577694d253aa09613a30c99b6369b8c
-    peak_cfs: 578.8
+    sha256: 9a77a92b1d68b3be3ab7fd971955bee0a9a77c949b1e5ff24708050b2a54599f
+    peak_cfs: 657.12
     continuity_error_pct: 0.0
     note: post-development (impervious), undetained
   - name: detention
     filename: swmm/tier1-detention.inp
     reports_node: OUT1
-    sha256: c7430be18d030a8953a3802045ca8baefa525f0a3250dfc1daad629b2bd3ba6e
-    peak_cfs: 216.18
+    sha256: 748604ce92877169e341101a116b6cc23e8b843fb9ab1ac5261d37523b4a4c0b
+    peak_cfs: 168.57
     continuity_error_pct: 0.0
-    note: post-development with sized basin (bottom orifice 5.49 ft)
+    note: post-development with sized basin (bottom orifice 4.76 ft)
   - name: sanitary
     filename: swmm/tier1-sanitary.inp
     reports_node: WWTP
-    sha256: c481faa8cf645b066a5404e91649ad05e5034b26423e4a841c7d653d50a9e37a
-    peak_cfs: 26.11
+    sha256: 3a43b7afc8caa4328b1f4dc5b715740bbfba95dada05ac8cd1e521e27009cef9
+    peak_cfs: 28.72
     continuity_error_pct: 0.0
     note: DWF + RDII sanitary wet-weather
   engine: pyswmm 2.1.0
