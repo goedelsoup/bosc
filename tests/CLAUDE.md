@@ -21,4 +21,11 @@ Offline test suite. Defers to the root [`CLAUDE.md`](../CLAUDE.md).
   embedding feeds are still emitted (empty), so the feed and schema sets are unchanged.
   Export directly *only* when the test needs a bundle the shared one can't be (a
   monkeypatched exporter, a deliberately degenerate feed) — and say so in the docstring.
+- **A new test module owes CI a duration.** The six-way CI shards are balanced from the
+  committed `.test_durations`, and pytest-split prices an unrecorded test at the *average*
+  of the recorded ones — so an unpriced slow module doesn't just go unbalanced, it makes its
+  shard look cheap (#1772). Merge a module in with
+  `uv run pytest -n0 --store-durations tests/test_new.py`, or rebuild everything with
+  `mise run test:durations`. `test_split_durations.py` fails once >10% of the suite is
+  unpriced and names the modules.
 - Run via `mise run check` (ruff + mypy strict + pytest) before declaring done.

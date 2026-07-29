@@ -89,6 +89,16 @@ run = "uv run pytest -n auto"
 description = "Backend tests, verbose (test names + full tracebacks)"
 run = "uv run pytest -v --tb=long -m 'not network'"
 
+# Rebuild `.test_durations`, the manifest CI's six-way pytest-split shards are balanced on.
+# A whole serial pass, so it is slow by construction: `-n0` is required because durations
+# have to be timed one at a time — under xdist every worker's wall clock overlaps.
+# `--clean-durations` drops entries for tests that no longer exist. Covering one new module
+# is far cheaper and needs no task: `uv run pytest -n0 --store-durations tests/test_new.py`
+# merges that module's timings in. `tests/test_split_durations.py` gates the drift (#1772).
+[tasks."test:durations"]
+description = "Regenerate .test_durations (serial) — what CI's shard balancer reads"
+run = "uv run pytest -n0 --store-durations --clean-durations"
+
 [tasks.lint]
 description = "Backend lint only (ruff check)"
 run = "uv run ruff check ."
