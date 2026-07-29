@@ -112,10 +112,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "bea8a65e7e958316aa89e243a05f40f619fa4348bf5af78c46c903cc3fee453f",
-      "size_bytes": 93939,
+      "sha256": "e611ec3cc39491e055f7a6c63c6a13383408516f2b59f898f84117c2dca73dbe",
+      "size_bytes": 144471,
       "lfs_materialized": true,
-      "file_count": 10,
+      "file_count": 12,
       "stale": false,
       "asof": null
     },
@@ -137,7 +137,7 @@
     "producer_kind": "manual",
     "command": null,
     "connector_ref": null,
-    "source": "Onboarding self-research pass (data/research/onboard-wilmington-*/findings.md); Clinton County RSEI inventory + BLS QCEW baseline (in-corpus). The sited-facility + load-driver web pass (JobsOhio, AES Ohio DAY-zone interconnect, OEPA air/NPDES, recorder/SOS, Port Authority) is still to-run.",
+    "source": "Web research sweep 2026-07-11 (#1277 grooming refresh / #1471; supersedes the 2026-07-03 scaffold, closes #519). Clinton County Port Authority data-center FAQ; govinfo docket 1:26-cv-00448; Ohio EPA OHD000001 draft-permit pages; WCPO/WDTN/wnewsj/WYSO reporting; in-corpus RSEI inventory + BLS QCEW baseline + NPDES fact sheet 1PD00013.fs.\n",
     "external_url": null,
     "license": "public record / public domain",
     "access_tier": "public",
@@ -149,9 +149,12 @@
       "data-center",
       "wilmington",
       "clinton-county",
+      "amazon",
+      "aws",
+      "cosler-farm",
+      "ardent-tac",
+      "sharp-litigation",
       "wilmington-air-park",
-      "amazon-air",
-      "atsg",
       "load-driver",
       "little-miami",
       "sweep"
@@ -165,15 +168,15 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d321b8413e3135f25f609537ca1c3a32b715bcaffc004cd3800972a9dbabc027",
-      "size_bytes": 7331,
+      "sha256": "45008f73dcdfc96c3972be110fe3363c191b98d21b49c8290fd1d754f39ca646",
+      "size_bytes": 18094,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Onboarding self-research pass (data/research/onboard-wilmington-*/findings.md); Clinton County RSEI inventory + BLS QCEW baseline (in-corpus). The sited-facility + load-driver web pass (JobsOhio, AES Ohio DAY-zone interconnect, OEPA air/NPDES, recorder/SOS, Port Authority) is still to-run.",
+      "source": "Web research sweep 2026-07-11 (#1277 grooming refresh / #1471; supersedes the 2026-07-03 scaffold, closes #519). Clinton County Port Authority data-center FAQ; govinfo docket 1:26-cv-00448; Ohio EPA OHD000001 draft-permit pages; WCPO/WDTN/wnewsj/WYSO reporting; in-corpus RSEI inventory + BLS QCEW baseline + NPDES fact sheet 1PD00013.fs.\n",
       "source_kind": "reference",
       "page": null,
       "confidence": "medium",
@@ -183,16 +186,16 @@
   },
   {
     "id": "grid",
-    "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+    "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
     "scope": "extracted",
     "collection": "grid",
     "status": "reviewed",
     "producer_kind": "extracted",
     "command": null,
     "connector_ref": null,
-    "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/",
+    "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
     "external_url": null,
-    "license": "Public record (federal agency order / regulatory filing)",
+    "license": "Public record (federal agency order / regulatory filing); AEP Ohio public project materials",
     "access_tier": "public",
     "site_scope": "basin-shared",
     "cadence": "on-demand",
@@ -204,26 +207,86 @@
       "backup-generation",
       "pjm",
       "section-202c",
-      "dispatch"
+      "dispatch",
+      "opsb",
+      "transmission",
+      "siting"
     ],
     "storage": [
       {
         "relpath": "extracted/grid/pjm-202c-emergency-2026.event.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/grid/aep-lyka-transmission-2026.project.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "f64866be10f28378d58f883b6c061e8d321b9db51d7fc3ba56a74f482117b4de",
-      "size_bytes": 6992,
+      "sha256": "c4a18667231164be035c927365116d5ce692787aac05222c9c31b4ccfed1c44c",
+      "size_bytes": 19814,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 2,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/",
+      "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "legal-records-legislation",
+    "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio General Assembly / LSC (H.B. 314, 136th G.A. — As Introduced and As Passed by the House) + Project BOSC analysis — provision digest, introduced→passed diff, and relevance to the R.C. 149.43 PRR/mandamus posture",
+    "external_url": null,
+    "license": "Public record (Ohio legislative document)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-22",
+    "tags": [
+      "public-records",
+      "legislation",
+      "r.c.-149.43"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/records-legislation/hb314-149-43.analysis.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/records-legislation/hb314-149-43.digest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "70d428fb3c6f8ebe196bae050b7f76db312811b89f0b22a437012ab19ec17ef2",
+      "size_bytes": 31430,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio General Assembly / LSC (H.B. 314, 136th G.A. — As Introduced and As Passed by the House) + Project BOSC analysis — provision digest, introduced→passed diff, and relevance to the R.C. 149.43 PRR/mandamus posture",
       "source_kind": "document",
       "page": null,
       "confidence": "medium",
@@ -556,8 +619,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4a7382e852780bb47c66520f601ceaece298b9c4803d5fe4c5a7d3c7116b2849",
-      "size_bytes": 12120,
+      "sha256": "a5f6618edb7cf95afbbcefac070c49fe50d93fd94a0f5823abd1861bc9dc468b",
+      "size_bytes": 13591,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -605,8 +668,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "bca65a269956e827264e06865a041501b30971cee68d4833f924d7e1615211c3",
-      "size_bytes": 12047,
+      "sha256": "863defd49f0caae14a18840e4de9c32a6846e4ca1f8a423e350ac92ff3100cc8",
+      "size_bytes": 14800,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -703,7 +766,8 @@
       "employment",
       "wages",
       "income",
-      "baseline"
+      "baseline",
+      "government"
     ],
     "storage": [
       {
@@ -719,10 +783,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "2f0e4273b89a3bccd236fcd4a4dfe4cba34f58059c06f31bfeb3679ecc6ca9d5",
-      "size_bytes": 293474,
+      "sha256": "773dc96b81a5fd9386ba5f430923a053e84e4819cd49ba84811a8728a201d8b9",
+      "size_bytes": 464394,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -768,8 +832,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e1a519a7faed4746aadc62cb77a531398940ace7c6360d724f06f2d2888b745b",
-      "size_bytes": 1539,
+      "sha256": "8bfb8390309aa47a9b5051744c7888af5d5a35655b99df36203991deaabc21b7",
+      "size_bytes": 1762,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -822,10 +886,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "97dd706636cf820b619b249d40f010a9b5de6781c4f3bbdf0440627c3bef8114",
-      "size_bytes": 32777,
+      "sha256": "534d3399b66f259df22e66254167a81b2c1caa35bf8998a8752d3447a4661552",
+      "size_bytes": 47694,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -876,10 +940,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "eb9bdfb00e774d047f5f4e4ef684913b2fd8dce4707ac189d7b8006721fac5dd",
-      "size_bytes": 3035,
+      "sha256": "09fd968643c5016a03974934253322be0179184a18787f97de39eb45e59a6408",
+      "size_bytes": 31135,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 10,
       "stale": false,
       "asof": null
     },
@@ -932,10 +996,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5d864562a76a16cdff7dd5d84457143180f7dc7b6d7c56fd7725476136f3e509",
-      "size_bytes": 64631,
+      "sha256": "4505fe62c61bacb61be5efe50abcfaad440f34aee9ef134657242bbdc47c797d",
+      "size_bytes": 104135,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -981,8 +1045,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "2f3001719a94893ce39eaaa60704e4e5c012c15e2a6ee2513daad62c03d8538a",
-      "size_bytes": 9523,
+      "sha256": "445171b4a4694b10f12491d322d5853570c0f821cf1676d41933a682c4fc9d45",
+      "size_bytes": 9869,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1386,10 +1450,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "460fed22c3409fcaff5f52ea5e0ecafdaab2ff1563e6c54d0bd28383213f0eed",
-      "size_bytes": 17282,
+      "sha256": "a3826bfb94c19d2b1e545e079befaa6ed6cd8c33611d7c7a6b3775285bc413b6",
+      "size_bytes": 18996,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -1440,10 +1504,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d0ab1896a9171a503033254b86a1fcec3bcd9dbbd4b9ac5fe41b45879671bec9",
-      "size_bytes": 52915,
+      "sha256": "259bd2e8e5fe316735747d701d425671babcb51af262c154e000a81474518e51",
+      "size_bytes": 58228,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -1545,8 +1609,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "88e5aba52a4b605ca188b386fabf8ca67a99732d7825f445926def682ddc355b",
-      "size_bytes": 89999,
+      "sha256": "bf00d7b2bfd8b58cb58545fe603d7e56eb40123c77d38bc7a1ec5470e19c83ee",
+      "size_bytes": 90607,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -1663,8 +1727,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "423c47dd57628058e35cebee82a220546d0c9c9f4268278e3f2d064685c3868e",
-      "size_bytes": 21527,
+      "sha256": "83dee16bb8bbc6a89b404fa0a5e722ab452223b785010af0a32cd753597e3254",
+      "size_bytes": 22598,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -1896,6 +1960,113 @@
       "page": null,
       "confidence": "medium",
       "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "oepa-cooling-reconciliation",
+    "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+    "scope": "reference",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "cooling-reconcile --write",
+    "connector_ref": "watermark.hydrology.cooling_reconcile",
+    "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
+    "external_url": "https://epa.ohio.gov",
+    "license": "Public records (Ohio state government)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-11",
+    "tags": [
+      "oepa",
+      "npdes",
+      "data-centers",
+      "cooling-water",
+      "blowdown",
+      "closed-loop",
+      "reconciliation",
+      "cycles-of-concentration",
+      "air-permit",
+      "tier-ii",
+      "corroborators"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/oepa/cooling-reconciliation.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "474a02be6dd511e3b15476184256513386b93632fedf7c82e1c982eb4b8ae8ea",
+      "size_bytes": 58227,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": "2026-07-11"
+    },
+    "citation": {
+      "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark cooling-reconcile --write",
+      "verified": false
+    }
+  },
+  {
+    "id": "oepa-ohd000001-coverage",
+    "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
+    "scope": "reference",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "oepa coverage --write",
+    "connector_ref": "watermark.hydrology.blowdown",
+    "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
+    "external_url": "https://epa.ohio.gov",
+    "license": "Public records (Ohio state government)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-11",
+    "tags": [
+      "oepa",
+      "npdes",
+      "general-permit",
+      "data-centers",
+      "ohd000001",
+      "cooling-water",
+      "blowdown",
+      "closed-loop"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/oepa/ohd000001-coverage.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "561ef21ac83fe62d11b188ad9afee6bdc6fcf991b1bd80cb114396ec84d94a33",
+      "size_bytes": 8215,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": "2026-07-11"
+    },
+    "citation": {
+      "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark oepa coverage --write",
       "verified": false
     }
   },
@@ -2135,7 +2306,7 @@
     "site_scope": "slug-scoped",
     "cadence": "on-demand",
     "ttl_days": null,
-    "last_refreshed": "2026-06-27",
+    "last_refreshed": "2026-07-13",
     "tags": [
       "parcels",
       "gis",
@@ -2151,10 +2322,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "bb267c62bf54da26a0ac944fc31d5da4ec02ad4edec0efe09ef1b3a9c97b775f",
-      "size_bytes": 136410,
+      "sha256": "279a8ad713688631ef11dd25e82da5e0ee25476239750bb108b2eb2dfe4b47e8",
+      "size_bytes": 346783,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 4,
       "stale": false,
       "asof": null
     },
@@ -2215,8 +2386,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "922e09eb27262d28f11a0ca038c23263e0628d48c3b061dd8164bc57831adfff",
-      "size_bytes": 61227,
+      "sha256": "d203006c30ea9c1e7f51315f3cc6243130b7484208f32e39af09eb15724b8424",
+      "size_bytes": 61903,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -2289,7 +2460,7 @@
     "producer_kind": "derived",
     "command": "rsei",
     "connector_ref": "watermark.rsei",
-    "source": "EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited 7Q10 — a multi-source derivation",
+    "source": "EPA RSEI (per-chemical water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited design low flows (1Q10/7Q10/harmonic mean) × Ohio WQS criteria (OAC 3745-1) — a multi-source derivation",
     "external_url": "https://www.epa.gov/rsei/ways-get-rsei-results",
     "license": "U.S. Government work (public domain)",
     "access_tier": "public",
@@ -2313,15 +2484,15 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "55b000e4196114be8a9fef6c11ef5815a3e56364b5b9418a2a1658ae7c94943f",
-      "size_bytes": 14049,
+      "sha256": "1e58be1c6b489f56a0d0a1c60563c2f19047f94d6dd5ea557313ad98485f6d32",
+      "size_bytes": 99958,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited 7Q10 — a multi-source derivation",
+      "source": "EPA RSEI (per-chemical water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited design low flows (1Q10/7Q10/harmonic mean) × Ohio WQS criteria (OAC 3745-1) — a multi-source derivation",
       "source_kind": "derived",
       "page": null,
       "confidence": "medium",
@@ -2366,10 +2537,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "24311c69c89cfd8c6af39aff55c696965b9f87e89e060764e6cdea3c956df24d",
-      "size_bytes": 2429920,
+      "sha256": "5779cd9e898f577d98ee88a01dbadc6dcfa84d8fe15e661d5c479c40a06bf4cd",
+      "size_bytes": 2732458,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -2380,6 +2551,110 @@
       "confidence": "medium",
       "note": "watermark rsei",
       "verified": true
+    }
+  },
+  {
+    "id": "thermal",
+    "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+    "scope": "reference",
+    "collection": "thermal",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "EPA Office of Water, Water Permits Division, Office of Wastewater Management",
+    "external_url": "https://www.epa.gov/npdes",
+    "license": "Public domain (U.S. federal government work)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-21",
+    "tags": [
+      "epa",
+      "npdes",
+      "thermal",
+      "temperature",
+      "cwa-316a",
+      "wqs",
+      "cooling-water",
+      "methodology"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/thermal/epa-833-f-23-007-thermal-discharges-npdes-2023.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "914f2576686459704ce56c416e57f6ebe1f1770fc24f4660fcdc4508da790c88",
+      "size_bytes": 26861427,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA Office of Water, Water Permits Division, Office of Wastewater Management",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "thermal-ris-tolerances",
+    "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+    "scope": "reference",
+    "collection": "thermal",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "EPA-833-F-23-007 \"Thermal Discharges in NPDES Permits\" (June 2023), Tables 3-4/3-5/3-6 — verbatim transcription of the Great Lakes Representative Important Species thermal tolerances",
+    "external_url": "https://www.epa.gov/npdes",
+    "license": "Public domain (U.S. federal government work)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "epa",
+      "thermal",
+      "temperature",
+      "cwa-316a",
+      "biological",
+      "great-lakes",
+      "ris",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/thermal/great-lakes-ris-thermal-tolerances.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "086d35cec2809069f67596fc44bf96ce7c96885b3ea8afed13dbbed458d34cb0",
+      "size_bytes": 18725,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA-833-F-23-007 \"Thermal Discharges in NPDES Permits\" (June 2023), Tables 3-4/3-5/3-6 — verbatim transcription of the Great Lakes Representative Important Species thermal tolerances",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -2395,7 +2670,7 @@
     "external_url": "https://api.usaspending.gov/",
     "license": "U.S. Government work (public domain)",
     "access_tier": "public",
-    "site_scope": "basin-shared",
+    "site_scope": "slug-scoped",
     "cadence": "on-demand",
     "ttl_days": null,
     "last_refreshed": null,
@@ -2411,12 +2686,17 @@
         "relpath": "reference/usaspending/awards.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "reference/usaspending/{site}/awards.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "de5f7d7fec8ff97ab3b5f5202de00386fcf2026f78723def180d31d73597f270",
-      "size_bytes": 3659,
+      "sha256": "852950738dcdbcb6938598bde10013c63871d3f267064a9087d2aa43e1afa600",
+      "size_bytes": 15854,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -2473,6 +2753,106 @@
     },
     "citation": {
       "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132)",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "wqs-criteria",
+    "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+    "scope": "reference",
+    "collection": "wqs",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "OAC 3745-1-35 (aquatic life, Tables 35-1/35-2/35-5/35-9) + 3745-1-33 (human health, Table 33-1) — verbatim transcription of the numeric criteria, cross-checked against EPA's National Recommended Water Quality Criteria",
+    "external_url": null,
+    "license": "Ohio public record (Ohio Administrative Code publication)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "wqs",
+      "water",
+      "criteria",
+      "toxics",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/wqs/ohio-water-quality-criteria.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "8628dd7859ba60a3b71b9c6b4ab91619d510cf468e0bdb1f645044317be24fc4",
+      "size_bytes": 11202,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "OAC 3745-1-35 (aquatic life, Tables 35-1/35-2/35-5/35-9) + 3745-1-33 (human health, Table 33-1) — verbatim transcription of the numeric criteria, cross-checked against EPA's National Recommended Water Quality Criteria",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "wqs-temperature",
+    "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
+    "scope": "reference",
+    "collection": "wqs",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "OAC 3745-1-35 Table 35-11 (inland streams/rivers, by geographic zone) + 3745-1-31 Table 31-1 (Lake Erie) + 3745-1-06 (O) Table 1 (thermal mixing zones) — verbatim transcription of the numeric temperature criteria (degF primary, degC derived)",
+    "external_url": null,
+    "license": "Ohio public record (Ohio Administrative Code publication)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "wqs",
+      "water",
+      "temperature",
+      "thermal",
+      "cwa-316a",
+      "criteria",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/wqs/ohio-temperature-criteria.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "da61a7ffc8d5e473e27aeaa3160c915af6d518b084c6ac4386fc90be922b0616",
+      "size_bytes": 18429,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "OAC 3745-1-35 Table 35-11 (inland streams/rivers, by geographic zone) + 3745-1-31 Table 31-1 (Lake Erie) + 3745-1-06 (O) Table 1 (thermal mixing zones) — verbatim transcription of the numeric temperature criteria (degF primary, degC derived)",
       "source_kind": "reference",
       "page": null,
       "confidence": "medium",

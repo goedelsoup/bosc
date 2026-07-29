@@ -542,7 +542,7 @@
       "source": null,
       "source_kind": "derived",
       "page": null,
-      "citation": "campus 2743 GWh / Ohio retail 161934 GWh",
+      "citation": "campus 2742.8 GWh / Ohio retail 161934 GWh",
       "confidence": "medium",
       "asof": null,
       "verified": false
@@ -580,13 +580,13 @@
     "unit": "MW",
     "status": "inference",
     "approximate": false,
-    "low": 302.5,
-    "high": 393.2,
+    "low": 275.0,
+    "high": 429.0,
     "evidence": {
       "source": null,
       "source_kind": "derived",
       "page": null,
-      "citation": "PowerBasis.facility_draw central (#87): 275 MW IT x PUE 1.265 (band mean) — total facility draw",
+      "citation": "PowerBasis.facility_draw central (#87): 275 MW IT (central) x PUE 1.265 — total facility draw; band = 250-300 MW IT x PUE 1.1-1.43 (efficient .. cooling-dominated)",
       "confidence": "medium",
       "asof": null,
       "verified": false
@@ -740,7 +740,7 @@
       "source": null,
       "source_kind": "derived",
       "page": null,
-      "citation": "1.69% demand x 1 transmission (STYLIZED upper bound)",
+      "citation": "1.6938% demand x 1 transmission (STYLIZED upper bound)",
       "confidence": "low",
       "asof": null,
       "verified": false
@@ -762,7 +762,7 @@
       "source": null,
       "source_kind": "derived",
       "page": null,
-      "citation": "1.69% demand x 0.5 transmission (STYLIZED lower bound)",
+      "citation": "1.6938% demand x 0.5 transmission (STYLIZED lower bound)",
       "confidence": "low",
       "asof": null,
       "verified": false
@@ -808,7 +808,7 @@
       "page": null,
       "citation": "EIA ELEC.PRICE.OH-RES.A (2025)",
       "confidence": "high",
-      "asof": null,
+      "asof": "2025",
       "verified": true
     },
     "feed": "economics-demand-pressure"
@@ -830,7 +830,7 @@
       "page": null,
       "citation": "EIA ELEC.SALES.OH-ALL.A (2025); 161934 million kWh",
       "confidence": "high",
-      "asof": null,
+      "asof": "2025",
       "verified": true
     },
     "feed": "economics-demand-pressure"
@@ -1072,7 +1072,7 @@
       "page": null,
       "citation": "EIA ELEC.PRICE.OH-RES.A (2025)",
       "confidence": "high",
-      "asof": null,
+      "asof": "2025",
       "verified": true
     },
     "feed": "energy-burden"
@@ -1094,7 +1094,7 @@
       "page": null,
       "citation": "EIA NG.N3010OH3.A (2025)",
       "confidence": "high",
-      "asof": null,
+      "asof": "2025",
       "verified": true
     },
     "feed": "energy-burden"
@@ -1188,28 +1188,6 @@
     "feed": "hydrology-scenarios"
   },
   {
-    "subject": "hydrology-scenario:baseline",
-    "subject_label": "baseline — Ottawa River",
-    "subject_kind": "hydrology-scenario",
-    "predicate": "receiving_live",
-    "value": 31.8,
-    "unit": "cfs",
-    "status": "verified",
-    "approximate": false,
-    "low": null,
-    "high": null,
-    "evidence": {
-      "source": null,
-      "source_kind": "connector",
-      "page": null,
-      "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
-      "confidence": "high",
-      "asof": "2026-07-18T21:30:00.000-04:00",
-      "verified": true
-    },
-    "feed": "hydrology-scenarios"
-  },
-  {
     "subject": "hydrology-scenario:buildout",
     "subject_label": "buildout — Ottawa River",
     "subject_kind": "hydrology-scenario",
@@ -1293,28 +1271,6 @@
       "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
       "confidence": "high",
       "asof": null,
-      "verified": true
-    },
-    "feed": "hydrology-scenarios"
-  },
-  {
-    "subject": "hydrology-scenario:buildout",
-    "subject_label": "buildout — Ottawa River",
-    "subject_kind": "hydrology-scenario",
-    "predicate": "receiving_live",
-    "value": 31.8,
-    "unit": "cfs",
-    "status": "verified",
-    "approximate": false,
-    "low": null,
-    "high": null,
-    "evidence": {
-      "source": null,
-      "source_kind": "connector",
-      "page": null,
-      "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
-      "confidence": "high",
-      "asof": "2026-07-18T21:30:00.000-04:00",
       "verified": true
     },
     "feed": "hydrology-scenarios"

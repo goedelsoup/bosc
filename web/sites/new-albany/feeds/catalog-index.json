@@ -1,7 +1,7 @@
 {
   "site": "new-albany",
-  "catalog_version": "c97b0939d563010ab9b62368d5da80eb7cc91dc2e2a05e26c5023f537c4cac43",
-  "contract_version": "1.36.0",
+  "catalog_version": "969f37f8fa561cf270010a36dfb8e857403517187ebca781f10573d9f3035c6a",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:new-albany:7q10",
@@ -9,6 +9,14 @@
       "site": "new-albany",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:aep",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:new-albany:behind-the-meter",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:brownfield",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:cercla",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:cgp",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:closed-loop-cooling",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:cmar",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:colocation",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:new-albany:common-control-plumbing",
       "kind": "concept",
       "site": "new-albany",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:conditional-use",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:consent-decree",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:constructive-denial",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:new-albany:cra",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:curve-number",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:dilution",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:dissolved-oxygen",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:dmr",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:echo",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:effluent",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:eia",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:enterprise-zone",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:epa",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:esc",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:ferc",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:ffa",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:hb",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:heat-reuse",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:hsg",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:huc",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:new-albany:hyperscale-data-center",
       "kind": "concept",
       "site": "new-albany",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:new-albany:hyperscaler",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:il6",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:interconnection-queue",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:jedd",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:moratorium",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:nda",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:npdes",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:nwis",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:oepa",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:once-through-cooling",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:opc",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:opsb",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:orc",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:pfas",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:pilot",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:pjm",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:potw",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:pti",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:new-albany:public-records-mandamus",
       "kind": "concept",
       "site": "new-albany",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:puco",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:pue",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:rezoning",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:rfp",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:rfq",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:rsei",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:rto",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:snc",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:sos",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:ssa",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:swat",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:swcd",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:tax-abatement",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:tif",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:tmdl",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:total-nitrogen",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:total-phosphorus",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:tri",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:usgs",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:variance",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:wla",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:wue",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:wwtp",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -208,7 +760,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -241,6 +793,14 @@
       "site": "new-albany",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:legal-records-legislation",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -297,6 +857,22 @@
       "site": "new-albany",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -372,11 +948,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:new-albany:thermal",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:new-albany:usaspending",
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:wqs-criteria",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:wqs-temperature",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

@@ -1,7 +1,7 @@
 {
   "site": "bryan",
-  "catalog_version": "8c1fcb66044389798f5266ea2e8a52e8327244e264f51ca2b9620318794871e6",
-  "contract_version": "1.36.0",
+  "catalog_version": "91da15d07087132e93937384bb4ea678735909aebee3f222f6ad1ca751508fa4",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:bryan:7q10",
@@ -9,6 +9,14 @@
       "site": "bryan",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:aep",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:bryan:behind-the-meter",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:brownfield",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:cercla",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:cgp",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:closed-loop-cooling",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:cmar",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:colocation",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:bryan:common-control-plumbing",
       "kind": "concept",
       "site": "bryan",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:conditional-use",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:consent-decree",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:constructive-denial",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:bryan:cra",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:curve-number",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:dilution",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:dissolved-oxygen",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:dmr",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:echo",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:effluent",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:eia",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:enterprise-zone",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:epa",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:esc",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:ferc",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:ffa",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:hb",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:heat-reuse",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:hsg",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:huc",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:bryan:hyperscale-data-center",
       "kind": "concept",
       "site": "bryan",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:bryan:hyperscaler",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:il6",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:interconnection-queue",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:jedd",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:moratorium",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:nda",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:npdes",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:nwis",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:oepa",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:once-through-cooling",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:opc",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:opsb",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:orc",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:pfas",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:pilot",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:pjm",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:potw",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:pti",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:bryan:public-records-mandamus",
       "kind": "concept",
       "site": "bryan",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:puco",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:pue",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:rezoning",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:rfp",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:rfq",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:rsei",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:rto",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:snc",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:sos",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:ssa",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:swat",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:swcd",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:tax-abatement",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:tif",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:tmdl",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:total-nitrogen",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:total-phosphorus",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:tri",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:usgs",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:variance",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:wla",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:wue",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:bryan:wwtp",
+      "kind": "concept",
+      "site": "bryan",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -105,6 +657,14 @@
       "site": "bryan",
       "local_id": "echo-maumee-npdes",
       "title": "Maumee-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:echo-maumee-receiving-water",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "echo-maumee-receiving-water",
+      "title": "Curated receiving-water overlay for the Maumee ECHO NPDES inventory",
       "feed": "catalog"
     },
     {
@@ -216,7 +776,7 @@
       "kind": "dataset",
       "site": "bryan",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -257,6 +817,14 @@
       "site": "bryan",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:legal-records-legislation",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -313,6 +881,22 @@
       "site": "bryan",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -388,11 +972,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:bryan:thermal",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:bryan:usaspending",
       "kind": "dataset",
       "site": "bryan",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:wqs-criteria",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:wqs-temperature",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

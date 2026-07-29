@@ -27,7 +27,7 @@
     "source": "connector",
     "citation": "EIA ELEC.PRICE.OH-RES.A (2025)",
     "confidence": "high",
-    "asof": null,
+    "asof": "2025",
     "low": null,
     "high": null
   },
@@ -67,7 +67,7 @@
     "source": "connector",
     "citation": "EIA NG.N3010OH3.A (2025)",
     "confidence": "high",
-    "asof": null,
+    "asof": "2025",
     "low": null,
     "high": null
   },

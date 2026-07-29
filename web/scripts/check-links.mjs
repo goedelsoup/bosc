@@ -32,28 +32,66 @@ function htmlFiles(dir) {
   return out;
 }
 
-/** Does a root-relative site path resolve to a built file or directory index? */
-function resolves(sitePath) {
-  let p = sitePath;
-  if (BASE && (p === BASE || p.startsWith(`${BASE}/`))) p = p.slice(BASE.length) || "/";
-  const onDisk = join(DIST, decodeURIComponent(p));
+/** Does one concrete on-disk path resolve to a built file or directory index? */
+function existsAsPage(onDisk) {
   if (existsSync(onDisk)) {
     const s = statSync(onDisk);
     if (s.isFile()) return true;
     if (s.isDirectory() && existsSync(join(onDisk, "index.html"))) return true;
   }
-  if (existsSync(`${onDisk}.html`)) return true; // /foo → foo.html
-  return false;
+  return existsSync(`${onDisk}.html`); // /foo → foo.html
+}
+
+/**
+ * Does a root-relative site path resolve to a built page?
+ *
+ * Tries the path **as written** and percent-decoded, because the two halves of the build don't
+ * agree on encoding: most routes are emitted at their literal name (so an encoded href has to be
+ * decoded to find them), but a route whose param carries a URL-special character — the as-received
+ * public-record filenames with `#`, `&`, `%` — is emitted by Astro with that character already
+ * percent-encoded *in the directory name on disk*, so the encoded href matches byte-for-byte and
+ * decoding it produces a path that does not exist. Accept either.
+ */
+function resolves(sitePath) {
+  let p = sitePath;
+  if (BASE && (p === BASE || p.startsWith(`${BASE}/`))) p = p.slice(BASE.length) || "/";
+  const candidates = [p];
+  try {
+    const decoded = decodeURIComponent(p);
+    if (decoded !== p) candidates.push(decoded);
+  } catch {
+    // A malformed escape sequence is not decodable; the as-written candidate still stands.
+  }
+  return candidates.some((c) => existsAsPage(join(DIST, c)));
 }
 
 const EXTERNAL = /^(https?:|mailto:|tel:|data:|javascript:|#)/i;
 const broken = new Map(); // target → Set<source page>
 
+/**
+ * Decode the HTML entities an attribute value is emitted with, before anything parses it.
+ *
+ * Load-bearing for the `?#` split below: a source path containing `&` (the PRR production tree
+ * has directories like `Contracts & Agreements`) is emitted as `&#38;`, whose `#` reads as a
+ * fragment delimiter and truncates the target to `.../Contracts &` — a link reported broken while
+ * the page it points at is sitting on disk. Numeric/named first, `&amp;` LAST, so an escaped
+ * entity like `&amp;#38;` doesn't get decoded twice.
+ */
+function decodeEntities(s) {
+  return s
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(Number.parseInt(h, 16)))
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
 for (const file of htmlFiles(DIST)) {
   const html = readFileSync(file, "utf8");
   const from = relative(DIST, file);
   for (const m of html.matchAll(/(?:href|src)="([^"]*)"/g)) {
-    const raw = m[1].trim();
+    const raw = decodeEntities(m[1].trim());
     if (!raw || EXTERNAL.test(raw) || raw.startsWith("//")) continue; // external / anchor-only
     if (!raw.startsWith("/")) continue; // document-relative — Astro emits root-relative; skip
     if (raw.startsWith("/api/")) continue; // runtime Pages Function route, not a static file

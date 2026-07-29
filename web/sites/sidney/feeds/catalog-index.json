@@ -1,7 +1,7 @@
 {
   "site": "sidney",
-  "catalog_version": "563d75b03a02cce97dce94a5fd143046c5e399994c2c302e9e3af33c53546471",
-  "contract_version": "1.36.0",
+  "catalog_version": "2d7d7b406cd7c6c515bd3fd8e3a44223a8f9064e5d25a7fefbdd5bdc78167263",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:sidney:7q10",
@@ -9,6 +9,14 @@
       "site": "sidney",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:aep",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:sidney:behind-the-meter",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:brownfield",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:cercla",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:cgp",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:closed-loop-cooling",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:cmar",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:colocation",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:sidney:common-control-plumbing",
       "kind": "concept",
       "site": "sidney",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:conditional-use",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:consent-decree",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:constructive-denial",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,11 +124,139 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:sidney:cra",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:curve-number",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:dilution",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:dissolved-oxygen",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:dmr",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:echo",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:effluent",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:eia",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:enterprise-zone",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:epa",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:esc",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:ferc",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:ffa",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:hb",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:sidney:heat-reuse",
       "kind": "concept",
       "site": "sidney",
       "local_id": "heat-reuse",
       "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:hsg",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:huc",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "huc",
+      "title": "HUC",
       "feed": "concepts"
     },
     {
@@ -52,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:sidney:hyperscaler",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:il6",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:interconnection-queue",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:jedd",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:moratorium",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:nda",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:npdes",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:nwis",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:oepa",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:once-through-cooling",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:opc",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:opsb",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:orc",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:pfas",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:pilot",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:pjm",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:potw",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:pti",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:sidney:public-records-mandamus",
       "kind": "concept",
       "site": "sidney",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:puco",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:pue",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:rezoning",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:rfp",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:rfq",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:rsei",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:rto",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:snc",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:sos",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:ssa",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:swat",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:swcd",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:tax-abatement",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:tif",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:tmdl",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:total-nitrogen",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:total-phosphorus",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:tri",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:usgs",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:variance",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:wla",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:wue",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:wwtp",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -268,6 +812,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:sidney:legal-records-legislation",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:sidney:lsc-status-report",
       "kind": "dataset",
       "site": "sidney",
@@ -321,6 +873,22 @@
       "site": "sidney",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -404,11 +972,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:sidney:thermal",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:sidney:usaspending",
       "kind": "dataset",
       "site": "sidney",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:wqs-criteria",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:wqs-temperature",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

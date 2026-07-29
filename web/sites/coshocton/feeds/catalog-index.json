@@ -1,7 +1,7 @@
 {
   "site": "coshocton",
-  "catalog_version": "58e155a1fff1b83908df2a16eb706fba5c7e1ea65cccaab2c3034782b930463e",
-  "contract_version": "1.36.0",
+  "catalog_version": "8b6ecec986a565dc3ed66f1ad62aa629d23bd749c6f2d54b43654275abf7ea7a",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:coshocton:7q10",
@@ -9,6 +9,14 @@
       "site": "coshocton",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:aep",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:coshocton:behind-the-meter",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:brownfield",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:cercla",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:cgp",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:closed-loop-cooling",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:cmar",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:colocation",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:coshocton:common-control-plumbing",
       "kind": "concept",
       "site": "coshocton",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:conditional-use",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:consent-decree",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:constructive-denial",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:coshocton:cra",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:curve-number",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:dilution",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:dissolved-oxygen",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:dmr",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:echo",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:effluent",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:eia",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:enterprise-zone",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:epa",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:esc",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:ferc",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:ffa",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:hb",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:heat-reuse",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:hsg",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:huc",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:coshocton:hyperscale-data-center",
       "kind": "concept",
       "site": "coshocton",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:coshocton:hyperscaler",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:il6",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:interconnection-queue",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:jedd",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:moratorium",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:nda",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:npdes",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:nwis",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:oepa",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:once-through-cooling",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:opc",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:opsb",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:orc",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:pfas",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:pilot",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:pjm",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:potw",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:pti",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:coshocton:public-records-mandamus",
       "kind": "concept",
       "site": "coshocton",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:puco",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:pue",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:rezoning",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:rfp",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:rfq",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:rsei",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:rto",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:snc",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:sos",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:ssa",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:swat",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:swcd",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:tax-abatement",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:tif",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:tmdl",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:total-nitrogen",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:total-phosphorus",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:tri",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:usgs",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:variance",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:wla",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:wue",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:coshocton:wwtp",
+      "kind": "concept",
+      "site": "coshocton",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -208,7 +760,7 @@
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -241,6 +793,14 @@
       "site": "coshocton",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:legal-records-legislation",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -297,6 +857,22 @@
       "site": "coshocton",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -372,11 +948,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:coshocton:thermal",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:coshocton:usaspending",
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:wqs-criteria",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:wqs-temperature",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

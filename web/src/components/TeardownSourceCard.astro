@@ -14,6 +14,7 @@
  * viewer page, which is dev-full / prod-gated. SSR-readable — the <DocViewer> embed
  * degrades to its own download/open affordances with JS off.
  */
+import { docPagePath } from "@watermark/core/docView";
 import type { DocumentEntry } from "@watermark/core/feeds";
 import type { BlockField } from "@watermark/core/recordBlock";
 import { withBase, withSite } from "@watermark/core/site";
@@ -42,7 +43,7 @@ const bodyClass = size === "lg" ? "td-srcbody--lg" : size === "sm" ? "td-srcbody
 const embed = !crop && !!sourceDoc?.published;
 // The header marker shows the real render_class when a source resolves, else the curated badge.
 const badge = sourceDoc ? sourceDoc.render_class.toUpperCase() : (source.badge ?? "SCAN");
-const docHref = sourceDoc ? withSite(`/site/documents/${sourceDoc.rel}`) : null;
+const docHref = sourceDoc ? withSite(docPagePath(sourceDoc.rel)) : null;
 // A crop carries its own precise overlay; otherwise the generic bar marks the gap.
 const showBar = !!redactionLabel && !crop?.redaction;
 const hasReal = crop || embed || facsimile.length > 0;

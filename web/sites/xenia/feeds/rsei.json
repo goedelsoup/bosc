@@ -285,7 +285,8 @@
           "score": 7.4,
           "pounds": 160681.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45430PLSTC3909R",
@@ -486,7 +487,8 @@
           "score": 1.8,
           "pounds": 22192.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45385LNCRP2060H",
@@ -741,7 +743,8 @@
           "score": 0.3,
           "pounds": 16310.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45324CMNTCSWCOR",
@@ -1031,7 +1034,8 @@
           "score": 481.5,
           "pounds": 525.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45301CMSCR530SO",
@@ -1308,7 +1312,8 @@
           "score": 0.1,
           "pounds": 44005.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45385TWSTN1370L",
@@ -1527,7 +1532,8 @@
           "score": 0.0,
           "pounds": 27079.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45324STDCT632YE",
@@ -1606,7 +1612,8 @@
           "score": 36988.1,
           "pounds": 37450.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45385CRBLN125FA",
@@ -1790,7 +1797,8 @@
           "score": 62.2,
           "pounds": 19193.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45433SDDSFDEPAR",
@@ -2016,7 +2024,8 @@
           "score": 9.6,
           "pounds": 18048.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45387VRNYL875DA",
@@ -2141,7 +2150,8 @@
           "score": 2.8,
           "pounds": 57606.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45324MMVLL678FA",
@@ -2219,7 +2229,8 @@
           "score": 363.3,
           "pounds": 2724.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45385YDRDC851BE",
@@ -2314,7 +2325,8 @@
           "score": 245.4,
           "pounds": 14611.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45324MMPRD1260S",
@@ -2464,7 +2476,8 @@
           "score": 456.7,
           "pounds": 140.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45385VRNYP915TR",
@@ -2518,7 +2531,8 @@
           "score": 0.8,
           "pounds": 8100.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45335MRCNB5100W",
@@ -2564,7 +2578,8 @@
           "score": 47.9,
           "pounds": 35491.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45385CCCLD1380L",
@@ -2650,7 +2665,8 @@
           "score": 0.0,
           "pounds": 44058.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45385LNCRP2070H",
@@ -2729,7 +2745,8 @@
           "score": 1.6,
           "pounds": 60101.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45385KSHNC825BE",
@@ -2756,7 +2773,8 @@
       "first_year": null,
       "last_year": null,
       "years": [],
-      "top_chemicals": []
+      "top_chemicals": [],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45430SCSLR1340G",
@@ -2783,7 +2801,8 @@
       "first_year": null,
       "last_year": null,
       "years": [],
-      "top_chemicals": []
+      "top_chemicals": [],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "45324STHWS506EX",
@@ -2810,7 +2829,8 @@
       "first_year": null,
       "last_year": null,
       "years": [],
-      "top_chemicals": []
+      "top_chemicals": [],
+      "top_water_chemicals": []
     }
   ]
 }

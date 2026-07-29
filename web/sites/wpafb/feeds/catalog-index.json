@@ -1,7 +1,7 @@
 {
   "site": "wpafb",
-  "catalog_version": "6ff1a25f05f30b6643ea43fb4a7680625fd0f3534d15a3eb25e3ac026f8d5ad9",
-  "contract_version": "1.36.0",
+  "catalog_version": "d7b8a5c6873de691ea904ceafa76c6295eaa2288064e85c3fce4f036e0496509",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:wpafb:7q10",
@@ -812,6 +812,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:wpafb:legal-records-legislation",
+      "kind": "dataset",
+      "site": "wpafb",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:wpafb:lsc-status-report",
       "kind": "dataset",
       "site": "wpafb",
@@ -865,6 +873,22 @@
       "site": "wpafb",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wpafb:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "wpafb",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wpafb:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "wpafb",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -948,6 +972,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:wpafb:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "wpafb",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:wpafb:usaspending",
       "kind": "dataset",
       "site": "wpafb",
@@ -969,6 +1001,14 @@
       "site": "wpafb",
       "local_id": "wqs-criteria",
       "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wpafb:wqs-temperature",
+      "kind": "dataset",
+      "site": "wpafb",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

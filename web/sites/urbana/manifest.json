@@ -2,9 +2,9 @@
   "site": "urbana",
   "bundle_version": "1.0.0",
   "contract_version": "1.41.0",
-  "generated_at": "2026-07-09T19:27:16+00:00",
-  "feed_count": 31,
-  "row_total": 390,
+  "generated_at": "2026-07-29T15:25:38+00:00",
+  "feed_count": 32,
+  "row_total": 401,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -117,7 +117,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 3
     },
     {
       "name": "rsei",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 43
+      "count": 50
     },
     {
       "name": "geo/campus",
@@ -240,20 +240,20 @@
       "count": 84
     },
     {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 2
+    },
+    {
       "name": "catalog-index",
       "path": "feeds/catalog-index.json",
       "media_type": "application/json",
       "schema": "schemas/catalog-index.schema.json",
       "kind": "object",
       "count": 1
-    },
-    {
-      "name": "ask-embeddings",
-      "path": "feeds/ask-embeddings.json",
-      "media_type": "application/json",
-      "schema": "schemas/ask-embeddings.schema.json",
-      "kind": "collection",
-      "count": 0
     },
     {
       "name": "corpus-index",
@@ -270,6 +270,14 @@
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
       "count": 82
+    },
+    {
+      "name": "ask-embeddings",
+      "path": "feeds/ask-embeddings.json",
+      "media_type": "application/json",
+      "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
     }
   ],
   "exports": []

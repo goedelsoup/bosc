@@ -1,7 +1,7 @@
 {
   "site": "toledo",
-  "catalog_version": "28e29032c5eaed4733fc58030cc9a6fb55814f116b46af5b95eb85df5b22df69",
-  "contract_version": "1.36.0",
+  "catalog_version": "005918634a8d545120f94f5552fc95a865b8138bcd26a1f08275c2a4c324769e",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:toledo:7q10",
@@ -9,6 +9,14 @@
       "site": "toledo",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:aep",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:toledo:behind-the-meter",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:brownfield",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:cercla",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:cgp",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:closed-loop-cooling",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:cmar",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:colocation",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:toledo:common-control-plumbing",
       "kind": "concept",
       "site": "toledo",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:conditional-use",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:consent-decree",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:constructive-denial",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:toledo:cra",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:curve-number",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:dilution",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:dissolved-oxygen",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:dmr",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:echo",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:effluent",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:eia",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:enterprise-zone",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:epa",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:esc",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:ferc",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:ffa",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:hb",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:heat-reuse",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:hsg",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:huc",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:toledo:hyperscale-data-center",
       "kind": "concept",
       "site": "toledo",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:toledo:hyperscaler",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:il6",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:interconnection-queue",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:jedd",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:moratorium",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:nda",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:npdes",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:nwis",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:oepa",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:once-through-cooling",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:opc",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:opsb",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:orc",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:pfas",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:pilot",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:pjm",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:potw",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:pti",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:toledo:public-records-mandamus",
       "kind": "concept",
       "site": "toledo",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:puco",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:pue",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:rezoning",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:rfp",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:rfq",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:rsei",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:rto",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:snc",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:sos",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:ssa",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:swat",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:swcd",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:tax-abatement",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:tif",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:tmdl",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:total-nitrogen",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:total-phosphorus",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:tri",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:usgs",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:variance",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:wla",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:wue",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:toledo:wwtp",
+      "kind": "concept",
+      "site": "toledo",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -105,6 +657,14 @@
       "site": "toledo",
       "local_id": "echo-maumee-npdes",
       "title": "Maumee-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:echo-maumee-receiving-water",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "echo-maumee-receiving-water",
+      "title": "Curated receiving-water overlay for the Maumee ECHO NPDES inventory",
       "feed": "catalog"
     },
     {
@@ -216,7 +776,7 @@
       "kind": "dataset",
       "site": "toledo",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -257,6 +817,22 @@
       "site": "toledo",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:hydrology-toledo-waterville-spill-monitor-read",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "hydrology-toledo-waterville-spill-monitor-read",
+      "title": "Maumee-at-Waterville (04193500) Continuous-Monitor Read — Napoleon Spill",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:legal-records-legislation",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -313,6 +889,22 @@
       "site": "toledo",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -388,11 +980,51 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:toledo:thermal",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:toledo-napoleon-spill-waterville-monitor-read",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "toledo-napoleon-spill-waterville-monitor-read",
+      "title": "Maumee-at-Waterville (04193500) Monitor Read — Napoleon Spill (narrative)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:toledo:usaspending",
       "kind": "dataset",
       "site": "toledo",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:wqs-criteria",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:wqs-temperature",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

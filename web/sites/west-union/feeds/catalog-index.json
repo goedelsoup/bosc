@@ -1,7 +1,7 @@
 {
   "site": "west-union",
-  "catalog_version": "548f4d5fcd223becd19eb490d590e0f9064606278aabc501a00017e7ebebf317",
-  "contract_version": "1.36.0",
+  "catalog_version": "7231b97c9d59299441727c02eeba4eebfcb8ac6fb2b0f92b3c6ad36d7c06f7c4",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:west-union:7q10",
@@ -9,6 +9,14 @@
       "site": "west-union",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:aep",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:west-union:behind-the-meter",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:brownfield",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:cercla",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:cgp",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:closed-loop-cooling",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:cmar",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:colocation",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:west-union:common-control-plumbing",
       "kind": "concept",
       "site": "west-union",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:conditional-use",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:consent-decree",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:constructive-denial",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:west-union:cra",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:curve-number",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:dilution",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:dissolved-oxygen",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:dmr",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:echo",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:effluent",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:eia",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:enterprise-zone",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:epa",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:esc",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:ferc",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:ffa",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:hb",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:heat-reuse",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:hsg",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:huc",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:west-union:hyperscale-data-center",
       "kind": "concept",
       "site": "west-union",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:west-union:hyperscaler",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:il6",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:interconnection-queue",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:jedd",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:moratorium",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:nda",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:npdes",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:nwis",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:oepa",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:once-through-cooling",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:opc",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:opsb",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:orc",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:pfas",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:pilot",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:pjm",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:potw",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:pti",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:west-union:public-records-mandamus",
       "kind": "concept",
       "site": "west-union",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:puco",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:pue",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:rezoning",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:rfp",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:rfq",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:rsei",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:rto",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:snc",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:sos",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:ssa",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:swat",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:swcd",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:tax-abatement",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:tif",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:tmdl",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:total-nitrogen",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:total-phosphorus",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:tri",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:usgs",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:variance",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:wla",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:wue",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:west-union:wwtp",
+      "kind": "concept",
+      "site": "west-union",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -208,7 +760,7 @@
       "kind": "dataset",
       "site": "west-union",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -241,6 +793,14 @@
       "site": "west-union",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:legal-records-legislation",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -297,6 +857,22 @@
       "site": "west-union",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -372,11 +948,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:west-union:thermal",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:west-union:usaspending",
       "kind": "dataset",
       "site": "west-union",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:wqs-criteria",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:wqs-temperature",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

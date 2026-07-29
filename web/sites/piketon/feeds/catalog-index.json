@@ -1,7 +1,7 @@
 {
   "site": "piketon",
-  "catalog_version": "59277e643ea396909e6d8dd842fc457b00844a2082851cdaa2349d382ca502dc",
-  "contract_version": "1.36.0",
+  "catalog_version": "d2bfa9968e620630446f5c1272210c496e9b7fc957bb46787ece5a908acc13f6",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:piketon:7q10",
@@ -9,6 +9,14 @@
       "site": "piketon",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:aep",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:piketon:behind-the-meter",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:brownfield",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:cercla",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:cgp",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:closed-loop-cooling",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:cmar",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:colocation",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:piketon:common-control-plumbing",
       "kind": "concept",
       "site": "piketon",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:conditional-use",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:consent-decree",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:constructive-denial",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:piketon:cra",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:curve-number",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:dilution",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:dissolved-oxygen",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:dmr",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:echo",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:effluent",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:eia",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:enterprise-zone",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:epa",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:esc",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:ferc",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:ffa",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:hb",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:heat-reuse",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:hsg",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:huc",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:piketon:hyperscale-data-center",
       "kind": "concept",
       "site": "piketon",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:piketon:hyperscaler",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:il6",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:interconnection-queue",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:jedd",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:moratorium",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:nda",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:npdes",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:nwis",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:oepa",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:once-through-cooling",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:opc",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:opsb",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:orc",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:pfas",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:pilot",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:pjm",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:potw",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:pti",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:piketon:public-records-mandamus",
       "kind": "concept",
       "site": "piketon",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:puco",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:pue",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:rezoning",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:rfp",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:rfq",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:rsei",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:rto",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:snc",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:sos",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:ssa",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:swat",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:swcd",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:tax-abatement",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:tif",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:tmdl",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:total-nitrogen",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:total-phosphorus",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:tri",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:usgs",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:variance",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:wla",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:wue",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:piketon:wwtp",
+      "kind": "concept",
+      "site": "piketon",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -208,7 +760,7 @@
       "kind": "dataset",
       "site": "piketon",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -241,6 +793,14 @@
       "site": "piketon",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:legal-records-legislation",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -297,6 +857,22 @@
       "site": "piketon",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -372,11 +948,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:piketon:thermal",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:piketon:usaspending",
       "kind": "dataset",
       "site": "piketon",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:wqs-criteria",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:wqs-temperature",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

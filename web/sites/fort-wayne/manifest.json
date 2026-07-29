@@ -2,9 +2,9 @@
   "site": "fort-wayne",
   "bundle_version": "1.0.0",
   "contract_version": "1.41.0",
-  "generated_at": "2026-07-08T21:11:19+00:00",
-  "feed_count": 31,
-  "row_total": 385,
+  "generated_at": "2026-07-29T15:17:07+00:00",
+  "feed_count": 32,
+  "row_total": 402,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -208,12 +208,20 @@
       "count": 0
     },
     {
+      "name": "drawdown",
+      "path": "feeds/drawdown.json",
+      "media_type": "application/json",
+      "schema": "schemas/drawdown.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
       "name": "catalog",
       "path": "feeds/catalog.json",
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 37
+      "count": 42
     },
     {
       "name": "geo/campus",
@@ -237,7 +245,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 77
+      "count": 88
     },
     {
       "name": "catalog-index",
@@ -246,14 +254,6 @@
       "schema": "schemas/catalog-index.schema.json",
       "kind": "object",
       "count": 1
-    },
-    {
-      "name": "ask-embeddings",
-      "path": "feeds/ask-embeddings.json",
-      "media_type": "application/json",
-      "schema": "schemas/ask-embeddings.schema.json",
-      "kind": "collection",
-      "count": 0
     },
     {
       "name": "corpus-index",
@@ -270,6 +270,14 @@
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
       "count": 79
+    },
+    {
+      "name": "ask-embeddings",
+      "path": "feeds/ask-embeddings.json",
+      "media_type": "application/json",
+      "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
     }
   ],
   "exports": []

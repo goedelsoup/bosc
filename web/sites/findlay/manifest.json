@@ -1,10 +1,10 @@
 {
   "site": "findlay",
   "bundle_version": "1.0.0",
-  "contract_version": "1.36.0",
-  "generated_at": "2026-07-16T12:14:17+00:00",
-  "feed_count": 29,
-  "row_total": 326,
+  "contract_version": "1.41.0",
+  "generated_at": "2026-07-29T15:16:30+00:00",
+  "feed_count": 31,
+  "row_total": 418,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -37,7 +37,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 1
     },
     {
       "name": "entities",
@@ -45,7 +45,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 3
+      "count": 2
     },
     {
       "name": "relationships",
@@ -144,6 +144,14 @@
       "count": 1
     },
     {
+      "name": "grid",
+      "path": "feeds/grid.json",
+      "media_type": "application/json",
+      "schema": "schemas/grid.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
       "name": "economics-demand-pressure",
       "path": "feeds/economics-demand-pressure.json",
       "media_type": "application/json",
@@ -213,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 45
+      "count": 53
     },
     {
       "name": "facts",
@@ -237,7 +245,23 @@
       "media_type": "application/json",
       "schema": "schemas/catalog-index.schema.json",
       "kind": "object",
-      "count": 0
+      "count": 1
+    },
+    {
+      "name": "corpus-index",
+      "path": "feeds/corpus-index.json",
+      "media_type": "application/json",
+      "schema": "schemas/corpus-index.schema.json",
+      "kind": "collection",
+      "count": 86
+    },
+    {
+      "name": "corpus-nodes",
+      "path": "feeds/corpus-nodes.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/corpus-nodes.schema.json",
+      "kind": "collection",
+      "count": 86
     },
     {
       "name": "ask-embeddings",
@@ -246,14 +270,6 @@
       "schema": "schemas/ask-embeddings.schema.json",
       "kind": "collection",
       "count": 0
-    },
-    {
-      "name": "corpus-index",
-      "path": "feeds/corpus-index.json",
-      "media_type": "application/json",
-      "schema": "schemas/corpus-index.schema.json",
-      "kind": "collection",
-      "count": 88
     }
   ],
   "exports": []

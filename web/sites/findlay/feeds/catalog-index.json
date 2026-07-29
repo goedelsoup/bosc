@@ -1,7 +1,7 @@
 {
   "site": "findlay",
-  "catalog_version": "f229423e07908c198fd12e0ff7aeab64b5e9824b7eeb3614881a0fab5b2db9b2",
-  "contract_version": "1.36.0",
+  "catalog_version": "35eb1f25bdd5499405e6359dc78cd04dcdd68d301f3ca4503f80dc81aa8e3fb6",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:findlay:7q10",
@@ -9,6 +9,14 @@
       "site": "findlay",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:aep",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:findlay:behind-the-meter",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:brownfield",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:cercla",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:cgp",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:closed-loop-cooling",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:cmar",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:colocation",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:findlay:common-control-plumbing",
       "kind": "concept",
       "site": "findlay",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:conditional-use",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:consent-decree",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:constructive-denial",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,11 +124,139 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:findlay:cra",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:curve-number",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:dilution",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:dissolved-oxygen",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:dmr",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:echo",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:effluent",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:eia",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:enterprise-zone",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:epa",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:esc",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:ferc",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:ffa",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:hb",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:findlay:heat-reuse",
       "kind": "concept",
       "site": "findlay",
       "local_id": "heat-reuse",
       "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:hsg",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:huc",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "huc",
+      "title": "HUC",
       "feed": "concepts"
     },
     {
@@ -52,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:findlay:hyperscaler",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:il6",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:interconnection-queue",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:jedd",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:moratorium",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:nda",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:npdes",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:nwis",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:oepa",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:once-through-cooling",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:opc",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:opsb",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:orc",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:pfas",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:pilot",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:pjm",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:potw",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:pti",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:findlay:public-records-mandamus",
       "kind": "concept",
       "site": "findlay",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:puco",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:pue",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:rezoning",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:rfp",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:rfq",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:rsei",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:rto",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:snc",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:sos",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:ssa",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:swat",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:swcd",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:tax-abatement",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:tif",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:tmdl",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:total-nitrogen",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:total-phosphorus",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:tri",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:usgs",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:variance",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:wla",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:wue",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:wwtp",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -113,6 +657,14 @@
       "site": "findlay",
       "local_id": "echo-maumee-npdes",
       "title": "Maumee-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:echo-maumee-receiving-water",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "echo-maumee-receiving-water",
+      "title": "Curated receiving-water overlay for the Maumee ECHO NPDES inventory",
       "feed": "catalog"
     },
     {
@@ -284,6 +836,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:legal-records-legislation",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:lsc-status-report",
       "kind": "dataset",
       "site": "findlay",
@@ -337,6 +897,22 @@
       "site": "findlay",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -412,6 +988,22 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:thermal",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:usaspending",
       "kind": "dataset",
       "site": "findlay",
@@ -420,12 +1012,20 @@
       "feed": "catalog"
     },
     {
-      "handle": "entity:findlay:CITY OF FINDLAY SUBAPPLICANT",
-      "kind": "entity",
+      "handle": "dataset:findlay:wqs-criteria",
+      "kind": "dataset",
       "site": "findlay",
-      "local_id": "CITY OF FINDLAY SUBAPPLICANT",
-      "title": "City of Findlay (subapplicant), in partnership with the Hancock County Commissioners and the Maumee Watershed Conservancy District (MWCD)",
-      "feed": "entities"
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:wqs-temperature",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
+      "feed": "catalog"
     },
     {
       "handle": "entity:findlay:GENERAL DYNAMICS",
@@ -514,14 +1114,6 @@
       "local_id": "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
       "title": "Blanchard River Watershed, Ohio — Feasibility Report",
       "feed": "records"
-    },
-    {
-      "handle": "timeline:findlay:EMC-2023-FM-003-0004",
-      "kind": "timeline",
-      "site": "findlay",
-      "local_id": "EMC-2023-FM-003-0004",
-      "title": "Flood Mitigation Assistance (FMA) EMC-2023-FM-003-0004 — grant approved / funds obligated (Hancock County Flood-Risk Reduction Program — Eagle Creek Dry Storage Basin + Blanchard River benching)",
-      "feed": "timeline"
     }
   ]
 }

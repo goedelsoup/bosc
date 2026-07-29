@@ -58,7 +58,7 @@
     "id": "artifact/bistrozzi",
     "node_class": "artifact",
     "kind": "entity",
-    "label": "Bistrozzi LLC",
+    "label": "BISTROZZI LLC",
     "scope": "site",
     "links_out": 1,
     "links_in": 12,
@@ -633,7 +633,7 @@
     "label": "Lima",
     "scope": "site",
     "links_out": 3,
-    "links_in": 97,
+    "links_in": 100,
     "lines": 13,
     "updated": null
   },
@@ -1705,6 +1705,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-dewatering-drywell-nw",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "A reportedly dry-and-replaced shallow well sits ~3.7 mi down-gradient of the dewatering field",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 23,
+    "updated": null
+  },
+  {
     "id": "question/lead-forcemain-mgd",
     "node_class": "question",
     "kind": "lead",
@@ -1712,7 +1723,7 @@
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
-    "lines": 16,
+    "lines": 19,
     "updated": null
   },
   {
@@ -1944,6 +1955,28 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "question/lead-thermal-no-limit",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Nothing on the Ottawa corridor holds a thermal limit against the heat already in the river",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 25,
+    "updated": null
+  },
+  {
+    "id": "question/lead-wwtp-param-assim",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The municipal-WWTP dilution check is hydraulic only — no per-parameter assimilative capacity on record",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
     "updated": null
   },
   {

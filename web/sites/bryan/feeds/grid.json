@@ -1,0 +1,86 @@
+{
+  "serving_utility": {
+    "utility": {
+      "value": "City of Bryan - (OH)",
+      "source": "reference",
+      "citation": "EIA-861S Short Form (City of Bryan - OH, #2439; Municipal, BA=PJM, ~160 GWh sold 2024) — Bryan Municipal Utilities, a municipally-owned electric system and American Municipal Power (AMP) member; municipal home-rule retail, the network's first municipal/short-form utility. Wholesale power + PJM scheduling are through AMP, not an IOU holding company",
+      "confidence": "high"
+    },
+    "holding_company": {
+      "value": "City of Bryan (municipal; American Municipal Power member)",
+      "source": "reference",
+      "citation": "Bryan Municipal Utilities is a municipally-owned electric system with no IOU holding company; its wholesale power and PJM scheduling are through American Municipal Power (AMP), the Ohio municipal joint-action agency",
+      "confidence": "high"
+    },
+    "balancing_authority": {
+      "value": "PJM Interconnection",
+      "source": "reference",
+      "citation": "PJM is the FERC-jurisdictional wholesale-market RTO for Bryan (AMP/PJM)",
+      "confidence": "high"
+    },
+    "rto": {
+      "value": "PJM Interconnection (RTO/ISO)",
+      "source": "reference",
+      "citation": "PJM is the FERC-jurisdictional wholesale-market RTO for Bryan (AMP/PJM)",
+      "confidence": "high"
+    },
+    "retail_regulator": {
+      "value": "municipal (home rule, OH)",
+      "source": "reference",
+      "citation": "OH municipal electric systems set their own retail rates under home rule (not state-PUC rate-regulated)",
+      "confidence": "high"
+    },
+    "note": "Serving utility is identified from the EIA-861 service-territory file; RTO=PJM Interconnection is authoritative. The retail service area is the utility's own (home rule, OH), not a PUC-certified IOU territory; it is confirmed against the EIA-861 service-territory file (#94)."
+  },
+  "utility_profile": {
+    "utility": "City of Bryan - (OH)",
+    "ownership": "Municipal",
+    "eia_source": "EIA-861 2024 per-utility retail (connector; 861S short-form total)",
+    "retail_sales_gwh": {
+      "value": 160.5,
+      "unit": "GWh/yr",
+      "source": "connector",
+      "citation": "EIA-861 2024 861S Short Form, City of Bryan - (OH) (#2439), OH; annual total sales",
+      "confidence": "high",
+      "asof": "2024",
+      "low": null,
+      "high": null
+    },
+    "customers": {
+      "value": 5814.0,
+      "unit": "customers",
+      "source": "connector",
+      "citation": "EIA-861 2024 861S Short Form, City of Bryan - (OH) (#2439), OH; annual total customers",
+      "confidence": "high",
+      "asof": "2024",
+      "low": null,
+      "high": null
+    },
+    "avg_price_cents_kwh": {
+      "value": 10.75,
+      "unit": "cents/kWh",
+      "source": "connector",
+      "citation": "EIA-861 2024 861S Short Form, City of Bryan - (OH) (#2439), OH; all-customer average for this utility — the short form has no service-type split, so a full-service municipal/cooperative's single total is its whole retail cohort (no bundled-vs-shopping skew)",
+      "confidence": "high",
+      "asof": "2024",
+      "low": null,
+      "high": null
+    }
+  },
+  "ba_profile": {
+    "ba": "PJM Interconnection",
+    "eia_source": "EIA-930 daily demand sum, annual (connector)",
+    "annual_load_gwh": {
+      "value": 815056.2,
+      "unit": "GWh/yr",
+      "source": "connector",
+      "citation": "EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)",
+      "confidence": "high",
+      "asof": "2024",
+      "low": null,
+      "high": null
+    }
+  },
+  "load_share": null,
+  "note": "Grid foundation layer (#94): per-site grid backdrop only. This site has no documented data-center facility, so there is no campus load to express as a share — the utility/BA/state denominators are real connector-sourced data, but the campus load share awaits the site's facility disclosure (the data-center dimension onboarding does not capture)."
+}

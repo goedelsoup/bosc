@@ -2,9 +2,9 @@
   "site": "wpafb",
   "bundle_version": "1.0.0",
   "contract_version": "1.41.0",
-  "generated_at": "2026-07-21T18:18:55+00:00",
+  "generated_at": "2026-07-29T15:28:04+00:00",
   "feed_count": 28,
-  "row_total": 431,
+  "row_total": 436,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -199,7 +199,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 46
+      "count": 51
     },
     {
       "name": "facts",

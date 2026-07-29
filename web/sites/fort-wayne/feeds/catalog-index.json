@@ -1,7 +1,7 @@
 {
   "site": "fort-wayne",
-  "catalog_version": "208673168fdac32928309004395ff83b78960050c4500436b55b44c2666a70f4",
-  "contract_version": "1.36.0",
+  "catalog_version": "9368c498c7bd33bb93b765794f206893fd87817a767b4a6dceb494aa8bc990bd",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:fort-wayne:7q10",
@@ -9,6 +9,14 @@
       "site": "fort-wayne",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:aep",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:fort-wayne:behind-the-meter",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:brownfield",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:cercla",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:cgp",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:closed-loop-cooling",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:cmar",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:colocation",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:fort-wayne:common-control-plumbing",
       "kind": "concept",
       "site": "fort-wayne",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:conditional-use",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:consent-decree",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:constructive-denial",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:fort-wayne:cra",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:curve-number",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:dilution",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:dissolved-oxygen",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:dmr",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:echo",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:effluent",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:eia",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:enterprise-zone",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:epa",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:esc",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:ferc",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:ffa",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:hb",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:heat-reuse",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:hsg",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:huc",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:fort-wayne:hyperscale-data-center",
       "kind": "concept",
       "site": "fort-wayne",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:fort-wayne:hyperscaler",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:il6",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:interconnection-queue",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:jedd",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:moratorium",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:nda",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:npdes",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:nwis",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:oepa",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:once-through-cooling",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:opc",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:opsb",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:orc",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:pfas",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:pilot",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:pjm",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:potw",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:pti",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:fort-wayne:public-records-mandamus",
       "kind": "concept",
       "site": "fort-wayne",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:puco",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:pue",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:rezoning",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:rfp",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:rfq",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:rsei",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:rto",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:snc",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:sos",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:ssa",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:swat",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:swcd",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:tax-abatement",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:tif",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:tmdl",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:total-nitrogen",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:total-phosphorus",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:tri",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:usgs",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:variance",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:wla",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:wue",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:fort-wayne:wwtp",
+      "kind": "concept",
+      "site": "fort-wayne",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -113,6 +665,14 @@
       "site": "fort-wayne",
       "local_id": "echo-maumee-npdes",
       "title": "Maumee-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:fort-wayne:echo-maumee-receiving-water",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "echo-maumee-receiving-water",
+      "title": "Curated receiving-water overlay for the Maumee ECHO NPDES inventory",
       "feed": "catalog"
     },
     {
@@ -224,7 +784,7 @@
       "kind": "dataset",
       "site": "fort-wayne",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -340,11 +900,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:fort-wayne:thermal",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:fort-wayne:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:fort-wayne:usaspending",
       "kind": "dataset",
       "site": "fort-wayne",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:fort-wayne:wqs-criteria",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:fort-wayne:wqs-temperature",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

@@ -9,6 +9,7 @@
  * are **flagged, not silently dropped** (the whole point of grounding an evidence corpus).
  */
 
+import { docPagePath } from "./docView";
 import { escapeHtml } from "./format";
 
 /** One source the answer cited — mirrors `AskCitation` in functions/api/_lib/ask.ts. */
@@ -44,7 +45,7 @@ export function withBasePath(base: string, path: string): string {
 export function citationHref(c: AskCitation, base: string): string {
   const DOC_PREFIX = "data/documents/";
   if (c.source_kind === "document" && c.source?.startsWith(DOC_PREFIX)) {
-    return withBasePath(base, `/site/documents/${c.source.slice(DOC_PREFIX.length)}`);
+    return withBasePath(base, docPagePath(c.source.slice(DOC_PREFIX.length)));
   }
   return withBasePath(base, c.url);
 }

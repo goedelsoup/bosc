@@ -192,7 +192,8 @@
           "score": 12.4,
           "pounds": 5667.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43078FLRSP515NO",
@@ -483,7 +484,8 @@
           "score": 0.0,
           "pounds": 545428.5
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43078DRCKT801ST",
@@ -624,7 +626,8 @@
           "score": 2.6,
           "pounds": 11140.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43072KTHPR1111N",
@@ -930,7 +933,8 @@
           "score": 0.1,
           "pounds": 14046.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43078JHNSN625SE",
@@ -1058,7 +1062,8 @@
           "score": 1333.4,
           "pounds": 315773.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43078SMNSN145DE",
@@ -1295,7 +1300,8 @@
           "score": 0.0,
           "pounds": 93005.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43078GRMSR550ST",
@@ -1478,7 +1484,8 @@
           "score": 2.9,
           "pounds": 43837.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43078RTBND417EA",
@@ -1628,7 +1635,8 @@
           "score": 0.0,
           "pounds": 66472.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43078TRTCN4795U",
@@ -1691,7 +1699,8 @@
           "score": 0.4,
           "pounds": 122240.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "4307WWDMNN7WEST",
@@ -1753,7 +1762,8 @@
           "score": 0.0,
           "pounds": 657.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43078HWRDP504CH",
@@ -1799,7 +1809,8 @@
           "score": 0.0,
           "pounds": 750.0
         }
-      ]
+      ],
+      "top_water_chemicals": []
     },
     {
       "facility_id": "43078CRNNT1000S",
@@ -1826,7 +1837,8 @@
       "first_year": null,
       "last_year": null,
       "years": [],
-      "top_chemicals": []
+      "top_chemicals": [],
+      "top_water_chemicals": []
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "site": "ottawa",
-  "catalog_version": "bc945be1c1723cd9ef7d933103c437781eb29a1e84716ee4d031a623b2283d19",
-  "contract_version": "1.36.0",
+  "catalog_version": "c56da0a8dcfee7ca3c9e226affa088e0b2e0d03bc8b86bb90dfb896ad8154479",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:ottawa:7q10",
@@ -9,6 +9,14 @@
       "site": "ottawa",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:aep",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:ottawa:behind-the-meter",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:brownfield",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:cercla",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:cgp",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:closed-loop-cooling",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:cmar",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:colocation",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:ottawa:common-control-plumbing",
       "kind": "concept",
       "site": "ottawa",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:conditional-use",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:consent-decree",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:constructive-denial",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:ottawa:cra",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:curve-number",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:dilution",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:dissolved-oxygen",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:dmr",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:echo",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:effluent",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:eia",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:enterprise-zone",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:epa",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:esc",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:ferc",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:ffa",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:hb",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:heat-reuse",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:hsg",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:huc",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:ottawa:hyperscale-data-center",
       "kind": "concept",
       "site": "ottawa",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:ottawa:hyperscaler",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:il6",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:interconnection-queue",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:jedd",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:moratorium",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:nda",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:npdes",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:nwis",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:oepa",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:once-through-cooling",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:opc",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:opsb",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:orc",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:pfas",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:pilot",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:pjm",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:potw",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:pti",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:ottawa:public-records-mandamus",
       "kind": "concept",
       "site": "ottawa",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:puco",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:pue",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:rezoning",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:rfp",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:rfq",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:rsei",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:rto",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:snc",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:sos",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:ssa",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:swat",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:swcd",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:tax-abatement",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:tif",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:tmdl",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:total-nitrogen",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:total-phosphorus",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:tri",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:usgs",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:variance",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:wla",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:wue",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:ottawa:wwtp",
+      "kind": "concept",
+      "site": "ottawa",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -105,6 +657,14 @@
       "site": "ottawa",
       "local_id": "echo-maumee-npdes",
       "title": "Maumee-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:echo-maumee-receiving-water",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "echo-maumee-receiving-water",
+      "title": "Curated receiving-water overlay for the Maumee ECHO NPDES inventory",
       "feed": "catalog"
     },
     {
@@ -216,7 +776,7 @@
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -257,6 +817,14 @@
       "site": "ottawa",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:legal-records-legislation",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -313,6 +881,22 @@
       "site": "ottawa",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -388,11 +972,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:ottawa:thermal",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:ottawa:usaspending",
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:wqs-criteria",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:wqs-temperature",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

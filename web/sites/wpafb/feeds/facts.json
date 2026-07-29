@@ -324,7 +324,7 @@
       "page": null,
       "citation": "EIA ELEC.PRICE.OH-RES.A (2025)",
       "confidence": "high",
-      "asof": null,
+      "asof": "2025",
       "verified": true
     },
     "feed": "energy-burden"
@@ -346,7 +346,7 @@
       "page": null,
       "citation": "EIA NG.N3010OH3.A (2025)",
       "confidence": "high",
-      "asof": null,
+      "asof": "2025",
       "verified": true
     },
     "feed": "energy-burden"

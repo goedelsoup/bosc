@@ -1,0 +1,290 @@
+{
+  "contractors": [
+    {
+      "name": "Lockheed Martin",
+      "note": null,
+      "patterns": [
+        "LOCKHEED MARTIN",
+        "LOCKHEED-MARTIN",
+        "LOCKHEED CORP",
+        "SIKORSKY AIRCRAFT"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Boeing",
+      "note": null,
+      "patterns": [
+        "BOEING"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "RTX (Raytheon Technologies)",
+      "note": "Raytheon merged with United Technologies in 2020; subsidiaries include Pratt & Whitney and Collins Aerospace.",
+      "patterns": [
+        "RAYTHEON",
+        "RTX CORPORATION",
+        "RTX CORP",
+        "PRATT & WHITNEY",
+        "PRATT AND WHITNEY",
+        "COLLINS AEROSPACE",
+        "ROCKWELL COLLINS"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Northrop Grumman",
+      "note": null,
+      "patterns": [
+        "NORTHROP GRUMMAN",
+        "NORTHROP-GRUMMAN"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "General Dynamics (broader)",
+      "note": "GDLS, GDIT, GD Ordnance, and TACOM/JSMC are caught by the Allen overlay's government_military patterns. This entry catches the parent and other GD subsidiaries (Bath Iron Works, Electric Boat, Gulfstream, NASSCO, Mission Systems) that may show up on parcels with no Allen-specific government role.",
+      "patterns": [
+        "GENERAL DYNAMICS CORPORATION",
+        "GENERAL DYNAMICS CORP",
+        "GENERAL DYNAMICS MISSION",
+        "BATH IRON WORKS",
+        "ELECTRIC BOAT CORP",
+        "GULFSTREAM AEROSPACE",
+        "NASSCO"
+      ],
+      "matched_entities": [
+        "GENERAL DYNAMICS"
+      ],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "inference",
+      "tag_basis": "owner / party name-pattern match against this site's entity graph — a lead to verify, not a classification and not an accusation"
+    },
+    {
+      "name": "L3Harris Technologies",
+      "note": "Bare 'HARRIS' is intentionally excluded — it would match thousands of parcels held by Harris-surnamed individuals.",
+      "patterns": [
+        "L3HARRIS",
+        "L-3 COMMUNICATIONS",
+        "L3 TECHNOLOGIES",
+        "L-3 TECHNOLOGIES"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "BAE Systems",
+      "note": null,
+      "patterns": [
+        "BAE SYSTEMS"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Booz Allen Hamilton",
+      "note": null,
+      "patterns": [
+        "BOOZ ALLEN HAMILTON",
+        "BOOZ ALLEN",
+        "BOOZ-ALLEN"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Leidos",
+      "note": null,
+      "patterns": [
+        "LEIDOS"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "SAIC (Science Applications International)",
+      "note": null,
+      "patterns": [
+        "SCIENCE APPLICATIONS INTERNATIONAL",
+        "SAIC INC",
+        "SAIC CORPORATION",
+        "SAIC CORP"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "CACI International",
+      "note": null,
+      "patterns": [
+        "CACI INTERNATIONAL",
+        "CACI INC",
+        "CACI, INC"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "ManTech",
+      "note": null,
+      "patterns": [
+        "MANTECH"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Honeywell",
+      "note": "DUAL-USE. Honeywell has substantial commercial (HVAC, building controls, industrial automation) and aerospace/defense businesses. Included because Honeywell Federal Manufacturing & Technologies operates Kansas City National Security Campus on behalf of the NNSA, and Honeywell Aerospace is a top DoD prime. Reviewers should treat a Honeywell hit as a starting point, not a conclusion.",
+      "patterns": [
+        "HONEYWELL"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Huntington Ingalls Industries",
+      "note": null,
+      "patterns": [
+        "HUNTINGTON INGALLS",
+        "NEWPORT NEWS SHIPBUILDING",
+        "INGALLS SHIPBUILDING"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Textron",
+      "note": "Includes Bell (helicopters) and Textron Systems.",
+      "patterns": [
+        "TEXTRON",
+        "BELL HELICOPTER",
+        "BELL TEXTRON"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Oshkosh Defense",
+      "note": "Bare 'OSHKOSH' is left out to avoid matching unrelated entities named after the Wisconsin city; the corporate parent typically appears as 'OSHKOSH CORPORATION' or 'OSHKOSH DEFENSE'.",
+      "patterns": [
+        "OSHKOSH DEFENSE",
+        "OSHKOSH CORPORATION",
+        "OSHKOSH CORP"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Anduril Industries",
+      "note": null,
+      "patterns": [
+        "ANDURIL"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Palantir Technologies",
+      "note": null,
+      "patterns": [
+        "PALANTIR"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    },
+    {
+      "name": "Peraton",
+      "note": null,
+      "patterns": [
+        "PERATON"
+      ],
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
+    }
+  ],
+  "prime_owned": [],
+  "army_controlled": [],
+  "notes": {
+    "matched_entities_provenance": "matched_entities are resolved against this site's entity graph, whose LEI enrichment folds a network-global defense-operator overlay — the reference build's JSMC / General Dynamics operator chain and its GLEIF ultimate parent — into every site's graph. A match here may reflect that shared overlay rather than any presence of the contractor in this site's own records; treat it as a cross-reference to follow up, not a site-local finding."
+  }
+}

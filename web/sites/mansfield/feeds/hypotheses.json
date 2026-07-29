@@ -1,0 +1,109 @@
+[
+  {
+    "id": "water",
+    "number": "H1",
+    "name": "Water & Coercion",
+    "claim": "Where discharge becomes leverage.",
+    "thesis": "The original thesis: hyperscale compute lands where it can pull power and water, and a data center's intake, discharge, and downstream effects are basin facts. Sites nest by drainage — two divides, nine basins. Lima is the live, fully-assembled reference. A coercion sub-thesis (#903): in municipalities with declining populations, the receiving WWTP may be running lean on influent — below the biological-treatment minimum that keeps it in NPDES compliance. A datacenter's high-volume, consistent discharge provides the flow buffer the plant needs, structurally compelling municipal acceptance. The Clean Water Act is the backstop that makes the need non-negotiable.",
+    "status": "reference",
+    "signals": [
+      "anchor",
+      "strong",
+      "moderate",
+      "watch"
+    ],
+    "groups": [
+      "coercion"
+    ],
+    "fields": [
+      "wwtp",
+      "gap"
+    ],
+    "related_docs": [
+      "docs/HYDROLOGY.md",
+      "docs/COURSE.md"
+    ],
+    "predicted_evidence": [
+      "cooling consumptive draw measured against the receiving water's cited 7Q10",
+      "an NPDES discharge to an already effluent-dominated stream",
+      "a paved campus footprint's pre/post-development stormwater delta",
+      "a serving utility / PJM zone that makes the load economically siteable",
+      "ECHO DMR showing the receiving WWTP's actual annual influent below its design-flow minimum",
+      "a utility service agreement or NPDES commitment that quantifies the datacenter's discharge volume relative to the WWTP's lean-flow deficit",
+      "OEPA enforcement correspondence or sanitary system capacity study citing the same deficit the datacenter discharge would address"
+    ]
+  },
+  {
+    "id": "defense",
+    "number": "H2",
+    "name": "Defense & Federal Enclave",
+    "claim": "Where the build-out meets federal land and the defense base.",
+    "thesis": "A second reading: the same map tracks arsenals, air bases, federal research and the CHIPS build — enclaves where federal jurisdiction, clearance, and defense supply chains concentrate. Newly opened; most sites are not yet assessed, and a federal nexus is a signal, not a verdict. A capture sub-thesis (#1663): the enclave is not only geography, it is an economic structure — federal payroll and prime-award obligations concentrated in one county, land held by the United States and therefore off the local tax rolls, and the abatement / PILOT / public-benefit instruments layered on the ground around it. The reading it tests is whether the defense base *distorts* the local economy the datacenter then lands in, or merely sits beside it.",
+    "status": "emerging",
+    "signals": [
+      "anchor",
+      "strong",
+      "moderate",
+      "watch"
+    ],
+    "groups": [
+      "arsenal",
+      "federal",
+      "supply",
+      "capture",
+      "watch"
+    ],
+    "fields": [
+      "nexus",
+      "linkage",
+      "capture",
+      "federal_flow"
+    ],
+    "related_docs": [
+      "docs/defense-nexus.md",
+      "docs/ECONOMICS.md"
+    ],
+    "predicted_evidence": [
+      "a co-located or adjacent arsenal, air base, or federal research lab",
+      "a CHIPS / federal semiconductor or defense-supply designation",
+      "a documented authorization posture (FedRAMP / DoD IL clearance level)",
+      "a federal-ownership QCEW employment / wage share the county's private-ownership sector mix structurally cannot show (the ME-B blind spot, #1661)",
+      "prime-award obligations resolving to a corridor entity by verified UEI, with the defense-vs-civilian split of those dollars (#1662)",
+      "a tax abatement, PILOT, or public-benefit agreement on defense-adjacent land — or federally-held acreage carrying assessed value but no local tax duty"
+    ]
+  },
+  {
+    "id": "surveillance",
+    "number": "H3",
+    "name": "Consumer Surveillance",
+    "claim": "What the compute is for, who it watches, and who's paying.",
+    "thesis": "A third reading: the operators behind shell LLCs, the public-subsidy stack that pulls them in, and the capital and data flows the facilities sit on. The consumer-surveillance thesis — opening now, mostly under investigation, with Lima's abatement on record. An end-use sub-thesis (#904): these facilities are infrastructure nodes in a consumer surveillance apparatus — behavioral tracking, financial-transaction processing, or similar mass-scale surveillance of individual consumer activity, financed in part by the public subsidies the same communities provide.",
+    "status": "emerging",
+    "signals": [
+      "anchor",
+      "strong",
+      "moderate",
+      "watch"
+    ],
+    "groups": [
+      "onrecord",
+      "subsidy",
+      "watch"
+    ],
+    "fields": [
+      "operator",
+      "capital",
+      "end_use"
+    ],
+    "related_docs": [
+      "docs/ECONOMICS.md"
+    ],
+    "predicted_evidence": [
+      "a named operator behind a shell LLC (deed / SOS / LEI trail)",
+      "a public-subsidy instrument on record (CRA / TIF / enterprise-zone abatement)",
+      "a capital or data-flow linkage tying the site to a known operator",
+      "the operator's active consumer-facing product lines at the time of the permit application (10-K / AWS availability-zone announcement / product launch timeline)",
+      "a product classification tying the compute to a consumer surveillance application class: behavioral-advertising, financial-transaction, consumer-credit, AI-inference over consumer data"
+    ]
+  }
+]
