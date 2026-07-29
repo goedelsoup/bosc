@@ -132,6 +132,17 @@
     "note": "obtained the permit + DMRs as a public record; the campus-share capacity analysis is PRR-only"
   },
   {
+    "id": "THERMAL-NO-LIMIT",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Nothing on the Ottawa corridor holds a thermal limit against the heat already in the river",
+    "detail": "Ohio's numeric temperature criterion for this reach is a 29.4 degC daily maximum (OAC 3745-1-35 Table 35-11, zone G, Jun 16-30). Two permitted dischargers report peak daily-maximum effluent temperatures at or over it from their own submissions — Lima Refinery (OH0002623) at 32.2 degC and PCS Nitrogen (OH0002615) at 30.0 degC — and neither discharging outfall carries a numeric thermal limit. The refinery's permit does hold an 85 degF ceiling, but on outfall 003, which did not discharge in the screened season; outfall 001, which did, has none. All three permits that report a temperature on this reach (adding the City of Lima WWTP, OH0026069) are monitor-only. [verified] from the reported ECHO DMR record. What no record shows is any thermal mixing-zone determination, alternative-effluent-limit demonstration, or CWA section 316(a) balanced-indigenous-community study for the corridor — the instrument that would establish whether the reported temperatures are authorized. Separately, the campus's own heat load has no thermal instrument at all — it holds no NPDES permit; its indirect-discharge permit (2DP00130*AP) monitors water temperature at the sewer, which is a POTW pretreatment condition, not a receiving-water limit.",
+    "source": "data/reference/hydrology/thermal-discharge-screen.yaml (EPA ECHO DMR, 2024-05-01..2024-10-31) · data/reference/wqs/ohio-temperature-criteria.yaml · data/extracted/oepa/2DP00130.npdes.yaml",
+    "issue": 1719,
+    "note": "OWED RECORD — a fact sheet, mixing-zone determination, or section 316(a) demonstration for any Ottawa-corridor thermal discharge would resolve it; absent that the authorization basis stays open"
+  },
+  {
     "id": "PRR-02",
     "kind": "question",
     "status": "unanswered",

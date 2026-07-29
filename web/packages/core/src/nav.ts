@@ -171,6 +171,7 @@ export function sections(): Section[] {
         { label: "RSEI / toxics", anchor: "rsei" },
         { label: "Air dispersion", anchor: "air" },
         { label: "Seasonal withdrawal", anchor: "seasonal" },
+        { label: "Thermal / §316(a)", anchor: "thermal" },
       ],
     },
     {
@@ -486,6 +487,11 @@ export function siteTabs(): NavItem[] {
               blurb: "Month-by-month climograph",
             },
             { label: "Water flow", href: `${base}/environment/flow`, blurb: "Animated reach-network flow" },
+            {
+              label: "Thermal / §316(a)",
+              href: `${base}/environment/thermal`,
+              blurb: "Discharge heat vs the temperature criterion",
+            },
           ],
         },
     economyLocked

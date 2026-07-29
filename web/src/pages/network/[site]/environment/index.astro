@@ -101,6 +101,17 @@ if (hasFeed("reach-network")) {
     note: "animated flow",
   });
 }
+if (hasFeed("thermal")) {
+  doors.push({
+    id: "thermal",
+    kind: "Analysis",
+    href: withSite("/environment/thermal"),
+    count: num(count("thermal")),
+    title: "Thermal discharge",
+    desc: "The receiving water's heat budget — the campus's modeled cooling heat load and the corridor's own reported effluent temperatures against Ohio's numeric temperature criterion, framed as CWA §316(a).",
+    note: "§316(a) screen",
+  });
+}
 if (hasFeed("drawdown") || hasFeed("dewatering")) {
   doors.push({
     id: "groundwater",

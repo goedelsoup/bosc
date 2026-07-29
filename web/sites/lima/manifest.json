@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.40.0",
+  "contract_version": "1.41.0",
   "generated_at": "2026-07-19T03:12:28+00:00",
-  "feed_count": 51,
-  "row_total": 1595,
+  "feed_count": 52,
+  "row_total": 1598,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -125,7 +125,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 28
+      "count": 29
     },
     {
       "name": "contacts",
@@ -304,6 +304,14 @@
       "count": 1
     },
     {
+      "name": "thermal",
+      "path": "feeds/thermal.json",
+      "media_type": "application/json",
+      "schema": "schemas/thermal.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
       "name": "catalog",
       "path": "feeds/catalog.json",
       "media_type": "application/json",
@@ -397,7 +405,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 27
+      "count": 28
     },
     {
       "name": "catalog-index",

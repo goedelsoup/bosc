@@ -353,7 +353,24 @@ from watermark.sites import (
 #   screen's upstream/downstream, since a radial cone is direction-blind but a down-gradient well sees
 #   the field ~upstream of it. All `[inference]`. Additive optional fields on an existing model →
 #   MINOR, back-compatible (a pre-1.40 reader is unaffected).
-CONTRACT_VERSION = "1.40.0"
+# 1.41.0: adds the `thermal` object feed (#1719, epic #1715 Phase 4) — the receiving-water
+#   temperature-rise / CWA §316(a) screen (`watermark.hydrology.thermal.ThermalDischargeInventory`),
+#   the **third cooling axis**. The platform already published cooling *volume*
+#   (`hydrology-scenarios`) and discharge *chemistry* (the toxics screen); the discharge's *heat*
+#   reached only a committed reference file. Each row is one facility's heat load read against the
+#   reach's Ohio numeric temperature criterion (OAC 3745-1-35 Table 35-11, by geographic zone) at
+#   the cited design low flows: the fully-mixed ΔT and mixed temperature, the reach's thermal
+#   assimilative capacity, the Great Lakes RIS tolerances the mixed temperature crosses, and the
+#   OAC 3745-1-06 (O)(5) closed-cycle-blowdown exemption. Rows carry `kind` — a `data_center` row's
+#   heat load is MODELLED from the disclosed IT load (`[inference]`, with its three heat-partition
+#   `scenarios` and the derived-vs-observed `calibration`), a `permitted_discharger` row's is the
+#   permittee's own ECHO-DMR reported effluent temperature x flow (`[verified]`, with the `dmr`
+#   block naming the permit's numeric limit or its absence). Never conflate them: read `kind`
+#   before quoting a number. Site-gated by the artifact's own `meta.site`, so a peer cannot inherit
+#   the reference site's corridor; exported as its own already-provenanced model like `grid` /
+#   `drawdown` / `dewatering`, so no new model is defined here. One new feed → MINOR,
+#   back-compatible (a pre-1.41 bundle simply has no thermal screen to render).
+CONTRACT_VERSION = "1.41.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
