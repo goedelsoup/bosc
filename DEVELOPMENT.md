@@ -111,6 +111,33 @@ Tests run against committed `data/extracted/` (the reviewed artifact), not raw
 run it can pollute offline tests; remove `data/cache/{hydrology,economics}` if
 tests fail spuriously after a live pull.
 
+### Shard balance and `.test_durations`
+
+CI splits the suite over six runners with pytest-split (`--splits 6 --group N`),
+and `check` waits on the slowest shard. The split is balanced from the committed
+`.test_durations` — and a test **missing** from that file is not skipped by the
+balancer, it is priced at the *average* of the tests that are in it. So the file
+does not degrade gracefully: let it go stale and the shards invert, with the
+cheapest-looking shard running longest (#1772).
+
+```bash
+mise run test:durations   # full rebuild: pytest -n0 --store-durations --clean-durations
+uv run pytest -n0 --store-durations tests/test_new.py   # merge one module in
+```
+
+`-n0` is required — durations have to be timed serially, since under xdist the
+workers' clocks overlap. `tests/test_split_durations.py` fails the suite once
+more than 10% of collected tests are unpriced, and names the modules to cover.
+
+Record on a machine where the suite actually *runs*: a test that skips locally is
+recorded at ~0 s and under-prices the CI shard that runs it for real. On macOS the
+SWMM engine is the one that bites — ad-hoc sign it first, or `test_hydro_tier1.py`'s
+engine tests skip out of the manifest.
+
+```bash
+codesign -s - -f .venv/lib/python3.11/site-packages/swmm/toolkit/*.dylib
+```
+
 ## Modules
 
 ```

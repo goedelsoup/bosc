@@ -57,6 +57,7 @@ jobs:
               - 'pyproject.toml'
               - 'uv.lock'
               - '.python-version'
+              - '.test_durations'
               - 'mise.toml'
               - '.github/workflows/ci.yml'
             data:
@@ -166,7 +167,10 @@ jobs:
   # duration-balanced groups (from the committed .test_durations); each shard ALSO runs
   # -n auto for intra-runner core parallelism. A shallow checkout is enough — the suite is
   # hermetic over committed fixtures + data/extracted (no LFS bytes, no full history).
-  # Regenerate .test_durations with `uv run pytest -n0 --store-durations` when it drifts.
+  # Regenerate .test_durations with `mise run test:durations` when it drifts. A test with no
+  # recorded duration is priced at the average of the recorded ones, so a stale manifest does
+  # not degrade gracefully — it inverts (#1772: the *cheapest*-looking shard ran 5.3x the
+  # fastest, and `check` waits on the slowest). tests/test_split_durations.py gates that.
   test:
     needs: changes
     if: ${{ needs.changes.outputs.code == 'true' }}

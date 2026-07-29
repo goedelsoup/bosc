@@ -18,6 +18,45 @@ EXTRACTED = REPO_ROOT / "data" / "extracted"
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 
+# --- the collected suite, before sharding (#1772) --------------------------------------------
+# CI splits the suite across six runners with pytest-split, which balances the shards on the
+# committed ``.test_durations``. That manifest rots silently: a collected test with no recorded
+# duration is charged the *average* of the recorded ones, so a file of expensive-but-unrecorded
+# tests reads as cheap and its shard runs long — at #1772 the manifest was 53% stale and the
+# slowest shard took 5.3x the fastest. ``test_split_durations.py`` gates that drift; this hook
+# is how it sees the whole suite rather than its own shard.
+#
+# ``tryfirst`` is load-bearing: pytest-split's own ``pytest_collection_modifyitems`` is
+# ``trylast`` and deselects every test outside the running group, so a later hook would only
+# ever see one sixth of the suite. Running first captures the full collection under
+# ``--splits/--group`` and under xdist alike (every worker collects everything, then filters).
+# ``network``-marked tests are dropped here: ``addopts`` deselects them, so they never run and
+# are never recorded — counting them would read as permanent staleness.
+COLLECTED_NODE_IDS: pytest.StashKey[list[str] | None] = pytest.StashKey()
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+    """Stash the full collection — but only when this run collected the whole suite.
+
+    A targeted run (``pytest tests/test_foo.py``, a node id, ``--co`` on a directory) sets
+    ``args_source`` to ``ARGS``; measuring coverage over that subset would fail the guard for
+    any new file. Those runs stash ``None`` and the guard skips.
+    """
+    full_suite = getattr(config, "args_source", None) is pytest.Config.ArgsSource.TESTPATHS
+    config.stash[COLLECTED_NODE_IDS] = (
+        [item.nodeid for item in items if item.get_closest_marker("network") is None]
+        if full_suite
+        else None
+    )
+
+
+@pytest.fixture(scope="session")
+def collected_node_ids(request: pytest.FixtureRequest) -> list[str] | None:
+    """Every test id this run collected before sharding, or ``None`` if it wasn't a full run."""
+    return request.config.stash.get(COLLECTED_NODE_IDS, None)
+
+
 # --- shared bundle exports (#1773) ----------------------------------------------------------
 # A full ``export_bundle()`` is the most expensive operation in the repo — ~14 s for Lima with
 # ``skip_embeddings``, ~28 s without — and the suite used to pay for 26 of them: nine modules
