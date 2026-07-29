@@ -61,7 +61,7 @@ the Maumee mainstem**, which carries far more dilution than Lima's under-flow
 tributaries. So Lima is **distinctive not in size but in receiving-water choice**:
 small county plants on intermittent tributaries, where 7Q10 ≈ the discharge itself.
 
-**The shared constraint.** All 129 sit under the **2023 Maumee Watershed Nutrient
+**The shared constraint.** All 130 sit under the **2023 Maumee Watershed Nutrient
 TMDL**'s binding phosphorus cap (Lake Erie's largest tributary; the basin
 future-growth reserve is only **~1.4–1.5 mt P/spring**). `[verified:
 data/reference/hydrology/maumee-tmdl-budget.yaml]` So a new data-center sanitary load
@@ -71,12 +71,13 @@ enters a *fully-allocated* basin regardless of which plant takes it.
 full ECHO POTW inventory (`watermark basin-screen`), not just Lima's plants. The
 denominators are the cited fact-sheet 7Q10s plus a **derived** LP3 7Q10 for the four
 major USGS-gaged mainstems (Maumee, Auglaize, St. Marys, St. Joseph;
-`data/reference/hydrology/low-flow-7q10.derived.yaml`). The honest result: only **8 of
-129** POTWs are screenable — **76** have no receiving water in ECHO, **44** discharge
+`data/reference/hydrology/low-flow-7q10.derived.yaml`). The honest result: only **9 of
+130** POTWs are screenable — **77** have no receiving water in ECHO, **42** discharge
 to ungaged tributaries/ditches (reported "no 7Q10" rather than screened against a
-downstream river's larger flow), and **1** has no design flow on record. Of the
-screenable, two are violations — Lima's **American Bath → Pike Run (0.01:1)** and
-**Van Wert → Town Creek (0.03:1)** — while **Decatur → St. Marys (3.1:1)** and
+downstream river's larger flow), and **2** have no design flow on record. Of the
+screenable, three are violations — the **Lima WWTP → Ottawa River (0.01:1)**, Lima's
+**American Bath → Pike Run (0.01:1)**, and **Van Wert → Town Creek (0.03:1)** — while
+**Decatur → St. Marys (3.1:1)** and
 **Defiance → Maumee (6.2:1)** screen "tight." (The Defiance 6.2:1 uses the basin-wide Waterville
 proxy; the reach-specific denominator — USGS 04192500, Maumee near Defiance, LP3 7Q10 139.24 cfs —
 gives **7.5:1**, still "tight" and slightly *looser* than the proxy, since the near-Defiance mainstem

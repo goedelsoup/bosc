@@ -23,6 +23,8 @@ from .conftest import REPO_ROOT
 # The Auglaize (04100007) is where every committed Maumee correction lives.
 _HUC = "04100007"
 _OTHER_HUC = "04100008"
+# What a pull ASKED ECHO for — distinct from what came back (see `curate`).
+_SCOPE = frozenset({_HUC})
 
 
 def _facility(**over: Any) -> echo.Facility:
@@ -109,7 +111,9 @@ def test_committed_overlay_survives_a_repull() -> None:
             county="VAN WERT",
         ),
     ]
-    curation = echo_curation.curate(facilities, echo.MAUMEE, settings=settings)
+    curation = echo_curation.curate(
+        facilities, echo.MAUMEE, queried_huc8s=_SCOPE, settings=settings
+    )
     outcomes = {a.correction.npdes_id: a.outcome for a in curation.applied}
     assert outcomes == {
         "OH0026069": "applied",
@@ -154,7 +158,10 @@ def test_committed_inventory_carries_the_curated_provenance() -> None:
 def test_absent_overlay_is_not_an_error(tmp_path: Path) -> None:
     # Most basins have nothing to correct; that must pull exactly as before.
     curation = echo_curation.curate(
-        [_facility()], echo.MAUMEE, settings=_settings_with(tmp_path, None)
+        [_facility()],
+        echo.MAUMEE,
+        queried_huc8s=_SCOPE,
+        settings=_settings_with(tmp_path, None),
     )
     assert curation.relpath is None and curation.applied == []
 
@@ -165,7 +172,7 @@ def test_conflict_refuses_the_write(tmp_path: Path) -> None:
     settings = _settings_with(tmp_path, _overlay_doc())
     fac = _facility(receiving_water="AUGLAIZE RIVER")
     with pytest.raises(echo_curation.CurationError, match="conflict"):
-        echo_curation.curate([fac], echo.MAUMEE, settings=settings)
+        echo_curation.curate([fac], echo.MAUMEE, queried_huc8s=_SCOPE, settings=settings)
     assert fac.receiving_water == "AUGLAIZE RIVER"  # untouched
 
 
@@ -173,7 +180,7 @@ def test_superseded_defers_to_echo(tmp_path: Path) -> None:
     # ECHO caught up and supplies the same water: the entry is redundant, not wrong.
     settings = _settings_with(tmp_path, _overlay_doc())
     fac = _facility(receiving_water="ottawa  river")  # matched case/whitespace-insensitively
-    curation = echo_curation.curate([fac], echo.MAUMEE, settings=settings)
+    curation = echo_curation.curate([fac], echo.MAUMEE, queried_huc8s=_SCOPE, settings=settings)
     assert [a.outcome for a in curation.applied] == ["superseded"]
     assert fac.receiving_water == "ottawa  river"  # ECHO's own value stands
     assert curation.by_frs() == {}  # so the row carries no curation provenance
@@ -185,7 +192,7 @@ def test_stale_entry_refuses_the_write(tmp_path: Path) -> None:
     settings = _settings_with(tmp_path, _overlay_doc())
     other = _facility(frs_registry_id="999", npdes_id="OH9999999", npdes_ids_all="OH9999999")
     with pytest.raises(echo_curation.CurationError, match="stale"):
-        echo_curation.curate([other], echo.MAUMEE, settings=settings)
+        echo_curation.curate([other], echo.MAUMEE, queried_huc8s=_SCOPE, settings=settings)
 
 
 def test_out_of_scope_pull_is_not_stale(tmp_path: Path) -> None:
@@ -198,9 +205,40 @@ def test_out_of_scope_pull_is_not_stale(tmp_path: Path) -> None:
         huc8=_OTHER_HUC,
         queried_huc8=_OTHER_HUC,
     )
-    curation = echo_curation.curate([elsewhere], echo.MAUMEE, settings=settings)
+    curation = echo_curation.curate(
+        [elsewhere], echo.MAUMEE, queried_huc8s=frozenset({_OTHER_HUC}), settings=settings
+    )
     assert [a.outcome for a in curation.applied] == ["out_of_scope"]
     assert curation.by_frs() == {}
+
+
+def test_empty_huc_response_is_stale_not_out_of_scope(tmp_path: Path) -> None:
+    # A queried subbasin that came back EMPTY leaves no trace on the facility list, so scope
+    # must come from what the pull asked for. Inferring it from the rows would call this
+    # out_of_scope and let the write proceed — the silent drop the overlay exists to prevent.
+    settings = _settings_with(tmp_path, _overlay_doc())
+    with pytest.raises(echo_curation.CurationError, match="stale"):
+        echo_curation.curate([], echo.MAUMEE, queried_huc8s=_SCOPE, settings=settings)
+
+
+def test_duplicate_frs_corrections_are_rejected(tmp_path: Path) -> None:
+    # Two entries for one facility race: both reconcile against the same row and the last
+    # `field` write silently wins. Refuse at load, not at some arbitrary winner.
+    doc = _overlay_doc()
+    doc["corrections"].append({**doc["corrections"][0], "npdes_id": "OH0000002"})
+    with pytest.raises(echo_curation.CurationError, match="duplicate"):
+        echo_curation.load_overlay(echo.MAUMEE, settings=_settings_with(tmp_path, doc))
+
+
+def test_curated_row_reports_this_pulls_echo_value(tmp_path: Path) -> None:
+    # `echo_value` and the live value match only after normalization, so the emitted
+    # `receiving_water_echo` must be what THIS pull returned, not the overlay's copy.
+    settings = _settings_with(tmp_path, _overlay_doc(echo_value="TOWN CREEK"))
+    fac = _facility(receiving_water="town  creek")
+    curation = echo_curation.curate([fac], echo.MAUMEE, queried_huc8s=_SCOPE, settings=settings)
+    entry = curation.by_frs()[fac.frs_registry_id or ""]
+    assert entry.outcome == "applied"
+    assert echo_curation.record_fields(entry)["receiving_water_echo"] == "town  creek"
 
 
 def test_renamed_facility_still_matches(tmp_path: Path) -> None:
@@ -208,7 +246,7 @@ def test_renamed_facility_still_matches(tmp_path: Path) -> None:
     # id is the identity assertion, so a rename must not fail the pull.
     settings = _settings_with(tmp_path, _overlay_doc())
     fac = _facility(name="CITY OF LIMA WASTEWATER TREATMENT PLANT")
-    curation = echo_curation.curate([fac], echo.MAUMEE, settings=settings)
+    curation = echo_curation.curate([fac], echo.MAUMEE, queried_huc8s=_SCOPE, settings=settings)
     assert [a.outcome for a in curation.applied] == ["applied"]
     assert fac.receiving_water == "Ottawa River"
 

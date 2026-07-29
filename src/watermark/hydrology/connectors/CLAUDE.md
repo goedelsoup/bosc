@@ -38,9 +38,12 @@ GIS, FEMA NFHL, ORC, LSC). Defers to the root [`CLAUDE.md`](../../../../CLAUDE.m
   into every pull, so a refresh can't clobber reviewed data. A hand edit inside regenerated
   output is silently reverted by the next pull — that's the bug this replaced. The overlay
   never overrides live data silently either: each entry pins the FRS id and records the
-  upstream value observed at review time, and a pull whose upstream has moved off it
-  **refuses to write** (`superseded` / `conflict` / `stale`) rather than paper over the
-  disagreement. `mode: caveat` records a correction without touching the field. Reuse this
+  upstream value observed at review time. A pull whose upstream has moved off it **refuses
+  to write** when the disagreement is real — `conflict` (upstream now says something else)
+  or `stale` (the record is gone from a pull that covered it) — rather than paper over it.
+  `superseded` (upstream caught up and now says the same thing) is **not** a refusal: the
+  write proceeds on upstream's own value and the run reports the entry as retirable.
+  `mode: caveat` records a correction without touching the field. Reuse this
   shape for any other connector that needs a reviewed correction; don't invent a second one.
 - Committed reference datasets a connector regenerates live under
   `data/reference/<source>/` (each with a README naming its source and gaps); raw

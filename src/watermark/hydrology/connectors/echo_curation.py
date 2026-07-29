@@ -17,9 +17,10 @@ Discipline (the point of the overlay, not decoration):
 * A correction **never invents** a receiving water. It carries the ``citation`` of the
   document that names it, and the ``echo_value`` ECHO itself returned when the correction
   was reviewed (normally ``null``).
-* A correction **never silently overrides live ECHO**. If ECHO's value has moved off
-  ``echo_value``, the pull refuses to write: either ECHO caught up (``superseded`` — retire
-  the entry) or it now asserts something else (``conflict`` — a human reconciles).
+* A correction **never silently overrides live ECHO**. If ECHO now asserts something else,
+  that's a ``conflict`` and the pull **refuses to write** until a human reconciles. If ECHO
+  merely caught up and now says the same thing, that's ``superseded``: not a disagreement,
+  so the write proceeds on ECHO's own value and the run reports the entry as retirable.
 * A correction whose facility is **gone** from a pull that covered its subbasin is
   ``stale`` and also refuses — a terminated or re-keyed permit is a reviewable event, not
   a silent drop. (A pull of *other* subbasins simply leaves it ``out_of_scope``.)
@@ -207,6 +208,17 @@ def load_overlay(basin: Basin, *, settings: Settings | None = None) -> CurationO
         raise CurationError(
             f"{path} declares basin {overlay.meta.basin!r} but was loaded for {basin.slug!r}"
         )
+    # Two entries for one facility would race: both reconcile against the same row, the last
+    # `field` write silently wins, and only one survives the FRS-keyed record lookup. Refuse
+    # at load rather than emit an inventory that reflects an arbitrary one of them.
+    seen: set[str] = set()
+    for correction in overlay.corrections:
+        if correction.frs_registry_id in seen:
+            raise CurationError(
+                f"{path} has duplicate corrections for FRS {correction.frs_registry_id} "
+                f"(at {correction.npdes_id}); one facility takes at most one correction"
+            )
+        seen.add(correction.frs_registry_id)
     return overlay
 
 
@@ -287,6 +299,7 @@ def curate(
     facilities: list[Facility],
     basin: Basin,
     *,
+    queried_huc8s: frozenset[str],
     settings: Settings | None = None,
 ) -> Curation:
     """Merge a basin's overlay into a freshly pulled facility list, in place.
@@ -296,6 +309,12 @@ def curate(
     and every downstream screen see it); ECHO's verbatim value is handed back on the
     returned :class:`Curation` for the record's ``receiving_water_echo``.
 
+    ``queried_huc8s`` is the set of subbasins this pull actually *asked* ECHO for — required,
+    and deliberately not inferred from ``facilities``: a HUC that returned zero rows leaves no
+    trace on them, so inferring scope would quietly downgrade a genuine ``stale`` (the
+    facility vanished) to ``out_of_scope`` (we never looked) and let the write proceed —
+    exactly the silent drop this overlay exists to prevent.
+
     Raises :class:`CurationError` if any correction is ``conflict`` or ``stale`` — refusing
     to write a half-reviewed inventory is the whole point (#1698).
     """
@@ -304,8 +323,9 @@ def curate(
         return Curation()
 
     by_frs = {f.frs_registry_id: f for f in facilities if f.frs_registry_id}
-    scope = frozenset(f.queried_huc8 for f in facilities)
-    applied = [_reconcile_one(c, by_frs.get(c.frs_registry_id), scope) for c in overlay.corrections]
+    applied = [
+        _reconcile_one(c, by_frs.get(c.frs_registry_id), queried_huc8s) for c in overlay.corrections
+    ]
 
     blocked = [a for a in applied if a.outcome in _BLOCKING_OUTCOMES]
     if blocked:
@@ -334,12 +354,16 @@ def record_fields(entry: AppliedCorrection) -> dict[str, Any]:
 
     ``applied`` rows advertise that the field is curated and keep ECHO's verbatim value;
     ``documented`` rows keep the ECHO-verbatim field and carry the correction alongside.
+
+    ``receiving_water_echo`` is what ECHO returned in **this** pull, not the reviewed
+    ``echo_value`` it was matched against: the two agree only after normalization, so using
+    the overlay's copy would report a stale surface form as if it were the live one.
     """
     c = entry.correction
     if entry.outcome == "applied":
         return {
             "receiving_water_source": "curated",
-            "receiving_water_echo": c.echo_value,
+            "receiving_water_echo": entry.echo_now,
             "receiving_water_citation": c.citation,
         }
     if entry.outcome == "documented":
