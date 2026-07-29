@@ -1,0 +1,995 @@
+{
+  "$defs": {
+    "DmrThermalObservation": {
+      "additionalProperties": false,
+      "description": "A permittee's own reported effluent-temperature record on the screened reach (#1718).\n\nEvery figure is verbatim from EPA ECHO's effluent-chart service, reduced to °C by its\n**reported** unit — ICIS carries temperature under 00010 (°C) *and* 00011 (°F) and this\ncorridor uses both. ``effluent_c`` is the peak **daily maximum**, matching the form of Ohio's\nnumeric criterion. ``monitor_only`` records the permit that requires temperature monitoring\nbut sets no numeric thermal limit — a cited absence, and on the Ottawa the common case.\n``instream_c`` is the permit's own upstream/downstream river station where it has one: an\nobserved *receiving-water* temperature, categorically different from an effluent reading.",
+      "properties": {
+        "npdes_id": {
+          "title": "Npdes Id",
+          "type": "string"
+        },
+        "permit_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Permit Name"
+        },
+        "window": {
+          "title": "Window",
+          "type": "string"
+        },
+        "outfall": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Outfall"
+        },
+        "monitoring_location": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Monitoring Location"
+        },
+        "parameter_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parameter Code"
+        },
+        "reported_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reported Unit"
+        },
+        "n_obs": {
+          "default": 0,
+          "title": "N Obs",
+          "type": "integer"
+        },
+        "effluent_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "mean_monthly_avg_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Monthly Avg C"
+        },
+        "flow": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "permitted_limit_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "permitted_limit_outfall": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Permitted Limit Outfall"
+        },
+        "limit_seasonal": {
+          "default": false,
+          "title": "Limit Seasonal",
+          "type": "boolean"
+        },
+        "monitor_only": {
+          "default": true,
+          "title": "Monitor Only",
+          "type": "boolean"
+        },
+        "reported_exceedances": {
+          "default": 0,
+          "title": "Reported Exceedances",
+          "type": "integer"
+        },
+        "over_criterion": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Over Criterion"
+        },
+        "over_permitted_limit": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Over Permitted Limit"
+        },
+        "instream_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "instream_station": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Instream Station"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "npdes_id",
+        "window"
+      ],
+      "title": "DmrThermalObservation",
+      "type": "object"
+    },
+    "ProvenancedValue": {
+      "additionalProperties": false,
+      "description": "A single numeric quantity tagged with its provenance.\n\nConstruct via the classmethods (:meth:`from_document`, :meth:`from_connector`,\n:meth:`assume`, :meth:`derived`) so the ``source`` tag is never forgotten.\n\nA **measured or derived estimate** may also carry a quantitative uncertainty range\n(#760): optional absolute ``low``/``high`` bounds around the central ``value``,\n*orthogonal* to the qualitative ``confidence`` enum. The convention: a document- or\nconnector-verbatim figure is a single value (no band); an estimate whose honest\nrepresentation is \"226 ± ~35 ac\" carries ``low``/``high`` so downstream consumers\n(the bundle, the frontend, the Monte-Carlo engine #271) see the spread as data, not\nprose buried in the citation. The estimate constructors (:meth:`derived`,\n:meth:`assume`, :meth:`from_reference`) take the range inline; :meth:`with_range`\nattaches one to any value (e.g. a document-anchored central with a derived band).",
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "asof": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asof"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source"
+      ],
+      "title": "ProvenancedValue",
+      "type": "object"
+    },
+    "RisThresholdCheck": {
+      "additionalProperties": false,
+      "description": "One Great Lakes RIS thermal limit vs the screened mixed temperature (biological context).",
+      "properties": {
+        "common_name": {
+          "title": "Common Name",
+          "type": "string"
+        },
+        "scientific_name": {
+          "title": "Scientific Name",
+          "type": "string"
+        },
+        "life_stage": {
+          "title": "Life Stage",
+          "type": "string"
+        },
+        "metric": {
+          "title": "Metric",
+          "type": "string"
+        },
+        "limit_c": {
+          "title": "Limit C",
+          "type": "number"
+        },
+        "exceeded": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Exceeded"
+        }
+      },
+      "required": [
+        "common_name",
+        "scientific_name",
+        "life_stage",
+        "metric",
+        "limit_c",
+        "exceeded"
+      ],
+      "title": "RisThresholdCheck",
+      "type": "object"
+    },
+    "ThermalCalibration": {
+      "additionalProperties": false,
+      "description": "The derived-vs-observed cross-check the phase exists to produce (#1718).\n\nReads a modelled facility's derived effluent temperature against the corridor's own observed\nindustrial effluent (the nearest available analog — the campus holds no discharge permit, so\nthere is nothing of its own to read against) and records the design ambient against the\nreach's observed in-stream temperature. ``verdict`` is about the MODEL, not the facility:\n``conservative`` means the screen runs hotter than the record, which is the defensible\ndirection; ``understated`` would mean the record is hotter than the screen and the screen\nneeds revisiting.",
+      "properties": {
+        "basis": {
+          "title": "Basis",
+          "type": "string"
+        },
+        "modeled_effluent_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Modeled Effluent C"
+        },
+        "observed_effluent_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed Effluent C"
+        },
+        "observed_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed Source"
+        },
+        "delta_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delta C"
+        },
+        "verdict": {
+          "default": "unvalidated",
+          "title": "Verdict",
+          "type": "string"
+        },
+        "design_ambient_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Design Ambient C"
+        },
+        "observed_instream_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed Instream C"
+        },
+        "ambient_delta_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ambient Delta C"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "basis"
+      ],
+      "title": "ThermalCalibration",
+      "type": "object"
+    },
+    "ThermalDischargeScreen": {
+      "additionalProperties": false,
+      "description": "One facility's cooling heat load read against its receiving reach's temperature WQS + RIS.",
+      "properties": {
+        "facility": {
+          "title": "Facility",
+          "type": "string"
+        },
+        "facility_key": {
+          "title": "Facility Key",
+          "type": "string"
+        },
+        "kind": {
+          "default": "data_center",
+          "title": "Kind",
+          "type": "string"
+        },
+        "npdes_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Npdes Id"
+        },
+        "facility_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Facility Type"
+        },
+        "cooling_model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cooling Model"
+        },
+        "method_disclosed": {
+          "title": "Method Disclosed",
+          "type": "boolean"
+        },
+        "reject_heat_mw": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "instream_heat_mw": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "receiving_water": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Receiving Water"
+        },
+        "receiving_water_source": {
+          "anyOf": [
+            {
+              "enum": [
+                "document",
+                "connector",
+                "reference",
+                "assumption",
+                "derived"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Receiving Water Source"
+        },
+        "zone_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Zone Id"
+        },
+        "zone_rule": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Zone Rule"
+        },
+        "design_period": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Design Period"
+        },
+        "daily_max_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ambient_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "headroom_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Headroom C"
+        },
+        "discharge_flow": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "flow_screens": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ThermalFlowScreen"
+          },
+          "title": "Flow Screens",
+          "type": "array"
+        },
+        "ris_checks": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RisThresholdCheck"
+          },
+          "title": "Ris Checks",
+          "type": "array"
+        },
+        "scenarios": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ThermalScenario"
+          },
+          "title": "Scenarios",
+          "type": "array"
+        },
+        "dmr": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DmrThermalObservation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "calibration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ThermalCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "blowdown_exempt": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Blowdown Exempt"
+        },
+        "blowdown_exempt_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Blowdown Exempt Note"
+        },
+        "flag": {
+          "title": "Flag",
+          "type": "string"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "facility",
+        "facility_key",
+        "method_disclosed",
+        "reject_heat_mw",
+        "flag",
+        "detail"
+      ],
+      "title": "ThermalDischargeScreen",
+      "type": "object"
+    },
+    "ThermalFlowScreen": {
+      "additionalProperties": false,
+      "description": "The heat load read against the Ohio daily-maximum criterion at one design low flow.\n\nThe direct heat analog of :class:`watermark.hydrology.toxics.CriterionScreen`.\n``thermal_capacity_mw`` = ``rho*cp*Q*(daily_max - ambient)`` is the loading capacity;\n``exceedance_factor`` = ``reject_heat / thermal_capacity`` (>= 1 exceeds). When the design\nflow is 0 (the Ottawa 1Q10) or the ambient already meets the criterion, the capacity is 0 and\nboth the factor and the mixed temperature are ``None`` (not ``Inf``) — ``flag`` is\n``no_capacity``. ``capacity_fraction`` = ``thermal_capacity / reject_heat`` is the\npartition-robustness metric: the fraction of the condenser rejection that would exhaust the\nreach's entire thermal capacity.",
+      "properties": {
+        "flow_label": {
+          "title": "Flow Label",
+          "type": "string"
+        },
+        "design_flow": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "thermal_capacity_mw": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Thermal Capacity Mw"
+        },
+        "delta_t_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mixed_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exceedance_factor": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Exceedance Factor"
+        },
+        "capacity_fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Capacity Fraction"
+        },
+        "headroom_fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Headroom Fraction"
+        },
+        "mixed_over_criterion": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mixed Over Criterion"
+        },
+        "flag": {
+          "title": "Flag",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "flow_label",
+        "design_flow",
+        "thermal_capacity_mw",
+        "delta_t_c",
+        "mixed_c",
+        "exceedance_factor",
+        "capacity_fraction",
+        "flag"
+      ],
+      "title": "ThermalFlowScreen",
+      "type": "object"
+    },
+    "ThermalScenario": {
+      "additionalProperties": false,
+      "description": "One cooling archetype's in-stream heat load, screened at the reach's design low flows.\n\nThe Phase-2 screen carried a single conservative bound (the whole condenser rejection reaching\nthe water). A scenario makes the **heat partition** explicit instead: ``instream_heat_mw`` is\nwhat actually enters the stream under this archetype, and ``instream_fraction`` is its share of\nthe condenser rejection. The point of running all three is that they span two orders of\nmagnitude of partition and *all* exceed the reach's capacity — the robustness claim, quantified.",
+      "properties": {
+        "scenario": {
+          "title": "Scenario",
+          "type": "string"
+        },
+        "basis": {
+          "title": "Basis",
+          "type": "string"
+        },
+        "reject_heat_mw": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "instream_heat_mw": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "instream_fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Instream Fraction"
+        },
+        "discharge_flow": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "effluent_c": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "flow_screens": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ThermalFlowScreen"
+          },
+          "title": "Flow Screens",
+          "type": "array"
+        },
+        "flag": {
+          "default": "context",
+          "title": "Flag",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "scenario",
+        "basis"
+      ],
+      "title": "ThermalScenario",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The screen artifact: provenance meta + the per-facility thermal screens.",
+  "properties": {
+    "meta": {
+      "additionalProperties": true,
+      "title": "Meta",
+      "type": "object"
+    },
+    "screens": {
+      "items": {
+        "$ref": "#/$defs/ThermalDischargeScreen"
+      },
+      "title": "Screens",
+      "type": "array"
+    }
+  },
+  "required": [
+    "meta",
+    "screens"
+  ],
+  "title": "ThermalDischargeInventory",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

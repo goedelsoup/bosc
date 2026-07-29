@@ -499,6 +499,206 @@ export interface DewateringReport {
   caveats: string[];
 }
 
+// --- the thermal / CWA §316(a) screen (`thermal` feed, contract 1.41.0) ------------------------
+// The third cooling axis: the platform publishes cooling VOLUME (`hydrology-scenarios`) and
+// discharge CHEMISTRY (the toxics screen); these carry the discharge's HEAT
+// (`bosc.hydrology.thermal`, epic #1715).
+
+/**
+ * A row's rollup band. `critical` = the fully-mixed temperature clears Ohio's daily-maximum
+ * criterion (a §316(a) / thermal-mixing-zone question, never an automatic violation);
+ * `exempt` = the OAC 3745-1-06 (O)(5) closed-cycle-blowdown off-ramp applies; `dry` = the
+ * archetype rejects its heat to the air; `uncharacterized` = the permit reports no temperature.
+ */
+export type ThermalFlag = "critical" | "elevated" | "exempt" | "dry" | "context" | "uncharacterized";
+
+/** One design low flow's band. `no_capacity` = a 0 cfs design flow or an ambient already at the
+ *  criterion — any heat load exceeds by construction (the screen reports `null`, never `Inf`). */
+export type ThermalFlowFlag = "exceedance" | "approach" | "ok" | "no_capacity";
+
+/**
+ * Where a row's heat load COMES FROM — the distinction the screen never conflates.
+ * `data_center` is MODELLED from the disclosed IT load (an inference about a facility that is not
+ * yet discharging); `permitted_discharger` is OBSERVED from the permittee's own reported effluent
+ * temperature × flow (a measurement). Read this before quoting any number off a row.
+ */
+export type ThermalKind = "data_center" | "permitted_discharger";
+
+/** A heat load read against the Ohio daily-max criterion at one design low flow
+ *  (`bosc.hydrology.thermal.ThermalFlowScreen`) — the heat analog of `AssimilativeCheck`. */
+export interface ThermalFlowScreen {
+  flow_label: string; // "1Q10" | "7Q10" | "summer 30Q10"
+  design_flow: ProvenancedValue; // cfs
+  /** ρ·cp·Q·(daily_max − ambient); 0 when the reach has no flow or no headroom. */
+  thermal_capacity_mw: number | null;
+  delta_t_c?: ProvenancedValue | null; // fully-mixed rise; null when unbounded
+  mixed_c?: ProvenancedValue | null; // ambient + ΔT; null when unbounded
+  exceedance_factor: number | null; // reject_heat / thermal_capacity
+  capacity_fraction: number | null; // thermal_capacity / reject_heat
+  /** ΔT / (daily_max − ambient) — the DILUTION-CORRECTED peer of `exceedance_factor`, and what
+   *  `flag` is set from wherever the mixed temperature is computable. Ohio's criterion is a
+   *  temperature, so the temperature is the test; `exceedance_factor` divides by the reach's
+   *  design flow alone and so overstates a discharge whose own flow dominates the reach. */
+  headroom_fraction?: number | null;
+  mixed_over_criterion?: boolean | null;
+  flag: ThermalFlowFlag;
+  note?: string | null;
+}
+
+/** One Great Lakes representative-important-species thermal limit vs the mixed temperature
+ *  (`bosc.hydrology.thermal.RisThresholdCheck`) — biological context for a §316(a)
+ *  balanced-indigenous-community read. `[reference]`: federal guidance (EPA-833-F-23-007), not law. */
+export interface ThermalRisCheck {
+  common_name: string;
+  scientific_name: string;
+  life_stage: string;
+  metric: "acute_upper" | "optimal_upper";
+  limit_c: number;
+  exceeded: boolean | null; // null when the mixed temperature is unbounded (exceeded by construction)
+}
+
+/**
+ * A permittee's own reported effluent-temperature record (`bosc.hydrology.thermal.DmrThermalObservation`),
+ * verbatim from EPA ECHO and reduced to °C by its REPORTED unit (ICIS carries temperature under
+ * 00010 °C *and* 00011 °F, and this corridor uses both). `monitor_only` records a permit that
+ * requires temperature monitoring but sets no numeric limit — a cited absence, not a clean bill of
+ * health. `permitted_limit_outfall` matters: a permit's ceiling and its discharging outfall are
+ * often DIFFERENT outfalls, so `over_permitted_limit` is null unless the limit binds this one.
+ */
+export interface ThermalDmrObservation {
+  npdes_id: string;
+  permit_name?: string | null;
+  window: string;
+  outfall?: string | null;
+  monitoring_location?: string | null;
+  parameter_code?: string | null; // 00010 (°C) | 00011 (°F)
+  reported_unit?: string | null;
+  n_obs: number;
+  effluent_c?: ProvenancedValue | null; // peak reported daily maximum
+  mean_monthly_avg_c?: number | null;
+  flow?: ProvenancedValue | null; // the same outfall's reported monthly-average flow, MGD
+  permitted_limit_c?: ProvenancedValue | null;
+  permitted_limit_outfall?: string | null;
+  limit_seasonal?: boolean;
+  monitor_only?: boolean;
+  reported_exceedances?: number; // ECHO's own determination, never computed here
+  over_criterion?: boolean | null;
+  over_permitted_limit?: boolean | null;
+  instream_c?: ProvenancedValue | null; // the permit's own upstream/downstream river station
+  instream_station?: string | null;
+  note?: string | null;
+}
+
+/** The derived-vs-observed cross-check (`bosc.hydrology.thermal.ThermalCalibration`). The verdict
+ *  grades the MODEL, not the facility: `conservative` = the screen runs hotter than the corridor's
+ *  record (the defensible direction); `understated` = the record is hotter than the screen. */
+export interface ThermalCalibration {
+  basis: string;
+  modeled_effluent_c?: number | null;
+  observed_effluent_c?: number | null;
+  observed_source?: string | null;
+  delta_c?: number | null;
+  verdict: "conservative" | "consistent" | "understated" | "unvalidated";
+  design_ambient_c?: number | null;
+  observed_instream_c?: number | null;
+  ambient_delta_c?: number | null;
+  note?: string | null;
+}
+
+/** One cooling archetype's in-stream heat load (`bosc.hydrology.thermal.ThermalScenario`). The
+ *  three scenarios span the heat PARTITION, not uncertainty in the load — two orders of magnitude
+ *  apart — so running all three is the robustness claim, quantified. */
+export interface ThermalScenario {
+  scenario: "conservative_bound" | "once_through" | "evaporative_blowdown";
+  basis: string;
+  reject_heat_mw?: ProvenancedValue | null; // the condenser rejection (same in every case)
+  instream_heat_mw?: ProvenancedValue | null; // the share that reaches the receiving water
+  instream_fraction?: number | null;
+  discharge_flow?: ProvenancedValue | null; // MGD
+  effluent_c?: ProvenancedValue | null;
+  flow_screens: ThermalFlowScreen[];
+  flag: ThermalFlag | "context";
+  note?: string | null;
+}
+
+/** One facility's heat load vs its receiving reach (`bosc.hydrology.thermal.ThermalDischargeScreen`). */
+export interface ThermalDischargeScreen {
+  facility: string;
+  facility_key: string;
+  kind: ThermalKind;
+  npdes_id?: string | null;
+  facility_type?: string | null; // ECHO's POTW / NON-POTW, for an observed discharger
+  cooling_model?: CoolingModel | null; // null for an observed discharger
+  method_disclosed: boolean;
+  reject_heat_mw?: ProvenancedValue | null; // the condenser rejection
+  /** The heat actually screened into the reach — kept distinct from `reject_heat_mw` so a
+   *  measurement is never displayed as an inference. */
+  instream_heat_mw?: ProvenancedValue | null;
+  receiving_water?: string | null;
+  receiving_water_source?: string | null;
+  zone_id?: string | null;
+  zone_rule?: string | null;
+  design_period?: string | null; // the peak-summer half-month label, e.g. "Jun 16-30"
+  daily_max_c?: ProvenancedValue | null; // the Ohio ceiling, `[reference]`
+  ambient_c?: ProvenancedValue | null; // background T_s
+  headroom_c?: number | null; // daily_max − ambient
+  discharge_flow?: ProvenancedValue | null; // MGD
+  flow_screens: ThermalFlowScreen[];
+  ris_checks: ThermalRisCheck[];
+  scenarios: ThermalScenario[]; // modelled rows only
+  dmr?: ThermalDmrObservation | null;
+  calibration?: ThermalCalibration | null; // modelled rows only
+  blowdown_exempt?: boolean | null; // null = not a closed-cycle case
+  blowdown_exempt_note?: string | null;
+  flag: ThermalFlag;
+  detail: string;
+}
+
+/** The screen's provenance header (`ThermalDischargeInventory.meta`, an untyped dict in Python
+ *  whose keys are set by `build_screen` — typed here because the frontend reads them). */
+export interface ThermalScreenMeta {
+  subject: string;
+  source: string;
+  site: string;
+  receiving_water?: string | null;
+  zone_id?: string | null;
+  zone_rule?: string | null;
+  design_period?: string | null;
+  daily_max_c?: number | null;
+  ambient_c?: number | null;
+  ambient_source?: string | null;
+  /** The zone's seasonal-average criterion standing in as a design ambient — what the screen
+   *  would have used had the corridor carried no observed in-stream temperature. */
+  reference_ambient_c?: number | null;
+  facility_count: number;
+  modelled_count: number;
+  industrial_count: number;
+  critical_count: number;
+  dmr_window?: string | null;
+  corridor_permits?: number | null;
+  corridor_permits_with_thermal_record?: number | null;
+  observed_instream_station?: string | null;
+  observed_instream_c?: number | null;
+  observed_effluent_analog?: string | null;
+  observed_effluent_analog_c?: number | null;
+  monitor_only_permits: string[];
+  permits_over_daily_max_criterion: string[];
+  caveats: string[];
+}
+
+/**
+ * The `thermal` feed (`bosc.hydrology.thermal.ThermalDischargeInventory`, contract 1.41.0) — the
+ * receiving-water temperature-rise / CWA §316(a) screen. Fully-mixed, design-low-flow,
+ * order-of-magnitude: no CORMIX plume model, no mixing-zone credit, no decay. A mixed temperature
+ * over the daily-max criterion flags the need for a permit-level thermal / §316(a) analysis, **not
+ * an automatic violation**. Site-gated by `meta.site` at export, so a peer never inherits the
+ * reference site's corridor.
+ */
+export interface ThermalScreenReport {
+  meta: ThermalScreenMeta;
+  screens: ThermalDischargeScreen[];
+}
+
 /** One dated Esri Wayback aerial release (the `geo/imagery` feed's `meta.wayback`). */
 export interface WaybackRelease {
   date: string; // e.g. "2014-12"

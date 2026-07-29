@@ -1,0 +1,1716 @@
+{
+  "meta": {
+    "subject": "Cooling + industrial heat load vs receiving-water temperature WQS / CWA §316(a), validated against the reported (ECHO DMR) effluent-temperature record",
+    "source": "watermark.hydrology.cooling_models (condenser heat rejection) x EPA ECHO DMR effluent temperature (parameters 00010/00011) + flow (50050) x Ohio EPA cited design low flows (data/reference/hydrology/low-flow-7q10.yaml) x Ohio temperature criteria (data/reference/wqs/ohio-temperature-criteria.yaml) x Great Lakes RIS tolerances (data/reference/thermal/great-lakes-ris-thermal-tolerances.yaml, EPA-833-F-23-007)",
+    "site": "lima",
+    "receiving_water": "Ottawa River",
+    "zone_id": "lake_erie_basin_general",
+    "zone_rule": "OAC 3745-1-35 Table 35-11 (G)",
+    "design_period": "Jun 16-30",
+    "daily_max_c": 29.4,
+    "ambient_c": 24.0,
+    "ambient_source": "connector",
+    "reference_ambient_c": 27.8,
+    "facility_count": 7,
+    "modelled_count": 1,
+    "industrial_count": 6,
+    "critical_count": 3,
+    "dmr_window": "2024-05-01..2024-10-31",
+    "corridor_permits": 6,
+    "corridor_permits_with_thermal_record": 3,
+    "observed_instream_station": "OH0026069 outfall 901 (Downstream Monitoring)",
+    "observed_instream_c": 24.0,
+    "observed_effluent_analog": "NPDES OH0002623 outfall 001 (LIMA REFINERY)",
+    "observed_effluent_analog_c": 32.22,
+    "monitor_only_permits": [
+      "OH0002623",
+      "OH0002615",
+      "OH0026069"
+    ],
+    "permits_over_daily_max_criterion": [
+      "OH0002623",
+      "OH0002615"
+    ],
+    "caveats": [
+      "A MODELLED (data-center) row's heat load is the CONDENSER heat rejection (IT x cooling overhead) — an inference about a facility that is not yet discharging. An INDUSTRIAL row's is the permittee's own reported effluent temperature x reported flow — a measurement. They are screened identically from there on but never conflated; read `kind` before quoting a number.",
+      "Fully-mixed, design-low-flow, order-of-magnitude: no CORMIX plume model, no mixing-zone credit, no decay. T_mixed above the daily-max criterion flags the need for a permit-level thermal / CWA §316(a) analysis, NOT an automatic violation.",
+      "The thermal assimilative capacity is rho*cp*Q*(daily_max - ambient). At a 0 cfs design flow (the Ottawa 1Q10) or an ambient already at the criterion the capacity is 0 — any heat load exceeds by construction (no Inf ΔT, mirroring the toxics screen).",
+      "The design ambient is a live NWIS 00010 reading where the gage carries one, else the reach's own reported in-stream (upstream/downstream) DMR monitoring, else the zone's seasonal-average temperature criterion as a stated design ambient. An in-stream station sits downstream of that plant's own outfall, so it is a measured in-stream temperature, not an undisturbed upstream background.",
+      "Cooling scenarios span the heat PARTITION, not uncertainty in the load: `once_through` sends the whole rejection to the stream by definition, `evaporative_blowdown` sends only the blowdown's sensible heat (the rest leaves as latent heat to the air) at a temperature CALIBRATED to an observed corridor analog — an [inference] by analogy, never this facility's own figure. `conservative_bound` is the Phase-2 ceiling.",
+      "Reported DMR values are verbatim from the permittee's submissions via ECHO and reduced to degC by their REPORTED unit (00011 is Fahrenheit, 00010 Celsius); an exceedance count is ECHO's own determination, never computed here by comparing a value to a limit. A permit with no numeric thermal limit is recorded as monitor-only — a cited absence, not a clean bill of health.",
+      "The OAC 3745-1-06 (O)(5) closed-cycle-blowdown exemption (blowdown < 5% of the 7Q10) is evaluated and surfaced whether or not it applies. RIS tolerances are the Great Lakes biological limits for a §316(a) balanced-indigenous-community read, [reference] (federal guidance, not law)."
+    ]
+  },
+  "screens": [
+    {
+      "facility": "Shawnee Energy Campus",
+      "facility_key": "shawnee-energy-campus",
+      "kind": "data_center",
+      "npdes_id": null,
+      "facility_type": null,
+      "cooling_model": "evaporative_tower",
+      "method_disclosed": true,
+      "reject_heat_mw": {
+        "value": 316.2,
+        "unit": "MW",
+        "source": "derived",
+        "citation": "condenser heat rejection = 275 MW IT x 1.15 cooling overhead; OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).; condenser heat rejection = IT load x ~1.15 cooling overhead (heat rejected is server load + cooling-system work — pumps/chillers/fans; ~1.1-1.4 typical, chiller-heavy higher; per PUE/mechanical-load screening convention, e.g. ASHRAE Datacom / DOE DC energy guides)",
+        "confidence": "medium",
+        "asof": null,
+        "low": 287.5,
+        "high": 345.0
+      },
+      "instream_heat_mw": {
+        "value": 316.2,
+        "unit": "MW",
+        "source": "derived",
+        "citation": "condenser heat rejection = 275 MW IT x 1.15 cooling overhead; OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).; condenser heat rejection = IT load x ~1.15 cooling overhead (heat rejected is server load + cooling-system work — pumps/chillers/fans; ~1.1-1.4 typical, chiller-heavy higher; per PUE/mechanical-load screening convention, e.g. ASHRAE Datacom / DOE DC energy guides)",
+        "confidence": "medium",
+        "asof": null,
+        "low": 287.5,
+        "high": 345.0
+      },
+      "receiving_water": "Ottawa River",
+      "receiving_water_source": "document",
+      "zone_id": "lake_erie_basin_general",
+      "zone_rule": "OAC 3745-1-35 Table 35-11 (G)",
+      "design_period": "Jun 16-30",
+      "daily_max_c": {
+        "value": 29.4,
+        "unit": "degC",
+        "source": "reference",
+        "citation": "OAC 3745-1-35 Table 35-11 (G) daily-maximum temperature criterion, Jun 16-30",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "ambient_c": {
+        "value": 24.0,
+        "unit": "degC",
+        "source": "connector",
+        "citation": "peak reported daily-maximum in-stream temperature, EPA ECHO DMR OH0026069 outfall 901 (Downstream Monitoring), 2024-05-01..2024-10-31 — the receiving water's own monitored temperature. It is a permit-required station DOWNSTREAM of that plant's own outfall, so it is a measured in-stream temperature, not an undisturbed upstream background",
+        "confidence": "medium",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "headroom_c": 5.4,
+      "discharge_flow": {
+        "value": 2.5,
+        "unit": "MGD",
+        "source": "derived",
+        "citation": "cooling discharge to Ottawa River for the evaporative_tower archetype",
+        "confidence": "low",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "flow_screens": [
+        {
+          "flow_label": "1Q10",
+          "design_flow": {
+            "value": 0.0,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "driest-day 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 0.0,
+          "delta_t_c": null,
+          "mixed_c": null,
+          "exceedance_factor": null,
+          "capacity_fraction": 0.0,
+          "headroom_fraction": null,
+          "mixed_over_criterion": null,
+          "flag": "no_capacity",
+          "note": "1Q10 = 0 cfs: no thermal assimilative capacity (0 cfs design flow) — any heat load exceeds the criterion by construction"
+        },
+        {
+          "flow_label": "7Q10",
+          "design_flow": {
+            "value": 0.2,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 0.128,
+          "delta_t_c": null,
+          "mixed_c": null,
+          "exceedance_factor": 2469.98,
+          "capacity_fraction": 0.000405,
+          "headroom_fraction": null,
+          "mixed_over_criterion": null,
+          "flag": "exceedance",
+          "note": "in-stream rise exceeds the liquid-water range at 7Q10 = 0.2 cfs — the reach cannot carry 316.2 MW; effectively no assimilative capacity (see the capacity ratio)"
+        },
+        {
+          "flow_label": "summer 30Q10",
+          "design_flow": {
+            "value": 1.6,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "summer 30Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 1.0241,
+          "delta_t_c": null,
+          "mixed_c": null,
+          "exceedance_factor": 308.75,
+          "capacity_fraction": 0.003239,
+          "headroom_fraction": null,
+          "mixed_over_criterion": null,
+          "flag": "exceedance",
+          "note": "in-stream rise exceeds the liquid-water range at summer 30Q10 = 1.6 cfs — the reach cannot carry 316.2 MW; effectively no assimilative capacity (see the capacity ratio)"
+        }
+      ],
+      "ris_checks": [
+        {
+          "common_name": "Opossum Shrimp",
+          "scientific_name": "Mysis relicta",
+          "life_stage": "NA",
+          "metric": "acute_upper",
+          "limit_c": 22.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Bloater",
+          "scientific_name": "Coregonus hoyi",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 27.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Alewife",
+          "scientific_name": "Alosa pseudoharengus",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 28.6,
+          "exceeded": null
+        },
+        {
+          "common_name": "Mottled Sculpin",
+          "scientific_name": "Cottus bairdi",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 30.4,
+          "exceeded": null
+        },
+        {
+          "common_name": "American Gizzard Shad",
+          "scientific_name": "Dorosoma cepedianum",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 31.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Spottail Shiner",
+          "scientific_name": "Notropis hudsonius",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 32.8,
+          "exceeded": null
+        },
+        {
+          "common_name": "Walleye",
+          "scientific_name": "Sander vitreus",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 33.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Zebra Mussel",
+          "scientific_name": "Dreissena polymorpha",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 33.0,
+          "exceeded": null
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario": "conservative_bound",
+          "basis": "Upper bound: the entire condenser heat rejection reaches the receiving water at the pinned evaporative_tower archetype's discharge flow. Physically generous for any closed-cycle archetype (a tower rejects most of it to the air) — carried so the other scenarios are read against a stated ceiling, not against nothing.",
+          "reject_heat_mw": {
+            "value": 316.2,
+            "unit": "MW",
+            "source": "derived",
+            "citation": "condenser heat rejection = 275 MW IT x 1.15 cooling overhead; OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).; condenser heat rejection = IT load x ~1.15 cooling overhead (heat rejected is server load + cooling-system work — pumps/chillers/fans; ~1.1-1.4 typical, chiller-heavy higher; per PUE/mechanical-load screening convention, e.g. ASHRAE Datacom / DOE DC energy guides)",
+            "confidence": "medium",
+            "asof": null,
+            "low": 287.5,
+            "high": 345.0
+          },
+          "instream_heat_mw": {
+            "value": 316.2,
+            "unit": "MW",
+            "source": "derived",
+            "citation": "condenser heat rejection = 275 MW IT x 1.15 cooling overhead; OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).; condenser heat rejection = IT load x ~1.15 cooling overhead (heat rejected is server load + cooling-system work — pumps/chillers/fans; ~1.1-1.4 typical, chiller-heavy higher; per PUE/mechanical-load screening convention, e.g. ASHRAE Datacom / DOE DC energy guides)",
+            "confidence": "medium",
+            "asof": null,
+            "low": 287.5,
+            "high": 345.0
+          },
+          "instream_fraction": 1.0,
+          "discharge_flow": {
+            "value": 2.5,
+            "unit": "MGD",
+            "source": "derived",
+            "citation": "the evaporative_tower archetype's discharge to the receiving water",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "effluent_c": null,
+          "flow_screens": [
+            {
+              "flow_label": "1Q10",
+              "design_flow": {
+                "value": 0.0,
+                "unit": "cfs",
+                "source": "document",
+                "citation": "driest-day 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+                "confidence": "high",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "thermal_capacity_mw": 0.0,
+              "delta_t_c": null,
+              "mixed_c": null,
+              "exceedance_factor": null,
+              "capacity_fraction": 0.0,
+              "headroom_fraction": null,
+              "mixed_over_criterion": null,
+              "flag": "no_capacity",
+              "note": "1Q10 = 0 cfs: no thermal assimilative capacity (0 cfs design flow) — any heat load exceeds the criterion by construction"
+            },
+            {
+              "flow_label": "7Q10",
+              "design_flow": {
+                "value": 0.2,
+                "unit": "cfs",
+                "source": "document",
+                "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+                "confidence": "high",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "thermal_capacity_mw": 0.128,
+              "delta_t_c": null,
+              "mixed_c": null,
+              "exceedance_factor": 2469.98,
+              "capacity_fraction": 0.000405,
+              "headroom_fraction": null,
+              "mixed_over_criterion": null,
+              "flag": "exceedance",
+              "note": "in-stream rise exceeds the liquid-water range at 7Q10 = 0.2 cfs — the reach cannot carry 316.2 MW; effectively no assimilative capacity (see the capacity ratio)"
+            },
+            {
+              "flow_label": "summer 30Q10",
+              "design_flow": {
+                "value": 1.6,
+                "unit": "cfs",
+                "source": "document",
+                "citation": "summer 30Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+                "confidence": "high",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "thermal_capacity_mw": 1.0241,
+              "delta_t_c": null,
+              "mixed_c": null,
+              "exceedance_factor": 308.75,
+              "capacity_fraction": 0.003239,
+              "headroom_fraction": null,
+              "mixed_over_criterion": null,
+              "flag": "exceedance",
+              "note": "in-stream rise exceeds the liquid-water range at summer 30Q10 = 1.6 cfs — the reach cannot carry 316.2 MW; effectively no assimilative capacity (see the capacity ratio)"
+            }
+          ],
+          "flag": "critical",
+          "note": null
+        },
+        {
+          "scenario": "once_through",
+          "basis": "Once-through: the cooling water passes the condenser once and returns to the stream warmed, so the whole rejection reaches the receiving water by definition — but it arrives diluted in the whole withdrawal, which itself dwarfs the design low flow. The reach below the outfall is then effectively the discharge.",
+          "reject_heat_mw": {
+            "value": 316.2,
+            "unit": "MW",
+            "source": "derived",
+            "citation": "condenser heat rejection = 275 MW IT x 1.15 cooling overhead; OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).; condenser heat rejection = IT load x ~1.15 cooling overhead (heat rejected is server load + cooling-system work — pumps/chillers/fans; ~1.1-1.4 typical, chiller-heavy higher; per PUE/mechanical-load screening convention, e.g. ASHRAE Datacom / DOE DC energy guides)",
+            "confidence": "medium",
+            "asof": null,
+            "low": 287.5,
+            "high": 345.0
+          },
+          "instream_heat_mw": {
+            "value": 316.2,
+            "unit": "MW",
+            "source": "derived",
+            "citation": "condenser heat rejection = 275 MW IT x 1.15 cooling overhead; OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).; condenser heat rejection = IT load x ~1.15 cooling overhead (heat rejected is server load + cooling-system work — pumps/chillers/fans; ~1.1-1.4 typical, chiller-heavy higher; per PUE/mechanical-load screening convention, e.g. ASHRAE Datacom / DOE DC energy guides)",
+            "confidence": "medium",
+            "asof": null,
+            "low": 287.5,
+            "high": 345.0
+          },
+          "instream_fraction": 1.0,
+          "discharge_flow": {
+            "value": 172.44,
+            "unit": "MGD",
+            "source": "derived",
+            "citation": "275 MW IT x 1.15 heat-rejection overhead = 316.25 MW rejected / (rho x c x dT); once-through condenser temperature rise dT ~10 degC (typical 8-12 design); condenser heat rejection = IT load x ~1.15 cooling overhead (heat rejected is server load + cooling-system work — pumps/chillers/fans; ~1.1-1.4 typical, chiller-heavy higher; per PUE/mechanical-load screening convention, e.g. ASHRAE Datacom / DOE DC energy guides) — once-through withdrawal, nearly all returned",
+            "confidence": "medium",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "effluent_c": {
+            "value": 34.0,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "design ambient 24 + the condenser rise of 316.2 MW over the 172 MGD once-through withdrawal",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "flow_screens": [
+            {
+              "flow_label": "1Q10",
+              "design_flow": {
+                "value": 0.0,
+                "unit": "cfs",
+                "source": "document",
+                "citation": "driest-day 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+                "confidence": "high",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "thermal_capacity_mw": 0.0,
+              "delta_t_c": null,
+              "mixed_c": null,
+              "exceedance_factor": null,
+              "capacity_fraction": 0.0,
+              "headroom_fraction": null,
+              "mixed_over_criterion": null,
+              "flag": "no_capacity",
+              "note": "1Q10 = 0 cfs: no thermal assimilative capacity (0 cfs design flow) — any heat load exceeds the criterion by construction"
+            },
+            {
+              "flow_label": "7Q10",
+              "design_flow": {
+                "value": 0.2,
+                "unit": "cfs",
+                "source": "document",
+                "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+                "confidence": "high",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "thermal_capacity_mw": 0.128,
+              "delta_t_c": {
+                "value": 10.0,
+                "unit": "degC",
+                "source": "derived",
+                "citation": "316.2 MW to water / (rho*cp*(0.2 + 2.7e+02 cfs)) fully mixed — once-through: the condenser water IS the discharge (no plume/mixing-zone credit)",
+                "confidence": "low",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "mixed_c": {
+                "value": 34.0,
+                "unit": "degC",
+                "source": "derived",
+                "citation": "design ambient 24 + 10 degC in-stream rise",
+                "confidence": "low",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "exceedance_factor": 2469.98,
+              "capacity_fraction": 0.000405,
+              "headroom_fraction": 1.85,
+              "mixed_over_criterion": true,
+              "flag": "exceedance",
+              "note": null
+            },
+            {
+              "flow_label": "summer 30Q10",
+              "design_flow": {
+                "value": 1.6,
+                "unit": "cfs",
+                "source": "document",
+                "citation": "summer 30Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+                "confidence": "high",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "thermal_capacity_mw": 1.0241,
+              "delta_t_c": {
+                "value": 9.9,
+                "unit": "degC",
+                "source": "derived",
+                "citation": "316.2 MW to water / (rho*cp*(1.6 + 2.7e+02 cfs)) fully mixed — once-through: the condenser water IS the discharge (no plume/mixing-zone credit)",
+                "confidence": "low",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "mixed_c": {
+                "value": 33.9,
+                "unit": "degC",
+                "source": "derived",
+                "citation": "design ambient 24 + 9.9 degC in-stream rise",
+                "confidence": "low",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "exceedance_factor": 308.75,
+              "capacity_fraction": 0.003239,
+              "headroom_fraction": 1.84,
+              "mixed_over_criterion": true,
+              "flag": "exceedance",
+              "note": null
+            }
+          ],
+          "flag": "critical",
+          "note": null
+        },
+        {
+          "scenario": "evaporative_blowdown",
+          "basis": "Evaporative tower: most of the rejection leaves as latent heat of evaporation to the atmosphere; only the blowdown carries sensible heat downstream. Its temperature is CALIBRATED to NPDES OH0002623 outfall 001 (LIMA REFINERY) — an observed corridor analog, not a figure for this facility, which holds no discharge permit of its own.",
+          "reject_heat_mw": {
+            "value": 316.2,
+            "unit": "MW",
+            "source": "derived",
+            "citation": "condenser heat rejection = 275 MW IT x 1.15 cooling overhead; OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).; condenser heat rejection = IT load x ~1.15 cooling overhead (heat rejected is server load + cooling-system work — pumps/chillers/fans; ~1.1-1.4 typical, chiller-heavy higher; per PUE/mechanical-load screening convention, e.g. ASHRAE Datacom / DOE DC energy guides)",
+            "confidence": "medium",
+            "asof": null,
+            "low": 287.5,
+            "high": 345.0
+          },
+          "instream_heat_mw": {
+            "value": 3.769,
+            "unit": "MW",
+            "source": "derived",
+            "citation": "rho*cp x 2.5 MGD blowdown x (32.22 - 24) degC — the sensible heat the blowdown carries at the corridor's own observed effluent temperature (NPDES OH0002623 outfall 001 (LIMA REFINERY)). The latent heat of evaporation leaves to the atmosphere and is not screened here.",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "instream_fraction": 0.0119,
+          "discharge_flow": {
+            "value": 2.5,
+            "unit": "MGD",
+            "source": "document",
+            "citation": "bosc-fm2 2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper bound",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "effluent_c": {
+            "value": 32.2,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "blowdown temperature taken from the corridor's observed effluent analog (NPDES OH0002623 outfall 001 (LIMA REFINERY)) — an [inference] by analogy",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "flow_screens": [
+            {
+              "flow_label": "1Q10",
+              "design_flow": {
+                "value": 0.0,
+                "unit": "cfs",
+                "source": "document",
+                "citation": "driest-day 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+                "confidence": "high",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "thermal_capacity_mw": 0.0,
+              "delta_t_c": null,
+              "mixed_c": null,
+              "exceedance_factor": null,
+              "capacity_fraction": 0.0,
+              "headroom_fraction": null,
+              "mixed_over_criterion": null,
+              "flag": "no_capacity",
+              "note": "1Q10 = 0 cfs: no thermal assimilative capacity (0 cfs design flow) — any heat load exceeds the criterion by construction"
+            },
+            {
+              "flow_label": "7Q10",
+              "design_flow": {
+                "value": 0.2,
+                "unit": "cfs",
+                "source": "document",
+                "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+                "confidence": "high",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "thermal_capacity_mw": 0.128,
+              "delta_t_c": {
+                "value": 7.8,
+                "unit": "degC",
+                "source": "derived",
+                "citation": "3.769 MW to water / (rho*cp*(0.2 + 3.9 cfs)) fully mixed — evaporative tower: only the blowdown's sensible heat reaches the water (no plume/mixing-zone credit)",
+                "confidence": "low",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "mixed_c": {
+                "value": 31.8,
+                "unit": "degC",
+                "source": "derived",
+                "citation": "design ambient 24 + 7.8 degC in-stream rise",
+                "confidence": "low",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "exceedance_factor": 29.44,
+              "capacity_fraction": 0.033966,
+              "headroom_fraction": 1.447,
+              "mixed_over_criterion": true,
+              "flag": "exceedance",
+              "note": null
+            },
+            {
+              "flow_label": "summer 30Q10",
+              "design_flow": {
+                "value": 1.6,
+                "unit": "cfs",
+                "source": "document",
+                "citation": "summer 30Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+                "confidence": "high",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "thermal_capacity_mw": 1.0241,
+              "delta_t_c": {
+                "value": 5.8,
+                "unit": "degC",
+                "source": "derived",
+                "citation": "3.769 MW to water / (rho*cp*(1.6 + 3.9 cfs)) fully mixed — evaporative tower: only the blowdown's sensible heat reaches the water (no plume/mixing-zone credit)",
+                "confidence": "low",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "mixed_c": {
+                "value": 29.8,
+                "unit": "degC",
+                "source": "derived",
+                "citation": "design ambient 24 + 5.8 degC in-stream rise",
+                "confidence": "low",
+                "asof": null,
+                "low": null,
+                "high": null
+              },
+              "exceedance_factor": 3.68,
+              "capacity_fraction": 0.271726,
+              "headroom_fraction": 1.077,
+              "mixed_over_criterion": true,
+              "flag": "exceedance",
+              "note": null
+            }
+          ],
+          "flag": "critical",
+          "note": null
+        }
+      ],
+      "dmr": null,
+      "calibration": {
+        "basis": "Derived once-through effluent temperature vs the warmest reported effluent temperature among the permitted dischargers on the same reach (EPA ECHO DMR). The campus holds no discharge permit, so the corridor analog is the closest observation on the record; a `conservative` verdict means the SCREEN runs hotter than the record.",
+        "modeled_effluent_c": 34.0,
+        "observed_effluent_c": 32.22,
+        "observed_source": "NPDES OH0002623 outfall 001 (LIMA REFINERY)",
+        "delta_c": 1.78,
+        "verdict": "consistent",
+        "design_ambient_c": 24.0,
+        "observed_instream_c": 24.0,
+        "ambient_delta_c": 3.8,
+        "note": "The modelled once-through effluent runs 1.78 degC above the corridor's warmest observed industrial effluent — consistent. The reach's own reported in-stream temperature (OH0026069 outfall 901 (Downstream Monitoring)) is 3.8 degC below the reference design ambient the criteria table supplies, so the observed rung is the one used."
+      },
+      "blowdown_exempt": false,
+      "blowdown_exempt_note": "OAC 3745-1-06 (O)(5): closed-cycle blowdown 2.5 MGD (3.868 cfs) vs 5% of the 0.2 cfs 7Q10 = 0.010 cfs — NOT exempt from the thermal-mixing-zone rule",
+      "flag": "critical",
+      "detail": "Shawnee Energy Campus: ~316.2 MW condenser rejection vs Ottawa River thermal capacity — 2,470x over at 7Q10 (only 0.04% of the rejection exhausts the capacity) [critical]."
+    },
+    {
+      "facility": "LIMA REFINERY",
+      "facility_key": "OH0002623",
+      "kind": "permitted_discharger",
+      "npdes_id": "OH0002623",
+      "facility_type": "NON-POTW",
+      "cooling_model": null,
+      "method_disclosed": true,
+      "reject_heat_mw": null,
+      "instream_heat_mw": {
+        "value": 5.578,
+        "unit": "MW",
+        "source": "derived",
+        "citation": "rho*cp x 3.7 MGD reported effluent flow x (32.22 - 24) degC above the design ambient — the reported-record heat load of NPDES OH0002623 outfall 001 (EPA ECHO DMR, 2024-05-01..2024-10-31)",
+        "confidence": "medium",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "receiving_water": "Ottawa River",
+      "receiving_water_source": "connector",
+      "zone_id": "lake_erie_basin_general",
+      "zone_rule": "OAC 3745-1-35 Table 35-11 (G)",
+      "design_period": "Jun 16-30",
+      "daily_max_c": {
+        "value": 29.4,
+        "unit": "degC",
+        "source": "reference",
+        "citation": "OAC 3745-1-35 Table 35-11 (G) daily-maximum temperature criterion, Jun 16-30",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "ambient_c": {
+        "value": 24.0,
+        "unit": "degC",
+        "source": "connector",
+        "citation": "peak reported daily-maximum in-stream temperature, EPA ECHO DMR OH0026069 outfall 901 (Downstream Monitoring), 2024-05-01..2024-10-31 — the receiving water's own monitored temperature. It is a permit-required station DOWNSTREAM of that plant's own outfall, so it is a measured in-stream temperature, not an undisturbed upstream background",
+        "confidence": "medium",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "headroom_c": 5.4,
+      "discharge_flow": {
+        "value": 3.7,
+        "unit": "MGD",
+        "source": "connector",
+        "citation": "mean reported monthly-average flow, EPA ECHO DMR OH0002623 outfall 001 (parameter 50050) over 4 month(s), 2024-05-01..2024-10-31",
+        "confidence": "high",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "flow_screens": [
+        {
+          "flow_label": "1Q10",
+          "design_flow": {
+            "value": 0.0,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "driest-day 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 0.0,
+          "delta_t_c": null,
+          "mixed_c": null,
+          "exceedance_factor": null,
+          "capacity_fraction": 0.0,
+          "headroom_fraction": null,
+          "mixed_over_criterion": null,
+          "flag": "no_capacity",
+          "note": "1Q10 = 0 cfs: no thermal assimilative capacity (0 cfs design flow) — any heat load exceeds the criterion by construction"
+        },
+        {
+          "flow_label": "7Q10",
+          "design_flow": {
+            "value": 0.2,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 0.128,
+          "delta_t_c": {
+            "value": 7.9,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "5.578 MW to water / (rho*cp*(0.2 + 5.7 cfs)) fully mixed — reported-record heat load (permittee's own DMR temperature x flow) (no plume/mixing-zone credit)",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "mixed_c": {
+            "value": 31.9,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "design ambient 24 + 7.9 degC in-stream rise",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "exceedance_factor": 43.57,
+          "capacity_fraction": 0.02295,
+          "headroom_fraction": 1.471,
+          "mixed_over_criterion": true,
+          "flag": "exceedance",
+          "note": null
+        },
+        {
+          "flow_label": "summer 30Q10",
+          "design_flow": {
+            "value": 1.6,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "summer 30Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 1.0241,
+          "delta_t_c": {
+            "value": 6.4,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "5.578 MW to water / (rho*cp*(1.6 + 5.7 cfs)) fully mixed — reported-record heat load (permittee's own DMR temperature x flow) (no plume/mixing-zone credit)",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "mixed_c": {
+            "value": 30.4,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "design ambient 24 + 6.4 degC in-stream rise",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "exceedance_factor": 5.45,
+          "capacity_fraction": 0.183603,
+          "headroom_fraction": 1.19,
+          "mixed_over_criterion": true,
+          "flag": "exceedance",
+          "note": null
+        }
+      ],
+      "ris_checks": [
+        {
+          "common_name": "Opossum Shrimp",
+          "scientific_name": "Mysis relicta",
+          "life_stage": "NA",
+          "metric": "acute_upper",
+          "limit_c": 22.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Bloater",
+          "scientific_name": "Coregonus hoyi",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 27.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Alewife",
+          "scientific_name": "Alosa pseudoharengus",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 28.6,
+          "exceeded": null
+        },
+        {
+          "common_name": "Mottled Sculpin",
+          "scientific_name": "Cottus bairdi",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 30.4,
+          "exceeded": null
+        },
+        {
+          "common_name": "American Gizzard Shad",
+          "scientific_name": "Dorosoma cepedianum",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 31.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Spottail Shiner",
+          "scientific_name": "Notropis hudsonius",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 32.8,
+          "exceeded": null
+        },
+        {
+          "common_name": "Walleye",
+          "scientific_name": "Sander vitreus",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 33.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Zebra Mussel",
+          "scientific_name": "Dreissena polymorpha",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 33.0,
+          "exceeded": null
+        }
+      ],
+      "scenarios": [],
+      "dmr": {
+        "npdes_id": "OH0002623",
+        "permit_name": "LIMA REFINERY",
+        "window": "2024-05-01..2024-10-31",
+        "outfall": "001",
+        "monitoring_location": "Effluent Gross",
+        "parameter_code": "00011",
+        "reported_unit": "deg F",
+        "n_obs": 8,
+        "effluent_c": {
+          "value": 32.22,
+          "unit": "degC",
+          "source": "connector",
+          "citation": "peak reported daily-maximum effluent temperature, EPA ECHO DMR OH0002623 outfall 001 (parameter 00011, reported in deg F), 2024-05-01..2024-10-31",
+          "confidence": "high",
+          "asof": "2024-10-31",
+          "low": null,
+          "high": null
+        },
+        "mean_monthly_avg_c": 27.78,
+        "flow": {
+          "value": 3.7,
+          "unit": "MGD",
+          "source": "connector",
+          "citation": "mean reported monthly-average flow, EPA ECHO DMR OH0002623 outfall 001 (parameter 50050) over 4 month(s), 2024-05-01..2024-10-31",
+          "confidence": "high",
+          "asof": "2024-10-31",
+          "low": null,
+          "high": null
+        },
+        "permitted_limit_c": {
+          "value": 29.44,
+          "unit": "degC",
+          "source": "document",
+          "citation": "NPDES OH0002623 outfall 003 permitted daily-maximum temperature limit, reported via EPA ECHO DMR (2024-05-01..2024-10-31) — seasonal; the warm-season ceiling",
+          "confidence": "high",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "permitted_limit_outfall": "003",
+        "limit_seasonal": true,
+        "monitor_only": true,
+        "reported_exceedances": 0,
+        "over_criterion": true,
+        "over_permitted_limit": null,
+        "instream_c": null,
+        "instream_station": null,
+        "note": "NPDES OH0002623 monitors effluent temperature at outfall 001 but ECHO carries NO numeric thermal limit for it — the discharge temperature is reported, not capped, though outfall 003 of the same permit does carry one (29.44 degC) — a limit that does not bind this discharge."
+      },
+      "calibration": null,
+      "blowdown_exempt": null,
+      "blowdown_exempt_note": null,
+      "flag": "critical",
+      "detail": "LIMA REFINERY (NPDES OH0002623): reports 32.22 degC peak daily-max effluent at 3.7 MGD, 2.8 degC OVER the 29.4 degC daily-maximum criterion; permitted daily-max limit 29.44 degC (outfall 003). Reported-record heat load ~5.578 MW — fully mixed at 7Q10 the reach reaches 31.9 degC — OVER the 29.4 degC criterion (147% of the reach's headroom, 44x its loading capacity) [critical]."
+    },
+    {
+      "facility": "PCS NITROGEN OHIO LP",
+      "facility_key": "OH0002615",
+      "kind": "permitted_discharger",
+      "npdes_id": "OH0002615",
+      "facility_type": "NON-POTW",
+      "cooling_model": null,
+      "method_disclosed": true,
+      "reject_heat_mw": null,
+      "instream_heat_mw": {
+        "value": 3.576,
+        "unit": "MW",
+        "source": "derived",
+        "citation": "rho*cp x 3.25 MGD reported effluent flow x (30 - 24) degC above the design ambient — the reported-record heat load of NPDES OH0002615 outfall 001 (EPA ECHO DMR, 2024-05-01..2024-10-31)",
+        "confidence": "medium",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "receiving_water": "Ottawa River",
+      "receiving_water_source": "assumption",
+      "zone_id": "lake_erie_basin_general",
+      "zone_rule": "OAC 3745-1-35 Table 35-11 (G)",
+      "design_period": "Jun 16-30",
+      "daily_max_c": {
+        "value": 29.4,
+        "unit": "degC",
+        "source": "reference",
+        "citation": "OAC 3745-1-35 Table 35-11 (G) daily-maximum temperature criterion, Jun 16-30",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "ambient_c": {
+        "value": 24.0,
+        "unit": "degC",
+        "source": "connector",
+        "citation": "peak reported daily-maximum in-stream temperature, EPA ECHO DMR OH0026069 outfall 901 (Downstream Monitoring), 2024-05-01..2024-10-31 — the receiving water's own monitored temperature. It is a permit-required station DOWNSTREAM of that plant's own outfall, so it is a measured in-stream temperature, not an undisturbed upstream background",
+        "confidence": "medium",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "headroom_c": 5.4,
+      "discharge_flow": {
+        "value": 3.25,
+        "unit": "MGD",
+        "source": "connector",
+        "citation": "mean reported monthly-average flow, EPA ECHO DMR OH0002615 outfall 001 (parameter 50050) over 6 month(s), 2024-05-01..2024-10-31",
+        "confidence": "high",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "flow_screens": [
+        {
+          "flow_label": "1Q10",
+          "design_flow": {
+            "value": 0.0,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "driest-day 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 0.0,
+          "delta_t_c": null,
+          "mixed_c": null,
+          "exceedance_factor": null,
+          "capacity_fraction": 0.0,
+          "headroom_fraction": null,
+          "mixed_over_criterion": null,
+          "flag": "no_capacity",
+          "note": "1Q10 = 0 cfs: no thermal assimilative capacity (0 cfs design flow) — any heat load exceeds the criterion by construction"
+        },
+        {
+          "flow_label": "7Q10",
+          "design_flow": {
+            "value": 0.2,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 0.128,
+          "delta_t_c": {
+            "value": 5.8,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "3.576 MW to water / (rho*cp*(0.2 + 5 cfs)) fully mixed — reported-record heat load (permittee's own DMR temperature x flow) (no plume/mixing-zone credit)",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "mixed_c": {
+            "value": 29.8,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "design ambient 24 + 5.8 degC in-stream rise",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "exceedance_factor": 27.93,
+          "capacity_fraction": 0.035799,
+          "headroom_fraction": 1.069,
+          "mixed_over_criterion": true,
+          "flag": "exceedance",
+          "note": null
+        },
+        {
+          "flow_label": "summer 30Q10",
+          "design_flow": {
+            "value": 1.6,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "summer 30Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 1.0241,
+          "delta_t_c": {
+            "value": 4.6,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "3.576 MW to water / (rho*cp*(1.6 + 5 cfs)) fully mixed — reported-record heat load (permittee's own DMR temperature x flow) (no plume/mixing-zone credit)",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "mixed_c": {
+            "value": 28.6,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "design ambient 24 + 4.6 degC in-stream rise",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "exceedance_factor": 3.49,
+          "capacity_fraction": 0.286392,
+          "headroom_fraction": 0.843,
+          "mixed_over_criterion": false,
+          "flag": "approach",
+          "note": null
+        }
+      ],
+      "ris_checks": [
+        {
+          "common_name": "Opossum Shrimp",
+          "scientific_name": "Mysis relicta",
+          "life_stage": "NA",
+          "metric": "acute_upper",
+          "limit_c": 22.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Bloater",
+          "scientific_name": "Coregonus hoyi",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 27.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Alewife",
+          "scientific_name": "Alosa pseudoharengus",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 28.6,
+          "exceeded": null
+        },
+        {
+          "common_name": "Mottled Sculpin",
+          "scientific_name": "Cottus bairdi",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 30.4,
+          "exceeded": null
+        },
+        {
+          "common_name": "American Gizzard Shad",
+          "scientific_name": "Dorosoma cepedianum",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 31.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Spottail Shiner",
+          "scientific_name": "Notropis hudsonius",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 32.8,
+          "exceeded": null
+        },
+        {
+          "common_name": "Walleye",
+          "scientific_name": "Sander vitreus",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 33.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Zebra Mussel",
+          "scientific_name": "Dreissena polymorpha",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 33.0,
+          "exceeded": null
+        }
+      ],
+      "scenarios": [],
+      "dmr": {
+        "npdes_id": "OH0002615",
+        "permit_name": "PCS NITROGEN OHIO LP",
+        "window": "2024-05-01..2024-10-31",
+        "outfall": "001",
+        "monitoring_location": "Effluent Gross",
+        "parameter_code": "00011",
+        "reported_unit": "deg F",
+        "n_obs": 12,
+        "effluent_c": {
+          "value": 30.0,
+          "unit": "degC",
+          "source": "connector",
+          "citation": "peak reported daily-maximum effluent temperature, EPA ECHO DMR OH0002615 outfall 001 (parameter 00011, reported in deg F), 2024-05-01..2024-10-31",
+          "confidence": "high",
+          "asof": "2024-10-31",
+          "low": null,
+          "high": null
+        },
+        "mean_monthly_avg_c": 24.91,
+        "flow": {
+          "value": 3.25,
+          "unit": "MGD",
+          "source": "connector",
+          "citation": "mean reported monthly-average flow, EPA ECHO DMR OH0002615 outfall 001 (parameter 50050) over 6 month(s), 2024-05-01..2024-10-31",
+          "confidence": "high",
+          "asof": "2024-10-31",
+          "low": null,
+          "high": null
+        },
+        "permitted_limit_c": null,
+        "permitted_limit_outfall": null,
+        "limit_seasonal": false,
+        "monitor_only": true,
+        "reported_exceedances": 0,
+        "over_criterion": true,
+        "over_permitted_limit": null,
+        "instream_c": null,
+        "instream_station": null,
+        "note": "NPDES OH0002615 monitors effluent temperature at outfall 001 but ECHO carries NO numeric thermal limit for it — the discharge temperature is reported, not capped."
+      },
+      "calibration": null,
+      "blowdown_exempt": null,
+      "blowdown_exempt_note": null,
+      "flag": "critical",
+      "detail": "PCS NITROGEN OHIO LP (NPDES OH0002615): reports 30 degC peak daily-max effluent at 3.25 MGD, 0.6 degC OVER the 29.4 degC daily-maximum criterion; NO numeric thermal limit on record. Reported-record heat load ~3.576 MW — fully mixed at 7Q10 the reach reaches 29.8 degC — OVER the 29.4 degC criterion (107% of the reach's headroom, 28x its loading capacity) [critical]."
+    },
+    {
+      "facility": "LIMA WWTP",
+      "facility_key": "OH0026069",
+      "kind": "permitted_discharger",
+      "npdes_id": "OH0026069",
+      "facility_type": "POTW",
+      "cooling_model": null,
+      "method_disclosed": true,
+      "reject_heat_mw": null,
+      "instream_heat_mw": {
+        "value": 3.279,
+        "unit": "MW",
+        "source": "derived",
+        "citation": "rho*cp x 12.77 MGD reported effluent flow x (25.4 - 24) degC above the design ambient — the reported-record heat load of NPDES OH0026069 outfall 001 (EPA ECHO DMR, 2024-05-01..2024-10-31)",
+        "confidence": "medium",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "receiving_water": "Ottawa River",
+      "receiving_water_source": "connector",
+      "zone_id": "lake_erie_basin_general",
+      "zone_rule": "OAC 3745-1-35 Table 35-11 (G)",
+      "design_period": "Jun 16-30",
+      "daily_max_c": {
+        "value": 29.4,
+        "unit": "degC",
+        "source": "reference",
+        "citation": "OAC 3745-1-35 Table 35-11 (G) daily-maximum temperature criterion, Jun 16-30",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "ambient_c": {
+        "value": 24.0,
+        "unit": "degC",
+        "source": "connector",
+        "citation": "peak reported daily-maximum in-stream temperature, EPA ECHO DMR OH0026069 outfall 901 (Downstream Monitoring), 2024-05-01..2024-10-31 — the receiving water's own monitored temperature. It is a permit-required station DOWNSTREAM of that plant's own outfall, so it is a measured in-stream temperature, not an undisturbed upstream background",
+        "confidence": "medium",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "headroom_c": 5.4,
+      "discharge_flow": {
+        "value": 12.77,
+        "unit": "MGD",
+        "source": "connector",
+        "citation": "mean reported monthly-average flow, EPA ECHO DMR OH0026069 outfall 001 (parameter 50050) over 6 month(s), 2024-05-01..2024-10-31",
+        "confidence": "high",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "flow_screens": [
+        {
+          "flow_label": "1Q10",
+          "design_flow": {
+            "value": 0.0,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "driest-day 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 0.0,
+          "delta_t_c": null,
+          "mixed_c": null,
+          "exceedance_factor": null,
+          "capacity_fraction": 0.0,
+          "headroom_fraction": null,
+          "mixed_over_criterion": null,
+          "flag": "no_capacity",
+          "note": "1Q10 = 0 cfs: no thermal assimilative capacity (0 cfs design flow) — any heat load exceeds the criterion by construction"
+        },
+        {
+          "flow_label": "7Q10",
+          "design_flow": {
+            "value": 0.2,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 0.128,
+          "delta_t_c": {
+            "value": 1.4,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "3.279 MW to water / (rho*cp*(0.2 + 20 cfs)) fully mixed — reported-record heat load (permittee's own DMR temperature x flow) (no plume/mixing-zone credit)",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "mixed_c": {
+            "value": 25.4,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "design ambient 24 + 1.4 degC in-stream rise",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "exceedance_factor": 25.61,
+          "capacity_fraction": 0.039041,
+          "headroom_fraction": 0.257,
+          "mixed_over_criterion": false,
+          "flag": "approach",
+          "note": null
+        },
+        {
+          "flow_label": "summer 30Q10",
+          "design_flow": {
+            "value": 1.6,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "summer 30Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "thermal_capacity_mw": 1.0241,
+          "delta_t_c": {
+            "value": 1.3,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "3.279 MW to water / (rho*cp*(1.6 + 20 cfs)) fully mixed — reported-record heat load (permittee's own DMR temperature x flow) (no plume/mixing-zone credit)",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "mixed_c": {
+            "value": 25.3,
+            "unit": "degC",
+            "source": "derived",
+            "citation": "design ambient 24 + 1.3 degC in-stream rise",
+            "confidence": "low",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "exceedance_factor": 3.2,
+          "capacity_fraction": 0.312332,
+          "headroom_fraction": 0.24,
+          "mixed_over_criterion": false,
+          "flag": "approach",
+          "note": null
+        }
+      ],
+      "ris_checks": [
+        {
+          "common_name": "Opossum Shrimp",
+          "scientific_name": "Mysis relicta",
+          "life_stage": "NA",
+          "metric": "acute_upper",
+          "limit_c": 22.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Bloater",
+          "scientific_name": "Coregonus hoyi",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 27.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Alewife",
+          "scientific_name": "Alosa pseudoharengus",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 28.6,
+          "exceeded": null
+        },
+        {
+          "common_name": "Mottled Sculpin",
+          "scientific_name": "Cottus bairdi",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 30.4,
+          "exceeded": null
+        },
+        {
+          "common_name": "American Gizzard Shad",
+          "scientific_name": "Dorosoma cepedianum",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 31.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Spottail Shiner",
+          "scientific_name": "Notropis hudsonius",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 32.8,
+          "exceeded": null
+        },
+        {
+          "common_name": "Walleye",
+          "scientific_name": "Sander vitreus",
+          "life_stage": "Juvenile",
+          "metric": "acute_upper",
+          "limit_c": 33.0,
+          "exceeded": null
+        },
+        {
+          "common_name": "Zebra Mussel",
+          "scientific_name": "Dreissena polymorpha",
+          "life_stage": "Adult",
+          "metric": "acute_upper",
+          "limit_c": 33.0,
+          "exceeded": null
+        }
+      ],
+      "scenarios": [],
+      "dmr": {
+        "npdes_id": "OH0026069",
+        "permit_name": "LIMA WWTP",
+        "window": "2024-05-01..2024-10-31",
+        "outfall": "001",
+        "monitoring_location": "Effluent Gross",
+        "parameter_code": "00010",
+        "reported_unit": "deg C",
+        "n_obs": 12,
+        "effluent_c": {
+          "value": 25.4,
+          "unit": "degC",
+          "source": "connector",
+          "citation": "peak reported daily-maximum effluent temperature, EPA ECHO DMR OH0026069 outfall 001 (parameter 00010, reported in deg C), 2024-05-01..2024-10-31",
+          "confidence": "high",
+          "asof": "2024-10-31",
+          "low": null,
+          "high": null
+        },
+        "mean_monthly_avg_c": 21.52,
+        "flow": {
+          "value": 12.77,
+          "unit": "MGD",
+          "source": "connector",
+          "citation": "mean reported monthly-average flow, EPA ECHO DMR OH0026069 outfall 001 (parameter 50050) over 6 month(s), 2024-05-01..2024-10-31",
+          "confidence": "high",
+          "asof": "2024-10-31",
+          "low": null,
+          "high": null
+        },
+        "permitted_limit_c": null,
+        "permitted_limit_outfall": null,
+        "limit_seasonal": false,
+        "monitor_only": true,
+        "reported_exceedances": 0,
+        "over_criterion": false,
+        "over_permitted_limit": null,
+        "instream_c": {
+          "value": 24.0,
+          "unit": "degC",
+          "source": "connector",
+          "citation": "peak reported daily-maximum in-stream temperature, EPA ECHO DMR OH0026069 outfall 901 (Downstream Monitoring), 2024-05-01..2024-10-31",
+          "confidence": "medium",
+          "asof": "2024-10-31",
+          "low": null,
+          "high": null
+        },
+        "instream_station": "outfall 901 (Downstream Monitoring)",
+        "note": "NPDES OH0026069 monitors effluent temperature at outfall 001 but ECHO carries NO numeric thermal limit for it — the discharge temperature is reported, not capped. The design ambient for this screen is this permit's OWN in-stream station (outfall 901 (Downstream Monitoring)), which sits downstream of its outfall — so the heat load below is measured against water this discharge has already warmed, and is a floor."
+      },
+      "calibration": null,
+      "blowdown_exempt": null,
+      "blowdown_exempt_note": null,
+      "flag": "elevated",
+      "detail": "LIMA WWTP (NPDES OH0026069): reports 25.4 degC peak daily-max effluent at 12.77 MGD; NO numeric thermal limit on record. Reported-record heat load ~3.279 MW — fully mixed at 7Q10 the reach reaches 25.4 degC — under the 29.4 degC criterion (26% of the reach's headroom, 26x its loading capacity) [elevated]."
+    },
+    {
+      "facility": "SUPERIOR FORGE & STEEL CORPORATION",
+      "facility_key": "OH0095346",
+      "kind": "permitted_discharger",
+      "npdes_id": "OH0095346",
+      "facility_type": "NON-POTW",
+      "cooling_model": null,
+      "method_disclosed": true,
+      "reject_heat_mw": null,
+      "instream_heat_mw": null,
+      "receiving_water": "Ottawa River",
+      "receiving_water_source": "assumption",
+      "zone_id": "lake_erie_basin_general",
+      "zone_rule": "OAC 3745-1-35 Table 35-11 (G)",
+      "design_period": "Jun 16-30",
+      "daily_max_c": {
+        "value": 29.4,
+        "unit": "degC",
+        "source": "reference",
+        "citation": "OAC 3745-1-35 Table 35-11 (G) daily-maximum temperature criterion, Jun 16-30",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "ambient_c": {
+        "value": 24.0,
+        "unit": "degC",
+        "source": "connector",
+        "citation": "peak reported daily-maximum in-stream temperature, EPA ECHO DMR OH0026069 outfall 901 (Downstream Monitoring), 2024-05-01..2024-10-31 — the receiving water's own monitored temperature. It is a permit-required station DOWNSTREAM of that plant's own outfall, so it is a measured in-stream temperature, not an undisturbed upstream background",
+        "confidence": "medium",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "headroom_c": 5.4,
+      "discharge_flow": null,
+      "flow_screens": [],
+      "ris_checks": [],
+      "scenarios": [],
+      "dmr": {
+        "npdes_id": "OH0095346",
+        "permit_name": "SUPERIOR FORGE & STEEL CORPORATION",
+        "window": "2024-05-01..2024-10-31",
+        "outfall": null,
+        "monitoring_location": null,
+        "parameter_code": null,
+        "reported_unit": null,
+        "n_obs": 0,
+        "effluent_c": null,
+        "mean_monthly_avg_c": null,
+        "flow": null,
+        "permitted_limit_c": null,
+        "permitted_limit_outfall": null,
+        "limit_seasonal": false,
+        "monitor_only": true,
+        "reported_exceedances": 0,
+        "over_criterion": null,
+        "over_permitted_limit": null,
+        "instream_c": null,
+        "instream_station": null,
+        "note": "NPDES OH0095346 reports no effluent temperature in 2024-05-01..2024-10-31 — a cited absence (the permit is not thermally monitored at an effluent outfall in this window), never read as 'no thermal discharge'."
+      },
+      "calibration": null,
+      "blowdown_exempt": null,
+      "blowdown_exempt_note": null,
+      "flag": "uncharacterized",
+      "detail": "SUPERIOR FORGE & STEEL CORPORATION (NPDES OH0095346): no effluent temperature reported in 2024-05-01..2024-10-31 — thermal load uncharacterized [uncharacterized]."
+    },
+    {
+      "facility": "EOLM LIMA ALLEN COUNTY LANDFILL INC",
+      "facility_key": "OH0146552",
+      "kind": "permitted_discharger",
+      "npdes_id": "OH0146552",
+      "facility_type": "NON-POTW",
+      "cooling_model": null,
+      "method_disclosed": true,
+      "reject_heat_mw": null,
+      "instream_heat_mw": null,
+      "receiving_water": "Ottawa River",
+      "receiving_water_source": "assumption",
+      "zone_id": "lake_erie_basin_general",
+      "zone_rule": "OAC 3745-1-35 Table 35-11 (G)",
+      "design_period": "Jun 16-30",
+      "daily_max_c": {
+        "value": 29.4,
+        "unit": "degC",
+        "source": "reference",
+        "citation": "OAC 3745-1-35 Table 35-11 (G) daily-maximum temperature criterion, Jun 16-30",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "ambient_c": {
+        "value": 24.0,
+        "unit": "degC",
+        "source": "connector",
+        "citation": "peak reported daily-maximum in-stream temperature, EPA ECHO DMR OH0026069 outfall 901 (Downstream Monitoring), 2024-05-01..2024-10-31 — the receiving water's own monitored temperature. It is a permit-required station DOWNSTREAM of that plant's own outfall, so it is a measured in-stream temperature, not an undisturbed upstream background",
+        "confidence": "medium",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "headroom_c": 5.4,
+      "discharge_flow": null,
+      "flow_screens": [],
+      "ris_checks": [],
+      "scenarios": [],
+      "dmr": {
+        "npdes_id": "OH0146552",
+        "permit_name": "EOLM LIMA ALLEN COUNTY LANDFILL INC",
+        "window": "2024-05-01..2024-10-31",
+        "outfall": null,
+        "monitoring_location": null,
+        "parameter_code": null,
+        "reported_unit": null,
+        "n_obs": 0,
+        "effluent_c": null,
+        "mean_monthly_avg_c": null,
+        "flow": null,
+        "permitted_limit_c": null,
+        "permitted_limit_outfall": null,
+        "limit_seasonal": false,
+        "monitor_only": true,
+        "reported_exceedances": 0,
+        "over_criterion": null,
+        "over_permitted_limit": null,
+        "instream_c": null,
+        "instream_station": null,
+        "note": "NPDES OH0146552 reports no effluent temperature in 2024-05-01..2024-10-31 — a cited absence (the permit is not thermally monitored at an effluent outfall in this window), never read as 'no thermal discharge'."
+      },
+      "calibration": null,
+      "blowdown_exempt": null,
+      "blowdown_exempt_note": null,
+      "flag": "uncharacterized",
+      "detail": "EOLM LIMA ALLEN COUNTY LANDFILL INC (NPDES OH0146552): no effluent temperature reported in 2024-05-01..2024-10-31 — thermal load uncharacterized [uncharacterized]."
+    },
+    {
+      "facility": "JOINT SYSTEMS MANUFACTURING CENTER",
+      "facility_key": "OHGC02549",
+      "kind": "permitted_discharger",
+      "npdes_id": "OHGC02549",
+      "facility_type": "NON-POTW",
+      "cooling_model": null,
+      "method_disclosed": true,
+      "reject_heat_mw": null,
+      "instream_heat_mw": null,
+      "receiving_water": "Ottawa River",
+      "receiving_water_source": "assumption",
+      "zone_id": "lake_erie_basin_general",
+      "zone_rule": "OAC 3745-1-35 Table 35-11 (G)",
+      "design_period": "Jun 16-30",
+      "daily_max_c": {
+        "value": 29.4,
+        "unit": "degC",
+        "source": "reference",
+        "citation": "OAC 3745-1-35 Table 35-11 (G) daily-maximum temperature criterion, Jun 16-30",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "ambient_c": {
+        "value": 24.0,
+        "unit": "degC",
+        "source": "connector",
+        "citation": "peak reported daily-maximum in-stream temperature, EPA ECHO DMR OH0026069 outfall 901 (Downstream Monitoring), 2024-05-01..2024-10-31 — the receiving water's own monitored temperature. It is a permit-required station DOWNSTREAM of that plant's own outfall, so it is a measured in-stream temperature, not an undisturbed upstream background",
+        "confidence": "medium",
+        "asof": "2024-10-31",
+        "low": null,
+        "high": null
+      },
+      "headroom_c": 5.4,
+      "discharge_flow": null,
+      "flow_screens": [],
+      "ris_checks": [],
+      "scenarios": [],
+      "dmr": {
+        "npdes_id": "OHGC02549",
+        "permit_name": "JOINT SYSTEMS MANUFACTURING CENTER",
+        "window": "2024-05-01..2024-10-31",
+        "outfall": null,
+        "monitoring_location": null,
+        "parameter_code": null,
+        "reported_unit": null,
+        "n_obs": 0,
+        "effluent_c": null,
+        "mean_monthly_avg_c": null,
+        "flow": null,
+        "permitted_limit_c": null,
+        "permitted_limit_outfall": null,
+        "limit_seasonal": false,
+        "monitor_only": true,
+        "reported_exceedances": 0,
+        "over_criterion": null,
+        "over_permitted_limit": null,
+        "instream_c": null,
+        "instream_station": null,
+        "note": "NPDES OHGC02549 reports no effluent temperature in 2024-05-01..2024-10-31 — a cited absence (the permit is not thermally monitored at an effluent outfall in this window), never read as 'no thermal discharge'."
+      },
+      "calibration": null,
+      "blowdown_exempt": null,
+      "blowdown_exempt_note": null,
+      "flag": "uncharacterized",
+      "detail": "JOINT SYSTEMS MANUFACTURING CENTER (NPDES OHGC02549): no effluent temperature reported in 2024-05-01..2024-10-31 — thermal load uncharacterized [uncharacterized]."
+    }
+  ]
+}

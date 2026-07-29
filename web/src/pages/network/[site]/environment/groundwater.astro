@@ -60,6 +60,7 @@ const VERDICT: Record<string, string> = {
     <nav class="topic-switch" aria-label="Hydrology topics">
       <a href={withSite("/environment/hydrology")}>← Surface water balance</a>
       <span class="topic-current">Groundwater</span>
+      {hasFeed("thermal") && <a href={withSite("/environment/thermal")}>Thermal · §316(a)</a>}
     </nav>
 
     <h1>Groundwater — the area well concerns</h1>

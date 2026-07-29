@@ -1,0 +1,616 @@
+---
+import { selectableSitePaths } from "@watermark/core/sites";
+export const getStaticPaths = selectableSitePaths;
+/**
+ * Thermal discharge — the receiving water's heat budget and CWA §316(a) (#1719, epic #1715
+ * Phase 4). The **third cooling axis**: the water-balance page carries cooling VOLUME and the
+ * toxics report carries discharge CHEMISTRY; this page carries the discharge's HEAT.
+ *
+ * The page's whole discipline is the `kind` split the screen never conflates — a `data_center`
+ * row's heat load is MODELLED from the disclosed IT load (an inference about a facility that is
+ * not yet discharging), a `permitted_discharger` row's is the permittee's own reported effluent
+ * temperature × flow (a measurement). They render in separate sections, tagged separately, and
+ * the modelled section carries the derived-vs-observed calibration that grades it against the
+ * corridor's record. Feed-gated (`thermal`), so a site without a screen degrades to the stub note.
+ */
+import Base from "~/layouts/Base.astro";
+import BulletChart from "~/components/charts/BulletChart.astro";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import FigureStat from "~/components/FigureStat.astro";
+import type { ProvenancedValue } from "@watermark/core/feeds";
+import type { FigureStatData } from "@watermark/core/viz";
+import { withSite } from "@watermark/core/site";
+import { fmtRanged } from "@watermark/core/format";
+import { CHRONIC_FLOW_LABEL, buildThermal, flowAt, warmestMixedC } from "@watermark/core/thermal";
+
+// Every derivation lives in `@watermark/core/thermal` (and is unit-tested there); this file is the
+// render. `null` for a site whose bundle carries no screen — it never borrows the reference site's.
+const t = buildThermal();
+const meta = t?.meta ?? null;
+// The lead paragraph renders before the feed gate, so it needs a river name that reads generically
+// rather than naming another site's water.
+const river = t?.river ?? "the receiving water";
+
+const fmt = (v: ProvenancedValue): string => fmtRanged(v, 1);
+const degC = (n: number | null | undefined): string => (n == null ? "—" : `${n.toFixed(1)} °C`);
+
+const headStats: FigureStatData[] = [];
+if (t && t.criterionC != null) {
+  headStats.push({
+    label: "Ohio daily-max criterion",
+    value: t.criterionC.toFixed(1),
+    unit: "°C",
+    evidence: "verified",
+    basis: "grounded",
+    sub: meta?.zone_rule ?? undefined,
+  });
+}
+if (t && t.ambientC != null) {
+  headStats.push({
+    label: "Design ambient",
+    value: t.ambientC.toFixed(1),
+    unit: "°C",
+    evidence: t.ambientGrounded ? "verified" : "inference",
+    basis: t.ambientGrounded ? "grounded" : "modeled",
+    sub: meta?.observed_instream_station ?? meta?.ambient_source ?? undefined,
+  });
+}
+if (t && t.headroomC != null) {
+  headStats.push({
+    label: "Temperature headroom",
+    value: t.headroomC.toFixed(1),
+    unit: "°C",
+    evidence: "inference",
+    basis: "modeled",
+    sub: "criterion − ambient",
+    warn: t.headroomC <= 0,
+  });
+}
+if (t && t.capacityMw != null) {
+  headStats.push({
+    label: `Thermal capacity at ${CHRONIC_FLOW_LABEL}`,
+    value: t.capacityMw.toFixed(2),
+    unit: "MW",
+    evidence: "inference",
+    basis: "modeled",
+    sub: `ρ·cp·Q·headroom · ${t.designFlowCfs ?? "—"} cfs`,
+  });
+}
+
+// The comparison chart: every screened facility's fully-mixed temperature at the chronic design
+// flow, against the criterion as the red limit marker. The ambient is the floor the rises start from.
+const bulletRows = [
+  ...(t?.ambientC != null
+    ? [
+        {
+          label: `${river} ambient (design)`,
+          value: t.ambientC,
+          evidence: (t.ambientGrounded ? "verified" : "inference") as "verified" | "inference",
+          evidenceNote: meta?.observed_instream_station ?? meta?.ambient_source ?? undefined,
+        },
+      ]
+    : []),
+  ...(t?.mixedRows ?? []).map((r) => ({
+    label: `${r.label} — mixed at ${CHRONIC_FLOW_LABEL}`,
+    value: r.mixedC,
+    // A modelled row's rise is amber ([inference]); a permittee's reported load is its own record.
+    fill: r.modelled ? "#9a6a14" : undefined,
+    evidence: (r.modelled ? "inference" : "verified") as "verified" | "inference",
+    evidenceNote: r.modelled ? "modeled from the disclosed IT load" : "ECHO DMR reported record",
+  })),
+];
+const showBullet = t?.criterionC != null && bulletRows.length > 1;
+// A modelled facility whose whole condenser rejection is off the liquid-water scale has no bar of
+// its own — say so on the chart rather than letting the biggest load read as simply absent.
+const offScale = t?.unbounded ?? [];
+
+const SCENARIO_LABELS: Record<string, string> = {
+  conservative_bound: "Conservative bound",
+  once_through: "Once-through",
+  evaporative_blowdown: "Evaporative blowdown",
+};
+const VERDICT_LABELS: Record<string, string> = {
+  conservative: "Screen runs conservative",
+  consistent: "Consistent with the record",
+  understated: "Screen runs cooler than the record",
+  unvalidated: "No observed analog on the reach",
+};
+// The partitions span two orders of magnitude, so a small share must not round to a flat "1%" —
+// the whole point of showing them together is that the smallest one still clears the criterion.
+const pctOf = (f: number | null | undefined): string =>
+  f == null ? "—" : f < 0.1 ? `${(f * 100).toFixed(2)}%` : `${Math.round(f * 100)}%`;
+---
+
+<Base title="Thermal discharge" section="environment">
+  <article class="prose">
+    <nav class="topic-switch" aria-label="Hydrology topics">
+      <a href={withSite("/environment/hydrology")}>← Surface water balance</a>
+      <a href={withSite("/environment/groundwater")}>Groundwater</a>
+      <span class="topic-current">Thermal · §316(a)</span>
+    </nav>
+
+    <h1>Thermal discharge — the river's heat budget</h1>
+    <p class="section-lead">
+      Cooling water leaves a plant <em>warm</em>. The water-balance page asks how much water a
+      campus takes and the toxics report asks what its discharge carries; this page asks the third
+      question — <strong>how much heat</strong> the {river} can absorb before it breaches Ohio's
+      numeric temperature standard, and who is already spending that budget. Under
+      <strong>CWA §316(a)</strong>, a discharger whose thermal load is more stringent than
+      necessary may seek alternative limits by demonstrating a <em>balanced indigenous
+      community</em> of fish and wildlife in the receiving water — which is why the biological
+      tolerances below sit alongside the temperature numbers.
+    </p>
+
+    {
+      t && meta && (
+        <Fragment>
+          <div class="fs-grid">
+            {headStats.map((st) => (
+              <FigureStat stat={st} size="lg" />
+            ))}
+          </div>
+          <p class="card-meta">
+            Ohio sets its numeric temperature criteria by <strong>geographic zone</strong>, not by
+            aquatic-life-use column — {river} sits in <code>{meta.zone_id}</code> ({meta.zone_rule}),
+            whose peak-summer daily maximum falls in the <strong>{meta.design_period}</strong> half-month
+            period. The criterion is <EvidenceTag kind="reference" /> (the rule text); the design ambient
+            is {t.ambientGrounded ? (
+              <Fragment>
+                <EvidenceTag kind="verified" /> — the corridor's own permit-required in-stream station
+                ({meta.observed_instream_station}), a measured receiving-water temperature. It sits
+                downstream of that plant's own outfall, so it is not an undisturbed upstream background;
+                the zone's seasonal-average criterion ({degC(meta.reference_ambient_c)}) is what the
+                screen falls back to without it.
+              </Fragment>
+            ) : (
+              <Fragment>
+                <EvidenceTag kind="reference" /> — the zone's seasonal-average criterion standing in as a
+                stated design ambient, because no station on this reach reports one.
+              </Fragment>
+            )}
+          </p>
+
+          <div class="framing-panel">
+            <p class="framing-title">What this screen is — and is not</p>
+            <p class="card-meta">
+              Fully-mixed, at the cited design low flow, order-of-magnitude: no CORMIX plume model, no
+              mixing-zone credit, no decay. A mixed temperature over the daily maximum flags the need
+              for a <strong>permit-level thermal / §316(a) analysis</strong> — it is
+              <strong> not</strong> a finding of violation. The thermal assimilative capacity is
+              ρ·cp·Q·(criterion − ambient), so at a 0 cfs design flow (the {river}'s 1Q10) or an ambient
+              already at the criterion the capacity is <strong>zero</strong> and any heat load exceeds by
+              construction.
+            </p>
+          </div>
+
+          {showBullet && t && t.criterionC != null && (
+            <BulletChart
+              kicker={`Bullet · fully-mixed temperature vs the criterion`}
+              title={`At the ${CHRONIC_FLOW_LABEL} design low flow, the ${river} has ${t.headroomC ?? "—"} °C of headroom to spend`}
+              scaleLabel="scale · degrees Celsius"
+              unit="°C"
+              marker={t.criterionC}
+              rows={bulletRows}
+              note={`The red mark is Ohio's ${t.criterionC.toFixed(1)} °C daily-maximum criterion for this zone and season. Each bar is that discharge's fully-mixed temperature at the cited ${CHRONIC_FLOW_LABEL} — the permittees' bars from their own reported effluent temperature and flow, the modeled campus bars from its disclosed IT load, one per heat-partition scenario.`}
+            />
+          )}
+
+          {offScale.length > 0 && (
+            <p class="card-meta">
+              <strong>One load has no bar, and that is the finding.</strong>{" "}
+              {`${offScale.map((s) => s.facility).join(", ")}${offScale.length === 1 ? "'s" : "'"}`}{" "}
+              whole condenser rejection, fully mixed into a{" "}
+              {t?.designFlowCfs ?? "—"} cfs design flow, would raise the reach past the range water
+              stays liquid in — so the screen reports no temperature at all rather than a literal
+              rise of hundreds of degrees. The magnitude is carried as a ratio instead: see the
+              modeled section below. Its bars above are its <em>partitions</em> — how much of that
+              rejection each cooling archetype actually sends to the water.
+            </p>
+          )}
+        </Fragment>
+      )
+    }
+
+    {
+      /* The corridor's OWN reported record — measurements, not model output. This section leads
+         because it is the strongest evidence on the page: permittees reporting their own numbers. */
+      t && meta && t.reported.length > 0 && (
+        <Fragment>
+          <h2>What the corridor already reports</h2>
+          <p class="card-meta">
+            Before modeling anything, read the record. Of the{" "}
+            <strong>{meta.corridor_permits ?? t.observed.length}</strong> NPDES permits sharing this
+            receiving water, <strong>{meta.corridor_permits_with_thermal_record ?? t.reported.length}</strong>{" "}
+            report an effluent temperature to EPA ECHO over the {meta.dmr_window} warm season. Every
+            figure below is the permittee's own submission, reduced to °C by its{" "}
+            <strong>reported</strong> unit — ICIS carries temperature under parameter 00010 (°C){" "}
+            <em>and</em> 00011 (°F), and this corridor uses both. <EvidenceTag kind="verified" />
+          </p>
+          <div class="table-scroll">
+            <table class="thermal-table">
+              <thead>
+                <tr>
+                  <th>Permit</th>
+                  <th>Outfall</th>
+                  <th>Peak daily-max</th>
+                  <th>Flow</th>
+                  <th>Numeric limit</th>
+                  <th>Mixed at 7Q10</th>
+                </tr>
+              </thead>
+              <tbody>
+                {t.reported.map((s) => {
+                  const d = s.dmr!;
+                  const mixed = flowAt(s)?.mixed_c?.value ?? null;
+                  return (
+                    <tr class={s.flag === "critical" ? "is-critical" : undefined}>
+                      <td>
+                        {d.permit_name ?? s.facility}
+                        <span class="cell-sub">{d.npdes_id}</span>
+                      </td>
+                      <td>
+                        {d.outfall ?? "—"}
+                        <span class="cell-sub">
+                          {d.parameter_code ? `param ${d.parameter_code}` : ""}
+                          {d.n_obs ? ` · ${d.n_obs} obs` : ""}
+                        </span>
+                      </td>
+                      <td class={d.over_criterion ? "is-over" : undefined}>
+                        {degC(d.effluent_c?.value)}
+                      </td>
+                      <td>{d.flow?.value != null ? `${d.flow.value} MGD` : "—"}</td>
+                      <td>
+                        {d.monitor_only ? (
+                          <span class="monitor-only">monitor only</span>
+                        ) : (
+                          degC(d.permitted_limit_c?.value)
+                        )}
+                        {d.permitted_limit_c?.value != null && d.permitted_limit_outfall && (
+                          <span class="cell-sub">
+                            {degC(d.permitted_limit_c.value)} on outfall {d.permitted_limit_outfall}
+                          </span>
+                        )}
+                      </td>
+                      <td class={flowAt(s)?.mixed_over_criterion ? "is-over" : undefined}>
+                        {degC(mixed)}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          {meta.permits_over_daily_max_criterion.length > 0 && (
+            <p class="card-meta">
+              <strong>{meta.permits_over_daily_max_criterion.join(", ")}</strong> report a peak
+              daily-maximum effluent temperature <strong>at or over</strong> the{" "}
+              {degC(meta.daily_max_c)} criterion — from outfalls their permits require them to
+              <em> measure</em> but do not <em>cap</em>.
+            </p>
+          )}
+          {meta.monitor_only_permits.length > 0 && (
+            <p class="card-meta">
+              <strong>Monitor-only is the common case here.</strong>{" "}
+              {meta.monitor_only_permits.join(", ")} monitor effluent temperature under a permit that
+              carries no numeric thermal limit on the discharging outfall. That is a{" "}
+              <strong>cited absence</strong>, not a clean bill of health — and a permit's ceiling and
+              its discharging outfall are often different outfalls, so a limit is reported here for
+              context and only ever compared within the outfall it binds. An exceedance count, where
+              one appears, is ECHO's own determination and is never computed by reading a value
+              against a limit.
+            </p>
+          )}
+        </Fragment>
+      )
+    }
+
+    {
+      (t?.modelled ?? []).map((s) => {
+        const cal = s.calibration ?? null;
+        const chronic = flowAt(s);
+        // The warmest temperature this facility resolves at the chronic flow — its own, else its
+        // hottest partition. The RIS table is read against it (the feed's own checks sit at the
+        // binding 1Q10, a dry channel, where everything is crossed by construction).
+        const warmest = warmestMixedC(s);
+        return (
+          <Fragment>
+            <h2>The modeled campus heat load — {s.facility}</h2>
+            <p class="card-meta">
+              The campus holds no discharge permit, so there is nothing of its own to read. This row
+              is the <strong>condenser heat rejection</strong> derived from the disclosed IT load
+              ({fmt(s.reject_heat_mw ?? { value: null })}) — an{" "}
+              <EvidenceTag kind="inference" /> about a facility that is not yet discharging, screened
+              on exactly the same reach, design flows, and criterion as the measured rows above, and
+              never conflated with them.
+            </p>
+            <p class="card-meta">{s.detail}</p>
+
+            {s.scenarios.length > 0 && (
+              <Fragment>
+                <h3>Where the heat goes</h3>
+                <p class="card-meta">
+                  The scenarios span the heat <strong>partition</strong>, not uncertainty in the
+                  load: <em>once-through</em> sends the whole rejection to the stream by definition,
+                  <em> evaporative blowdown</em> sends only the blowdown's sensible heat (the rest
+                  leaves as latent heat to the air), and the <em>conservative bound</em> is the
+                  ceiling. They sit two orders of magnitude apart — and the point of running all
+                  three is that they <strong>all</strong> exhaust the reach's capacity.
+                </p>
+                <div class="table-scroll">
+                  <table class="thermal-table">
+                    <thead>
+                      <tr>
+                        <th>Partition</th>
+                        <th>Reaches the stream</th>
+                        <th>In-stream heat</th>
+                        <th>Effluent</th>
+                        <th>Mixed at 7Q10</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {s.scenarios.map((sc) => {
+                        const f = flowAt(sc);
+                        return (
+                          <tr class={f?.mixed_over_criterion ? "is-critical" : undefined}>
+                            <td>
+                              {SCENARIO_LABELS[sc.scenario] ?? sc.scenario}
+                              <span class="cell-sub">{sc.flag}</span>
+                            </td>
+                            <td>{pctOf(sc.instream_fraction)}</td>
+                            <td>
+                              {sc.instream_heat_mw?.value != null
+                                ? `${sc.instream_heat_mw.value} MW`
+                                : "—"}
+                            </td>
+                            <td>{degC(sc.effluent_c?.value)}</td>
+                            <td class={f?.mixed_over_criterion ? "is-over" : undefined}>
+                              {degC(f?.mixed_c?.value)}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                <p class="card-meta">
+                  Even the smallest partition — the tower blowdown at{" "}
+                  {pctOf(
+                    s.scenarios.find((sc) => sc.scenario === "evaporative_blowdown")
+                      ?.instream_fraction,
+                  )}{" "}
+                  of the rejection — clears the criterion at the design low flow. That robustness is
+                  the claim, and it is why the headline does not rest on the conservative bound alone.
+                </p>
+              </Fragment>
+            )}
+
+            {cal && (
+              <Fragment>
+                <h3>Grading the model against the record</h3>
+                <div class={`screen-verdict verdict-${cal.verdict}`}>
+                  <span class="verdict-tag">{VERDICT_LABELS[cal.verdict] ?? cal.verdict}</span>
+                  <p>{cal.note}</p>
+                </div>
+                <p class="card-meta">
+                  The verdict is about the <strong>model</strong>, not the facility. The derived
+                  once-through effluent ({degC(cal.modeled_effluent_c)}) is read against the warmest
+                  effluent temperature actually reported on this reach ({degC(cal.observed_effluent_c)}
+                  {cal.observed_source ? `, ${cal.observed_source}` : ""}) — an{" "}
+                  <EvidenceTag kind="inference" /> by analogy, never this facility's own figure.
+                  <em> Conservative</em> means the screen runs hotter than the record, which is the
+                  defensible direction; <em>understated</em> would mean the screen needs revisiting.
+                </p>
+              </Fragment>
+            )}
+
+            {s.blowdown_exempt != null && (
+              <p class="card-meta">
+                <strong>The closed-cycle off-ramp.</strong> {s.blowdown_exempt_note}
+              </p>
+            )}
+
+            {s.ris_checks.length > 0 && chronic && (
+              <Fragment>
+                <h3>The balanced indigenous community</h3>
+                <p class="card-meta">
+                  A §316(a) demonstration turns on whether the receiving water still supports a
+                  balanced indigenous community. These are the Great Lakes representative-important-species
+                  thermal limits the screened mixed temperature is read against — federal guidance
+                  (EPA-833-F-23-007 Table 3-5), <EvidenceTag kind="reference" />, not law.
+                </p>
+                <p class="card-meta">
+                  The screen evaluates them at this reach's <strong>binding</strong> design flow,
+                  which here is the <strong>1Q10 = 0 cfs</strong> — a dry channel, where every limit
+                  is crossed by construction and the honest answer is no temperature at all rather
+                  than a fabricated one. So the <em>Crossed</em> column below is read at the
+                  warmest temperature this facility does resolve at the {CHRONIC_FLOW_LABEL}
+                  {warmest == null
+                    ? "."
+                    : s.scenarios.length > 0
+                      ? ` — ${degC(warmest)}, its hottest heat partition.`
+                      : ` — ${degC(warmest)}.`}
+                </p>
+                <div class="table-scroll">
+                  <table class="thermal-table ris-table">
+                    <thead>
+                      <tr>
+                        <th>Species</th>
+                        <th>Life stage</th>
+                        <th>Limit</th>
+                        <th>Metric</th>
+                        <th>{warmest != null ? `Crossed at ${degC(warmest)}` : "Crossed"}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {s.ris_checks.map((r) => {
+                        // The feed's own `exceeded` where it resolves; otherwise the same
+                        // comparison at the warmest temperature this facility does resolve.
+                        const crossed = r.exceeded ?? (warmest != null ? warmest >= r.limit_c : null);
+                        return (
+                          <tr>
+                            <td>
+                              {r.common_name}
+                              <span class="cell-sub">{r.scientific_name}</span>
+                            </td>
+                            <td>{r.life_stage}</td>
+                            <td>{degC(r.limit_c)}</td>
+                            <td>{r.metric === "acute_upper" ? "acute upper" : "optimal upper"}</td>
+                            <td class={crossed ? "is-over" : undefined}>
+                              {crossed == null ? "—" : crossed ? "yes" : "no"}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </Fragment>
+            )}
+          </Fragment>
+        );
+      })
+    }
+
+    {
+      meta && meta.caveats.length > 0 && (
+        <Fragment>
+          <h2>How to read these numbers</h2>
+          <ul class="caveats">
+            {meta.caveats.map((c) => (
+              <li>{c}</li>
+            ))}
+          </ul>
+        </Fragment>
+      )
+    }
+
+    {
+      t && (
+        <p class="card-meta cross-link">
+          The volume side of the same cooling load is on the{" "}
+          <a href={withSite("/environment/hydrology")}>water balance</a> page; the chemistry side is
+          in <a href={withSite("/reports/toxics-and-the-corridor")}>toxics and the corridor</a>.
+          Source: <code>{meta?.source}</code>
+        </p>
+      )
+    }
+
+    {!t && <p class="stub-note">No thermal-discharge screen has been modeled for this site yet.</p>}
+  </article>
+</Base>
+
+<style>
+  .topic-switch {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .topic-current {
+    color: var(--bosc-ink);
+    font-weight: 700;
+    border-bottom: 2px solid var(--forest, #1f6f4a);
+  }
+
+  /* The "what this screen is / is not" framing — a documentary panel, square + hairline. */
+  .framing-panel {
+    border: 1px solid var(--bosc-rule);
+    background: #efece2;
+    padding: 14px 18px;
+    margin: 16px 0;
+  }
+  .framing-title {
+    font-weight: 700;
+    color: var(--bosc-ink);
+    margin: 0 0 4px;
+  }
+  .framing-panel .card-meta {
+    margin: 0;
+  }
+
+  /* Wide tables scroll inside their own box rather than the page body. */
+  .table-scroll {
+    overflow-x: auto;
+  }
+  .thermal-table {
+    font-size: 0.85rem;
+  }
+  .thermal-table td:nth-child(n + 3) {
+    font-family: var(--font-mono);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .ris-table td:nth-child(2) {
+    font-family: inherit;
+    text-align: left;
+  }
+  .cell-sub {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--bosc-muted);
+  }
+  /* Over the criterion is a breach of a constraint — the one place oxblood belongs. The evidence
+     palette stays reserved for evidence register, so an exceedance is data-colored, not amber. */
+  .thermal-table td.is-over {
+    color: var(--oxblood, #7b2d26);
+    font-weight: 700;
+  }
+  .thermal-table tr.is-critical td:first-child {
+    border-left: 3px solid var(--oxblood, #7b2d26);
+    padding-left: 9px;
+  }
+  .monitor-only {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--bosc-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* The calibration verdict box — the same documentary treatment the dewatering discharge screen
+     uses, since both grade a model against a record rather than announcing a result. */
+  .screen-verdict {
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--ev-inference-fg);
+    background: #efece2;
+    padding: 12px 16px;
+    margin: 14px 0;
+  }
+  .verdict-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--ev-inference-fg);
+    margin-bottom: 6px;
+  }
+  .screen-verdict p {
+    margin: 0;
+    font-size: 0.88rem;
+  }
+
+  .caveats {
+    margin: 8px 0 0;
+    padding-left: 1.1rem;
+  }
+  .caveats li {
+    font-size: 0.8rem;
+    color: var(--bosc-muted);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .cross-link {
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 12px;
+    margin-top: 18px;
+  }
+</style>

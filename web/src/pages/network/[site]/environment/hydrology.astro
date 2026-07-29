@@ -11,6 +11,7 @@ import type {
   FacilityItem,
   ProvenancedValue,
   ScenarioResult,
+  ThermalScreenReport,
 } from "@watermark/core/feeds";
 import type { FigureStatData } from "@watermark/core/viz";
 import { withSite } from "@watermark/core/site";
@@ -85,6 +86,13 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
 // The groundwater thread (drawdown cone, documented dewatering, discharge screen) moved to its own
 // page (#well-drawdown) so each topic has room; link across when that page has content.
 const hasGroundwater = hasFeed("drawdown") || hasFeed("dewatering");
+
+// The third cooling axis (#1719): this page screens the cooling load's VOLUME against the low
+// flow; the thermal page screens the same load's HEAT against Ohio's temperature criterion. The
+// headline is pulled from the feed so the teaser can never drift from the screen it links to.
+const thermal = hasFeed("thermal") ? loadFeed<ThermalScreenReport>("thermal") : null;
+const thermalCritical = thermal?.meta.critical_count ?? 0;
+const thermalOverCriterion = thermal?.meta.permits_over_daily_max_criterion ?? [];
 ---
 
 <Base title="Hydrology" section="environment">
@@ -141,6 +149,32 @@ const hasGroundwater = hasFeed("drawdown") || hasFeed("dewatering");
           </p>
           <p class="card-meta">
             <a href={withSite("/environment/groundwater")}>Groundwater — the area well concerns →</a>
+          </p>
+        </div>
+      )
+    }
+
+    {
+      thermal && (
+        <div class="cross-link">
+          <p class="card-meta">
+            The screen above weighs the cooling load's <em>volume</em>. The same load also carries
+            <strong> heat</strong>: cooling water leaves a plant warm, and Ohio writes a numeric
+            temperature standard the {riverName} has only{" "}
+            {thermal.meta.daily_max_c != null && thermal.meta.ambient_c != null
+              ? `${(thermal.meta.daily_max_c - thermal.meta.ambient_c).toFixed(1)} °C`
+              : "a few degrees"}{" "}
+            of headroom against at design low flow. The thermal screen reads the modeled campus heat
+            load <em>and</em> the corridor's own reported effluent temperatures against it, framed as
+            <strong> CWA §316(a)</strong>
+            {thermalCritical > 0 ? ` — ${thermalCritical} of ${thermal.meta.facility_count} screened dischargers clear the criterion` : ""}
+            {thermalOverCriterion.length > 0
+              ? `, and ${thermalOverCriterion.length} permit${thermalOverCriterion.length === 1 ? "" : "s"} already report an effluent temperature over it`
+              : ""}
+            .
+          </p>
+          <p class="card-meta">
+            <a href={withSite("/environment/thermal")}>Thermal discharge — the river's heat budget →</a>
           </p>
         </div>
       )

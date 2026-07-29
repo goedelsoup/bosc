@@ -55,7 +55,17 @@ const STORY_KEYS = [...new Set(FILES.map((f) => `${f.site}/${f.codename}`))];
 // is the point: it keeps chapter authoring portable and free of ad-hoc one-off imports. The libs
 // now live in @watermark/core (Epic #1549, Phase 1 #1551); `~/lib/*` is still accepted for any
 // as-yet-unmigrated chapter.
-const ALLOWED_LIB = new Set(["site", "walk", "teardowns", "bundle", "dilution", "moneyFlow"]);
+const ALLOWED_LIB = new Set([
+  "site",
+  "walk",
+  "teardowns",
+  "bundle",
+  "dilution",
+  "moneyFlow",
+  // The heat side of the water chapter (#1719) — `dilution`'s peer: the same cooling load read
+  // against the receiving water's temperature criterion instead of its low flow.
+  "thermal",
+]);
 function isAllowedImport(spec: string): boolean {
   const lib = spec.match(/^(?:~\/lib|@watermark\/core)\/([A-Za-z0-9_]+)$/);
   if (lib) return ALLOWED_LIB.has(lib[1]);

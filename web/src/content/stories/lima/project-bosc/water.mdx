@@ -14,8 +14,12 @@ description: "A data center cools itself with water. Read what the receiving str
 import { NPDES_TEARDOWN } from "@watermark/core/teardowns";
 import DilutionScreen from "@watermark/viz/islands/DilutionScreen.tsx";
 import { buildDilution, dilutionMultiple } from "@watermark/core/dilution";
+import { buildThermal } from "@watermark/core/thermal";
 
 export const dilution = buildDilution();
+// The heat side of the same cooling load (#1719). `null` for a site with no committed screen, so
+// the beat below self-skips rather than asserting another river's temperature standard.
+export const thermal = buildThermal();
 export const fmtMult = (m) =>
   Number.isFinite(m) ? `${m >= 10 ? Math.round(m) : m.toFixed(1)}×` : "∞ (dry)";
 export const effluentCfs = dilution.discharge.wwtpCfs + dilution.discharge.campusFm2Cfs;
@@ -182,6 +186,52 @@ neither.
   </Prose>
 </Interactive>
 
+{/* Written as JSX, not markdown: children of a `{cond && …}` expression are NOT markdown-processed
+    in MDX, so `**bold**` inside this block would render as literal asterisks. */}
+{thermal && (
+<Interactive heading="The water also comes back warmer" label="The heat the water carries">
+  <Prose>
+  <p>
+    “The campus's waste heat leaves the site as water” is not a figure of speech. Read the same
+    sentence as a physics problem and it becomes the third question this chapter has to ask.
+    Volume is what the campus takes. Chemistry is what the blowdown carries. <strong>Heat</strong>{" "}
+    is the one nobody had a number for — and Ohio writes a numeric standard for it.
+  </p>
+  <p>
+    For the {thermal.river} in this zone and season, that standard is a daily maximum of{" "}
+    <strong>{thermal.meta.daily_max_c} °C</strong> ({thermal.meta.zone_rule}). The river's own
+    reported temperature — measured at a permit-required in-stream station on this reach — runs{" "}
+    <strong>{thermal.meta.ambient_c} °C</strong>. The whole heat budget is the difference:{" "}
+    <strong>{thermal.headroomC} °C</strong> of headroom, which at the drought flow Ohio permits at
+    works out to about <strong>{thermal.capacityMw} MW</strong> of heat the river can absorb before
+    it breaches the standard. A campus rejecting on the order of{" "}
+    {Math.round(thermal.modelled[0]?.reject_heat_mw?.value ?? 0)} MW of condenser heat does not fit
+    inside that budget under <em>any</em> of the three ways the heat could be partitioned — not even
+    the smallest, where only the tower blowdown reaches the water. <code>[inference]</code>, from
+    the disclosed IT load.
+  </p>
+  <p>
+    But the sharper finding is the one that needs no model at all. Of the permits already
+    discharging to this reach,{" "}
+    <strong>{thermal.meta.permits_over_daily_max_criterion.length}</strong> report effluent
+    temperatures <strong>at or over</strong> Ohio's criterion — their own submissions, in their own
+    filings. And they report them from outfalls their permits require them to <em>measure</em> but
+    never <em>cap</em>: not one of the{" "}
+    {thermal.meta.monitor_only_permits.length} permits reporting a temperature on this reach
+    ({thermal.meta.monitor_only_permits.join(", ")}) carries a numeric thermal limit on its
+    discharging outfall. That is a <strong>cited absence</strong>, not a clean bill of health.{" "}
+    <code>[verified]</code>, from the reported record.
+  </p>
+  <p>
+    None of this is a violation, and the screen does not say it is. It says the river's thermal
+    budget is already spent, that the record shows no one holding a limit against it, and that a
+    new heat load of this size is the kind of question the Clean Water Act answers with a{" "}
+    <strong>§316(a)</strong> demonstration — which nobody on this reach has been asked to make.
+  </p>
+  </Prose>
+</Interactive>
+)}
+
 <Interactive heading="It starts in a soybean field" label="The site and its headwaters">
   <Prose>
   All of it lands on ground that drains the wrong way for it. Of the **~340 acres** assembled
@@ -208,6 +258,7 @@ neither.
 <ChapterDoors
   doors={[
     { label: "Live hydrology dashboard", blurb: "The screen, re-run against the Ottawa's current USGS flow.", path: "/environment/hydrology" },
+    { label: "Thermal discharge · §316(a)", blurb: "The river's heat budget — the modeled campus heat load and the corridor's own reported effluent temperatures against Ohio's criterion.", path: "/environment/thermal" },
     { label: "Watershed map", blurb: "The WWTP outfalls and the streams they discharge to.", path: "/environment/map" },
     { label: "The hydrology write-up", blurb: "The full Tier-0 water balance and the assimilative-capacity screen.", href: "/docs/hydrology" },
     { label: "The sanitary build-out", blurb: "Resolution #679-24, the blowdown-treatment study, and the BOSC forcemains to the American Bath WWTP.", path: "/site/legal/" },

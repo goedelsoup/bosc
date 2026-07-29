@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
 # The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
 # the fresh-export assertions below pin it so a bump lands here in one place.
-_CV = "1.40.0"
+_CV = "1.41.0"
 # The per-site offline bundle (#727): the committed Lima bundle the frontend build reads
 # (`web/sites/<slug>/`, a full `watermark export` per registered site).
 FRONTEND_SAMPLE = REPO_ROOT / "web" / "sites" / "lima"
