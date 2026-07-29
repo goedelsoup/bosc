@@ -23,7 +23,11 @@ A new connector is a pure sync `fn(..., settings) -> pydantic` in that dir, with
 committed fixture under `tests/fixtures/hydrology/<connector>/`. External-data
 pulls land as committed reference datasets under `data/reference/<source>/` and
 are regenerable via a `watermark` subcommand (e.g. `watermark npdes` → the EPA ECHO Maumee
-NPDES inventory; columns are selected by ECHO **ObjectName**, never by index).
+NPDES inventory; columns are selected by ECHO **ObjectName**, never by index). A regenerated
+dataset is **never** hand-edited — the next pull reverts it. A reviewed, document-cited
+correction goes in a committed **overlay** the connector merges on every pull
+(`echo_curation.py` / `data/reference/echo/curation/`, #1698), and a correction that stops
+reconciling against upstream **refuses the write** instead of overriding it silently.
 
 The **public site** is built in two tiers. The Python data tier (`src/watermark/site/`)
 emits a typed **content bundle** — JSON feeds + a manifest with a `CONTRACT_VERSION`,

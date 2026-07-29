@@ -5,40 +5,40 @@ meta:
 huc_counts:
 - huc8: '04100003'
   name: St. Joseph
-  reported_count: 360
-  rows_pulled: 360
+  reported_count: 381
+  rows_pulled: 381
   potw_rows_pulled: 19
 - huc8: '04100004'
   name: St. Marys
-  reported_count: 275
-  rows_pulled: 275
+  reported_count: 314
+  rows_pulled: 314
   potw_rows_pulled: 14
 - huc8: '04100005'
   name: Upper Maumee
-  reported_count: 178
-  rows_pulled: 178
+  reported_count: 185
+  rows_pulled: 185
   potw_rows_pulled: 8
 - huc8: '04100006'
   name: Tiffin
-  reported_count: 45
-  rows_pulled: 45
+  reported_count: 71
+  rows_pulled: 71
   potw_rows_pulled: 19
 - huc8: '04100007'
   name: Auglaize
-  reported_count: 90
-  rows_pulled: 90
+  reported_count: 213
+  rows_pulled: 213
   potw_rows_pulled: 35
 - huc8: 04100008
   name: Blanchard
-  reported_count: 37
-  rows_pulled: 37
+  reported_count: 97
+  rows_pulled: 97
   potw_rows_pulled: 14
 - huc8: 04100009
   name: Lower Maumee
-  reported_count: 72
-  rows_pulled: 72
-  potw_rows_pulled: 20
+  reported_count: 401
+  rows_pulled: 401
+  potw_rows_pulled: 21
 totals:
-  raw: 1057
-  deduped: 1006
-  potw: 129
+  raw: 1662
+  deduped: 1579
+  potw: 130

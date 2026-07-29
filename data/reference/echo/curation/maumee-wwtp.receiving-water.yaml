@@ -1,0 +1,85 @@
+meta:
+  subject: Curated receiving-water corrections for the Maumee ECHO NPDES inventory
+  basin: maumee
+  rationale: >-
+    ECHO's CWPStateWaterBodyName is null for roughly 70% of the Ohio rows, including
+    load-bearing plants whose receiving water a primary document names outright. Each
+    correction below is re-applied by `watermark npdes --basin maumee` on every pull, so
+    refreshing the basin inventory never clobbers reviewed data (#1698). Corrections are
+    declared HERE and nowhere else — a hand edit inside the regenerated
+    `maumee-wwtp.*.yaml` is overwritten by the next pull, which is exactly the regression
+    this overlay exists to prevent. Nothing here is inferred: every entry carries the
+    document that names the receiving water, plus the ECHO value observed at review time,
+    and the pull refuses to write if ECHO has since moved off that value.
+
+corrections:
+  # ECHO carries no receiving water for the largest Lima-area POTW. The renewal permit's
+  # own cover page names it, so the field is corrected and `ottawa_discharge` follows.
+  - npdes_id: OH0026069
+    frs_registry_id: '110000760659'
+    facility: LIMA WWTP
+    huc8: '04100007'  # Auglaize
+    receiving_water: Ottawa River
+    echo_value: null
+    mode: field
+    issue: 1536
+    citation: >-
+      Ohio EPA NPDES permit 2PE00000*OD cover page — outfall 2PE00000001 to the Ottawa
+      River at River Mile 37.6 (data/documents/oepa/2PE00000.pdf;
+      data/extracted/oepa/2PE00000.npdes.yaml)
+    caveat: >-
+      receiving_water was null for OH0026069 (Lima WWTP) in ECHO; corrected to Ottawa
+      River (River Mile 37.6, outfall 2PE00000001) per Ohio EPA NPDES permit 2PE00000*OD
+      cover page (data/documents/oepa/2PE00000.pdf; data/extracted/oepa/2PE00000.npdes.yaml)
+      — the un-requested municipal custodian record, issue #1536. ottawa_discharge set true
+      accordingly. Re-applied on every pull from
+      reference/echo/curation/maumee-wwtp.receiving-water.yaml (#1698).
+
+  # Without this the Van Wert WWTP sits in no_receiving_water and is never screened, which
+  # is what hid the basin's most extreme effluent dominance (0.03:1) until #376.
+  - npdes_id: OH0027910
+    frs_registry_id: '110006645176'
+    facility: VAN WERT WWTP
+    huc8: '04100007'  # Auglaize
+    receiving_water: Town Creek
+    echo_value: null
+    mode: field
+    issue: 376
+    citation: >-
+      Ohio EPA NPDES fact sheet 2PD00006 (data/documents/oepa/van-wert/2PD00006.fs.pdf),
+      Table 12 — outfall 2PD00006001 at River Mile 13.87
+    caveat: >-
+      receiving_water is null for OH0027910 (Van Wert WWTP) in ECHO; corrected to Town
+      Creek per NPDES fact sheet 2PD00006 (data/documents/oepa/van-wert/2PD00006.fs.pdf),
+      Table 12 — outfall 2PD00006001 at River Mile 13.87. Re-applied on every pull from
+      reference/echo/curation/maumee-wwtp.receiving-water.yaml (#1698).
+
+  # `mode: caveat` preserves the reviewed decision from #379: this row's receiving_water
+  # keeps mirroring ECHO's CWPStateWaterBodyName verbatim, and the correction is recorded
+  # beside it (receiving_water_documented) rather than written into the field. The
+  # correction's source is ECHO's own detailed facility report, not an independent
+  # regulatory document, and the facility carries no design flow or mass limit, so nothing
+  # downstream screens on it. Flipping this to `mode: field` is a one-word reviewed edit.
+  - npdes_id: OH0135569
+    frs_registry_id: '110008587421'
+    facility: CITY OF VAN WERT
+    huc8: '04100007'  # Auglaize
+    receiving_water: LOWER TOWN CREEK
+    echo_value: null
+    mode: caveat
+    issue: 379
+    citation: >-
+      EPA ECHO detailed facility report for OH0135569 — WBD12 041000070804, outfall 001
+      monitoring point 40.847601/-84.574769 (data/extracted/van-wert/ONBOARDING.md)
+    caveat: >-
+      receiving_water is null in ECHO for OH0135569 (CITY OF VAN WERT, NON-POTW) and is
+      left null (the field mirrors ECHO's CWPStateWaterBodyName verbatim; the correction
+      rides on receiving_water_documented instead). Per the ECHO detailed facility report
+      the receiving water is Lower Town Creek (WBD12 041000070804, outfall 001 monitoring
+      point 40.847601/-84.574769). This is the City of Van Wert WATER TREATMENT PLANT
+      (SIC 4941 Water Supply, 1260 S Washington St) discharging filter/softening residuals
+      — NOT the WWTP (OH0027910) and NOT an MS4. Flow is monitor-only (no numeric effluent
+      limit; no design flow); pH is the only numeric limit (6.5-11 SU). Same Town Creek
+      reach as OH0027910 but ~2.5 mi south. Excluded from the effluent-dominance basin
+      screen (no design flow, no mass limit). See data/extracted/van-wert/ONBOARDING.md
+      (#379).

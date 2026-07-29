@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-28T21:17:42.000711+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-07-29T00:29:54.392806+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **130** catalogued datasets — **129** reviewed.
-- **130** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **131** catalogued datasets — **130** reviewed.
+- **131** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -54,7 +54,7 @@ Snapshot reconciled: **2026-07-28T21:17:42.000711+00:00**. Regenerate with `wate
 | reference | allen-gis | 1 | 1 | 0 | 0 |
 | reference | compute | 1 | 1 | 0 | 0 |
 | reference | datacenter-industry | 1 | 1 | 0 | 0 |
-| reference | echo | 3 | 3 | 0 | 0 |
+| reference | echo | 4 | 4 | 0 | 0 |
 | reference | economics | 1 | 1 | 0 | 0 |
 | reference | eia | 4 | 4 | 0 | 0 |
 | reference | federal | 1 | 1 | 0 | 0 |
@@ -89,27 +89,27 @@ Snapshot reconciled: **2026-07-28T21:17:42.000711+00:00**. Regenerate with `wate
 | site | relevant | present | missing |
 | --- | --- | --- | --- |
 | bowling-green | 48 | 42 | 6 |
-| bryan | 50 | 42 | 8 |
+| bryan | 51 | 43 | 8 |
 | columbus | 48 | 41 | 7 |
 | coshocton | 48 | 34 | 14 |
-| defiance | 50 | 42 | 8 |
-| findlay | 52 | 46 | 6 |
-| fort-wayne | 41 | 33 | 8 |
+| defiance | 51 | 43 | 8 |
+| findlay | 53 | 47 | 6 |
+| fort-wayne | 42 | 34 | 8 |
 | greenville | 49 | 41 | 8 |
 | hamilton-middletown | 50 | 43 | 7 |
-| lima | 101 | 97 | 4 |
+| lima | 102 | 98 | 4 |
 | mansfield | 49 | 42 | 7 |
 | new-albany | 48 | 41 | 7 |
-| ottawa | 50 | 42 | 8 |
+| ottawa | 51 | 43 | 8 |
 | piketon | 48 | 34 | 14 |
 | portsmouth | 49 | 35 | 14 |
 | sandusky | 48 | 34 | 14 |
 | sidney | 52 | 46 | 6 |
 | springfield | 49 | 43 | 6 |
-| toledo | 52 | 44 | 8 |
+| toledo | 53 | 45 | 8 |
 | troy-piqua | 54 | 49 | 5 |
 | urbana | 50 | 44 | 6 |
-| van-wert | 52 | 46 | 6 |
+| van-wert | 53 | 47 | 6 |
 | west-union | 48 | 40 | 8 |
 | wilmington | 53 | 47 | 6 |
 | wpafb | 51 | 44 | 7 |

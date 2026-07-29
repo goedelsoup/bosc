@@ -31,6 +31,17 @@ GIS, FEMA NFHL, ORC, LSC). Defers to the root [`CLAUDE.md`](../../../../CLAUDE.m
   flag is tagged `derived`. The headline-count and caveat discipline in
   [`data/reference/echo/README.md`](../../../../data/reference/echo/README.md) is the
   model to follow.
+- **A document-cited correction to connector output is an OVERLAY, never a hand edit.**
+  `echo_curation.py` is the pattern (#1698): *not* a connector (no network, no
+  `cached_get`), it loads a committed, cited overlay
+  (`data/reference/echo/curation/<basin>-wwtp.receiving-water.yaml`) and `echo.py` merges it
+  into every pull, so a refresh can't clobber reviewed data. A hand edit inside regenerated
+  output is silently reverted by the next pull — that's the bug this replaced. The overlay
+  never overrides live data silently either: each entry pins the FRS id and records the
+  upstream value observed at review time, and a pull whose upstream has moved off it
+  **refuses to write** (`superseded` / `conflict` / `stale`) rather than paper over the
+  disagreement. `mode: caveat` records a correction without touching the field. Reuse this
+  shape for any other connector that needs a reviewed correction; don't invent a second one.
 - Committed reference datasets a connector regenerates live under
   `data/reference/<source>/` (each with a README naming its source and gaps); raw
   responses cache under the git-ignored `data/cache/`.

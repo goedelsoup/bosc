@@ -26,6 +26,13 @@ Synchronous (``httpx.Client``) to match BOSC's otherwise-sync pipeline layer.
 Verified against ``cwa_rest_services`` metadata ``CWA v2017-10-13 1325``
 (260 result columns). Notably **CWNS ID is NOT a column** in this service — see
 the module note in :mod:`watermark.cli` / the inventory output for that gap.
+
+The one thing that is *not* verbatim ECHO is the **curated receiving-water overlay**
+(:mod:`watermark.hydrology.connectors.echo_curation`, #1698): a committed, cited set of
+corrections re-applied on every pull, so refreshing a basin never clobbers reviewed data.
+Corrections are declared there, never typed into the regenerated output by hand, and a
+correction that stops reconciling against live ECHO refuses the write rather than
+overriding it silently.
 """
 
 from __future__ import annotations
@@ -41,7 +48,9 @@ from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
 from watermark.connectors import to_float, to_int, to_str
+from watermark.hydrology.connectors import echo_curation
 from watermark.hydrology.connectors._cache import cached_get
+from watermark.hydrology.connectors.echo_curation import Curation
 from watermark.logging import get_logger
 
 log = get_logger(__name__)
@@ -124,7 +133,7 @@ MAUMEE = Basin(
     area_huc8s=LIMA_AREA_HUC8S,
     caveats=(
         "Four subbasins cross into IN/MI — cross-check Ohio EPA / IDEM / EGLE for completeness.",
-        "ottawa_discharge keys on the sparse receiving_water field and undercounts (e.g. Lima WWTP).",
+        "ottawa_discharge keys on the sparse receiving_water field and undercounts.",
     ),
 )
 GREAT_MIAMI = Basin(
@@ -461,12 +470,22 @@ def _secondary_npdes(fac: Facility) -> list[str]:
     return list(dict.fromkeys(others))
 
 
-def facility_record(fac: Facility, *, basin: Basin = MAUMEE) -> dict[str, Any]:
+def facility_record(
+    fac: Facility,
+    *,
+    basin: Basin = MAUMEE,
+    correction: echo_curation.AppliedCorrection | None = None,
+) -> dict[str, Any]:
     """One facility as a YAML-ready mapping. ``None`` is a genuine ECHO null.
 
     The ``in_lima_subbasin`` / ``ottawa_discharge`` flags are a Maumee/Lima concept and
     are emitted only for a basin with an ``area_huc8s`` of interest (the Maumee); other
     basins omit them. Key order is preserved so the Maumee inventory regenerates identically.
+
+    ``correction`` is this facility's entry from the curated receiving-water overlay, if it
+    has one: it adds the ``receiving_water_*`` provenance keys beside the field (the curated
+    value is already on ``fac`` — :func:`echo_curation.curate` applied it before dedup output
+    so the derived ``ottawa_discharge`` flag follows from it).
     """
     rec: dict[str, Any] = {
         "frs_registry_id": fac.frs_registry_id,
@@ -479,6 +498,7 @@ def facility_record(fac: Facility, *, basin: Basin = MAUMEE) -> dict[str, Any]:
         "design_flow_mgd": fac.design_flow_mgd,
         "design_flow_missing": fac.design_flow_mgd is None,
         "receiving_water": fac.receiving_water,
+        **(echo_curation.record_fields(correction) if correction else {}),
         "huc8": fac.huc8,
         "huc8_name": basin.huc8s.get(fac.huc8 or ""),
         "huc12": fac.huc12,
@@ -503,35 +523,80 @@ def _dump_yaml(path: Path, data: dict[str, Any]) -> None:
 
 
 def _facilities_doc(
-    facilities: list[Facility], *, scope: str, basin: Basin = MAUMEE
+    facilities: list[Facility],
+    *,
+    scope: str,
+    basin: Basin = MAUMEE,
+    curation: Curation | None = None,
 ) -> dict[str, Any]:
+    """One emitted inventory file (``meta`` + ``facilities``).
+
+    The curated corrections are scoped to the rows this file actually holds, so the
+    POTW-only inventory never advertises a correction to a non-POTW row it doesn't contain.
+    """
     ordered = sorted(facilities, key=lambda f: (f.huc8 or "", (f.name or "").upper()))
+    curation = curation or Curation()
+    by_frs = curation.by_frs()
+    present = {f.frs_registry_id for f in ordered if f.frs_registry_id}
+
+    meta: dict[str, Any] = {
+        "subject": basin.subject,
+        "scope": scope,
+        "source": _INVENTORY_SOURCE,
+        "watershed": basin.watershed,
+        "huc8s": dict(basin.huc8s),
+        "dedup_key": "FRS RegistryID",
+        "count": len(ordered),
+        "caveats": [*_GENERIC_CAVEATS, *basin.caveats, *echo_curation.caveats(curation, present)],
+    }
+    block = echo_curation.meta_block(curation, present)
+    if block is not None:
+        meta["receiving_water_curation"] = block
+
     return {
-        "meta": {
-            "subject": basin.subject,
-            "scope": scope,
-            "source": _INVENTORY_SOURCE,
-            "watershed": basin.watershed,
-            "huc8s": dict(basin.huc8s),
-            "dedup_key": "FRS RegistryID",
-            "count": len(ordered),
-            "caveats": [*_GENERIC_CAVEATS, *basin.caveats],
-        },
-        "facilities": [facility_record(f, basin=basin) for f in ordered],
+        "meta": meta,
+        "facilities": [
+            facility_record(f, basin=basin, correction=by_frs.get(f.frs_registry_id or ""))
+            for f in ordered
+        ],
     }
 
 
+def curate_inventory(
+    results: list[HucResult], *, basin: Basin = MAUMEE, settings: Settings | None = None
+) -> tuple[list[Facility], Curation]:
+    """Deduplicate a pull and merge the basin's curated receiving-water overlay into it.
+
+    Split out of :func:`write_inventory` so a refresh can be reconciled (and refused, on a
+    conflict or a stale entry) *before* anything is written — see
+    :mod:`watermark.hydrology.connectors.echo_curation`.
+    """
+    deduped = deduplicate(results)
+    return deduped, echo_curation.curate(deduped, basin, settings=settings)
+
+
 def write_inventory(
-    results: list[HucResult], out_dir: Path, *, basin: Basin = MAUMEE
+    results: list[HucResult],
+    out_dir: Path,
+    *,
+    basin: Basin = MAUMEE,
+    settings: Settings | None = None,
+    curated: tuple[list[Facility], Curation] | None = None,
 ) -> dict[str, Path]:
     """Write the deduplicated inventory as YAML: all-NPDES, POTW, and HUC counts.
 
     Counts in the manifest are real (ECHO's reported ``QueryRows`` vs the rows we
     actually pulled), so totals are sanity-checkable. Output is deterministic (no
     timestamp), so re-running regenerates identical files.
+
+    The basin's curated receiving-water overlay is merged in before writing (pass an
+    already-reconciled ``curated`` pair to reuse one from :func:`curate_inventory` rather
+    than reconciling twice). A correction that no longer reconciles against the pull raises
+    :class:`~watermark.hydrology.connectors.echo_curation.CurationError` and **nothing is
+    written** — a re-pull must never quietly drop reviewed data (#1698).
     """
+    deduped, curation = curated or curate_inventory(results, basin=basin, settings=settings)
     out_dir.mkdir(parents=True, exist_ok=True)
-    deduped = deduplicate(results)
     potws = [f for f in deduped if f.is_potw]
 
     all_path = out_dir / f"{basin.file_stem}.all-npdes.yaml"
@@ -540,11 +605,21 @@ def write_inventory(
 
     _dump_yaml(
         all_path,
-        _facilities_doc(deduped, scope="all active CWA-permitted dischargers", basin=basin),
+        _facilities_doc(
+            deduped,
+            scope="all active CWA-permitted dischargers",
+            basin=basin,
+            curation=curation,
+        ),
     )
     _dump_yaml(
         potw_path,
-        _facilities_doc(potws, scope="POTWs only (CWPFacilityTypeIndicator == POTW)", basin=basin),
+        _facilities_doc(
+            potws,
+            scope="POTWs only (CWPFacilityTypeIndicator == POTW)",
+            basin=basin,
+            curation=curation,
+        ),
     )
     _dump_yaml(
         counts_path,

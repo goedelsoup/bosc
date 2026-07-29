@@ -209,7 +209,9 @@ def test_facility_record_basin_aware() -> None:
 
 def test_write_inventory_yaml_round_trips(hydro_settings: Settings, tmp_path: Path) -> None:
     result = echo.fetch_huc_facilities("04100008", settings=hydro_settings)
-    paths = echo.write_inventory([result], tmp_path)
+    # A Blanchard-only pull: the Maumee's curated corrections all sit in the Auglaize
+    # (04100007), so they're out of scope here and the write proceeds untouched (#1698).
+    paths = echo.write_inventory([result], tmp_path, settings=hydro_settings)
     assert {p.suffix for p in paths.values()} == {".yaml"}
 
     all_doc = yaml.safe_load(paths["all"].read_text())

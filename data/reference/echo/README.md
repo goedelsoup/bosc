@@ -2,8 +2,11 @@
 
 Verified inventories of CWA-permitted facilities per watershed basin, pulled from
 EPA's **ECHO Clean Water Act REST services** (`cwa_rest_services`). Every facility,
-NPDES ID, and value here was returned by the ECHO API — nothing is fabricated,
-inferred, or filled in. Three basins are committed today, each with its own
+NPDES ID, and value here was returned by the ECHO API — nothing is fabricated or
+inferred. The one exception is a **curated receiving water**, which is never invented
+either: it is a document-cited correction declared in the
+[curated overlay](#curated-receiving-water-the-refresh-path) and always marked as such on
+the row. Three basins are committed today, each with its own
 `<basin>-wwtp.*` fileset: the **Maumee** (`watermark npdes`, the default), the **Great
 Miami** (`watermark npdes --basin great-miami`, the Miami-basin sites — Urbana, Springfield,
 WPAFB, Troy-Piqua, Hamilton-Middletown), and the **Little Miami** (`watermark npdes --basin
@@ -47,6 +50,12 @@ null (never an estimate); `true`/`false` flags are booleans.
   per-HUC manifest (ECHO's reported count vs. rows actually pulled — they match, no
   pagination loss) plus `totals:` (raw / deduped / potw).
 
+The three files above are **regenerated output** — never hand-edit them, the next pull
+overwrites the edit. Reviewed corrections go in the one hand-authored file here:
+
+- [**`curation/maumee-wwtp.receiving-water.yaml`**](curation/maumee-wwtp.receiving-water.yaml)
+  — the curated receiving-water overlay re-applied on every pull (see below).
+
 ## Method
 
 Per HUC-8: `get_facilities` (`p_huc=<HUC8>`, `p_act=Y`) returns a QID + summary
@@ -58,12 +67,61 @@ multiple permits keeps its primary NPDES ID with the rest in
 Verified against `cwa_rest_services` metadata **CWA v2017-10-13 1325** (260 result
 columns). Numbers come from the API's structured fields, not any text layer.
 
+## Curated receiving water (the refresh path)
+
+ECHO's `CWPStateWaterBodyName` is null for most of the Ohio rows (66 of 832 carry one),
+including plants whose receiving water an Ohio EPA permit names outright. Those
+corrections used to be typed straight into the files above — so the next
+`watermark npdes --basin maumee` silently reverted them and regressed every downstream
+screen (Lima WWTP and Van Wert WWTP fell back to `no_receiving_water`, taking the basin's
+two starkest effluent-dominance findings with them). That is why the basin inventory sat
+un-refreshed: a re-pull cost reviewed data.
+
+Corrections now live in
+[`curation/maumee-wwtp.receiving-water.yaml`](curation/maumee-wwtp.receiving-water.yaml)
+and the connector re-applies them on **every** pull, so a refresh is non-destructive. Each
+entry carries the FRS Registry ID it pins, the document that names the receiving water, and
+the ECHO value observed when it was reviewed. Two modes:
+
+- **`mode: field`** — the curated value is written into `receiving_water` (so derived flags
+  like `ottawa_discharge` and every downstream screen see it), with ECHO's verbatim value
+  preserved alongside as `receiving_water_echo` and the row marked
+  `receiving_water_source: curated`.
+- **`mode: caveat`** — `receiving_water` keeps mirroring ECHO verbatim and the correction
+  rides beside it on `receiving_water_documented`. This is the reviewed posture for
+  OH0135569 (#379), whose correction comes from ECHO's own facility report rather than an
+  independent regulatory document, and which nothing downstream screens on.
+
+**The overlay never overrides live ECHO silently.** If ECHO has moved off the reviewed
+`echo_value`, the pull *refuses to write* and names what changed — `superseded` (ECHO now
+supplies the same water; retire the entry), `conflict` (ECHO now supplies a different one;
+reconcile the document), or `stale` (the facility is gone from a pull that covered its
+subbasin; the permit was terminated or re-keyed). Each pull prints an outcome table and
+records the applied set in every emitted file's `meta.receiving_water_curation`.
+
+Adding a basin's overlay is a new `curation/<basin>-wwtp.receiving-water.yaml` plus a
+catalog entry — no code change. A basin with no overlay pulls exactly as before.
+
 ## Headline counts (last pull)
 
-1,057 active-permit rows across the 7 HUC-8s → **1,006 facilities** after FRS
-dedup: **129 POTW**, 875 non-POTW, 2 federal. POTW design flow present for
-112/129 (the 17 blanks are mostly Michigan general-permit stabilization lagoons
-that don't report a design-flow number).
+**2026-07-28** (whole-basin refresh, #1698): 1,662 active-permit rows across the 7 HUC-8s
+→ **1,579 facilities** after FRS dedup: **130 POTW**, 1,447 non-POTW, 2 federal. POTW
+design flow present for 113/130 (the 17 blanks are mostly Michigan general-permit
+stabilization lagoons that don't report a design-flow number).
+
+Up from 1,006 facilities / 129 POTW at the previous pull. Nearly all of the growth (591 of
+593 new rows) is **General Permit Covered Facility** coverage ECHO's WATERS geocoding now
+resolves into these HUC-8s — construction/industrial stormwater, concentrated in the Lower
+Maumee — not new wastewater outfalls; 20 expired Indiana construction permits dropped out.
+Movements worth knowing about on the POTW side:
+
+- **Toledo Bay View Park WWTP** (OH0027740, → Maumee River) is new to the inventory. ECHO
+  carries no design flow for it, so it is counted but not screened.
+- **Shawnee II WWTP** (OH0022675) design flow moved 2.0 → **3.0 MGD**, converging on the
+  figure the routed model already used from Ohio EPA fact sheet 2PK00002.
+- **Harrison Lake State Park** was re-keyed from an individual permit (OH0036170) to a
+  general permit (OHGC10322) and lost its receiving water; **Miller City HS** gained a
+  design flow (0.008 MGD) and lost its receiving water. Both move to unscreened.
 
 ## Great Miami River basin (`great-miami-wwtp.*`, #446/#455)
 
@@ -80,9 +138,11 @@ Whitewater (**05080003**) is predominantly Indiana drainage and is excluded (mir
 the Maumee's excluded WLE neighbors). **Last pull:** 289 active-permit rows across the 2
 HUC-8s → **286 facilities** after FRS dedup, **81 POTW**. The **City of Springfield WWTP**
 (OH0027481, 25 MGD, → Mad River) is present, but ECHO carries no receiving-water value for
-it, so the basin-screen reports it unscreened rather than guess (same gap as Lima WWTP,
-caveat 5). Files: `great-miami-wwtp.all-npdes.yaml`, `great-miami-wwtp.potw.yaml`,
-`great-miami-wwtp.huc-counts.yaml`.
+it, so the basin-screen reports it unscreened rather than guess — the same gap the Maumee's
+curated overlay closes for Lima WWTP, and a candidate for a Great Miami overlay of its own
+once its receiving water is document-cited. Files: `great-miami-wwtp.all-npdes.yaml`,
+`great-miami-wwtp.potw.yaml`, `great-miami-wwtp.huc-counts.yaml`. Those counts are from an
+earlier pull; the Maumee refresh (#1698) did not re-pull this basin.
 
 ## Known gaps & caveats (read before using)
 
@@ -111,10 +171,11 @@ caveat 5). Files: `great-miami-wwtp.all-npdes.yaml`, `great-miami-wwtp.potw.yaml
    — filter on them rather than assuming every record is a wastewater outfall.
 
 5. **`ottawa_discharge` undercounts.** This optional flag is keyed on ECHO's
-   `CWPStateWaterBodyName` string, which is null for ~70% of the Ohio rows —
-   including **Lima WWTP (OH0026069, 18.5 MGD)**, the largest Lima-area POTW, which
-   discharges to the Ottawa River but has no receiving-water value in ECHO. Per the
-   "no inference" rule we do *not* backfill it. Use `in_lima_subbasin` (every
+   `CWPStateWaterBodyName` string, which is null for most of the Ohio rows. **Lima WWTP
+   (OH0026069, 18.5 MGD)**, the largest Lima-area POTW, is flagged only because its
+   permit-cited receiving water is supplied by the curated overlay; every other
+   Ottawa-River discharger ECHO leaves blank is still missing from the flag, and per the
+   "no inference" rule none of them is guessed at. Use `in_lima_subbasin` (every
    Auglaize + Blanchard record) plus `county` for the broad Lima/Allen screen, and
    treat `ottawa_discharge: true` as a floor, not a complete list.
 
@@ -133,7 +194,11 @@ Each entry under `facilities:` carries these keys (`null` = ECHO returned nothin
 | permit_type | CWPPermitTypeDesc | NPDES vs non-NPDES, individual vs general |
 | design_flow_mgd | CWPTotalDesignFlowNmbr | `null` = ECHO returned no value |
 | design_flow_missing | derived | `true` when design_flow_mgd is null |
-| receiving_water | CWPStateWaterBodyName | sparse for OH |
+| receiving_water | CWPStateWaterBodyName | sparse for OH; a curated `mode: field` row carries the document-cited value instead |
+| receiving_water_source | curation | present (`curated`) only on a `mode: field` row |
+| receiving_water_echo | CWPStateWaterBodyName | the verbatim ECHO value a curated row replaced |
+| receiving_water_documented | curation | a `mode: caveat` correction, recorded beside the untouched field |
+| receiving_water_citation | curation | the document naming the curated receiving water |
 | huc8 / huc8_name | FacDerivedHuc | |
 | huc12 | RadWBDHuc12 | |
 | county | FacCountyName | |
@@ -174,7 +239,7 @@ Regenerate: `watermark npdes --basin little-miami`
 
 ### `echo-maumee-npdes` — Maumee-basin NPDES discharger inventory (EPA ECHO)
 
-Source: EPA ECHO — cwa_rest_services (CWA v2017-10-13) · License: U.S. Government work (public domain) · Access: throttled · Site scope: basin:maumee · Refresh: quarterly (ttl 180d)
+Source: EPA ECHO — cwa_rest_services (CWA v2017-10-13) · License: U.S. Government work (public domain) · Access: throttled · Site scope: basin:maumee · Refresh: quarterly (ttl 180d), last 2026-07-28
 
 Regenerate: `watermark npdes --basin maumee`
 
@@ -183,5 +248,13 @@ Regenerate: `watermark npdes --basin maumee`
 | `reference/echo/maumee-wwtp.all-npdes.yaml` | application/x-yaml | no |
 | `reference/echo/maumee-wwtp.potw.yaml` | application/x-yaml | no |
 | `reference/echo/maumee-wwtp.huc-counts.yaml` | application/x-yaml | no |
+
+### `echo-maumee-receiving-water` — Curated receiving-water overlay for the Maumee ECHO NPDES inventory
+
+Source: Hand-authored, document-cited corrections to ECHO's CWPStateWaterBodyName — Ohio EPA NPDES permit 2PE00000*OD (Lima WWTP), Ohio EPA NPDES fact sheet 2PD00006 Table 12 (Van Wert WWTP), and the EPA ECHO detailed facility report for OH0135569 · License: U.S. Government work (public domain) — the cited permits and fact sheets are Ohio EPA records · Access: public · Site scope: basin:maumee · Refresh: on-demand
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/echo/curation/maumee-wwtp.receiving-water.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

@@ -1,0 +1,41 @@
+id: echo-maumee-receiving-water
+title: Curated receiving-water overlay for the Maumee ECHO NPDES inventory
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Hand-authored, document-cited corrections to ECHO's CWPStateWaterBodyName — Ohio EPA
+    NPDES permit 2PE00000*OD (Lima WWTP), Ohio EPA NPDES fact sheet 2PD00006 Table 12
+    (Van Wert WWTP), and the EPA ECHO detailed facility report for OH0135569
+license: U.S. Government work (public domain) — the cited permits and fact sheets are Ohio EPA records
+access_tier: public
+site_scope: basin:maumee
+storage:
+  - relpath: reference/echo/curation/maumee-wwtp.receiving-water.yaml
+    media_type: application/x-yaml
+    lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+schema_ref: watermark.hydrology.connectors.echo_curation.CurationOverlay
+tags:
+  - npdes
+  - cwa
+  - maumee
+  - receiving-water
+  - curation
+  - reference
+notes: >-
+  The reviewed receiving-water corrections that `watermark npdes --basin maumee` re-applies to
+  every fresh ECHO pull (#1698). ECHO's CWPStateWaterBodyName is null for roughly 70% of the Ohio
+  rows, including plants whose receiving water a primary document names outright; those
+  corrections used to live as hand edits inside the connector's own output, so a re-pull silently
+  reverted them and regressed the basin screen (Lima WWTP and Van Wert WWTP both fell back to
+  `no_receiving_water`). Declaring them here makes the refresh non-destructive. Nothing is
+  inferred: each entry carries the document that names the receiving water plus the ECHO value
+  observed at review time, and the pull REFUSES to write if ECHO has since moved off that value
+  (`superseded` when ECHO caught up, `conflict` when it disagrees, `stale` when the facility is
+  gone). `mode: caveat` records a correction without touching the field, preserving the #379
+  decision that OH0135569's `receiving_water` keeps mirroring ECHO verbatim. Consumed by
+  `watermark.hydrology.connectors.echo_curation`; see data/reference/echo/README.md.

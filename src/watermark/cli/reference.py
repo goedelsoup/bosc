@@ -33,8 +33,13 @@ def npdes(
     Queries the basin's HUC-8 subbasins, deduplicates by FRS Registry ID, and writes a
     POTW-only YAML, an all-dischargers YAML, and a per-HUC count manifest. The basin is a
     registry entry in ``watermark.hydrology.connectors.echo`` (default: the Maumee).
+
+    This is the **refresh path** (#1698): the basin's curated receiving-water overlay
+    (``reference/echo/curation/<basin>-wwtp.receiving-water.yaml``) is re-applied to the
+    fresh pull, so a re-pull never clobbers reviewed data. A correction that no longer
+    reconciles against live ECHO aborts the run and nothing is written.
     """
-    from watermark.hydrology.connectors import echo
+    from watermark.hydrology.connectors import echo, echo_curation
 
     try:
         b = echo.resolve_basin(basin)
@@ -62,7 +67,14 @@ def npdes(
         )
     console.print(table)
 
-    deduped = echo.deduplicate(results)
+    # Reconcile the curated overlay against the fresh pull BEFORE writing: a conflict or a
+    # stale entry must abort with the committed inventory untouched, not half-rewritten.
+    try:
+        deduped, curation = echo.curate_inventory(results, basin=b, settings=settings)
+    except echo_curation.CurationError as exc:
+        console.print(f"[red]Curated receiving-water overlay does not reconcile.[/]\n{exc}")
+        raise typer.Exit(code=1) from exc
+
     n_potw = sum(1 for f in deduped if f.is_potw)
     raw = sum(len(r.facilities) for r in results)
     console.print(
@@ -70,7 +82,24 @@ def npdes(
         f"after FRS dedup ([green]{n_potw} POTW[/], {len(deduped) - n_potw} non-POTW)."
     )
 
-    paths = echo.write_inventory(results, target, basin=b)
+    if curation.applied:
+        curated = Table("NPDES", "facility", "receiving water", "mode", "outcome")
+        for entry in curation.applied:
+            c = entry.correction
+            colour = {"superseded": "yellow", "out_of_scope": "dim"}.get(entry.outcome, "green")
+            curated.add_row(
+                c.npdes_id, c.facility, c.receiving_water, c.mode, f"[{colour}]{entry.outcome}[/]"
+            )
+        console.print(f"\n[bold]Curated receiving water[/] ({curation.relpath}):")
+        console.print(curated)
+        for entry in curation.applied:
+            if entry.outcome == "superseded":
+                console.print(
+                    f"[yellow]ECHO now supplies {entry.correction.npdes_id}'s receiving water "
+                    f"({entry.echo_now!r}); retire that overlay entry.[/]"
+                )
+
+    paths = echo.write_inventory(results, target, basin=b, curated=(deduped, curation))
     for label, path in paths.items():
         console.print(f"[green]Wrote[/] {label}: {path}")
     console.print(
