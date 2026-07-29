@@ -12,22 +12,46 @@ meta:
     04100008: Blanchard
     04100009: Lower Maumee
   dedup_key: FRS RegistryID
-  count: 129
+  count: 130
   caveats:
   - ECHO's CWA facility service has no CWNS column; the POTW flag rests on CWPFacilityTypeIndicator.
   - Facilities link to HUCs via WATERS (FacDerivedHuc); a permit that didn't geocode
     can be missed.
-  - Four subbasins cross into IN/MI — cross-check Ohio EPA / IDEM / EGLE for completeness.
   - design_flow_mgd is null where ECHO returned no value; it is never estimated.
+  - Four subbasins cross into IN/MI — cross-check Ohio EPA / IDEM / EGLE for completeness.
   - ottawa_discharge keys on the sparse receiving_water field and undercounts.
-  - "receiving_water was null for OH0026069 (Lima WWTP) in ECHO; corrected to Ottawa
+  - 'receiving_water was null for OH0026069 (Lima WWTP) in ECHO; corrected to Ottawa
     River (River Mile 37.6, outfall 2PE00000001) per Ohio EPA NPDES permit 2PE00000*OD
     cover page (data/documents/oepa/2PE00000.pdf; data/extracted/oepa/2PE00000.npdes.yaml)
-    — the un-requested municipal custodian record, issue #1536. ottawa_discharge set true
-    accordingly."
-  - "receiving_water is null for OH0027910 (Van Wert WWTP) in ECHO; corrected to
-    Town Creek per NPDES fact sheet 2PD00006 (data/documents/oepa/van-wert/2PD00006.fs.pdf),
-    Table 12 — outfall 2PD00006001 at River Mile 13.87."
+    — the un-requested municipal custodian record, issue #1536. ottawa_discharge set
+    true accordingly. Re-applied on every pull from reference/echo/curation/maumee-wwtp.receiving-water.yaml
+    (#1698).'
+  - receiving_water is null for OH0027910 (Van Wert WWTP) in ECHO; corrected to Town
+    Creek per NPDES fact sheet 2PD00006 (data/documents/oepa/van-wert/2PD00006.fs.pdf),
+    Table 12 — outfall 2PD00006001 at River Mile 13.87. Re-applied on every pull from
+    reference/echo/curation/maumee-wwtp.receiving-water.yaml (#1698).
+  receiving_water_curation:
+    overlay: reference/echo/curation/maumee-wwtp.receiving-water.yaml
+    corrections:
+    - npdes_id: OH0026069
+      frs_registry_id: '110000760659'
+      mode: field
+      outcome: applied
+      receiving_water: Ottawa River
+      echo_value: null
+      citation: Ohio EPA NPDES permit 2PE00000*OD cover page — outfall 2PE00000001
+        to the Ottawa River at River Mile 37.6 (data/documents/oepa/2PE00000.pdf;
+        data/extracted/oepa/2PE00000.npdes.yaml)
+      issue: 1536
+    - npdes_id: OH0027910
+      frs_registry_id: '110006645176'
+      mode: field
+      outcome: applied
+      receiving_water: Town Creek
+      echo_value: null
+      citation: Ohio EPA NPDES fact sheet 2PD00006 (data/documents/oepa/van-wert/2PD00006.fs.pdf),
+        Table 12 — outfall 2PD00006001 at River Mile 13.87
+      issue: 376
 facilities:
 - frs_registry_id: '110009911257'
   name: AMBOY TWP WWSL
@@ -333,7 +357,7 @@ facilities:
   county: WILLIAMS
   latitude: 41.67839
   longitude: -84.55351
-  compliance_status: null
+  compliance_status: Failure to Report DMR - Not Received
   informal_enf_count: 0
   formal_enf_count: null
   in_lima_subbasin: false
@@ -355,8 +379,8 @@ facilities:
   county: HILLSDALE
   latitude: 41.862376
   longitude: -84.480651
-  compliance_status: Compliance/Permit Schedule - Reporting
-  informal_enf_count: 0
+  compliance_status: null
+  informal_enf_count: 1
   formal_enf_count: null
   in_lima_subbasin: false
   ottawa_discharge: false
@@ -400,7 +424,7 @@ facilities:
   latitude: 41.304694
   longitude: -84.903694
   compliance_status: Effluent - Monthly Average Limit
-  informal_enf_count: 3
+  informal_enf_count: 4
   formal_enf_count: null
   in_lima_subbasin: false
   ottawa_discharge: false
@@ -754,7 +778,7 @@ facilities:
   latitude: 40.74713
   longitude: -84.79289
   compliance_status: Effluent - Monthly Average Limit
-  informal_enf_count: 3
+  informal_enf_count: 4
   formal_enf_count: null
   in_lima_subbasin: false
   ottawa_discharge: false
@@ -1003,15 +1027,16 @@ facilities:
   ottawa_discharge: false
   queried_huc8: '04100006'
 - frs_registry_id: '110006699849'
-  name: HARRISON LAKE STATE PARK WWTP
-  npdes_id: OH0036170
-  npdes_ids_secondary: []
+  name: HARRISON LAKE STATE PARK CAMPGROUND
+  npdes_id: OHGC10322
+  npdes_ids_secondary:
+  - OH0036170
   ownership: POTW
   facility_type: POTW
-  permit_type: NPDES Individual Permit
+  permit_type: General Permit Covered Facility
   design_flow_mgd: 0.04
   design_flow_missing: false
-  receiving_water: MILL CREEK
+  receiving_water: null
   huc8: '04100006'
   huc8_name: Tiffin
   huc12: '041000060204'
@@ -1040,7 +1065,7 @@ facilities:
   county: WILLIAMS
   latitude: 41.477994
   longitude: -84.4591
-  compliance_status: Compliance/Permit Schedule - Violations
+  compliance_status: null
   informal_enf_count: 0
   formal_enf_count: 1
   in_lima_subbasin: false
@@ -1238,7 +1263,7 @@ facilities:
   county: FULTON
   latitude: 41.519
   longitude: -84.3049
-  compliance_status: Effluent - Monthly Average Limit
+  compliance_status: null
   informal_enf_count: 3
   formal_enf_count: null
   in_lima_subbasin: false
@@ -1305,7 +1330,7 @@ facilities:
   latitude: 41.7381
   longitude: -84.4428
   compliance_status: null
-  informal_enf_count: 1
+  informal_enf_count: 2
   formal_enf_count: null
   in_lima_subbasin: false
   ottawa_discharge: false
@@ -1610,8 +1635,8 @@ facilities:
   huc8_name: Auglaize
   huc12: 041000070903
   county: ALLEN
-  latitude: 40.85513
-  longitude: -84.34265
+  latitude: 40.859746
+  longitude: -84.345151
   compliance_status: null
   informal_enf_count: 2
   formal_enf_count: null
@@ -1634,7 +1659,7 @@ facilities:
   county: ALLEN
   latitude: 40.79753
   longitude: -84.20382
-  compliance_status: null
+  compliance_status: Effluent - Monthly Average Limit
   informal_enf_count: 0
   formal_enf_count: null
   in_lima_subbasin: true
@@ -1744,8 +1769,8 @@ facilities:
   county: PAULDING
   latitude: 41.087631
   longitude: -84.5816
-  compliance_status: null
-  informal_enf_count: 1
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
   formal_enf_count: null
   in_lima_subbasin: true
   ottawa_discharge: false
@@ -1760,6 +1785,11 @@ facilities:
   design_flow_mgd: 18.5
   design_flow_missing: false
   receiving_water: Ottawa River
+  receiving_water_source: curated
+  receiving_water_echo: null
+  receiving_water_citation: Ohio EPA NPDES permit 2PE00000*OD cover page — outfall
+    2PE00000001 to the Ottawa River at River Mile 37.6 (data/documents/oepa/2PE00000.pdf;
+    data/extracted/oepa/2PE00000.npdes.yaml)
   huc8: '04100007'
   huc8_name: Auglaize
   huc12: '041000070404'
@@ -1795,15 +1825,15 @@ facilities:
   ottawa_discharge: false
   queried_huc8: '04100007'
 - frs_registry_id: '110009820774'
-  name: MILLER CITY HIGH SCH WWTP
+  name: MILLER CITY HIGH SCHOOL WASTEWATER TREATMENT PLANT
   npdes_id: OH0126535
   npdes_ids_secondary: []
   ownership: POTW
   facility_type: POTW
   permit_type: NPDES Individual Permit
-  design_flow_mgd: null
-  design_flow_missing: true
-  receiving_water: BLANCHARD RIVER, TRIB TO MILLER CITY CUTOFF DITCH
+  design_flow_mgd: 0.008
+  design_flow_missing: false
+  receiving_water: null
   huc8: '04100007'
   huc8_name: Auglaize
   huc12: 041000080603
@@ -1834,7 +1864,7 @@ facilities:
   latitude: 40.97
   longitude: -84.854167
   compliance_status: null
-  informal_enf_count: 2
+  informal_enf_count: 3
   formal_enf_count: null
   in_lima_subbasin: true
   ottawa_discharge: false
@@ -1922,7 +1952,7 @@ facilities:
   latitude: 41.15783
   longitude: -84.5492
   compliance_status: Compliance/Permit Schedule - Violations
-  informal_enf_count: 0
+  informal_enf_count: 1
   formal_enf_count: null
   in_lima_subbasin: true
   ottawa_discharge: false
@@ -1950,13 +1980,13 @@ facilities:
   ottawa_discharge: false
   queried_huc8: '04100007'
 - frs_registry_id: '110001162802'
-  name: SHAWNEE NO 2 WWTP
+  name: SHAWNEE II WWTP
   npdes_id: OH0023850
   npdes_ids_secondary: []
   ownership: POTW
   facility_type: POTW
   permit_type: NPDES Individual Permit
-  design_flow_mgd: 2.0
+  design_flow_mgd: 3.0
   design_flow_missing: false
   receiving_water: null
   huc8: '04100007'
@@ -2025,6 +2055,10 @@ facilities:
   design_flow_mgd: 4.0
   design_flow_missing: false
   receiving_water: Town Creek
+  receiving_water_source: curated
+  receiving_water_echo: null
+  receiving_water_citation: Ohio EPA NPDES fact sheet 2PD00006 (data/documents/oepa/van-wert/2PD00006.fs.pdf),
+    Table 12 — outfall 2PD00006001 at River Mile 13.87
   huc8: '04100007'
   huc8_name: Auglaize
   huc12: 041000070804
@@ -2097,7 +2131,7 @@ facilities:
   county: PAULDING
   latitude: 41.02114
   longitude: -84.47404
-  compliance_status: Effluent - Monthly Average Limit
+  compliance_status: null
   informal_enf_count: 0
   formal_enf_count: null
   in_lima_subbasin: true
@@ -2119,7 +2153,7 @@ facilities:
   county: PAULDING
   latitude: 41.046959
   longitude: -84.572873
-  compliance_status: null
+  compliance_status: Effluent - Monthly Average Limit
   informal_enf_count: 0
   formal_enf_count: null
   in_lima_subbasin: true
@@ -2161,8 +2195,8 @@ facilities:
   huc8_name: Blanchard
   huc12: 041000080304
   county: HANCOCK
-  latitude: 41.04809
-  longitude: -83.66843
+  latitude: 41.04568
+  longitude: -83.66417
   compliance_status: null
   informal_enf_count: 0
   formal_enf_count: null
@@ -2170,7 +2204,7 @@ facilities:
   ottawa_discharge: false
   queried_huc8: 04100008
 - frs_registry_id: '110006215906'
-  name: COUNTRY ACRES GOLF CLUB
+  name: COUNTRY ACRES GOLF COURSE/PUTNAM COUNTY
   npdes_id: OH0079057
   npdes_ids_secondary: []
   ownership: POTW
@@ -2229,8 +2263,8 @@ facilities:
   county: HARDIN
   latitude: 40.80177
   longitude: -83.51438
-  compliance_status: Effluent - Monthly Average Limit
-  informal_enf_count: 3
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 4
   formal_enf_count: null
   in_lima_subbasin: true
   ottawa_discharge: false
@@ -2315,8 +2349,8 @@ facilities:
   huc8_name: Blanchard
   huc12: 041000080501
   county: ALLEN COUNTY
-  latitude: 40.9862
-  longitude: -83.71086
+  latitude: 40.9772
+  longitude: -83.7284
   compliance_status: null
   informal_enf_count: 0
   formal_enf_count: null
@@ -2735,11 +2769,34 @@ facilities:
   huc8_name: Lower Maumee
   huc12: 041000090903
   county: WOOD
-  latitude: 41.56672
-  longitude: -83.62631
+  latitude: 41.55681
+  longitude: -83.65015
   compliance_status: null
   informal_enf_count: 0
   formal_enf_count: null
+  in_lima_subbasin: false
+  ottawa_discharge: false
+  queried_huc8: 04100009
+- frs_registry_id: '110000556577'
+  name: TOLEDO BAY VIEW PARK WWTP
+  npdes_id: OH0027740
+  npdes_ids_secondary:
+  - MIG960020
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: MAUMEE RIVER
+  huc8: 04100009
+  huc8_name: Lower Maumee
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.68903
+  longitude: -83.48255
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 1
+  formal_enf_count: 1
   in_lima_subbasin: false
   ottawa_discharge: false
   queried_huc8: 04100009

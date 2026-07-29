@@ -43,7 +43,7 @@ The distinctive cause is **what they discharge into**: tiny tributaries — **Du
 Pike Run** — not a mainstem.
 
 **Basin context (EPA ECHO).** The committed [Maumee NPDES inventory](../data/reference/echo/README.md)
-holds **129 POTWs**. Ranked by design flow: `[verified: data/reference/echo/maumee-wwtp.potw.yaml]`
+holds **130 POTWs**. Ranked by design flow: `[verified: data/reference/echo/maumee-wwtp.potw.yaml]`
 
 | WWTP | Design flow | Receiving water |
 |---|---|---|

@@ -36,13 +36,19 @@ def test_derived_low_flows_loaded(data_settings: Settings) -> None:
 def test_basin_screen_coverage(data_settings: Settings) -> None:
     screen = basin.check_basin_assimilative(settings=data_settings)
     c = screen.coverage
-    assert c.total == 129
+    # 130 since the #1698 whole-basin refresh: ECHO added Toledo Bay View Park WWTP
+    # (OH0027740) to the Lower Maumee POTW set.
+    assert c.total == 130
     # 9 since #1536: the Lima WWTP (OH0026069) now carries a document-cited receiving
     # water (Ottawa River, from permit 2PE00000), so it moves out of no_receiving_water
-    # and screens (28.62 cfs into the Ottawa's 0.2 cfs 7Q10 — a fresh violation).
+    # and screens (28.62 cfs into the Ottawa's 0.2 cfs 7Q10 — a fresh violation). The
+    # curated receiving-water overlay re-applies that correction (and Van Wert's) on every
+    # pull, so a refresh can no longer silently drop either back to no_receiving_water.
     assert c.screened == len(screen.checks) == 9
-    # Honest coverage: most of the basin is unscreenable, surfaced explicitly.
-    assert c.no_receiving_water == 75
+    # Honest coverage: most of the basin is unscreenable, surfaced explicitly. 77 after the
+    # refresh — ECHO dropped the receiving water it used to carry for Harrison Lake State
+    # Park (re-keyed to a general permit) and Miller City HS, and the new Toledo row has none.
+    assert c.no_receiving_water == 77
     assert c.screened + c.no_receiving_water + c.no_7q10 + c.no_design_flow == c.total
     # The cited Lima-loop violation (American Bath -> Pike Run) is still caught.
     cited = [ch for ch in screen.checks if ch.design_low_flow.source == "document"]
