@@ -1,7 +1,7 @@
 {
   "site": "sandusky",
-  "catalog_version": "d0ebdab71a52b858775e207ea9e41784f0e3e5211ae87da008d0c8a22aeeeb5e",
-  "contract_version": "1.41.0",
+  "catalog_version": "2271bf4fc4d5260b17bc1e96d2def814eb1d6e37500379c8e4d3de4838d949ca",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:sandusky:7q10",
@@ -689,6 +689,22 @@
       "site": "sandusky",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sandusky:enclave-federal-land",
+      "kind": "dataset",
+      "site": "sandusky",
+      "local_id": "enclave-federal-land",
+      "title": "Sandusky · Perkins Twp Federal-Enclave Boundary — Erie County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sandusky:enclave-profile",
+      "kind": "dataset",
+      "site": "sandusky",
+      "local_id": "enclave-profile",
+      "title": "Sandusky · Perkins Twp Federal-Enclave Profile — Erie County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

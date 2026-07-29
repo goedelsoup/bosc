@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "052bb459af99341f0214851f774f3b43b31b61a127e5372a0c229890d3e8e6b1",
-  "contract_version": "1.41.0",
+  "catalog_version": "5f787bb301768d48c61423db95cda4e286e0debaa9f6e4bd5415b992cdbe01d4",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -921,6 +921,22 @@
       "site": "lima",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:enclave-federal-land",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "enclave-federal-land",
+      "title": "Lima Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:enclave-profile",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "enclave-profile",
+      "title": "Lima Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

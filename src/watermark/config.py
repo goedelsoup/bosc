@@ -429,6 +429,27 @@ class Settings(BaseSettings):
     gnis_default_state: str = ""
     gnis_layers: list[int] = Field(default_factory=lambda: [6, 7])  # Streams, Other Hydro
 
+    # --- Federal enclave (the registers a county-scoped model cannot see) ---
+    # A federal installation is invisible to the connectors the rest of the platform leans on:
+    # it is off the county tax rolls (no CAMA parcel), and it reports its toxics from whichever
+    # county it is addressed in rather than the one the site picked as its economic unit. These
+    # three federal registers close that gap (#1664) — DoD MIRTA for the enclave's boundary,
+    # EPA SDWIS for its own public water systems, EPA ECHO for its own NPDES discharges. All are
+    # free, keyless, public-domain, and ride the standard cache/offline/fixture discipline
+    # (fixtures under tests/fixtures/federal/).
+    mirta_url: str = (
+        "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/"
+        "MIRTA_Polygons_A_view/FeatureServer/0"
+    )
+    sdwis_url: str = "https://data.epa.gov/efservice"
+    echo_cwa_url: str = "https://echodata.epa.gov/echo/cwa_rest_services.get_facility_info"
+    federal_offline: bool = False  # serve cached/fixture register responses only; never fetch
+    federal_request_timeout_s: float = 60.0
+    # The federal registers are annual-to-quarterly publications (MIRTA is a Base Structure
+    # Report vintage), so the default weekly window is if anything too eager.
+    federal_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS
+    federal_fixtures_dir: Path | None = None  # committed connector fixtures (tests/CI)
+
     # --- Civic (political-subdivision meeting records) ---------------------
     # The civic discovery + fetchers + downloader reach county CMS/WAF pages through
     # the same connector cache/offline/fixture machinery as every other subsystem,
@@ -531,6 +552,11 @@ class Settings(BaseSettings):
     def civic_cache_dir(self) -> Path:
         """Cached civic page fetches (county CMS/WAF listings). Not committed."""
         return self.cache_dir / "civic"
+
+    @property
+    def federal_cache_dir(self) -> Path:
+        """Cached federal-register responses (DoD MIRTA, EPA SDWIS/ECHO). Not committed."""
+        return self.cache_dir / "federal"
 
     @property
     def research_cache_dir(self) -> Path:

@@ -1,7 +1,7 @@
 {
   "site": "fort-wayne",
-  "catalog_version": "9368c498c7bd33bb93b765794f206893fd87817a767b4a6dceb494aa8bc990bd",
-  "contract_version": "1.41.0",
+  "catalog_version": "0eae93ab0866db106a800ea46cdbbb9e4328724acba8a3c9691a4b63cebab924",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:fort-wayne:7q10",
@@ -713,6 +713,22 @@
       "site": "fort-wayne",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:fort-wayne:enclave-federal-land",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "enclave-federal-land",
+      "title": "Fort Wayne Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:fort-wayne:enclave-profile",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "enclave-profile",
+      "title": "Fort Wayne Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

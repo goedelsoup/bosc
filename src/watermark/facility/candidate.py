@@ -279,7 +279,10 @@ def promotion_status(slug: str, settings: Settings | None = None) -> PromotionRo
     settings = settings or get_settings()
     profile = SITES[slug]
     has_register = register_path(settings, slug).exists()
-    has_facility = profile.facility is not None
+    # `campus`, not `facility` (#1664): this tracks the DATA-CENTER discovery funnel, so a
+    # federal-installation facility must not read as "a campus was promoted here" and close out a
+    # site whose data-center question is still open (WPAFB / #442).
+    has_facility = profile.campus is not None
     record = load_candidates(candidates_path(settings, slug))
     candidate_count = len(record.candidates) if record else 0
     promotable_count = len(record.promotable) if record else 0

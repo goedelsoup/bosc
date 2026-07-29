@@ -1,7 +1,7 @@
 {
   "site": "piketon",
-  "catalog_version": "d2bfa9968e620630446f5c1272210c496e9b7fc957bb46787ece5a908acc13f6",
-  "contract_version": "1.41.0",
+  "catalog_version": "c3896e1e0a879107d717ba9207e7187fb32e6c0f88a9da7c3d223ec39ad1fd2b",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:piketon:7q10",
@@ -689,6 +689,22 @@
       "site": "piketon",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:enclave-federal-land",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "enclave-federal-land",
+      "title": "Piketon Federal-Enclave Boundary — Pike County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:enclave-profile",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "enclave-profile",
+      "title": "Piketon Federal-Enclave Profile — Pike County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

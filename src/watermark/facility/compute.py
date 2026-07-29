@@ -324,7 +324,7 @@ def derive_compute_capacity(
         # the cooling-overhead multiplier with the same precedence as _derive_once_through and
         # divide it back out (#1153), so this recovers the *IT* load, not the inflated
         # rejected-heat load.
-        facility = active_profile(settings).facility
+        facility = active_profile(settings).campus
         heat_reject_mult, mult_cite = _resolve_heat_reject_mult(facility, CoolingParams())
         it_water_low = it_water_high = it_load_mw_from_once_through_withdrawal(
             cooling.makeup_demand.value, heat_reject_multiplier=heat_reject_mult

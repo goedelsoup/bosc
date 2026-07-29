@@ -1,0 +1,223 @@
+---
+import { selectableSitePaths } from "@watermark/core/sites";
+export const getStaticPaths = selectableSitePaths;
+import BackLink from "~/components/BackLink.astro";
+import Base from "~/layouts/Base.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { EnclaveFeed } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
+
+// The federal-enclave read (#1664). A base is invisible to the county-scoped instruments the rest
+// of the site is built on — off the tax rolls, and reporting toxics from whichever county it is
+// addressed in — so its own land / water / wastewater / power / toxics are assembled from federal
+// registers instead. Enclave-gated: the feed exists only where a `federal_installation` facility is
+// registered, and everything below is projected from the bundle, never restated here.
+const enclave = hasFeed("enclave") ? loadFeed<EnclaveFeed>("enclave") : null;
+const num = (v: number | null | undefined): string => (v == null ? "—" : Number(v).toLocaleString("en-US"));
+const water = enclave?.water;
+const waste = enclave?.wastewater;
+const toxics = enclave?.toxics;
+---
+
+<Base title="The federal enclave" section="environment">
+  <article class="prose">
+    <BackLink href={withSite("/environment/")} label="The environment" />
+    <h1>The federal enclave</h1>
+    {
+      enclave == null ? (
+        <p class="stub-note">
+          This site has no federal enclave on the record. The page appears for a site whose
+          facility is a federal installation rather than a data-center campus.
+        </p>
+      ) : (
+        <>
+          <p class="section-lead">
+            <strong>{enclave.name}</strong> — {enclave.component}, {enclave.agency}. A federal
+            installation runs its own water, its own outfalls and its own load, and none of it
+            reaches the county instruments the rest of this site is built on. Everything below is
+            carried from a named federal register or projected from the enclave's grounding record;
+            an undisclosed figure is left open rather than estimated.
+          </p>
+          <p class="card-meta">
+            Registers: {(enclave.meta.registers ?? []).join(" · ")} · Grounding record:{" "}
+            <code>{enclave.record_relpath}</code>
+          </p>
+
+          <h2>Land</h2>
+          {enclave.land == null ? (
+            <p class="stub-note">
+              The enclave is not located in the federal land register — its boundary is open.
+            </p>
+          ) : (
+            <>
+              <p>
+                <strong>{num(enclave.land.register_acres)} acres</strong> mapped across{" "}
+                {enclave.land.parts ?? 1} part(s) by {enclave.land.register_name}, status{" "}
+                {enclave.land.operational_status}
+                {enclave.land.record_acres != null && (
+                  <>
+                    {" "}— against <strong>{num(enclave.land.record_acres)} acres</strong> stated by
+                    the grounding record
+                  </>
+                )}
+                .
+              </p>
+              {enclave.land.acreage_note && (
+                <div class="callout callout--open">
+                  <p class="callout-title">Coverage caveat</p>
+                  <p>{enclave.land.acreage_note}</p>
+                </div>
+              )}
+              <p class="card-meta">{enclave.land.note}</p>
+            </>
+          )}
+
+          <h2>Water</h2>
+          <p>
+            {water?.systems.length ?? 0} public water system(s) the installation runs itself
+            {water?.population_served != null && (
+              <> serving <strong>{num(water.population_served)}</strong> people</>
+            )}
+            {water?.supply_wells != null && (
+              <>
+                , drawing on {num(water.supply_wells)} supply wells
+                {water.well_fields != null && <> across {num(water.well_fields)} well fields</>}
+                {water.aquifer && <> in the {water.aquifer}</>}
+              </>
+            )}
+            .
+          </p>
+          {(water?.systems.length ?? 0) > 0 && (
+            <table>
+              <thead>
+                <tr>
+                  <th>PWSID</th>
+                  <th>System</th>
+                  <th>Type</th>
+                  <th>Source</th>
+                  <th>Population served</th>
+                  <th>Connections</th>
+                </tr>
+              </thead>
+              <tbody>
+                {water?.systems.map((s) => (
+                  <tr>
+                    <td>{s.pwsid}</td>
+                    <td>{s.name}</td>
+                    <td>{s.system_type ?? "—"}</td>
+                    <td>{s.source_type ?? "—"}</td>
+                    <td>{num(s.population_served)}</td>
+                    <td>{num(s.service_connections)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <p class="card-meta">
+            Raw-water withdrawal:{" "}
+            {water?.withdrawal_mgd != null ? (
+              <>{num(water.withdrawal_mgd)} MGD — {water.withdrawal_citation}</>
+            ) : (
+              <>[open]. A supply system is not a meter; no withdrawal is inferred from population
+              served.</>
+            )}
+          </p>
+
+          <h2>Wastewater</h2>
+          <p>
+            {waste?.discharges.length ?? 0} NPDES permit(s) held by the installation
+            {waste?.reported_average_flow_mgd != null && (
+              <>
+                , <strong>{num(waste.reported_average_flow_mgd)} MGD</strong> reported average flow
+              </>
+            )}
+            .
+          </p>
+          {(waste?.discharges.length ?? 0) > 0 && (
+            <table>
+              <thead>
+                <tr>
+                  <th>NPDES</th>
+                  <th>Facility</th>
+                  <th>Status</th>
+                  <th>County</th>
+                  <th>Reported avg (MGD)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {waste?.discharges.map((d) => (
+                  <tr>
+                    <td>{d.npdes_id}</td>
+                    <td>{d.name}</td>
+                    <td>{d.permit_status ?? "—"}</td>
+                    <td>{d.county ?? "—"}</td>
+                    <td>{num(d.actual_average_flow_mgd)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          {waste?.reported_flow_note && <p class="card-meta">{waste.reported_flow_note}</p>}
+
+          <h2>Power</h2>
+          <p>
+            {enclave.power.load_mw != null ? (
+              <>
+                <strong>{num(enclave.power.load_mw)} MW</strong> — {enclave.power.load_citation}
+              </>
+            ) : (
+              <>The installation's electrical load is <strong>[open]</strong>.</>
+            )}
+          </p>
+          {enclave.power.note && <p class="card-meta">{enclave.power.note}</p>}
+
+          <h2>Toxics</h2>
+          {toxics?.scope_disagreement && (
+            <div class="callout callout--open">
+              <p class="callout-title">Why the county inventory misses this base</p>
+              <p>{toxics.scope_note}</p>
+            </div>
+          )}
+          {toxics?.rsei ? (
+            <p>
+              The enclave's own EPA RSEI row — <code>{toxics.tri_facility_id}</code> in{" "}
+              {toxics.tri_county_name} — carries a modeled Risk-Screening Score of{" "}
+              <strong>{num(Number(toxics.rsei.score))}</strong> over{" "}
+              {num(Number(toxics.rsei.pounds))} reported pounds. Score is EPA's modeled,
+              population-weighted index: comparative only, not a risk or a concentration.
+            </p>
+          ) : (
+            <p class="stub-note">The enclave's own RSEI/TRI row is [open].</p>
+          )}
+          {toxics?.npl_site_id && (
+            <p>
+              The installation is itself a federal Superfund site — EPA site{" "}
+              <code>{toxics.npl_site_id}</code>, listed {toxics.npl_listed_on} (
+              {toxics.npl_citation})
+              {toxics.waste_disposal_sites != null && (
+                <>, with {num(toxics.waste_disposal_sites)} waste-disposal sites on the record</>
+              )}
+              {toxics.disposal_period && <> from {toxics.disposal_period}</>}.
+            </p>
+          )}
+          {(toxics?.contaminants.length ?? 0) > 0 && (
+            <p class="card-meta">Contaminants of record: {toxics?.contaminants.join(", ")}.</p>
+          )}
+          {toxics?.cercla_gap_note && (
+            <div class="callout callout--note">
+              <p class="callout-title">How to read the two toxics instruments</p>
+              <p>{toxics.cercla_gap_note}</p>
+            </div>
+          )}
+
+          <h2>Sources</h2>
+          <ul>
+            {enclave.citations.map((c) => (
+              <li class="card-meta">{c}</li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </article>
+</Base>

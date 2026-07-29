@@ -1,0 +1,40 @@
+id: enclave-profile
+title: Lima Federal-Enclave Profile — Allen County, OH (land / water / wastewater / power / toxics)
+title_template: '{place} Federal-Enclave Profile — {county_state} (land / water / wastewater / power
+  / toxics)'
+scope: reference
+status: reviewed
+producer:
+  kind: derived
+  command: enclave
+  connector_ref: watermark.enclave
+  source: DoD MIRTA (site boundary) × EPA SDWIS (public water systems) × EPA ECHO CWA (NPDES
+    discharges) × EPA RSEI/TRI (toxic releases), joined to the enclave's committed grounding record
+    (its CERCLA §120 Federal Facility Agreement) — a multi-source assembly
+  external_url: https://echo.epa.gov/
+license: U.S. Government work (public domain)
+access_tier: public
+site_scope: slug-scoped
+storage:
+- relpath: reference/{site}/enclave.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: derived
+schema_ref: watermark.enclave.EnclaveProfile
+tags:
+- federal
+- enclave
+- water
+- wastewater
+- toxics
+- derived
+notes: A federal installation's own land, water, wastewater, power and toxics — the dimensions the
+  county-scoped instruments cannot see. Documented figures are PROJECTED from the grounding record
+  (supply wells, well fields, treatment units, waste-disposal sites, NPL listing) rather than re-keyed,
+  so they cannot drift from it; the registers supply the rest verbatim. An undisclosed figure is null
+  ([open]), never defaulted — the installation's electrical load and raw-water withdrawal are both open.
+  The toxics block carries the scope severance - a straddling enclave reports TRI from a county the site
+  profile did not pick as its economic unit, so the county backdrop misses it by construction. Issue
+  1664, epic 1659.

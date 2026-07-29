@@ -83,6 +83,7 @@ from watermark.site import contacts as contacts_mod
 from watermark.site import documents as documents_mod
 from watermark.site import docversions as docversions_mod
 from watermark.site import economics as economics_mod
+from watermark.site import enclave as enclave_mod
 from watermark.site import exhibits as exhibits_mod
 from watermark.site import facility as facility_mod
 from watermark.site import gismap as gismap_mod
@@ -387,7 +388,7 @@ def _air_dispersion(settings: Settings) -> list[DispersionResult] | None:
     ``available=False`` with empty screens — the deck + NAAQS basis are real, no concentration is
     fabricated.
     """
-    fac = active_profile(settings).facility
+    fac = active_profile(settings).campus
     if fac is None or fac.air_permit_relpath is None:
         return None
     runs: list[DispersionResult] = []
@@ -435,7 +436,7 @@ def _dispersion_field(settings: Settings) -> list[DispersionField] | None:
     if not is_reference_site(settings.site):
         return None
     profile = active_profile(settings)
-    if profile.facility is None:
+    if profile.campus is None:
         return None
     fields: list[DispersionField] = []
     for pollutant, periods in _DISPERSION_SPEC:
@@ -887,6 +888,12 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # lifecycle status / operator / end-use / IT-load bracket / disclosure / cooling / geometry.
         # Facility-gated — None (feed skipped) for a site with no disclosed facility.
         ("facility", FacilityItem, lambda: facility_mod.build_facility_feed(settings)),
+        # The federal enclave (#1664): the installation's own land / water / wastewater / power /
+        # toxics, projected from its grounding record and the federal registers. Enclave-gated —
+        # None (feed skipped) unless the site carries a `federal_installation` facility. It is the
+        # facility domain's second leaf feed, and the ONLY place the enclave's own RSEI row and the
+        # county-scope severance that hides it are published.
+        ("enclave", None, lambda: enclave_mod.export_enclave(settings)),
         # Cross-site basin synthesis (#308/#323): the watershed points as one connected basin.
         ("network", None, lambda: build_basin_network(settings=settings)),
         # Watermark's own compute footprint (the GreenOps report, #1076/#1084) — the platform's
@@ -977,6 +984,14 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         campus = gismap_mod.campus_from_parcels(settings)
         if campus is not None:
             feeds.append(_geo_feed(campus))
+    # The federal-enclave boundary (#1664) — emitted for ANY site that commits one, Lima included:
+    # unlike the campus branch above it reads no shared Lima artifact, only the site's own
+    # `federal_land_relpath`, so there is nothing to leak. It is the non-CAMA land path the
+    # `places` domain can activate off (a federal enclave is off the county tax rolls and will
+    # never appear in a parcel layer).
+    enclave_geo = gismap_mod.enclave_from_federal_land(settings)
+    if enclave_geo is not None:
+        feeds.append(_geo_feed(enclave_geo))
     # Two more geo feeds assembled outside gis-findings: the USGS WBD watershed
     # boundaries and the imagery tracking-AOI footprints + Wayback ladder (for #72).
     watershed = gismap_mod.export_watershed_geo(settings)

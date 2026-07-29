@@ -136,5 +136,6 @@ Regenerate: `watermark rsei`
 | --- | --- | --- |
 | `reference/rsei/inventory.yaml` | application/x-yaml | no |
 | `reference/rsei/{site}/inventory.yaml` | application/x-yaml | no |
+| `reference/rsei/{site}/enclave.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

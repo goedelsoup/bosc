@@ -552,3 +552,128 @@ def waterwells(
         r"(self-reported \[verified] for what the log states). There is no pumping-level "
         r"column, so a specific capacity / transmissivity / drawdown cone is \[inference].[/]"
     )
+
+
+@app.command(name="enclave")
+def enclave_cmd(
+    offline: bool = typer.Option(
+        False,
+        "--offline",
+        help="Use cached/fixture register responses + cached RSEI tables only; never fetch.",
+    ),
+    skip_rsei: bool = typer.Option(
+        False,
+        "--skip-rsei",
+        help="Skip the enclave RSEI reduction (it streams the ~447 MB v2312 archive).",
+    ),
+) -> None:
+    """Pull the federal registers for the active site's enclave -> committed artifacts.
+
+    A federal installation is invisible to the county-scoped instruments the rest of the
+    platform uses: it is off the tax rolls (no CAMA parcel) and it reports TRI from whichever
+    county it is addressed in, which for a straddling base is not the site's economic unit.
+    This resolves it against four federal registers instead — DoD MIRTA (site boundary),
+    EPA SDWIS (its own public water systems), EPA ECHO (its own NPDES discharges) and EPA
+    RSEI/TRI (its own toxic-release row) — and writes reference/<slug>/federal-land.geojson,
+    reference/<slug>/enclave.yaml and the enclave's one-facility RSEI reduction.
+
+    No-op for a site with no `federal_installation` facility. Select the site with
+    `watermark --site <slug> enclave` (default: WATERMARK_SITE).
+    """
+    from watermark import enclave as enc
+    from watermark.sites import active_profile
+
+    settings = get_settings()
+    if offline:
+        settings = Settings(
+            site=settings.site,
+            federal_offline=True,
+            federal_fixtures_dir=repo_fixtures_dir("federal"),
+            rsei_offline=True,
+        )
+    profile = active_profile(settings)
+    if enc.installation_of(profile) is None:
+        console.print(
+            f"[yellow]Site '{settings.site}' has no federal_installation facility — nothing to "
+            "pull. Register one on its SiteProfile (SiteFacility.kind=federal_installation) "
+            "first.[/]"
+        )
+        raise typer.Exit(0)
+
+    written = enc.regenerate(settings) if not skip_rsei else _enclave_without_rsei(settings)
+    for path in written.values():
+        wrote(path)
+
+    prof = enc.load_enclave(settings)
+    if prof is None:
+        return
+    tox = prof.toxics
+    table = Table("dimension", "value")
+    if prof.land is not None:
+        record = f" / record {prof.land.record_acres:,}" if prof.land.record_acres else ""
+        table.add_row("land", f"{prof.land.register_acres:,.0f} ac (register){record}")
+    table.add_row(
+        "water",
+        f"{len(prof.water.systems)} public water system(s)"
+        + (f", {prof.water.population_served:,} served" if prof.water.population_served else "")
+        + (f"; {prof.water.supply_wells} supply wells" if prof.water.supply_wells else ""),
+    )
+    flow = prof.wastewater.reported_average_flow_mgd
+    table.add_row(
+        "wastewater",
+        f"{len(prof.wastewater.discharges)} NPDES permit(s)"
+        + (f", {flow:g} MGD reported avg" if flow is not None else r", flow \[open]"),
+    )
+    # `\[open]` — escaped so rich renders the evidence tag instead of eating it as markup.
+    table.add_row("power", f"{prof.power.load_mw:g} MW" if prof.power.load_mw else r"\[open]")
+    table.add_row(
+        "toxics",
+        (f"RSEI Score {tox.rsei.score:,.0f}" if tox.rsei else r"RSEI row \[open]")
+        + (f"; NPL {tox.npl_site_id}" if tox.npl_site_id else "")
+        + (f"; {tox.waste_disposal_sites} waste sites" if tox.waste_disposal_sites else ""),
+    )
+    console.print(table)
+    if prof.land is not None and prof.land.acreage_note:
+        console.print(f"\n[yellow]{prof.land.acreage_note}[/]")
+    if tox.scope_disagreement:
+        console.print(
+            f"\n[yellow]Scope disagreement:[/] the enclave reports TRI from "
+            f"{tox.tri_county_name} ({tox.tri_county_fips}); this site's toxics backdrop covers "
+            f"{tox.site_rsei_county_name} ({tox.site_rsei_fips}). The county inventory does not "
+            "contain the installation — out of scope by construction, not missing."
+        )
+    console.print(f"[dim]{tox.cercla_gap_note}[/]")
+
+
+def _enclave_without_rsei(settings: Settings) -> dict[Path, Path] | dict[str, Path]:
+    """`watermark enclave --skip-rsei`: the register pulls only, leaving the RSEI row as-is.
+
+    The RSEI reduction streams the ~447 MB v2312 archive, so a boundary/water/wastewater refresh
+    shouldn't have to pay for it. The previously committed enclave RSEI row is re-read (not
+    dropped) so the assembled profile keeps it.
+    """
+    from watermark import enclave as enc
+    from watermark.connectors.federal import boundary_geojson, write_boundary
+    from watermark.sites import active_profile
+
+    profile = active_profile(settings)
+    inst = enc.installation_of(profile)
+    assert inst is not None  # the caller gated on this
+    written: dict[str, Path] = {}
+    boundary = None
+    if inst.register_name is not None:
+        from watermark.connectors.federal import fetch_installation_boundary
+
+        boundary = fetch_installation_boundary(
+            inst.register_name, utm_epsg=profile.hydro_utm_epsg, settings=settings
+        )
+    if boundary is not None and profile.federal_land_relpath is not None:
+        dest = settings.data_dir / profile.federal_land_relpath
+        write_boundary(boundary_geojson(boundary, slug=settings.site), dest)
+        written["federal-land"] = dest
+    committed = enc.load_enclave_rsei(settings)
+    row = committed.facilities[0] if committed and committed.facilities else None
+    assembled = enc.build_enclave(settings, boundary=boundary, rsei_row=row)
+    if assembled is not None:
+        written["enclave"] = enc.write_enclave(assembled, enc.enclave_path(settings))
+    return written

@@ -1,7 +1,7 @@
 {
   "site": "sidney",
-  "catalog_version": "2d7d7b406cd7c6c515bd3fd8e3a44223a8f9064e5d25a7fefbdd5bdc78167263",
-  "contract_version": "1.41.0",
+  "catalog_version": "f2a86f2d1a60f3d48998e992547f8b21fb6143c352d6572fa5c86eb320513d39",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:sidney:7q10",
@@ -705,6 +705,22 @@
       "site": "sidney",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:enclave-federal-land",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "enclave-federal-land",
+      "title": "Sidney Federal-Enclave Boundary — Shelby County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:enclave-profile",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "enclave-profile",
+      "title": "Sidney Federal-Enclave Profile — Shelby County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

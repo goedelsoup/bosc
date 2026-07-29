@@ -1,0 +1,1126 @@
+{
+  "$defs": {
+    "Discharge": {
+      "additionalProperties": false,
+      "description": "One EPA ECHO NPDES-permitted discharge held by the enclave itself.",
+      "properties": {
+        "npdes_id": {
+          "title": "Npdes Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "registry_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Registry Id"
+        },
+        "permit_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Permit Status"
+        },
+        "permit_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Permit Type"
+        },
+        "county": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "County"
+        },
+        "county_fips": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "County Fips"
+        },
+        "federal_agency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Federal Agency"
+        },
+        "design_flow_mgd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Design Flow Mgd"
+        },
+        "actual_average_flow_mgd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actual Average Flow Mgd"
+        },
+        "latitude": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latitude"
+        },
+        "longitude": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Longitude"
+        }
+      },
+      "required": [
+        "npdes_id",
+        "name"
+      ],
+      "title": "Discharge",
+      "type": "object"
+    },
+    "EnclaveLand": {
+      "additionalProperties": false,
+      "description": "The enclave's land: the federal register's boundary, cross-checked against the record.",
+      "properties": {
+        "register_name": {
+          "title": "Register Name",
+          "type": "string"
+        },
+        "feature_name": {
+          "title": "Feature Name",
+          "type": "string"
+        },
+        "site_name": {
+          "title": "Site Name",
+          "type": "string"
+        },
+        "operational_status": {
+          "title": "Operational Status",
+          "type": "string"
+        },
+        "is_joint_base": {
+          "title": "Is Joint Base",
+          "type": "boolean"
+        },
+        "register_acres": {
+          "title": "Register Acres",
+          "type": "number"
+        },
+        "parts": {
+          "default": 1,
+          "title": "Parts",
+          "type": "integer"
+        },
+        "record_acres": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Record Acres"
+        },
+        "acreage_delta_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acreage Delta Pct"
+        },
+        "acreage_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acreage Note"
+        },
+        "relpath": {
+          "title": "Relpath",
+          "type": "string"
+        },
+        "note": {
+          "default": "A federal enclave is off the county tax rolls and appears in no county CAMA parcel layer. This boundary is the DoD's own site register — federally owned or otherwise managed land, planning-grade, not a legal survey.",
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "register_name",
+        "feature_name",
+        "site_name",
+        "operational_status",
+        "is_joint_base",
+        "register_acres",
+        "relpath"
+      ],
+      "title": "EnclaveLand",
+      "type": "object"
+    },
+    "EnclavePower": {
+      "additionalProperties": false,
+      "description": "The enclave's electrical load — ``[open]`` unless an instrument discloses it.\n\nModeled explicitly rather than omitted, because the absence is the finding: a ~27,000-person\ninstallation is unmistakably a large load, and the honest representation of that is a named\ngap with the backdrop that does apply, not a plausible number.",
+      "properties": {
+        "load_mw": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Load Mw"
+        },
+        "load_citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Load Citation"
+        },
+        "note": {
+          "default": "No instrument in the corpus discloses it, and none may be inferred from acreage or population. The site's grid backdrop (serving utility, balancing authority, state denominators) still applies and is carried with load_share null — the enclave is a real load the grid layer refuses to size.",
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "title": "EnclavePower",
+      "type": "object"
+    },
+    "EnclaveToxics": {
+      "additionalProperties": false,
+      "description": "The enclave's own contaminant record, and the county scope that structurally misses it.",
+      "properties": {
+        "tri_facility_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tri Facility Id"
+        },
+        "tri_county_fips": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tri County Fips"
+        },
+        "tri_county_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tri County Name"
+        },
+        "epa_registry_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Epa Registry Id"
+        },
+        "rsei": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RseiFacility"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rsei_relpath": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rsei Relpath"
+        },
+        "site_rsei_fips": {
+          "title": "Site Rsei Fips",
+          "type": "string"
+        },
+        "site_rsei_county_name": {
+          "title": "Site Rsei County Name",
+          "type": "string"
+        },
+        "scope_disagreement": {
+          "title": "Scope Disagreement",
+          "type": "boolean"
+        },
+        "scope_note": {
+          "title": "Scope Note",
+          "type": "string"
+        },
+        "cercla_gap_note": {
+          "default": "RSEI tracks TRI **reporting** — annual releases from a covered facility. It does not, and cannot, carry the CERCLA mass: legacy waste-disposal sites, landfills, fire-training areas and the resulting groundwater plume predate TRI (reporting began in 1987) and are not releases under it. The enclave's Superfund record is the instrument for that, and the two are complements, not alternatives — neither is the base's total contaminant footprint.",
+          "title": "Cercla Gap Note",
+          "type": "string"
+        },
+        "npl_site_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Npl Site Id"
+        },
+        "npl_listed_on": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Npl Listed On"
+        },
+        "npl_citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Npl Citation"
+        },
+        "waste_disposal_sites": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Waste Disposal Sites"
+        },
+        "disposal_period": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Disposal Period"
+        },
+        "contaminants": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Contaminants",
+          "type": "array"
+        },
+        "statutory_authority": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Statutory Authority"
+        }
+      },
+      "required": [
+        "site_rsei_fips",
+        "site_rsei_county_name",
+        "scope_disagreement",
+        "scope_note"
+      ],
+      "title": "EnclaveToxics",
+      "type": "object"
+    },
+    "EnclaveWastewater": {
+      "additionalProperties": false,
+      "description": "The enclave's own permitted discharges (EPA ECHO).",
+      "properties": {
+        "discharges": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Discharge"
+          },
+          "title": "Discharges",
+          "type": "array"
+        },
+        "reported_average_flow_mgd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reported Average Flow Mgd"
+        },
+        "reported_flow_note": {
+          "default": "Sum of the reported average flows EPA ECHO carries for the enclave's own permits. A permit ECHO leaves blank is omitted, never imputed — so this is a floor, not a total.",
+          "title": "Reported Flow Note",
+          "type": "string"
+        }
+      },
+      "title": "EnclaveWastewater",
+      "type": "object"
+    },
+    "EnclaveWater": {
+      "additionalProperties": false,
+      "description": "The enclave's own water supply — its public water systems plus the record's wellfield.",
+      "properties": {
+        "systems": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/WaterSystem"
+          },
+          "title": "Systems",
+          "type": "array"
+        },
+        "population_served": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Population Served"
+        },
+        "service_connections": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Connections"
+        },
+        "supply_wells": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supply Wells"
+        },
+        "well_fields": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Well Fields"
+        },
+        "treatment_units": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Treatment Units"
+        },
+        "aquifer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Aquifer"
+        },
+        "withdrawal_mgd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Withdrawal Mgd"
+        },
+        "withdrawal_citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Withdrawal Citation"
+        }
+      },
+      "title": "EnclaveWater",
+      "type": "object"
+    },
+    "RseiChemicalScore": {
+      "description": "A chemical's contribution to a facility (cumulative across years).",
+      "properties": {
+        "chemical": {
+          "title": "Chemical",
+          "type": "string"
+        },
+        "cas": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cas"
+        },
+        "toxicity_category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Toxicity Category"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "pounds": {
+          "title": "Pounds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "chemical",
+        "score",
+        "pounds"
+      ],
+      "title": "RseiChemicalScore",
+      "type": "object"
+    },
+    "RseiFacility": {
+      "description": "One TRI/RSEI facility in the target county, with modeled results rolled up.",
+      "properties": {
+        "facility_id": {
+          "title": "Facility Id",
+          "type": "string"
+        },
+        "facility_number": {
+          "title": "Facility Number",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "parent_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Name"
+        },
+        "federal_facility": {
+          "default": false,
+          "title": "Federal Facility",
+          "type": "boolean"
+        },
+        "latitude": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latitude"
+        },
+        "longitude": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Longitude"
+        },
+        "street": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Street"
+        },
+        "city": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "City"
+        },
+        "state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "State"
+        },
+        "fips": {
+          "title": "Fips",
+          "type": "string"
+        },
+        "npdes_permit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Npdes Permit"
+        },
+        "naics": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Naics"
+        },
+        "sic": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sic"
+        },
+        "water_releases": {
+          "default": false,
+          "title": "Water Releases",
+          "type": "boolean"
+        },
+        "score": {
+          "default": 0.0,
+          "title": "Score",
+          "type": "number"
+        },
+        "cancer_score": {
+          "default": 0.0,
+          "title": "Cancer Score",
+          "type": "number"
+        },
+        "noncancer_score": {
+          "default": 0.0,
+          "title": "Noncancer Score",
+          "type": "number"
+        },
+        "hazard": {
+          "default": 0.0,
+          "title": "Hazard",
+          "type": "number"
+        },
+        "pounds": {
+          "default": 0.0,
+          "title": "Pounds",
+          "type": "number"
+        },
+        "pounds_by_media": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "default": {},
+          "title": "Pounds By Media",
+          "type": "object"
+        },
+        "first_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Year"
+        },
+        "last_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Year"
+        },
+        "years": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RseiYearScore"
+          },
+          "title": "Years",
+          "type": "array"
+        },
+        "top_chemicals": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RseiChemicalScore"
+          },
+          "title": "Top Chemicals",
+          "type": "array"
+        },
+        "top_water_chemicals": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RseiWaterChemical"
+          },
+          "title": "Top Water Chemicals",
+          "type": "array"
+        }
+      },
+      "required": [
+        "facility_id",
+        "facility_number",
+        "name",
+        "fips"
+      ],
+      "title": "RseiFacility",
+      "type": "object"
+    },
+    "RseiWaterChemical": {
+      "description": "A chemical's cumulative pounds released **to water** at a facility (media bucket 3).\n\nDistinct from :class:`RseiChemicalScore`, whose ``pounds`` are cumulative across *all*\nmedia (dominated by air/underground injection) and whose ranking is by modeled Score —\nso its top-N routinely omits the actual top water pollutants. This is the per-chemical\n*water* breakdown a chemical-specific dilution screen needs (#1607): it sums only the\ndirect-water (``MediaCode == 3``) release rows and reconciles to\n``pounds_by_media[\"water\"]``. ``reporting_years`` is the count of distinct years this\nchemical was reported to water — the faithful annualization divisor (mirrors\n:func:`watermark.hydrology.toxics._annual_water_pounds`), never the calendar span.",
+      "properties": {
+        "chemical": {
+          "title": "Chemical",
+          "type": "string"
+        },
+        "cas": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cas"
+        },
+        "water_pounds": {
+          "title": "Water Pounds",
+          "type": "number"
+        },
+        "reporting_years": {
+          "title": "Reporting Years",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "chemical",
+        "water_pounds",
+        "reporting_years"
+      ],
+      "title": "RseiWaterChemical",
+      "type": "object"
+    },
+    "RseiYearScore": {
+      "description": "One reporting year of a facility's RSEI totals.",
+      "properties": {
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "cancer_score": {
+          "title": "Cancer Score",
+          "type": "number"
+        },
+        "noncancer_score": {
+          "title": "Noncancer Score",
+          "type": "number"
+        },
+        "hazard": {
+          "title": "Hazard",
+          "type": "number"
+        },
+        "pounds": {
+          "title": "Pounds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "year",
+        "score",
+        "cancer_score",
+        "noncancer_score",
+        "hazard",
+        "pounds"
+      ],
+      "title": "RseiYearScore",
+      "type": "object"
+    },
+    "WaterSystem": {
+      "additionalProperties": false,
+      "description": "One EPA SDWIS public water system operated by the enclave (its own supply, not the city's).",
+      "properties": {
+        "pwsid": {
+          "title": "Pwsid",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "system_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "System Type"
+        },
+        "source_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Type"
+        },
+        "population_served": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Population Served"
+        },
+        "service_connections": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Connections"
+        },
+        "owner_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Owner Type"
+        },
+        "is_active": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Is Active"
+        }
+      },
+      "required": [
+        "pwsid",
+        "name"
+      ],
+      "title": "WaterSystem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The committed per-site federal-enclave artifact (``data/reference/<slug>/enclave.yaml``).",
+  "properties": {
+    "meta": {
+      "additionalProperties": true,
+      "title": "Meta",
+      "type": "object"
+    },
+    "slug": {
+      "title": "Slug",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "component": {
+      "title": "Component",
+      "type": "string"
+    },
+    "agency": {
+      "title": "Agency",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "record_relpath": {
+      "title": "Record Relpath",
+      "type": "string"
+    },
+    "land": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EnclaveLand"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "water": {
+      "$ref": "#/$defs/EnclaveWater"
+    },
+    "wastewater": {
+      "$ref": "#/$defs/EnclaveWastewater"
+    },
+    "power": {
+      "$ref": "#/$defs/EnclavePower"
+    },
+    "toxics": {
+      "$ref": "#/$defs/EnclaveToxics"
+    },
+    "citations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Citations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "meta",
+    "slug",
+    "name",
+    "component",
+    "agency",
+    "status",
+    "record_relpath",
+    "water",
+    "wastewater",
+    "power",
+    "toxics"
+  ],
+  "title": "EnclaveProfile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

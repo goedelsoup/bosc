@@ -125,6 +125,31 @@ class DcEndUse(StrEnum):
     ENCLAVE = "enclave"
 
 
+class FacilityKind(StrEnum):
+    """What KIND of thing a :class:`SiteFacility` describes (#1664, epic #1659 ME-E).
+
+    The model grew up around the **data center** — an IT load, a genset fleet, a cooling
+    archetype — because that is the network's subject. But a watershed point can be dominated by
+    a facility that has none of those and still drives the water / power / discharge story: a
+    **federal installation** (Wright-Patterson AFB) runs its own wells, its own wastewater
+    outfalls, and its own load, and is invisible to every instrument the data-center model reads
+    (no air-permit genset bank, no site plan, no county CAMA parcel).
+
+    ``federal_installation`` carries a :class:`FederalInstallation` block instead of the IT-load /
+    genset / cooling dimensions, and the data-center math refuses it by construction rather than
+    modeling a base as if it were a campus: the IT-load triple must be ``[open]``, the cooling
+    archetype must be ``off`` (there is no IT-load-driven cooling-water demand to derive), and the
+    per-archetype overrides must be unset. See :meth:`SiteFacility._installation_kind_consistent`.
+
+    This is a **kind**, not a grade: an installation is graded on the same documentary-depth
+    rule as a campus (:attr:`SiteFacility.is_instrument_grounded`) — a filed federal instrument
+    (a CERCLA §120 Federal Facility Agreement) grounds it the way an air permit grounds Lima.
+    """
+
+    DATA_CENTER = "data_center"  # the network's default subject (every campus)
+    FEDERAL_INSTALLATION = "federal_installation"  # a federal enclave (WPAFB)
+
+
 class ItLoadGrounding(StrEnum):
     """The evidentiary grounding of a facility's disclosed IT load — the grade #1630 keys facility
     readiness (``watermark.site.readiness``) on, so a permit-grounded and a screening-only facility
@@ -177,6 +202,139 @@ def _require_together(*fields: tuple[str, object], label: str = "", note: str = 
         raise ValueError(f"{subject} must be set together{f' {note}' if note else ''}")
 
 
+class FederalInstallation(BaseModel):
+    """A federal enclave's own land / water / wastewater / power / toxics **identity** (#1664).
+
+    The block a :class:`SiteFacility` of kind ``federal_installation`` carries in place of the
+    data-center dimensions. It answers the three questions the generic models structurally cannot
+    for an enclave, and it answers them by **pointing at instruments**, never by re-keying them:
+
+    * **Land** — a federal enclave is off the county tax rolls, so no county CAMA parcel layer will
+      ever carry it (``SiteProfile.gis_parcel`` is honestly ``None`` for WPAFB and always will be).
+      ``register_name`` is the enclave's key in the **DoD MIRTA** register — the federal peer of a
+      parcel id — which :mod:`watermark.connectors.federal_land` resolves to committed boundary
+      geometry so the ``places`` domain can activate off non-CAMA land.
+    * **Water / wastewater / power** — the base runs its own supply wells, its own outfalls, and
+      its own load. The **documented** figures are read out of ``record_relpath`` (the committed
+      extraction), so this block never restates them; what it adds is what that record does not
+      carry — the NPDES permits (EPA ECHO) and the load, which stays ``[open]`` until an
+      instrument discloses it.
+    * **Toxics** — ``tri_facility_id`` / ``tri_county_fips`` locate the enclave's OWN row in
+      EPA TRI/RSEI. These are load-bearing precisely because they usually **disagree** with the
+      site's ``rsei_fips``: an installation straddling two counties reports from the one the
+      profile did not pick as its economic unit, so the county backdrop misses the enclave by
+      construction. Recording the enclave's own county here is what lets
+      :mod:`watermark.enclave` reconcile the two instead of leaving the base severed from the
+      toxics layer.
+
+    Every figure here is either a [verified] identifier from a named federal source or ``None``
+    (``[open]``). Nothing is estimated; a value and its citation travel together.
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    # --- Identity in the federal register -------------------------------------
+    # The reporting component + owning department, as the federal registers name them (MIRTA
+    # ``SITEREPORTINGCOMPONENT``; EPA TRI ``asgn_agency``). Free text, not an enum: the register
+    # vocabulary spans services, Guard components and defence agencies, and inventing a closed
+    # set here would force a mis-fit on the first non-Air-Force enclave.
+    component: str
+    agency: str
+    # The enclave's key in the **DoD MIRTA** site register (``FEATURENAME``) — the federal peer of
+    # a parcel id, and the join `watermark.connectors.federal_land` queries on. ``None`` = the
+    # enclave is not in MIRTA (or has not been located in it yet): the land seam then stays
+    # ``[open]`` and no boundary is fabricated from a bounding box.
+    register_name: str | None = None
+    register_citation: str | None = None
+
+    # --- The grounding instrument ---------------------------------------------
+    # The committed extraction the enclave's documented water / contaminant facts are READ from
+    # (relative to ``settings.extracted_dir``) — e.g. the CERCLA §120 Federal Facility Agreement,
+    # which states the acreage, the supply wells, the well fields, the treatment units, the waste
+    # sites and the contaminants. Those figures are deliberately NOT restated as fields here:
+    # re-keying a primary record into a profile is exactly the drift this repo refuses, so
+    # :mod:`watermark.enclave` projects them from the record instead. This is also the facility's
+    # instrument grounding (:attr:`SiteFacility.is_instrument_grounded`) — a filed federal
+    # instrument grounds an installation the way an air permit grounds a campus.
+    record_relpath: str
+    record_citation: str
+    record_source: Literal["document", "connector", "reference", "assumption"] = "document"
+
+    # --- Water supply (EPA SDWIS — not in the CERCLA record) ------------------
+    # The enclave's own **public water systems**, by PWSID. A base does not buy from the city: it
+    # runs its own community water systems off its own wells, and SDWIS is where their source,
+    # their population served and their connection count are on the record — the closest thing to
+    # a metered water footprint the enclave publishes. Empty = ``[open]``.
+    pwsids: tuple[str, ...] = ()
+    pws_citation: str | None = None
+
+    # --- Wastewater (EPA ECHO / the state permit — not in the CERCLA record) ---
+    # The enclave's own NPDES permits. Empty = ``[open]``, never "no discharge".
+    npdes_permits: tuple[str, ...] = ()
+    npdes_citation: str | None = None
+
+    # --- Power / withdrawal (both ``[open]`` for WPAFB) -----------------------
+    # An installation-wide electrical load and a raw-water withdrawal, each present ONLY when an
+    # instrument discloses it. ``None`` is the honest default: a base is unmistakably a large
+    # power and water user, and that is precisely why no figure may be invented for it — the
+    # grid stack emits the county/utility backdrop with ``load_share=None`` instead.
+    load_mw: float | None = None
+    load_citation: str | None = None
+    withdrawal_mgd: float | None = None
+    withdrawal_citation: str | None = None
+
+    # --- Toxics identity (EPA TRI / FRS / NPL) --------------------------------
+    # The enclave's own TRI facility id and the county it REPORTS FROM — which for a straddling
+    # installation is not the site's ``rsei_fips``. ``tri_county_fips`` is the scope
+    # :func:`watermark.enclave.build_enclave_inventory` reduces RSEI against.
+    tri_facility_id: str | None = None
+    tri_county_fips: str | None = None
+    tri_county_name: str | None = None
+    epa_registry_id: str | None = None  # EPA FRS registry id (optional; not every enclave has one)
+    tri_citation: str | None = None
+
+    @model_validator(mode="after")
+    def _identity_citations_paired(self) -> FederalInstallation:
+        _require_together(
+            ("register_name", self.register_name),
+            ("register_citation", self.register_citation),
+            note="(or both left None — the enclave is not located in the federal land register)",
+        )
+        # An empty id tuple is [open], so it carries no citation; a disclosed list must.
+        if bool(self.pwsids) != (self.pws_citation is not None):
+            raise ValueError(
+                "pwsids and pws_citation must be set together (or both left empty/None — the "
+                "enclave's water systems are [open], not 'served by the municipality')"
+            )
+        if bool(self.npdes_permits) != (self.npdes_citation is not None):
+            raise ValueError(
+                "npdes_permits and npdes_citation must be set together (or both left empty/None "
+                "— the enclave's outfalls are [open], which is not the same as 'no discharge')"
+            )
+        _require_together(("load_mw", self.load_mw), ("load_citation", self.load_citation))
+        _require_together(
+            ("withdrawal_mgd", self.withdrawal_mgd),
+            ("withdrawal_citation", self.withdrawal_citation),
+        )
+        # The TRI identity is all-or-nothing: a facility id without the county it reports from
+        # cannot be reduced against RSEI, and a county without the id cannot be narrowed to the
+        # enclave — a half-set group would silently screen the wrong rows.
+        _require_together(
+            ("tri_facility_id", self.tri_facility_id),
+            ("tri_county_fips", self.tri_county_fips),
+            ("tri_county_name", self.tri_county_name),
+            ("tri_citation", self.tri_citation),
+            label="the enclave TRI identity",
+            note="or all left None (the enclave's TRI row is [open])",
+        )
+        if self.epa_registry_id is not None and self.tri_facility_id is None:
+            raise ValueError(
+                "epa_registry_id identifies the enclave's EPA-registered facility — set it only "
+                "alongside the TRI identity it belongs to"
+            )
+        return self
+
+
 class SiteFacility(BaseModel):
     """A site's disclosed data-center facility power basis.
 
@@ -192,6 +350,15 @@ class SiteFacility(BaseModel):
       MW load is **not** disclosed. Gensets and the air permit are ``None``; the IT load is a
       floor-area SCREENING bracket carried as ``[inference]`` (``it_load_citation``), never a
       disclosure — the interconnection/air-permit MW stays ``[open]``.
+
+    A third mode is not a data center at all:
+
+    * **Federal enclave** (Wright-Patterson AFB, #1664): ``kind = federal_installation`` and an
+      :class:`FederalInstallation` block in place of the IT-load / genset / cooling dimensions.
+      The base's water, wastewater and land are documented by federal instruments the campus
+      models never read (a CERCLA §120 agreement, the DoD MIRTA land register, EPA TRI), and its
+      load is ``[open]``. The data-center math refuses it by construction rather than sizing a
+      base as a campus — see :meth:`_installation_kind_consistent`.
 
     A site with no identified facility leaves ``SiteProfile.facility = None`` — the grid stack
     then emits the per-site grid backdrop (utility / BA / state denominators) **without**
@@ -212,6 +379,11 @@ class SiteFacility(BaseModel):
     name: str
     key: str = ""
     status: FacilityLifecycle
+    # What kind of facility this is (#1664). Defaults to ``data_center`` — every campus in the
+    # network — so no existing profile changes. ``federal_installation`` swaps the data-center
+    # dimensions for the ``installation`` block below.
+    kind: FacilityKind = FacilityKind.DATA_CENTER
+    installation: FederalInstallation | None = None
     operator: str | None = None
     operator_citation: str | None = None
     end_use: DcEndUse | None = None
@@ -326,6 +498,64 @@ class SiteFacility(BaseModel):
             if isinstance(name, str) and name:
                 data["key"] = _facility_slug(name)
         return data
+
+    @model_validator(mode="after")
+    def _installation_kind_consistent(self) -> SiteFacility:
+        """A ``federal_installation`` carries its enclave block and **none** of the data-center
+        dimensions; a ``data_center`` carries no enclave block (#1664).
+
+        This is the structural half of the refusal. A base is a large power and water user, so
+        the tempting failure is to let it inherit the campus math and emit a plausible number:
+        an IT load standing in for the installation's load, the ``unknown`` cooling archetype
+        bracketing a nonexistent cooling-water demand, a genset fleet dispatched through AERMOD.
+        Every one of those would be fabricated. Forbidding the fields makes the enclave's load
+        ``[open]`` at the type level, which is what the record actually says, and pins the
+        cooling archetype to ``off`` so :func:`watermark.hydrology.cooling.derive_cooling_basis`
+        reports an explicit zero data-center cooling load rather than a bracket over silence.
+        """
+        if (self.kind is FacilityKind.FEDERAL_INSTALLATION) != (self.installation is not None):
+            raise ValueError(
+                f"kind={self.kind.value} and installation="
+                f"{'set' if self.installation is not None else 'None'} disagree — a "
+                f"`federal_installation` carries a FederalInstallation block and a `data_center` "
+                f"carries none"
+            )
+        if self.kind is not FacilityKind.FEDERAL_INSTALLATION:
+            return self
+        # The data-center dimensions, by the name a profile would set them under.
+        dc_only: tuple[tuple[str, object], ...] = (
+            ("it_load_mw", self.it_load_mw),
+            ("it_load_low_mw", self.it_load_low_mw),
+            ("it_load_high_mw", self.it_load_high_mw),
+            ("it_load_citation", self.it_load_citation),
+            ("it_load_source", self.it_load_source),
+            ("air_permit_citation", self.air_permit_citation),
+            ("air_permit_relpath", self.air_permit_relpath),
+            ("genset_count", self.genset_count),
+            ("genset_mw", self.genset_mw),
+            ("genset_stack_citation", self.genset_stack_citation),
+            ("end_use", self.end_use),
+            ("gross_floor_area_sqft", self.gross_floor_area_sqft),
+            ("disclosed_investment_usd", self.disclosed_investment_usd),
+            ("blowdown_mgd", self.blowdown_mgd),
+            ("wue_l_per_kwh", self.wue_l_per_kwh),
+            ("cycles_of_concentration", self.cycles_of_concentration),
+            ("heat_reject_multiplier", self.heat_reject_multiplier),
+        )
+        set_fields = [n for n, v in dc_only if v is not None]
+        if set_fields:
+            raise ValueError(
+                f"a federal_installation facility carries no data-center dimensions; got "
+                f"{set_fields} — an installation's load lives in installation.load_mw (or stays "
+                f"[open]), and its water in the record at installation.record_relpath"
+            )
+        if self.cooling_model is not CoolingModelType.OFF:
+            raise ValueError(
+                f"a federal_installation facility must pin cooling_model=off (got "
+                f"{self.cooling_model.value}) — there is no IT load to derive a cooling-water "
+                f"demand from, and `unknown` would publish a bracketed range over an absence"
+            )
+        return self
 
     @model_validator(mode="after")
     def _override_citations_paired(self) -> SiteFacility:
@@ -462,6 +692,11 @@ class SiteFacility(BaseModel):
         return self
 
     @property
+    def is_data_center(self) -> bool:
+        """True for a data-center campus — the subject the power / cooling / air models size."""
+        return self.kind is FacilityKind.DATA_CENTER
+
+    @property
     def has_disclosed_stack(self) -> bool:
         """True if the site discloses a documented genset stack geometry (not the CBI case)."""
         return self.genset_stack_citation is not None
@@ -492,7 +727,16 @@ class SiteFacility(BaseModel):
         ([inference]) or a [reference] announced ceiling is on the record but not instrument-
         documented — it SEEDS the facility domain rather than lifting it. Never collapse a screening
         bracket with a permit/disclosure figure (epic #1626).
+
+        A **federal installation** (#1664) is graded on the same rule through its own instrument:
+        the enclave's ``record_relpath`` — a filed federal agreement (WPAFB's CERCLA §120 FFA)
+        documenting the base's extent, supply wells and contaminant mass — grounds it exactly as an
+        air permit grounds a campus. The grade is the *record's* provenance class, so an enclave
+        seeded from a press description (``record_source="reference"``) still only SEEDS.
         """
+        inst = self.installation
+        if inst is not None:
+            return inst.record_source in ("document", "connector")
         return self.it_load_grounding in (
             ItLoadGrounding.PERMIT,
             ItLoadGrounding.DISCLOSURE,
@@ -593,15 +837,21 @@ class SiteProfile(BaseModel):
     def _facility_has_demand_pressure_destination(self) -> SiteProfile:
         # The demand-pressure sensitivity is facility-gated (``derive_demand_pressure`` raises for
         # a facility-less site), and ``write_demand_pressure`` needs a destination. So a profile
-        # WITH a documented facility must carry a non-None ``demand_pressure_relpath`` — else the
-        # feed it is entitled to could never be written (#1660). The reverse (a facility-less site
-        # must be None) is intentionally NOT enforced here: 15 registered peers still carry a
-        # dangling path pending the network-wide cleanup this ME-A fix deferred — WPAFB is the
-        # first facility-less profile set to None.
-        if self.facility is not None and self.demand_pressure_relpath is None:
+        # entitled to that feed must carry a non-None ``demand_pressure_relpath`` — else the feed
+        # could never be written (#1660). The reverse (a site without one must be None) is
+        # intentionally NOT enforced here: 15 registered peers still carry a dangling path pending
+        # the network-wide cleanup this ME-A fix deferred.
+        #
+        # Entitlement is ``has_facility_power_basis``, not "has a facility" (#1664): the writer
+        # sizes the sensitivity against a **derivable campus load**, so a facility whose load is
+        # entirely ``[open]`` — a rezoning-only campus, or a federal installation, which has no IT
+        # load at all — is no more entitled to the feed than a facility-less site. Keying on the
+        # power basis is the same gate ``onboard`` and the grid CLI already use.
+        if self.has_facility_power_basis and self.demand_pressure_relpath is None:
             raise ValueError(
-                f"site {self.slug!r} has a documented facility but demand_pressure_relpath is None "
-                "— a facility site needs a destination for its demand-pressure feed"
+                f"site {self.slug!r} has a facility with a derivable power basis but "
+                "demand_pressure_relpath is None — it needs a destination for its "
+                "demand-pressure feed"
             )
         return self
 
@@ -684,6 +934,14 @@ class SiteProfile(BaseModel):
     noaa_fallback_24h_depth_in: dict[int, float]
     parcels_relpath: str  # relative to settings.data_dir
     footprint_relpath: str  # relative to settings.data_dir
+    # The FEDERAL-LAND boundary (#1664), relative to settings.data_dir — committed GeoJSON pulled
+    # from the DoD MIRTA site register by `watermark federal-land`. This is a THIRD land path,
+    # deliberately not folded into `parcels_relpath`: a parcel assemblage is a county CAMA record
+    # (owner, situs, transfer date, valuation) and a federal enclave has none of those — it is off
+    # the tax rolls, so no county parcel layer will ever carry it. Keeping the two apart is what
+    # lets the `places` domain activate off non-CAMA geometry without a phantom owner column.
+    # ``None`` for every site with no federal enclave.
+    federal_land_relpath: str | None = None
     # "Corridor" sense 2 (CORROBORATION GEOMETRY): the frozen external-corroboration geometry
     # dir (corridor.geojson + corridor-centerline.geojson), relative to settings.data_dir —
     # folded into the GIS findings by site/gismap.merge_corridor_layer. Real line/polygon
@@ -715,6 +973,14 @@ class SiteProfile(BaseModel):
     # Economics (per-site by county FIPS / state / utility):
     baseline_relpath: str  # Census+QCEW county baseline (economics/baseline.py)
     rsei_relpath: str  # EPA RSEI county toxics inventory (rsei.py)
+    # The federal ENCLAVE's own RSEI row (#1664) — a second, one-facility reduction scoped to the
+    # installation's own reporting county (``installation.tri_county_fips``), which for a
+    # straddling enclave is NOT ``rsei_fips``. Enclave-GATED, like ``demand_pressure_relpath`` is
+    # facility-gated: ``None`` for every site without a ``federal_installation`` facility, so no
+    # peer declares a destination for a file that can never be written. It never replaces
+    # ``rsei_relpath`` — the county backdrop stays the readiness floor signal; this reconciles the
+    # enclave the county scope structurally misses (:mod:`watermark.enclave`).
+    enclave_rsei_relpath: str | None = None
     consumer_energy_relpath: str  # EIA consumer energy prices (economics/energy.py)
     # Facility demand→price-pressure sensitivity (economics/energy.py). Facility-GATED: the feed
     # only exists for a site with a documented ``facility`` (``derive_demand_pressure`` raises
@@ -934,6 +1200,24 @@ class SiteProfile(BaseModel):
         return self.facilities[0] if self.facilities else None
 
     @property
+    def campus(self) -> SiteFacility | None:
+        """The primary facility **if it is a data-center campus**, else ``None`` (#1664).
+
+        The narrower peer of :attr:`facility`, and the accessor the data-center models should
+        read. Before the enclave seam the two were the same thing, so ``facility is not None``
+        was a safe stand-in for "there is a campus to size". A ``federal_installation`` breaks
+        that equivalence: WPAFB now HAS a facility, but sizing a genset fleet or an AERMOD
+        dispatch deck against it would be fabricating a data center on an Air Force base.
+
+        Everything that models a *campus* (air dispatch, the compute/power basis, the
+        demand→price sensitivity, the basin activity summary) reads this; everything that asks
+        "does this site have a documented facility at all" (readiness, the facility feed) keeps
+        reading :attr:`facility`.
+        """
+        fac = self.facility
+        return fac if fac is not None and fac.is_data_center else None
+
+    @property
     def has_facility_power_basis(self) -> bool:
         """True when the primary facility has a **derivable** IT-load power basis (#1628): a
         facility exists AND its load is not entirely ``[open]``.
@@ -942,9 +1226,10 @@ class SiteProfile(BaseModel):
         power basis (:func:`watermark.facility.power.derive_power_basis` returns ``None`` in both the
         no-facility and the open-load cases). A rezoning-only campus (load all ``[open]``) is treated
         like no facility for that purpose — never a fabricated Lima-scale load — so those commands
-        skip cleanly instead of crashing.
+        skip cleanly instead of crashing. A ``federal_installation`` never has one: its IT load is
+        forbidden at the type level (#1664), so it falls out here without a special case.
         """
-        fac = self.facility
+        fac = self.campus
         return fac is not None and fac.it_load_mw is not None
 
     def facility_geometry(self, fac: SiteFacility) -> tuple[str, str]:

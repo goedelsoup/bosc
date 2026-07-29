@@ -264,6 +264,33 @@ def air_settings() -> Settings:
 
 
 @pytest.fixture
+def federal_settings(tmp_path: Path) -> Settings:
+    """Offline federal-enclave settings for WPAFB: MIRTA/SDWIS/ECHO fixtures, no network (#1664).
+
+    ``data_dir`` is a tmp_path shell that **symlinks** the committed ``extracted/`` and
+    ``reference/`` trees — the same sandboxing idea as ``research_settings``, but the enclave
+    assembly reads real committed data (its grounding record, its RSEI row), so those two subtrees
+    are linked through rather than copied. The point of the shell is ``cache_dir``, which derives
+    from ``data_dir``: it keeps a developer's live ``data/cache/federal/`` from shadowing the
+    committed fixtures, so the register pulls are proven to replay from
+    ``tests/fixtures/federal/`` alone rather than passing green off a warm local cache.
+    """
+    data_dir = tmp_path / "data"
+    data_dir.mkdir()
+    for sub in ("extracted", "reference", "documents", "site", "entities", "catalog"):
+        src = REPO_ROOT / "data" / sub
+        if src.is_dir():
+            (data_dir / sub).symlink_to(src, target_is_directory=True)
+    return Settings(
+        site="wpafb",
+        data_dir=data_dir,
+        federal_offline=True,
+        federal_fixtures_dir=FIXTURES / "federal",
+        rsei_offline=True,
+    )
+
+
+@pytest.fixture
 def civic_settings() -> Settings:
     """Offline civic settings: real repo data dir, civic page fixtures, no network."""
     return Settings(

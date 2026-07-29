@@ -10,6 +10,7 @@ against these instead of the network or the git-ignored `data/cache/`.
 | `hydrology/<connector>/<key>.json` | Recorded connector responses (USGS NWIS, EPA ECHO, NOAA Atlas-14, Allen/Lima GIS, ORC, LSC). The `<key>` is the request hash `cached_get` computes; `conftest.py` points `hydro_fixtures_dir` here and sets `hydro_offline=True`. |
 | `air/isd/<key>.json`, `air/igra/<key>.json` | AERMET met pulls — NOAA ISD surface (ISHD) and IGRA v2 upper-air, as `cached_get` JSON payloads (`air_settings` fixture, `air_offline=True`). Trimmed to a few days/soundings; the `igra` payload is already year-filtered (what `fetch()` caches). |
 | `air/ned/<key>.tif` | AERMAP terrain — a small decimated USGS 3DEP/NED DEM GeoTIFF (raster, not JSON — the committed-fixture-GeoTIFF discipline of `gis/raster.py`). |
+| `federal/{mirta,sdwis,echo_cwa}/<key>.json` | The federal-enclave registers (#1664) — DoD MIRTA site boundaries, EPA SDWIS public water systems, EPA ECHO CWA facility records. Recorded as `cached_get` payloads; `federal_fixtures_dir` + `federal_offline=True` replay them. Narrow the *request* (one `FEATURENAME` / PWSID / NPDES id per key), never the response. |
 | `periplus-bosc-parcels.geojson` | Parcel geometry fixture for the Periplus cross-check test. |
 
 ## Adding a fixture

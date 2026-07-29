@@ -24,7 +24,7 @@
     },
     "NodeActivity": {
       "additionalProperties": false,
-      "description": "The node's disclosed data-center activity (from the primary ``SiteProfile`` facility).\n\nCarries the primary campus's real-world lifecycle ``facility_status`` (#1628) so the pure\nbasin/directory builders read it off the ``network`` feed instead of a hardcoded per-slug dict —\n``None`` when the site has no disclosed facility (the reader defaults to ``investigation``).\n``facility_count`` reflects the full multi-facility list.",
+      "description": "The node's disclosed data-center activity (from the primary ``SiteProfile`` **campus**).\n\nCarries the primary campus's real-world lifecycle ``facility_status`` (#1628) so the pure\nbasin/directory builders read it off the ``network`` feed instead of a hardcoded per-slug dict —\n``None`` when the site has no disclosed campus (the reader defaults to ``investigation``).\n``facility_count`` counts the site's data-center campuses.\n\nData-center only, by construction (#1664): a ``federal_installation`` facility (WPAFB) is a\ndocumented facility but not data-center activity, so it is excluded here rather than reported\nas a campus with an ``[open]`` IT load. The enclave surfaces through the ``enclave`` feed and\nthe ``facility`` domain instead.",
       "properties": {
         "has_disclosed_facility": {
           "default": false,

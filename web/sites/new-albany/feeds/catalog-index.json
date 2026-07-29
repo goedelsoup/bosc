@@ -1,7 +1,7 @@
 {
   "site": "new-albany",
-  "catalog_version": "969f37f8fa561cf270010a36dfb8e857403517187ebca781f10573d9f3035c6a",
-  "contract_version": "1.41.0",
+  "catalog_version": "e5354e7bafd57758c15f8e17e7f1316574d90b41c9639dda28f763e5a8a5deaf",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:new-albany:7q10",
@@ -689,6 +689,22 @@
       "site": "new-albany",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:enclave-federal-land",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "enclave-federal-land",
+      "title": "New Albany · Licking Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:enclave-profile",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "enclave-profile",
+      "title": "New Albany · Licking Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

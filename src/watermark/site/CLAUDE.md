@@ -22,7 +22,16 @@ root [`CLAUDE.md`](../../../CLAUDE.md).
   `GeoFeatureCollection` feeds for the frontend's DeckGL map (`export_geo` /
   `export_watershed_geo` / `export_imagery_geo`); `merge_rsei_layer` / `merge_corridor_layer`
   fold the RSEI facility points + the frozen-Periplus corridor in first. Geometry is WGS84
-  verbatim (display-only, no reprojection).
+  verbatim (display-only, no reprojection). Two per-site land layers sit beside them and are
+  **not interchangeable**: `campus_from_parcels` (county CAMA — owner / situs / transfer date)
+  and `enclave_from_federal_land` (#1664, the DoD MIRTA boundary — reporting component /
+  operational status). A federal enclave is off the tax rolls, so the second is the *only* land
+  path it can ever have; `readiness.PLACES_GEOMETRY_FEEDS` activates `places` on either.
+- **`enclave.py`** publishes the committed federal-enclave profile
+  (`data/reference/<slug>/enclave.yaml`, built by `watermark enclave`) as the `enclave` object
+  feed — the peer of `rsei.py`: the artifact is already a provenance-carrying model, so the feed
+  **is** the model. It is where the enclave's own RSEI/TRI row and the county-scope severance
+  that hides it from the site's `rsei` backdrop are published.
 - **`objectstore.py`** backs the object-store CLI (serving real source bytes from R2), not the
   bundle.
 - The legacy Python SSG (`build.py` / `render.py` / `nav` / `templates/` / `assets/`, the

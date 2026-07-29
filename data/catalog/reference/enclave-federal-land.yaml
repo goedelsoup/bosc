@@ -1,0 +1,37 @@
+id: enclave-federal-land
+title: Lima Federal-Enclave Boundary — Allen County, OH (DoD MIRTA)
+title_template: '{place} Federal-Enclave Boundary — {county_state} (DoD MIRTA)'
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: enclave
+  connector_ref: watermark.connectors.federal
+  source: DoD MIRTA (Military Installations, Ranges, and Training Areas) site-boundary register,
+    published via Esri US Federal Data; boundaries encompass federally owned or otherwise managed
+    lands as defined in the Base Structure Report
+  external_url: https://www.arcgis.com/home/item.html?id=fb3b6e6bb5f14b09b0a3690a5e3ceb6a
+license: U.S. Government work (public domain)
+access_tier: public
+site_scope: slug-scoped
+storage:
+- relpath: reference/{site}/federal-land.geojson
+  media_type: application/geo+json
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: connector
+schema_ref: watermark.connectors.federal.InstallationBoundary
+tags:
+- federal
+- enclave
+- land
+- dod
+- mirta
+- geojson
+notes: The land path for a federal enclave, which is off the county tax rolls and therefore appears
+  in no county CAMA parcel layer — the register key (FEATURENAME) is the federal peer of a parcel id.
+  Planning-grade, NOT a legal survey or a cadastral parcel. Acreage is measured from this geometry in
+  the site's own UTM zone and may disagree materially with the acreage the enclave's grounding record
+  states (WPAFB - 5,230 mapped acres against the 1991 CERCLA agreement's ~8,200); the two are
+  independent measurements and neither is adjusted toward the other. Issue 1664, epic 1659.

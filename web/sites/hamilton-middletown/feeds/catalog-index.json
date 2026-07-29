@@ -1,7 +1,7 @@
 {
   "site": "hamilton-middletown",
-  "catalog_version": "677481d84a36ead65351d5cbf8068e21518ddfab466d57b9dca28b6dfd28ef3a",
-  "contract_version": "1.41.0",
+  "catalog_version": "fba3937e6315414263e75066171b2d6d01912b48ac5d5046a3b32600e8fff2e6",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:hamilton-middletown:7q10",
@@ -705,6 +705,22 @@
       "site": "hamilton-middletown",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:hamilton-middletown:enclave-federal-land",
+      "kind": "dataset",
+      "site": "hamilton-middletown",
+      "local_id": "enclave-federal-land",
+      "title": "Hamilton · Middletown Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:hamilton-middletown:enclave-profile",
+      "kind": "dataset",
+      "site": "hamilton-middletown",
+      "local_id": "enclave-profile",
+      "title": "Hamilton · Middletown Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

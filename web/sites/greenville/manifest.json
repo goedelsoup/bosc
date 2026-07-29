@@ -1,10 +1,10 @@
 {
   "site": "greenville",
   "bundle_version": "1.0.0",
-  "contract_version": "1.41.0",
-  "generated_at": "2026-07-29T15:17:43+00:00",
+  "contract_version": "1.42.0",
+  "generated_at": "2026-07-29T18:21:51+00:00",
   "feed_count": 27,
-  "row_total": 371,
+  "row_total": 373,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 49
+      "count": 51
     },
     {
       "name": "facts",

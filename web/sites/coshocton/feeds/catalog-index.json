@@ -1,7 +1,7 @@
 {
   "site": "coshocton",
-  "catalog_version": "8b6ecec986a565dc3ed66f1ad62aa629d23bd749c6f2d54b43654275abf7ea7a",
-  "contract_version": "1.41.0",
+  "catalog_version": "e09dce4024d5dfbffaae5c5fd03ae705e0b4700f9c27ff96adbc02c6101bc361",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:coshocton:7q10",
@@ -689,6 +689,22 @@
       "site": "coshocton",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:enclave-federal-land",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "enclave-federal-land",
+      "title": "Coshocton Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:enclave-profile",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "enclave-profile",
+      "title": "Coshocton Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

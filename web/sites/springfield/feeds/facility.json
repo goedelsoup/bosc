@@ -4,6 +4,7 @@
     "name": "5C Data Centers \"CMH01\"",
     "is_primary": true,
     "status": "construction",
+    "kind": "data_center",
     "operator": "5C Data Centers USA, Inc. (anchor tenant Vultr)",
     "operator_citation": "[verified] City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) — 5C Data Centers USA, Inc., anchor tenant Vultr, 601 Benjamin Drive, PrimeOhio Corporate Park.",
     "end_use": "colocation",

@@ -1,10 +1,10 @@
 {
   "site": "troy-piqua",
   "bundle_version": "1.0.0",
-  "contract_version": "1.41.0",
-  "generated_at": "2026-07-29T15:25:02+00:00",
+  "contract_version": "1.42.0",
+  "generated_at": "2026-07-29T18:29:10+00:00",
   "feed_count": 32,
-  "row_total": 460,
+  "row_total": 462,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 54
+      "count": 56
     },
     {
       "name": "geo/campus",

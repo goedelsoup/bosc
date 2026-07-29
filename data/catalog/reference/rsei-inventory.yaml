@@ -19,6 +19,9 @@ storage:
 - relpath: reference/rsei/{site}/inventory.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: reference/rsei/{site}/enclave.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: on-demand
 provenance: connector
@@ -30,4 +33,7 @@ tags:
 - epa
 notes: Per-facility RSEI Score/Hazard/pounds for Allen County, OH (FIPS 39003), reduced from EPA's RSEI
   Public Data Set v2.3.12 by joining five relational tables; slug-scoped (Lima keeps the legacy un-slugged
-  path).
+  path). `enclave.yaml` is a SECOND, one-facility reduction for a site with a federal installation (issue
+  1664, `watermark enclave`) - scoped to the enclave's OWN reporting county rather than the site's
+  `rsei_fips`, which for a straddling base is a different county. It never replaces `inventory.yaml`; the
+  county backdrop stays the readiness floor signal.

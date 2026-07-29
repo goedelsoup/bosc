@@ -1,7 +1,7 @@
 {
   "site": "wilmington",
-  "catalog_version": "d8447f9a1f0cac12c7228276945864b7df6bcf9abdb5134c9b5018cadcd81bbf",
-  "contract_version": "1.41.0",
+  "catalog_version": "82522e51067d881fbdfc9f28056386456f5f43d3a41fcba122a03822312f8b9e",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:wilmington:7q10",
@@ -705,6 +705,22 @@
       "site": "wilmington",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:enclave-federal-land",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "enclave-federal-land",
+      "title": "Wilmington Federal-Enclave Boundary — Clinton County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:enclave-profile",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "enclave-profile",
+      "title": "Wilmington Federal-Enclave Profile — Clinton County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

@@ -1,7 +1,7 @@
 {
   "site": "west-union",
-  "catalog_version": "7231b97c9d59299441727c02eeba4eebfcb8ac6fb2b0f92b3c6ad36d7c06f7c4",
-  "contract_version": "1.41.0",
+  "catalog_version": "2236602af7b4d507bfffc46a8603bd262e2ca49416b00491e065f457ce9ea24a",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:west-union:7q10",
@@ -689,6 +689,22 @@
       "site": "west-union",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:enclave-federal-land",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "enclave-federal-land",
+      "title": "West Union · Adams Co Federal-Enclave Boundary — Adams County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:enclave-profile",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "enclave-profile",
+      "title": "West Union · Adams Co Federal-Enclave Profile — Adams County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

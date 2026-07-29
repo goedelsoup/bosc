@@ -922,6 +922,90 @@
     }
   },
   {
+    "id": "enclave-federal-land",
+    "title": "Toledo Federal-Enclave Boundary — Lucas County, OH (DoD MIRTA)",
+    "scope": "reference",
+    "collection": "reference",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "enclave",
+    "connector_ref": "watermark.connectors.federal",
+    "source": "DoD MIRTA (Military Installations, Ranges, and Training Areas) site-boundary register, published via Esri US Federal Data; boundaries encompass federally owned or otherwise managed lands as defined in the Base Structure Report",
+    "external_url": "https://www.arcgis.com/home/item.html?id=fb3b6e6bb5f14b09b0a3690a5e3ceb6a",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "federal",
+      "enclave",
+      "land",
+      "dod",
+      "mirta",
+      "geojson"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/{site}/federal-land.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "citation": {
+      "source": "DoD MIRTA (Military Installations, Ranges, and Training Areas) site-boundary register, published via Esri US Federal Data; boundaries encompass federally owned or otherwise managed lands as defined in the Base Structure Report",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark enclave",
+      "verified": true
+    }
+  },
+  {
+    "id": "enclave-profile",
+    "title": "Toledo Federal-Enclave Profile — Lucas County, OH (land / water / wastewater / power / toxics)",
+    "scope": "reference",
+    "collection": "reference",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "enclave",
+    "connector_ref": "watermark.enclave",
+    "source": "DoD MIRTA (site boundary) × EPA SDWIS (public water systems) × EPA ECHO CWA (NPDES discharges) × EPA RSEI/TRI (toxic releases), joined to the enclave's committed grounding record (its CERCLA §120 Federal Facility Agreement) — a multi-source assembly",
+    "external_url": "https://echo.epa.gov/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "federal",
+      "enclave",
+      "water",
+      "wastewater",
+      "toxics",
+      "derived"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/{site}/enclave.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "citation": {
+      "source": "DoD MIRTA (site boundary) × EPA SDWIS (public water systems) × EPA ECHO CWA (NPDES discharges) × EPA RSEI/TRI (toxic releases), joined to the enclave's committed grounding record (its CERCLA §120 Federal Facility Agreement) — a multi-source assembly",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark enclave",
+      "verified": false
+    }
+  },
+  {
     "id": "federal",
     "title": "Federal Energy-Policy & National-Output Backdrop (IRA + EIA + LBNL/DOE)",
     "scope": "reference",
@@ -2639,6 +2723,11 @@
       },
       {
         "relpath": "reference/rsei/{site}/inventory.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/rsei/{site}/enclave.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       }

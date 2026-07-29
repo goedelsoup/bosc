@@ -1,7 +1,7 @@
 {
   "site": "defiance",
-  "catalog_version": "2ec891cf0a18f9b862d00102f2cffdf286c8afaaf5f7f17103e707452e34bfde",
-  "contract_version": "1.41.0",
+  "catalog_version": "01ede4512ad8be74099c1c57b706f597e212c1508abfde8210b0215d556d806b",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:defiance:7q10",
@@ -705,6 +705,22 @@
       "site": "defiance",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:defiance:enclave-federal-land",
+      "kind": "dataset",
+      "site": "defiance",
+      "local_id": "enclave-federal-land",
+      "title": "Defiance Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:defiance:enclave-profile",
+      "kind": "dataset",
+      "site": "defiance",
+      "local_id": "enclave-profile",
+      "title": "Defiance Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

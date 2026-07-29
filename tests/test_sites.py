@@ -191,23 +191,27 @@ def test_per_site_output_relpaths_unique() -> None:
 
 
 def test_facility_less_site_declares_no_demand_pressure_destination() -> None:
-    # ``demand_pressure_relpath`` is facility-gated: the feed only exists for a site with a
-    # documented ``facility`` (``derive_demand_pressure`` raises otherwise). A facility-less site
-    # must declare ``None`` — no destination — rather than a dangling path to a file that can
-    # never be written (#1660, ME-A: WPAFB shipped a path to a nonexistent demand-pressure.yaml).
-    # Enforced at model construction: a profile WITH a documented facility must carry a
-    # destination (else the feed it's entitled to could never be written). WPAFB (facility-less)
-    # is exempt and legitimately None; forcing a facility profile to None must raise.
+    # ``demand_pressure_relpath`` is gated on a DERIVABLE CAMPUS LOAD: the feed is sized against
+    # one (``derive_demand_pressure`` raises otherwise), so a site without one must declare
+    # ``None`` — no destination — rather than a dangling path to a file that can never be written
+    # (#1660, ME-A: WPAFB shipped a path to a nonexistent demand-pressure.yaml). Enforced at model
+    # construction: a profile entitled to the feed must carry a destination. Forcing an entitled
+    # profile to None must raise.
     lima = SITES["lima"]
-    assert lima.facility is not None and lima.demand_pressure_relpath is not None
+    assert lima.has_facility_power_basis and lima.demand_pressure_relpath is not None
     with pytest.raises(ValidationError, match="demand_pressure_relpath"):
         SiteProfile.model_validate({**lima.model_dump(), "demand_pressure_relpath": None})
 
+    # WPAFB has a facility — a ``federal_installation``, #1664 — but no data-center campus and so
+    # no IT load to size a demand→price sensitivity against. The gate is the power basis, not mere
+    # facility presence; an enclave is as unentitled to this feed as a facility-less site.
     wpafb = SITES["wpafb"]
-    assert wpafb.facility is None
+    assert wpafb.facility is not None
+    assert wpafb.campus is None
+    assert wpafb.has_facility_power_basis is False
     assert wpafb.demand_pressure_relpath is None, (
-        "a facility-less site must not carry a demand_pressure_relpath pointing at a file that "
-        "can never be written"
+        "a site with no derivable campus load must not carry a demand_pressure_relpath pointing "
+        "at a file that can never be written"
     )
 
 

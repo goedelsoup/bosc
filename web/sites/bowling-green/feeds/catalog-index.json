@@ -1,7 +1,7 @@
 {
   "site": "bowling-green",
-  "catalog_version": "29e1e97c2774b19390270e8d496489d53d61c411482bbd2358ad7a3e8b17d814",
-  "contract_version": "1.41.0",
+  "catalog_version": "bf0c55b92a2954a7bc3045eb927ef07b6bc2e76b5e4090094a1aabda00077529",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:bowling-green:7q10",
@@ -689,6 +689,22 @@
       "site": "bowling-green",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bowling-green:enclave-federal-land",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "enclave-federal-land",
+      "title": "Bowling Green · Middleton Twp Federal-Enclave Boundary (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bowling-green:enclave-profile",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "enclave-profile",
+      "title": "Bowling Green · Middleton Twp Federal-Enclave Profile (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

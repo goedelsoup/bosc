@@ -19,7 +19,7 @@ domain        live when                                         signal
 ============  ================================================  =========================
 **backdrop**  every always-pull floor feed present              floor feeds (FIPS/state/grid)
 **facility**  ``SiteProfile.facility`` instrument-grounded      profile facility grounding
-**places**    committed campus/footprint geometry exported      ``geo/campus`` feed
+**places**    committed campus **or** enclave geometry          ``geo/campus``/``geo/enclave``
 **record**    extracted corpus over threshold                   records+documents+entities
 **story**     a registered story + a leads feed                 ``STORY_SLUGS`` + leads
 ============  ================================================  =========================
@@ -94,6 +94,15 @@ FACILITY_FEED = "economics-demand-pressure"
 # schema is set on nearly every profile (stubs included), so it does not discriminate — only
 # actually-committed geometry (which surfaces as ``geo/campus``) or place records do.
 PLACES_GEOMETRY_FEED = "geo/campus"
+# The **non-CAMA** land path (#1664). ``places`` gated on ``geo/campus`` alone made the domain
+# structurally unreachable for a federal enclave: a base is off the county tax rolls, so no
+# county parcel layer will ever carry it and no amount of research would ever produce a parcel
+# assemblage. That was a gap in the model, not a gap in the evidence — the DoD MIRTA site
+# register carries the boundary, and committed register geometry activates the domain on exactly
+# the same terms as committed parcel geometry: the trigger is still the evidence, and still
+# geometry a map can actually be drawn from.
+PLACES_ENCLAVE_FEED = "geo/enclave"
+PLACES_GEOMETRY_FEEDS: tuple[str, ...] = (PLACES_GEOMETRY_FEED, PLACES_ENCLAVE_FEED)
 PLACES_RECORD_FEED = "places"
 
 # The per-site extracted **document corpus** — the genuinely site-scoped record feeds. Only
@@ -136,7 +145,7 @@ READINESS_FEED_NAMES: frozenset[str] = frozenset(
     {
         *BACKDROP_FLOOR_FEEDS,
         FACILITY_FEED,
-        PLACES_GEOMETRY_FEED,
+        *PLACES_GEOMETRY_FEEDS,
         PLACES_RECORD_FEED,
         *RECORD_SEED_FEEDS,
         LEADS_FEED,
@@ -176,7 +185,9 @@ def _facility_state(profile: SiteProfile) -> State:
 
 
 def _places_state(feed_counts: Mapping[str, int]) -> State:
-    if _count(feed_counts, PLACES_GEOMETRY_FEED) > 0:
+    # Committed campus parcels OR a committed federal-enclave boundary (#1664) — either is
+    # drawable geometry for the place the site is about.
+    if any(_count(feed_counts, f) > 0 for f in PLACES_GEOMETRY_FEEDS):
         return "live"
     # Place *records* without committed footprint geometry — some spatial signal, not enough
     # to draw the map with.

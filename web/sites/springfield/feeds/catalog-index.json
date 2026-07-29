@@ -1,7 +1,7 @@
 {
   "site": "springfield",
-  "catalog_version": "6b52c8456d691fb646a992fd056b01e84626f3cf9d4185d3dfaeccb8517283a7",
-  "contract_version": "1.41.0",
+  "catalog_version": "684ff7534cc650e43105f631d5ba543b38cd9c75f12ffb54d472fbd2745f5b01",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:springfield:7q10",
@@ -697,6 +697,22 @@
       "site": "springfield",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:springfield:enclave-federal-land",
+      "kind": "dataset",
+      "site": "springfield",
+      "local_id": "enclave-federal-land",
+      "title": "Springfield Federal-Enclave Boundary — Clark County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:springfield:enclave-profile",
+      "kind": "dataset",
+      "site": "springfield",
+      "local_id": "enclave-profile",
+      "title": "Springfield Federal-Enclave Profile — Clark County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

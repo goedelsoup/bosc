@@ -77,7 +77,7 @@ def stack_params_from_profile(settings: Settings | None = None) -> GensetStackPa
     redacts engine specs as CBI — so it screens on the assumption.
     """
     settings = settings or get_settings()
-    fac = active_profile(settings).facility
+    fac = active_profile(settings).campus
     if fac is not None and fac.has_disclosed_stack:
         cite = fac.genset_stack_citation
         assert (  # the model validator guarantees these are set together; narrow for mypy

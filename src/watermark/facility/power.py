@@ -289,9 +289,10 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
     :func:`watermark.config.get_settings`.
     """
     settings = settings or get_settings()
-    fac = active_profile(settings).facility
-    # No facility, or one whose load is entirely [open] (#1628 — a rezoning-only second campus is
-    # never the primary, but guard defensively): no power basis, so the grid backdrop stands alone.
+    fac = active_profile(settings).campus
+    # No data-center campus (none at all, or a federal installation — #1664), or one whose load is
+    # entirely [open] (#1628 — a rezoning-only second campus is never the primary, but guard
+    # defensively): no power basis, so the grid backdrop stands alone.
     if (
         fac is None
         or fac.it_load_mw is None

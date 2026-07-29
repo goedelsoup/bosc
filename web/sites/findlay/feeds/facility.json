@@ -4,6 +4,7 @@
     "name": "Findlay Megawatt Hub (MWHub 01)",
     "is_primary": true,
     "status": "live",
+    "kind": "data_center",
     "operator": "MARA Holdings, Inc. (NASDAQ: MARA); host One Power Co",
     "operator_citation": "[verified] One Power Co Form S-1/A (EDGAR CIK 2039139) + MARA Holdings 2024-11-11 release: MARA is the 150 MW, 15-year take-or-pay customer at the One Power Findlay Megawatt Hub (host/host-operator One Power Co).",
     "end_use": "bitcoin",

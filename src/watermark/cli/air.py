@@ -34,9 +34,10 @@ def _air_settings(offline: bool) -> Settings:
 
 def _no_facility(site: str) -> None:
     console.print(
-        f"[yellow]No documented facility for site '{site}' (SiteProfile.facility is None) — "
-        "air modeling needs an identified backup-generation fleet + air permit. The grid "
-        "backdrop still applies; the air section locks per the readiness layer.[/]"
+        f"[yellow]No documented data-center campus for site '{site}' (SiteProfile.campus is None) "
+        "— air modeling needs an identified backup-generation fleet + air permit. A federal "
+        "installation (#1664) has neither, so it takes this path too. The grid backdrop still "
+        "applies; the air section locks per the readiness layer.[/]"
     )
     raise typer.Exit(0)
 
@@ -158,7 +159,7 @@ def scenarios_cmd(
     from watermark.sites import active_profile
 
     settings = get_settings()
-    if active_profile(settings).facility is None:
+    if active_profile(settings).campus is None:
         _no_facility(settings.site)
 
     results = []
@@ -234,7 +235,7 @@ def calibrate_cmd() -> None:
     from watermark.sites import active_profile
 
     settings = get_settings()
-    if active_profile(settings).facility is None:
+    if active_profile(settings).campus is None:
         _no_facility(settings.site)
     runtime = cal.calibrate_dispatch(settings=settings)
     if runtime is None:
@@ -280,7 +281,7 @@ def dispersion_cmd(
     from watermark.sites import active_profile
 
     settings = get_settings()
-    if active_profile(settings).facility is None:
+    if active_profile(settings).campus is None:
         _no_facility(settings.site)
     if pollutant not in POLLUTANTS:
         raise typer.BadParameter(f"unknown pollutant {pollutant!r}; known: {list(POLLUTANTS)}")

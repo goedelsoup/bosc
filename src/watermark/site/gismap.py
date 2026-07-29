@@ -47,6 +47,10 @@ _IMAGERY_AOI_COLOR = "#37474f"  # blue-grey — a neutral footprint frame for th
 # The impacted wells wear the evidence-grammar gap oxblood — the concern made visible.
 _DEWATERING_WELL_COLOR = "#00695c"  # deep teal — the construction-dewatering wells (the stressor)
 _DEWATERING_IMPACT_COLOR = "#7a2230"  # oxblood (the evidence gap hue) — the impacted domestic wells
+# The federal-enclave boundary (#1664). Deliberately NOT the campus indigo: this is land from a
+# federal register, not a county CAMA parcel assemblage, and the two must not read as the same
+# kind of evidence on the map. Slate — an administrative boundary, not a subject.
+_ENCLAVE_COLOR = "#455a64"
 
 
 def _rsei_radius(score: float) -> int:
@@ -328,6 +332,56 @@ def campus_from_parcels(settings: Settings | None = None) -> GeoFeatureCollectio
     return GeoFeatureCollection(
         feed="campus",
         meta={"crs": "WGS84 (EPSG:4326)", "layers": ["campus"]},
+        features=features,
+    )
+
+
+def enclave_from_federal_land(settings: Settings | None = None) -> GeoFeatureCollection | None:
+    """The ``enclave`` geo feed — the active site's committed federal-land boundary (#1664).
+
+    The non-CAMA peer of :func:`campus_from_parcels`. A federal enclave is off the county tax
+    rolls, so it appears in no parcel layer and the ``places`` domain could never activate off
+    one; the DoD MIRTA register carries the boundary instead (``watermark enclave`` writes
+    ``SiteProfile.federal_land_relpath``). Kept as its own feed rather than folded into ``campus``
+    precisely because the two are different evidence: a parcel carries an owner, a situs and a
+    transfer date, and this carries a reporting component and an operational status. ``None`` when
+    the site commits no federal land.
+    """
+    settings = settings or get_settings()
+    relpath = active_profile(settings).federal_land_relpath
+    if relpath is None:
+        return None
+    path = settings.data_dir / relpath
+    if not path.is_file():
+        return None
+    fc = json.loads(path.read_text(encoding="utf-8"))
+    features: list[GeoFeature] = []
+    for feat in fc.get("features", []):
+        geometry = feat.get("geometry")
+        if not geometry:
+            continue
+        src = dict(feat.get("properties") or {})
+        props: dict[str, Any] = {
+            **src,
+            "layer": "enclave",
+            "label": src.get("label") or src.get("feature_name"),
+            "color": _ENCLAVE_COLOR,
+            "role": _geometry_role(geometry),
+        }
+        features.append(
+            GeoFeature(geometry=geometry, properties=GeoProperties.model_validate(props))
+        )
+    if not features:
+        return None
+    provenance = fc.get("bosc:provenance") or {}
+    return GeoFeatureCollection(
+        feed="enclave",
+        meta={
+            "crs": "WGS84 (EPSG:4326)",
+            "layers": ["enclave"],
+            "register": provenance.get("register"),
+            "note": provenance.get("note"),
+        },
         features=features,
     )
 

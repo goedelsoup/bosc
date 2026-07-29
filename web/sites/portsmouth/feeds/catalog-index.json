@@ -1,7 +1,7 @@
 {
   "site": "portsmouth",
-  "catalog_version": "b90caf8cf65bcae1c3d78c6efcffd91646aec4e55194b8927781d7c4d7c4890d",
-  "contract_version": "1.41.0",
+  "catalog_version": "c8ad3e35467422d586eba81a690dc1d6e5b74305bec011cd0380cc39f1d780cf",
+  "contract_version": "1.42.0",
   "atoms": [
     {
       "handle": "concept:portsmouth:7q10",
@@ -689,6 +689,22 @@
       "site": "portsmouth",
       "local_id": "eia-grid-profile",
       "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:portsmouth:enclave-federal-land",
+      "kind": "dataset",
+      "site": "portsmouth",
+      "local_id": "enclave-federal-land",
+      "title": "Portsmouth · Green Twp Federal-Enclave Boundary — Scioto County, OH (DoD MIRTA)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:portsmouth:enclave-profile",
+      "kind": "dataset",
+      "site": "portsmouth",
+      "local_id": "enclave-profile",
+      "title": "Portsmouth · Green Twp Federal-Enclave Profile — Scioto County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

@@ -22,7 +22,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_contract_version_bumped() -> None:
-    """This feed landed at 1.22.0 (additive/MINOR); the contract has since advanced to 1.41.0
+    """This feed landed at 1.22.0 (additive/MINOR); the contract has since advanced to 1.42.0
     (ProvenancedValue range 1.23.0 #760, contacts feed 1.24.0, facts feed 1.25.0 #1587, the
     passages feed 1.26.0 #1589, the open-questions feed 1.27.0 #1568, DocumentItem version/dedup
     metadata 1.27.1 #1590, the corpus-index feed 1.28.0 #1573, the manifest exports block
@@ -40,8 +40,10 @@ def test_contract_version_bumped() -> None:
     where-did-the-water-go gage screen), then the impacted-well vulnerability (goes-dry) +
     hydraulic-gradient (up/down-gradient) fields 1.40.0 (the why-does-a-shallow-dry-well-slip-past
     thread), then the thermal / CWA §316(a) discharge-screen feed 1.41.0 (#1719, epic #1715 — the
-    third cooling axis, heat, after volume and chemistry))."""
-    assert CONTRACT_VERSION == "1.41.0"
+    third cooling axis, heat, after volume and chemistry), then the federal-enclave `enclave` +
+    `geo/enclave` feeds and the `FacilityItem.kind` discriminant 1.42.0 (ME-E #1664, epic #1659 —
+    the non-data-center facility seam))."""
+    assert CONTRACT_VERSION == "1.42.0"
 
 
 # `lima_bundle` / `site_bundle` are conftest's session-wide, cross-worker exports (#1773).
@@ -57,7 +59,7 @@ def test_reference_export_emits_the_seasonal_field(lima_bundle: Path) -> None:
     """The reference build ships `water-seasonal-field` with real months (climate normals are
     committed, so it does not degrade like the AERMOD field), `reference`-provenanced."""
     manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
-    assert manifest["contract_version"] == "1.41.0"
+    assert manifest["contract_version"] == "1.42.0"
 
     field = _field(lima_bundle)
     assert field["site"] == "lima"
