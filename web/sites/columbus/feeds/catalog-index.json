@@ -1,7 +1,7 @@
 {
   "site": "columbus",
-  "catalog_version": "caa87ed457472b9eb566ef06242822ac0ea4697583d77b94c2b636da7b5343ce",
-  "contract_version": "1.36.0",
+  "catalog_version": "986e536abd2b54ca5bf916ee9e743fb2fa1eaf5fe9b2653c8b6960727bbc4db5",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:columbus:7q10",
@@ -9,6 +9,14 @@
       "site": "columbus",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:aep",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:columbus:behind-the-meter",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:brownfield",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:cercla",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:cgp",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:closed-loop-cooling",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:cmar",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:colocation",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:columbus:common-control-plumbing",
       "kind": "concept",
       "site": "columbus",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:conditional-use",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:consent-decree",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:constructive-denial",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:columbus:cra",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:curve-number",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:dilution",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:dissolved-oxygen",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:dmr",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:echo",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:effluent",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:eia",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:enterprise-zone",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:epa",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:esc",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:ferc",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:ffa",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:hb",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:heat-reuse",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:hsg",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:huc",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:columbus:hyperscale-data-center",
       "kind": "concept",
       "site": "columbus",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:columbus:hyperscaler",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:il6",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:interconnection-queue",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:jedd",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:moratorium",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:nda",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:npdes",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:nwis",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:oepa",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:once-through-cooling",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:opc",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:opsb",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:orc",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:pfas",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:pilot",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:pjm",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:potw",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:pti",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:columbus:public-records-mandamus",
       "kind": "concept",
       "site": "columbus",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:puco",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:pue",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:rezoning",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:rfp",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:rfq",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:rsei",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:rto",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:snc",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:sos",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:ssa",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:swat",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:swcd",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:tax-abatement",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:tif",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:tmdl",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:total-nitrogen",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:total-phosphorus",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:tri",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:usgs",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:variance",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:wla",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:wue",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:columbus:wwtp",
+      "kind": "concept",
+      "site": "columbus",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -208,7 +760,7 @@
       "kind": "dataset",
       "site": "columbus",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -241,6 +793,14 @@
       "site": "columbus",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:legal-records-legislation",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -297,6 +857,22 @@
       "site": "columbus",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -372,11 +948,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:columbus:thermal",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:columbus:usaspending",
       "kind": "dataset",
       "site": "columbus",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:wqs-criteria",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:wqs-temperature",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

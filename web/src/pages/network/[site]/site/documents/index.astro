@@ -3,7 +3,7 @@ import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import { docAccess } from "@watermark/core/docView";
+import { docAccess, docPagePath } from "@watermark/core/docView";
 import { formatBytes, type DocumentCollectionItem } from "@watermark/core/feeds";
 import { withSite } from "@watermark/core/site";
 
@@ -109,7 +109,7 @@ const accesses = [...new Set(rows.map((r) => r.access))];
             >
               <td class="doccat-coll">{r.collection}</td>
               <td class="file">
-                <a href={withSite(`/site/documents/${r.rel}`)}>{r.name}</a>
+                <a href={withSite(docPagePath(r.rel))}>{r.name}</a>
               </td>
               <td><span class="dchip dchip--type">{r.type}</span></td>
               <td class="num">{formatBytes(r.size)}</td>

@@ -1,0 +1,93 @@
+[
+  {
+    "id": "ENERGIACRES-DEED",
+    "origin": "lead",
+    "question": "Who actually controls the Ernsberger–Amoy Ganges 600–700 acres?",
+    "detail": "EnergiAcres' own developer site (fetched 2026-07-10) still lists a Mansfield campus of 600–700 acres of Franklin Township farmland at Ernsberger Rd–Amoy Ganges Rd — 100 MW grid + 800 MW behind-the-meter gas. No binding instrument has surfaced on either side: no confirmed deeds or purchase options, no annexation petition, no OPSB/PUCO filing, no air permit. The mayor said the city \"will no longer pursue the project\" (2026-04-21) and all three commissioners went on record against it (2026-04-24), conceding they cannot ban it outright (2026-05-12) — but land control was never established either way. A Richland County Recorder pull against the parcel(s) is the instrument that would close this.",
+    "source": "EnergiAcres developer site (fetched 2026-07-10) · readiness(mansfield) epic",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1428,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "ENERGIACRES-BELMONT",
+    "origin": "lead",
+    "question": "EnergiAcres is shopping a 2–3 GW version of the same project to Belmont County",
+    "detail": "EnergiAcres' developer site (fetched 2026-07-10) still lists the Mansfield campus as advancing, even after the mayor and all three commissioners went on record against it. Separately, press coverage (2026-07-02) has the developer shopping a 2–3 GW version of the same \"AI factory\" concept to Belmont County. Watch for a re-pitch of the Mansfield-scale project to a different Richland County jurisdiction (a township rather than the city) now that the city has foreclosed its own annexation/utility path.",
+    "source": "EnergiAcres developer site (fetched 2026-07-10); press report, 2026-07-02 · readiness(mansfield) epic",
+    "kind": "signal",
+    "status": "low",
+    "issue": 1425,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "DC-BALLOT-AMENDMENT",
+    "origin": "lead",
+    "question": "Did the statewide >25 MW anti-data-center ballot amendment qualify by 2026-07-01?",
+    "detail": "Distinct from the SB 52 township wind/solar referendum (already resolved: 11 of 18 townships restricted 2025-07-17, upheld by referendum ~53% on 2026-05-05) — a separate statewide ballot-initiative effort to restrict data centers drawing more than 25 MW is reported to have gathered roughly 1,000 signatures in Richland County toward it. Whether the initiative actually qualified for the ballot by the 2026-07-01 threshold is unconfirmed; the Secretary of State's petition-certification record is the instrument that would close this.",
+    "source": "readiness(mansfield) epic",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1430,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "WWTP-CAPITAL-BILL",
+    "origin": "lead",
+    "question": "What capital bill (and what rate case) falls out of the WWTP facilities study + Ohio EPA's revised findings-and-orders?",
+    "detail": "The city's WWTP (NPDES 2PE00001*ND / OH0026328, 1960-built, 12 MGD) carries 329 violations in five years, a 397.1 MG secondary-treatment bypass in 2020 alone, an unfinished 2014-06-13 draft findings-and-orders, 12 of 12 quarters noncompliant on ECHO, SNC as of Q2 2024, and a State Administrative Consent Order (OH-24-015, 2025-05-02, $0 penalty). A $154K Jones & Henry facilities study was approved 2025-04-29. Rocky Fork Creek, the receiving water, is 303(d)-impaired for nutrients, flow alteration, and low DO. Open: the facilities study's findings, the capital bill it recommends, and whether a rate case follows are not yet in hand.",
+    "source": "OEPA fact sheet (NPDES 2PE00001*ND / OH0026328); ECHO; readiness(mansfield) epic",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1429,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "AOFF-WATER-LOOP",
+    "origin": "lead",
+    "question": "The All Ohio Future Fund application for the airport water loop — filed? awarded?",
+    "detail": "The city is building a ~$15M water loop (N. Main/Bowman) that adds redundancy for the 179th Cyberspace Wing's planned on-base data center and opens roughly 500 acres of capacity at Airport West/Aero Site (following the 321-acre I-1→I-2 rezone passed 2025-06-03). Whether the loop is being funded in whole or part through an All Ohio Future Fund application — and if so, whether that application has been filed or awarded — is not yet documented.",
+    "source": "readiness(mansfield) epic",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1431,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "CLEARFORK-STANTEC",
+    "origin": "lead",
+    "question": "Clear Fork Reservoir has never been dredged — what does the Stantec capacity study find?",
+    "detail": "Clear Fork Reservoir (built 1949, ~997 acres, ~4.4–4.5 billion gallons) supplies the city's water system and has never been dredged. A roughly $150K Stantec sedimentation/capacity study was purchased 2024-11; its findings — actual remaining capacity against the reservoir's original design volume — are not yet in hand and bear directly on how much slack the city's water supply has for any large-load buildout.",
+    "source": "readiness(mansfield) epic",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1429,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "OCP-SUBSTATION",
+    "origin": "lead",
+    "question": "Ontario Commerce Park (former GM site) buildout has gone unreported since ~2024",
+    "detail": "ICP's Ontario Commerce Park — the former GM Ontario plant site — had its substation deconstructed, at an estimated ~$10M / ~2 years to restore. Buildout status has gone unreported since roughly 2024. That deconstruction is a quiet cap on any large-load reuse of the site (a data center or otherwise) without a substantial capital outlay to rebuild grid capacity there first.",
+    "source": "readiness(mansfield) epic",
+    "kind": "signal",
+    "status": "low",
+    "issue": 1425,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  }
+]

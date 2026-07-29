@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "6454861595b0827ebf512cb102b482fae08c7cf9ccde772c14c2c9afe820feaf",
-  "contract_version": "1.37.0",
+  "catalog_version": "052bb459af99341f0214851f774f3b43b31b61a127e5372a0c229890d3e8e6b1",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -656,7 +656,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "aedg-roundabouts-opc",
-      "title": "AEDG roundabouts \u2014 Tetra Tech OPC estimates (extracted)",
+      "title": "AEDG roundabouts — Tetra Tech OPC estimates (extracted)",
       "feed": "catalog"
     },
     {
@@ -664,7 +664,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "air-emission-factors",
-      "title": "Genset Emission Factors (EPA AP-42 \u00a73.4)",
+      "title": "Genset Emission Factors (EPA AP-42 §3.4)",
       "feed": "catalog"
     },
     {
@@ -680,7 +680,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "allen-boe",
-      "title": "Allen County BOE \u2014 Cross-Election Registration & Turnout Statistics",
+      "title": "Allen County BOE — Cross-Election Registration & Turnout Statistics",
       "feed": "catalog"
     },
     {
@@ -688,7 +688,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "allen-boe-precincts-csv",
-      "title": "Allen County BOE \u2014 Per-Precinct Election Results (Long Form)",
+      "title": "Allen County BOE — Per-Precinct Election Results (Long Form)",
       "feed": "catalog"
     },
     {
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "allen-boe-results-csv",
-      "title": "Allen County BOE \u2014 Countywide Canvass Summary Results",
+      "title": "Allen County BOE — Countywide Canvass Summary Results",
       "feed": "catalog"
     },
     {
@@ -704,7 +704,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "allen-boe-source-pdf",
-      "title": "Allen County BOE \u2014 Official Election Result PDFs (Primary Source)",
+      "title": "Allen County BOE — Official Election Result PDFs (Primary Source)",
       "feed": "catalog"
     },
     {
@@ -712,7 +712,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "allen-gis-parcels",
-      "title": "Allen County, Ohio Parcels (CAMA) \u2014 Corpus Subset",
+      "title": "Allen County, Ohio Parcels (CAMA) — Corpus Subset",
       "feed": "catalog"
     },
     {
@@ -728,7 +728,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "bundle-records",
-      "title": "The published content bundle \u2014 typed feeds + manifest (watermark export)",
+      "title": "The published content bundle — typed feeds + manifest (watermark export)",
       "feed": "catalog"
     },
     {
@@ -736,7 +736,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "commissioners",
-      "title": "Allen County Commissioners \u2014 Legislative Record Analysis (Project BOSC)",
+      "title": "Allen County Commissioners — Legislative Record Analysis (Project BOSC)",
       "feed": "catalog"
     },
     {
@@ -744,7 +744,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "commissioners-meetings",
-      "title": "Allen County Commissioners \u2014 Meeting Records (Civic Connector)",
+      "title": "Allen County Commissioners — Meeting Records (Civic Connector)",
       "feed": "catalog"
     },
     {
@@ -752,7 +752,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "commissioners-minutes",
-      "title": "Allen County Commissioners \u2014 Minutes/Agendas OCR Index Bundle",
+      "title": "Allen County Commissioners — Minutes/Agendas OCR Index Bundle",
       "feed": "catalog"
     },
     {
@@ -776,7 +776,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "data-centers-hamilton-middletown",
-      "title": "Hamilton-Middletown / Butler County OH \u2014 Data-Center Activity Register",
+      "title": "Hamilton-Middletown / Butler County OH — Data-Center Activity Register",
       "feed": "catalog"
     },
     {
@@ -784,7 +784,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "data-centers-sidney",
-      "title": "Sidney / Shelby County OH \u2014 Data-Center Activity Register",
+      "title": "Sidney / Shelby County OH — Data-Center Activity Register",
       "feed": "catalog"
     },
     {
@@ -792,7 +792,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "data-centers-troy-piqua",
-      "title": "Troy-Piqua / Miami County OH \u2014 Data-Center Activity Register",
+      "title": "Troy-Piqua / Miami County OH — Data-Center Activity Register",
       "feed": "catalog"
     },
     {
@@ -800,7 +800,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "data-centers-van-wert",
-      "title": "Van Wert / Van Wert County OH \u2014 Data-Center Activity Register",
+      "title": "Van Wert / Van Wert County OH — Data-Center Activity Register",
       "feed": "catalog"
     },
     {
@@ -808,7 +808,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "data-centers-wilmington",
-      "title": "Wilmington / Clinton Co. OH \u2014 Data-Center Activity Register",
+      "title": "Wilmington / Clinton Co. OH — Data-Center Activity Register",
       "feed": "catalog"
     },
     {
@@ -816,7 +816,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "data-centers-wpafb",
-      "title": "WPAFB / Dayton (Greene + Montgomery Co.) OH \u2014 Data-Center Activity Register",
+      "title": "WPAFB / Dayton (Greene + Montgomery Co.) OH — Data-Center Activity Register",
       "feed": "catalog"
     },
     {
@@ -824,7 +824,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "data-centers-xenia",
-      "title": "Xenia / Beavercreek (Greene Co.) OH \u2014 Data-Center Activity Register",
+      "title": "Xenia / Beavercreek (Greene Co.) OH — Data-Center Activity Register",
       "feed": "catalog"
     },
     {
@@ -841,6 +841,14 @@
       "site": "lima",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:dewatering-discharge",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "dewatering-discharge",
+      "title": "Dewatering Discharge-Signal Screen + Reservoir-Recharge Context (Derived)",
       "feed": "catalog"
     },
     {
@@ -865,6 +873,14 @@
       "site": "lima",
       "local_id": "echo-maumee-npdes",
       "title": "Maumee-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:echo-maumee-receiving-water",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "echo-maumee-receiving-water",
+      "title": "Curated receiving-water overlay for the Maumee ECHO NPDES inventory",
       "feed": "catalog"
     },
     {
@@ -896,7 +912,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "eia-demand-pressure",
-      "title": "Facility Demand \u2192 Consumer Price-Pressure Sensitivity (EIA + facility load)",
+      "title": "Facility Demand → Consumer Price-Pressure Sensitivity (EIA + facility load)",
       "feed": "catalog"
     },
     {
@@ -904,7 +920,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "eia-grid-profile",
-      "title": "Per-Site Campus Grid Profile \u2014 Serving Utility, BA & Load Share (EIA-861/930)",
+      "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
       "feed": "catalog"
     },
     {
@@ -920,7 +936,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "ferc",
-      "title": "FERC\u2194PUCO Regulatory Seam (Federal Power Act + FERC eLibrary)",
+      "title": "FERC↔PUCO Regulatory Seam (Federal Power Act + FERC eLibrary)",
       "feed": "catalog"
     },
     {
@@ -928,7 +944,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "findlay-flood",
-      "title": "Findlay \u2014 Flood-Mitigation Instrument Chain (Extractions)",
+      "title": "Findlay — Flood-Mitigation Instrument Chain (Extractions)",
       "feed": "catalog"
     },
     {
@@ -952,7 +968,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "greenops",
-      "title": "GreenOps \u2014 Anthropic Admin usage & cost",
+      "title": "GreenOps — Anthropic Admin usage & cost",
       "feed": "catalog"
     },
     {
@@ -960,7 +976,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "greenops-aws",
-      "title": "GreenOps \u2014 AWS costs & estimated carbon",
+      "title": "GreenOps — AWS costs & estimated carbon",
       "feed": "catalog"
     },
     {
@@ -968,7 +984,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "greenops-factors",
-      "title": "GreenOps \u2014 eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
       "feed": "catalog"
     },
     {
@@ -976,7 +992,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "greenops-footprint",
-      "title": "GreenOps \u2014 derived compute footprint (usage \u2192 electricity \u2192 water)",
+      "title": "GreenOps — derived compute footprint (usage → electricity → water)",
       "feed": "catalog"
     },
     {
@@ -984,7 +1000,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "greenops-github",
-      "title": "GreenOps \u2014 GitHub Actions minutes & storage",
+      "title": "GreenOps — GitHub Actions minutes & storage",
       "feed": "catalog"
     },
     {
@@ -992,7 +1008,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "grid",
-      "title": "Grid Reliability + Siting Extractions (PJM \u00a7202(c) dispatch; AEP Ohio Lyka 345kV project)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -1008,7 +1024,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "hydrology",
-      "title": "Hydrology Reference Bundle (Water Balance \u00b7 TMDL \u00b7 Routing \u00b7 Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -1024,7 +1040,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) \u2014 Cited + Derived",
+      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -1032,7 +1048,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "hydrology-nasa-power-climatology",
-      "title": "NASA POWER Climate Normals \u2014 site climatology",
+      "title": "NASA POWER Climate Normals — site climatology",
       "feed": "catalog"
     },
     {
@@ -1048,7 +1064,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "hydrology-reaches",
-      "title": "Reach-network river centerlines \u2014 NHDPlus geometry (USGS NLDI)",
+      "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
       "feed": "catalog"
     },
     {
@@ -1064,7 +1080,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "hydrology-toledo-waterville-spill-monitor-read",
-      "title": "Maumee-at-Waterville (04193500) Continuous-Monitor Read \u2014 Napoleon Spill",
+      "title": "Maumee-at-Waterville (04193500) Continuous-Monitor Read — Napoleon Spill",
       "feed": "catalog"
     },
     {
@@ -1072,7 +1088,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset \u2014 Campus HUC Boundaries (HU10/HU12)",
+      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {
@@ -1080,7 +1096,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "idem",
-      "title": "IDEM (Indiana) Permit Extractions \u2014 Air (Title V) & Water (\u00a7401 WQC)",
+      "title": "IDEM (Indiana) Permit Extractions — Air (Title V) & Water (§401 WQC)",
       "feed": "catalog"
     },
     {
@@ -1104,7 +1120,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal",
-      "title": "BOSC Legal Record \u2014 Corpus Completeness Audit & Cross-Production Referral Map",
+      "title": "BOSC Legal Record — Corpus Completeness Audit & Cross-Production Referral Map",
       "feed": "catalog"
     },
     {
@@ -1112,7 +1128,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-prr-mandamus",
-      "title": "PRR & Mandamus \u2014 Source Instruments and the Layered Withholding Map",
+      "title": "PRR & Mandamus — Source Instruments and the Layered Withholding Map",
       "feed": "catalog"
     },
     {
@@ -1120,7 +1136,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-prr-mandamus-bosc-prr-production-2026-06-05",
-      "title": "Allen County Commissioners PRR Production \u2014 Batch 1 (2026-06-05)",
+      "title": "Allen County Commissioners PRR Production — Batch 1 (2026-06-05)",
       "feed": "catalog"
     },
     {
@@ -1128,7 +1144,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-prr-mandamus-bosc-prr-production-2026-06-12",
-      "title": "Allen County PRR Production \u2014 Batch 2, Category-B Wastewater Works (2026-06-12)",
+      "title": "Allen County PRR Production — Batch 2, Category-B Wastewater Works (2026-06-12)",
       "feed": "catalog"
     },
     {
@@ -1136,7 +1152,15 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-prr-mandamus-bosc-prr-production-2026-06-12-aswcd",
-      "title": "Allen SWCD PRR Production \u2014 Site Stormwater/Erosion Record (2026-06-12)",
+      "title": "Allen SWCD PRR Production — Site Stormwater/Erosion Record (2026-06-12)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:legal-prr-mandamus-bosc-prr-production-2026-07-24",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "legal-prr-mandamus-bosc-prr-production-2026-07-24",
+      "title": "Allen County PRR Production — Batch 3, Sanitary Engineer Per-Item Trees (2026-07-24)",
       "feed": "catalog"
     },
     {
@@ -1144,7 +1168,23 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-prr-mandamus-bosc-site-permit-sequence",
-      "title": "Project BOSC Site \u2014 Permit/Approval vs Earth-Disturbance Sequence (4110 N. Cole St.)",
+      "title": "Project BOSC Site — Permit/Approval vs Earth-Disturbance Sequence (4110 N. Cole St.)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:legal-prr-mandamus-prr-production-2026-07-24-records",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "legal-prr-mandamus-prr-production-2026-07-24-records",
+      "title": "Batch-3 Sanitary Production — Extracted Record Envelopes (DFFO chain, WPCLF, SSO reports)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:legal-records-legislation",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -1152,7 +1192,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-select-committee-2026",
-      "title": "Ohio Select Committee on Data Centers (2026) \u2014 Hearing Index & Witness-Submissions Digest",
+      "title": "Ohio Select Committee on Data Centers (2026) — Hearing Index & Witness-Submissions Digest",
       "feed": "catalog"
     },
     {
@@ -1160,7 +1200,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-select-committee-2026-hearings-audio-bosc-committee-hearing-2026-06-04-am",
-      "title": "Data-Center Committee Hearing \u2014 2026-06-04 Morning (Hyperscaler Panel, Round One)",
+      "title": "Data-Center Committee Hearing — 2026-06-04 Morning (Hyperscaler Panel, Round One)",
       "feed": "catalog"
     },
     {
@@ -1168,7 +1208,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-select-committee-2026-hearings-audio-bosc-committee-hearing-2026-06-04-pm",
-      "title": "Data-Center Committee Hearing \u2014 2026-06-04 Afternoon (Hyperscaler Panel, Round Two)",
+      "title": "Data-Center Committee Hearing — 2026-06-04 Afternoon (Hyperscaler Panel, Round Two)",
       "feed": "catalog"
     },
     {
@@ -1176,7 +1216,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-select-committee-2026-hearings-audio-bosc-committee-hearing-2026-06-04-pm2",
-      "title": "Data-Center Committee Hearing \u2014 2026-06-04 Late Afternoon (Closing Witnesses: MARA + Vantage)",
+      "title": "Data-Center Committee Hearing — 2026-06-04 Late Afternoon (Closing Witnesses: MARA + Vantage)",
       "feed": "catalog"
     },
     {
@@ -1184,7 +1224,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-select-committee-2026-hearings-audio-bosc-committee-testimony-2026-06-04",
-      "title": "Cory Parent Oral Testimony \u2014 Ohio Select Committee on Data Centers (2026-06-04)",
+      "title": "Cory Parent Oral Testimony — Ohio Select Committee on Data Centers (2026-06-04)",
       "feed": "catalog"
     },
     {
@@ -1192,7 +1232,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-select-committee-2026-relator-testimony",
-      "title": "Relator Testimony Deck & Data Appendix \u2014 'Who Is the Customer?' (2026-06-01)",
+      "title": "Relator Testimony Deck & Data Appendix — 'Who Is the Customer?' (2026-06-01)",
       "feed": "catalog"
     },
     {
@@ -1200,7 +1240,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-select-committee-2026-relator-testimony-bosc-written-testimony-2026-06-01",
-      "title": "Cory Parent Written Testimony \u2014 Beneficial-Ownership Disclosure (2026-06-01)",
+      "title": "Cory Parent Written Testimony — Beneficial-Ownership Disclosure (2026-06-01)",
       "feed": "catalog"
     },
     {
@@ -1208,7 +1248,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "legal-web-vendor-audit",
-      "title": "Allen County Web-Vendor Audit \u2014 Vendor Corporate Records & County-Level Sites",
+      "title": "Allen County Web-Vendor Audit — Vendor Corporate Records & County-Level Sites",
       "feed": "catalog"
     },
     {
@@ -1228,11 +1268,19 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:lima-campus-dewatering",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "lima-campus-dewatering",
+      "title": "Lima campus construction-dewatering wellfield (Ohio DNR)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:lima-gis",
       "kind": "dataset",
       "site": "lima",
       "local_id": "lima-gis",
-      "title": "City of Lima, Ohio GIS \u2014 Zoning, Cited-Parcel Scan & FEMA Flood Zones",
+      "title": "City of Lima, Ohio GIS — Zoning, Cited-Parcel Scan & FEMA Flood Zones",
       "feed": "catalog"
     },
     {
@@ -1240,7 +1288,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "limaohio",
-      "title": "The Lima News (LimaOhio.com) \u2014 Project BOSC News Coverage",
+      "title": "The Lima News (LimaOhio.com) — Project BOSC News Coverage",
       "feed": "catalog"
     },
     {
@@ -1256,7 +1304,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "mansfield",
-      "title": "Mansfield (Richland County, OH) \u2014 the airport nexus (places domain)",
+      "title": "Mansfield (Richland County, OH) — the airport nexus (places domain)",
       "feed": "catalog"
     },
     {
@@ -1280,7 +1328,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "odd-grants-loans",
-      "title": "Ohio Department of Development \u2014 Grants and Loans disbursements (statewide)",
+      "title": "Ohio Department of Development — Grants and Loans disbursements (statewide)",
       "feed": "catalog"
     },
     {
@@ -1288,7 +1336,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "odd-tax-incentives",
-      "title": "Ohio Department of Development \u2014 Tax Incentives (JCTC/JRTC/Historic/Datacenter)",
+      "title": "Ohio Department of Development — Tax Incentives (JCTC/JRTC/Historic/Datacenter)",
       "feed": "catalog"
     },
     {
@@ -1296,7 +1344,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority \u2014 meeting minutes (Jan 2025 \u2013 Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
       "feed": "catalog"
     },
     {
@@ -1312,7 +1360,23 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "oepa",
-      "title": "Ohio EPA permit extractions (Lima \u2014 receiving-WWTP NPDES + Bistrozzi indirect discharge)",
+      "title": "Ohio EPA permit extractions (Lima — receiving-WWTP NPDES + Bistrozzi indirect discharge)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -1356,11 +1420,27 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:ohio-water-withdrawal-allen",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "ohio-water-withdrawal-allen",
+      "title": "Allen County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:ohio-waterwells-allen",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "ohio-waterwells-allen",
+      "title": "Allen County, OH water-well-log census (Ohio DNR)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:onboard-bundle",
       "kind": "dataset",
       "site": "lima",
       "local_id": "onboard-bundle",
-      "title": "Full site onboarding \u2014 every reach/economics connector, in dependency order",
+      "title": "Full site onboarding — every reach/economics connector, in dependency order",
       "feed": "catalog"
     },
     {
@@ -1368,7 +1448,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "orc",
-      "title": "Ohio Revised Code \u2014 Corpus Citation Index",
+      "title": "Ohio Revised Code — Corpus Citation Index",
       "feed": "catalog"
     },
     {
@@ -1376,7 +1456,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "orc-orc",
-      "title": "Ohio Revised Code \u2014 Full Text (Cited Sections + Titles)",
+      "title": "Ohio Revised Code — Full Text (Cited Sections + Titles)",
       "feed": "catalog"
     },
     {
@@ -1408,7 +1488,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "permits-dazzler-portsmouth",
-      "title": "Project Dazzler Permit Extractions (Scioto County \u00a7401 / wetland mitigation)",
+      "title": "Project Dazzler Permit Extractions (Scioto County §401 / wetland mitigation)",
       "feed": "catalog"
     },
     {
@@ -1484,11 +1564,27 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:thermal",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:toledo-napoleon-spill-waterville-monitor-read",
       "kind": "dataset",
       "site": "lima",
       "local_id": "toledo-napoleon-spill-waterville-monitor-read",
-      "title": "Maumee-at-Waterville (04193500) Monitor Read \u2014 Napoleon Spill (narrative)",
+      "title": "Maumee-at-Waterville (04193500) Monitor Read — Napoleon Spill (narrative)",
       "feed": "catalog"
     },
     {
@@ -1504,7 +1600,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "troy-piqua-watch-items",
-      "title": "Troy\u00b7Piqua site watch-items (WWTP infrastructure geometry)",
+      "title": "Troy·Piqua site watch-items (WWTP infrastructure geometry)",
       "feed": "catalog"
     },
     {
@@ -1556,11 +1652,27 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:wqs-criteria",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:wqs-temperature",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:wwtp-oh0026069-lima",
       "kind": "dataset",
       "site": "lima",
       "local_id": "wwtp-oh0026069-lima",
-      "title": "City of Lima WWTP (NPDES OH0026069) Effluent Record \u2014 DMR",
+      "title": "City of Lima WWTP (NPDES OH0026069) Effluent Record — DMR",
       "feed": "catalog"
     },
     {
@@ -1568,7 +1680,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "wwtp-oh0027049-troy-piqua",
-      "title": "Piqua WWTP (NPDES OH0027049) Effluent Record \u2014 DMR",
+      "title": "Piqua WWTP (NPDES OH0027049) Effluent Record — DMR",
       "feed": "catalog"
     },
     {
@@ -1576,7 +1688,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "wwtp-oh0027421-sidney",
-      "title": "Sidney WWTP (NPDES OH0027421) Effluent Record \u2014 DMR",
+      "title": "Sidney WWTP (NPDES OH0027421) Effluent Record — DMR",
       "feed": "catalog"
     },
     {
@@ -1640,7 +1752,7 @@
       "kind": "entity",
       "site": "lima",
       "local_id": "AMERICAN BATH WASTEWATER TREATMENT PLANT POTW",
-      "title": "American \u2013 Bath Wastewater Treatment Plant (POTW)",
+      "title": "American – Bath Wastewater Treatment Plant (POTW)",
       "feed": "entities"
     },
     {
@@ -2352,7 +2464,7 @@
       "kind": "exhibit",
       "site": "lima",
       "local_id": "bistrozzi-air-permit-data-center",
-      "title": "Ohio EPA air permit \u2014 \"Bistrozzi LLC Data Center\"",
+      "title": "Ohio EPA air permit — \"Bistrozzi LLC Data Center\"",
       "feed": "exhibits"
     },
     {
@@ -2376,7 +2488,7 @@
       "kind": "exhibit",
       "site": "lima",
       "local_id": "mutual-nda-bistrozzi-county",
-      "title": "Mutual NDA \u2014 Bistrozzi LLC \u2194 Allen County",
+      "title": "Mutual NDA — Bistrozzi LLC ↔ Allen County",
       "feed": "exhibits"
     },
     {
@@ -2400,7 +2512,7 @@
       "kind": "exhibit",
       "site": "lima",
       "local_id": "sos-bistrozzi-addition-llc",
-      "title": "Secretary of State filing \u2014 Bistrozzi Addition LLC",
+      "title": "Secretary of State filing — Bistrozzi Addition LLC",
       "feed": "exhibits"
     },
     {
@@ -2408,7 +2520,7 @@
       "kind": "lead",
       "site": "lima",
       "local_id": "AEP-LYKA-OPSB",
-      "title": "AEP Ohio's Lyka 345kV substation/line has no OPSB case yet \u2014 filing expected early 2027, final route undetermined",
+      "title": "AEP Ohio's Lyka 345kV substation/line has no OPSB case yet — filing expected early 2027, final route undetermined",
       "feed": "leads"
     },
     {
@@ -2416,7 +2528,7 @@
       "kind": "lead",
       "site": "lima",
       "local_id": "ASWCD-03",
-      "title": "Wetland determination: \u201cno records\u201d \u2014 but a produced inspection says otherwise",
+      "title": "Wetland determination: “no records” — but a produced inspection says otherwise",
       "feed": "leads"
     },
     {
@@ -2424,7 +2536,7 @@
       "kind": "lead",
       "site": "lima",
       "local_id": "ASWCD-04",
-      "title": "Farm-tile drainage impact: \u201cno records\u201d \u2014 yet a failure is photographed",
+      "title": "Farm-tile drainage impact: “no records” — yet a failure is photographed",
       "feed": "leads"
     },
     {
@@ -2433,6 +2545,14 @@
       "site": "lima",
       "local_id": "ASWCD-PLANS",
       "title": "The site plan sets are withheld twice over",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:DEWATERING-DRYWELL-NW",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "DEWATERING-DRYWELL-NW",
+      "title": "A reportedly dry-and-replaced shallow well sits ~3.7 mi down-gradient of the dewatering field",
       "feed": "leads"
     },
     {
@@ -2472,7 +2592,7 @@
       "kind": "lead",
       "site": "lima",
       "local_id": "GH-161",
-      "title": "Acquire the corridor environmental records (forcemain + Shawnee II Ph2 NPDES/SWPPP/ESC; item-9 MGD) \u2014 the #151 referral",
+      "title": "Acquire the corridor environmental records (forcemain + Shawnee II Ph2 NPDES/SWPPP/ESC; item-9 MGD) — the #151 referral",
       "feed": "leads"
     },
     {
@@ -2504,7 +2624,7 @@
       "kind": "lead",
       "site": "lima",
       "local_id": "GH-752",
-      "title": "gap(extraction): extract the LACRPC CAC agenda .jpg \u2014 first use of the #703 image path",
+      "title": "gap(extraction): extract the LACRPC CAC agenda .jpg — first use of the #703 image path",
       "feed": "leads"
     },
     {
@@ -2528,7 +2648,7 @@
       "kind": "lead",
       "site": "lima",
       "local_id": "H2-AUTH",
-      "title": "The campus's federal authorization posture is undisclosed \u2014 searched, negative",
+      "title": "The campus's federal authorization posture is undisclosed — searched, negative",
       "feed": "leads"
     },
     {
@@ -2576,7 +2696,7 @@
       "kind": "lead",
       "site": "lima",
       "local_id": "PRR-02",
-      "title": "County \u21c4 DoD / federal-contractor comms \u2014 narrowed to nothing",
+      "title": "County ⇄ DoD / federal-contractor comms — narrowed to nothing",
       "feed": "leads"
     },
     {
@@ -2600,7 +2720,7 @@
       "kind": "lead",
       "site": "lima",
       "local_id": "PRR-19",
-      "title": "County \u21c4 engineer-of-record (EMH&T) comms not produced",
+      "title": "County ⇄ engineer-of-record (EMH&T) comms not produced",
       "feed": "leads"
     },
     {
@@ -2612,11 +2732,19 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:lima:THERMAL-NO-LIMIT",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "THERMAL-NO-LIMIT",
+      "title": "Nothing on the Ottawa corridor holds a thermal limit against the heat already in the river",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:lima:WWTP-PARAM-ASSIM",
       "kind": "lead",
       "site": "lima",
       "local_id": "WWTP-PARAM-ASSIM",
-      "title": "The municipal-WWTP dilution check is hydraulic only \u2014 no per-parameter assimilative capacity on record",
+      "title": "The municipal-WWTP dilution check is hydraulic only — no per-parameter assimilative capacity on record",
       "feed": "leads"
     },
     {
@@ -3392,7 +3520,7 @@
       "kind": "record",
       "site": "lima",
       "local_id": "permits/3987141.epa.yaml",
-      "title": "Bistrozzi LLC Data Center \u2013 Initial Installation",
+      "title": "Bistrozzi LLC Data Center – Initial Installation",
       "feed": "records"
     },
     {
@@ -3560,7 +3688,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "1A-C-3104",
-      "title": "Grading & Storm Plan (95% SPS Design) \u2014 American Industrial Park Site",
+      "title": "Grading & Storm Plan (95% SPS Design) — American Industrial Park Site",
       "feed": "timeline"
     },
     {
@@ -3568,7 +3696,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "1II00129*HD",
-      "title": "NPDES 1II00129*HD (Wilmington Sanitary Landfill) \u2014 public notice",
+      "title": "NPDES 1II00129*HD (Wilmington Sanitary Landfill) — public notice",
       "feed": "timeline"
     },
     {
@@ -3576,7 +3704,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "1PD00013*QD",
-      "title": "NPDES 1PD00013*QD (City of Wilmington WWTP) \u2014 public notice",
+      "title": "NPDES 1PD00013*QD (City of Wilmington WWTP) — public notice",
       "feed": "timeline"
     },
     {
@@ -3584,7 +3712,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "1PT00125*BD",
-      "title": "NPDES 1PT00125*BD (Clinton County Board of Developmental Disabilities) \u2014 public notice",
+      "title": "NPDES 1PT00125*BD (Clinton County Board of Developmental Disabilities) — public notice",
       "feed": "timeline"
     },
     {
@@ -3592,7 +3720,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "1PV00037*ED",
-      "title": "NPDES 1PV00037*ED (Hidden Valley Mobile Home Park) \u2014 public notice",
+      "title": "NPDES 1PV00037*ED (Hidden Valley Mobile Home Park) — public notice",
       "feed": "timeline"
     },
     {
@@ -3600,7 +3728,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "202508130008300",
-      "title": "Limited Warranty Deed 202508130008300: Kyle C. Brenneman and Sarah N. Brenneman, Co-Trustees of the Kyle C. Brenneman Living Trust dated March 30, 2023, and any amendments thereto, Keaton A. Brenneman and Kristen M. Brenneman, Co-Trustees of the Keaton A. Brenneman Living Trust dated March 2, 2023, and any amendments thereto \u2192 BISTROZZI LLC, a Delaware limited liability company",
+      "title": "Limited Warranty Deed 202508130008300: Kyle C. Brenneman and Sarah N. Brenneman, Co-Trustees of the Kyle C. Brenneman Living Trust dated March 30, 2023, and any amendments thereto, Keaton A. Brenneman and Kristen M. Brenneman, Co-Trustees of the Keaton A. Brenneman Living Trust dated March 2, 2023, and any amendments thereto → BISTROZZI LLC, a Delaware limited liability company",
       "feed": "timeline"
     },
     {
@@ -3608,7 +3736,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "202508130008312",
-      "title": "Limited Warranty Deed 202508130008312: NEFF FARMS, INC. \u2192 BISTROZZI LLC",
+      "title": "Limited Warranty Deed 202508130008312: NEFF FARMS, INC. → BISTROZZI LLC",
       "feed": "timeline"
     },
     {
@@ -3616,7 +3744,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "202508130008316",
-      "title": "Limited Warranty Deed 202508130008316: PIKE RUN FARMS LLC \u2192 BISTROZZI LLC",
+      "title": "Limited Warranty Deed 202508130008316: PIKE RUN FARMS LLC → BISTROZZI LLC",
       "feed": "timeline"
     },
     {
@@ -3624,7 +3752,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "202511180011830",
-      "title": "Limited Warranty Deed 202511180011830: THE PORT AUTHORITY OF ALLEN COUNTY, OHIO \u2192 Amazon.com Services LLC",
+      "title": "Limited Warranty Deed 202511180011830: THE PORT AUTHORITY OF ALLEN COUNTY, OHIO → Amazon.com Services LLC",
       "feed": "timeline"
     },
     {
@@ -3632,7 +3760,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "202603040002064",
-      "title": "General Warranty Deed 202603040002064: James W. Neighbors, Suzanne M. Neighbors \u2192 Bistrozzi LLC, a Delaware Limited Liability Company",
+      "title": "General Warranty Deed 202603040002064: James W. Neighbors, Suzanne M. Neighbors → Bistrozzi LLC, a Delaware Limited Liability Company",
       "feed": "timeline"
     },
     {
@@ -3640,7 +3768,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "202604210003890",
-      "title": "Limited Warranty Deed 202604210003890: Timothy R. Pieper, RaeAnn Pieper \u2192 Bistrozzi Addition LLC",
+      "title": "Limited Warranty Deed 202604210003890: Timothy R. Pieper, RaeAnn Pieper → Bistrozzi Addition LLC",
       "feed": "timeline"
     },
     {
@@ -3648,7 +3776,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "2DP00130*AP",
-      "title": "NPDES 2DP00130*AP (Bosc) \u2014 public notice",
+      "title": "NPDES 2DP00130*AP (Bosc) — public notice",
       "feed": "timeline"
     },
     {
@@ -3656,7 +3784,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "2GC08468*AG",
-      "title": "NPDES Construction Site Stormwater General Permit (OHC000006) coverage 2GC08468*AG \u2014 approved (LMA 1A (BOSC / Bistrozzi data-center campus))",
+      "title": "NPDES Construction Site Stormwater General Permit (OHC000006) coverage 2GC08468*AG — approved (LMA 1A (BOSC / Bistrozzi data-center campus))",
       "feed": "timeline"
     },
     {
@@ -3664,7 +3792,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "2PD00006*VD",
-      "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) \u2014 public notice",
+      "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — public notice",
       "feed": "timeline"
     },
     {
@@ -3672,7 +3800,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "2PH00006*LD",
-      "title": "NPDES 2PH00006*LD (American II Wastewater Treatment Plant) \u2014 public notice",
+      "title": "NPDES 2PH00006*LD (American II Wastewater Treatment Plant) — public notice",
       "feed": "timeline"
     },
     {
@@ -3680,7 +3808,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "2PH00007*MD",
-      "title": "NPDES 2PH00007*MD (American Bath WWTP) \u2014 public notice",
+      "title": "NPDES 2PH00007*MD (American Bath WWTP) — public notice",
       "feed": "timeline"
     },
     {
@@ -3688,7 +3816,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "2PK00002*LD",
-      "title": "NPDES 2PK00002*LD (Shawnee II WWTP) \u2014 public notice",
+      "title": "NPDES 2PK00002*LD (Shawnee II WWTP) — public notice",
       "feed": "timeline"
     },
     {
@@ -3696,7 +3824,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "2PK00002*MD",
-      "title": "NPDES 2PK00002*MD (Shawnee II WWTP) \u2014 public notice",
+      "title": "NPDES 2PK00002*MD (Shawnee II WWTP) — public notice",
       "feed": "timeline"
     },
     {
@@ -3704,7 +3832,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "445754445",
-      "title": "401 Water Quality Certification 445754445 \u2014 application (Project Bosc)",
+      "title": "401 Water Quality Certification 445754445 — application (Project Bosc)",
       "feed": "timeline"
     },
     {
@@ -3712,7 +3840,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "A0080278 (+ PBR21722)",
-      "title": "Trade Secret recognition (OAC 3745-49-03 / ORC 3734.12(G)) on the Initial Air PTI application A0080278 (+ PBR21722) \u2014 trade-secret-granted (Lima Facility (Bistrozzi greenfield data center))",
+      "title": "Trade Secret recognition (OAC 3745-49-03 / ORC 3734.12(G)) on the Initial Air PTI application A0080278 (+ PBR21722) — trade-secret-granted (Lima Facility (Bistrozzi greenfield data center))",
       "feed": "timeline"
     },
     {
@@ -3720,7 +3848,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "DSW-6756",
-      "title": "Surface Water Permit-to-Install DSW-6756 \u2014 application (Project Bosc)",
+      "title": "Surface Water Permit-to-Install DSW-6756 — application (Project Bosc)",
       "feed": "timeline"
     },
     {
@@ -3728,7 +3856,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "DSW401251760W",
-      "title": "Isolated Wetland Permit DSW401251760W \u2014 incomplete (Project Bosc)",
+      "title": "Isolated Wetland Permit DSW401251760W — incomplete (Project Bosc)",
       "feed": "timeline"
     },
     {
@@ -3736,7 +3864,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "DSW401252260W",
-      "title": "Isolated Wetland Permit DSW401252260W \u2014 incomplete (Project Bosc Lvl 2 IWP)",
+      "title": "Isolated Wetland Permit DSW401252260W — incomplete (Project Bosc Lvl 2 IWP)",
       "feed": "timeline"
     },
     {
@@ -3744,7 +3872,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "DSWPTI-260294",
-      "title": "Surface Water Permit-to-Install DSWPTI-260294 \u2014 application (BOSC-1A Private Sanitary Sewer Improvement Plan)",
+      "title": "Surface Water Permit-to-Install DSWPTI-260294 — application (BOSC-1A Private Sanitary Sewer Improvement Plan)",
       "feed": "timeline"
     },
     {
@@ -3752,7 +3880,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "Ohio EPA ID No. 251760W (prior Level 1 IWP referenced); Application ID: 495612045",
-      "title": "401 Water Quality Certification / Isolated Wetland Permit (Level 2) Ohio EPA ID No. 251760W (prior Level 1 IWP referenced); Application ID: 495612045 \u2014 application (Project Bosc Lvl 2 IWP)",
+      "title": "401 Water Quality Certification / Isolated Wetland Permit (Level 2) Ohio EPA ID No. 251760W (prior Level 1 IWP referenced); Application ID: 495612045 — application (Project Bosc Lvl 2 IWP)",
       "feed": "timeline"
     },
     {
@@ -3760,7 +3888,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "P0138965",
-      "title": "Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO) - Air Pollution Control P0138965 \u2014 application (Bistrozzi LLC - Allen County Air Pollution Source)",
+      "title": "Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO) - Air Pollution Control P0138965 — application (Bistrozzi LLC - Allen County Air Pollution Source)",
       "feed": "timeline"
     },
     {
@@ -3768,7 +3896,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "PMP-212",
-      "title": "Wetland Mitigation Bank Credit Purchase PMP-212 \u2014 correspondence (Project BOSC)",
+      "title": "Wetland Mitigation Bank Credit Purchase PMP-212 — correspondence (Project BOSC)",
       "feed": "timeline"
     },
     {
@@ -3776,7 +3904,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "amtwp-zoning-2025-09-08",
-      "title": "American Township zoning text amendment \u2014 data-center provisions adopted (#09-082025)",
+      "title": "American Township zoning text amendment — data-center provisions adopted (#09-082025)",
       "feed": "timeline"
     },
     {
@@ -3784,7 +3912,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "exec-2025-02-14-(G)(2)",
-      "title": "Executive session (G)(2) \u2014 \"to discuss two (1) [sic] po[t]ential purposes of property for public purposes and one (1)",
+      "title": "Executive session (G)(2) — \"to discuss two (1) [sic] po[t]ential purposes of property for public purposes and one (1)",
       "feed": "timeline"
     },
     {
@@ -3792,7 +3920,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "exec-2025-05-27-(G)(8)",
-      "title": "Executive session (G)(8) \u2014 Consideration of the proposed CRA Agreement. The minutes state: \"agreements that permit co",
+      "title": "Executive session (G)(8) — Consideration of the proposed CRA Agreement. The minutes state: \"agreements that permit co",
       "feed": "timeline"
     },
     {
@@ -3800,7 +3928,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "exec-2025-10-01-(G)(8)",
-      "title": "Executive session (G)(8) \u2014 \"Rex Huffman asked to enter executive session to discuss the terms of the Port Authority p",
+      "title": "Executive session (G)(8) — \"Rex Huffman asked to enter executive session to discuss the terms of the Port Authority p",
       "feed": "timeline"
     },
     {
@@ -3808,7 +3936,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "exec-2025-12-18-(G)(8) + (G)(2)",
-      "title": "Executive session (G)(8) + (G)(2) \u2014 Re a property matter: \"the ORC does state that it is able to be discussed in executive ses",
+      "title": "Executive session (G)(8) + (G)(2) — Re a property matter: \"the ORC does state that it is able to be discussed in executive ses",
       "feed": "timeline"
     },
     {
@@ -3816,7 +3944,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "exec-2026-01-08-(G)(2) + (G)(8)",
-      "title": "Executive session (G)(2) + (G)(8) \u2014 \"to discuss consideration of sale of property per ORC 121.22(G)(2) and considering confide",
+      "title": "Executive session (G)(2) + (G)(8) — \"to discuss consideration of sale of property per ORC 121.22(G)(2) and considering confide",
       "feed": "timeline"
     },
     {
@@ -3824,7 +3952,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2024-11-25-American Township",
-      "title": "American Township \u2014 minutes (corridor: bosc, datacenter)",
+      "title": "American Township — minutes (corridor: bosc, datacenter)",
       "feed": "timeline"
     },
     {
@@ -3832,7 +3960,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2024-12-09-American Township",
-      "title": "American Township \u2014 minutes (corridor: datacenter)",
+      "title": "American Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3840,7 +3968,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2025-01-13-American Township",
-      "title": "American Township \u2014 minutes (corridor: datacenter)",
+      "title": "American Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3848,7 +3976,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2025-06-09-American Township",
-      "title": "American Township \u2014 minutes (corridor: datacenter)",
+      "title": "American Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3856,7 +3984,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2025-06-30-American Township",
-      "title": "American Township \u2014 minutes (corridor: datacenter)",
+      "title": "American Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3864,7 +3992,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2025-08-11-American Township",
-      "title": "American Township \u2014 minutes (corridor: datacenter)",
+      "title": "American Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3872,7 +4000,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2025-09-08-American Township",
-      "title": "American Township \u2014 minutes (corridor: datacenter)",
+      "title": "American Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3880,7 +4008,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2025-11-24-American Township",
-      "title": "American Township \u2014 minutes (corridor: datacenter)",
+      "title": "American Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3888,7 +4016,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2026-02-09-American Township",
-      "title": "American Township \u2014 minutes (corridor: bosc, datacenter)",
+      "title": "American Township — minutes (corridor: bosc, datacenter)",
       "feed": "timeline"
     },
     {
@@ -3896,7 +4024,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2026-02-23-American Township",
-      "title": "American Township \u2014 minutes (corridor: datacenter)",
+      "title": "American Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3904,7 +4032,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-american-township-2026-03-30-American Township",
-      "title": "American Township \u2014 minutes (corridor: datacenter, google)",
+      "title": "American Township — minutes (corridor: datacenter, google)",
       "feed": "timeline"
     },
     {
@@ -3912,7 +4040,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2024-05-30-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3920,7 +4048,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2024-06-06-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3928,7 +4056,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2024-08-20-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3936,7 +4064,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2024-08-22-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3944,7 +4072,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2024-09-12-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3952,7 +4080,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2024-09-17-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3960,7 +4088,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2024-09-24-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3968,7 +4096,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-02-14-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -3976,7 +4104,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-03-04-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -3984,7 +4112,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-05-20-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -3992,7 +4120,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-05-22-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4000,7 +4128,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-05-27-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bistrozzi, bosc)",
+      "title": "Commissioners — minutes (corridor: bistrozzi, bosc)",
       "feed": "timeline"
     },
     {
@@ -4008,7 +4136,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-06-03-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc, datacenter)",
+      "title": "Commissioners — minutes (corridor: bosc, datacenter)",
       "feed": "timeline"
     },
     {
@@ -4016,7 +4144,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-06-12-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4024,7 +4152,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-06-24-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bistrozzi)",
+      "title": "Commissioners — minutes (corridor: bistrozzi)",
       "feed": "timeline"
     },
     {
@@ -4032,7 +4160,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-07-10-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bistrozzi)",
+      "title": "Commissioners — minutes (corridor: bistrozzi)",
       "feed": "timeline"
     },
     {
@@ -4040,7 +4168,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-07-24-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4048,7 +4176,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-07-29-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4056,7 +4184,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-07-31-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bistrozzi, bosc)",
+      "title": "Commissioners — minutes (corridor: bistrozzi, bosc)",
       "feed": "timeline"
     },
     {
@@ -4064,7 +4192,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-08-14-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4072,7 +4200,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-09-18-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4080,7 +4208,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-11-20-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4088,7 +4216,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-12-18-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4096,7 +4224,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2025-12-23-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4104,7 +4232,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2026-01-13-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4112,7 +4240,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2026-02-03-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4120,7 +4248,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2026-02-17-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4128,7 +4256,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2026-02-26-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4136,7 +4264,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2026-04-28-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: datacenter)",
+      "title": "Commissioners — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4144,7 +4272,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2026-05-05-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4152,7 +4280,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2026-05-12-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4160,7 +4288,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-commissioners-2026-05-14-Commissioners",
-      "title": "Commissioners \u2014 minutes (corridor: bosc)",
+      "title": "Commissioners — minutes (corridor: bosc)",
       "feed": "timeline"
     },
     {
@@ -4168,7 +4296,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-lacrpc-2026-01-15-Community Development Committee (CDC)",
-      "title": "Community Development Committee (CDC) \u2014 minutes (corridor: datacenter)",
+      "title": "Community Development Committee (CDC) — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4176,7 +4304,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-lacrpc-2026-03-26-Executive Committee (EC)",
-      "title": "Executive Committee (EC) \u2014 minutes (corridor: datacenter)",
+      "title": "Executive Committee (EC) — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4184,7 +4312,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-lacrpc-2026-04-23-Executive Committee (EC)",
-      "title": "Executive Committee (EC) \u2014 minutes (corridor: bosc, datacenter, google)",
+      "title": "Executive Committee (EC) — minutes (corridor: bosc, datacenter, google)",
       "feed": "timeline"
     },
     {
@@ -4192,7 +4320,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2023-12-05-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: google)",
+      "title": "Perry Township — minutes (corridor: google)",
       "feed": "timeline"
     },
     {
@@ -4200,7 +4328,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-04-02-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4208,7 +4336,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-04-16-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4216,7 +4344,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-05-07-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4224,7 +4352,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-05-21-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4232,7 +4360,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-06-04-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4240,7 +4368,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-06-18-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4248,7 +4376,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-07-02-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter, google)",
+      "title": "Perry Township — minutes (corridor: datacenter, google)",
       "feed": "timeline"
     },
     {
@@ -4256,7 +4384,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-07-16-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4264,7 +4392,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-08-13-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4272,7 +4400,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-09-03-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4280,7 +4408,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-09-05-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter, google)",
+      "title": "Perry Township — minutes (corridor: datacenter, google)",
       "feed": "timeline"
     },
     {
@@ -4288,7 +4416,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-09-17-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4296,7 +4424,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-10-01-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4304,7 +4432,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-10-15-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4312,7 +4440,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2024-10-29-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4320,7 +4448,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2025-01-21-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4328,7 +4456,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2025-03-18-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4336,7 +4464,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2025-05-20-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4344,7 +4472,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2025-06-03-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4352,7 +4480,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2025-07-15-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4360,7 +4488,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2025-09-16-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: google)",
+      "title": "Perry Township — minutes (corridor: google)",
       "feed": "timeline"
     },
     {
@@ -4368,7 +4496,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2025-10-21-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4376,7 +4504,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2025-12-02-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4384,7 +4512,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2026-02-17-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: google)",
+      "title": "Perry Township — minutes (corridor: google)",
       "feed": "timeline"
     },
     {
@@ -4392,7 +4520,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2026-03-03-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: google)",
+      "title": "Perry Township — minutes (corridor: google)",
       "feed": "timeline"
     },
     {
@@ -4400,7 +4528,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2026-04-07-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4408,7 +4536,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-perry-township-2026-04-21-Perry Township",
-      "title": "Perry Township \u2014 minutes (corridor: datacenter)",
+      "title": "Perry Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4416,7 +4544,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-shawnee-township-2026-03-09-Shawnee Township",
-      "title": "Shawnee Township \u2014 minutes (corridor: datacenter)",
+      "title": "Shawnee Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4424,7 +4552,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-shawnee-township-2026-03-23-Shawnee Township",
-      "title": "Shawnee Township \u2014 minutes (corridor: datacenter)",
+      "title": "Shawnee Township — minutes (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4432,7 +4560,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "mtg-shawnee-township-2026-04-13-Shawnee Township",
-      "title": "Shawnee Township \u2014 other (corridor: datacenter)",
+      "title": "Shawnee Township — other (corridor: datacenter)",
       "feed": "timeline"
     },
     {
@@ -4584,7 +4712,7 @@
       "kind": "timeline",
       "site": "lima",
       "local_id": "res-679-24",
-      "title": "Res #679-24: Task Order No. 5 with MS Consultants ($47,600) \u2014 'WWTP Data Center Flows Treatment Evaluation' of the campus BLOWDOWN stream (storage + treatment @ American Bath WWTP); County to gather data from 'the developer and data center manufacturer'.",
+      "title": "Res #679-24: Task Order No. 5 with MS Consultants ($47,600) — 'WWTP Data Center Flows Treatment Evaluation' of the campus BLOWDOWN stream (storage + treatment @ American Bath WWTP); County to gather data from 'the developer and data center manufacturer'.",
       "feed": "timeline"
     },
     {

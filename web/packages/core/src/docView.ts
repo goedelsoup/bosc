@@ -17,6 +17,28 @@ export function docApiUrl(rel: string): string {
   return `/api/doc/${encoded}`;
 }
 
+/**
+ * The site-relative **viewer-page** path for a document (`/site/documents/<rel>`). Callers wrap it
+ * in `withSite` / `withBasePath`; it carries no base of its own.
+ *
+ * Deliberately NOT `encodeURIComponent` per segment like `docApiUrl` above — the two have
+ * different contracts. The byte URL is read by a Pages Function that calls `decodeURIComponent`,
+ * so it wants everything encoded. This one has to address a **static file Astro already wrote to
+ * disk**, and Astro encodes only the characters that would break path parsing when it materializes
+ * a route param: `#` becomes `%23` in the emitted directory name, while spaces and `&` stay
+ * literal. Encoding more than Astro does produces a path that exists nowhere.
+ *
+ * This matters because source filenames are as-received public records and are never renamed
+ * (chain of custody): the sanitary PRR production has 141 files with `#` in the name, 1,571 with
+ * `&`, and 1,739 with spaces. Interpolated raw, a `#` reads as a fragment delimiter and the
+ * browser requests a truncated path — the link 404s while the file sits on disk.
+ */
+export function docPagePath(rel: string): string {
+  // `%` first so an existing escape can't be re-read as one; then the path-structural characters.
+  const encoded = rel.replace(/%/g, "%25").replace(/#/g, "%23").replace(/\?/g, "%3F");
+  return `/site/documents/${encoded}`;
+}
+
 /** How a reader can reach a document's bytes, given the gate + local availability. */
 export type DocAccess = "published" | "dev-only" | "absent";
 

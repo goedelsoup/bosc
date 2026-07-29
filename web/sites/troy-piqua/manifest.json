@@ -1,18 +1,18 @@
 {
   "site": "troy-piqua",
   "bundle_version": "1.0.0",
-  "contract_version": "1.36.0",
-  "generated_at": "2026-07-13T13:16:07+00:00",
-  "feed_count": 27,
-  "row_total": 329,
+  "contract_version": "1.41.0",
+  "generated_at": "2026-07-29T15:25:02+00:00",
+  "feed_count": 32,
+  "row_total": 460,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
-      "places": "absent",
+      "places": "live",
       "record": "live",
-      "story": "absent"
+      "story": "seeded"
     }
   },
   "facility": {
@@ -112,6 +112,14 @@
       "count": 0
     },
     {
+      "name": "leads",
+      "path": "feeds/leads.json",
+      "media_type": "application/json",
+      "schema": "schemas/leads.schema.json",
+      "kind": "collection",
+      "count": 12
+    },
+    {
       "name": "rsei",
       "path": "feeds/rsei.json",
       "media_type": "application/json",
@@ -132,6 +140,14 @@
       "path": "feeds/consumer-energy.json",
       "media_type": "application/json",
       "schema": "schemas/consumer-energy.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "grid",
+      "path": "feeds/grid.json",
+      "media_type": "application/json",
+      "schema": "schemas/grid.schema.json",
       "kind": "object",
       "count": 1
     },
@@ -205,7 +221,15 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 45
+      "count": 54
+    },
+    {
+      "name": "geo/campus",
+      "path": "feeds/geo/campus.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 3
     },
     {
       "name": "facts",
@@ -216,6 +240,14 @@
       "count": 87
     },
     {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 10
+    },
+    {
       "name": "catalog-index",
       "path": "feeds/catalog-index.json",
       "media_type": "application/json",
@@ -224,20 +256,28 @@
       "count": 1
     },
     {
-      "name": "ask-embeddings",
-      "path": "feeds/ask-embeddings.json",
-      "media_type": "application/json",
-      "schema": "schemas/ask-embeddings.schema.json",
-      "kind": "collection",
-      "count": 0
-    },
-    {
       "name": "corpus-index",
       "path": "feeds/corpus-index.json",
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
       "count": 96
+    },
+    {
+      "name": "corpus-nodes",
+      "path": "feeds/corpus-nodes.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/corpus-nodes.schema.json",
+      "kind": "collection",
+      "count": 96
+    },
+    {
+      "name": "ask-embeddings",
+      "path": "feeds/ask-embeddings.json",
+      "media_type": "application/json",
+      "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
     }
   ],
   "exports": []

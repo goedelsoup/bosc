@@ -1,7 +1,7 @@
 {
   "site": "xenia",
-  "catalog_version": "072405a1aaebc974388d6f53c0b702d8b286ddce35a70c8bade9ffc373bf4c44",
-  "contract_version": "1.36.0",
+  "catalog_version": "9edbc192e1a72429f6fc4e3632a21a39e0d34ecb92258cfacc1f343c83b749f3",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:xenia:7q10",
@@ -9,6 +9,14 @@
       "site": "xenia",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:aep",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:xenia:behind-the-meter",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:brownfield",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:cercla",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:cgp",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:closed-loop-cooling",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:cmar",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:colocation",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:xenia:common-control-plumbing",
       "kind": "concept",
       "site": "xenia",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:conditional-use",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:consent-decree",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:constructive-denial",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:xenia:cra",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:curve-number",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:dilution",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:dissolved-oxygen",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:dmr",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:echo",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:effluent",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:eia",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:enterprise-zone",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:epa",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:esc",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:ferc",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:ffa",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:hb",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:heat-reuse",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:hsg",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:huc",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:xenia:hyperscale-data-center",
       "kind": "concept",
       "site": "xenia",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:xenia:hyperscaler",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:il6",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:interconnection-queue",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:jedd",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:moratorium",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:nda",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:npdes",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:nwis",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:oepa",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:once-through-cooling",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:opc",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:opsb",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:orc",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:pfas",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:pilot",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:pjm",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:potw",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:pti",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:xenia:public-records-mandamus",
       "kind": "concept",
       "site": "xenia",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:puco",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:pue",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:rezoning",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:rfp",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:rfq",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:rsei",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:rto",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:snc",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:sos",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:ssa",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:swat",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:swcd",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:tax-abatement",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:tif",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:tmdl",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:total-nitrogen",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:total-phosphorus",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:tri",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:usgs",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:variance",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:wla",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:wue",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:xenia:wwtp",
+      "kind": "concept",
+      "site": "xenia",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -224,7 +776,7 @@
       "kind": "dataset",
       "site": "xenia",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -257,6 +809,14 @@
       "site": "xenia",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:legal-records-legislation",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -313,6 +873,22 @@
       "site": "xenia",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -388,11 +964,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:xenia:thermal",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:xenia:usaspending",
       "kind": "dataset",
       "site": "xenia",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:wqs-criteria",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:wqs-temperature",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

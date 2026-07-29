@@ -1,7 +1,7 @@
 {
   "site": "wilmington",
-  "catalog_version": "45827cc5ba8023bfcf5f7308a11a1b26c6e70c9f5a2495d724883723b39107fd",
-  "contract_version": "1.36.0",
+  "catalog_version": "d8447f9a1f0cac12c7228276945864b7df6bcf9abdb5134c9b5018cadcd81bbf",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:wilmington:7q10",
@@ -9,6 +9,14 @@
       "site": "wilmington",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:aep",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:wilmington:behind-the-meter",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:brownfield",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:cercla",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:cgp",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:closed-loop-cooling",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:cmar",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:colocation",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:wilmington:common-control-plumbing",
       "kind": "concept",
       "site": "wilmington",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:conditional-use",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:consent-decree",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:constructive-denial",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:wilmington:cra",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:curve-number",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:dilution",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:dissolved-oxygen",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:dmr",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:echo",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:effluent",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:eia",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:enterprise-zone",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:epa",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:esc",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:ferc",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:ffa",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:hb",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:heat-reuse",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:hsg",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:huc",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:wilmington:hyperscale-data-center",
       "kind": "concept",
       "site": "wilmington",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:wilmington:hyperscaler",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:il6",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:interconnection-queue",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:jedd",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:moratorium",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:nda",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:npdes",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:nwis",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:oepa",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:once-through-cooling",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:opc",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:opsb",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:orc",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:pfas",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:pilot",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:pjm",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:potw",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:pti",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:wilmington:public-records-mandamus",
       "kind": "concept",
       "site": "wilmington",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:puco",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:pue",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:rezoning",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:rfp",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:rfq",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:rsei",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:rto",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:snc",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:sos",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:ssa",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:swat",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:swcd",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:tax-abatement",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:tif",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:tmdl",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:total-nitrogen",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:total-phosphorus",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:tri",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:usgs",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:variance",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:wla",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:wue",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wilmington:wwtp",
+      "kind": "concept",
+      "site": "wilmington",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -224,7 +776,7 @@
       "kind": "dataset",
       "site": "wilmington",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -257,6 +809,14 @@
       "site": "wilmington",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:legal-records-legislation",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -313,6 +873,22 @@
       "site": "wilmington",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -396,6 +972,22 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:wilmington:thermal",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:wilmington:usaspending",
       "kind": "dataset",
       "site": "wilmington",
@@ -417,6 +1009,22 @@
       "site": "wilmington",
       "local_id": "wilmington-watch-items",
       "title": "Wilmington site watch-items (WWTP infrastructure geometry)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:wqs-criteria",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:wqs-temperature",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

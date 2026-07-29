@@ -1,7 +1,7 @@
 {
   "site": "van-wert",
-  "catalog_version": "120ead6549f186b7b942e55f0ee9970e5204dbd1bed94f858f939d44d22d3dee",
-  "contract_version": "1.36.0",
+  "catalog_version": "c1a137b1c3c1c010fea62b377d662e7cae70e02f6b3bb27d0e2d1a32740bdead",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:van-wert:7q10",
@@ -9,6 +9,14 @@
       "site": "van-wert",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:aep",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:van-wert:behind-the-meter",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:brownfield",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:cercla",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:cgp",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:closed-loop-cooling",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:cmar",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:colocation",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:van-wert:common-control-plumbing",
       "kind": "concept",
       "site": "van-wert",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:conditional-use",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:consent-decree",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:constructive-denial",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,11 +124,139 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:van-wert:cra",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:curve-number",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:dilution",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:dissolved-oxygen",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:dmr",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:echo",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:effluent",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:eia",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:enterprise-zone",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:epa",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:esc",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:ferc",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:ffa",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:hb",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:van-wert:heat-reuse",
       "kind": "concept",
       "site": "van-wert",
       "local_id": "heat-reuse",
       "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:hsg",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:huc",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "huc",
+      "title": "HUC",
       "feed": "concepts"
     },
     {
@@ -52,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:van-wert:hyperscaler",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:il6",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:interconnection-queue",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:jedd",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:moratorium",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:nda",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:npdes",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:nwis",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:oepa",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:once-through-cooling",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:opc",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:opsb",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:orc",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:pfas",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:pilot",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:pjm",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:potw",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:pti",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:van-wert:public-records-mandamus",
       "kind": "concept",
       "site": "van-wert",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:puco",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:pue",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:rezoning",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:rfp",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:rfq",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:rsei",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:rto",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:snc",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:sos",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:ssa",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:swat",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:swcd",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:tax-abatement",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:tif",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:tmdl",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:total-nitrogen",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:total-phosphorus",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:tri",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:usgs",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:variance",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:wla",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:wue",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:wwtp",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -121,6 +665,14 @@
       "site": "van-wert",
       "local_id": "echo-maumee-npdes",
       "title": "Maumee-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:echo-maumee-receiving-water",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "echo-maumee-receiving-water",
+      "title": "Curated receiving-water overlay for the Maumee ECHO NPDES inventory",
       "feed": "catalog"
     },
     {
@@ -276,6 +828,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:van-wert:legal-records-legislation",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:van-wert:lsc-status-report",
       "kind": "dataset",
       "site": "van-wert",
@@ -329,6 +889,22 @@
       "site": "van-wert",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -412,11 +988,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:van-wert:thermal",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:van-wert:usaspending",
       "kind": "dataset",
       "site": "van-wert",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:wqs-criteria",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:wqs-temperature",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

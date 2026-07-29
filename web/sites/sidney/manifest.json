@@ -1,10 +1,10 @@
 {
   "site": "sidney",
   "bundle_version": "1.0.0",
-  "contract_version": "1.36.0",
-  "generated_at": "2026-07-13T12:52:42+00:00",
-  "feed_count": 27,
-  "row_total": 296,
+  "contract_version": "1.41.0",
+  "generated_at": "2026-07-29T15:23:11+00:00",
+  "feed_count": 29,
+  "row_total": 383,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -136,6 +136,14 @@
       "count": 1
     },
     {
+      "name": "grid",
+      "path": "feeds/grid.json",
+      "media_type": "application/json",
+      "schema": "schemas/grid.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
       "name": "economics-demand-pressure",
       "path": "feeds/economics-demand-pressure.json",
       "media_type": "application/json",
@@ -205,7 +213,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 45
+      "count": 52
     },
     {
       "name": "facts",
@@ -224,20 +232,28 @@
       "count": 1
     },
     {
-      "name": "ask-embeddings",
-      "path": "feeds/ask-embeddings.json",
-      "media_type": "application/json",
-      "schema": "schemas/ask-embeddings.schema.json",
-      "kind": "collection",
-      "count": 0
-    },
-    {
       "name": "corpus-index",
       "path": "feeds/corpus-index.json",
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
       "count": 79
+    },
+    {
+      "name": "corpus-nodes",
+      "path": "feeds/corpus-nodes.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/corpus-nodes.schema.json",
+      "kind": "collection",
+      "count": 79
+    },
+    {
+      "name": "ask-embeddings",
+      "path": "feeds/ask-embeddings.json",
+      "media_type": "application/json",
+      "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
     }
   ],
   "exports": []

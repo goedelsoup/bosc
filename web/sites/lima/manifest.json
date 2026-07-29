@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "1.41.0",
-  "generated_at": "2026-07-19T03:12:28+00:00",
+  "generated_at": "2026-07-29T15:19:04+00:00",
   "feed_count": 52,
-  "row_total": 1598,
+  "row_total": 1616,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -317,7 +317,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 117
+      "count": 131
     },
     {
       "name": "geo/campus",
@@ -368,14 +368,6 @@
       "count": 3
     },
     {
-      "name": "geo/dewatering",
-      "path": "feeds/geo/dewatering.geojson",
-      "media_type": "application/geo+json",
-      "schema": "schemas/geo.schema.json",
-      "kind": "geojson",
-      "count": 54
-    },
-    {
       "name": "geo/watershed",
       "path": "feeds/geo/watershed.geojson",
       "media_type": "application/geo+json",
@@ -392,12 +384,20 @@
       "count": 1
     },
     {
+      "name": "geo/dewatering",
+      "path": "feeds/geo/dewatering.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 54
+    },
+    {
       "name": "facts",
       "path": "feeds/facts.json",
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 162
+      "count": 160
     },
     {
       "name": "open-questions",
@@ -421,7 +421,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 238
+      "count": 241
     },
     {
       "name": "corpus-nodes",
@@ -429,7 +429,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 238
+      "count": 241
     },
     {
       "name": "ask-embeddings",

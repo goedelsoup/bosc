@@ -1,0 +1,86 @@
+{
+  "serving_utility": {
+    "utility": {
+      "value": "Dayton Power & Light Co",
+      "source": "reference",
+      "citation": "EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) is the IOU serving Greene County, OH — the Xenia LSE (Duke #3542 fringes the SW county; Village of Yellow Springs muni is separate). [verified]",
+      "confidence": "high"
+    },
+    "holding_company": {
+      "value": "The AES Corporation (AES Ohio)",
+      "source": "reference",
+      "citation": "Dayton Power & Light Co does business as AES Ohio, the Ohio operating company of The AES Corporation",
+      "confidence": "high"
+    },
+    "balancing_authority": {
+      "value": "PJM Interconnection",
+      "source": "reference",
+      "citation": "PJM is the FERC-jurisdictional wholesale-market RTO for Dayton Power & Light (AES Ohio)",
+      "confidence": "high"
+    },
+    "rto": {
+      "value": "PJM Interconnection (RTO/ISO)",
+      "source": "reference",
+      "citation": "PJM is the FERC-jurisdictional wholesale-market RTO for Dayton Power & Light (AES Ohio)",
+      "confidence": "high"
+    },
+    "retail_regulator": {
+      "value": "Public Utilities Commission of Ohio (PUCO)",
+      "source": "reference",
+      "citation": "Ohio retail electric service is PUCO-regulated (intrastate)",
+      "confidence": "high"
+    },
+    "note": "Serving utility is identified from the EIA-861 service-territory file; RTO=PJM Interconnection is authoritative. The retail service-territory boundary is formally confirmed against the EIA-861 territory file / PUCO map (#94)."
+  },
+  "utility_profile": {
+    "utility": "Dayton Power & Light Co",
+    "ownership": "Investor Owned",
+    "eia_source": "EIA-861 2024 per-utility retail (connector; bundled+delivery total)",
+    "retail_sales_gwh": {
+      "value": 13817.6,
+      "unit": "GWh/yr",
+      "source": "connector",
+      "citation": "EIA-861 2024 Sales to Ultimate Customers, Dayton Power & Light Co (#4922), OH; bundled + delivery total sales",
+      "confidence": "high",
+      "asof": "2024",
+      "low": null,
+      "high": null
+    },
+    "customers": {
+      "value": 540836.0,
+      "unit": "customers",
+      "source": "connector",
+      "citation": "EIA-861 2024 Sales to Ultimate Customers, Dayton Power & Light Co (#4922), OH; bundled + delivery total customers",
+      "confidence": "high",
+      "asof": "2024",
+      "low": null,
+      "high": null
+    },
+    "avg_price_cents_kwh": {
+      "value": 14.94,
+      "unit": "cents/kWh",
+      "source": "connector",
+      "citation": "EIA-861 2024 Sales to Ultimate Customers, Dayton Power & Light Co (#4922), OH; COHORT PRICE — bundled (standard-service-offer) revenue/sales only. Delivery-only rows are excluded because they carry just the wires charge (generation is paid to a competitive supplier), but the remaining bundled cohort is the customers who never shopped, which in a restructured state skews residential. NOT the utility's all-sector average and NOT an industrial/data-center rate — for that, compare the all-sector price EIA ELEC.PRICE.OH-ALL.A",
+      "confidence": "high",
+      "asof": "2024",
+      "low": null,
+      "high": null
+    }
+  },
+  "ba_profile": {
+    "ba": "PJM Interconnection",
+    "eia_source": "EIA-930 daily demand sum, annual (connector)",
+    "annual_load_gwh": {
+      "value": 815056.2,
+      "unit": "GWh/yr",
+      "source": "connector",
+      "citation": "EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)",
+      "confidence": "high",
+      "asof": "2024",
+      "low": null,
+      "high": null
+    }
+  },
+  "load_share": null,
+  "note": "Grid foundation layer (#94): per-site grid backdrop only. This site has no documented data-center facility, so there is no campus load to express as a share — the utility/BA/state denominators are real connector-sourced data, but the campus load share awaits the site's facility disclosure (the data-center dimension onboarding does not capture)."
+}

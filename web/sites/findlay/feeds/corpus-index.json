@@ -1,23 +1,12 @@
 [
   {
-    "id": "artifact/city-of-findlay-subapplicant",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "City of Findlay (subapplicant), in partnership with the Hancock County Commissioners and the Maumee Watershed Conservancy District (MWCD)",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 0,
-    "lines": 13,
-    "updated": "2026-07-14"
-  },
-  {
     "id": "artifact/site-findlay",
     "node_class": "artifact",
     "kind": "site",
     "label": "Findlay",
     "scope": "site",
     "links_out": 3,
-    "links_in": 12,
+    "links_in": 10,
     "lines": 13,
     "updated": null
   },
@@ -939,17 +928,6 @@
     "node_class": "question",
     "kind": "lead",
     "label": "Find the sediment-characterization study at Riverside Park dam (only a dredging project is documented)",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 0,
-    "lines": 22,
-    "updated": null
-  },
-  {
-    "id": "question/lead-taxonomy-grants",
-    "node_class": "question",
-    "kind": "lead",
-    "label": "The record-group taxonomy has no federal-grant / disaster-mitigation bucket (network-level follow-up)",
     "scope": "site",
     "links_out": 1,
     "links_in": 0,

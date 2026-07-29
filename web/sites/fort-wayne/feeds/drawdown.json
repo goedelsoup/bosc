@@ -1,0 +1,175 @@
+{
+  "county": "Allen",
+  "scenario": {
+    "name": "cooling-makeup-if-groundwater",
+    "pumping_mgd": {
+      "value": 1.28,
+      "unit": "MGD",
+      "source": "assumption",
+      "citation": "Campus cooling makeup (buildout central, data/scenarios/buildout.scenario.yaml) framed as a HYPOTHETICAL groundwater pumping stress. The campus draws municipal SURFACE water; no on-site production well or withdrawal permit is on record ([open]).",
+      "confidence": "low",
+      "asof": null,
+      "low": null,
+      "high": null
+    },
+    "duration_days": 365.0,
+    "aquifer_material": "LIMESTONE",
+    "note": "Hypothetical: what a well field supplying the campus cooling makeup would do to the LIMESTONE aquifer. Bounds the 'area well concerns'; not a documented groundwater use."
+  },
+  "material": "LIMESTONE",
+  "confinement": "confined",
+  "transmissivity_ft2_day": {
+    "value": 141.0,
+    "unit": "ft^2/day",
+    "source": "derived",
+    "citation": "T = K x b: literature K (Freeze & Cherry (1979) Groundwater, Tables 2.2/2.4 (by material)) x census saturated thickness for LIMESTONE. An [inference] BRACKET - K spans orders of magnitude.",
+    "confidence": "medium",
+    "asof": null,
+    "low": 1.0,
+    "high": 22950.0
+  },
+  "storativity": {
+    "value": 0.0005,
+    "unit": "fraction",
+    "source": "reference",
+    "citation": "Freeze & Cherry (1979) Table 2.2 (limestone & dolomite, incl. fractured/karstic) + Table 2.4. NW Ohio carbonate aquifer is fracture-controlled (confined behavior).",
+    "confidence": "medium",
+    "asof": null,
+    "low": null,
+    "high": null
+  },
+  "saturated_thickness_ft": 47.0,
+  "drawdown_at_well_ft": {
+    "value": 47.0,
+    "unit": "ft",
+    "source": "derived",
+    "citation": "Theis cone apex (r=0.5 ft, t=365 d) on the LIMESTONE aquifer, Q=1.28 MGD [inference]. CAPPED at the saturated thickness -- the low-transmissivity end of the bracket exceeds it, i.e. the aquifer DEWATERS and cannot sustain this rate.",
+    "confidence": "medium",
+    "asof": null,
+    "low": 15.3,
+    "high": 47.0
+  },
+  "radius_of_influence_ft": {
+    "value": 15218.0,
+    "unit": "ft",
+    "source": "derived",
+    "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S) on the LIMESTONE aquifer [inference].",
+    "confidence": "medium",
+    "asof": null,
+    "low": 1282.0,
+    "high": 194153.0
+  },
+  "dewaters": true,
+  "sustainable": false,
+  "affected_domestic_wells": 0,
+  "profile": [
+    {
+      "radius_ft": 0.5,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 634.6,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 1268.6,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 1902.7,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 2536.8,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 3170.8,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 3804.9,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 4439.0,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 5073.1,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 5707.1,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 6341.2,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 6975.3,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 7609.3,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 8243.4,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 8877.5,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 9511.5,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 10145.6,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 10779.7,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 11413.7,
+      "drawdown_ft": 47.0
+    },
+    {
+      "radius_ft": 12047.8,
+      "drawdown_ft": 45.1
+    },
+    {
+      "radius_ft": 12681.9,
+      "drawdown_ft": 35.2
+    },
+    {
+      "radius_ft": 13316.0,
+      "drawdown_ft": 25.8
+    },
+    {
+      "radius_ft": 13950.0,
+      "drawdown_ft": 16.8
+    },
+    {
+      "radius_ft": 14584.1,
+      "drawdown_ft": 8.2
+    },
+    {
+      "radius_ft": 15218.2,
+      "drawdown_ft": 0.0
+    }
+  ],
+  "tag": "inference",
+  "caveats": [
+    "Hypothetical pumping stress: the campus draws municipal SURFACE water; no groundwater withdrawal is on record. Q is [inference], the cone is a screen, never a headline.",
+    "The low-transmissivity end of the bracket drives the cone past the saturated thickness: the local aquifer CANNOT sustain this rate -- corroborating the campus's reliance on municipal surface water.",
+    "Theis assumes a confined, homogeneous, fully-penetrating aquifer at constant Q -- a screening idealization, not a calibrated model.",
+    "No specific capacity: the well-log service reports a static level and a test yield but not the pumping level during the test.",
+    "Transmissivity is a literature-K x census-thickness bracket, not a measured value."
+  ]
+}

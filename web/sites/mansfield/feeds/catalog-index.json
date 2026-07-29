@@ -1,0 +1,1071 @@
+{
+  "site": "mansfield",
+  "catalog_version": "7e5e2e9eaf43730efb581dd7fc9e3dfef75294d1aa970fe4e1ff2013e4a16498",
+  "contract_version": "1.41.0",
+  "atoms": [
+    {
+      "handle": "concept:mansfield:7q10",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "7q10",
+      "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:aep",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "aep",
+      "title": "AEP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:assimilative-capacity",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "assimilative-capacity",
+      "title": "Assimilative capacity",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:behind-the-meter",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:brownfield",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:cercla",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:cgp",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:closed-loop-cooling",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:cmar",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:colocation",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:common-control-plumbing",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "common-control-plumbing",
+      "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:conditional-use",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:consent-decree",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:constructive-denial",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:consumptive-cooling",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "consumptive-cooling",
+      "title": "Consumptive cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:cra",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:curve-number",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:dilution",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:dissolved-oxygen",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:dmr",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:echo",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:effluent",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:eia",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:enterprise-zone",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:epa",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:esc",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:ferc",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:ffa",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:hb",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:heat-reuse",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:hsg",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:huc",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:hyperscale-data-center",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "hyperscale-data-center",
+      "title": "Hyperscale data center",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:hyperscaler",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:il6",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:interconnection-queue",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:jedd",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:moratorium",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:nda",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:npdes",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:nwis",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:oepa",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:once-through-cooling",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:opc",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:opsb",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:orc",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:pfas",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:pilot",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:pjm",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:potw",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:pti",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:public-records-mandamus",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "public-records-mandamus",
+      "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:puco",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:pue",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:rezoning",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:rfp",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:rfq",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:rsei",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:rto",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:snc",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:sos",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:ssa",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:swat",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:swcd",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:tax-abatement",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:tif",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:tmdl",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:total-nitrogen",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:total-phosphorus",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:tri",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:usgs",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:variance",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:wla",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:wue",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:mansfield:wwtp",
+      "kind": "concept",
+      "site": "mansfield",
+      "local_id": "wwtp",
+      "title": "WWTP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "dataset:mansfield:air-emission-factors",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "air-emission-factors",
+      "title": "Genset Emission Factors (EPA AP-42 §3.4)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:air-naaqs",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "air-naaqs",
+      "title": "National Ambient Air Quality Standards (NAAQS)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:bundle-records",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "bundle-records",
+      "title": "The published content bundle — typed feeds + manifest (watermark export)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:compute",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "compute",
+      "title": "AI Accelerator & Rack-Density Compute Reference",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:data-centers",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "data-centers",
+      "title": "Per-Site Data-Center Activity Register",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:datacenter-industry",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "datacenter-industry",
+      "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:economics-baseline",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "economics-baseline",
+      "title": "Richland County Economic Baseline (BLS QCEW + US Census ACS)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:eia",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "eia",
+      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:eia-consumer-energy",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "eia-consumer-energy",
+      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:eia-demand-pressure",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "eia-demand-pressure",
+      "title": "Facility Demand → Consumer Price-Pressure Sensitivity (EIA + facility load)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:eia-grid-profile",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "eia-grid-profile",
+      "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:federal",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "federal",
+      "title": "Federal Energy-Policy & National-Output Backdrop (IRA + EIA + LBNL/DOE)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:ferc",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "ferc",
+      "title": "FERC↔PUCO Regulatory Seam (Federal Power Act + FERC eLibrary)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:gleif",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "gleif",
+      "title": "Corridor Entity LEIs (GLEIF)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:greenops",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "greenops",
+      "title": "GreenOps — Anthropic Admin usage & cost",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:greenops-aws",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "greenops-aws",
+      "title": "GreenOps — AWS costs & estimated carbon",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:greenops-factors",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "greenops-factors",
+      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:greenops-footprint",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "greenops-footprint",
+      "title": "GreenOps — derived compute footprint (usage → electricity → water)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:greenops-github",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "greenops-github",
+      "title": "GreenOps — GitHub Actions minutes & storage",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:grid",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "grid",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:hydrology-atlas14-corridor-ddf",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "hydrology-atlas14-corridor-ddf",
+      "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:hydrology-nasa-power-climatology",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "hydrology-nasa-power-climatology",
+      "title": "NASA POWER Climate Normals — site climatology",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:hydrology-ohio-principal-streams",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "hydrology-ohio-principal-streams",
+      "title": "Ohio Principal Streams & Drainage Areas (ODNR, Sherman 1925 / 1999 reprint)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:hydrology-reaches",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "hydrology-reaches",
+      "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:legal-records-legislation",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:lsc-status-report",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "lsc-status-report",
+      "title": "Ohio LSC Status Report of Legislation",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:mansfield",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "mansfield",
+      "title": "Mansfield (Richland County, OH) — the airport nexus (places domain)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:meetings",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "meetings",
+      "title": "Per-Site Civic Meeting Records (Slug-Scoped)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:network",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "network",
+      "title": "BOSC Watershed-Point Network Synthesis (Maumee Basin)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:odd-grants-loans",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "odd-grants-loans",
+      "title": "Ohio Department of Development — Grants and Loans disbursements (statewide)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:odd-tax-incentives",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "odd-tax-incentives",
+      "title": "Ohio Department of Development — Tax Incentives (JCTC/JRTC/Historic/Datacenter)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:odd-tca-minutes",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "odd-tca-minutes",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:odot-driveohio-cv-av",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "odot-driveohio-cv-av",
+      "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:oepa-ohd000001-gp",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "oepa-ohd000001-gp",
+      "title": "Ohio EPA Draft General NPDES Permit for Data Center Facilities (OHD000001)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:onboard-bundle",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "onboard-bundle",
+      "title": "Full site onboarding — every reach/economics connector, in dependency order",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:orc",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "orc",
+      "title": "Ohio Revised Code — Corpus Citation Index",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:orc-orc",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "orc-orc",
+      "title": "Ohio Revised Code — Full Text (Cited Sections + Titles)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:parcel-assemblage",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "parcel-assemblage",
+      "title": "Per-Site Parcel Assemblage Geometry",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:periplus",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "periplus",
+      "title": "Periplus Corridor GIS (Frozen Fork-Point Import)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:pjm",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "pjm",
+      "title": "PJM Wholesale-Market Reference (LMP / RPM Capacity / Large-Load Queue)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:rsei",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "rsei",
+      "title": "RSEI Toxic-Discharge Water Screen",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:rsei-inventory",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "rsei-inventory",
+      "title": "Richland County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:thermal",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:usaspending",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "usaspending",
+      "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:wqs-criteria",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:wqs-temperature",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "entity:mansfield:GENERAL DYNAMICS",
+      "kind": "entity",
+      "site": "mansfield",
+      "local_id": "GENERAL DYNAMICS",
+      "title": "GENERAL DYNAMICS CORPORATION",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:mansfield:GENERAL DYNAMICS LAND SYSTEMS",
+      "kind": "entity",
+      "site": "mansfield",
+      "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
+      "title": "General Dynamics Land Systems Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "lead:mansfield:AOFF-WATER-LOOP",
+      "kind": "lead",
+      "site": "mansfield",
+      "local_id": "AOFF-WATER-LOOP",
+      "title": "The All Ohio Future Fund application for the airport water loop — filed? awarded?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:mansfield:CLEARFORK-STANTEC",
+      "kind": "lead",
+      "site": "mansfield",
+      "local_id": "CLEARFORK-STANTEC",
+      "title": "Clear Fork Reservoir has never been dredged — what does the Stantec capacity study find?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:mansfield:DC-BALLOT-AMENDMENT",
+      "kind": "lead",
+      "site": "mansfield",
+      "local_id": "DC-BALLOT-AMENDMENT",
+      "title": "Did the statewide >25 MW anti-data-center ballot amendment qualify by 2026-07-01?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:mansfield:ENERGIACRES-BELMONT",
+      "kind": "lead",
+      "site": "mansfield",
+      "local_id": "ENERGIACRES-BELMONT",
+      "title": "EnergiAcres is shopping a 2–3 GW version of the same project to Belmont County",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:mansfield:ENERGIACRES-DEED",
+      "kind": "lead",
+      "site": "mansfield",
+      "local_id": "ENERGIACRES-DEED",
+      "title": "Who actually controls the Ernsberger–Amoy Ganges 600–700 acres?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:mansfield:OCP-SUBSTATION",
+      "kind": "lead",
+      "site": "mansfield",
+      "local_id": "OCP-SUBSTATION",
+      "title": "Ontario Commerce Park (former GM site) buildout has gone unreported since ~2024",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:mansfield:WWTP-CAPITAL-BILL",
+      "kind": "lead",
+      "site": "mansfield",
+      "local_id": "WWTP-CAPITAL-BILL",
+      "title": "What capital bill (and what rate case) falls out of the WWTP facilities study + Ohio EPA's revised findings-and-orders?",
+      "feed": "leads"
+    }
+  ]
+}

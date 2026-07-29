@@ -749,7 +749,9 @@
     "variants": [
       "MPLX TERMINALS LLC - LIMA OH TERMINAL"
     ],
-    "signals": [],
+    "signals": [
+      "toxic_water_discharger"
+    ],
     "roles": {
       "rsei_facility": 1
     },

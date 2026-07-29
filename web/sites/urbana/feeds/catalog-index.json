@@ -1,7 +1,7 @@
 {
   "site": "urbana",
-  "catalog_version": "5b84a0f21f7d9b6cf1f197d2011d33562be0c9d3cb5d3a0d53c84edf534cf19c",
-  "contract_version": "1.36.0",
+  "catalog_version": "dff7e660e832d15a5f1e7c3daa0c21ebcb8b478153ccb09f8fe6c219f230fa3b",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:urbana:7q10",
@@ -9,6 +9,14 @@
       "site": "urbana",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:aep",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:urbana:behind-the-meter",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:brownfield",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:cercla",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:cgp",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:closed-loop-cooling",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:cmar",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:colocation",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:urbana:common-control-plumbing",
       "kind": "concept",
       "site": "urbana",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:conditional-use",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:consent-decree",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:constructive-denial",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:urbana:cra",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:curve-number",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:dilution",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:dissolved-oxygen",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:dmr",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:echo",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:effluent",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:eia",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:enterprise-zone",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:epa",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:esc",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:ferc",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:ffa",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:hb",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:heat-reuse",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:hsg",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:huc",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:urbana:hyperscale-data-center",
       "kind": "concept",
       "site": "urbana",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:urbana:hyperscaler",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:il6",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:interconnection-queue",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:jedd",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:moratorium",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:nda",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:npdes",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:nwis",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:oepa",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:once-through-cooling",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:opc",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:opsb",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:orc",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:pfas",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:pilot",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:pjm",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:potw",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:pti",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:urbana:public-records-mandamus",
       "kind": "concept",
       "site": "urbana",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:puco",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:pue",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:rezoning",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:rfp",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:rfq",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:rsei",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:rto",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:snc",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:sos",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:ssa",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:swat",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:swcd",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:tax-abatement",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:tif",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:tmdl",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:total-nitrogen",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:total-phosphorus",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:tri",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:usgs",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:variance",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:wla",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:wue",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:urbana:wwtp",
+      "kind": "concept",
+      "site": "urbana",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -216,7 +768,7 @@
       "kind": "dataset",
       "site": "urbana",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -249,6 +801,14 @@
       "site": "urbana",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:legal-records-legislation",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -305,6 +865,22 @@
       "site": "urbana",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -380,6 +956,22 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:urbana:thermal",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:urbana:urbana",
       "kind": "dataset",
       "site": "urbana",
@@ -393,6 +985,22 @@
       "site": "urbana",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:wqs-criteria",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:wqs-temperature",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {
@@ -417,6 +1025,22 @@
       "site": "urbana",
       "local_id": "GH-448",
       "title": "Pin Honda 'Champaign-area' data center to a parcel or filing, or downgrade to corridor context",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:urbana:THOR-CP",
+      "kind": "lead",
+      "site": "urbana",
+      "local_id": "THOR-CP",
+      "title": "Capture the Champaign County Common Pleas administrative appeal (the second Thor v. Urbana case)",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:urbana:THOR-FED",
+      "kind": "lead",
+      "site": "urbana",
+      "local_id": "THOR-FED",
+      "title": "Thor v. City of Urbana (S.D. Ohio 3:26-cv-00196) — federal suit over the data-center zoning reversal is live",
       "feed": "leads"
     }
   ]

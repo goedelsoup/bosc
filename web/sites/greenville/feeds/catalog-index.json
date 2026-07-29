@@ -1,7 +1,7 @@
 {
   "site": "greenville",
-  "catalog_version": "61a6fbf4fda560fa81aa2efce1ae6ef522cc50a8ae30de3d51d81c0b2744df9a",
-  "contract_version": "1.36.0",
+  "catalog_version": "472ed8e1d51a0d46e9ae36e7d1efd0bc1b8a197d0428e86b712610162c91cb82",
+  "contract_version": "1.41.0",
   "atoms": [
     {
       "handle": "concept:greenville:7q10",
@@ -9,6 +9,14 @@
       "site": "greenville",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:aep",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:greenville:behind-the-meter",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:brownfield",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:cercla",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:cgp",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:closed-loop-cooling",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:cmar",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:colocation",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:greenville:common-control-plumbing",
       "kind": "concept",
       "site": "greenville",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:conditional-use",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:consent-decree",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:constructive-denial",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:greenville:cra",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:curve-number",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:dilution",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:dissolved-oxygen",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:dmr",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:echo",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:effluent",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:eia",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:enterprise-zone",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:epa",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:esc",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:ferc",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:ffa",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:hb",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:heat-reuse",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:hsg",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:huc",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:greenville:hyperscale-data-center",
       "kind": "concept",
       "site": "greenville",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:greenville:hyperscaler",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:il6",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:interconnection-queue",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:jedd",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:moratorium",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:nda",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:npdes",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:nwis",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:oepa",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:once-through-cooling",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:opc",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:opsb",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:orc",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:pfas",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:pilot",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:pjm",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:potw",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:pti",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:greenville:public-records-mandamus",
       "kind": "concept",
       "site": "greenville",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:puco",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:pue",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:rezoning",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:rfp",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:rfq",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:rsei",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:rto",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:snc",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:sos",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:ssa",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:swat",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:swcd",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:tax-abatement",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:tif",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:tmdl",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:total-nitrogen",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:total-phosphorus",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:tri",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:usgs",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:variance",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:wla",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:wue",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:greenville:wwtp",
+      "kind": "concept",
+      "site": "greenville",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -216,7 +768,7 @@
       "kind": "dataset",
       "site": "greenville",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -249,6 +801,14 @@
       "site": "greenville",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:legal-records-legislation",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "legal-records-legislation",
+      "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -305,6 +865,22 @@
       "site": "greenville",
       "local_id": "odot-driveohio-cv-av",
       "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:oepa-cooling-reconciliation",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "oepa-cooling-reconciliation",
+      "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:oepa-ohd000001-coverage",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "oepa-ohd000001-coverage",
+      "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
       "feed": "catalog"
     },
     {
@@ -380,11 +956,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:greenville:thermal",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:thermal-ris-tolerances",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "thermal-ris-tolerances",
+      "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:greenville:usaspending",
       "kind": "dataset",
       "site": "greenville",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:wqs-criteria",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:wqs-temperature",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "wqs-temperature",
+      "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {

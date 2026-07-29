@@ -133,8 +133,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4322f0546ce83fb787ab891966e391ff38f5a2676be67efe20f03b75f72b8089",
-      "size_bytes": 55899,
+      "sha256": "717c0dc59cbe87a140f18a790597c2b1623ae9dba8cbc675936b0623ea6958dc",
+      "size_bytes": 55901,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -317,8 +317,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "7f0236de1194fe90896b00aa656b9357bd1bb28dfb50cee272a5716cac256002",
-      "size_bytes": 60460,
+      "sha256": "c2eb84347fb228bf1a2a32248ffb939163f669a16b1ac2cec4864b8692d09335",
+      "size_bytes": 60761,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -497,8 +497,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "788800ea76d5f2d6e3cf95cce2e8545c18bcde19ee49158db09b63a265ff6161",
-      "size_bytes": 140250,
+      "sha256": "e611ec3cc39491e055f7a6c63c6a13383408516f2b59f898f84117c2dca73dbe",
+      "size_bytes": 144471,
       "lfs_materialized": true,
       "file_count": 12,
       "stale": false,
@@ -544,14 +544,19 @@
         "relpath": "extracted/hamilton-middletown/data-centers.md",
         "media_type": "text/markdown",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/hamilton-middletown/data-centers.candidates.yaml",
+        "media_type": "application/yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "200d6d872634423689671d339f5068bf60d0054759bc1f3180d0b4cd4337fc76",
-      "size_bytes": 10872,
+      "sha256": "9f92b78b8c31f7557304cf5a315d94679b8591bd2fd2d249de7c51f616cb7337",
+      "size_bytes": 20803,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 2,
       "stale": false,
       "asof": null
     },
@@ -652,8 +657,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "0bcaf9afb9165f228eec58c7a56e7ed6b676a7a77a5a75c234f09954fd7f0ad1",
-      "size_bytes": 25628,
+      "sha256": "d56c21736bd8b22c4a17fa9543c7d59bf3db495db970fdefa8f135a271a48fd3",
+      "size_bytes": 26817,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -705,8 +710,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "a7c51157bd33cf082231bdf31155670f8b0afe58a644e61dec3cc606b52c0ff8",
-      "size_bytes": 11993,
+      "sha256": "d56fbbaaac3d715378537c7b05df793efeb0ab52cbcdd898e4988925a236b360",
+      "size_bytes": 12988,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -931,8 +936,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "7e6432bb31dfe5a548d9805b7f04a3246fd084896e0a71b45c7e3bce8b9720e3",
-      "size_bytes": 52701,
+      "sha256": "d1bfe4a9653d955eb2e35afe05de4aeb04a77c856a53e10863e648040e9867e8",
+      "size_bytes": 52706,
       "lfs_materialized": true,
       "file_count": 7,
       "stale": false,
@@ -999,8 +1004,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e35ef58d1ce2085bae6ed81cb8e2b14039e78a3f31f5e78633684a23f0a6247e",
-      "size_bytes": 32854,
+      "sha256": "8e370ee3cc46e645af3bf265eefb9dee9a611b6a854d2d130bb04a40dc8b3271",
+      "size_bytes": 32650,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -1326,8 +1331,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "112d84393e230f26bc466c8450ce8e33a652fb9f92abbaf13ee91d575972defd",
-      "size_bytes": 51953,
+      "sha256": "6d03e55b58b7feb966be1f5fbf1fc190aebfec9db4b25f5a1f4cae08c6610b89",
+      "size_bytes": 53208,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -1566,6 +1571,64 @@
     }
   },
   {
+    "id": "legal-prr-mandamus-bosc-prr-production-2026-07-24",
+    "title": "Allen County PRR Production — Batch 3, Sanitary Engineer Per-Item Trees (2026-07-24)",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Allen County Sanitary Engineering department (via the Board of Commissioners) — PRR production batch 3 (per-item native file trees, items 9/11/13/14/15), received 2026-07-24 on USB flash drive",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "lima-legacy",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-24",
+    "tags": [
+      "public-records",
+      "wastewater",
+      "production",
+      "chain-of-custody"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.response-index.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.custody-manifest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.analysis.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "8b739414d60dbd3f2927c95f846cd9afdf2f736c8180a4eb3eba36a6976b67e5",
+      "size_bytes": 539136,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Allen County Sanitary Engineering department (via the Board of Commissioners) — PRR production batch 3 (per-item native file trees, items 9/11/13/14/15), received 2026-07-24 on USB flash drive",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "legal-prr-mandamus-bosc-site-permit-sequence",
     "title": "Project BOSC Site — Permit/Approval vs Earth-Disturbance Sequence (4110 N. Cole St.)",
     "scope": "extracted",
@@ -1610,6 +1673,157 @@
     },
     "citation": {
       "source": "Project BOSC analysis (#150) — cross-document ordering reconstruction from in-corpus produced records",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "legal-prr-mandamus-prr-production-2026-07-24-records",
+    "title": "Batch-3 Sanitary Production — Extracted Record Envelopes (DFFO chain, WPCLF, SSO reports)",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "manual/scripted transcription from the batch-3 per-item trees (items 9/11/15) — born-digital text layers, scanned-instrument visual reads, textutil (.doc/.docx), and openpyxl (.xlsx); figures copied as printed, negative meter readings preserved",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "lima-legacy",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-24",
+    "tags": [
+      "public-records",
+      "wastewater",
+      "enforcement",
+      "finance",
+      "sso"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2011-extension-request.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2023-extension-letter.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closure-amer-bath-2010.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closure-cam-court-2019.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/owda-loan-6718.award.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/cridersville-treatment-agreement-2014.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/shawnee-oaks-reroute-2026.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-reports-2019.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "49484a61af01e6d91d3c35dd3be9c4e4380176094511f25570ab32d9e54964f3",
+      "size_bytes": 45884,
+      "lfs_materialized": true,
+      "file_count": 11,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "manual/scripted transcription from the batch-3 per-item trees (items 9/11/15) — born-digital text layers, scanned-instrument visual reads, textutil (.doc/.docx), and openpyxl (.xlsx); figures copied as printed, negative meter readings preserved",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "legal-records-legislation",
+    "title": "Public-Records Legislation — Sub. H.B. 314 (136th G.A.) Digest & Analysis",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio General Assembly / LSC (H.B. 314, 136th G.A. — As Introduced and As Passed by the House) + Project BOSC analysis — provision digest, introduced→passed diff, and relevance to the R.C. 149.43 PRR/mandamus posture",
+    "external_url": null,
+    "license": "Public record (Ohio legislative document)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-22",
+    "tags": [
+      "public-records",
+      "legislation",
+      "r.c.-149.43"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/records-legislation/hb314-149-43.analysis.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/records-legislation/hb314-149-43.digest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "70d428fb3c6f8ebe196bae050b7f76db312811b89f0b22a437012ab19ec17ef2",
+      "size_bytes": 31430,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio General Assembly / LSC (H.B. 314, 136th G.A. — As Introduced and As Passed by the House) + Project BOSC analysis — provision digest, introduced→passed diff, and relevance to the R.C. 149.43 PRR/mandamus posture",
       "source_kind": "document",
       "page": null,
       "confidence": "medium",
@@ -1861,8 +2075,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "c1540a7ab4632be5e7fbb74dede22367a327bb22596f6dc698248dd9a05c37bd",
-      "size_bytes": 19567,
+      "sha256": "a9ab14013810b101ccaf202e32ba2e95a9b72a25b700f5ca42c2c2cf9536742d",
+      "size_bytes": 19727,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -3168,8 +3382,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "7509cb9c9fe58e0fddd667a57320a796bd6da07da72a523c4b045319ce98b5ad",
-      "size_bytes": 16996,
+      "sha256": "d5a0ed1d1d050b77455f0e0c36766159a3e04c601363b2c5eed3f72fa06e5a26",
+      "size_bytes": 22253,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -3606,8 +3820,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "0c0911c228b331bf4c00432c90cdcfa5049e9b5f8837ab92c49701ffa8da17ff",
-      "size_bytes": 19121,
+      "sha256": "8e15bc68a2d5df6562181e63de3d9455e56dfeecc71f146b0c89d94c61460a0c",
+      "size_bytes": 19126,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -3656,8 +3870,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "1fb88d239051e2d3c8ecb46eaf5c3b2539c654fb1e9edd20a7f1e8d6a7f2a081",
-      "size_bytes": 4134,
+      "sha256": "4dbda179702ef57d180c88bdfcc9a3f0ab2f0211e44667de95979b65f8c4dd43",
+      "size_bytes": 4139,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -3706,8 +3920,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "aff4d534365cf1a8f6bb8e565bb046ea84ac318f3ff530a127a85a052bc06c4a",
-      "size_bytes": 2607,
+      "sha256": "6546a2345117bf40af5cc6e87909efca960675970f37caf05335b4382ccc573f",
+      "size_bytes": 2612,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -4203,8 +4417,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4a7382e852780bb47c66520f601ceaece298b9c4803d5fe4c5a7d3c7116b2849",
-      "size_bytes": 12120,
+      "sha256": "a5f6618edb7cf95afbbcefac070c49fe50d93fd94a0f5823abd1861bc9dc468b",
+      "size_bytes": 13591,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -4265,6 +4479,54 @@
       "page": null,
       "confidence": "medium",
       "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "dewatering-discharge",
+    "title": "Dewatering Discharge-Signal Screen + Reservoir-Recharge Context (Derived)",
+    "scope": "reference",
+    "collection": "hydrology",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "dewatering-discharge --write",
+    "connector_ref": "watermark.hydrology.connectors.nwis",
+    "source": "USGS NWIS daily discharge (00060) for the campus's bracketing gages (Ottawa @ Lima, near Kalida) + the primary supply gage (Auglaize @ Fort Jennings); the reach-gain screen is derived [inference]",
+    "external_url": "https://waterservices.usgs.gov/",
+    "license": "U.S. Government work (USGS NWIS)",
+    "access_tier": "public",
+    "site_scope": "lima-legacy",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "dewatering",
+      "usgs-nwis",
+      "reach-gain",
+      "discharge"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/hydrology/dewatering-discharge.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "151f8de93c9dd192ab48983cf4eec01d0b4aba6aa059777c417afc804b46780f",
+      "size_bytes": 3450,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "USGS NWIS daily discharge (00060) for the campus's bracketing gages (Ottawa @ Lima, near Kalida) + the primary supply gage (Auglaize @ Fort Jennings); the reach-gain screen is derived [inference]",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark dewatering-discharge --write",
       "verified": false
     }
   },
@@ -4400,7 +4662,7 @@
     "site_scope": "basin:maumee",
     "cadence": "quarterly",
     "ttl_days": 180,
-    "last_refreshed": null,
+    "last_refreshed": "2026-07-28",
     "tags": [
       "npdes",
       "cwa",
@@ -4426,8 +4688,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "f3b2332d5be8a95bf21909bc502f3ef148a4ac2d3726ae76aa0fb3405cbbaaeb",
-      "size_bytes": 651428,
+      "sha256": "e038bb0e37f5fbb9cdb0b495e3b97715f5b934d6354d5e339ffd37e438facc21",
+      "size_bytes": 980311,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -4440,6 +4702,56 @@
       "confidence": "medium",
       "note": "watermark npdes --basin maumee",
       "verified": true
+    }
+  },
+  {
+    "id": "echo-maumee-receiving-water",
+    "title": "Curated receiving-water overlay for the Maumee ECHO NPDES inventory",
+    "scope": "reference",
+    "collection": "echo",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Hand-authored, document-cited corrections to ECHO's CWPStateWaterBodyName — Ohio EPA NPDES permit 2PE00000*OD (Lima WWTP), Ohio EPA NPDES fact sheet 2PD00006 Table 12 (Van Wert WWTP), and the EPA ECHO detailed facility report for OH0135569",
+    "external_url": null,
+    "license": "U.S. Government work (public domain) — the cited permits and fact sheets are Ohio EPA records",
+    "access_tier": "public",
+    "site_scope": "basin:maumee",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "cwa",
+      "maumee",
+      "receiving-water",
+      "curation",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/echo/curation/maumee-wwtp.receiving-water.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "faa14307f452690b09c20c23f2fb35494d741d98d5927dfbfeb34f01a64b41a8",
+      "size_bytes": 4744,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Hand-authored, document-cited corrections to ECHO's CWPStateWaterBodyName — Ohio EPA NPDES permit 2PE00000*OD (Lima WWTP), Ohio EPA NPDES fact sheet 2PD00006 Table 12 (Van Wert WWTP), and the EPA ECHO detailed facility report for OH0135569",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -4466,7 +4778,8 @@
       "employment",
       "wages",
       "income",
-      "baseline"
+      "baseline",
+      "government"
     ],
     "storage": [
       {
@@ -4482,8 +4795,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "269fb3f3738ddd0169fcd3418935828d626ca26f0bc1eff001124cf9c766873e",
-      "size_bytes": 353396,
+      "sha256": "773dc96b81a5fd9386ba5f430923a053e84e4819cd49ba84811a8728a201d8b9",
+      "size_bytes": 464394,
       "lfs_materialized": true,
       "file_count": 22,
       "stale": false,
@@ -4531,8 +4844,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e1a519a7faed4746aadc62cb77a531398940ace7c6360d724f06f2d2888b745b",
-      "size_bytes": 1539,
+      "sha256": "8bfb8390309aa47a9b5051744c7888af5d5a35655b99df36203991deaabc21b7",
+      "size_bytes": 1762,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -4639,10 +4952,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "687132142a6f75288950000b8d53b67f5bfd4e38cbc8715334ed22bf3af9e3c1",
-      "size_bytes": 27615,
+      "sha256": "09fd968643c5016a03974934253322be0179184a18787f97de39eb45e59a6408",
+      "size_bytes": 31135,
       "lfs_materialized": true,
-      "file_count": 9,
+      "file_count": 10,
       "stale": false,
       "asof": null
     },
@@ -4695,8 +5008,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5a564010f3a8c0087de444e1907f0801deabe9535e686fc79916c3b8c2b5efb7",
-      "size_bytes": 79382,
+      "sha256": "4505fe62c61bacb61be5efe50abcfaad440f34aee9ef134657242bbdc47c797d",
+      "size_bytes": 104135,
       "lfs_materialized": true,
       "file_count": 22,
       "stale": false,
@@ -4744,8 +5057,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "2f3001719a94893ce39eaaa60704e4e5c012c15e2a6ee2513daad62c03d8538a",
-      "size_bytes": 9523,
+      "sha256": "445171b4a4694b10f12491d322d5853570c0f821cf1676d41933a682c4fc9d45",
+      "size_bytes": 9869,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -5185,6 +5498,11 @@
     ],
     "storage": [
       {
+        "relpath": "reference/hydrology/aquifer-properties.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "reference/hydrology/bosc-stormwater-discharge.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -5260,6 +5578,16 @@
         "lfs": false
       },
       {
+        "relpath": "reference/hydrology/thermal-discharge-screen.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/tier0-parameters.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "reference/hydrology/tier1-swmm.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -5277,10 +5605,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "073042e7f66ad5e339682d8cde1cdebfc5d1c867e695b4188ce63372f5d4cf0e",
-      "size_bytes": 101711,
+      "sha256": "95e093507c4bf9b946a587aef02800aa5e33dcfd8c4eea59ce4a33f4ea18d591",
+      "size_bytes": 175516,
       "lfs_materialized": true,
-      "file_count": 18,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -5613,8 +5941,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "1a72f530ba3bdd1e3914744dd57fe834109c13b45967f99e3ef3f0c27b711617",
-      "size_bytes": 20719,
+      "sha256": "894b14da8fa27e461df932bea3d2686380b0721699756ea2af59be04858985b4",
+      "size_bytes": 22642,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -5663,8 +5991,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8cbe405e74b44207a3435e5687e946a9fb9a5ef359372954aa01a57f8ef23519",
-      "size_bytes": 3907,
+      "sha256": "4e1de29bd89ed262c1f1fc052a8d32f018a884ccc1cbdca6c87ee518f8333001",
+      "size_bytes": 4211,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -5731,6 +6059,55 @@
       "confidence": "medium",
       "note": "watermark wbd --write",
       "verified": true
+    }
+  },
+  {
+    "id": "lima-campus-dewatering",
+    "title": "Lima campus construction-dewatering wellfield (Ohio DNR)",
+    "scope": "reference",
+    "collection": "ohio-waterwells",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio DNR Water Well Locator (waterwells.ohiodnr.gov) — well-log export reconciled with the sealing-report export, both pulled 2026-07-28. Not connector-regenerable: the live MapServer now shows only the 1 active DEWATERING WELL (the 43 sealed wells dropped off the active layer).",
+    "external_url": "https://waterwells.ohiodnr.gov/",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "site:lima",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-28",
+    "tags": [
+      "waterwells",
+      "dewatering",
+      "groundwater",
+      "ohio-dnr",
+      "data-centers"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/ohio-waterwells/lima-campus-dewatering.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "2f42ff12bf330038fb7d092a70009ee59ab8140342fc375c9e233f6daf409369",
+      "size_bytes": 4312,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio DNR Water Well Locator (waterwells.ohiodnr.gov) — well-log export reconciled with the sealing-report export, both pulled 2026-07-28. Not connector-regenerable: the live MapServer now shows only the 1 active DEWATERING WELL (the 43 sealed wells dropped off the active layer).",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -5893,8 +6270,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "423c47dd57628058e35cebee82a220546d0c9c9f4268278e3f2d064685c3868e",
-      "size_bytes": 21527,
+      "sha256": "83dee16bb8bbc6a89b404fa0a5e722ab452223b785010af0a32cd753597e3254",
+      "size_bytes": 22598,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -6130,6 +6507,113 @@
     }
   },
   {
+    "id": "oepa-cooling-reconciliation",
+    "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+    "scope": "reference",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "cooling-reconcile --write",
+    "connector_ref": "watermark.hydrology.cooling_reconcile",
+    "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
+    "external_url": "https://epa.ohio.gov",
+    "license": "Public records (Ohio state government)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-11",
+    "tags": [
+      "oepa",
+      "npdes",
+      "data-centers",
+      "cooling-water",
+      "blowdown",
+      "closed-loop",
+      "reconciliation",
+      "cycles-of-concentration",
+      "air-permit",
+      "tier-ii",
+      "corroborators"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/oepa/cooling-reconciliation.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "474a02be6dd511e3b15476184256513386b93632fedf7c82e1c982eb4b8ae8ea",
+      "size_bytes": 58227,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": "2026-07-11"
+    },
+    "citation": {
+      "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark cooling-reconcile --write",
+      "verified": false
+    }
+  },
+  {
+    "id": "oepa-ohd000001-coverage",
+    "title": "OHD000001 data-center general-permit coverage — closed-loop cohort",
+    "scope": "reference",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "oepa coverage --write",
+    "connector_ref": "watermark.hydrology.blowdown",
+    "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
+    "external_url": "https://epa.ohio.gov",
+    "license": "Public records (Ohio state government)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-11",
+    "tags": [
+      "oepa",
+      "npdes",
+      "general-permit",
+      "data-centers",
+      "ohd000001",
+      "cooling-water",
+      "blowdown",
+      "closed-loop"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/oepa/ohd000001-coverage.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "561ef21ac83fe62d11b188ad9afee6bdc6fcf991b1bd80cb114396ec84d94a33",
+      "size_bytes": 8215,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": "2026-07-11"
+    },
+    "citation": {
+      "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark oepa coverage --write",
+      "verified": false
+    }
+  },
+  {
     "id": "oepa-ohd000001-gp",
     "title": "Ohio EPA Draft General NPDES Permit for Data Center Facilities (OHD000001)",
     "scope": "reference",
@@ -6189,6 +6673,104 @@
       "confidence": "medium",
       "note": null,
       "verified": false
+    }
+  },
+  {
+    "id": "ohio-water-withdrawal-allen",
+    "title": "Allen County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+    "scope": "reference",
+    "collection": "ohio-water-withdrawal",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "water-withdrawal --county Allen",
+    "connector_ref": "watermark.hydrology.connectors.ohio_water_withdrawal",
+    "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+    "external_url": "https://ohiodnr.gov/wwfacilitylocator",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "site:lima",
+    "cadence": "annual",
+    "ttl_days": 365,
+    "last_refreshed": null,
+    "tags": [
+      "water-withdrawal",
+      "wwfrp",
+      "ohio-dnr",
+      "cooling",
+      "makeup"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/ohio-water-withdrawal/allen.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "3b275c411aa9c537fad498f81a9d5690ca7c4bd1f3a582f2381efc5e3a41210c",
+      "size_bytes": 96737,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark water-withdrawal --county Allen",
+      "verified": true
+    }
+  },
+  {
+    "id": "ohio-waterwells-allen",
+    "title": "Allen County, OH water-well-log census (Ohio DNR)",
+    "scope": "reference",
+    "collection": "ohio-waterwells",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "waterwells --county Allen",
+    "connector_ref": "watermark.hydrology.connectors.ohio_waterwells",
+    "source": "Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05 (contractor completion/sealing logs), public ArcGIS MapServer (layer 0)",
+    "external_url": "https://waterwells.ohiodnr.gov/",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "site:lima",
+    "cadence": "annual",
+    "ttl_days": 365,
+    "last_refreshed": null,
+    "tags": [
+      "waterwells",
+      "groundwater",
+      "ohio-dnr",
+      "aquifer",
+      "drawdown"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/ohio-waterwells/allen.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "d4466bed897c8f0b96b0ab0bead9367ef6c905ff37bfc08be14e29e1b3c717ec",
+      "size_bytes": 926490,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05 (contractor completion/sealing logs), public ArcGIS MapServer (layer 0)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark waterwells --county Allen",
+      "verified": true
     }
   },
   {
@@ -6519,7 +7101,7 @@
     "producer_kind": "derived",
     "command": "rsei",
     "connector_ref": "watermark.rsei",
-    "source": "EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited 7Q10 — a multi-source derivation",
+    "source": "EPA RSEI (per-chemical water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited design low flows (1Q10/7Q10/harmonic mean) × Ohio WQS criteria (OAC 3745-1) — a multi-source derivation",
     "external_url": "https://www.epa.gov/rsei/ways-get-rsei-results",
     "license": "U.S. Government work (public domain)",
     "access_tier": "public",
@@ -6543,15 +7125,15 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "55b000e4196114be8a9fef6c11ef5815a3e56364b5b9418a2a1658ae7c94943f",
-      "size_bytes": 14049,
+      "sha256": "1e58be1c6b489f56a0d0a1c60563c2f19047f94d6dd5ea557313ad98485f6d32",
+      "size_bytes": 99958,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited 7Q10 — a multi-source derivation",
+      "source": "EPA RSEI (per-chemical water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited design low flows (1Q10/7Q10/harmonic mean) × Ohio WQS criteria (OAC 3745-1) — a multi-source derivation",
       "source_kind": "derived",
       "page": null,
       "confidence": "medium",
@@ -6596,8 +7178,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e78ebd57927a63bb3f9a51427ab5f50fee826f7735b354a06af72e6f6f1e6389",
-      "size_bytes": 2721640,
+      "sha256": "5779cd9e898f577d98ee88a01dbadc6dcfa84d8fe15e661d5c479c40a06bf4cd",
+      "size_bytes": 2732458,
       "lfs_materialized": true,
       "file_count": 22,
       "stale": false,
@@ -6658,6 +7240,110 @@
       "confidence": "medium",
       "note": "watermark subdivisions discover",
       "verified": true
+    }
+  },
+  {
+    "id": "thermal",
+    "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+    "scope": "reference",
+    "collection": "thermal",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "EPA Office of Water, Water Permits Division, Office of Wastewater Management",
+    "external_url": "https://www.epa.gov/npdes",
+    "license": "Public domain (U.S. federal government work)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-21",
+    "tags": [
+      "epa",
+      "npdes",
+      "thermal",
+      "temperature",
+      "cwa-316a",
+      "wqs",
+      "cooling-water",
+      "methodology"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/thermal/epa-833-f-23-007-thermal-discharges-npdes-2023.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "914f2576686459704ce56c416e57f6ebe1f1770fc24f4660fcdc4508da790c88",
+      "size_bytes": 26861427,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA Office of Water, Water Permits Division, Office of Wastewater Management",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "thermal-ris-tolerances",
+    "title": "Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)",
+    "scope": "reference",
+    "collection": "thermal",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "EPA-833-F-23-007 \"Thermal Discharges in NPDES Permits\" (June 2023), Tables 3-4/3-5/3-6 — verbatim transcription of the Great Lakes Representative Important Species thermal tolerances",
+    "external_url": "https://www.epa.gov/npdes",
+    "license": "Public domain (U.S. federal government work)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "epa",
+      "thermal",
+      "temperature",
+      "cwa-316a",
+      "biological",
+      "great-lakes",
+      "ris",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/thermal/great-lakes-ris-thermal-tolerances.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "086d35cec2809069f67596fc44bf96ce7c96885b3ea8afed13dbbed458d34cb0",
+      "size_bytes": 18725,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA-833-F-23-007 \"Thermal Discharges in NPDES Permits\" (June 2023), Tables 3-4/3-5/3-6 — verbatim transcription of the Great Lakes Representative Important Species thermal tolerances",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -6771,7 +7457,7 @@
     "external_url": "https://api.usaspending.gov/",
     "license": "U.S. Government work (public domain)",
     "access_tier": "public",
-    "site_scope": "basin-shared",
+    "site_scope": "slug-scoped",
     "cadence": "on-demand",
     "ttl_days": null,
     "last_refreshed": null,
@@ -6787,12 +7473,17 @@
         "relpath": "reference/usaspending/awards.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "reference/usaspending/{site}/awards.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "de5f7d7fec8ff97ab3b5f5202de00386fcf2026f78723def180d31d73597f270",
-      "size_bytes": 3659,
+      "sha256": "852950738dcdbcb6938598bde10013c63871d3f267064a9087d2aa43e1afa600",
+      "size_bytes": 15854,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -6849,6 +7540,106 @@
     },
     "citation": {
       "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132)",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "wqs-criteria",
+    "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
+    "scope": "reference",
+    "collection": "wqs",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "OAC 3745-1-35 (aquatic life, Tables 35-1/35-2/35-5/35-9) + 3745-1-33 (human health, Table 33-1) — verbatim transcription of the numeric criteria, cross-checked against EPA's National Recommended Water Quality Criteria",
+    "external_url": null,
+    "license": "Ohio public record (Ohio Administrative Code publication)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "wqs",
+      "water",
+      "criteria",
+      "toxics",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/wqs/ohio-water-quality-criteria.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "8628dd7859ba60a3b71b9c6b4ab91619d510cf468e0bdb1f645044317be24fc4",
+      "size_bytes": 11202,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "OAC 3745-1-35 (aquatic life, Tables 35-1/35-2/35-5/35-9) + 3745-1-33 (human health, Table 33-1) — verbatim transcription of the numeric criteria, cross-checked against EPA's National Recommended Water Quality Criteria",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "wqs-temperature",
+    "title": "Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)",
+    "scope": "reference",
+    "collection": "wqs",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "OAC 3745-1-35 Table 35-11 (inland streams/rivers, by geographic zone) + 3745-1-31 Table 31-1 (Lake Erie) + 3745-1-06 (O) Table 1 (thermal mixing zones) — verbatim transcription of the numeric temperature criteria (degF primary, degC derived)",
+    "external_url": null,
+    "license": "Ohio public record (Ohio Administrative Code publication)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "wqs",
+      "water",
+      "temperature",
+      "thermal",
+      "cwa-316a",
+      "criteria",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/wqs/ohio-temperature-criteria.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "da61a7ffc8d5e473e27aeaa3160c915af6d518b084c6ac4386fc90be922b0616",
+      "size_bytes": 18429,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "OAC 3745-1-35 Table 35-11 (inland streams/rivers, by geographic zone) + 3745-1-31 Table 31-1 (Lake Erie) + 3745-1-06 (O) Table 1 (thermal mixing zones) — verbatim transcription of the numeric temperature criteria (degF primary, degC derived)",
       "source_kind": "reference",
       "page": null,
       "confidence": "medium",

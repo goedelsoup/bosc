@@ -13,7 +13,11 @@
         "render_class": "pdf",
         "published": false,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       },
       {
         "rel": "idem/fort-wayne/47378PN-JS.pdf",
@@ -24,7 +28,11 @@
         "render_class": "pdf",
         "published": false,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       },
       {
         "rel": "idem/fort-wayne/47378f.pdf",
@@ -35,7 +43,11 @@
         "render_class": "pdf",
         "published": false,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       },
       {
         "rel": "idem/fort-wayne/48739d.pdf",
@@ -46,7 +58,11 @@
         "render_class": "pdf",
         "published": false,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       },
       {
         "rel": "idem/fort-wayne/Response-to-Public-Comments-WQC001454-Project-Zodiac-Phase-3-Google-Data-Center.pdf",
@@ -57,7 +73,11 @@
         "render_class": "pdf",
         "published": false,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       },
       {
         "rel": "idem/fort-wayne/WQC001454-Section-401-WQC-Approval.pdf",
@@ -68,7 +88,11 @@
         "render_class": "pdf",
         "published": false,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       },
       {
         "rel": "idem/fort-wayne/caats-confidentiality.pdf",
@@ -79,7 +103,11 @@
         "render_class": "pdf",
         "published": false,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       },
       {
         "rel": "idem/fort-wayne/notice_20260403_401_wqc001454.pdf",
@@ -90,7 +118,26 @@
         "render_class": "pdf",
         "published": false,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "idem/fort-wayne/notice_20260629_npdes_in0032191.pdf",
+        "name": "notice_20260629_npdes_in0032191.pdf",
+        "size_bytes": 13622633,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       },
       {
         "rel": "idem/fort-wayne/public-comments-compiled.pdf",
@@ -101,7 +148,11 @@
         "render_class": "pdf",
         "published": false,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       }
     ]
   }

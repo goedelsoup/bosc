@@ -13,7 +13,11 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       },
       {
         "rel": "oepa/troy-piqua/1PD00008.pdf",
@@ -24,7 +28,11 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       }
     ]
   }
