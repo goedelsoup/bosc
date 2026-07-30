@@ -1,0 +1,99 @@
+---
+/**
+ * A study gap rendered as a FINDING (the missing-impact-study epic) — the fixed three-line
+ * grammar: the requirement, the absence, the ask. This is the absence register, and it is
+ * deliberately NOT `SectionLocked` (no lock icon, no "still being assembled") and NOT an
+ * evidence-palette wash: the chapter isn't waiting to open — the missing record IS the
+ * chapter's content. Only the `[open]` pill spends evidence color.
+ */
+import type { StudyGapFinding } from "@watermark/core/study";
+import { withSite } from "@watermark/core/site";
+import EvidenceTag from "../EvidenceTag.astro";
+
+interface Props {
+  gap: StudyGapFinding;
+}
+const { gap } = Astro.props as Props;
+---
+
+<aside class="studygap">
+  <div class="studygap-eyebrow">What a real impact study would show here</div>
+  <p class="studygap-req">A real impact study would report {gap.wouldScreen}</p>
+  <p class="studygap-absence">
+    Computing it requires {gap.missingRecord} <EvidenceTag kind="open" />
+  </p>
+  {gap.producer && <p class="studygap-producer">Who could produce it: {gap.producer}.</p>}
+  <div class="studygap-actions">
+    <a class="studygap-submit" href={withSite("/submit")}>Have this record? Submit it →</a>
+    <a class="studygap-inventory" href={withSite("/study/missing")}>See the full gap inventory →</a>
+  </div>
+</aside>
+
+<style>
+  /* The absence register: hairline + bone, square corners, no elevation. The rule weight on
+     the left is structural ink, not an evidence color — only the [open] pill encodes evidence. */
+  .studygap {
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--bosc-ink);
+    background: var(--bosc-bg);
+    padding: 20px 24px 22px;
+    margin: 1.6rem 0;
+    max-width: 660px;
+  }
+  .studygap-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    margin-bottom: 10px;
+  }
+  .studygap-req {
+    font-size: 1.02rem;
+    font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: -0.15px;
+    margin: 0;
+  }
+  .studygap-absence {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #3a4036;
+    margin: 0.6rem 0 0;
+  }
+  .studygap-producer {
+    font-family: var(--bosc-mono);
+    font-size: 0.74rem;
+    line-height: 1.5;
+    color: var(--bosc-faint);
+    margin: 0.6rem 0 0;
+  }
+  .studygap-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 14px;
+  }
+  .studygap-submit {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--bosc-bg);
+    background: var(--bosc-ink);
+    padding: 8px 14px;
+    text-decoration: none;
+  }
+  .studygap-submit:hover {
+    background: var(--bosc-forest);
+  }
+  .studygap-inventory {
+    align-self: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--bosc-muted);
+    text-decoration: none;
+  }
+  .studygap-inventory:hover {
+    text-decoration: underline;
+  }
+</style>

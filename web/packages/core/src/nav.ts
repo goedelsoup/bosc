@@ -22,6 +22,7 @@ import type { HypothesisItem } from "./feeds";
 import { sectionStatus } from "./readiness";
 import { siteBase, storyBase } from "./routes";
 import type { NetworkSite } from "./sites";
+import { STUDY_CHAPTERS, STUDY_PARTS } from "./study";
 import { type Story, activeStory, chapterHref, storyContentsHref } from "./walk";
 
 export type SectionId =
@@ -29,6 +30,7 @@ export type SectionId =
   | "leads"
   | "contacts"
   | "story"
+  | "study"
   | "timeline"
   | "reports"
   | "docs"
@@ -124,6 +126,19 @@ export function sections(): Section[] {
       href: storyRoot,
       blurb: "Project BOSC — read the record one document at a time, no prior knowledge.",
       toc: [],
+    },
+    {
+      // The impact study — the site's primary artifact: the environmental + economic study the
+      // community never received, assembled from the public record. Every chapter renders the
+      // screen the record supports or the gap AS a finding; the study never locks. The toc
+      // anchors are the cover page's chapter cards (`id={def.id}`), which feeds the search index.
+      id: "study",
+      label: "The impact study",
+      tab: "Study",
+      href: `${base}/study/`,
+      blurb:
+        "The environmental and economic impact study this community never received — data where the record provides it, and the gap named where it doesn't.",
+      toc: STUDY_CHAPTERS.map((c) => ({ label: c.title, anchor: c.id })),
     },
     {
       id: "timeline",
@@ -545,6 +560,30 @@ export function siteTabs(): NavItem[] {
           ],
         },
     { kind: "link", label: "The record", section: "site", href: `${base}/site/`, match: ["timeline"] },
+    {
+      // The impact study — the site's primary artifact (the missing-impact-study epic). Never a
+      // locked variant: the study renders for every selectable site, and an absent record is the
+      // chapter's own content (the gap-as-finding register), not a lock. Appended last for now;
+      // the promotion pass re-orders it first and merges environment/economy into a Reference
+      // dropdown.
+      kind: "dropdown",
+      label: "The impact study",
+      section: "study",
+      children: [
+        {
+          label: "The impact study",
+          href: `${base}/study/`,
+          blurb: "Cover — the verdict strip over every chapter",
+        },
+        ...STUDY_PARTS.flatMap((p): NavChild[] => [
+          { divider: true },
+          ...STUDY_CHAPTERS.filter((c) => c.part === p.id).map((c) => ({
+            label: c.title,
+            href: `${base}/study/${c.id}`,
+          })),
+        ]),
+      ],
+    },
   ];
 }
 

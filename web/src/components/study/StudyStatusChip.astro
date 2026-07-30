@@ -1,0 +1,94 @@
+---
+/**
+ * A chapter's verdict chip (the missing-impact-study epic) — the status vocabulary rendered
+ * one way everywhere (chapter header + the cover's verdict strip). Status is a property of
+ * the RECORD, not of the evidence in it, so the chip uses the facility-status color register
+ * (grey/forest/amber — `FACILITY_STATUS_META`'s vocabulary), never the `--ev-*` evidence
+ * palette. Absence (`gap`) is quiet grey: the finding does the talking, not the chrome.
+ */
+import { type ChapterStatus, STUDY_STATUS_META } from "@watermark/core/study";
+
+interface Props {
+  status: ChapterStatus;
+  /** Human-readable qualifiers, shown as a mono subline (chapter header) or a title (strip). */
+  reasons?: string[];
+  /** Compact form for the cover's verdict strip rows (dot + label only, reasons as tooltip). */
+  compact?: boolean;
+}
+const { status, reasons = [], compact = false } = Astro.props as Props;
+const meta = STUDY_STATUS_META[status];
+const tip = reasons.length > 0 ? reasons.join(" · ") : meta.gloss;
+---
+
+{
+  compact ? (
+    <span class:list={["studychip", `studychip--${status}`]} title={tip}>
+      <span class="studychip-dot" aria-hidden="true" />
+      {meta.label}
+    </span>
+  ) : (
+    <div class="studychip-block">
+      <span class:list={["studychip", `studychip--${status}`]} title={meta.gloss}>
+        <span class="studychip-dot" aria-hidden="true" />
+        {meta.label}
+      </span>
+      {reasons.length > 0 && (
+        <ul class="studychip-reasons">
+          {reasons.map((r) => (
+            <li>{r}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+<style>
+  .studychip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border: 1px solid var(--bosc-rule);
+    padding: 3px 10px;
+    color: var(--bosc-muted);
+    background: var(--bosc-bg);
+    white-space: nowrap;
+  }
+  .studychip-dot {
+    width: 7px;
+    height: 7px;
+    background: currentColor;
+  }
+  /* The facility-status color register (grey / forest / amber), not the evidence palette. */
+  .studychip--data {
+    color: var(--bosc-forest);
+  }
+  .studychip--partial {
+    color: #9a6a14;
+  }
+  .studychip--gap {
+    color: #566159;
+  }
+  .studychip--na {
+    color: var(--bosc-faint);
+  }
+  .studychip-block {
+    margin: 0.4rem 0 0;
+  }
+  .studychip-reasons {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+  }
+  .studychip-reasons li {
+    font-family: var(--bosc-mono);
+    font-size: 0.74rem;
+    line-height: 1.5;
+    color: var(--bosc-faint);
+  }
+</style>

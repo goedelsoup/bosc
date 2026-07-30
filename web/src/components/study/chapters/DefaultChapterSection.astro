@@ -1,0 +1,86 @@
+---
+/**
+ * The generic chapter section (the missing-impact-study epic) — renders any chapter's model
+ * honestly with no bespoke treatment: the headline stats strip (every figure wearing its
+ * evidence tag), the must-render caveats, and the watch-state panel for `na` chapters.
+ * Bespoke chapter sections land incrementally in `CHAPTER_SECTIONS` (./index.ts) and replace
+ * this one chapter at a time; gap panels are the shell's job, not this section's.
+ */
+import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
+import FigureStat from "../../FigureStat.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  /** Threaded to every section (bespoke ones read feeds with it); unused here. */
+  slug?: string;
+}
+const { def, model } = Astro.props as Props;
+---
+
+{
+  model.status === "na" ? (
+    <div class="studyna">
+      <p class="studyna-line">
+        No project is disclosed at this site yet — nothing is screened here, and nothing is
+        fabricated to fill the page.
+      </p>
+      <p class="studyna-would">The day one is on the record, this chapter reports {def.gap.wouldScreen}</p>
+    </div>
+  ) : (
+    <>
+      {model.stats.length > 0 && (
+        <div class="studystats">
+          {model.stats.map((s) => (
+            <FigureStat stat={s} />
+          ))}
+        </div>
+      )}
+      {model.caveats.length > 0 && (
+        <ul class="studycaveats">
+          {model.caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+    </>
+  )
+}
+
+<style>
+  .studystats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 1.4rem 0;
+  }
+  /* Carried caveats are data, not decoration (the gridBackdrop.ts discipline): always render. */
+  .studycaveats {
+    margin: 1.2rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .studycaveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .studyna {
+    border: 1px solid var(--bosc-rule);
+    background: var(--bosc-bg);
+    padding: 20px 24px;
+    max-width: 660px;
+  }
+  .studyna-line {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .studyna-would {
+    font-family: var(--bosc-mono);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin: 0.7rem 0 0;
+  }
+</style>
