@@ -211,6 +211,21 @@ describe("the impact-study feed seam — a shipped feed is preferred wholesale",
     dir = mkdtempSync(join(tmpdir(), "study-seam-"));
     const slugDir = join(dir, "seamtest");
     mkdirSync(join(slugDir, "feeds"), { recursive: true });
+    // A decoy row for ANOTHER facility rides first: the lookup must match the exact
+    // (chapter, facility_key) pair — a null key never wildcards onto some campus's study.
+    const decoy: ImpactStudyFeedRow = {
+      chapter: "power",
+      facility_key: "some-other-campus",
+      model: {
+        id: "power",
+        facilityKey: "some-other-campus",
+        status: "gap",
+        statusReasons: ["the WRONG facility's row"],
+        stats: [],
+        gaps: [],
+        caveats: [],
+      },
+    };
     const row: ImpactStudyFeedRow = {
       chapter: "power",
       facility_key: null,
@@ -224,7 +239,7 @@ describe("the impact-study feed seam — a shipped feed is preferred wholesale",
         caveats: [],
       },
     };
-    writeFileSync(join(slugDir, "feeds", "impact-study.json"), JSON.stringify([row]));
+    writeFileSync(join(slugDir, "feeds", "impact-study.json"), JSON.stringify([decoy, row]));
     writeFileSync(
       join(slugDir, "manifest.json"),
       JSON.stringify({
@@ -233,7 +248,7 @@ describe("the impact-study feed seam — a shipped feed is preferred wholesale",
         contract_version: "1.41.0",
         generated_at: "2026-01-01T00:00:00Z",
         feed_count: 1,
-        row_total: 1,
+        row_total: 2,
         feeds: [
           {
             name: "impact-study",
@@ -241,7 +256,7 @@ describe("the impact-study feed seam — a shipped feed is preferred wholesale",
             media_type: "application/json",
             schema: "schemas/impact-study.schema.json",
             kind: "collection",
-            count: 1,
+            count: 2,
           },
         ],
       }),

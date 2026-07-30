@@ -33,7 +33,14 @@ const REPO_DIR = /^(data|docs|src|spikes|\.claude|\.github)\//;
 // Network-global routes live at the site root, shared across every watershed site, so they
 // are NOT prefixed with the Lima base (#307 follow-up: about/about-me/wiki/ask/privacy are global).
 // `docs` joined them at the network-global-host move (#1304): the long-form prose is one root build.
-const GLOBAL_ROUTE = /^\/(about|about-me|wiki|ask|privacy|docs)(\/|#|$)/;
+// `methodology` is the method-essay build at the pages root — global like the rest.
+const GLOBAL_ROUTE = /^\/(about|about-me|wiki|ask|privacy|docs|methodology)(\/|#|$)/;
+
+/** True for a network-global route (never site-base-prefixed) — the ONE definition of that
+ *  set, shared with any surface deciding between a global and a site-local href. */
+export function isGlobalRoute(path: string): boolean {
+  return GLOBAL_ROUTE.test(path);
+}
 
 function splitHash(href: string): [string, string] {
   const i = href.indexOf("#");
