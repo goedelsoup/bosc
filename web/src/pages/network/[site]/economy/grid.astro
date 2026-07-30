@@ -27,6 +27,7 @@ export const getStaticPaths = selectableSitePaths;
  */
 import BackLink from "~/components/BackLink.astro";
 import Base from "~/layouts/Base.astro";
+import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import SectionLocked from "~/components/SectionLocked.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
 import { buildDemandPressure, buildGridBackdrop } from "@watermark/core/gridBackdrop";
@@ -54,6 +55,7 @@ const kappaBand =
   <article class="prose">
     <BackLink href={withSite("/economy/")} label="The economy" />
     <h1>The grid backdrop</h1>
+    <StudyAnnexBanner chapters={["power"]} />
 
     {backdrop === null ? (
       <SectionLocked

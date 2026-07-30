@@ -4,6 +4,7 @@ export const getStaticPaths = selectableSitePaths;
 import BackLink from "~/components/BackLink.astro";
 import LineChart from "~/components/charts/LineChart.astro";
 import Base from "~/layouts/Base.astro";
+import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { LinePoint } from "@watermark/charts/charts";
 import type {
@@ -127,6 +128,7 @@ const energyCharts = [
   <article class="prose">
     <BackLink href={withSite("/economy/")} label="The economy" />
     <h1>Economics — localized baseline</h1>
+    <StudyAnnexBanner chapters={["labor"]} />
     {
       eb === null ? (
         <p class="stub-note">No economic baseline is available yet for this site.</p>

@@ -1,0 +1,253 @@
+---
+/**
+ * Study §III — Power & ratepayers (the missing-impact-study epic, PR4). Two bands the grid
+ * annex keeps deliberately separate, kept separate here too:
+ *
+ *  - **The backdrop** — whose grid this is: the cited electric-service chain + the EIA load
+ *    denominators. A property of the PLACE; it renders for a facility-less site with an
+ *    honestly-empty campus column, never a fabricated share.
+ *  - **The campus against it** — the demand-pressure read, rendered ONLY when the facility
+ *    domain is live (#1630): a screening bracket is not a settled load, so the read is
+ *    withheld and the shell's gap panel carries the instrument ask. The price-pressure band
+ *    is deliberately STYLIZED and never headlined — the carried caveats render, always.
+ */
+import { buildDemandPressure, buildGridBackdrop } from "@watermark/core/gridBackdrop";
+import type { ProvenancedValue } from "@watermark/core/feeds";
+import { facilityLoadAvailable } from "@watermark/core/readiness";
+import { withSite } from "@watermark/core/site";
+import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
+import type { FigureStatData } from "@watermark/core/viz";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import FigureStat from "~/components/FigureStat.astro";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+const live = model.status === "data" || model.status === "partial";
+const backdrop = live ? buildGridBackdrop(slug) : null;
+const pressure = live && facilityLoadAvailable(slug) ? buildDemandPressure(slug) : null;
+
+const gwh = (n: number): string => n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+const num = (v?: ProvenancedValue | null, digits = 0): string =>
+  v?.value == null ? "—" : v.value.toLocaleString("en-US", { maximumFractionDigits: digits });
+
+const pressureStats: FigureStatData[] = pressure
+  ? [
+      {
+        label: "Share of state retail sales",
+        value: `${num(pressure.demand_share_pct, 2)}%`,
+        evidence: "inference",
+        basis: "modeled",
+        sub: `${num(pressure.annual_consumption_gwh, 1)} GWh/yr over ${num(pressure.state_retail_sales_gwh)} GWh (${pressure.area}, EIA)`,
+      },
+      {
+        label: "Households-equivalent",
+        value: `~${num(pressure.households_equivalent)}`,
+        evidence: "inference",
+        basis: "modeled",
+        sub: `at ${num(pressure.avg_household_kwh_yr)} kWh/household/yr`,
+      },
+    ]
+  : [];
+---
+
+{
+  backdrop === null ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="pow-lead">
+        Every megawatt figure about a data center is a number over a denominator, and the
+        denominator is somebody's grid. A real impact study names that grid — cited, not
+        asserted — and states what the campus load does to the households on the same wires.
+      </p>
+
+      <h2 class="pow-h2">Whose grid this is</h2>
+      <table class="pow-table">
+        <thead>
+          <tr>
+            <th>Link</th>
+            <th>Identification</th>
+            <th>Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {backdrop.chain.map((row) => (
+            <tr>
+              <td>{row.label}</td>
+              <td>
+                <strong>{row.value}</strong>
+              </td>
+              <td>
+                <EvidenceTag kind={row.verified ? "verified" : "reference"} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2 class="pow-h2">What those systems already carry</h2>
+      <table class="pow-table">
+        <thead>
+          <tr>
+            <th>System</th>
+            <th>Annual load</th>
+            {backdrop.campus && <th>Campus share</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {backdrop.denominators.map((d) => (
+            <tr>
+              <td>{d.label}</td>
+              <td>{gwh(d.gwh)} GWh/yr</td>
+              {backdrop.campus && <td class="pow-share">{d.sharePct == null ? "—" : `${d.sharePct.toFixed(2)}%`}</td>}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {backdrop.campus === null ? (
+        <p class="pow-nocampus">
+          No campus load is disclosed here, so there is no share to express against these
+          denominators — and this study will not invent one. The column appears when a
+          facility does.
+        </p>
+      ) : (
+        <p class="pow-campusline">
+          The disclosed campus draws ~{Math.round(backdrop.campus.loadMw)} MW — at a{" "}
+          {backdrop.campus.loadFactor} load factor, ~{gwh(backdrop.campus.annualGwh)} GWh/yr, the
+          numerator of every share above. The draw is itself an <code>[inference]</code>.
+        </p>
+      )}
+
+      <h2 class="pow-h2">The campus against consumer prices</h2>
+      {pressure === null ? (
+        <p class="pow-withheld">
+          The demand → consumer-price read needs an <strong>instrument-grounded</strong> campus
+          load — an air permit or a filed disclosure. This site's load is{" "}
+          {backdrop.campus === null ? "not disclosed" : "a screening bracket"}, so the read is
+          withheld rather than computed off an inference — the gap panel below names the
+          instrument that would ground it.
+        </p>
+      ) : (
+        <>
+          <div class="pow-stats">
+            {pressureStats.map((s) => (
+              <FigureStat stat={s} size="lg" />
+            ))}
+          </div>
+          <p class="pow-band">
+            Applying the stated short-run transmission coefficient (
+            {num(pressure.transmission_coefficient, 2)} %price/%demand) to that share gives{" "}
+            {num(pressure.price_pressure_pct_low, 2)}–{num(pressure.price_pressure_pct_high, 2)}%
+            on the {num(pressure.residential_price, 2)}¢/kWh residential price —{" "}
+            <strong>deliberately stylized</strong>, an order of magnitude and never anyone's
+            bill: the campus buys at wholesale, not the residential rate.
+          </p>
+        </>
+      )}
+
+      {model.caveats.length > 0 && (
+        <ul class="pow-caveats">
+          {model.caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+
+      <p class="pow-annexline">
+        The cited service chain with its full citations, the cohort-price qualification, and
+        the load report's inference chain are in the{" "}
+        <a href={withSite("/economy/grid")}>grid annex</a>.
+      </p>
+    </>
+  )
+}
+
+<style>
+  .pow-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.2rem;
+  }
+  .pow-h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 0.9rem;
+    margin: 1.2rem 0 0.6rem;
+  }
+  .pow-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .pow-table th {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    text-align: left;
+    border-bottom: 1px solid var(--bosc-ink);
+    padding: 6px 10px 6px 0;
+  }
+  .pow-table td {
+    border-bottom: 1px solid var(--bosc-rule);
+    padding: 7px 10px 7px 0;
+  }
+  .pow-share {
+    font-family: var(--bosc-mono);
+  }
+  .pow-nocampus,
+  .pow-withheld {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    max-width: 660px;
+    border: 1px solid var(--bosc-rule);
+    background: #efece2;
+    padding: 10px 14px;
+    margin: 0.8rem 0 0;
+  }
+  .pow-campusline {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    max-width: 660px;
+    margin: 0.8rem 0 0;
+  }
+  .pow-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 0.4rem 0 0.9rem;
+  }
+  .pow-band {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    max-width: 660px;
+  }
+  .pow-caveats {
+    margin: 1rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .pow-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .pow-annexline {
+    font-size: 0.9rem;
+    color: var(--bosc-muted);
+    margin-top: 1rem;
+  }
+</style>

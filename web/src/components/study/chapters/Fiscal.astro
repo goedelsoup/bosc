@@ -1,0 +1,114 @@
+---
+/**
+ * Study §III — The fiscal trade (the missing-impact-study epic, PR4). The gap-first chapter
+ * by design: the abatement is granted BEFORE any study exists, no fiscal feed exists, and
+ * none is fabricated. What renders is the shape of the analysis a real study would contain —
+ * four named blanks, each an [open] line waiting on a public record — plus whatever
+ * documented fact the record already carries (the composer's caveats, e.g. a disclosed
+ * investment figure in the [reference] register). The shell's gap panel carries the asks.
+ */
+import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+// The four analyses a real fiscal chapter contains — each a named blank until its public
+// record is produced. The records themselves are named by the gap panel; these are the
+// QUESTIONS the records answer.
+const BLANKS: { question: string; instrument: string }[] = [
+  {
+    question: "What tax revenue is abated, and at what percentage?",
+    instrument: "the enterprise-zone / CRA agreement",
+  },
+  {
+    question: "What does the school district forgo, and was it compensated?",
+    instrument: "the school-board resolution and any compensation agreement",
+  },
+  {
+    question: "What payment-in-lieu schedule replaces the abated tax, if any?",
+    instrument: "the PILOT schedule in the agreement",
+  },
+  {
+    question: "When does the community break even on the trade?",
+    instrument: "the county auditor's annual abatement report",
+  },
+];
+---
+
+{
+  model.status === "na" ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="fis-lead">
+        The fiscal trade is decided first and studied never: the abatement is granted before
+        any impact study exists. This chapter is the shape of the analysis a real study would
+        contain — every line of it a public record that has not been produced into this one.
+      </p>
+
+      <dl class="fis-blanks">
+        {BLANKS.map((b) => (
+          <div class="fis-blank">
+            <dt>
+              {b.question} <EvidenceTag kind="open" />
+            </dt>
+            <dd>Answered by {b.instrument}.</dd>
+          </div>
+        ))}
+      </dl>
+
+      {model.caveats.length > 0 && (
+        <ul class="fis-caveats">
+          {model.caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+    </>
+  )
+}
+
+<style>
+  .fis-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.2rem;
+  }
+  .fis-blanks {
+    margin: 0;
+    max-width: 660px;
+  }
+  .fis-blank {
+    border-top: 1px solid var(--bosc-rule);
+    padding: 12px 0;
+  }
+  .fis-blank dt {
+    font-weight: 700;
+    font-size: 0.98rem;
+    letter-spacing: -0.15px;
+  }
+  .fis-blank dd {
+    font-family: var(--bosc-mono);
+    font-size: 0.76rem;
+    line-height: 1.5;
+    color: var(--bosc-faint);
+    margin: 0.35rem 0 0;
+  }
+  .fis-caveats {
+    margin: 1.2rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .fis-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+</style>
