@@ -19,16 +19,17 @@ from jsonschema.validators import Draft202012Validator
 
 from watermark.config import Settings
 from watermark.pipeline.corpus import relpath_in_scope
-from watermark.sites import effective_corpus_scope, get_profile
+from watermark.sites import SITES, effective_corpus_scope, get_profile
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
 # The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
 # the fresh-export assertions below pin it so a bump lands here in one place.
 _CV = "1.45.1"
-# The per-site offline bundle (#727): the committed Lima bundle the frontend build reads
-# (`web/sites/<slug>/`, a full `watermark export` per registered site).
-FRONTEND_SAMPLE = REPO_ROOT / "web" / "sites" / "lima"
+# The per-site offline bundles (#727): a full `watermark export` per registered site, the
+# committed input the Astro build reads with no Python step (`web/sites/<slug>/`).
+COMMITTED_BUNDLES = REPO_ROOT / "web" / "sites"
+FRONTEND_SAMPLE = COMMITTED_BUNDLES / "lima"
 
 
 @pytest.fixture(scope="session")
@@ -532,8 +533,16 @@ def _assert_fixture_tracks_export(fixture_dir: Path, exported_manifest: dict[str
     aside), so its feed set matches — but the check stays a *subset* assertion so a lean committed
     bundle can never carry a feed the exporter no longer produces. The ``contract_version`` and
     ``site`` must match exactly, every committed feed must still exist in the real export (catches
-    a rename/removal), and the committed manifest must stay internally consistent. Refresh it
-    (see ``web/sites/README.md``) on drift.
+    a rename/removal), the ``readiness`` block must equal the fresh export's, and the committed
+    manifest must stay internally consistent. Refresh it (see ``web/sites/README.md``) on drift.
+
+    The readiness pin (#1770) was WPAFB-only (#1660, ME-A) until Urbana drifted the other way —
+    shipping ``record: live`` over a zero-length ``records`` feed, a stale claim from an older
+    export that survived because every other check here is contract-shaped, not evidence-shaped.
+    Readiness is a **standing** property recomputed at every export, so a committed snapshot lags
+    its own evidence in either direction the moment a source lands or dries up; pinning it for
+    every contract-tested bundle is the guard, and it must not depend on the contract version
+    also having moved.
     """
     sample = json.loads((fixture_dir / "manifest.json").read_text(encoding="utf-8"))
 
@@ -548,6 +557,11 @@ def _assert_fixture_tracks_export(fixture_dir: Path, exported_manifest: dict[str
     exported_feeds = {f["name"] for f in exported_manifest["feeds"]}
     stale = {f["name"] for f in sample["feeds"]} - exported_feeds
     assert not stale, f"{fixture_dir.name} fixture has feeds no longer produced by export: {stale}"
+
+    assert sample["readiness"] == exported_manifest["readiness"], (
+        f"committed {fixture_dir.name} readiness drifted from a fresh export — re-export the "
+        "bundle (see web/sites/README.md); an ingest that moves a domain must re-export its site"
+    )
 
     # The trimmed manifest must stay internally consistent and its feed files present.
     assert sample["feed_count"] == len(sample["feeds"])
@@ -565,15 +579,13 @@ def test_fort_wayne_sample_bundle_tracks_the_export_contract(fort_wayne_bundle: 
     """The committed Fort Wayne fixture tracks **`watermark --site fort-wayne export` (#741) — the
     first non-Lima committed site bundle, so this also guards that a sibling fixture stays a real,
     per-site-scoped slice of its own export."""
-    _assert_fixture_tracks_export(
-        REPO_ROOT / "web" / "sites" / "fort-wayne", _manifest(fort_wayne_bundle)
-    )
+    _assert_fixture_tracks_export(COMMITTED_BUNDLES / "fort-wayne", _manifest(fort_wayne_bundle))
 
 
 def test_urbana_sample_bundle_tracks_the_export_contract(urbana_bundle: Path) -> None:
     """The committed Urbana fixture tracks `watermark --site urbana export` (#797) — the network's
     third live site, promoted 2026-07-01."""
-    _assert_fixture_tracks_export(REPO_ROOT / "web" / "sites" / "urbana", _manifest(urbana_bundle))
+    _assert_fixture_tracks_export(COMMITTED_BUNDLES / "urbana", _manifest(urbana_bundle))
 
 
 def test_wpafb_committed_bundle_is_fresh(wpafb_bundle: Path) -> None:
@@ -585,19 +597,12 @@ def test_wpafb_committed_bundle_is_fresh(wpafb_bundle: Path) -> None:
     ``RECORD_LIVE_THRESHOLD``, but the committed bundle was never re-exported — so it shipped
     ``tier: backdrop`` / ``record: absent`` with a 0-length ``records`` feed while the exporter
     (and ``test_wpafb_exports_at_case_tier``) already produced ``tier: case`` / ``record: live``.
-    The generic ``_assert_fixture_tracks_export`` alone would have caught it *only because* the
-    contract version had also moved (1.29.0 → 1.30.2); to catch the "live in code, absent on
-    disk" class even at a steady contract, this additionally pins the committed readiness block
-    and the ``records`` feed to what a fresh export produces."""
-    fixture = REPO_ROOT / "web" / "sites" / "wpafb"
-    fresh = _manifest(wpafb_bundle)
-    _assert_fixture_tracks_export(fixture, fresh)
+    The readiness pin that caught it now lives in ``_assert_fixture_tracks_export`` itself, for
+    every contract-tested bundle (#1770); what stays here is the site-specific half — the
+    ``records`` feed pinned to the two extracted-tree paths, which shouldn't generalize."""
+    fixture = COMMITTED_BUNDLES / "wpafb"
+    _assert_fixture_tracks_export(fixture, _manifest(wpafb_bundle))
 
-    committed = _manifest(fixture)
-    assert committed["readiness"] == fresh["readiness"], (
-        "committed wpafb readiness drifted from a fresh export — re-export the bundle "
-        "(see web/sites/README.md); a record ingest must re-export the affected site"
-    )
     # The record domain is live because the site owns exactly its two in-scope agency records;
     # pin the committed feed to those extracted-tree source paths so a dropped/renamed record
     # (readiness silently falling back to seeded/absent on disk) fails here, not in production.
@@ -606,6 +611,54 @@ def test_wpafb_committed_bundle_is_fresh(wpafb_bundle: Path) -> None:
         "wpafb/ssa-53fr15876.epa.yaml",
         "wpafb/cercla-ffa-1991.epa.yaml",
     }, f"committed wpafb records feed drifted, got {sorted(committed_records)}"
+
+
+def test_every_committed_bundle_readiness_matches_its_own_feed_counts() -> None:
+    """Every committed bundle's ``readiness`` block must be the one its **own** feed counts imply
+    (#1770) — the standing, whole-fleet half of the drift guard.
+
+    The fresh-export pin above reaches only the four contract-tested sites; re-exporting all ~26
+    to cover the rest would cost the suite a full-fleet export. This costs nothing:
+    ``compute_readiness`` is a pure function of ``(profile, feed counts)``, and a manifest carries
+    both its own counts *and* the block that was derived from them, so self-consistency is
+    checkable without re-exporting anything. It is exactly the check Urbana's committed
+    ``record: live`` over a zero-length ``records`` feed failed — a stale claim from an older
+    export, on a site the WPAFB-only pin didn't cover.
+
+    Half the *staleness* class comes free: the profile side is read live, so a facility that
+    gains instrument grounding, or a site that gains a registered story, without a bundle refresh
+    fails here too. What this can't see is a corpus change that would move a feed count — only a
+    re-export moves those, which is what the four pinned sites are for.
+
+    (The committed bundles are lean — ``passages`` / ``passage-embeddings`` are dropped, see
+    ``web/sites/README.md``. Neither is a ``READINESS_FEED_NAMES`` member, so the trim can't
+    perturb the recompute; and were a readiness feed ever trimmed, this fails loudly rather than
+    recomputing a quietly-wrong block.)
+    """
+    from watermark.site.readiness import compute_readiness
+
+    bundles = sorted(d for d in COMMITTED_BUNDLES.iterdir() if (d / "manifest.json").is_file())
+    assert bundles, f"no committed site bundles under {COMMITTED_BUNDLES}"
+
+    offenders: list[str] = []
+    for bundle_dir in bundles:
+        manifest = _manifest(bundle_dir)
+        slug = manifest["site"]
+        if slug != bundle_dir.name:
+            offenders.append(f"{bundle_dir.name}: manifest declares site {slug!r}")
+            continue
+        if slug not in SITES:
+            offenders.append(f"{slug}: committed bundle for a slug not in watermark.sites.SITES")
+            continue
+        feed_counts = {f["name"]: f["count"] for f in manifest["feeds"]}
+        implied = compute_readiness(get_profile(slug), feed_counts)
+        if implied != manifest["readiness"]:
+            offenders.append(f"{slug}: committed {manifest['readiness']} != implied {implied}")
+
+    assert not offenders, (
+        "committed bundle readiness disagrees with the bundle's own feed counts — re-export the "
+        "site(s) (see web/sites/README.md):\n" + "\n".join(offenders)
+    )
 
 
 # --- Backdrop-tier network sites (#1220 / #1224) --------------------------------------------

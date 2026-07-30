@@ -61,7 +61,15 @@ Notes on what's committed here vs. a raw export:
 
 ## Drift guard
 
-`tests/test_site_bundle.py` asserts the committed lima/fort-wayne/urbana bundles still track
-their `watermark … export` contract (matching `contract_version` + `site`, every committed feed
-still produced by the exporter, internally consistent counts). Refresh the affected site(s) on
-drift.
+`tests/test_site_bundle.py` guards these in two layers. Refresh the affected site(s) on drift.
+
+- **Against a fresh export** — the committed lima / fort-wayne / urbana / wpafb bundles must
+  still track their `watermark … export` (matching `contract_version` + `site`, every committed
+  feed still produced by the exporter, an equal `readiness` block, internally consistent counts).
+  Only these four are re-exported by the suite; a full-fleet export would be too slow to run per
+  commit.
+- **Against itself, for every committed bundle** — `readiness` is a *standing* property
+  recomputed at every export, so a snapshot can over- or under-read its own evidence. Since
+  `watermark.site.readiness.compute_readiness` is a pure function of `(profile, feed counts)` and
+  a manifest carries both, every bundle here is checked for self-consistency with no export at
+  all (#1770 — Urbana had shipped `record: live` over a zero-length `records` feed).
