@@ -1,0 +1,124 @@
+{
+  "site": "wilmington",
+  "asof": "2026-07-11",
+  "source": "data/reference/oepa/cooling-reconciliation.yaml — regenerate: watermark cooling-reconcile --write",
+  "caveats": [
+    "The harness recommends; it never mutates the pinned cooling model — re-archetyping is a reviewed edit with the instrument cited.",
+    "A back-solved cycles-of-concentration is an [inference] bracket, never a headline scalar.",
+    "A gap (no documented makeup or blowdown) is an [open] records-request lead — never read as 'confirmed dry'.",
+    "A reservation ceiling (a will-serve / water-agreement figure) is not a discharge/withdrawal instrument — it keeps the archetype pin and is never collapsed into a headline consumptive figure.",
+    "An operator self-report lands on its own disclosed_* slot, never on documented_*, and cannot upgrade the claim's source.",
+    "The corroborators (air-permit PM, Tier II chemistry) are secondary — recorded and reconciled against the claim, never the sole basis for a re-archetype and never changing the outcome."
+  ],
+  "candidates": [
+    {
+      "site": "wilmington",
+      "facility": "Cosler Farm campus",
+      "is_control": false,
+      "claimed_archetype": "hybrid_adiabatic",
+      "claim_source": "reference",
+      "claim_citation": "[reference] DIRECT EVAPORATIVE cooling disclosed in the joint Port Authority / City Data Center FAQs, with a projected ~6M gal/yr cooling-water CONSUMPTION and water-cooled operation only ~11 days/yr (dry/free-cooling otherwise) — mapped to the HYBRID_ADIABATIC archetype (dry with seasonal evaporative assist). The disclosed ~6M gal/yr at the screening IT load implies a very low water-use effectiveness (near-dry operation), which UNDERCUTS a large-abstraction premise — the water-thesis finding. Not a document extraction; the reserved withdrawal MGD, the Caesar Creek Lake source contract, and the WUE/back-solve reconciliation are the water plan (#1472). Wastewater returns to the City WWTP -> NPDES OH0028134 -> Lytle Creek -> Todd Fork -> Little Miami.",
+      "account": {
+        "archetype": "hybrid_adiabatic",
+        "it_load": {
+          "value": 312.1,
+          "unit": "MW",
+          "source": "derived",
+          "citation": "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/air-permit MW stays [open] (#1469: OPSB 25-0871-EL-BLN 345kV build-out + the PJM-queue lead). No MW figure is primary-sourced for the campus. Primary basis = the network floor-area screen (cf. Urbana #1327 / Troy-Piqua): the disclosed 9-building site plan's 1,920,299 sq ft gross floor area (Nov/Dec 2025) x a whole-building IT power-density band of 75-250 W/sq ft (stated screening assumption) -> 144.0 MW low, ~312 MW central (MW-midpoint; watermark.facility.screening — #1641 D2), 480.1 MW high. Corroborated (not a second source) by the investment screen (cf. Sidney): the [reported] $4B campus / a hyperscale ~$8.5-20M-per-MW-IT construction-cost band -> ~200 MW ($20M/MW) .. ~470 MW ($8.5M/MW) — the two independent screens agree at an order-of-magnitude ~150-480 MW, so the bracket is set there (central ~312 MW). Signals that point HIGHER but are NOT adopted into the bracket: (a) the 9->12-building revision tabled 2026-03-27 is unreconciled [open] and would scale the floor area up; (b) the [reported] 252 Tier-4 diesel gensets, at a typical hyperscale per-unit rating (undisclosed), imply a larger N+1 backup envelope; (c) the widely repeated '1.5 GW' is [reference] press analysis of PJM interconnection filings (interconnection capacity != near-term IT load) — a lead tracked on #1469, not a document in hand. Replace with the disclosed load the moment a PJM interconnection / OPSB / SWOAQA air-permit instrument names the campus MW. Full record: data/extracted/wilmington/data-centers.md. Discipline: this Clinton-County thread is SELF-CONTAINED — do NOT bridge the Lima/Allen Bistrozzi land-assembly graph.",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_makeup": {
+          "value": 1.86,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "annual average: warm-season makeup x 5/12 assist months (JUN-OCT); assist window = ET0 > precip months from the committed NASA POWER normals + FAO-56 ET0 (see hydrology climatology artifact)",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_consumptive": {
+          "value": 1.4880000000000002,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "central consumptive = 1.86 MGD intake x 0.8 consumptive fraction ((CoC-1)/CoC at CoC=5, during assist months only)",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_blowdown": {
+          "value": 0.372,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "predicted blowdown = makeup 1.86 - evaporation 1.488 MGD for the hybrid_adiabatic archetype",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "documented_makeup": null,
+        "documented_blowdown": null,
+        "reserved_makeup": null,
+        "reserved_blowdown": null,
+        "disclosed_makeup": null,
+        "disclosed_ceiling": null,
+        "disclosed_cycles": null,
+        "backsolved_cycles": null,
+        "seasonality_warm_ratio": null
+      },
+      "outcome": "gap",
+      "recommended_archetype": null,
+      "recommended_source": null,
+      "kept_archetype": null,
+      "lead": {
+        "kind": "records-request",
+        "site": "wilmington",
+        "facility": "Cosler Farm campus",
+        "subject": "cooling-water account — makeup + blowdown records",
+        "records_sought": [
+          "industrial pretreatment / indirect-discharge (IU) permit",
+          "sewer-use agreement + any cooling-tower blowdown authorization",
+          "metered water-service use (makeup withdrawal)",
+          "cooling-tower blowdown / low-volume-wastewater DMR",
+          "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits",
+          "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)"
+        ],
+        "holder": "City / municipal water-sewer authority serving wilmington; Ohio EPA / regional air agency (DAPC); SERC / LEPC",
+        "rationale": "hybrid_adiabatic claim (source=reference) with no facility-own discharge permit and no documented makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES, or the loop is genuinely dry.",
+        "epic_ref": "#1688 (C2)",
+        "tag": "[open]"
+      },
+      "corroborators": {
+        "air_permit": {
+          "state": "not_on_record",
+          "stance": "silent",
+          "tower_count": null,
+          "pm10_tpy": null,
+          "pm25_tpy": null,
+          "citation": "no air permit wired for Cosler Farm campus (SiteFacility.air_permit_relpath is None)",
+          "tag": "[open]",
+          "confidence": "low",
+          "finding": "No air permit on file for Cosler Farm campus: whether its cooling towers are permitted PM (drift) sources cannot be checked against the hybrid_adiabatic claim — a records-request item (facility air PTI/PTIO), never read as 'no cooling tower'."
+        },
+        "tier2_chemistry": {
+          "state": "not_on_record",
+          "stance": "silent",
+          "chemicals": [],
+          "citation": "Tier II / EPCRA-312 cooling-water treatment inventory not on record (SERC/LEPC-held, not published to ECHO)",
+          "tag": "[open]",
+          "confidence": "low",
+          "finding": "No Tier II / EPCRA-312 cooling-chemistry inventory on file for Cosler Farm campus: heavy biocide / scale-inhibitor treatment scales with evaporative cycling and would corroborate over-cycling against the hybrid_adiabatic claim — a records-request item (LEPC/SERC filing), not yet obtainable."
+        },
+        "net_stance": "silent",
+        "summary": "Neither corroborator is on record for Cosler Farm campus (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
+      },
+      "tag": "[open]",
+      "confidence": "low",
+      "finding": "No documented makeup or blowdown for Cosler Farm campus: the hybrid_adiabatic claim (source=reference) cannot yet be tested against records — an [open] gap, not 'confirmed dry' (→ C2 records request #1688). Predicted makeup 1.86 MGD. Neither corroborator is on record for Cosler Farm campus (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
+    }
+  ]
+}

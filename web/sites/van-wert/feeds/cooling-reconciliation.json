@@ -1,0 +1,133 @@
+{
+  "site": "van-wert",
+  "asof": "2026-07-11",
+  "source": "data/reference/oepa/cooling-reconciliation.yaml — regenerate: watermark cooling-reconcile --write",
+  "caveats": [
+    "The harness recommends; it never mutates the pinned cooling model — re-archetyping is a reviewed edit with the instrument cited.",
+    "A back-solved cycles-of-concentration is an [inference] bracket, never a headline scalar.",
+    "A gap (no documented makeup or blowdown) is an [open] records-request lead — never read as 'confirmed dry'.",
+    "A reservation ceiling (a will-serve / water-agreement figure) is not a discharge/withdrawal instrument — it keeps the archetype pin and is never collapsed into a headline consumptive figure.",
+    "An operator self-report lands on its own disclosed_* slot, never on documented_*, and cannot upgrade the claim's source.",
+    "The corroborators (air-permit PM, Tier II chemistry) are secondary — recorded and reconciled against the claim, never the sole basis for a re-archetype and never changing the outcome."
+  ],
+  "candidates": [
+    {
+      "site": "van-wert",
+      "facility": "Van Wert Mega Site",
+      "is_control": false,
+      "claimed_archetype": "closed_loop_dry",
+      "claim_source": "reference",
+      "claim_citation": "[reference] operator/developer claim (NOT instrument-confirmed): closed-loop cooling (Danfoss-patented equipment); QTS states the campus 'does not consume water for cooling once operational', characterizing ongoing use as 'about what 4 households use per month' (q.com/data-centers/van-wert; vanwert.org/water-treatment). Same closed-loop pattern that undercut the Urbana water thesis (#1327). Carries an [open] discrepancy on the initial closed-loop fill (~660,000 gal from the City of Van Wert — local press frames it 'annually' while the 2026-06-11 event framed it as a one-time fill); reconciling the fill volume + the still-negotiated water/sewer service agreement is the water-service instrument (#1407) / water-contradiction lead (#1409), not this pin. B2 (#1682) ran the A3 cooling-cycling reconciliation harness (`watermark cooling-reconcile`) on this claim: with no metered makeup (A1 built no Van Wert County withdrawal) and no facility-own blowdown (A2 OHD000001 draft), the outcome is a `gap` that KEEPS this [reference] pin — the ~660k gal figure is a single-source self-report, not an instrument, so it can neither upgrade the source nor re-archetype; the initial-fill open quantity is sharpened into a C2 records request (#1688/#1409). Replace with a documented cooling design when an NPDES/mechanical instrument lands (the OHD000001 draft data-center general permit is not yet linked to the facility by name, #1408).",
+      "account": {
+        "archetype": "closed_loop_dry",
+        "it_load": {
+          "value": 500.0,
+          "unit": "MW",
+          "source": "derived",
+          "citation": "[reference] 'up to 500 MW' — Thor Equities / Form8tion's 2025-08-19 land-acquisition release (GlobeNewswire; citybiz; Data Center Dynamics) and local press; NOT an air-permit or PJM-interconnection disclosure of the campus's own load. QTS's own site DECLINES to state capacity ('we don't disclose specific power capacity', q.com/data-centers/van-wert), so this stays a [reference] bracket, never a point disclosure — the official/interconnection MW is [open]. Carried central at the announced 500 MW ceiling per #1402 (like the Bowling Green disclosed-peak precedent, #1435): 500 is an 'up to'/campus-draw ceiling, so treating it as the IT load makes downstream figures (facility_draw = IT x PUE, then x load factor) run conservative-high. The low bound reads the same 'up to 500 MW' as the ALL-IN campus/grid-interconnection draw and divides out the cooling-dominated PUE ceiling (the announced-ceiling screen, watermark.facility.screening — #1629): 500 / 1.43 ~= 349.7 MW implied IT load — the bracket (349.7-500 MW) thus spans the campus-total-vs-IT-only interpretive ambiguity. No floor-area screen is possible (gross floor area is not disclosed, unlike Urbana #1327 / Troy-Piqua #1482 / Bowling Green #1435). Replace with the disclosed load when an OEPA air PTI, a PJM interconnection filing, or the AEP Ohio load contract (PUCO tariff 24-508-EL-ATA) surfaces it; the AEP Ohio Transco Van Wert-Haviland 138 kV LON (OPSB 25-0697-EL-BLN, $45M, in-service Dec 2026) is a [reference] transmission signal whose stated need is generic (#1401).",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_makeup": {
+          "value": 0.0,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only)",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_consumptive": {
+          "value": 0.0,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "central consumptive = 0 MGD intake x 0 consumptive fraction (sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only))",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_blowdown": {
+          "value": 0.0,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "predicted blowdown = makeup 0 - evaporation 0 MGD for the closed_loop_dry archetype",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "documented_makeup": null,
+        "documented_blowdown": null,
+        "reserved_makeup": null,
+        "reserved_blowdown": null,
+        "disclosed_makeup": {
+          "value": 0.0018,
+          "unit": "MGD",
+          "source": "reference",
+          "citation": "[reference] operator-DISCLOSED ongoing draw — NOT a metered use and NOT a discharge/withdrawal instrument: QTS characterizes the campus's ongoing water use as 'about what 4 households use per month', and local press reports ~660,000 gal (≈0.0018 MGD annualized) — a SINGLE local-press source (thevwindependent.com; vanwert.org/water-treatment). Carried here as the annualized ongoing-draw reading to test the 'does not consume water once operational' claim; the SAME ~660,000 gal figure is elsewhere framed as a ONE-TIME initial fill (the 2026-06-11 City-approved closed-loop fill) — that fill-vs-annual ambiguity is the unresolved #1409 discrepancy, not settled here. Self-reported (cannot upgrade the [reference] pin); the metered water-service use + the fill authorization are C2 pull targets (#1407/#1409/#1688).",
+          "confidence": "low",
+          "asof": "2026-06-11",
+          "low": null,
+          "high": null
+        },
+        "disclosed_ceiling": null,
+        "disclosed_cycles": null,
+        "backsolved_cycles": null,
+        "seasonality_warm_ratio": null
+      },
+      "outcome": "gap",
+      "recommended_archetype": null,
+      "recommended_source": null,
+      "kept_archetype": null,
+      "lead": {
+        "kind": "records-request",
+        "site": "van-wert",
+        "facility": "Van Wert Mega Site",
+        "subject": "cooling-water account — reconcile the disclosed ongoing draw + the initial fill volume vs the closed-loop claim",
+        "records_sought": [
+          "initial closed-loop fill volume + top-off / make-up rate (the fill-vs-annual figure)",
+          "metered water-service use (actual makeup withdrawal vs the disclosed ongoing draw)",
+          "executed water & sewer service agreement (the City-approved fill authorization — the instrument, not a press summary)",
+          "cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)",
+          "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits",
+          "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)"
+        ],
+        "holder": "City / municipal water-sewer authority serving van-wert; Ohio EPA (NPDES / OHD000001); Ohio EPA / regional air agency (DAPC); SERC / LEPC",
+        "rationale": "A closed_loop_dry claim (source=reference) that 'does not consume water once operational', with an UNVERIFIED disclosed ongoing draw (0.0018 MGD) consistent with a dry loop at screening scale — a single-source self-report, not a metered instrument, so it neither corroborates nor re-archetypes the claim and cannot upgrade the [reference] pin; the disclosed figure's fill-vs-annual framing is itself unresolved (#1409). The 'once operational' wording also structurally excludes the initial closed-loop fill (a City-approved one-time withdrawal of undisclosed volume). Pull the metered use + the fill authorization to resolve whether the loop is genuinely dry or the fill / top-off is material.",
+        "epic_ref": "#1688 (C2); #1409",
+        "tag": "[open]"
+      },
+      "corroborators": {
+        "air_permit": {
+          "state": "not_on_record",
+          "stance": "silent",
+          "tower_count": null,
+          "pm10_tpy": null,
+          "pm25_tpy": null,
+          "citation": "no air permit wired for Van Wert Mega Site (SiteFacility.air_permit_relpath is None)",
+          "tag": "[open]",
+          "confidence": "low",
+          "finding": "No air permit on file for Van Wert Mega Site: whether its cooling towers are permitted PM (drift) sources cannot be checked against the closed_loop_dry claim — a records-request item (facility air PTI/PTIO), never read as 'no cooling tower'."
+        },
+        "tier2_chemistry": {
+          "state": "not_on_record",
+          "stance": "silent",
+          "chemicals": [],
+          "citation": "Tier II / EPCRA-312 cooling-water treatment inventory not on record (SERC/LEPC-held, not published to ECHO)",
+          "tag": "[open]",
+          "confidence": "low",
+          "finding": "No Tier II / EPCRA-312 cooling-chemistry inventory on file for Van Wert Mega Site: heavy biocide / scale-inhibitor treatment scales with evaporative cycling and would corroborate over-cycling against the closed_loop_dry claim — a records-request item (LEPC/SERC filing), not yet obtainable."
+        },
+        "net_stance": "silent",
+        "summary": "Neither corroborator is on record for Van Wert Mega Site (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
+      },
+      "tag": "[open]",
+      "confidence": "low",
+      "finding": "No metered makeup or blowdown for Van Wert Mega Site to test the closed_loop_dry claim (source=reference) — an [open] gap, not 'confirmed dry'. The operator DISCLOSES an UNVERIFIED ongoing draw of 0.0018 MGD, consistent with a dry loop at screening scale — either way a single-source self-report (not a metered instrument), so it neither corroborates nor re-archetypes the claim and cannot upgrade the [reference] pin; the claim's 'once operational' wording also excludes the initial closed-loop fill (a City-approved one-time withdrawal of undisclosed volume) — the specific open quantity (→ C2 records request #1688). Keep the pin [reference]. Neither corroborator is on record for Van Wert Mega Site (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
+    }
+  ]
+}
