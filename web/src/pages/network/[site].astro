@@ -150,6 +150,13 @@ const doors = [
       <div class="netsite-kicker netsite-doors-kicker">
         What will land here <span class="netsite-faint">— the same record grammar as Lima</span>
       </div>
+      {/* The primary artifact, teased registry-only (the missing-impact-study epic): a watch
+          site has no bundle, so no study routes — copy only, never a door that 404s. */}
+      <p class="netsite-study-tease">
+        The impact study — the environmental and economic study this community should receive
+        before any abatement or rezoning — opens with this site's record, chapter by chapter,
+        the day its bundle does.
+      </p>
       <div class="netsite-doors">
         {
           doors.map((d) => (
@@ -203,3 +210,16 @@ const doors = [
     )
   }
 </Base>
+
+<style>
+  /* The impact-study tease (registry-only; the missing-impact-study epic) — quiet, one line. */
+  .netsite-study-tease {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    max-width: 640px;
+    border-left: 3px solid var(--bosc-rule);
+    padding-left: 14px;
+    margin: 0 0 14px;
+  }
+</style>

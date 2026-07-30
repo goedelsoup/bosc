@@ -386,23 +386,86 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   ];
 }
 
-/** Site-tier left tabs — shown inside a site. A 5-tab bar (#1307): The site · The story ·
- *  The environment · The economy · The record. Environment and Economy are first-class site-tier
- *  dropdowns (promoted out of the "The site" mega, where they used to be "themes it crosses").
- *  Reports — the long-form analysis over the record — moved back from the network Research ▾
- *  dropdown (reverting #1305) into the "The site" mega-menu as a fourth destination tile. */
+/** Site-tier left tabs — shown inside a site. A 5-tab bar (the missing-impact-study epic's
+ *  promotion pass): The site · **The impact study** · The story · **Reference** · The record.
+ *  The study — the site's primary artifact — rides second, right after the mega; the old
+ *  "The environment" / "The economy" dropdowns merge into ONE Reference dropdown, reframed
+ *  as the data behind the study's chapters (the demotion is nav + framing; every URL is
+ *  unchanged). Reports stay a "The site" mega tile (and light that tab), cross-linked from
+ *  the Reference dropdown and the chapters' annex footers. */
 export function siteTabs(): NavItem[] {
   const { base, storyRoot, story } = siteRoots();
   const chapters = story?.chapters ?? [];
   // Per-site readiness (#781/#1220): on a thinner peer some of these destinations aren't on the
   // record yet. `sectionStatus` reads the bundle's domain-activation block, so Lima's menu is
   // unchanged (every domain live) without any reference-site special-case. A locked theme collapses
-  // its dropdown to a non-navigable locked marker (the page isn't there yet), matching the locked
-  // `link` tabs a coming-soon peer already shows.
+  // to its landing link (which renders the coherent lock page) inside the Reference dropdown —
+  // the merged dropdown must never advertise facet links that render locks. The study tab has
+  // NO locked variant: an absent record is a chapter's own content, never a lock.
   const slug = activeSite();
   const storyLocked = sectionStatus(slug, "story") === "locked";
   const environmentLocked = sectionStatus(slug, "environment") === "locked";
   const economyLocked = sectionStatus(slug, "economy") === "locked";
+
+  // The environment/economy halves of the Reference dropdown — each collapsing to its landing
+  // link when its section is locked (the landing page renders the lock + the ask).
+  const environmentChildren: NavChild[] = environmentLocked
+    ? [{ label: "The environment", href: `${base}/environment/`, blurb: "Locked — awaiting a source" }]
+    : [
+        {
+          label: "The environment",
+          href: `${base}/environment/`,
+          blurb: "The data behind Part II — section overview",
+        },
+        { label: "Hydrology", href: `${base}/environment/hydrology`, blurb: "Low-flow dilution vs the 7Q10" },
+        { label: "Watershed map", href: `${base}/environment/map`, blurb: "Typed GeoJSON on deck.gl" },
+        { label: "Imagery", href: `${base}/environment/imagery`, blurb: "Dated aerials — before / after" },
+        { label: "RSEI / toxics", href: `${base}/environment/rsei`, blurb: "EPA toxic-release inventory" },
+        { label: "Air dispersion", href: `${base}/environment/air`, blurb: "AERMOD screening field" },
+        {
+          label: "Seasonal withdrawal",
+          href: `${base}/environment/seasonal`,
+          blurb: "Month-by-month climograph",
+        },
+        { label: "Water flow", href: `${base}/environment/flow`, blurb: "Animated reach-network flow" },
+        {
+          label: "Thermal / §316(a)",
+          href: `${base}/environment/thermal`,
+          blurb: "Discharge heat vs the temperature criterion",
+        },
+      ];
+  const economyChildren: NavChild[] = economyLocked
+    ? [{ label: "The economy", href: `${base}/economy/`, blurb: "Locked — awaiting a source" }]
+    : [
+        {
+          label: "The economy",
+          href: `${base}/economy/`,
+          blurb: "The data behind Part III — section overview",
+        },
+        {
+          label: "Localized labor baseline",
+          href: `${base}/environment/economics-baseline`,
+          blurb: "BLS QCEW · Census employment",
+        },
+        { label: "The grid backdrop", href: `${base}/economy/grid`, blurb: "Whose grid, cited" },
+        {
+          label: "End use & workloads",
+          href: `${base}/reports/end-use-and-workloads`,
+          blurb: "Where the campus load goes",
+        },
+        {
+          label: "The load & the grid",
+          href: `${base}/reports/the-load-and-the-grid`,
+          blurb: "The load report",
+        },
+        {
+          label: "The economic ledger",
+          href: `${base}/reports/the-economic-ledger`,
+          blurb: "The public balance sheet",
+        },
+        { label: "Demand & public benefits", href: "/docs/economics", blurb: "The prose companion" },
+      ];
+
   return [
     {
       kind: "mega",
@@ -454,118 +517,10 @@ export function siteTabs(): NavItem[] {
         },
       },
     },
-    { kind: "link", label: "The story", section: "story", href: storyRoot, locked: storyLocked },
-    environmentLocked
-      ? {
-          kind: "link",
-          label: "The environment",
-          section: "environment",
-          href: `${base}/environment/`,
-          locked: true,
-        }
-      : {
-          // "Themes it crosses" facets are standalone leaf routes (slugs), each its own page — not
-          // in-page anchors (#1323): every one is a real content page (the hydrology dashboard, the
-          // deck.gl map/air/seasonal/flow islands, the imagery viewer, the RSEI read), so a direct
-          // link is the right target. The economics baseline is economic ground, so it lives on the
-          // economy tab, not here.
-          kind: "dropdown",
-          label: "The environment",
-          section: "environment",
-          children: [
-            {
-              label: "The environment",
-              href: `${base}/environment/`,
-              blurb: "Section overview — the doors below",
-            },
-            { divider: true },
-            {
-              label: "Hydrology",
-              href: `${base}/environment/hydrology`,
-              blurb: "Low-flow dilution vs the 7Q10",
-            },
-            { label: "Watershed map", href: `${base}/environment/map`, blurb: "Typed GeoJSON on deck.gl" },
-            {
-              label: "Imagery",
-              href: `${base}/environment/imagery`,
-              blurb: "Dated aerials — before / after",
-            },
-            {
-              label: "RSEI / toxics",
-              href: `${base}/environment/rsei`,
-              blurb: "EPA toxic-release inventory",
-            },
-            { label: "Air dispersion", href: `${base}/environment/air`, blurb: "AERMOD screening field" },
-            {
-              label: "Seasonal withdrawal",
-              href: `${base}/environment/seasonal`,
-              blurb: "Month-by-month climograph",
-            },
-            { label: "Water flow", href: `${base}/environment/flow`, blurb: "Animated reach-network flow" },
-            {
-              label: "Thermal / §316(a)",
-              href: `${base}/environment/thermal`,
-              blurb: "Discharge heat vs the temperature criterion",
-            },
-          ],
-        },
-    economyLocked
-      ? {
-          kind: "link",
-          label: "The economy",
-          section: "economy",
-          href: `${base}/economy/`,
-          locked: true,
-        }
-      : {
-          // Like the environment facets (#1323), the economy "themes it crosses" are standalone leaf
-          // routes (slugs) — cross-links into the localized labor baseline, `/reports/*`, and
-          // `/docs/economics`. The labor baseline (BLS QCEW · Census) is the economics-baseline read:
-          // it lives here on the economy tab, not on environment, since it's economic ground.
-          kind: "dropdown",
-          label: "The economy",
-          section: "economy",
-          children: [
-            {
-              label: "The economy",
-              href: `${base}/economy/`,
-              blurb: "Section overview — the ground the deal sits on",
-            },
-            { divider: true },
-            {
-              label: "Localized labor baseline",
-              href: `${base}/environment/economics-baseline`,
-              blurb: "BLS QCEW · Census employment",
-            },
-            {
-              label: "End use & workloads",
-              href: `${base}/reports/end-use-and-workloads`,
-              blurb: "Where the campus load goes",
-            },
-            {
-              label: "The load & the grid",
-              href: `${base}/reports/the-load-and-the-grid`,
-              blurb: "The grid backdrop",
-            },
-            {
-              label: "The economic ledger",
-              href: `${base}/reports/the-economic-ledger`,
-              blurb: "The public balance sheet",
-            },
-            {
-              label: "Demand & public benefits",
-              href: "/docs/economics",
-              blurb: "The prose companion",
-            },
-          ],
-        },
-    { kind: "link", label: "The record", section: "site", href: `${base}/site/`, match: ["timeline"] },
     {
-      // The impact study — the site's primary artifact (the missing-impact-study epic). Never a
-      // locked variant: the study renders for every selectable site, and an absent record is the
-      // chapter's own content (the gap-as-finding register), not a lock. Appended last for now;
-      // the promotion pass re-orders it first and merges environment/economy into a Reference
-      // dropdown.
+      // The impact study — the site's primary artifact. Never a locked variant: the study
+      // renders for every selectable site, and an absent record is a chapter's own content
+      // (the gap-as-finding register), not a lock.
       kind: "dropdown",
       label: "The impact study",
       section: "study",
@@ -584,6 +539,29 @@ export function siteTabs(): NavItem[] {
         ]),
       ],
     },
+    { kind: "link", label: "The story", section: "story", href: storyRoot, locked: storyLocked },
+    environmentLocked && economyLocked
+      ? {
+          // Both halves locked (a stub-tier peer): the merged tab collapses to the same
+          // non-navigable locked marker the separate tabs used to show.
+          kind: "link",
+          label: "Reference",
+          section: "environment",
+          href: `${base}/environment/`,
+          locked: true,
+        }
+      : {
+          // The Reference dropdown — the old environment + economy trees, reframed as the
+          // study's data annex ("the data behind the chapters"). Facets stay standalone leaf
+          // routes (#1323) at their unchanged URLs; a locked half collapses to its landing
+          // link (which renders the lock + the ask), never advertising facet links onto locks.
+          kind: "dropdown",
+          label: "Reference",
+          section: "environment",
+          match: ["economy"],
+          children: [...environmentChildren, { divider: true }, ...economyChildren],
+        },
+    { kind: "link", label: "The record", section: "site", href: `${base}/site/`, match: ["timeline"] },
   ];
 }
 
@@ -677,6 +655,7 @@ export function footerGroups(): FooterGroup[] {
       heading: "The investigation",
       links: [
         { label: "Overview", href: base },
+        { label: "The impact study", href: `${base}/study/` },
         { label: "Open leads", href: `${base}/leads` },
         { label: "The environment", href: `${base}/environment/` },
         { label: "The economy", href: `${base}/economy/` },
