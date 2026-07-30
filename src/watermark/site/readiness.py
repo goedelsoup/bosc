@@ -236,7 +236,7 @@ def site_tier(states: Mapping[Domain, State]) -> Tier:
       *role* — routed-hydrograph, hypothesis matrix, catalog, concepts), which is not a
       readiness backdoor.
     * ``case`` — the floor is live and at least one above-floor domain is live (Fort Wayne:
-      facility+places+record; Urbana: record).
+      facility+places+record; Urbana: places+record).
     * ``backdrop`` — the floor is live but nothing above it is (the 17 one-export-from-real
       sites).
     * ``stub`` — not even the floor is live (profile only, ~zero data).

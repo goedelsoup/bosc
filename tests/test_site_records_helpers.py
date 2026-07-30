@@ -2,7 +2,14 @@
 
 from __future__ import annotations
 
-from watermark.site.records import _approx_paths, _classify, _Record, _record_title
+from watermark.site.records import (
+    _approx_paths,
+    _classify,
+    _normalize_source_rel,
+    _Record,
+    _record_title,
+    _source_ref,
+)
 
 
 def test_approx_paths_finds_every_tilde_scalar() -> None:
@@ -30,6 +37,44 @@ def test_classify_recognizes_block_genres_and_opc() -> None:
     assert _classify(["not", "a", "dict"]) is None
 
 
+def test_classify_publishes_whole_document_genres() -> None:
+    """A filed case and a conveyance register are whole-document genres (#1724).
+
+    Their subject is spread across the top level, not carried by one block, so the payload is
+    the document minus its envelope — keying `litigation` to the `case:` block alone would
+    publish a docket stub and drop the parties, counts and relief the filing pleads.
+    """
+    filing = {
+        "source_path": "data/documents/legal/x/1.pdf",  # envelope — never a subject field
+        "case": {"caption": "A v. B", "case_no": "3:26-cv-1"},
+        "counts": ["I. Takings"],
+    }
+    group, payload = _classify(filing)  # type: ignore[misc]
+    assert group == "litigation"
+    assert payload == {"case": filing["case"], "counts": ["I. Takings"]}
+
+    register = {"assembly": "The Hub", "conveyances": [{"grantee": "SPE I", "acres": 47.6}]}
+    assert _classify(register) == ("land-assembly", register)
+
+    # A register is NOT filed under `deeds` — that group is instrument-level, one vision read
+    # per recorder PDF, and an instrument block still wins when both shapes are present.
+    assert _classify({"deed": {"grantee": "X"}, "conveyances": [{"grantee": "X"}]})[0] == "deeds"  # type: ignore[index]
+    # An empty list is no register at all.
+    assert _classify({"conveyances": []}) is None
+
+
+def test_source_ref_resolves_either_provenance_shape() -> None:
+    """A structured read of a filed instrument points at its source with a `source:` block
+    rather than the vision extractor's top-level `source_path` (#1724) — both must resolve, or
+    the record can't link to the document it was read from."""
+    assert _source_ref({"source_path": "data/documents/a.pdf"}) == "data/documents/a.pdf"
+    block = {"source": {"instrument": "federal-complaint", "file": "data/documents/b.pdf"}}
+    assert _source_ref(block) == "data/documents/b.pdf"
+    assert _normalize_source_rel(_source_ref(block)) == "b.pdf"
+    assert _source_ref({"source": "a bare string, not a block"}) is None
+    assert _source_ref({}) is None
+
+
 def test_record_title_prefers_the_most_identifying_field() -> None:
     rec = _Record(
         rel="oepa/x.yaml",
@@ -48,3 +93,19 @@ def test_record_title_prefers_the_most_identifying_field() -> None:
     assert _record_title(rec2) == "BOSC Roadwork"
     rec3 = _Record(rel="misc/cole-street.yaml", group="opc", data={}, payload={})
     assert _record_title(rec3) == "cole-street"
+    # The whole-document genres (#1724): a register names itself at the top level, a filing
+    # names itself in the `case:` block it keeps its caption in.
+    rec4 = _Record(
+        rel="urbana/land-assembly.yaml",
+        group="land-assembly",
+        data={},
+        payload={"assembly": "Urbana Technology Hub — SR-55 & S US-68", "conveyances": []},
+    )
+    assert _record_title(rec4) == "Urbana Technology Hub — SR-55 & S US-68"
+    rec5 = _Record(
+        rel="urbana/litigation-thor-v-urbana.yaml",
+        group="litigation",
+        data={},
+        payload={"case": {"caption": "Thor Equities, LLC et al. v. City of Urbana, Ohio et al."}},
+    )
+    assert _record_title(rec5) == "Thor Equities, LLC et al. v. City of Urbana, Ohio et al."

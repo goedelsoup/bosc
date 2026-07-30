@@ -87,8 +87,9 @@ describe("domain activation (manifest readiness block)", () => {
     expect(siteTier("lima")).toBe("reference");
     expect(siteTier("fort-wayne")).toBe("case");
     // Urbana is a Case site after the Highland55 land-assembly sourcing (#1328): the floor plus a
-    // committed parcel footprint (`places` live) is enough — the tier holds even though `record`
-    // reads `seeded` rather than the stale `live` its manifest used to claim (#1642).
+    // committed parcel footprint (`places` live) was already enough, and the tier is unmoved by
+    // `record` going seeded (#1642) and then live on its published extractions (#1724) — one
+    // above-floor domain is the bar, and Urbana has had one throughout.
     expect(siteTier("urbana")).toBe("case");
   });
 
@@ -99,14 +100,14 @@ describe("domain activation (manifest readiness block)", () => {
     }
     const urbana = siteDomainStates("urbana");
     expect(urbana.backdrop).toBe("live"); // the floor is real
-    // `seeded`, not `live` — corrected when the bundle was re-derived for the grid feed (#1642).
-    // The committed manifest had been asserting `record: live` while its own `records` feed was
-    // zero-length: Urbana's scoped corpus is analyses + a land-assembly/litigation table, none of
-    // which validate as `RecordItem` genres, so only `documents` (2 collections) signals — which
-    // SEEDS the domain and never lifts it (#1364). The stale claim survived because only WPAFB's
-    // committed readiness is pinned to a fresh export; the record section still opens (`seeded` is
-    // present), it just no longer over-reads its own evidence.
-    expect(urbana.record).toBe("seeded");
+    // `live`, but only since the feed caught up with the corpus (#1724). Two corrections in
+    // sequence, in opposite directions: the committed manifest used to assert `record: live` over
+    // a zero-length `records` feed and was re-derived to `seeded` for the grid feed (#1642); then
+    // the site-tier classifier gained the two genres Urbana's corpus actually carries — its
+    // structured read of the Thor v. Urbana complaint (`litigation`) and its recorded conveyance
+    // chain (`land-assembly`) — which clears `RECORD_LIVE_THRESHOLD` on real extractions rather
+    // than on a stale claim. The manifest is a reader of the feed at every step.
+    expect(urbana.record).toBe("live");
     expect(urbana.places).toBe("live"); // committed parcel footprint (parcel-assemblage.geojson)
     // The Urbana Technology Hub facility is SCREENING-only (floor-area [inference] load, MW [open]) →
     // `seeded`, distinguished from a permit-grounded facility, not floated to `live` (#1630).

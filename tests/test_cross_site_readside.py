@@ -69,12 +69,22 @@ def test_effective_corpus_scope_defaults_to_own_slug_not_lima() -> None:
     fort_wayne = effective_corpus_scope(SITES["fort-wayne"])
     assert fort_wayne.include == ("fort-wayne", "idem/fort-wayne")
     assert fort_wayne.exclude == ()  # a peer includes its own prefixes and excludes nothing
-    # An explicit non-slug scope wins — Urbana's Highland55 land-assembly corpus (#1328).
-    assert effective_corpus_scope(SITES["urbana"]).include == (
+    # An explicit non-slug scope wins — Urbana's Highland55 land-assembly corpus (#1328) plus the
+    # filed federal complaint that is its dispute's legal spine (#1724). The complaint sat under
+    # no peer prefix, so Lima's whole-tree-minus-peers scope swallowed it while Urbana's own
+    # catalog lacked the instrument its litigation record cites; naming it here moves it both ways
+    # at once, since Lima's exclusion set IS the union of the peers' scopes.
+    urbana = effective_corpus_scope(SITES["urbana"])
+    assert urbana.include == (
         "urbana",
         "permits/highland55",
         "oepa/urbana",
+        "legal/thor-v-urbana",
     )
+    assert urbana.contains("legal/thor-v-urbana/1.pdf")
+    assert not lima.contains("legal/thor-v-urbana/1.pdf")
+    # Only the named subtree moves — Lima keeps the rest of `legal/` (its own PRR/mandamus record).
+    assert lima.contains("legal/prr-mandamus/cra-agreement.cra.yaml")
 
 
 def test_unscoped_sibling_loads_its_own_corpus_not_lima() -> None:

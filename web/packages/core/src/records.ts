@@ -6,6 +6,8 @@ export const RECORD_GROUP_LABELS: Record<string, string> = {
   deeds: "Deeds",
   enforcement: "Enforcement — orders & decrees",
   finance: "Financing — loans & awards",
+  "land-assembly": "Land assembly — conveyance chains",
+  litigation: "Litigation — filed court instruments",
   "permits-epa": "Permits — Ohio EPA / USACE",
   "permits-idem": "Permits — IDEM (Indiana)",
   "permits-npdes": "Permits — NPDES",

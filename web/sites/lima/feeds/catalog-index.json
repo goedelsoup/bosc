@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "83b8f99dcf63716b98ef9da7ff9dccaf78b2e598727a9f062cf7cd5cc9c94cef",
-  "contract_version": "1.45.1",
+  "catalog_version": "da3445b3791d75d44b450a45a6ba15e00180cfb4575736e9d1a358b95774371a",
+  "contract_version": "1.46.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -4713,6 +4713,14 @@
       "site": "lima",
       "local_id": "res-575-25",
       "title": "Res #575-25: Enter into a Sanitary Sewer Developer Agreement with Project BOSC Developer.",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:res-582-26",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "res-582-26",
+      "title": "Res #582-26: Approve the Second Amendment to the Sanitary Sewer Development Agreement with Project Bosc Developer.",
       "feed": "timeline"
     },
     {

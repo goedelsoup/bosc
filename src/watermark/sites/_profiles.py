@@ -1408,7 +1408,13 @@ _URBANA = SiteProfile(
     # Corps JD instruments, PR #803) and the City-of-Urbana OEPA/NPDES record (oepa/urbana). Scope
     # to those two prefixes plus the slug so the bundle's documents/timeline feeds carry Urbana's
     # actual record (flips the `record` readiness domain live) — never Lima's Allen-County tree.
-    corpus_relpaths=("urbana", "permits/highland55", "oepa/urbana"),
+    # `legal/thor-v-urbana` joins them (#1724): the filed federal complaint (S.D. Ohio
+    # 3:26-cv-00196) is the legal spine of THIS site's dispute and the source of its
+    # `litigation-thor-v-urbana.yaml` read, but it sat outside every peer prefix — so Lima's
+    # whole-tree-minus-peers scope swallowed it and Urbana's own document catalog didn't carry
+    # the instrument its record cites. Naming it here moves it in both directions at once
+    # (#1505), because Lima's exclusion set IS the union of the peers' scopes.
+    corpus_relpaths=("urbana", "permits/highland55", "oepa/urbana", "legal/thor-v-urbana"),
     parcels_relpath="reference/urbana/parcel-assemblage.geojson",  # [verified] 4 parcels / 3 Thor SPEs / ~230 ac (#1326)
     footprint_relpath="extracted/urbana/bosc-site-footprint.yaml",  # [verified] recorded ownership assemblage (#1326)
     climatology_relpath="reference/hydrology/urbana/nasa-power-climatology.yaml",

@@ -1,7 +1,7 @@
 {
   "site": "urbana",
-  "catalog_version": "94816b8f70e36c2d654c802f5b191c6f2d25b721d581bd3dca487d1eb7068d6b",
-  "contract_version": "1.45.1",
+  "catalog_version": "b5ba482c98b2d2c20e518f9766fb557f14a0f90ab55a4a22ccdd3edab7e04eba",
+  "contract_version": "1.46.0",
   "atoms": [
     {
       "handle": "concept:urbana:7q10",
@@ -1066,6 +1066,22 @@
       "local_id": "THOR-FED",
       "title": "Thor v. City of Urbana (S.D. Ohio 3:26-cv-00196) — federal suit over the data-center zoning reversal is live",
       "feed": "leads"
+    },
+    {
+      "handle": "record:urbana:urbana/land-assembly.yaml",
+      "kind": "record",
+      "site": "urbana",
+      "local_id": "urbana/land-assembly.yaml",
+      "title": "Urbana Technology Hub (Thor Equities) — SR-55 & S US-68, Urbana Township",
+      "feed": "records"
+    },
+    {
+      "handle": "record:urbana:urbana/litigation-thor-v-urbana.yaml",
+      "kind": "record",
+      "site": "urbana",
+      "local_id": "urbana/litigation-thor-v-urbana.yaml",
+      "title": "Thor Equities, LLC et al. v. City of Urbana, Ohio et al.",
+      "feed": "records"
     }
   ]
 }

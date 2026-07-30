@@ -310,5 +310,22 @@ notes: >-
   refuses the write when they fork. Adds no new committed upstream — the values are projected
   from the already-validated `SiteProfile.facilities`, retiring the duplicate copies the
   presentation tier carried as TS literals.
+  The `records` feed's closed RecordGroup taxonomy gains `litigation` and `land-assembly`
+  (issue 1724, contract 1.46.0, MINOR enum growth). The site tier publishes a record from its raw
+  payload, so its classifier does not need an extraction model behind a genre the way
+  `watermark.pipeline.corpus` does — but its genre map had drifted narrower than the corpus, and a
+  site whose worked corpus was a filed complaint plus a recorded conveyance chain therefore
+  published an EMPTY records feed and read `record: seeded` over real, cited extractions (Urbana:
+  the structured read of Thor v. Urbana, S.D. Ohio 3:26-cv-00196, and the Champaign-County CAMA
+  land-assembly register). Both are whole-document genres — their subject is spread across the top
+  level rather than carried by one block, so the payload is the document minus its envelope, and
+  keying `litigation` to its `case:` block alone would publish a docket stub and drop the counts
+  pleaded. `land-assembly` is deliberately NOT `deeds`: that group is instrument-level, a per-deed
+  vision read of a recorder PDF, while a register is a compiled chain sourced to a county CAMA
+  layer, and filing one as the other would present a compilation as an instrument read. A record's
+  join to its source document also now resolves a `source:` provenance block's `file`, not only the
+  vision extractor's top-level `source_path`, so a structured read of a filed instrument links to
+  the instrument. Adds no new committed upstream — the extractions were already committed and
+  already catalogued; what changed is that the feed publishes them.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

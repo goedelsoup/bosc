@@ -1,5 +1,27 @@
 [
   {
+    "slug": "legal",
+    "title": "Legal",
+    "description": "",
+    "entries": [
+      {
+        "rel": "legal/thor-v-urbana/1.pdf",
+        "name": "1.pdf",
+        "size_bytes": 139029,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  },
+  {
     "slug": "oepa",
     "title": "Ohio EPA",
     "description": "**Collection:** `oepa/` · immutable source evidence",

@@ -3440,6 +3440,42 @@
     }
   },
   {
+    "date": "2026-07-30",
+    "category": "county_event",
+    "title": "1:00 p.m. — Sanitary Engineer Brad Niemeyer presented Res #582-26, the SECOND AMENDMENT to the Sanitary Sewer Development Agreement with the Project BOSC developer [verified: agenda]. The Lima News reports the Board APPROVED an $8M change order to the ~$31M BOSC sanitary-sewer construction contract, to be paid by Google [reference]: the campus force-main pump station moves from Bluelick Rd to the N. Cole St & Beery St intersection, adding 8-inch + 16-inch DUAL force mains; up to 500,000 gpd is SPLIT between the American Bath WWTP (3226 N. Cole St) and the American #2 plant (4140 Diller Rd), with any excess diverted to the CITY OF LIMA WWTP. Niemeyer: the County 'promised (Google) a capacity of two and a half million gallons a day on their worst day … very few days.' The influx is city-reservoir water cycled through the data-center COOLING system 'anywhere from three to six times,' the only additive being corrosion/biocide chemicals.",
+    "ref": "",
+    "parties": [],
+    "detail": "On the inference that Res #582-26 carries the news-reported redesign (the amendment text is not yet in hand), the Second Amendment would re-route the BOSC sanitary/blowdown stream across THREE receiving plants (American Bath + American #2 + City of Lima), superseding the single-plant American Bath design implicit in the #575-25/#975-25 record; ties to the WWTP Data Center Flows / blowdown-treatment keystone (#679-24) and the forcemain CMAR (#137-26 → #378-26). The disclosed 3–6× cooling cycles-of-concentration and the 2.5 MGD worst-day figure are the County Sanitary Engineer's OWN self-report — [reference]; do NOT upgrade to [verified] or feed a cooling-CoC classifier (cf. the closed-loop cooling reconciliation harness / A3).",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-07-30",
+    "category": "county_resolution",
+    "title": "Res #582-26: Approve the Second Amendment to the Sanitary Sewer Development Agreement with Project Bosc Developer.",
+    "ref": "res-582-26",
+    "parties": [],
+    "detail": "wastewater",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2026-07-31",
     "category": "npdes_comment_deadline",
     "title": "NPDES 2DP00130*AP (Bosc) — comment period ends",

@@ -1,1 +1,560 @@
-[]
+[
+  {
+    "rel": "urbana/land-assembly.yaml",
+    "group": "land-assembly",
+    "title": "Urbana Technology Hub (Thor Equities) — SR-55 & S US-68, Urbana Township",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "as_of": "2026-07-09",
+      "site": "urbana",
+      "county": "Champaign County, OH (FIPS 39021)",
+      "assembly": "Urbana Technology Hub (Thor Equities) — SR-55 & S US-68, Urbana Township",
+      "sources": {
+        "auditor_cama": {
+          "layer": "parcel_joined FeatureServer 0 (auditor CAMA + geometry)",
+          "org": "Champaign County Engineer ArcGIS Online org (CCEO, HBIN2hfRscrws7eM)",
+          "url": "https://services5.arcgis.com/HBIN2hfRscrws7eM/arcgis/rest/services/parcel_joined/FeatureServer/0",
+          "fields_used": [
+            "Parcel",
+            "PPDeeded",
+            "PPOwner",
+            "BOOK_NO",
+            "PAGE_NO",
+            "PPAmount",
+            "PPSaleDate",
+            "PPAcres",
+            "PPClassNumber"
+          ],
+          "pulled": "2026-07-09"
+        },
+        "public_reporting": [
+          "Urbana Daily Citizen, \"Thor pushing forward with data center\" (2026-06-14) — https://www.urbanacitizen.com/2026/06/14/thor-pushing-forward-with-data-center/",
+          "Urbana Daily Citizen, \"Data center plans revealed at city meeting\" (2026-02-18) — https://www.urbanacitizen.com/2026/02/18/data-center-plans-revealed-at-city-meeting/"
+        ],
+        "litigation": {
+          "instrument": "Complaint, Thor Equities et al. v. City of Urbana, No. 3:26-cv-00196-MJN-CHG (S.D. Ohio, filed 2026-06-19)",
+          "file": "data/documents/legal/thor-v-urbana/1.pdf",
+          "establishes": "¶¶8–13 — the four owned parcels and their owning SPEs match this register exactly; the OWNED-parcel holding is ~230.346 ac (¶13; = 47.637 + 85.619 + 97.09, the three conveyances below). A fifth entity (Urbana Owner LLC) is the contract purchaser of two FURTHER parcels (-36-001-00 + a portion of -37-001-00, additional to the 230.346 ac; their acreage is [open], see `contract_pending`). [verified] as pleaded.\n"
+        }
+      },
+      "conveyances": [
+        {
+          "id": "vance-brands",
+          "grantee": "Urbana Owner I LLC",
+          "grantee_tag": "verified",
+          "grantor": "Brand Investments LTD",
+          "grantor_tag": "reference",
+          "grantor_corroboration": "inference",
+          "parcels": [
+            "K48-25-11-01-30-001-00"
+          ],
+          "acres": 47.637,
+          "consideration_usd": 2143665,
+          "conveyance_date": "2025-08-22",
+          "deed_reference": "OR601/4948",
+          "recorder_instrument_no": null,
+          "situs": "S US HWY 68",
+          "class_number": 110,
+          "notes": "The \"Vance Brands\" parcel of the Highland55 §401 WQC filings (highland55-findings.md). Owner-of-record mailing 25 W 39th St, New York NY 10018 (c/o Thor Equities). First of the three SPE takedowns; consideration $2,143,665."
+        },
+        {
+          "id": "highland55",
+          "grantee": "Highland55 Investments LLC",
+          "grantee_tag": "verified",
+          "grantor": "Brand Investments LTD",
+          "grantor_tag": "reference",
+          "grantor_corroboration": "inference",
+          "parcels": [
+            "K48-25-11-01-32-005-00"
+          ],
+          "acres": 85.619,
+          "consideration_usd": 3210712.5,
+          "conveyance_date": "2025-11-18",
+          "deed_reference": "OR603/1927",
+          "recorder_instrument_no": null,
+          "situs": "ST RTE 55 URBANA OH 43078",
+          "class_number": 100,
+          "notes": "The 85.6-ac parcel south of Rittal (per the issue). Owner-of-record mailing 3040 Riverside Dr Ste 122, Columbus OH 43221 — the Highland Realty Development address, DISTINCT from the Urbana Owner I/II NY mailing. Brand + Highland55 together = the \">$5.5M / 133 ac\" H2-2025 Brand disposition ([reference]); the two [verified] considerations sum to $5,354,377.50, i.e. the news \">$5.5M\" is approximate. [inference]"
+        },
+        {
+          "id": "organ-farms",
+          "grantee": "Urbana Owner II LLC",
+          "grantee_tag": "verified",
+          "grantor": "Organ Farms LLC",
+          "grantor_tag": "reference",
+          "grantor_corroboration": "inference",
+          "parcels": [
+            "K48-25-11-01-30-005-00",
+            "K48-25-11-01-30-006-00"
+          ],
+          "acres": 97.09,
+          "consideration_usd": 3398150,
+          "conveyance_date": "2026-06-12",
+          "deed_reference": "OR606/3352",
+          "recorder_instrument_no": null,
+          "situs": "S US HWY 68 URBANA OH 43078",
+          "class_number": 110,
+          "notes": "Reported ([reference]) as the exercise of an existing purchase agreement with Organ Farms LLC for 97.09 ac at ~$3.4M; the auditor records both parcels transferring on one deed (OR606/3352) for $3,398,150 — \"nearly $3.4 million\" [inference]. Owner-of-record mailing c/o Thor Equities, 25 W 39th St, New York NY."
+        }
+      ],
+      "excluded_residual": [
+        {
+          "parcel": "K48-25-11-01-32-021-00",
+          "owner": "Brand Investments LTD",
+          "deed_reference": "OR601/4518",
+          "acres": null,
+          "note": "Seller-residual — Brand's retained holding adjacent to the Vance Brands parcel; excluded from the assembly."
+        },
+        {
+          "owner": "Organ Farms LLC",
+          "note": "[open] Any Organ Farms retained acreage not individually resolved; only the 97.09-ac transferred block (OR606/3352) is in the assembly."
+        }
+      ],
+      "contract_pending": [
+        {
+          "purchaser": "Urbana Owner LLC",
+          "purchaser_tag": "verified",
+          "parcels": [
+            "K48-25-11-01-36-001-00",
+            "portion of K48-25-11-01-37-001-00"
+          ],
+          "status": "under contract to purchase (not yet conveyed)",
+          "deed_reference": null,
+          "acres": null,
+          "note": "ADDITIONAL to the ~230.346-ac owned holding (¶13 gives 230.346 ac for the four owned parcels only; these two contract parcels are separate and their acreage is [open]). Not in the auditor conveyance chain above because title has not transferred; when it does, add a `conveyances` entry. Caption mailing 3040 Riverside Dr Ste 122, Columbus (Doc #1) — same caption address as the other three SPEs."
+        }
+      ],
+      "entities": [
+        {
+          "name": "Thor Equities",
+          "role": "developer",
+          "tag": "reference",
+          "notes": "Developer of record; operates the takedown via single-purpose entities. Public reporting names a \"Form8tion\" Thor unit as the operating vehicle [reference]. NY mailing 25 W 39th St."
+        },
+        {
+          "name": "Form8tion",
+          "role": "thor_operating_unit",
+          "tag": "reference",
+          "ohio_sos_agent": null,
+          "notes": "Reported Thor operating unit; no in-corpus filing yet. Ohio SoS registration [open]."
+        },
+        {
+          "name": "Urbana Owner LLC",
+          "role": "contract_purchaser_spe",
+          "tag": "verified",
+          "mailing_complaint_caption": "3040 Riverside Dr Ste 122, Columbus OH 43221",
+          "ohio_sos_agent": null,
+          "holds_pending": [
+            "K48-25-11-01-36-001-00",
+            "portion of K48-25-11-01-37-001-00"
+          ],
+          "notes": "Contract purchaser (not yet grantee) — see `contract_pending`. Added from the federal complaint."
+        },
+        {
+          "name": "Urbana Owner I LLC",
+          "role": "grantee_spe",
+          "tag": "verified",
+          "mailing_auditor": "25 W 39th St, New York NY 10018 (c/o Thor Equities)",
+          "mailing_complaint_caption": "3040 Riverside Dr Ste 122, Columbus OH 43221",
+          "ohio_sos_agent": null,
+          "holds": [
+            "vance-brands"
+          ],
+          "notes": "Two [verified] records give DIFFERENT mailings: the auditor PPOwnerAddress is 25 W 39th St, New York (c/o Thor Equities); the federal complaint caption (Doc #1 ¶10) lists the entity at 3040 Riverside Dr Ste 122, Columbus. Which is the entity's operative address, and whether the NY line is a Thor-parent c/o, is [inference]/[open] pending the Ohio SoS registered-agent pull."
+        },
+        {
+          "name": "Urbana Owner II LLC",
+          "role": "grantee_spe",
+          "tag": "verified",
+          "mailing_auditor": "c/o Thor Equities, 25 W 39th St, New York NY 10018",
+          "mailing_complaint_caption": "3040 Riverside Dr Ste 122, Columbus OH 43221",
+          "ohio_sos_agent": null,
+          "holds": [
+            "organ-farms"
+          ],
+          "notes": "Same split as Urbana Owner I: the auditor records 25 W 39th St, New York (c/o Thor) while the complaint caption lists 3040 Riverside Dr, Columbus. Reconciling the two is [inference]/[open] — Urbana Owner II's operative address is not resolved at its recorded (auditor) address."
+        },
+        {
+          "name": "Highland55 Investments LLC",
+          "role": "grantee_spe",
+          "tag": "verified",
+          "mailing": "3040 Riverside Dr Ste 122, Columbus OH 43221",
+          "ohio_sos_agent": null,
+          "holds": [
+            "highland55"
+          ],
+          "notes": "Highland55's auditor mailing (3040 Riverside Dr Ste 122, Columbus) matches the complaint caption (Doc #1 ¶12) — the one SPE where the two [verified] records agree. A THIRD address is also on record: the §401 WQC prelim-JD cover (eDoc 3938251) lists \"Highland Realty Development LLC / Urbana Owner I LLC, 720 E Broad St Suite 200, Columbus\". All three (720 E Broad, 3040 Riverside, and the 25 W 39th St NY c/o-Thor line on the Urbana Owner I/II auditor rows) are retained; which is each entity's operative address, and how the WQC 720 E Broad line relates, is [inference]/[open] pending the Ohio SoS registered-agent pull. The complaint caption lists all four SPEs at 3040 Riverside, but the auditor records Urbana Owner I/II at 25 W 39th St — so \"all four share 3040 Riverside\" holds only for the caption, not the auditor record."
+        },
+        {
+          "name": "Brand Investments LTD",
+          "role": "seller",
+          "tag": "verified",
+          "ohio_sos_agent": null,
+          "notes": "Seller of the 133-ac Brand disposition (vance-brands + highland55); retains K48-…-32-021-00."
+        },
+        {
+          "name": "Organ Farms LLC",
+          "role": "seller",
+          "tag": "reference",
+          "ohio_sos_agent": null,
+          "notes": "Seller of the 97.09-ac block (OR606/3352) via exercise of a prior purchase agreement."
+        },
+        {
+          "name": "Champaign County (Board of Commissioners)",
+          "role": "option_holder",
+          "tag": "reference",
+          "notes": "Holds an existing, NOT-yet-exercised land-purchase option agreement with Thor \"in the same area\" [reference]; commissioners reportedly signed before learning of the data-center plan. No parcel pinned, no instrument in corpus — [open]."
+        }
+      ],
+      "end_use": {
+        "determination": "Data center campus (\"Urbana Technology Hub\")",
+        "tag": "reference",
+        "basis": "Explicit, repeated public reporting (Urbana Daily Citizen, 2026-02-18 \"Data center plans revealed at city meeting\"; 2026-06-14) names the project a \"data center campus\", disclosed at a public City of Urbana meeting, plus the Thor v. Urbana litigation (tracked under #1263). This RESOLVES the [open] end-use carried on lead #447: the substation + build-to-suit framing ([verified] from the §401 WQC) now attaches to a publicly disclosed data center. A primary instrument that NAMES the facility type (air permit, building permit, or utility interconnection showing the MW load) would take the end-use itself from [reference] to [verified] — tracked in the sibling #1263 catch-up issues, not this one. The land assembly, developer, considerations, and deed references in this register are [verified]."
+      },
+      "limitations": [
+        "Ohio Secretary of State (businesssearch.ohiosos.gov) is not reachable from the build/agent environment (403/DNS-blocked; only vetted connector hosts resolve). The registered-agent lines on every entity are therefore [open] pending a live SoS pull — NOT fabricated. Documented search effort: 2026-07-09.",
+        "The Champaign County Recorder's own sequential instrument numbers and the deed-image grantor lines are [open]; the auditor's Official-Record BOOK_NO/PAGE_NO (the OR###/#### references above) are [verified] and are sufficient to retrieve each instrument. A recorder connector is the follow-up.",
+        "Grantor identities (Brand Investments LTD, Organ Farms LLC) are [reference] from public reporting, corroborated [inference] by the auditor acreage/price/date triangulation; the deed image confirms them to [verified]."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "urbana/land-assembly.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "urbana/litigation-thor-v-urbana.yaml",
+    "group": "litigation",
+    "title": "Thor Equities, LLC et al. v. City of Urbana, Ohio et al.",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "as_of": "2026-07-10",
+      "site": "urbana",
+      "strengthens": [
+        "record",
+        "story"
+      ],
+      "issue": "watermark-directory/the-watermark-directory#1329",
+      "epic": "watermark-directory/the-watermark-directory#1263",
+      "source": {
+        "instrument": "federal-complaint",
+        "file": "data/documents/legal/thor-v-urbana/1.pdf",
+        "sha256": "95efdb0457b36e2da0dcf497ad34fe4e85863b83f4f01bc60422eb58343fbd3c",
+        "content_verified": "text-layer"
+      },
+      "case": {
+        "caption": "Thor Equities, LLC et al. v. City of Urbana, Ohio et al.",
+        "court": "U.S. District Court, Southern District of Ohio, Western Division",
+        "case_no": "3:26-cv-00196-MJN-CHG",
+        "filed": "2026-06-19",
+        "jury_demand": true,
+        "ohio_ag_served": true,
+        "jurisdiction": [
+          "28 U.S.C. § 1331 (federal question)",
+          "28 U.S.C. § 1343(a)(3) (civil rights)",
+          "28 U.S.C. § 1367 (supplemental)",
+          "28 U.S.C. § 1332(a)(1) (diversity)",
+          "28 U.S.C. § 2201 (declaratory judgment)"
+        ],
+        "venue": "28 U.S.C. § 1391(b)(2)"
+      },
+      "plaintiffs": [
+        {
+          "name": "Thor Equities, LLC",
+          "citizenship": "New York (Delaware LLC; two NY-citizen members)",
+          "address": "25 West 39th Street, New York, NY 10018",
+          "role": "site-plan applicant"
+        },
+        {
+          "name": "Urbana Owner LLC",
+          "citizenship": "New York (Delaware LLC; member → Delaware LLC → Delaware trust, NY trustees)",
+          "address": "3040 Riverside Drive, Ste 122, Columbus, OH 43221",
+          "role": "contract purchaser",
+          "parcels_under_contract": [
+            "K48-25-11-01-36-001-00",
+            "portion of K48-25-11-01-37-001-00"
+          ]
+        },
+        {
+          "name": "Urbana Owner I LLC",
+          "citizenship": "New York",
+          "address": "3040 Riverside Drive, Ste 122, Columbus, OH 43221",
+          "role": "owner",
+          "parcels_owned": [
+            "K48-25-11-01-30-001-00"
+          ]
+        },
+        {
+          "name": "Urbana Owner II LLC",
+          "citizenship": "New York",
+          "address": "3040 Riverside Drive, Ste 122, Columbus, OH 43221",
+          "role": "owner",
+          "parcels_owned": [
+            "K48-25-11-01-30-005-00",
+            "K48-25-11-01-30-006-00"
+          ]
+        },
+        {
+          "name": "Highland55 Investments LLC",
+          "citizenship": "New York",
+          "address": "3040 Riverside Drive, Ste 122, Columbus, OH 43221",
+          "role": "owner",
+          "parcels_owned": [
+            "K48-25-11-01-32-005-00"
+          ]
+        }
+      ],
+      "property": {
+        "owned_acres": "~230.346",
+        "under_contract_acres": null,
+        "location": "Champaign County, Ohio — west of S. U.S. Highway 68, Urbana Township / annexed into the City of Urbana",
+        "owned_parcels": [
+          "K48-25-11-01-30-001-00",
+          "K48-25-11-01-32-005-00",
+          "K48-25-11-01-30-006-00",
+          "K48-25-11-01-30-005-00"
+        ],
+        "under_contract": [
+          "K48-25-11-01-36-001-00",
+          "portion of K48-25-11-01-37-001-00"
+        ],
+        "reconciliation": "The four OWNED parcels + owners exactly match land-assembly.yaml (auditor CAMA, #1328), now corroborated by a filed federal instrument. Doc #1 ADDS a fifth entity — Urbana Owner LLC, the [verified] contract purchaser of the two -36/-37 parcels not previously in the assembly (still under contract, not yet conveyed; their acreage is [open] and is ADDITIONAL to the ~230.346-ac owned holding). On mailing addresses: the complaint CAPTION lists all four SPEs at 3040 Riverside Drive Ste 122, Columbus, and Thor Equities LLC at 25 W 39th St, New York. The auditor CAMA agrees for Highland55 (3040 Riverside) but records Urbana Owner I and Urbana Owner II at 25 W 39th St, New York (c/o Thor) — so the caption vs auditor address for those two is NOT resolved; it stays [inference]/[open] pending the Ohio SoS agent pull.\n"
+      },
+      "defendants": [
+        {
+          "name": "City of Urbana, Ohio",
+          "kind": "chartered municipal corporation, Champaign County",
+          "address": "205 S. Main Street, Urbana, OH 43078"
+        },
+        {
+          "name": "Urbana, Ohio City Council",
+          "kind": "legislative body — eight elected officials"
+        },
+        {
+          "name": "Urbana, Ohio Building and Zoning Appeals Board (BZA)",
+          "kind": "administrative body — five members; hears appeals of the Zoning Inspector"
+        }
+      ],
+      "counsel": {
+        "firm": "Vorys, Sater, Seymour and Pease LLP",
+        "address": "52 East Gay Street, P.O. Box 1008, Columbus, OH 43216-1008",
+        "attorneys": [
+          "Joseph R. Miller (0068463) — Trial Attorney",
+          "Christopher L. Ingram (0086325)",
+          "Elizabeth S. Alexander (0096401)",
+          "Garrett M. Anderson (0100121)",
+          "Brodi S. Voight (0105912)"
+        ],
+        "for": "Plaintiffs (Thor Equities and the four SPEs)"
+      },
+      "counts": [
+        {
+          "n": 1,
+          "title": "Procedural Due Process",
+          "basis": "42 U.S.C. § 1983 + Ohio Const. Art. I §§ 1, 16",
+          "paras": "94–103",
+          "gist": "Deprivation of a vested property/liberty interest in the data-center use without lawful process (notice, fair BZA hearing, consideration of evidence)."
+        },
+        {
+          "n": 2,
+          "title": "Substantive Due Process",
+          "basis": "42 U.S.C. § 1983 + Ohio Const. Art. I §§ 1, 16",
+          "paras": "104–112",
+          "gist": "The moratorium, application denial, and appeal handling were arbitrary, capricious, and lacking any substantial relation to legitimate land-use regulation."
+        },
+        {
+          "n": 3,
+          "title": "Declaratory Judgment — Moratorium void (Charter § 2.12)",
+          "basis": "28 U.S.C. §§ 2201–2202",
+          "paras": "113–117",
+          "gist": "Charter § 2.12 bars enacting/amending/repealing any zoning or building resolution as an emergency; the moratorium is a de facto zoning amendment."
+        },
+        {
+          "n": 4,
+          "title": "Declaratory Judgment — Moratorium void (Charter § 2.11)",
+          "basis": "28 U.S.C. §§ 2201–2202",
+          "paras": "118–123",
+          "gist": "Res. 2727-26 is not necessary for public peace/health/welfare/safety and does not set forth the specific facts necessitating the emergency."
+        },
+        {
+          "n": 5,
+          "title": "Declaratory Judgment — Moratorium void (Ohio Const. Art. XVIII §3 + R.C. 731.30)",
+          "basis": "28 U.S.C. §§ 2201–2202",
+          "paras": "124–130",
+          "gist": "The emergency exceeds the City's home-rule authority and R.C. 731.30's emergency-ordinance requirements."
+        },
+        {
+          "n": 6,
+          "title": "Declaratory Judgment — Moratorium void (Charter §§ 2.10, 2.16 + Zoning Code Ch. 1113)",
+          "basis": "28 U.S.C. §§ 2201–2202",
+          "paras": "131–140",
+          "gist": "No newspaper publication 7 days before enactment, no Planning-Commission referral, no 10-day notice, and passed on one reading (three required for permanent legislation)."
+        },
+        {
+          "n": 7,
+          "title": "Declaratory Judgment — Moratorium an unlawful impairment of vested rights",
+          "basis": "28 U.S.C. §§ 2201–2202",
+          "paras": "141–151",
+          "gist": "Filing the Feb-13-2026 site-plan application froze the zoning rules (Golf Vill. N. LLC v. City of Powell; Gibson v. Oberlin); the later moratorium cannot retroactively defeat the vested use."
+        },
+        {
+          "n": 8,
+          "title": "Declaratory Judgment — Site-plan denial violated Zoning Code Ch. 1110",
+          "basis": "28 U.S.C. §§ 2201–2202",
+          "paras": "152–160",
+          "gist": "The City denied the application as 'incomplete' by importing Chapter 1161 (major-subdivision) requirements and a traffic study that Chapter 1110 site-plan review does not require — ultra vires."
+        }
+      ],
+      "key_authority_cited": [
+        "Golf Vill. N. LLC v. City of Powell, 826 F. App'x 426, 433 (6th Cir. 2020) — filing an application 'freezes' the applicable zoning rules",
+        "Gibson v. Oberlin, 171 Ohio St. 1, 5 (1960) — vesting on application for a zoning certificate",
+        "Snyder v. City of Bowling Green, 1996 Ohio App. LEXIS 5580 (6th Dist.) — insufficient emergency basis"
+      ],
+      "relief_sought": [
+        "Compensatory damages (jury)",
+        "Declarations that the Moratorium (Res. 2727-26) is void ab initio on five independent grounds (Charter §§ 2.10/2.11/2.12/2.16, Zoning Ch. 1113, Ohio Const. Art. XVIII §3, R.C. 731.30)",
+        "Declaration that the site-plan denial violated Zoning Ch. 1110 and that the Application was complete",
+        "Declaration of a vested right to the data-center use under the rules in effect at filing",
+        "Preliminary + permanent injunction (Fed. R. Civ. P. 65) barring enforcement of the Moratorium and the amended Zoning Code against the Property, and directing approval of the Application",
+        "Pre-/post-judgment interest; attorney's fees under 42 U.S.C. § 1988; costs"
+      ],
+      "alleged_investment": {
+        "total_usd": ">19600000",
+        "land_usd": ">12500000",
+        "tui_usd": 1274198,
+        "due_diligence_usd": 714135,
+        "design_usd": 5180000,
+        "lost_profit_claimed_usd": ">118000000",
+        "note": "Pleaded reliance/damages figures; a party's averment. [reference]. '>' prefixes mark floor values (see comments)."
+      },
+      "alleged_facts": [
+        "The City encouraged Thor's investment from Dec-2024 and gave repeated assurances (¶¶41–47).",
+        "The Feb-20-2026 'incomplete' denial was pretextual — the cited Ch. 1161 items don't govern site-plan review (¶¶56–59).",
+        "The moratorium was a pretext to stop an already-authorized use; council members admitted no information would change their minds (¶¶65–66).",
+        "The BZA hearing was procedurally defective: no lawful notice, denied continuance, only 4 of 5 members present (four votes needed to sustain an appeal), evidence disregarded (¶¶76–85)."
+      ],
+      "public_records_thread": [
+        {
+          "date": "2026-03-10",
+          "event": "Thor R.C. 149.43(B) request for a copy of the Moratorium; follow-up email 2026-03-12; no response. (¶68)"
+        },
+        {
+          "date": "2026-03-13",
+          "event": "In-person request at the municipal building denied; access to the Law Director denied — though a Council member had already posted portions of the Moratorium to Facebook. (¶69)"
+        },
+        {
+          "date": "2026-03-17",
+          "event": "Thor's written demand that the non-response violated R.C. 149.43; City produced the Moratorium the next day (2026-03-18). (¶70)"
+        },
+        {
+          "date": "2026-04-03",
+          "event": "Second R.C. 149.43(B) request (records re the Ordinances, Moratorium, Property). (¶73)"
+        },
+        {
+          "date": "2026-04-15",
+          "event": "Thor again demands compliance; City counsel responds 2026-05-19 that Thor's deadlines are inapplicable; as of filing no responsive document produced to the Apr-3 request. (¶¶74–75)"
+        }
+      ],
+      "ordinance_record": [
+        {
+          "id": "Ordinance 4619-25",
+          "exhibit": 1,
+          "adopted": "2025-04-22",
+          "action": "Annexation of nine parcels (~219.986 ac) into the City of Urbana",
+          "tag": "reference"
+        },
+        {
+          "id": "Ordinance 4625-25",
+          "exhibit": 2,
+          "adopted": "2025-04-22",
+          "action": "Official Zoning Map update — designates annexed areas (incl. parcels of the Property) M-1 Manufacturing District",
+          "tag": "reference"
+        },
+        {
+          "id": "Ordinance 4620-25",
+          "exhibit": 3,
+          "adopted": "2025-04-22",
+          "action": "Amends Zoning Code Ch. 1102 — adds definitions for computing-infrastructure providers, incl. data centers",
+          "tag": "reference"
+        },
+        {
+          "id": "Ordinance 4621-25",
+          "exhibit": 4,
+          "adopted": "2025-04-22",
+          "action": "Amends Zoning Code Ch. 1126 — adds 'Computing Infrastructure Providers, Data Processing, Web Hosting, and Related Services' as PRINCIPALLY PERMITTED uses in M-1",
+          "tag": "reference",
+          "significance": "This is the by-right entitlement Thor claims vested — data centers permitted in M-1 on the Property."
+        },
+        {
+          "id": "Ordinance 4631-25",
+          "exhibit": null,
+          "adopted": "2025-11-04",
+          "action": "Approves CRA #2 (Community Reinvestment Area) tax-incentive district supporting the Project",
+          "tag": "reference",
+          "corroboration": "Aligns with the Nov-18-2025 Highland55 deed (OR603/1927) in land-assembly.yaml. [inference]"
+        },
+        {
+          "id": "Resolution 2727-26 (the Moratorium)",
+          "exhibit": 5,
+          "adopted": "2026-03-03",
+          "action": "12-month emergency moratorium on data-center permits/approvals within the City; took immediate effect",
+          "tag": "reference",
+          "note": "First placed on the 2026-02-17 agenda, then removed without a vote (¶60); enacted 2026-03-03. The instrument at the center of Counts III–VII."
+        },
+        {
+          "id": "Resolution 2731-26",
+          "exhibit": null,
+          "adopted": "2026-05-05",
+          "action": "Referred to the Planning Commission — initiates permanent removal of data-center use from M-1",
+          "tag": "reference"
+        },
+        {
+          "id": "Ordinance 4635-26",
+          "exhibit": 9,
+          "adopted": null,
+          "action": "Would amend M-1 to permanently REMOVE data centers as a permitted use (Planning Commission recommended approval 2026-05-18)",
+          "tag": "reference",
+          "note": "Pending — first reading only. The 'permanent' reversal that (with the moratorium) Thor says eviscerates its vested right."
+        }
+      ],
+      "companion_case": {
+        "court": "Champaign County Court of Common Pleas",
+        "posture": "Administrative appeal (R.C. Ch. 2506) of the BZA's affirmance of the 'incomplete' site-plan determination",
+        "status": "open",
+        "case_no": null,
+        "follow_up": "watermark-directory/the-watermark-directory#1360",
+        "known_from_complaint": "Doc #1 ¶¶71–72: Thor appealed the application denial to BOTH the Champaign County Court of Common Pleas AND the BZA (¶71), because the City's actions made it unclear who had denied the application; Thor hand-delivered the BZA appeal on 2026-03-20 (¶72). The Common Pleas filing itself, and its case number, are [open] ingest targets.\n"
+      },
+      "open_targets": [
+        "Exhibits 1–9 to Doc #1 (the four Apr-2025 ordinances, Res. 2727-26, the counsel letter, the BZA response, the motion for continuance, Ord. 4635-26) — separate ECF attachments; ingest to take the ordinance record [reference] → [verified]. Follow-up: #1359.",
+        "The Champaign County Common Pleas administrative appeal (case number + complaint) — the companion case. Follow-up: #1360.",
+        "Later docket entries in 3:26-cv-00196 (answer, any TRO/PI motion + ruling) — the case is live as of 2026-07-10.",
+        "The City of Urbana minutes/ordinance source for Res. 2727-26 and Ord. 4635-26 — the defendant-side record."
+      ]
+    },
+    "approximate_paths": [
+      "property.owned_acres"
+    ],
+    "citation": {
+      "source": "urbana/litigation-thor-v-urbana.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/thor-v-urbana/1.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  }
+]
