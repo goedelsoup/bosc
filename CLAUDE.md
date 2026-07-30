@@ -96,7 +96,11 @@ so it is *reconciled* with them, not a competing index (the `/ask` feed stays ca
   `web/` changes; `mise run ci` for both). `markdown` (`pnpm exec markdownlint-cli2`) is a
   **separate required CI check** on any `.md` edit — run it locally (common failures
   `MD032` missing-blank-before-list, `MD012` consecutive-blanks; config + excludes in
-  `.markdownlint-cli2.yaml`). CI (`.github/workflows/ci.yml`) gates its two halves at the
+  `.markdownlint-cli2.yaml`). That root config **ignores `web/**`** — the Astro tree has its
+  own config + task (`web/.markdownlint-cli2.yaml`, `mise run //web:markdown`, also folded
+  into `//web:check` and the CI `markdown` job), so a `web/**/*.md` edit is linted there, not
+  by the root run. Same rules; `.mdx` is linted by neither (Biome + `astro check` own it).
+  CI (`.github/workflows/ci.yml`) gates its two halves at the
   **job** level via a `changes` job, **not** a trigger-level `paths:` filter — a skipped
   job reports success and satisfies the required `check`, whereas a path-filtered-away
   workflow leaves it stuck "pending". **Don't add a top-level `paths:` to `ci.yml`.**

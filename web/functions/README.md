@@ -94,8 +94,8 @@ Two endpoints live here:
 Two tiers, both in [`frontend/README.md`](../README.md) → *Local dev & testing*:
 
 - **Automated (offline, in CI):** the route handlers here are driven end-to-end by
-  `src/lib/{submit,ask,doc}Route.test.ts` (over `src/lib/_routeHarness.ts`) — a faked `Env`
-  + a stubbed `fetch`, so the full path (gates → validate → rate-limit → Turnstile → the
+  `src/lib/{submit,ask,doc}Route.test.ts` (over `src/lib/_routeHarness.ts`) — a faked `Env` +
+  a stubbed `fetch`, so the full path (gates → validate → rate-limit → Turnstile → the
   external call → response) runs under `npm test` with no wrangler, no network, no spend.
 - **Interactive:** `mise run //frontend:dev:stack` serves these Functions under
   `wrangler pages dev` with the externals mocked by default (`scripts/dev-mocks.mjs`, the

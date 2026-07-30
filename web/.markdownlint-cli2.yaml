@@ -1,0 +1,31 @@
+# Markdown lint for the `web/` project (markdownlint-cli2). The repo-root config
+# deliberately ignores `web/**` — the Astro site has its own toolchain — which left
+# web/'s hand-authored `.md` (the package READMEs, sites/README.md, the user-stories
+# contract) linted by nothing at all. This is that toolchain's markdown leg: same rule
+# set as the root config, scoped to web/ and run by `mise run //web:markdown`.
+#
+# `.mdx` is deliberately NOT linted: it's Astro content with JSX in it, owned by Biome
+# and `astro check`, and markdownlint reads its expressions as broken Markdown.
+gitignore: true
+
+globs:
+  - "**/*.md"
+
+ignores:
+  - "**/node_modules/**"
+
+# Kept in step with the repo-root `.markdownlint-cli2.yaml` — same prose conventions
+# apply on either side of the tier boundary, so a doc moving across doesn't change rules.
+config:
+  default: true
+  MD013: false   # line length — prose/evidence docs aren't wrapped
+  MD041: false   # first line need not be an H1 (frontmatter / lead paragraphs)
+  MD033: false   # inline HTML is used intentionally in a few docs
+  MD040: false   # not every fenced block has a meaningful language
+  MD036: false   # bold used as a label/lead-in, not a faux heading
+  MD018: false   # "#" with no space — these docs open prose lines with issue refs like "#133"
+  MD029: false   # ordered-list numbering style — stylistic; avoid auto-renumber churn
+  MD028: false   # blank line inside a blockquote — often intentional; not auto-fixable
+  MD001: false   # heading-level increments — structural/intentional here
+  MD024:
+    siblings_only: true   # repeated section names under different parents are fine

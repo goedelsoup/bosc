@@ -29,12 +29,13 @@ description = "Full local stack: astro build + wrangler pages dev (runs /api/sub
 run = "pnpm run dev:stack"
 
 [tasks.check]
-description = "Frontend gate (CI parity): Biome lint + astro/tsc types + vitest + build + link check"
+description = "Frontend gate (CI parity): Biome lint + Markdown lint + astro/tsc types + vitest + build + link check"
 # Skip the Python export and point bundle.ts at the committed sites/ fixtures.
 # sites is an explicit opt-in here — not a silent fallback from bundle.ts.
 env = { WATERMARK_SKIP_EXPORT = "1", WATERMARK_BUNDLE_DIR = "sites" }
 run = [
   "pnpm run lint",        # Biome (format + lint) — the gate CI runs that `pnpm run check` omits
+  "pnpm exec markdownlint-cli2",   # web/'s Markdown (config: web/.markdownlint-cli2.yaml)
   "pnpm run check",       # astro check + tsc (functions)
   "pnpm test",            # vitest
   "pnpm run build",       # astro build against sites/ (offline, no Python)
@@ -49,6 +50,13 @@ run = "pnpm test"
 description = "Frontend lint only (Biome ci — format + lint gate)"
 run = "pnpm run lint"
 
+# The repo-root `.markdownlint-cli2.yaml` ignores `web/**` (this project owns its own
+# toolchain), which left web/'s hand-authored .md linted by nothing. Same rule set,
+# scoped here — see web/.markdownlint-cli2.yaml. Biome doesn't lint Markdown.
+[tasks.markdown]
+description = "Frontend Markdown lint only (markdownlint-cli2 over web/**/*.md)"
+run = "pnpm exec markdownlint-cli2"
+
 [tasks.types]
 description = "Frontend type-check only (astro check + tsc)"
 run = "pnpm run check"
@@ -62,8 +70,11 @@ description = "Check internal links over the build"
 run = "pnpm run check:links"
 
 [tasks.fmt]
-description = "Auto-fix the frontend with Biome (format + safe lint fixes)"
-run = "pnpm run format"
+description = "Auto-fix the frontend: Biome (format + safe lint fixes) + Markdown"
+run = [
+  "pnpm run format",
+  "pnpm exec markdownlint-cli2 --fix",
+]
 
 [tasks.preview]
 description = "Serve the built site locally (astro preview)"
