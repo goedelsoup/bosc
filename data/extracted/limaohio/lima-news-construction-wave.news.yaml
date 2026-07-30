@@ -4,7 +4,8 @@ subject: >-
   the first post-permit CONSTRUCTION-PHASE coverage of the Google / Project BOSC data
   center: Ohio EPA lime-dust monitoring, the North Cole Street roundabout open house and
   resident concerns, the Chamber proponent pitch, the commissioners' fiber/roadwork
-  approvals, and the building-trades labor case.
+  approvals, the building-trades labor case, and the 2026-07-30 approval of an $8M
+  Google-requested sanitary-sewer design change (Res #582-26, the Second Amendment).
 
 provenance:
   source_path: data/documents/limaohio/
@@ -25,7 +26,10 @@ provenance:
     2026-06-22 Wendel op-ed, the 2026-07-09 commissioners item, and the 2026-07-14
     resident-transparency item were not syndicated to Yahoo/AOL/MSN (re-checked 2026-07-14) —
     their substance is confirmed at the search-snippet level and extracted as [reference]; a
-    full raw byte capture is OWED (see data/documents/limaohio/SOURCES.md).
+    full raw byte capture is OWED (see data/documents/limaohio/SOURCES.md). The 2026-07-30
+    sewer-design-change article, by contrast, was captured DIRECTLY from limaohio.com as a
+    print/PDF via a manual browser pull (the .limaohio-print.pdf) — the collection's first
+    canonical-publisher byte capture, confirming the manual-pull path the owed items still need.
   tags: [reference, news, lima, bosc, google, construction-phase, story, record]
 
 headline_findings:
@@ -108,6 +112,45 @@ headline_findings:
       completion window is a new datable milestone; the "30–40% / 60–70% design" figures are the
       reporter's paraphrase of Niemeyer, not a document — treat as [reference].
     confidence: medium
+
+  sewer_design_change_second_amendment:
+    finding: >-
+      Reported 2026-07-30 (Craig Kelly) [reference; captured DIRECTLY from limaohio.com as a
+      print/PDF — the collection's first canonical-publisher byte capture, see SOURCES.md]: the
+      Allen County commissioners approved an $8 million CHANGE ORDER to the ~$31 million Project
+      BOSC sanitary-sewer construction contract, to be paid by Google, after Sanitary Engineer
+      Brad Niemeyer outlined a Google-requested redesign of the sanitary sewer layout. Original
+      design: wastewater — INCLUDING the plant's server-cooling water — drained via a 20-inch force
+      main to a pump station on Bluelick Rd, then south down Providence Circle to the county's
+      American Bath WWTP (3226 N. Cole St). New design: the pump station moves to the N. Cole St &
+      Beery St intersection, adding 8-inch + 16-inch DUAL force mains; up to 500,000 gpd is SPLIT
+      between the American Bath plant and the American #2 plant (4140 Diller Rd), and anything
+      beyond that is diverted to the City of Lima WWTP. Niemeyer: "We've promised (Google) a
+      capacity of two and a half million gallons a day on their worst day, and that's going to be
+      very few days." He said the influx "will consist of water from city reservoirs that has run
+      through the data center's cooling system anywhere from three to six times, with the only
+      additive being chemicals designed to prevent pipe corrosion and bacteria growth" ("People
+      have figured out how to treat it"). He tied the reroute to keeping treatment in county hands
+      (revenue + rate stabilization): the county sanitary rate is "$57 now, and it'll be $59 (next
+      year)," with no increase since 2014. Commissioners Cory Noonan ("We're not maxing ourselves
+      out") and Brian Winegardner were present.
+    significance: >-
+      The formal instrument is Resolution #582-26, the SECOND AMENDMENT to the Sanitary Sewer
+      Development Agreement with the Project BOSC developer, on the same day's commissioners agenda
+      (A073026.pdf, 1:00 p.m.; commissioners/bosc-resolution-ledger #582-26) — the PRIMARY anchor
+      for this secondary report. Substantively it re-routes the campus sanitary/blowdown stream
+      across THREE receiving plants (American Bath + American #2 + City of Lima), superseding the
+      single-plant American Bath design in the #575-25/#975-25 record, and it is the operational
+      face of the WWTP Data Center Flows / blowdown-treatment keystone (#679-24) and the forcemain
+      CMAR (#137-26 → #378-26). The news "$31M construction contract" reconciles with the #137-26
+      CMAR RFQ construction estimate ($29,834,256). Two figures are directly load-bearing for the
+      hydrology screen and the cooling epic: the 2.5 MGD WORST-DAY promised capacity, and the
+      DISCLOSED cooling cycles-of-concentration of "three to six times." Both are the County
+      Sanitary Engineer's self-report, transcribed as [reference] — a disclosed figure that
+      sharpens the cooling-CoC and effluent-dilution questions but must NOT be upgraded to
+      [verified] or fed to a classifier (cf. the closed-loop cooling reconciliation harness; the
+      hydrology dilution screen).
+    confidence: high
 
   chamber_proponent_case:
     finding: >-
@@ -204,7 +247,17 @@ named_actors:
       affected by the ROW easements.
   - name: Brad Niemeyer
     role: Allen County Sanitary Engineer
-    note: Source for the CMAR / long-lead procurement / ~Jan–Mar 2028 completion detail.
+    note: Source for the CMAR / long-lead procurement / ~Jan–Mar 2028 completion detail, and for
+      the 2026-07-30 sewer-design change — the Second Amendment (#582-26) — the 2.5 MGD worst-day
+      capacity and the disclosed 3–6× cooling cycles-of-concentration.
+  - name: Cory Noonan
+    role: Allen County Commissioner
+    note: On the 2026-07-30 sewer-design change — "We're not maxing ourselves out." Also throughout
+      the commissioners' BOSC record (bosc-resolution-ledger).
+  - name: Brian Winegardner
+    role: Allen County Commissioner
+    note: Present for the 2026-07-30 sewer-design change (photo caption); mover on several BOSC
+      wastewater resolutions in bosc-resolution-ledger (#469-25/#713-25/#975-25).
   - name: Gary Thompson
     role: Executive Vice President, Regional Growth Partnership (RGP)
   - name: Mark Droll
@@ -261,18 +314,27 @@ posts:
     canonical_url: https://www.limaohio.com/top-stories/2026/07/14/residents-question-transparency-with-allen-county-data-center/
     capture: owed   # not syndicated to Yahoo/AOL/MSN (checked 2026-07-14); snippet-confirmed; raw byte capture owed
     role: transparency/NDA grievance — redacted "proprietary" backup-genset specs; officials under NDA
+  - slug: commissioners-approve-google-data-center-sewer-design-change
+    title: Commissioners approve Google data center sewer design change
+    published: '2026-07-30'
+    byline: Craig Kelly   # the reporter (metro editor, The Lima News; also the photo credit). Kelly is the reporting conduit — the substantive claims are attributed to Sanitary Engineer Brad Niemeyer and Commissioner Cory Noonan, not to the byline.
+    canonical_url: https://www.limaohio.com/news/2026/07/30/commissioners-approve-google-data-center-sewer-design-change/   # section/slug pattern-inferred (the captured print/PDF omits the address bar); byte-verify on the next manual pull
+    source_file: data/documents/limaohio/2026-07-30-commissioners-approve-google-data-center-sewer-design-change.limaohio-print.pdf
+    capture: limaohio-print   # direct print/PDF capture of the canonical limaohio.com page (manual browser pull) — NOT a Yahoo mirror; the collection's FIRST canonical-publisher byte capture. Original download name: 20260730-commissioners-approve-google-data-center-sewer-design-change.pdf
+    role: $8M change order / Second Amendment (#582-26) — Google-requested sewer redesign (pump station relocated to N. Cole & Beery, dual force main, up to 500k gpd split across American Bath + American No. 2, excess to City of Lima; 2.5 MGD worst-day; cooling cycled 3–6×)
 
 cross_references:
   - data/documents/limaohio/SOURCES.md                                    # chain-of-custody manifest
+  - data/documents/commissioners/meetings/A073026.pdf                     # PRIMARY: the 2026-07-30 agenda carrying Res #582-26 (Second Amendment) — anchors the 2026-07-30 sewer-design story
   - data/extracted/aedg/aedg-data-center-release.release.yaml             # the prior AEDG capture set (through 2026-04-27)
   - data/extracted/aedg/paac-board-minutes.minutes.yaml                   # PAAC transparency + well-concerns record this extends
-  - data/extracted/commissioners/bosc-resolution-ledger.yaml             # #378-26 CMAR; 2026-07-09 Brightspeed RUMA event
+  - data/extracted/commissioners/bosc-resolution-ledger.yaml             # #378-26 CMAR; 2026-07-09 Brightspeed RUMA; 2026-07-30 #582-26 Second Amendment
   - data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml             # ~50 permanent jobs; Elida PILOT date thread
   - data/site/leads.yaml                                                  # LIMA-LIMEDUST, LIMA-CONSTR-TRAFFIC construction-impact signals
   - docs/legal/proponent-analysis.md                                      # weigh the Chamber/Wendel proponent claims against the record
 
 relevance:
-  tags: [reference, news, lima, bosc, google, construction-phase, air, roundabout, transparency, fiber, labor, story, record]
+  tags: [reference, news, lima, bosc, google, construction-phase, air, roundabout, transparency, fiber, labor, wastewater, cooling, story, record]
   note: >-
     The Q2–Q3 2026 Lima News wave — the corpus's first construction-phase coverage of the Google /
     Project BOSC campus. Ohio EPA lime-dust monitoring (2026-05-11) and the North Cole roundabout
@@ -281,5 +343,10 @@ relevance:
     2028; the Chamber (2026-04-24) and Wendel (2026-06-22) items are proponent framing to weigh;
     the 2026-07-09 commissioners item adds the buried-fiber telecom layer and the Brightspeed RUMA;
     the 2026-07-14 piece adds a resident transparency/NDA grievance over backup-genset specs redacted
-    as proprietary. All [reference]. Captured via the Yahoo syndication mirror because limaohio.com is
-    bot-gated (403) with no Wayback snapshot; three un-syndicated items have raw captures still owed.
+    as proprietary; the 2026-07-30 piece reports the commissioners' approval of an $8M Google-paid
+    sanitary-sewer DESIGN CHANGE — Res #582-26, the Second Amendment — that splits up to 500k gpd
+    across the American Bath + American #2 plants (excess to the City of Lima WWTP), promises 2.5 MGD
+    worst-day capacity, and discloses cooling water cycled 3–6×. All [reference]. Most items were
+    captured via the Yahoo syndication mirror because limaohio.com is bot-gated (403) with no Wayback
+    snapshot; the 2026-07-30 item is a direct limaohio.com print/PDF capture; three un-syndicated
+    items still have raw captures owed.
