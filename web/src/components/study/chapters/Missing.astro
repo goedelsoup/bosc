@@ -1,0 +1,292 @@
+---
+/**
+ * Study §IV — The gap inventory (the missing-impact-study epic, PR5). Every gap this study
+ * names, as ONE inventory: the per-chapter rollup (each ask with its chapter, its tracked
+ * leads, and the submit CTA), then the site's open questions the chapters don't claim, then
+ * the needs board for whole SECTIONS still awaiting sources — three distinct registers of
+ * absence, never conflated. This page is the leads board re-sorted by what a study needs.
+ *
+ * Everything here reads the same spine the chapters read (`studyChapterModel` /
+ * `studyGapLeads`) — the inventory can never disagree with the panels it aggregates.
+ */
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { OpenQuestionItem } from "@watermark/core/feeds";
+import { withBase, withSite } from "@watermark/core/site";
+import {
+  type StudyChapterDef,
+  type StudyChapterModel,
+  STUDY_STATUS_META,
+  studyChapterModel,
+  studyGapLeads,
+  studyToc,
+} from "@watermark/core/study";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import SiteNeeds from "~/components/SiteNeeds.astro";
+import StudyStatusChip from "~/components/study/StudyStatusChip.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { slug } = Astro.props as Props;
+
+// The rollup: every chapter but this one, with its rendered gaps and curated lead joins.
+// `na` chapters are watch states, not asks — the strip already says so; they stay off the
+// inventory so a facility-less site's annex doesn't scold.
+interface InventoryRow {
+  num: number;
+  title: string;
+  href: string;
+  status: StudyChapterModel["status"];
+  reasons: string[];
+  gaps: StudyChapterModel["gaps"];
+  leadIds: readonly string[];
+}
+const rows: InventoryRow[] = studyToc(slug)
+  .flatMap((p) => p.chapters)
+  .filter((ch) => ch.def.id !== "missing" && ch.status !== "na")
+  .map((ch) => {
+    const m = studyChapterModel(ch.def.id, slug);
+    return {
+      num: ch.num,
+      title: ch.def.title,
+      href: ch.href,
+      status: ch.status,
+      reasons: ch.reasons,
+      gaps: m.gaps,
+      leadIds: studyGapLeads(slug, ch.def.id),
+    };
+  })
+  .filter((r) => r.gaps.length > 0 || r.leadIds.length > 0);
+
+const gapTotal = rows.reduce((s, r) => s + r.gaps.length, 0);
+
+// The open questions the chapters DON'T claim — the site's board beyond this study's scope.
+const claimed = new Set(rows.flatMap((r) => [...r.leadIds, ...r.gaps.flatMap((g) => g.leadIds ?? [])]));
+const openQuestions = hasFeed("open-questions", slug)
+  ? loadFeed<OpenQuestionItem[]>("open-questions", slug).filter((q) => !claimed.has(q.id))
+  : [];
+---
+
+<p class="mis-lead">
+  Every ask this study makes, on one page: {gapTotal}{" "}
+  {gapTotal === 1 ? "gap" : "gaps"} named across {rows.length}{" "}
+  {rows.length === 1 ? "chapter" : "chapters"}. Each one is a public record someone could
+  produce tomorrow — and each is the same ask the site's leads board tracks, never a
+  duplicate. Absence here is a finding, not a lock.
+</p>
+
+{
+  rows.length > 0 && (
+    <section class="mis-rollup">
+      <h2 class="mis-h2">What this study cannot compute yet</h2>
+      {rows.map((r) => (
+        <article class="mis-chapter" id={`ch-${r.num}`}>
+          <div class="mis-chhead">
+            <a class="mis-chlink" href={withBase(r.href)}>
+              <span class="mis-num">{String(r.num).padStart(2, "0")}</span>
+              <span class="mis-chtitle">{r.title}</span>
+            </a>
+            <StudyStatusChip status={r.status} reasons={r.reasons} compact />
+          </div>
+          {r.gaps.map((g) => (
+            <div class="mis-gap">
+              <p class="mis-gapreq">
+                A real impact study would report {g.wouldScreen} <EvidenceTag kind="open" />
+              </p>
+              <p class="mis-gapask">Computing it requires {g.missingRecord}</p>
+              <div class="mis-gapacts">
+                {(g.leadIds ?? []).map((id) => (
+                  <a class="mis-leadlink" href={withSite(`/leads#${id}`)}>
+                    Tracked as <span class="mis-leadid">{id}</span> →
+                  </a>
+                ))}
+                <a class="mis-submit" href={withSite("/submit")}>
+                  Submit the record →
+                </a>
+              </div>
+            </div>
+          ))}
+          {r.gaps.length === 0 && r.leadIds.length > 0 && (
+            <div class="mis-gap">
+              <p class="mis-gapask">
+                {STUDY_STATUS_META[r.status].label} — residual asks stay tracked on the board:
+              </p>
+              <div class="mis-gapacts">
+                {r.leadIds.map((id) => (
+                  <a class="mis-leadlink" href={withSite(`/leads#${id}`)}>
+                    <span class="mis-leadid">{id}</span> →
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </article>
+      ))}
+    </section>
+  )
+}
+
+{
+  openQuestions.length > 0 && (
+    <section class="mis-oq">
+      <h2 class="mis-h2">The site's open questions beyond these chapters</h2>
+      <ul class="mis-oqlist">
+        {openQuestions.map((q) => (
+          <li class="mis-oqrow">
+            <EvidenceTag kind="open" />
+            <span class="mis-oqbody">
+              <span class="mis-oqq">{q.question}</span>
+              <span class="mis-oqsrc">
+                {q.origin === "hypothesis" ? (q.hypothesis_label ?? "hypothesis matrix") : q.source}
+              </span>
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p class="mis-oqfoot">
+        The full board, with lifecycle and filters, is at{" "}
+        <a href={withSite("/leads")}>open leads</a> and{" "}
+        <a href={withBase("/wiki/open-questions")}>open questions</a>.
+      </p>
+    </section>
+  )
+}
+
+<section class="mis-needs">
+  <h2 class="mis-h2">Sections of the site still awaiting a source</h2>
+  <p class="mis-needsdek">
+    Distinct from the study's gaps: these are whole sections of the record that have not
+    opened yet — the needs board's asks, not the study's.
+  </p>
+  <SiteNeeds slug={slug} />
+</section>
+
+<style>
+  .mis-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.2rem;
+  }
+  .mis-h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    border-top: 2px solid var(--bosc-ink);
+    padding-top: 0.8rem;
+    margin: 1.6rem 0 0.6rem;
+  }
+  .mis-chapter {
+    border-top: 1px solid var(--bosc-rule);
+    padding: 10px 0 6px;
+  }
+  .mis-chhead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 12px;
+  }
+  .mis-chlink {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .mis-chlink:hover .mis-chtitle {
+    color: var(--bosc-forest);
+    text-decoration: underline;
+  }
+  .mis-num {
+    font-family: var(--bosc-mono);
+    font-size: 0.74rem;
+    color: var(--bosc-faint);
+  }
+  .mis-chtitle {
+    font-weight: 700;
+    font-size: 0.98rem;
+  }
+  .mis-gap {
+    margin: 8px 0 10px 26px;
+    max-width: 640px;
+  }
+  .mis-gapreq {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    font-weight: 600;
+    margin: 0;
+  }
+  .mis-gapask {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin: 0.25rem 0 0;
+  }
+  .mis-gapacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin-top: 0.35rem;
+  }
+  .mis-leadlink,
+  .mis-submit {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .mis-leadlink {
+    color: var(--bosc-forest);
+  }
+  .mis-submit {
+    color: var(--bosc-muted);
+  }
+  .mis-leadlink:hover,
+  .mis-submit:hover {
+    text-decoration: underline;
+  }
+  .mis-leadid {
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+  }
+  .mis-oqlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 660px;
+  }
+  .mis-oqrow {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-top: 1px solid var(--bosc-rule);
+    padding: 8px 0;
+  }
+  .mis-oqbody {
+    min-width: 0;
+  }
+  .mis-oqq {
+    display: block;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .mis-oqsrc {
+    display: block;
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    color: var(--bosc-faint);
+    margin-top: 2px;
+  }
+  .mis-oqfoot {
+    font-size: 0.85rem;
+    color: var(--bosc-muted);
+    margin-top: 0.7rem;
+  }
+  .mis-needsdek {
+    font-size: 0.88rem;
+    color: var(--bosc-muted);
+    max-width: 660px;
+    margin: 0 0 0.8rem;
+  }
+</style>

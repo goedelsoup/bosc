@@ -2,12 +2,14 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { loadFeed } from "./bundle";
 import {
   chapterAvailability,
   chapterNumber,
   type ChapterStatus,
   type ImpactStudyFeedRow,
   STUDY_CHAPTERS,
+  STUDY_GAP_LEADS,
   STUDY_PARTS,
   studyChapter,
   studyChapterModel,
@@ -177,6 +179,29 @@ describe("study verdicts — defiance (facility-less backdrop: the study still e
     expect(m.stats.find((s) => s.label === "Serving utility")).toBeTruthy();
     expect(m.stats.find((s) => s.label.startsWith("Campus share"))).toBeUndefined();
     expect(m.gaps).toEqual([]); // no facility ⇒ no instrument ask either
+  });
+});
+
+describe("STUDY_GAP_LEADS — the curated gap→lead joins never drift off the board", () => {
+  it("every curated id names a real chapter and a real lead in that site's committed feed", () => {
+    for (const [slug, byChapter] of Object.entries(STUDY_GAP_LEADS)) {
+      const leads = loadFeed<{ id: string }[]>("leads", slug);
+      const known = new Set(leads.map((l) => l.id));
+      for (const [chapterId, ids] of Object.entries(byChapter)) {
+        expect(() => studyChapter(chapterId)).not.toThrow();
+        for (const id of ids) {
+          expect(known.has(id), `${slug}/${chapterId}: lead "${id}" is not on the board`).toBe(true);
+        }
+      }
+    }
+  });
+
+  it("a chapter's rendered gaps carry the curated joins (lima fiscal → the withheld CBA)", () => {
+    const m = studyChapterModel("fiscal", "lima");
+    expect(m.gaps[0]?.leadIds).toEqual(["PRR-04", "GH-35"]);
+    // Uncurated sites keep clean panels — never a borrowed or fuzzy-matched join.
+    const u = studyChapterModel("fiscal", "urbana");
+    expect(u.gaps[0]?.leadIds ?? []).toEqual([]);
   });
 });
 

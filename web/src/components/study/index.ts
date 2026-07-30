@@ -16,12 +16,13 @@ import Fiscal from "./chapters/Fiscal.astro";
 import Groundwater from "./chapters/Groundwater.astro";
 import Heat from "./chapters/Heat.astro";
 import Labor from "./chapters/Labor.astro";
+import Missing from "./chapters/Missing.astro";
 import Power from "./chapters/Power.astro";
 import Stormwater from "./chapters/Stormwater.astro";
 import WaterSupply from "./chapters/WaterSupply.astro";
 
-/** Bespoke sections by chapter id — Environment I–II + Economy; the front-matter and annex
- *  chapters (method / project / missing) stay on the generic renderer until their PRs. */
+/** Bespoke sections by chapter id — every screened chapter + the annex; only the two
+ *  front-matter chapters (method / project) remain on the generic renderer. */
 export const CHAPTER_SECTIONS: Record<string, typeof DefaultChapterSection> = {
   "water-supply": WaterSupply,
   discharge: Discharge,
@@ -33,6 +34,7 @@ export const CHAPTER_SECTIONS: Record<string, typeof DefaultChapterSection> = {
   power: Power,
   fiscal: Fiscal,
   balance: Balance,
+  missing: Missing,
 };
 
 /** The section for a chapter id — the bespoke one when registered, the default otherwise. */

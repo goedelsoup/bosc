@@ -25,6 +25,15 @@ const { gap } = Astro.props as Props;
   {gap.producer && <p class="studygap-producer">Who could produce it: {gap.producer}.</p>}
   <div class="studygap-actions">
     <a class="studygap-submit" href={withSite("/submit")}>Have this record? Submit it →</a>
+    {
+      // Curated joins only (STUDY_GAP_LEADS): the ask is ALREADY on the leads board — link
+      // its anchor so the study and the board present one ask, never a duplicate.
+      (gap.leadIds ?? []).map((id) => (
+        <a class="studygap-lead" href={withSite(`/leads#${id}`)}>
+          Tracked as <span class="studygap-leadid">{id}</span> →
+        </a>
+      ))
+    }
     <a class="studygap-inventory" href={withSite("/study/missing")}>See the full gap inventory →</a>
   </div>
 </aside>
@@ -85,6 +94,20 @@ const { gap } = Astro.props as Props;
   }
   .studygap-submit:hover {
     background: var(--bosc-forest);
+  }
+  .studygap-lead {
+    align-self: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--bosc-forest);
+    text-decoration: none;
+  }
+  .studygap-lead:hover {
+    text-decoration: underline;
+  }
+  .studygap-leadid {
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
   }
   .studygap-inventory {
     align-self: center;
