@@ -19,6 +19,7 @@ import SiteNeeds from "./SiteNeeds.astro";
 import StoryTeaser from "./story/StoryTeaser.astro";
 import { loadManifest } from "@watermark/core/bundle";
 import { type ReadinessSection, SECTION_META, isAvailable, lockedSections } from "@watermark/core/readiness";
+import { studyStatusSummary } from "@watermark/core/study";
 import { withBase, withSite, withStory } from "@watermark/core/site";
 import {
   FACILITY_STATUS_META,
@@ -100,6 +101,10 @@ const onRecord = DATA_SECTIONS.filter((s) => isAvailable(slug, s)).map((s) => {
 // here we only need the count for the hero pill + the section guard. A held (`comingSoon`) story is
 // advertised, not a gap (#1526), so it's excluded from the count exactly as `SiteNeeds` excludes it.
 const needsCount = lockedSections(slug).filter((s) => !(s === "story" && comingSoonStory)).length;
+
+// The impact study — THE reframe for a thin peer (the promotion pass): its missing sections
+// stop being deficits and become the study's named findings. The rollup is real per-site.
+const study = studyStatusSummary(slug);
 ---
 
 <div class="psite">
@@ -130,6 +135,27 @@ const needsCount = lockedSections(slug).filter((s) => !(s === "story" && comingS
       below; what's missing is named, not hidden, and you can help close it.
     </p>
   </header>
+
+  {/* The primary artifact — the impact study, ahead of the section cards (the promotion pass).
+      For a thin peer this is THE reframe: what the site lacks stops being a deficit list and
+      becomes the study's named findings — gaps as content, watch states as watch states. */}
+  <a class="psite-study" href={withSite("/study/")}>
+    <span class="psite-study-eyebrow">The impact study</span>
+    <span class="psite-study-title">
+      The study this community never received — assembled from its own public record.
+    </span>
+    <span class="psite-study-count">
+      {study.data} of {study.total} chapters on the record · {study.partial} partial ·{" "}
+      {study.gap} {study.gap === 1 ? "gap" : "gaps"} named{
+        study.na > 0 ? ` · ${study.na} watching` : ""
+      }
+    </span>
+    <span class="psite-study-desc">
+      Where the record is silent, the silence is the finding — every gap names the public
+      record that would close it.
+    </span>
+    <span class="psite-study-go">Open the study →</span>
+  </a>
 
   {/* What we DO have — the real, navigable slices. */}
   <section class="psite-block" aria-label="On the record so far">
@@ -268,6 +294,34 @@ const needsCount = lockedSections(slug).filter((s) => !(s === "story" && comingS
     padding-top: 1.2rem; margin-top: 2.5rem;
   }
   .psite-foot p { font-size: 0.82rem; color: var(--bosc-muted); line-height: 1.5; margin: 0; max-width: 70ch; }
+  /* The primary-artifact card (the promotion pass) — the same register as the Lima home's
+     band: forest structural rail on bone, square corners, no elevation. */
+  .psite-study {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 1px solid var(--bosc-rule);
+    border-left: 4px solid var(--bosc-forest);
+    background: var(--bosc-bg);
+    padding: 18px 22px;
+    margin: 22px 0;
+    text-decoration: none;
+    color: inherit;
+  }
+  .psite-study:hover .psite-study-title { color: var(--bosc-forest); text-decoration: underline; }
+  .psite-study-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+  }
+  .psite-study-title { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.25px; line-height: 1.25; }
+  .psite-study-count { font-family: var(--bosc-mono); font-size: 0.74rem; color: var(--bosc-muted); }
+  .psite-study-desc { font-size: 0.88rem; line-height: 1.55; color: #3a4036; max-width: 620px; }
+  .psite-study-go { font-size: 0.85rem; font-weight: 700; color: var(--bosc-forest); margin-top: 4px; }
+
   @media (max-width: 640px) {
     .psite-hero h1 { font-size: 2rem; }
     .psite-ask { flex-direction: column; align-items: flex-start; gap: 10px; }

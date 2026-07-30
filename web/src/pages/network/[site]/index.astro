@@ -25,6 +25,7 @@ import {
   siteState,
 } from "@watermark/core/sites";
 import type { FigureStatData } from "@watermark/core/viz";
+import { studyStatusSummary } from "@watermark/core/study";
 import { activeStory, chapterHref } from "@watermark/core/walk";
 import { withBase, withSite, withStory } from "@watermark/core/site";
 
@@ -54,6 +55,10 @@ const nLeads = count("leads");
 
 // The facility clock (separate from the site-build clock) — the active site's campus lifecycle.
 const fac = FACILITY_STATUS_META[facilityStatus(slug)];
+
+// The impact study — the site's PRIMARY artifact (the promotion pass): the home leads with
+// it, and its door carries the verdict rollup, never a fabricated completeness claim.
+const study = studyStatusSummary(slug);
 
 // Dataset JSON-LD — gated on Astro.site (production builds only).
 const astroSite = Astro.site;
@@ -120,6 +125,26 @@ const stats: FigureStatData[] = [
         </a>
       </div>
     </div>
+
+    {/* The primary artifact — the impact study, full-width above the entry fork (the promotion
+        pass). The count line is the verdict rollup, real per-site: gaps are named, not hidden. */}
+    <a class="home-study" href={withSite("/study/")}>
+      <div class="home-study-main">
+        <span class="home-study-eyebrow">The primary artifact · for the resident &amp; the official</span>
+        <span class="home-study-title">Read the impact study</span>
+        <span class="home-study-desc">
+          The environmental and economic study that should precede any abatement or rezoning —
+          assembled from the public record. Where the record is silent, the silence is the finding.
+        </span>
+      </div>
+      <div class="home-study-side">
+        <span class="home-study-count">
+          {study.data} of {study.total} chapters on the record · {study.gap}{" "}
+          {study.gap === 1 ? "gap" : "gaps"} named
+        </span>
+        <span class="home-study-go">Open the study →</span>
+      </div>
+    </a>
 
     {/* The entry fork — the researcher's library (quiet outline). The newcomer's guided-walk door
         joins it only when the site surfaces a readable story; with Lima's walk held as coming-soon
@@ -211,3 +236,78 @@ const stats: FigureStatData[] = [
     <PartialSiteHome slug={slug} site={site} dateline={dateline} />
   )}
 </Base>
+
+<style>
+  /* The primary-artifact band (the promotion pass): full-width above the entry fork, a forest
+     structural rail on bone — the one place the home spends the signal, because the study IS
+     the site's primary artifact. Square corners, hairline, no elevation. */
+  .home-study {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 28px;
+    border: 1px solid var(--bosc-rule);
+    border-left: 4px solid var(--bosc-forest);
+    background: var(--bosc-bg);
+    padding: 20px 26px;
+    margin: 26px 0 18px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .home-study:hover .home-study-title {
+    color: var(--bosc-forest);
+    text-decoration: underline;
+  }
+  .home-study-main {
+    flex: 1 1 420px;
+    min-width: 0;
+  }
+  .home-study-eyebrow {
+    display: block;
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    margin-bottom: 6px;
+  }
+  .home-study-title {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.35px;
+    line-height: 1.1;
+  }
+  .home-study-desc {
+    display: block;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #3a4036;
+    max-width: 560px;
+    margin-top: 6px;
+  }
+  .home-study-side {
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .home-study-count {
+    font-family: var(--bosc-mono);
+    font-size: 0.74rem;
+    color: var(--bosc-muted);
+  }
+  .home-study-go {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--bosc-bg);
+    background: var(--bosc-ink);
+    padding: 10px 16px;
+  }
+  .home-study:hover .home-study-go {
+    background: var(--bosc-forest);
+  }
+</style>
