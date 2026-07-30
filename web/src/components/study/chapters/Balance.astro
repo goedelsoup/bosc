@@ -1,0 +1,181 @@
+---
+/**
+ * Study §III — The public balance (the missing-impact-study epic, PR4). The closing
+ * chapter: what the community gives against what it is documented to get — rendered as a
+ * VERDICT TABLE over the other chapters, no new math. The environment part is what's given
+ * (water, heat, groundwater, runoff, air headroom); the economy part is what's promised and
+ * who pays. The sheet totals nothing: a study that cannot price the fiscal trade does not
+ * pretend to — that refusal is the chapter's finding.
+ */
+import { withBase } from "@watermark/core/site";
+import { type StudyChapterDef, type StudyChapterModel, studyToc } from "@watermark/core/study";
+import StudyStatusChip from "~/components/study/StudyStatusChip.astro";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+// The verdict rows: every environment + economy chapter except this one — read through the
+// same spine the cover reads (never re-derived here).
+const parts = studyToc(slug).filter((p) => p.part.id === "environment" || p.part.id === "economy");
+const FRAMES: Record<string, string> = {
+  environment: "What the community gives",
+  economy: "What it is promised, and who pays",
+};
+---
+
+{
+  model.status === "na" ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="bal-lead">
+        The whole trade on one sheet — as verdicts, not totals. Each row is a chapter of this
+        study; the balance synthesizes them and adds no math of its own. Where a row reads
+        gap, the trade was made without that number, and no one on the public's side of it
+        has ever had it.
+      </p>
+
+      {parts.map((p) => (
+        <section class="bal-part">
+          <h2 class="bal-h2">
+            {FRAMES[p.part.id]} <span class="bal-partnum">Part {p.part.num} · {p.part.title}</span>
+          </h2>
+          <ul class="bal-rows">
+            {p.chapters
+              .filter((ch) => ch.def.id !== "balance")
+              .map((ch) => (
+                <li class="bal-row">
+                  <a class="bal-rowlink" href={withBase(ch.href)}>
+                    <span class="bal-num">{String(ch.num).padStart(2, "0")}</span>
+                    <span class="bal-title">{ch.def.title}</span>
+                    {ch.reasons.length > 0 && <span class="bal-reason">{ch.reasons[0]}</span>}
+                    <StudyStatusChip status={ch.status} reasons={ch.reasons} compact />
+                  </a>
+                </li>
+              ))}
+          </ul>
+        </section>
+      ))}
+
+      {model.statusReasons.length > 0 && (
+        <p class="bal-verdictline">{model.statusReasons[0]}.</p>
+      )}
+
+      <p class="bal-close">
+        The sheet totals nothing, deliberately: pricing the trade requires the fiscal
+        instruments the record does not carry. A number here would be an invention — the
+        refusal is the finding.
+      </p>
+
+      {model.caveats.length > 0 && (
+        <ul class="bal-caveats">
+          {model.caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+    </>
+  )
+}
+
+<style>
+  .bal-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.2rem;
+  }
+  .bal-part {
+    margin-top: 1.4rem;
+  }
+  .bal-h2 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 14px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    border-top: 2px solid var(--bosc-ink);
+    padding-top: 0.8rem;
+    margin: 0 0 0.4rem;
+  }
+  .bal-partnum {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+  }
+  .bal-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .bal-row + .bal-row {
+    border-top: 1px solid var(--bosc-rule);
+  }
+  .bal-rowlink {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 9px 4px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .bal-rowlink:hover .bal-title {
+    color: var(--bosc-forest);
+    text-decoration: underline;
+  }
+  .bal-num {
+    font-family: var(--bosc-mono);
+    font-size: 0.74rem;
+    color: var(--bosc-faint);
+    flex: 0 0 auto;
+  }
+  .bal-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex: 0 0 auto;
+  }
+  .bal-reason {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: var(--bosc-faint);
+  }
+  .bal-verdictline {
+    font-family: var(--bosc-mono);
+    font-size: 0.78rem;
+    color: var(--bosc-muted);
+    margin: 1.1rem 0 0;
+  }
+  .bal-close {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 660px;
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--bosc-ink);
+    background: var(--bosc-bg);
+    padding: 14px 18px;
+    margin: 1rem 0 0;
+  }
+  .bal-caveats {
+    margin: 1rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .bal-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+</style>

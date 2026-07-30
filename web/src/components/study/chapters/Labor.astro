@@ -1,0 +1,214 @@
+---
+/**
+ * Study §III — Labor & the local baseline (the missing-impact-study epic, PR4). What this
+ * economy is BEFORE the project: the QCEW/ACS denominator every jobs claim divides by.
+ * Deliberately the study's most reliably-reported chapter (the backdrop floor) — the proof
+ * the artifact isn't a gap generator.
+ *
+ * Register: every figure here is a cited federal series ([verified]); a jobs CLAIM, when one
+ * is on the record, reads against this baseline as claim [reference] vs denominator
+ * [verified] — the study never computes a jobs multiplier (no ingredient; none fabricated).
+ */
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { EconomicBaseline, ProvenancedValue } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
+import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
+import type { FigureStatData } from "@watermark/core/viz";
+import FigureStat from "~/components/FigureStat.astro";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+const live = model.status === "data" || model.status === "partial";
+const eb =
+  live && hasFeed("economics-baseline", slug) ? loadFeed<EconomicBaseline>("economics-baseline", slug) : null;
+
+const num = (v?: ProvenancedValue | null): string =>
+  v?.value == null ? "—" : Math.round(v.value).toLocaleString("en-US");
+// A location quotient orients the county against the nation: ≥1.25 exports the work, <1 imports it.
+const orientation = (v?: ProvenancedValue | null): string => {
+  const q = v?.value ?? null;
+  if (q == null) return "—";
+  return q >= 1.25 ? `${q.toFixed(2)} · exports` : q >= 1.0 ? q.toFixed(2) : `${q.toFixed(2)} · imports`;
+};
+
+const sectors = [...(eb?.latest.sectors ?? [])]
+  .sort((a, b) => (b.annual_avg_employment.value ?? 0) - (a.annual_avg_employment.value ?? 0))
+  .slice(0, 5);
+const government = eb?.latest.government ?? [];
+const govJobs = government.reduce((s, g) => s + (g.annual_avg_employment.value ?? 0), 0);
+const pop = eb?.population?.points ?? [];
+const latestPop = pop.length > 0 ? pop[pop.length - 1] : null;
+
+const stats: FigureStatData[] = [];
+if (eb?.latest.total_employment) {
+  stats.push({
+    label: "County employment",
+    value: num(eb.latest.total_employment),
+    evidence: "verified",
+    basis: "grounded",
+    sub: `${eb.area_name} · ${eb.latest.year} · all ownerships`,
+    source: "BLS QCEW",
+  });
+}
+if (latestPop?.population.value != null) {
+  stats.push({
+    label: "Population",
+    value: Math.round(latestPop.population.value).toLocaleString("en-US"),
+    evidence: "verified",
+    basis: "grounded",
+    sub: String(latestPop.year),
+    source: "Census ACS",
+  });
+}
+if (eb?.median_household_income?.value != null) {
+  stats.push({
+    label: "Median household income",
+    value: `$${Math.round(eb.median_household_income.value).toLocaleString("en-US")}`,
+    evidence: "verified",
+    basis: "grounded",
+    source: "Census ACS B19013",
+  });
+}
+---
+
+{
+  eb === null ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="lab-lead">
+        Every jobs promise is a numerator, and this chapter is the denominator: what{" "}
+        {eb.area_name}'s economy is <em>before</em> the project, from the federal series that
+        will still be there after it. A real impact study starts from this baseline; so does
+        every claim made against it.
+      </p>
+
+      <div class="lab-stats">
+        {stats.map((s) => (
+          <FigureStat stat={s} size="lg" />
+        ))}
+      </div>
+
+      {sectors.length > 0 && (
+        <>
+          <h2 class="lab-h2">The five largest private sectors</h2>
+          <table class="lab-table">
+            <thead>
+              <tr>
+                <th>Sector</th>
+                <th>Jobs</th>
+                <th>Location quotient</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sectors.map((s) => (
+                <tr>
+                  <td>{s.sector_name}</td>
+                  <td>{num(s.annual_avg_employment)}</td>
+                  <td class="lab-lq">{orientation(s.location_quotient)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+
+      {govJobs > 0 && (
+        <p class="lab-gov">
+          Government employment adds ~{Math.round(govJobs).toLocaleString("en-US")} jobs across{" "}
+          {government.length} ownership {government.length === 1 ? "slice" : "slices"} (QCEW
+          federal/state/local) — the slice a private-only sector mix cannot show.
+        </p>
+      )}
+
+      {model.caveats.length > 0 && (
+        <ul class="lab-caveats">
+          {model.caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+
+      <p class="lab-annexline">
+        The full sector mix, the multi-decade employment trend, wages, and the consumer-energy
+        series are in the{" "}
+        <a href={withSite("/environment/economics-baseline")}>labor-baseline annex</a>.
+      </p>
+    </>
+  )
+}
+
+<style>
+  .lab-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.2rem;
+  }
+  .lab-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 0 0 1.2rem;
+  }
+  .lab-h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 0.9rem;
+    margin: 1.2rem 0 0.6rem;
+  }
+  .lab-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .lab-table th {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    text-align: left;
+    border-bottom: 1px solid var(--bosc-ink);
+    padding: 6px 10px 6px 0;
+  }
+  .lab-table td {
+    border-bottom: 1px solid var(--bosc-rule);
+    padding: 7px 10px 7px 0;
+  }
+  .lab-lq {
+    font-family: var(--bosc-mono);
+    font-size: 0.78rem;
+  }
+  .lab-gov {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    max-width: 660px;
+    margin: 0.9rem 0 0;
+  }
+  .lab-caveats {
+    margin: 1rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .lab-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .lab-annexline {
+    font-size: 0.9rem;
+    color: var(--bosc-muted);
+    margin-top: 1rem;
+  }
+</style>
