@@ -20,10 +20,10 @@ interface Props {
 }
 const { def, model, slug } = Astro.props as Props;
 
-const network =
-  model.status === "data" && hasFeed("reach-network", slug)
-    ? loadFeed<ReachNetwork>("reach-network", slug)
-    : null;
+// The sibling sections' `live` idiom: a present reach table renders whether the verdict is
+// data or partial (a future probe must never silently drop the reach summary to the fallback).
+const live = model.status === "data" || model.status === "partial";
+const network = live && hasFeed("reach-network", slug) ? loadFeed<ReachNetwork>("reach-network", slug) : null;
 ---
 
 {
