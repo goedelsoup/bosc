@@ -182,8 +182,10 @@ const ghIssue = (n: number): string =>
             leads.map((l) => {
               const k = KIND_META[l.kind];
               const s = STATUS_META[l.status];
+              // Anchored by lead id so the study's gap panels can deep-link `/leads#<id>`
+              // (the missing-impact-study epic) — the SAME ask, one board.
               return (
-                <article class:list={["lead", `lead--${k.mod}`, `lead-${l.kind}`]}>
+                <article id={l.id} class:list={["lead", `lead--${k.mod}`, `lead-${l.kind}`]}>
                   <div class="lead-body">
                     <div class="lead-meta">
                       <span class="lead-kind">{k.label}</span>

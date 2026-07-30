@@ -510,6 +510,34 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
   },
 ];
 
+/**
+ * Curated gap → lead joins, per site (the annex wiring). Each entry says "this chapter's
+ * asks are ALREADY TRACKED as these leads" — the study's gap panels deep-link the board's
+ * own anchors, and the annex inventory lists them under the chapter, so the study and the
+ * leads board present ONE set of asks. Strictly curated, never a fuzzy keyword match
+ * (misattributing a gap is an evidentiary-discipline violation) — which is why a site whose
+ * leads don't correspond to a study ask (urbana today) is simply absent here. Chapter-level
+ * granularity: every gap a chapter renders carries its chapter's tracked leads. A drift
+ * test pins every id to the site's committed leads feed.
+ */
+export const STUDY_GAP_LEADS: Readonly<Record<string, Readonly<Record<string, readonly string[]>>>> = {
+  lima: {
+    "water-supply": ["FORCEMAIN-MGD", "LIMA-WWTP-SHARE", "H1-DRAW"],
+    discharge: ["WWTP-PARAM-ASSIM", "OEPA-2DP00130"],
+    heat: ["THERMAL-NO-LIMIT"],
+    groundwater: ["DEWATERING-DRYWELL-NW"],
+    stormwater: ["ASWCD-PLANS", "ASWCD-04"],
+    air: ["PTI-313MW", "GH-160"],
+    power: ["PTI-313MW", "AEP-LYKA-OPSB"],
+    fiscal: ["PRR-04", "GH-35"],
+  },
+};
+
+/** The curated lead ids tracking a chapter's asks on a site ([] when none are joined). */
+export function studyGapLeads(slug: string, chapterId: string): readonly string[] {
+  return STUDY_GAP_LEADS[slug]?.[chapterId] ?? [];
+}
+
 /** Look up a chapter def by id (throws on an unknown id — a registry typo, not a data state). */
 export function studyChapter(id: string): StudyChapterDef {
   const def = STUDY_CHAPTERS.find((c) => c.id === id);
@@ -591,15 +619,20 @@ export function studyChapterModel(id: string, slug: string, facilityKey?: string
   const { status, reasons } = chapterAvailability(def, slug, facilityKey);
   const composed =
     status === "na" ? EMPTY_COMPOSITION : (COMPOSERS[id]?.(slug, facility) ?? EMPTY_COMPOSITION);
+  // The chapter-level gap framing renders whenever the chapter IS the finding; probe-level
+  // gaps (a bracketed cooling method inside a partial chapter) come from the composer. The
+  // curated per-site lead joins ride every gap the chapter renders (one board, one ask).
+  const leadIds = studyGapLeads(slug, id);
+  const gaps = (status === "gap" ? [def.gap, ...composed.gaps] : composed.gaps).map((g) =>
+    leadIds.length > 0 && (g.leadIds?.length ?? 0) === 0 ? { ...g, leadIds: [...leadIds] } : g,
+  );
   return {
     id,
     facilityKey: key,
     status,
     statusReasons: reasons,
     stats: composed.stats,
-    // The chapter-level gap framing renders whenever the chapter IS the finding; probe-level
-    // gaps (a bracketed cooling method inside a partial chapter) come from the composer.
-    gaps: status === "gap" ? [def.gap, ...composed.gaps] : composed.gaps,
+    gaps,
     caveats: composed.caveats,
   };
 }
