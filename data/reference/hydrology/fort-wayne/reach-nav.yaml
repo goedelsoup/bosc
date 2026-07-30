@@ -51,7 +51,14 @@ tributaries:
     confluence: st-joseph-confluence
     anchor: [-85.0740833, 41.16738889]  # USGS 04180500 St. Joseph River near Fort Wayne (NLDI)
     upstream_km: 8.0
-    downstream_km: 14.9  # measured gage->confluence arc; 16 km overshot ~2.7 km down the Maumee
+    # The St. Joseph's mouth rides an NHD flowline FUSED into the Maumee levelpath (its final
+    # reach + the first ~2.7 km of the Maumee are one artificial path), so no navigation
+    # distance ends at the junction: 15.6 km stops one flowline (~133 m) short, 15.9 includes
+    # the fused flowline and runs 2.7 km down the Maumee. Navigate through the junction and
+    # TRIM at the committed junction vertex instead (confluence_point — the mainstem's
+    # split-at-vertex idiom): verbatim geometry, exact confluence join, no double-draw.
+    downstream_km: 15.9
+    confluence_point: [-85.131833702, 41.083737597]  # the Three Rivers junction vertex (NHDPlus; = the mainstem maumee-head line's upstream terminus)
   - head: st-marys-head
     confluence: st-marys-confluence
     anchor: [-85.111914, 40.9878257]  # USGS 04182000 St. Marys River near Fort Wayne (NLDI)
