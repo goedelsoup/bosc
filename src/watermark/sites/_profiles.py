@@ -190,7 +190,7 @@ _LIMA = SiteProfile(
     # grid / facility (the disclosed Lima campus; serving-utility provenance = the corpus)
     facilities=(
         SiteFacility(
-            name="Shawnee Energy Campus",
+            name="Project BOSC",
             status=FacilityLifecycle.CONSTRUCTION,  # air-permit-grounded; the disclosed build (#234)
             operator="Google (developer of record)",
             operator_citation=(

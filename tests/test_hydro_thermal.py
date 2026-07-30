@@ -94,7 +94,7 @@ def test_screen_builds_and_lima_is_a_critical_316a_trigger() -> None:
     assert inv.meta["modelled_count"] == len(inv.modelled) == 1
     assert inv.meta["critical_count"] == len(inv.flagged)
     s = _campus(inv)
-    assert "Shawnee" in s.facility
+    assert "Project BOSC" in s.facility
     assert s.flag == "critical"
     assert s.kind == thermal.KIND_DATA_CENTER
     assert s.cooling_model == "evaporative_tower" and s.method_disclosed is True

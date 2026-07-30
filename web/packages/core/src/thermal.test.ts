@@ -97,8 +97,8 @@ afterAll(() => {
 });
 
 const CAMPUS: ThermalDischargeScreen = {
-  facility: "Shawnee Energy Campus",
-  facility_key: "shawnee-energy-campus",
+  facility: "Project BOSC",
+  facility_key: "project-bosc",
   kind: "data_center",
   npdes_id: null,
   method_disclosed: true,
@@ -164,7 +164,7 @@ describe("buildThermal", () => {
     const t = buildThermal()!;
     // One is an inference about a facility that is not yet discharging; the other is a
     // measurement. Merging them into one ranked list is the mistake this guards.
-    expect(t.modelled.map((s) => s.facility_key)).toEqual(["shawnee-energy-campus"]);
+    expect(t.modelled.map((s) => s.facility_key)).toEqual(["project-bosc"]);
     expect(t.observed.map((s) => s.facility_key)).toEqual(["OH0002623", "OHGC02549"]);
   });
 
@@ -252,7 +252,7 @@ describe("buildThermal", () => {
     expect(t.mixedRows.map((r) => r.scenario)).toEqual(["once_through", "evaporative_blowdown", null]);
     expect(t.mixedRows.map((r) => r.mixedC)).toEqual([34.0, 31.8, 31.9]);
     // The row is reported as unbounded so the page can say WHY the whole-rejection bar is missing.
-    expect(t.unbounded.map((s) => s.facility_key)).toEqual(["shawnee-energy-campus"]);
+    expect(t.unbounded.map((s) => s.facility_key)).toEqual(["project-bosc"]);
   });
 
   it("marks a reference-table design ambient as ungrounded", async () => {

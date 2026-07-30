@@ -301,7 +301,7 @@ def test_lima_reads_data_dominant_with_fiscal_the_one_gap(lima_bundle: Path) -> 
     assert statuses["fiscal"] == "gap"
     assert sum(1 for s in statuses.values() if s == "data") == 12
     # The reference build's rows are facility-keyed to the primary campus.
-    assert {r["facility_key"] for r in rows} == {"shawnee-energy-campus"}
+    assert {r["facility_key"] for r in rows} == {"project-bosc"}
     assert all(r["model"]["facilityKey"] == r["facility_key"] for r in rows)
 
 

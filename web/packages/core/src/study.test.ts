@@ -84,7 +84,7 @@ describe("study verdicts — lima (reference: the data-dominant strip)", () => {
 
   it("water composer carries the worst-case draw, the cited floor, and the bound caveat", () => {
     const m = studyChapterModel("water-supply", "lima");
-    expect(m.facilityKey).toBe("shawnee-energy-campus");
+    expect(m.facilityKey).toBe("project-bosc");
     const labels = m.stats.map((s) => s.label);
     expect(labels).toContain("Worst-case consumptive draw");
     expect(labels).toContain("Receiving low flow (7Q10)");

@@ -584,7 +584,7 @@ class FacilityItem(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     key: str  # the facility's stable slug (unique within a site)
-    name: str  # display identity, e.g. "Shawnee Energy Campus"
+    name: str  # display identity, e.g. "Project BOSC"
     is_primary: bool  # the first/modeled campus (drives the water/power/air math)
     status: FacilityLifecycle  # investigation | confirmed | construction | live
     # What KIND of facility this row is (#1664). Every row before the enclave seam was a

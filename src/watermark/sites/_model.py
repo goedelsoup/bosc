@@ -369,7 +369,7 @@ class SiteFacility(BaseModel):
 
     # --- Identity / structured facts (#1628) ----------------------------------
     # A site now holds N facilities (``SiteProfile.facilities``); ``name`` is the display
-    # identity (e.g. "Shawnee Energy Campus") and ``key`` its stable dedupe slug (filled from
+    # identity (e.g. "Project BOSC") and ``key`` its stable dedupe slug (filled from
     # ``name`` when left blank — unique within a site). ``status`` is the real-world lifecycle
     # stage the frontend rail reads off the bundle (retiring the hand-maintained TS
     # ``FACILITY_STATUS`` dict): a disclosed facility is at least ``confirmed``. ``operator`` and
