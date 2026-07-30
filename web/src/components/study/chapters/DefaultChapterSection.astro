@@ -13,7 +13,7 @@ interface Props {
   def: StudyChapterDef;
   model: StudyChapterModel;
   /** Threaded to every section (bespoke ones read feeds with it); unused here. */
-  slug?: string;
+  slug: string;
 }
 const { def, model } = Astro.props as Props;
 ---

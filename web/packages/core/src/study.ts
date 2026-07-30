@@ -36,7 +36,7 @@
  * NOT client-safe (imports the node bundle loader) — pages render these plain objects.
  */
 import { hasFeed, loadFeed, loadManifest } from "./bundle";
-import type { EconomicBaseline, FacilityItem, ProvenancedValue, ScenarioResult } from "./feeds";
+import type { CoolingModel, EconomicBaseline, FacilityItem, ProvenancedValue, ScenarioResult } from "./feeds";
 import { fmtMult, fmtRanged, round } from "./format";
 import { buildDemandPressure, buildGridBackdrop } from "./gridBackdrop";
 import { coolingMethodUndisclosed, facilityLoadAvailable, facilityState } from "./readiness";
@@ -96,6 +96,18 @@ export const STUDY_PARTS: readonly StudyPart[] = [
  *                site with nothing to study).
  */
 export type ChapterStatus = "data" | "partial" | "gap" | "na";
+
+/** The cooling-archetype display labels (epic #1060) — the enum is keyed on mechanism, and
+ *  "open loop / closed loop" are the industry's ambiguous names, shown only as parenthetical
+ *  aliases. ONE copy, shared by the hydrology annex page and the study's water chapter. */
+export const COOLING_MODEL_LABELS: Record<CoolingModel, string> = {
+  off: "no cooling-water load",
+  evaporative_tower: "evaporative cooling tower (“open loop”)",
+  once_through: "once-through surface water (“open once-through”)",
+  closed_loop_dry: "closed-loop dry / air-cooled (“closed loop”)",
+  hybrid_adiabatic: "hybrid dry + seasonal adiabatic assist",
+  unknown: "undisclosed cooling method",
+};
 
 /** Display copy for each verdict — the status chip and the cover's verdict strip read this
  *  (one vocabulary, so the strip and the chapter header can never disagree). The chip colors

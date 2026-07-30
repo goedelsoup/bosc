@@ -1,0 +1,296 @@
+---
+/**
+ * Study §II — Water supply & consumptive use (the missing-impact-study epic, PR2). The
+ * chapter-template setter: a narrative-first section over the SAME feeds the hydrology
+ * annex renders (`hydrology-scenarios` + `facility`) — never a fork of its numbers.
+ *
+ * Register discipline, by verdict:
+ *  - data     — the worst-case modeled draw against the cited 7Q10 (bullet), then each
+ *               scenario's compact figure strip. Draw = [inference], floor = [verified].
+ *  - partial  — an undisclosed cooling method renders the bracketed envelope AS the
+ *               finding (#1057's discipline, on the surface built to carry it) — never a
+ *               single fabricated headline.
+ *  - gap      — the section still states what IS on the record (the facility's cooling
+ *               posture: not disclosed [open], or an operator claim [reference] — "a claim
+ *               is not an instrument"); the shell's gap panels carry the asks.
+ *  - na       — delegated to the generic watch-state panel.
+ *
+ * Site-generic by construction: river names and figures come from the feed; the site's
+ * narrative texture (e.g. Lima's off-stream reservoirs) belongs to the annex page and the
+ * per-site MDX slot, not here.
+ */
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { CoolingModel, ProvenancedValue, ScenarioResult } from "@watermark/core/feeds";
+import { fmtRanged } from "@watermark/core/format";
+import { withSite } from "@watermark/core/site";
+import {
+  COOLING_MODEL_LABELS,
+  resolveStudyFacility,
+  type StudyChapterDef,
+  type StudyChapterModel,
+} from "@watermark/core/study";
+import type { FigureStatData } from "@watermark/core/viz";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import FigureStat from "~/components/FigureStat.astro";
+import BulletChart from "~/components/charts/BulletChart.astro";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+const facility = resolveStudyFacility(slug);
+const scenarios =
+  model.status === "na" || !hasFeed("hydrology-scenarios", slug)
+    ? []
+    : loadFeed<ScenarioResult[]>("hydrology-scenarios", slug);
+
+// Two decimals: a 0.2 cfs design low flow must never round to "0 cfs" in prose.
+const fmt = (v: ProvenancedValue): string => fmtRanged(v, 2);
+const grounded = (v: ProvenancedValue): boolean =>
+  v.source === "document" || v.source === "connector" || v.source === "reference";
+const toStat = (label: string, v: ProvenancedValue): FigureStatData => ({
+  label,
+  value: v.value == null ? "—" : v.value.toLocaleString("en-US"),
+  unit: v.unit ?? undefined,
+  evidence: grounded(v) ? "verified" : "inference",
+  basis: grounded(v) ? "grounded" : "modeled",
+  sub: v.citation ?? v.source ?? undefined,
+});
+
+const coolingOf = (s: ScenarioResult): CoolingModel | null =>
+  s.cooling_model ?? s.scenario.cooling_model ?? null;
+const bracketed = (s: ScenarioResult): boolean =>
+  coolingOf(s) === "unknown" || s.scenario.basis?.is_bracketed === true;
+
+// The headline screen: worst NON-bracketed scenario by modeled draw vs the cited 7Q10 —
+// the same pick the hydrology annex makes, so the two surfaces can never disagree.
+const candidates = scenarios.filter((s) => !bracketed(s));
+const worst =
+  candidates.length > 0
+    ? candidates.reduce((a, b) => ((b.consumptive_loss.value ?? 0) > (a.consumptive_loss.value ?? 0) ? b : a))
+    : null;
+const drawV = worst?.consumptive_loss ?? null;
+const lowV = worst?.receiving_7q10 ?? null;
+const riverName = scenarios.map((s) => s.receiving_water_name).find(Boolean) ?? "the receiving water";
+const showScreen = worst != null && (drawV?.value ?? 0) > 0 && (lowV?.value ?? 0) > 0;
+const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.value as number)) : 0;
+
+// The facility's cooling posture — the one line this chapter always states when a project
+// is on the record, whatever the verdict. The register tracks the SOURCE, never the claim:
+// document/connector ⇒ [verified]; reference ⇒ an operator claim; assumption ⇒ [inference].
+const cooling = facility?.cooling_model ?? null;
+const coolingEvidence =
+  cooling === "unknown"
+    ? ("open" as const)
+    : facility?.cooling_model_source === "document" || facility?.cooling_model_source === "connector"
+      ? ("verified" as const)
+      : facility?.cooling_model_source === "reference"
+        ? ("reference" as const)
+        : ("inference" as const);
+const facilityName = facility?.name ?? "the proposed facility";
+---
+
+{
+  model.status === "na" ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="wsup-lead">
+        A real impact study states how much water {facilityName} consumes at buildout and sets
+        it against the {riverName}'s own cited design low flows — the drought floor discharge
+        permits are written at. This chapter reports exactly as much of that as the record
+        supports, and names what it cannot compute.
+      </p>
+
+      {cooling !== null && (
+        <p class="wsup-cooling">
+          <span class="wsup-cooling-label">Cooling method</span>
+          <strong>{cooling === "unknown" ? "not disclosed" : COOLING_MODEL_LABELS[cooling]}</strong>
+          <EvidenceTag kind={coolingEvidence} />
+          {coolingEvidence === "reference" && (
+            <span class="wsup-cooling-note">an operator claim — a claim is not an instrument</span>
+          )}
+          {cooling === "unknown" && (
+            <span class="wsup-cooling-note">
+              a facility is on the record here; no record says how it rejects heat
+            </span>
+          )}
+        </p>
+      )}
+
+      {showScreen && drawV && lowV && worst && (
+        <BulletChart
+          kicker="The headline screen · draw vs design low flow"
+          title={`At the 7Q10 design low flow, the ${worst.scenario.name} cooling draw is ~${drawRatio}× the ${riverName}`}
+          scaleLabel="scale · cubic feet per second"
+          unit="cfs"
+          rows={[
+            {
+              label: `Consumptive draw · ${worst.scenario.name}`,
+              value: drawV.value as number,
+              fill: "#9a6a14",
+              evidence: grounded(drawV) ? "verified" : "inference",
+              evidenceNote: drawV.citation ?? drawV.source ?? undefined,
+            },
+            {
+              label: `${riverName} 7Q10 design low flow`,
+              value: lowV.value as number,
+              evidence: grounded(lowV) ? "verified" : "inference",
+              evidenceNote: lowV.citation ?? lowV.source ?? undefined,
+            },
+          ]}
+          note={`The modeled ${worst.scenario.name} draw (${fmt(drawV)}) against the cited 7Q10 (${fmt(lowV)}) is a basin-scale worst-case bound, not a withdrawal claim — the full derivation, the site's supply arrangement, and the live gauge sit in the hydrology annex below.`}
+        />
+      )}
+
+      {
+        // An undisclosed cooling method renders the bracketed envelope AS the finding —
+        // the study's whole reason to exist is carrying this honestly (#1057).
+        scenarios.filter(bracketed).map((s) => {
+          const basis = s.scenario.basis;
+          return (
+            <div class="wsup-bracket">
+              <p class="wsup-bracket-title">The water figure is a bracket, and that is the finding</p>
+              <p>
+                No record discloses how {facilityName} rejects heat, so its consumptive water
+                figure is a <strong>range across candidate cooling archetypes</strong>
+                {basis
+                  ? ` — ${fmt(basis.consumptive_low)} (closed-loop dry) to ${fmt(basis.consumptive_high)} (evaporative tower)`
+                  : ""}
+                — not an estimate. A single headline would fabricate the site's most
+                load-bearing number; the bracket stands until the method is on the record.
+              </p>
+            </div>
+          );
+        })
+      }
+
+      {candidates.map((s) => {
+        const river = s.receiving_water_name ?? riverName;
+        const stats: FigureStatData[] = [
+          toStat("Cooling demand", s.scenario.cooling_demand),
+          toStat("Consumptive loss", s.consumptive_loss),
+        ];
+        if (s.receiving_7q10) stats.push(toStat(`${river} 7Q10`, s.receiving_7q10));
+        return (
+          <section class="wsup-scenario">
+            <h2>{s.scenario.name}</h2>
+            {s.scenario.description && <p class="wsup-scenario-dek">{s.scenario.description}</p>}
+            <div class="wsup-stats">
+              {stats.map((st) => (
+                <FigureStat stat={st} size="sm" />
+              ))}
+            </div>
+          </section>
+        );
+      })}
+
+      {model.caveats.length > 0 && (
+        <ul class="wsup-caveats">
+          {model.caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+
+      {model.status === "gap" && scenarios.length === 0 && (
+        <p class="wsup-gapline">
+          No water-balance scenario exists for this site — the panels below name the records
+          that would let this chapter compute one.{" "}
+          <a href={withSite("/environment/hydrology")}>The hydrology annex</a> holds whatever
+          partial record exists.
+        </p>
+      )}
+    </>
+  )
+}
+
+<style>
+  .wsup-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.1rem;
+  }
+  .wsup-cooling {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 10px;
+    border: 1px solid var(--bosc-rule);
+    background: #efece2;
+    padding: 10px 14px;
+    margin: 0 0 1.2rem;
+    font-size: 0.92rem;
+  }
+  .wsup-cooling-label {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+  }
+  .wsup-cooling-note {
+    font-size: 0.8rem;
+    color: var(--bosc-muted);
+  }
+  .wsup-bracket {
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--bosc-ink);
+    background: var(--bosc-bg);
+    padding: 16px 20px;
+    margin: 1.2rem 0;
+    max-width: 660px;
+  }
+  .wsup-bracket-title {
+    font-weight: 700;
+    margin: 0 0 6px;
+  }
+  .wsup-bracket p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .wsup-scenario {
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 0.9rem;
+    margin-top: 1.4rem;
+  }
+  .wsup-scenario h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    margin: 0;
+  }
+  .wsup-scenario-dek {
+    font-size: 0.85rem;
+    color: var(--bosc-muted);
+    margin: 0.3rem 0 0;
+  }
+  .wsup-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 0.8rem;
+  }
+  .wsup-caveats {
+    margin: 1.2rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .wsup-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .wsup-gapline {
+    font-size: 0.92rem;
+    color: var(--bosc-muted);
+    max-width: 660px;
+  }
+</style>

@@ -15,7 +15,9 @@ import type {
 import type { FigureStatData } from "@watermark/core/viz";
 import { withSite } from "@watermark/core/site";
 import { fmtRanged } from "@watermark/core/format";
+import { COOLING_MODEL_LABELS } from "@watermark/core/study";
 import { buildThermal } from "@watermark/core/thermal";
+import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 
 const scenarios = hasFeed("hydrology-scenarios") ? loadFeed<ScenarioResult[]>("hydrology-scenarios") : [];
 
@@ -48,16 +50,9 @@ const toStat = (label: string, v: ProvenancedValue, neg?: boolean): FigureStatDa
   warn: neg,
 });
 
-// The cooling archetype labels (epic #1060). The enum is keyed on mechanism; "open loop /
-// closed loop" are the industry's ambiguous labels, shown only as parenthetical aliases.
-const COOLING_LABELS: Record<CoolingModel, string> = {
-  off: "no cooling-water load",
-  evaporative_tower: "evaporative cooling tower (“open loop”)",
-  once_through: "once-through surface water (“open once-through”)",
-  closed_loop_dry: "closed-loop dry / air-cooled (“closed loop”)",
-  hybrid_adiabatic: "hybrid dry + seasonal adiabatic assist",
-  unknown: "undisclosed cooling method",
-};
+// The cooling archetype labels (epic #1060) — the shared core copy, so this annex and the
+// study's water chapter can never label a mechanism differently.
+const COOLING_LABELS = COOLING_MODEL_LABELS;
 const coolingOf = (s: ScenarioResult): CoolingModel | null =>
   s.cooling_model ?? s.scenario.cooling_model ?? null;
 // A bracketed basis (undisclosed method, #1057) must never render a single headline.
@@ -99,6 +94,7 @@ const thermalOverCriterion = thermal?.meta.permits_over_daily_max_criterion ?? [
 <Base title="Hydrology" section="environment">
   <article class="prose">
     <h1>Hydrology — water balance</h1>
+    <StudyAnnexBanner chapters={["water-supply", "discharge"]} />
     <p class="section-lead">
       Each scenario screens the {riverName}'s low-flow capacity against the
       campus's consumptive cooling draw: live flow minus consumptive loss against

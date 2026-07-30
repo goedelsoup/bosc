@@ -2,6 +2,7 @@
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
+import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { RseiInventory } from "@watermark/core/feeds";
 
@@ -15,6 +16,7 @@ const num = (v: unknown): string => (v == null ? "—" : Number(v).toLocaleStrin
 <Base title="RSEI / toxics" section="environment">
   <article class="prose">
     <h1>RSEI / toxic-release inventory</h1>
+    <StudyAnnexBanner chapters={["discharge"]} />
     {
       rsei ? (
         <>
