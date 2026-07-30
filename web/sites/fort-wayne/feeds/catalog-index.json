@@ -1,7 +1,7 @@
 {
   "site": "fort-wayne",
-  "catalog_version": "0eae93ab0866db106a800ea46cdbbb9e4328724acba8a3c9691a4b63cebab924",
-  "contract_version": "1.42.0",
+  "catalog_version": "f41b5daaf537ea82d828a62a1bbfbafb3df1f2d670befeec0a54322635c66e72",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:fort-wayne:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:fort-wayne:abatement-parameters",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:fort-wayne:air-emission-factors",
       "kind": "dataset",
       "site": "fort-wayne",
@@ -720,7 +728,7 @@
       "kind": "dataset",
       "site": "fort-wayne",
       "local_id": "enclave-federal-land",
-      "title": "Fort Wayne Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "Fort Wayne Federal-Enclave Boundary — Allen County, IN (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -728,7 +736,7 @@
       "kind": "dataset",
       "site": "fort-wayne",
       "local_id": "enclave-profile",
-      "title": "Fort Wayne Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "Fort Wayne Federal-Enclave Profile — Allen County, IN (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

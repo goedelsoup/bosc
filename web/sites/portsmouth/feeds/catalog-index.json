@@ -1,7 +1,7 @@
 {
   "site": "portsmouth",
-  "catalog_version": "c8ad3e35467422d586eba81a690dc1d6e5b74305bec011cd0380cc39f1d780cf",
-  "contract_version": "1.42.0",
+  "catalog_version": "d35e240d3d0d1f225a858547740ad1138b816d3e970d9457b5d8fff2af123be7",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:portsmouth:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:portsmouth:abatement-parameters",
+      "kind": "dataset",
+      "site": "portsmouth",
+      "local_id": "abatement-parameters",
+      "title": "Scioto County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:portsmouth:air-emission-factors",

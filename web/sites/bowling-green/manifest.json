@@ -1,10 +1,10 @@
 {
   "site": "bowling-green",
   "bundle_version": "1.0.0",
-  "contract_version": "1.42.0",
-  "generated_at": "2026-07-29T18:17:28+00:00",
+  "contract_version": "1.43.0",
+  "generated_at": "2026-07-29T21:07:16+00:00",
   "feed_count": 30,
-  "row_total": 441,
+  "row_total": 442,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 50
+      "count": 51
     },
     {
       "name": "facts",

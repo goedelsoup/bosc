@@ -1,0 +1,578 @@
+{
+  "site": "lima",
+  "site_name": "Lima",
+  "instrument": "Allen County CRA No. 1 Agreement with Bistrozzi LLC (data-center tax abatement) (Res #548-25)",
+  "instrument_record": "data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml",
+  "tag": "open",
+  "confidence": "low",
+  "constants": [
+    {
+      "key": "capital_investment",
+      "label": "Stated capital investment",
+      "value": {
+        "value": 500000000.0,
+        "unit": "usd",
+        "source": "document",
+        "citation": "data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml — company good-faith estimate per R.C. 3735.671(B)(8); explicitly NOT a cap",
+        "confidence": "medium",
+        "asof": null,
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "key": "abatement_percent",
+      "label": "Abatement percent",
+      "value": {
+        "value": 0.75,
+        "unit": "fraction",
+        "source": "document",
+        "citation": "data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "key": "term_years",
+      "label": "Abatement term",
+      "value": {
+        "value": 15.0,
+        "unit": "years",
+        "source": "document",
+        "citation": "data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml — per Building",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "key": "stated_jobs",
+      "label": "Stated permanent jobs",
+      "value": {
+        "value": 50.0,
+        "unit": "jobs",
+        "source": "document",
+        "citation": "data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml — company estimate; the agreement records that actuals may differ significantly",
+        "confidence": "low",
+        "asof": null,
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "key": "assessment_ratio",
+      "label": "Assessment ratio (market -> assessed)",
+      "value": {
+        "value": 0.35,
+        "unit": "fraction",
+        "source": "reference",
+        "citation": "Ohio Revised Code 5715.01 / Ohio Adm.Code 5703-25-05 — real property is assessed at 35% of true (market) value for taxation. Statutory, uniform statewide.",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "key": "effective_commercial_mills",
+      "label": "Effective commercial millage (of assessed value)",
+      "value": {
+        "value": 0.063,
+        "unit": "fraction",
+        "source": "assumption",
+        "citation": "STATED ASSUMPTION, not a cited Allen County rate. The exact American Township / Elida LSD effective commercial-and-industrial millage (gross millage net of the H.B. 920 reduction factors) is not in the corpus; ~63 effective mills on assessed value is the Ohio commercial band's mid-point. The Allen County Auditor's published rate sheet would replace it with a cited figure. The single largest unforced uncertainty in the ledger — it scales every dollar figure linearly. The low/high bracket the Ohio commercial band; `watermark.ledger` carries the same assumption as a 0.015-0.023 fraction-of-market-value screening range (assessment ratio already folded in), which is the same statement.",
+        "confidence": "low",
+        "asof": null,
+        "low": 0.045,
+        "high": 0.08
+      }
+    },
+    {
+      "key": "effective_rate",
+      "label": "Effective tax rate (of market value, per year)",
+      "value": {
+        "value": 0.02205,
+        "unit": "fraction",
+        "source": "derived",
+        "citation": "0.35 assessment ratio x 0.063 effective mills — the product the whole ledger scales on",
+        "confidence": "low",
+        "asof": null,
+        "low": 0.01575,
+        "high": 0.027999999999999997
+      }
+    },
+    {
+      "key": "sales_and_use_rate",
+      "label": "Combined sales-and-use rate",
+      "value": {
+        "value": 0.0725,
+        "unit": "fraction",
+        "source": "reference",
+        "citation": "Ohio Department of Taxation — Allen County combined state (5.75%) + county permissive (1.50%) sales-and-use rate. The Ohio data-center tax exemption (DCTE, R.C. 122.175) exempts qualifying equipment AND construction materials from this rate. Whether THIS campus holds a DCTE agreement is not in the record — the exemption figure is therefore a conditional band, `[open]` on application.",
+        "confidence": "high",
+        "asof": null,
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "key": "equipment_refresh",
+      "label": "Equipment refresh over the term",
+      "value": {
+        "value": 1.5,
+        "unit": "x",
+        "source": "assumption",
+        "citation": "Multiplier on the initial-buildout equipment spend across the 15-year abatement window. 1.0 = the initial purchase only; 2.0 = one full refresh. Bracketed from `reference/datacenter-industry/priors.yaml` · ai_rack_refresh (AI-class hardware on a 3-5 yr cycle, ~30-40% of hardware cost annually in opex) against a 15-year term.",
+        "confidence": "low",
+        "asof": null,
+        "low": 1.0,
+        "high": 2.0
+      }
+    }
+  ],
+  "withheld": [
+    {
+      "key": "building_share",
+      "label": "Building (abated real-property) share of the build",
+      "band": {
+        "low": 0.2,
+        "central": 0.3,
+        "high": 0.45,
+        "unit": "fraction",
+        "dist": "triangular"
+      },
+      "tag": "open",
+      "confidence": "low",
+      "why": "reference/datacenter-industry/priors.yaml · building_real_property_share — pooled published capex breakdowns (Epoch AI, US Chamber CTEC, McKinsey, BlueCap). Industry reference, NOT this campus.",
+      "resolving_record": "the building/equipment capital split (CRA §2 detail, or the county's cost-benefit analysis)"
+    },
+    {
+      "key": "jobs",
+      "label": "Steady-state permanent jobs",
+      "band": {
+        "low": 30.0,
+        "central": 50.0,
+        "high": 50.0,
+        "unit": "jobs",
+        "dist": "triangular"
+      },
+      "tag": "open",
+      "confidence": "low",
+      "why": "The CRA's own ~50 permanent full-time estimate (§2) is the high end — it is explicitly non-binding (\"actuals may differ significantly\"). The 30-job low end is the lean-ops case that `reference/datacenter-industry/priors.yaml` · jobs_per_mw (0.10-0.30 jobs/MW) brackets for a load this size.",
+      "resolving_record": "an actual steady-state headcount"
+    },
+    {
+      "key": "equipment_refresh",
+      "label": "Equipment spend + refresh across the term",
+      "band": {
+        "low": 1.0,
+        "central": 1.5,
+        "high": 2.0,
+        "unit": "x",
+        "dist": "triangular"
+      },
+      "tag": "open",
+      "confidence": "low",
+      "why": "Multiplier on the initial-buildout equipment spend across the 15-year abatement window. 1.0 = the initial purchase only; 2.0 = one full refresh. Bracketed from `reference/datacenter-industry/priors.yaml` · ai_rack_refresh (AI-class hardware on a 3-5 yr cycle, ~30-40% of hardware cost annually in opex) against a 15-year term.",
+      "resolving_record": "the equipment spend and its refresh schedule"
+    },
+    {
+      "key": "school_compensation",
+      "label": "School District Compensation (offset)",
+      "band": {
+        "low": 0.0,
+        "central": 15000000.0,
+        "high": 30000000.0,
+        "unit": "usd",
+        "dist": "uniform"
+      },
+      "tag": "open",
+      "confidence": "low",
+      "why": "A wide SCREENING range, not a figure. The School District Compensation Agreement's dollar terms are non-public (`cra-agreement.cra.yaml` `amounts_public: false`); the County estimated only that they equal or exceed the R.C. 3735.671(A)(2) statutory floor of 25% of the foregone taxes (Res #494-25, 2025-06-24). The PAAC board minutes record a $250,000/yr PILOT *proposed* to the Elida board (2025-05-20), which over the 15-year term would be ~$3.75M — inside this range and well below its top.",
+      "resolving_record": "the School District Compensation Agreement"
+    }
+  ],
+  "axes": [
+    {
+      "key": "govcloud_premium",
+      "label": "Government / sovereign-cloud price premium",
+      "question": "Does the authorized-region premium explain why this load is sited here?",
+      "band": {
+        "low": 0.2,
+        "central": 0.25,
+        "high": 0.3,
+        "unit": "fraction",
+        "dist": "triangular"
+      },
+      "tag": "reference",
+      "confidence": "low",
+      "site_status": "open",
+      "drives": [
+        "the authorized-region-premium driver in the end-use / who-captures-the-benefit analysis"
+      ],
+      "basis": "The recurring price premium government/sovereign cloud commands over commercial (isolation, U.S.-persons staffing, compliance) is what would reward building dedicated hardened capacity in a low-cost jurisdiction. That the premium exists is documented; that it applies to this campus is not — the facility's authorization posture is undisclosed (docs/defense-nexus.md). ~20-30% recurring premium (isolation, U.S.-persons staffing, compliance). Already multi-sourced in the relator's data appendix (BCG, AWS GovCloud vs commercial, CapLinked, Matlock); carried here so the prior has one home. Application to Lima [open].",
+      "sources": [
+        {
+          "name": "Relator committee data appendix §1 (pooled)",
+          "year": 2026,
+          "url": null,
+          "contributes": "BCG \"Cloud Cover\" (up to 30%); AWS EC2/S3 GovCloud vs commercial (~20-25%); CapLinked; Matlock"
+        }
+      ],
+      "resolving_record": null
+    },
+    {
+      "key": "ai_rack_refresh",
+      "label": "AI hardware refresh cycle and rack power density",
+      "question": "Does AI-class hardware break the equipment forecast the DCTE was scored against?",
+      "band": null,
+      "tag": "reference",
+      "confidence": "low",
+      "site_status": "open",
+      "drives": [],
+      "basis": "Ohio's data-center sales-tax exemption is scored against a single equipment-purchase forecast. AI-class hardware refreshes on a 3-5 year cycle at ~30-40% of hardware cost annually, and rack density is rising, so the exempted base recurs across the abatement window rather than being spent once. Whether this campus takes the exemption, and on how much hardware, is not in the record. AI-class hardware refreshes on a 3-5 yr cycle (~30-40% of hardware cost annually in opex); rack power density jumps 5-15 kW (enterprise) to 120-140 kW (GB200), projected 250-900 kW/rack by 2027. Drives the RECURRENCE of the DCTE sales-tax exemption — the exemption is scored against a single equipment forecast that AI refresh breaks.",
+      "sources": [
+        {
+          "name": "Relator data appendix §2 (pooled — NVIDIA HGX, IntuitionLabs, McKinsey/Dell'Oro)",
+          "year": 2026,
+          "url": null,
+          "contributes": "rack density 5-15kW->120-140kW; refresh 3-5yr, ~30-40% opex/yr; GPU servers $200k-515k"
+        }
+      ],
+      "resolving_record": null
+    },
+    {
+      "key": "building_real_property_share",
+      "label": "Building (abated real-property) share of total capex",
+      "question": "How much of the build is abated real property rather than exempt equipment?",
+      "band": {
+        "low": 0.2,
+        "central": 0.3,
+        "high": 0.45,
+        "unit": "fraction",
+        "dist": "triangular"
+      },
+      "tag": "reference",
+      "confidence": "low",
+      "site_status": "open",
+      "drives": [
+        "the CRA 75%/15-yr property-tax abatement base (the abated assessed value)"
+      ],
+      "basis": "The CRA abates real property only; the DCTE covers equipment and construction materials. The split is jurisdiction-specific and genuinely fuzzy, and it is the single knob that moves the most money between the two subsidies. Independent capex breakdowns put the building SHELL at ~15-21% of total cost; with affixed mechanical/electrical fixtures classified as real property the abated base rises toward ~40-50%. Ohio's CRA abates REAL property; the DCTE sales-tax exemption covers equipment AND construction materials (R.C. 122.175) — so the building/equipment line is genuinely fuzzy and jurisdiction-specific, which is exactly why this is a band. The corpus's earlier single 0.35 sits inside it.",
+      "sources": [
+        {
+          "name": "Epoch AI — TCO of a 1 GW AI data center",
+          "year": 2025,
+          "url": "https://epoch.ai/data-insights/ai-datacenter-cost-breakdown",
+          "contributes": "building/land/equipment capex split for AI-class builds"
+        },
+        {
+          "name": "U.S. Chamber CTEC — data-center report",
+          "year": 2025,
+          "url": "https://www.uschamber.com/assets/documents/ctec_datacenterrpt_lowres.pdf",
+          "contributes": "cost-structure shares (shell vs mechanical/electrical vs IT)"
+        },
+        {
+          "name": "McKinsey — \"The data center dividend\"",
+          "year": 2025,
+          "url": "https://www.mckinsey.com/featured-insights/week-in-charts/the-data-center-dividend",
+          "contributes": "hyperscale capex composition (~20% shell / ~20% cooling / ~20% power / ~40% servers)"
+        },
+        {
+          "name": "BlueCap Economic Advisors — data-center cost",
+          "year": 2025,
+          "url": "https://www.bluecapeconomicadvisors.com/post/cost-data-center",
+          "contributes": "land 6% / shell 21% / mech+electrical 73% itemization"
+        },
+        {
+          "name": "Ohio Revised Code 122.175 (DCTE scope)",
+          "year": 2025,
+          "url": "https://codes.ohio.gov/ohio-revised-code/section-122.175",
+          "contributes": "the real-vs-personal line — DCTE exempts equipment + construction materials, not the abated real-property value"
+        }
+      ],
+      "resolving_record": null
+    },
+    {
+      "key": "jobs_per_mw",
+      "label": "Steady-state permanent jobs per MW (automated hyperscale)",
+      "question": "How many permanent jobs does a load this size actually carry?",
+      "band": {
+        "low": 0.1,
+        "central": 0.18,
+        "high": 0.3,
+        "unit": "jobs_per_mw",
+        "dist": "triangular"
+      },
+      "tag": "reference",
+      "confidence": "low",
+      "site_status": "verified-stated",
+      "drives": [
+        "the job-count input to the per-job and load-not-jobs figures"
+      ],
+      "basis": "Automated hyperscale campuses run roughly 20-40 operators per 100 MW. Applied to a load of this scale the range independently brackets the agreement's own non-binding estimate, which is why the job count is turned across a band rather than taken at its stated value. Automated hyperscale campuses run ~20-40 operators per 100 MW (0.2-0.3/MW); the most automated sites approach 0.1/MW. For Lima's ~275-348 MW that is ~28-105 jobs — which independently brackets the CRA's non-binding ~50 (mid-low) and the leaner 30-job profile. Colocation runs higher per MW; bitcoin near zero.",
+      "sources": [
+        {
+          "name": "Brookings — new evidence on data-center employment effects",
+          "year": 2025,
+          "url": "https://www.brookings.edu/articles/new-evidence-on-data-center-employment-effects/",
+          "contributes": "empirical permanent-employment effects of data centers"
+        },
+        {
+          "name": "Good Jobs First — data-center subsidy studies",
+          "year": 2025,
+          "url": "https://goodjobsfirst.org/study-state-and-local-governments-pay-2-million-job-tech-giants-data-centers/",
+          "contributes": "20-30 staff per 100 MW for >100 MW facilities"
+        },
+        {
+          "name": "Built In — data-center jobs",
+          "year": 2025,
+          "url": "https://builtin.com/articles/data-center-jobs",
+          "contributes": "operations staffing roles and counts"
+        },
+        {
+          "name": "Broadstaff — data-center staffing levels",
+          "year": 2025,
+          "url": "https://broadstaffglobal.com/data-center-staffing-levels-how-many-people-does-a-facility-need",
+          "contributes": "per-MW staffing by facility type (hyperscale vs colocation)"
+        }
+      ],
+      "resolving_record": null
+    },
+    {
+      "key": "subsidy_per_job_benchmark",
+      "label": "Subsidy per data-center job (comparative benchmark)",
+      "question": "Is the modeled subsidy per job typical of a data-center deal, or an outlier?",
+      "band": {
+        "low": 1400000.0,
+        "central": 2000000.0,
+        "high": 6400000.0,
+        "unit": "usd_per_job",
+        "dist": "triangular"
+      },
+      "tag": "reference",
+      "confidence": "low",
+      "site_status": "comparative",
+      "drives": [
+        "a sanity band the ledger's modeled per-job subsidy is read against"
+      ],
+      "basis": "A comparative benchmark the modeled per-job figures are read against — a corroboration of the output, never an input to it. Good Jobs First: data-center megadeals average ~$2M/job (Illinois ~$1.4M; North Carolina/Apple ~$6.4M; Digital Realty >$2M). BOSC's modeled property-tax abatement alone is ~$0.6-2.1M/job; adding the sales-tax exemption puts the total squarely in this band — i.e. TYPICAL of a data-center megadeal, not an outlier. A corroboration of the ledger output, not an input.",
+      "sources": [
+        {
+          "name": "Good Jobs First — \"$2 million per job\"",
+          "year": 2025,
+          "url": "https://goodjobsfirst.org/study-state-and-local-governments-pay-2-million-job-tech-giants-data-centers/",
+          "contributes": "national average + per-state per-job subsidy figures"
+        },
+        {
+          "name": "Data Center Dynamics — coverage of the GJF study",
+          "year": 2025,
+          "url": "https://www.datacenterdynamics.com/en/news/research-us-state-subsidies-pay-2-million-per-data-center-job/",
+          "contributes": "independent reporting of the $2M/job finding"
+        }
+      ],
+      "resolving_record": null
+    },
+    {
+      "key": "salestax_exemption_dominance",
+      "label": "The sales-tax exemption is the dominant data-center subsidy",
+      "question": "Which subsidy is actually the larger one?",
+      "band": null,
+      "tag": "reference",
+      "confidence": "low",
+      "site_status": "comparative",
+      "drives": [],
+      "basis": "Every jurisdiction that has measured it reports the sales-tax exemption, not the property abatement, as the dominant cost. A qualitative corroboration from other states — it asserts no magnitude here, which is why it carries no band. Corroborates the ledger's \"second subsidy no one scores.\" Virginia's JLARC found the data-center sales-and-use exemption cost $1.02B in FY2024 — 81% of ALL state incentive spending. Ohio's own DCTE ballooned to ~$16B, prompting a 2025-26 move to suspend new grants (HB957). The exemption — not the property abatement — is repeatedly the largest line, at the scale of states that have actually measured it.",
+      "sources": [
+        {
+          "name": "Virginia JLARC — Data Centers in Virginia (Dec 2024)",
+          "year": 2024,
+          "url": "https://www.pwcva.gov/assets/2024-12/JLARC%20Report%20Summary_12-16-2024.pdf",
+          "contributes": "exemption = $1.02B FY2024, 81% of state incentive spend; ~25 direct jobs per 250,000 sq ft"
+        },
+        {
+          "name": "Virginia Business — JLARC $2.7B exemption (2021-2024)",
+          "year": 2024,
+          "url": "https://virginiabusiness.com/virginia-data-centers-tax-exemption-2-7-billion/",
+          "contributes": "independent reporting of the JLARC exemption magnitude"
+        },
+        {
+          "name": "Good Jobs First — Virginia data-center annual losses top $1B",
+          "year": 2025,
+          "url": "https://goodjobsfirst.org/virginia-data-center-annual-losses-top-1-billion/",
+          "contributes": "corroborating the exemption-dominated subsidy structure"
+        },
+        {
+          "name": "Ohio data-center exemption suspension (~$16B) / HB957",
+          "year": 2025,
+          "url": "https://trackbill.com/bill/ohio-house-bill-957-prohibit-new-data-center-sales-tax-exemptions-from-being-granted/2853899/",
+          "contributes": "Ohio-specific — the DCTE cost ballooned to ~$16B; bill to prohibit new exemptions"
+        }
+      ],
+      "resolving_record": null
+    }
+  ],
+  "profiles": [
+    {
+      "key": "stated",
+      "label": "Take the application at its word",
+      "note": "the CRA's own ~50 jobs; a mid building-shell share of the $500M",
+      "basis": "The reference corner — the agreement's own non-binding estimates, with the building share at the middle of the industry band.",
+      "building_share": 0.35,
+      "jobs": 50,
+      "abatement_usd": 43410938.0,
+      "kept_usd": 14470313.0,
+      "exemption_usd": 35343750.0,
+      "net_subsidy_usd": 78754688.0,
+      "abatement_per_job_usd": 868219.0,
+      "net_subsidy_per_job_usd": 1575094.0
+    },
+    {
+      "key": "equipment",
+      "label": "AI / GPU-dense (equipment-heavy)",
+      "note": "most value is servers + electrical — personal property, not abated — so the abated base shrinks",
+      "basis": "Shifts capex toward equipment: the property abatement shrinks and the sales-tax exemption grows. Bounded below by the priors' 0.20 shell-heavy end.",
+      "building_share": 0.25,
+      "jobs": 50,
+      "abatement_usd": 31007813.0,
+      "kept_usd": 10335938.0,
+      "exemption_usd": 40781250.0,
+      "net_subsidy_usd": 71789063.0,
+      "abatement_per_job_usd": 620156.0,
+      "net_subsidy_per_job_usd": 1435781.0
+    },
+    {
+      "key": "hyperscale",
+      "label": "Hyperscale-realistic (lean ops)",
+      "note": "data centers staff lean at steady state; the CRA warns actuals 'may differ significantly'",
+      "basis": "Holds the stated building share and turns only the job count to the lean-ops end the jobs_per_mw prior brackets — isolating the denominator's effect on the per-job figures.",
+      "building_share": 0.35,
+      "jobs": 30,
+      "abatement_usd": 43410938.0,
+      "kept_usd": 14470313.0,
+      "exemption_usd": 35343750.0,
+      "net_subsidy_usd": 78754688.0,
+      "abatement_per_job_usd": 1447031.0,
+      "net_subsidy_per_job_usd": 2625156.0
+    },
+    {
+      "key": "govcloud",
+      "label": "GovCloud / defense-hardened",
+      "note": "hardened construction lifts the real-property share, cleared ops run lean — a what-if profile, not a finding (#233)",
+      "basis": "The top corner of the band, and the one most easily misread. It turns BOTH knobs to the ends a high-authorization enclave would imply. It is a labeled counterfactual that prices what such a facility WOULD cost the public — it asserts nothing about what this facility is. The corpus does not establish a defense nexus and this profile is not evidence of one (docs/defense-nexus.md).",
+      "building_share": 0.5,
+      "jobs": 30,
+      "abatement_usd": 62015625.0,
+      "kept_usd": 20671875.0,
+      "exemption_usd": 27187500.0,
+      "net_subsidy_usd": 89203125.0,
+      "abatement_per_job_usd": 2067188.0,
+      "net_subsidy_per_job_usd": 2973438.0
+    }
+  ],
+  "lines": [
+    {
+      "key": "abatement",
+      "label": "Property-tax abatement (forgone)",
+      "band": {
+        "low": 31007813.0,
+        "central": 43410938.0,
+        "high": 62015625.0,
+        "unit": "usd",
+        "dist": "profiles"
+      },
+      "tag": "inference",
+      "confidence": "low",
+      "note": "75% / 15-yr on the real-property share of the stated capital investment",
+      "resolving_record": "the building/equipment capital split (CRA §2 detail, or the county's cost-benefit analysis)"
+    },
+    {
+      "key": "exemption",
+      "label": "Sales-tax exemption (if taken)",
+      "band": {
+        "low": 27187500.0,
+        "central": 35343750.0,
+        "high": 40781250.0,
+        "unit": "usd",
+        "dist": "profiles"
+      },
+      "tag": "open",
+      "confidence": "low",
+      "note": "DCTE on equipment + construction materials (R.C. 122.175); application [open]",
+      "resolving_record": "the equipment spend and its refresh schedule"
+    },
+    {
+      "key": "kept",
+      "label": "Un-abated property tax (the public keeps)",
+      "band": {
+        "low": 10335938.0,
+        "central": 14470313.0,
+        "high": 20671875.0,
+        "unit": "usd",
+        "dist": "profiles"
+      },
+      "tag": "inference",
+      "confidence": "low",
+      "note": "the 25% the abatement does not touch",
+      "resolving_record": "the building/equipment capital split (CRA §2 detail, or the county's cost-benefit analysis)"
+    },
+    {
+      "key": "net",
+      "label": "Net public subsidy (gives)",
+      "band": {
+        "low": 71789063.0,
+        "central": 78754688.0,
+        "high": 89203125.0,
+        "unit": "usd",
+        "dist": "profiles"
+      },
+      "tag": "inference",
+      "confidence": "low",
+      "note": "abatement + exemption, before the withheld school-compensation offset and before water / grid burdens, which are not monetized here",
+      "resolving_record": "the School District Compensation Agreement"
+    },
+    {
+      "key": "net_per_job",
+      "label": "Net public subsidy per job",
+      "band": {
+        "low": 1435781.0,
+        "central": 1575094.0,
+        "high": 2973438.0,
+        "unit": "usd_per_job",
+        "dist": "profiles"
+      },
+      "tag": "inference",
+      "confidence": "low",
+      "note": "the deciding number the withheld figures all move; read against the subsidy_per_job_benchmark axis, not on its own",
+      "resolving_record": "the School District Compensation Agreement + an actual headcount"
+    }
+  ],
+  "load_per_job": {
+    "key": "load_per_job",
+    "label": "Disclosed IT load per modeled job",
+    "band": {
+      "low": 5.0,
+      "central": 5.5,
+      "high": 10.0,
+      "unit": "MW_per_job",
+      "dist": "profiles"
+    },
+    "tag": "inference",
+    "confidence": "low",
+    "note": "IT load 250-300 MW (OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).) over 30-50 modeled jobs. The central is the reference corner — the load at the agreement's own stated headcount. This is the magnitude behind the structural reading that the public instrument is scaled to load and consumption rather than to employment; it is a ratio of two modeled quantities, not a finding about intent.",
+    "resolving_record": "an actual steady-state headcount + a disclosed IT load"
+  },
+  "method": "15-yr forgone real-property tax = capex x building_share x assessment_ratio x effective_commercial_mills x abatement_percent x term_years; forgone sales tax (the DCTE, if taken) = (1 - building_share) x capex x sales_and_use_rate x equipment_refresh; net subsidy = the two, before the withheld school-compensation offset. Each is priced at every scenario corner and published as the envelope of those corners.",
+  "disclaimer": "A labeled counterfactual, not a finding. Every figure here is a band across explicitly stated scenarios whose constants are all on the table — it prices what the public instrument WOULD cost under each set of assumptions, and asserts nothing about which one is true. The GovCloud / defense-hardened profile in particular is a what-if on two knobs (building share and headcount); it is NOT a claim that this facility does defense work. That question is open and the corpus does not answer it (docs/defense-nexus.md).",
+  "caveats": [
+    "Every figure here is a band across labeled scenarios, not an estimate of what will happen. The constants are all published above; turn any of them and the band moves.",
+    "The effective commercial millage is a STATED ASSUMPTION, not a cited Allen County, OH rate — it scales every dollar figure linearly and is the largest unforced uncertainty in the model.",
+    "The abatement is on real property only, so the building/equipment split moves money between the two subsidies rather than shrinking the total.",
+    "The sales-tax exemption line is conditional: whether this campus holds a DCTE agreement is not in the record.",
+    "The school-compensation offset is a wide screening range because the agreement's dollar terms are non-public — the net-subsidy line is stated before it, not net of it.",
+    "The single figure that would most narrow this band — the School District Compensation Agreement — is withheld by the county, which is why the band is wide."
+  ]
+}

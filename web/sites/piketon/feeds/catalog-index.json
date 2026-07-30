@@ -1,7 +1,7 @@
 {
   "site": "piketon",
-  "catalog_version": "c3896e1e0a879107d717ba9207e7187fb32e6c0f88a9da7c3d223ec39ad1fd2b",
-  "contract_version": "1.42.0",
+  "catalog_version": "ab1295b2db3bca2fa5e55f2e46324a84bcac547fb6698bafb59bad10eec409ce",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:piketon:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:piketon:abatement-parameters",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "abatement-parameters",
+      "title": "Pike County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:piketon:air-emission-factors",

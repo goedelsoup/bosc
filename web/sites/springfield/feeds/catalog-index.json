@@ -1,7 +1,7 @@
 {
   "site": "springfield",
-  "catalog_version": "684ff7534cc650e43105f631d5ba543b38cd9c75f12ffb54d472fbd2745f5b01",
-  "contract_version": "1.42.0",
+  "catalog_version": "000a0d2208221b7a8f5adc7c4e8465ec1e4968c00a1a916a33e75e84fc9038cd",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:springfield:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:springfield:abatement-parameters",
+      "kind": "dataset",
+      "site": "springfield",
+      "local_id": "abatement-parameters",
+      "title": "Clark County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:springfield:air-emission-factors",

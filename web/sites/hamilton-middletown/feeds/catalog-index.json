@@ -1,7 +1,7 @@
 {
   "site": "hamilton-middletown",
-  "catalog_version": "fba3937e6315414263e75066171b2d6d01912b48ac5d5046a3b32600e8fff2e6",
-  "contract_version": "1.42.0",
+  "catalog_version": "4d08fa48042be74e4379939227e66991805ac90579a20f2da754d195308b7d36",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:hamilton-middletown:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:hamilton-middletown:abatement-parameters",
+      "kind": "dataset",
+      "site": "hamilton-middletown",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:hamilton-middletown:air-emission-factors",
       "kind": "dataset",
       "site": "hamilton-middletown",
@@ -712,7 +720,7 @@
       "kind": "dataset",
       "site": "hamilton-middletown",
       "local_id": "enclave-federal-land",
-      "title": "Hamilton · Middletown Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "Hamilton · Middletown Federal-Enclave Boundary — Butler County, OH (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -720,7 +728,7 @@
       "kind": "dataset",
       "site": "hamilton-middletown",
       "local_id": "enclave-profile",
-      "title": "Hamilton · Middletown Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "Hamilton · Middletown Federal-Enclave Profile — Butler County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

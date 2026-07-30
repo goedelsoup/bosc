@@ -1,7 +1,7 @@
 {
   "site": "urbana",
-  "catalog_version": "8a2a471a2b85f5d270b79e99c6da98514769b7926c7ae9913803b4ac68949ea2",
-  "contract_version": "1.42.0",
+  "catalog_version": "94816b8f70e36c2d654c802f5b191c6f2d25b721d581bd3dca487d1eb7068d6b",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:urbana:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:urbana:abatement-parameters",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "abatement-parameters",
+      "title": "Champaign County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:urbana:air-emission-factors",

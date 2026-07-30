@@ -1,7 +1,7 @@
 {
   "site": "coshocton",
-  "catalog_version": "e09dce4024d5dfbffaae5c5fd03ae705e0b4700f9c27ff96adbc02c6101bc361",
-  "contract_version": "1.42.0",
+  "catalog_version": "e1e1f3021129d035bcb36d7d7a3f3ec94cdfeba3aac740d288188520a6d2e1ff",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:coshocton:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:coshocton:abatement-parameters",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:coshocton:air-emission-factors",
       "kind": "dataset",
       "site": "coshocton",
@@ -696,7 +704,7 @@
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "enclave-federal-land",
-      "title": "Coshocton Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "Coshocton Federal-Enclave Boundary — Coshocton County, OH (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -704,7 +712,7 @@
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "enclave-profile",
-      "title": "Coshocton Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "Coshocton Federal-Enclave Profile — Coshocton County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

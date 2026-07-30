@@ -420,6 +420,62 @@
     }
   },
   {
+    "id": "abatement-parameters",
+    "title": "Montgomery County, OH Abatement Parameters + What-If Scenario Knobs",
+    "scope": "reference",
+    "collection": "economics",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio Revised Code (5715.01 assessment ratio; 122.175 DCTE scope; 3735.671(A)(2) school-compensation floor) + Ohio Department of Taxation county sales-and-use rate + a stated commercial-millage assumption; the withheld-knob bands are cross-referenced to reference/datacenter-industry/priors.yaml",
+    "external_url": null,
+    "license": "U.S./state statutory material (public domain); the assumption bands are this project's stated modeling inputs",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-29",
+    "tags": [
+      "economics",
+      "abatement",
+      "cra",
+      "dcte",
+      "scenarios",
+      "assumptions",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/economics/abatement-parameters.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/economics/{site}/abatement-parameters.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "132664ffd7765939e9f0ab3f5bdf5cfe5e4e1bababf942a91509af64a7a68d6a",
+      "size_bytes": 9617,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio Revised Code (5715.01 assessment ratio; 122.175 DCTE scope; 3735.671(A)(2) school-compensation floor) + Ohio Department of Taxation county sales-and-use rate + a stated commercial-millage assumption; the withheld-knob bands are cross-referenced to reference/datacenter-industry/priors.yaml",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "air-emission-factors",
     "title": "Genset Emission Factors (EPA AP-42 §3.4)",
     "scope": "reference",

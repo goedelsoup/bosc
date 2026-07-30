@@ -1,7 +1,7 @@
 {
   "site": "sidney",
-  "catalog_version": "f2a86f2d1a60f3d48998e992547f8b21fb6143c352d6572fa5c86eb320513d39",
-  "contract_version": "1.42.0",
+  "catalog_version": "56861a591714afcfbed13753f1fd00a175adac9d56d34d10960ba622c0239553",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:sidney:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:sidney:abatement-parameters",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "abatement-parameters",
+      "title": "Shelby County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:sidney:air-emission-factors",

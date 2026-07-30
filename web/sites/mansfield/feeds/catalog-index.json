@@ -1,7 +1,7 @@
 {
   "site": "mansfield",
-  "catalog_version": "1f3a68e2ba637960bdb43f513b2f014280e3a3092c5212179c1b1f23f61a76cb",
-  "contract_version": "1.42.0",
+  "catalog_version": "94b4acc9110d786d177e9358488a32f6e21c6a48690083c71c757df3bb8b9052",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:mansfield:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:mansfield:abatement-parameters",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:mansfield:air-emission-factors",
       "kind": "dataset",
       "site": "mansfield",
@@ -696,7 +704,7 @@
       "kind": "dataset",
       "site": "mansfield",
       "local_id": "enclave-federal-land",
-      "title": "Mansfield Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "Mansfield Federal-Enclave Boundary — Richland County (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -704,7 +712,7 @@
       "kind": "dataset",
       "site": "mansfield",
       "local_id": "enclave-profile",
-      "title": "Mansfield Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "Mansfield Federal-Enclave Profile — Richland County (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

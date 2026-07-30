@@ -1,7 +1,7 @@
 {
   "site": "greenville",
-  "catalog_version": "ab19c013d1eeb143784bf0398cdfd4fec5957ed6eda298cf7db55c260102ed6b",
-  "contract_version": "1.42.0",
+  "catalog_version": "b73a3edb23423848f1c0f914ce3aba9c702c5a730e5ea4dcd674386d17b8a889",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:greenville:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:greenville:abatement-parameters",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:greenville:air-emission-factors",
       "kind": "dataset",
       "site": "greenville",
@@ -704,7 +712,7 @@
       "kind": "dataset",
       "site": "greenville",
       "local_id": "enclave-federal-land",
-      "title": "Greenville · Darke Co Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "Greenville · Darke Co Federal-Enclave Boundary — Darke County, OH (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -712,7 +720,7 @@
       "kind": "dataset",
       "site": "greenville",
       "local_id": "enclave-profile",
-      "title": "Greenville · Darke Co Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "Greenville · Darke Co Federal-Enclave Profile — Darke County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

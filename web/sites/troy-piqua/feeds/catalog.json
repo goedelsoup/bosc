@@ -448,6 +448,62 @@
     }
   },
   {
+    "id": "abatement-parameters",
+    "title": "Miami County, OH Abatement Parameters + What-If Scenario Knobs",
+    "scope": "reference",
+    "collection": "economics",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio Revised Code (5715.01 assessment ratio; 122.175 DCTE scope; 3735.671(A)(2) school-compensation floor) + Ohio Department of Taxation county sales-and-use rate + a stated commercial-millage assumption; the withheld-knob bands are cross-referenced to reference/datacenter-industry/priors.yaml",
+    "external_url": null,
+    "license": "U.S./state statutory material (public domain); the assumption bands are this project's stated modeling inputs",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-29",
+    "tags": [
+      "economics",
+      "abatement",
+      "cra",
+      "dcte",
+      "scenarios",
+      "assumptions",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/economics/abatement-parameters.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/economics/{site}/abatement-parameters.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "132664ffd7765939e9f0ab3f5bdf5cfe5e4e1bababf942a91509af64a7a68d6a",
+      "size_bytes": 9617,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio Revised Code (5715.01 assessment ratio; 122.175 DCTE scope; 3735.671(A)(2) school-compensation floor) + Ohio Department of Taxation county sales-and-use rate + a stated commercial-millage assumption; the withheld-knob bands are cross-referenced to reference/datacenter-industry/priors.yaml",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "air-emission-factors",
     "title": "Genset Emission Factors (EPA AP-42 §3.4)",
     "scope": "reference",
@@ -1008,7 +1064,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "d69863d130a518baf544bb97818770969e6d3bef345716430468434c868a719b",
+      "size_bytes": 31823,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "citation": {
       "source": "DoD MIRTA (Military Installations, Ranges, and Training Areas) site-boundary register, published via Esri US Federal Data; boundaries encompass federally owned or otherwise managed lands as defined in the Base Structure Report",
       "source_kind": "connector",
@@ -1050,7 +1114,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "57b3e2f7ad57b80db208aae924e2588060359da31ace7b43efd47c2afdcd89c1",
+      "size_bytes": 12286,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "citation": {
       "source": "DoD MIRTA (site boundary) × EPA SDWIS (public water systems) × EPA ECHO CWA (NPDES discharges) × EPA RSEI/TRI (toxic releases), joined to the enclave's committed grounding record (its CERCLA §120 Federal Facility Agreement) — a multi-source assembly",
       "source_kind": "derived",
@@ -2590,10 +2662,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5779cd9e898f577d98ee88a01dbadc6dcfa84d8fe15e661d5c479c40a06bf4cd",
-      "size_bytes": 2732458,
+      "sha256": "48b14c7a9814753a8396096a2f30cc27d8312b89298deef4243d6a39da248d8f",
+      "size_bytes": 2738433,
       "lfs_materialized": true,
-      "file_count": 22,
+      "file_count": 23,
       "stale": false,
       "asof": null
     },

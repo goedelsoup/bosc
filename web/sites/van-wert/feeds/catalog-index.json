@@ -1,7 +1,7 @@
 {
   "site": "van-wert",
-  "catalog_version": "716ac0155c56fa0cdd60e9a61d6956695420004735543a98aafffdf9aa30bc52",
-  "contract_version": "1.42.0",
+  "catalog_version": "a3424b597045f6d70aead89f4cd6d8cafdf3cf48630505c520af4cc3790cccef",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:van-wert:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:van-wert:abatement-parameters",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "abatement-parameters",
+      "title": "Van Wert County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:van-wert:air-emission-factors",

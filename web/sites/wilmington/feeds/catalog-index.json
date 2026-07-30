@@ -1,7 +1,7 @@
 {
   "site": "wilmington",
-  "catalog_version": "82522e51067d881fbdfc9f28056386456f5f43d3a41fcba122a03822312f8b9e",
-  "contract_version": "1.42.0",
+  "catalog_version": "690c6a0f2b6ef9000a417482997e4dc0b735aa7f83d316cc2ca4ad10c3223932",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:wilmington:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:wilmington:abatement-parameters",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "abatement-parameters",
+      "title": "Clinton County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:wilmington:air-emission-factors",
