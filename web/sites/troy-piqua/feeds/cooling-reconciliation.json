@@ -1,0 +1,151 @@
+{
+  "site": "troy-piqua",
+  "asof": "2026-07-11",
+  "source": "data/reference/oepa/cooling-reconciliation.yaml — regenerate: watermark cooling-reconcile --write",
+  "caveats": [
+    "The harness recommends; it never mutates the pinned cooling model — re-archetyping is a reviewed edit with the instrument cited.",
+    "A back-solved cycles-of-concentration is an [inference] bracket, never a headline scalar.",
+    "A gap (no documented makeup or blowdown) is an [open] records-request lead — never read as 'confirmed dry'.",
+    "A reservation ceiling (a will-serve / water-agreement figure) is not a discharge/withdrawal instrument — it keeps the archetype pin and is never collapsed into a headline consumptive figure.",
+    "An operator self-report lands on its own disclosed_* slot, never on documented_*, and cannot upgrade the claim's source.",
+    "The corroborators (air-permit PM, Tier II chemistry) are secondary — recorded and reconciled against the claim, never the sole basis for a re-archetype and never changing the outcome."
+  ],
+  "candidates": [
+    {
+      "site": "troy-piqua",
+      "facility": "Project Klondike",
+      "is_control": false,
+      "claimed_archetype": "closed_loop_dry",
+      "claim_source": "reference",
+      "claim_citation": "[reference] the City of Piqua's public FAQ describes closed-loop cooling with only an 'initial fill-up' + occasional top-offs (domestic-only ongoing use) — the low-water CLAIM under test here. The profile itself deliberately pins cooling_model=UNKNOWN (the FAQ-vs-reservation conflict is unresolved, lead #1486); this reconciliation TESTS the FAQ's dry framing, it does not adopt it. See data/extracted/troy-piqua/data-centers.md 'Water / hydrology hook'.",
+      "account": {
+        "archetype": "closed_loop_dry",
+        "it_load": {
+          "value": 113.8,
+          "unit": "MW",
+          "source": "derived",
+          "citation": "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/air-permit MW stays [open] (a direct OEPA eSuite/DAPC search for 'J5 LLC' / 'Shaytura LLC' / the Farrington Road address found no PTI filing, confirmed-negative as of 2026-07-11). Derived from the disclosed 700,000 sq ft gross floor area (two ~350,000 sq ft buildings; City of Piqua project page piquaoh.gov/1673, approved by the Piqua City Commission 4-0 on 2025-11-03) x the same whole-building IT power-density screening band used elsewhere in the network (75-250 W/sq ft, the Urbana Technology Hub precedent, #1327): 52.5 MW low, ~113.8 MW central (MW-midpoint), 175 MW high (watermark.facility.screening — #1641 D2). Unlike Urbana, this band is NOT bounded by a disclosed cooling design — the facility's cooling_model stays UNKNOWN pending #1486 (the unreconciled closed-loop-FAQ-vs-2.0-MGD-water-agreement conflict). A candidate-site tracker (ryangrissinger.com, OH-DC-0028) reports ~180 MW peak IT for the initial two buildings — [reported], not officially disclosed (the City page and Data Center Dynamics state capacity figures 'weren't shared') — sitting just above (~3%) the top of this screening bracket, within the screening estimate's uncertainty (a ~3% gap, not rounding), not a reconciliation. Replace with the disclosed load when the 40-yr AES Ohio franchise ordinance's load schedule, an air permit, or a PJM interconnection filing surfaces it.",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_makeup": {
+          "value": 0.0,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only)",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_consumptive": {
+          "value": 0.0,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "central consumptive = 0 MGD intake x 0 consumptive fraction (sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only))",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_blowdown": {
+          "value": 0.0,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "predicted blowdown = makeup 0 - evaporation 0 MGD for the closed_loop_dry archetype",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "documented_makeup": null,
+        "documented_blowdown": null,
+        "reserved_makeup": {
+          "value": 2.0,
+          "unit": "MGD",
+          "source": "reference",
+          "citation": "[verified summary] RESERVATION CEILING, not metered use: the negotiated City of Piqua Water & Wastewater Agreement (effective 2026-01-23) reserves up to 500,000 GPD (Tier I) scaling to 2.0 MGD (Tier II / full operation) — ~30% of Piqua's ~6.75 MGD permitted intake. From secondary summaries (Miami Valley Today; civiccapacity.com); the executed agreement text is a C2 pull target (#1486/#1688). A reserved capacity ceiling, NOT a withdrawal record.",
+          "confidence": "high",
+          "asof": "2026-01-23",
+          "low": null,
+          "high": null
+        },
+        "reserved_blowdown": {
+          "value": 1.0,
+          "unit": "MGD",
+          "source": "reference",
+          "citation": "[verified summary] RESERVATION CEILING, not metered discharge: ~1.0 MGD reserved wastewater under the same Water & Wastewater Agreement (Miami Valley Today; civiccapacity.com) — a reserved capacity that bundles domestic sewage (so it OVER-states cooling blowdown and the back-solved CoC is a lower bound). Executed agreement text is a C2 pull target (#1486/#1688).",
+          "confidence": "high",
+          "asof": "2026-01-23",
+          "low": null,
+          "high": null
+        },
+        "disclosed_makeup": null,
+        "disclosed_ceiling": null,
+        "disclosed_cycles": null,
+        "backsolved_cycles": {
+          "value": 2.0,
+          "unit": "ratio",
+          "source": "derived",
+          "citation": "back-solved CoC = reserved makeup 2 MGD / reserved wastewater 1 MGD ([inference]: the ratio of two RESERVATION CEILINGS, not metered use — a bracket, and an upper-bound shape only, never a headline consumptive)",
+          "confidence": "medium",
+          "asof": null,
+          "low": 1.7,
+          "high": 2.3
+        },
+        "seasonality_warm_ratio": null
+      },
+      "outcome": "reservation_conflict",
+      "recommended_archetype": null,
+      "recommended_source": null,
+      "kept_archetype": "unknown",
+      "lead": {
+        "kind": "records-request",
+        "site": "troy-piqua",
+        "facility": "Project Klondike",
+        "subject": "cooling-water account — reconcile the reserved 2 MGD makeup vs the closed-loop claim",
+        "records_sought": [
+          "executed water & wastewater service agreement (the instrument text, not a summary)",
+          "metered water-service use (actual makeup withdrawal vs the reserved ceiling)",
+          "cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)",
+          "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
+          "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits",
+          "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)"
+        ],
+        "holder": "City / municipal water-sewer authority serving troy-piqua; Ohio EPA (NPDES / OHD000001); Ohio EPA / regional air agency (DAPC); SERC / LEPC",
+        "rationale": "A disclosed reservation ceiling (2 MGD) is disproportionate to the closed_loop_dry (source=reference) low-water claim and contradicts it — but a reservation is a ceiling, not a metered use, and not a discharge/withdrawal instrument, so it sharpens the standing water lead (#1486) without licensing a re-archetype. Pull the executed instrument + metered use to resolve which framing governs the consumptive screen.",
+        "epic_ref": "#1688 (C2); #1486",
+        "tag": "[open]"
+      },
+      "corroborators": {
+        "air_permit": {
+          "state": "not_on_record",
+          "stance": "silent",
+          "tower_count": null,
+          "pm10_tpy": null,
+          "pm25_tpy": null,
+          "citation": "no air permit wired for Project Klondike (SiteFacility.air_permit_relpath is None)",
+          "tag": "[open]",
+          "confidence": "low",
+          "finding": "No air permit on file for Project Klondike: whether its cooling towers are permitted PM (drift) sources cannot be checked against the closed_loop_dry claim — a records-request item (facility air PTI/PTIO), never read as 'no cooling tower'."
+        },
+        "tier2_chemistry": {
+          "state": "not_on_record",
+          "stance": "silent",
+          "chemicals": [],
+          "citation": "Tier II / EPCRA-312 cooling-water treatment inventory not on record (SERC/LEPC-held, not published to ECHO)",
+          "tag": "[open]",
+          "confidence": "low",
+          "finding": "No Tier II / EPCRA-312 cooling-chemistry inventory on file for Project Klondike: heavy biocide / scale-inhibitor treatment scales with evaporative cycling and would corroborate over-cycling against the closed_loop_dry claim — a records-request item (LEPC/SERC filing), not yet obtainable."
+        },
+        "net_stance": "silent",
+        "summary": "Neither corroborator is on record for Project Klondike (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
+      },
+      "tag": "[open]",
+      "confidence": "medium",
+      "finding": "Reserved 2 MGD makeup contradicts the closed_loop_dry FAQ claim's ~0 MGD prediction — but a reservation is a ceiling, not a discharge/withdrawal instrument, so keep the archetype pin (no [verified] re-archetype) and sharpen the water lead (→ C2 records request #1688). Back-solved CoC 2 (1.7-2.3) off the reservation ceilings ([inference], not metered use). The reserved figure is an upper-bound ceiling, NOT a headline consumptive. Neither corroborator is on record for Project Klondike (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
+    }
+  ]
+}

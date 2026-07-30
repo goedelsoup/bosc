@@ -1,10 +1,10 @@
 {
   "site": "springfield",
   "bundle_version": "1.0.0",
-  "contract_version": "1.44.0",
-  "generated_at": "2026-07-30T13:47:12+00:00",
-  "feed_count": 32,
-  "row_total": 406,
+  "contract_version": "1.45.0",
+  "generated_at": "2026-07-30T14:48:57+00:00",
+  "feed_count": 33,
+  "row_total": 407,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -214,6 +214,14 @@
       "schema": "schemas/air-scenarios.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "cooling-reconciliation",
+      "path": "feeds/cooling-reconciliation.json",
+      "media_type": "application/json",
+      "schema": "schemas/cooling-reconciliation.schema.json",
+      "kind": "object",
+      "count": 1
     },
     {
       "name": "catalog",

@@ -1,0 +1,143 @@
+{
+  "site": "springfield",
+  "asof": "2026-07-11",
+  "source": "data/reference/oepa/cooling-reconciliation.yaml — regenerate: watermark cooling-reconcile --write",
+  "caveats": [
+    "The harness recommends; it never mutates the pinned cooling model — re-archetyping is a reviewed edit with the instrument cited.",
+    "A back-solved cycles-of-concentration is an [inference] bracket, never a headline scalar.",
+    "A gap (no documented makeup or blowdown) is an [open] records-request lead — never read as 'confirmed dry'.",
+    "A reservation ceiling (a will-serve / water-agreement figure) is not a discharge/withdrawal instrument — it keeps the archetype pin and is never collapsed into a headline consumptive figure.",
+    "An operator self-report lands on its own disclosed_* slot, never on documented_*, and cannot upgrade the claim's source.",
+    "The corroborators (air-permit PM, Tier II chemistry) are secondary — recorded and reconciled against the claim, never the sole basis for a re-archetype and never changing the outcome."
+  ],
+  "candidates": [
+    {
+      "site": "springfield",
+      "facility": "5C Data Centers \"CMH01\"",
+      "is_control": false,
+      "claimed_archetype": "closed_loop_dry",
+      "claim_source": "reference",
+      "claim_citation": "[reference] Closed-loop / direct-liquid recirculating cooling, disclosed 'not evaporative' by the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs); up to 300,000 gal/day permitted from the municipal system at an >80degF extreme-heat max ('near zero' most of the year, ~30k gal/day realistic), with an on-site reservoir under study to avoid the municipal tap. A largely dry recirculating design undercuts the Mad River buried-valley abstraction thesis. B3 (#1683) ran the A3 cooling-cycling reconciliation harness (`watermark cooling-reconcile`) on this claim: with no matching makeup record on file (the Ohio DNR WWFRP water-withdrawal registry has no Clark County withdrawal pull built) and no matching facility-own discharge record on file (OHD000001 still draft, unlinked to the facility by name; no facility-specific NPDES/DMR located) — an absence of records, not evidence of zero use — the outcome is a `gap` that KEEPS this [reference] pin. The 300,000 gal/day is a permitted-withdrawal CEILING self-disclosed by this same FAQ — NOT an independently-negotiated reservation, so (unlike Troy-Piqua B1) it is not a reservation_conflict: a dry loop sits far below it, and a self-report cannot corroborate its own claim. The actual metered withdrawal vs the ceiling is sharpened into a C2 records request (#1688/#1415). Not a document extraction; refine to [verified] on an ingested mechanical/plumbing permit. The receiving-water / source-water screen is the water sub-issue (#1415).",
+      "account": {
+        "archetype": "closed_loop_dry",
+        "it_load": {
+          "value": 100.0,
+          "unit": "MW",
+          "source": "derived",
+          "citation": "[verified/inference] DISCLOSURE-anchored bracket — NOT an air-permit figure (the disclosed interconnection/air-permit MW stays [open] until the Ohio EPA Air PTI lands, #1414). Anchored on two disclosed hard figures: the City of Springfield 5C FAQ 'up to 150 MW max load' (springfieldohio.gov/5c-data-center-faqs) as the HIGH, and the announced first tranche — a 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12) — as the LOW; the 100 MW central is the midpoint of that disclosed 50-150 MW corridor. The register (data/extracted/springfield/data-centers.md, hydrology hook) treats the 150 MW max as the IT-load screening input. The ~900 MW ultimate buildout (datacentermap facility 'CMH01') and the 75/200 MW interim-phase figures are [open] — unconfirmed by any primary instrument and DELIBERATELY EXCLUDED from this band; the air permit settles the stack. Crusoe (75 MW, parcel undisclosed) is a SEPARATE register and is not blended in. Replace with the disclosed load when the Ohio EPA Air PTI or a PJM interconnection filing names 5C's MW.",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_makeup": {
+          "value": 0.0,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only)",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_consumptive": {
+          "value": 0.0,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "central consumptive = 0 MGD intake x 0 consumptive fraction (sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only))",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "predicted_blowdown": {
+          "value": 0.0,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "predicted blowdown = makeup 0 - evaporation 0 MGD for the closed_loop_dry archetype",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "documented_makeup": null,
+        "documented_blowdown": null,
+        "reserved_makeup": null,
+        "reserved_blowdown": null,
+        "disclosed_makeup": {
+          "value": 0.03,
+          "unit": "MGD",
+          "source": "reference",
+          "citation": "[reference] operator-DISCLOSED 'realistic' ongoing draw — NOT a metered use: the City of Springfield 5C FAQ characterizes ongoing municipal-system use as ~30,000 gal/day (~0.03 MGD) 'realistic' with 'near zero' most of the year, under the up-to-300,000 gal/day permitted peak ceiling. A self-report from the same source as the 'not evaporative' claim (cannot upgrade the [reference] pin); ~0.03 MGD is a small fraction of the ~1 MGD+ an evaporative tower at ~100-150 MW would draw — consistent with 'not evaporative', but unverified. Metered use is a C2 target.",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "disclosed_ceiling": {
+          "value": 0.3,
+          "unit": "MGD",
+          "source": "reference",
+          "citation": "[reference] SELF-DISCLOSED permit CEILING, not metered use and not a negotiated reservation: the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) discloses 'up to 300,000 gal/day' (0.3 MGD) permitted from the municipal system at an >80degF extreme-heat MAX, with use 'near zero' most of the year. A permitted PEAK ceiling from the SAME source that makes the 'not evaporative' closed-loop claim (so it cannot corroborate the claim without circularity), and a self-report rather than an independently-negotiated will-serve reservation (so it is not a reservation_conflict — a genuinely dry loop sits far below it). The actual metered municipal withdrawal against this ceiling is the missing measurement (C2, #1415/#1688).",
+          "confidence": "high",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "disclosed_cycles": null,
+        "backsolved_cycles": null,
+        "seasonality_warm_ratio": null
+      },
+      "outcome": "gap",
+      "recommended_archetype": null,
+      "recommended_source": null,
+      "kept_archetype": null,
+      "lead": {
+        "kind": "records-request",
+        "site": "springfield",
+        "facility": "5C Data Centers \"CMH01\"",
+        "subject": "cooling-water account — reconcile the actual municipal withdrawal vs the disclosed 0.3 MGD (300,000 gal/day) permitted ceiling for the 'not evaporative' claim",
+        "records_sought": [
+          "metered water-service use (actual municipal withdrawal vs the disclosed permitted ceiling — is the ceiling approached, or does a dry loop sit far below it?)",
+          "the closed-loop / direct-liquid mechanical-plumbing permit (the instrument that would confirm 'not evaporative')",
+          "cooling-tower / low-volume-wastewater blowdown DMR (facility-own or OHD000001 coverage)",
+          "on-site reservoir / alternate-supply plan (the disclosed municipal-tap-avoidance study)",
+          "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
+          "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits",
+          "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)"
+        ],
+        "holder": "City / municipal water-sewer authority serving springfield; Ohio EPA (NPDES / OHD000001; Air PTI); Ohio EPA / regional air agency (DAPC); SERC / LEPC",
+        "rationale": "A closed_loop_dry claim (source=reference) disclosed EXPLICITLY 'not evaporative', with a SELF-DISCLOSED permitted municipal-withdrawal ceiling of 0.3 MGD (300,000 gal/day) (an >80degF extreme-heat peak, 'near zero' most of the year) — a permitted PEAK ceiling from the claim's own source, NOT an independently-negotiated reservation, so it is not a reservation conflict: a genuinely dry loop sits far below it. But a self-report is not a metered instrument, so it can neither confirm 'not evaporative' nor re-archetype. Pull the actual metered withdrawal to test whether use approaches the 0.3 MGD (300,000 gal/day) ceiling or sits far below it — a screening signal only, not proof of mechanism: evaporative vs. dry is established by an ingested mechanical/plumbing permit or a facility-own blowdown/discharge record (an on-site reservoir could also supply cooling), not the withdrawal figure alone — plus the blowdown / OHD000001 to complete the account (#1415).",
+        "epic_ref": "#1688 (C2); #1415",
+        "tag": "[open]"
+      },
+      "corroborators": {
+        "air_permit": {
+          "state": "not_on_record",
+          "stance": "silent",
+          "tower_count": null,
+          "pm10_tpy": null,
+          "pm25_tpy": null,
+          "citation": "no air permit wired for 5C Data Centers \"CMH01\" (SiteFacility.air_permit_relpath is None)",
+          "tag": "[open]",
+          "confidence": "low",
+          "finding": "No air permit on file for 5C Data Centers \"CMH01\": whether its cooling towers are permitted PM (drift) sources cannot be checked against the closed_loop_dry claim — a records-request item (facility air PTI/PTIO), never read as 'no cooling tower'."
+        },
+        "tier2_chemistry": {
+          "state": "not_on_record",
+          "stance": "silent",
+          "chemicals": [],
+          "citation": "Tier II / EPCRA-312 cooling-water treatment inventory not on record (SERC/LEPC-held, not published to ECHO)",
+          "tag": "[open]",
+          "confidence": "low",
+          "finding": "No Tier II / EPCRA-312 cooling-chemistry inventory on file for 5C Data Centers \"CMH01\": heavy biocide / scale-inhibitor treatment scales with evaporative cycling and would corroborate over-cycling against the closed_loop_dry claim — a records-request item (LEPC/SERC filing), not yet obtainable."
+        },
+        "net_stance": "silent",
+        "summary": "Neither corroborator is on record for 5C Data Centers \"CMH01\" (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
+      },
+      "tag": "[open]",
+      "confidence": "low",
+      "finding": "No metered makeup or blowdown for 5C Data Centers \"CMH01\" to test the closed_loop_dry 'not evaporative' claim (source=reference) — an [open] gap, not 'confirmed dry'. The claim's own source self-discloses a permitted municipal-withdrawal CEILING of 0.3 MGD (300,000 gal/day, an >80degF extreme-heat max), ~0.03 MGD 'realistic' and near zero most of the year; the pinned archetype predicts ~0 MGD — far below the ceiling. A permitted PEAK ceiling self-disclosed by the claim's OWN source is NOT a reservation conflict (a genuinely dry loop sits far below it) and is a self-report, not a metered instrument — so it can neither corroborate 'not evaporative' (circular) nor re-archetype; the actual metered withdrawal against the ceiling is the missing measurement (→ C2 records request #1688/#1415). Keep the pin [reference]. Neither corroborator is on record for 5C Data Centers \"CMH01\" (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
+    }
+  ]
+}
