@@ -28,6 +28,8 @@ import {
   storyHomeHref,
 } from "@watermark/core/walk";
 import { getCollection } from "astro:content";
+import { chapterNumber, STUDY_PARTS, studyChapter } from "@watermark/core/study";
+import { withSite } from "@watermark/core/site";
 
 export async function getStaticPaths() {
   const selectable = new Set(SITES.filter((s) => s.selectable).map((s) => s.slug));
@@ -74,6 +76,17 @@ const prevHref = prev?.live ? chapterHref(story, prev.slug) : undefined;
 const nextHref = next?.live ? chapterHref(story, next.slug) : undefined;
 const pageTitle = fm.pageTitle ?? `${ch.title} — Chapter ${step}`;
 
+// The walk↔study cross-link, walk side (the missing-impact-study epic): one hop to the study
+// chapter this walk chapter teaches toward. `studyChapter` throws on a typo'd id — a build
+// failure, not a silent dead link.
+const studyTarget = "studySection" in fm && fm.studySection ? studyChapter(fm.studySection) : null;
+const studyPart = studyTarget ? STUDY_PARTS.find((p) => p.id === studyTarget.part) : null;
+// One prebuilt label — expression-boundary whitespace collapses in the template.
+const studyLabel =
+  studyTarget && studyPart
+    ? `The impact study, §${studyPart.num}·${chapterNumber(studyTarget.id)} ${studyTarget.title}`
+    : null;
+
 const networkSite = siteForSlug(slug);
 const breadcrumbs = [
   { label: "Network", href: withBase("/network") },
@@ -111,6 +124,13 @@ const articleLd = Astro.site
 
         <Content components={STORY_COMPONENTS} />
 
+        {studyTarget && studyPart && (
+          <p class="walk-studylink">
+            The finding this chapter teaches toward →{" "}
+            <a href={withSite(`/study/${studyTarget.id}`)}>{studyLabel}</a>
+          </p>
+        )}
+
         <nav class="walk-nav" aria-label="Chapter navigation">
           {
             prev?.live ? (
@@ -136,3 +156,20 @@ const articleLd = Astro.site
     </Base>
   )
 }
+
+<style>
+  .walk-studylink {
+    font-size: 0.9rem;
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 0.9rem;
+    margin-top: 1.8rem;
+  }
+  .walk-studylink a {
+    font-weight: 700;
+    color: var(--bosc-forest);
+    text-decoration: none;
+  }
+  .walk-studylink a:hover {
+    text-decoration: underline;
+  }
+</style>

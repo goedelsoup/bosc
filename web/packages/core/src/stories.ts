@@ -25,6 +25,8 @@ export interface StoryChapterSpine {
   anchorRecordRels: string[];
   live: boolean;
   eyebrow?: string;
+  /** The impact-study chapter this walk chapter teaches toward (walk↔study cross-link). */
+  studySection?: string;
 }
 
 /** Story-level metadata not carried per chapter — supplied by the registry (`StoryRef`). */
@@ -52,6 +54,7 @@ export function buildStory(
     skill: c.skill,
     anchor: c.anchor,
     live: c.live,
+    ...(c.studySection ? { studySection: c.studySection } : {}),
   }));
   const anchors: Record<string, WalkAnchor> = {};
   for (const c of ordered) {
@@ -161,6 +164,7 @@ export function buildAllStories(): Story[] {
       anchorRecordRels: Array.isArray(fm.anchorRecordRels) ? (fm.anchorRecordRels as string[]) : [],
       live: fm.live !== false, // STORY_CHAPTER_SCHEMA defaults live=true
       eyebrow: fm.eyebrow != null ? String(fm.eyebrow) : undefined,
+      studySection: fm.studySection != null ? String(fm.studySection) : undefined,
     });
   }
   return [...groups.values()].map((g) =>

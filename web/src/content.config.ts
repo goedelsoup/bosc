@@ -28,6 +28,11 @@ export const STORY_CHAPTER_SCHEMA = z.object({
   pageTitle: z.string().optional(),
   /** Meta description for the chapter page. */
   description: z.string().optional(),
+  /** The impact-study chapter this walk chapter teaches toward (a `STUDY_CHAPTERS` id) —
+   *  the one-hop-each-way walk↔study cross-link (the missing-impact-study epic). The walk
+   *  teaches the record-reading; the study owns the finding. Validated at render by
+   *  `studyChapter` (an unknown id fails the build, like `getSection`). */
+  studySection: z.string().optional(),
 });
 
 // A story's on-ramp / home (`_home.mdx`): the prose-heavy intro the index route renders. Data
@@ -51,6 +56,35 @@ const stories = defineCollection({
   // A chapter, or the story home (`_home.mdx`). Chapters carry a numeric `step`; the home a
   // `kind: home`. `loadStories` / the chapter route key off `step` to tell them apart.
   schema: z.union([STORY_CHAPTER_SCHEMA, STORY_HOME_SCHEMA]),
+});
+
+// The `study` collection (the missing-impact-study epic, PR6): OPTIONAL per-site narrative
+// slotted into an impact-study chapter. Unlike `stories`, the study's spine is the registry
+// (`@watermark/core/study`), NOT the MDX — a note enriches a chapter; it never creates one.
+// Files live at `src/content/study/<site>/<chapter>.mdx`; a facility-scoped note at
+// `<site>/<facility-key>/<chapter>.mdx` wins when that facility's study is being read (the
+// multi-project seam, baked into the lookup from day one). Bodies compose STUDY_COMPONENTS
+// with no imports, exactly like walk chapters.
+export const STUDY_NOTE_SCHEMA = z.object({
+  /** Must equal a `STUDY_CHAPTERS` id — validated at lookup by the shell, not by zod
+   *  (this config can't import `@watermark/core/study` without dragging the bundle reader
+   *  into the content-config graph). */
+  chapter: z.string().min(1),
+  /** Facility key this note is scoped to; absent = the site's primary-facility study. */
+  facility: z.string().optional(),
+  /** Unpublish a drafted note without deleting it. */
+  live: z.boolean().default(true),
+  /** Dateline shown with the note (ISO date). */
+  updated: z.string().optional(),
+});
+
+const study = defineCollection({
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/study",
+    generateId: ({ entry }) => entry.replace(/\.(md|mdx)$/, ""),
+  }),
+  schema: STUDY_NOTE_SCHEMA,
 });
 
 // The `narrative` collection sources the public prose under the repo-root `docs/`
@@ -99,4 +133,4 @@ const legal = defineCollection({
   }),
 });
 
-export const collections = { narrative, reference, legal, stories };
+export const collections = { narrative, reference, legal, stories, study };
