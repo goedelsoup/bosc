@@ -10,6 +10,15 @@
 > **where a load-bearing figure is withheld or non-binding, it is neither blanked nor guessed at a single value — it is modeled as a _band across explicit scenarios_, every constant on the table.**
 > A band you can audit beats a point estimate you can't, and beats a blank. The
 > defense/GovCloud case appears here as one scenario _profile_, not a finding.
+>
+> **The model is code, and this page quotes it.** Since issue #1665 every figure below is
+> computed by [`watermark.economics.scenarios`](../src/watermark/economics/scenarios.py) from
+> the committed CRA extraction, this county's cited tax parameters
+> ([`abatement-parameters.yaml`](../data/reference/economics/abatement-parameters.yaml)) and the
+> pooled industry priors, and published as the **`economics-scenarios`** bundle feed — the same
+> object the site renders. Run `watermark scenarios` to print it. Where this page and the feed
+> disagree, the feed is right and this page is stale. See
+> [ECONOMICS §7](ECONOMICS.md#7-the-scenario-bands--where-these-numbers-are-computed).
 
 The plainest way to say what this report is: the public side of this deal can be added
 up, but four of the numbers that decide whether it was a good one are not in the record.
@@ -131,11 +140,20 @@ On the initial purchase that is on the order of _half_ the property-tax abatemen
 hardware is the part that doesn't sit still: AI-class racks turn over on a short cycle
 (the relator's appendix cites ~30–40% of cost replaced annually, GPU servers at
 $200k–$515k each) `[verified: data appendix]`, so across the 15-year window a single
-refresh roughly **doubles** the exempted total — into the **~$25M–$47M** range, where it
-can _approach or exceed_ the abatement. The building share you can't see shifts the
-subsidy between two pots; it does not shrink the total. Add the two and the public's
-fifteen-year give is on the order of **~$45M–$90M**, depending entirely on four numbers
-the record withholds.
+refresh roughly **doubles** the exempted total, where it can _approach or exceed_ the
+abatement. Priced across the four scenario corners at the central refresh, the exemption
+line is **~$27M–$41M** `[inference: computed]` — the feed's `exemption` band. The building
+share you can't see shifts the subsidy between two pots; it does not shrink the total.
+
+**A correction the typed model makes to an earlier version of this page.** This section
+once added the two bands' independent extremes and reported the public's give as
+"~$45M–$90M". That double-counts, because the building share moves the two lines in
+_opposite_ directions: the corner with the smallest abatement has the largest exemption,
+so no single scenario sits at both extremes. Pricing each corner and taking the envelope
+of the sums gives the honest band — **~$72M–$89M** over fifteen years
+`[inference: computed]`, with the take-the-application-at-its-word case at **~$79M**. The
+range is narrower than the naive sum and its floor is far higher; the argument does not
+depend on the width.
 
 That the exemption is the heavier subsidy is not a screening artifact — it is what every
 jurisdiction that has actually measured it reports. Virginia's legislative audit found its
@@ -177,24 +195,28 @@ roadwork exposure is itself `[open]` `[inference]`.
 ## the ledger, in a band
 
 Set it on one sheet — a fifteen-year public ledger, every uncertain line a range, not a
-point:
+point. These are the `economics-scenarios` feed's `lines`, each the envelope of the four
+priced corners:
 
 | | 15-year figure | Register |
 |---|---|---|
 | **Gives** | | |
 | Property-tax abatement | ~$31M – $62M | `[inference: computed]` |
-| Sales-tax exemption (if taken) | ~$13M – $47M | `[inference: computed]`, application `[open]` |
+| Sales-tax exemption (if taken) | ~$27M – $41M | `[inference: computed]`, application `[open]` |
+| **Net public subsidy** (the two summed per scenario) | **~$72M – $89M** | `[inference: computed]` |
 | Net roadwork exposure | ≤ $14.2M, offset by §5.5 | `[open]` |
 | Grid / ratepayer + basin water | not monetized here | `[inference]` (see [the-load-and-the-grid.md](the-load-and-the-grid.md), [HYDROLOGY.md](HYDROLOGY.md)) |
 | **Receives** | | |
 | Un-abated property tax (25%) | ~$10M – $21M | `[inference: computed]` |
 | Payroll's direct public slice | ~$0 – small | `[open]` (jurisdiction-dependent) |
-| School District Compensation | withheld | `[open]` |
+| School District Compensation | withheld, screened at $0 – $30M | `[open]` |
 | Permanent jobs | ~50 (≈0.1% of county) | `[verified]`, non-binding |
+| Load carried per job | ~5.0 – 10.0 MW/job | `[inference: computed]` |
 
 Read down the columns and the structural finding the corpus already names becomes a
 magnitude: the public is extending **tens of millions** in forgone tax — on the order of
-**$45M–$90M** before water and grid — for roughly **fifty jobs** in a shrinking county.
+**$72M–$89M** before the withheld school-compensation offset, and before water and grid —
+for roughly **fifty jobs** in a shrinking county.
 That is the demand-side mirror of the hydrology finding, in dollars:
 **the public subsidizes the load and the consumption, not the employment** — and it does so for a
 counterparty named only as a Delaware shell.
@@ -220,6 +242,13 @@ is the truthful object: it says the public give is tens of millions against fift
 it shows exactly which withheld numbers would narrow it, and it leaves the verdict where
 it belongs — waiting on a disclosure the county has so far declined to make.
 
+That is also now enforced rather than promised. The model refuses to serialize a band that
+has collapsed to a point, and refuses to tag any scenario `[verified]` or to carry it at
+better than `low` confidence — so nothing on this page can quietly harden into a finding,
+and the GovCloud profile in particular cannot be read as one. It is a labeled counterfactual
+pricing what a hardened, cleared facility _would_ cost the public; the question of whether
+this is one stays open, in [defense-nexus.md](defense-nexus.md), where it belongs.
+
 ———
 
 ## sources
@@ -227,12 +256,15 @@ it belongs — waiting on a disclosure the county has so far declined to make.
 - The abatement, capital, jobs, roadwork, and contribution terms — the county's PRR
   production (`data/extracted/legal/prr-mandamus/`), CRA No. 1 (Res #548-25), RDA §3.2(a)
   / §5.5; synthesized in [ECONOMICS.md](ECONOMICS.md) §2
-- The abatement-per-job model and its labeled constants (assessment 0.35, ~63 mills,
-  75%/15-yr, the four profiles) — the Cost chapter's follow-the-money model
-  (`web/packages/core/src/moneyFlow.ts`, `buildAbatementPerJob`); the non-public school terms —
-  `cra-agreement.cra.yaml` (`amounts_public: false`)
-- The 15-year ledger figures — `[inference: computed]` from those constants (building
-  share, job count, and the ~7.25% Allen County sales-tax rate turned across scenarios)
+- The model itself — [`watermark.economics.scenarios`](../src/watermark/economics/scenarios.py)
+  (`watermark scenarios`), published as the **`economics-scenarios`** bundle feed and read by
+  the report page, the simulator island and the Cost chapter's follow-the-money model. Every
+  figure on this page is quoted from that feed rather than computed here (#1665)
+- Its labeled constants (assessment 0.35 statutory, ~63 effective mills `[assumption]`,
+  the ~7.25% Allen County sales-and-use rate, the four profiles, the four withheld knobs) —
+  the committed [`abatement-parameters.yaml`](../data/reference/economics/abatement-parameters.yaml);
+  the abatement terms themselves are _read_ from `cra-agreement.cra.yaml`, never re-keyed, and
+  the non-public school terms are that file's `amounts_public: false`
 - The DCTE sales-tax exemption, the AI-rack cost curve, and the GovCloud premium — the
   relator's committee data appendix
   (`data/extracted/legal/select-committee-2026/relator-testimony/`); [ECONOMICS.md](ECONOMICS.md) §4

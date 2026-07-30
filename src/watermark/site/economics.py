@@ -11,6 +11,7 @@ from __future__ import annotations
 from watermark.economics.model import (
     ConsumerEnergyCosts,
     EconomicBaseline,
+    EconomicScenarios,
     EnergyBurden,
     FacilityDemandPressure,
 )
@@ -56,3 +57,17 @@ def export_energy_burden(burden: EnergyBurden) -> EnergyBurden:
     citation, so like :func:`export_economics` the feed is the provenanced model itself.
     """
     return burden
+
+
+def export_economic_scenarios(scenarios: EconomicScenarios) -> EconomicScenarios:
+    """Export the economic argument as scenario bands (already feed-ready, #1665 ME-F).
+
+    The typed replacement for figures the frontend hardcoded (``craProfiles.ts``) and the docs
+    carried as prose (``ECONOMICS.md`` §3/§4, ``the-economic-ledger.md``): the priced what-if
+    profiles, the ledger lines as bands over them, the load-per-job ratio, the cited industry
+    axes, and the withheld inputs that keep the bands wide. Like :func:`export_economics` the
+    feed is the provenanced model itself — and it is the model, not this exporter, that refuses
+    to serialize a collapsed band or a scenario tagged ``verified``. Absent (exporter not
+    called) for a site with no abatement instrument on the record.
+    """
+    return scenarios

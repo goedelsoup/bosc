@@ -385,7 +385,24 @@ from watermark.sites import (
 #   row is unchanged) — a consumer must branch on it rather than read a `federal_installation`'s
 #   absent IT load as an undisclosed campus MW. Two new feeds + an optional field → MINOR,
 #   back-compatible (a pre-1.42 bundle simply has no enclave to render).
-CONTRACT_VERSION = "1.42.0"
+# 1.43.0: the economic argument as disciplined scenario bands (#1665, epic #1659 ME-F) — one
+#   new feed. `economics-scenarios` (object) publishes what lived only in prose and in a
+#   hardcoded frontend array: the discrete what-if `profiles` (building share x jobs, each
+#   priced for forgone property tax / un-abated tax kept / sales-tax exemption / net subsidy /
+#   per-job), the ledger `lines` as bands over those corners, the `load_per_job` ratio (the
+#   §3 "subsidizes load, not employment" magnitude), the `withheld` inputs that keep the bands
+#   wide with the record that would collapse each, the modeling `constants` as cited
+#   `ProvenancedValue`s, and the cited industry `axes` (the GovCloud authorized-region premium,
+#   the DCTE / AI-rack refresh curve, jobs-per-MW, the subsidy-per-job benchmark) each carrying
+#   every published source pooled into it. The DISCIPLINE is in the type system, not the prose:
+#   a band refuses `low == high`, and every axis / line / withheld input refuses the `verified`
+#   tag and any confidence above `low` — a scenario structurally cannot serialize as an
+#   assertion, and the GovCloud profile is a labeled counterfactual, explicitly not a defense
+#   finding. INSTRUMENT-gated on `SiteProfile.abatement_parameters_relpath`, so a peer with no
+#   abatement agreement on the record simply has no feed and its report locks rather than being
+#   priced off another county's mills. One new feed → MINOR, back-compatible (a pre-1.43 bundle
+#   simply has no scenario bands to render).
+CONTRACT_VERSION = "1.43.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

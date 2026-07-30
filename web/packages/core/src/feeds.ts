@@ -1106,6 +1106,125 @@ export interface FacilityDemandPressure {
   caveats?: string[];
 }
 
+// --- economics-scenarios: the economic argument as bands (#1665, epic #1659 ME-F) ---
+
+/**
+ * A low/central/high band — the deliverable, never a point estimate. The Python model
+ * (`watermark.economics.model.ScenarioBand`) refuses `low == high`, so a consumer can rely on
+ * `high > low` and on `central` lying inside. `dist` says how the interior is shaped:
+ * `profiles` means the band is the ENVELOPE of the discrete scenario corners, so no distribution
+ * is asserted between them — don't sample it as if one were.
+ */
+export interface ScenarioBand {
+  low: number;
+  central: number;
+  high: number;
+  unit: string; // "usd" | "usd_per_job" | "fraction" | "jobs" | "MW_per_job" | "x" | …
+  dist: "triangular" | "uniform" | "profiles";
+}
+
+/** One published source pooled into a scenario axis's band. */
+export interface ScenarioSource {
+  name: string;
+  year?: number | null;
+  url?: string | null;
+  contributes?: string;
+}
+
+/**
+ * One cited driver of the economic argument. `band` is null for a **corroboration** axis that
+ * asserts no range of its own (a qualitative finding from other jurisdictions) — render those as
+ * context, never as a magnitude. `site_status` (`open` | `comparative` | `context`) is what keeps
+ * an industry range from being read as a fact about this campus; surface it beside the band.
+ */
+export interface ScenarioAxis {
+  key: string;
+  label: string;
+  question: string; // the [open] question the axis bears on — an axis sharpens, never answers
+  band?: ScenarioBand | null;
+  tag: FactStatus; // never "verified" — the model refuses it
+  confidence: "low"; // likewise fixed low
+  site_status: string;
+  drives?: string[];
+  basis?: string;
+  sources?: ScenarioSource[];
+  resolving_record?: string | null;
+}
+
+/** One discrete what-if corner: the two knobs turned, and the ledger priced on them. */
+export interface ScenarioProfile {
+  key: string; // "stated" | "equipment" | "hyperscale" | "govcloud"
+  label: string;
+  note?: string;
+  basis?: string;
+  building_share: number;
+  jobs: number;
+  abatement_usd: number;
+  kept_usd: number;
+  exemption_usd: number;
+  net_subsidy_usd: number;
+  abatement_per_job_usd: number;
+  net_subsidy_per_job_usd: number;
+}
+
+/** One ledger line as a band across the scenario corners. */
+export interface ScenarioLine {
+  key: string;
+  label: string;
+  band: ScenarioBand;
+  tag: FactStatus;
+  confidence: "low";
+  note?: string;
+  resolving_record?: string | null;
+}
+
+/** A load-bearing figure the record does not fix, plus the record that would collapse its band. */
+export interface WithheldInput {
+  key: string;
+  label: string;
+  band: ScenarioBand;
+  tag: FactStatus;
+  confidence: "low";
+  why?: string;
+  resolving_record?: string;
+}
+
+/** One named modeling constant, carrying its citation and register. */
+export interface ScenarioConstant {
+  key: string;
+  label: string;
+  value: ProvenancedValue;
+}
+
+/**
+ * The economic argument as disciplined scenario bands (`economics-scenarios` object feed;
+ * `watermark.economics.model.EconomicScenarios`, #1665 ME-F). The typed replacement for figures
+ * this frontend used to hardcode (`craProfiles.ts`) and the docs used to carry as prose.
+ *
+ * INSTRUMENT-gated: absent for a site with no abatement agreement on the record, which is why a
+ * peer's report locks and asks for its own agreement instead of being priced off another county's
+ * mills. `tag` is always `open` and `confidence` always `low` — a scenario here structurally
+ * cannot be an assertion, and the `govcloud` profile in particular is a labeled counterfactual,
+ * NOT a claim the facility does defense work. Render `disclaimer`; don't drop it.
+ */
+export interface EconomicScenarios {
+  site: string;
+  site_name: string;
+  instrument: string; // the abatement agreement this prices, named
+  instrument_record: string; // the committed extraction it is read from
+  tag: "open";
+  confidence: "low";
+  constants?: ScenarioConstant[];
+  withheld?: WithheldInput[];
+  axes?: ScenarioAxis[];
+  profiles?: ScenarioProfile[];
+  lines?: ScenarioLine[];
+  load_per_job?: ScenarioLine | null; // null where the site has no derivable power basis
+  method?: string;
+  disclaimer?: string;
+  caveats?: string[];
+}
+
 // --- grid: the per-site grid backdrop (object feed; bosc.grid.model, #94 / GP-E #1642) ---
 
 /**

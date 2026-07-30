@@ -11,8 +11,10 @@ license: Site content — CC BY 4.0 over public-record sources (see web/README.m
 access_tier: public
 site_scope: slug-scoped
 depends_on:
+- abatement-parameters
 - air-emission-factors
 - air-naaqs
+- datacenter-industry
 - dewatering-discharge
 - echo-maumee-npdes
 - economics-baseline
@@ -237,5 +239,27 @@ notes: >-
   enclave-gated by construction (`SiteFacility.kind = federal_installation`), so every other site
   self-skips. `FacilityItem` also gains `kind` (`data_center` default), so a consumer branches on the
   discriminant instead of reading an installation's absent IT load as an undisclosed campus MW.
+  The `economics-scenarios` object feed (issue 1665, epic 1659 ME-F, contract 1.43.0) publishes the
+  economic argument as disciplined SCENARIO BANDS — the figures that until now lived only in the
+  prose of `docs/ECONOMICS.md` and `docs/the-economic-ledger.md` and in a hardcoded frontend array,
+  where a hand-copied console figure drifts from its source and a typed feed does not. It carries the
+  discrete what-if `profiles` (building share x jobs, each priced for forgone property tax /
+  un-abated tax kept / sales-tax exemption / net subsidy / per-job), the ledger `lines` as bands over
+  those corners, the `load_per_job` ratio (the subsidizes-load-not-employment magnitude), the
+  `withheld` inputs that keep the bands wide together with the record that would collapse each, the
+  modeling `constants` as cited `ProvenancedValue`s, and the cited industry `axes` — the GovCloud
+  authorized-region premium, the DCTE / AI-rack refresh curve, jobs-per-MW, the subsidy-per-job
+  benchmark — each carrying every published source pooled into it. It adds the committed
+  `abatement-parameters` entry (this county's cited tax mechanics + what-if knobs) and
+  `datacenter-industry` (the pooled published priors, read by Python for the first time) as declared
+  upstreams; the abatement terms themselves are READ from the committed CRA extraction rather than
+  re-keyed, so a correction to the record moves the bands with it. The discipline is enforced in the
+  type system, not asked for in prose: a band refuses `low == high`, and every axis / line / withheld
+  input refuses the `verified` tag and any confidence above `low`, so a scenario structurally cannot
+  serialize as an assertion — the GovCloud profile is a labeled counterfactual and explicitly not a
+  defense finding (docs/defense-nexus.md). INSTRUMENT-gated on
+  `SiteProfile.abatement_parameters_relpath`: a site with no abatement agreement on the record has no
+  feed at all, so its report locks and asks for that agreement rather than being priced off another
+  county's mills — the same refusal `ledgerProfiles(site)` made by slug, now made by the record.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

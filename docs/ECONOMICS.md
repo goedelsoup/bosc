@@ -56,13 +56,27 @@ see DOSSIER §2). `[inference]` This is the demand-side mirror of HYDROLOGY's
 "burden already maxed" finding (the 1996 SSO consent decree, the $11.8M I/I
 backlog).
 
+The MW-per-job figure is **modeled, not transcribed here** (issue #1665): it is the
+`load_per_job` line of the [`economics-scenarios`](#7-the-scenario-bands--where-these-numbers-are-computed)
+feed, and the feed states it as a band — **~5.0–10.0 MW/job**, with the ~5.5 above as
+its *reference corner* (the disclosed IT-load central over the agreement's own stated
+headcount). The ~5–6 quoted here is that corner; the lean-ops end of the band is roughly
+twice it. Quote the band or quote the corner, but say which.
+
 ## 4. Why this load exists *here* — demand-side drivers `[open]`
 
 These explain the *incentive* to site authorized cloud capacity in a low-cost,
 low-scrutiny jurisdiction. The magnitudes are now **document-backed industry
 reference ranges** — from the relator's [data appendix](../data/extracted/legal/select-committee-2026/relator-testimony/bosc-data-appendix-2026-06-01.md),
 with its cited sources — though whether each applies to *this* campus stays
-`[inference]`/`[open]`:
+`[inference]`/`[open]`.
+
+> **These four are modeled, not asserted here** (issue #1665). Each is an `axis` of the
+> [`economics-scenarios`](#7-the-scenario-bands--where-these-numbers-are-computed) feed,
+> computed from the committed pooled priors
+> ([`data/reference/datacenter-industry/priors.yaml`](../data/reference/datacenter-industry/priors.yaml))
+> and carrying every published source behind its band. The numbers below are quoted *from*
+> that feed; if the two ever disagree, the feed is right and this page is stale.
 
 - **Authorized-region premium.** Government/sovereign cloud (GovCloud-class,
   FedRAMP / DoD IL2–IL6) runs **~20–30% above commercial** (BCG: up to 30%; AWS
@@ -130,6 +144,43 @@ forecast** (retail price formation is far more complex than one coefficient, and
 campus buys at wholesale/industrial rates, not the residential price shown). This is
 the consumer-cost mirror of the §3 "subsidizes load, not jobs" finding.
 
+## 7. The scenario bands — where these numbers are computed
+
+Everything in §3 and §4 that is not a straight record read is **modeled**, and since
+issue #1665 (epic #1659, cluster ME-F) it is modeled *in code* rather than in this page's
+prose. [`watermark.economics.scenarios`](../src/watermark/economics/scenarios.py) assembles
+it from three committed inputs and publishes the **`economics-scenarios`** bundle feed:
+
+| Input | What it supplies |
+|---|---|
+| [`cra-agreement.cra.yaml`](../data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml) | the abatement instrument — percent, term, stated capex, stated jobs (**read**, never re-keyed) |
+| [`reference/economics/abatement-parameters.yaml`](../data/reference/economics/abatement-parameters.yaml) | this county's cited tax mechanics + the withheld knobs + the what-if corners |
+| [`reference/datacenter-industry/priors.yaml`](../data/reference/datacenter-industry/priors.yaml) | the pooled published industry bands (the §4 drivers), each with its sources |
+
+Run it with `watermark scenarios`. What the feed carries:
+
+- **`profiles`** — the four what-if corners (building share × jobs), each priced for
+  forgone property tax, un-abated tax kept, sales-tax exemption, net subsidy and per-job.
+  These used to be a hardcoded array in the frontend and a table in
+  [the-economic-ledger.md](the-economic-ledger.md); there is now one computation.
+- **`lines`** — each ledger line as a **band over those corners**.
+- **`load_per_job`** — the §3 MW-per-job ratio, as a band.
+- **`withheld`** — the four figures the record does not fix, each naming the record that
+  would collapse its band.
+- **`constants`** — every modeling constant as a cited `ProvenancedValue` (including the
+  effective millage, which announces itself as an `[assumption]`).
+- **`axes`** — the §4 drivers, with every published source pooled into each band.
+
+**The discipline is enforced in the type system, not asked for in prose.** A band refuses
+`low == high`, and every axis, line and withheld input refuses the `verified` tag and any
+confidence above `low` — so a scenario *structurally cannot* be published as an assertion.
+The feed is also **instrument-gated**: a watershed point with no abatement agreement on its
+record has no feed at all, and its report locks and asks for that agreement rather than
+being priced off Allen County's mills.
+
 **Nothing on this page promotes a defense-intelligence thesis.** Defense-ecosystem
 actors enter only as `[open]` context where the public record already names them
-(see COURSE §1.4); the load, the benefits, and the consumption are the findings.
+(see COURSE §1.4); the load, the benefits, and the consumption are the findings. The
+GovCloud / defense-hardened *scenario profile* is a labeled counterfactual on two knobs —
+it prices what such a facility would cost the public and asserts nothing about what this
+one is. That question is open; see [defense-nexus.md](defense-nexus.md).

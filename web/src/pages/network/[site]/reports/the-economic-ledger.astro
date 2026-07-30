@@ -14,25 +14,35 @@ export const getStaticPaths = selectableSitePaths;
  */
 import EconLedgerSimulator from "@watermark/viz/islands/EconLedgerSimulator.tsx";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { ledgerLines, ledgerProfiles, promisedJobs } from "@watermark/core/econLedger";
+import {
+  economicScenarios,
+  ledgerConstants,
+  priorsFromFeed,
+  promisedJobs,
+} from "@watermark/core/econScenarios";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { EconomicBaseline } from "@watermark/core/feeds";
 import { fmtUsdM } from "@watermark/core/money";
 import { withBase, withSite } from "@watermark/core/site";
 
-// Per-site (#1642, E4): the whole ledger is Allen County's CRA (Res #548-25's terms, ~63 local
-// mills, the 7.25% county sales-and-use rate). `ledgerLines`/`ledgerProfiles` answer only for the
-// site whose instrument it is — a peer reads null and this page asks for that site's agreement
-// rather than pricing its build off another county's mills.
-const site = Astro.locals.site;
-const lines = ledgerLines(site);
-const profiles = ledgerProfiles(site);
+// Per-site, and now instrument-gated rather than slug-gated (#1642 E4, sharpened by #1665 ME-F).
+// The whole ledger prices ONE abatement agreement — its terms, its local effective mills, its
+// county sales-and-use rate — so it is computed in Python from that committed instrument and read
+// here off the `economics-scenarios` feed. A site with no such agreement on the record has no
+// feed: everything below reads null and the page asks for that site's agreement rather than
+// pricing its build off another county's mills.
+const scenarios = economicScenarios();
+const lines = scenarios?.lines ?? null;
+const profiles = scenarios?.profiles ?? null;
+const constants = ledgerConstants(scenarios);
+const priors = priorsFromFeed(scenarios);
 const net = lines?.find((l) => l.key === "net") ?? null;
-// The site's own non-binding job commitment (Lima's CRA ~50) — null where none is on the record,
-// which drops the whole jobs clause rather than asserting another site's promise (#1642, E4).
-const jobs = promisedJobs(site);
+// The site's own non-binding job commitment, read from the instrument's `stated_jobs` — null where
+// none is on the record, which drops the whole jobs clause rather than asserting another site's
+// promise (#1642, E4).
+const jobs = promisedJobs(scenarios);
 
-// The county employment baseline the ~50 jobs is read against — the `economics-baseline` feed's
+// The county employment baseline the promised jobs is read against — the `economics-baseline` feed's
 // cited `total_employment` (QCEW, self-dating via `asof`), replacing a hand-copied constant that
 // had gone a vintage stale (#1642, E2).
 const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
@@ -70,8 +80,14 @@ const countyJobsAsof = eb?.latest.total_employment?.asof ?? null;
       </p>
   </Fragment>
 
-    {profiles && countyJobs !== null ? (
-      <EconLedgerSimulator client:only="react" profiles={profiles} countyJobs={countyJobs} />
+    {profiles && constants && priors && countyJobs !== null ? (
+      <EconLedgerSimulator
+        client:only="react"
+        profiles={profiles}
+        constants={constants}
+        priors={priors}
+        countyJobs={countyJobs}
+      />
     ) : null}
 
     {/* No-JS fallback: the essay's ledger in a band, computed from the same model. */}
@@ -86,7 +102,7 @@ const countyJobsAsof = eb?.latest.total_employment?.asof ?? null;
               <tr>
                 <td>{l.label}</td>
                 <td>{fmtUsdM(l.band.low)} – {fmtUsdM(l.band.high)}</td>
-                <td><code>[{l.register}]</code></td>
+                <td><code>[{l.tag}]</code></td>
               </tr>
             ))}
           </tbody>
@@ -98,10 +114,10 @@ const countyJobsAsof = eb?.latest.total_employment?.asof ?? null;
             {profiles.map((p) => (
               <tr>
                 <td>{p.label}</td>
-                <td>{Math.round(p.buildingShare * 100)}%</td>
+                <td>{Math.round(p.building_share * 100)}%</td>
                 <td>{p.jobs}</td>
-                <td>{fmtUsdM(p.abatementUsd)}</td>
-                <td>{fmtUsdM(p.abatementPerJobUsd)}</td>
+                <td>{fmtUsdM(p.abatement_usd)}</td>
+                <td>{fmtUsdM(p.abatement_per_job_usd)}</td>
               </tr>
             ))}
           </tbody>
@@ -110,16 +126,17 @@ const countyJobsAsof = eb?.latest.total_employment?.asof ?? null;
       </article>
     </noscript>
     ) : (
-    /* No abatement instrument on this site's record (#1642, E4): the ledger is Allen County's CRA
-       — Res #548-25's terms and its local mills — so pricing this site's build off it would be
-       fabrication. Lock the ledger and ask for the agreement. */
+    /* No abatement instrument on this site's record (#1642 E4 / #1665): the `economics-scenarios`
+       feed is instrument-gated, so its absence IS the statement — this site has no agreement whose
+       terms and local mills could be priced. Lock the ledger and ask for it. */
     <div class="callout callout--open">
       <p class="callout-title">No abatement agreement on record for this site</p>
       <p>
-        This ledger prices one specific instrument: the Allen County CRA (Res #548-25) — its
-        75%/15-year terms, its local effective mills, its county sales-and-use rate. Those are
-        that county's numbers, not a general model of an abatement, so the give for this site
-        stays <code>[open]</code> rather than being computed off another county's terms.
+        This ledger prices one specific instrument — a Community Reinvestment Area agreement,
+        with its own abated percentage and term, its local effective mills, and its county
+        sales-and-use rate. Those are one county's numbers, not a general model of an abatement,
+        so the give for this site stays <code>[open]</code> rather than being computed off
+        another county's terms.
         Have this site's agreement? <a href={withSite("/submit")}>Submit it →</a>
       </p>
     </div>

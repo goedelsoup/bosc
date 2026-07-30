@@ -16,8 +16,12 @@ import MoneyFlow from "@watermark/viz/islands/MoneyFlow.tsx";
 import { buildMoneyFlow, fmtUsd, fmtUsdFull, fmtUsdM } from "@watermark/core/moneyFlow";
 
 export const money = buildMoneyFlow();
+// The abatement-per-job band is read from the `economics-scenarios` feed now (#1665) — null for a
+// site with no abatement instrument on the record. This chapter belongs to the site whose
+// instrument it is, so in practice it is always present; the guard below keeps the chapter
+// renderable (minus the modeled strand) instead of failing the build on a thin bundle.
 export const perJob = money.abatementPerJob;
-export const a = perJob.assumptions;
+export const a = perJob?.assumptions ?? null;
 
 <Prose>
 The public's share of this project arrives as roads — four roundabouts and
@@ -105,6 +109,7 @@ carries the cost.
       farmland, so converting it triggers tax recoupment. The public return: ~{money.abatement.jobs} jobs
       / ~{fmtUsd(money.abatement.payrollUsd)} payroll by 2030, from near-zero today.
     </p>
+    {perJob && a ? (
     <p>
       What the abatement costs <em>per job</em> is the deciding number, and the record that would
       pin it — the School District Compensation Agreement — is <strong>non-public</strong>. So we
@@ -116,6 +121,10 @@ carries the cost.
       at face value. Every one of those dwarfs the ~{fmtUsd(money.abatement.payrollUsd / money.abatement.jobs)} a
       job pays in a year.
     </p>
+    ) : null}
+
+    {perJob && a ? (
+    <>
 
     <table class="dtable mf-perjob">
       <caption>
@@ -133,7 +142,7 @@ carries the cost.
         </tr>
       </thead>
       <tbody>
-        {perJob.profiles.map((p) => (
+        {(perJob?.profiles ?? []).map((p) => (
           <tr class={p.key === "stated" ? "mf-perjob-central" : undefined}>
             <td>
               {p.label}
@@ -152,9 +161,13 @@ carries the cost.
       <code>[verified]</code> (Res #548-25) on the building share of the ~{fmtUsd(a.capexUsd)} build
       <code>[verified]</code> (CRA §2, a non-binding estimate), taxed at Ohio's {Math.round(a.assessmentRatio * 100)}%
       assessment <code>[verified]</code> × ~{Math.round(a.effectiveMills * 1000)} effective mills
-      <code>[assumption]</code> (the exact Elida rate isn't in the corpus). The result is a screening band,
-      <code>[open]</code> — the real number is owed to the non-public School District Compensation Agreement.
+      <code>[assumption]</code> (the exact Elida rate isn't in the corpus). Every one of those constants,
+      and the profiles below, are read from the <code>economics-scenarios</code> feed rather than typed
+      into this page. The result is a screening band, <code>[open]</code> — the real number is owed to
+      the non-public School District Compensation Agreement.
     </p>
+    </>
+    ) : null}
   </div>
 </Interactive>
 

@@ -12,8 +12,7 @@
  */
 import { useMemo, useState } from "react";
 import {
-  ECON_PRIORS,
-  type LedgerProfile,
+  type LedgerConstants,
   abatement,
   abatementPerJob,
   keptByPublic,
@@ -21,10 +20,14 @@ import {
   netSubsidyPerJobModel,
   salesTaxExemption,
 } from "@watermark/core/econLedger";
+import type { ScenarioProfile } from "@watermark/core/feeds";
 import { fmtUsdM } from "@watermark/core/money";
 import {
   DEFAULT_SEED,
+  type Prior,
   applyDisclosures,
+  bounds,
+  central as centralOf,
   outcomeBand,
   sample,
   summarize,
@@ -33,29 +36,48 @@ import {
 import { DiscloseList, Line, Slider } from "./scenarioControls";
 import { DistributionStrip, RegisterMark, TornadoChart } from "./uncertaintyGrammar";
 
-const REFRESH_CENTRAL = 1.5;
-
 export interface EconLedgerSimulatorProps {
-  /** The site's priced CRA profiles (`econLedger.ledgerProfiles(site)`) — passed in rather than
-   *  computed at module scope so the island can never resolve them for the wrong site (#1642 E4). */
-  profiles: LedgerProfile[];
+  /** The site's priced what-if corners, from the `economics-scenarios` feed — passed in rather
+   *  than computed at module scope so the island can never resolve them for the wrong site
+   *  (#1642 E4), and no longer a second declaration of them (#1665). */
+  profiles: ScenarioProfile[];
+  /** The site's abatement constants, from the same feed's cited `constants` — what the live
+   *  slider recompute is a function of. Formerly module literals here and in two other files. */
+  constants: LedgerConstants;
+  /** The site's four withheld figures as priors, from the same feed's `withheld` — the slider
+   *  bounds and the disclosure list both derive from these, so a parameters edit moves the UI. */
+  priors: Prior[];
   /** The county's covered-employment baseline, read from the `economics-baseline` feed's cited
    *  `total_employment` (#1642 E2 — was the stale hardcoded `countyJobs`). */
   countyJobs: number;
 }
 
+/** One prior's [low, high] and central — the slider's range comes from the record, not a literal. */
+function knob(priors: Prior[], key: string): { low: number; high: number; central: number } {
+  const prior = priors.find((p) => p.key === key);
+  if (!prior) return { low: 0, high: 1, central: 0.5 };
+  const [low, high] = bounds(prior.dist);
+  return { low, high, central: centralOf(prior.dist) };
+}
+
 export default function EconLedgerSimulator({
   profiles: PROFILES,
+  constants: K,
+  priors: ECON_PRIORS,
   countyJobs,
 }: EconLedgerSimulatorProps): JSX.Element {
+  const shareKnob = knob(ECON_PRIORS, "building_share");
+  const jobsKnob = knob(ECON_PRIORS, "jobs");
+  const schoolKnob = knob(ECON_PRIORS, "school_compensation");
   const [mode, setMode] = useState<"discrete" | "distribution">("discrete");
 
-  // Discrete-mode point inputs (default = the "stated" profile).
-  const [share, setShare] = useState(0.35);
-  const [jobs, setJobs] = useState(50);
-  const [schoolComp, setSchoolComp] = useState(0);
+  // Discrete-mode point inputs (default = the reference corner, else the knobs' centrals).
+  const reference = PROFILES.find((p) => p.key === "stated") ?? PROFILES[0];
+  const [share, setShare] = useState(reference?.building_share ?? shareKnob.central);
+  const [jobs, setJobs] = useState(reference?.jobs ?? Math.round(jobsKnob.central));
+  const [schoolComp, setSchoolComp] = useState(schoolKnob.low);
   const [dcte, setDcte] = useState(true);
-  const [activeProfile, setActiveProfile] = useState<string>("stated");
+  const [activeProfile, setActiveProfile] = useState<string>(reference?.key ?? "stated");
 
   // Distribution-mode disclosures (which knobs have been "produced").
   const [disclosed, setDisclosed] = useState<Record<string, boolean>>({});
@@ -64,46 +86,46 @@ export default function EconLedgerSimulator({
     const p = PROFILES.find((x) => x.key === key);
     if (!p) return;
     setActiveProfile(key);
-    setShare(p.buildingShare);
+    setShare(p.building_share);
     setJobs(p.jobs);
   }
 
   // --- discrete point ledger ---
   const point = useMemo(() => {
-    const ab = abatement(share);
-    const ex = dcte ? salesTaxExemption(share, REFRESH_CENTRAL) : 0;
+    const ab = abatement(K, share);
+    const ex = dcte ? salesTaxExemption(K, share, K.refreshCentral) : 0;
     return {
       abatement: ab,
-      kept: keptByPublic(share),
+      kept: keptByPublic(K, share),
       exemption: ex,
       net: ab + ex - schoolComp,
-      perJob: abatementPerJob(share, jobs),
+      perJob: abatementPerJob(K, share, jobs),
       jobsPct: (jobs / countyJobs) * 100,
     };
-  }, [share, jobs, schoolComp, dcte, countyJobs]);
+  }, [K, share, jobs, schoolComp, dcte, countyJobs]);
 
   // --- distribution: priors with disclosed knobs collapsed to their central ---
-  const effectivePriors = useMemo(() => applyDisclosures(ECON_PRIORS, disclosed), [disclosed]);
+  const effectivePriors = useMemo(() => applyDisclosures(ECON_PRIORS, disclosed), [ECON_PRIORS, disclosed]);
 
   const sim = useMemo(() => {
-    const perJobModel = netSubsidyPerJobModel(dcte);
-    const netModel = netSubsidyModel(dcte);
+    const perJobModel = netSubsidyPerJobModel(K, dcte);
+    const netModel = netSubsidyModel(K, dcte);
     const outcomes = sample(effectivePriors, perJobModel, 6000, DEFAULT_SEED);
     const summary = summarize(outcomes, 28);
     const perJobBand = outcomeBand(effectivePriors, perJobModel);
     const netBand = outcomeBand(effectivePriors, netModel);
     const bars = tornado(effectivePriors, perJobModel).map((b) => ({ ...b }));
     return { summary, perJobBand, netBand, bars };
-  }, [effectivePriors, dcte]);
+  }, [K, effectivePriors, dcte]);
 
   // Fixed axes from the fully-undisclosed band, so the collapse is visible against them.
   const baseline = useMemo(() => {
-    const perJobModel = netSubsidyPerJobModel(true);
+    const perJobModel = netSubsidyPerJobModel(K, true);
     return {
       perJob: outcomeBand(ECON_PRIORS, perJobModel),
-      net: outcomeBand(ECON_PRIORS, netSubsidyModel(true)),
+      net: outcomeBand(ECON_PRIORS, netSubsidyModel(K, true)),
     };
-  }, []);
+  }, [K, ECON_PRIORS]);
 
   const allDisclosed = ECON_PRIORS.every((p) => disclosed[p.key]);
   const halfWidthM = (sim.perJobBand.high - sim.perJobBand.low) / 2;
@@ -148,10 +170,10 @@ export default function EconLedgerSimulator({
 
           <div className="unc-sliders">
             <Slider
-              label="Building (abated) share of the $500M"
+              label={`Building (abated) share of the ${fmtUsdM(K.capexUsd)} build`}
               value={share}
-              min={0.2}
-              max={0.45}
+              min={shareKnob.low}
+              max={shareKnob.high}
               step={0.01}
               onChange={(v) => {
                 setShare(v);
@@ -163,8 +185,8 @@ export default function EconLedgerSimulator({
             <Slider
               label="Steady-state jobs"
               value={jobs}
-              min={30}
-              max={50}
+              min={jobsKnob.low}
+              max={jobsKnob.high}
               step={1}
               onChange={(v) => {
                 setJobs(v);
@@ -176,9 +198,9 @@ export default function EconLedgerSimulator({
             <Slider
               label="School District Compensation (offset)"
               value={schoolComp}
-              min={0}
-              max={30_000_000}
-              step={1_000_000}
+              min={schoolKnob.low}
+              max={schoolKnob.high}
+              step={Math.max(1, Math.round((schoolKnob.high - schoolKnob.low) / 30))}
               onChange={setSchoolComp}
               fmt={(v) => fmtUsdM(v)}
               register="open"
