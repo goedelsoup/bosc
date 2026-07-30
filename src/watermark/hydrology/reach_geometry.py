@@ -205,6 +205,13 @@ class TributaryNav(BaseModel):
     anchor: tuple[float, float]  # (lon, lat) of the WWTP outfall to snap
     upstream_km: float
     downstream_km: float
+    # Optional junction trim (#1806, the mainstem's `split_at_point` idiom applied to a fork):
+    # where a tributary's mouth rides an NHD flowline FUSED into the mainstem levelpath (Fort
+    # Wayne's St. Joseph — its final reach and the first ~2.7 km of the Maumee are one
+    # artificial path), the DM navigation can only stop a flowline short of the junction or
+    # run past it down the mainstem. Committing the junction vertex here cuts the navigated
+    # line AT that vertex — verbatim geometry, exact confluence join, no mainstem double-draw.
+    confluence_point: tuple[float, float] | None = None
 
 
 class ReachNavPlan(BaseModel):
@@ -335,6 +342,10 @@ def assemble_reach_network(
             nldi.navigate_flowlines(cid, "DM", distance_km=trib.downstream_km, settings=settings),
         ]
         line = orient_downstream(chain_flowlines(_gather(tcalls)), anchor)
+        if trib.confluence_point is not None:
+            # Trim at the committed junction vertex (see the field's note) — everything past
+            # it belongs to the mainstem and is already drawn by the mainstem reaches.
+            line, _past_junction = split_at_point(line, trib.confluence_point)
         if len(line) < 2:
             warnings.append(f"tributary {trib.head!r}: no usable geometry from comid {cid}")
             continue

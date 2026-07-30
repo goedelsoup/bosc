@@ -198,10 +198,11 @@ def test_peer_tables_resolve_slug_scoped_never_limas(hydro_settings: Settings) -
     assert lima.parts[-3:] == ("reference", "hydrology", "reaches.yaml")
 
 
-def test_geometry_grade_table_skips_the_routed_feed(tmp_path) -> None:  # type: ignore[no-untyped-def]
+def test_geometry_grade_table_skips_the_routed_feed(tmp_path, hydro_settings: Settings) -> None:  # type: ignore[no-untyped-def]
     """#1364 on the routing axis: a committed table with topology + reach geometry but NO
     catchments (the honest geometry-grade artifact a peer commits for the reach-network map)
-    must NOT produce an all-zero routed-hydrograph feed."""
+    must NOT produce an all-zero routed-hydrograph feed. Derived from `hydro_settings` so the
+    hermetic offline/fixture config holds even if the guard ordering ever changes."""
     d = tmp_path / "reference" / "hydrology" / "sidney"
     d.mkdir(parents=True)
     (d / "network.yaml").write_text(
@@ -218,7 +219,7 @@ def test_geometry_grade_table_skips_the_routed_feed(tmp_path) -> None:  # type: 
         "    slope: {value: 0.001, unit: ft/ft, source: assumption, citation: test}\n",
         encoding="utf-8",
     )
-    settings = Settings(data_dir=tmp_path, site="sidney")
+    settings = hydro_settings.model_copy(update={"data_dir": tmp_path, "site": "sidney"})
     table = hr.load_reaches(settings=settings)
     assert table is not None and not table.catchments  # the table itself loads fine
     assert hr.build_routed_hydrograph(settings=settings, live=False) is None
@@ -248,6 +249,22 @@ def test_committed_fort_wayne_tables_are_geometry_grade(hydro_settings: Settings
     assert node_ids, "fort-wayne commits its own topology under reference/hydrology/fort-wayne/"
     assert set(table.reaches) <= node_ids
     assert hr.build_routed_hydrograph(settings=fw, live=False) is None
+    # The committed centerlines are spatially CONNECTED at the Three Rivers junction: both
+    # fork lines terminate on the maumee-head line's upstream vertex (the St. Joseph via the
+    # nav plan's confluence_point trim — its mouth rides a flowline fused into the Maumee
+    # levelpath, so no navigation distance alone can end there).
+    import json as _json
+
+    doc = _json.loads(
+        (fw.data_dir / "reference" / "hydrology" / "reaches" / "fort-wayne.geojson").read_text(
+            encoding="utf-8"
+        )
+    )
+    lines = {f["properties"]["node_id"]: f["geometry"]["coordinates"] for f in doc["features"]}
+    junction = lines["maumee-head"][0]
+    for fork in ("st-joseph-confluence", "st-marys-confluence"):
+        end = lines[fork][-1]
+        assert end == junction, f"{fork} does not terminate at the junction vertex: {end}"
 
 
 def test_committed_lima_loop_routes_and_attenuates(hydro_settings: Settings) -> None:

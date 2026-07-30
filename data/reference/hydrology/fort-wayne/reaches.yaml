@@ -38,10 +38,10 @@ reaches:
       confidence: low
   st-joseph-confluence:
     length_ft:
-      value: 48591.0
+      value: 50095.0
       unit: ft
       source: derived
-      citation: "derived — NLDI-navigated NHDPlus centerline arc length: St. Joseph River, USGS 04180500 to the Three Rivers confluence (14.81 km arc; line terminates at the confluence). Regenerate: watermark --site fort-wayne reaches --write"
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: St. Joseph River, USGS 04180500 to the Three Rivers confluence (15.27 km arc; the line is trimmed AT the committed junction vertex — see reach-nav confluence_point). Regenerate: watermark --site fort-wayne reaches --write"
       confidence: medium
     slope:
       value: 0.0004
