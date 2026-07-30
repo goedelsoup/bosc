@@ -45,7 +45,7 @@ def _dry_facility(**kw: object) -> SiteFacility:
 
 
 def test_lima_air_permit_lists_cooling_tower_pm_corroborates_its_evaporative_claim() -> None:
-    # Lima's own facility (Shawnee Energy Campus, evaporative_tower) against its real air permit:
+    # Lima's own facility (Project BOSC, evaporative_tower) against its real air permit:
     # the 36 permitted cooling-tower PM units CORROBORATE the evaporative claim. Real-data coverage
     # of the reconciliation — "at least the cohort with air permits on file" (the acceptance).
     lima_fac = SITES["lima"].facilities[0]

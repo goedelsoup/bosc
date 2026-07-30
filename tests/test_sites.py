@@ -773,7 +773,7 @@ def test_facility_key_is_minted_from_name_and_unique_within_a_site() -> None:
     from watermark.sites import SiteProfile
 
     assert SITES["lima"].facility is not None
-    assert SITES["lima"].facility.key == "shawnee-energy-campus"  # auto-filled from name
+    assert SITES["lima"].facility.key == "project-bosc"  # auto-filled from name
     # Two facilities that slug to the same key are rejected within one site.
     dup = SITES["toledo"].model_copy(
         update={"facilities": (_fac("Same Name"), _fac("Same Name"))}

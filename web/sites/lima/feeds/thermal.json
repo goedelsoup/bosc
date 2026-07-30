@@ -43,8 +43,8 @@
   },
   "screens": [
     {
-      "facility": "Shawnee Energy Campus",
-      "facility_key": "shawnee-energy-campus",
+      "facility": "Project BOSC",
+      "facility_key": "project-bosc",
       "kind": "data_center",
       "npdes_id": null,
       "facility_type": null,
@@ -666,7 +666,7 @@
       "blowdown_exempt": false,
       "blowdown_exempt_note": "OAC 3745-1-06 (O)(5): closed-cycle blowdown 2.5 MGD (3.868 cfs) vs 5% of the 0.2 cfs 7Q10 = 0.010 cfs — NOT exempt from the thermal-mixing-zone rule",
       "flag": "critical",
-      "detail": "Shawnee Energy Campus: ~316.2 MW condenser rejection vs Ottawa River thermal capacity — 2,470x over at 7Q10 (only 0.04% of the rejection exhausts the capacity) [critical]."
+      "detail": "Project BOSC: ~316.2 MW condenser rejection vs Ottawa River thermal capacity — 2,470x over at 7Q10 (only 0.04% of the rejection exhausts the capacity) [critical]."
     },
     {
       "facility": "LIMA REFINERY",

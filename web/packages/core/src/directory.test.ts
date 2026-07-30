@@ -72,7 +72,7 @@ const CELLS: HypothesisAssessmentItem[] = [
     signal: "anchor",
     tag: "verified",
     group: "onrecord",
-    fields: { operator: "Shawnee Energy Campus", capital: "CRA #548-25 · 15 yr / 75%" },
+    fields: { operator: "Project BOSC", capital: "CRA #548-25 · 15 yr / 75%" },
     citations: [],
   },
   {
@@ -208,7 +208,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
         tag: "verified",
         sub_thesis: "capture",
         group: "onrecord",
-        fields: { operator: "Shawnee Energy Campus", capital: "CRA #548-25 · 15 yr / 75%" },
+        fields: { operator: "Project BOSC", capital: "CRA #548-25 · 15 yr / 75%" },
         citations: [],
       },
     ];
@@ -217,7 +217,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     // The scorecard row appends · [capture] to the operator cell.
     const v = buildLens("surveillance", LIMA_COUNTS, data, FAC_STATUS);
     const limaRow = v.groups.flatMap((g) => g.rows).find((r) => r.slug === "lima");
-    expect(limaRow?.cells[1].text).toBe("Shawnee Energy Campus · [capture]");
+    expect(limaRow?.cells[1].text).toBe("Project BOSC · [capture]");
   });
 
   it("lensConfig sources name/claim/blurb/status from the hypotheses feed (not hardcoded)", () => {

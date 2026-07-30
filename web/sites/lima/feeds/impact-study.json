@@ -1,11 +1,11 @@
 [
   {
     "chapter": "method",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [],
     "model": {
       "id": "method",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [],
@@ -15,11 +15,11 @@
   },
   {
     "chapter": "project",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [],
     "model": {
       "id": "project",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [
@@ -50,7 +50,7 @@
   },
   {
     "chapter": "water-supply",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [
       "FORCEMAIN-MGD",
       "LIMA-WWTP-SHARE",
@@ -58,7 +58,7 @@
     ],
     "model": {
       "id": "water-supply",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [
@@ -91,14 +91,14 @@
   },
   {
     "chapter": "discharge",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [
       "WWTP-PARAM-ASSIM",
       "OEPA-2DP00130"
     ],
     "model": {
       "id": "discharge",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [
@@ -119,13 +119,13 @@
   },
   {
     "chapter": "heat",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [
       "THERMAL-NO-LIMIT"
     ],
     "model": {
       "id": "heat",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [
@@ -156,13 +156,13 @@
   },
   {
     "chapter": "groundwater",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [
       "DEWATERING-DRYWELL-NW"
     ],
     "model": {
       "id": "groundwater",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [],
@@ -172,14 +172,14 @@
   },
   {
     "chapter": "stormwater",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [
       "ASWCD-PLANS",
       "ASWCD-04"
     ],
     "model": {
       "id": "stormwater",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [],
@@ -189,14 +189,14 @@
   },
   {
     "chapter": "air",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [
       "PTI-313MW",
       "GH-160"
     ],
     "model": {
       "id": "air",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [],
@@ -206,11 +206,11 @@
   },
   {
     "chapter": "labor",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [],
     "model": {
       "id": "labor",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [
@@ -233,14 +233,14 @@
   },
   {
     "chapter": "power",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [
       "PTI-313MW",
       "AEP-LYKA-OPSB"
     ],
     "model": {
       "id": "power",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [
@@ -276,14 +276,14 @@
   },
   {
     "chapter": "fiscal",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [
       "PRR-04",
       "GH-35"
     ],
     "model": {
       "id": "fiscal",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "gap",
       "statusReasons": [
         "no fiscal instrument is on the record"
@@ -305,11 +305,11 @@
   },
   {
     "chapter": "balance",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [],
     "model": {
       "id": "balance",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [],
@@ -319,11 +319,11 @@
   },
   {
     "chapter": "missing",
-    "facility_key": "shawnee-energy-campus",
+    "facility_key": "project-bosc",
     "lead_ids": [],
     "model": {
       "id": "missing",
-      "facilityKey": "shawnee-energy-campus",
+      "facilityKey": "project-bosc",
       "status": "data",
       "statusReasons": [],
       "stats": [],

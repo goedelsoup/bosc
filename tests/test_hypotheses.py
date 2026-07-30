@@ -68,7 +68,7 @@ _EXPECTED = {
     ("surveillance", "lima"): (
         "anchor",
         "onrecord",
-        {"operator": "Shawnee Energy Campus", "capital": "CRA #548-25 · 15 yr / 75%"},
+        {"operator": "Project BOSC", "capital": "CRA #548-25 · 15 yr / 75%"},
     ),
     ("surveillance", "hamilton-middletown"): (
         "watch",
