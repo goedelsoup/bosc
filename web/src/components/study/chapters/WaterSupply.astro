@@ -153,6 +153,7 @@ const facilityName = facility?.name ?? "the proposed facility";
               { label: "Reservation ceiling · blowdown — not an instrument", v: r.account.reserved_blowdown },
               { label: "Operator self-report · ongoing draw", v: r.account.disclosed_makeup },
               { label: "Self-disclosed permit ceiling", v: r.account.disclosed_ceiling },
+              { label: "Self-disclosed cycles of concentration", v: r.account.disclosed_cycles },
               { label: "Back-solved cycles of concentration · bracket", v: r.account.backsolved_cycles },
             ].filter((s) => s.v != null);
             return (
