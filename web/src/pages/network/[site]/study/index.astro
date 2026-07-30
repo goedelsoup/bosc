@@ -1,0 +1,266 @@
+---
+import { selectableSitePaths, siteForSlug } from "@watermark/core/sites";
+export const getStaticPaths = selectableSitePaths;
+/**
+ * The impact study — the cover (the missing-impact-study epic).
+ *
+ * The site's primary artifact: the environmental + economic study the community never
+ * received, assembled from the public record. The cover is the study's front matter — the
+ * title, the project chip, the evidence legend, and the **verdict strip**: one row per
+ * chapter, each `On the record | Partial | Gap | Watch`, each linking into its chapter.
+ * A gap row is a FINDING, not a lock — the study renders for every selectable site, and a
+ * thin site's strip is the honest headline ("a live campus with a mostly-gap study").
+ *
+ * Every verdict on this page comes from `studyToc` (the data spine) — the cover reads no
+ * raw feeds, so a future `impact-study` bundle feed replaces the derivation wholesale.
+ */
+import Base from "~/layouts/Base.astro";
+import EvidenceLegend from "~/components/EvidenceLegend.astro";
+import StudyStatusChip from "~/components/study/StudyStatusChip.astro";
+import { FACILITY_STATUS_META, facilityStatus } from "@watermark/core/sites";
+import { resolveStudyFacility, STUDY_STATUS_META, studyStatusSummary, studyToc } from "@watermark/core/study";
+import { withBase, withSite } from "@watermark/core/site";
+
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug);
+const place = site?.place ?? slug;
+const facility = resolveStudyFacility(slug);
+const toc = studyToc(slug);
+const summary = studyStatusSummary(slug);
+const facStatus = facilityStatus(slug);
+const facMeta = FACILITY_STATUS_META[facStatus];
+
+// The title's verb tracks the lifecycle, never the verdicts: a project still at the
+// investigation stage gets "should demand"; a confirmed/built one "never received".
+const title =
+  facility === null
+    ? `The impact study ${place} would start from`
+    : facStatus === "investigation"
+      ? `The impact study ${place} should demand`
+      : `The impact study ${place} never received`;
+
+const dek =
+  facility === null
+    ? "No project is disclosed at this site yet. This is the baseline a real impact study would start from — assembled and standing ready for the day one is."
+    : "The environmental and economic study that should precede any abatement or rezoning — assembled from the public record. Where the record is silent, the silence is the finding.";
+---
+
+<Base title="The impact study" section="study" description={dek}>
+  <article class="studycover">
+    <header class="studycover-head">
+      <div class="studycover-eyebrow">The impact study</div>
+      <h1 class="studycover-h1">{title}</h1>
+      <p class="studycover-dek">{dek}</p>
+      {
+        facility && (
+          <p class="studycover-facility">
+            <span class="studycover-facchip" style={`color:${facMeta.color};background:${facMeta.bg}`}>
+              {facMeta.label}
+            </span>
+            <strong>{facility.name}</strong>
+            {facility.operator && <span class="studycover-operator"> · {facility.operator}</span>}
+          </p>
+        )
+      }
+      <p class="studycover-count">
+        {summary.data} of {summary.total} chapters on the record · {summary.partial} partial ·{" "}
+        {summary.gap} {summary.gap === 1 ? "gap" : "gaps"} named{
+          summary.na > 0 && ` · ${summary.na} watching`
+        }
+      </p>
+    </header>
+
+    <section class="studycover-legend">
+      <EvidenceLegend />
+      <p class="studycover-legendnote">
+        Every figure in this study wears one of these tags. A chapter's verdict —{" "}
+        {Object.values(STUDY_STATUS_META)
+          .map((m) => m.label)
+          .join(" · ")}{" "}
+        — measures the <em>record</em>, never the project's press.
+      </p>
+    </section>
+
+    {
+      toc.map((partGroup) => (
+        <section class="studypart">
+          <header class="studypart-head">
+            <span class="studypart-num">Part {partGroup.part.num}</span>
+            <h2 class="studypart-title">{partGroup.part.title}</h2>
+            <p class="studypart-dek">{partGroup.part.dek}</p>
+          </header>
+          <ol class="studytoc">
+            {partGroup.chapters.map((ch) => (
+              <li class="studytoc-row" id={ch.def.id}>
+                <a class="studytoc-link" href={withBase(ch.href)}>
+                  <span class="studytoc-num">{String(ch.num).padStart(2, "0")}</span>
+                  <span class="studytoc-body">
+                    <span class="studytoc-title">{ch.def.title}</span>
+                    <span class="studytoc-dek">{ch.def.dek}</span>
+                    {ch.reasons.length > 0 && <span class="studytoc-reason">{ch.reasons[0]}</span>}
+                  </span>
+                  <StudyStatusChip status={ch.status} reasons={ch.reasons} compact />
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))
+    }
+
+    <footer class="studycover-foot">
+      <p>
+        Missing a record this study names? <a href={withSite("/submit")}>Submit it →</a> — every
+        confirmed figure started as a lead.
+      </p>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .studycover {
+    max-width: 860px;
+  }
+  .studycover-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    margin-bottom: 0.6rem;
+  }
+  .studycover-h1 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    line-height: 1.08;
+    margin: 0;
+  }
+  .studycover-dek {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: #3a4036;
+    max-width: 640px;
+    margin: 0.9rem 0 0;
+  }
+  .studycover-facility {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    margin: 1.1rem 0 0;
+  }
+  .studycover-facchip {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid var(--bosc-rule);
+    padding: 2px 8px;
+  }
+  .studycover-operator {
+    color: var(--bosc-muted);
+  }
+  .studycover-count {
+    font-family: var(--bosc-mono);
+    font-size: 0.78rem;
+    color: var(--bosc-muted);
+    margin: 0.8rem 0 0;
+  }
+  .studycover-legend {
+    border-top: 1px solid var(--bosc-rule);
+    margin-top: 1.8rem;
+    padding-top: 1.2rem;
+  }
+  .studycover-legendnote {
+    font-size: 0.85rem;
+    color: var(--bosc-muted);
+    max-width: 640px;
+  }
+  .studypart {
+    margin-top: 2.4rem;
+  }
+  .studypart-head {
+    border-top: 2px solid var(--bosc-ink);
+    padding-top: 0.8rem;
+  }
+  .studypart-num {
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+  }
+  .studypart-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    margin: 0.2rem 0 0;
+  }
+  .studypart-dek {
+    font-size: 0.9rem;
+    color: var(--bosc-muted);
+    max-width: 640px;
+    margin: 0.4rem 0 0;
+  }
+  .studytoc {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+  }
+  .studytoc-row + .studytoc-row {
+    border-top: 1px solid var(--bosc-rule);
+  }
+  .studytoc-link {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 6px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .studytoc-link:hover .studytoc-title {
+    color: var(--bosc-forest);
+    text-decoration: underline;
+  }
+  .studytoc-num {
+    font-family: var(--bosc-mono);
+    font-size: 0.78rem;
+    color: var(--bosc-faint);
+    flex: 0 0 auto;
+  }
+  .studytoc-body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .studytoc-title {
+    display: block;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.15px;
+  }
+  .studytoc-dek {
+    display: block;
+    font-size: 0.83rem;
+    line-height: 1.5;
+    color: var(--bosc-muted);
+    margin-top: 2px;
+  }
+  .studytoc-reason {
+    display: block;
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: var(--bosc-faint);
+    margin-top: 4px;
+  }
+  .studycover-foot {
+    border-top: 1px solid var(--bosc-rule);
+    margin-top: 2.4rem;
+    padding-top: 1rem;
+    font-size: 0.9rem;
+  }
+</style>

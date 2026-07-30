@@ -1,0 +1,53 @@
+---
+/**
+ * The study's wayfinding line — "Part II · The environment — Chapter 4 of 13", with the
+ * back-to-cover link. The study reads as ONE document across chapter pages: continuous
+ * numbering + this line + the prev/next rail carry the document feel.
+ */
+import type { StudyPart } from "@watermark/core/study";
+import { withSite } from "@watermark/core/site";
+
+interface Props {
+  part: StudyPart;
+  num: number;
+  total: number;
+}
+const { part, num, total } = Astro.props as Props;
+---
+
+<nav class="studyway" aria-label="Study wayfinding">
+  <a class="studyway-cover" href={withSite("/study/")}>The impact study</a>
+  <span class="studyway-sep" aria-hidden="true">/</span>
+  <span class="studyway-part">Part {part.num} · {part.title}</span>
+  <span class="studyway-sep" aria-hidden="true">—</span>
+  <span class="studyway-num">Chapter {num} of {total}</span>
+</nav>
+
+<style>
+  .studyway {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.3px;
+    color: var(--bosc-muted);
+    margin-bottom: 1.1rem;
+  }
+  .studyway-cover {
+    color: var(--bosc-forest);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .studyway-cover:hover {
+    text-decoration: underline;
+  }
+  .studyway-sep {
+    color: var(--bosc-faint);
+  }
+  .studyway-part {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+</style>

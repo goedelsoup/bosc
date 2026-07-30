@@ -1,0 +1,152 @@
+---
+/**
+ * The impact study — the chapter shell (the missing-impact-study epic). One dynamic route
+ * renders every chapter of every selectable site's study: wayfinding → verdict chip →
+ * the chapter section (bespoke when registered, the generic model renderer otherwise) →
+ * gap panels (the finding, never a lock) → the reference annex → the prev/next rail.
+ *
+ * `getStaticPaths` is the shared-items form of `withSitePaths` (the chapter set is one
+ * closed registry across sites); every per-site read happens at render, inside the
+ * middleware's `runWithSite` scope, with the `slug` prop threaded explicitly. Facility-
+ * scoped studies are reserved at `/study/f/<facility-key>/…` (multi-project, later) — this
+ * route never emits a chapter id `f`.
+ */
+import Base from "~/layouts/Base.astro";
+import ReferenceAnnex from "~/components/study/ReferenceAnnex.astro";
+import StudyGap from "~/components/study/StudyGap.astro";
+import StudyStatusChip from "~/components/study/StudyStatusChip.astro";
+import StudyWayfinding from "~/components/study/StudyWayfinding.astro";
+import { chapterSection } from "~/components/study";
+import { withSitePaths } from "@watermark/core/sites";
+import {
+  chapterNumber,
+  STUDY_CHAPTERS,
+  STUDY_PARTS,
+  studyChapter,
+  studyChapterModel,
+} from "@watermark/core/study";
+import { withSite } from "@watermark/core/site";
+
+export function getStaticPaths() {
+  return withSitePaths(
+    STUDY_CHAPTERS.map((c) => ({ params: { chapter: c.id }, props: { chapterId: c.id } })),
+  );
+}
+
+const { slug, chapterId } = Astro.props as { slug: string; chapterId: string };
+const def = studyChapter(chapterId);
+const model = studyChapterModel(chapterId, slug);
+const part = STUDY_PARTS.find((p) => p.id === def.part)!;
+const num = chapterNumber(chapterId);
+const total = STUDY_CHAPTERS.length;
+const prev = STUDY_CHAPTERS[num - 2];
+const next = STUDY_CHAPTERS[num];
+const Section = chapterSection(chapterId);
+const chapterPath = (id: string): string => withSite(`/study/${id}`);
+---
+
+<Base
+  title={`${def.title} — The impact study`}
+  section="study"
+  description={def.dek}
+  prevHref={prev ? chapterPath(prev.id) : undefined}
+  nextHref={next ? chapterPath(next.id) : undefined}
+>
+  <article class="studych">
+    <StudyWayfinding part={part} num={num} total={total} />
+
+    <header class="studych-head">
+      <h1 class="studych-h1">{def.title}</h1>
+      <p class="studych-dek">{def.dek}</p>
+      <StudyStatusChip status={model.status} reasons={model.statusReasons} />
+    </header>
+
+    <Section def={def} model={model} slug={slug} />
+
+    {model.gaps.map((gap) => <StudyGap gap={gap} />)}
+
+    <ReferenceAnnex references={def.references} slug={slug} />
+
+    <nav class="studych-nav" aria-label="Chapter navigation">
+      {
+        prev ? (
+          <a class="studych-nav-link" href={chapterPath(prev.id)}>
+            ← {chapterNumber(prev.id)}. {prev.title}
+          </a>
+        ) : (
+          <a class="studych-nav-link" href={withSite("/study/")}>
+            ← The cover
+          </a>
+        )
+      }
+      <a class="studych-nav-toc" href={withSite("/study/")}>All chapters</a>
+      {
+        next ? (
+          <a class="studych-nav-link studych-nav-next" href={chapterPath(next.id)}>
+            {chapterNumber(next.id)}. {next.title} →
+          </a>
+        ) : (
+          <a class="studych-nav-link studych-nav-next" href={withSite("/study/")}>
+            ↺ Back to the cover
+          </a>
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .studych {
+    max-width: 860px;
+  }
+  .studych-head {
+    margin-bottom: 1.6rem;
+  }
+  .studych-h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .studych-dek {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #3a4036;
+    max-width: 640px;
+    margin: 0.7rem 0 0.4rem;
+  }
+  .studych-nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid var(--bosc-rule);
+    margin-top: 2.4rem;
+    padding-top: 1rem;
+  }
+  .studych-nav-link {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--bosc-ink);
+    text-decoration: none;
+    max-width: 40%;
+  }
+  .studych-nav-link:hover {
+    color: var(--bosc-forest);
+    text-decoration: underline;
+  }
+  .studych-nav-next {
+    text-align: right;
+  }
+  .studych-nav-toc {
+    font-family: var(--bosc-mono);
+    font-size: 0.74rem;
+    color: var(--bosc-muted);
+    text-decoration: none;
+    flex: 0 0 auto;
+  }
+  .studych-nav-toc:hover {
+    text-decoration: underline;
+  }
+</style>

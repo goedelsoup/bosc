@@ -1,0 +1,71 @@
+---
+/**
+ * The chapter's reference annex — "the data behind this chapter": feed-guarded cross-links
+ * into the existing environment/economy/reports tree, which the study demotes to its data
+ * annex. A link whose feed is absent from this site's bundle is simply not offered (no doors
+ * onto locks); an empty annex renders nothing.
+ */
+import { hasFeed } from "@watermark/core/bundle";
+import type { StudyReference } from "@watermark/core/study";
+import { withBase, withSite } from "@watermark/core/site";
+
+interface Props {
+  references: readonly StudyReference[];
+  slug: string;
+}
+const { references, slug } = Astro.props as Props;
+const offered = references.filter((r) => !r.requiresFeed || hasFeed(r.requiresFeed, slug));
+// Network-global sections keep their root paths (`rehype-doc-links`' GLOBAL_ROUTE vocabulary);
+// everything else is a page of the active site.
+const isGlobal = (path: string): boolean => /^\/(docs|wiki|about|ask|privacy|methodology)(\/|$)/.test(path);
+const href = (path: string): string => (isGlobal(path) ? withBase(path) : withSite(path));
+---
+
+{
+  offered.length > 0 && (
+    <footer class="studyannex">
+      <div class="studyannex-eyebrow">The data behind this chapter</div>
+      <ul class="studyannex-links">
+        {offered.map((r) => (
+          <li>
+            <a href={href(r.path)}>{r.label} →</a>
+          </li>
+        ))}
+      </ul>
+    </footer>
+  )
+}
+
+<style>
+  .studyannex {
+    border-top: 1px solid var(--bosc-rule);
+    margin-top: 2.2rem;
+    padding-top: 1rem;
+  }
+  .studyannex-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    margin-bottom: 8px;
+  }
+  .studyannex-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin: 0;
+    padding: 0;
+  }
+  .studyannex-links a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--bosc-forest);
+    text-decoration: none;
+  }
+  .studyannex-links a:hover {
+    text-decoration: underline;
+  }
+</style>
