@@ -1,10 +1,10 @@
 {
   "site": "xenia",
   "bundle_version": "1.0.0",
-  "contract_version": "1.43.0",
-  "generated_at": "2026-07-29T21:23:37+00:00",
-  "feed_count": 27,
-  "row_total": 372,
+  "contract_version": "1.44.0",
+  "generated_at": "2026-07-30T13:52:01+00:00",
+  "feed_count": 28,
+  "row_total": 385,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -200,6 +200,14 @@
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
       "count": 72
+    },
+    {
+      "name": "impact-study",
+      "path": "feeds/impact-study.json",
+      "media_type": "application/json",
+      "schema": "schemas/impact-study.schema.json",
+      "kind": "collection",
+      "count": 13
     },
     {
       "name": "catalog-index",

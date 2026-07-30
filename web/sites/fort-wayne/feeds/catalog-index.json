@@ -1,7 +1,7 @@
 {
   "site": "fort-wayne",
   "catalog_version": "f41b5daaf537ea82d828a62a1bbfbafb3df1f2d670befeec0a54322635c66e72",
-  "contract_version": "1.43.0",
+  "contract_version": "1.44.0",
   "atoms": [
     {
       "handle": "concept:fort-wayne:7q10",
@@ -608,7 +608,7 @@
       "kind": "dataset",
       "site": "fort-wayne",
       "local_id": "abatement-parameters",
-      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "title": "Allen County, IN Abatement Parameters + What-If Scenario Knobs",
       "feed": "catalog"
     },
     {

@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.43.0",
-  "generated_at": "2026-07-29T21:12:51+00:00",
-  "feed_count": 53,
-  "row_total": 1620,
+  "contract_version": "1.44.0",
+  "generated_at": "2026-07-30T13:42:25+00:00",
+  "feed_count": 54,
+  "row_total": 1633,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -414,6 +414,14 @@
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
       "count": 28
+    },
+    {
+      "name": "impact-study",
+      "path": "feeds/impact-study.json",
+      "media_type": "application/json",
+      "schema": "schemas/impact-study.schema.json",
+      "kind": "collection",
+      "count": 13
     },
     {
       "name": "catalog-index",

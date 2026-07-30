@@ -1,0 +1,314 @@
+[
+  {
+    "chapter": "method",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "method",
+      "facilityKey": "urbana-technology-hub",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "project",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "project",
+      "facilityKey": "urbana-technology-hub",
+      "status": "partial",
+      "statusReasons": [
+        "the IT load on the record is a screening bracket, not an instrument-grounded figure"
+      ],
+      "stats": [
+        {
+          "label": "IT load",
+          "value": "35–115",
+          "unit": "MW",
+          "evidence": "inference",
+          "basis": "modeled",
+          "sub": "screening bracket — no instrument grounds it yet",
+          "source": "screening estimate",
+          "warn": null
+        },
+        {
+          "label": "Cooling",
+          "value": "closed loop dry",
+          "unit": null,
+          "evidence": "inference",
+          "basis": null,
+          "sub": "an operator claim — a claim is not an instrument",
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "water-supply",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "water-supply",
+      "facilityKey": "urbana-technology-hub",
+      "status": "gap",
+      "statusReasons": [
+        "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "how much water this project consumes at buildout — monthly, against the receiving water's cited design low flows.",
+          "missingRecord": "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here.",
+          "producer": "the water utility's contract, a wastewater permit application, or the operator's cooling-plant spec",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "discharge",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "discharge",
+      "facilityKey": "urbana-technology-hub",
+      "status": "partial",
+      "statusReasons": [
+        "baseline context only — the project-side record has not been produced"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": [
+        "Only the receiving water's existing burden is on the record here — the project-side discharge screen renders the day a characterization is filed."
+      ]
+    }
+  },
+  {
+    "chapter": "heat",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "heat",
+      "facilityKey": "urbana-technology-hub",
+      "status": "gap",
+      "statusReasons": [
+        "a thermal characterization for this project — none exists on the record."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "how much heat the discharge adds to a reach screened against Ohio's numeric temperature criterion at its design low flows.",
+          "missingRecord": "a thermal characterization for this project — none exists on the record.",
+          "producer": "the NPDES application's thermal load sheet, or the permit's §316(a) demonstration",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "groundwater",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "groundwater",
+      "facilityKey": "urbana-technology-hub",
+      "status": "gap",
+      "statusReasons": [
+        "a well survey and any dewatering record — neither has been produced."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the wells within the drawdown radius, and whether construction dewatering was permitted and where the water went.",
+          "missingRecord": "a well survey and any dewatering record — neither has been produced.",
+          "producer": "state well logs, a dewatering permit, and the contractor's discharge records",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "stormwater",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "stormwater",
+      "facilityKey": "urbana-technology-hub",
+      "status": "gap",
+      "statusReasons": [
+        "the site grading and drainage plan — requested, not produced."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the runoff a campus-scale impervious surface adds to the design storm, routed down the reach.",
+          "missingRecord": "the site grading and drainage plan — requested, not produced.",
+          "producer": "the site plan's grading/drainage sheets and the construction stormwater permit (NOI)",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "air",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "air",
+      "facilityKey": "urbana-technology-hub",
+      "status": "gap",
+      "statusReasons": [
+        "an air-permit application for this project — none is on the record."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the dispersion footprint of the campus's permitted backup-generator fleet.",
+          "missingRecord": "an air-permit application for this project — none is on the record.",
+          "producer": "the state air permit application (PTI/Title V) and its emissions tables",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "labor",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "labor",
+      "facilityKey": "urbana-technology-hub",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "County employment",
+          "value": "10471",
+          "unit": "jobs",
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Champaign County, Ohio · 2023",
+          "source": "BLS QCEW",
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "Any jobs claim reads against this baseline as claim vs. denominator — the study never computes a jobs multiplier."
+      ]
+    }
+  },
+  {
+    "chapter": "power",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "power",
+      "facilityKey": "urbana-technology-hub",
+      "status": "partial",
+      "statusReasons": [
+        "the campus load is a screening bracket — the demand-pressure read is withheld until an instrument grounds it"
+      ],
+      "stats": [
+        {
+          "label": "Serving utility",
+          "value": "Dayton Power & Light Co",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "PJM Interconnection",
+          "source": null,
+          "warn": null
+        },
+        {
+          "label": "Campus share of utility load",
+          "value": "5.65%",
+          "unit": null,
+          "evidence": "inference",
+          "basis": "modeled",
+          "sub": "~99 MW disclosed campus draw",
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [
+        {
+          "wouldScreen": "the campus's share of the serving utility's, balancing authority's, and state's annual load, from a grounded load figure.",
+          "missingRecord": "an instrument that grounds the IT load — an air permit or an interconnection filing; the load on the record is a screening bracket.",
+          "producer": "the state air-permit file or the RTO interconnection queue",
+          "leadIds": null
+        }
+      ],
+      "caveats": [
+        "Grid foundation layer (#94). The state, Dayton Power & Light Co, and PJM denominators are now all connector-sourced — Ohio retail from EIA (shared with #91), per-utility retail from the EIA-861 file, and PJM annual demand from EIA-930. The campus is a single load equal to a material fraction of its serving utility's entire retail sales. Denominator vintages differ (utility EIA-861 2024 / BA EIA-930 2024 / state EIA 2025 (1-year spread)): the EIA state seriesid route publishes ahead of the EIA-861 bulk file and the EIA-930 annual sum, so the three shares are not struck against one common year."
+      ]
+    }
+  },
+  {
+    "chapter": "fiscal",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "fiscal",
+      "facilityKey": "urbana-technology-hub",
+      "status": "gap",
+      "statusReasons": [
+        "no fiscal instrument is on the record"
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "what tax revenue is being traded away and for how long, before the trade is approved.",
+          "missingRecord": "the abatement agreement, the school-board resolution, and the county auditor's abatement report — all public records, none produced into this record.",
+          "producer": "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
+          "leadIds": null
+        }
+      ],
+      "caveats": [
+        "Disclosed investment: $1.0B — the operator's own announcement, not an instrument; the abatement agreement that would price the trade is not on the record."
+      ]
+    }
+  },
+  {
+    "chapter": "balance",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "balance",
+      "facilityKey": "urbana-technology-hub",
+      "status": "partial",
+      "statusReasons": [
+        "synthesizes the screened chapters — 1 on the record, 2 partial, 5 gap"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "missing",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "missing",
+      "facilityKey": "urbana-technology-hub",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  }
+]

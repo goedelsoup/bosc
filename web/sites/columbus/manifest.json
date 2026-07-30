@@ -1,10 +1,10 @@
 {
   "site": "columbus",
   "bundle_version": "1.0.0",
-  "contract_version": "1.43.0",
-  "generated_at": "2026-07-29T21:08:28+00:00",
-  "feed_count": 28,
-  "row_total": 378,
+  "contract_version": "1.44.0",
+  "generated_at": "2026-07-30T13:38:01+00:00",
+  "feed_count": 29,
+  "row_total": 391,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -208,6 +208,14 @@
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
       "count": 1
+    },
+    {
+      "name": "impact-study",
+      "path": "feeds/impact-study.json",
+      "media_type": "application/json",
+      "schema": "schemas/impact-study.schema.json",
+      "kind": "collection",
+      "count": 13
     },
     {
       "name": "catalog-index",

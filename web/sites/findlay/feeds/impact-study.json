@@ -1,0 +1,304 @@
+[
+  {
+    "chapter": "method",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "method",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "project",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "project",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "IT load",
+          "value": "30–150",
+          "unit": "MW",
+          "evidence": "inference",
+          "basis": "modeled",
+          "sub": "bracket grounded by an instrument on the record",
+          "source": "screening estimate",
+          "warn": null
+        },
+        {
+          "label": "Cooling",
+          "value": "not disclosed",
+          "unit": null,
+          "evidence": "open",
+          "basis": null,
+          "sub": "an operator claim — a claim is not an instrument",
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "water-supply",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "water-supply",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "gap",
+      "statusReasons": [
+        "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "how much water this project consumes at buildout — monthly, against the receiving water's cited design low flows.",
+          "missingRecord": "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here.",
+          "producer": "the water utility's contract, a wastewater permit application, or the operator's cooling-plant spec",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "discharge",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "discharge",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "partial",
+      "statusReasons": [
+        "baseline context only — the project-side record has not been produced"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": [
+        "Only the receiving water's existing burden is on the record here — the project-side discharge screen renders the day a characterization is filed."
+      ]
+    }
+  },
+  {
+    "chapter": "heat",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "heat",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "gap",
+      "statusReasons": [
+        "a thermal characterization for this project — none exists on the record."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "how much heat the discharge adds to a reach screened against Ohio's numeric temperature criterion at its design low flows.",
+          "missingRecord": "a thermal characterization for this project — none exists on the record.",
+          "producer": "the NPDES application's thermal load sheet, or the permit's §316(a) demonstration",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "groundwater",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "groundwater",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "gap",
+      "statusReasons": [
+        "a well survey and any dewatering record — neither has been produced."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the wells within the drawdown radius, and whether construction dewatering was permitted and where the water went.",
+          "missingRecord": "a well survey and any dewatering record — neither has been produced.",
+          "producer": "state well logs, a dewatering permit, and the contractor's discharge records",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "stormwater",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "stormwater",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "gap",
+      "statusReasons": [
+        "the site grading and drainage plan — requested, not produced."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the runoff a campus-scale impervious surface adds to the design storm, routed down the reach.",
+          "missingRecord": "the site grading and drainage plan — requested, not produced.",
+          "producer": "the site plan's grading/drainage sheets and the construction stormwater permit (NOI)",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "air",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "air",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "gap",
+      "statusReasons": [
+        "an air-permit application for this project — none is on the record."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the dispersion footprint of the campus's permitted backup-generator fleet.",
+          "missingRecord": "an air-permit application for this project — none is on the record.",
+          "producer": "the state air permit application (PTI/Title V) and its emissions tables",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "labor",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "labor",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "County employment",
+          "value": "44290",
+          "unit": "jobs",
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Hancock County, Ohio · 2023",
+          "source": "BLS QCEW",
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "Any jobs claim reads against this baseline as claim vs. denominator — the study never computes a jobs multiplier."
+      ]
+    }
+  },
+  {
+    "chapter": "power",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "power",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Serving utility",
+          "value": "AEP Ohio (Ohio Power Company)",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "PJM Interconnection",
+          "source": null,
+          "warn": null
+        },
+        {
+          "label": "Campus share of utility load",
+          "value": "3.16%",
+          "unit": null,
+          "evidence": "inference",
+          "basis": "modeled",
+          "sub": "~195 MW disclosed campus draw",
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "The demand share and households-equivalent are the robust, EIA-cited headline; the price-pressure band is a STYLIZED screening sensitivity, not a forecast of retail bills.",
+        "The campus buys at wholesale/industrial rates, not the residential price shown — residential price is the consumer-impact reference, not the campus bill.",
+        "Facility draw is itself an assumption-laden estimate (air-permit IT load x PUE band, #87); the load factor and transmission coefficient are assumptions.",
+        "Grid foundation layer (#94). The state, AEP Ohio (Ohio Power Company), and PJM denominators are now all connector-sourced — Ohio retail from EIA (shared with #91), per-utility retail from the EIA-861 file, and PJM annual demand from EIA-930. The campus is a single load equal to a material fraction of its serving utility's entire retail sales. Denominator vintages differ (utility EIA-861 2024 / BA EIA-930 2024 / state EIA 2025 (1-year spread)): the EIA state seriesid route publishes ahead of the EIA-861 bulk file and the EIA-930 annual sum, so the three shares are not struck against one common year."
+      ]
+    }
+  },
+  {
+    "chapter": "fiscal",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "fiscal",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "gap",
+      "statusReasons": [
+        "no fiscal instrument is on the record"
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "what tax revenue is being traded away and for how long, before the trade is approved.",
+          "missingRecord": "the abatement agreement, the school-board resolution, and the county auditor's abatement report — all public records, none produced into this record.",
+          "producer": "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "balance",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "balance",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "partial",
+      "statusReasons": [
+        "synthesizes the screened chapters — 2 on the record, 1 partial, 5 gap"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "missing",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "missing",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  }
+]
