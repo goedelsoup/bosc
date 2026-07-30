@@ -128,7 +128,9 @@ def _resolve_columns(table: list[Any], source: str) -> tuple[int, int, list[Any]
     return index[_PT_COLUMN], index[_HSG_COLUMN], table[1:]
 
 
-def _hsg_by_point(rows: list[Any], pt_i: int, hsg_i: int, source: str) -> dict[str, str]:
+def _hsg_by_point(
+    rows: list[Any], pt_i: int, hsg_i: int, source: str, n_points: int
+) -> dict[int, str]:
     """One HSG per sampled point (``""`` = sampled but unrated), duplicates collapsed.
 
     The query already forces a single winner per point; this re-enforces it on the
@@ -136,13 +138,29 @@ def _hsg_by_point(rows: list[Any], pt_i: int, hsg_i: int, source: str) -> dict[s
     change — can't restore the double-vote. A duplicate is broken by the only field the
     payload carries, mirroring the query's order: a rated group beats an unrated one,
     then lowest ``hydgrp``.
+
+    ``pt`` is the grid index this connector itself emitted into the SQL, so a row must
+    echo one back: an id that isn't an integer in ``range(n_points)`` doesn't identify a
+    sampled location and is rejected rather than stringified into a key of its own —
+    otherwise a ``NULL`` and a stray id would tally as two more "points", re-opening the
+    inflated-``n_points`` hole from the other side.
     """
-    by_point: dict[str, str] = {}
+    by_point: dict[int, str] = {}
     duplicates = 0
     for row in rows:
         if not isinstance(row, list) or len(row) <= max(pt_i, hsg_i):
             raise SsurgoError(f"SDA response for {source} has a short/malformed row: {row!r}")
-        pt = str(row[pt_i]).strip()
+        try:
+            pt = int(str(row[pt_i]).strip())
+        except (TypeError, ValueError):
+            raise SsurgoError(
+                f"SDA response for {source} has a non-numeric point id {row[pt_i]!r}"
+            ) from None
+        if not 0 <= pt < n_points:
+            raise SsurgoError(
+                f"SDA response for {source} has point id {pt} outside the sampled grid "
+                f"(0..{n_points - 1})"
+            )
         value = row[hsg_i]
         hsg = str(value).strip().upper() if value else ""
         prior = by_point.get(pt)
@@ -196,7 +214,7 @@ def dominant_hsg(
         raise SsurgoError(f"SDA returned no soil rows for {footprint_path.name}")
     # JSON+COLUMNNAME: row 0 is the column header (["pt","hsg"]); the rest are samples.
     pt_i, hsg_i, rows = _resolve_columns(table, footprint_path.name)
-    by_point = _hsg_by_point(rows, pt_i, hsg_i, footprint_path.name)
+    by_point = _hsg_by_point(rows, pt_i, hsg_i, footprint_path.name, len(points))
 
     counts: dict[str, int] = {}
     for hsg in by_point.values():

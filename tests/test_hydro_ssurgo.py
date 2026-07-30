@@ -41,6 +41,7 @@ def _seeded(tmp_path: Path, table: list[list[object]]) -> tuple[Path, Settings]:
     drifted header) without a network call — the cache key is the deterministic point
     grid, so it is computable here the same way the connector computes it.
     """
+    tmp_path.mkdir(parents=True, exist_ok=True)  # callers may pass a fresh sub-path
     footprint = tmp_path / "square.geojson"
     footprint.write_text(json.dumps(_SQUARE))
     points = geo.grid_points_within(footprint, 6)
@@ -115,6 +116,19 @@ def test_hsg_read_by_column_name_not_position(tmp_path: Path) -> None:
     assert survey.dominant_hsg == "C"
     assert survey.n_points == 3
     assert {d.hsg for d in survey.distribution} == {"C", "B"}
+
+
+def test_unattributable_point_ids_raise(tmp_path: Path) -> None:
+    # `pt` is the grid index this connector emitted; a row that doesn't echo one back
+    # can't be attributed to a sampled location. Stringifying it would give each bad id a
+    # key of its own — two more "points" in the tally, the n_points hole from the far side.
+    footprint, settings = _seeded(tmp_path, [["pt", "hsg"], ["0", "B"], [None, "D"]])
+    with pytest.raises(ssurgo.SsurgoError, match="non-numeric point id"):
+        ssurgo.dominant_hsg(footprint, settings=settings)
+
+    footprint, settings = _seeded(tmp_path / "b", [["pt", "hsg"], ["0", "B"], ["9999", "D"]])
+    with pytest.raises(ssurgo.SsurgoError, match="outside the sampled grid"):
+        ssurgo.dominant_hsg(footprint, settings=settings)
 
 
 def test_missing_hsg_column_raises(tmp_path: Path) -> None:
