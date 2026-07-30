@@ -1,7 +1,7 @@
 {
   "site": "new-albany",
-  "catalog_version": "e5354e7bafd57758c15f8e17e7f1316574d90b41c9639dda28f763e5a8a5deaf",
-  "contract_version": "1.42.0",
+  "catalog_version": "2bfc0367496804fff738dfc6da162650dae24023ad436843c496b472c1d94ece",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:new-albany:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:new-albany:abatement-parameters",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:new-albany:air-emission-factors",
       "kind": "dataset",
       "site": "new-albany",
@@ -696,7 +704,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "enclave-federal-land",
-      "title": "New Albany · Licking Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "New Albany · Licking Federal-Enclave Boundary — Licking County, OH (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -704,7 +712,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "enclave-profile",
-      "title": "New Albany · Licking Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "New Albany · Licking Federal-Enclave Profile — Licking County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

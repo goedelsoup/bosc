@@ -1,10 +1,10 @@
 {
   "site": "new-albany",
   "bundle_version": "1.0.0",
-  "contract_version": "1.42.0",
-  "generated_at": "2026-07-29T18:24:29+00:00",
+  "contract_version": "1.43.0",
+  "generated_at": "2026-07-29T21:14:14+00:00",
   "feed_count": 27,
-  "row_total": 374,
+  "row_total": 375,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 50
+      "count": 51
     },
     {
       "name": "facts",

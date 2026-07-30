@@ -1,7 +1,7 @@
 {
   "site": "columbus",
-  "catalog_version": "96a5dbcf0544f4b6bf80088e21138aeeb4b91663ca3fc6062733eaa269d5b082",
-  "contract_version": "1.42.0",
+  "catalog_version": "f925eea275c9995252a033868adc945ae702e65e429285f2203c3b0d40a902f7",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:columbus:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:columbus:abatement-parameters",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:columbus:air-emission-factors",
       "kind": "dataset",
       "site": "columbus",
@@ -696,7 +704,7 @@
       "kind": "dataset",
       "site": "columbus",
       "local_id": "enclave-federal-land",
-      "title": "Columbus Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "Columbus Federal-Enclave Boundary — Franklin County, OH (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -704,7 +712,7 @@
       "kind": "dataset",
       "site": "columbus",
       "local_id": "enclave-profile",
-      "title": "Columbus Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "Columbus Federal-Enclave Profile — Franklin County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

@@ -1,7 +1,7 @@
 {
   "site": "ottawa",
-  "catalog_version": "9a3320c39506b29a80a7ac287326e2d8a0ecd784b5a88bf744483d5adbc28f69",
-  "contract_version": "1.42.0",
+  "catalog_version": "3b3fb081ccf73d5fb640b979987c0fa3cd6dc1cc11791f511645d85ec9d3ffcf",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:ottawa:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:ottawa:abatement-parameters",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:ottawa:air-emission-factors",
       "kind": "dataset",
       "site": "ottawa",
@@ -712,7 +720,7 @@
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "enclave-federal-land",
-      "title": "Ottawa Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "Ottawa Federal-Enclave Boundary — Putnam County, OH (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -720,7 +728,7 @@
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "enclave-profile",
-      "title": "Ottawa Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "Ottawa Federal-Enclave Profile — Putnam County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

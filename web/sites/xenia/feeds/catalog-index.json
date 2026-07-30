@@ -1,7 +1,7 @@
 {
   "site": "xenia",
-  "catalog_version": "d8909216ff2ceee05d384090509840a1759d68cce536a512b5f9021653a31d94",
-  "contract_version": "1.42.0",
+  "catalog_version": "f3cf91b159792ab4240426d1911d85b4dbdcbd73c10298039b1a639d0b64f358",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:xenia:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:xenia:abatement-parameters",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "abatement-parameters",
+      "title": "Greene County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:xenia:air-emission-factors",

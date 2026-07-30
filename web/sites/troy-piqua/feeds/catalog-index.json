@@ -1,7 +1,7 @@
 {
   "site": "troy-piqua",
-  "catalog_version": "bacc386b9ff3d8189e14332a8a89c1b16e668d8750f9684ffeea67b7ca7f861f",
-  "contract_version": "1.42.0",
+  "catalog_version": "ff7215cfbd87ceadd7e6f314043e69e8b766a8c24798d6b4f511547e70e0df0d",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:troy-piqua:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:troy-piqua:abatement-parameters",
+      "kind": "dataset",
+      "site": "troy-piqua",
+      "local_id": "abatement-parameters",
+      "title": "Miami County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:troy-piqua:air-emission-factors",

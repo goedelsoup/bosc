@@ -1,7 +1,7 @@
 {
   "site": "bowling-green",
-  "catalog_version": "bf0c55b92a2954a7bc3045eb927ef07b6bc2e76b5e4090094a1aabda00077529",
-  "contract_version": "1.42.0",
+  "catalog_version": "80b35fc06eeced5101dcd3de82db3b0a2bc048c256062b5eb793f51ac798fe23",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:bowling-green:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:bowling-green:abatement-parameters",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:bowling-green:air-emission-factors",
       "kind": "dataset",
       "site": "bowling-green",
@@ -696,7 +704,7 @@
       "kind": "dataset",
       "site": "bowling-green",
       "local_id": "enclave-federal-land",
-      "title": "Bowling Green · Middleton Twp Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "Bowling Green · Middleton Twp Federal-Enclave Boundary — Wood County, OH (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -704,7 +712,7 @@
       "kind": "dataset",
       "site": "bowling-green",
       "local_id": "enclave-profile",
-      "title": "Bowling Green · Middleton Twp Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "Bowling Green · Middleton Twp Federal-Enclave Profile — Wood County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {

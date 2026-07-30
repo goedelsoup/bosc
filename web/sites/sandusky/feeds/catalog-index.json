@@ -1,7 +1,7 @@
 {
   "site": "sandusky",
-  "catalog_version": "2271bf4fc4d5260b17bc1e96d2def814eb1d6e37500379c8e4d3de4838d949ca",
-  "contract_version": "1.42.0",
+  "catalog_version": "9a7f9c57496ab8e40d83540277b1579a8c782e15e0e8f4f04a7f2c6ea237a814",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:sandusky:7q10",
@@ -602,6 +602,14 @@
       "local_id": "wwtp",
       "title": "WWTP",
       "feed": "concepts"
+    },
+    {
+      "handle": "dataset:sandusky:abatement-parameters",
+      "kind": "dataset",
+      "site": "sandusky",
+      "local_id": "abatement-parameters",
+      "title": "Erie County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
     },
     {
       "handle": "dataset:sandusky:air-emission-factors",

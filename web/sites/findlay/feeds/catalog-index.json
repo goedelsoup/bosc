@@ -1,7 +1,7 @@
 {
   "site": "findlay",
-  "catalog_version": "e47c81f071b1713f5cfff5524a273c1598264cb43e1a0c3c82c2c3a33e884be5",
-  "contract_version": "1.42.0",
+  "catalog_version": "c659eab56f5712572a4dba8f02e8ee01edcf0f7e105c5915f172f2b589519a31",
+  "contract_version": "1.43.0",
   "atoms": [
     {
       "handle": "concept:findlay:7q10",
@@ -604,6 +604,14 @@
       "feed": "concepts"
     },
     {
+      "handle": "dataset:findlay:abatement-parameters",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "abatement-parameters",
+      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:air-emission-factors",
       "kind": "dataset",
       "site": "findlay",
@@ -712,7 +720,7 @@
       "kind": "dataset",
       "site": "findlay",
       "local_id": "enclave-federal-land",
-      "title": "Findlay Federal-Enclave Boundary (DoD MIRTA)",
+      "title": "Findlay Federal-Enclave Boundary — Hancock County, OH (DoD MIRTA)",
       "feed": "catalog"
     },
     {
@@ -720,7 +728,7 @@
       "kind": "dataset",
       "site": "findlay",
       "local_id": "enclave-profile",
-      "title": "Findlay Federal-Enclave Profile (land / water / wastewater / power / toxics)",
+      "title": "Findlay Federal-Enclave Profile — Hancock County, OH (land / water / wastewater / power / toxics)",
       "feed": "catalog"
     },
     {
