@@ -32,6 +32,25 @@ costs, plus the stylized facility→price-pressure sensitivity. Defers to the ro
   Persisted per-site to `demand_pressure_relpath` via `write_demand_pressure`/`load_demand_pressure`
   and exported as the **`economics-demand-pressure`** bundle feed (`watermark.site.economics`, #1105);
   both the write (`watermark eia`) and the feed are facility-gated — a thin site simply omits them.
+- **`scenarios.py` → `EconomicScenarios` (ME-F, #1665).** The economic *argument* as disciplined
+  scenario bands — the one part of this package in tension with the anti-modeling method of
+  [`docs/defense-nexus.md`](../../../docs/defense-nexus.md), so its discipline is enforced in the
+  type system rather than asked for in prose. Assembled from three committed inputs: the abatement
+  instrument **read** off `data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml` (percent, term,
+  capex, jobs — never re-keyed, so a correction to the record moves the bands), this county's cited
+  tax mechanics + what-if knobs at `abatement_parameters_relpath`, and the network-global pooled
+  industry priors (`priors.py` over `reference/datacenter-industry/priors.yaml` — committed since
+  #269 and read by nothing until now, which is exactly why its numbers had been hand-copied into the
+  frontend and the docs). Publishes the **`economics-scenarios`** feed: priced what-if `profiles`,
+  ledger `lines` as bands over those corners, the `load_per_job` ratio, the `withheld` inputs with
+  the record that would collapse each, cited `constants`, and the industry `axes`. Three refusals,
+  all structural: `ScenarioBand` rejects `low == high`; every axis / line / withheld input rejects
+  the `verified` tag and any confidence above `low`; fewer than two corners is not a band. So a
+  scenario **cannot** serialize as an assertion, and the GovCloud profile is a labeled
+  counterfactual — never a defense finding. **INSTRUMENT-gated**, not slug-gated: `data/extracted`
+  is one tree for the whole network, so the gate is `SiteProfile.abatement_parameters_relpath`. A
+  peer declaring none returns `None`, the feed is absent, and its report locks and asks for its own
+  agreement. Never default that path. CLI: `watermark scenarios`.
 - **Per-site config flows in through the profile, not constants.** `econ_fips`, `eia_state`,
   `eia861_utility_number` come off `active_profile(settings)`/`Settings` (see
   [`watermark.sites`](../sites/CLAUDE.md)); the output relpaths are per-site (#326/#606). **Never

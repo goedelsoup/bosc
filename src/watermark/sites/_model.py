@@ -987,6 +987,15 @@ class SiteProfile(BaseModel):
     # otherwise), so a facility-less site declares ``None`` — no destination — rather than a path
     # to a file that can never be written. Mirrors onboard's ``… if facility is not None else None``.
     demand_pressure_relpath: str | None = None
+    # The local tax mechanics + what-if scenario knobs the economic scenario bands run on
+    # (#1665, epic #1659 ME-F) — relative to settings.data_dir. INSTRUMENT-GATED: the
+    # assessment ratio, effective millage, sales-and-use rate and the discrete
+    # building-share x jobs profiles are one county's abatement agreement, not a model of
+    # an abatement, so a site with no such instrument on the record declares ``None`` and
+    # the `economics-scenarios` feed is simply absent. Never default it: pricing a peer's
+    # build off Allen County's mills is exactly the failure the gate exists to prevent
+    # (the Python peer of `econLedger.ts`'s `ledgerProfiles(site) -> null`).
+    abatement_parameters_relpath: str | None = None
     grid_relpath: str  # EIA-861 utility + grid profile (grid/utility.py)
 
     # --- Toxics screening inference (hydrology/toxics.py) --------------------------------

@@ -65,13 +65,27 @@ Order 14265** (signed 2025-04-09), which pressed defense primes to modernize clo
 procurement `[verified]`.
 
 The capability has an economic edge the rest of the record sharpens. Government cloud
-runs **20–30% above commercial** rates, and — the relator's point — an authorized
+runs **20–30% above commercial** rates — the `govcloud_premium` axis of the
+`economics-scenarios` feed, pooling BCG and AWS GovCloud-vs-commercial pricing
+`[reference]`; an industry range whose application to this campus stays `[open]` by
+construction — and, the relator's point, an authorized
 facility is closed to the community that subsidized it: _"I cannot use that data
 center if it is a FedRAMP-compliant facility."_ `[verified: relator testimony]` That
 is why the question is not idle. _If_ the campus were a high-authorization enclave,
 the public-benefit math the abatement was scored on would not hold — a sealed federal
 supply chain seeds no local cluster (see [end-use-and-workloads.md](end-use-and-workloads.md)).
 But that is an _if_, and the record does not resolve it.
+
+What that _if_ would cost the public is now priced, and it is worth being precise about
+what the pricing is and is not. The economic ledger's **GovCloud / defense-hardened
+profile** turns two knobs to the ends a hardened, cleared facility would imply — a larger
+real-property share and a leaner headcount — and lands at the top of the subsidy band
+(see [the-economic-ledger.md](the-economic-ledger.md), issue #1665). It is a **labeled
+counterfactual**: it says what such a facility _would_ cost, and the model that produces
+it structurally cannot tag it `[verified]` or carry it above `low` confidence. It is not
+evidence of a defense nexus, and nothing here should be read as sharpening the case for
+one. It exists so that the reader who asks "and if it _were_?" gets a number instead of a
+hint.
 
 ———
 

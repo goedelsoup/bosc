@@ -12,13 +12,17 @@
  * row carries its register and the specific record whose disclosure would collapse it.
  *
  * Per-site (#1642, GP-E E4): a row appears only where that narrative has something on **this**
- * site's record. The economic row is Allen County's CRA (`siteNetSubsidyOutcome`), so a peer's
- * sheet simply omits it rather than pricing another county's abatement — and `econExposure` is
- * then null, so the page states the exposure it can actually source. The sheet is a composition
- * of narratives; where a narrative is silent for a site, the honest sheet is shorter.
+ * site's record. The economic row is the site's own abatement instrument, so a peer's sheet simply
+ * omits it rather than pricing another county's abatement — and `econExposure` is then null, so the
+ * page states the exposure it can actually source. The sheet is a composition of narratives; where
+ * a narrative is silent for a site, the honest sheet is shorter.
+ *
+ * The economic outcome is now **passed in** (#1665, epic #1659 ME-F) rather than derived from the
+ * slug: it is built from the `economics-scenarios` feed by `econScenarios.netSubsidyOutcomeFromFeed()`
+ * at build time, which is both the same client-safety rule the toxics constants already follow and
+ * a stronger gate — the row exists when the *record* does, not when the slug matches.
  */
 import { reportUrl } from "./reports";
-import { siteNetSubsidyOutcome } from "./econLedger";
 import { facilityDrawOutcome, gridPriorsFromFacility } from "./gridLoad";
 import { assimilativeOutcome } from "./toxicsDilution";
 import type { UncertainOutcome } from "./uncertainty";
@@ -55,17 +59,17 @@ export interface BalanceSheetData {
 /**
  * Compose the balance sheet. `toxicsEffluentCfs` / `toxicsNaturalAnnualCfs` come from the
  * hydrology feed (`buildDilution().discharge`) so the toxics band matches its narrative.
- * `siteSlug` scopes each band's narrative companion link to the active site (#1145) **and** gates
- * which bands exist for it at all (#1642).
+ * `siteSlug` scopes each band's narrative companion link to the active site (#1145). `econ` is the
+ * site's net-subsidy band from the `economics-scenarios` feed — omit or pass `null` where the site
+ * has no abatement instrument and the economic row is dropped (#1642 E4 / #1665).
  */
 export function buildBalanceSheet(
   toxicsEffluentCfs: number,
   toxicsNaturalAnnualCfs: number,
   siteSlug: string,
   gridItLoad?: GridItLoad | null,
+  econ?: UncertainOutcome | null,
 ): BalanceSheetData {
-  // The economic band is the site's own abatement instrument — absent for a site with none.
-  const econ = siteNetSubsidyOutcome(siteSlug);
   // #1632: source the grid band's IT-load prior from the facility feed when supplied, so this
   // sheet's load row matches the-load-and-the-grid and /basin (one sourced IT figure, not a
   // hardcoded band). Falls back to the Lima GRID_PRIORS default when absent.

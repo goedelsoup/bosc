@@ -15,6 +15,7 @@ import BalanceSheet from "@watermark/viz/islands/BalanceSheet.tsx";
 import ReportShell from "~/layouts/ReportShell.astro";
 import { type BalanceUnit, type GridItLoad, buildBalanceSheet } from "@watermark/core/balanceSheet";
 import { buildDilution } from "@watermark/core/dilution";
+import { netSubsidyOutcomeFromFeed } from "@watermark/core/econScenarios";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { FacilityItem } from "@watermark/core/feeds";
 import { fmtUsdM } from "@watermark/core/money";
@@ -31,7 +32,10 @@ const gridItLoad: GridItLoad | null =
   primary?.it_load_mw != null
     ? { central: primary.it_load_mw, low: primary.it_load_low_mw, high: primary.it_load_high_mw }
     : null;
-const sheet = buildBalanceSheet(effluentCfs, dc.naturalCfs, Astro.locals.site, gridItLoad);
+// The economic row's band comes from the `economics-scenarios` feed (#1665) — null for a site with
+// no abatement instrument on the record, in which case the sheet is simply shorter.
+const econ = netSubsidyOutcomeFromFeed();
+const sheet = buildBalanceSheet(effluentCfs, dc.naturalCfs, Astro.locals.site, gridItLoad, econ);
 
 const fmt = (n: number, unit: BalanceUnit): string =>
   unit === "usd" ? fmtUsdM(n) : unit === "mw" ? `${Math.round(n)} MW` : `${n.toFixed(0)}%`;

@@ -6,10 +6,82 @@ import { fmtUsd, fmtUsdFull } from "./money";
 
 const tmpDirs: string[] = [];
 
-function makeBundle(records: object[]): string {
+/** A minimal `economics-scenarios` payload (#1665). The abatement strand is fed by this feed now,
+ *  so a fixture that omits it exercises the no-instrument path, not a hardcoded fallback. */
+function scenariosFeed(): object {
+  const constant = (key: string, value: number) => ({
+    key,
+    label: key,
+    value: { value, unit: "x", source: "document", citation: "c", confidence: "low", asof: null },
+  });
+  const corner = (key: string, buildingShare: number, jobs: number) => {
+    const ab = 500_000_000 * buildingShare * 0.35 * 0.063 * 0.75 * 15;
+    const ex = (1 - buildingShare) * 500_000_000 * 0.0725 * 1.5;
+    return {
+      key,
+      label: key,
+      note: key === "govcloud" ? "a what-if profile, not a finding (#233)" : "",
+      basis: "",
+      building_share: buildingShare,
+      jobs,
+      abatement_usd: Math.round(ab),
+      kept_usd: Math.round(500_000_000 * buildingShare * 0.35 * 0.063 * 0.25 * 15),
+      exemption_usd: Math.round(ex),
+      net_subsidy_usd: Math.round(ab + ex),
+      abatement_per_job_usd: Math.round(ab / jobs),
+      net_subsidy_per_job_usd: Math.round((ab + ex) / jobs),
+    };
+  };
+  const band = (low: number, central: number, high: number, unit: string) => ({
+    low,
+    central,
+    high,
+    unit,
+    dist: "profiles",
+  });
+  return {
+    site: "lima",
+    site_name: "Lima",
+    instrument: "Test CRA (Res #000-00)",
+    instrument_record: "data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml",
+    tag: "open",
+    confidence: "low",
+    constants: [
+      constant("capital_investment", 500_000_000),
+      constant("assessment_ratio", 0.35),
+      constant("effective_commercial_mills", 0.063),
+      constant("effective_rate", 0.35 * 0.063),
+      constant("abatement_percent", 0.75),
+      constant("term_years", 15),
+      constant("stated_jobs", 50),
+      constant("sales_and_use_rate", 0.0725),
+      constant("equipment_refresh", 1.5),
+    ],
+    withheld: [],
+    axes: [],
+    profiles: [
+      corner("stated", 0.35, 50),
+      corner("equipment", 0.25, 50),
+      corner("hyperscale", 0.35, 30),
+      corner("govcloud", 0.5, 30),
+    ],
+    lines: [
+      {
+        key: "net",
+        label: "Net public subsidy",
+        band: band(1, 2, 3, "usd"),
+        tag: "inference",
+        confidence: "low",
+      },
+    ],
+    load_per_job: null,
+  };
+}
+
+function makeBundle(records: object[], withScenarios = true): string {
   const dir = mkdtempSync(join(tmpdir(), "bosc-mf-"));
   tmpDirs.push(dir);
-  const feeds = [
+  const feeds: object[] = [
     {
       name: "records",
       path: "records.json",
@@ -19,6 +91,17 @@ function makeBundle(records: object[]): string {
       count: records.length,
     },
   ];
+  if (withScenarios) {
+    feeds.push({
+      name: "economics-scenarios",
+      path: "economics-scenarios.json",
+      media_type: "application/json",
+      schema: "s",
+      kind: "object",
+      count: 1,
+    });
+    writeFileSync(join(dir, "economics-scenarios.json"), JSON.stringify(scenariosFeed()));
+  }
   writeFileSync(
     join(dir, "manifest.json"),
     JSON.stringify({
@@ -98,15 +181,19 @@ describe("buildMoneyFlow", () => {
     expect(m.abatement.schoolTermsPublic).toBe(false);
     // ...so the per-job is carried as a modeled [open] band, not a verified figure.
     const pj = m.abatementPerJob;
+    expect(pj).not.toBeNull();
+    if (!pj) throw new Error("unreachable");
     expect(pj.tag).toBe("open");
     expect(pj.lowUsd).toBeLessThan(pj.highUsd);
     expect(pj.centralUsd).toBeGreaterThanOrEqual(pj.lowUsd);
     expect(pj.centralUsd).toBeLessThanOrEqual(pj.highUsd);
   });
 
-  it("computes each profile deterministically from the labeled constants", async () => {
+  it("computes each profile deterministically from the feed's labeled constants", async () => {
     const { buildAbatementPerJob } = await loadMoneyFlow(makeBundle([OPC_RECORD]));
     const pj = buildAbatementPerJob();
+    expect(pj).not.toBeNull();
+    if (!pj) throw new Error("unreachable");
     const keys = pj.profiles.map((p) => p.key);
     // The defense/GovCloud case is one modeling profile among a few.
     expect(keys).toContain("govcloud");
@@ -122,6 +209,14 @@ describe("buildMoneyFlow", () => {
     // The "stated" profile is the central reference; the hardened build is the ceiling.
     expect(pj.centralUsd).toBe(pj.profiles.find((p) => p.key === "stated")?.perJobUsd);
     expect(pj.highUsd).toBe(pj.profiles.find((p) => p.key === "govcloud")?.perJobUsd);
+  });
+
+  it("drops the per-job strand when no abatement instrument is on the record (#1665)", async () => {
+    // The constants used to be literals here, so a bundle without the instrument still produced a
+    // full priced band under the wrong site's name. Now the absent feed IS the answer.
+    const mod = await loadMoneyFlow(makeBundle([OPC_RECORD], false));
+    expect(mod.buildAbatementPerJob()).toBeNull();
+    expect(mod.buildMoneyFlow().abatementPerJob).toBeNull();
   });
 
   it("falls back to the curated OPC items when the feed is absent (CI fixture)", async () => {

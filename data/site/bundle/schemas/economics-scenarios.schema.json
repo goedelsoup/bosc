@@ -1,0 +1,594 @@
+{
+  "$defs": {
+    "ProvenancedValue": {
+      "additionalProperties": false,
+      "description": "A single numeric quantity tagged with its provenance.\n\nConstruct via the classmethods (:meth:`from_document`, :meth:`from_connector`,\n:meth:`assume`, :meth:`derived`) so the ``source`` tag is never forgotten.\n\nA **measured or derived estimate** may also carry a quantitative uncertainty range\n(#760): optional absolute ``low``/``high`` bounds around the central ``value``,\n*orthogonal* to the qualitative ``confidence`` enum. The convention: a document- or\nconnector-verbatim figure is a single value (no band); an estimate whose honest\nrepresentation is \"226 ± ~35 ac\" carries ``low``/``high`` so downstream consumers\n(the bundle, the frontend, the Monte-Carlo engine #271) see the spread as data, not\nprose buried in the citation. The estimate constructors (:meth:`derived`,\n:meth:`assume`, :meth:`from_reference`) take the range inline; :meth:`with_range`\nattaches one to any value (e.g. a document-anchored central with a derived band).",
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "asof": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asof"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source"
+      ],
+      "title": "ProvenancedValue",
+      "type": "object"
+    },
+    "ScenarioAxis": {
+      "additionalProperties": false,
+      "description": "One cited driver of the economic argument, published as a band with its sources.\n\nThe typed home of the figures `docs/ECONOMICS.md` §4 carried as prose: the\nauthorized-region (GovCloud) premium, the DCTE tax-base forecasting risk, the jobs-per-MW\nstaffing range, the subsidy-per-job benchmark. ``band`` is ``None`` for a\n**corroboration** axis that asserts no range of its own (the sales-tax-exemption-dominance\nfinding is a qualitative corroboration from other jurisdictions, not a Lima magnitude) —\nthose still carry their sources, so the claim can be checked.\n\n``site_status`` is the prior's ``lima_status``, generalized: whether the band's application\nto *this* site is ``open`` (unresolved), ``comparative`` (a benchmark the site is read\nagainst), or ``context`` (national backdrop). It is what keeps an industry range from\nbeing read as a facility fact.",
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "band": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScenarioBand"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tag": {
+          "default": "reference",
+          "enum": [
+            "verified",
+            "inference",
+            "reference",
+            "open"
+          ],
+          "title": "Tag",
+          "type": "string"
+        },
+        "confidence": {
+          "default": "low",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "site_status": {
+          "default": "open",
+          "title": "Site Status",
+          "type": "string"
+        },
+        "drives": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Drives",
+          "type": "array"
+        },
+        "basis": {
+          "default": "",
+          "title": "Basis",
+          "type": "string"
+        },
+        "sources": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ScenarioSource"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "resolving_record": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resolving Record"
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "question"
+      ],
+      "title": "ScenarioAxis",
+      "type": "object"
+    },
+    "ScenarioBand": {
+      "additionalProperties": false,
+      "description": "A low/central/high band — the deliverable, never a point estimate.\n\n``high > low`` is enforced: a \"band\" that collapses to a single number is precisely the\nfalse precision this layer exists to prevent, so it cannot be constructed. ``dist``\nrecords how the interior of the band is shaped for a consumer that samples it —\n``profiles`` means the band is the envelope of the discrete scenario corners (no\ndistribution is asserted between them), which is the honest default here.",
+      "properties": {
+        "low": {
+          "title": "Low",
+          "type": "number"
+        },
+        "central": {
+          "title": "Central",
+          "type": "number"
+        },
+        "high": {
+          "title": "High",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "dist": {
+          "default": "profiles",
+          "enum": [
+            "triangular",
+            "uniform",
+            "profiles"
+          ],
+          "title": "Dist",
+          "type": "string"
+        }
+      },
+      "required": [
+        "low",
+        "central",
+        "high",
+        "unit"
+      ],
+      "title": "ScenarioBand",
+      "type": "object"
+    },
+    "ScenarioConstant": {
+      "additionalProperties": false,
+      "description": "One named modeling constant, carrying its citation and register.",
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/ProvenancedValue"
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "value"
+      ],
+      "title": "ScenarioConstant",
+      "type": "object"
+    },
+    "ScenarioLine": {
+      "additionalProperties": false,
+      "description": "One ledger line, as a band across the scenario profiles.",
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "band": {
+          "$ref": "#/$defs/ScenarioBand"
+        },
+        "tag": {
+          "default": "inference",
+          "enum": [
+            "verified",
+            "inference",
+            "reference",
+            "open"
+          ],
+          "title": "Tag",
+          "type": "string"
+        },
+        "confidence": {
+          "default": "low",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "resolving_record": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resolving Record"
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "band"
+      ],
+      "title": "ScenarioLine",
+      "type": "object"
+    },
+    "ScenarioProfile": {
+      "additionalProperties": false,
+      "description": "One discrete what-if corner: the two knobs turned, and the ledger priced on them.\n\nThe typed peer of the frontend's former hardcoded ``CRA_PROFILES`` array. Every dollar\nfigure is computed here from the committed instrument (the CRA extraction) and the\ncommitted, cited local parameters — so the profile the site renders and the profile the\nessay tabulates are the same object, and neither can drift from the record.",
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "basis": {
+          "default": "",
+          "title": "Basis",
+          "type": "string"
+        },
+        "building_share": {
+          "title": "Building Share",
+          "type": "number"
+        },
+        "jobs": {
+          "title": "Jobs",
+          "type": "integer"
+        },
+        "abatement_usd": {
+          "title": "Abatement Usd",
+          "type": "number"
+        },
+        "kept_usd": {
+          "title": "Kept Usd",
+          "type": "number"
+        },
+        "exemption_usd": {
+          "title": "Exemption Usd",
+          "type": "number"
+        },
+        "net_subsidy_usd": {
+          "title": "Net Subsidy Usd",
+          "type": "number"
+        },
+        "abatement_per_job_usd": {
+          "title": "Abatement Per Job Usd",
+          "type": "number"
+        },
+        "net_subsidy_per_job_usd": {
+          "title": "Net Subsidy Per Job Usd",
+          "type": "number"
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "building_share",
+        "jobs",
+        "abatement_usd",
+        "kept_usd",
+        "exemption_usd",
+        "net_subsidy_usd",
+        "abatement_per_job_usd",
+        "net_subsidy_per_job_usd"
+      ],
+      "title": "ScenarioProfile",
+      "type": "object"
+    },
+    "ScenarioSource": {
+      "additionalProperties": false,
+      "description": "One published source pooled into a scenario axis's band (from the industry priors).",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        },
+        "contributes": {
+          "default": "",
+          "title": "Contributes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ScenarioSource",
+      "type": "object"
+    },
+    "WithheldInput": {
+      "additionalProperties": false,
+      "description": "A load-bearing figure the record does not fix, and the record that would fix it.\n\nNaming these is half the discipline: the band is wide *because* of a specific,\nidentifiable disclosure that has not been made. ``resolving_record`` is what collapses it.",
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "band": {
+          "$ref": "#/$defs/ScenarioBand"
+        },
+        "tag": {
+          "default": "open",
+          "enum": [
+            "verified",
+            "inference",
+            "reference",
+            "open"
+          ],
+          "title": "Tag",
+          "type": "string"
+        },
+        "confidence": {
+          "default": "low",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "why": {
+          "default": "",
+          "title": "Why",
+          "type": "string"
+        },
+        "resolving_record": {
+          "default": "",
+          "title": "Resolving Record",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "band"
+      ],
+      "title": "WithheldInput",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The economic argument as disciplined scenario bands (#1665, epic #1659 ME-F).\n\nAssembled by :func:`watermark.economics.scenarios.derive_economic_scenarios` from three\ncommitted inputs — the site's abatement instrument (the CRA extraction), its cited local\ntax parameters + what-if knobs (``abatement_parameters_relpath``), and the network-global\nindustry priors (``reference/datacenter-industry/priors.yaml``) — plus the facility power\nbasis where one exists. Nothing is re-keyed: every figure traces to one of those files.\n\nInstrument-gated: a site with no abatement agreement on the record produces ``None``, so\nno peer is ever priced off another county's mills.",
+  "properties": {
+    "site": {
+      "title": "Site",
+      "type": "string"
+    },
+    "site_name": {
+      "title": "Site Name",
+      "type": "string"
+    },
+    "instrument": {
+      "title": "Instrument",
+      "type": "string"
+    },
+    "instrument_record": {
+      "title": "Instrument Record",
+      "type": "string"
+    },
+    "tag": {
+      "const": "open",
+      "default": "open",
+      "title": "Tag",
+      "type": "string"
+    },
+    "confidence": {
+      "const": "low",
+      "default": "low",
+      "title": "Confidence",
+      "type": "string"
+    },
+    "constants": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ScenarioConstant"
+      },
+      "title": "Constants",
+      "type": "array"
+    },
+    "withheld": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/WithheldInput"
+      },
+      "title": "Withheld",
+      "type": "array"
+    },
+    "axes": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ScenarioAxis"
+      },
+      "title": "Axes",
+      "type": "array"
+    },
+    "profiles": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ScenarioProfile"
+      },
+      "title": "Profiles",
+      "type": "array"
+    },
+    "lines": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ScenarioLine"
+      },
+      "title": "Lines",
+      "type": "array"
+    },
+    "load_per_job": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ScenarioLine"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "method": {
+      "default": "",
+      "title": "Method",
+      "type": "string"
+    },
+    "disclaimer": {
+      "default": "A labeled counterfactual, not a finding. Every figure here is a band across explicitly stated scenarios whose constants are all on the table — it prices what the public instrument WOULD cost under each set of assumptions, and asserts nothing about which one is true. The GovCloud / defense-hardened profile in particular is a what-if on two knobs (building share and headcount); it is NOT a claim that this facility does defense work. That question is open and the corpus does not answer it (docs/defense-nexus.md).",
+      "title": "Disclaimer",
+      "type": "string"
+    },
+    "caveats": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Caveats",
+      "type": "array"
+    }
+  },
+  "required": [
+    "site",
+    "site_name",
+    "instrument",
+    "instrument_record"
+  ],
+  "title": "EconomicScenarios",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

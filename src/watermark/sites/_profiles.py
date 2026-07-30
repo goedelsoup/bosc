@@ -119,6 +119,8 @@ _LIMA = SiteProfile(
     rsei_relpath="reference/rsei/inventory.yaml",
     consumer_energy_relpath="reference/eia/consumer-energy.yaml",
     demand_pressure_relpath="reference/eia/demand-pressure.yaml",
+    # The only abatement instrument in the network on the record (CRA No. 1, Res #548-25).
+    abatement_parameters_relpath="reference/economics/abatement-parameters.yaml",
     grid_relpath="reference/eia/grid-profile.yaml",
     # Lima pins the un-slugged legacy regulatory-stack paths (#1639/B1); peers use the
     # slug-scoped default. (ba-interchange stays basin-shared — not a per-site relpath.)

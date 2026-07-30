@@ -23,7 +23,7 @@ import {
   pctOfUtilityRetail,
 } from "@watermark/core/gridLoad";
 import { buildGridBaseline } from "@watermark/core/gridBackdrop";
-import { promisedJobs } from "@watermark/core/econLedger";
+import { promisedJobs } from "@watermark/core/econScenarios";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { FacilityItem } from "@watermark/core/feeds";
 import { buildDilution } from "@watermark/core/dilution";
@@ -49,7 +49,7 @@ const draw = facilityDrawOutcome(priors);
 const site = Astro.locals.site;
 const baseline = buildGridBaseline(site);
 const backup = backupRecord(site);
-const jobs = promisedJobs(site);
+const jobs = promisedJobs();
 // The no-JS fallback's figures, computed from the same feed-sourced baseline as the island.
 const gwh = annualGwh(draw.central);
 const pctOfUtility = baseline ? pctOfUtilityRetail(gwh, baseline.utilityRetailGwh) : null;

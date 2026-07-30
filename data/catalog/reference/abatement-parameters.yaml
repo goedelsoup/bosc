@@ -1,0 +1,44 @@
+id: abatement-parameters
+title: Allen County, OH Abatement Parameters + What-If Scenario Knobs
+title_template: '{county_state} Abatement Parameters + What-If Scenario Knobs'
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: Ohio Revised Code (5715.01 assessment ratio; 122.175 DCTE scope; 3735.671(A)(2) school-compensation
+    floor) + Ohio Department of Taxation county sales-and-use rate + a stated commercial-millage assumption;
+    the withheld-knob bands are cross-referenced to reference/datacenter-industry/priors.yaml
+license: U.S./state statutory material (public domain); the assumption bands are this project's
+  stated modeling inputs
+access_tier: public
+site_scope: slug-scoped
+storage:
+- relpath: reference/economics/abatement-parameters.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/economics/{site}/abatement-parameters.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-07-29'
+provenance: reference
+schema_ref: watermark.economics.scenarios.AbatementParameters
+tags:
+- economics
+- abatement
+- cra
+- dcte
+- scenarios
+- assumptions
+- reference
+notes: The site-specific tax mechanics and what-if knobs the economic scenario bands run on
+  (watermark.economics.scenarios, ME-F issue 1665) — the statutory assessment ratio, the local effective
+  commercial millage (a STATED ASSUMPTION, not a cited county rate; the single largest unforced
+  uncertainty, and it scales every dollar figure linearly), the county sales-and-use rate, the four
+  withheld knobs as screening bands, and the discrete building-share x jobs profiles the ledger is
+  priced across. Curated, not connector-regenerable. INSTRUMENT-gated by
+  SiteProfile.abatement_parameters_relpath — only a site with an abatement agreement on the record
+  declares one, so no peer is priced off another county's mills. Everything computed from it is a
+  labeled counterfactual, tagged [open] / confidence low by construction; the GovCloud profile is a
+  what-if on two knobs, NOT a defense finding (docs/defense-nexus.md).

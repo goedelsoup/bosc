@@ -59,6 +59,7 @@ from watermark.economics.energy import (
     load_consumer_energy,
     load_demand_pressure,
 )
+from watermark.economics.scenarios import build_economic_scenarios
 from watermark.gleif import load_inventory as load_lei_inventory
 from watermark.grid.utility import load_grid_profile
 from watermark.hydrology.dewatering import DATASET_ASOF, load_dewatering_impact
@@ -765,6 +766,13 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
             costs=econ_energy, income=econ.median_household_income, settings=settings
         )
     )
+    # The economic argument as scenario bands (#1665, epic #1659 ME-F): the what-if profiles
+    # priced off the committed abatement instrument + this county's cited tax parameters, the
+    # ledger lines as bands over those corners, the load-per-job ratio, and the cited industry
+    # axes (the GovCloud premium, the DCTE refresh curve, jobs/MW). Everything it reads is
+    # committed, so the static build needs no pull. Instrument-gated → None for a site with no
+    # abatement agreement on the record.
+    econ_scenarios = build_economic_scenarios(settings)
 
     # The feed registry — one row per feed, in bundle order. ``model`` set => a collection feed
     # of that item type; ``None`` => an already-provenanced object feed (its own Pydantic model,
@@ -882,6 +890,22 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
             None,
             lambda: (
                 None if econ_burden is None else economics_mod.export_energy_burden(econ_burden)
+            ),
+        ),
+        # The economic argument as disciplined scenario bands (#1665): the what-if profiles and
+        # ledger lines the frontend used to hardcode, plus the cited industry axes the docs used
+        # to carry as prose. INSTRUMENT-gated — absent for a site with no abatement agreement on
+        # the record, so a peer's report locks and asks for its own agreement rather than being
+        # priced off another county's mills. The ``has_material_content`` guard applies the #1364
+        # present-but-empty rule: a parameters file that loaded but declared no scenarios is
+        # dropped, not shipped as a ``count == 1`` shell.
+        (
+            "economics-scenarios",
+            None,
+            lambda: (
+                economics_mod.export_economic_scenarios(econ_scenarios)
+                if econ_scenarios is not None and econ_scenarios.has_material_content
+                else None
             ),
         ),
         # The disclosed data-center facilities (#1628, epic #1626 F2): one row per campus with its

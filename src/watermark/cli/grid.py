@@ -865,3 +865,68 @@ def orc(
             console.print(f"[green]Wrote[/] title {tnum}: {len(secs)} sections -> {path}")
 
     console.print(f"\n[green]Wrote[/] {len(resolved)} cited sections + manifest to {target}.")
+
+
+@app.command(name="scenarios")
+def scenarios_cmd() -> None:
+    """The economic argument as disciplined scenario bands (the what-if ledger, #1665)."""
+    from watermark.economics.scenarios import derive_economic_scenarios
+
+    settings = get_settings()
+    scenarios = derive_economic_scenarios(settings)
+    if scenarios is None:
+        console.print(
+            f"[yellow]No abatement instrument on the record for site '{settings.site}' — "
+            "there is nothing to price. A site is priced only off its OWN agreement; it is "
+            "never modeled on another county's mills.[/]"
+        )
+        raise typer.Exit(0)
+
+    console.print(f"[bold]{scenarios.site_name} — {scenarios.instrument}[/]")
+    console.print(f"[dim]{scenarios.instrument_record}[/]\n")
+
+    profiles = Table(
+        "profile", "building share", "jobs", "abatement", "exemption", "net", "per job"
+    )
+    for p in scenarios.profiles:
+        profiles.add_row(
+            p.label,
+            f"{p.building_share:.0%}",
+            str(p.jobs),
+            f"${p.abatement_usd / 1e6:,.1f}M",
+            f"${p.exemption_usd / 1e6:,.1f}M",
+            f"${p.net_subsidy_usd / 1e6:,.1f}M",
+            f"${p.net_subsidy_per_job_usd / 1e6:,.2f}M",
+        )
+    console.print(profiles)
+
+    def fmt(value: float, unit: str) -> str:
+        if unit == "usd":
+            return f"${value / 1e6:,.1f}M"
+        if unit == "usd_per_job":
+            return f"${value:,.0f}"
+        return f"{value:g}"
+
+    lines = Table("line", "low", "central", "high", "tag")
+    for line in [*scenarios.lines, *([scenarios.load_per_job] if scenarios.load_per_job else [])]:
+        unit = line.band.unit
+        lines.add_row(
+            line.label,
+            fmt(line.band.low, unit),
+            fmt(line.band.central, unit),
+            fmt(line.band.high, unit),
+            line.tag,
+        )
+    console.print(lines)
+
+    axes = Table("axis", "band", "applies to this site", "sources")
+    for axis in scenarios.axes:
+        band = (
+            f"{axis.band.low:g} to {axis.band.high:g} {axis.band.unit}"
+            if axis.band
+            else "[dim]no band asserted[/]"
+        )
+        axes.add_row(axis.label, band, axis.site_status, str(len(axis.sources)))
+    console.print(axes)
+
+    console.print(f"\n[dim]{scenarios.disclaimer}[/]")

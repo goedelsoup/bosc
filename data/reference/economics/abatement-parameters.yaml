@@ -1,0 +1,201 @@
+# The local tax mechanics + what-if scenario knobs the economic scenario bands run on
+# (ME-F / issue #1665, epic #1659).
+#
+# These are the SITE-SPECIFIC parameters the abatement/exemption arithmetic turns on:
+# Ohio's statutory assessment ratio, the local effective commercial millage, the county
+# sales-and-use rate, and the discrete what-if profiles (building share x job count) the
+# ledger is priced across. They lived as bare literals in three places at once —
+# `watermark.ledger`, the frontend's `moneyFlow.ts` / `econLedger.ts` / `craProfiles.ts`,
+# and the prose of `docs/the-economic-ledger.md` — where a drift in one passed silently.
+# They live here once, each with its citation and register, in the same shape as
+# `reference/hydrology/tier0-parameters.yaml`.
+#
+# What is NOT here: the INDUSTRY reference bands (building share, jobs/MW, the GovCloud
+# premium, the AI-rack refresh curve, the subsidy-per-job benchmark). Those are pooled
+# published estimates, network-global and not a property of this county — they stay in
+# `reference/datacenter-industry/priors.yaml` and are read alongside this file by
+# `watermark.economics.scenarios`. Keeping the two apart is the point: this file says what
+# Allen County's instrument is, that one says what the industry looks like, and neither is
+# allowed to stand in for the other.
+#
+# DISCIPLINE. Everything computed from this file is a LABELED COUNTERFACTUAL — a band
+# across explicit scenarios, `[open]` / confidence `low` by construction. No scenario here
+# is a finding, and the GovCloud profile in particular is a what-if on two knobs, NOT a
+# claim the facility is defense (that thread stays `[open]` — see docs/defense-nexus.md).
+#
+# Loaded by `watermark.economics.scenarios.load_abatement_parameters`, gated on
+# `SiteProfile.abatement_parameters_relpath` — a site with no abatement instrument on the
+# record declares no path, so no peer is ever priced off Allen County's mills.
+
+meta:
+  site: lima
+  instrument: "Allen County CRA No. 1 — Res #548-25 (Bistrozzi LLC)"
+  instrument_record: extracted/legal/prr-mandamus/cra-agreement.cra.yaml
+  jurisdiction: American Township, Allen County, Ohio — Elida Local School District tax base
+  method: >-
+    15-yr forgone real-property tax = capex x building_share x assessment_ratio x
+    effective_commercial_mills x abatement_percent x term_years. The forgone sales tax
+    (the DCTE, if taken) = (1 - building_share) x capex x sales_and_use_rate x
+    equipment_refresh. The abatement percent, term, capex and job estimate are read from
+    the CRA extraction itself, never re-keyed here.
+  discipline: >-
+    Every figure below that is not statutory is an ASSUMPTION or a REFERENCE band, and is
+    tagged as one. The output is a range across labeled scenarios, never a point estimate
+    and never a finding.
+
+# --- Ohio / Allen County tax mechanics ---------------------------------------
+tax:
+  assessment_ratio:
+    value: 0.35
+    source: reference
+    citation: >-
+      Ohio Revised Code 5715.01 / Ohio Adm.Code 5703-25-05 — real property is assessed at
+      35% of true (market) value for taxation. Statutory, uniform statewide.
+    confidence: high
+
+  effective_commercial_mills:
+    value: 0.063
+    low: 0.045
+    high: 0.080
+    dist: triangular
+    source: assumption
+    citation: >-
+      STATED ASSUMPTION, not a cited Allen County rate. The exact American Township /
+      Elida LSD effective commercial-and-industrial millage (gross millage net of the
+      H.B. 920 reduction factors) is not in the corpus; ~63 effective mills on assessed
+      value is the Ohio commercial band's mid-point. The Allen County Auditor's published
+      rate sheet would replace it with a cited figure.
+    confidence: low
+    note: >-
+      The single largest unforced uncertainty in the ledger — it scales every dollar
+      figure linearly. The low/high bracket the Ohio commercial band; `watermark.ledger`
+      carries the same assumption as a 0.015-0.023 fraction-of-market-value screening
+      range (assessment ratio already folded in), which is the same statement.
+
+  sales_and_use_rate:
+    value: 0.0725
+    source: reference
+    citation: >-
+      Ohio Department of Taxation — Allen County combined state (5.75%) + county
+      permissive (1.50%) sales-and-use rate. The Ohio data-center tax exemption (DCTE,
+      R.C. 122.175) exempts qualifying equipment AND construction materials from this rate.
+    confidence: high
+    note: >-
+      Whether THIS campus holds a DCTE agreement is not in the record — the exemption
+      figure is therefore a conditional band, `[open]` on application.
+
+# --- The withheld knobs, as screening bands ----------------------------------
+# Each is a number the record does not fix. None is invented; each is turned across a
+# labeled range whose upper and lower ends are both stated.
+knobs:
+  building_share:
+    value: 0.30
+    low: 0.20
+    high: 0.45
+    dist: triangular
+    source: reference
+    citation: >-
+      reference/datacenter-industry/priors.yaml · building_real_property_share — pooled
+      published capex breakdowns (Epoch AI, US Chamber CTEC, McKinsey, BlueCap). Industry
+      reference, NOT this campus.
+    confidence: low
+    note: >-
+      The abatement covers real property only (`cra-agreement.cra.yaml`
+      `real_property_only: true`); the split between the abated shell and the
+      non-abated equipment is not stated in the CRA.
+    resolving_record: the building/equipment capital split (CRA §2 detail, or the county's cost-benefit analysis)
+
+  jobs:
+    value: 50
+    low: 30
+    high: 50
+    dist: triangular
+    source: assumption
+    citation: >-
+      The CRA's own ~50 permanent full-time estimate (§2) is the high end — it is
+      explicitly non-binding ("actuals may differ significantly"). The 30-job low end is
+      the lean-ops case that `reference/datacenter-industry/priors.yaml` · jobs_per_mw
+      (0.10-0.30 jobs/MW) brackets for a load this size.
+    confidence: low
+    resolving_record: an actual steady-state headcount
+
+  equipment_refresh:
+    value: 1.5
+    low: 1.0
+    high: 2.0
+    dist: triangular
+    source: assumption
+    citation: >-
+      Multiplier on the initial-buildout equipment spend across the 15-year abatement
+      window. 1.0 = the initial purchase only; 2.0 = one full refresh. Bracketed from
+      `reference/datacenter-industry/priors.yaml` · ai_rack_refresh (AI-class hardware on a
+      3-5 yr cycle, ~30-40% of hardware cost annually in opex) against a 15-year term.
+    confidence: low
+    resolving_record: the equipment spend and its refresh schedule
+
+  school_compensation:
+    value: 15000000
+    low: 0
+    high: 30000000
+    dist: uniform
+    source: assumption
+    citation: >-
+      A wide SCREENING range, not a figure. The School District Compensation Agreement's
+      dollar terms are non-public (`cra-agreement.cra.yaml` `amounts_public: false`); the
+      County estimated only that they equal or exceed the R.C. 3735.671(A)(2) statutory
+      floor of 25% of the foregone taxes (Res #494-25, 2025-06-24). The PAAC board minutes
+      record a $250,000/yr PILOT *proposed* to the Elida board (2025-05-20), which over the
+      15-year term would be ~$3.75M — inside this range and well below its top.
+    confidence: low
+    note: >-
+      UNIFORM: the central is the arithmetic midpoint of the screening range and carries
+      no information of its own. Read the range, not the middle.
+    resolving_record: the School District Compensation Agreement
+
+# --- The discrete what-if profiles -------------------------------------------
+# Two knobs turned to four labeled corners. These are the profiles the frontend's
+# what-if band renders and the ledger essay tabulates; they are scenarios, not cases.
+scenarios:
+  - key: stated
+    label: Take the application at its word
+    building_share: 0.35
+    jobs: 50
+    note: the CRA's own ~50 jobs; a mid building-shell share of the $500M
+    basis: >-
+      The reference corner — the agreement's own non-binding estimates, with the building
+      share at the middle of the industry band.
+
+  - key: equipment
+    label: AI / GPU-dense (equipment-heavy)
+    building_share: 0.25
+    jobs: 50
+    note: >-
+      most value is servers + electrical — personal property, not abated — so the abated
+      base shrinks
+    basis: >-
+      Shifts capex toward equipment: the property abatement shrinks and the sales-tax
+      exemption grows. Bounded below by the priors' 0.20 shell-heavy end.
+
+  - key: hyperscale
+    label: Hyperscale-realistic (lean ops)
+    building_share: 0.35
+    jobs: 30
+    note: data centers staff lean at steady state; the CRA warns actuals 'may differ significantly'
+    basis: >-
+      Holds the stated building share and turns only the job count to the lean-ops end
+      the jobs_per_mw prior brackets — isolating the denominator's effect on the per-job
+      figures.
+
+  - key: govcloud
+    label: GovCloud / defense-hardened
+    building_share: 0.50
+    jobs: 30
+    note: >-
+      hardened construction lifts the real-property share, cleared ops run lean — a
+      what-if profile, not a finding (#233)
+    basis: >-
+      The top corner of the band, and the one most easily misread. It turns BOTH knobs to
+      the ends a high-authorization enclave would imply. It is a labeled counterfactual
+      that prices what such a facility WOULD cost the public — it asserts nothing about
+      what this facility is. The corpus does not establish a defense nexus and this
+      profile is not evidence of one (docs/defense-nexus.md).

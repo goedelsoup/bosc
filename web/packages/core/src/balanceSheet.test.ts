@@ -1,9 +1,21 @@
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { buildBalanceSheet } from "./balanceSheet";
+
+// The economic row's band comes from the `economics-scenarios` feed now (#1665), so this suite is
+// bundle-backed. Pin WATERMARK_BUNDLE_DIR at the committed `web/sites` fixtures before importing
+// anything that reads a bundle.
+process.env.WATERMARK_BUNDLE_DIR ??= resolve(fileURLToPath(new URL(".", import.meta.url)), "../../../sites");
+
+const { buildBalanceSheet } = await import("./balanceSheet");
+const { runWithSite } = await import("./bundle");
+const { netSubsidyOutcomeFromFeed } = await import("./econScenarios");
 
 // The feed's discharge constants (buildDilution): WWTP 8.82 + FM-2 3.87 = 12.69 cfs
 // effluent; ~1.01 cfs summed natural low flow at the annual 7Q10.
-const sheet = buildBalanceSheet(12.69, 1.01, "lima");
+const sheet = runWithSite("lima", () =>
+  buildBalanceSheet(12.69, 1.01, "lima", null, netSubsidyOutcomeFromFeed()),
+);
 
 describe("balanceSheet — composes every narrative's band (#273)", () => {
   it("has one row per quantitative narrative, each carrying a register + resolving record", () => {
@@ -48,8 +60,12 @@ describe("balanceSheet — composes every narrative's band (#273)", () => {
   });
 });
 
+// The peer's economic row is absent because its bundle carries no `economics-scenarios` feed —
+// the gate is the instrument on the record, not the slug (#1642 E4, sharpened by #1665).
 describe("balanceSheet — a peer's sheet omits what its record doesn't hold (#1642 E4)", () => {
-  const peer = buildBalanceSheet(12.69, 1.01, "fort-wayne");
+  const peer = runWithSite("fort-wayne", () =>
+    buildBalanceSheet(12.69, 1.01, "fort-wayne", null, netSubsidyOutcomeFromFeed()),
+  );
 
   it("drops the economic row rather than pricing Allen County's CRA under another name", () => {
     expect(peer.rows.map((r) => r.outcome.key)).toEqual(["grid_facility_draw", "toxics_effluent_share"]);
