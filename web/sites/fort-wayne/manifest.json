@@ -2,9 +2,9 @@
   "site": "fort-wayne",
   "bundle_version": "1.0.0",
   "contract_version": "1.45.0",
-  "generated_at": "2026-07-30T14:42:14+00:00",
-  "feed_count": 33,
-  "row_total": 418,
+  "generated_at": "2026-07-30T16:15:49+00:00",
+  "feed_count": 34,
+  "row_total": 419,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -206,6 +206,14 @@
       "schema": "schemas/air-scenarios.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "reach-network",
+      "path": "feeds/reach-network.json",
+      "media_type": "application/json",
+      "schema": "schemas/reach-network.schema.json",
+      "kind": "object",
+      "count": 1
     },
     {
       "name": "drawdown",

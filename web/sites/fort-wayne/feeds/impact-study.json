@@ -133,19 +133,10 @@
     "model": {
       "id": "stormwater",
       "facilityKey": "project-zodiac",
-      "status": "gap",
-      "statusReasons": [
-        "the site grading and drainage plan — requested, not produced."
-      ],
+      "status": "data",
+      "statusReasons": [],
       "stats": [],
-      "gaps": [
-        {
-          "wouldScreen": "the runoff a campus-scale impervious surface adds to the design storm, routed down the reach.",
-          "missingRecord": "the site grading and drainage plan — requested, not produced.",
-          "producer": "the site plan's grading/drainage sheets and the construction stormwater permit (NOI)",
-          "leadIds": null
-        }
-      ],
+      "gaps": [],
       "caveats": []
     }
   },
@@ -271,7 +262,7 @@
       "facilityKey": "project-zodiac",
       "status": "partial",
       "statusReasons": [
-        "synthesizes the screened chapters — 3 on the record, 1 partial, 4 gap"
+        "synthesizes the screened chapters — 4 on the record, 1 partial, 3 gap"
       ],
       "stats": [],
       "gaps": [],
