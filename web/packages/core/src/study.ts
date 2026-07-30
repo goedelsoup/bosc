@@ -569,7 +569,9 @@ export function studyChapterModel(id: string, slug: string, facilityKey?: string
 
   if (hasFeed(IMPACT_STUDY_FEED, slug)) {
     const rows = loadFeed<ImpactStudyFeedRow[]>(IMPACT_STUDY_FEED, slug);
-    const row = rows.find((r) => r.chapter === id && (key === null || r.facility_key === key));
+    // Exact (chapter, facility_key) pair — a null key matches only site-level rows
+    // (facility_key null), never some other facility's study, and vice versa.
+    const row = rows.find((r) => r.chapter === id && r.facility_key === key);
     if (row) return row.model;
   }
 

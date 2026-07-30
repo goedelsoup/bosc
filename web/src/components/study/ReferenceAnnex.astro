@@ -6,6 +6,7 @@
  * onto locks); an empty annex renders nothing.
  */
 import { hasFeed } from "@watermark/core/bundle";
+import { isGlobalRoute } from "@watermark/core/rehype-doc-links";
 import type { StudyReference } from "@watermark/core/study";
 import { withBase, withSite } from "@watermark/core/site";
 
@@ -15,10 +16,9 @@ interface Props {
 }
 const { references, slug } = Astro.props as Props;
 const offered = references.filter((r) => !r.requiresFeed || hasFeed(r.requiresFeed, slug));
-// Network-global sections keep their root paths (`rehype-doc-links`' GLOBAL_ROUTE vocabulary);
-// everything else is a page of the active site.
-const isGlobal = (path: string): boolean => /^\/(docs|wiki|about|ask|privacy|methodology)(\/|$)/.test(path);
-const href = (path: string): string => (isGlobal(path) ? withBase(path) : withSite(path));
+// Network-global sections keep their root paths — the shared GLOBAL_ROUTE vocabulary
+// (`rehype-doc-links`), so this list and the doc-link rewriter can never drift.
+const href = (path: string): string => (isGlobalRoute(path) ? withBase(path) : withSite(path));
 ---
 
 {
