@@ -402,7 +402,22 @@ from watermark.sites import (
 #   abatement agreement on the record simply has no feed and its report locks rather than being
 #   priced off another county's mills. One new feed → MINOR, back-compatible (a pre-1.43 bundle
 #   simply has no scenario bands to render).
-CONTRACT_VERSION = "1.43.0"
+# 1.44.0: the impact study as a typed bundle artifact (#1804, epic #1803 P1) — one new feed.
+#   `impact-study` (collection) ships the missing-impact-study's data spine: one row per study
+#   chapter, keyed `(chapter, facility_key)`, each carrying the chapter's verdict
+#   (`data | partial | gap | na` — row counts + content probes, never presence alone), its
+#   headline `stats` (each wearing a `verified | inference | open` evidence tag), its gap
+#   findings (the fixed three-line grammar: the requirement, the absence, the ask), the
+#   MUST-render caveats, and the strictly-curated `lead_ids` joins onto the site's own leads
+#   board. A pure post-pass PROJECTION over the feeds already assembled (`watermark.site.
+#   impact_study`, the `open-questions` pattern): it mints no claims and reads no corpus —
+#   the same sources the frontend's TS composers read, which it replaces row-for-row (the
+#   frontend prefers a shipped row wholesale; a parity suite over every committed bundle
+#   pins the two derivations equal, so the cutover cannot silently change a published
+#   verdict). Emitted for every site — a facility-less site's project-dependent chapters
+#   read `na` (watch state), never `gap`. One new feed → MINOR, back-compatible (a pre-1.44
+#   bundle simply composes chapter models at the frontend build instead).
+CONTRACT_VERSION = "1.44.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -1028,6 +1043,91 @@ class OpenQuestionItem(BaseModel):
     hypothesis: str | None = None  # the lens id ("water" | "defense" | "surveillance")
     hypothesis_label: str | None = None  # the human lens label, e.g. "H1 Water & Coercion"
     signal: str | None = None  # the cell's signal strength ("anchor"|"strong"|"moderate"|"watch")
+
+
+# --- impact-study feed (issue #1804, epic #1803) --------------------------------
+# The study's verdict vocabulary and the FigureStat evidence subset. These mirror
+# `web/packages/core/src/study.ts` (`ChapterStatus`, `FigureStatData.evidence`) — the frontend
+# prefers a shipped `impact-study` row WHOLESALE over its TS composers, so the serialized shapes
+# below are pinned by the frontend's own guardrail + parity suites and must not drift.
+StudyChapterStatus = Literal["data", "partial", "gap", "na"]
+StudyEvidence = Literal["verified", "inference", "open"]
+StudyBasis = Literal["grounded", "modeled"]
+
+
+class StudyStat(BaseModel):
+    """One headline figure of a study chapter — the `FigureStatData` shape, exported.
+
+    Every figure wears a real evidence tag (`verified | inference | open` — the FigureStat
+    contract admits no `reference`; reference-register context rides in `sub`/caveats). The
+    field names are already the frontend's — no aliasing needed.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    label: str
+    value: str  # pre-formatted display string (ranges, brackets) — the JS formatting, mirrored
+    unit: str | None = None
+    evidence: StudyEvidence
+    basis: StudyBasis | None = None
+    sub: str | None = None
+    source: str | None = None
+    warn: bool | None = None  # tri-state: absent (not a screened figure) vs. explicit pass/fail
+
+
+class StudyGap(BaseModel):
+    """A gap rendered as a FINDING — the panel's fixed three-line grammar.
+
+    ``missing_record`` is a noun phrase completing "Computing it requires ___" (the frontend
+    guardrails reject sentence-form copy). ``lead_ids`` are the strictly-curated joins onto the
+    site's own leads board — never a fuzzy keyword match. Serializes camelCase to match the
+    `StudyGapFinding` interface the frontend renders verbatim.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    would_screen: str = Field(serialization_alias="wouldScreen")
+    missing_record: str = Field(serialization_alias="missingRecord")
+    producer: str | None = None
+    lead_ids: list[str] | None = Field(default=None, serialization_alias="leadIds")
+
+
+class StudyChapterModel(BaseModel):
+    """One chapter's plain-JSON model — the exact shape every study surface renders.
+
+    The Python realization of the frontend's `StudyChapterModel` (the seam #1795 reserved):
+    `studyChapterModel` returns a shipped row's ``model`` untransformed, so this serializes
+    with the interface's own camelCase keys.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    facility_key: str | None = Field(default=None, serialization_alias="facilityKey")
+    status: StudyChapterStatus
+    status_reasons: list[str] = Field(default_factory=list, serialization_alias="statusReasons")
+    stats: list[StudyStat] = Field(default_factory=list)
+    gaps: list[StudyGap] = Field(default_factory=list)
+    caveats: list[str] = Field(default_factory=list)
+
+
+class ImpactStudyItem(BaseModel):
+    """One `impact-study` feed row — a chapter's model, keyed ``(chapter, facility_key)``.
+
+    A projection (`watermark.site.impact_study`) over the bundle's own assembled feeds — the
+    missing-impact-study epic's data spine, computed at export instead of at the frontend
+    build. ``facility_key`` is the resolved primary campus (null for a facility-less site's
+    site-level study — the frontend matches the pair exactly, so null never wildcards onto a
+    campus's rows). ``lead_ids`` are the chapter-level curated joins (the annex "residual
+    asks" register — distinct from the per-gap joins inside the model).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    chapter: str
+    facility_key: str | None = None
+    lead_ids: list[str] = Field(default_factory=list)
+    model: StudyChapterModel
 
 
 # --- corpus-index feed (issue #1573, epic #1560 workstream C) ------------------

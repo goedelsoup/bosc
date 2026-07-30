@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "impact-study feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One `impact-study` feed row — a chapter's model, keyed ``(chapter, facility_key)``.\n\nA projection (`watermark.site.impact_study`) over the bundle's own assembled feeds — the\nmissing-impact-study epic's data spine, computed at export instead of at the frontend\nbuild. ``facility_key`` is the resolved primary campus (null for a facility-less site's\nsite-level study — the frontend matches the pair exactly, so null never wildcards onto a\ncampus's rows). ``lead_ids`` are the chapter-level curated joins (the annex \"residual\nasks\" register — distinct from the per-gap joins inside the model).",
+    "properties": {
+      "chapter": {
+        "title": "Chapter",
+        "type": "string"
+      },
+      "facility_key": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Facility Key"
+      },
+      "lead_ids": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Lead Ids",
+        "type": "array"
+      },
+      "model": {
+        "$ref": "#/$defs/StudyChapterModel"
+      }
+    },
+    "required": [
+      "chapter",
+      "model"
+    ],
+    "title": "ImpactStudyItem",
+    "type": "object"
+  },
+  "$defs": {
+    "StudyChapterModel": {
+      "additionalProperties": false,
+      "description": "One chapter's plain-JSON model — the exact shape every study surface renders.\n\nThe Python realization of the frontend's `StudyChapterModel` (the seam #1795 reserved):\n`studyChapterModel` returns a shipped row's ``model`` untransformed, so this serializes\nwith the interface's own camelCase keys.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "facilityKey": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Facilitykey"
+        },
+        "status": {
+          "enum": [
+            "data",
+            "partial",
+            "gap",
+            "na"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "statusReasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Statusreasons",
+          "type": "array"
+        },
+        "stats": {
+          "items": {
+            "$ref": "#/$defs/StudyStat"
+          },
+          "title": "Stats",
+          "type": "array"
+        },
+        "gaps": {
+          "items": {
+            "$ref": "#/$defs/StudyGap"
+          },
+          "title": "Gaps",
+          "type": "array"
+        },
+        "caveats": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Caveats",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "status"
+      ],
+      "title": "StudyChapterModel",
+      "type": "object"
+    },
+    "StudyGap": {
+      "additionalProperties": false,
+      "description": "A gap rendered as a FINDING — the panel's fixed three-line grammar.\n\n``missing_record`` is a noun phrase completing \"Computing it requires ___\" (the frontend\nguardrails reject sentence-form copy). ``lead_ids`` are the strictly-curated joins onto the\nsite's own leads board — never a fuzzy keyword match. Serializes camelCase to match the\n`StudyGapFinding` interface the frontend renders verbatim.",
+      "properties": {
+        "wouldScreen": {
+          "title": "Wouldscreen",
+          "type": "string"
+        },
+        "missingRecord": {
+          "title": "Missingrecord",
+          "type": "string"
+        },
+        "producer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Producer"
+        },
+        "leadIds": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leadids"
+        }
+      },
+      "required": [
+        "wouldScreen",
+        "missingRecord"
+      ],
+      "title": "StudyGap",
+      "type": "object"
+    },
+    "StudyStat": {
+      "additionalProperties": false,
+      "description": "One headline figure of a study chapter — the `FigureStatData` shape, exported.\n\nEvery figure wears a real evidence tag (`verified | inference | open` — the FigureStat\ncontract admits no `reference`; reference-register context rides in `sub`/caveats). The\nfield names are already the frontend's — no aliasing needed.",
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "evidence": {
+          "enum": [
+            "verified",
+            "inference",
+            "open"
+          ],
+          "title": "Evidence",
+          "type": "string"
+        },
+        "basis": {
+          "anyOf": [
+            {
+              "enum": [
+                "grounded",
+                "modeled"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Basis"
+        },
+        "sub": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sub"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        },
+        "warn": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Warn"
+        }
+      },
+      "required": [
+        "label",
+        "value",
+        "evidence"
+      ],
+      "title": "StudyStat",
+      "type": "object"
+    }
+  }
+}

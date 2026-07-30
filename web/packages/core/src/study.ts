@@ -191,14 +191,19 @@ export interface StudyChapterModel {
   caveats: string[];
 }
 
-/** Reserved bundle feed name — when a future export ships per-chapter models, the frontend
- *  prefers it wholesale and the TS composers below become the fallback. */
+/** The bundle feed the Python export ships (#1804) — the frontend prefers its rows
+ *  wholesale, and the TS composers below survive as the fallback for a bundle predating it
+ *  (plus the parity harness's reference derivation — see `study.parity.test.ts`). */
 export const IMPACT_STUDY_FEED = "impact-study";
 
-/** One row of the future `impact-study` feed (`(chapter, facility_key)`-keyed). */
+/** One row of the `impact-study` feed (`(chapter, facility_key)`-keyed). `lead_ids` are the
+ *  chapter-level curated gap → lead joins, whose ONE owner is now the Python projector
+ *  (`watermark.site.impact_study.STUDY_GAP_LEADS`) — the export refuses a join that stops
+ *  reconciling against the site's own leads feed. */
 export interface ImpactStudyFeedRow {
   chapter: string;
   facility_key: string | null;
+  lead_ids?: string[];
   model: StudyChapterModel;
 }
 
@@ -511,31 +516,22 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
 ];
 
 /**
- * Curated gap → lead joins, per site (the annex wiring). Each entry says "this chapter's
- * asks are ALREADY TRACKED as these leads" — the study's gap panels deep-link the board's
- * own anchors, and the annex inventory lists them under the chapter, so the study and the
- * leads board present ONE set of asks. Strictly curated, never a fuzzy keyword match
- * (misattributing a gap is an evidentiary-discipline violation) — which is why a site whose
- * leads don't correspond to a study ask (urbana today) is simply absent here. Chapter-level
- * granularity: every gap a chapter renders carries its chapter's tracked leads. A drift
- * test pins every id to the site's committed leads feed.
+ * The curated lead ids tracking a chapter's asks on a site ([] when none are joined) — the
+ * annex wiring. Each join says "this chapter's asks are ALREADY TRACKED as these leads":
+ * the study's gap panels deep-link the board's own anchors, and the annex inventory lists
+ * them under the chapter, so the study and the leads board present ONE set of asks.
+ *
+ * The curation itself moved home to the Python projector at the feed cutover (#1804 —
+ * `watermark.site.impact_study.STUDY_GAP_LEADS`, strictly curated, never a fuzzy keyword
+ * match, and validated against the site's own leads feed at export). This is now a thin
+ * reader of the shipped row's `lead_ids`; a bundle predating the feed simply has no joins,
+ * and its gap panels degrade to the submit CTA alone.
  */
-export const STUDY_GAP_LEADS: Readonly<Record<string, Readonly<Record<string, readonly string[]>>>> = {
-  lima: {
-    "water-supply": ["FORCEMAIN-MGD", "LIMA-WWTP-SHARE", "H1-DRAW"],
-    discharge: ["WWTP-PARAM-ASSIM", "OEPA-2DP00130"],
-    heat: ["THERMAL-NO-LIMIT"],
-    groundwater: ["DEWATERING-DRYWELL-NW"],
-    stormwater: ["ASWCD-PLANS", "ASWCD-04"],
-    air: ["PTI-313MW", "GH-160"],
-    power: ["PTI-313MW", "AEP-LYKA-OPSB"],
-    fiscal: ["PRR-04", "GH-35"],
-  },
-};
-
-/** The curated lead ids tracking a chapter's asks on a site ([] when none are joined). */
-export function studyGapLeads(slug: string, chapterId: string): readonly string[] {
-  return STUDY_GAP_LEADS[slug]?.[chapterId] ?? [];
+export function studyGapLeads(slug: string, chapterId: string, facilityKey?: string): readonly string[] {
+  if (!hasFeed(IMPACT_STUDY_FEED, slug)) return [];
+  const key = facilityKey ?? resolveStudyFacility(slug, facilityKey)?.key ?? null;
+  const rows = loadFeed<ImpactStudyFeedRow[]>(IMPACT_STUDY_FEED, slug);
+  return rows.find((r) => r.chapter === chapterId && r.facility_key === key)?.lead_ids ?? [];
 }
 
 /** Look up a chapter def by id (throws on an unknown id — a registry typo, not a data state). */
@@ -601,10 +597,11 @@ function probeOrData(
 
 /**
  * The chapter model every study surface renders. Prefers a shipped `impact-study` feed row
- * (the Python seam); falls back to the TS composers over today's feeds. Plain JSON out.
+ * (the Python seam, now live — #1804); falls back to `composeStudyChapterModel` for a
+ * bundle predating the feed. Plain JSON out.
  */
 export function studyChapterModel(id: string, slug: string, facilityKey?: string): StudyChapterModel {
-  const def = studyChapter(id);
+  studyChapter(id); // the registry-typo guard throws on an unknown id even on the feed path
   const facility = resolveStudyFacility(slug, facilityKey);
   const key = facilityKey ?? facility?.key ?? null;
 
@@ -615,14 +612,28 @@ export function studyChapterModel(id: string, slug: string, facilityKey?: string
     const row = rows.find((r) => r.chapter === id && r.facility_key === key);
     if (row) return row.model;
   }
+  return composeStudyChapterModel(id, slug, facilityKey);
+}
 
+/**
+ * The TS-composed chapter model — the pre-feed derivation, kept as (a) the fallback for a
+ * bundle that ships no `impact-study` feed and (b) the reference derivation the parity gate
+ * compares every shipped row against (`study.parity.test.ts`): the Python projector mirrors
+ * this path line-for-line, and a divergence is a defect there, not a display choice.
+ */
+export function composeStudyChapterModel(id: string, slug: string, facilityKey?: string): StudyChapterModel {
+  const def = studyChapter(id);
+  const facility = resolveStudyFacility(slug, facilityKey);
+  const key = facilityKey ?? facility?.key ?? null;
   const { status, reasons } = chapterAvailability(def, slug, facilityKey);
   const composed =
     status === "na" ? EMPTY_COMPOSITION : (COMPOSERS[id]?.(slug, facility) ?? EMPTY_COMPOSITION);
   // The chapter-level gap framing renders whenever the chapter IS the finding; probe-level
   // gaps (a bracketed cooling method inside a partial chapter) come from the composer. The
-  // curated per-site lead joins ride every gap the chapter renders (one board, one ask).
-  const leadIds = studyGapLeads(slug, id);
+  // curated per-site lead joins ride every gap the chapter renders (one board, one ask) —
+  // the same attachment rule the Python projector applies, so a partially-shipped feed
+  // (a row missing for one chapter) still composes consistently with its siblings.
+  const leadIds = studyGapLeads(slug, id, facilityKey);
   const gaps = (status === "gap" ? [def.gap, ...composed.gaps] : composed.gaps).map((g) =>
     leadIds.length > 0 && (g.leadIds?.length ?? 0) === 0 ? { ...g, leadIds: [...leadIds] } : g,
   );
