@@ -1,0 +1,59 @@
+# Reach-network navigation plan — Fort Wayne (the Three Rivers confluence), #1806.
+#
+# The companion to this directory's network.yaml (topology) and reaches.yaml (reach lengths).
+# Those carry NO coordinates, so the reach-network's map geometry is navigated from the USGS
+# NLDI NHDPlus flowline network (watermark.hydrology.connectors.nldi) and stitched per reach
+# by watermark.hydrology.reach_geometry. `watermark --site fort-wayne reaches --write` reads
+# this plan and writes data/reference/hydrology/reaches/fort-wayne.geojson.
+#
+# DISCIPLINE (the Lima plan's, verbatim): the geometry is verbatim NHDPlus (real river
+# lines). The only modeling choice is where one navigated line is CUT into its named model
+# reaches — done by those reaches' own reaches.yaml length RATIOS (a proportional cut of the
+# real arc length), so no reach boundary is asserted as an NHDPlus segment break. Anchors are
+# the three [verified] USGS gage locations already cited on the fort-wayne SiteProfile
+# (nwis_sites), resolved to coordinates via NLDI `linked-data/nwissite/USGS-<id>`.
+
+meta:
+  site: fort-wayne
+  subject: Reach-network centerline navigation plan (Fort Wayne — the Three Rivers confluence)
+  source: >-
+    USGS NLDI (Network-Linked Data Index) over the NHDPlus flowline network. Mainstem
+    navigated from USGS gage 04182900 (Maumee River at Fort Wayne); the St. Joseph and
+    St. Marys forks snapped from their own cited gages 04180500 / 04182000 (the three
+    nwis_sites on the fort-wayne SiteProfile). Gage coordinates via NLDI nwissite lookup.
+  crs: WGS84 (EPSG:4326)
+  caveats:
+    - "Centerline geometry is verbatim NHDPlus, display-only — no reprojection or simplification."
+    - "Reach boundaries are a proportional cut by reaches.yaml lengths, not NHDPlus breaks."
+    - "Tier-0 screening geometry for the reach-network map; not a calibrated hydraulic network."
+    - "Geometry-grade only: no contributing catchments are authored (reaches.yaml catchments: {}), so no routed storm model exists for this site yet."
+
+# Orients every reach so flow direction reads downstream (the vertex nearest this point is
+# last). A Maumee River point near New Haven, ~8 km below the Fort Wayne gage (NLDI DM).
+outlet_anchor: [-85.0169, 41.0704]
+
+# The Maumee mainstem — navigated from the [verified] gage 04182900 (Maumee River at Fort
+# Wayne, ~1.5 km below the Three Rivers confluence), split at the real gage point: ABOVE the
+# gage is the short confluence-to-gage reach (maumee-head, kept UNDER the confluence distance
+# so no fork water is mislabeled as Maumee); BELOW is the reach toward New Haven.
+mainstem:
+  gage: USGS-04182900
+  gage_point: [-85.115248, 41.0825483]  # NLDI gage location — the head/reach split anchor
+  upstream_km: 1.5   # confluence -> gage only; deliberately short of the confluence
+  downstream_km: 12.0  # the reach below the gage toward New Haven
+  above_gage: [maumee-head]
+  below_gage: maumee-reach
+
+# Each fork: snap its own [verified] gage, navigate upstream for the headwater reach and
+# downstream for the reach to the Three Rivers confluence.
+tributaries:
+  - head: st-joseph-head
+    confluence: st-joseph-confluence
+    anchor: [-85.0740833, 41.16738889]  # USGS 04180500 St. Joseph River near Fort Wayne (NLDI)
+    upstream_km: 8.0
+    downstream_km: 14.9  # measured gage->confluence arc; 16 km overshot ~2.7 km down the Maumee
+  - head: st-marys-head
+    confluence: st-marys-confluence
+    anchor: [-85.111914, 40.9878257]  # USGS 04182000 St. Marys River near Fort Wayne (NLDI)
+    upstream_km: 8.0
+    downstream_km: 18.0

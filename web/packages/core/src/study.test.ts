@@ -119,7 +119,10 @@ describe("study verdicts — fort-wayne (live campus, thin water record)", () =>
     ["discharge", "partial"], // baseline burden (rsei) only — no project discharge screen
     ["heat", "gap"],
     ["groundwater", "data"], // the drawdown screen is on the record
-    ["stormwater", "gap"], // the designed gap chapter
+    // §II·7 un-gated by #1806: fort-wayne committed its own navigated reach network (the
+    // Three Rivers confluence), so the chapter reads its geometry instead of the designed
+    // gap. The routed-hydrograph stays absent (geometry-grade table, no cited catchments).
+    ["stormwater", "data"],
     ["air", "gap"],
     ["labor", "data"],
     ["power", "data"],

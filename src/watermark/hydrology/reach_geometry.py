@@ -30,6 +30,7 @@ from watermark.hydrology.connectors import nldi
 from watermark.hydrology.hydrograph_routing import load_reaches
 from watermark.hydrology.network import load_topology
 from watermark.logging import get_logger
+from watermark.sites import active_profile, site_reference_path
 
 log = get_logger(__name__)
 
@@ -217,7 +218,15 @@ class ReachNavPlan(BaseModel):
 
 
 def _nav_path(settings: Settings) -> Path:
-    return settings.data_dir / "reference" / "hydrology" / "reach-nav.yaml"
+    # Slug-scoped via the profile pin (#1806): Lima pins its legacy un-slugged plan; a peer
+    # resolves `reference/hydrology/<slug>/reach-nav.yaml`. The `meta.site` validation below
+    # stays as the belt to this suspender.
+    return site_reference_path(
+        settings,
+        active_profile(settings).reach_nav_relpath,
+        subdir="hydrology",
+        filename="reach-nav.yaml",
+    )
 
 
 def load_nav_plan(*, settings: Settings | None = None) -> ReachNavPlan | None:

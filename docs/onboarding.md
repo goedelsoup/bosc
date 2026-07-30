@@ -206,6 +206,23 @@ deeper, separate cutover, not part of routine onboarding.
   energy** (state), and the **grid profile** (utility). Writes go to `reference/<source>/<slug>/…`;
   the **read** side stays Lima-keyed until a site reaches parity (the site build still consumes
   Lima's data until then — a deliberate, documented deferral).
+- **Per-site design-storm routing tables (authored, not pulled — #1806, epic #1803 P3):** the
+  reach-network map and the routed design storm read three committed tables that resolve
+  slug-scoped through the profile pins (Lima keeps its legacy un-slugged
+  `reference/hydrology/{network,reaches,reach-nav}.yaml`; a peer commits its own under
+  `reference/hydrology/<slug>/`). The **geometry tier** un-gates the study's stormwater
+  chapter (§II·7) on its own: author `reach-nav.yaml` (NLDI navigation anchors — cited USGS
+  gage coordinates), a magnitude-free `network.yaml` topology, and a `reaches.yaml` whose
+  reach lengths are DERIVED from the navigated NHDPlus arcs, then run
+  `watermark --site <slug> reaches --write` (record the NLDI responses under
+  `tests/fixtures/hydrology/nldi/` so `--offline` regen is byte-stable). Keep
+  `catchments: {}` until a **cited** CN/Tc/area screening set exists — a geometry-grade table
+  deliberately ships the reach map WITHOUT a routed-hydrograph feed (the #1364 rule; an
+  all-zero routed storm would read as "screened"). Lighting the routed feed is the full lift:
+  cited catchments + channel slopes + the site's own Atlas-14 depth
+  (`noaa_fallback_24h_depth_in`), under the WS-09 Muskingum subdivision and WS-10 peak-fidelity
+  disciplines (`hydrology/CLAUDE.md`). Fort Wayne (the Three Rivers confluence) is the first
+  peer set and the worked example.
 - **Two dimensions captured, one not:** onboard captures **hydrology** and **economics**.
   The third dimension — **data-center activity** (extracted permits/records + entity graph) —
   is corpus extraction + the self-research pass (#247 seam), not a connector pull; it's also

@@ -24,6 +24,10 @@ const { def, model, slug } = Astro.props as Props;
 // data or partial (a future probe must never silently drop the reach summary to the fallback).
 const live = model.status === "data" || model.status === "partial";
 const network = live && hasFeed("reach-network", slug) ? loadFeed<ReachNetwork>("reach-network", slug) : null;
+// A geometry-grade site (#1806) ships the navigated reach network WITHOUT a routed storm —
+// its table carries no cited catchments, so the routed feed honestly self-skips. The copy
+// must track that: claiming routed peaks off geometry alone would fabricate the model.
+const routed = hasFeed("routed-hydrograph", slug);
 ---
 
 {
@@ -34,10 +38,11 @@ const network = live && hasFeed("reach-network", slug) ? loadFeed<ReachNetwork>(
       <p class="sw-lead">
         A campus-scale impervious surface changes what a design storm does downstream, and a
         real impact study routes that change down the reach. This site has a committed reach
-        table — <strong>{network.reaches.length}</strong> routed{" "}
-        {network.reaches.length === 1 ? "reach" : "reaches"} — so the design-storm hydrograph
-        is computable here: the routed peaks, the channel attenuation, and the animated flow
-        field live in the annex.
+        table — <strong>{network.reaches.length}</strong> navigated{" "}
+        {network.reaches.length === 1 ? "reach" : "reaches"} —{" "}
+        {routed
+          ? "and the design-storm hydrograph is computed here: the routed peaks, the channel attenuation, and the animated flow field live in the annex."
+          : "the real river geometry this chapter's screen would route down. The routed design-storm itself is not yet computed: no cited runoff parameters (contributing areas, curve numbers, times of concentration) are on the record for this basin, and the study does not fabricate them — committing that cited set is what lights the routed model."}
       </p>
       {network.note && <p class="sw-note">{network.note}</p>}
       {(model.caveats.length > 0 || network.caveats.length > 0) && (
@@ -48,7 +53,9 @@ const network = live && hasFeed("reach-network", slug) ? loadFeed<ReachNetwork>(
         </ul>
       )}
       <p class="sw-annexline">
-        <a href={withSite("/environment/flow")}>The flow annex — the routed reach network →</a>
+        <a href={withSite("/environment/flow")}>
+          {routed ? "The flow annex — the routed reach network →" : "The flow annex — the reach network →"}
+        </a>
       </p>
     </>
   )

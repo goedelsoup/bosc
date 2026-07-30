@@ -1,0 +1,65 @@
+# Confluence topology — Fort Wayne (the Three Rivers confluence), #1806.
+#
+# The magnitude-free peer of Lima's network.yaml: structure only (each node's kind, the
+# stream it sits on, and the node it drains into). NO flow magnitudes live here — the
+# topology never fabricates a number. The St. Joseph (north) and St. Marys (south) forks
+# meet at downtown Fort Wayne to form the Maumee ("the Three Rivers"); the reach ids key
+# the reaches.yaml table and the reach-nav.yaml navigation plan.
+#
+# Geometry-grade (#1806): this topology + the reach lengths support the reach-network
+# centerline map. No contributing catchments are authored (reaches.yaml catchments: {}),
+# so there is NO routed storm model for this site yet — the routed-hydrograph feed
+# correctly self-skips, and §II·7's optional routed table stays absent, honestly.
+
+meta:
+  site: fort-wayne
+  subject: Confluence topology — St. Joseph + St. Marys -> Maumee at Fort Wayne
+  source: >-
+    USGS GNIS / NHDPlus stream naming; the three [verified] USGS gages on the fort-wayne
+    SiteProfile (04180500 St. Joseph River near Fort Wayne, 04182000 St. Marys River near
+    Fort Wayne, 04182900 Maumee River at Fort Wayne). HUC-8 04100005 (Upper Maumee).
+  caveats:
+    - "Cited topology only — confluence ORDER is the single modeling choice; no magnitudes."
+
+nodes:
+  - id: st-joseph-head
+    name: St. Joseph River above the near-Fort Wayne gage
+    kind: headwater
+    downstream: st-joseph-confluence
+    receiving_water: St. Joseph River
+    citation: "USGS 04180500 St. Joseph River near Fort Wayne, IN — the north fork of the Maumee"
+  - id: st-joseph-confluence
+    name: St. Joseph River to the Three Rivers confluence
+    kind: confluence
+    downstream: maumee-head
+    receiving_water: St. Joseph River
+    citation: "NHDPlus: the St. Joseph joins the St. Marys at downtown Fort Wayne to form the Maumee"
+  - id: st-marys-head
+    name: St. Marys River above the near-Fort Wayne gage
+    kind: headwater
+    downstream: st-marys-confluence
+    receiving_water: St. Marys River
+    citation: "USGS 04182000 St. Marys River near Fort Wayne, IN — the south fork of the Maumee"
+  - id: st-marys-confluence
+    name: St. Marys River to the Three Rivers confluence
+    kind: confluence
+    downstream: maumee-head
+    receiving_water: St. Marys River
+    citation: "NHDPlus: the St. Marys joins the St. Joseph at downtown Fort Wayne to form the Maumee"
+  - id: maumee-head
+    name: Maumee River, Three Rivers confluence to the Fort Wayne gage
+    kind: confluence
+    downstream: maumee-reach
+    receiving_water: Maumee River
+    citation: "USGS 04182900 Maumee River at Fort Wayne, IN sits ~1.5 km below the confluence"
+  - id: maumee-reach
+    name: Maumee River below the Fort Wayne gage
+    kind: gage
+    downstream: maumee-outlet
+    receiving_water: Maumee River
+    citation: "The mainstem receiving reach (profile nwis_sites [verified] 04182900), toward New Haven"
+  - id: maumee-outlet
+    name: Maumee River toward New Haven (screening outlet)
+    kind: outlet
+    receiving_water: Maumee River
+    citation: "Screening outlet — where this site's reach assessment stops, not a basin terminus"

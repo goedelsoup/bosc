@@ -42,12 +42,20 @@ from watermark.hydrology.model import (
     WaterBalance,
 )
 from watermark.logging import get_logger
+from watermark.sites import active_profile, site_reference_path
 
 log = get_logger(__name__)
 
 
 def _topology_path(settings: Settings) -> Path:
-    return settings.data_dir / "reference" / "hydrology" / "network.yaml"
+    # Slug-scoped via the profile pin (#1806): Lima pins its legacy un-slugged path; a peer
+    # resolves `reference/hydrology/<slug>/network.yaml` — its own loop, never Lima's.
+    return site_reference_path(
+        settings,
+        active_profile(settings).hydrology_network_relpath,
+        subdir="hydrology",
+        filename="network.yaml",
+    )
 
 
 def load_topology(*, settings: Settings | None = None) -> list[NetworkNode]:

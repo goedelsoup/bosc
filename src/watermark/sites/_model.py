@@ -961,6 +961,22 @@ class SiteProfile(BaseModel):
     # `watermark dewatering-discharge --write`. Present ONLY for a site with a committed report.
     dewatering_discharge_relpath: str | None = None
 
+    # --- Design-storm routing tables (#1806, epic #1803 P3) ------------------------------
+    # The reach-table inputs the storm-hydrograph routing + reach-network geometry read:
+    # `network.yaml` (magnitude-free confluence topology), `reaches.yaml` (channel geometry +
+    # contributing subcatchments), `reach-nav.yaml` (the NLDI navigation plan), and the
+    # `routed-hydrograph.yaml` summary `watermark basin-route --write` persists. All four
+    # resolve through `site_reference_path` (the ferc/pjm/federal idiom): Lima pins its
+    # legacy un-slugged paths; `None` slug-scopes the default
+    # (`reference/hydrology/<slug>/<file>`) so a peer commits its own tables without ever
+    # clobbering — or silently inheriting — Lima's loop. Deliberately NOT in
+    # `PER_SITE_OUTPUT_FIELDS`; the resolved-path collision oracle covers them
+    # (tests/test_shared_registries.py).
+    hydrology_network_relpath: str | None = None
+    hydrology_reaches_relpath: str | None = None
+    reach_nav_relpath: str | None = None
+    routed_hydrograph_relpath: str | None = None
+
     # --- Per-site onboard reach outputs (point-specific writes; relative to data_dir) ----
     # The point-specific connector outputs `watermark onboard` writes. Lima keeps its legacy
     # (un-slugged) filenames; a new site slug-scopes them so onboarding never clobbers Lima.

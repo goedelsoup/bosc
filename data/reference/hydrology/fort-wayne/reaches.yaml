@@ -1,0 +1,103 @@
+# Reach table — Fort Wayne (the Three Rivers confluence), #1806. GEOMETRY-GRADE.
+#
+# The peer of Lima's reaches.yaml, deliberately WITHOUT contributing catchments: no cited
+# CN/Tc/area screening set has been authored for this basin, so `catchments: {}` and the
+# routed-hydrograph feed self-skips (the #1364 present-but-empty rule) rather than routing
+# an all-zero storm. What IS here: the per-reach channel lengths the reach-nav cut uses
+# (derived from the navigated NHDPlus centerline arc lengths — see each citation) and the
+# schema-required slopes, stated as screening assumptions that feed no computation today.
+
+meta:
+  subject: Reach lengths for the Fort Wayne reach-network centerline cut (geometry-grade)
+  tier: tier0
+  method: >-
+    Proportional-cut lengths for watermark.hydrology.reach_geometry: each reach's length is
+    the arc length of its own navigated NHDPlus centerline (reaches/fort-wayne.geojson), so
+    the committed ratio reproduces the navigated cut deterministically. No storm-routing
+    parameters are authored (catchments: {}) — this table supports the reach-network map,
+    not a hydrograph model.
+  caveats:
+    - "Geometry-grade: no contributing catchments, no routed storm model — the routed-hydrograph feed self-skips for this site."
+    - "Slopes are stated screening assumptions carried for the Reach schema; they feed no computation while catchments is empty."
+
+catchments: {}
+
+reaches:
+  st-joseph-head:
+    length_ft:
+      value: 27663.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: St. Joseph River, navigated headwater reach above USGS 04180500 (8.43 km arc; the gage anchors the head/confluence cut). Regenerate: watermark --site fort-wayne reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0004
+      unit: ft/ft
+      source: assumption
+      citation: "Upper Maumee lake-plain screening gradient; feeds no computation (catchments: {})"
+      confidence: low
+  st-joseph-confluence:
+    length_ft:
+      value: 48591.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: St. Joseph River, USGS 04180500 to the Three Rivers confluence (14.81 km arc; line terminates at the confluence). Regenerate: watermark --site fort-wayne reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0004
+      unit: ft/ft
+      source: assumption
+      citation: "Upper Maumee lake-plain screening gradient; feeds no computation (catchments: {})"
+      confidence: low
+  st-marys-head:
+    length_ft:
+      value: 34831.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: St. Marys River, navigated headwater reach above USGS 04182000 (10.62 km arc; the gage anchors the head/confluence cut). Regenerate: watermark --site fort-wayne reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0004
+      unit: ft/ft
+      source: assumption
+      citation: "Upper Maumee lake-plain screening gradient; feeds no computation (catchments: {})"
+      confidence: low
+  st-marys-confluence:
+    length_ft:
+      value: 56633.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: St. Marys River, USGS 04182000 to the Three Rivers confluence (17.26 km arc; line terminates at the confluence). Regenerate: watermark --site fort-wayne reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0004
+      unit: ft/ft
+      source: assumption
+      citation: "Upper Maumee lake-plain screening gradient; feeds no computation (catchments: {})"
+      confidence: low
+  maumee-head:
+    length_ft:
+      value: 6643.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: Maumee River, Three Rivers confluence to USGS 04182900 (2.02 km arc). Regenerate: watermark --site fort-wayne reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0004
+      unit: ft/ft
+      source: assumption
+      citation: "Upper Maumee lake-plain screening gradient; feeds no computation (catchments: {})"
+      confidence: low
+  maumee-reach:
+    length_ft:
+      value: 35539.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: Maumee River, USGS 04182900 toward New Haven (10.83 km arc). Regenerate: watermark --site fort-wayne reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0004
+      unit: ft/ft
+      source: assumption
+      citation: "Upper Maumee lake-plain screening gradient; feeds no computation (catchments: {})"
+      confidence: low

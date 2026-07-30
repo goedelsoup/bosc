@@ -130,7 +130,7 @@ Source: Ohio DNR, Division of Water — 'Principal Streams and Their Drainage Ar
 
 ### `hydrology-reaches` — Reach-network river centerlines — NHDPlus geometry (USGS NLDI)
 
-Source: USGS NLDI navigation over the NHDPlus flowline network (mainstem from gage 04187100 + tributary WWTP snaps) · License: U.S. Government work (public domain) · Access: public · Site scope: slug-scoped · Refresh: on-demand
+Source: USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages) · License: U.S. Government work (public domain) · Access: public · Site scope: slug-scoped · Refresh: on-demand
 
 Regenerate: `watermark reaches --write`
 
@@ -138,6 +138,10 @@ Regenerate: `watermark reaches --write`
 | --- | --- | --- |
 | `reference/hydrology/reach-nav.yaml` | application/x-yaml | no |
 | `reference/hydrology/reaches/lima.geojson` | application/geo+json | no |
+| `reference/hydrology/fort-wayne/reach-nav.yaml` | application/x-yaml | no |
+| `reference/hydrology/fort-wayne/network.yaml` | application/x-yaml | no |
+| `reference/hydrology/fort-wayne/reaches.yaml` | application/x-yaml | no |
+| `reference/hydrology/reaches/fort-wayne.geojson` | application/geo+json | no |
 
 ### `hydrology-swmm` — Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)
 

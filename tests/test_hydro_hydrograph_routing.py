@@ -184,6 +184,46 @@ def test_load_reaches_absent_returns_none(tmp_path) -> None:  # type: ignore[no-
     assert hr.load_reaches(settings=Settings(data_dir=tmp_path)) is None
 
 
+def test_peer_tables_resolve_slug_scoped_never_limas(hydro_settings: Settings) -> None:
+    """#1806: a peer's loaders resolve reference/hydrology/<slug>/ — with Lima's legacy
+    files committed right there in the shared dir, a peer without its OWN tables must load
+    NOTHING (the inheritance leak the slug-scoping closes), and Lima's pins still resolve
+    the legacy paths byte-identically."""
+    peer = hydro_settings.model_copy(update={"site": "sidney"})
+    assert hr._reaches_path(peer).parts[-3:] == ("hydrology", "sidney", "reaches.yaml")
+    assert hr.load_reaches(settings=peer) is None
+    assert hr.network.load_topology(settings=peer) == []
+    assert hr.build_routed_hydrograph(settings=peer, live=False) is None
+    lima = hr._reaches_path(hydro_settings)
+    assert lima.parts[-3:] == ("reference", "hydrology", "reaches.yaml")
+
+
+def test_geometry_grade_table_skips_the_routed_feed(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """#1364 on the routing axis: a committed table with topology + reach geometry but NO
+    catchments (the honest geometry-grade artifact a peer commits for the reach-network map)
+    must NOT produce an all-zero routed-hydrograph feed."""
+    d = tmp_path / "reference" / "hydrology" / "sidney"
+    d.mkdir(parents=True)
+    (d / "network.yaml").write_text(
+        "nodes:\n"
+        "- id: head\n  name: Head\n  kind: headwater\n  downstream: outlet\n"
+        "- id: outlet\n  name: Outlet\n  kind: outlet\n",
+        encoding="utf-8",
+    )
+    (d / "reaches.yaml").write_text(
+        "catchments: {}\n"
+        "reaches:\n"
+        "  head:\n"
+        "    length_ft: {value: 5000.0, unit: ft, source: derived, citation: test}\n"
+        "    slope: {value: 0.001, unit: ft/ft, source: assumption, citation: test}\n",
+        encoding="utf-8",
+    )
+    settings = Settings(data_dir=tmp_path, site="sidney")
+    table = hr.load_reaches(settings=settings)
+    assert table is not None and not table.catchments  # the table itself loads fine
+    assert hr.build_routed_hydrograph(settings=settings, live=False) is None
+
+
 def test_committed_reaches_table_loads(hydro_settings: Settings) -> None:
     """The committed reaches.yaml validates and keys onto the network.yaml nodes."""
     table = hr.load_reaches(settings=hydro_settings)
@@ -194,6 +234,20 @@ def test_committed_reaches_table_loads(hydro_settings: Settings) -> None:
     # Every reach key is a real node id in the committed topology.
     node_ids = {n.id for n in hr.network.load_topology(settings=hydro_settings)}
     assert set(table.reaches) <= node_ids
+
+
+def test_committed_fort_wayne_tables_are_geometry_grade(hydro_settings: Settings) -> None:
+    """#1806's first peer set: the committed Fort Wayne tables load slug-scoped, key onto
+    their own topology, and stay geometry-grade — reach-network geometry without a routed
+    storm model (catchments deliberately empty, so the routed feed self-skips)."""
+    fw = hydro_settings.model_copy(update={"site": "fort-wayne"})
+    table = hr.load_reaches(settings=fw)
+    assert table is not None
+    assert table.catchments == {}  # geometry-grade by design — no fabricated CN/Tc/areas
+    node_ids = {n.id for n in hr.network.load_topology(settings=fw)}
+    assert node_ids, "fort-wayne commits its own topology under reference/hydrology/fort-wayne/"
+    assert set(table.reaches) <= node_ids
+    assert hr.build_routed_hydrograph(settings=fw, live=False) is None
 
 
 def test_committed_lima_loop_routes_and_attenuates(hydro_settings: Settings) -> None:
