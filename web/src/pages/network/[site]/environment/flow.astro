@@ -5,6 +5,7 @@ import BackLink from "~/components/BackLink.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
 import FlowMap from "@watermark/viz/islands/FlowMap.tsx";
 import Base from "~/layouts/Base.astro";
+import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import { reachAttenuationRows } from "~/lib/basin";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { RoutedHydrographNetwork } from "@watermark/core/feeds";
@@ -36,6 +37,7 @@ const mapSrc = withBase("/feeds/flow.json");
   <article class="prose">
     <BackLink href={withSite("/environment/")} label="The environment" />
     <h1>Water flow</h1>
+    <StudyAnnexBanner chapters={["stormwater"]} />
     <p class="section-lead">
       GPU particles advect down {subject}, over the real NHDPlus river centerlines. Particle
       density and speed encode each reach's routed storm-peak flow; reaches whose receiving water

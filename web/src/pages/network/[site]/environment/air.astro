@@ -5,6 +5,7 @@ import BackLink from "~/components/BackLink.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
 import DispersionMap from "@watermark/viz/islands/DispersionMap.tsx";
 import Base from "~/layouts/Base.astro";
+import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { DispersionField } from "@watermark/core/feeds";
 import { isReferenceSite } from "@watermark/core/readiness";
@@ -55,6 +56,7 @@ const mapSrc = withBase("/feeds/air/dispersion.json");
   <article class="prose">
     <BackLink href={withSite("/environment/")} label="The environment" />
     <h1>Air dispersion</h1>
+    <StudyAnnexBanner chapters={["air"]} />
     <p class="section-lead">
       A Tier-1 AERMOD screening of the criteria-pollutant concentrations {fieldLead} would
       disperse across the surrounding grid. Switch pollutant and averaging period, toggle the

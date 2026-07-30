@@ -1,0 +1,91 @@
+---
+/**
+ * Study §II — Stormwater & the built surface (the missing-impact-study epic, PR3). The
+ * designed gap chapter: on nearly every site the grading and drainage plan has not been
+ * produced, and the shell's gap panel carries that concrete ask — the purest expression of
+ * the study's thesis. Where a routed reach table IS committed (the reference build today;
+ * #829 is the growth path), this section names what the routed design-storm covers and
+ * points at the flow annex for the animation and the reach table.
+ */
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { ReachNetwork } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
+import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+const network =
+  model.status === "data" && hasFeed("reach-network", slug)
+    ? loadFeed<ReachNetwork>("reach-network", slug)
+    : null;
+---
+
+{
+  network === null ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="sw-lead">
+        A campus-scale impervious surface changes what a design storm does downstream, and a
+        real impact study routes that change down the reach. This site has a committed reach
+        table — <strong>{network.reaches.length}</strong> routed{" "}
+        {network.reaches.length === 1 ? "reach" : "reaches"} — so the design-storm hydrograph
+        is computable here: the routed peaks, the channel attenuation, and the animated flow
+        field live in the annex.
+      </p>
+      {network.note && <p class="sw-note">{network.note}</p>}
+      {(model.caveats.length > 0 || network.caveats.length > 0) && (
+        <ul class="sw-caveats">
+          {[...new Set([...model.caveats, ...network.caveats])].map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+      <p class="sw-annexline">
+        <a href={withSite("/environment/flow")}>The flow annex — the routed reach network →</a>
+      </p>
+    </>
+  )
+}
+
+<style>
+  .sw-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1rem;
+  }
+  .sw-note {
+    font-size: 0.88rem;
+    color: var(--bosc-muted);
+    max-width: 660px;
+  }
+  .sw-caveats {
+    margin: 0.9rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .sw-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .sw-annexline {
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+  .sw-annexline a {
+    font-weight: 700;
+    color: var(--bosc-forest);
+    text-decoration: none;
+  }
+  .sw-annexline a:hover {
+    text-decoration: underline;
+  }
+</style>

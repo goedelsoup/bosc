@@ -1,0 +1,235 @@
+---
+/**
+ * Study §II — Groundwater & dewatering (the missing-impact-study epic, PR3). Either screen
+ * lifts the chapter out of gap (`anyRequired`): the HYPOTHETICAL cone (a Theis screen of
+ * what supplying the campus from the aquifer would do to the census wells) and the
+ * DOCUMENTED construction-dewatering wellfield — plus, on the same feed, where the pumped
+ * water went (the discharge screen and the reservoir-recharge context).
+ *
+ * Register: wells, rates, and dates are [verified] ODNR records; every drawdown foot is
+ * [inference], bracketed by the aquifer's transmissivity uncertainty. The two cones are
+ * never conflated — one is a what-if, one is on the record.
+ */
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { DewateringReport, DrawdownReport } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
+import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
+import type { FigureStatData } from "@watermark/core/viz";
+import FigureStat from "~/components/FigureStat.astro";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+const live = model.status === "data" || model.status === "partial";
+const drawdown = live && hasFeed("drawdown", slug) ? loadFeed<DrawdownReport>("drawdown", slug) : null;
+const dewatering =
+  live && hasFeed("dewatering", slug) ? loadFeed<DewateringReport>("dewatering", slug) : null;
+
+// The documented wellfield's headline counts (the groundwater annex's own reads).
+const dwImpacted = dewatering?.impacted_wells.length ?? 0;
+const dwDry = dewatering ? dewatering.impacted_wells.filter((w) => w.goes_dry).length : 0;
+
+const OUTCOME_LABELS: Record<string, string> = {
+  not_separable: "not separable from natural reach gain",
+  elevated_gain: "an elevated reach gain during the pumping window",
+  elevated_floor: "an elevated low-flow floor during the pumping window",
+};
+const discharge = dewatering?.discharge_screen ?? null;
+
+const hypoStats: FigureStatData[] = drawdown
+  ? [
+      // `size="sm"` cells carry no unit slot — units fold into the value strings.
+      {
+        label: "Hypothetical groundwater stress",
+        value:
+          drawdown.scenario.pumping_mgd.value == null ? "—" : `${drawdown.scenario.pumping_mgd.value} MGD`,
+        evidence: "inference",
+        basis: "modeled",
+        sub: "a what-if supply well field — no groundwater withdrawal is on record",
+      },
+      {
+        label: "Drawdown at the well",
+        value: drawdown.drawdown_at_well_ft.value == null ? "—" : `${drawdown.drawdown_at_well_ft.value} ft`,
+        evidence: "inference",
+        basis: "modeled",
+        sub: drawdown.dewaters
+          ? "exceeds the saturated thickness — dewaters"
+          : "within the saturated thickness",
+        warn: drawdown.dewaters,
+      },
+      {
+        label: "Domestic wells in the radius",
+        value: drawdown.affected_domestic_wells?.toLocaleString("en-US") ?? "—",
+        evidence: "inference",
+        basis: "modeled",
+        sub: "ODNR census wells [verified] inside a modeled radius",
+      },
+    ]
+  : [];
+
+const docStats: FigureStatData[] = dewatering
+  ? [
+      {
+        label: "Dewatering wells installed",
+        value: String(dewatering.well_count),
+        evidence: "verified",
+        basis: "grounded",
+        sub: `~${dewatering.total_capacity_mgd} MGD yield-test capacity · ${dewatering.operating_window}`,
+      },
+      {
+        label: "Domestic wells in the composite cone",
+        value: String(dwImpacted),
+        evidence: "inference",
+        basis: "modeled",
+        sub: "more than a foot of modeled drawdown",
+        warn: dwImpacted > 0,
+      },
+      ...(dwDry > 0
+        ? [
+            {
+              label: "Modeled to go dry",
+              value: String(dwDry),
+              evidence: "inference" as const,
+              basis: "modeled" as const,
+              sub: "the well's own buffer exhausted at the bracket's low end",
+              warn: true,
+            },
+          ]
+        : []),
+    ]
+  : [];
+---
+
+{
+  drawdown === null && dewatering === null ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="gw-lead">
+        A real impact study inventories the wells within reach of the site's pumping — before
+        the pumping. This chapter holds the groundwater evidence the record supports: the
+        hypothetical cone (what supplying the campus from the aquifer would do), the documented
+        dewatering where one is on the record, and where the pumped water went.
+      </p>
+
+      {drawdown && (
+        <section class="gw-block">
+          <h2>The hypothetical cone</h2>
+          <p class="gw-blockdek">
+            A Theis screen over the ODNR well-log census — a <strong>what-if</strong>, not a
+            documented withdrawal{drawdown.dewaters ? ", and the what-if fails: the aquifer cannot sustain the stress, which is itself the finding" : ""}.
+          </p>
+          <div class="gw-stats">
+            {hypoStats.map((s) => (
+              <FigureStat stat={s} size="sm" />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {dewatering && (
+        <section class="gw-block">
+          <h2>The documented dewatering</h2>
+          <p class="gw-blockdek">
+            On the record: the construction-dewatering wellfield, as a superposition of
+            Cooper-Jacob cones over the same census. Wells, rates, and dates are{" "}
+            <code>[verified]</code>; every drawdown foot is <code>[inference]</code>, bracketed
+            by the aquifer's transmissivity uncertainty.
+          </p>
+          <div class="gw-stats">
+            {docStats.map((s) => (
+              <FigureStat stat={s} size="sm" />
+            ))}
+          </div>
+          {discharge && (
+            <p class="gw-discharge">
+              <strong>Where the pumped water went:</strong> the river record between{" "}
+              {discharge.upstream_name} and {discharge.downstream_name} reads the pumping window
+              as {OUTCOME_LABELS[discharge.outcome] ?? discharge.outcome} — a screening read of
+              cited gage records, not a measurement of the discharge itself.
+            </p>
+          )}
+        </section>
+      )}
+
+      {model.caveats.length > 0 && (
+        <ul class="gw-caveats">
+          {model.caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+
+      <p class="gw-annexline">
+        The cone profile, the per-well table with the goes-dry and gradient lenses, and the
+        full discharge screen are in the{" "}
+        <a href={withSite("/environment/groundwater")}>groundwater annex</a>.
+      </p>
+    </>
+  )
+}
+
+<style>
+  .gw-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.2rem;
+  }
+  .gw-block {
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 0.9rem;
+    margin-top: 1.3rem;
+  }
+  .gw-block h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    margin: 0;
+  }
+  .gw-blockdek {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    max-width: 660px;
+    margin: 0.3rem 0 0;
+  }
+  .gw-blockdek code {
+    font-size: 0.76rem;
+  }
+  .gw-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 0.8rem;
+  }
+  .gw-discharge {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    max-width: 660px;
+    border: 1px solid var(--bosc-rule);
+    background: #efece2;
+    padding: 10px 14px;
+    margin: 0.9rem 0 0;
+  }
+  .gw-caveats {
+    margin: 1.1rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .gw-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .gw-annexline {
+    font-size: 0.9rem;
+    color: var(--bosc-muted);
+    margin-top: 1rem;
+  }
+</style>

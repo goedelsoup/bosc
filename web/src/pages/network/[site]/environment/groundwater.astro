@@ -2,6 +2,7 @@
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
+import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import AquiferSection from "~/components/charts/AquiferSection.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { DewateringReport, DrawdownReport, ProvenancedValue } from "@watermark/core/feeds";
@@ -64,6 +65,7 @@ const VERDICT: Record<string, string> = {
     </nav>
 
     <h1>Groundwater — the area well concerns</h1>
+    <StudyAnnexBanner chapters={["groundwater"]} />
     <p class="section-lead">
       The record trail shows residents raised <em>well-drawdown</em> concerns as the campus was
       built. This page holds the groundwater evidence three ways: a <strong>hypothetical</strong>

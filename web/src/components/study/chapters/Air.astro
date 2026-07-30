@@ -1,0 +1,161 @@
+---
+/**
+ * Study §II — Air (the missing-impact-study epic, PR3). The dispersion footprint of the
+ * campus's permitted backup-generator fleet, screened against the NAAQS.
+ *
+ * Register: the whole field is modeled screening — where a permit withholds the stack
+ * parameters as CBI the run rests on stated assumptions — so every concentration is
+ * [inference], never a measured value and never a violation finding. Exceedance cells are
+ * flagged in the status register (amber), not the evidence palette.
+ */
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { DispersionField } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
+import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+const live = model.status === "data" || model.status === "partial";
+const fields: DispersionField[] =
+  live && hasFeed("air-dispersion-field", slug)
+    ? loadFeed<DispersionField[]>("air-dispersion-field", slug)
+    : [];
+
+const periodLabel = (ave: string): string => (ave.toUpperCase() === "ANNUAL" ? "Annual" : `${ave}-hour`);
+// All fields, not just `available` ones — `available` gates the gridded surface payload (a
+// LEAN bundle elides it), not the screen itself. A missing peak renders as a dash, and its
+// screen verdict dashes with it (never "under" off a value that isn't there).
+const rows = fields.flatMap((f) =>
+  f.periods.map((p) => ({
+    pollutant: f.pollutant,
+    period: periodLabel(p.averaging_period),
+    peak: p.max_conc_ug_m3,
+    naaqs: p.naaqs_ug_m3,
+    exceeds: p.exceeds_naaqs,
+  })),
+);
+const fmt = (v: number | null): string => (v == null ? "—" : v.toFixed(2));
+const stackAssumed = fields.some((f) => f.stack_is_assumption);
+---
+
+{
+  rows.length === 0 ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="air-lead">
+        A real impact study models where the campus's permitted generator fleet puts its
+        exhaust — the AERMOD screening field, peak receptor concentrations against the
+        national ambient standards. Every figure here is <code>[inference]</code>: a labelled
+        screening estimate{stackAssumed ? " resting on stated stack assumptions where the permit withholds the geometry as confidential business information" : ""} —
+        never a monitor reading, never a violation finding.
+      </p>
+
+      <table class="air-table">
+        <thead>
+          <tr>
+            <th>Pollutant</th>
+            <th>Averaging period</th>
+            <th>Peak modeled (µg/m³)</th>
+            <th>NAAQS (µg/m³)</th>
+            <th>Screen</th>
+            <th>Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr>
+              <td>{r.pollutant}</td>
+              <td>{r.period}</td>
+              <td>{fmt(r.peak)}</td>
+              <td>{fmt(r.naaqs)}</td>
+              <td class:list={["air-flag", r.peak != null && r.exceeds && "air-flag--over"]}>
+                {r.peak == null ? "—" : r.exceeds ? "over the standard" : "under"}
+              </td>
+              <td>
+                <EvidenceTag kind="inference" />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {model.caveats.length > 0 && (
+        <ul class="air-caveats">
+          {model.caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+
+      <p class="air-annexline">
+        The full gridded field — switch pollutant and period, hover receptors, toggle the
+        NAAQS isopleth — is in the <a href={withSite("/environment/air")}>air annex</a>; the
+        buildout itself is visible in the <a href={withSite("/environment/imagery")}>imagery annex</a>.
+      </p>
+    </>
+  )
+}
+
+<style>
+  .air-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.2rem;
+  }
+  .air-lead code {
+    font-size: 0.8rem;
+  }
+  .air-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .air-table th {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    text-align: left;
+    border-bottom: 1px solid var(--bosc-ink);
+    padding: 6px 10px 6px 0;
+  }
+  .air-table td {
+    border-bottom: 1px solid var(--bosc-rule);
+    padding: 7px 10px 7px 0;
+  }
+  /* The screen verdict is a status, not evidence: amber, never the evidence palette. */
+  .air-flag {
+    font-family: var(--bosc-mono);
+    font-size: 0.78rem;
+  }
+  .air-flag--over {
+    color: #9a6a14;
+    font-weight: 700;
+  }
+  .air-caveats {
+    margin: 1rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .air-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .air-annexline {
+    font-size: 0.9rem;
+    color: var(--bosc-muted);
+    margin-top: 1rem;
+  }
+</style>
