@@ -5,6 +5,7 @@
  * lifecycle stage, the tracking issue, and (when restricted) a lock — a locked row routes to
  * its request-access page rather than the build.
  */
+import { manifestOrNull } from "@watermark/core/bundle";
 import {
   FACILITY_STATUS_META,
   type NetworkSite,
@@ -23,6 +24,13 @@ const isActive = activeSlug !== null && s.slug === activeSlug;
 const locked = Boolean(s.locked);
 // Locked overrides the build-phase pill (lock is about access, not phase).
 const status = locked ? { label: "Locked", cls: "is-locked" } : SITE_STATUS_META[s.status];
+
+// The impact-study badge (the missing-impact-study epic, peers polish): a selectable site
+// whose facility domain carries evidence has a study with a project in it — worth a marker
+// in the directory. Read via manifestOrNull (most registry sites have no bundle; never throw
+// in the switcher), and never shown for a baseline-only dossier (facility `absent`).
+const facDomain = manifestOrNull(s.slug)?.readiness?.domains.facility ?? "absent";
+const hasStudy = s.selectable && !locked && facDomain !== "absent";
 
 // The facility lifecycle stage — a separate clock from the build phase (the dot + short label).
 const fac = facilityStatus(s.slug);
@@ -68,8 +76,23 @@ const FAC_SHORT: Record<string, string> = {
         </svg>
         {FAC_SHORT[fac]}
       </span>
+      {hasStudy && <span class="switcher-study" title="This site's impact study is readable">study</span>}
       {s.issue && <span class="switcher-issue">#{s.issue}</span>}
     </span>
   </span>
   <span class="switcher-check" aria-hidden="true">{isActive ? "✓" : ""}</span>
 </a>
+
+<style>
+  /* The study marker — quiet mono chip; forest only because a readable study is a live signal. */
+  .switcher-study {
+    font-family: var(--bosc-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--bosc-forest);
+    border: 1px solid var(--bosc-rule);
+    padding: 0 5px;
+  }
+</style>
