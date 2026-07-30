@@ -82,8 +82,9 @@ const overCriterion = meta?.permits_over_daily_max_criterion ?? [];
     <>
       <p class="heat-lead">
         Cooling water leaves a plant warm, and a real impact study states how much heat the
-        discharge adds to a reach that has {t.headroomC != null ? `${t.headroomC.toFixed(1)} °C` : "only a few degrees"}{" "}
-        of headroom against Ohio's numeric criterion at its design low flow — the CWA §316(a)
+        discharge adds to a reach that has{" "}
+        {t.headroomC != null ? `${t.headroomC.toFixed(1)} °C` : "an unresolved amount"} of
+        headroom against Ohio's numeric criterion at its design low flow — the CWA §316(a)
         frame. This screen reads the modeled campus load <em>and</em> the corridor's own
         reported effluent temperatures against the same water.
       </p>
