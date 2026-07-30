@@ -77,21 +77,27 @@ def test_missing_artifact_is_a_clean_skip(tmp_path: Path) -> None:
 # --- the discipline travels as data --------------------------------------------------------
 def test_caveats_are_carried_and_pinned_to_the_meta_discipline() -> None:
     """Each carried caveat distills a rule the artifact's meta prose actually states — the
-    renderer-facing text can't drift from the canonical discipline block."""
+    renderer-facing text can't drift from the canonical discipline block.
+
+    Pairwise, not pooled: each pin phrase must appear in BOTH its own caveat and the meta
+    prose, so a caveat reworded away from its rule (or a caveat/rule mismatch hiding behind
+    another entry's phrase) fails, not just a wholesale deletion.
+    """
     feed = load_cooling_reconciliation(_settings("urbana"))
     assert feed is not None
     assert list(feed.caveats) == list(DISCIPLINE_CAVEATS)
     discipline = str(_artifact()["meta"]["discipline"]).lower()
+    # One canonical rule phrase per caveat, in DISCIPLINE_CAVEATS order.
     pins = [
         "never mutates",
-        "[inference] bracket, never",
-        "never read as",
-        "a ceiling is not a",
-        "cannot upgrade the source",
-        "never changing the outcome",
+        "[inference] bracket, never a headline scalar",
+        "never read as 'confirmed dry'",
+        "is not a discharge/withdrawal instrument",
+        "cannot upgrade the",
+        "never the sole basis for a re-archetype",
     ]
-    assert len(pins) == len(DISCIPLINE_CAVEATS)
-    for phrase in pins:
+    for caveat, phrase in zip(DISCIPLINE_CAVEATS, pins, strict=True):
+        assert phrase in caveat.lower(), f"caveat lost its rule phrase {phrase!r}: {caveat!r}"
         assert phrase in discipline, f"discipline rule {phrase!r} not in the artifact meta"
 
 
