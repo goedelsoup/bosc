@@ -34,6 +34,21 @@ search-snippet level and extracted as `[reference]` (the 2026-07-14 byline is no
 confirmed); a full raw byte capture remains **owed** (manual browser pull), matching the
 issue's own fetch-block caveat.
 
+The 2026-07-30 article — "Commissioners approve Google data center sewer design change"
+(reporter Craig Kelly, metro editor) — was instead obtained on 2026-07-30 as a **direct
+print/PDF capture of the canonical limaohio.com page** (a manual browser pull), committed
+unaltered as
+`2026-07-30-commissioners-approve-google-data-center-sewer-design-change.limaohio-print.pdf`
+(the as-received download name was
+`20260730-commissioners-approve-google-data-center-sewer-design-change.pdf`). It is the
+collection's **first canonical-publisher byte capture** — not a Yahoo mirror — and it confirms
+the manual-pull path the three owed items still need. Its companion **primary** record, the
+Board of Commissioners' own 2026-07-30 agenda carrying **Resolution #582-26 (the Second
+Amendment to the Sanitary Sewer Development Agreement with the Project BOSC developer)**, is
+committed under the commissioners collection at
+`data/documents/commissioners/meetings/A073026.pdf` (see
+`data/extracted/commissioners/bosc-resolution-ledger.yaml`).
+
 ## Articles
 
 | Date | Title | Byline | Capture |
@@ -44,6 +59,7 @@ issue's own fetch-block caveat.
 | 2026-06-22 | Brad Wendel: Allen County's biggest investment is putting our members to work | Brad Wendel (op-ed) | owed (not syndicated) |
 | 2026-07-09 | Allen commissioners approve construction projects | (staff) | owed (not syndicated) |
 | 2026-07-14 | Residents question transparency with Allen County data center | (unconfirmed) | owed (not syndicated) |
+| 2026-07-30 | Commissioners approve Google data center sewer design change | Craig Kelly | captured (limaohio.com PDF) |
 
 ### Canonical URLs
 
@@ -53,6 +69,7 @@ issue's own fetch-block caveat.
 - 2026-06-22 — <https://www.limaohio.com/top-stories/2026/06/22/brad-wendel-allen-countys-biggest-investment-is-putting-our-members-to-work/>
 - 2026-07-09 — <https://www.limaohio.com/news/2026/07/09/allen-commissioners-approve-construction-projects/>
 - 2026-07-14 — <https://www.limaohio.com/top-stories/2026/07/14/residents-question-transparency-with-allen-county-data-center/>
+- 2026-07-30 — <https://www.limaohio.com/news/2026/07/30/commissioners-approve-google-data-center-sewer-design-change/> (section/slug pattern-inferred; the captured print/PDF omits the address bar — byte-verify on the next pull)
 
 ### Captured-from (Yahoo syndication mirror) URLs
 
