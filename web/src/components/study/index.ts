@@ -9,9 +9,14 @@
  * the existing environment/economy pages do.
  */
 import DefaultChapterSection from "./chapters/DefaultChapterSection.astro";
+import Discharge from "./chapters/Discharge.astro";
+import WaterSupply from "./chapters/WaterSupply.astro";
 
-/** Bespoke sections by chapter id — empty until the chapter-buildout PRs land them. */
-export const CHAPTER_SECTIONS: Record<string, typeof DefaultChapterSection> = {};
+/** Bespoke sections by chapter id — landing chapter by chapter (Environment I: PR2). */
+export const CHAPTER_SECTIONS: Record<string, typeof DefaultChapterSection> = {
+  "water-supply": WaterSupply,
+  discharge: Discharge,
+};
 
 /** The section for a chapter id — the bespoke one when registered, the default otherwise. */
 export function chapterSection(id: string): typeof DefaultChapterSection {

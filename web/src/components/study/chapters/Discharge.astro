@@ -1,0 +1,271 @@
+---
+/**
+ * Study §II — The discharge & the receiving water (the missing-impact-study epic, PR2).
+ * Two halves, deliberately separable:
+ *
+ *  - **The project screen** (`hydrology-scenarios` → `AssimilativeCheck` rows): dilution at
+ *    the cited design low flows, the design flow matched to the criterion type — chronic
+ *    aquatic-life at the 7Q10, acute at the sharper 1Q10 (WS-08) — plus the
+ *    effluent-credited ratio where the plant shares its reach (WS-15). Screening bands,
+ *    never a permit determination. Rendered from the binding (worst-diluted) scenario.
+ *  - **The existing burden** (`rsei`): what the receiving water already carries — real,
+ *    baseline-renderable content even when no project discharge is characterized, which is
+ *    exactly the `partial` (baseline-register) state on a thin site.
+ *
+ * gap / na delegate to the generic section; the shell's gap panels carry the asks.
+ */
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { AssimilativeCheck, DilutionFlag, RseiInventory, ScenarioResult } from "@watermark/core/feeds";
+import { fmtRanged } from "@watermark/core/format";
+import { withSite } from "@watermark/core/site";
+import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+const scenarios =
+  model.status === "na" || !hasFeed("hydrology-scenarios", slug)
+    ? []
+    : loadFeed<ScenarioResult[]>("hydrology-scenarios", slug);
+const rsei = hasFeed("rsei", slug) ? loadFeed<RseiInventory>("rsei", slug) : null;
+
+// The binding scenario: the one whose worst reach dilutes least — the project's discharge
+// screened where it bites hardest. The same reduce the composer's headline stat makes.
+const minRatio = (s: ScenarioResult): number =>
+  Math.min(...(s.assimilative ?? []).map((r) => r.dilution_ratio), Number.POSITIVE_INFINITY);
+const screened = scenarios.filter((s) => (s.assimilative ?? []).length > 0);
+const binding = screened.length > 0 ? screened.reduce((a, b) => (minRatio(b) < minRatio(a) ? b : a)) : null;
+const checks: AssimilativeCheck[] = binding?.assimilative ?? [];
+const violations = checks.filter((r) => r.flag === "violation" || r.acute_flag === "violation").length;
+
+const grounded = (v: { source?: string | null }): boolean =>
+  v.source === "document" || v.source === "connector" || v.source === "reference";
+const ratio = (n: number | null | undefined): string => (n == null ? "—" : `${n.toFixed(2)}:1`);
+const flagWord = (f: DilutionFlag | null | undefined): string => f ?? "—";
+
+// The existing burden: EPA's comparative Risk-Screening Scores for the county's TRI
+// facilities — what the receiving water already carries before any new discharge.
+const burden = [...(rsei?.facilities ?? [])]
+  .sort((a, b) => (Number(b.score) || 0) - (Number(a.score) || 0))
+  .slice(0, 5);
+---
+
+{
+  model.status === "na" || (checks.length === 0 && burden.length === 0) ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="dis-lead">
+        A real impact study screens the project's discharge against the receiving stream's
+        assimilative capacity at its cited design low flows — and reads that discharge on top
+        of the burden the water already carries. The design flow is matched to the criterion
+        type: chronic aquatic-life dilution at the 7Q10, acute at the sharper 1Q10. Screening
+        bands, never a permit determination.
+      </p>
+
+      {checks.length > 0 && binding ? (
+        <>
+          <h2 class="dis-h2">The dilution screen · {binding.scenario.name}</h2>
+          <table class="dis-table">
+            <thead>
+              <tr>
+                <th>Discharge → receiving water</th>
+                <th>Design 7Q10</th>
+                <th>Discharge</th>
+                <th>Chronic</th>
+                <th>Credited</th>
+                <th>Acute (1Q10)</th>
+                <th>Evidence</th>
+              </tr>
+            </thead>
+            <tbody>
+              {checks.map((r) => (
+                <tr>
+                  <td>
+                    <strong>{r.discharger}</strong>
+                    <span class="dis-cite">→ {r.receiving_water}</span>
+                  </td>
+                  <td>
+                    {fmtRanged(r.design_low_flow)}
+                    {r.design_low_flow.citation && <span class="dis-cite">{r.design_low_flow.citation}</span>}
+                  </td>
+                  <td>{fmtRanged(r.discharge)}</td>
+                  <td class:list={["dis-flag", `dis-flag--${r.flag}`]}>
+                    {ratio(r.dilution_ratio)} · {flagWord(r.flag)}
+                  </td>
+                  <td>
+                    {r.effluent_credited_ratio != null
+                      ? `${ratio(r.effluent_credited_ratio)} · ${flagWord(r.effluent_credited_flag)}`
+                      : "—"}
+                  </td>
+                  <td
+                    class:list={
+                      r.acute_flag ? ["dis-flag", `dis-flag--${r.acute_flag}`] : undefined
+                    }
+                  >
+                    {r.acute_dilution_ratio != null
+                      ? `${ratio(r.acute_dilution_ratio)} · ${flagWord(r.acute_flag)}`
+                      : "—"}
+                  </td>
+                  <td>
+                    <EvidenceTag kind={grounded(r.design_low_flow) ? "verified" : "inference"} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="dis-note">
+            {violations} of {checks.length} receiving {checks.length === 1 ? "reach fails" : "reaches fail"}{" "}
+            a dilution band at design low flow. The effluent-credited ratio counts the permitted
+            effluent already in the reach (WS-15); a cited 1Q10 of 0 cfs is a stream that runs dry
+            at design low flow — no acute capacity at all.
+          </p>
+        </>
+      ) : (
+        <p class="dis-gapline">
+          No project discharge has been characterized for this site — the screen renders the day
+          an NPDES application and its fact sheet are filed. What follows is the receiving
+          water's own baseline.
+        </p>
+      )}
+
+      {burden.length > 0 && rsei && (
+        <>
+          <h2 class="dis-h2">The burden the receiving water already carries</h2>
+          <p class="dis-burden-meta">
+            {rsei.meta.source ?? "EPA RSEI"}
+            {rsei.meta.version ? ` (${rsei.meta.version})` : ""} ·{" "}
+            {rsei.meta.facility_count ?? burden.length} TRI facilities on file
+            {rsei.county_name ? ` · ${rsei.county_name}` : ""} — comparative Risk-Screening
+            Scores, unitless. <EvidenceTag kind="verified" />
+          </p>
+          <table class="dis-table">
+            <thead>
+              <tr>
+                <th>Facility</th>
+                <th>City</th>
+                <th>RSEI score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {burden.map((f) => (
+                <tr>
+                  <td>{f.name ?? "—"}</td>
+                  <td>{f.city ?? "—"}</td>
+                  <td>{f.score == null ? "—" : Number(f.score).toLocaleString("en-US")}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="dis-note">
+            Any new discharge lands on top of this baseline — the point of reading the two
+            halves together. The full ranked inventory and its reading caveats are in the{" "}
+            <a href={withSite("/environment/rsei")}>RSEI annex</a>.
+          </p>
+        </>
+      )}
+
+      {model.caveats.length > 0 && (
+        <ul class="dis-caveats">
+          {model.caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+    </>
+  )
+}
+
+<style>
+  .dis-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.2rem;
+  }
+  .dis-h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 0.9rem;
+    margin: 1.4rem 0 0.6rem;
+  }
+  .dis-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .dis-table th {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    text-align: left;
+    border-bottom: 1px solid var(--bosc-ink);
+    padding: 6px 10px 6px 0;
+  }
+  .dis-table td {
+    border-bottom: 1px solid var(--bosc-rule);
+    padding: 8px 10px 8px 0;
+    vertical-align: top;
+  }
+  .dis-cite {
+    display: block;
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    line-height: 1.4;
+    color: var(--bosc-faint);
+    margin-top: 2px;
+    max-width: 26ch;
+  }
+  /* The band is a screening status, not evidence: amber for tight, a heavier amber for a
+     violation — never the evidence palette. */
+  .dis-flag {
+    font-family: var(--bosc-mono);
+    white-space: nowrap;
+  }
+  .dis-flag--tight {
+    color: #9a6a14;
+  }
+  .dis-flag--violation {
+    color: #9a6a14;
+    font-weight: 700;
+  }
+  .dis-note {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    max-width: 660px;
+    margin: 0.7rem 0 0;
+  }
+  .dis-burden-meta {
+    font-size: 0.85rem;
+    color: var(--bosc-muted);
+    margin: 0 0 0.6rem;
+  }
+  .dis-gapline {
+    font-size: 0.92rem;
+    color: var(--bosc-muted);
+    max-width: 660px;
+    margin: 0 0 1rem;
+  }
+  .dis-caveats {
+    margin: 1.2rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .dis-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+</style>

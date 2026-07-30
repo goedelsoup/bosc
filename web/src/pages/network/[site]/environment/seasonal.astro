@@ -3,6 +3,7 @@ import { selectableSitePaths, siteForSlug } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import BackLink from "~/components/BackLink.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
+import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import SeasonalField from "@watermark/viz/islands/SeasonalField.tsx";
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
@@ -37,6 +38,7 @@ const mapSrc = withBase("/feeds/water/seasonal.json");
   <article class="prose">
     <BackLink href={withSite("/environment/")} label="The environment" />
     <h1>Seasonal withdrawal</h1>
+    <StudyAnnexBanner chapters={["water-supply"]} />
     <p class="section-lead">
       A month-by-month climograph of net atmospheric withdrawal — reference evapotranspiration
       (ET0) minus precipitation — for the receiving basin, with {fieldLead} read against the cited

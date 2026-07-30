@@ -1,0 +1,70 @@
+---
+/**
+ * The annex banner (the missing-impact-study epic, PR2) — placed on the existing
+ * environment/economy data pages to reframe them as the study's data annex: the page keeps
+ * its URL and its full detail, and this one slim line points back at the chapter(s) whose
+ * findings it substantiates. The demotion is framing, never a move or a redirect.
+ */
+import { chapterNumber, STUDY_PARTS, studyChapter } from "@watermark/core/study";
+import { withSite } from "@watermark/core/site";
+
+interface Props {
+  /** The study chapter id(s) this page is the data annex for. */
+  chapters: string[];
+}
+const { chapters } = Astro.props as Props;
+const targets = chapters.map((id) => {
+  const def = studyChapter(id);
+  const part = STUDY_PARTS.find((p) => p.id === def.part);
+  return { def, num: chapterNumber(id), partNum: part?.num ?? "" };
+});
+---
+
+<aside class="annexbar">
+  <span class="annexbar-eyebrow">The impact study · data annex</span>
+  <span class="annexbar-body">
+    This page is the data behind{" "}
+    {targets.map((t, i) => (
+      <>
+        {i > 0 && " and "}
+        <a href={withSite(`/study/${t.def.id}`)}>
+          §{t.partNum}·{t.num} {t.def.title} →
+        </a>
+      </>
+    ))}
+  </span>
+</aside>
+
+<style>
+  .annexbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 14px;
+    border: 1px solid var(--bosc-rule);
+    background: #efece2;
+    padding: 8px 14px;
+    margin: 0 0 1.2rem;
+  }
+  .annexbar-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    white-space: nowrap;
+  }
+  .annexbar-body {
+    font-size: 0.82rem;
+    color: var(--bosc-muted);
+  }
+  .annexbar-body a {
+    font-weight: 700;
+    color: var(--bosc-forest);
+    text-decoration: none;
+  }
+  .annexbar-body a:hover {
+    text-decoration: underline;
+  }
+</style>
