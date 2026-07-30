@@ -273,7 +273,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     gap: {
       wouldScreen: "the project this study screens — its operator, scale, load, and cooling design.",
       missingRecord:
-        "no project is disclosed at this site; the day one is, this chapter names it from the record.",
+        "a disclosed project — none is on the record at this site yet; the day one is, this chapter names it.",
       producer: "the operator's own filings — a permit application, a rezoning, an interconnection request",
     },
     references: [
@@ -324,7 +324,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     gap: {
       wouldScreen:
         "the discharge screened against the receiving stream's assimilative capacity at its cited design low flows.",
-      missingRecord: "no discharge characterization for this project has been filed.",
+      missingRecord: "a discharge characterization for this project — none has been filed.",
       producer: "an NPDES permit application and its fact sheet",
     },
     references: [
@@ -341,7 +341,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     gap: {
       wouldScreen:
         "how much heat the discharge adds to a reach screened against Ohio's numeric temperature criterion at its design low flows.",
-      missingRecord: "no thermal characterization exists for this project.",
+      missingRecord: "a thermal characterization for this project — none exists on the record.",
       producer: "the NPDES application's thermal load sheet, or the permit's §316(a) demonstration",
     },
     references: [{ label: "Thermal / §316(a)", path: "/environment/thermal", requiresFeed: "thermal" }],
@@ -357,7 +357,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     gap: {
       wouldScreen:
         "the wells within the drawdown radius, and whether construction dewatering was permitted and where the water went.",
-      missingRecord: "no well survey or dewatering record has been produced.",
+      missingRecord: "a well survey and any dewatering record — neither has been produced.",
       producer: "state well logs, a dewatering permit, and the contractor's discharge records",
     },
     references: [{ label: "Groundwater", path: "/environment/groundwater" }],
@@ -391,7 +391,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     optionalFeeds: ["air-dispersion-field", "air-scenarios"],
     gap: {
       wouldScreen: "the dispersion footprint of the campus's permitted backup-generator fleet.",
-      missingRecord: "no air-permit application for this project is on the record.",
+      missingRecord: "an air-permit application for this project — none is on the record.",
       producer: "the state air permit application (PTI/Title V) and its emissions tables",
     },
     references: [
@@ -409,7 +409,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     requiredFeeds: ["economics-baseline"],
     gap: {
       wouldScreen: "the local labor baseline every jobs claim should be read against.",
-      missingRecord: "the county employment baseline has not been assembled for this site yet.",
+      missingRecord: "the county employment baseline — not yet assembled for this site.",
       producer: "BLS QCEW and Census ACS — public series; this gap closes on the next export",
     },
     references: [{ label: "Localized labor baseline", path: "/environment/economics-baseline" }],
@@ -424,7 +424,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     gap: {
       wouldScreen:
         "the campus's load against the serving utility's, balancing authority's, and state's annual load.",
-      missingRecord: "the grid backdrop has not been assembled for this site yet.",
+      missingRecord: "the site's grid backdrop — not yet assembled.",
       producer: "EIA-861/930 — public series; this gap closes on the next export",
     },
     references: [
@@ -450,7 +450,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     gap: {
       wouldScreen: "what tax revenue is being traded away and for how long, before the trade is approved.",
       missingRecord:
-        "the abatement agreement, the school-board resolution, and the county auditor's abatement report — all public records — have not been produced into this record.",
+        "the abatement agreement, the school-board resolution, and the county auditor's abatement report — all public records, none produced into this record.",
       producer: "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
     },
     references: [],
@@ -466,7 +466,8 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     requiredFeeds: [],
     gap: {
       wouldScreen: "the whole trade on one sheet — headroom given against benefits documented.",
-      missingRecord: "the balance synthesizes the other chapters; it has no record of its own to miss.",
+      missingRecord:
+        "no record of its own — it synthesizes the other chapters, and none of them has a record to draw on yet.",
     },
     references: [
       { label: "Public balance sheet", path: "/reports/public-balance-sheet" },

@@ -1,0 +1,168 @@
+---
+/**
+ * Study §II — Heat (the missing-impact-study epic, PR3). The third cooling axis: §II·3
+ * carries the cooling load's VOLUME and §II·4 its CHEMISTRY; this chapter carries its HEAT,
+ * read against Ohio's numeric temperature criterion at the cited design low flows.
+ *
+ * The one discipline this section preserves verbatim from `@watermark/core/thermal`: the
+ * `kind` split. A modelled (data-center) heat load is an [inference] about a facility not
+ * yet discharging; an observed (permittee DMR) load is a [verified] measurement. They are
+ * screened identically and never conflated — and the rows that resolve NO mixed temperature
+ * (an unbounded rise, a dry 1Q10) are counted out loud, never silently filtered.
+ */
+import { withSite } from "@watermark/core/site";
+import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
+import { buildThermal } from "@watermark/core/thermal";
+import type { FigureStatData } from "@watermark/core/viz";
+import FigureStat from "~/components/FigureStat.astro";
+import DefaultChapterSection from "./DefaultChapterSection.astro";
+
+interface Props {
+  def: StudyChapterDef;
+  model: StudyChapterModel;
+  slug: string;
+}
+const { def, model, slug } = Astro.props as Props;
+
+const t = model.status === "data" || model.status === "partial" ? buildThermal(slug) : null;
+const meta = t?.meta ?? null;
+
+const stats: FigureStatData[] = [];
+if (t?.criterionC != null) {
+  stats.push({
+    label: "Ohio daily-max criterion",
+    value: t.criterionC.toFixed(1),
+    unit: "°C",
+    evidence: "verified",
+    basis: "grounded",
+    sub: meta?.zone_rule ?? undefined,
+  });
+}
+if (t?.ambientC != null) {
+  stats.push({
+    label: "Design ambient",
+    value: t.ambientC.toFixed(1),
+    unit: "°C",
+    evidence: t.ambientGrounded ? "verified" : "inference",
+    basis: t.ambientGrounded ? "grounded" : "modeled",
+    sub: meta?.observed_instream_station ?? meta?.ambient_source ?? undefined,
+  });
+}
+if (t?.headroomC != null) {
+  stats.push({
+    label: "Temperature headroom",
+    value: t.headroomC.toFixed(1),
+    unit: "°C",
+    evidence: "inference",
+    basis: "modeled",
+    sub: "criterion − design ambient",
+    warn: t.headroomC <= 0,
+  });
+}
+if (t?.capacityMw != null) {
+  stats.push({
+    label: "Reach thermal capacity",
+    value: t.capacityMw.toFixed(1),
+    unit: "MW",
+    evidence: "inference",
+    basis: "modeled",
+    sub: t.designFlowCfs != null ? `at the ${t.designFlowCfs} cfs chronic design flow` : undefined,
+  });
+}
+
+// Merge the composer's must-render caveats with the screen's own carried ones, first-seen order.
+const caveats = [...new Set([...model.caveats, ...(t?.caveats ?? [])])];
+const overCriterion = meta?.permits_over_daily_max_criterion ?? [];
+---
+
+{
+  t === null ? (
+    <DefaultChapterSection def={def} model={model} slug={slug} />
+  ) : (
+    <>
+      <p class="heat-lead">
+        Cooling water leaves a plant warm, and a real impact study states how much heat the
+        discharge adds to a reach that has {t.headroomC != null ? `${t.headroomC.toFixed(1)} °C` : "only a few degrees"}{" "}
+        of headroom against Ohio's numeric criterion at its design low flow — the CWA §316(a)
+        frame. This screen reads the modeled campus load <em>and</em> the corridor's own
+        reported effluent temperatures against the same water.
+      </p>
+
+      <div class="heat-stats">
+        {stats.map((s) => (
+          <FigureStat stat={s} size="lg" />
+        ))}
+      </div>
+
+      <p class="heat-cohort">
+        Screened cohort: <strong>{t.modelled.length}</strong> modeled data-center{" "}
+        {t.modelled.length === 1 ? "load" : "loads"} <code>[inference]</code> ·{" "}
+        <strong>{t.observed.length}</strong> permitted{" "}
+        {t.observed.length === 1 ? "discharger" : "dischargers"} ({t.reported.length} reporting an
+        effluent temperature <code>[verified]</code>) — screened identically, never conflated.
+        {overCriterion.length > 0 &&
+          ` ${overCriterion.length} permit${overCriterion.length === 1 ? "" : "s"} already report an effluent temperature over the criterion.`}
+        {t.unbounded.length > 0 &&
+          ` ${t.unbounded.length} modeled ${t.unbounded.length === 1 ? "load resolves" : "loads resolve"} NO mixed temperature at the chronic flow — the reach cannot physically carry that heat as liquid water; the magnitude lives in the exceedance factor, not a fabricated ΔT.`}
+        {t.unresolved.length > t.unbounded.length &&
+          ` ${t.unresolved.length - t.unbounded.length} more ${t.unresolved.length - t.unbounded.length === 1 ? "row contributes" : "rows contribute"} no comparable temperature (no cited chronic flow, or no screen at all) — counted, not hidden.`}
+      </p>
+
+      {caveats.length > 0 && (
+        <ul class="heat-caveats">
+          {caveats.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )}
+
+      <p class="heat-annexline">
+        The full per-discharger comparison — every mixed temperature, the heat-partition
+        scenarios, and the derived-vs-observed calibration — is in the{" "}
+        <a href={withSite("/environment/thermal")}>thermal annex</a>.
+      </p>
+    </>
+  )
+}
+
+<style>
+  .heat-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 660px;
+    margin: 0 0 1.2rem;
+  }
+  .heat-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 0 0 1.1rem;
+  }
+  .heat-cohort {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    max-width: 660px;
+    border: 1px solid var(--bosc-rule);
+    background: #efece2;
+    padding: 12px 16px;
+    margin: 0 0 1rem;
+  }
+  .heat-cohort code {
+    font-size: 0.78rem;
+  }
+  .heat-caveats {
+    margin: 0.8rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .heat-caveats li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .heat-annexline {
+    font-size: 0.9rem;
+    color: var(--bosc-muted);
+    margin-top: 1rem;
+  }
+</style>

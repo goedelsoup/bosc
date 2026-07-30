@@ -52,10 +52,11 @@ const scenarios =
 const fmt = (v: ProvenancedValue): string => fmtRanged(v, 2);
 const grounded = (v: ProvenancedValue): boolean =>
   v.source === "document" || v.source === "connector" || v.source === "reference";
+// The scenario strips render `size="sm"`, which carries no unit slot — fold the unit into
+// the value string so "4.85" never renders unitless.
 const toStat = (label: string, v: ProvenancedValue): FigureStatData => ({
   label,
-  value: v.value == null ? "—" : v.value.toLocaleString("en-US"),
-  unit: v.unit ?? undefined,
+  value: v.value == null ? "—" : `${v.value.toLocaleString("en-US")}${v.unit ? ` ${v.unit}` : ""}`,
   evidence: grounded(v) ? "verified" : "inference",
   basis: grounded(v) ? "grounded" : "modeled",
   sub: v.citation ?? v.source ?? undefined,

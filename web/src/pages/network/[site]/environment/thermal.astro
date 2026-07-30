@@ -14,6 +14,7 @@ export const getStaticPaths = selectableSitePaths;
  * corridor's record. Feed-gated (`thermal`), so a site without a screen degrades to the stub note.
  */
 import Base from "~/layouts/Base.astro";
+import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import BulletChart from "~/components/charts/BulletChart.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
 import FigureStat from "~/components/FigureStat.astro";
@@ -133,6 +134,7 @@ const pctOf = (f: number | null | undefined): string =>
     </nav>
 
     <h1>Thermal discharge — the river's heat budget</h1>
+    <StudyAnnexBanner chapters={["heat"]} />
     <p class="section-lead">
       Cooling water leaves a plant <em>warm</em>. The water-balance page asks how much water a
       campus takes and the toxics report asks what its discharge carries; this page asks the third
