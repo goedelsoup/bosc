@@ -324,6 +324,108 @@ export interface ScenarioResult {
   assimilative: AssimilativeCheck[];
 }
 
+// --- cooling-reconciliation: the claim-vs-record cooling account (#1805, epic #1803 P2) ---
+
+/** The harness's four-outcome vocabulary (`bosc.hydrology.cooling_reconcile.ReconcileOutcome`). */
+export type ReconcileOutcome = "discrepancy" | "corroborated" | "reservation_conflict" | "gap";
+
+/** A corroborator's read against the claim — never the primary outcome. */
+export type CorroboratorStance = "corroborates" | "contradicts" | "silent";
+
+/** One facility's water account (`bosc.hydrology.cooling_reconcile.WaterAccount`): the
+ *  archetype-predicted side plus the FOUR structurally-distinct provenance slots — documented
+ *  (a metered/record instrument), reserved (a will-serve CEILING, not an instrument),
+ *  disclosed (an operator self-report, never an upgrade), and the self-disclosed permit
+ *  ceiling. A renderer must keep those registers apart — collapsing them is the exact
+ *  failure the harness exists to prevent. */
+export interface CoolingWaterAccount {
+  archetype: CoolingModel;
+  it_load: ProvenancedValue;
+  predicted_makeup: ProvenancedValue;
+  predicted_consumptive: ProvenancedValue;
+  predicted_blowdown: ProvenancedValue;
+  documented_makeup?: ProvenancedValue | null;
+  documented_blowdown?: ProvenancedValue | null;
+  reserved_makeup?: ProvenancedValue | null;
+  reserved_blowdown?: ProvenancedValue | null;
+  disclosed_makeup?: ProvenancedValue | null;
+  disclosed_ceiling?: ProvenancedValue | null;
+  disclosed_cycles?: ProvenancedValue | null;
+  /** Always an `[inference]` bracket, never a headline scalar (the carried discipline). */
+  backsolved_cycles?: ProvenancedValue | null;
+  seasonality_warm_ratio?: number | null;
+}
+
+/** The C2 records-request payload riding a `gap`/`reservation_conflict` row. */
+export interface ReconciliationLead {
+  kind: string;
+  site: string;
+  facility: string;
+  subject: string;
+  records_sought: string[];
+  holder: string;
+  rationale: string;
+  epic_ref?: string | null;
+  tag: string;
+}
+
+/** One secondary corroborator (air-permit PM or Tier II chemistry) — sharpens the finding,
+ *  never changes the outcome. The two variants share a render shape; the PM fields belong to
+ *  the air permit, `chemicals` to Tier II. */
+export interface ReconciliationCorroborator {
+  state: string;
+  stance: CorroboratorStance;
+  citation: string;
+  tag: string;
+  confidence: Confidence;
+  finding: string;
+  tower_count?: number | null;
+  pm10_tpy?: number | null;
+  pm25_tpy?: number | null;
+  chemicals?: string[];
+}
+
+export interface CoolingCorroborators {
+  air_permit: ReconciliationCorroborator;
+  tier2_chemistry: ReconciliationCorroborator;
+  net_stance: CorroboratorStance;
+  summary: string;
+}
+
+/** One reconciliation row (`bosc.hydrology.cooling_reconcile.ReconciliationRecord`), shipped
+ *  verbatim from the committed reference artifact. `is_control` is always false in a bundle —
+ *  the Intel calibration row is excluded at export — but typed so a consumer can assert it. */
+export interface ReconciliationRecordRow {
+  site: string;
+  facility: string;
+  is_control: boolean;
+  claimed_archetype: CoolingModel;
+  claim_source: SourceKind;
+  claim_citation: string;
+  account: CoolingWaterAccount;
+  outcome: ReconcileOutcome;
+  recommended_archetype?: CoolingModel | null;
+  recommended_source?: string | null;
+  /** The pin KEPT for a reservation_conflict (a ceiling can't re-pin an archetype). */
+  kept_archetype?: CoolingModel | null;
+  lead?: ReconciliationLead | null;
+  corroborators?: CoolingCorroborators | null;
+  tag: string;
+  confidence: Confidence;
+  finding: string;
+}
+
+/** The `cooling-reconciliation` object feed (`bosc.site.cooling_reconciliation`): the site's
+ *  OWN candidate row(s) of the committed claim-vs-record account, plus the harness's
+ *  discipline rules as MUST-render `caveats` (callers render, never drop). */
+export interface CoolingReconciliation {
+  site: string;
+  asof: string;
+  source: string;
+  caveats: string[];
+  candidates: ReconciliationRecordRow[];
+}
+
 /** One (radius, drawdown) sample of the cone profile (`bosc.hydrology.drawdown.DrawdownPoint`). */
 export interface DrawdownPoint {
   radius_ft: number;

@@ -98,6 +98,7 @@ from watermark.site import places as places_mod
 from watermark.site import records as records_mod
 from watermark.site import rsei as rsei_mod
 from watermark.site.catalog_index import build_catalog_index
+from watermark.site.cooling_reconciliation import load_cooling_reconciliation
 from watermark.site.corpus_index import build_corpus_index
 from watermark.site.corpus_mirror import build_mirror
 from watermark.site.corpus_nodes import build_corpus_nodes
@@ -987,6 +988,13 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # modelled campus heat load AND the corridor's own permitted dischargers, each read against
         # the reach's Ohio numeric temperature criterion at the cited design low flows.
         ("thermal", None, lambda: _thermal_screen(settings)),
+        # The claim-vs-record cooling-cycling reconciliation (#1805, epic #1803 P2) — the site's
+        # OWN candidate row(s) of the committed cross-site account (epic #1676: A3 harness + A4
+        # corroborators + B1-B3 provenance slots), with the harness's discipline riding as
+        # MUST-render caveats. Site-gated on the rows' own `site` key; self-skips for a site
+        # outside the cohort (#1364), and the Intel positive-control row is excluded explicitly —
+        # a calibration vector never ships as site data.
+        ("cooling-reconciliation", None, lambda: load_cooling_reconciliation(settings)),
         # The published data catalog (epic #631 Phase 3 / #659) — the data tier /about/data reads.
         ("catalog", CatalogItem, lambda: catalog_mod.export_catalog(settings)),
     ]

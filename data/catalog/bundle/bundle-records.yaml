@@ -28,6 +28,7 @@ depends_on:
 - hydrology-reaches
 - hydrology-wbd
 - lima-campus-dewatering
+- oepa-cooling-reconciliation
 - ohio-waterwells-allen
 - rsei-inventory
 - usaspending
@@ -276,5 +277,17 @@ notes: >-
   only feeds already produced and adds no new committed upstream. Always emitted (13 rows per
   site): a facility-less site's project-dependent chapters are `na` watch states, never skips,
   so the schema set stays stable and every bundle's study is a committed, citable artifact.
+  The `cooling-reconciliation` object feed (issue 1805, epic 1803 P2, contract 1.45.0) ships the
+  site's OWN candidate row(s) of the committed claim-vs-record cooling-cycling account
+  (`oepa-cooling-reconciliation`, epic 1676: the A3 harness, the A4 secondary corroborators, the
+  B1-B3 provenance slots) — claim + predicted account at screening grade, the
+  documented / reserved / disclosed slots kept structurally distinct, outcome + tag + finding,
+  the records-sought lead, and the corroborator stances — validated back through the producer's
+  own `ReconciliationRecord` model and shipped verbatim, so the feed is byte-consistent with the
+  reference artifact by construction; the harness's discipline rules ride as MUST-render caveats.
+  This adds `oepa-cooling-reconciliation` as a declared upstream. Site-gated on the rows' own
+  `site` key and self-skipped when the site has no cohort row (the issue-1364 rule), and the
+  Intel positive-control row (`is_control`) is excluded explicitly — a calibration vector is
+  never shipped as site data, even on a `new-albany` bundle.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

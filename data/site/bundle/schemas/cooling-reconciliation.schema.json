@@ -1,0 +1,660 @@
+{
+  "$defs": {
+    "AirPermitCorroborator": {
+      "additionalProperties": false,
+      "description": "The air-permit cooling-tower-PM corroborator, reconciled against the claimed archetype.\n\n``pm10_tpy`` / ``pm25_tpy`` / ``tower_count`` are populated only when a permit is on file and\nlists cooling towers as PM units; the PM figures are best-effort (the ``~`` approx marker is\ntolerated). The ``stance`` is the reconciliation against ``cooling_model`` — never the primary\noutcome.",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/AirPermitState"
+        },
+        "stance": {
+          "$ref": "#/$defs/CorroboratorStance"
+        },
+        "tower_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tower Count"
+        },
+        "pm10_tpy": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pm10 Tpy"
+        },
+        "pm25_tpy": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pm25 Tpy"
+        },
+        "citation": {
+          "title": "Citation",
+          "type": "string"
+        },
+        "tag": {
+          "title": "Tag",
+          "type": "string"
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "finding": {
+          "title": "Finding",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "stance",
+        "citation",
+        "tag",
+        "confidence",
+        "finding"
+      ],
+      "title": "AirPermitCorroborator",
+      "type": "object"
+    },
+    "AirPermitState": {
+      "description": "Whether the facility's own air permit lists a cooling tower as a PM emission source.",
+      "enum": [
+        "pm_source_listed",
+        "no_pm_source",
+        "not_on_record"
+      ],
+      "title": "AirPermitState",
+      "type": "string"
+    },
+    "CoolingCorroborators": {
+      "additionalProperties": false,
+      "description": "The two independent corroborators for one facility, plus their combined read.\n\n``net_stance`` is the strongest non-silent direction across the two signals (a single\ncontradiction dominates): it lets a consumer see at a glance whether the corroborators point the\nsame way as the primary water account, *without* ever having changed that account's outcome.",
+      "properties": {
+        "air_permit": {
+          "$ref": "#/$defs/AirPermitCorroborator"
+        },
+        "tier2_chemistry": {
+          "$ref": "#/$defs/TierIIChemistryCorroborator"
+        },
+        "net_stance": {
+          "$ref": "#/$defs/CorroboratorStance"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "air_permit",
+        "tier2_chemistry",
+        "net_stance",
+        "summary"
+      ],
+      "title": "CoolingCorroborators",
+      "type": "object"
+    },
+    "CoolingModelType": {
+      "description": "The cooling-water archetype of a data-center facility, keyed on physical mechanism.\n\nEach member selects one spec in :data:`watermark.hydrology.cooling_models.COOLING_MODELS` —\nits own consumptive/withdrawal math and parameter set. The enum lives here (not in\n``watermark.hydrology``) because the archetype is a **per-site facility attribute**\n(:class:`SiteFacility.cooling_model`) and ``watermark.config`` imports this package,\nso hydrology modules cannot be imported from here.\n\nNaming ([reference]): the enum is keyed on mechanism because the data-center industry's\n\"open loop / closed loop\" labels are ambiguous — EPA WaterSense at Work (§6, Cooling\nTowers) calls a recirculating wet tower an *open recirculating* system, which trade\nusage shortens to \"open loop\", while \"closed loop\" is used both for sealed dry/air-\ncooled circuits and (confusingly) for tower condenser-water loops. The open/closed\nlabels are display-only **aliases**, documented per spec in\n:mod:`watermark.hydrology.cooling_models`; the engine never dispatches on them.\n\n``unknown`` means \"facility disclosed, cooling method not on record\" — never \"no\ncooling\". It yields a bracketed range, not a single figure. ``off`` is the explicit\nno-cooling-water-load case; ``SiteProfile.facility is None`` also resolves to it.",
+      "enum": [
+        "off",
+        "evaporative_tower",
+        "once_through",
+        "closed_loop_dry",
+        "hybrid_adiabatic",
+        "unknown"
+      ],
+      "title": "CoolingModelType",
+      "type": "string"
+    },
+    "CorroboratorStance": {
+      "description": "How a corroborating signal bears on the *claimed* archetype — never on the primary outcome.\n\nA stance is read relative to whether the claim runs an evaporative cooling tower\n(:data:`_TOWER_ARCHETYPES`): a cooling-tower PM listing / treatment-chemistry inventory\n``corroborates`` a wet claim and ``contradicts`` a dry (``closed_loop_dry``) one; ``silent``\nwhen the signal is not on record and cannot speak either way.",
+      "enum": [
+        "corroborates",
+        "contradicts",
+        "silent"
+      ],
+      "title": "CorroboratorStance",
+      "type": "string"
+    },
+    "ProvenancedValue": {
+      "additionalProperties": false,
+      "description": "A single numeric quantity tagged with its provenance.\n\nConstruct via the classmethods (:meth:`from_document`, :meth:`from_connector`,\n:meth:`assume`, :meth:`derived`) so the ``source`` tag is never forgotten.\n\nA **measured or derived estimate** may also carry a quantitative uncertainty range\n(#760): optional absolute ``low``/``high`` bounds around the central ``value``,\n*orthogonal* to the qualitative ``confidence`` enum. The convention: a document- or\nconnector-verbatim figure is a single value (no band); an estimate whose honest\nrepresentation is \"226 ± ~35 ac\" carries ``low``/``high`` so downstream consumers\n(the bundle, the frontend, the Monte-Carlo engine #271) see the spread as data, not\nprose buried in the citation. The estimate constructors (:meth:`derived`,\n:meth:`assume`, :meth:`from_reference`) take the range inline; :meth:`with_range`\nattaches one to any value (e.g. a document-anchored central with a derived band).",
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "asof": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asof"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source"
+      ],
+      "title": "ProvenancedValue",
+      "type": "object"
+    },
+    "ReconcileOutcome": {
+      "description": "The reconciliation of a facility's cooling claim against documented water.",
+      "enum": [
+        "discrepancy",
+        "corroborated",
+        "reservation_conflict",
+        "gap"
+      ],
+      "title": "ReconcileOutcome",
+      "type": "string"
+    },
+    "ReconciliationRecord": {
+      "additionalProperties": false,
+      "description": "One facility's reconciliation: its water account, outcome, recommendation, provenance.",
+      "properties": {
+        "site": {
+          "title": "Site",
+          "type": "string"
+        },
+        "facility": {
+          "title": "Facility",
+          "type": "string"
+        },
+        "is_control": {
+          "default": false,
+          "title": "Is Control",
+          "type": "boolean"
+        },
+        "claimed_archetype": {
+          "title": "Claimed Archetype",
+          "type": "string"
+        },
+        "claim_source": {
+          "title": "Claim Source",
+          "type": "string"
+        },
+        "claim_citation": {
+          "title": "Claim Citation",
+          "type": "string"
+        },
+        "account": {
+          "$ref": "#/$defs/WaterAccount"
+        },
+        "outcome": {
+          "$ref": "#/$defs/ReconcileOutcome"
+        },
+        "recommended_archetype": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recommended Archetype"
+        },
+        "recommended_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recommended Source"
+        },
+        "kept_archetype": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kept Archetype"
+        },
+        "lead": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RecordsRequestLead"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "corroborators": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoolingCorroborators"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tag": {
+          "title": "Tag",
+          "type": "string"
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "finding": {
+          "title": "Finding",
+          "type": "string"
+        }
+      },
+      "required": [
+        "site",
+        "facility",
+        "claimed_archetype",
+        "claim_source",
+        "claim_citation",
+        "account",
+        "outcome",
+        "tag",
+        "confidence",
+        "finding"
+      ],
+      "title": "ReconciliationRecord",
+      "type": "object"
+    },
+    "RecordsRequestLead": {
+      "additionalProperties": false,
+      "description": "A C2 (#1688) records-request lead payload emitted for a gap facility.\n\nA validated peer of the raw dict the harness used to carry (like ``AwardLead`` /\n``LeiLead``, a lead model lives with its producer — the reconciliation output models all\nlive here, not in ``watermark.models``, which is for corpus extractions). Structured so a\nconsumer (the C2 queue) reads typed fields, not free-form keys.",
+      "properties": {
+        "kind": {
+          "const": "records-request",
+          "default": "records-request",
+          "title": "Kind",
+          "type": "string"
+        },
+        "site": {
+          "title": "Site",
+          "type": "string"
+        },
+        "facility": {
+          "title": "Facility",
+          "type": "string"
+        },
+        "subject": {
+          "title": "Subject",
+          "type": "string"
+        },
+        "records_sought": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Records Sought",
+          "type": "array"
+        },
+        "holder": {
+          "title": "Holder",
+          "type": "string"
+        },
+        "rationale": {
+          "title": "Rationale",
+          "type": "string"
+        },
+        "epic_ref": {
+          "title": "Epic Ref",
+          "type": "string"
+        },
+        "tag": {
+          "title": "Tag",
+          "type": "string"
+        }
+      },
+      "required": [
+        "site",
+        "facility",
+        "subject",
+        "records_sought",
+        "holder",
+        "rationale",
+        "epic_ref",
+        "tag"
+      ],
+      "title": "RecordsRequestLead",
+      "type": "object"
+    },
+    "TierIIChemistryCorroborator": {
+      "additionalProperties": false,
+      "description": "The Tier II / EPCRA-312 cooling-chemistry corroborator, reconciled against the claim.\n\n``chemicals`` lists the cooling-water treatment substances on file (biocide, scale / corrosion\ninhibitor) when a Tier II inventory is on record; empty otherwise. A forward seam for the live\ncohort (LEPC/SERC-held, not on ECHO) until a filing lands.",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/TierIIState"
+        },
+        "stance": {
+          "$ref": "#/$defs/CorroboratorStance"
+        },
+        "chemicals": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Chemicals",
+          "type": "array"
+        },
+        "citation": {
+          "title": "Citation",
+          "type": "string"
+        },
+        "tag": {
+          "title": "Tag",
+          "type": "string"
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "finding": {
+          "title": "Finding",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "stance",
+        "citation",
+        "tag",
+        "confidence",
+        "finding"
+      ],
+      "title": "TierIIChemistryCorroborator",
+      "type": "object"
+    },
+    "TierIIState": {
+      "description": "Whether a Tier II / EPCRA-312 cooling-water treatment inventory is on record.",
+      "enum": [
+        "treatment_present",
+        "absent",
+        "not_on_record"
+      ],
+      "title": "TierIIState",
+      "type": "string"
+    },
+    "WaterAccount": {
+      "additionalProperties": false,
+      "description": "The assembled per-facility water account: predicted (claim) vs documented (record).\n\n``predicted_*`` come from running the pinned archetype through\n:mod:`watermark.hydrology.cooling_models` — an ``[inference]`` from the claim. ``documented_*``\nare read from records (A1 makeup, A2 blowdown DMR) and are ``None`` until such a record\nexists. ``backsolved_cycles`` is present only when *both* documented makeup and blowdown are\non record, and is always a bracket (never a scalar). Every figure carries its own provenance.",
+      "properties": {
+        "archetype": {
+          "$ref": "#/$defs/CoolingModelType"
+        },
+        "it_load": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "predicted_makeup": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "predicted_consumptive": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "predicted_blowdown": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "documented_makeup": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "documented_blowdown": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "reserved_makeup": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "reserved_blowdown": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "disclosed_makeup": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "disclosed_ceiling": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "disclosed_cycles": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "backsolved_cycles": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "seasonality_warm_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seasonality Warm Ratio"
+        }
+      },
+      "required": [
+        "archetype",
+        "it_load",
+        "predicted_makeup",
+        "predicted_consumptive",
+        "predicted_blowdown"
+      ],
+      "title": "WaterAccount",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The site's own claim-vs-record cooling account, as the bundle ships it.\n\n``candidates`` are the committed artifact's rows for this site, verbatim (each an\nalready-provenanced ``ReconciliationRecord`` — claim, predicted account at screening\ngrade, the documented/reserved/disclosed slots, outcome + tag + finding, the\nrecords-sought lead, the secondary corroborator stances). ``caveats`` are the harness's\ndiscipline rules; a renderer must show them, not drop them.",
+  "properties": {
+    "site": {
+      "title": "Site",
+      "type": "string"
+    },
+    "asof": {
+      "title": "Asof",
+      "type": "string"
+    },
+    "source": {
+      "title": "Source",
+      "type": "string"
+    },
+    "caveats": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Caveats",
+      "type": "array"
+    },
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/ReconciliationRecord"
+      },
+      "title": "Candidates",
+      "type": "array"
+    }
+  },
+  "required": [
+    "site",
+    "asof",
+    "source",
+    "caveats",
+    "candidates"
+  ],
+  "title": "CoolingReconciliationFeed",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
