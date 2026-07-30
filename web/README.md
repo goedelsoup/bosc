@@ -92,7 +92,7 @@ first when changing a Function.
 
 **Tier B — the full interactive stack.** `mise run //web:dev:stack` builds the site and
 serves it **with** the Functions via `wrangler pages dev`, so you can click through
-submit/ask/doc in a browser (→ http://localhost:8788). It:
+submit/ask/doc in a browser (→ <http://localhost:8788>). It:
 
 - creates `web/.dev.vars` from [`.dev.vars.example`](.dev.vars.example) on first run
   (with a throwaway App key) — kill switches on, **mocked externals by default**;

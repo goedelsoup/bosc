@@ -301,3 +301,11 @@ jobs:
       # foot-gun that could pull a newer version than the lockfile).
       - name: Markdown lint
         run: pnpm exec markdownlint-cli2
+
+      # The root config ignores `web/**` — the Astro site owns its own toolchain — so web/'s
+      # hand-authored .md (the package READMEs, sites/README.md) was linted by nothing. Its
+      # own config carries the same rules; `pnpm exec` from a member dir still resolves the
+      # workspace-root bin, so the `--filter bosc-repo-tools` install above is enough.
+      - name: Markdown lint (web/)
+        run: pnpm exec markdownlint-cli2
+        working-directory: web

@@ -32,11 +32,12 @@ mise run dev -- … # run the watermark CLI
 ### Frontend (Astro)
 
 ```bash
-mise run //web:check      # gate: Biome + astro check + vitest + build + links
+mise run //web:check      # gate: Biome + Markdown + astro check + vitest + build + links
 mise run //web:dev        # astro dev server  → http://localhost:4321
 mise run //web:test       # vitest only
 mise run //web:lint       # biome ci
-mise run //web:fmt        # biome format (auto-fix)
+mise run //web:markdown   # markdownlint over web/**/*.md (web/.markdownlint-cli2.yaml)
+mise run //web:fmt        # biome format (auto-fix) + markdownlint --fix
 mise run //web:build      # static build  → web/dist/
 mise run //web:dev:stack  # wrangler + mocked externals (Pages Functions)
 ```
