@@ -1,7 +1,7 @@
 {
   "site": "new-albany",
   "catalog_version": "2bfc0367496804fff738dfc6da162650dae24023ad436843c496b472c1d94ece",
-  "contract_version": "1.43.0",
+  "contract_version": "1.44.0",
   "atoms": [
     {
       "handle": "concept:new-albany:7q10",
@@ -608,7 +608,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "abatement-parameters",
-      "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "title": "Licking County, OH Abatement Parameters + What-If Scenario Knobs",
       "feed": "catalog"
     },
     {

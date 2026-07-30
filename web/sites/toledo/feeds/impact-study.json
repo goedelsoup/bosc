@@ -1,0 +1,239 @@
+[
+  {
+    "chapter": "method",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "method",
+      "facilityKey": null,
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "project",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "project",
+      "facilityKey": null,
+      "status": "gap",
+      "statusReasons": [
+        "a disclosed project — none is on the record at this site yet; the day one is, this chapter names it."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the project this study screens — its operator, scale, load, and cooling design.",
+          "missingRecord": "a disclosed project — none is on the record at this site yet; the day one is, this chapter names it.",
+          "producer": "the operator's own filings — a permit application, a rezoning, an interconnection request",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "water-supply",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "water-supply",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "discharge",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "discharge",
+      "facilityKey": null,
+      "status": "partial",
+      "statusReasons": [
+        "baseline context only — the project-side record has not been produced"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": [
+        "Only the receiving water's existing burden is on the record here — the project-side discharge screen renders the day a characterization is filed."
+      ]
+    }
+  },
+  {
+    "chapter": "heat",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "heat",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "groundwater",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "groundwater",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "stormwater",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "stormwater",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "air",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "air",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "labor",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "labor",
+      "facilityKey": null,
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "County employment",
+          "value": "196306",
+          "unit": "jobs",
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Lucas County, Ohio · 2023",
+          "source": "BLS QCEW",
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "Any jobs claim reads against this baseline as claim vs. denominator — the study never computes a jobs multiplier."
+      ]
+    }
+  },
+  {
+    "chapter": "power",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "power",
+      "facilityKey": null,
+      "status": "partial",
+      "statusReasons": [
+        "no disclosed campus load to size against the grid — the backdrop stands on its own"
+      ],
+      "stats": [
+        {
+          "label": "Serving utility",
+          "value": "The Toledo Edison Co",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "PJM Interconnection",
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "Grid foundation layer (#94): per-site grid backdrop only. This site has no documented data-center facility, so there is no campus load to express as a share — the utility/BA/state denominators are real connector-sourced data, but the campus load share awaits the site's facility disclosure (the data-center dimension onboarding does not capture)."
+      ]
+    }
+  },
+  {
+    "chapter": "fiscal",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "fiscal",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "balance",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "balance",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "missing",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "missing",
+      "facilityKey": null,
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  }
+]

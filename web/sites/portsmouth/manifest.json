@@ -1,10 +1,10 @@
 {
   "site": "portsmouth",
   "bundle_version": "1.0.0",
-  "contract_version": "1.43.0",
-  "generated_at": "2026-07-29T21:16:22+00:00",
-  "feed_count": 23,
-  "row_total": 379,
+  "contract_version": "1.44.0",
+  "generated_at": "2026-07-30T13:45:25+00:00",
+  "feed_count": 24,
+  "row_total": 392,
   "readiness": {
     "tier": "stub",
     "domains": {
@@ -168,6 +168,14 @@
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
       "count": 7
+    },
+    {
+      "name": "impact-study",
+      "path": "feeds/impact-study.json",
+      "media_type": "application/json",
+      "schema": "schemas/impact-study.schema.json",
+      "kind": "collection",
+      "count": 13
     },
     {
       "name": "catalog-index",

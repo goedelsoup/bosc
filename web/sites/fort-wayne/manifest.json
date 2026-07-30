@@ -1,10 +1,10 @@
 {
   "site": "fort-wayne",
   "bundle_version": "1.0.0",
-  "contract_version": "1.43.0",
-  "generated_at": "2026-07-29T21:10:52+00:00",
-  "feed_count": 32,
-  "row_total": 405,
+  "contract_version": "1.44.0",
+  "generated_at": "2026-07-30T13:40:27+00:00",
+  "feed_count": 33,
+  "row_total": 418,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -246,6 +246,14 @@
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
       "count": 88
+    },
+    {
+      "name": "impact-study",
+      "path": "feeds/impact-study.json",
+      "media_type": "application/json",
+      "schema": "schemas/impact-study.schema.json",
+      "kind": "collection",
+      "count": 13
     },
     {
       "name": "catalog-index",

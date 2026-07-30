@@ -1,0 +1,281 @@
+[
+  {
+    "chapter": "method",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "method",
+      "facilityKey": "wright-patterson-afb",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "project",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "project",
+      "facilityKey": "wright-patterson-afb",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Cooling",
+          "value": "off",
+          "unit": null,
+          "evidence": "inference",
+          "basis": null,
+          "sub": null,
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "water-supply",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "water-supply",
+      "facilityKey": "wright-patterson-afb",
+      "status": "gap",
+      "statusReasons": [
+        "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "how much water this project consumes at buildout — monthly, against the receiving water's cited design low flows.",
+          "missingRecord": "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here.",
+          "producer": "the water utility's contract, a wastewater permit application, or the operator's cooling-plant spec",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "discharge",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "discharge",
+      "facilityKey": "wright-patterson-afb",
+      "status": "partial",
+      "statusReasons": [
+        "baseline context only — the project-side record has not been produced"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": [
+        "Only the receiving water's existing burden is on the record here — the project-side discharge screen renders the day a characterization is filed."
+      ]
+    }
+  },
+  {
+    "chapter": "heat",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "heat",
+      "facilityKey": "wright-patterson-afb",
+      "status": "gap",
+      "statusReasons": [
+        "a thermal characterization for this project — none exists on the record."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "how much heat the discharge adds to a reach screened against Ohio's numeric temperature criterion at its design low flows.",
+          "missingRecord": "a thermal characterization for this project — none exists on the record.",
+          "producer": "the NPDES application's thermal load sheet, or the permit's §316(a) demonstration",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "groundwater",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "groundwater",
+      "facilityKey": "wright-patterson-afb",
+      "status": "gap",
+      "statusReasons": [
+        "a well survey and any dewatering record — neither has been produced."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the wells within the drawdown radius, and whether construction dewatering was permitted and where the water went.",
+          "missingRecord": "a well survey and any dewatering record — neither has been produced.",
+          "producer": "state well logs, a dewatering permit, and the contractor's discharge records",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "stormwater",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "stormwater",
+      "facilityKey": "wright-patterson-afb",
+      "status": "gap",
+      "statusReasons": [
+        "the site grading and drainage plan — requested, not produced."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the runoff a campus-scale impervious surface adds to the design storm, routed down the reach.",
+          "missingRecord": "the site grading and drainage plan — requested, not produced.",
+          "producer": "the site plan's grading/drainage sheets and the construction stormwater permit (NOI)",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "air",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "air",
+      "facilityKey": "wright-patterson-afb",
+      "status": "gap",
+      "statusReasons": [
+        "an air-permit application for this project — none is on the record."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the dispersion footprint of the campus's permitted backup-generator fleet.",
+          "missingRecord": "an air-permit application for this project — none is on the record.",
+          "producer": "the state air permit application (PTI/Title V) and its emissions tables",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "labor",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "labor",
+      "facilityKey": "wright-patterson-afb",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "County employment",
+          "value": "250085",
+          "unit": "jobs",
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Montgomery County, Ohio · 2024",
+          "source": "BLS QCEW",
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "Any jobs claim reads against this baseline as claim vs. denominator — the study never computes a jobs multiplier."
+      ]
+    }
+  },
+  {
+    "chapter": "power",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "power",
+      "facilityKey": "wright-patterson-afb",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Serving utility",
+          "value": "Dayton Power & Light Co",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "PJM Interconnection",
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "Grid foundation layer (#94): per-site grid backdrop only. This site has no documented data-center facility, so there is no campus load to express as a share — the utility/BA/state denominators are real connector-sourced data, but the campus load share awaits the site's facility disclosure (the data-center dimension onboarding does not capture)."
+      ]
+    }
+  },
+  {
+    "chapter": "fiscal",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "fiscal",
+      "facilityKey": "wright-patterson-afb",
+      "status": "gap",
+      "statusReasons": [
+        "no fiscal instrument is on the record"
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "what tax revenue is being traded away and for how long, before the trade is approved.",
+          "missingRecord": "the abatement agreement, the school-board resolution, and the county auditor's abatement report — all public records, none produced into this record.",
+          "producer": "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "balance",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "balance",
+      "facilityKey": "wright-patterson-afb",
+      "status": "partial",
+      "statusReasons": [
+        "synthesizes the screened chapters — 2 on the record, 1 partial, 5 gap"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "missing",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "missing",
+      "facilityKey": "wright-patterson-afb",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  }
+]

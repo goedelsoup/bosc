@@ -1,0 +1,236 @@
+[
+  {
+    "chapter": "method",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "method",
+      "facilityKey": null,
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "project",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "project",
+      "facilityKey": null,
+      "status": "gap",
+      "statusReasons": [
+        "a disclosed project — none is on the record at this site yet; the day one is, this chapter names it."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the project this study screens — its operator, scale, load, and cooling design.",
+          "missingRecord": "a disclosed project — none is on the record at this site yet; the day one is, this chapter names it.",
+          "producer": "the operator's own filings — a permit application, a rezoning, an interconnection request",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "water-supply",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "water-supply",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "discharge",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "discharge",
+      "facilityKey": null,
+      "status": "gap",
+      "statusReasons": [
+        "a discharge characterization for this project — none has been filed."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the discharge screened against the receiving stream's assimilative capacity at its cited design low flows.",
+          "missingRecord": "a discharge characterization for this project — none has been filed.",
+          "producer": "an NPDES permit application and its fact sheet",
+          "leadIds": null
+        }
+      ],
+      "caveats": [
+        "Only the receiving water's existing burden is on the record here — the project-side discharge screen renders the day a characterization is filed."
+      ]
+    }
+  },
+  {
+    "chapter": "heat",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "heat",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "groundwater",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "groundwater",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "stormwater",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "stormwater",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "air",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "air",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "labor",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "labor",
+      "facilityKey": null,
+      "status": "gap",
+      "statusReasons": [
+        "the county employment baseline — not yet assembled for this site."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the local labor baseline every jobs claim should be read against.",
+          "missingRecord": "the county employment baseline — not yet assembled for this site.",
+          "producer": "BLS QCEW and Census ACS — public series; this gap closes on the next export",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "power",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "power",
+      "facilityKey": null,
+      "status": "gap",
+      "statusReasons": [
+        "the site's grid backdrop — not yet assembled."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the campus's load against the serving utility's, balancing authority's, and state's annual load.",
+          "missingRecord": "the site's grid backdrop — not yet assembled.",
+          "producer": "EIA-861/930 — public series; this gap closes on the next export",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "fiscal",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "fiscal",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "balance",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "balance",
+      "facilityKey": null,
+      "status": "na",
+      "statusReasons": [
+        "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "missing",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "missing",
+      "facilityKey": null,
+      "status": "data",
+      "statusReasons": [],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  }
+]
