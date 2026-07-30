@@ -13,49 +13,67 @@
  * retail customer of AEP Ohio); PJM dollar figures are `[reference]` / screening. The
  * resolving record is the operating-load disclosure + the un-redacted per-engine rating.
  *
- * Per-site (#1642, GP-E E2/E4). This module holds the *model*, never a site's numbers:
+ * Per-site (#1642, GP-E E2/E4; #1771). This module holds the *model*, never a site's numbers:
  *  - the load denominators arrive as a {@link GridBaseline}, read from the `grid` feed by
  *    `gridBackdrop.buildGridBaseline` — they used to be Lima's EIA figures hand-copied in as
  *    literals (`AEP_OHIO_RETAIL_GWH = 48_653`) and tagged as if connector-sourced;
- *  - the 313 MW / 114-genset backup record is reached through {@link backupRecord}, which
- *    answers only for the site whose permit it is.
- * So a second selectable site can no longer render Lima's grid as its own.
+ *  - the backup fleet arrives as a {@link BackupRecord}, read from the `facility` feed by
+ *    `gridBackdrop.buildBackupRecord` — Lima's 313 MW / 114 gensets / 2,750 ekW were the last
+ *    literals here, duplicating `SiteFacility.genset_*` with nothing pinning the copies together
+ *    and a hardcoded Lima-only branch that refused Fort Wayne's real fleet (#1771).
+ * So a second selectable site can no longer render Lima's grid as its own — and no longer has to
+ * render nothing where it has a record of its own.
  */
-import { LIMA_SLUG } from "./routes";
+import type { GensetRatingBasis } from "./feeds";
 import { type Prior, type UncertainOutcome, outcomeBand, sample, summarize } from "./uncertainty";
 
-// --- the cited backup + its redaction (Lima's air-permit record) --------------
-// These are the *Lima* record's figures — permit 4132514's 114 emergency gensets and the
-// per-engine rating that survives only on draft 3987141. They are not a general property of a
-// data-center site, so they are reached through `backupRecord(site)` (#1642, E4): another site
-// gets null and its caller asks for that site's permit rather than inheriting Lima's gensets.
-const LIMA_BACKUP: BackupRecord = {
-  backupMw: 313, // 114 emergency gensets × ~2,750 ekW [verified: DRAFT 3987141]
-  nEngines: 114,
-  perEngineEkwDraft: 2750, // survives only on the draft public notice
-  finalPermit: "4132514",
-  draftPermit: "3987141",
-};
+// --- the backup-generation record --------------------------------------------
 
-/** The cited backup-generation record behind a site's headline MW figure. */
+/**
+ * A site's disclosed backup-generation fleet, as the `facility` feed carries it (#1771).
+ *
+ * Every field is the record's, not this module's. The two grades are what keep it honest across
+ * sites: {@link totalBasis} says whether the printed MW is the record's own figure or this
+ * platform's arithmetic, and {@link ratingBasis} says how firmly the per-engine rating under it
+ * is grounded. Lima is `cited` + `draft_only` — the corpus states `~313 MW` (hence
+ * {@link approximate}) and the rating behind it survives only on the draft the issued permit
+ * redacts. Fort Wayne is `derived` + `derived` — 34 engines are a verbatim disclosure, but the
+ * permit states heat input rather than an electrical rating, so both the rating and the total
+ * resting on it are inferences and must never render as `[verified]`.
+ */
 export interface BackupRecord {
+  /** Total backup capacity, MW. */
   backupMw: number;
+  /** `cited` — transcribed from the record; `derived` — count × rating, because no total is on
+   *  the record. Deriving Lima's would print 313.5 for a site whose every published surface says
+   *  ~313, which is why the cited total exists as its own field. */
+  totalBasis: "cited" | "derived";
+  /** The transcription `~` marker, carried as data — render the tilde where it is true. */
+  approximate: boolean;
   nEngines: number;
-  /** The per-engine rating — redacted in the issued permit, surviving on the draft. */
-  perEngineEkwDraft: number;
-  finalPermit: string;
-  draftPermit: string;
+  /** Per-engine rating, MW. */
+  perEngineMw: number;
+  ratingBasis: GensetRatingBasis;
+  /** The total's own citation where one is cited, else the permit that discloses the fleet. */
+  cite: string;
 }
 
 /**
- * The backup-generation record for a site, or null where none is on the record (#1642, E4).
+ * The evidence register the backup figure renders under.
  *
- * Mirrors `buildEndUse(site)` (#1633): the 313 MW / 114-genset / redacted-per-engine chain is
- * Lima's air permit, so a different site reads null and its page asks for the source instead of
- * republishing Lima's figures under another county's name.
+ * `[verified]` only where BOTH the total is the record's own and the rating under it is a record
+ * figure (Lima's draft counts — it is a document, redaction notwithstanding). A derived total, or
+ * one resting on a back-derived rating, is an `assumption`: the platform's arithmetic over a
+ * disclosure, which is not the same as a disclosure.
  */
-export function backupRecord(site: string): BackupRecord | null {
-  return site === LIMA_SLUG ? LIMA_BACKUP : null;
+export function backupRegister(backup: BackupRecord): "verified" | "assumption" {
+  return backup.totalBasis === "cited" && backup.ratingBasis !== "derived" ? "verified" : "assumption";
+}
+
+/** The backup total as text, keeping the record's `~` marker where it carries one. */
+export function fmtBackupMw(backup: BackupRecord): string {
+  const n = Number.isInteger(backup.backupMw) ? String(backup.backupMw) : backup.backupMw.toFixed(1);
+  return `${backup.approximate ? "~" : ""}${n} MW`;
 }
 
 // --- the load-vs-baseline model ----------------------------------------------

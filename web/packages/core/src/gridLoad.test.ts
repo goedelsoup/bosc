@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { buildGridBaseline } from "./gridBackdrop";
 import {
+  type BackupRecord,
   GRID_PRIORS,
   annualGwh,
-  backupRecord,
+  backupRegister,
   equivalentHomes,
   facilityDrawModel,
   facilityDrawOutcome,
+  fmtBackupMw,
   gridPriorsFromFacility,
   mwPerJob,
   pctOfUtilityRetail,
@@ -24,7 +26,6 @@ describe("gridLoad — the inference chain reproduces the essay", () => {
 
   it("load-not-jobs: ~5–6 MW of IT load per promised job", () => {
     expect(mwPerJob(275, 50)).toBeCloseTo(5.5);
-    expect(backupRecord("lima")?.backupMw).toBe(313);
   });
 });
 
@@ -66,21 +67,44 @@ describe("gridLoad — the load baseline is feed-sourced, not a second copy (#16
   });
 });
 
-describe("gridLoad — the backup record answers only for the site whose permit it is (#1642)", () => {
-  it("Lima carries the cited 313 MW / 114-genset record", () => {
-    const r = backupRecord("lima");
-    expect(r).not.toBeNull();
-    expect(r?.backupMw).toBe(313);
-    expect(r?.nEngines).toBe(114);
-    // The per-engine rating survives on the draft only — the redaction the report is built on.
-    expect(r?.perEngineEkwDraft).toBe(2750);
-    expect(r?.finalPermit).toBe("4132514");
-    expect(r?.draftPermit).toBe("3987141");
+// The #1771 grades. `gridLoad.ts` holds the model — how a backup record RENDERS — while the
+// record itself is read from the `facility` feed by `gridBackdrop.buildBackupRecord` (tested
+// there, against the committed bundles). These pin the two rules that keep a per-site record
+// honest: the record's own `~` marker survives to the page, and a figure this platform derived
+// never renders under the register a disclosed one gets.
+describe("gridLoad — the backup figure renders at the grade its record earns (#1771)", () => {
+  const lima: BackupRecord = {
+    backupMw: 313,
+    totalBasis: "cited",
+    approximate: true,
+    nEngines: 114,
+    perEngineMw: 2.75,
+    ratingBasis: "draft_only",
+    cite: "the ~313 MW backup total (4132514.epa.yaml) over the draft's ~2,750 ekW",
+  };
+
+  it("a cited total over a document-grade rating is [verified] — the draft is a document", () => {
+    expect(backupRegister(lima)).toBe("verified");
+    expect(backupRegister({ ...lima, ratingBasis: "disclosed" })).toBe("verified");
   });
 
-  it("another site gets null, not Lima's gensets", () => {
-    expect(backupRecord("fort-wayne")).toBeNull();
-    expect(backupRecord("urbana")).toBeNull();
+  it("a back-derived rating pulls the total down to an assumption, cited or not", () => {
+    // Fort Wayne: 34 engines are verbatim, but the permit states heat input, not an electrical
+    // rating — so the MW resting on it is the platform's inference and must not read [verified].
+    expect(backupRegister({ ...lima, ratingBasis: "derived" })).toBe("assumption");
+  });
+
+  it("a total this platform multiplied out is an assumption, however good the rating", () => {
+    expect(backupRegister({ ...lima, totalBasis: "derived", approximate: false })).toBe("assumption");
+  });
+
+  it("keeps the record's ~ marker — the site's headline is ~313 MW, never 313.5", () => {
+    expect(fmtBackupMw(lima)).toBe("~313 MW");
+    // A derived total prints its real product, with no marker it did not earn.
+    expect(fmtBackupMw({ ...lima, backupMw: 313.5, totalBasis: "derived", approximate: false })).toBe(
+      "313.5 MW",
+    );
+    expect(fmtBackupMw({ ...lima, backupMw: 102, totalBasis: "derived", approximate: false })).toBe("102 MW");
   });
 });
 

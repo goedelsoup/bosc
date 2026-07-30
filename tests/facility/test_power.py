@@ -121,10 +121,11 @@ def test_site_facility_disclosure_fields_require_a_citation() -> None:
 
 
 def test_site_facility_gensets_are_paired() -> None:
-    """A genset count without a rating (or vice-versa) can't form a backup figure."""
+    """A genset count without a rating (or vice-versa) can't form a backup figure — and since
+    #1771 the rating can't travel without its grade either, so the group is all three."""
     from watermark.sites._model import SiteFacility
 
-    with pytest.raises(ValueError, match="genset_count and genset_mw must be set together"):
+    with pytest.raises(ValueError, match=r"the genset fleet .* must be set together"):
         SiteFacility(
             name="Test",
             status="confirmed",

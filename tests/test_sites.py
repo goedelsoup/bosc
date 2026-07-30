@@ -871,6 +871,109 @@ def test_it_load_source_pairs_with_the_non_permit_basis() -> None:
     assert not ok.is_instrument_grounded
 
 
+# --- The disclosed backup fleet (#1771) ----------------------------------------------------
+def test_lima_carries_the_cited_backup_total_not_the_product() -> None:
+    """The site's most-cited number is TRANSCRIBED, never multiplied out.
+
+    Lima's corpus, essay and docs all say ``~313 MW``; the components multiply to 313.5. Before
+    #1771 the frontend carried 313 as a TS literal precisely because deriving it would restate
+    the headline — so the cited total lives here, with its marker and its own citation, and the
+    components stay for the arithmetic.
+    """
+    from watermark.sites import GensetRatingBasis
+
+    lima = SITES["lima"].facility
+    assert lima is not None
+    assert lima.genset_count == 114 and lima.genset_mw == 2.75
+    assert lima.genset_total_mw == 313.0  # the record's figure, not 114 * 2.75 = 313.5
+    assert lima.genset_count * lima.genset_mw == 313.5
+    assert lima.genset_total_approximate is True  # the "~" survives as data
+    assert lima.genset_total_citation is not None
+    # The total's citation is NOT the air permit's: the issued permit redacts the per-engine
+    # rating and so cannot state the total — attributing ~313 MW to it would misattribute it.
+    assert lima.genset_total_citation != lima.air_permit_citation
+    assert lima.genset_rating_basis is GensetRatingBasis.DRAFT_ONLY
+
+
+def test_fort_wayne_declares_a_derived_rating_and_no_cited_total() -> None:
+    """Fort Wayne's permit states heat input, not an electrical rating, and states no total.
+
+    So its rating is graded ``derived`` and ``genset_total_mw`` stays None — a consumer that
+    needs a total derives it and must label it derived. Fabricating a "cited" 102 MW here would
+    launder this platform's arithmetic into a disclosure.
+    """
+    from watermark.sites import GensetRatingBasis
+
+    fw = SITES["fort-wayne"].facility
+    assert fw is not None
+    assert fw.genset_count == 34 and fw.genset_mw == 3.0
+    assert fw.genset_rating_basis is GensetRatingBasis.DERIVED
+    assert fw.genset_total_mw is None and fw.genset_total_citation is None
+    assert fw.genset_total_approximate is False
+
+
+def test_a_cited_backup_total_must_reconcile_with_its_own_fleet() -> None:
+    """The guard that makes the cited total a second *representation*, not a second *source*.
+
+    A hand-carried copy with nothing tying it to its components is the defect #1771 was filed
+    about, so a total that stops reconciling refuses the write rather than shipping two numbers
+    for one fleet.
+    """
+    from watermark.sites import GensetRatingBasis
+
+    kw: dict[str, object] = {
+        "air_permit_citation": "the permit",
+        "genset_count": 114,
+        "genset_mw": 2.75,
+        "genset_rating_basis": GensetRatingBasis.DRAFT_ONLY,
+    }
+    # The real pairing: ~313 against a 313.5 product is a rounded transcription, and passes.
+    ok = _fac("Cited", genset_total_mw=313.0, genset_total_citation="c", **kw)
+    assert ok.genset_total_mw == 313.0
+    # Restating the count as 115 (the permit's 114 hall gensets + the smaller HUBGEN) forks the
+    # two: 313 against 316.25. The total is not silently corrected — the write is refused.
+    with pytest.raises(ValidationError, match="no longer reconciles"):
+        _fac(
+            "Forked",
+            genset_total_mw=313.0,
+            genset_total_citation="c",
+            **{**kw, "genset_count": 115},
+        )
+    # A total can never pass uncited, nor stand without the fleet it totals.
+    with pytest.raises(ValidationError, match="set together"):
+        _fac("Uncited", genset_total_mw=313.0, **kw)
+    with pytest.raises(ValidationError, match="the fleet it totals"):
+        _fac(
+            "Fleetless",
+            genset_total_mw=313.0,
+            genset_total_citation="c",
+            it_load_mw=275.0,
+            it_load_low_mw=250.0,
+            it_load_high_mw=300.0,
+            it_load_citation="a floor-area screen",
+            it_load_source="screening",
+        )
+    # And the "~" marker means nothing without a number to mark.
+    with pytest.raises(ValidationError, match="marks a transcribed genset_total_mw"):
+        _fac("BareMarker", genset_total_approximate=True, **kw)
+
+
+def test_a_genset_rating_never_passes_ungraded() -> None:
+    """Count / rating / rating-grade travel together (#1771).
+
+    The count is a verbatim permit disclosure everywhere it appears; the rating is not. Letting a
+    rating pass without its grade is what let a back-derived figure render beside a disclosed one
+    under the same ``[verified]`` badge.
+    """
+    with pytest.raises(ValidationError, match="the genset fleet"):
+        _fac("Ungraded", air_permit_citation="the permit", genset_count=34, genset_mw=3.0)
+    # A facility with no disclosed generation leaves all three None — the common case.
+    urbana = SITES["urbana"].facility
+    assert urbana is not None
+    assert urbana.genset_count is None and urbana.genset_rating_basis is None
+    assert urbana.genset_total_mw is None
+
+
 def test_facility_geometry_inherits_the_site_default() -> None:
     """`facility_geometry` resolves a facility's parcels/footprint, falling back to the site-level
     paths when the facility carries none of its own."""
@@ -904,6 +1007,36 @@ def test_facility_feed_and_summary_project_the_model() -> None:
     # Facility-gated: a facility-less site emits neither.
     assert build_facility_feed(Settings(site="toledo")) is None
     assert build_facility_summary(Settings(site="toledo")) is None
+
+
+def test_facility_feed_carries_the_backup_fleet_across_the_seam() -> None:
+    """The genset columns reach the bundle verbatim (#1771).
+
+    They are disclosed campus data and belong in the facility inventory regardless; the immediate
+    consumer is the frontend load report, which carried Lima's 313 MW / 114 gensets / 2,750 ekW as
+    TS literals duplicating these very fields. Crossing the seam must not launder a grade: the
+    cited total keeps its marker and its own citation, and Fort Wayne's total stays absent so the
+    reader derives-and-labels rather than reading a disclosure that isn't there.
+    """
+    from watermark.config import Settings
+    from watermark.site.facility import build_facility_feed
+    from watermark.sites import GensetRatingBasis
+
+    lima = (build_facility_feed(Settings(site="lima")) or [])[0]
+    assert lima.genset_count == 114 and lima.genset_mw == 2.75
+    assert lima.genset_total_mw == 313.0 and lima.genset_total_approximate is True
+    assert lima.genset_rating_basis is GensetRatingBasis.DRAFT_ONLY
+    assert lima.genset_total_citation and "313 MW" in lima.genset_total_citation
+
+    fw = (build_facility_feed(Settings(site="fort-wayne")) or [])[0]
+    assert fw.genset_count == 34 and fw.genset_mw == 3.0
+    assert fw.genset_rating_basis is GensetRatingBasis.DERIVED
+    assert fw.genset_total_mw is None and fw.genset_total_citation is None
+
+    # A site-plan-grounded facility discloses no generation — all columns null, never zero.
+    urbana = (build_facility_feed(Settings(site="urbana")) or [])[0]
+    assert urbana.genset_count is None and urbana.genset_mw is None
+    assert urbana.genset_rating_basis is None and urbana.genset_total_mw is None
 
 
 def test_network_activity_carries_the_primary_facility_status() -> None:

@@ -288,6 +288,7 @@ def _stub_facility(**overrides: object) -> SiteFacility:
         "status": "confirmed",
         "genset_count": 10,
         "genset_mw": 2.0,
+        "genset_rating_basis": "disclosed",
         "it_load_mw": 20.0,
         "it_load_low_mw": 15.0,
         "it_load_high_mw": 25.0,

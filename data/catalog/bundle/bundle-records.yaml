@@ -299,5 +299,16 @@ notes: >-
   fabricating an all-zero routed feed (the issue-1364 rule). No new feed and no schema change —
   the study's stormwater chapter (§II·7) keys on these same feeds and un-gates per site with
   no frontend change.
+  The `facility` feed gains the disclosed backup-generation columns (issue 1771, contract
+  1.45.1, PATCH): `genset_count` / `genset_mw`, the rating GRADE (`genset_rating_basis` —
+  `draft_only` where the issued permit redacts the per-engine rating and the draft preserves it,
+  `derived` where the permit states heat input and no electrical rating), and the CITED total
+  (`genset_total_mw` + its `~` marker + its own citation). The total is transcribed from the
+  record, never the product of the two columns beside it: Lima's corpus, essay and docs all say
+  `~313 MW` while 114 x 2.75 = 313.5, so a derived total would silently restate the site's
+  most-cited number. The producer reconciles a cited total against its own components and
+  refuses the write when they fork. Adds no new committed upstream — the values are projected
+  from the already-validated `SiteProfile.facilities`, retiring the duplicate copies the
+  presentation tier carried as TS literals.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

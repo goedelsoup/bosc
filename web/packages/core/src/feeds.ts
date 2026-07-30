@@ -1458,6 +1458,16 @@ export interface NodeActivity {
  *  and never read its absent `it_load_mw` as a campus whose MW is merely undisclosed. */
 export type FacilityKind = "data_center" | "federal_installation";
 
+/** How a facility's PER-ENGINE genset rating is grounded (`bosc.sites.GensetRatingBasis`, #1771).
+ *
+ *  The genset count is a verbatim permit disclosure everywhere it appears; the rating is not, and
+ *  the backup total inherits whichever grade this carries. `draft_only` — stated on the draft
+ *  public notice and redacted as CBI in the issued permit (Lima's ~2,750 ekW): still a record
+ *  figure, `[verified: draft]`, and the redaction is the story. `derived` — the permit states no
+ *  electrical rating at all and the figure is back-derived (Fort Wayne, from heat input):
+ *  `[inference]`, so a total resting on it is never rendered as verified. */
+export type GensetRatingBasis = "disclosed" | "draft_only" | "derived";
+
 /** One disclosed facility — the `facility` feed row (`bosc.site.feeds.FacilityItem`, #1628/#1664). */
 export interface FacilityItem {
   key: string;
@@ -1478,6 +1488,19 @@ export interface FacilityItem {
   air_permit_citation?: string | null;
   air_permit_relpath?: string | null;
   it_load_citation?: string | null;
+  // The disclosed backup fleet (#1771). `genset_total_mw` is the CITED total, transcribed from
+  // the record — Lima's `~313 MW`, not the components' 313.5 product — with the transcription
+  // marker as data. Null total = no total is on this fleet's record, so a consumer that needs
+  // one derives it from count × rating and must label it derived. `genset_rating_basis` grades
+  // the per-engine rating (`draft_only` = on the draft, CBI-redacted in the issued permit;
+  // `derived` = back-derived from heat input) so a consumer can grade the backup figure without
+  // reading permit prose.
+  genset_count?: number | null;
+  genset_mw?: number | null;
+  genset_rating_basis?: GensetRatingBasis | null;
+  genset_total_mw?: number | null;
+  genset_total_approximate?: boolean;
+  genset_total_citation?: string | null;
   gross_floor_area_sqft?: number | null;
   disclosed_investment_usd?: number | null;
   disclosure_citation?: string | null;

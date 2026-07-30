@@ -1,6 +1,7 @@
 /**
  * Build-time model for the per-site **grid backdrop** (GP-E #1642, E1/E2) — the reader for the
- * `grid` object feed and its facility-gated companion, `economics-demand-pressure`.
+ * `grid` object feed, its facility-gated companion `economics-demand-pressure`, and (for the load
+ * report's backup chain step) the `facility` feed's disclosed genset fleet (#1771).
  *
  * The gap this closes: the richest per-site grid artifact (serving utility, PJM zone, the
  * EIA-861/930/state load denominators) was computed in Python, written to a CLI reference file,
@@ -9,10 +10,12 @@
  * uncontrolled copy of EIA figures with no drift guard. Everything the load report divides by now
  * comes from here.
  *
- * Discipline, in the shape `dilution.ts` established: **no Lima fallback**. A site whose bundle
- * carries no `grid` feed returns `null` and its caller locks and asks for the source — it never
- * borrows another site's utility. The backdrop describes the *place*, so `loadShare` is null for a
- * facility-less peer (no fabricated campus share) while the cited service chain still renders.
+ * Discipline, in the shape `dilution.ts` established: **no Lima fallback**, and equally no
+ * Lima-only branch. A site whose bundle carries no `grid` feed returns `null` and its caller locks
+ * and asks for the source — it never borrows another site's utility; a site that HAS a record of
+ * its own gets its own answer rather than the reference build's. The backdrop describes the
+ * *place*, so `loadShare` is null for a facility-less peer (no fabricated campus share) while the
+ * cited service chain still renders.
  *
  * The demand-pressure registers travel with the numbers: `demandSharePct` / `householdsEquivalent`
  * are the EIA-cited headline; `pricePressure` is a deliberately STYLIZED screening band off a
@@ -22,8 +25,8 @@
  * NOT client-safe (imports the node bundle loader) — islands consume the plain objects as props.
  */
 import { hasFeed, loadFeed } from "./bundle";
-import type { CitedFact, FacilityDemandPressure, GridProfile, SourceKind } from "./feeds";
-import type { GridBaseline } from "./gridLoad";
+import type { CitedFact, FacilityDemandPressure, FacilityItem, GridProfile, SourceKind } from "./feeds";
+import type { BackupRecord, GridBaseline } from "./gridLoad";
 
 /** One cited link in the electric-service chain, flattened for rendering. */
 export interface GridChainRow {
@@ -218,5 +221,44 @@ export function buildGridBaseline(slug?: string): GridBaseline | null {
     householdKwhYr: householdKwh,
     householdCite: dp?.avg_household_kwh_yr.citation ?? null,
     stateArea: dp?.area ?? null,
+  };
+}
+
+/**
+ * The site's disclosed backup-generation fleet, or null where its record carries none (#1771).
+ *
+ * These figures — Lima's 313 MW / 114 gensets / 2,750 ekW — were the last literals in
+ * `gridLoad.ts`, duplicating `SiteFacility.genset_count` / `genset_mw` behind a hardcoded
+ * `site === "lima"` branch that returned null for Fort Wayne's real 34-engine fleet. They now
+ * come from the primary `facility` row, so there is one copy of each figure and every disclosed
+ * fleet on the network reaches the page.
+ *
+ * The total is the record's own where the feed carries one (Lima's `~313 MW`) and derived from
+ * count × rating only where it does not (Fort Wayne) — and `totalBasis` says which, so a derived
+ * figure is never mistaken for a disclosed one. That distinction is the reason the cited total
+ * exists: multiplying Lima's components prints 313.5 for a site whose permit extraction, essay
+ * and docs all say ~313.
+ *
+ * Null means the fleet is `[open]` for this site — the chain step asks for the permit rather than
+ * inheriting another county's gensets.
+ */
+export function buildBackupRecord(slug?: string): BackupRecord | null {
+  if (!hasFeed("facility", slug)) return null;
+  const rows = loadFeed<FacilityItem[]>("facility", slug);
+  const primary = rows.find((f) => f.is_primary) ?? rows[0];
+  // The three travel together in the model (count / rating / rating grade), so a half-set row
+  // can't reach here — but read defensively: an older bundle predates these columns entirely.
+  if (primary?.genset_count == null || primary.genset_mw == null || !primary.genset_rating_basis) {
+    return null;
+  }
+  const cited = primary.genset_total_mw;
+  return {
+    backupMw: cited ?? primary.genset_count * primary.genset_mw,
+    totalBasis: cited == null ? "derived" : "cited",
+    approximate: cited == null ? false : (primary.genset_total_approximate ?? false),
+    nEngines: primary.genset_count,
+    perEngineMw: primary.genset_mw,
+    ratingBasis: primary.genset_rating_basis,
+    cite: (cited == null ? null : primary.genset_total_citation) ?? primary.air_permit_citation ?? "",
   };
 }

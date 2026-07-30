@@ -171,6 +171,30 @@ class ItLoadGrounding(StrEnum):
     REFERENCE = "reference"  # a [reference] announced "up to" ceiling / press peak
 
 
+class GensetRatingBasis(StrEnum):
+    """How a facility's **per-engine** genset rating is grounded (#1771).
+
+    The genset count is a verbatim permit disclosure everywhere it appears; the *rating* is not,
+    and the two disclosed fleets on the network are grounded differently in ways the backup figure
+    inherits. Carried as a typed grade — the ``it_load_source`` idiom — because every consumer of
+    the backup number (the load report's chain step, the register it renders, the redaction
+    callout) has to branch on it, and the alternative is regexing ``air_permit_citation`` prose.
+
+    * ``disclosed`` — the issued permit states the per-engine rating. Nothing on the network yet.
+    * ``draft_only`` — stated on the DRAFT public notice and **redacted as CBI in the issued
+      permit** (Lima: ~2,750 ekW on eDocs 3987141/3987144, withheld from final 4132514 under an
+      Ohio EPA trade-secret grant). Still a record figure — ``[verified: draft]`` — but the
+      redaction is the story, not a footnote.
+    * ``derived`` — the permit states no electrical rating at all and the figure is back-derived
+      (Fort Wayne: 26.4 MMBTU/hr heat input per engine at an assumed electrical efficiency).
+      ``[inference]`` — a backup total resting on it is an inference too, never ``[verified]``.
+    """
+
+    DISCLOSED = "disclosed"  # the issued permit states the per-engine rating
+    DRAFT_ONLY = "draft_only"  # on the draft; CBI-redacted in the issued permit (Lima)
+    DERIVED = "derived"  # no rating on the record — back-derived (Fort Wayne, heat input)
+
+
 def _facility_slug(text: str, *, max_len: int = 64) -> str:
     """A stable dedupe slug for a facility ``key`` (local peer of ``facility.candidate._slug`` —
     kept here so ``watermark.sites`` doesn't depend on ``watermark.facility``)."""
@@ -183,6 +207,14 @@ def _facility_slug(text: str, *, max_len: int = 64) -> str:
 # validator refuses it on a facility that pins an archetype or claims a non-``assumption``
 # source (either would ship a disclosed method under "not disclosed in the record").
 UNDISCLOSED_COOLING_CITATION = "cooling method not disclosed in the record"
+
+# The band a **cited** backup total (``SiteFacility.genset_total_mw``) may differ from its own
+# count x rating by. It exists because the cited figure is a rounded transcription of that product
+# (Lima: ~313 against 114 x 2.75 = 313.5, 0.16%), not because the two are allowed to disagree —
+# anything wider means the total and the components describe different fleets. Restating the count
+# as 115 (the permit's 114 hall gensets + the smaller HUBGEN) lands at 1.04% and is refused, which
+# is exactly the drift this guard exists to catch.
+GENSET_TOTAL_TOLERANCE = 0.01
 
 
 def _require_together(*fields: tuple[str, object], label: str = "", note: str = "") -> None:
@@ -344,7 +376,11 @@ class SiteFacility(BaseModel):
       the permit discloses the **backup** capacity (gensets x rating) — that is the ``[verified]``
       figure. The **IT load is an ``[inference]``**, derived from the backup by the N+1 relation
       (IT ~= backup net of mechanical overhead), never a permit disclosure (#1697). Full power +
-      air-dispatch basis.
+      air-dispatch basis. How firmly the backup itself is grounded varies and is declared, not
+      assumed: ``genset_rating_basis`` grades the per-engine rating (Lima's survives only on the
+      draft the issued permit redacts; Fort Wayne's is back-derived from heat input), and
+      ``genset_total_mw`` carries the **cited** total where the record states one, transcribed
+      rather than multiplied out (#1771).
     * **Site-plan-grounded** (Urbana Technology Hub, from the disclosed data-center site plan):
       the facility is on the public record (type / floor area / investment / cooling) but the
       MW load is **not** disclosed. Gensets and the air permit are ``None``; the IT load is a
@@ -429,6 +465,28 @@ class SiteFacility(BaseModel):
     # (:mod:`watermark.air.scenario`) refuses cleanly rather than modeling a fabricated fleet.
     genset_count: int | None = None  # emergency gensets disclosed in the air permit
     genset_mw: float | None = None  # MW each (ekW)
+    # How the per-engine rating above is grounded (#1771) — travels with the pair, because the
+    # count is a verbatim disclosure everywhere while the rating is not (Lima's survives only on
+    # the redacted permit's draft; Fort Wayne's is back-derived from heat input). Every consumer
+    # of the backup figure branches on this rather than parsing the permit citation's prose.
+    genset_rating_basis: GensetRatingBasis | None = None
+    # The **cited** backup total, MW — transcribed from the record, NOT computed here (#1771).
+    # The distinction is load-bearing: Lima's corpus and every published surface say ``~313 MW``
+    # while the components multiply to 313.5, so deriving the total would silently restate the
+    # site's most-cited number as 313.5 (or, rounded, 314) and contradict the permit extraction,
+    # the essay and the docs. ``None`` = no total is on the record for this fleet; a consumer that
+    # needs one derives it from the components and must label it as derived (Fort Wayne). The
+    # cited total is reconciled against count x rating below, so the two copies cannot fork.
+    genset_total_mw: float | None = None
+    # The transcription ``~`` marker, as data (the repo's approximate convention — a profile is
+    # code, not YAML, so the marker is declared rather than written into the number). True ⇒ the
+    # source states the total as approximate and every rendering keeps the tilde.
+    genset_total_approximate: bool = False
+    # Where the cited total comes from. It is deliberately NOT ``air_permit_citation``: for Lima
+    # the issued permit does not carry the total at all (the per-engine rating it multiplies is
+    # CBI-redacted), so attributing ~313 MW to it would misattribute the figure to a document
+    # that explicitly disclaims it.
+    genset_total_citation: str | None = None
     # --- Site-plan disclosure (non-power facility attributes) -----------------
     # Populated for a facility disclosed by a site-plan / public record rather than an air
     # permit (Urbana Technology Hub): the facility type, gross floor area, and disclosed
@@ -533,6 +591,9 @@ class SiteFacility(BaseModel):
             ("air_permit_relpath", self.air_permit_relpath),
             ("genset_count", self.genset_count),
             ("genset_mw", self.genset_mw),
+            ("genset_rating_basis", self.genset_rating_basis),
+            ("genset_total_mw", self.genset_total_mw),
+            ("genset_total_citation", self.genset_total_citation),
             ("genset_stack_citation", self.genset_stack_citation),
             ("end_use", self.end_use),
             ("gross_floor_area_sqft", self.gross_floor_area_sqft),
@@ -627,12 +688,17 @@ class SiteFacility(BaseModel):
         )
         _require_together(("end_use", self.end_use), ("end_use_citation", self.end_use_citation))
         # Gensets are paired: a count without a rating (or vice-versa) can't form a backup
-        # figure. A site-plan-grounded facility with no disclosed generation leaves both None.
+        # figure, and a rating with no declared grade would let a back-derived number pass as a
+        # permit disclosure. A site-plan-grounded facility with no disclosed generation leaves
+        # all three None.
         _require_together(
             ("genset_count", self.genset_count),
             ("genset_mw", self.genset_mw),
-            note="(or both left None)",
+            ("genset_rating_basis", self.genset_rating_basis),
+            label="the genset fleet",
+            note="(or all left None)",
         )
+        self._check_genset_total()
         # Site-plan disclosure attributes (type / floor area / investment) carry
         # [reference]/[verified] claims — they travel with disclosure_citation (both or
         # neither), so a disclosed value can never pass uncited.
@@ -690,6 +756,41 @@ class SiteFacility(BaseModel):
                 "— cite the record that discloses the method"
             )
         return self
+
+    def _check_genset_total(self) -> None:
+        """The cited backup total travels with its citation, its fleet, and its own arithmetic.
+
+        The total is transcribed, never computed (see ``genset_total_mw``) — which is exactly why
+        it needs a guard: a hand-carried copy of a figure with no tie to its components is the
+        defect #1771 was filed about. So it must (a) carry its own citation, (b) belong to a fleet
+        that actually discloses gensets, and (c) reconcile with count x rating. A cited total that
+        stops reconciling **refuses the write** rather than shipping two numbers for one fleet.
+        """
+        _require_together(
+            ("genset_total_mw", self.genset_total_mw),
+            ("genset_total_citation", self.genset_total_citation),
+            note="(or both left None — no backup total is on this fleet's record)",
+        )
+        if self.genset_total_mw is None:
+            if self.genset_total_approximate:
+                raise ValueError(
+                    "genset_total_approximate marks a transcribed genset_total_mw — set the total, "
+                    "or leave the marker False"
+                )
+            return
+        if self.genset_count is None or self.genset_mw is None:
+            raise ValueError(
+                "genset_total_mw is this fleet's cited backup total — set genset_count/genset_mw "
+                "(the fleet it totals), or leave the total None"
+            )
+        product = self.genset_count * self.genset_mw
+        if abs(self.genset_total_mw - product) > GENSET_TOTAL_TOLERANCE * product:
+            raise ValueError(
+                f"the cited genset_total_mw ({self.genset_total_mw:g} MW) no longer reconciles "
+                f"with its own components ({self.genset_count} x {self.genset_mw:g} = "
+                f"{product:g} MW, outside {GENSET_TOTAL_TOLERANCE:.0%}) — the cited total and the "
+                "fleet have forked; re-read the record rather than adjusting either to match"
+            )
 
     @property
     def is_data_center(self) -> bool:

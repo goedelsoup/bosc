@@ -4,7 +4,7 @@
   "type": "array",
   "items": {
     "additionalProperties": false,
-    "description": "One disclosed data-center campus — the machine-readable projection of a\n:class:`watermark.sites.SiteFacility` (#1628, epic #1626 F2).\n\nA site holds N of these (``is_primary`` marks the modeled campus that drives the water/power/air\nmath). Each carries the structured facts the model now holds instead of freetext comments: the\nlifecycle ``status``, the ``operator`` / ``end_use`` (each with its citation), the IT-load bracket\n(``None`` when the load is entirely ``[open]`` — a rezoning-only campus), the site-plan\ndisclosure, the cooling archetype, and the resolved geometry link (facility-level, or inherited\nfrom the site). Nothing here is re-keyed by hand — it is projected from the validated model, so a\nprovenance travels with its value across the seam.",
+    "description": "One disclosed data-center campus — the machine-readable projection of a\n:class:`watermark.sites.SiteFacility` (#1628, epic #1626 F2).\n\nA site holds N of these (``is_primary`` marks the modeled campus that drives the water/power/air\nmath). Each carries the structured facts the model now holds instead of freetext comments: the\nlifecycle ``status``, the ``operator`` / ``end_use`` (each with its citation), the IT-load bracket\n(``None`` when the load is entirely ``[open]`` — a rezoning-only campus), the disclosed backup\ngeneration (#1771), the site-plan disclosure, the cooling archetype, and the resolved geometry\nlink (facility-level, or inherited from the site). Nothing here is re-keyed by hand — it is\nprojected from the validated model, so a provenance travels with its value across the seam.",
     "properties": {
       "key": {
         "title": "Key",
@@ -156,6 +156,70 @@
         "default": null,
         "title": "It Load Citation"
       },
+      "genset_count": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Genset Count"
+      },
+      "genset_mw": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Genset Mw"
+      },
+      "genset_rating_basis": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/GensetRatingBasis"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "genset_total_mw": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Genset Total Mw"
+      },
+      "genset_total_approximate": {
+        "default": false,
+        "title": "Genset Total Approximate",
+        "type": "boolean"
+      },
+      "genset_total_citation": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Genset Total Citation"
+      },
       "gross_floor_area_sqft": {
         "anyOf": [
           {
@@ -289,6 +353,16 @@
         "live"
       ],
       "title": "FacilityLifecycle",
+      "type": "string"
+    },
+    "GensetRatingBasis": {
+      "description": "How a facility's **per-engine** genset rating is grounded (#1771).\n\nThe genset count is a verbatim permit disclosure everywhere it appears; the *rating* is not,\nand the two disclosed fleets on the network are grounded differently in ways the backup figure\ninherits. Carried as a typed grade — the ``it_load_source`` idiom — because every consumer of\nthe backup number (the load report's chain step, the register it renders, the redaction\ncallout) has to branch on it, and the alternative is regexing ``air_permit_citation`` prose.\n\n* ``disclosed`` — the issued permit states the per-engine rating. Nothing on the network yet.\n* ``draft_only`` — stated on the DRAFT public notice and **redacted as CBI in the issued\n  permit** (Lima: ~2,750 ekW on eDocs 3987141/3987144, withheld from final 4132514 under an\n  Ohio EPA trade-secret grant). Still a record figure — ``[verified: draft]`` — but the\n  redaction is the story, not a footnote.\n* ``derived`` — the permit states no electrical rating at all and the figure is back-derived\n  (Fort Wayne: 26.4 MMBTU/hr heat input per engine at an assumed electrical efficiency).\n  ``[inference]`` — a backup total resting on it is an inference too, never ``[verified]``.",
+      "enum": [
+        "disclosed",
+        "draft_only",
+        "derived"
+      ],
+      "title": "GensetRatingBasis",
       "type": "string"
     }
   }
