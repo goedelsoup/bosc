@@ -3,11 +3,15 @@ import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 /**
  * The load and the grid — the interactive companion (docs/the-load-and-the-grid.md, epic
- * #271 Phase 2 #265). The essay's discipline: the famous "313 MW" is *backup*, not the
- * operating load, and the per-engine rating behind it is redacted in the issued permit —
- * so the working load is an inference chain, and that chain is the uncertainty. The
- * simulator makes the band draggable-by-disclosure; the RedactionReveal (the #220 pattern)
- * shows that the headline rests on the draft.
+ * #271 Phase 2 #265). The essay's discipline: the headline MW everyone cites is *backup*, not
+ * the operating load — so the working load is an inference chain, and that chain is the
+ * uncertainty. The simulator makes the band draggable-by-disclosure.
+ *
+ * Every figure and every evidence claim on this page is the STANDING site's (#1642, #1632,
+ * #1771): the backup fleet, its two grades, the denominators, the IT bracket, the headline and
+ * the meta description all come from that site's feeds. The RedactionReveal (the #220 pattern)
+ * renders only where the record is actually in that situation — a per-engine rating the issued
+ * permit redacts and the draft preserves, which today is Lima's and not Fort Wayne's.
  *
  * Island-over-SSR: the inference table is the no-JS fallback; the simulator is the island.
  */
@@ -17,18 +21,19 @@ import ReportShell from "~/layouts/ReportShell.astro";
 import {
   GRID_PRIORS,
   annualGwh,
-  backupRecord,
   facilityDrawOutcome,
+  fmtBackupMw,
   gridPriorsFromFacility,
   pctOfUtilityRetail,
 } from "@watermark/core/gridLoad";
-import { buildGridBaseline } from "@watermark/core/gridBackdrop";
+import { buildBackupRecord, buildGridBaseline } from "@watermark/core/gridBackdrop";
 import { promisedJobs } from "@watermark/core/econScenarios";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { FacilityItem } from "@watermark/core/feeds";
 import { buildDilution } from "@watermark/core/dilution";
 import { round } from "@watermark/core/format";
 import type { TeardownRedaction } from "@watermark/core/teardown";
+import type { Prior } from "@watermark/core/uncertainty";
 import { withBase, withSite } from "@watermark/core/site";
 
 // Reconcile the two MW figures (#1632): source the IT-load prior from the facility feed — the
@@ -48,39 +53,77 @@ const draw = facilityDrawOutcome(priors);
 // there is one copy, in the reference data. Null ⇒ the readouts are withheld, not defaulted.
 const site = Astro.locals.site;
 const baseline = buildGridBaseline(site);
-const backup = backupRecord(site);
+// The site's own disclosed fleet, from its `facility` row (#1771) — this was Lima's 313 MW /
+// 114 gensets / 2,750 ekW as TS literals behind a `site === "lima"` branch, so Fort Wayne's real
+// 34-engine permit rendered as no record at all.
+const backup = buildBackupRecord(site);
 const jobs = promisedJobs();
 // The no-JS fallback's figures, computed from the same feed-sourced baseline as the island.
 const gwh = annualGwh(draw.central);
 const pctOfUtility = baseline ? pctOfUtilityRetail(gwh, baseline.utilityRetailGwh) : null;
+// The IT-load row of the no-JS table, off the same prior the island samples (#1771) — it was
+// Lima's "~250–300 MW" as literal text, which every other site's table printed as its own.
+const itLoad = priors.find((p: Prior) => p.key === "it_load")?.dist;
+const itLow = itLoad && "low" in itLoad ? itLoad.low : draw.low;
+const itHigh = itLoad && "high" in itLoad ? itLoad.high : draw.high;
 
 // The water bridge (#1632): the same draw drives the cooling water — surface the derivation
 // instead of leaving MW and MGD as two orphaned headlines. Figures from the hydrology feed.
 const dilution = buildDilution();
 
-// The per-engine redaction — the #220 reveal: the headline 313 MW rests on the draft.
-const redaction: TeardownRedaction = {
-  label: "REDACTED · per-engine rating (final permit)",
-  summary: "Why won't the issued permit say how big the engines are?",
-  lock: "The final Air PTI (eDoc 4132514, issued 2026-05-28) withholds the emergency-generator make, model, and size as confidential business information. The ~2,750 ekW/engine figure that multiplies to the famous 313 MW survives only on the draft public notice (3987141) — not in the issued permit.",
-  cite: "data/extracted/permits/4132514.epa.yaml (Comments 16, 19; Response 16) · draft data/extracted/permits/3987141.epa.yaml",
-  read: "So the most-cited number about this facility — 313 MW — rests on a figure the issued permit redacts. The backup capacity is real; the per-engine rating behind it, and the operating load you would derive from it, are withheld.",
-};
+// The per-engine redaction — the #220 reveal: the headline rests on the draft. It is a claim
+// about ONE evidentiary situation (a rating the issued permit redacts and the draft preserves),
+// so it renders only for a site whose record is in it (#1771) — Lima today. Where the rating is
+// back-derived instead (Fort Wayne: heat input, never an electrical rating), there is nothing
+// redacted to reveal, and the island's chain step says so in its own words. The identifiers stay
+// in the citation, where they came from, rather than being re-keyed into the prose.
+const redaction: TeardownRedaction | null =
+  backup?.ratingBasis === "draft_only"
+    ? {
+        label: "REDACTED · per-engine rating (issued permit)",
+        summary: "Why won't the issued permit say how big the engines are?",
+        lock: `The issued air permit withholds the emergency-generator make, model, and size as confidential business information. The per-engine rating that multiplies to the famous ${fmtBackupMw(backup)} survives only on the draft public notice — not in the issued permit.`,
+        cite: [backup.cite, primary?.air_permit_citation].filter(Boolean).join(" · "),
+        read: `So the most-cited number about this facility — ${fmtBackupMw(backup)} — rests on a figure the issued permit redacts. The backup capacity is real; the per-engine rating behind it, and the operating load you would derive from it, are withheld.`,
+      }
+    : null;
+
+// The report's own headline + meta, composed from the same feed figures the body renders (#1771)
+// rather than restated as Lima's. A site with no disclosed fleet leads with the absence.
+const backupText = backup ? fmtBackupMw(backup) : null;
+const h1 = redaction
+  ? "The number everyone cites is the backup — and it's redacted"
+  : backup
+    ? "The number everyone cites is the backup, not the load"
+    : "The load this site will carry is not on the record";
+const description = backupText
+  ? `The famous ${backupText} is backup, not load${redaction ? " — and the number behind it is redacted in the issued permit" : ""}. So the working load is an inference: ${backupText} backup → IT via N+1 → × PUE ≈ ${Math.round(draw.central)} MW${pctOfUtility !== null && baseline ? `, ~${pctOfUtility.toFixed(1)}% of all retail electricity ${baseline.utilityLabel} sells` : ""}${jobs !== null ? `, for ~${jobs} jobs` : ""}.`
+  : `No backup-generation record is on this site's file, so the load it will carry stays [open]. What the inference chain can still say: IT via N+1 → × PUE ≈ ${Math.round(draw.central)} MW.`;
 ---
 
 <ReportShell
   title="The load and the grid"
-  description="The famous 313 MW is backup, not load — and the number behind it is redacted in the issued permit. So the working load is an inference: 313 MW backup → IT via N+1 → × PUE ≈ 348 MW, ~5–6% of AEP Ohio's entire retail electricity, ~260k homes, for ~50 jobs."
+  description={description}
   eyebrow="Extension narrative · #233 · the grid it will carry"
-  h1="The number everyone cites is the backup — and it's redacted"
+  h1={h1}
   annexChapters={["power"]}
 >
   <Fragment slot="lead">
       <p class="section-lead">
-        Every summary repeats <strong>313 MW</strong>. It is <em>backup generation</em> —
-        114 emergency gensets — <strong>not the operating load</strong>, and the per-engine
-        rating that multiplies to it is <strong>redacted in the issued permit</strong>. So
-        the working draw can only be inferred:
+        {backup ? (
+          <Fragment>
+            Every summary repeats <strong>{backupText}</strong>. It is <em>backup generation</em> —
+            {" "}{backup.nEngines} emergency gensets — <strong>not the operating load</strong>, and
+            the per-engine rating that multiplies to it is{" "}
+            <strong>{redaction ? "redacted in the issued permit" : "not stated on the record either"}</strong>.
+            So the working draw can only be inferred:
+          </Fragment>
+        ) : (
+          <Fragment>
+            No backup-generation record is on this site's file, so even the usual starting point —
+            a permitted genset bank — is <code>[open]</code>. The working draw can only be inferred:
+          </Fragment>
+        )}
         <strong>{Math.round(draw.low)}–{Math.round(draw.high)} MW</strong> (central
         ~{Math.round(draw.central)}), and that inference chain <em>is</em> the uncertainty.
         Drag it open below. Full essay:
@@ -88,7 +131,7 @@ const redaction: TeardownRedaction = {
       </p>
   </Fragment>
 
-    <RedactionReveal redaction={redaction} />
+    {redaction && <RedactionReveal redaction={redaction} />}
 
     <GridLoadScreen
       client:only="react"
@@ -128,14 +171,29 @@ const redaction: TeardownRedaction = {
         <table>
           <thead><tr><th>Step</th><th>Figure</th><th>Register</th></tr></thead>
           <tbody>
+            {/* Register from the record's own grades (#1771), not a fixed `[verified: draft]`:
+                Lima's total is cited over a draft-only rating, Fort Wayne's is this platform's
+                product of a back-derived rating, and the table must not print them alike. */}
             {backup && (
               <tr>
                 <td>Backup generation ({backup.nEngines} gensets)</td>
-                <td>{backup.backupMw} MW</td>
-                <td><code>[verified: draft]</code></td>
+                <td>{fmtBackupMw(backup)}</td>
+                <td>
+                  <code>
+                    {backup.ratingBasis === "derived" || backup.totalBasis === "derived"
+                      ? "[inference]"
+                      : backup.ratingBasis === "draft_only"
+                        ? "[verified: draft]"
+                        : "[verified]"}
+                  </code>
+                </td>
               </tr>
             )}
-            <tr><td>IT load (N+1 backup ≈ IT)</td><td>~250–300 MW</td><td><code>[inference]</code></td></tr>
+            <tr>
+              <td>IT load (N+1 backup ≈ IT)</td>
+              <td>~{Math.round(itLow)}–{Math.round(itHigh)} MW</td>
+              <td><code>[inference]</code></td>
+            </tr>
             <tr><td>Facility draw (IT × PUE)</td><td>~{Math.round(draw.low)}–{Math.round(draw.high)} MW</td><td><code>[inference]</code></td></tr>
           </tbody>
         </table>

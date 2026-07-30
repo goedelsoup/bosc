@@ -35,6 +35,7 @@ from watermark.sites._model import (
     FacilityKind,
     FacilityLifecycle,
     FederalInstallation,
+    GensetRatingBasis,
     ItLoadGrounding,
     SiteFacility,
     SiteProfile,
@@ -201,6 +202,24 @@ _LIMA = SiteProfile(
             # unresolved question the end-use explorer (endUse.ts / docs/end-use-and-workloads.md) turns on.
             genset_count=114,
             genset_mw=2.75,  # MW each (~2,750 ekW), per the air permit
+            # [verified: draft] the ~2,750 ekW rating is on the draft public notice and CBI-redacted
+            # in the issued permit — the redaction the whole load report is built on.
+            genset_rating_basis=GensetRatingBasis.DRAFT_ONLY,
+            # The site's most-cited number, TRANSCRIBED from the corpus, not multiplied out (#1771).
+            # The record says "~313 MW" everywhere it appears; 114 x 2.75 = 313.5, so deriving it
+            # would restate the headline as 313.5/314 and contradict the permit extraction, the
+            # essay and the docs. The `~` rides as data (genset_total_approximate) so every
+            # rendering keeps it. The model reconciles this against the components on validation.
+            genset_total_mw=313.0,
+            genset_total_approximate=True,
+            genset_total_citation=(
+                "~313 MW backup total, as stated in the committed final-permit extraction "
+                "data/extracted/permits/4132514.epa.yaml ('the ~2,750 ekW/engine figure behind "
+                "the ~313 MW backup total'). NOT a figure of the issued permit, which withholds "
+                "the per-engine rating as trade secret and so cannot state the total: it is the "
+                "final permit's unit COUNT (114 hall gensets) x the DRAFT public notice's "
+                "~2,750 ekW/engine (eDocs 3987141/3987144), approximate as transcribed."
+            ),
             it_load_mw=275.0,  # [inference] midpoint of the 250-300 MW N+1 estimate (IT ~= backup),
             # derived from the disclosed ~313 MW backup — NOT a permit disclosure (#1697)
             it_load_low_mw=250.0,
@@ -612,6 +631,12 @@ _FORT_WAYNE = SiteProfile(
             # is DERIVED (heat-input x efficiency), unlike Lima's disclosed ekW. genset_count is verbatim.
             genset_count=34,  # [verified] "Thirty-four (34) diesel-fired emergency generators, Gen 1..34" (A.2)
             genset_mw=3.0,  # [inference] 26.4 MMBTU/hr HHV / engine at ~38-43% electrical eff -> ~2.9-3.3 MWe
+            # [inference] the rating is back-derived from heat input — the permit states no
+            # electrical rating at all, so any backup total resting on it is an inference too.
+            genset_rating_basis=GensetRatingBasis.DERIVED,
+            # No genset_total_mw: unlike Lima's ~313 MW, no backup TOTAL is stated on this record
+            # (the ~102 MW below is this profile's own arithmetic). A consumer that needs one
+            # derives it from the components and must label it derived — never [verified].
             it_load_mw=90.0,  # [inference] N+1: IT ~= 0.88 x backup (Lima 275/313 convention); 34 x 3.0 ~= 102 MW backup
             it_load_low_mw=80.0,
             it_load_high_mw=100.0,

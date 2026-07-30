@@ -1542,7 +1542,7 @@
     "producer_kind": "connector",
     "command": "reaches --write",
     "connector_ref": "watermark.hydrology.connectors.nldi",
-    "source": "USGS NLDI navigation over the NHDPlus flowline network (mainstem from gage 04187100 + tributary WWTP snaps)",
+    "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages)",
     "external_url": "https://api.water.usgs.gov/nldi",
     "license": "U.S. Government work (public domain)",
     "access_tier": "public",
@@ -1569,19 +1569,39 @@
         "relpath": "reference/hydrology/reaches/lima.geojson",
         "media_type": "application/geo+json",
         "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/fort-wayne/reach-nav.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/fort-wayne/network.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/fort-wayne/reaches.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/reaches/fort-wayne.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "bf00d7b2bfd8b58cb58545fe603d7e56eb40123c77d38bc7a1ec5470e19c83ee",
-      "size_bytes": 90607,
+      "sha256": "4bf5c0cc9b20cd6671ca26cca0a199de3ecc4fa869dbf99354aa69636c8d654d",
+      "size_bytes": 161742,
       "lfs_materialized": true,
-      "file_count": 2,
+      "file_count": 6,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "USGS NLDI navigation over the NHDPlus flowline network (mainstem from gage 04187100 + tributary WWTP snaps)",
+      "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages)",
       "source_kind": "connector",
       "page": null,
       "confidence": "medium",

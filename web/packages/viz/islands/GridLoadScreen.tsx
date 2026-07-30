@@ -1,10 +1,14 @@
 /**
- * Grid load-band simulator (epic #271 Phase 2, #265). The headline "313 MW" is backup,
- * not load, and the per-engine rating behind it is redacted in the issued permit — so the
- * working load is an inference chain (313 backup → IT via N+1 → ×PUE → facility ~348 MW),
- * and that chain IS the uncertainty. Disclose the operating load and the band collapses;
- * the load-not-jobs bars hold the finding that survives both disciplines. Reuses the
- * uncertainty engine + grammar.
+ * Grid load-band simulator (epic #271 Phase 2, #265). The headline MW everyone cites is backup,
+ * not load, and the operating load is nowhere on the record — so the working draw is an inference
+ * chain (backup → IT via N+1 → ×PUE → facility draw), and that chain IS the uncertainty. Disclose
+ * the operating load and the band collapses; the load-not-jobs bars hold the finding that survives
+ * both disciplines. Reuses the uncertainty engine + grammar.
+ *
+ * Every figure is a prop, and so is every evidence claim about it (#1771): the {@link BackupRecord}
+ * carries how its total and its per-engine rating are each grounded, and the chain step and the
+ * closing note branch on those grades. Lima's rating is redacted-on-the-draft; Fort Wayne's is
+ * back-derived from heat input — the component must not tell the first story about the second.
  */
 import { useMemo, useState } from "react";
 import {
@@ -12,8 +16,10 @@ import {
   GRID_PRIORS,
   type GridBaseline,
   annualGwh,
+  backupRegister,
   equivalentHomes,
   facilityDrawModel,
+  fmtBackupMw,
   mwPerJob,
   pctOfUtilityRetail,
 } from "@watermark/core/gridLoad";
@@ -37,7 +43,9 @@ export interface GridLoadScreenProps {
    *  divided by another utility's sales. (Named apart from the local `baseline` band below, which
    *  is the undisclosed outcome band that fixes the chart axes.) */
   gridBaseline?: GridBaseline | null;
-  /** The cited backup record behind the headline MW (`gridLoad.backupRecord`) — null off Lima. */
+  /** The site's disclosed backup fleet (`gridBackdrop.buildBackupRecord`, #1771) — null where its
+   *  record discloses none. Was a Lima-only literal; every figure and both of its evidence grades
+   *  now come from that site's own `facility` row. */
   backup?: BackupRecord | null;
   /** The site's non-binding promised job count (`econLedger.promisedJobs`) — null where none. */
   promisedJobs?: number | null;
@@ -85,8 +93,21 @@ export default function GridLoadScreen({
       <div className="unc-chain">
         <span className="unc-chain-step">
           {backup ? (
+            // Register + qualifier come from the record's own grades (#1771): a cited total over a
+            // document-grade rating is [verified] — Lima's, qualified "(draft)" because the issued
+            // permit redacts the rating it rests on — while a total this platform multiplied out,
+            // or one over a back-derived rating (Fort Wayne), is an assumption and says so.
             <>
-              <RegisterMark register="verified" /> {backup.backupMw} MW backup <em>(draft)</em>
+              <RegisterMark register={backupRegister(backup)} /> {fmtBackupMw(backup)} backup{" "}
+              <em>
+                {backup.ratingBasis === "draft_only"
+                  ? "(draft)"
+                  : backup.ratingBasis === "derived"
+                    ? "(derived from heat input)"
+                    : backup.totalBasis === "derived"
+                      ? "(count × rating)"
+                      : "(permit)"}
+              </em>
             </>
           ) : (
             <>
@@ -164,8 +185,26 @@ export default function GridLoadScreen({
 
       {backup && (
         <p className="unc-note">
-          <strong>{backup.backupMw} MW is backup, not load.</strong> The per-engine rating that pins it is
-          redacted in the issued permit — the band above exists <em>because</em> the record is withheld.
+          {/* The middle clause is the site's OWN gap, not Lima's (#1771): a redacted rating and a
+              rating the permit never stated are different absences, and asserting the first where
+              the second holds would publish Lima's story under another county's permit. */}
+          <strong>{fmtBackupMw(backup)} is backup, not load.</strong>{" "}
+          {backup.ratingBasis === "draft_only" ? (
+            <>
+              The per-engine rating that pins it is redacted in the issued permit — the band above exists{" "}
+              <em>because</em> the record is withheld.
+            </>
+          ) : backup.ratingBasis === "derived" ? (
+            <>
+              The permit discloses heat input, not an electrical rating, so the figure above is back-derived{" "}
+              <code>[inference]</code> — the band exists because the load was never stated.
+            </>
+          ) : (
+            <>
+              The operating load it implies is nowhere on the record — the band above exists because that
+              disclosure is missing.
+            </>
+          )}{" "}
           "Behind-the-meter" is a proponent claim <code>[open]</code>: the campus is a rate-regulated{" "}
           <strong>retail</strong> customer of {gridBaseline?.utilityLabel ?? "the serving utility"} (the{" "}
           {backup.nEngines} gensets are emergency backup, not primary generation). PJM dollar figures are a{" "}

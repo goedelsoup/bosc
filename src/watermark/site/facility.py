@@ -74,6 +74,15 @@ def build_facility_feed(settings: Settings | None = None) -> list[FacilityItem] 
                 air_permit_citation=fac.air_permit_citation,
                 air_permit_relpath=fac.air_permit_relpath,
                 it_load_citation=fac.it_load_citation,
+                # The disclosed backup fleet (#1771). The cited total ships as the record's own
+                # figure, marker and all — the frontend used to carry Lima's 313 MW / 114 gensets
+                # / 2,750 ekW as TS literals duplicating these very fields.
+                genset_count=fac.genset_count,
+                genset_mw=fac.genset_mw,
+                genset_rating_basis=fac.genset_rating_basis,
+                genset_total_mw=fac.genset_total_mw,
+                genset_total_approximate=fac.genset_total_approximate,
+                genset_total_citation=fac.genset_total_citation,
                 gross_floor_area_sqft=fac.gross_floor_area_sqft,
                 disclosed_investment_usd=fac.disclosed_investment_usd,
                 disclosure_citation=fac.disclosure_citation,

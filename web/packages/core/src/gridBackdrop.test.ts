@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildDemandPressure, buildGridBackdrop } from "./gridBackdrop";
+import { buildBackupRecord, buildDemandPressure, buildGridBackdrop } from "./gridBackdrop";
 
 // The grid backdrop reads the committed per-site bundles (`web/sites/<slug>/`), so these run
 // against real reference data — which is the point: the feed exists so the presentation tier
@@ -102,5 +102,48 @@ describe("gridBackdrop — the demand-pressure feed is finally readable (#1642 E
 
   it("a facility-less site has no sensitivity to read", () => {
     expect(buildDemandPressure("wpafb")).toBeNull();
+  });
+});
+
+// The #1771 drift guard. Lima's 313 MW / 114 gensets / 2,750 ekW lived in `gridLoad.ts` as TS
+// literals duplicating `SiteFacility.genset_*`, with nothing pinning the copies together and a
+// `site === "lima"` branch that refused Fort Wayne's real fleet. These read the committed bundles,
+// so if a profile figure moves, the assertion moves with it — while the site's PUBLISHED headline
+// (~313 MW, marker and all) is pinned, so a change big enough to restate it fails here.
+describe("gridBackdrop — the backup record is feed-sourced, not a second copy (#1771)", () => {
+  it("Lima's record is the CITED ~313 MW, not the components' 313.5 product", () => {
+    const r = buildBackupRecord("lima");
+    expect(r).not.toBeNull();
+    expect(r?.backupMw).toBe(313);
+    expect(r?.totalBasis).toBe("cited");
+    expect(r?.approximate).toBe(true); // the record says "~313 MW"; the tilde is data
+    expect(r?.nEngines).toBe(114);
+    expect(r?.perEngineMw).toBe(2.75);
+    // The rating survives only on the draft the issued permit redacts — the report's whole subject.
+    expect(r?.ratingBasis).toBe("draft_only");
+    expect(r?.cite).toMatch(/313 MW/);
+    // The distinction the cited field exists for: deriving would have published this instead.
+    expect((r?.nEngines ?? 0) * (r?.perEngineMw ?? 0)).toBe(313.5);
+  });
+
+  it("Fort Wayne gets its OWN record — 34 engines, derived, no longer null", () => {
+    const r = buildBackupRecord("fort-wayne");
+    expect(r).not.toBeNull();
+    expect(r?.nEngines).toBe(34);
+    expect(r?.backupMw).toBeCloseTo(102, 5);
+    // No total is on that permit, so the figure is this platform's product — and says so, twice:
+    // the total is derived and the per-engine rating under it is back-derived from heat input.
+    expect(r?.totalBasis).toBe("derived");
+    expect(r?.ratingBasis).toBe("derived");
+    expect(r?.approximate).toBe(false); // a derived product carries no transcription marker
+    expect(r?.cite.length).toBeGreaterThan(0);
+  });
+
+  it("a facility with no disclosed gensets is null — it never inherits Lima's fleet", () => {
+    // Urbana's facility is site-plan-grounded (floor area, no air permit); WPAFB is a federal
+    // enclave, which is forbidden genset fields at the type level; Coshocton has no feed at all.
+    expect(buildBackupRecord("urbana")).toBeNull();
+    expect(buildBackupRecord("wpafb")).toBeNull();
+    expect(buildBackupRecord("coshocton")).toBeNull();
   });
 });

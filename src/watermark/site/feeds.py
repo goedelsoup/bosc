@@ -37,7 +37,8 @@ from watermark.sites import (
     DcEndUse,
     FacilityKind,
     FacilityLifecycle,
-)  # the facility vocab (#1628 / #1664)
+    GensetRatingBasis,
+)  # the facility vocab (#1628 / #1664 / #1771)
 
 # --- bundle contract version ---------------------------------------------------
 # Bumped per the back-compat policy in data/site/bundle/README.md: PATCH for additive
@@ -434,7 +435,17 @@ from watermark.sites import (
 #   never ships as site data, even on a `new-albany` bundle. One new feed → MINOR,
 #   back-compatible (a pre-1.45 bundle simply renders the water chapter without the
 #   reconciliation block).
-CONTRACT_VERSION = "1.45.0"
+# 1.45.1: `FacilityItem` gains the disclosed backup-generation columns (#1771) —
+#   `genset_count` / `genset_mw` / `genset_rating_basis` and the CITED total
+#   (`genset_total_mw` + `genset_total_approximate` + `genset_total_citation`). They are
+#   disclosed campus data that belonged in the facility inventory regardless; the immediate
+#   consumer is `gridLoad.ts`, which carried Lima's 313 MW / 114 gensets / 2,750 ekW as TS
+#   literals duplicating `SiteFacility.genset_*` with nothing pinning the copies together. The
+#   total ships as the record's own `~313 MW` rather than the components' 313.5 product, and
+#   the rating basis (`draft_only` for Lima's CBI-redacted rating, `derived` for Fort Wayne's
+#   heat-input back-derivation) is what lets a consumer grade the figure without parsing permit
+#   prose. Additive + optional → PATCH; a pre-1.45.1 bundle just carries no genset columns.
+CONTRACT_VERSION = "1.45.1"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -575,10 +586,10 @@ class FacilityItem(BaseModel):
     A site holds N of these (``is_primary`` marks the modeled campus that drives the water/power/air
     math). Each carries the structured facts the model now holds instead of freetext comments: the
     lifecycle ``status``, the ``operator`` / ``end_use`` (each with its citation), the IT-load bracket
-    (``None`` when the load is entirely ``[open]`` — a rezoning-only campus), the site-plan
-    disclosure, the cooling archetype, and the resolved geometry link (facility-level, or inherited
-    from the site). Nothing here is re-keyed by hand — it is projected from the validated model, so a
-    provenance travels with its value across the seam.
+    (``None`` when the load is entirely ``[open]`` — a rezoning-only campus), the disclosed backup
+    generation (#1771), the site-plan disclosure, the cooling archetype, and the resolved geometry
+    link (facility-level, or inherited from the site). Nothing here is re-keyed by hand — it is
+    projected from the validated model, so a provenance travels with its value across the seam.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -610,6 +621,23 @@ class FacilityItem(BaseModel):
     air_permit_citation: str | None = None
     air_permit_relpath: str | None = None
     it_load_citation: str | None = None  # a NON-permit derivation basis (screening bracket)
+    # --- disclosed backup generation (#1771) ----------------------------------
+    # The air permit's genset fleet: the count, the per-engine rating, and the grade of that
+    # rating (`draft_only` = on the draft, CBI-redacted in the issued permit — Lima; `derived` =
+    # no electrical rating on the record, back-derived from heat input — Fort Wayne). All None
+    # for a facility with no disclosed on-site generation.
+    genset_count: int | None = None
+    genset_mw: float | None = None  # MW each (ekW)
+    genset_rating_basis: GensetRatingBasis | None = None
+    # The CITED backup total and its own citation — transcribed from the record, never the
+    # product of the two columns above. The distinction is the whole point of the field: Lima's
+    # record says `~313 MW` (approximate, hence the marker) while 114 x 2.75 = 313.5, so a
+    # consumer that derives the total silently restates the site's most-cited number. `None` =
+    # no total is on this fleet's record; a consumer needing one derives it and must label it
+    # derived. The producer reconciles a cited total against its components, so they can't fork.
+    genset_total_mw: float | None = None
+    genset_total_approximate: bool = False  # the transcription `~` marker, as data
+    genset_total_citation: str | None = None
     gross_floor_area_sqft: int | None = None
     disclosed_investment_usd: float | None = None
     disclosure_citation: str | None = None

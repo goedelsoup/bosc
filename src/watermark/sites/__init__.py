@@ -93,6 +93,9 @@ from watermark.sites._model import (
     FederalInstallation as FederalInstallation,
 )
 from watermark.sites._model import (
+    GensetRatingBasis as GensetRatingBasis,
+)
+from watermark.sites._model import (
     ItLoadGrounding as ItLoadGrounding,
 )
 from watermark.sites._model import (
