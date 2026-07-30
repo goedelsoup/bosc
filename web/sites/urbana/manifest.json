@@ -1,17 +1,17 @@
 {
   "site": "urbana",
   "bundle_version": "1.0.0",
-  "contract_version": "1.45.1",
-  "generated_at": "2026-07-30T19:12:50+00:00",
+  "contract_version": "1.46.0",
+  "generated_at": "2026-07-30T22:25:16+00:00",
   "feed_count": 34,
-  "row_total": 418,
+  "row_total": 421,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
       "places": "live",
-      "record": "seeded",
+      "record": "live",
       "story": "seeded"
     }
   },
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "timeline",
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 3
     },
     {
       "name": "exhibits",

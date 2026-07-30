@@ -1,11 +1,26 @@
 """Export the committed extractions into typed record feeds.
 
 Reads every ``data/extracted/**/*.yaml`` generically — by the shape of its
-payload block, the same way :mod:`watermark.pipeline.corpus` classifies — and emits one
+payload block, in the same idiom :mod:`watermark.pipeline.corpus` classifies by — and emits one
 :class:`~watermark.site.feeds.RecordItem` per record. Reading off the raw dict (not the
 Pydantic models) keeps this contractor-/genre-agnostic and preserves the ``~``
 approximate marker verbatim, per the data discipline in CLAUDE.md. (The legacy
 markdown ``render_record_pages`` peer was removed at the SSG-cutover cleanup, #603.)
+
+The classifier is the site tier's own taxonomy, and it is **wider** than the corpus loader's:
+:mod:`watermark.pipeline.corpus` routes a genre only where a Pydantic extraction model backs
+it, whereas a record here is published from the raw payload. That gap is what let a site's
+worked corpus go unpublished — Urbana's structured read of the Thor v. Urbana complaint and
+its recorded land-assembly register were both real, cited extractions that no group claimed,
+so the site shipped a zero-length ``records`` feed and a ``record`` domain that read `seeded`
+over a corpus that was neither absent nor thin (#1724). A genre earns a group when the corpus
+carries the artifact; it does not need an extractor to have produced it.
+
+What is deliberately *not* a record: the derived per-site models (``bosc-site-footprint.yaml``
+— the profile's ``footprint_relpath`` input), the corpus indexes and manifests (``meta:`` +
+``documents:``), and the analysis digests (``kind:``/``subject:``/``provenance:``). Those are
+compiled *from* the record or *about* it; publishing them as records would float a site's
+record domain on its own scaffolding.
 """
 
 from __future__ import annotations
@@ -39,6 +54,22 @@ _BLOCK_TO_GROUP: dict[str, str] = {
 }
 # OPC estimates are whole-document (summary/detail/page) — no single block key.
 _OPC_KEYS = frozenset({"estimate", "sub_estimates", "estimate_template"})
+# Whole-document genres: the subject is spread across the top level, so the payload is the
+# document minus its envelope rather than one block (#1724).
+#
+#   `case`        — a filed court instrument's structured read. The `case:` block carries only
+#                   the caption/court/docket; the substance (parties, counts, relief sought, the
+#                   ordinance record recited) sits beside it, so keying the payload to the block
+#                   would publish a docket stub and drop the filing.
+#   `conveyances` — a recorded land-assembly register: one entry per deed (grantor → grantee,
+#                   acres, consideration, Official-Record book/page). Deliberately NOT the
+#                   `deeds` group, which is instrument-level — a per-deed vision read of a
+#                   recorder PDF. A register is a compiled chain sourced to a county CAMA layer,
+#                   and filing it under `deeds` would present it as an instrument read.
+_WHOLE_DOC_BLOCK_TO_GROUP: dict[str, str] = {
+    "case": "litigation",
+    "conveyances": "land-assembly",
+}
 # Envelope keys that are provenance, not subject fields — rendered separately.
 _ENVELOPE = frozenset(
     {
@@ -69,6 +100,10 @@ def _classify(data: Any) -> tuple[str, dict[str, Any]] | None:
         body = data.get(block)
         if isinstance(body, dict):
             return group, body
+    for block, group in _WHOLE_DOC_BLOCK_TO_GROUP.items():
+        body = data.get(block)
+        if isinstance(body, dict | list) and body:
+            return group, {k: v for k, v in data.items() if k not in _ENVELOPE}
     if any(k in data for k in _OPC_KEYS):
         body = data.get("estimate")
         payload = (
@@ -97,15 +132,19 @@ def _record_title(rec: _Record) -> str:
         "name",
         "subject",
         "permit_number",
+        "assembly",  # land-assembly registers (#1724)
     ):
         val = payload.get(key)
         if isinstance(val, str) and val.strip():
             return val.strip()
-    meta = payload.get("meta")
-    if isinstance(meta, dict):
-        program = meta.get("program")
-        if isinstance(program, str) and program.strip():
-            return program.strip()
+    # Nested identifiers: the DMR-style `meta.program`, and a filed case's caption, which sits
+    # in the `case:` block while the whole-document payload carries the rest of the filing.
+    for block, key in (("meta", "program"), ("case", "caption")):
+        body = payload.get(block)
+        if isinstance(body, dict):
+            val = body.get(key)
+            if isinstance(val, str) and val.strip():
+                return val.strip()
     return Path(rec.rel).stem
 
 
@@ -149,6 +188,21 @@ def _approx_paths(value: Any, prefix: str = "") -> list[str]:
     elif isinstance(value, str) and value.strip().startswith("~"):
         out.append(prefix.rstrip("."))
     return out
+
+
+def _source_ref(data: dict[str, Any]) -> Any:
+    """The extraction's pointer at the source document it was read from.
+
+    A vision extraction carries a top-level ``source_path``. A structured read of a filed
+    instrument carries a ``source:`` provenance block instead, whose ``file`` names the same
+    corpus path (#1724) — resolving both is what lets such a record link to its instrument in
+    the documents catalog rather than standing alone.
+    """
+    direct = data.get("source_path")
+    if direct is not None:
+        return direct
+    source = data.get("source")
+    return source.get("file") if isinstance(source, dict) else None
 
 
 def _normalize_source_rel(source_path: Any) -> str | None:
@@ -205,7 +259,7 @@ def export_records(
         pages = rec.data.get("pages_read") or None
 
         # Join to the real source document, but only when it's actually catalogued.
-        src_rel = _normalize_source_rel(rec.data.get("source_path"))
+        src_rel = _normalize_source_rel(_source_ref(rec.data))
         joined = doc_index.get(src_rel) if (doc_index is not None and src_rel) else None
         source_doc_rel = src_rel if joined is not None else None
         source_doc_render_class = joined[0] if joined is not None else None

@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
 # The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
 # the fresh-export assertions below pin it so a bump lands here in one place.
-_CV = "1.45.1"
+_CV = "1.46.0"
 # The per-site offline bundles (#727): a full `watermark export` per registered site, the
 # committed input the Astro build reads with no Python step (`web/sites/<slug>/`).
 COMMITTED_BUNDLES = REPO_ROOT / "web" / "sites"
@@ -723,6 +723,50 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
         f"records feed should hold exactly the two in-scope flood records, got {sorted(r['rel'] for r in records)}"
     )
     assert len(records) == 2
+
+
+def test_urbana_record_domain_publishes_its_worked_corpus(urbana_bundle: Path) -> None:
+    """Urbana's ``record`` is live off the two extractions its corpus actually holds (#1724).
+
+    The defect this pins: the site had a structured read of the Thor v. Urbana federal complaint
+    and a recorded land-assembly register — both reviewed, both cited — and published a
+    **zero-length** ``records`` feed, because the site-tier classifier's genre map had no bucket
+    for either shape. ``record`` then read ``seeded`` over a corpus that was neither absent nor
+    thin, which is the mirror image of the stale ``record: live`` that #1724 opened on: one lied
+    about the manifest, this lied about the feed.
+
+    Two genres carry them, and the pair is deliberate. ``land-assembly`` is *not* ``deeds``:
+    that group is instrument-level (a vision read of one recorder PDF), while a register is a
+    compiled transfer chain sourced to a county CAMA layer. Filing the register under ``deeds``
+    would present a compilation as an instrument read.
+    """
+    manifest = _manifest(urbana_bundle)
+    assert manifest["contract_version"] == _CV
+    readiness = manifest["readiness"]
+    assert readiness["domains"]["record"] == "live", (
+        f"urbana record should be live off its two extractions, got {readiness}"
+    )
+    assert readiness["tier"] == "case"
+
+    records = _rows(urbana_bundle, _feeds_by_name(urbana_bundle)["records"])
+    by_rel = {r["rel"]: r for r in records}
+    assert set(by_rel) == {
+        "urbana/land-assembly.yaml",
+        "urbana/litigation-thor-v-urbana.yaml",
+    }, f"urbana records feed drifted, got {sorted(by_rel)}"
+    assert by_rel["urbana/land-assembly.yaml"]["group"] == "land-assembly"
+
+    filing = by_rel["urbana/litigation-thor-v-urbana.yaml"]
+    assert filing["group"] == "litigation"
+    # The payload is the whole filing, not the `case:` docket stub — the counts pleaded are the
+    # substance, and they sit beside the block.
+    assert "counts" in filing["fields"] and "case" in filing["fields"]
+    # It joins to the instrument it was read from: the complaint is in Urbana's own document
+    # catalog now that `legal/thor-v-urbana` is in its corpus scope (the other half of #1724).
+    assert filing["source_doc_rel"] == "legal/thor-v-urbana/1.pdf"
+    assert filing["source_doc_render_class"] == "pdf"
+    docs = _rows(urbana_bundle, _feeds_by_name(urbana_bundle)["documents"])
+    assert filing["source_doc_rel"] in {e["rel"] for c in docs for e in c["entries"]}
 
 
 def test_wpafb_exports_at_case_tier(wpafb_bundle: Path) -> None:

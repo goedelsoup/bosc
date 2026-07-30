@@ -445,7 +445,18 @@ from watermark.sites import (
 #   the rating basis (`draft_only` for Lima's CBI-redacted rating, `derived` for Fort Wayne's
 #   heat-input back-derivation) is what lets a consumer grade the figure without parsing permit
 #   prose. Additive + optional → PATCH; a pre-1.45.1 bundle just carries no genset columns.
-CONTRACT_VERSION = "1.45.1"
+# 1.46.0: the `records` feed's closed RecordGroup enum gains the two genres Urbana's corpus
+#   carries (#1724): `litigation` (a `case:` block — a filed court instrument's structured read:
+#   caption, court, docket, the parties, counts and relief pleaded) and `land-assembly` (a
+#   `conveyances:` list — a recorded transfer chain, one entry per deed, sourced to a county
+#   CAMA layer). Both are whole-document payloads, and `land-assembly` is kept distinct from
+#   `deeds` on purpose: that group is instrument-level, a per-deed read of a recorder PDF, while
+#   a register is a compiled chain. Until now neither genre had a bucket, so a site whose worked
+#   corpus was a complaint plus a land register published an EMPTY records feed and read
+#   `record: seeded` over real extractions. Enum growth is additive for feed READERS (a pre-1.46
+#   records.json stays valid) but a pre-1.46 records.schema.json rejects the new group values —
+#   MINOR, back-compatible for data, schema refresh required.
+CONTRACT_VERSION = "1.46.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -454,6 +465,8 @@ RecordGroup = Literal[
     "deeds",
     "enforcement",
     "finance",
+    "land-assembly",
+    "litigation",
     "permits-epa",
     "permits-idem",
     "permits-npdes",
