@@ -69,7 +69,7 @@ committed under the commissioners collection at
 - 2026-06-22 — <https://www.limaohio.com/top-stories/2026/06/22/brad-wendel-allen-countys-biggest-investment-is-putting-our-members-to-work/>
 - 2026-07-09 — <https://www.limaohio.com/news/2026/07/09/allen-commissioners-approve-construction-projects/>
 - 2026-07-14 — <https://www.limaohio.com/top-stories/2026/07/14/residents-question-transparency-with-allen-county-data-center/>
-- 2026-07-30 — <https://www.limaohio.com/news/2026/07/30/commissioners-approve-google-data-center-sewer-design-change/> (section/slug pattern-inferred; the captured print/PDF omits the address bar — byte-verify on the next pull)
+- 2026-07-30 — canonical URL **owed** (the captured print/PDF omits the address bar; the section/slug is only pattern-inferrable — withheld until byte-verified, not guessed)
 
 ### Captured-from (Yahoo syndication mirror) URLs
 

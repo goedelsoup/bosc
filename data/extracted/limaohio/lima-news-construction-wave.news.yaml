@@ -11,14 +11,17 @@ provenance:
   source_path: data/documents/limaohio/
   publisher: The Lima News (LimaOhio.com), an AIM Media Midwest paper
   layer: web_capture   # secondary news; article text read from the captured syndication bytes
-  capture_date: '2026-07-13'   # date the pages were fetched into the corpus
-  content_verified: '2026-07-13'   # publication dates are each article's own datePublished (below)
+  capture_date: '2026-07-30'   # latest fetch: the 2026-07-30 sewer article (direct limaohio.com print/PDF). The 2026-04/05 Yahoo syndication-mirror set was fetched 2026-07-13.
+  content_verified: '2026-07-30'   # each article's own datePublished (below) is authoritative; the newest content read into the corpus is the 2026-07-30 sewer article. Earlier bulk read: 2026-07-13.
   evidence: >-
     Secondary news reporting. The three 2026-04/05 articles are committed as verbatim Yahoo
     News syndication-mirror bytes (`*.yahoo-mirror.html`); Yahoo hosts the article under
     provider "The Lima News, Ohio" with the canonical limaohio.com URL, byline, and ISO
     datePublished preserved in the page JSON-LD, so figures/quotes are transcribed verbatim
-    from the captured article body.
+    from the captured article body. The 2026-07-30 sewer-design-change article is instead a
+    DIRECT canonical-publisher capture — the verbatim limaohio.com page saved as a print/PDF
+    (a manual browser pull), not a syndication mirror — so its figures/quotes are transcribed
+    from the publisher's own bytes.
   retrieval_caveat: >-
     limaohio.com is CAPTCHA/bot-gated and returned HTTP 403 to every automated fetch, and no
     Wayback snapshot exists for any URL (checked 2026-07-13). The canonical publisher bytes are
@@ -135,21 +138,26 @@ headline_findings:
       year)," with no increase since 2014. Commissioners Cory Noonan ("We're not maxing ourselves
       out") and Brian Winegardner were present.
     significance: >-
-      The formal instrument is Resolution #582-26, the SECOND AMENDMENT to the Sanitary Sewer
-      Development Agreement with the Project BOSC developer, on the same day's commissioners agenda
-      (A073026.pdf, 1:00 p.m.; commissioners/bosc-resolution-ledger #582-26) — the PRIMARY anchor
-      for this secondary report. Substantively it re-routes the campus sanitary/blowdown stream
-      across THREE receiving plants (American Bath + American #2 + City of Lima), superseding the
-      single-plant American Bath design in the #575-25/#975-25 record, and it is the operational
-      face of the WWTP Data Center Flows / blowdown-treatment keystone (#679-24) and the forcemain
-      CMAR (#137-26 → #378-26). The news "$31M construction contract" reconciles with the #137-26
-      CMAR RFQ construction estimate ($29,834,256). Two figures are directly load-bearing for the
-      hydrology screen and the cooling epic: the 2.5 MGD WORST-DAY promised capacity, and the
-      DISCLOSED cooling cycles-of-concentration of "three to six times." Both are the County
-      Sanitary Engineer's self-report, transcribed as [reference] — a disclosed figure that
-      sharpens the cooling-CoC and effluent-dilution questions but must NOT be upgraded to
-      [verified] or fed to a classifier (cf. the closed-loop cooling reconciliation harness; the
-      hydrology dilution screen).
+      The agenda anchors this secondary report to a PRIMARY instrument: Resolution #582-26,
+      titled "Approve the Second Amendment to the Sanitary Sewer Development Agreement with Project
+      Bosc Developer," taken up at 1:00 p.m. on 2026-07-30 (A073026.pdf;
+      commissioners/bosc-resolution-ledger #582-26). Only the resolution's NUMBER and verbatim
+      TITLE are [verified] (from the agenda); the amendment's actual content is NOT — its text and
+      the meeting minutes are not yet in hand. That the news-reported $8M redesign is the SUBSTANCE
+      of #582-26 is therefore a LIKELY CORRESPONDENCE [inference] (same meeting, subject, and
+      official — Niemeyer), not confirmed amendment content. On that inference, the redesign would
+      re-route the campus sanitary/blowdown stream across THREE receiving plants (American Bath +
+      American #2 + City of Lima), superseding the single-plant American Bath design in the
+      #575-25/#975-25 record, as the operational face of the WWTP Data Center Flows /
+      blowdown-treatment keystone (#679-24) and the forcemain CMAR (#137-26 → #378-26) — but that
+      linkage awaits the amendment text. The news "~$31M construction contract" is a rounded figure
+      that reconciles with, but is not identical to, the #137-26 CMAR RFQ construction estimate
+      ($29,834,256). Two figures are directly load-bearing for the hydrology screen and the cooling
+      epic: the 2.5 MGD WORST-DAY promised capacity, and the DISCLOSED cooling
+      cycles-of-concentration of "three to six times." Both are the County Sanitary Engineer's
+      self-report, transcribed as [reference] — a disclosed figure that sharpens the cooling-CoC and
+      effluent-dilution questions but must NOT be upgraded to [verified] or fed to a classifier
+      (cf. the closed-loop cooling reconciliation harness; the hydrology dilution screen).
     confidence: high
 
   chamber_proponent_case:
@@ -318,10 +326,10 @@ posts:
     title: Commissioners approve Google data center sewer design change
     published: '2026-07-30'
     byline: Craig Kelly   # the reporter (metro editor, The Lima News; also the photo credit). Kelly is the reporting conduit — the substantive claims are attributed to Sanitary Engineer Brad Niemeyer and Commissioner Cory Noonan, not to the byline.
-    canonical_url: https://www.limaohio.com/news/2026/07/30/commissioners-approve-google-data-center-sewer-design-change/   # section/slug pattern-inferred (the captured print/PDF omits the address bar); byte-verify on the next manual pull
+    # canonical_url OWED — the section/slug URL is only pattern-inferrable and the captured print/PDF omits the address bar; withheld until the publisher page is byte-verified (do not guess a URL)
     source_file: data/documents/limaohio/2026-07-30-commissioners-approve-google-data-center-sewer-design-change.limaohio-print.pdf
     capture: limaohio-print   # direct print/PDF capture of the canonical limaohio.com page (manual browser pull) — NOT a Yahoo mirror; the collection's FIRST canonical-publisher byte capture. Original download name: 20260730-commissioners-approve-google-data-center-sewer-design-change.pdf
-    role: $8M change order / Second Amendment (#582-26) — Google-requested sewer redesign (pump station relocated to N. Cole & Beery, dual force main, up to 500k gpd split across American Bath + American No. 2, excess to City of Lima; 2.5 MGD worst-day; cooling cycled 3–6×)
+    role: Second Amendment (#582-26) on the agenda (verified metadata) — likely the instrument for the news-reported $8M Google-requested sewer redesign (inference); the design specifics are reference-tagged, pending the amendment text — pump station relocated to N. Cole & Beery, dual force main, up to 500k gpd split across American Bath + American No. 2, excess to City of Lima; 2.5 MGD worst-day; cooling cycled 3–6×
 
 cross_references:
   - data/documents/limaohio/SOURCES.md                                    # chain-of-custody manifest
@@ -344,7 +352,8 @@ relevance:
     the 2026-07-09 commissioners item adds the buried-fiber telecom layer and the Brightspeed RUMA;
     the 2026-07-14 piece adds a resident transparency/NDA grievance over backup-genset specs redacted
     as proprietary; the 2026-07-30 piece reports the commissioners' approval of an $8M Google-paid
-    sanitary-sewer DESIGN CHANGE — Res #582-26, the Second Amendment — that splits up to 500k gpd
+    sanitary-sewer DESIGN CHANGE — likely enacted by Res #582-26, the Second Amendment on that day's
+    agenda (verified metadata; the amendment text is not yet in hand) — that splits up to 500k gpd
     across the American Bath + American #2 plants (excess to the City of Lima WWTP), promises 2.5 MGD
     worst-day capacity, and discloses cooling water cycled 3–6×. All [reference]. Most items were
     captured via the Yahoo syndication mirror because limaohio.com is bot-gated (403) with no Wayback
