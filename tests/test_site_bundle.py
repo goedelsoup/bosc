@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
 # The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
 # the fresh-export assertions below pin it so a bump lands here in one place.
-_CV = "1.44.0"
+_CV = "1.45.0"
 # The per-site offline bundle (#727): the committed Lima bundle the frontend build reads
 # (`web/sites/<slug>/`, a full `watermark export` per registered site).
 FRONTEND_SAMPLE = REPO_ROOT / "web" / "sites" / "lima"
@@ -105,17 +105,24 @@ def test_all_schemas_are_valid_draft_2020_12(bundle: Path) -> None:
         Draft202012Validator.check_schema(json.loads(path.read_text(encoding="utf-8")))
 
 
-def test_committed_schemas_match_generated(bundle: Path, wpafb_bundle: Path) -> None:
+def test_committed_schemas_match_generated(
+    bundle: Path, wpafb_bundle: Path, urbana_bundle: Path
+) -> None:
     """The committed schemas/ must equal what the models generate — else `watermark export`.
 
-    Compared against the **union** of the reference build and the enclave-bearing build, not Lima
-    alone (#1664). The committed `schemas/` are the *network's* shared contract, and a feed can be
-    gated on evidence only one site has: `enclave` exists only where a `federal_installation`
-    facility is registered, so Lima can never generate its schema and a Lima-only comparison would
-    force an enclave-gated contract to go uncommitted. Adding a second producing bundle keeps the
-    guard's real job — catching drift between a model and its committed schema — intact.
+    Compared against the **union** of the producing builds, not Lima alone (#1664). The committed
+    `schemas/` are the *network's* shared contract, and a feed can be gated on evidence only some
+    sites have: `enclave` exists only where a `federal_installation` facility is registered
+    (wpafb), and `cooling-reconciliation` (#1805) only where the cooling-cycling cohort has a
+    candidate row (urbana; Lima is not in the cohort) — so a Lima-only comparison would force an
+    evidence-gated contract to go uncommitted. Adding producing bundles keeps the guard's real
+    job — catching drift between a model and its committed schema — intact.
     """
-    produced = {p.name: p for b in (bundle, wpafb_bundle) for p in (b / "schemas").glob("*.json")}
+    produced = {
+        p.name: p
+        for b in (bundle, wpafb_bundle, urbana_bundle)
+        for p in (b / "schemas").glob("*.json")
+    }
     committed = {p.name for p in COMMITTED_SCHEMAS.glob("*.json")}
     assert set(produced) == committed, "committed schema set differs — run `watermark export`"
     for name, path in produced.items():

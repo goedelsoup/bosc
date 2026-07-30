@@ -417,7 +417,24 @@ from watermark.sites import (
 #   verdict). Emitted for every site — a facility-less site's project-dependent chapters
 #   read `na` (watch state), never `gap`. One new feed → MINOR, back-compatible (a pre-1.44
 #   bundle simply composes chapter models at the frontend build instead).
-CONTRACT_VERSION = "1.44.0"
+# 1.45.0: the cooling-cycling reconciliation reaches the bundle (#1805, epic #1803 P2) — one
+#   new feed. `cooling-reconciliation` (object) ships THE SITE'S OWN candidate row(s) of the
+#   committed claim-vs-record water account (`data/reference/oepa/cooling-reconciliation.yaml`,
+#   epic #1676: the A3 harness, the A4 secondary corroborators, the B1-B3 provenance slots) —
+#   claim (archetype + source + citation), the predicted account at screening grade, the
+#   documented / reserved / disclosed slots kept structurally distinct, outcome
+#   (`discrepancy | corroborated | reservation_conflict | gap`) + tag + finding, the
+#   records-sought lead, and the corroborator stances — validated back through the producer's
+#   own `ReconciliationRecord` model and shipped verbatim, so the feed is byte-consistent with
+#   the reference artifact by construction. The harness's discipline rules ride the feed as
+#   MUST-render `caveats` (a ceiling is not an instrument; a self-report never upgrades the
+#   source; corroborators never change the outcome; a back-solved CoC is a bracket). Site-gated
+#   on the rows' own `site` key and self-skipped when the site has no row (#1364), and the
+#   Intel positive-control row (`is_control`) is excluded explicitly — a calibration vector
+#   never ships as site data, even on a `new-albany` bundle. One new feed → MINOR,
+#   back-compatible (a pre-1.45 bundle simply renders the water chapter without the
+#   reconciliation block).
+CONTRACT_VERSION = "1.45.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

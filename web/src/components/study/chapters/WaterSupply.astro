@@ -20,6 +20,7 @@
  * per-site MDX slot, not here.
  */
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { buildCoolingReconciliation, RECONCILE_OUTCOME_META } from "@watermark/core/coolingReconciliation";
 import type { CoolingModel, ProvenancedValue, ScenarioResult } from "@watermark/core/feeds";
 import { fmtRanged } from "@watermark/core/format";
 import { withSite } from "@watermark/core/site";
@@ -84,6 +85,20 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
 // The facility's cooling posture — the one line this chapter always states when a project
 // is on the record, whatever the verdict. The register tracks the SOURCE, never the claim:
 // document/connector ⇒ [verified]; reference ⇒ an operator claim; assumption ⇒ [inference].
+// The claim-vs-record reconciliation (#1805) — the site's own row(s) of the committed
+// cooling-cycling account, shipped on the `cooling-reconciliation` feed. Null outside the
+// cohort; the block simply doesn't render. The feed's caveats are the harness's discipline
+// rules and MUST render with it.
+const recon = buildCoolingReconciliation(slug);
+// The claim's register tracks its SOURCE (the same mapping the cooling-posture line uses):
+// document/connector ⇒ verified; reference ⇒ an operator claim; the rest ⇒ inference.
+const claimTagOf = (source: string): "verified" | "reference" | "inference" =>
+  source === "document" || source === "connector"
+    ? "verified"
+    : source === "reference"
+      ? "reference"
+      : "inference";
+
 const cooling = facility?.cooling_model ?? null;
 const coolingEvidence =
   cooling === "unknown"
@@ -122,6 +137,84 @@ const facilityName = facility?.name ?? "the proposed facility";
             </span>
           )}
         </p>
+      )}
+
+      {recon !== null && (
+        <section class="wsrec">
+          <p class="wsrec-kicker">Claim vs record · the cooling-cycling reconciliation</p>
+          {recon.candidates.map((r) => {
+            const meta = RECONCILE_OUTCOME_META[r.outcome];
+            // The four provenance slots render ONLY when their record exists, each under its
+            // own register label — a renderer must keep them apart (the carried discipline).
+            const slots = [
+              { label: "Documented makeup · metered/record", v: r.account.documented_makeup },
+              { label: "Documented blowdown · metered/record", v: r.account.documented_blowdown },
+              { label: "Reservation ceiling · makeup — not an instrument", v: r.account.reserved_makeup },
+              { label: "Reservation ceiling · blowdown — not an instrument", v: r.account.reserved_blowdown },
+              { label: "Operator self-report · ongoing draw", v: r.account.disclosed_makeup },
+              { label: "Self-disclosed permit ceiling", v: r.account.disclosed_ceiling },
+              { label: "Back-solved cycles of concentration · bracket", v: r.account.backsolved_cycles },
+            ].filter((s) => s.v != null);
+            return (
+              <article class="wsrec-row">
+                <p class="wsrec-claim">
+                  {r.facility} claims{" "}
+                  <strong>{COOLING_MODEL_LABELS[r.claimed_archetype]}</strong>
+                  <EvidenceTag kind={claimTagOf(r.claim_source)} />
+                  <span class:list={["wsrec-outcome", `is-${r.outcome}`]} title={meta.gloss}>
+                    {meta.label}
+                  </span>
+                  {r.kept_archetype && (
+                    <span class="wsrec-kept">
+                      pin kept: {COOLING_MODEL_LABELS[r.kept_archetype]}
+                    </span>
+                  )}
+                </p>
+                <p class="wsrec-finding">{r.finding}</p>
+                <div class="wsrec-stats">
+                  <FigureStat stat={toStat("Predicted makeup", r.account.predicted_makeup)} size="sm" />
+                  <FigureStat stat={toStat("Predicted consumptive", r.account.predicted_consumptive)} size="sm" />
+                  <FigureStat stat={toStat("Predicted blowdown", r.account.predicted_blowdown)} size="sm" />
+                  {slots.map((s) => (
+                    <FigureStat stat={toStat(s.label, s.v!)} size="sm" />
+                  ))}
+                </div>
+                {r.lead && (
+                  <div class="wsrec-lead">
+                    <p class="wsrec-lead-head">
+                      The records that would test it <EvidenceTag kind="open" />
+                    </p>
+                    <ul class="wsrec-lead-list">
+                      {r.lead.records_sought.map((rec) => (
+                        <li>{rec}</li>
+                      ))}
+                    </ul>
+                    <p class="wsrec-lead-holder">Holder: {r.lead.holder}</p>
+                  </div>
+                )}
+                {r.corroborators && (
+                  <p class="wsrec-corr">
+                    <span class="wsrec-corr-label">Corroborators · secondary, never the outcome</span>
+                    <span class="wsrec-corr-chips">
+                      air permit · {r.corroborators.air_permit.stance} &middot; Tier II chemistry ·{" "}
+                      {r.corroborators.tier2_chemistry.stance}
+                    </span>
+                    <span class="wsrec-corr-sum">{r.corroborators.summary}</span>
+                  </p>
+                )}
+                <p class="wsrec-cite">{r.claim_citation}</p>
+              </article>
+            );
+          })}
+          <ul class="wsrec-caveats">
+            {recon.caveats.map((c) => (
+              <li>{c}</li>
+            ))}
+          </ul>
+          <p class="wsrec-src">
+            {recon.source} · reconciled as of {recon.asof}
+          </p>
+        </section>
       )}
 
       {showScreen && drawV && lowV && worst && (
@@ -240,6 +333,142 @@ const facilityName = facility?.name ?? "the proposed facility";
   .wsup-cooling-note {
     font-size: 0.8rem;
     color: var(--bosc-muted);
+  }
+  .wsrec {
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--bosc-ink);
+    padding: 16px 20px;
+    margin: 0 0 1.4rem;
+  }
+  .wsrec-kicker {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    margin: 0 0 0.7rem;
+  }
+  .wsrec-row + .wsrec-row {
+    border-top: 1px solid var(--bosc-rule);
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+  .wsrec-claim {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 10px;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  /* The outcome chip speaks the facility-status color register (grey/forest/amber) —
+     the evidence palette only ever encodes evidence. */
+  .wsrec-outcome {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid var(--bosc-rule);
+    padding: 1px 7px;
+    color: var(--bosc-muted);
+  }
+  .wsrec-outcome.is-corroborated {
+    color: var(--bosc-forest);
+    border-color: var(--bosc-forest);
+  }
+  .wsrec-outcome.is-discrepancy,
+  .wsrec-outcome.is-reservation_conflict {
+    color: #9a6a14;
+    border-color: #9a6a14;
+  }
+  .wsrec-kept {
+    font-size: 0.8rem;
+    color: var(--bosc-muted);
+  }
+  .wsrec-finding {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    max-width: 660px;
+    margin: 0.5rem 0 0;
+  }
+  .wsrec-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 0.8rem;
+  }
+  .wsrec-lead {
+    margin-top: 0.9rem;
+  }
+  .wsrec-lead-head {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin: 0 0 0.3rem;
+  }
+  .wsrec-lead-list {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+  .wsrec-lead-list li {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 2px;
+  }
+  .wsrec-lead-holder {
+    font-size: 0.8rem;
+    color: var(--bosc-muted);
+    margin: 0.35rem 0 0;
+  }
+  .wsrec-corr {
+    display: block;
+    margin: 0.9rem 0 0;
+    font-size: 0.85rem;
+  }
+  .wsrec-corr-label {
+    display: block;
+    font-family: var(--bosc-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+  }
+  .wsrec-corr-chips {
+    display: block;
+    margin-top: 2px;
+  }
+  .wsrec-corr-sum {
+    display: block;
+    color: var(--bosc-muted);
+    margin-top: 2px;
+    max-width: 660px;
+  }
+  .wsrec-cite {
+    font-size: 0.76rem;
+    line-height: 1.5;
+    color: var(--bosc-faint);
+    max-width: 660px;
+    margin: 0.8rem 0 0;
+  }
+  .wsrec-caveats {
+    margin: 1rem 0 0;
+    padding-left: 1.1rem;
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 0.7rem;
+  }
+  .wsrec-caveats li {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--bosc-muted);
+    margin-bottom: 0.3rem;
+  }
+  .wsrec-src {
+    font-family: var(--bosc-mono);
+    font-size: 0.68rem;
+    color: var(--bosc-faint);
+    margin: 0.6rem 0 0;
   }
   .wsup-bracket {
     border: 1px solid var(--bosc-rule);

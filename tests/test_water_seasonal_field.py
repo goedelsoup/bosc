@@ -22,7 +22,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_contract_version_bumped() -> None:
-    """This feed landed at 1.22.0 (additive/MINOR); the contract has since advanced to 1.44.0
+    """This feed landed at 1.22.0 (additive/MINOR); the contract has since advanced to 1.45.0
     (ProvenancedValue range 1.23.0 #760, contacts feed 1.24.0, facts feed 1.25.0 #1587, the
     passages feed 1.26.0 #1589, the open-questions feed 1.27.0 #1568, DocumentItem version/dedup
     metadata 1.27.1 #1590, the corpus-index feed 1.28.0 #1573, the manifest exports block
@@ -45,8 +45,10 @@ def test_contract_version_bumped() -> None:
     the non-data-center facility seam), then the `economics-scenarios` feed 1.43.0 (ME-F #1665,
     epic #1659 — the prose economic argument as disciplined scenario bands), then the
     `impact-study` feed 1.44.0 (#1804, epic #1803 — the study's per-chapter verdicts + models
-    as a committed projection over the assembled feeds))."""
-    assert CONTRACT_VERSION == "1.44.0"
+    as a committed projection over the assembled feeds), then the `cooling-reconciliation` feed
+    1.45.0 (#1805 — the site's own claim-vs-record cooling account, shipped verbatim from the
+    committed reference artifact))."""
+    assert CONTRACT_VERSION == "1.45.0"
 
 
 # `lima_bundle` / `site_bundle` are conftest's session-wide, cross-worker exports (#1773).
@@ -62,7 +64,7 @@ def test_reference_export_emits_the_seasonal_field(lima_bundle: Path) -> None:
     """The reference build ships `water-seasonal-field` with real months (climate normals are
     committed, so it does not degrade like the AERMOD field), `reference`-provenanced."""
     manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
-    assert manifest["contract_version"] == "1.44.0"
+    assert manifest["contract_version"] == "1.45.0"
 
     field = _field(lima_bundle)
     assert field["site"] == "lima"
