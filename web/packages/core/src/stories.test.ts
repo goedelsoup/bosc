@@ -36,6 +36,7 @@ const LIMA_SPINE: StoryChapterSpine[] = [
     anchor: "Ohio EPA Air Permit-to-Install P0138965",
     anchorRecordRels: ["permits/4132514.epa.yaml"],
     live: true,
+    studySection: "power",
   },
   {
     step: 4,
@@ -45,6 +46,7 @@ const LIMA_SPINE: StoryChapterSpine[] = [
     anchor: "NPDES dilution + the cooling-draw screen",
     anchorRecordRels: ["oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml"],
     live: true,
+    studySection: "water-supply",
   },
   {
     step: 5,
@@ -54,6 +56,7 @@ const LIMA_SPINE: StoryChapterSpine[] = [
     anchor: "Tetra Tech OPC + the Roadwork Development Agreement",
     anchorRecordRels: ["aedg/roundabouts.summary.opc.yaml"],
     live: true,
+    studySection: "balance",
   },
   {
     step: 6,

@@ -52,6 +52,7 @@ exports[`story spine parity snapshot (#742) > the Lima project-bosc spine is sta
       "skill": "Reading an air permit · recognizing a CBI redaction",
       "slug": "scale",
       "step": 3,
+      "studySection": "power",
       "title": "How big is it — and what won't they tell you?",
     },
     {
@@ -60,6 +61,7 @@ exports[`story spine parity snapshot (#742) > the Lima project-bosc spine is sta
       "skill": "Reading an NPDES permit · the 7Q10 low-flow screen",
       "slug": "water",
       "step": 4,
+      "studySection": "water-supply",
       "title": "What it does to the water",
     },
     {
@@ -68,6 +70,7 @@ exports[`story spine parity snapshot (#742) > the Lima project-bosc spine is sta
       "skill": "Reading a cost estimate · reading a contract clause",
       "slug": "cost",
       "step": 5,
+      "studySection": "balance",
       "title": "What it costs the public",
     },
     {

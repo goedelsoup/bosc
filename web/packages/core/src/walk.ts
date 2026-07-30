@@ -36,6 +36,10 @@ export interface Chapter {
   anchor: string;
   /** Whether the chapter page exists (vs. still drafting). */
   live: boolean;
+  /** The impact-study chapter this walk chapter teaches toward (a `STUDY_CHAPTERS` id) —
+   *  the walk↔study cross-link: the walk teaches the record-reading, the study owns the
+   *  finding, and each surface links the other exactly once (never inlines it). */
+  studySection?: string;
 }
 
 /** @deprecated Prefer {@link Chapter}; kept so existing type imports don't break. */
