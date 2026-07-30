@@ -40,6 +40,7 @@ from watermark.hydrology.model import (
 from watermark.hydrology.solver.routing import route_reach
 from watermark.hydrology.solver.runoff import simulate_runoff, unit_duration_hr
 from watermark.logging import get_logger
+from watermark.sites import active_profile, site_reference_path
 
 log = get_logger(__name__)
 
@@ -50,7 +51,14 @@ _ROUTING_HEADROOM_HR = 24.0
 
 
 def _reaches_path(settings: Settings) -> Path:
-    return settings.data_dir / "reference" / "hydrology" / "reaches.yaml"
+    # Slug-scoped via the profile pin (#1806): Lima pins its legacy un-slugged path; a peer
+    # resolves `reference/hydrology/<slug>/reaches.yaml` — its own table, never Lima's.
+    return site_reference_path(
+        settings,
+        active_profile(settings).hydrology_reaches_relpath,
+        subdir="hydrology",
+        filename="reaches.yaml",
+    )
 
 
 def load_reaches(*, settings: Settings | None = None) -> ReachTable | None:
@@ -315,14 +323,21 @@ def build_routed_hydrograph(
     offline-aware :func:`watermark.hydrology.stormwater._resolve_storm` (same NOAA Atlas-14
     corridor-point depth the campus storm chain uses), and routes. Returns ``None`` if either
     committed input is absent, so ``watermark export`` skips the feed rather than fabricating one.
-    """
-    from watermark.sites import active_profile
 
+    A table with NO contributing catchments also returns ``None`` (the #1364
+    present-but-empty rule): a geometry-grade reach table — real NHD topology + lengths
+    committed for the reach-network map, with no cited runoff parameters yet — supports the
+    `reach-network` feed but cannot generate a storm hydrograph, and an all-zero routed feed
+    would read as "screened, nothing found" instead of "not yet modeled".
+    """
     settings = settings or get_settings()
     nodes = network.load_topology(settings=settings)
     table = load_reaches(settings=settings)
     if not nodes or table is None:
         log.info("hydro.hydrograph_route.absent", nodes=len(nodes), reaches=table is not None)
+        return None
+    if not table.catchments:
+        log.info("hydro.hydrograph_route.no_catchments", site=settings.site)
         return None
     storm = stormwater._resolve_storm(return_period_yr, settings=settings, live=live)
     return route_storm_network(
@@ -335,7 +350,15 @@ def build_routed_hydrograph(
     )
 
 
-_ARTIFACT_REL = ("reference", "hydrology", "routed-hydrograph.yaml")
+def _artifact_path(settings: Settings) -> Path:
+    # Slug-scoped via the profile pin (#1806), like the tables it summarizes: Lima pins its
+    # legacy un-slugged path; a peer's `basin-route --write` lands under its own slug dir.
+    return site_reference_path(
+        settings,
+        active_profile(settings).routed_hydrograph_relpath,
+        subdir="hydrology",
+        filename="routed-hydrograph.yaml",
+    )
 
 
 def write_routed_hydrograph(
@@ -349,7 +372,7 @@ def write_routed_hydrograph(
     offline via ``watermark basin-route``. A committed reference doc, not a typed pipeline input.
     """
     settings = settings or get_settings()
-    path = settings.data_dir.joinpath(*_ARTIFACT_REL)
+    path = _artifact_path(settings)
     path.parent.mkdir(parents=True, exist_ok=True)
     doc = rn.model_dump(exclude={"times_hr", "outlet_hydrograph_cfs", "summed_hydrograph_cfs"})
     doc["series_note"] = (

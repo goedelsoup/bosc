@@ -112,6 +112,12 @@ _LIMA = SiteProfile(
         downstream_da_sqmi=350.0,
     ),
     dewatering_discharge_relpath="reference/hydrology/dewatering-discharge.yaml",
+    # Design-storm routing tables (#1806): Lima pins its legacy un-slugged paths; a peer
+    # leaves these None and resolves reference/hydrology/<slug>/<file> via site_reference_path.
+    hydrology_network_relpath="reference/hydrology/network.yaml",
+    hydrology_reaches_relpath="reference/hydrology/reaches.yaml",
+    reach_nav_relpath="reference/hydrology/reach-nav.yaml",
+    routed_hydrograph_relpath="reference/hydrology/routed-hydrograph.yaml",
     # per-site onboard reach outputs (Lima = legacy un-slugged paths)
     climatology_relpath="reference/hydrology/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/atlas14-corridor-ddf.yaml",

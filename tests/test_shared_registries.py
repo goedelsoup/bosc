@@ -44,6 +44,12 @@ _SITE_REFERENCE_WRITERS = (
     ("ferc_relpath", "ferc", "ferc-seam.yaml"),
     ("pjm_relpath", "pjm", "pjm-market.yaml"),
     ("federal_relpath", "federal", "federal-energy.yaml"),
+    # The design-storm routing tables + artifact (#1806) — Lima pins its legacy un-slugged
+    # paths; every peer resolves reference/hydrology/<slug>/<file>.
+    ("hydrology_network_relpath", "hydrology", "network.yaml"),
+    ("hydrology_reaches_relpath", "hydrology", "reaches.yaml"),
+    ("reach_nav_relpath", "hydrology", "reach-nav.yaml"),
+    ("routed_hydrograph_relpath", "hydrology", "routed-hydrograph.yaml"),
 )
 
 
