@@ -26,8 +26,9 @@ const { gap } = Astro.props as Props;
   <div class="studygap-actions">
     <a class="studygap-submit" href={withSite("/submit")}>Have this record? Submit it →</a>
     {
-      // Curated joins only (STUDY_GAP_LEADS): the ask is ALREADY on the leads board — link
-      // its anchor so the study and the board present one ask, never a duplicate.
+      // Curated joins only (the Python projector's STUDY_GAP_LEADS, shipped on the feed
+      // row — #1804): the ask is ALREADY on the leads board — link its anchor so the study
+      // and the board present one ask, never a duplicate.
       (gap.leadIds ?? []).map((id) => (
         <a class="studygap-lead" href={withSite(`/leads#${id}`)}>
           Tracked as <span class="studygap-leadid">{id}</span> →

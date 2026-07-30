@@ -125,6 +125,7 @@ from watermark.site.feeds import (
     FeedKind,
     FeedRef,
     GeoFeatureCollection,
+    ImpactStudyItem,
     LeadItem,
     Manifest,
     MeetingItem,
@@ -142,6 +143,7 @@ from watermark.site.feeds import (
     SiteReadiness,
     TimelineEntry,
 )
+from watermark.site.impact_study import build_impact_study
 from watermark.site.open_questions import build_open_questions
 from watermark.site.passages import load_committed_passages
 from watermark.site.readiness import (
@@ -155,6 +157,7 @@ from watermark.site.readiness import (
     RECORD_LIVE_FEED,
     RSEI_FEED,
     compute_readiness,
+    domain_states,
 )
 from watermark.sites import (
     active_profile,
@@ -1096,6 +1099,36 @@ def _open_questions_feed(feeds: Sequence[_Feed]) -> _Feed | None:
     return _collection_feed("open-questions", OpenQuestionItem, questions)
 
 
+def _impact_study_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
+    """Build the `impact-study` feed (#1804) as a projection over the assembled feeds.
+
+    Like `_open_questions_feed`, a post-pass over feeds already in hand (no corpus re-load):
+    it re-derives each study chapter's verdict + model from the same sources the frontend's
+    TS composers read (`web/packages/core/src/study.ts`), which prefer a shipped row wholesale
+    — the parity suite over the committed bundles pins the two derivations equal. ALWAYS
+    emitted (13 rows, one per chapter — a facility-less site's project-dependent chapters are
+    `na` watch states, not skips), so the schema set stays stable and every bundle's study is
+    a committed artifact. The facility domain state is computed from the same
+    `domain_states` inputs the manifest block gets below, so the shipped probe verdicts and
+    the manifest readiness can never disagree.
+    """
+    payloads_by_feed: dict[str, object] = {}
+    for feed in feeds:
+        if feed.kind == "collection":
+            payloads_by_feed[feed.name] = _collection_rows(feed)
+        elif feed.kind == "object":
+            payloads_by_feed[feed.name] = json.loads(feed.payload)
+    feed_counts = {feed.name: feed.count for feed in feeds}
+    states = domain_states(active_profile(settings), feed_counts)
+    rows = build_impact_study(
+        payloads_by_feed,
+        site=settings.site,
+        feed_counts=feed_counts,
+        facility_domain=states["facility"],
+    )
+    return _collection_feed("impact-study", ImpactStudyItem, rows)
+
+
 def _corpus_index_feed(mirror: Mirror, settings: Settings) -> _Feed:
     """Build the `corpus-index` feed (#1573) — the node map of the site's yidam corpus mirror.
 
@@ -1193,6 +1226,10 @@ def export_bundle(
     open_questions_feed = _open_questions_feed(feeds)
     if open_questions_feed is not None:
         feeds.append(open_questions_feed)
+    # The impact-study feed (#1804) — the study's per-chapter verdicts + models, projected
+    # from the just-assembled feeds (the same sources the frontend composers read). Always
+    # emitted, after `open-questions` so the annex's sibling projections are in hand first.
+    feeds.append(_impact_study_feed(feeds, settings))
     # The page-level `passages` index (#1589) — a post-pass over the just-assembled `documents`
     # feed's published PDFs, so it's appended after `_collect_feeds` (like facts). Always emitted
     # (empty when no published PDF is readable) so the schema set is stable. Its `passage-embeddings`

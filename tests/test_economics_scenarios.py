@@ -35,7 +35,7 @@ from watermark.economics.scenarios import (
 )
 from watermark.site.feeds import CONTRACT_VERSION
 
-_CV = "1.43.0"
+_CV = "1.44.0"
 _PEER = "urbana"  # a selectable peer with no abatement instrument on the record
 
 
@@ -321,8 +321,9 @@ def _feed(bundle: Path) -> dict[str, Any] | None:
 
 
 def test_contract_version_bumped_for_the_scenarios_feed() -> None:
-    """One new feed → MINOR (1.42.0 → 1.43.0): a pre-1.43 reader is unaffected and a pre-1.43
-    bundle simply has no scenario bands to render."""
+    """One new feed → MINOR (1.42.0 → 1.43.0, since advanced to 1.44.0 by the `impact-study`
+    feed #1804): a pre-1.43 reader is unaffected and a pre-1.43 bundle simply has no scenario
+    bands to render."""
     assert CONTRACT_VERSION == _CV
 
 

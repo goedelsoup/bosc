@@ -7,12 +7,13 @@ import {
   chapterAvailability,
   chapterNumber,
   type ChapterStatus,
+  IMPACT_STUDY_FEED,
   type ImpactStudyFeedRow,
   STUDY_CHAPTERS,
-  STUDY_GAP_LEADS,
   STUDY_PARTS,
   studyChapter,
   studyChapterModel,
+  studyGapLeads,
   studyHref,
   studyStatusSummary,
   studyToc,
@@ -182,18 +183,24 @@ describe("study verdicts — defiance (facility-less backdrop: the study still e
   });
 });
 
-describe("STUDY_GAP_LEADS — the curated gap→lead joins never drift off the board", () => {
-  it("every curated id names a real chapter and a real lead in that site's committed feed", () => {
-    for (const [slug, byChapter] of Object.entries(STUDY_GAP_LEADS)) {
-      const leads = loadFeed<{ id: string }[]>("leads", slug);
-      const known = new Set(leads.map((l) => l.id));
-      for (const [chapterId, ids] of Object.entries(byChapter)) {
-        expect(() => studyChapter(chapterId)).not.toThrow();
-        for (const id of ids) {
-          expect(known.has(id), `${slug}/${chapterId}: lead "${id}" is not on the board`).toBe(true);
-        }
+describe("the curated gap→lead joins never drift off the board", () => {
+  // The curation's ONE owner is the Python projector (#1804), which refuses a dangling
+  // join at export — this pins the SHIPPED rows to the committed board from the consumer
+  // side, so a hand-edited bundle can't smuggle one past either.
+  it("every shipped lead id names a real chapter and a real lead in lima's committed feed", () => {
+    const rows = loadFeed<ImpactStudyFeedRow[]>(IMPACT_STUDY_FEED, "lima");
+    const known = new Set(loadFeed<{ id: string }[]>("leads", "lima").map((l) => l.id));
+    const joined = rows.filter((r) => (r.lead_ids?.length ?? 0) > 0);
+    expect(joined.length).toBeGreaterThan(0); // lima curates 8 chapters — never silently empty
+    for (const row of joined) {
+      expect(() => studyChapter(row.chapter)).not.toThrow();
+      for (const id of row.lead_ids ?? []) {
+        expect(known.has(id), `lima/${row.chapter}: lead "${id}" is not on the board`).toBe(true);
       }
     }
+    // `studyGapLeads` is the thin reader of those rows (the annex's residual-asks register).
+    expect(studyGapLeads("lima", "fiscal")).toEqual(["PRR-04", "GH-35"]);
+    expect(studyGapLeads("urbana", "fiscal")).toEqual([]);
   });
 
   it("a chapter's rendered gaps carry the curated joins (lima fiscal → the withheld CBA)", () => {
