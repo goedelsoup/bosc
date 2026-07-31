@@ -2,9 +2,9 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "1.47.0",
-  "generated_at": "2026-07-31T01:34:13+00:00",
+  "generated_at": "2026-07-31T02:55:41+00:00",
   "feed_count": 32,
-  "row_total": 497,
+  "row_total": 527,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 3
     },
     {
       "name": "exhibits",
@@ -117,7 +117,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 15
+      "count": 22
     },
     {
       "name": "rsei",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 58
+      "count": 59
     },
     {
       "name": "facts",
@@ -237,7 +237,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 13
+      "count": 20
     },
     {
       "name": "impact-study",
@@ -261,7 +261,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 99
+      "count": 106
     },
     {
       "name": "corpus-nodes",
@@ -269,7 +269,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 99
+      "count": 106
     },
     {
       "name": "ask-embeddings",

@@ -52,6 +52,88 @@
     ]
   },
   {
+    "slug": "grid",
+    "title": "Grid",
+    "description": "**Collection:** `grid/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "grid/findlay/20250916-item-04f---aep-large-load-request.pdf",
+        "name": "20250916-item-04f---aep-large-load-request.pdf",
+        "size_bytes": 2276472,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "grid/findlay/Ebersole-Fostoria Center 2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV Tie Line Project Construction Notice.pdf",
+        "name": "Ebersole-Fostoria Center 2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV Tie Line Project Construction Notice.pdf",
+        "size_bytes": 7417796,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "grid/findlay/July_24_2026_AEP_Ohio_Tariff_Book.pdf",
+        "name": "July_24_2026_AEP_Ohio_Tariff_Book.pdf",
+        "size_bytes": 11336536,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "grid/findlay/Rocky Ford 138 kV Station Project Letter of Notification.pdf",
+        "name": "Rocky Ford 138 kV Station Project Letter of Notification.pdf",
+        "size_bytes": 7698712,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "grid/findlay/Rocky Ford 138 kV Station Project Public Notice.pdf",
+        "name": "Rocky Ford 138 kV Station Project Public Notice.pdf",
+        "size_bytes": 94018,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  },
+  {
     "slug": "oepa",
     "title": "Ohio EPA",
     "description": "**Collection:** `oepa/` · immutable source evidence",

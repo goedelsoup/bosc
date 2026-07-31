@@ -1,0 +1,78 @@
+id: findlay-grid
+title: Findlay — Grid Posture (OPSB siting pair, Schedule DCT, behind-the-meter fleet, the +300 MW gap)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    AEP Ohio Transmission Company's Letter of Notification for the Rocky Ford 138 kV
+    Station Project (OPSB 24-0707-EL-BLN) and Ohio Power Company's Construction Notice
+    for the Ebersole-Fostoria Central #2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV
+    Tie Line Project (OPSB 24-0706-EL-BNR), both filed 2024-09-10, plus AEP's public
+    notice for the pair; Ohio Power Company's filed retail tariff P.U.C.O. No. 22
+    (Schedule DCT, Original Sheet Nos. 223-1..223-7); AEP's 2025 Load Forecast
+    Adjustments presented to the PJM Load Analysis Subcommittee 2025-09-16. All four
+    captured under data/documents/grid/findlay/. Secondary/uncommitted reads (cited by
+    URL, not carried as bytes): One Power Co's Form S-1 (EDGAR CIK 2039139, filed
+    2025-01-23, withdrawn 2025-05-09), the OCC merit brief in Ohio S.Ct. 2025-1458, and
+    the SEL / Goldwind / OnSite vendor releases.
+license: Public record (state siting filings, a filed retail tariff, an RTO committee document)
+access_tier: public
+site_scope: site:findlay
+storage:
+- relpath: extracted/grid/findlay/rocky-ford-138kv-2024.project.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/grid/findlay/aep-dct-tariff-posture.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/grid/findlay/megawatt-hub-interconnection.gap.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/grid/findlay/behind-the-meter-generation.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- grid
+- opsb
+- siting
+- transmission
+- tariff
+- data-center-tariff
+- schedule-dct
+- interconnection
+- behind-the-meter
+- wind
+- pjm
+- puco
+- findlay
+- hancock-county
+notes: >-
+  Issue #1464 (under epic #1265) — the power side of Findlay's facility story. Four
+  structured records, none of which is a `RecordItem` genre: like the Lima "Lyka" record
+  (#1476) a siting docket and a tariff posture are carried as corpus extractions rather
+  than as a new RecordGroup, so this set does not move the site's `record` domain.
+  What it establishes. (1) Both OPSB case numbers the issue asked for are resolved off
+  the filings' own cover pages — 24-0707-EL-BLN (station, $8.7M) and 24-0706-EL-BNR
+  (lines, $2.214M), both Cass Township, both fully reimbursed by the IPP — and the
+  "Central Findlay" case resolves as a jurisdictional NEGATIVE: that work is 69 kV, below
+  the 100 kV threshold in R.C. 4906.01(B)(2), so no OPSB case exists to find. (2) Rocky
+  Ford is a GENERATION interconnection for Border Basin I's 120 MW/81 MW solar plant
+  (PJM AE1-146, network upgrade n8130) — emphatically not the Megawatt Hub load
+  instrument, and the record says so rather than letting a fresh 138 kV substation stand
+  in for the missing one. (3) Schedule DCT is read verbatim off the filed sheets, not off
+  press summaries: its "Mobile Data Center" definition reaches cryptocurrency mining by
+  name, an Existing Load that expands by more than 25,000 kW converts to New Load by
+  definition, and behind-the-meter netting carries an instantaneous-curtailment
+  obligation. (4) The +300 MW "standalone interconnection site" stays [open] with the
+  negative recorded per source — and the PUCO route is recorded as ACCESS-BLOCKED (DIS
+  returns an application-firewall page to automated retrieval) rather than as empty, so
+  no conclusion is drawn from a docket that was never actually searched. Corrections to
+  the issue body's own framing are carried inline: the ~$2.2M belongs to the line project
+  alone, the ten Wind-for-Industry turbines sit behind three manufacturers' meters and
+  not at the hub, Whirlpool's 14.4 MW + 6.0 MW is a Net Zero project rather than
+  Wind-for-Industry, and the OnSite/AEP/Basalt fuel-cell release names neither Findlay
+  nor One Power. Open threads are cross-filed in data/site/findlay/leads.yaml.

@@ -8,7 +8,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 14,
-    "updated": null
+    "updated": "2026-07-30"
   },
   {
     "id": "artifact/city-of-findlay",
@@ -19,7 +19,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 15,
-    "updated": null
+    "updated": "2026-07-30"
   },
   {
     "id": "artifact/npdes-2pd00008",
@@ -30,7 +30,7 @@
     "links_out": 1,
     "links_in": 2,
     "lines": 14,
-    "updated": null
+    "updated": "2026-07-30"
   },
   {
     "id": "artifact/site-findlay",
@@ -39,7 +39,7 @@
     "label": "Findlay",
     "scope": "site",
     "links_out": 3,
-    "links_in": 21,
+    "links_in": 28,
     "lines": 13,
     "updated": null
   },
@@ -902,6 +902,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-aep-bloom-onsite",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Confirm the AEP/Bloom fuel-cell commitments — the captured release names neither Findlay nor One Power",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
     "id": "question/lead-assessment-om-method",
     "node_class": "question",
     "kind": "lead",
@@ -932,6 +943,17 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 20,
+    "updated": "2026-07-30"
+  },
+  {
+    "id": "question/lead-central-findlay-69kv",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Put scope, schedule and cost on the Central Findlay 69 kV rebuild — there is no OPSB case to pull",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
     "updated": null
   },
   {
@@ -950,6 +972,17 @@
     "node_class": "question",
     "kind": "lead",
     "label": "The CSO Long-Term Control Plan addendum is due 2026-11-01 — a dated deadline on an issued permit",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
+    "id": "question/lead-dct-appeal-2025-1458",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The data-center tariff is on appeal to the Supreme Court of Ohio — capture the decision",
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
@@ -987,6 +1020,17 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 21,
+    "updated": "2026-07-30"
+  },
+  {
+    "id": "question/lead-hub-esa-customer",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Who actually holds the AEP Ohio electric service agreement at the Findlay Megawatt Hub?",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 23,
     "updated": null
   },
   {
@@ -994,6 +1038,17 @@
     "node_class": "question",
     "kind": "lead",
     "label": "The mercury variance runs with the permit to 2029-10-31 — track the annual 12 ng/L condition",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
+    "id": "question/lead-netzero-whirlpool-cod",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Did Whirlpool's Hancock County Net Zero project (14.4 MW wind + 6.0 MW solar) reach operation?",
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
@@ -1012,6 +1067,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-puco-dis-access",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "PUCO's docket system refuses automated retrieval — the tariff docket is unsearched, not empty",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 23,
+    "updated": null
+  },
+  {
     "id": "question/lead-riverside-dam-sediment",
     "node_class": "question",
     "kind": "lead",
@@ -1020,6 +1086,17 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 22,
+    "updated": null
+  },
+  {
+    "id": "question/lead-rocky-ford-inservice",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Did Rocky Ford Station energize on its December 2025 schedule?",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 19,
     "updated": null
   },
   {
@@ -1064,7 +1141,7 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 21,
-    "updated": null
+    "updated": "2026-07-30"
   },
   {
     "id": "relation/city-of-findlay--operates--npdes-2pd00008",
@@ -1075,7 +1152,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-07-30"
   },
   {
     "id": "relation/npdes-2pd00008--discharges-to--blanchard-river",
@@ -1086,6 +1163,6 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-07-30"
   }
 ]

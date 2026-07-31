@@ -1,6 +1,6 @@
 {
   "site": "findlay",
-  "catalog_version": "ff1f651779a05402d5463a1879fc3dc96cf6c8b26044be704c840905d8c33447",
+  "catalog_version": "ecb3eb26e0b1f5e2d81c03d3313b188a75dc7090bbac879ac3e67e2e1da0b1f8",
   "contract_version": "1.47.0",
   "atoms": [
     {
@@ -780,6 +780,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:findlay-grid",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "findlay-grid",
+      "title": "Findlay — Grid Posture (OPSB siting pair, Schedule DCT, behind-the-meter fleet, the +300 MW gap)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:gleif",
       "kind": "dataset",
       "site": "findlay",
@@ -1108,6 +1116,14 @@
       "feed": "entities"
     },
     {
+      "handle": "lead:findlay:AEP-BLOOM-ONSITE",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "AEP-BLOOM-ONSITE",
+      "title": "Confirm the AEP/Bloom fuel-cell commitments — the captured release names neither Findlay nor One Power",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:ASSESSMENT-OM-METHOD",
       "kind": "lead",
       "site": "findlay",
@@ -1132,6 +1148,14 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:CENTRAL-FINDLAY-69KV",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "CENTRAL-FINDLAY-69KV",
+      "title": "Put scope, schedule and cost on the Central Findlay 69 kV rebuild — there is no OPSB case to pull",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:CONSERVANCY-COURT-2021",
       "kind": "lead",
       "site": "findlay",
@@ -1145,6 +1169,14 @@
       "site": "findlay",
       "local_id": "CSO-LTCP-2026-11-01",
       "title": "The CSO Long-Term Control Plan addendum is due 2026-11-01 — a dated deadline on an issued permit",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:DCT-APPEAL-2025-1458",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "DCT-APPEAL-2025-1458",
+      "title": "The data-center tariff is on appeal to the Supreme Court of Ohio — capture the decision",
       "feed": "leads"
     },
     {
@@ -1172,11 +1204,27 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:HUB-ESA-CUSTOMER",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "HUB-ESA-CUSTOMER",
+      "title": "Who actually holds the AEP Ohio electric service agreement at the Findlay Megawatt Hub?",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:MERCURY-VARIANCE-RENEWAL",
       "kind": "lead",
       "site": "findlay",
       "local_id": "MERCURY-VARIANCE-RENEWAL",
       "title": "The mercury variance runs with the permit to 2029-10-31 — track the annual 12 ng/L condition",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:NETZERO-WHIRLPOOL-COD",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "NETZERO-WHIRLPOOL-COD",
+      "title": "Did Whirlpool's Hancock County Net Zero project (14.4 MW wind + 6.0 MW solar) reach operation?",
       "feed": "leads"
     },
     {
@@ -1188,11 +1236,27 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:PUCO-DIS-ACCESS",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "PUCO-DIS-ACCESS",
+      "title": "PUCO's docket system refuses automated retrieval — the tariff docket is unsearched, not empty",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:RIVERSIDE-DAM-SEDIMENT",
       "kind": "lead",
       "site": "findlay",
       "local_id": "RIVERSIDE-DAM-SEDIMENT",
       "title": "Find the sediment-characterization study at Riverside Park dam (only a dredging project is documented)",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:ROCKY-FORD-INSERVICE",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "ROCKY-FORD-INSERVICE",
+      "title": "Did Rocky Ford Station energize on its December 2025 schedule?",
       "feed": "leads"
     },
     {

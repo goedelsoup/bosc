@@ -1,0 +1,183 @@
+# Capture / alias manifest — Findlay (Hancock County) grid posture, issue #1464.
+#
+# Web-captured primary evidence: two OPSB siting filings and their public notice
+# (AEP Ohio Transmission Company / Ohio Power Company, served from
+# aeptransmission.com), AEP's own PJM Load Analysis Subcommittee large-load
+# presentation, and the Ohio Power Company retail tariff book carrying Schedule
+# DCT (the data-center tariff). Raw bytes are never edited and files keep the
+# name the server served them under — including `Center 2` in the construction
+# notice's filename, which the document's own cover page spells `Central #2`
+# (see that entry's note; the as-served name is NOT corrected).
+#
+# The `content_verified` date is read from each file's OWN text layer (a cover
+# page, a slide header, an issue line), never from the URL, the fetch time, or
+# outside knowledge.
+#
+# evidence: native_text = PDF text layer (pypdf) confirms the identity + date
+#           quoted below.
+meta:
+  subject: >-
+    Findlay / Hancock County grid posture — the Rocky Ford 138 kV OPSB pair
+    (24-0707-EL-BLN / 24-0706-EL-BNR), AEP Ohio's PJM large-load forecast
+    adjustment, and Schedule DCT as filed (issue #1464)
+  collection: grid/findlay/
+  captured_by: issue #1464 (epic #1265, readiness(findlay) — grid posture)
+  generated_at: '2026-07-31'
+  policy: non-destructive — as-served bytes, as-served filenames.
+
+documents:
+  - filename: Rocky Ford 138 kV Station Project Letter of Notification.pdf
+    canonical: rocky-ford-138kv-station-lon-24-0707-EL-BLN.pdf
+    title: >-
+      Letter of Notification for Rocky Ford 138 kV Station Project — PUCO/OPSB
+      Case No. 24-0707-EL-BLN (O.A.C. 4906-6-05)
+    issuer: AEP Ohio Transmission Company, Inc.
+    source_url: https://www.aeptransmission.com/ohio/docs/Rocky%20Ford%20138%20kV%20Station%20Project%20Letter%20of%20Notification.pdf
+    landing_page: https://www.aeptransmission.com/ohio/filings.php
+    sha256: cc9b7a7e0fc0c83269dc0523f12edeab9ddf106ad7e2a2279491f7e4b7d5275b
+    bytes: 7698712
+    content_type: application/pdf
+    pages: 68
+    fetched_at: '2026-07-31T02:28:00Z'
+    content_verified: '2024-09-10'   # cover page: "September 10, 2024"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The instrument that answers the issue's "Rocky Ford OPSB case number"
+      question outright: the cover page prints "PUCO Case No. 24-0707-EL-BLN"
+      and B(1) states the Project is in Cass Township, Hancock County and
+      "will provide a 138 kV interconnection to the Border Basin facility
+      (OPSB Case Number 21-0277-EL-BGN), proposed by Border Basin I, LLC, an
+      Independent Power Producer" with "PJM Queue Position ... AE1-146" and PJM
+      network upgrade number n8130. B(9)(c) prices the station at
+      "approximately $8,700,000 using a Class 4 estimate" and states "The costs
+      for this Project will be recovered through total reimbursement by the
+      IPP." Appendix B reproduces the FE-T9 pages of AEP's 2024 Long Term
+      Forecast Report (pp. 109-110). Construction January 2025, in-service
+      December 2025; station footprint ~6.25 acres of Agricultural District
+      land. SHPO concurrence (no effect) received 2024-02-12, Appendix C.
+  - filename: >-
+      Ebersole-Fostoria Center 2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV Tie Line Project Construction Notice.pdf
+    canonical: ebersole-fostoria-central-2-cutin-rocky-ford-border-basin-tie-cn-24-0706-EL-BNR.pdf
+    title: >-
+      Construction Notice for Ebersole-Fostoria Central #2 138 kV Cut-In and
+      Rocky Ford-Border Basin 138 kV Tie Line Project — PUCO/OPSB Case No.
+      24-0706-EL-BNR (O.A.C. 4906-6-05)
+    issuer: Ohio Power Company
+    source_url: https://www.aeptransmission.com/ohio/docs/Ebersole-Fostoria%20Center%202%20138%20kV%20Cut-In%20and%20Rocky%20Ford-Border%20Basin%20138%20kV%20Tie%20Line%20Project%20Construction%20Notice.pdf
+    landing_page: https://www.aeptransmission.com/ohio/filings.php
+    sha256: 4864c9d85bbab573441c00e5ef1fe7d9cdf458f3daf6fde57f75adbf25de4d02
+    bytes: 7417796
+    content_type: application/pdf
+    pages: 68
+    fetched_at: '2026-07-31T02:28:00Z'
+    content_verified: '2024-09-10'   # cover page: "September 10, 2024"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      ⚠️ NAME MISMATCH, preserved on purpose. The served filename says
+      "Ebersole-Fostoria **Center 2**"; the document's own cover page and every
+      running header say "Ebersole-Fostoria **Central #2**", and AEP's public
+      notice for the same pair spells it "Ebersol-Fostoria Central #2" (also
+      dropping the trailing "e" from Ebersole). The as-received name is kept
+      verbatim per chain of custody; `canonical` carries the document's own
+      spelling. Substance: the sibling filing to the LON above — the same POI,
+      the same IPP (Border Basin I, LLC), the same PJM queue position AE1-146
+      and network upgrade n8130, filed by **Ohio Power Company** (the
+      distribution/transmission operating company) rather than AEP Ohio Transco.
+      Scope is two <0.1-mile 138 kV line extensions looping the existing
+      Fostoria-East Lima 138 kV line (the Ebersole-Fostoria Central #2 circuit)
+      through Rocky Ford Station plus one ~0.04-mile span to the IPP's station.
+      B(9)(c): "approximately $2,214,000 using a Class 4 estimate ... recovered
+      through total reimbursement by the IPP" — this, not the station, is the
+      ~$2.2M figure. One third-party parcel (No. 130001029770), ~1.5 acres of
+      Agricultural District land.
+  - filename: Rocky Ford 138 kV Station Project Public Notice.pdf
+    canonical: rocky-ford-138kv-public-notice-24-0707-24-0706.pdf
+    title: >-
+      AEP Ohio public notice — Rocky Ford Station + tie line, Case Nos.
+      24-0707-EL-BLN and 24-0706-EL-BNR
+    issuer: AEP Ohio (an AEP company)
+    source_url: https://www.aeptransmission.com/ohio/docs/Rocky%20Ford%20138%20kV%20Station%20Project%20Public%20Notice.pdf
+    landing_page: https://www.aeptransmission.com/ohio/filings.php
+    sha256: ba97d5642f53ac408ff75a605e8e30ba0d86ce6ef7fd21a4547f64ba3888ee81
+    bytes: 94018
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-07-31T02:28:00Z'
+    content_verified: null   # [open] no publication date in this file's own text/graphic layer
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The newspaper-style notice that binds the two case numbers together and
+      states the siting facts in AEP's own public-facing words: the station sits
+      "near the intersection of Township Road 238 and County Road 216 in Cass
+      Township, Hancock County," the line is "less than 0.2 miles of 138-kilovolt
+      (kV) transmission line connecting Rocky Ford Station to a customer facility
+      and an existing 138-kV transmission line," and the reason is "to serve a
+      customer's facility and support their development plans." Intervention runs
+      10 days from publication under O.A.C. 4906-2-12; copies were lodged at the
+      Findlay-Hancock County Public Library, 206 Broadway. Undated in its own
+      layer — its content ("expect construction to begin in January and conclude
+      late 2025") places publication in autumn 2024, but that is [inference] and
+      `content_verified` stays null rather than asserting a date the bytes do not
+      carry.
+  - filename: 20250916-item-04f---aep-large-load-request.pdf
+    canonical: pjm-las-2025-09-16-aep-2025-load-forecast-adjustments.pdf
+    title: >-
+      AEP — 2025 Load Forecast Adjustments, presented to the PJM Load Analysis
+      Subcommittee, 2025-09-16 (agenda item 4f)
+    issuer: American Electric Power (presented at PJM's Load Analysis Subcommittee)
+    source_url: https://www.pjm.com/-/media/DotCom/committees-groups/subcommittees/las/2025/20250916/20250916-item-04f---aep-large-load-request.pdf
+    landing_page: https://www.pjm.com/committees-and-groups/subcommittees/las
+    sha256: bd57286c07eef113588fad5b1f147b2aa7ec820bbcc8184baa16e2f39298e652
+    bytes: 2276472
+    content_type: application/pdf
+    pages: 7
+    fetched_at: '2026-07-31T02:28:00Z'
+    content_verified: '2025-09-16'   # title slide: "PJM LOAD ANALYSIS SUBCOMMITTEE / SEPTEMBER 16, 2025"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Captured as the PJM-route NEGATIVE for the +300 MW question, and it is a
+      strong one: this is AEP's own presentation of where its large-load
+      additions come from, and it is entirely ZONE-level. Slide 4 gives the Ohio
+      funnel — "Total Interconnection Queue 38 GW", "DCT Study Requests 13.0 GW",
+      "85% Tariff Provision ... 11.1 GW" — and slide 5 the cumulative summer-peak
+      adjustments (AEP Ohio 2,273 MW in 2026 rising to 7,615 MW in 2030 and
+      22,272 MW "Ultimate"; Total AEP 26,105 MW). Not one county, substation,
+      customer or project is named anywhere in the deck. Method slide 3: a load
+      addition enters the forecast only on "a signed LOA and/or ESA", and
+      "through 2030, 77% of projects are backed by take-or-pay ESA contracts;
+      23% are backed by LOA contracts."
+  - filename: July_24_2026_AEP_Ohio_Tariff_Book.pdf
+    canonical: ohio-power-company-tariff-puco-no-22-2026-07-24.pdf
+    title: >-
+      Ohio Power Company retail tariff, P.U.C.O. No. 22 — as compiled
+      2026-07-24; Schedule DCT (Data Center Tariff) at Original Sheet Nos.
+      223-1 through 223-7
+    issuer: Ohio Power Company (AEP Ohio) — issued by Marc Reitter, President
+    source_url: https://www.aepohio.com/lib/docs/ratesandtariffs/Ohio/July_24_2026_AEP_Ohio_Tariff_Book.pdf
+    landing_page: https://www.aepohio.com/company/about/rates/
+    sha256: 961432b69f11b809b35f9f64dfbfc9b106d6a7b62a17b57a42ad81ca29d63740
+    bytes: 11336536
+    content_type: application/pdf
+    pages: 188
+    fetched_at: '2026-07-31T02:28:00Z'
+    content_verified: '2026-07-24'   # Sheet 101-1 (Table of Contents): "Issued: July 24, 2026  Effective: July 24, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The data-center tariff AS FILED, not as summarized. Schedule DCT occupies
+      Original Sheet Nos. 223-1 to 223-7 (PDF pages 113-119 of 188, 0-based
+      112-118), each stamped "Filed pursuant to Order dated April 1, 2026 in
+      Case No. 25-392-EL-AIR / Issued: April 8, 2026 / Effective: April 10,
+      2026" — i.e. these are the CURRENT sheets, re-issued in AEP Ohio's
+      distribution rate case; the schedule's own definitions section dates its
+      origin to "the Commission's order in Case No. 24-508-EL-ATA". Captured
+      because every secondary account of this tariff paraphrases it, and the
+      Findlay questions (a >25,000 kW crypto load, an existing-load expansion,
+      behind-the-meter generation at a transmission-voltage site) turn on
+      definitions that only the sheets carry. The book is the whole retail
+      tariff; nothing outside sheets 223-1..223-7 and the 105-1 cross reference
+      is read for this issue.

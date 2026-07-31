@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "acb138329b78db3feefd89637a59483112f61ef2e8a1f9c233a1f11471050d89",
+  "catalog_version": "576b9f4f6815297a9555e97421103febe5f4b8d995395e77c04773796c4f2126",
   "contract_version": "1.47.0",
   "atoms": [
     {
@@ -993,6 +993,14 @@
       "site": "lima",
       "local_id": "findlay-gis",
       "title": "City of Findlay, Ohio Zoning Districts",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:findlay-grid",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "findlay-grid",
+      "title": "Findlay — Grid Posture (OPSB siting pair, Schedule DCT, behind-the-meter fleet, the +300 MW gap)",
       "feed": "catalog"
     },
     {

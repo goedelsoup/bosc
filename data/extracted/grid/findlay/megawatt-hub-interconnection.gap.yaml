@@ -1,0 +1,251 @@
+# Structured gap record — the One Power "Findlay Megawatt Hub" +300 MW standalone
+# interconnection: the claim, and the per-source negative for the instrument behind it.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such
+#   [open]      = not established by any captured source — do NOT assert
+#
+# This file exists to make an ABSENCE legible. The +300 MW is the single biggest
+# facility-watch signal in Hancock County and it rests on one sentence in one
+# withdrawn registration statement. Recording where it is NOT documented, source
+# by source, is the finding — not a failure to find one.
+meta:
+  subject: >-
+    The +300 MW "standalone interconnection site" at the One Power Findlay
+    Megawatt Hub — provenance of the claim and the per-source search for its
+    instrument
+  kind: grid-interconnection-gap
+  captured_for: issue 1464 (epic 1265, readiness(findlay) — grid posture)
+  extracted_at: '2026-07-31'
+  method: >-
+    Full-text read of the One Power registration statement; then four independent
+    routes checked for a load-interconnection instrument (PJM, PUCO, AEP's own
+    filings and reporting, the registrant's own text), each recorded with what
+    was checked, when, and what came back.
+  sources:
+    primary:
+      - url: https://www.sec.gov/Archives/edgar/data/2039139/000162828025002278/onepowercompany-sx1a.htm   # One Power Co Form S-1, filed 2025-01-23
+      - file: data/documents/grid/findlay/20250916-item-04f---aep-large-load-request.pdf
+      - file: data/documents/grid/findlay/July_24_2026_AEP_Ohio_Tariff_Book.pdf
+    index:
+      - url: https://www.aeptransmission.com/ohio/filings.php
+      - url: https://www.aepohio.com/company/about/rates/data-center-tariff/
+
+# --- The claim, verbatim ------------------------------------------------------
+the_claim:
+  tag: '[verified]'
+  quote: >-
+    "In 2023, we installed and energized our first Megawatt Hub, the Findlay
+    Megawatt Hub, which has a 30 MW transformer bay currently energized and is
+    expandable to 150 MW, on our property in Hancock County, Ohio. In 2024, we
+    expanded the Findlay Megawatt Hub to make available an additional 300 MW of
+    capacity with a standalone interconnection site. A portion of the Findlay
+    Megawatt Hub is currently leased to MARA Holdings, Inc., who has contracted
+    for 150 MW at the site for a term of 15 years."
+  source: One Power Co Form S-1, Business section (page break at "101" falls inside the sentence)
+  what_the_sentence_is:
+    tag: '[inference]'
+    statement: >-
+      Read precisely, this is a statement that capacity was "made available" — a
+      developer describing its own site's readiness to a prospective investor. It
+      is not a statement that an interconnection agreement exists, that AEP Ohio
+      has agreed to serve 300 MW, or that a queue position was granted. The
+      surrounding text is a business-model description in which "Megawatt Hubs
+      will be situated at transmission-voltage-interconnected sites with an
+      intended capacity ranging from 30 MW to 300 MW" — the 300 MW is the top of
+      the company's own product range. Treat the +300 MW as a DISCLOSED
+      DEVELOPMENT CLAIM, never as documented grid capacity.
+  the_filing_it_sits_in:
+    tag: '[verified]'
+    statement: >-
+      The document is a Form S-1 registration statement filed 2025-01-23 (EDGAR
+      CIK 0002039139, accession 0001628280-25-002278), preceded by a DRS
+      2024-11-12 and a DRS/A 2024-12-31, and WITHDRAWN by a Form RW on
+      2025-05-09; a Form D private placement followed on 2025-07-23. The
+      registration never went effective. It remains a signed filing subject to
+      Securities Act liability, so it is good evidence of what One Power stated —
+      but the IPO it was written for did not happen, and no subsequent public
+      filing updates the 300 MW.
+    naming_correction: >-
+      This corpus (data/extracted/findlay/data-centers.md, _FINDLAY.facilities,
+      and issue 1464's body) has been calling this document a "Form S-1/A." EDGAR
+      types it **S-1**, not S-1/A; only the exhibit filename
+      (onepowercompany-sx1a.htm) suggests an amendment. Cite it as the Form S-1
+      filed 2025-01-23.
+    source: EDGAR company filing index for CIK 0002039139 (read 2026-07-31)
+  what_the_filing_never_says:
+    tag: '[verified]'
+    statement: >-
+      Searched in full: the registration statement contains ZERO occurrences of
+      "AEP", "American Electric Power", or "PJM". A 900,000-character document
+      describing transmission-voltage interconnection at 30-300 MW scale names
+      neither its transmission owner nor its RTO anywhere. It also names no queue
+      position, no interconnection agreement, and no in-service date for the
+      additional 300 MW.
+
+# --- Per-source negative ------------------------------------------------------
+# The acceptance criterion allows a negative "recorded per-source." Each route
+# below states what was checked and what it returned, on 2026-07-31.
+search_for_the_instrument:
+  checked_on: '2026-07-31'
+  pjm_queue:
+    tag: '[verified negative, structural]'
+    what_was_checked: >-
+      PJM's public interconnection queue and PJM's own committee material for
+      AEP large-load additions, including the Load Analysis Subcommittee item
+      captured in this collection.
+    result: >-
+      Nothing naming Findlay, Hancock County, One Power, One Energy, MARA or a
+      Megawatt Hub. But the more useful finding is structural, not empirical:
+      PJM's interconnection queue is a GENERATION queue. A large retail LOAD does
+      not take a queue position there — it contracts with the transmission owner
+      under state-jurisdictional retail tariffs, and reaches PJM only as an
+      aggregate forecast adjustment. AEP's own 2025-09-16 LAS presentation is
+      exactly that: 38 GW of Ohio queue, 13.0 GW of DCT study requests, 11.1 GW
+      after the tariff provision, and cumulative summer-peak additions by
+      operating company — with no county, substation, customer or project named
+      anywhere in seven slides. So this route COULD NOT have surfaced a Findlay
+      +300 MW even if one exists, and its silence is not evidence of absence.
+      What it does establish is where to stop looking.
+    source: data/documents/grid/findlay/20250916-item-04f---aep-large-load-request.pdf
+  puco_dis:
+    tag: '[open — access blocked]'
+    what_was_checked: >-
+      PUCO's Docketing Information System, both the case record route
+      (dis.puc.state.oh.us/CaseRecord.aspx?CaseNo=24-0508-EL-ATA) and a direct
+      document request.
+    result: >-
+      Not a negative — an ACCESS FAILURE, and it should be recorded as one. Every
+      DIS request from this session returned an application-firewall page
+      ("Request Rejected ... Your support ID is ...") rather than a docket, with
+      and without a browser user-agent, referer and session cookie. PUCO's own
+      news release for the 2025-07-09 order also 404s from its published URL. So
+      the PUCO route is UNSEARCHED, not searched-and-empty, and no conclusion may
+      be drawn from it. A human-browser or written-request pull is owed.
+      Lead PUCO-DIS-ACCESS.
+    candidate_document:
+      tag: '[open]'
+      statement: >-
+        One search-engine result described a 2024-06-25 DIS filing of Initial
+        Comments by One Energy Enterprises in the AEP Ohio data-center tariff
+        case, at CMID A1001001A24F25B53005B01397. If real, that would put the
+        Findlay hub's own developer on the record as a party in the tariff
+        proceeding — the most directly relevant document this issue could hope
+        for. It is recorded here as a retrieval target ONLY. The document could
+        not be opened, a targeted follow-up search did not corroborate it, and no
+        party list for the case was obtained. Do not cite it for anything until
+        the bytes are in hand. Lead ONE-ENERGY-24-508-COMMENTS.
+  aep_filings:
+    tag: '[verified negative, web-level]'
+    what_was_checked: >-
+      AEP Ohio Transmission's Ohio regulatory-filings index
+      (aeptransmission.com/ohio/filings.php); AEP Ohio's Data Center Tariff
+      customer page; AEP Ohio's 2026-02-13 release reporting DCT contract totals
+      to the PUCO; and Schedule DCT as filed.
+    result: >-
+      The filings index carries exactly two Hancock County entries, and both are
+      the Rocky Ford solar-interconnection pair already recorded here — no load
+      substation, no Allen Township project, no Megawatt Hub filing. The DCT
+      reporting is territory-wide and names no site: 5,642 MW of contracts signed
+      under the tariff as of 2026-02-12, 12,219 MW signed before it, 17,861 MW
+      total through 2035, from 13,022.7 MW that paid for studies out of ~30,000
+      MW requested. Neither Findlay, Hancock County, One Power nor MARA appears.
+      An AEP Ohio load-service instrument is also not the kind of document that
+      is published: an LOA or ESA is a bilateral contract, and the DCT study queue
+      is confidential per customer. The absence at web level is expected and does
+      not weigh against the claim.
+    source: >-
+      data/documents/grid/findlay/July_24_2026_AEP_Ohio_Tariff_Book.pdf;
+      AEP Ohio release 2026-02-13 (aepohio.com releaseID 10753);
+      aeptransmission.com/ohio/filings.php (absence, checked 2026-07-31)
+  ohio_power_siting_board:
+    tag: '[verified negative, web-level]'
+    what_was_checked: >-
+      Whether a transmission facility serving a Findlay-area large load has been
+      sited, via AEP's filings index and the Rocky Ford filings' own references.
+    result: >-
+      None found. Note the jurisdictional limit that makes this weak evidence:
+      OPSB reaches transmission at 100 kV and above (R.C. 4906.01(B)(2)), and a
+      hub that already owns its own transmission-voltage substation may need no
+      new AEP-sited facility at all — the Rocky Ford pair shows how small the
+      sited footprint can be (two spans under 0.1 mile). A +300 MW service
+      addition can exist with no OPSB case behind it.
+
+# --- Where the negative leaves the question -----------------------------------
+status:
+  tag: '[open]'
+  statement: >-
+    The +300 MW standalone interconnection remains UNDOCUMENTED. It is asserted
+    once, by the developer, in a registration statement that was withdrawn, with
+    no counterparty named, no capacity agreement cited, no queue position, and no
+    in-service date — and after four routes, no instrument. The three routes that
+    returned nothing are each independently weak (PJM is structurally the wrong
+    forum; AEP's load contracts are not published; OPSB may have no jurisdiction),
+    and the one route that would be decisive, PUCO's docket, could not be
+    searched at all. So this is an OPEN QUESTION with a known next step, not a
+    negative finding.
+  do_not_write: >-
+    Do not write that Findlay has 300 MW of available interconnection capacity,
+    that AEP Ohio has agreed to serve it, that it is queued, or that a customer
+    exists for it. Do not add it to any load basis. `_FINDLAY.facilities` already
+    excludes it from the SiteFacility power basis on purpose (issue 1459) and this
+    record does not change that.
+  what_would_close_it:
+    - An AEP Ohio letter of agreement or electric service agreement for the site
+      (the instrument Schedule DCT and AEP's own forecast methodology both turn on)
+    - A PUCO filing in 24-508-EL-ATA or a successor docket naming One Power, One
+      Energy, or the Findlay hub
+    - A One Power / OnSite Partners disclosure post-dating the withdrawn S-1 —
+      the Form D 2025-07-23 private placement, or any Basalt-era statement
+    - A PJM Large Load Addition or transmission-owner interconnection study
+      naming a Hancock County point of interconnection
+
+# --- The other serving-utility possibility, re-checked ------------------------
+hancock_wood_cooperative:
+  tag: '[verified negative, web-level]'
+  checked_on: '2026-07-31'
+  statement: >-
+    Issue 1464 asked for the Hancock-Wood large-load negative to be re-checked
+    and recorded. It re-checks as still negative, and the co-op side of the
+    record has actually moved a little.
+  what_was_checked:
+    - Hancock-Wood Electric Cooperative's own site and news feed (hwe.coop) —
+      current items run to 4-H sponsorship, Member Appreciation Week and a
+      Washington advocacy trip; no data center, large load, industrial customer,
+      new rate class or tariff item appears.
+    - Ohio's Electric Cooperatives' own 2026-05-25 statement, "State's electric
+      co-ops are ready for data centers," which says "Some of Ohio's 24 electric
+      distribution cooperatives have been approached about serving large-load
+      data centers" and that Buckeye Power Inc. "has developed a dedicated process
+      for energy-intensive data centers ... establishes data centers as a separate
+      category of electric load and assigns infrastructure and power costs
+      directly to them" — while naming no cooperative, county, project or MW
+      figure, and never mentioning Hancock-Wood, Findlay or Hancock County.
+  result: >-
+    No Hancock-Wood large-load or data-center customer is on any reachable
+    record. The co-op serves the rural county, AEP Ohio the city and the I-75
+    corridor, and the Findlay Megawatt Hub's transmission-voltage interconnection
+    puts it on the investor-owned side of that line. The finding of record stays:
+    AEP Ohio is the serving utility for this site's load story, and Hancock-Wood
+    is not a party to it.
+  the_new_wrinkle:
+    tag: '[reference]'
+    statement: >-
+      Buckeye Power's dedicated large-load process is a REAL structural change on
+      the cooperative side of Ohio — a generation-and-transmission co-op building
+      its own answer to the same cost-allocation question Schedule DCT answers for
+      AEP Ohio, outside PUCO rate regulation. If a Hancock County large load ever
+      lands on co-op territory, that process, not Schedule DCT, is the instrument
+      to pull. Recorded as a watch item, not as a Findlay fact.
+  source:
+    - url: https://hwe.coop/   # Hancock-Wood Electric Cooperative news feed (read 2026-07-31)
+    - url: https://ofbf.org/2026/05/25/states-electric-co-ops-are-ready-for-data-centers/
+
+acceptance:   # per issue 1464
+  interconnection_instrument_located: false        # not located — see status above
+  negative_recorded_per_source: true               # PJM / PUCO / AEP filings / OPSB, each with what + when + result
+  puco_route_recorded_as_blocked_not_empty: true   # DIS is WAF-blocked; the route is unsearched, and says so
+  hancock_wood_negative_rechecked: true
+  no_fabricated_capacity_or_customer: true
