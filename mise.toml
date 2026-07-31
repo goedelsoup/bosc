@@ -127,6 +127,11 @@ run = "uv run watermark export"
 # so it is the one to reach for when /api/ask or /api/submit is 500ing.
 [tasks."deploy:rotate"]
 description = "Rotate a Pages Function secret — set + pulumi up + verify (see deploy/SECRETS.md)"
+# raw: connect stdin/stdout/stderr straight through instead of mise's line-buffered wrapper.
+# rotate.sh branches on `[[ -t 0 ]]` — with stdin mediated it would see "not a terminal" on a
+# real terminal and wait for EOF instead of prompting, and `pulumi up`'s own confirmation
+# prompt would be unreachable. (Piped input works either way; verified.)
+raw = true
 usage = '''
 arg "<key>" help="Pulumi config key, e.g. anthropicApiKey (`mise run deploy:rotate -- --help`)"
 '''

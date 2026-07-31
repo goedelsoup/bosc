@@ -487,6 +487,12 @@ const storiesHyperdrive =
 // `watermark-deploy:storiesLakebaseUrl` secret the Stories/auth Hyperdrive uses, so notify
 // also requires that secret to be set (guarded below).
 //
+// ROTATING either secret is a CUTOVER, not an overlap: GitHub signs the webhook with exactly
+// one secret and the Lambda verifies against exactly one, so there is a gap by construction
+// (GitHub retries the rejected deliveries). Stage the Pulumi secret, change it on the GitHub
+// webhook, `pulumi up` to refresh GITHUB_WEBHOOK_SECRET / UNSUB_SECRET on the function, then
+// verify with a redelivery — nothing to revoke afterwards. See SECRETS.md.
+//
 // The Lambda zip must be built before `pulumi up`:
 //   cd lambda/notify && npm install && npm run build
 // Then Pulumi reads ../lambda/notify/dist/ as a FileArchive.

@@ -55,6 +55,17 @@ secret_field() { # <configKey> <1-based field>
 die() { echo "rotate: $*" >&2; exit 1; }
 note() { echo "  $*"; }
 
+# curl with a bearer token that never reaches argv. `-H "Authorization: Bearer $TOKEN"`
+# would put the token in the process table for anyone running `ps` — unacceptable in a tool
+# whose whole job is handling credentials. curl reads extra options from a config file, and
+# `--config -` takes that file on stdin, so the header stays in the pipe.
+#   curl_auth <token> <remaining curl args…>
+curl_auth() {
+  local token="$1"
+  shift
+  printf 'header = "Authorization: Bearer %s"\n' "$token" | curl --config - "$@"
+}
+
 # The usage text IS the header comment above — print it back rather than keeping a second
 # copy that drifts. Stops at the first line that isn't a comment.
 usage() {
@@ -110,9 +121,13 @@ cmd_set() {
   [[ -s "$tmp" ]] || die "empty value — nothing set"
 
   # Single-line values pick up a stray newline from every pipe going; strip it. Multi-line
-  # PEMs keep theirs (the trailing newline is part of the armour).
+  # PEMs keep theirs (the trailing newline is part of the armour). Rewritten through a shell
+  # variable rather than a second temp file: a `$tmp.trimmed` would sit outside the EXIT
+  # trap, so an interrupt between writing it and moving it would strand the plaintext secret.
   if [[ "$multiline" != "yes" ]]; then
-    tr -d '\r\n' < "$tmp" > "$tmp.trimmed" && mv "$tmp.trimmed" "$tmp"
+    local trimmed
+    trimmed="$(tr -d '\r\n' < "$tmp")"
+    printf '%s' "$trimmed" > "$tmp"
   fi
 
   echo "==> pulumi config set --secret ${NAMESPACE}:${key}"
@@ -149,7 +164,9 @@ cmd_turnstile() {
   account="$(pulumi config get "${NAMESPACE}:cloudflareAccountId" </dev/null 2>/dev/null || true)"
   [[ -n "$account" ]] || die "could not read ${NAMESPACE}:cloudflareAccountId from the stack config"
   [[ -n "${CLOUDFLARE_API_TOKEN:-}" ]] || die "CLOUDFLARE_API_TOKEN is not set (needs Turnstile Sites: Write)"
-  sitekey="$(pulumi stack output turnstileSiteKey)"
+  # `|| true` so a pulumi failure doesn't trip `set -e` before the check below can print the
+  # actionable message — same pattern as the read-only lookups in cmd_verify.
+  sitekey="$(pulumi stack output turnstileSiteKey </dev/null 2>/dev/null || true)"
   [[ -n "$sitekey" ]] || die "could not read the turnstileSiteKey stack output"
 
   cat <<EOF
@@ -167,9 +184,8 @@ EOF
   fi
 
   echo "==> POST rotate_secret (invalidate_immediately=false → 2h overlap)"
-  curl -fsS -X POST \
+  curl_auth "$CLOUDFLARE_API_TOKEN" -fsS -X POST \
     "https://api.cloudflare.com/client/v4/accounts/${account}/challenges/widgets/${sitekey}/rotate_secret" \
-    -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
     -H 'Content-Type: application/json' \
     -d '{"invalidate_immediately": false}' > /dev/null
 
@@ -197,9 +213,8 @@ cmd_verify() {
   if [[ -n "${CLOUDFLARE_API_TOKEN:-}" && -n "$account" ]] && command -v jq >/dev/null; then
     echo "-- Pages project env vars (${project})"
     local body
-    body="$(curl -fsS \
-      "https://api.cloudflare.com/client/v4/accounts/${account}/pages/projects/${project}" \
-      -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}")" || body=""
+    body="$(curl_auth "$CLOUDFLARE_API_TOKEN" -fsS \
+      "https://api.cloudflare.com/client/v4/accounts/${account}/pages/projects/${project}")" || body=""
     if [[ -z "$body" ]]; then
       note "SKIP  could not read the project (token scope?)"
     else
@@ -254,17 +269,27 @@ cmd_verify() {
       note "SKIP  ASK_PLUGIN_TOKEN not set — check /ask by hand in a browser instead"
     else
       local out code
-      out="$(curl -sS -m 60 -o - -w '\n%{http_code}' -X POST "${url}/api/ask" \
+      out="$(curl_auth "$ASK_PLUGIN_TOKEN" -sS -m 60 -o - -w '\n%{http_code}' -X POST "${url}/api/ask" \
         -H 'Content-Type: application/json' \
-        -H "Authorization: Bearer ${ASK_PLUGIN_TOKEN}" \
         -d '{"question":"What does this site document?"}' 2>/dev/null || true)"
       code="$(tail -n1 <<<"$out")"
-      if [[ "$code" == "200" ]]; then
-        note "ok    /api/ask answered — ANTHROPIC_API_KEY is valid, not just present"
-      else
-        note "FAIL  /api/ask returned HTTP ${code} to an authorized request"
-        failures=$((failures + 1))
-      fi
+      case "$code" in
+        200)
+          note "ok    /api/ask answered — ANTHROPIC_API_KEY is valid, not just present" ;;
+        # 503 is a GATE, not a bad key: ASK_ENABLED off, or the fail-closed budget guard
+        # (#587 — no ASK_BUDGET/ASK_RATE_LIMIT KV bound and ASK_ALLOW_UNCAPPED!="true").
+        # Either way the request never reaches Anthropic, so the key is untested — say so
+        # rather than reporting a failure the operator can't act on. Observed on prod.
+        503)
+          note "SKIP  /api/ask is gated (503) — kill switch or the fail-closed budget guard;"
+          note "      the key was never exercised. Check /ask by hand once the gate is open." ;;
+        403)
+          note "FAIL  /api/ask rejected the bearer (403) — ASK_PLUGIN_TOKEN does not match"
+          failures=$((failures + 1)) ;;
+        *)
+          note "FAIL  /api/ask returned HTTP ${code} to an authorized request"
+          failures=$((failures + 1)) ;;
+      esac
     fi
   fi
 

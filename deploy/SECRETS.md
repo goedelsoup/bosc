@@ -91,6 +91,25 @@ Steps 1 and 5 are the ones that are easy to get backwards. Revoking first (or is
 replacement that invalidates its predecessor) means production runs on a dead credential for the
 length of steps 2–4 — minutes at best, and longer if `pulumi up` needs a fix.
 
+### When there is no overlap to keep
+
+The five steps above assume the provider will hold **two valid values at once**. Anthropic keys,
+GitHub App private keys, and Turnstile (for two hours) all do. Three secrets do **not**, and for
+them the sequence is a **cutover**, not an overlap:
+
+- **`EARLY_ACCESS_SECRET`** — signs a stateless cookie. The new value invalidates every
+  outstanding `__ea` cookie the moment it lands; there is no configuration in which both are
+  honoured.
+- **`githubWebhookSecret`** — GitHub signs with exactly one secret and the Lambda verifies against
+  exactly one. Deliveries in the gap are rejected (GitHub retries them).
+- **`unsubSecret`** — signs links in mail already delivered; rotating breaks every outstanding one.
+
+For these, replace step 5 with: **pick a low-traffic window, cut over both sides as close to
+simultaneously as you can, then verify.** There is nothing to revoke afterwards — the old value
+died at the moment the new one took effect. Plan for the gap instead of trying to avoid it, and
+don't reach for `verify` expecting it to prove the seam is healthy (it doesn't cover any of the
+three — see [Verification](#verification)).
+
 **Compromise is the deliberate exception.** If a value has leaked, revoke it *first* and accept
 the outage: a few minutes of `500 misconfigured` beats a live credential in someone else's hands.
 Say so in the incident note so the inverted ordering doesn't read as a mistake later.
@@ -246,6 +265,20 @@ Two consumers, one secret:
 The parser in [`index.ts`](index.ts) (`parseLakebaseOrigin`) validates the URL shape and fails
 `pulumi up` with a clear message rather than writing a malformed origin.
 
+**Verify both consumers before revoking the old Databricks token** — `rotate.sh verify` covers
+neither. Its probes hit `/api/ask` and `/api/submit`, and even the manual `/api/stories` check
+only exercises the **Hyperdrive** path:
+
+1. **Workers side** — `/api/stories` returns rows rather than 503.
+2. **Lambda side** — confirm `pulumi up` actually refreshed the function's `LAKEBASE_URL`
+   (`aws lambda get-function-configuration --function-name watermark-notify`), then exercise it:
+   invoke the digest path and confirm it reads subscribers rather than erroring on connect. The
+   Lambda opens its **own** Postgres connection outside the Workers runtime, so a token that works
+   through Hyperdrive proves nothing about it.
+
+Skipping (2) is the quiet failure mode: the site looks healthy and the digest mailer silently
+stops finding subscribers.
+
 **Prefer eliminating this rotation over scheduling it.** A Databricks **service principal** with a
 longer-lived credential removes the expiry treadmill entirely; failing that, a scheduled re-apply
 (a cron'd `pulumi up` on the deploy-infra workflow) at least keeps the cache fresh. Both features
@@ -256,13 +289,28 @@ after.
 
 Both are AWS Lambda env vars, gated on `notifyEnabled`. They never touch Cloudflare.
 
-- **`githubWebhookSecret`** must be rotated on **both sides simultaneously** — GitHub signs with
-  it, the Lambda verifies with it, and neither side supports two values. There is no overlap
-  window; webhooks delivered during the swap are rejected, and GitHub will retry them. Update the
-  repo webhook's secret and run `pulumi up` back to back.
+Both are set as Pulumi secrets like any other, but `pulumi up` writes them to the Lambda's
+`environment.variables` (`GITHUB_WEBHOOK_SECRET` / `UNSUB_SECRET`) rather than to Pages, so no
+Cloudflare-side check sees them.
+
+- **`githubWebhookSecret`** must be rotated on **both sides as close to simultaneously as you can**
+  — GitHub signs with it, the Lambda verifies with it, and neither side supports two values, so
+  this is a cutover with a gap, not an overlap. Deliveries in the gap are rejected; GitHub retries
+  them, which is what makes the gap survivable.
+
+  ```bash
+  ./rotate.sh set githubWebhookSecret     # 1. stage the new value (nothing live changes yet)
+  # 2. GitHub → repo Settings → Webhooks → edit the secret to the same value
+  pulumi up                               # 3. refresh GITHUB_WEBHOOK_SECRET on the Lambda
+  # 4. verify: redeliver a recent webhook from the GitHub UI and confirm a 2xx
+  ```
+
+  Do steps 2 and 3 back to back — the gap is exactly the interval between them. There is nothing
+  to revoke at the end; the old secret died when step 3 landed.
 - **`unsubSecret`** signs unsubscribe links in already-delivered mail. Rotating it **breaks every
   outstanding link** — recipients get an invalid-token error on mail they received before the roll.
-  Rotate only on compromise.
+  Rotate only on compromise: `./rotate.sh set unsubSecret` then `pulumi up`, and verify by
+  clicking a link from a *freshly* sent digest, not an old one.
 
 ### `ASK_PLUGIN_TOKEN` / `COGNITO_CLIENT_SECRET` — wrangler-set
 
@@ -317,10 +365,21 @@ Tier 1 green and tier 2 red is the signature of "the value is on the project but
 not picked it up" — cut a fresh deployment with [`pages.yml`](../.github/workflows/pages.yml)
 (`deploy: true`) and re-verify.
 
-Neither tier proves the value is *correct* — only that it is *present*. `--deep` closes that gap
-for `ANTHROPIC_API_KEY` alone (a real `/api/ask` round-trip via the plugin bearer token). For
-everything else the correctness check is manual and belongs at step 4 of
-[The universal ordering](#the-universal-ordering) — before you revoke, never after:
+**A green `verify` is necessary, not sufficient — it is not the gate for revoking.** Neither tier
+proves a value is *correct*, only that it is *present*: the probes deliberately send an empty
+payload and no credentials, because `/api/ask` requires a Turnstile token that is unscriptable by
+design and `/api/submit` additionally requires a Cognito bearer. So `verify` cannot assert a
+success response, and a wrong-but-well-formed secret sails through it.
+
+`--deep` closes that gap for `ANTHROPIC_API_KEY` alone, via a real `/api/ask` round-trip on the
+plugin bearer. Note it reports **SKIP, not OK**, on a `503` — the kill switch and the fail-closed
+budget guard both short-circuit ahead of the model call, so the key goes untested (this is the
+current state of production, which has no budget KV bound).
+
+Revoke an old value only once **both** the matching row below and `verify` have passed. Two
+secrets have no probe at all — `githubWebhookSecret` and `unsubSecret` are Lambda-side and invisible
+to every tier here; test them by delivering a real webhook and clicking a freshly-minted
+unsubscribe link.
 
 | Secret | Manual correctness check |
 | --- | --- |
