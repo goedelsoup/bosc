@@ -28,9 +28,11 @@ from watermark.pipeline.timeline import _subdivision_meeting_events
 from watermark.retrieval.ingestion import iter_extracted_chunks
 from watermark.sites import SITES, active_profile, effective_corpus_scope
 
-# A registered peer with the plain default corpus scope (`("findlay",)`, unset `corpus_relpaths`) —
-# the epic's happy path: `<site>/<body>/meetings/` under the bare slug.
-PEER = "findlay"
+# A registered peer with the plain default corpus scope (`("defiance",)`, unset `corpus_relpaths`) —
+# the epic's happy path: `<site>/<body>/meetings/` under the bare slug. This was findlay until
+# #1460 gave that site an explicit two-prefix scope (`findlay` + `oepa/findlay`) for its NPDES
+# instrument set; the case under test here is the UNSET one, so it moved to another Maumee peer.
+PEER = "defiance"
 PEER_BODY = "allen-cty-comm"
 LIMA_BODY = "commissioners"  # one of Lima's six flat bodies
 
@@ -216,7 +218,7 @@ def test_timeline_meeting_events_isolate_by_site(tmp_path: Path) -> None:
 
     # This is a *provenance-isolation* test, not a vocabulary test: pass an explicit corridor
     # vocab so the seeded ``datacenter`` meeting surfaces for BOTH sites regardless of each
-    # profile's own ``corridor_subjects`` (the peer, findlay, declares none by default — #1523).
+    # profile's own ``corridor_subjects`` (the peer, defiance, declares none by default — #1523).
     # Per-site vocabulary selection has its own coverage in tests/test_civic_indexer.py.
     lima_events = _subdivision_meeting_events(
         lima, effective_corpus_scope(active_profile(lima)), subjects=("datacenter",)

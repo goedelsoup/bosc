@@ -1,0 +1,63 @@
+id: findlay-dislocation
+title: Findlay — WARN Notices + Brownfield Round 11 Awards (Extractions)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Two Ohio Department of Job and Family Services WARN Act notices served from the Ohio DAM's
+    jfs.ohio.gov/warn tree — The Goodyear Tire & Rubber Company's Tall Timbers Mold facility closing
+    (received 2026-01-30) and Michigan Sugar Company's Findlay warehouse closing (received
+    2025-12-11) — plus the Ohio Brownfield Remediation Program Round 11 award-description packet
+    distributed with the 2026-05-13 announcement (govdelivery). All three fetched 2026-07-31;
+    per-file provenance in data/documents/findlay/warn/filename-map.yaml and
+    data/documents/findlay/brownfield/filename-map.yaml. Verbatim transcription from each PDF's
+    embedded text layer — digitally generated letters, not scans.
+license: public record / public domain
+access_tier: public
+site_scope: site:findlay
+storage:
+- relpath: extracted/findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/warn/michigan-sugar-findlay-2025.warn.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/brownfield/round-11-hancock-2026.award.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/dislocation-and-brownfields.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- warn
+- odjfs
+- labor
+- plant-closure
+- goodyear
+- michigan-sugar
+- brownfield
+- bustr
+- underground-storage-tank
+- findlay
+- hancock-county
+notes: >-
+  Issue 1460 (under epic 1265). Two labor rows and one finance row. The `labor` RecordGroup was
+  added to the bundle contract for this ingest (1.47.0, block key `layoff_notice:`): a statutorily
+  required plant-closing notice filed with a state workforce agency is not a permit, an enforcement
+  order, an award, a deed or a pleading, and the already-taken `notice:` key belongs to R.C. 1311.04
+  Notices of Commencement, so it was deliberately left unclaimed. THREE THINGS THE INSTRUMENTS DO
+  NOT SAY, and which must not be sourced from here. (1) Goodyear's letter names no destination for
+  the closed facility's work and no labor organization — a consolidation destination is widely
+  reported but is not in this document (lead WARN-GOODYEAR-DESTINATION). (2) Michigan Sugar's
+  filing is a COURTESY one; the company states outright it does not believe the closure required
+  notice, and four employees is far below the federal threshold, so it is not a statutory WARN
+  trigger. Its value is elsewhere — it puts a SEVERED RAIL SPUR at the Findlay site on the record as
+  the employer's own stated reason (lead FINDLAY-RAIL-SEVERANCE). (3) The $999,998 Brownfield total
+  is Round 11 ONLY; Hancock County's presence in Rounds 4-10 is unresearched (lead
+  BROWNFIELD-ROUNDS-4-10), and the packet's job figures are forward-looking projections, not
+  outcomes. Note the Bluffton Gas America award goes to the Hancock County Commissioners Office, not
+  the City of Findlay.

@@ -382,13 +382,30 @@ _FINDLAY = SiteProfile(
         0.0,
         0.0,
     ),  # [open] pending an identified corridor on the Blanchard
-    # balance (per-WWTP receiving waters pending the site's NPDES fact sheets)
-    # Findlay↔Ottawa intra-tributary comparison (#417): the Findlay WPCC (OH0025135, 15.0 MGD →
-    # 23.21 cfs) screens VIOLATION (2.68x — effluent exceeds the whole low flow) against the shared
-    # derived Blanchard 7Q10 (8.67 cfs, USGS 04189000; low-flow-7q10.derived.yaml, #414) vs its
-    # downstream Ottawa sibling's TIGHT band (0.54x) — the network's only along-one-river control.
-    # See data/reference/network/findlay-ottawa-comparison.yaml (watershed held constant, discharge point varied).
-    plant_receiving={},  # [open] cited fact-sheet 7Q10 still pending the Findlay WPCC NPDES fact sheet (#352)
+    # balance — Findlay WPCC (OH0025135 / 2PD00008), the Blanchard subbasin's anchor POTW.
+    # Receiving water and the cited low flow are now on the record from the plant's own issued
+    # NPDES fact sheet (#1460, closing #352): outfall 2PD00008001 to the Blanchard River at
+    # RIVER MILE 56.42, average design flow 15 MGD (23.208 cfs), peak hydraulic 40 MGD.
+    # ⚠️ TWO DIFFERENT LOW FLOWS, and the difference is the whole point. Findlay↔Ottawa
+    # intra-tributary comparison (#417) screens this plant at 2.68x against the shared DERIVED
+    # Blanchard 7Q10 (8.67 cfs at USGS 04189000; low-flow-7q10.derived.yaml, #414). The permit's
+    # own Table 12 gives 0.21 cfs AT THE OUTFALL — ~41x smaller — so the cited screen is ~110x,
+    # not 2.68x, and the fact sheet computes an acute dilution ratio of 1.0 outright: at design
+    # flow the Blanchard below RM 56.42 IS the effluent. Reconciling the derived and cited
+    # denominators (and re-basing findlay-ottawa-comparison.yaml) is the hydrology sub-issue
+    # #1458; nothing here re-bases it, and the derived artifact is left alone on purpose.
+    plant_receiving={
+        "findlay-wpcc": (
+            "Blanchard River at River Mile 56.42",
+            "Ohio EPA NPDES fact sheet 2PD00008*UD (data/documents/oepa/findlay/2PD00008.fs.pdf), "
+            "p. 7 — outfall 2PD00008001, HUC 04100008-03-04, Ohio EPA river code 04-160; "
+            "Table 12 (p. 28) annual 7Q10 0.21 cfs / 1Q10 0.17 cfs / harmonic mean 1.84 cfs "
+            "(USGS gages 04188300 + 04189000), design flow 23.208 cfs, acute dilution ratio 1.0 "
+            "(p. 13) — data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml",
+        ),
+    },  # [verified: OEPA 2PD00008*UD fact sheet]. Key is the future watch-item id (#829) —
+    # Findlay has no committed watch-items.geojson yet, so the routed balance does not read this
+    # entry; it is the cited datum of record until that file lands, and the two must match then.
     abstraction_gage="04189000",  # [inference] the primary Blanchard gage near Findlay
     # refill (the water-balance supply model is not yet designed for Findlay)
     supply_gage_primary="TODO",  # [open] refill supply gage — pending the site's water-balance model
@@ -494,6 +511,14 @@ _FINDLAY = SiteProfile(
     ),
     lmp_pnode_id=8445784,
     lmp_pnode_name="AEP",
+    # OEPA permit registry — what `watermark oepa discover` annotates as "known" (#844).
+    npdes_permits=["2PD00008"],  # City of Findlay WPCC / application OH0025135
+    # Corpus scope (#762/#780/#1505). Findlay's worked record spans two collections: its own
+    # `findlay/` tree (flood, WARN, brownfield, narratives) and the site-scoped OEPA sub-collection
+    # `oepa/findlay/` holding the 2PD00008 instrument set. Naming both here is also what SUBTRACTS
+    # them from Lima's reference-build scope, so a Findlay NPDES permit stops rendering inside
+    # Lima's Allen-County record — the same treatment troy-piqua and urbana get.
+    corpus_relpaths=("findlay", "oepa/findlay"),
     # rsei
     county_name="Hancock County, OH",  # [verified]
 )

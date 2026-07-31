@@ -108,5 +108,137 @@ leads:
     (data/extracted/findlay/flood/usace-blanchard-review-plan-2024.epa.yaml).
   source: 'lrd.usace.army.mil article #3643262 (403 direct; reader-proxy recovered) · hancockcountyflooding.com/faq (2015 BCR) · data/extracted/findlay/flood/usace-blanchard-review-plan-2024.epa.yaml'
   issue: 1465
+- id: CSO-LTCP-2026-11-01
+  kind: signal
+  status: unanswered
+  tag: open
+  title: The CSO Long-Term Control Plan addendum is due 2026-11-01 — a dated deadline on an issued permit
+  detail: >
+    NPDES modification 2PD00008*VD (effective 2026-02-01) exists to move one thing, twice — the
+    Municipal CSO Schedule milestone event code 34099 and the Long-Term Control Plan Addendum, both to
+    "No later than November 1, 2026." The City's 1998 LTCP did not attain its designated level of
+    control of four overflows per typical year; a 2018 evaluation found 12 of the CSO outfalls no
+    longer had combined sewer upstream (they are now SSOs); the updated integrated LTCP approved
+    2021-07-08 was then superseded by the City's request for more time. Ten CSOs remain authorized,
+    two of them to Eagle Creek. WATCH — capture the addendum when filed, and whether the deadline
+    moves a third time. The pretreatment milestone (event 52599, due 2026-05-01) is the sibling date,
+    and it asks whether Findlay will impose local industrial-user limits for total phosphorus toward a
+    0.5 mg/L target.
+  source: 'data/extracted/oepa/findlay/2PD00008.npdes.yaml · data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml'
+  issue: 1460
+- id: TP-SEASON-REPORTS
+  kind: question
+  status: unanswered
+  tag: open
+  title: Request Findlay WPCF's annual OHP000001 Total Phosphorus Season Reports (is it still over 3,200 kg?)
+  detail: >
+    The Maumee TMDL allocated Findlay WPCF 3.2 metric tons of spring total phosphorus, and the plant
+    reported 4.8-5.5 MT in every year the TMDL published — 2017 through 2021 — plus 4.4 MT in the 2008
+    baseline. General permit OHP000001 makes that a violation ONLY when the 39-facility cumulative
+    load also breaches its cap, and in 2024 the group reported 43,304 kg against a 64,170 kg limit, so
+    it was not. OPEN — nothing in the corpus says what Findlay's own load has been since 2021. The
+    record that would is the Season Report each permittee must file by September 1 under OHP000001
+    Part IV.D, carrying "the calculated Individual Load and a brief assessment comparing the
+    Individual Load to the permittee's Individual Load Limit." Request the 2022-2026 reports from Ohio
+    EPA DSW; the group's own headroom is the thing to watch shrinking.
+  source: 'data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml · data/documents/oepa/OHP000001.pdf (Part IV.C, IV.D)'
+  issue: 1460
+- id: UD-ISSUANCE-BYTES
+  kind: question
+  status: unanswered
+  tag: open
+  title: Obtain the original 2PD00008*UD issuance — the DAM now serves only the *VD modification package
+  detail: >
+    Ohio EPA's DAM slot for this permit (permits/doc/2PD00008.pdf) serves the 2025 modification
+    package, not the 2024 renewal it modified, so the corpus holds the *UD FACT SHEET but not the *UD
+    permit as issued. Its term is recorded from a third instrument — the January 2026 statewide
+    variance list, which prints "2PD00008*UD | 001 | 11/1/2024 | 10/31/2029" — rather than from the
+    permit itself. OPEN — request the as-issued *UD permit (and its transmittal) from Ohio EPA DSW so
+    the chain is byte-complete and the 2024-11-01 effective date is grounded in the instrument that
+    carries it, not in a list about it.
+  source: 'data/documents/oepa/findlay/filename-map.yaml · data/documents/oepa/Jan_2026_List_of_Variances.pdf'
+  issue: 1460
+- id: MERCURY-VARIANCE-RENEWAL
+  kind: signal
+  status: unanswered
+  tag: open
+  title: The mercury variance runs with the permit to 2029-10-31 — track the annual 12 ng/L condition
+  detail: >
+    Findlay's mercury variance dates to a 2010 permit modification and was renewed in the 2024 action
+    under OAC 3745-1-38(H). The water-quality-based limit is 1.3 ng/L; the variance-based monthly
+    average is 3.3 ng/L, with a daily maximum of 1700 ng/L and a standing condition that the ANNUAL
+    average stay at or below 12 ng/L. Ohio EPA records the effluent falling from 8.5 ng/L at issue to
+    2.2 ng/L now. The January 2026 statewide variance list carries a Modified Allowable Ambient
+    Concentration of 3.29 ng/L for this outfall — essentially identical to the effluent limit, which
+    is what a 1.0 acute dilution ratio means in practice. WATCH — the annual condition is the trigger
+    that would end the variance, and DMR mercury is the series that answers it.
+  source: 'data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml · data/documents/oepa/Jan_2026_List_of_Variances.pdf'
+  issue: 1460
+- id: WARN-GOODYEAR-DESTINATION
+  kind: question
+  status: unanswered
+  tag: open
+  title: Where does Goodyear's Tall Timbers mold work go — the WARN letter does not say
+  detail: >
+    Goodyear's 2026-01-30 WARN letter notices a permanent closing of the Tall Timbers Mold facility at
+    2025 Production Drive and 85 separations from on or around 2026-03-31, weighted to skilled work
+    (39 Manufacturing Technicians, 8 engineers, 7 Technology Specialists). It names no destination
+    plant, no consolidation, and no labor organization, and it states there are no bumping rights.
+    OPEN — the receiving site is a widely reported detail that this instrument does not support, so it
+    is not carried as a claim. Confirm from a Goodyear filing or a second primary source before it is
+    written anywhere as fact. The parcel's next use is the second half of the question.
+  source: 'data/extracted/findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml'
+  issue: 1460
+- id: FINDLAY-RAIL-SEVERANCE
+  kind: question
+  status: unanswered
+  tag: open
+  title: Michigan Sugar puts a severed Findlay rail spur on the record — map what else lost service
+  detail: >
+    Michigan Sugar's courtesy WARN filing (2025-12-11, four employees) gives an infrastructure reason
+    for closing its Greenwood Street warehouse "Rail service was previously severed to the Findlay
+    site," which with Ohio's stricter truck-weight limits made the site unservable from its Michigan
+    factories. That is a freight-access datum about a specific industrial parcel, from the tenant, in
+    a filed instrument. OPEN — which line, when, and by whom; and whether the same severance affects
+    neighbouring parcels. Cross-check against the Norfolk Southern and CSX corridors already in the
+    flood record (the Cory Street-CSX benching and the NS bridge).
+  source: 'data/extracted/findlay/warn/michigan-sugar-findlay-2025.warn.yaml'
+  issue: 1460
+- id: BROWNFIELD-ROUNDS-4-10
+  kind: question
+  status: unanswered
+  tag: open
+  title: Establish Hancock County's presence in Ohio Brownfield Remediation Rounds 4-10
+  detail: >
+    Round 11 (announced 2026-05-13) brought three Hancock awards totalling $999,998 — the former
+    Lincoln Elementary remediation, the Tiffin Avenue gas-station assessment, and a BUSTR assessment
+    at a former Gas America in Bluffton awarded to the county rather than the city. Two of the three
+    are subsurface petroleum. OPEN — whether the county appeared in earlier rounds is unresearched,
+    so the Round 11 total is not a program total and must not be presented as one. Pull the Rounds
+    4-10 award lists and, for each Hancock site, the BUSTR Tier 1/Tier 2 assessment reports, which are
+    the documents that would say what is actually in the ground.
+  source: 'data/extracted/findlay/brownfield/round-11-hancock-2026.award.yaml'
+  issue: 1460
+- id: ENTITY-CORPORATE-FILINGS
+  kind: question
+  status: unanswered
+  tag: open
+  title: Seed the corporate chain in the entity graph — One Power, OnSite, Basalt, MARA (≠ Marathon)
+  detail: >
+    The cross-document entity graph is DERIVED, not curated - it resolves parties only out of routed
+    extraction genres (deeds, NPDES permits, Secretary-of-State filings, EPA actions). Findlay's
+    corporate chain is therefore documented in prose (data/extracted/findlay/data-centers.md, from the
+    One Power Form S-1/A CIK 2039139 and MARA's 2024-11-11 release) and pinned on the site profile's
+    SiteFacility, but it has no structured filing behind it, so no node exists for One Power Co,
+    OnSite Partners, Basalt Infrastructure Partners, or MARA Holdings. OPEN — pull the Ohio Secretary
+    of State business filings for the One Power and OnSite entities (and Goodyear's and Michigan
+    Sugar's Ohio registrations) and extract them with `watermark extract --kind sos`, which is the
+    mechanism that puts a company in the graph with an agent and an organizer. HARD GUARD to carry
+    into every one of those records - MARA Holdings, Inc. (NASDAQ MARA, ex-Marathon Digital, a bitcoin
+    miner) is NOT Marathon Petroleum Corporation (NYSE MPC, the Findlay-headquartered refiner and a
+    Hancock County NPDES permittee). Two unrelated companies that share a city and half a name; a
+    graph that merges them would be wrong in the most quotable way available.
+  source: 'data/extracted/findlay/data-centers.md · src/watermark/sites/_profiles.py (_FINDLAY.facilities) · src/watermark/pipeline/entities/_graph.py'
+  issue: 1460
 # (TAXONOMY-GRANTS retired 2026-07-24: fulfilled by the contract-1.34.0 RecordGroup extension —
 # `enforcement` + `finance` groups, #1746 — and the FMA obligation refiled under `finance`.)

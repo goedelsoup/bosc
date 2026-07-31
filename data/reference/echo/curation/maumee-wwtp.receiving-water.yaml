@@ -54,6 +54,40 @@ corrections:
       Table 12 — outfall 2PD00006001 at River Mile 13.87. Re-applied on every pull from
       reference/echo/curation/maumee-wwtp.receiving-water.yaml (#1698).
 
+  # The Blanchard basin's anchor POTW, and the direct answer to #352: ECHO carried no receiving
+  # water for the largest plant on the Blanchard River, so nothing downstream could screen it.
+  # Three independent Ohio EPA instruments name the water outright, which is why this is a
+  # `field` correction rather than a caveat.
+  - npdes_id: OH0025135
+    frs_registry_id: '110064593177'
+    facility: CITY OF FINDLAY WATER POLLUTION CONTROL CENTER
+    huc8: '04100008'  # Blanchard
+    receiving_water: Blanchard River
+    echo_value: null
+    mode: field
+    issue: 352
+    citation: >-
+      Ohio EPA NPDES fact sheet 2PD00008*UD (data/documents/oepa/findlay/2PD00008.fs.pdf),
+      p. 7 — "Findlay WPCC discharges to Blanchard River at River Mile 56.42"; corroborated by
+      the Maumee Watershed Total Phosphorus general permit OHP000001 Part I.C.1
+      (data/documents/oepa/OHP000001.pdf, p. 2) — "City of Findlay WPCF | OH0025135 | 2PD00008 |
+      Blanchard River" — and by Ohio EPA's January 2026 List of Variances
+      (data/documents/oepa/Jan_2026_List_of_Variances.pdf, p. 2), affected water body
+      "Blanchard River"
+    caveat: >-
+      receiving_water was null for OH0025135 (City of Findlay Water Pollution Control Center)
+      in ECHO; corrected to Blanchard River per NPDES fact sheet 2PD00008*UD
+      (data/documents/oepa/findlay/2PD00008.fs.pdf, p. 7) — outfall 2PD00008001 at River Mile
+      56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 — the issued permit's own datum,
+      independently named by general permit OHP000001 (p. 2) and the January 2026 variance list
+      (p. 2). The same fact sheet supplies the low-flow denominator ECHO's null had left open:
+      Table 12 gives an annual 7Q10 of 0.21 cfs at the outfall against the plant's 23.208 cfs
+      (15 MGD) average design flow, an acute dilution ratio of 1.0. This is the 15.0 MGD anchor
+      POTW of the Blanchard subbasin, the third-largest grouped-load phosphorus discharger in the
+      Maumee watershed, and it was un-screenable while the field was null — issue #352.
+      Re-applied on every pull from
+      reference/echo/curation/maumee-wwtp.receiving-water.yaml (#1698).
+
   # `mode: caveat` preserves the reviewed decision from #379: this row's receiving_water
   # keeps mirroring ECHO's CWPStateWaterBodyName verbatim, and the correction is recorded
   # beside it (receiving_water_documented) rather than written into the field. The

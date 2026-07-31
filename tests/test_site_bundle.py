@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
 # The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
 # the fresh-export assertions below pin it so a bump lands here in one place.
-_CV = "1.46.0"
+_CV = "1.47.0"
 # The per-site offline bundles (#727): a full `watermark export` per registered site, the
 # committed input the Astro build reads with no Python step (`web/sites/<slug>/`).
 COMMITTED_BUNDLES = REPO_ROOT / "web" / "sites"
@@ -712,17 +712,42 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
     # ``places`` stays absent: no committed campus geometry (a separate epic #1265 sub-issue).
     assert domains["places"] == "absent", "findlay places must not scaffold"
 
-    # ``record`` is live because the site owns exactly its two real, in-scope agency records — the
-    # FEMA FMA obligation and the USACE feasibility Review Plan — not scaffolding: assert the
-    # records feed holds precisely those two artifacts by their extracted-tree source paths (#1465).
+    # ``record`` is live off real, in-scope agency records — never scaffolding. The feed is
+    # pinned by exact source path so a stray artifact can't quietly float the domain. It began
+    # (#1465) as the two flood records; #1460 added the City of Findlay WPCC's own NPDES
+    # instrument set, the TMDL phosphorus-allocation chain, the WARN pair and the Brownfield
+    # Round 11 awards. Note the two collections: ``oepa/findlay/**`` reaches this site only
+    # because ``_FINDLAY.corpus_relpaths`` names it (which also subtracts it from Lima's
+    # reference-build scope, #1505).
     records = _rows(out, _feeds_by_name(out)["records"])
     assert {r["rel"] for r in records} == {
+        "findlay/brownfield/round-11-hancock-2026.award.yaml",
         "findlay/flood/fema-fma-obligation-2026.epa.yaml",
         "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
-    }, (
-        f"records feed should hold exactly the two in-scope flood records, got {sorted(r['rel'] for r in records)}"
-    )
-    assert len(records) == 2
+        "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
+        "findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
+        "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
+        "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+        "oepa/findlay/2PD00008.fs.npdes.yaml",
+        "oepa/findlay/2PD00008.npdes.yaml",
+    }, f"unexpected findlay records feed, got {sorted(r['rel'] for r in records)}"
+    assert len(records) == 9
+    # The WARN pair publishes under ``labor`` — the group added for #1460 (contract 1.47.0),
+    # because a state-filed plant-closing notice is not a permit, an order, an award, a deed or
+    # a pleading, and filing it under the nearest of those would misrepresent the instrument.
+    assert {r["rel"] for r in records if r["group"] == "labor"} == {
+        "findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
+        "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
+    }
+
+    # The site's first source-document catalog: the permit set under ``oepa/`` and the WARN +
+    # brownfield instruments under ``findlay/``. Before #1460 both collections were empty, so a
+    # site with a live ``record`` domain published no documents at all.
+    doc_collections = _rows(out, _feeds_by_name(out)["documents"])
+    assert {c["slug"] for c in doc_collections} == {"findlay", "oepa"}
+    docs = {e["rel"] for c in doc_collections for e in c["entries"]}
+    assert "oepa/findlay/2PD00008.fs.pdf" in docs
+    assert "findlay/warn/GoodyearTireRubberCompany.pdf" in docs
 
 
 def test_urbana_record_domain_publishes_its_worked_corpus(urbana_bundle: Path) -> None:

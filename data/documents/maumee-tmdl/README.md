@@ -18,6 +18,20 @@ content-verified dates in [`MANIFEST.yaml`](MANIFEST.yaml)):
 - **Ohio EPA** (`epa.ohio.gov`) — the TMDL report, Appendices 1–9, fact sheet,
   FAQs, and the official-draft responsiveness summary.
 
+## Biennial reporting
+
+`2024_Maumee_Biennial_Report_Final_clean.pdf` — the **Maumee Watershed Nutrient TMDL Biennial
+Report, December 2024**, added 2026-07-31 (issue 1460; provenance in
+[`filename-map.yaml`](filename-map.yaml)). It is the TMDL's own progress record, and pp. 13-14
+publish the first reported season of the phosphorus general permit `OHP000001`: 39 facilities, a
+Cumulative Load Limit of **64,170 kg-TP** for March-July 2024 (including a 1,400 kg allowance for
+future growth) against a reported Cumulative Load of **43,304 kg-TP** — 20,866 kg of headroom.
+
+That group figure is what determines whether any *individual* over-allocation plant is in violation,
+so it is the number to track alongside Appendix 4's per-facility allocations. The report publishes
+**only** the group total, not per-facility 2024 loads; Appendix 4's per-facility series stops at
+2021.
+
 ## Caveats
 
 - `content_verified_date` is drawn only from each document's own text layer; years

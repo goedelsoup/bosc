@@ -43925,6 +43925,21 @@
         "supersedes": []
       },
       {
+        "rel": "maumee-tmdl/2024_Maumee_Biennial_Report_Final_clean.pdf",
+        "name": "2024_Maumee_Biennial_Report_Final_clean.pdf",
+        "size_bytes": 7735357,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
         "rel": "maumee-tmdl/Appendix-1-Dissolved-Reactive-Phosphorus-Final.pdf",
         "name": "Appendix-1-Dissolved-Reactive-Phosphorus-Final.pdf",
         "size_bytes": 1348508,
@@ -44276,6 +44291,21 @@
         "supersedes": []
       },
       {
+        "rel": "oepa/Jan_2026_List_of_Variances.pdf",
+        "name": "Jan_2026_List_of_Variances.pdf",
+        "size_bytes": 158974,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
         "rel": "oepa/OHD000001_Draft.fs.pdf",
         "name": "OHD000001_Draft.fs.pdf",
         "size_bytes": 185549,
@@ -44321,6 +44351,36 @@
         "duplicate_cluster": "oepa:OHD000001",
         "canonical_document_id": "oepa/OHD000001_Draft.pdf",
         "version": "public_notice",
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/OHP000001.pdf",
+        "name": "OHP000001.pdf",
+        "size_bytes": 1381747,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/OHP000001_FS.pdf",
+        "name": "OHP000001_FS.pdf",
+        "size_bytes": 373472,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
         "supersedes": []
       },
       {

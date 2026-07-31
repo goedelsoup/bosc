@@ -1,6 +1,6 @@
 meta:
   subject: OEPA/DAM permit download manifest
-  generated_at: '2026-07-14'
+  generated_at: '2026-07-31'
   policy: non-destructive — originals keep as-received names
 documents:
 - filename: 2PE00000.pdf
@@ -12,10 +12,56 @@ documents:
   fetched_at: '2026-07-14T17:59:59.976939+00:00'
   status: downloaded
   content_verified: '2026-07-14'
-  note: 'As-received DAM name kept (bare permit number, as with 2DP00130.pdf).
-    Content-verified from the text layer 2026-07-14: Ohio EPA NPDES Permit Renewal
-    2PE00000*OD (application OH0026069), City of Lima WWTP, 1200 Fort Amanda Road,
-    Lima, Allen County; outfall 2PE00000001 to the Ottawa River at River Mile 37.6;
-    effective 2023-07-01, expires 2028-06-30. Structured read:
-    data/extracted/oepa/2PE00000.npdes.yaml. The un-requested municipal custodian
-    record (issue #1536).'
+  note: 'As-received DAM name kept (bare permit number, as with 2DP00130.pdf). Content-verified
+    from the text layer 2026-07-14: Ohio EPA NPDES Permit Renewal 2PE00000*OD (application
+    OH0026069), City of Lima WWTP, 1200 Fort Amanda Road, Lima, Allen County; outfall
+    2PE00000001 to the Ottawa River at River Mile 37.6; effective 2023-07-01, expires
+    2028-06-30. Structured read: data/extracted/oepa/2PE00000.npdes.yaml. The un-requested
+    municipal custodian record (issue #1536).'
+- filename: OHP000001.pdf
+  permit_id: OHP000001
+  content_verified: '2026-07-31'
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Maumee_Watershed_Total_Phosphorus/OHP000001.pdf
+  sha256: 3de2663c3c98f05cc60961a2b6c76b57a77492907bd2de1a2f6a6ced973352b9
+  bytes: 1381747
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:41:10.508822+00:00'
+  status: downloaded
+  note: >-
+    As-received DAM name kept. Content-verified from the text layer 2026-07-31: Maumee
+    Watershed Total Phosphorus NPDES General Permit OHP000001, effective 2023-11-01, expires
+    2028-10-31, signed by Director Anne M. Vogel; 39 covered facilities (Part I.C.1) with
+    per-facility seasonal Individual Load Limits (Part IV.A.1) implementing the Maumee
+    Watershed Nutrient TMDL. BASIN-WIDE, not site-specific. Its Part IV.C.3 compliance rule —
+    an individual exceedance is a violation only when the CUMULATIVE load also breaches its cap
+    — is the load-bearing clause. Structured read of the Findlay row:
+    data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml (issue 1460).
+- filename: OHP000001_FS.pdf
+  permit_id: OHP000001
+  content_verified: '2026-07-31'
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Maumee_Watershed_Total_Phosphorus/OHP000001_FS.pdf
+  sha256: 67ab1b30497d5a529415824a8198aee4fa41b878fbe9c46fe08fabd9b5853416
+  bytes: 373472
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:41:10.803576+00:00'
+  status: downloaded
+  note: >-
+    Fact sheet for general permit OHP000001. As-received DAM name kept; basin-wide, not
+    site-specific (issue 1460).
+- filename: Jan_2026_List_of_Variances.pdf
+  permit_id: null
+  content_verified: '2026-01'
+  source_url: https://dam.assets.ohio.gov/image/upload/v1769786735/epa.ohio.gov/Portals/35/wqs/Jan_2026_List_of_Variances.pdf
+  sha256: 7407b98d5333e6d7a476bbd44cd4e6e4eb64ec25dd908078293e4e61aa1e7e7e
+  bytes: 158974
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:41:10.980775+00:00'
+  status: downloaded
+  note: >-
+    Ohio EPA's STATEWIDE list of water-quality-standards variances, January 2026 — one row per
+    variance (discharger, permit number, outfall, permit effective/expiration dates, affected
+    water body, pollutant, Modified Allowable Ambient Concentration). Content-verified from the
+    text layer 2026-07-31; the document's own date is stated as January 2026 in its title, not
+    as a printed day. Not site-specific, but it is the ONLY committed instrument stating the
+    term of Findlay's 2PD00008*UD permit (11/1/2024 - 10/31/2029), which the DAM's permit slot
+    no longer serves, and it carries that outfall's mercury MAAC of 3.29 ng/L (issue 1460).

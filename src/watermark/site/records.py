@@ -51,6 +51,12 @@ _BLOCK_TO_GROUP: dict[str, str] = {
     "permit": "permits-npdes",
     "filing": "permits-sos",
     "plan": "plans",
+    # A WARN Act plant-closing / mass-layoff notice filed with a state workforce agency (#1460).
+    # The key is `layoff_notice` and NOT the shorter `notice`, which the corpus already uses for
+    # R.C. 1311.04 Notices of Commencement (`recorder/`, `legal/prr-mandamus/`). Those stay
+    # unclaimed on purpose: claiming `notice` here would reclassify a mechanic's-lien filing as a
+    # workforce instrument, which is precisely the misfiling this taxonomy exists to prevent.
+    "layoff_notice": "labor",
 }
 # OPC estimates are whole-document (summary/detail/page) — no single block key.
 _OPC_KEYS = frozenset({"estimate", "sub_estimates", "estimate_template"})

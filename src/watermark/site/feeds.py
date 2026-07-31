@@ -456,7 +456,20 @@ from watermark.sites import (
 #   `record: seeded` over real extractions. Enum growth is additive for feed READERS (a pre-1.46
 #   records.json stays valid) but a pre-1.46 records.schema.json rejects the new group values —
 #   MINOR, back-compatible for data, schema refresh required.
-CONTRACT_VERSION = "1.46.0"
+# 1.47.0: the `records` feed's closed RecordGroup enum gains `labor` — a statutorily required
+#   notice of a plant closing or mass layoff, filed with a state workforce agency (Ohio's WARN
+#   Act / the federal Worker Adjustment and Retraining Notification Act of 1988). Findlay's
+#   corpus carries two (#1460: Goodyear's Tall Timbers Mold closure, Michigan Sugar's warehouse),
+#   and no existing group fits one: it is not a permit, not an enforcement order, not an award,
+#   not a deed, and not a pleading. Filing it under the nearest bucket would present a workforce
+#   instrument as an environmental one, which is the misfiling this enum exists to prevent. Its
+#   payload key is `layoff_notice:` and NOT the already-taken `notice:`, which belongs to the
+#   R.C. 1311.04 Notice of Commencement extractions in `recorder/` and `legal/` — those are
+#   deliberately left unclaimed here so this bump can't silently reclassify them. Enum growth is
+#   additive for feed READERS (a pre-1.47 records.json stays valid) but a pre-1.47
+#   records.schema.json rejects the new group value — MINOR, back-compatible for data, schema
+#   refresh required.
+CONTRACT_VERSION = "1.47.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -465,6 +478,7 @@ RecordGroup = Literal[
     "deeds",
     "enforcement",
     "finance",
+    "labor",
     "land-assembly",
     "litigation",
     "permits-epa",

@@ -1,0 +1,73 @@
+id: findlay-discharge-record
+title: Findlay — NPDES 2PD00008 Instrument Set + Maumee TP Allocation Chain (Extractions)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Ohio EPA NPDES permit 2PD00008 / application OH0025135 — the 2024 *UD renewal fact sheet
+    (Public Notice 205259), the 2025 *VD modification package as issued (Public Notice 216133,
+    effective 2026-02-01), and that modification's draft public notice, all fetched from the Ohio
+    DAM 2026-07-31 (data/documents/oepa/findlay/filename-map.yaml). The permit:/ blocks are
+    `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1
+    image); everything after them is a reviewed augmentation transcribed page-by-page from each
+    PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans. The
+    allocation-chain record additionally reads the Maumee Watershed Nutrient TMDL Appendix 4
+    (Tables A4.1 / A4.3 / A4.5), general permit OHP000001 (Parts I.C.1, IV.A.1, IV.C, IV.D), and
+    the December 2024 TMDL Biennial Report (pp. 13-14).
+license: public record / public domain
+access_tier: public
+site_scope: site:findlay
+storage:
+- relpath: extracted/oepa/findlay/2PD00008.fs.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/findlay/2PD00008.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/findlay/2PD00008.1abaf306.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/discharge-record.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- npdes
+- oepa
+- findlay
+- hancock-county
+- blanchard-river
+- 7q10
+- dilution
+- mercury-variance
+- cso
+- tmdl
+- phosphorus
+- ohp000001
+notes: >-
+  Issue 1460 (under epic 1265); closes issue 352. Three permits-npdes rows plus one permits-epa row.
+  The fact sheet is the anchor: outfall 2PD00008001 to the Blanchard River at RIVER MILE 56.42, HUC
+  04100008-03-04, Table 12 annual 7Q10 of 0.21 cfs against a 23.208 cfs (15 MGD) design flow, and an
+  acute dilution ratio of 1.0 computed by Ohio EPA itself — at design flow the river below the
+  outfall IS the effluent. Those values populate _FINDLAY.plant_receiving and, with general permit
+  OHP000001 and the January 2026 variance list as corroborators, drive the committed ECHO
+  receiving-water correction for OH0025135
+  (data/reference/echo/curation/maumee-wwtp.receiving-water.yaml). TWO CAVEATS TO CARRY. (1) The
+  cited 0.21 cfs is ~41x smaller than the network's derived Blanchard 7Q10 of 8.67 cfs at gage
+  04189000, so the findlay-ottawa-comparison screen of 2.68x is really ~110x; reconciling the two is
+  issue 1458 and is deliberately NOT done here. (2) The Ohio DAM's permits/doc slot serves the
+  MODIFIED package, not the 2024 *UD renewal it modified, so the *UD permit as issued is not among
+  the committed bytes and its term (effective 2024-11-01, expires 2029-10-31) is recorded from the
+  variance list instead — lead UD-ISSUANCE-BYTES. The allocation record carries the finding that a
+  plant discharging 4.8-5.5 MT of spring phosphorus against a 3.2 MT wasteload allocation in every
+  reported year (2017-2021) is nonetheless in compliance, because OHP000001 Part IV.C.3 makes an
+  individual exceedance a violation only when the 39-facility cumulative load also breaches its cap
+  — and in 2024 the group reported 43,304 kg against 64,170 kg. Open threads in
+  data/site/findlay/leads.yaml (CSO-LTCP-2026-11-01, TP-SEASON-REPORTS, UD-ISSUANCE-BYTES,
+  MERCURY-VARIANCE-RENEWAL).

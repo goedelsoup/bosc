@@ -1,0 +1,101 @@
+doc_id: warn-goodyear-tall-timbers-mold-2026-01-30
+source_path: data/documents/findlay/warn/GoodyearTireRubberCompany.pdf
+kind: warn
+pages_read:
+- 0
+- 1
+image_pages_read: []
+dpi: 0
+method: >-
+  Verbatim transcription from the PDF's embedded text layer (pypdf). Two pages: the notice letter
+  and the enclosed job-title table. This is a digitally generated letter, not a scan.
+source_text_excerpt: >-
+  "January 30, 2026 / VIA EMAIL (rapdresp@jfs.ohio.gov) / Matt Damschroder, ODJFS Director...
+  We are writing to inform you that The Goodyear Tire & Rubber Company will close its Tall
+  Timbers Mold facility located at 2025 Production Drive Findlay, OH 45840. As required by the
+  Ohio WARN Act and the federal Worker Adjustment and Retraining Notification Act of 1988, this
+  letter serves to give you notice of the closing. The entire facility will close and this action
+  is expected to be permanent." Stamped: "Received: 1/30/2026 @ 2:33pm".
+layoff_notice:
+  confidence: high
+  warnings:
+  - >-
+    The letter states no destination for the work and names no receiving plant. Any claim that
+    this closure consolidates production to another Goodyear site is NOT supported by this
+    instrument and is not asserted here.
+  - >-
+    The letter names no labor organization and states "There are no bumping rights at this
+    location." Do not attribute union representation at this facility from this document.
+  - >-
+    The separation date is stated as a 14-day window, not a date: "on or around the 14-day period
+    commencing on March 31, 2026." `separations_begin` below is the window's start as printed.
+  statute:
+  - Ohio WARN Act
+  - Worker Adjustment and Retraining Notification Act of 1988 (federal)
+  filed_with: Ohio Department of Job and Family Services (ODJFS)
+  addressee: Matt Damschroder, ODJFS Director
+  filed_by: The Goodyear Tire & Rubber Company
+  signatory: Dusty Douglas, Director, Americas Manufacturing — Mixing, Racing and Non-Tires
+  contact: Elizabeth Slough, HR Specialist, 419-619-5581
+  notice_date: '2026-01-30'
+  received_stamp: 'Received: 1/30/2026 @ 2:33pm'
+  transmission: email to rapdresp@jfs.ohio.gov
+  facility_name: Goodyear Tall Timbers Mold facility
+  employer: The Goodyear Tire & Rubber Company
+  site_address: 2025 Production Drive, Findlay, OH 45840
+  county: Hancock
+  action: facility closing
+  scope: entire facility
+  permanent: true
+  employees_affected: 85
+  separations_begin: '2026-03-31'
+  separations_window: 14-day period commencing on or around 2026-03-31
+  bumping_rights: false
+  severance_offered: true
+  outplacement_offered: true
+  note: >-
+    [verified] A permanent closing of Goodyear's Tall Timbers Mold facility in Findlay, noticed
+    to ODJFS on 2026-01-30 and affecting 85 positions, with separations beginning on or around
+    2026-03-31. The enclosed job-title table shows the loss is weighted to skilled and technical
+    work, not line labor: 39 Manufacturing Technicians plus 7 Technology Specialists and 8
+    engineers of various grades.
+
+# --- the enclosed schedule, verbatim (p. 2) ----------------------------------------------------
+impacted_positions:
+- {title: Area Manager, count: 4}
+- {title: Computer-Aided Manufacturing Engineer, count: 2}
+- {title: Electronic Tech, count: 2}
+- {title: Engineer Senior, count: 2}
+- {title: Environmental, Health and Safety Coordinator, count: 1}
+- {title: HR Specialist, count: 1}
+- {title: Manufacturing Clerk, count: 2}
+- {title: Manufacturing Planner Schedule Leader, count: 2}
+- {title: Manufacturing Technician, count: 39}
+- {title: Mold Operations Apprenticeship, count: 1}
+- {title: Procurement Coordinator, count: 1}
+- {title: Production Business Leader, count: 3}
+- {title: Quality Business Leader, count: 1}
+- {title: Quality Engineer Associate, count: 1}
+- {title: Quality Engineer Senior, count: 1}
+- {title: Quality Specialist, count: 3}
+- {title: Quality Technician, count: 4}
+- {title: 'Technician II, Mold Operations', count: 1}
+- {title: Technology Engineer, count: 2}
+- {title: Technology Engineer Associate, count: 2}
+- {title: Technology Engineer Senior, count: 1}
+- {title: Technology Engineer Staff, count: 2}
+- {title: Technology Specialist, count: 7}
+grand_total: 85   # as printed on the schedule; the transcribed rows sum to 85
+
+relevance:
+  tags: [verified, warn, odjfs, findlay, hancock-county, goodyear, plant-closure,
+         manufacturing, labor]
+  note: >-
+    The larger of the two 2025-26 Findlay WARN filings, and the one that removes skilled
+    manufacturing employment from the county in the same window the site's new large-load
+    development is arriving. Held as a labor-side record, not an economic conclusion: the
+    county-level employment effect is a question for the economics baseline, not a claim this
+    letter makes.
+  cross_refs:
+  - data/extracted/findlay/warn/michigan-sugar-findlay-2025.warn.yaml
+  - data/extracted/findlay/dislocation-and-brownfields.md

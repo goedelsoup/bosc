@@ -44,11 +44,15 @@ def test_basin_screen_coverage(data_settings: Settings) -> None:
     # and screens (28.62 cfs into the Ottawa's 0.2 cfs 7Q10 — a fresh violation). The
     # curated receiving-water overlay re-applies that correction (and Van Wert's) on every
     # pull, so a refresh can no longer silently drop either back to no_receiving_water.
-    assert c.screened == len(screen.checks) == 9
+    # 10 since #1460 (closing #352): the Findlay WPCC (OH0025135, the Blanchard's 15 MGD
+    # anchor POTW) gains its own overlay correction from NPDES fact sheet 2PD00008, so it
+    # too leaves no_receiving_water and screens — a fourth violation.
+    assert c.screened == len(screen.checks) == 10
     # Honest coverage: most of the basin is unscreenable, surfaced explicitly. 77 after the
-    # refresh — ECHO dropped the receiving water it used to carry for Harrison Lake State
-    # Park (re-keyed to a general permit) and Miller City HS, and the new Toledo row has none.
-    assert c.no_receiving_water == 77
+    # #1698 refresh — ECHO dropped the receiving water it used to carry for Harrison Lake
+    # State Park (re-keyed to a general permit) and Miller City HS, and the new Toledo row
+    # has none; 76 after the Findlay correction moved one row out of the bucket.
+    assert c.no_receiving_water == 76
     assert c.screened + c.no_receiving_water + c.no_7q10 + c.no_design_flow == c.total
     # The cited Lima-loop violation (American Bath -> Pike Run) is still caught.
     cited = [ch for ch in screen.checks if ch.design_low_flow.source == "document"]

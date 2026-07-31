@@ -1,0 +1,24 @@
+meta:
+  subject: >-
+    Ohio Brownfield Remediation Program Round 11 award descriptions — download manifest
+    (issue 1460)
+  generated_at: '2026-07-31'
+  policy: >-
+    non-destructive — originals keep as-received names. The govdelivery attachment serves no
+    Content-Disposition header, so the only name on the wire is the URL path segment, which is
+    percent-encoded. It is stored URL-DECODED ("%20" -> space) because that decode is the
+    attachment's actual name, not a correction of it; both forms are recorded below and the
+    bytes are untouched (sha256 as fetched).
+documents:
+- filename: Round 11 Brownfield Descriptions.pdf
+  url_encoded_name: Round%2011%20Brownfield%20Descriptions.pdf
+  permit_id: null
+  source_url: https://content.govdelivery.com/attachments/OHIOGOVERNOR/2026/05/13/file_attachments/3649823/Round%2011%20Brownfield%20Descriptions.pdf
+  sha256: 158ca1f1b47dd742b7e10c9697bf28844d848e5ab00c1f18ad2f2fb84efc9562
+  bytes: 463172
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:41:36.736080+00:00'
+  status: downloaded
+  note: >-
+    Distributed by the Governor's office (govdelivery) with the 2026-05-13 Round 11 announcement.
+    Statewide award-description packet; three of its entries are Hancock County awards.

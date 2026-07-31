@@ -936,8 +936,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d1bfe4a9653d955eb2e35afe05de4aeb04a77c856a53e10863e648040e9867e8",
-      "size_bytes": 52706,
+      "sha256": "20718735689c4d547c0cc77b488a5771f827a965c60d23090b6f1f6a5b933ab9",
+      "size_bytes": 53431,
       "lfs_materialized": true,
       "file_count": 7,
       "stale": false,
@@ -950,6 +950,152 @@
       "confidence": "medium",
       "note": "watermark dmr IN0032191 --start 2023-01-01 --end 2023-12-31 --design-flow 74.0",
       "verified": true
+    }
+  },
+  {
+    "id": "findlay-discharge-record",
+    "title": "Findlay — NPDES 2PD00008 Instrument Set + Maumee TP Allocation Chain (Extractions)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA NPDES permit 2PD00008 / application OH0025135 — the 2024 *UD renewal fact sheet (Public Notice 205259), the 2025 *VD modification package as issued (Public Notice 216133, effective 2026-02-01), and that modification's draft public notice, all fetched from the Ohio DAM 2026-07-31 (data/documents/oepa/findlay/filename-map.yaml). The permit:/ blocks are `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1 image); everything after them is a reviewed augmentation transcribed page-by-page from each PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans. The allocation-chain record additionally reads the Maumee Watershed Nutrient TMDL Appendix 4 (Tables A4.1 / A4.3 / A4.5), general permit OHP000001 (Parts I.C.1, IV.A.1, IV.C, IV.D), and the December 2024 TMDL Biennial Report (pp. 13-14).",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "oepa",
+      "findlay",
+      "hancock-county",
+      "blanchard-river",
+      "7q10",
+      "dilution",
+      "mercury-variance",
+      "cso",
+      "tmdl",
+      "phosphorus",
+      "ohp000001"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/findlay/2PD00008.fs.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/findlay/2PD00008.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/discharge-record.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "b12dd12fbe53d2f38d0e38cbfb100563b83b3e3b7318b5f9762158d1914b0439",
+      "size_bytes": 54658,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio EPA NPDES permit 2PD00008 / application OH0025135 — the 2024 *UD renewal fact sheet (Public Notice 205259), the 2025 *VD modification package as issued (Public Notice 216133, effective 2026-02-01), and that modification's draft public notice, all fetched from the Ohio DAM 2026-07-31 (data/documents/oepa/findlay/filename-map.yaml). The permit:/ blocks are `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1 image); everything after them is a reviewed augmentation transcribed page-by-page from each PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans. The allocation-chain record additionally reads the Maumee Watershed Nutrient TMDL Appendix 4 (Tables A4.1 / A4.3 / A4.5), general permit OHP000001 (Parts I.C.1, IV.A.1, IV.C, IV.D), and the December 2024 TMDL Biennial Report (pp. 13-14).",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "findlay-dislocation",
+    "title": "Findlay — WARN Notices + Brownfield Round 11 Awards (Extractions)",
+    "scope": "extracted",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Two Ohio Department of Job and Family Services WARN Act notices served from the Ohio DAM's jfs.ohio.gov/warn tree — The Goodyear Tire & Rubber Company's Tall Timbers Mold facility closing (received 2026-01-30) and Michigan Sugar Company's Findlay warehouse closing (received 2025-12-11) — plus the Ohio Brownfield Remediation Program Round 11 award-description packet distributed with the 2026-05-13 announcement (govdelivery). All three fetched 2026-07-31; per-file provenance in data/documents/findlay/warn/filename-map.yaml and data/documents/findlay/brownfield/filename-map.yaml. Verbatim transcription from each PDF's embedded text layer — digitally generated letters, not scans.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "warn",
+      "odjfs",
+      "labor",
+      "plant-closure",
+      "goodyear",
+      "michigan-sugar",
+      "brownfield",
+      "bustr",
+      "underground-storage-tank",
+      "findlay",
+      "hancock-county"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/brownfield/round-11-hancock-2026.award.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/dislocation-and-brownfields.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "ee73c28a022363772279f282de063e4bdd8e4c8a1f551a7030527105bb1152e4",
+      "size_bytes": 25725,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Two Ohio Department of Job and Family Services WARN Act notices served from the Ohio DAM's jfs.ohio.gov/warn tree — The Goodyear Tire & Rubber Company's Tall Timbers Mold facility closing (received 2026-01-30) and Michigan Sugar Company's Findlay warehouse closing (received 2025-12-11) — plus the Ohio Brownfield Remediation Program Round 11 award-description packet distributed with the 2026-05-13 announcement (govdelivery). All three fetched 2026-07-31; per-file provenance in data/documents/findlay/warn/filename-map.yaml and data/documents/findlay/brownfield/filename-map.yaml. Verbatim transcription from each PDF's embedded text layer — digitally generated letters, not scans.",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -4744,8 +4890,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e038bb0e37f5fbb9cdb0b495e3b97715f5b934d6354d5e339ffd37e438facc21",
-      "size_bytes": 980311,
+      "sha256": "a0ee958158faf24267bb587b343855ae31e5a007b3aa3c3ad53616ae411a659e",
+      "size_bytes": 985135,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -4794,8 +4940,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "faa14307f452690b09c20c23f2fb35494d741d98d5927dfbfeb34f01a64b41a8",
-      "size_bytes": 4744,
+      "sha256": "4a0e4434d45d1586dfe22c31f366da937dc71c3fd07b070d405a762e43d58f25",
+      "size_bytes": 6940,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -5761,8 +5907,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e775dff974bdcff51cbc524995199b4f137fecd633d2c62c3f951a2121eac0dd",
-      "size_bytes": 175489,
+      "sha256": "dd96ba6479a37c7c3ae6f4c40bcc6d51f6a16b8f6ff10fa8a1c3829da108fa66",
+      "size_bytes": 178823,
       "lfs_materialized": true,
       "file_count": 21,
       "stale": false,

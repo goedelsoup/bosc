@@ -67,12 +67,15 @@ async def test_reference_tools_do_not_serve_lima_data_off_home(
     # Lima commissioners minutes must not bleed into a Findlay run.
     assert "commissioners" not in timeline_text.lower()
 
-    # list_documents now filters data/documents/ by site slug rather than returning a
-    # _reference_only notice — Findlay's evidence lives under data/extracted (not
-    # data/documents), so the result is still an empty message.
+    # list_documents filters data/documents/ by the site's own corpus scope rather than
+    # returning a _reference_only notice. Since #1460 Findlay owns real source bytes in TWO
+    # collections — its NPDES instrument set under `oepa/findlay/` and the WARN/brownfield
+    # instruments under `findlay/` — so this serves Findlay's own documents and, critically,
+    # none of Lima's.
     docs_text = (await tools.list_documents.handler({}))["content"][0]["text"]
-    assert "No source documents found for site 'findlay'" in docs_text
-    assert "[scope]" not in docs_text  # no reference-only notice, just an honest empty message
+    assert "2PD00008.fs.pdf" in docs_text and "GoodyearTireRubberCompany.pdf" in docs_text
+    # Lima's own collections must not bleed into a Findlay run.
+    assert "2PE00000.pdf" not in docs_text and "PRR-01-bundle" not in docs_text
 
     # program_overview resolves within findlay's own corpus (which has no OPC estimate) —
     # no Lima OPC leak.

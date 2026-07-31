@@ -1,0 +1,66 @@
+meta:
+  subject: >-
+    OEPA/DAM permit download manifest — City of Findlay Water Pollution Control Center
+    (WPCC/WPCF), NPDES 2PD00008 / application OH0025135 (issue 1460)
+  generated_at: '2026-07-31'
+  policy: >-
+    non-destructive — originals keep as-received names. Ohio EPA serves TWO different documents
+    from the DAM under the same basename `2PD00008.pdf` (one from `permits/doc/`, one from
+    `permits/DraftPN/`). Both bytes are kept: the second landed with its content-hash suffix
+    (`2PD00008.1abaf306.pdf`) under the fetcher's collision rule. Neither file is renamed to
+    "fix" the collision; the canonical name of each is recorded below beside its source URL, and
+    the content-verified dates come from each document's own text layer, never from its filename.
+documents:
+- filename: 2PD00008.pdf
+  canonical_name: >-
+    2PD00008*VD modification package — Director's transmittal letter (2025-11-07), the modified
+    NPDES permit as issued (effective 2026-02-01), and the modification's own 8-page fact sheet
+    (Public Notice 216133). 52 pp.
+  content_verified_date: '2025-11-07'   # transmittal letter date, printed on p. 1 of the text layer
+  permit_id: 2PD00008
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00008.pdf
+  sha256: 050dc447f5f3111dea5c335e8f51c642070f19638581692bcab33e7ad15b46d6
+  bytes: 1160870
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:38:37.424384+00:00'
+  status: downloaded
+  note: >-
+    IMPORTANT — the DAM's `permits/doc/` slot for this permit serves the MODIFIED package, not
+    the original 2024 *UD renewal. The *UD issuance is not among the bytes obtainable from this
+    slot as of 2026-07-31; its term (effective 2024-11-01, expires 2029-10-31) is recorded from
+    the Ohio EPA January 2026 variance list instead. See
+    data/extracted/oepa/findlay/2PD00008.npdes.yaml.
+- filename: 2PD00008.fs.pdf
+  canonical_name: >-
+    Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024 — permit 2PD00008*UD, Public Notice
+    205259. 33 pp.
+  content_verified_date: '2024-08-09'   # Public Notice Date, printed on p. 1 of the text layer
+  permit_id: 2PD00008
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00008.fs.pdf
+  sha256: 70549789ae7b802f7a7110ac02c9fc6820f4defde861aadd77fdaf8db760f7aa
+  bytes: 1377067
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:40:46.452801+00:00'
+  status: downloaded
+  note: >-
+    The anchor water-record instrument: receiving water and River Mile 56.42, Table 12 low flows
+    (7Q10 0.21 cfs), the 1.0 acute dilution ratio, the renewed mercury variance, and the TMDL
+    wasteload reference. See data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml.
+- filename: 2PD00008.1abaf306.pdf
+  canonical_name: >-
+    Public Notice of NPDES Permit Modification, 2PD00008*VD — Public Notice 216133, noticed
+    2025-11-14, effective date "PROPOSED". 55 pp.
+  content_verified_date: '2025-11-14'   # Date of Public Notice, printed on p. 1 of the text layer
+  as_received_name: 2PD00008.pdf
+  permit_id: 2PD00008
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/DraftPN/2PD00008.pdf
+  sha256: 1abaf306e441a068e290ad88fd98494234df2dfa9a650c9ca9374f650194f82b
+  bytes: 1265367
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:40:46.814607+00:00'
+  status: conflict
+  note: >-
+    same name, different bytes — kept alongside original. The as-received DAM basename is
+    `2PD00008.pdf`; the `.1abaf306` infix is this file's own sha256 prefix, added by the
+    fetcher's non-destructive collision rule, not a rename of the source. See
+    data/extracted/oepa/findlay/2PD00008.1abaf306.npdes.yaml.
