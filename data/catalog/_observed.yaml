@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-31T01:46:45.861074+00:00'
+reconciled_at: '2026-07-31T02:46:09.078510+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -162,8 +162,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: e611ec3cc39491e055f7a6c63c6a13383408516f2b59f898f84117c2dca73dbe
-    size_bytes: 144471
+    sha256: 6a35f61c62279e79385799578b00e6a4bea1c483a197357627bd37d121afd82e
+    size_bytes: 149534
     lfs_materialized: true
     file_count: 12
     missing: []
@@ -352,8 +352,8 @@ entries:
     site_scope: slug-scoped
   eia-grid-profile:
     exists: true
-    sha256: 4505fe62c61bacb61be5efe50abcfaad440f34aee9ef134657242bbdc47c797d
-    size_bytes: 104135
+    sha256: 7f5e29511e137d0b882ac94655ac684e9dc37b22d2d8f0ccc3478f0c94adb5b7
+    size_bytes: 104545
     lfs_materialized: true
     file_count: 22
     missing: []
@@ -436,6 +436,16 @@ entries:
     size_bytes: 1447
     lfs_materialized: true
     file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:findlay
+  findlay-grid:
+    exists: true
+    sha256: 03311f5776edb4af2c30fdba1c35979001599e1b85dce36f3286c62a4b627f7a
+    size_bytes: 62135
+    lfs_materialized: true
+    file_count: 4
     missing: []
     asof: null
     stale: false

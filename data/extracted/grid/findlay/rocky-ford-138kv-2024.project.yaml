@@ -1,0 +1,254 @@
+# Structured project record — the Rocky Ford 138 kV pair, Cass Township, Hancock County.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Source bytes: data/documents/grid/findlay/ (see that dir's filename-map.yaml).
+meta:
+  subject: >-
+    AEP Ohio's Rocky Ford 138 kV Station + the Ebersole-Fostoria Central #2 cut-in
+    and Rocky Ford-Border Basin tie line — Cass Township, Hancock County, Ohio
+  kind: grid-siting-project
+  captured_for: issue 1464 (epic 1265, readiness(findlay) — grid posture)
+  extracted_at: '2026-07-31'
+  method: >-
+    Direct read of the two OPSB filings' own PDF text layers plus AEP's public
+    notice for the same pair. Both case numbers are printed on the filings
+    themselves; nothing here is taken from a docket search or from press.
+  sources:
+    primary:
+      - file: data/documents/grid/findlay/Rocky Ford 138 kV Station Project Letter of Notification.pdf
+      - file: data/documents/grid/findlay/Ebersole-Fostoria Center 2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV Tie Line Project Construction Notice.pdf
+      - file: data/documents/grid/findlay/Rocky Ford 138 kV Station Project Public Notice.pdf
+    index:
+      - url: https://www.aeptransmission.com/ohio/filings.php   # AEP Ohio regulatory-filings index, where all three are served
+
+# --- What the issue asked for: the OPSB case numbers -------------------------
+opsb_cases:
+  tag: '[verified]'
+  statement: >-
+    The project is TWO OPSB cases, filed the same day for the same point of
+    interconnection, because Ohio's application-requirement matrix splits them.
+    Both numbers are printed on the filings' own cover pages and repeated in
+    AEP's public notice.
+  cases:
+    - case_no: 24-0707-EL-BLN
+      instrument: Letter of Notification (O.A.C. 4906-6-05)
+      applicant: AEP Ohio Transmission Company, Inc. ("AEP Ohio Transco")
+      filed: '2024-09-10'
+      covers: >-
+        Construction of the Rocky Ford 138 kV Station (~6.25 acres). Qualifies as
+        an LON under item (3) of Appendix A to O.A.C. 4906-1-01 — "Constructing a
+        new electric power transmission substation."
+      source: Letter of Notification cover page + B(1), p. 1
+    - case_no: 24-0706-EL-BNR
+      instrument: Construction Notice (O.A.C. 4906-6-05)
+      applicant: Ohio Power Company
+      filed: '2024-09-10'
+      covers: >-
+        The Ebersole-Fostoria Central #2 138 kV cut-in and the Rocky Ford-Border
+        Basin 138 kV tie line. Qualifies as a CN under item (1)(a) of the same
+        appendix (new construction/extension of transmission circuits).
+      source: Construction Notice cover page + B(1), p. 1
+  note: >-
+    Two different applicants — the transmission-only affiliate files the station,
+    the operating company files the lines. Do not collapse them into one filer.
+
+# --- Scope, as the filings state it ------------------------------------------
+project:
+  tag: '[verified]'
+  location:
+    township: Cass Township
+    county: Hancock County, Ohio
+    landmark: >-
+      "near the intersection of Township Road 238 and County Road 216" (public
+      notice); topographic quadrangles Arcadia, OH and Bloomdale, OH
+    parcel: '130001029770'   # third-party owned at filing; AEP Ohio Transco to acquire
+    source: LON B(3) p. 2 + B(10)(a) p. 4; CN B(8) p. 4; public notice p. 1
+  station:
+    name: Rocky Ford Station
+    voltage_kv: 138
+    footprint_acres: 6.25
+    equipment:
+      - 16' x 27' drop-in control module
+      - (3) 138 kV circuit breakers, 3000A
+      - (3) takeoff structures (2 phase-over-phase, 1 H-frame)
+    source: LON B(9)(a) p. 4
+  lines:
+    cut_in: >-
+      Loop the existing Fostoria-East Lima 138 kV transmission line (specifically
+      the Ebersole-Fostoria Central #2 138 kV circuit) through Rocky Ford Station
+      by extending two single-circuit 138 kV lines of less than 0.1 mile each.
+    tie: >-
+      One span of 138 kV line, approximately 0.04 mile, from Rocky Ford Station to
+      a Point of Interconnection with the IPP's own 138 kV transmission line.
+    conductor: 795 KCM 26/7 ACSR Drake; 100 ft ROW; galvanized steel poles on drilled-pier foundations
+    public_notice_summary: >-
+      "less than 0.2 miles of 138-kilovolt (kV) transmission line connecting Rocky
+      Ford Station to a customer facility and an existing 138-kV transmission line"
+    source: CN B(1) p. 1, B(2) p. 2, B(9)(a) p. 4; public notice p. 1
+  schedule:
+    construction_start: '2025-01'   # "Construction is planned to start in January of 2025"
+    anticipated_in_service: '2025-12'   # "the anticipated in-service date will be December of 2025"
+    source: LON B(6) p. 3; CN B(6) p. 3
+    status_as_captured:
+      tag: '[open]'
+      statement: >-
+        Whether the station and lines actually energized on the December 2025
+        schedule is not established by any captured source. AEP's filings state a
+        PLAN; no in-service confirmation, PJM notice, or OPSB compliance filing
+        was captured. Do not write "in service" without one.
+
+# --- Cost, and who pays it ---------------------------------------------------
+cost:
+  tag: '[verified]'
+  station_usd: 8700000        # "approximately $8,700,000 using a Class 4 estimate"
+  lines_usd: 2214000          # "approximately $2,214,000 using a Class 4 estimate"
+  estimate_class: Class 4
+  cost_recovery: >-
+    Both filings say the same thing in the same words: "The costs for this
+    Project will be recovered through total reimbursement by the IPP." Neither
+    project is a ratepayer-funded network upgrade — the generator pays.
+  source: LON B(9)(c) p. 4; CN B(9)(c) p. 5
+  correction_to_issue_body:
+    tag: '[verified]'
+    statement: >-
+      Issue 1464 carried "~$2.2M" as the cost of "Rocky Ford 138 kV Station +
+      Rocky Ford-Border Basin tie." The $2,214,000 is the LINE project
+      (24-0706-EL-BNR) alone; the station (24-0707-EL-BLN) is a separate
+      $8,700,000. Combined, the pair is ~$10.9M, all IPP-reimbursed.
+
+# --- Why it exists: a GENERATION interconnection, not a load one --------------
+purpose:
+  tag: '[verified]'
+  statement: >-
+    Both filings state the identical need: "The Border Basin I IPP plans to build
+    a 120 MW Maximum Facility Output (81 MW Capacity) solar generating facility
+    near Arcadia, Ohio. As part of the AE1-146 IPP Interconnection Service
+    Agreement, the Company will be required to connect the proposed facilities to
+    the electric grid." Failure to proceed would jeopardize "the customer's
+    required in-service date per the FERC approved Interconnection Service
+    Agreement."
+  interconnecting_customer: Border Basin I, LLC — an Independent Power Producer
+  generating_facility_opsb_case: 21-0277-EL-BGN   # OPSB has approved the generating facility
+  pjm_queue_position: AE1-146
+  pjm_network_upgrade: n8130
+  in_aep_long_term_forecast: 2024 Long Term Forecast Report, pp. 109-110 (reproduced at LON Appendix B)
+  source: LON B(1)-B(2) pp. 1-2; CN B(1)-B(2) pp. 1-2
+  what_this_is_not:
+    tag: '[verified]'
+    statement: >-
+      AE1-146 is a GENERATOR's queue position — Border Basin I's solar plant —
+      and Rocky Ford is the substation built to receive it. It is NOT a
+      large-load interconnection, NOT a data-center service point, and NOT the
+      One Power "Findlay Megawatt Hub" +300 MW standalone interconnection this
+      epic is looking for. The two sit in different townships (Cass, near
+      Arcadia, versus the Hub's Allen Township) and answer to different
+      processes: a FERC-jurisdictional generator interconnection agreement
+      versus a retail electric service agreement under AEP Ohio's Schedule DCT.
+      The "customer facility" in AEP's public notice is Border Basin I's own
+      station. Anyone reading the county's grid record must not let the presence
+      of a fresh 138 kV substation stand in for the load instrument that is
+      still missing — see megawatt-hub-interconnection.gap.yaml.
+
+# --- Environmental / land review as filed -------------------------------------
+review:
+  tag: '[verified]'
+  agricultural_district: >-
+    Both project areas sit on a parcel enrolled in Ohio's Agricultural District
+    Land program, verified with the Hancock County Auditor's Office on
+    2024-08-20; the parcel "will not be eligible and will be withdrawn from the
+    program by the Company." Station ~6.25 acres, lines ~1.5 acres.
+  land_use: >-
+    Hancock County Auditor land use "Other Agricultural Use with Outbuildings
+    Qualified for Current Use Value"; field observation found the area entirely
+    agricultural field. No tree clearing anticipated.
+  cultural_resources: >-
+    Phase I archaeological and history/architectural surveys conducted January
+    2024. One new archaeological site identified, not recommended NRHP-eligible;
+    six resources fifty years or older in the APE, none recommended eligible.
+    SHPO correspondence received 2024-02-12 agreeing the Project will have no
+    effect on historic properties and that no further coordination is necessary.
+  proximity: >-
+    No occupied residence or institution within 100 feet (so the EMF section is
+    stated inapplicable); no cemetery, church, school or community facility
+    within 1,000 feet.
+  source: LON B(10)(a)-(c) pp. 4-5; CN B(10)(a)-(c) pp. 5-6
+
+# --- The other in-county project the issue named ------------------------------
+central_findlay_project:
+  tag: '[verified]'
+  statement: >-
+    Issue 1464 asked for the "Central Findlay Improvement Project" OPSB LON case
+    number. There is no OPSB case to find, and the reason is jurisdictional, not
+    a search failure. AEP Ohio's own description of the work is 69 kV —
+    "Rebuilding four miles of 69-kilovolt (kV) transmission line, installing two
+    miles of overhead 69-kV transmission line and installing one mile of
+    underground 69-kV transmission line" — and Ohio's siting jurisdiction begins
+    at 100 kV. R.C. 4906.01(B)(2) defines a "major utility facility" to include
+    an "electric transmission line and associated facilities of a design capacity
+    of one hundred kilovolts or more," and the O.A.C. 4906-1-01 Appendix A
+    application matrix that produced the two Rocky Ford filings applies to that
+    same class. A 69 kV rebuild is below the threshold, so it generates neither an
+    LON nor a CN. AEP's Ohio regulatory-filings index carries no Central Findlay
+    entry, consistent with that.
+  scope_correction: >-
+    The issue body described it as "~4 mi rebuild, ~1 mi underground." AEP's own
+    text is three components — 4 mi rebuilt + 2 mi new overhead + 1 mi new
+    underground, all at 69 kV, not 138 kV.
+  stated_purpose: >-
+    "These improvements support the area's electrical needs and strengthen the
+    local power grid by replacing aging equipment." No customer, load, or
+    data-center connection is stated.
+  source:
+    - url: https://www.aepohiowire.com/transmission-northwest/   # AEP Ohio's own northwest-Ohio transmission project page (read 2026-07-31)
+    - url: https://www.aeptransmission.com/ohio/filings.php      # filings index — no Central Findlay entry (absence, checked 2026-07-31)
+  residual_open:
+    tag: '[open]'
+    statement: >-
+      The project factsheet URL the issue carried is 404 and AEP's page gives no
+      schedule, cost, or route. A 69 kV rebuild still needs local road/ROW
+      permissions and would appear in AEP Ohio's distribution capital filings at
+      PUCO, so the record is thin rather than closed. Lead CENTRAL-FINDLAY-69KV.
+
+# --- Corridor linkage ---------------------------------------------------------
+corridor_linkage:
+  solar_export_load_import:
+    tag: '[inference]'
+    statement: >-
+      Border Basin I is one of the two utility-scale solar projects Hancock
+      County's 2022 S.B. 52 restricted-area designation grandfathered (the other
+      is South Branch). Rocky Ford is the transmission instrument that builds one
+      of those two out. Read against the load side of this county's record — a
+      150 MW contracted compute load already operating at the One Power hub and
+      an undocumented +300 MW of "available" capacity beyond it — the county is
+      wiring out 81 MW of solar capacity while its large-load question stays
+      unanswered. The two facts are verified; the framing that joins them is
+      reasoning, and the S.B. 52 designation itself belongs to the governance
+      sub-issue, not this record.
+    source: >-
+      LON B(2) p. 1 (Border Basin 120 MW MFO / 81 MW capacity); the S.B. 52
+      restricted-area designation is carried in issue 1464's research refresh and
+      is NOT independently captured here — do not cite this record for it.
+  no_new_profile_field:
+    tag: '[open]'
+    statement: >-
+      As with the Lima "Lyka" record (issue 1476), no SiteProfile/SiteFacility
+      schema field is added for a transmission-siting project. `GridProfile`
+      (src/watermark/grid/model.py) is the connector-generated quantitative
+      backdrop — serving utility, EIA-861 utility profile, EIA-930 BA load, and
+      the campus load share — with `extra="forbid"`; a siting docket, a tariff
+      posture, and a behind-the-meter fleet are corpus instruments, not
+      denominators, and inlining them would put hand-curated prose inside a file
+      the next connector run rewrites. They live here instead, and
+      `_FINDLAY.serving_utility_citation` (the one hand-authored input that
+      reaches grid-profile.yaml) points at them.
+
+acceptance:   # per issue 1464
+  rocky_ford_case_number_resolved: true    # 24-0707-EL-BLN (station) + 24-0706-EL-BNR (lines)
+  central_findlay_case_number_resolved: true   # resolved as a NEGATIVE — 69 kV is below the 100 kV OPSB threshold
+  construction_notices_committed: true     # 3 PDFs under data/documents/grid/findlay/
+  no_fabricated_customer_or_load: true     # the interconnecting customer is Border Basin I, an IPP; no data-center attribution

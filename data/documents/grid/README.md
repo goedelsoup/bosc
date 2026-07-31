@@ -62,3 +62,37 @@ should not be conflated with the OPSB siting case itself. Neither AEP's project
 page nor its fact sheet names a customer ("a commercial customer's facility");
 the Google/Bistrozzi attribution in local press is tracked `[inference]`, not
 `[verified]` — see the extracted record.
+
+### `findlay/` — Hancock County grid posture (issue #1464)
+
+Site-scoped: this subdirectory is named in `_FINDLAY.corpus_relpaths`, which is
+what keeps a Hancock County siting docket out of Lima's reference build. Five
+files, captured 2026-07-31 from AEP Transmission's Ohio regulatory-filings index,
+AEP Ohio's rates page, and PJM's Load Analysis Subcommittee materials.
+
+| File | Document | Dated |
+|---|---|---|
+| `Rocky Ford 138 kV Station Project Letter of Notification.pdf` | AEP Ohio Transco's LON for the Rocky Ford 138 kV Station — **OPSB Case No. 24-0707-EL-BLN**, Cass Township, ~6.25 ac, ~$8,700,000, IPP-reimbursed | 2024-09-10 |
+| `Ebersole-Fostoria Center 2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV Tie Line Project Construction Notice.pdf` | Ohio Power Company's CN for the cut-in + tie line — **OPSB Case No. 24-0706-EL-BNR**, ~$2,214,000, IPP-reimbursed | 2024-09-10 |
+| `Rocky Ford 138 kV Station Project Public Notice.pdf` | AEP Ohio's public notice binding both case numbers, with the TR 238 / CR 216 location and the intervention window | undated in its own layer |
+| `20250916-item-04f---aep-large-load-request.pdf` | AEP's "2025 Load Forecast Adjustments" to the PJM Load Analysis Subcommittee — the Ohio queue funnel (38 GW → 13.0 GW → 11.1 GW) and cumulative additions, all zone-level | 2025-09-16 |
+| `July_24_2026_AEP_Ohio_Tariff_Book.pdf` | Ohio Power Company retail tariff, P.U.C.O. No. 22 — **Schedule DCT** at Original Sheet Nos. 223-1..223-7 | 2026-07-24 |
+
+Capture provenance is in [`findlay/filename-map.yaml`](findlay/filename-map.yaml).
+Structured reads live under
+[`data/extracted/grid/findlay/`](../../extracted/grid/findlay/).
+
+**Naming caveat (chain of custody).** The construction notice's *served filename*
+says `Ebersole-Fostoria Center 2`; the document's own cover page and running
+headers say `Ebersole-Fostoria Central #2`, and AEP's public notice for the same
+pair spells it `Ebersol-Fostoria Central #2`. The as-received name is kept
+verbatim and the document's own spelling is recorded as `canonical` in the
+filename map — the source file is not renamed.
+
+**Scope caveat (chain of custody).** Rocky Ford is a **generation**
+interconnection — the substation AEP must build to receive Border Basin I's
+120 MW/81 MW solar plant under FERC-approved interconnection agreement PJM
+AE1-146. It is *not* a data-center service point and *not* the One Power
+Megawatt Hub's undocumented +300 MW. The tariff book is captured because every
+secondary account of Schedule DCT paraphrases it; only sheets 223-1..223-7 and
+the 105-1 cross reference are read.

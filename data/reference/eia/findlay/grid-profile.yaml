@@ -4,7 +4,11 @@ serving_utility:
     source: reference
     citation: 'EIA-861 service-territory file (Ohio Power Co #14006) + PUCO certified-territory
       map; AEP Ohio serving Findlay corroborated by the City of Findlay (AEP smart-meter
-      notice)'
+      notice); Hancock-Wood Electric Cooperative serves the rural county and has no
+      located large-load or data-center customer (negative re-checked 2026-07-31).
+      Retail terms for a >25,000 kW load here are AEP Ohio Schedule DCT, P.U.C.O.
+      No. 22 Original Sheet Nos. 223-1..223-7 (origin PUCO 24-508-EL-ATA, on appeal
+      as Ohio S.Ct. 2025-1458) — data/extracted/grid/findlay/aep-dct-tariff-posture.yaml'
     confidence: high
   holding_company:
     value: American Electric Power (AEP)

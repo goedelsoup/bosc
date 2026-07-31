@@ -33,17 +33,17 @@ The one confirmed operating large-load facility in the county. Verified from **b
 host's SEC filing and the customer's own release.
 
 - **Host / operator:** One Power Co (privately held; CEO Jereme Kent). `[verified]`
-  Source: One Power Co Form S-1/A, EDGAR CIK 2039139.
+  Source: One Power Co Form S-1, EDGAR CIK 2039139.
 - **Anchor customer:** MARA Holdings, Inc. (NASDAQ: MARA; ex-Marathon Digital Holdings) — bitcoin
-  mining. `[verified]` Source: One Power S-1/A + MARA 2024-11-11 release.
+  mining. `[verified]` Source: One Power S-1 + MARA 2024-11-11 release.
 - **Facility name:** MWHub 01, the "Findlay Megawatt Hub." `[verified]`
 - **Location:** ~170-acre campus in Allen Township, Hancock County — I-75 at TR 215 / CR 99.
-  `[verified]` Source: One Power S-1/A.
+  `[verified]` Source: One Power S-1.
 - **Capacity:** "Current Capacity 30 MW, Planned Maximum 150 MW, Status: **Operating**." First
   energized 2023 with "the first fully digital substation in the United States." `[verified]`
-  Source: One Power S-1/A.
+  Source: One Power S-1.
 - **Contract:** MARA leases **150 MW for 15 years, take-or-pay** — payment "due regardless of
-  whether or not the customer elects to purchase power." `[verified]` Source: One Power S-1/A.
+  whether or not the customer elects to purchase power." `[verified]` Source: One Power S-1.
 - **Customer corroboration:** MARA's 2024-11-11 release describes "a **150-megawatt operation in
   Findlay, Ohio**, which already has **30 megawatts of capacity**," part of ~372 MW across three
   Ohio sites, with full energization **intended by end-2025**. `[verified]`
@@ -116,10 +116,40 @@ figure. Do not invent one.
 ## 2 — Watch surface (in-county, no instrument yet)
 
 - **+300 MW made available in 2024** via a One Power "standalone interconnection site" expansion
-  (S-1/A) — **no named customer.** `[open]` The interconnection instrument (PUCO / PJM / AEP) is
-  the epic #1265 grid sub-issue's target. **Not** in the `SiteFacility` basis.
+  (S-1) — **no named customer.** `[open]` **Still open after a four-route search (#1464)**, and
+  the search itself is now the record: the claim is one sentence in a registration statement that
+  was **withdrawn** before it went effective, and that filing never names AEP or PJM anywhere. PJM
+  is structurally the wrong forum (its queue is a *generation* queue; large load reaches PJM only
+  as an aggregate zone forecast), AEP's load contracts are not published, OPSB may have no
+  jurisdiction — and the one decisive route, PUCO's docket, **could not be searched at all**
+  because `dis.puc.state.oh.us` rejects automated retrieval. So this is an open question with a
+  known next step, not a negative finding. Read it as a *disclosed development claim*, never as
+  documented grid capacity. **Not** in the `SiteFacility` basis.
+  Source: `data/extracted/grid/findlay/megawatt-hub-interconnection.gap.yaml`.
 - **Tall Timbers West** and **Findlay International Park** — industrial-park capacity to watch; no
   disclosed data-center tenant. `[open]`
+
+### Grid posture (the tariff the load would sit under)
+
+The power side of this facility story is worked in
+[`data/extracted/grid/findlay/`](../grid/findlay/) (#1464). Three things bear directly on the
+entries above:
+
+- **AEP Ohio Schedule DCT names crypto mining outright.** Its "Mobile Data Center" definition
+  reaches electronic information services "(including mining of cryptocurrency)" above 25,000 kW,
+  and MARA's contracted 150 MW is six times that threshold. A Mobile Data Center customer must
+  also give a **sworn statement under penalty of perjury** that it is not affiliated with a foreign
+  adversary under 15 C.F.R. § 7.4 — the only attestation anywhere in the schedule. `[verified]`
+  Source: P.U.C.O. No. 22, Original Sheet Nos. 223-1, 223-7.
+- **The +300 MW would convert the site to New Load by the tariff's own definition.** "Existing
+  Load that signs a new ESA to increase its contract capacity by more than 25,000 kW" *is* New
+  Load — and +300 MW is twelve times that trigger, so the pre-tariff grandfather cannot absorb it.
+  `[inference]` — the conclusion follows from the sheets; the premise (an executed pre-2025-07-23
+  agreement) is `[open]`.
+- **Who holds the AEP Ohio service agreement here is unestablished.** One Power owns the site and
+  its own transmission-voltage substation; MARA leases capacity behind it. Whether Schedule DCT
+  reaches the host, the tenant, or neither turns on a contract nobody has produced. `[open]` —
+  lead `HUB-ESA-CUSTOMER`.
 
 ## 3 — Corridor context (adjacent counties, out of scope for this site)
 
@@ -141,12 +171,31 @@ node (the disambiguation guardrail: adjacent-county projects are context, not en
   data-center SIC. `[verified]` Source: `data/reference/rsei/findlay/inventory.yaml` (FIPS 39063).
 - **OEPA air PTI web search:** no One Power / MARA generator-bank PTI reachable at web level
   (see Regulatory record). `[verified — negative]`
+- **PJM committee material (2026-07-31 sweep):** AEP's own 2025-09-16 Load Analysis Subcommittee
+  presentation of Ohio large-load additions names **no county, substation, customer or project**
+  in seven slides — only zone totals (38 GW queue → 13.0 GW of DCT study requests → 11.1 GW after
+  the tariff provision). `[verified — negative, structural]` A Findlay load could not have appeared
+  there even if one exists. Source: `data/documents/grid/findlay/20250916-item-04f---aep-large-load-request.pdf`.
+- **AEP Ohio filings + DCT reporting (2026-07-31 sweep):** the Ohio regulatory-filings index carries
+  exactly two Hancock County entries, both the Rocky Ford *solar* interconnection pair; AEP's
+  2026-02-13 report to the PUCO (5,642 MW signed under the tariff, 17,861 MW total through 2035) is
+  territory-wide and mentions neither Findlay, Hancock County, One Power nor MARA.
+  `[verified — negative, web-level]`
+- **Hancock-Wood Electric Cooperative (re-checked 2026-07-31):** no large-load or data-center
+  customer on the co-op's own news feed, and Ohio's Electric Cooperatives' 2026-05-25 statement
+  that "some of Ohio's 24 electric distribution cooperatives have been approached" names no
+  cooperative, county or MW figure and never mentions Hancock-Wood or Findlay.
+  `[verified — negative, web-level]`
+- **PUCO Docketing Information System:** ⚠️ **not a negative — an access failure.** Every request
+  returned an application-firewall page, so the docket that would actually carry a Findlay
+  large-load instrument is **unsearched**. Do not read its silence as absence.
+  `[open — access blocked]` Lead `PUCO-DIS-ACCESS`.
 
 A negative check tagged `[verified]` is a result, not a gap — it protects the record.
 
 ## Instruments to pull (priority order)
 
-1. **One Power Co Form S-1/A** (EDGAR CIK 2039139) — the primary disclosure of the hub capacity +
+1. **One Power Co Form S-1** (EDGAR CIK 2039139) — the primary disclosure of the hub capacity +
    the MARA take-or-pay contract (already cited; ingest for the corpus).
 2. **MARA Holdings 10-K / operations updates** — resolve the 2026 energization status `[open]`.
 3. **Hancock County Recorder** — deed(s) for the 110-ac (2026-03-05, $5.9M) + 40-ac + 74-ac
@@ -154,16 +203,31 @@ A negative check tagged `[verified]` is a result, not a gap — it protects the 
 4. **OEPA Air PTI** (NWDO eSuite) — One Power / MARA generator-bank permit(s), Allen Township.
 5. **OEPA CGP stormwater NOI** — the North Findlay Industrial Park construction coverage.
 6. **OHD000001 comment docket** — scan for Findlay-area commenters.
-7. **PJM / PUCO / AEP interconnection** — the +300 MW standalone-interconnection instrument (epic
-   #1265 grid sub-issue).
-8. **Ohio SOS** — One Power Co and MARA Holdings, Inc. registrations.
+7. **The hub's AEP Ohio electric service agreement / letter of agreement** — the single document
+   that would settle who the Schedule DCT customer is, whether the site is Existing or New Load,
+   and whether the +300 MW is contracted. Not published; a PUCO records request is the route
+   (#1464 narrowed the target from "PJM / PUCO / AEP interconnection" to this).
+8. **PUCO docket 24-508-EL-ATA (by hand)** — the Commission's Opinion and Order, and any filing
+   naming One Power / One Energy. `dis.puc.state.oh.us` blocks automated retrieval, so this needs
+   a browser or a written request. Lead `PUCO-DIS-ACCESS`.
+9. **Ohio SOS** — One Power Co and MARA Holdings, Inc. registrations.
 
 ## Sources
 
-- One Power Co Form S-1/A (EDGAR CIK 2039139): [sec.gov/Archives/edgar/data/2039139/…/onepowercompany-sx1a.htm](https://www.sec.gov/Archives/edgar/data/2039139/000162828025002278/onepowercompany-sx1a.htm)
+- One Power Co Form S-1 (EDGAR CIK 2039139): [sec.gov/Archives/edgar/data/2039139/…/onepowercompany-sx1a.htm](https://www.sec.gov/Archives/edgar/data/2039139/000162828025002278/onepowercompany-sx1a.htm)
 - MARA release, 2024-11-11: [ir.mara.com/news-events/press-releases/detail/1375](https://ir.mara.com/news-events/press-releases/detail/1375/)
 - OnSite acquires One Power (2026-02-16): [onsitepartners.com/news/onsite-partners-acquires-one-power-company](https://onsitepartners.com/news/onsite-partners-acquires-one-power-company-to-expand-distributed-generation-portfolio/)
 - OnSite + AEP + Basalt (2025-06-12): [onsitepartners.com/news/onsite-partners-aep-and-basalt-infrastructure-partners-collaborate](https://onsitepartners.com/news/onsite-partners-aep-and-basalt-infrastructure-partners-collaborate-to-bring-power-solutions-to-data-centers/)
 - The Ohio Register (2026-03-25, land assembly + speculation, use for leads not primary facts): [theohioregister.com/findlay-hiding-looming-data-center-project](https://www.theohioregister.com/findlay-hiding-looming-data-center-project/)
 - Baxtel MARA listing (secondary): [baxtel.com/data-centers/mara-holdings](https://baxtel.com/data-centers/mara-holdings)
 - OHD000001 hearing slides (OEPA): [dam.assets.ohio.gov … OHD_DataCenter_PP-FINAL-PresentationFull-Slides](https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD_DataCenter_PP-FINAL-PresentationFull-Slides-Correct.pdf)
+- Grid posture (#1464), committed source bytes + structured reads:
+  [`data/documents/grid/findlay/`](../../documents/grid/findlay/) ·
+  [`data/extracted/grid/findlay/`](../grid/findlay/)
+
+**Citation correction (#1464).** This file and `_FINDLAY` previously cited One Power's
+registration statement as a "Form S-1/A." EDGAR types the 2025-01-23 filing (accession
+0001628280-25-002278) as **S-1** — only the exhibit filename `onepowercompany-sx1a.htm` suggests
+an amendment, which is what a JOBS Act confidential-submission lineage looks like: the first
+*public* filing after a DRS and DRS/A is a Form S-1 even though its content amends the draft. All
+citations here now read S-1.

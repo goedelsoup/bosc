@@ -4,21 +4,21 @@
 #   candidates  — mechanically discovered acronyms needing triage (promote or stoplist).
 # `count` is total occurrences; `sources` maps each file to its hit count.
 scope: findlay
-sources_scanned: 2
+sources_scanned: 4
 glossary_defined: 77
 term_count: 0
-candidate_count: 24
-candidates_found: 24
+candidate_count: 40
+candidates_found: 45
 terms: []
 candidates:
 - term: MARA
   kind: term
   provenance: discovery
-  count: 24
+  count: 27
   example: '…Every entry below is confirmed as genuinely Hancock County, OH. ⚠️ **The critical guard:
     MARA Holdings, Inc. ≠ Marathon Petroleum Corp.** Two unrelated companies, both attachable to t…'
   sources:
-    data/extracted/findlay/data-centers.md: 24
+    data/extracted/findlay/data-centers.md: 27
 - term: MWCD
   kind: term
   provenance: discovery
@@ -35,6 +35,30 @@ candidates:
     FEMA FMA $24M obligation `[verified]` - [`flood/usace-blanchard-review-plan-2024.epa.yaml`](fl…
   sources:
     data/extracted/findlay/flood-mitigation.md: 10
+- term: UD
+  kind: term
+  provenance: discovery
+  count: 10
+  example: …two of them. | Leg | Instrument | Dates | |---|---|---| | Renewal fact sheet | `2PD00008*UD`,
+    Public Notice 205259 | noticed 2024-08-09, comments closed 2024-09-08 | | Renewal as is…
+  sources:
+    data/extracted/findlay/discharge-record.md: 10
+- term: WARN
+  kind: term
+  provenance: discovery
+  count: 9
+  example: '# Findlay''s dislocation record — the WARN pair and Brownfield Round 11 **Site:** Findlay,
+    OH (Hancock County) · **Issue:** 1460 · *…'
+  sources:
+    data/extracted/findlay/dislocation-and-brownfields.md: 9
+- term: CSO
+  kind: term
+  provenance: discovery
+  count: 7
+  example: …art I, C, Schedule of Compliance, change the milestone summary report for the > Municipal
+    CSO Schedule event code 34099 Due Date to **November 1, 2026**. > 2. Page 15 - Part I, C, 2,…
+  sources:
+    data/extracted/findlay/discharge-record.md: 7
 - term: BCR
   kind: term
   provenance: discovery
@@ -43,6 +67,22 @@ candidates:
     BCR is **distinct** from the failed 2015 USACE federal BCR (below). - **Local funding** — a *…
   sources:
     data/extracted/findlay/flood-mitigation.md: 5
+- term: DCT
+  kind: term
+  provenance: discovery
+  count: 5
+  example: '…findlay/) (#1464). Three things bear directly on the entries above: - **AEP Ohio Schedule
+    DCT names crypto mining outright.** Its "Mobile Data Center" definition reaches electronic in…'
+  sources:
+    data/extracted/findlay/data-centers.md: 5
+- term: EDGAR
+  kind: term
+  provenance: discovery
+  count: 5
+  example: '…e Power Co (privately held; CEO Jereme Kent). `[verified]` Source: One Power Co Form S-1,
+    EDGAR CIK 2039139. - **Anchor customer:** MARA Holdings, Inc. (NASDAQ: MARA; ex-Marathon Digita…'
+  sources:
+    data/extracted/findlay/data-centers.md: 5
 - term: LOMR
   kind: term
   provenance: discovery
@@ -63,16 +103,8 @@ candidates:
   kind: term
   provenance: discovery
   count: 4
-  example: '…Co (privately held; CEO Jereme Kent). `[verified]` Source: One Power Co Form S-1/A, EDGAR
+  example: '…r Co (privately held; CEO Jereme Kent). `[verified]` Source: One Power Co Form S-1, EDGAR
     CIK 2039139. - **Anchor customer:** MARA Holdings, Inc. (NASDAQ: MARA; ex-Marathon Digital Ho…'
-  sources:
-    data/extracted/findlay/data-centers.md: 4
-- term: EDGAR
-  kind: term
-  provenance: discovery
-  count: 4
-  example: '…Power Co (privately held; CEO Jereme Kent). `[verified]` Source: One Power Co Form S-1/A,
-    EDGAR CIK 2039139. - **Anchor customer:** MARA Holdings, Inc. (NASDAQ: MARA; ex-Marathon Digita…'
   sources:
     data/extracted/findlay/data-centers.md: 4
 - term: FINAL
@@ -90,6 +122,14 @@ candidates:
     FMA $24M obligation `[verified]` - [`flood/usace-blanchard-review-plan-2024.epa.yaml`](flood/…
   sources:
     data/extracted/findlay/flood-mitigation.md: 4
+- term: LTCP
+  kind: term
+  provenance: discovery
+  count: 4
+  example: …99 Due Date to **November 1, 2026**. > 2. Page 15 - Part I, C, 2, Long-Term Control Plan (LTCP)
+    Addendum section (b.), change the > language to **No later than November 1, 2026**. Noth…
+  sources:
+    data/extracted/findlay/discharge-record.md: 4
 - term: NOI
   kind: term
   provenance: discovery
@@ -129,6 +169,39 @@ candidates:
     WFIN bid tabulation should be re-captured from a non-datacenter IP (or archive.org) to lock th…
   sources:
     data/extracted/findlay/flood-mitigation.md: 4
+- term: WPCC
+  kind: term
+  provenance: discovery
+  count: 4
+  example: '…. ## The plant The City of Findlay Water Pollution Control Center — the fact sheet writes
+    WPCC, the permit and the TMDL write WPCF — sits at 1201 South River Road and discharges throug…'
+  sources:
+    data/extracted/findlay/discharge-record.md: 3
+    data/extracted/findlay/flood-mitigation.md: 1
+- term: WPCF
+  kind: term
+  provenance: discovery
+  count: 4
+  example: …ater Pollution Control Center — the fact sheet writes WPCC, the permit and the TMDL write
+    WPCF — sits at 1201 South River Road and discharges through a single final outfall, `2PD000080…
+  sources:
+    data/extracted/findlay/discharge-record.md: 4
+- term: DAM
+  kind: term
+  provenance: discovery
+  count: 3
+  example: …nd what its modification actually did The permit history has three legs, and the Ohio EPA
+    DAM currently serves only two of them. | Leg | Instrument | Dates | |---|---|---| | Renewal f…
+  sources:
+    data/extracted/findlay/discharge-record.md: 3
+- term: DRS
+  kind: term
+  provenance: discovery
+  count: 3
+  example: …drawn (Form RW) 2025-05-09**; Form D private placement **2025-07-23** (EDGAR CIK 2039139;
+    DRS 2024-11-12). September 2025 reorganization / layoffs + a lender workout. `[reference]` -…
+  sources:
+    data/extracted/findlay/data-centers.md: 3
 - term: FRA
   kind: term
   provenance: discovery
@@ -137,6 +210,14 @@ candidates:
     RAISE grant (NS bridge) | $7,115,711 | USDOT / FRA, awarded to MWCD | `[verified]` | | Co…
   sources:
     data/extracted/findlay/flood-mitigation.md: 3
+- term: ODJFS
+  kind: term
+  provenance: discovery
+  count: 3
+  example: …ay, OH (Hancock County) · **Issue:** 1460 · **Ingested:** 2026-07-31 **Instruments:** two
+    ODJFS WARN notices (Goodyear 2026-01-30, Michigan Sugar 2025-12-11) · the Ohio Brownfield Remed…
+  sources:
+    data/extracted/findlay/dislocation-and-brownfields.md: 3
 - term: ODNR
   kind: term
   provenance: discovery
@@ -153,6 +234,22 @@ candidates:
     (SFHA). - **985 parcels (~67 acres) remain in the SFHA but with a reduced 100-year water-surfac…'
   sources:
     data/extracted/findlay/flood-mitigation.md: 3
+- term: VD
+  kind: term
+  provenance: discovery
+  count: 3
+  example: …00008*UD` | effective **2024-11-01**, expires **2029-10-31** | | Modification | `2PD00008*VD`,
+    Public Notice 216133 | issued 2025-11-07, noticed 2025-11-14, comments closed 2025-12-1…
+  sources:
+    data/extracted/findlay/discharge-record.md: 3
+- term: ACCESS
+  kind: term
+  provenance: discovery
+  count: 2
+  example: '…nsearched**. Do not read its silence as absence. `[open — access blocked]` Lead `PUCO-DIS-ACCESS`.
+    A negative check tagged `[verified]` is a result, not a gap — it protects the record. #…'
+  sources:
+    data/extracted/findlay/data-centers.md: 2
 - term: BCA
   kind: term
   provenance: discovery
@@ -161,6 +258,54 @@ candidates:
     models storage-basin O&M at $75,000/yr for Eagle Creek specifically. **Disambiguation.**…
   sources:
     data/extracted/findlay/flood-mitigation.md: 2
+- term: BCTGM
+  kind: term
+  provenance: discovery
+  count: 2
+  example: '…a warehouse manager, an assistant, and two utility persons, two of them represented by **BCTGM
+    Local 19**. The company is explicit that it did not have to file: > Although we do not be…'
+  sources:
+    data/extracted/findlay/dislocation-and-brownfields.md: 2
+- term: BUSTR
+  kind: term
+  provenance: discovery
+  count: 2
+  example: …tion where the award pays to pull the underground storage tanks and run Tier 1 and Tier 2
+    BUSTR assessments, ahead of a planned Holistic Health & Resilience Center. The Bluffton site is…
+  sources:
+    data/extracted/findlay/dislocation-and-brownfields.md: 2
+- term: BYTES
+  kind: term
+  provenance: discovery
+  count: 2
+  example: '…1/1/2024 | 10/31/2029` outright. Obtaining the as-issued `*UD` bytes is lead `UD-ISSUANCE-BYTES`.
+    The modification''s entire substance is a date, moved twice: > 1. Page 14 - Part I, C, S…'
+  sources:
+    data/extracted/findlay/discharge-record.md: 2
+- term: DIS
+  kind: term
+  provenance: discovery
+  count: 2
+  example: …**unsearched**. Do not read its silence as absence. `[open — access blocked]` Lead `PUCO-DIS-ACCESS`.
+    A negative check tagged `[verified]` is a result, not a gap — it protects the re…
+  sources:
+    data/extracted/findlay/data-centers.md: 2
+- term: ESA
+  kind: term
+  provenance: discovery
+  count: 2
+  example: …rt the site to New Load by the tariff's own definition.** "Existing Load that signs a new
+    ESA to increase its contract capacity by more than 25,000 kW" *is* New Load — and +300 MW is…
+  sources:
+    data/extracted/findlay/data-centers.md: 2
+- term: MT
+  kind: term
+  provenance: discovery
+  count: 2
+  example: …**3.2 metric tons** of total phosphorus (Appendix 4, Table A4.1), plus a separate **0.016
+    MT** for its combined sewer overflows (Table A4.3) — the third-largest CSO allocation in the…
+  sources:
+    data/extracted/findlay/discharge-record.md: 2
 - term: NAICS
   kind: term
   provenance: discovery
@@ -183,21 +328,5 @@ candidates:
   count: 2
   example: '…itting, but no instrument was reachable. Instrument to pull: OEPA Air Pollution Control /
     NWDO **eSuite**, search "One Power," "MARA," "Marathon Digital," Hancock County / Allen Townsh…'
-  sources:
-    data/extracted/findlay/data-centers.md: 2
-- term: RAISE
-  kind: term
-  provenance: discovery
-  count: 2
-  example: …o Capital Budget grant | $60,000,000 total | Ohio General Assembly | `[verified]` | | FRA
-    RAISE grant (NS bridge) | $7,115,711 | USDOT / FRA, awarded to MWCD | `[verified]` | | County s…
-  sources:
-    data/extracted/findlay/flood-mitigation.md: 2
-- term: SEC
-  kind: term
-  provenance: discovery
-  count: 2
-  example: '…ng**: a disclosed, operating large-load facility whose MW is verified from both sides via
-    SEC instruments (entry 1). Every figure is cited; none is fabricated. Do not bridge the Lima/…'
   sources:
     data/extracted/findlay/data-centers.md: 2

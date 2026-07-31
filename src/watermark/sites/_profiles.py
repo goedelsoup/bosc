@@ -418,7 +418,7 @@ _FINDLAY = SiteProfile(
     # Holdings, Inc. (NASDAQ: MARA, ex-Marathon Digital — bitcoin mining). Unlike the network's
     # site-plan-grounded facilities (Urbana #1327 / Sidney #1378 / Van Wert #1402), where NO MW is
     # disclosed and the IT load is a floor-area / investment SCREENING bracket, here the load IS
-    # DISCLOSED from both sides via SEC instruments: One Power Co's Form S-1/A (EDGAR CIK 2039139)
+    # DISCLOSED from both sides via SEC instruments: One Power Co's Form S-1 (EDGAR CIK 2039139)
     # states the hub is "Operating" with "Current Capacity 30 MW, Planned Maximum 150 MW" and names
     # MARA as the 150 MW / 15-yr take-or-pay customer, and MARA's own 2024-11-11 release confirms
     # "a 150-megawatt operation in Findlay, Ohio, which already has 30 megawatts of capacity." So
@@ -433,10 +433,10 @@ _FINDLAY = SiteProfile(
     facilities=(
         SiteFacility(
             name="Findlay Megawatt Hub (MWHub 01)",
-            status=FacilityLifecycle.LIVE,  # "Status: Operating" — 30 MW energized (One Power S-1/A)
+            status=FacilityLifecycle.LIVE,  # "Status: Operating" — 30 MW energized (One Power S-1)
             operator="MARA Holdings, Inc. (NASDAQ: MARA); host One Power Co",
             operator_citation=(
-                "[verified] One Power Co Form S-1/A (EDGAR CIK 2039139) + MARA Holdings 2024-11-11 "
+                "[verified] One Power Co Form S-1 (EDGAR CIK 2039139) + MARA Holdings 2024-11-11 "
                 "release: MARA is the 150 MW, 15-year take-or-pay customer at the One Power Findlay "
                 "Megawatt Hub (host/host-operator One Power Co)."
             ),
@@ -453,7 +453,7 @@ _FINDLAY = SiteProfile(
             it_load_high_mw=150.0,  # [verified] contracted / planned maximum (150 MW take-or-pay)
             it_load_source=ItLoadGrounding.DISCLOSURE,
             it_load_citation=(
-                "[verified] DISCLOSED load (NOT a screening inference): One Power Co Form S-1/A (EDGAR "
+                "[verified] DISCLOSED load (NOT a screening inference): One Power Co Form S-1 (EDGAR "
                 "CIK 2039139) describes MWHub 01 / Findlay Megawatt Hub — 'Current Capacity 30 MW, "
                 "Planned Maximum 150 MW, Status: Operating' — and names MARA Holdings, Inc. as the 150 "
                 "MW, 15-year take-or-pay customer ('due regardless of whether or not the customer elects "
@@ -462,7 +462,7 @@ _FINDLAY = SiteProfile(
                 "MW across three Ohio sites, full energization intended by end-2025). Central = the 150 "
                 "MW contracted take-or-pay; low = the 30 MW currently energized; high = the 150 MW "
                 "contracted maximum. MARA's energization status as of 2026 is [open — MARA 10-K/ops "
-                "updates]. A separate +300 MW 'standalone interconnection site' expansion (S-1/A, 2024) "
+                "updates]. A separate +300 MW 'standalone interconnection site' expansion (S-1, 2024) "
                 "has NO named customer and is NOT in this basis (it stays [open], the epic #1265 grid "
                 "sub-issue's PUCO/PJM/AEP target). See data/extracted/findlay/data-centers.md."
             ),
@@ -478,7 +478,7 @@ _FINDLAY = SiteProfile(
             # 2026-03-05 land assembly is a separate recorder/places thread under epic #1265, not this
             # facility's investment; hyperscale end-use for the assembly is press speculation [reference]).
             disclosure_citation=(
-                "[verified] One Power Co Form S-1/A (EDGAR CIK 2039139: DRS 2024-11-12, IPO S-1 filed "
+                "[verified] One Power Co Form S-1 (EDGAR CIK 2039139: DRS 2024-11-12, IPO S-1 filed "
                 "2025-01-23, withdrawn Form RW 2025-05-09, Form D private placement 2025-07-23) + MARA "
                 "Holdings 2024-11-11 press release (ir.mara.com/news-events/press-releases/detail/1375). "
                 "Host: One Power Co (CEO Jereme Kent); OnSite Partners — funds advised by Basalt "
@@ -499,9 +499,20 @@ _FINDLAY = SiteProfile(
             ),
         ),
     ),
+    # The one hand-authored string that reaches the connector-generated grid-profile.yaml
+    # (`derive_grid_profile` → `ServingUtility.utility.citation`). The site's qualitative grid
+    # POSTURE — Schedule DCT, the OPSB siting pair, the behind-the-meter fleet, the undocumented
+    # +300 MW — is NOT inlined there: `GridProfile` is an `extra="forbid"` model of connector-
+    # pulled denominators that the next run rewrites, so the posture lives as cited corpus
+    # records under data/extracted/grid/findlay/ and this citation points at them (#1464).
     serving_utility_citation=(  # [reference] not Lima's corpus
         "EIA-861 service-territory file (Ohio Power Co #14006) + PUCO certified-territory map; "
-        "AEP Ohio serving Findlay corroborated by the City of Findlay (AEP smart-meter notice)"
+        "AEP Ohio serving Findlay corroborated by the City of Findlay (AEP smart-meter notice); "
+        "Hancock-Wood Electric Cooperative serves the rural county and has no located large-load "
+        "or data-center customer (negative re-checked 2026-07-31). Retail terms for a >25,000 kW "
+        "load here are AEP Ohio Schedule DCT, P.U.C.O. No. 22 Original Sheet Nos. 223-1..223-7 "
+        "(origin PUCO 24-508-EL-ATA, on appeal as Ohio S.Ct. 2025-1458) — "
+        "data/extracted/grid/findlay/aep-dct-tariff-posture.yaml"
     ),
     # grid (same PJM AEP zone as Lima — Ohio Power Co)
     lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (same zone as Lima)
@@ -513,12 +524,15 @@ _FINDLAY = SiteProfile(
     lmp_pnode_name="AEP",
     # OEPA permit registry — what `watermark oepa discover` annotates as "known" (#844).
     npdes_permits=["2PD00008"],  # City of Findlay WPCC / application OH0025135
-    # Corpus scope (#762/#780/#1505). Findlay's worked record spans two collections: its own
-    # `findlay/` tree (flood, WARN, brownfield, narratives) and the site-scoped OEPA sub-collection
-    # `oepa/findlay/` holding the 2PD00008 instrument set. Naming both here is also what SUBTRACTS
-    # them from Lima's reference-build scope, so a Findlay NPDES permit stops rendering inside
-    # Lima's Allen-County record — the same treatment troy-piqua and urbana get.
-    corpus_relpaths=("findlay", "oepa/findlay"),
+    # Corpus scope (#762/#780/#1505). Findlay's worked record spans three collections: its own
+    # `findlay/` tree (flood, WARN, brownfield, narratives), the site-scoped OEPA sub-collection
+    # `oepa/findlay/` holding the 2PD00008 instrument set, and `grid/findlay/` — the grid-posture
+    # set (#1464: the Rocky Ford OPSB pair, Schedule DCT read against the Megawatt Hub, the
+    # behind-the-meter fleet, the +300 MW gap). The `grid/` collection is otherwise basin-shared
+    # and reads into Lima's reference build; the site-scoped subdirectory is what keeps a Hancock
+    # County siting docket out of Lima's Allen-County record. Naming all three here is also what
+    # SUBTRACTS them from Lima's scope — the same treatment troy-piqua and urbana get.
+    corpus_relpaths=("findlay", "oepa/findlay", "grid/findlay"),
     # rsei
     county_name="Hancock County, OH",  # [verified]
 )

@@ -1,0 +1,330 @@
+# Structured tariff record — AEP Ohio Schedule DCT read against the Findlay Megawatt Hub.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Source bytes: data/documents/grid/findlay/ (see that dir's filename-map.yaml).
+meta:
+  subject: >-
+    AEP Ohio Schedule DCT (Data Center Tariff), P.U.C.O. No. 22 Original Sheet
+    Nos. 223-1 to 223-7 — the terms as filed, and which of them bite at the One
+    Power "Findlay Megawatt Hub"
+  kind: tariff-posture
+  captured_for: issue 1464 (epic 1265, readiness(findlay) — grid posture)
+  extracted_at: '2026-07-31'
+  method: >-
+    Verbatim read of the tariff sheets in Ohio Power Company's own filed tariff
+    book. Every quoted term below is from the sheets, not from a press summary or
+    a law-firm client alert. Procedural history and the appeal are sourced
+    separately and tagged accordingly.
+  sources:
+    primary:
+      - file: data/documents/grid/findlay/July_24_2026_AEP_Ohio_Tariff_Book.pdf   # Schedule DCT, sheets 223-1..223-7
+      - file: data/documents/grid/findlay/20250916-item-04f---aep-large-load-request.pdf
+      - url: https://www.supremecourt.ohio.gov/pdf_viewer/pdf_viewer.aspx?pdf=1000491.pdf&subdirectory=2025-1458%5CDocketItems   # OCC merit brief, Ohio S.Ct. 2025-1458 (read 2026-07-31; not committed)
+    secondary:
+      - url: https://content.govdelivery.com/accounts/OHPUC/bulletins/3e8bb79   # PUCO release, 2025-07-09 order
+      - url: https://www.aepohio.com/company/about/rates/data-center-tariff/     # AEP Ohio's own DCT customer page
+      - url: https://www.aepohio.com/company/news/view?releaseID=10753           # AEP Ohio release 2026-02-13, DCT contract totals
+
+# --- Where the tariff came from ----------------------------------------------
+procedural_history:
+  tag: '[reference]'
+  statement: >-
+    AEP Ohio filed its Application for Approval of New Tariffs on 2024-05-13 in
+    PUCO Case No. 24-508-EL-ATA. The Commission issued its order adopting a
+    settlement on 2025-07-09 (signatories reported as AEP Ohio, PUCO Staff, the
+    Office of the Ohio Consumers' Counsel, the Ohio Energy Group, Walmart and
+    Ohio Partners for Affordable Energy), ordering AEP Ohio to file updated
+    tariffs and to "lift its moratorium on connecting new data centers as soon as
+    possible." The compliance tariff followed on 2025-07-11 and took effect
+    2025-07-23.
+  why_reference_not_verified: >-
+    The Commission's Opinion and Order itself is NOT in the corpus. PUCO's
+    Docketing Information System (dis.puc.state.oh.us) rejects automated
+    retrieval — both the case record and a direct ViewImage document request
+    returned an application-firewall "Request Rejected" page on 2026-07-31 — and
+    PUCO's own news page for this order now 404s, leaving a GovDelivery mirror.
+    So the dates and settlement roster above rest on secondary text. The TARIFF
+    TERMS below do not: those are read off the filed sheets.
+  the_tariff_dates_itself:
+    tag: '[verified]'
+    statement: >-
+      The sheets close the loop on their own origin. Sheet 223-2 defines
+      "'Effective Date of Schedule DCT' means the date Schedule DCT became
+      effective following the Commission's order in Case No. 24-508-EL-ATA."
+    source: tariff book, Original Sheet No. 223-2
+  currently_filed_version:
+    tag: '[verified]'
+    statement: >-
+      The sheets captured here are stamped "Filed pursuant to Order dated April
+      1, 2026 in Case No. 25-392-EL-AIR / Issued: April 8, 2026 / Effective:
+      April 10, 2026" — the schedule as re-issued in AEP Ohio's distribution rate
+      case, not the July 2025 compliance sheet. The tariff book compilation
+      itself is dated 2026-07-24. Any comparison against the 2025 original is
+      [open]; the original compliance sheet is not captured.
+    source: tariff book, Original Sheet Nos. 223-1..223-7 and Sheet No. 101-1
+  on_appeal:
+    tag: '[verified]'
+    statement: >-
+      The order is on appeal to the Supreme Court of Ohio, Case No. 2025-1458,
+      "In the Matter of the Application of Ohio Power Company for New Tariffs
+      Related to Data Centers and Mobile Data Centers," on appeal from Pub. Util.
+      Comm. Case No. 24-508-EL-ATA. Appellant is The Ohio Manufacturers'
+      Association Energy Group (counsel Kimberly W. Bojko, Carpenter Lipps LLP);
+      the PUCO is appellee and the Office of the Ohio Consumers' Counsel filed a
+      merit brief as intervening appellee on 2026-03-24. OMA's propositions of
+      law run to undue discrimination / equal protection, sufficiency of the
+      evidence, and the specificity of the Commission's reasoning under R.C.
+      4903.09, plus a contention that the case was an application for an increase
+      in rates under R.C. 4909.18.
+    disposition:
+      tag: '[open]'
+      statement: >-
+        No decision was located as of 2026-07-31. The tariff is in force pending
+        appeal. Do not write that the tariff has been upheld or vacated.
+    source: >-
+      Merit Brief of Intervening Appellee, Office of the Ohio Consumers' Counsel,
+      Ohio S.Ct. No. 2025-1458, filed 2026-03-24 (read at supremecourt.ohio.gov;
+      caption + tables of contents; not committed to the corpus)
+
+# --- The terms that actually bite --------------------------------------------
+# Everything in this block is quoted or paraphrased from the filed sheets.
+terms:
+  tag: '[verified]'
+  source: tariff book, Original Sheet Nos. 223-1 through 223-7
+  who_it_applies_to:
+    data_center_definition: >-
+      "a centralized facility (a) used primarily or exclusively for electronic
+      information services such as the management, storage, processing, and
+      dissemination of electronic data and information through the use of
+      computer systems, servers, networking equipment, and related components
+      that (b) has an aggregate monthly maximum demand of greater than 25,000 kW.
+      Unless otherwise specified, the term 'Data Center' shall include 'Mobile
+      Data Center.'"
+    mobile_data_center_definition: >-
+      the same, but "(including mining of cryptocurrency)" and "has load that is
+      portable and/or distributable, including but not limited to structures that
+      are not affixed to the ground or are easily removed from a location."
+    availability: >-
+      Service is available to customers operating a Data Center that will use,
+      within the initial contract term, a monthly maximum demand greater than
+      25,000 kW "at a Single Location or an aggregated Total Customer Contract
+      Capacity in Service Territory of greater than 25,000 kW." Mixed sites are
+      swept in whole unless the customer separately meters at its own cost.
+    sheet: 223-1, 223-2
+  existing_vs_new_load:
+    existing_load: >-
+      "Data Center load for which a letter of agreement or electric service
+      agreement has already been signed by the Effective Date of Schedule DCT."
+      It "does not include Data Center load for which a customer signs a new
+      electric service agreement to expand its Existing Load by more than 25,000
+      kW of New Load above the contract capacity under the existing electric
+      service agreement after the Effective Date." Un-separately-metered
+      expansions cost the whole load its Existing Load status.
+    new_load: >-
+      "(a) Data Center load for which a letter of agreement or electric service
+      agreement was signed after the Effective Date of Schedule DCT or (b)
+      Existing Load that signs a new ESA to increase its contract capacity by
+      more than 25,000 kW." Expansions of 25,000 kW or less do not convert.
+    sheet: 223-2
+  minimum_billing_demand:
+    existing_load: >-
+      Not less than 60% of the contract capacity or of the highest previously
+      established monthly billing demand in the past 11 months.
+    new_load_during_ramp: >-
+      Not less than 85% of the customer's Load Ramp Contract Capacity, where the
+      Load Ramp Contract Capacity is itself floored at 50% / 65% / 80% / 90% of
+      Contract Capacity in Years 1 / 2 / 3 / 4.
+    new_load_after_ramp: >-
+      Not less than the greater of (a) 85% of the highest previously established
+      monthly billing demand in the past 11 months, or (b) the "Minimum Demand"
+      table — 15,000 kW plus 85% of the marginal amount over 25,000 kW for a
+      total contract capacity of 25,001-75,000 kW; 57,500 kW plus 100% of the
+      marginal amount over 75,000 kW above that, capped at 85% of total contract
+      capacity.
+    aggregation: >-
+      "All New Loads of affiliated companies and companies with common ownership
+      greater than 25,000 kW will be considered in the aggregate" for the Total
+      Customer Contract Capacity, stacked by energization date. Existing Load is
+      excluded from that aggregate.
+    sheet: 223-3, 223-4
+    reconciliation_note: >-
+      This is where the widely repeated shorthand "data centers must pay for 85%
+      of contracted capacity" comes from, and it is close enough to be usable but
+      not precise enough to quote. The 85% is a floor applied to a RAMPED
+      capacity during the ramp and to a rolling 11-month peak (or the Minimum
+      Demand table) afterwards. The Year-4 ramp floor is 90%, which is higher
+      than 85% — the two numbers are not in conflict because they multiply
+      different things. Cite the sheets, not the shorthand.
+  contract_term:
+    new_load: >-
+      "contracts under the Schedule shall be made for an initial period of not
+      less than the Load Ramp Period plus 8 years. By way of example, the initial
+      period of a Contract for a Data Center with a 4-year Load Ramp Period will
+      be 12 years." After the initial term either party needs three years' written
+      notice to terminate or to change Contract Capacity.
+    existing_load: >-
+      Existing contracts run on their own terms until terminated under those
+      terms; the Company is not required to supply capacity above Contract
+      Capacity except by mutual agreement.
+    exit_fee: >-
+      "If after completion of the fifth year of the Contract after the Load Ramp
+      Period the customer chooses to pay an exit fee equal to minimum charges for
+      36 months after notice of termination, the customer can thereafter
+      terminate the contract."
+    load_additions: A new contract is required for any load addition in excess of 100 kW.
+    site_control: >-
+      "the customer must designate a specific site at which its Data Center
+      project will be constructed and served by the Company, and the customer
+      must own or have the exclusive right to use the land for this purpose."
+    sheet: 223-5
+  collateral:
+    new_load: >-
+      Unless the customer holds both an A-/A3 credit rating and liquidity above
+      ten times the requirement, it must post a guarantee, standby letter of
+      credit, or cash equal to 50% of the total minimum charges for the full
+      contract term, reduced by one year's minimum charges for each year
+      energized with on-time payment.
+    sheet: 223-6
+  behind_the_meter_generation:
+    interconnection_agreement: >-
+      "Consistent with Ohio Administrative Code Chapter 4901:1-22, Schedule DCT
+      Customers shall enter into an interconnection agreement between the Company
+      and the Customer in advance of connecting any source of power other than the
+      delivery point specified in the Contract. Emergency or backup generation
+      that is not designed to operate in parallel with the Company's system is not
+      subject to the additional requirements in this section."
+    netting_election: >-
+      A customer electing to use behind-the-meter generation to OFFSET its
+      Contract Capacity must keep equipment in place "to instantaneously curtail
+      load equal to or greater than the behind-the-meter generation output." A
+      customer that does NOT elect to net may have service suspended, with
+      Commission approval, if usage exceeds Contract Capacity by more than 1,000
+      kW.
+    sheet: 223-6, 223-7
+  mobile_data_center_attestation: >-
+    "Prior to receiving service, Mobile Data Center customers will be required to
+    provide a sworn statement, under penalty of perjury, that neither the customer
+    nor its corporate parent or affiliates are affiliated with or acting on behalf
+    of any foreign adversary as defined in 15 C.F.R. § 7.4," with an immediate
+    disconnection right on a good-faith belief of falsity.
+  transmission_voltage_charges: >-
+    Schedule codes 297/797 (transmission service voltage): customer charge
+    $6,800/month plus a supplemental customer charge of $20,000/month, the latter
+    expressly "not a base distribution rate ... and will not apply to Existing
+    Load"; excess reactive demand $0.95/kVAR beyond 50% of metered kW.
+  sheet_ref: 223-3
+
+# --- What it means at the Findlay Megawatt Hub --------------------------------
+findlay_application:
+  scale_test:
+    tag: '[inference]'
+    statement: >-
+      MARA Holdings' contracted 150 MW at the One Power Findlay Megawatt Hub is
+      150,000 kW — six times the 25,000 kW threshold — and the 30 MW currently
+      energized already clears it. Whatever else is unresolved, this is not a
+      site that falls below Schedule DCT on size.
+    source: >-
+      One Power Co Form S-1 (EDGAR CIK 2039139, filed 2025-01-23) + the tariff's
+      25,000 kW definition; see data/extracted/findlay/data-centers.md
+  crypto_is_named_in_the_tariff:
+    tag: '[verified]'
+    statement: >-
+      The tariff does not leave cryptocurrency mining to interpretation. "Mobile
+      Data Center" is defined to reach electronic information services
+      "(including mining of cryptocurrency)" with portable or distributable load,
+      and "Data Center" is defined to include "Mobile Data Center" unless stated
+      otherwise. MARA Holdings, Inc. is a bitcoin miner. A Findlay compute load of
+      that description, taken as a retail customer of AEP Ohio above 25,000 kW,
+      is squarely inside the definition — and it inherits the sworn
+      foreign-adversary attestation, which is the only place in this tariff where
+      a customer must swear to anything.
+    guard: >-
+      MARA Holdings, Inc. (NASDAQ MARA, ex-Marathon Digital) is NOT Marathon
+      Petroleum Corporation (NYSE MPC, the Findlay-headquartered refiner and a
+      Hancock County NPDES permittee). Never merge them. The distinction is live
+      in this very record: One Power's S-1 lists "Marathon Petroleum Company LP,
+      Wyandot County, Ohio, 1.5 MW" as a Wind for Industry customer — a different
+      company, a different county, a different contract.
+  who_is_the_retail_customer:
+    tag: '[open]'
+    statement: >-
+      The tariff applies to "the customer," and at this hub it is not established
+      who that is. One Power owns the site and built its own transmission-voltage
+      digital substation; MARA leases capacity behind it under a 15-year
+      take-or-pay lease whose "lease payment is due regardless of whether or not
+      the customer elects to purchase power" (S-1). So the party holding an
+      electric service agreement with AEP Ohio may be One Power rather than MARA,
+      and One Power describes the hub as a multi-tenant "electrified industrial
+      park" for uses spanning fixed and mobile data centers, digital currency
+      mining, electric fleet charging, cathode/anode manufacturing, hydrogen
+      production, indoor farming and additive manufacturing — which is not
+      obviously "used primarily or exclusively for electronic information
+      services." Whether Schedule DCT reaches the hub, reaches its compute tenant,
+      or reaches neither is a question for the ESA, and no ESA, LOA or PUCO filing
+      naming this site was located. Lead HUB-ESA-CUSTOMER.
+  the_grandfather_question:
+    tag: '[inference]'
+    statement: >-
+      Two dates set up the question. MARA's 150 MW take-or-pay was announced
+      2024-11-11 and the hub was energized in 2023 — both before Schedule DCT's
+      Effective Date of 2025-07-23. If an LOA or ESA covering that load was signed
+      before that date, it is "Existing Load," billed at a 60% minimum demand
+      rather than 85%, exempt from the $20,000 supplemental transmission customer
+      charge, and left on its own contract terms. The +300 MW is what breaks it:
+      the tariff makes "Existing Load that signs a new ESA to increase its
+      contract capacity by more than 25,000 kW" into New Load by definition, and
+      +300 MW is twelve times that trigger. On the tariff's own terms an expansion
+      of that size cannot be taken as Existing Load — it is either separately
+      metered New Load, or it converts the whole site. That conclusion follows
+      from the sheets; whether the premise holds (an executed pre-2025-07-23
+      instrument) is [open] and turns on the ESA nobody has produced.
+    source: >-
+      tariff sheets 223-2, 223-3; MARA Holdings release 2024-11-11; One Power Co
+      Form S-1 2025-01-23
+  behind_the_meter_bearing:
+    tag: '[inference]'
+    statement: >-
+      The netting provision is the one that reads as if it were written with a
+      site like this one in mind. The hub sits behind One Power's own digital
+      substation, One Power's Hancock County behind-the-meter wind fleet is
+      operating, its Whirlpool Net Zero project in the county is in construction,
+      and AEP has a publicised collaboration to place Bloom fuel cells at
+      data-center customers. Under sheets 223-6/223-7 none of that is free: any
+      non-parallel emergency/backup generation is carved out, but anything
+      designed to operate in parallel needs an interconnection agreement with the
+      Company under O.A.C. 4901:1-22, and electing to net BTM output against
+      Contract Capacity obliges the customer to maintain instantaneous
+      load-curtailment equipment. What the Findlay hub has actually elected is not
+      on any captured record. See behind-the-meter-generation.yaml.
+  ratepayer_backdrop:
+    tag: '[verified]'
+    statement: >-
+      AEP's own numbers give the scale the tariff is sorting. Its 2025-09-16 PJM
+      LAS presentation puts the Ohio interconnection queue at 38 GW, DCT study
+      requests at 13.0 GW, and the tariff-adjusted figure at 11.1 GW, with AEP
+      Ohio cumulative summer-peak additions of 2,273 MW by 2026, 7,615 MW by 2030
+      and 22,272 MW "Ultimate." Its 2026-02-13 release reports 5,642 MW of
+      contracts signed under the DCT as of 2026-02-12 against 12,219 MW signed
+      before it, 17,861 MW total through 2035, from 13,022.7 MW that "asked and
+      paid for a study" and an original ~30,000 MW of requests — against a
+      customer peak demand of roughly 8,000-10,500 MW today.
+    findlay_share_of_it:
+      tag: '[open]'
+      statement: >-
+        None of those figures is broken out by county, substation or customer,
+        and neither document mentions Findlay, Hancock County, One Power or MARA.
+        Findlay's share of the 38 GW queue, the 13.0 GW of study requests, or the
+        5,642 MW of signed DCT contracts is unknown and must not be estimated.
+    source: >-
+      data/documents/grid/findlay/20250916-item-04f---aep-large-load-request.pdf
+      (slides 3-5, 7); AEP Ohio release 2026-02-13 (aepohio.com releaseID 10753)
+
+acceptance:   # per issue 1464
+  tariff_posture_committed_with_citations: true   # read off the filed sheets, not a press summary
+  terms_traced_to_sheet_numbers: true             # every quoted term carries its Original Sheet No.
+  no_asserted_esa_or_customer: true               # the retail customer of record stays [open]

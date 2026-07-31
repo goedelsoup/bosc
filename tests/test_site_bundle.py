@@ -689,7 +689,7 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
     from the disclosed One Power "Findlay Megawatt Hub" / MARA 150 MW take-or-pay ``SiteFacility``
     (#1459). Facility is graded ``live`` on DOCUMENTARY DEPTH (#1630): unlike the site-plan-grounded
     Urbana/Sidney facilities, the MW here is a `[verified]` filed disclosure (One Power's SEC Form
-    S-1/A: 30 MW energized / 150 MW contracted — ``it_load_grounding`` is ``disclosure``), an
+    S-1: 30 MW energized / 150 MW contracted — ``it_load_grounding`` is ``disclosure``), an
     instrument-grounded load, not a screening bracket — so it lifts the domain, not merely seeds it.
     ``story`` is ``seeded`` (the committed per-site leads board,
     ``data/site/findlay/leads.yaml``, is a leads-first resting state — Findlay is not yet in
@@ -740,14 +740,24 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
         "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
     }
 
-    # The site's first source-document catalog: the permit set under ``oepa/`` and the WARN +
-    # brownfield instruments under ``findlay/``. Before #1460 both collections were empty, so a
-    # site with a live ``record`` domain published no documents at all.
+    # The site's source-document catalog spans all three in-scope collections: the permit set
+    # under ``oepa/``, the WARN + brownfield instruments under ``findlay/``, and the grid-posture
+    # captures under ``grid/`` (#1464 — the Rocky Ford OPSB pair, AEP's PJM large-load deck, and
+    # Schedule DCT as filed). Before #1460 all of them were empty, so a site with a live
+    # ``record`` domain published no documents at all.
     doc_collections = _rows(out, _feeds_by_name(out)["documents"])
-    assert {c["slug"] for c in doc_collections} == {"findlay", "oepa"}
+    assert {c["slug"] for c in doc_collections} == {"findlay", "grid", "oepa"}
     docs = {e["rel"] for c in doc_collections for e in c["entries"]}
     assert "oepa/findlay/2PD00008.fs.pdf" in docs
     assert "findlay/warn/GoodyearTireRubberCompany.pdf" in docs
+    # ``grid/findlay/**`` reaches this site only because ``_FINDLAY.corpus_relpaths`` names it,
+    # which is also what keeps a Hancock County siting docket out of Lima's whole-tree reference
+    # build (#1505) — the ``grid/`` collection root is otherwise basin-shared.
+    assert "grid/findlay/Rocky Ford 138 kV Station Project Letter of Notification.pdf" in docs
+    # ...and the grid-posture extractions are deliberately NOT records: a siting docket and a
+    # tariff posture get no ``RecordGroup``, exactly as the Lima "Lyka" project record chose
+    # (#1476), so the four new YAML files above leave the ``records`` feed at 9 rows.
+    assert not [r for r in records if r["rel"].startswith("grid/")]
 
 
 def test_urbana_record_domain_publishes_its_worked_corpus(urbana_bundle: Path) -> None:
