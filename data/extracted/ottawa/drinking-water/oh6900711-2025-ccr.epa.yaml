@@ -251,6 +251,33 @@ ucmr5_pfas_2024:
     PFBS: {avg: 0.006, range: [0.003, 0.008], detected_events: 3, regulated: false}
     PFBA: {avg: 0.011, range: [0.009, 0.012], detected_events: 2, regulated: false}
     Lithium: {avg: 10.727, range: [0, 11.9], regulated: false}
+  lithium_row_does_not_close_arithmetically:
+    tag: '[verified]'
+    row_verbatim: 'Lithium | No Limit | No Limit | 10.727 | 0–11.9 | Unregulated'
+    finding: >-
+      The literals above are transcribed exactly as the report prints them, and as printed they
+      cannot all be true of four samples. UCMR 5 sampling was four events (March, June, September
+      and December 2024). With a minimum of 0 and a maximum of 11.9, the largest mean four values
+      can have is (0 + 11.9 + 11.9 + 11.9) / 4 = 8.925 ng/L — below the 10.727 printed.
+    the_reading_that_does_close:
+      tag: '[inference]'
+      statement: >-
+        The average is over the DETECTED events only, with the 0 being a non-detect carried into
+        the range column. Three detects averaging 10.727 need 32.181 ng/L between them, each at or
+        under the 11.9 maximum — entirely possible.
+      supporting_detail: >-
+        Lithium is the only unregulated row whose Notes column carries no detection count. Its four
+        siblings all state one ("Detected 3 of 4 events", "Detected 2 of 4 events"), and each of
+        those has a non-zero range minimum. Lithium's is the only 0.
+      why_it_is_not_verified: >-
+        The report neither states lithium's detection count nor says how the average was computed,
+        and the corpus does not hold the underlying UCMR 5 data. The reading is reasoned from the
+        table's own shape, not stated by it.
+    disposition: >-
+      Literals retained as printed. Correcting a source figure to make it self-consistent would
+      substitute our arithmetic for the instrument's — the same rule that keeps a malformed source
+      filename unrenamed. The full UCMR 5 results are obtainable from the Village (the report
+      offers them by phone) or from EPA's UCMR 5 public data. Lead OTTAWA-UCMR5-LITHIUM.
   finding: >-
     All six PFAS regulated by the 2024 rule were non-detect; four unregulated short-chain PFAS and
     lithium were detected at low concentrations. The Village states it is in compliance with the

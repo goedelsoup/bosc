@@ -133,4 +133,25 @@ describe("buildAskIndex", () => {
     const m = await loadAskIndex(dir);
     expect(m.buildAskIndex()).toEqual([]);
   });
+
+  // A timeline `ref` is a cross-doc dedup key by design — every event about one instrument
+  // shares it — so two dated events under one permit collided on a single unit id. That id is
+  // the join key `retrieval.ts` builds a Map from, and a Map keeps the LAST entry, so one event
+  // was scored against the other's vector (#1422).
+  it("disambiguates repeated unit ids, leaving the first occurrence untouched", async () => {
+    const dir = makeBundle([feedRef("timeline", "feeds/timeline.json", 2)], {
+      "feeds/timeline.json": JSON.stringify([
+        { ...TIMELINE, date: "2024-12-17", ref: "2PD00028*PD", detail: "Public notice issued" },
+        { ...TIMELINE, date: "2025-01-16", ref: "2PD00028*PD", detail: "Comment period ends" },
+      ]),
+    });
+    const m = await loadAskIndex(dir);
+    const units = m.buildAskIndex();
+    expect(units.map((u: { id: string }) => u.id)).toEqual([
+      "timeline:2PD00028*PD",
+      "timeline:2PD00028*PD#2",
+    ]);
+    // Distinct ids must still carry distinct text, or the fix is cosmetic.
+    expect(units[0].text).not.toBe(units[1].text);
+  });
 });

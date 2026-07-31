@@ -15,7 +15,7 @@ The `record` domain activated on 2026-07-31 and the site's tier rose **backdrop 
 committed record rows: the `2PD00028*PD` NPDES permit and its fact sheet (two `permits-npdes`), and
 the Village's 2025 Consumer Confidence Report (one `permits-epa`). The standing watch that reads
 both sides of the river together is [`water-watch.yaml`](water-watch.yaml) — quarterly cadence,
-eleven open leads.
+thirteen open leads.
 
 This closes the Ottawa WWTP fact-sheet pull that had been open since **#415**. Its Table 12 supplies
 the **regulatory** low-flow set (annual 7Q10 **7.78 cfs**, 1Q10 5.42, 90Q10 21.66, harmonic mean
