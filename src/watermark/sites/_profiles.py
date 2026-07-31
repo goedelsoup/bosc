@@ -26,6 +26,8 @@ from watermark.sites._gis_schemas import (
     PIQUA_ZONING_SCHEMA,
     PUTNAM_PARCEL_SCHEMA,
     RICHLAND_PARCEL_SCHEMA,
+    SHELBY_PARCEL_SCHEMA,
+    SIDNEY_ZONING_SCHEMA,
     VAN_WERT_PARCEL_SCHEMA,
 )
 from watermark.sites._model import (
@@ -2416,39 +2418,56 @@ _SIDNEY = SiteProfile(
     rsei_fips="39149",  # [verified] Shelby County, OH
     econ_fips="39149",
     eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — EIA-861 2024 Service_Territory, Shelby Co [verified] (not 'City of Shelby' #17043, a Richland-Co muni)
-    parcels_url=(  # [reference] OGRIP Ohio statewide parcels, scoped to County='Shelby' (39149)
-        "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
-        "OhioStatewidePacels_full_view/FeatureServer/0"
+    parcels_url=(  # [verified] Shelby County Engineer's Office AGOL — auditor CAMA + geometry (#1379)
+        "https://services6.arcgis.com/fzPZZJiNVtryYcsC/arcgis/rest/services/Parcels/FeatureServer/0"
     ),
-    zoning_url="TODO",  # [open] pending City of Sidney zoning REST endpoint discovery
+    zoning_url=(  # [verified] City of Sidney GIS zoning districts (polygon-only; city limits only)
+        "https://cama.shelbycountyauditors.com/arcgis/rest/services/City_of_Sidney/"
+        "SidneyGIS_AllLayers/MapServer/270"
+    ),
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
     hydro_utm_epsg=32616,  # [verified] UTM 16N (Sidney ~84.16 degW; zone 16 spans 90-84 degW) — NOT zone 17
-    gis_parcel=OHIO_STATEWIDE_PARCEL_SCHEMA.model_copy(
-        # Shelby County OGRIP layer — owner-redacted public view. LocalParcelID format
-        # pending a live sample verification; defaulting to dashless-12-digit (Hancock pattern).
-        update={"reference_dir": "sidney-gis", "query_scope": "County='Shelby'"}
-    ),
-    gis_zoning=None,  # [open] pending City of Sidney zoning-layer discovery
+    # #1379: was the OGRIP statewide substitute, which for Shelby is owner-redacted AND a
+    # 2023-05-23 extract — it predates the whole Project Galaxy transfer and can name no grantee.
+    # The county engineer's own layer carries the full auditor CAMA (owner / deed / conveyance).
+    gis_parcel=SHELBY_PARCEL_SCHEMA,
+    gis_zoning=SIDNEY_ZONING_SCHEMA,
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "sidney-gis"}),
     design_lat=40.2842,  # [verified] Sidney centroid = NOAA Atlas-14 point
     design_lon=-84.1558,
     corridor_name="Upper Great Miami headwaters corridor",  # [inference] the Sidney mainstem reach (I-75)
-    dominant_hsg="B",  # [inference] upper Great Miami buried-valley outwash (well-drained valley fill)
+    dominant_hsg="D",  # [verified] SSURGO over the committed campus footprint (#1379) — see citation
     hsg_citation=(
-        "Sidney (Shelby County) sits on the upper Great Miami Buried Valley Aquifer - glacial "
-        "outwash sand & gravel, a US-EPA designated sole-source aquifer the Sidney well field "
-        "draws on - so the valley fill is well-drained HSG A/B, the INVERSE of the Maumee "
-        "lake-plain Black Swamp clays (HSG D); [inference] pending an SSURGO area-weighted "
-        "confirmation (onboard SSURGO needs a footprint)"
+        "[verified] USDA NRCS SSURGO via Soil Data Access, 8x8 grid sample (64 interior points) "
+        "over data/reference/sidney/parcel-assemblage.geojson - the AWS Project Galaxy campus "
+        "parcel 26-03-201-002 (watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8, "
+        "2026-07-31): D 62 pts (96.9%) + C/D 2 pts (3.1%). A SINGLE group, so the drained-vs-"
+        "undrained switch is inert here. Dominant map units: Blount silt loam, end moraine, 2-4% "
+        "slopes (mukey 2765022) and Glynwood silt loam, end moraine, 2-6% slopes (mukey 2856692), "
+        "both HSG D. This REPLACES the prior [inference] of HSG 'B' and its reasoning: that "
+        "argued from the Great Miami Buried Valley sole-source aquifer (glacial outwash sand & "
+        "gravel, well-drained), which is true of the Sidney WELL FIELD but not of this campus - "
+        "the site sits ~2 mi west of the valley on the Wisconsinan END MORAINE, whose till "
+        "surface governs the runoff CN. Same surface-vs-aquifer correction as Urbana (B->C) and "
+        "Troy-Piqua (B->C/D), sharper here because the ground is moraine, not valley fill. "
+        "See data/extracted/sidney/bosc-site-footprint.yaml"
     ),
-    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
-    post_cover="TODO",
-    developed_pervious_cover="TODO",
+    # [verified] pre-development cover from the auditor CAMA land use across the campus and its
+    # five pre-consolidation predecessors - 110/111 'Agr-CAUV' + 101 'Agr-Cash-Grain Farm', i.e.
+    # CAUV row crop (the campus parcel is still land use 110 today). post/developed_pervious are
+    # the network's standard screening pair (NLCD 24 high-intensity + NLCD 21 developed open
+    # space): AWS has disclosed NO floor area or site plan for Project Galaxy, so these are
+    # `source: assumption`-grade until the Rule-5 SWPPP / site plan lands (#1380).
+    pre_cover="cropland",
+    post_cover="developed_campus",
+    developed_pervious_cover="open_space",
     noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
-    parcels_relpath="reference/sidney/parcel-assemblage.geojson",  # [open] commit the site's own geometry
-    footprint_relpath="extracted/sidney/bosc-site-footprint.yaml",  # [open] pending an identified site
+    # [verified] committed #1379 — the single consolidated parcel 26-03-201-002 deeded to Amazon
+    # Data Services, Inc. (243.092 ac CAMA / 235.468 ac planar) + its footprint record.
+    parcels_relpath="reference/sidney/parcel-assemblage.geojson",
+    footprint_relpath="extracted/sidney/bosc-site-footprint.yaml",
     climatology_relpath="reference/hydrology/sidney/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/sidney/atlas14-corridor-ddf.yaml",
     baseline_relpath="reference/economics/sidney/baseline.yaml",

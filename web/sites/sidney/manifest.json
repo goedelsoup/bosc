@@ -2,15 +2,15 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "1.47.0",
-  "generated_at": "2026-07-31T01:40:36+00:00",
-  "feed_count": 30,
-  "row_total": 399,
+  "generated_at": "2026-07-31T09:55:04+00:00",
+  "feed_count": 31,
+  "row_total": 400,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
-      "places": "absent",
+      "places": "live",
       "record": "seeded",
       "story": "absent"
     }
@@ -214,6 +214,14 @@
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
       "count": 55
+    },
+    {
+      "name": "geo/campus",
+      "path": "feeds/geo/campus.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 1
     },
     {
       "name": "facts",

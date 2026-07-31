@@ -69,6 +69,12 @@ from watermark.sites._gis_schemas import (
     RICHLAND_PARCEL_SCHEMA as RICHLAND_PARCEL_SCHEMA,
 )
 from watermark.sites._gis_schemas import (
+    SHELBY_PARCEL_SCHEMA as SHELBY_PARCEL_SCHEMA,
+)
+from watermark.sites._gis_schemas import (
+    SIDNEY_ZONING_SCHEMA as SIDNEY_ZONING_SCHEMA,
+)
+from watermark.sites._gis_schemas import (
     VAN_WERT_PARCEL_SCHEMA as VAN_WERT_PARCEL_SCHEMA,
 )
 from watermark.sites._model import (

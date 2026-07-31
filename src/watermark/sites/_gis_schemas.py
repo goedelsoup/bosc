@@ -998,3 +998,147 @@ PIQUA_ZONING_SCHEMA = GisZoningSchema(
         ),
     ),
 )
+
+
+# Shelby County, OH parcels (Sidney watershed point; #1379). Sidney's profile had been pointed at
+# the OGRIP statewide substitute, which for Shelby is BOTH owner-redacted AND a 2023-05-23 county
+# extract (`CurrentTo`) — i.e. it predates the entire Project Galaxy land transfer and cannot name
+# a grantee. The Shelby County Engineer's Office publishes the auditor CAMA join on its own AGOL org
+# instead: owner, deed volume/page, conveyance date + consideration, appraised values, CAUV /
+# exemption / abatement flags, legal description and tax district all on layer 0 with the geometry —
+# the same full fit Miami/Champaign give Troy-Piqua/Urbana. That upgrade is what closes the register's
+# acreage `[open]`: it resolves 2388 W. Millcreek Rd to `26-03-201-002` (243.092 ac, AMAZON DATA
+# SERVICES INC, conveyed 2025-11-24 for $5,621,490, OR2329/454). Field names + samples confirmed
+# from the live layer-0 metadata + queries (2026-07-31).
+SHELBY_PARCEL_SCHEMA = GisParcelSchema(
+    connector="shelby_gis",
+    reference_dir="sidney-gis",
+    page_size=2000,  # the layer's maxRecordCount
+    out_fields=(
+        "PIN",
+        "Listed_Name",
+        "Location_Address",
+        "Location_City_State_Zip",
+        "Acres",
+        "Land_Use_Code",
+        "District_Name",
+        "School_District",
+        "Appraised_Land_100",
+        "Appraised_Improvement_100",
+        "Appraised_Total_100",
+        "Date_Conveyed",
+        "Consideration",
+        "Valid_Sale",
+        "Owner_Contact_Address",
+        "Owner_Contact_City",
+        "Owner_Contact_State",
+        "Owner_Contact_ZipCode",
+    ),
+    id_field="PIN",  # the dashed auditor parcel number, e.g. "26-03-201-002"
+    owner_field="Listed_Name",  # the CAMA owner of record
+    owner_2_field="",  # no second-owner field (Listed_Name carries the whole string)
+    deeded_owner_field="",  # Owner_Contact_Name duplicates Listed_Name here — not a distinct slot
+    situs_fields=("Location_Address", "Location_City_State_Zip"),
+    owner_addr_fields=(
+        "Owner_Contact_Address",
+        "Owner_Contact_City",
+        "Owner_Contact_State",
+        "Owner_Contact_ZipCode",
+    ),
+    land_use_field="Land_Use_Code",  # bare numeric Ohio use code (Land_Use_Name = the label)
+    acres_field="Acres",  # the auditor's DEEDED acreage, not a GIS planar measure (CalcAcres is null)
+    market_land_field="Appraised_Land_100",
+    market_improvement_field="Appraised_Improvement_100",
+    market_total_field="Appraised_Total_100",
+    cauv_field="",  # Has_CAUV is a YES/NO flag, not a value — unmapped, like Miami/Van Wert
+    tax_district_field="District_Name",
+    school_field="School_District",
+    neighborhood_field="",  # absent in this layer -> None (never fabricated)
+    sale_date_field="Date_Conveyed",  # Esri esriFieldTypeDate (epoch millis)
+    sale_amount_field="Consideration",
+    valid_sale_field="Valid_Sale",  # a "True"/"False" string, stored verbatim
+    id_normalize="verbatim",  # the dashed PIN is stored verbatim (PIN_No_Dash is the dashless twin)
+    date_decode="epoch_millis",
+    land_use_decode="int",
+    deed_id_regex=r"\b\d{2}-\d{2}-\d{3}-\d{3}\b",  # the dashed auditor PIN form (26-03-201-002)
+    meta=GisMeta(
+        subject="Shelby County, Ohio parcels (auditor CAMA + geometry)",
+        source="Shelby County Engineer's Office ArcGIS Online org (BHA_sceo, fzPZZJiNVtryYcsC) — "
+        "Parcels FeatureServer layer 0 (auditor CAMA join)",
+        source_url=(
+            "https://services6.arcgis.com/fzPZZJiNVtryYcsC/arcgis/rest/services/"
+            "Parcels/FeatureServer/0"
+        ),
+        caveats=(
+            "Values are verbatim from the county CAMA join; null means the service had no value.",
+            "Acres is the auditor's DEEDED acreage from the tax record, not a GIS planar measure "
+            "(the layer's CalcAcres column is null throughout) — the two differ, so a planar "
+            "acreage must be measured from the geometry and reported as a separate figure.",
+            "Appraised_*_100 are the 100% appraised (market) values; the Taxable_*_100 twins are "
+            "the assessed 35% figures and are NOT what market_* carries here.",
+            "Has_CAUV / Has_Exemption / Has_Abatement are YES/NO flags, not values — cauv_value is "
+            "always null; the committed assemblage geojson carries the booleans separately.",
+            "Deed_Volume/Deed_Page (the auditor Official-Record locator, e.g. OR2329/454) and "
+            "Legal_Description are on the layer but have no GisParcelSchema slot; the assemblage "
+            "recipe reads them directly.",
+            "A consolidation plat retires its predecessor parcels: the current layer holds only the "
+            "surviving PIN, so a pre-consolidation situs address (e.g. '2388 W. Millcreek Rd') "
+            "resolves to NOTHING here — reconcile it geometrically against a prior-vintage layer.",
+            "Right-state guard: Shelby County OHIO (FIPS 39149), districts 'CLINTON TWP SIDNEY "
+            "CORP …', WKID 3735 (NAD83 Ohio South ftUS). Not the same-named Shelby County in "
+            "TN / KY / IN / IL / AL / MO / TX.",
+            "Field names + samples confirmed from the live layer-0 metadata + queries (2026-07-31).",
+        ),
+    ),
+)
+
+
+# City of Sidney, OH zoning (Sidney watershed point; #1379). The City's GIS Department publishes its
+# districts through the county auditor's ArcGIS server, as a polygon-only layer (ZONING label + CODE)
+# with NO parcel id — the Findlay shape, not Piqua's: the district catalog works, per-parcel joins do
+# not. Nine districts (CC / CSD / IIM / NC / R-1 / R-2 / R-3 / TND). Coverage is CITY LIMITS ONLY and
+# the layer was "officially adopted on October 24, 2016"; the sibling Annexation layer's most recent
+# record is ordinance A-3145 (2023-08-28). The Project Galaxy campus parcel (26-03-201-002) therefore
+# falls in a HOLE in all three city polygon layers — zoning, corp limits, and annexation all MISS its
+# interior point, while its two district-01 neighbours (SEMCORP 26-03-301-001 -> IIM, DP&L
+# 26-03-429-009 -> CC) hit all three. So the campus's zoning district is UNKNOWN from this layer, not
+# unzoned: the auditor's TY2025 tax district already places it inside the Sidney corporate limits.
+# Field names + the coverage probe confirmed from the live layer-270 metadata + queries (2026-07-31).
+SIDNEY_ZONING_SCHEMA = GisZoningSchema(
+    connector="sidney_gis",
+    reference_dir="sidney-gis",  # shared with the Shelby parcel + NFHL flood schemas
+    page_size=1000,  # the layer's maxRecordCount
+    object_id_field="OBJECTID_1",
+    parcel_field=None,  # polygon-only layer — no parcel id to join on (the Findlay case)
+    zoning_field="CODE",  # the district code (ZONING = the long label)
+    http_method="GET",
+    id_normalize="verbatim",
+    meta=GisMeta(
+        subject="City of Sidney, Ohio zoning districts (catalog)",
+        source="City of Sidney GIS Department — ArcGIS MapServer "
+        "'City_of_Sidney/SidneyGIS_AllLayers', layer 270 'Zoning' (hosted on the Shelby County "
+        "Auditor's server; twin at City_of_Sidney/Intranet_Map_Original_CAD layer 23)",
+        source_url=(
+            "https://cama.shelbycountyauditors.com/arcgis/rest/services/City_of_Sidney/"
+            "SidneyGIS_AllLayers/MapServer/270"
+        ),
+        caveats=(
+            "Values are verbatim from the City of Sidney zoning layer.",
+            "Polygon-only layer (no parcel id): the district catalog is supported; per-parcel "
+            "zoning joins are not.",
+            "Coverage is Sidney CITY LIMITS ONLY; unincorporated Shelby County townships carry no "
+            "district here.",
+            "Currency: the layer is described as 'Officially adopted on October 24, 2016' and the "
+            "sibling Annexation layer (SidneyGIS_AllLayers/76) stops at ordinance A-3145, "
+            "2023-08-28 — so land annexed after that is absent from zoning, corp limits AND "
+            "annexation alike.",
+            "The Project Galaxy campus parcel 26-03-201-002 is exactly that gap: all three city "
+            "layers MISS its interior point while its district-01 neighbours hit them, so its "
+            "zoning district is UNKNOWN here — NOT 'unzoned' and NOT 'outside the city' (the "
+            "auditor's TY2025 tax district 01 places it inside the Sidney corporate limits).",
+            "Right-state guard: City of Sidney, SHELBY County OHIO 45365 (GIS Dept, 201 W Poplar "
+            "St). Not the same-named Sidney in NY / MT / NE / IA / OH-Champaign 'Sidney' usages.",
+            "Field names confirmed from the live layer-270 metadata + queries (2026-07-31).",
+        ),
+    ),
+)
