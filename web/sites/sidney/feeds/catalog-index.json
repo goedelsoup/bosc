@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "56861a591714afcfbed13753f1fd00a175adac9d56d34d10960ba622c0239553",
+  "catalog_version": "30d6b566173a7fa2bcf4556d284ac5f5ed25206b8247b4d9854a51f5ac6de1fd",
   "contract_version": "1.47.0",
   "atoms": [
     {
@@ -996,6 +996,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:sidney:sidney-regulatory-watch",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "sidney-regulatory-watch",
+      "title": "Sidney — Standing Regulatory Watch (air PTI, construction stormwater, OH0027421, PUCO 25-958-EL-AIR, site plan)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:sidney:thermal",
       "kind": "dataset",
       "site": "sidney",
@@ -1058,6 +1066,14 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "record:sidney:oepa/sidney/1PD00009.npdes.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "oepa/sidney/1PD00009.npdes.yaml",
+      "title": "City of Sidney WWTP",
+      "feed": "records"
     },
     {
       "handle": "record:sidney:sidney/wwtp-oh0027421.dmr.yaml",

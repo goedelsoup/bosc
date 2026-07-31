@@ -65,3 +65,22 @@ documents:
     as a printed day. Not site-specific, but it is the ONLY committed instrument stating the
     term of Findlay's 2PD00008*UD permit (11/1/2024 - 10/31/2029), which the DAM's permit slot
     no longer serves, and it carries that outfall's mercury MAAC of 3.29 ng/L (issue 1460).
+- filename: 2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html
+  canonical: ohio-epa-community-notice-data-center-general-permit-not-finalized-2026-07-21.html
+  type: agency-community-notice
+  source_url: https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/npdes-general-permits
+  sha256: d31f28c83c60848948ccf099ffa6166dd9f5d81b7447b3b6753ee9c04f023401
+  bytes: 390056
+  content_type: text/html;charset=UTF-8
+  fetched_at: '2026-07-31T11:04:47.484428+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    The Ohio EPA NPDES General Permits page as served on 2026-07-31, captured for the
+    Community Notice it carries under "Recent Activities": "Ohio EPA Will NOT Finalize
+    Proposed Data Center General Permit / Community Notice (July 21, 2026) ... Ohio EPA has
+    decided not to move forward with finalizing the general permit. The individual NPDES
+    permit issuance process is the most appropriate path forward at this time." This is the
+    primary source killing OHD000001, whose three draft documents are committed alongside
+    (see README.md). A LIVE page, not a dated document — the bytes are the record of what it
+    said on the capture date; re-capture rather than edit if it changes.

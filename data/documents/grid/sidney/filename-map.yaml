@@ -1,0 +1,58 @@
+meta:
+  subject: Grid / utility source documents — Sidney (Shelby County, OH)
+  generated_at: '2026-07-31'
+  captured_for: issue 1383 (epic 1275, readiness(sidney) — standing regulatory watch)
+  policy: >-
+    Non-destructive — originals keep their as-received bytes and names. Ohio EPA
+    eDocument (edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=N) sends no
+    Content-Disposition, so those files are named by their stable eDoc docid, the
+    same convention as data/documents/oepa/urbana/. Captured web pages keep their
+    exact response bytes (see .gitattributes: data/documents/**/*.html is -text).
+documents:
+- filename: 4184081.pdf
+  edoc_id: '4184081'
+  permit_id: 1GC11112
+  canonical: oepa-1gc11112-aes-6694-transmission-line-reroute-noi-2026-07-09.pdf
+  type: npdes-general-permit-noi
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4184081
+  sha256: 7bb20cb1fcdd88b71e96c27c87851746be29858ebfd870876e12403f624ebf95
+  bytes: 10261
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:32.491439+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    The only public instrument found that puts AES itself on the ground next to the
+    AWS campus. Notice of Intent for Construction Site Stormwater General Permit
+    coverage OHC000006, Ohio EPA facility permit number 1GC11112*AG. Applicant "The
+    AES Corporation", 1 Monument Circle, Indianapolis IN; contact Jason Steckel.
+    Facility "6694 Transmission Line Reroute", 2522 Mill Creek Road, Sidney, Clinton
+    Township, Shelby County; 40.26960894 / -84.19750701 — roughly 500 ft west of the
+    campus NOI point. Receiving waters "Mill Creek - Loramie Creek (12HUC:
+    050800010604), Brush Creek - Great Miami River (12HUC: 050800010703)". Total
+    land disturbance 1.55 acres; construction 2026-09-01 to 2026-12-31; SWPPP
+    figures dated 2026-06-25. Coverage approved 2026-07-09. It carries NO voltage,
+    NO circuit rating and NO megawatts — it is a stormwater instrument, and it must
+    not be read as evidence of the campus load. See
+    data/extracted/sidney/regulatory-watch.yaml, instrument `aes-6694-reroute`.
+- filename: 2026-07-21-aes-ohio-files-unopposed-settlement-for-its-three-year-rate-plan.aes-ohio.html
+  canonical: aes-ohio-unopposed-settlement-three-year-rate-plan-2026-07-21.html
+  type: utility-press-release
+  source_url: https://www.aes-ohio.com/press-release/aes-ohio-files-unopposed-settlement-its-three-year-rate-plan
+  sha256: d86b4e8f0a25b0b2bec9c5244071933174f13a7aefb90ff1896d9e66549ff6c4
+  bytes: 64211
+  content_type: text/html; charset=UTF-8
+  fetched_at: '2026-07-31T11:04:47.750872+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    AES Ohio's own account, dated July 21, 2026, of what it filed in PUCO Case No.
+    25-958-EL-AIR: "filed an unopposed Settlement (Stipulation) with the PUCO Staff
+    and 16 parties for a Three-Year Rate Plan", including "Customer protections that
+    ensure data centers will pay for their costs, under a new Data Center Tariff as
+    recommended by the PUCO", and "Predictable costs with planned distribution rates
+    through 2029". A SELF-PUBLISHED utility account of a filing, not the filing —
+    the stipulation itself is on the PUCO docket, which is WAF-blocked from this
+    workstation (see regulatory-watch.yaml, `puco_dis` access failure). It does not
+    state the four DCT rate classes, any AWS-specific service agreement, or any
+    megawatt figure.

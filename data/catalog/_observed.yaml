@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-31T12:02:35.230325+00:00'
+reconciled_at: '2026-07-31T12:33:57.303802+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -162,8 +162,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: c7f2c54f121c28b5b8c240ea2720d448c39724a0f3e31decef99e27ce56a20fa
-    size_bytes: 158313
+    sha256: 670b17edcb48bf4d697c5fc4c2d06d3d090462f243b5fc37979c9bb55f684b2b
+    size_bytes: 168826
     lfs_materialized: true
     file_count: 12
     missing: []
@@ -182,8 +182,8 @@ entries:
     site_scope: site:hamilton-middletown
   data-centers-sidney:
     exists: true
-    sha256: 7b62e5b9846d413be108a6ecc6f489498b628fa23abf1d6a21f37191cb0ecfdd
-    size_bytes: 13526
+    sha256: 214d1dd7543dacb3375982ba954c9bfc043a951af519760f67a5c2ef8aed191d
+    size_bytes: 24039
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -1200,6 +1200,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  sidney-regulatory-watch:
+    exists: true
+    sha256: 2df9e38c1f786955008666f62506ff1c168ae258d5371df1ee5e0d31ecd82113
+    size_bytes: 45206
+    lfs_materialized: true
+    file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:sidney
   subdivisions:
     exists: true
     sha256: 397cefb9dd09a4fa7beb8e54ef15879cb7df6ac2d1bfeb7a23ecc0da3fd4a89c

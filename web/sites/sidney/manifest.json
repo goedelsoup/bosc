@@ -2,23 +2,23 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "1.47.0",
-  "generated_at": "2026-07-31T10:34:25+00:00",
+  "generated_at": "2026-07-31T12:33:09+00:00",
   "feed_count": 31,
-  "row_total": 400,
+  "row_total": 404,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
       "places": "live",
-      "record": "seeded",
+      "record": "live",
       "story": "absent"
     }
   },
   "facility": {
     "status": "construction",
     "count": 1,
-    "primary_name": "AWS \"Project Galaxy\"",
+    "primary_name": "AWS Sidney Data Center Campus",
     "primary_operator": "Amazon Web Services, Inc. (operator); Amazon Data Services, Inc. (developer)",
     "primary_end_use": "hyperscale"
   },
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 2
     },
     {
       "name": "timeline",
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "exhibits",
@@ -213,7 +213,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 55
+      "count": 56
     },
     {
       "name": "geo/campus",
