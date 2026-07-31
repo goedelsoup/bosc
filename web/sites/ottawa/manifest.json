@@ -1,10 +1,10 @@
 {
   "site": "ottawa",
   "bundle_version": "1.0.0",
-  "contract_version": "1.48.0",
-  "generated_at": "2026-07-31T17:10:06+00:00",
+  "contract_version": "1.49.0",
+  "generated_at": "2026-07-31T20:49:48+00:00",
   "feed_count": 29,
-  "row_total": 409,
+  "row_total": 416,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -207,7 +207,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 69
+      "count": 76
     },
     {
       "name": "impact-study",

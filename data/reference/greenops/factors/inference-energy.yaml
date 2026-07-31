@@ -1,0 +1,78 @@
+vintage: Epoch AI 2025-02 / Jegham et al. 2025-05 / Google 2025-08
+benchmarks:
+- model_class: frontier
+  label: Frontier / reasoning-class hosted model
+  wh_per_1k_tokens:
+    value: 2.0
+    unit: Wh/1k output tokens
+    source: reference
+    citation: 'No published per-token figure exists for Opus-class models; this is
+      the mid-tier band scaled for a larger model and longer reasoning traces. Anchors:
+      Epoch AI 2025-02 (~0.3 Wh / 500 output tokens, GPT-4o, accelerator+host) at
+      the low bound; Jegham et al. 2025-05 (arXiv:2505.09598) infrastructure-aware
+      per-query figures, where the heaviest reasoning models exceed 29 Wh on a long
+      prompt, at the high bound.'
+    confidence: low
+    asof: null
+    low: 0.6
+    high: 12.0
+  basis: output_tokens
+  note: The conservative default for an unmapped model id — an unrecognized model
+    is priced high rather than dropped from the energy chain.
+- model_class: mid_tier
+  label: Mid-tier hosted model (Sonnet / GPT-4o class)
+  wh_per_1k_tokens:
+    value: 0.6
+    unit: Wh/1k output tokens
+    source: reference
+    citation: 'Epoch AI, ''How much energy does ChatGPT use?'' (2025-02): ~0.3 Wh
+      per typical GPT-4o query at an explicit 500-output-token basis => 0.6 Wh per
+      1k output tokens (accelerator + host, excludes facility overhead). Corroborated
+      at a wider boundary by Google, arXiv:2508.15734 (2025-08): 0.24 Wh for the median
+      Gemini Apps text prompt measured full-stack. High bound from Jegham et al.,
+      arXiv:2505.09598 (2025-05), which measures Claude Sonnet at 0.8-5.5 Wh per query
+      infrastructure-aware — roughly an order of magnitude above the accelerator-only
+      anchors.'
+    confidence: low
+    asof: null
+    low: 0.3
+    high: 6.0
+  basis: output_tokens
+  note: 'The best-attested row: the only anchor that states its own token basis.'
+- model_class: small
+  label: Small / task-tuned hosted model
+  wh_per_1k_tokens:
+    value: 0.15
+    unit: Wh/1k output tokens
+    source: reference
+    citation: Scaled below the mid-tier anchor (Epoch AI 2025-02) in proportion to
+      served parameter count; Google (arXiv:2508.15734, 2025-08) reports a 33x year-over-year
+      energy reduction for the median Gemini text prompt, so a small distilled model
+      an order of magnitude under the mid-tier figure is consistent with the published
+      trend. No direct measurement.
+    confidence: low
+    asof: null
+    low: 0.05
+    high: 0.6
+  basis: output_tokens
+  note: Not currently exercised — the platform's extraction workload runs on mid-tier
+    models. Present so a right-sizing change is priced rather than untracked.
+models:
+  claude-opus: frontier
+  claude-sonnet: mid_tier
+  claude-haiku: small
+  claude-3-opus: frontier
+  claude-3-sonnet: mid_tier
+  claude-3-haiku: small
+default_class: frontier
+note: 'LLM inference energy per 1,000 OUTPUT tokens, by model class, hand-curated
+  from published third-party measurements (Epoch AI 2025-02 / Jegham et al. 2025-05
+  / Google 2025-08). No provider publishes a per-token energy figure for its hosted
+  models, so these are `reference` estimates, never a metered fact about our own inference.
+  Every row is banded because the published spread is roughly an order of magnitude,
+  driven mostly by BOUNDARY: an accelerator-only figure excludes host CPU/DRAM, idle
+  capacity and facility overhead, and Google''s 2025-08 production measurement found
+  the accelerator is only 58% of full-stack energy. The basis is OUTPUT tokens — decode
+  dominates inference energy and prefill is far cheaper per token, so applying these
+  to an input+output total would overstate a cache-heavy agentic workload several-fold.
+  An unmapped model id is priced at `default_class` (frontier), never dropped.'

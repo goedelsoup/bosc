@@ -23,6 +23,75 @@
       "title": "AiByTask",
       "type": "object"
     },
+    "CarbonAccount": {
+      "additionalProperties": false,
+      "description": "The report's CO2e figures — the thing eGRID exists to produce (#1643/F1).\n\nCarbon was previously computed only to build a prose reconciliation sentence, so a\nsustainability page reported every dimension *except* the one its factor table is for.\nThis is the first-class account.\n\n**Dual reporting is the GHG-Protocol Scope-2 convention, and the two are not\ninterchangeable.** ``location_based`` prices electricity at the *physical grid's* average\nintensity (our eGRID subregion factor) — what the grid actually emitted to serve us.\n``market_based`` prices it at the *contractual* intensity the supplier claims (PPAs,\nRECs) — what our provider reports after procurement. A market-based figure is always the\nsmaller and is never a substitute for the location-based one; both are published.\n\n``derived_location_based`` is *our* model (electricity x the eGRID rate);\n``provider_location_based`` / ``market_based`` are the provider's own estimate over its\nwhole service surface. They differ by scope, which is why ``reconciliation`` states the\nratio in prose rather than picking a winner.",
+      "properties": {
+        "unit": {
+          "default": "MTCO2e",
+          "title": "Unit",
+          "type": "string"
+        },
+        "derived_location_based": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "provider_location_based": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "market_based": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "intensity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "subregion": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subregion"
+        },
+        "reconciliation": {
+          "default": "",
+          "title": "Reconciliation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "derived_location_based"
+      ],
+      "title": "CarbonAccount",
+      "type": "object"
+    },
     "ComputeByFunction": {
       "additionalProperties": false,
       "description": "Compute split by platform function (the ranked-bar panel), in vCPU-hours.",
@@ -75,6 +144,29 @@
         "renewable"
       ],
       "title": "ElectricitySeries",
+      "type": "object"
+    },
+    "EnergyBreakdown": {
+      "additionalProperties": false,
+      "description": "Electricity split by **scope of the workload**, not by function (#1643/F2).\n\nThe vCPU chain models the infrastructure we rent (instances + CI runners). Model\ninference runs on the provider's accelerators and appears on no bill of ours as energy —\nonly as tokens. Scoping it out entirely made the electricity, carbon and water headlines\nstructurally unable to represent a Claude-driven platform's real footprint, so it is\nfolded in here as its own component and reported separately rather than hidden inside\nthe infrastructure number.\n\nBoth components carry the same unit as :class:`ElectricitySeries`; ``inference`` is a\nbanded assumption (see :class:`InferenceEnergyTable`) and stays visibly low-confidence.",
+      "properties": {
+        "unit": {
+          "default": "MWh",
+          "title": "Unit",
+          "type": "string"
+        },
+        "infrastructure": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "inference": {
+          "$ref": "#/$defs/ProvenancedValue"
+        }
+      },
+      "required": [
+        "infrastructure",
+        "inference"
+      ],
+      "title": "EnergyBreakdown",
       "type": "object"
     },
     "GreenopsPeriod": {
@@ -272,7 +364,7 @@
     },
     "WaterDraw": {
       "additionalProperties": false,
-      "description": "Water draw split direct/indirect (the stacked bar) against the internal budget cap.",
+      "description": "Water attributable to our draw, on the **source** basis, against the internal budget cap.\n\n**The boundary is tenancy, not ownership** (#1643/F4). We operate no data center: the\ncooling water in ``direct`` is drawn by *our cloud provider's* facility, apportioned to us\nby the kWh we bill. Calling it \"our direct on-site cooling\" claimed a facility we do not\nhave; it is **tenant-attributed facility cooling**, and the field name is kept only for\nfeed stability.\n\n**The two components compose; they are not two bases summed.** ``direct`` is site-basis\ncooling water per kWh of *IT* load; ``indirect`` is the *upstream increment* — water\nconsumed generating the electricity delivered to the whole facility (IT x PUE). Site WUE\nplus that increment **is** the source WUE by definition (The Green Grid WP#35), so\n:attr:`total` is a well-formed source-basis figure. What must never be summed is a\nsite-basis WUE and an already-source-basis WUE; the benchmark table marks the increment\n``basis=\"upstream\"`` precisely so the derivation cannot pick a source-basis row here.",
       "properties": {
         "unit": {
           "default": "gal",
@@ -320,6 +412,28 @@
     "electricity": {
       "$ref": "#/$defs/ElectricitySeries"
     },
+    "energy": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EnergyBreakdown"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "carbon": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CarbonAccount"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "water": {
       "$ref": "#/$defs/WaterDraw"
     },
@@ -337,6 +451,15 @@
       },
       "title": "Sources",
       "type": "array"
+    },
+    "basis": {
+      "default": "illustrative",
+      "enum": [
+        "illustrative",
+        "measured"
+      ],
+      "title": "Basis",
+      "type": "string"
     },
     "note": {
       "default": "",

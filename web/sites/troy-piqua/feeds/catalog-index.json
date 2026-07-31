@@ -1,7 +1,7 @@
 {
   "site": "troy-piqua",
   "catalog_version": "ff7215cfbd87ceadd7e6f314043e69e8b766a8c24798d6b4f511547e70e0df0d",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:troy-piqua:7q10",
@@ -776,7 +776,7 @@
       "kind": "dataset",
       "site": "troy-piqua",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

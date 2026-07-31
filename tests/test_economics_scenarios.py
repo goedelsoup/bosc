@@ -35,7 +35,7 @@ from watermark.economics.scenarios import (
 )
 from watermark.site.feeds import CONTRACT_VERSION
 
-_CV = "1.48.0"
+_CV = "1.49.0"
 _PEER = "urbana"  # a selectable peer with no abatement instrument on the record
 
 

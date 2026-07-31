@@ -1,6 +1,6 @@
 """AWS cost + carbon connector — the cloud-provider half of GreenOps (#1079).
 
-Two cached pulls through the shared ``watermark.connectors.cached_get`` machinery:
+Two cached pulls through the shared GreenOps fetch helper (``_fetch.greenops_cached_get``):
 
 1. **Cost Explorer** (``ce:GetCostAndUsage``), monthly granularity, grouped by
    SERVICE + USAGE_TYPE — dollars (``UnblendedCost``) and usage quantities
@@ -44,7 +44,6 @@ import httpx
 import yaml
 
 from watermark.config import Settings, get_settings
-from watermark.connectors import cached_get
 from watermark.connectors._sigv4 import sigv4_authorization
 from watermark.greenops.model import (
     AwsCarbonMonth,
@@ -53,12 +52,13 @@ from watermark.greenops.model import (
     AwsFunctionCost,
     AwsUsageLine,
     GreenopsPeriod,
+    SourceBasis,
     period_from_window,
 )
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
 
-from . import GreenopsOfflineError
+from ._fetch import greenops_cached_get
 from ._readme import write_reference_yaml
 
 log = get_logger(__name__)
@@ -190,7 +190,9 @@ def _signed_post(
 # --- Cost Explorer ----------------------------------------------------------------------
 
 
-def _fetch_cost_and_usage(start: str, end: str, settings: Settings) -> dict[str, Any]:
+def _fetch_cost_and_usage(
+    start: str, end: str, settings: Settings
+) -> tuple[dict[str, Any], SourceBasis]:
     """Fetch ``ce:GetCostAndUsage`` over ``[start, end)`` (dates), merged across pages.
 
     Credentials are deliberately absent from the cache-key params and read only inside
@@ -229,27 +231,19 @@ def _fetch_cost_and_usage(start: str, end: str, settings: Settings) -> dict[str,
                 break
         return {"ResultsByTime": results, "GroupDefinitions": group_definitions}
 
-    return cast(
-        "dict[str, Any]",
-        cached_get(
-            "aws",
-            key_params,
-            fetch,
-            cache_dir=settings.greenops_cache_dir,
-            offline=settings.greenops_offline,
-            fixtures_dir=settings.greenops_fixtures_dir,
-            ttl_hours=settings.greenops_cache_ttl_hours,
-            offline_error=GreenopsOfflineError,
-        ),
-    )
+    return greenops_cached_get("aws", key_params, fetch, settings)
 
 
-def build_cost_report(payload: dict[str, Any], period: GreenopsPeriod) -> AwsCostReport:
+def build_cost_report(
+    payload: dict[str, Any], period: GreenopsPeriod, *, basis: SourceBasis = "illustrative"
+) -> AwsCostReport:
     """Reduce the raw ``GetCostAndUsage`` payload into an :class:`AwsCostReport`.
 
     Pure over the payload (no I/O) so the offline fixtures exercise the real reduction.
     Group values are resolved **by name** by zipping the response's own
     ``GroupDefinitions`` with each group's ``Keys`` — never by hardcoded position.
+    ``basis`` is the caller's finding about the payload's origin (#1643/F3), defaulting to
+    ``illustrative`` so an unattributed payload never reads as a real pull.
     """
     cite = f"AWS Cost Explorer GetCostAndUsage ({period.label})"
     group_names = [d.get("Key", "") for d in payload.get("GroupDefinitions") or []]
@@ -316,6 +310,7 @@ def build_cost_report(payload: dict[str, Any], period: GreenopsPeriod) -> AwsCos
         ),
         by_function=by_function,
         lines=lines,
+        basis=basis,
         note=(
             "AWS Cost Explorer GetCostAndUsage over the window, monthly granularity, grouped "
             "by SERVICE + USAGE_TYPE (values read by name via the response's "
@@ -340,14 +335,16 @@ def fetch_aws_costs(
     An offline cache/fixture miss raises :class:`GreenopsOfflineError` naming the key.
     """
     settings = settings or get_settings()
-    payload = _fetch_cost_and_usage(starting_at[:10], ending_at[:10], settings)
-    return build_cost_report(payload, period_from_window(starting_at, ending_at))
+    payload, basis = _fetch_cost_and_usage(starting_at[:10], ending_at[:10], settings)
+    return build_cost_report(payload, period_from_window(starting_at, ending_at), basis=basis)
 
 
 # --- Sustainability (the CCFT successor) ------------------------------------------------
 
 
-def _fetch_carbon(starting_at: str, ending_at: str, settings: Settings) -> dict[str, Any]:
+def _fetch_carbon(
+    starting_at: str, ending_at: str, settings: Settings
+) -> tuple[dict[str, Any], SourceBasis]:
     """Fetch ``GetEstimatedCarbonEmissions`` over the window, merged across pages."""
     key_params: dict[str, Any] = {
         "report": "estimated_carbon_emissions",
@@ -376,26 +373,17 @@ def _fetch_carbon(starting_at: str, ending_at: str, settings: Settings) -> dict[
                 break
         return {"Results": results}
 
-    return cast(
-        "dict[str, Any]",
-        cached_get(
-            "aws",
-            key_params,
-            fetch,
-            cache_dir=settings.greenops_cache_dir,
-            offline=settings.greenops_offline,
-            fixtures_dir=settings.greenops_fixtures_dir,
-            ttl_hours=settings.greenops_cache_ttl_hours,
-            offline_error=GreenopsOfflineError,
-        ),
-    )
+    return greenops_cached_get("aws", key_params, fetch, settings)
 
 
-def build_carbon_report(payload: dict[str, Any], period: GreenopsPeriod) -> AwsCarbonReport:
+def build_carbon_report(
+    payload: dict[str, Any], period: GreenopsPeriod, *, basis: SourceBasis = "illustrative"
+) -> AwsCarbonReport:
     """Reduce the raw ``GetEstimatedCarbonEmissions`` payload into an :class:`AwsCarbonReport`.
 
     Pure over the payload. Emissions values are read **by name** from each result's
     ``EmissionsValues`` map; the unit comes from the payload (MTCO2e), not hardcoded.
+    ``basis`` is the caller's finding about the payload's origin (#1643/F3).
     """
     cite = f"AWS Sustainability GetEstimatedCarbonEmissions ({period.label})"
 
@@ -433,6 +421,7 @@ def build_carbon_report(payload: dict[str, Any], period: GreenopsPeriod) -> AwsC
         lbm_total=ref(lbm_total, unit),
         monthly=months,
         model_version="+".join(versions),
+        basis=basis,
         note=(
             "AWS Sustainability GetEstimatedCarbonEmissions (the Customer Carbon Footprint "
             "Tool's successor; CCFT retired 2026-06-30) over the window, monthly granularity, "
@@ -453,8 +442,8 @@ def fetch_aws_carbon(
 ) -> AwsCarbonReport:
     """Pull + reduce the AWS emissions estimate over ``[starting_at, ending_at)`` (cached)."""
     settings = settings or get_settings()
-    payload = _fetch_carbon(starting_at, ending_at, settings)
-    return build_carbon_report(payload, period_from_window(starting_at, ending_at))
+    payload, basis = _fetch_carbon(starting_at, ending_at, settings)
+    return build_carbon_report(payload, period_from_window(starting_at, ending_at), basis=basis)
 
 
 # --- committed reference artifacts (data/reference/greenops/aws-*.yaml) -----------------

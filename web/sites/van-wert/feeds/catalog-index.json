@@ -1,7 +1,7 @@
 {
   "site": "van-wert",
   "catalog_version": "a3424b597045f6d70aead89f4cd6d8cafdf3cf48630505c520af4cc3790cccef",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:van-wert:7q10",
@@ -784,7 +784,7 @@
       "kind": "dataset",
       "site": "van-wert",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

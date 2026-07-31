@@ -1,7 +1,7 @@
 {
   "site": "findlay",
   "catalog_version": "ecb3eb26e0b1f5e2d81c03d3313b188a75dc7090bbac879ac3e67e2e1da0b1f8",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:findlay:7q10",
@@ -816,7 +816,7 @@
       "kind": "dataset",
       "site": "findlay",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

@@ -28,4 +28,7 @@ notes: The model-provider slice of Watermark's own compute footprint (#1076/#107
   figure is derived downstream (#4/#1083). Regenerate with `watermark greenops anthropic --write`
   (needs ANTHROPIC_ADMIN_KEY). The folder README is shared across the greenops connectors (composed
   by `greenops.connectors._readme` since issue 1079), so any `--write` regenerates the whole
-  document — see also `greenops-aws`.
+  document — see also `greenops-aws`. Since issue 1643 the export also carries a `basis`
+  (`illustrative` | `measured`) stamped from the connector's own fetch path — a committed-fixture
+  replay is a sample, a live pull is real usage — and the per-model token split is what the
+  derivation prices inference energy against (by OUTPUT tokens, per model class).

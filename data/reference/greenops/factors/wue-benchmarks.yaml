@@ -1,18 +1,42 @@
-vintage: EPRI 2024 / Uptime Institute 2023 / NREL 2012
+vintage: AWS 2025 / EPRI 2024 / Uptime Institute 2023 / Macknick et al. 2012
 benchmarks:
+- facility_type: aws_published_site
+  label: AWS data centers, published site WUE
+  wue:
+    value: 0.12
+    unit: L/kWh
+    source: reference
+    citation: 'AWS published global data-center WUE — 0.12 L/kWh water withdrawn per
+      kWh of IT load (2025; 0.15 in 2024), sustainability.aboutamazon.com/products-services/aws-cloud,
+      accessed 2026-07-31. Band: AWS''s global average (low) to the industry-average
+      withdrawal WUE of 0.84 L/kWh it compares itself against (high).'
+    confidence: medium
+    asof: null
+    low: 0.12
+    high: 0.84
+  basis: site
+  note: 'The row the derivation selects, because our compute is an AWS tenancy: the
+    cooling water is drawn by AWS''s facility, apportioned to us by billed IT-kWh.
+    A global average — a specific region''s WUE can be several times either bound,
+    which is what the band carries.'
 - facility_type: industry_average_site
   label: Data center, industry-average site WUE
   wue:
     value: 1.8
     unit: L/kWh
     source: reference
-    citation: Uptime Institute Global Data Center Survey — average site WUE across
-      operators that measure it
-    confidence: medium
+    citation: 'Commonly-quoted industry-average data-center site WUE (~1.8 L/kWh);
+      no single dated primary source — the figure recurs across Uptime Institute survey
+      commentary and secondary literature. Band: AWS''s stated industry-average withdrawal
+      WUE 0.84 L/kWh (2025) to the EPRI evaporative row below.'
+    confidence: low
     asof: null
+    low: 0.84
+    high: 2.2
   basis: site
-  note: Direct on-site cooling water per kWh of IT load; operators that measure WUE,
-    so it skews toward the more instrumented (often more efficient) fleet.
+  note: 'Kept for comparison, NOT applied: it is an undated composite whose boundary
+    (withdrawal vs consumption, cooling-only vs total) is not stated in any one primary
+    source, hence low confidence and a band wider than its own value.'
 - facility_type: hyperscale_evaporative
   label: Hyperscale, evaporative-tower cooling
   wue:
@@ -20,9 +44,12 @@ benchmarks:
     unit: L/kWh
     source: reference
     citation: EPRI data-center water-use characterization — evaporative (open-loop
-      cooling-tower) facilities
+      cooling-tower) facilities; a representative published upper range, not a dated
+      single measurement.
     confidence: low
     asof: null
+    low: 1.8
+    high: 3.0
   basis: site
   note: Wet cooling trades electricity for water; a representative upper-range site
     WUE for evaporatively cooled campuses.
@@ -32,30 +59,43 @@ benchmarks:
     value: 0.3
     unit: L/kWh
     source: reference
-    citation: EPRI / industry closed-loop + air-side-economizer data-center WUE
+    citation: EPRI / industry closed-loop + air-side-economizer data-center WUE; a
+      representative published range, not a dated single measurement.
     confidence: low
     asof: null
+    low: 0.05
+    high: 0.6
   basis: site
   note: Dry / closed-loop cooling draws little on-site water but more electricity;
     a representative low-water site WUE.
 - facility_type: grid_upstream
-  label: Grid generation, upstream (source WUE)
+  label: Grid generation, upstream increment (water for electricity)
   wue:
     value: 1.9
     unit: L/kWh
     source: reference
-    citation: Macknick et al. (NREL 2012) operational water-consumption factors /
-      EPRI water-for-electricity — US thermoelectric fleet average
+    citation: 'Macknick, Newmark, Heath & Hallett, ''Operational water consumption
+      and withdrawal factors for electricity generating technologies'', Environ. Res.
+      Lett. 7 045802 (2012-12-20), median operational water-CONSUMPTION factors. Central:
+      US thermoelectric fleet average. Band: gas combined-cycle with cooling tower
+      205 gal/MWh = 0.78 L/kWh (low) to nuclear with cooling tower 672 gal/MWh = 2.54
+      L/kWh (high).'
     confidence: low
     asof: null
-  basis: source
-  note: Water consumed upstream to generate 1 kWh delivered — added to site WUE for
-    a source WUE; varies with the subregion generation mix (eGRID), so the derivation
-    scales it by the workload's subregion.
-note: Water Usage Effectiveness benchmarks (liters of water per kWh), hand-curated
-  from published sources (EPRI 2024 / Uptime Institute 2023 / NREL 2012). SITE WUE
-  is direct on-site cooling water; SOURCE WUE is the water consumed upstream to generate
-  the electricity drawn — the two are on different bases and must never be summed
-  across bases or compared. Every figure is `reference` (a published benchmark), never
-  a metered fact about our own cooling; the derivation (#1083) applies them and stays
-  `derived`. Representative rows are marked low-confidence.
+    low: 0.78
+    high: 2.54
+  basis: upstream
+  note: Water consumed upstream to generate 1 kWh DELIVERED — the increment added
+    to a site WUE to reach a source WUE, never a WUE on its own. It applies to the
+    whole facility draw (IT x PUE), not the IT load. The band is the generation-mix
+    spread the subregion (eGRID) determines.
+note: 'Water Usage Effectiveness benchmarks (liters of water per kWh), hand-curated
+  from published sources (AWS 2025 / EPRI 2024 / Uptime Institute 2023 / Macknick
+  et al. 2012); every row carries a dated citation and a band. THREE bases, and the
+  distinction is load-bearing: SITE is facility cooling water per kWh of IT load;
+  UPSTREAM is the increment consumed generating the electricity delivered to the whole
+  facility (per facility-kWh) — a term you ADD to a site WUE, not a WUE on its own;
+  SOURCE is an already-complete site+upstream figure. Site + upstream compose; site
+  + source double-counts cooling and must never be summed. Every figure is `reference`
+  (a published benchmark), never a metered fact about our own cooling; the derivation
+  (#1083) applies them and stays `derived`. Representative rows are marked low-confidence.'

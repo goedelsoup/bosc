@@ -1,7 +1,7 @@
 {
   "site": "lima",
   "catalog_version": "db70b202011070a74e7fe733b1de72fba68557b79617738d15588d648f665967",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -1032,7 +1032,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

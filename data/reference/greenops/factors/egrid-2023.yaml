@@ -11,6 +11,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 16.3
     unit: '%'
@@ -18,6 +20,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -52,6 +56,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 69.0
     unit: '%'
@@ -59,6 +65,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: hydro
     label: Hydro
@@ -85,6 +93,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 22.3
     unit: '%'
@@ -92,6 +102,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -134,6 +146,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 46.5
     unit: '%'
@@ -141,6 +155,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -187,6 +203,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 28.7
     unit: '%'
@@ -194,6 +212,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -236,6 +256,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 6.6
     unit: '%'
@@ -243,6 +265,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -289,6 +313,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 34.2
     unit: '%'
@@ -296,6 +322,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: oil
     label: Oil
@@ -330,6 +358,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 14.2
     unit: '%'
@@ -337,6 +367,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: oil
     label: Oil
@@ -367,6 +399,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 17.3
     unit: '%'
@@ -374,6 +408,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -412,6 +448,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 43.5
     unit: '%'
@@ -419,6 +457,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: wind
     label: Wind
@@ -469,6 +509,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 19.2
     unit: '%'
@@ -476,6 +518,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -526,6 +570,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 55.1
     unit: '%'
@@ -533,6 +579,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: hydro
     label: Hydro
@@ -587,6 +635,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 0.6
     unit: '%'
@@ -594,6 +644,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -624,6 +676,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 6.5
     unit: '%'
@@ -631,6 +685,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -661,6 +717,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 41.8
     unit: '%'
@@ -668,6 +726,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: hydro
     label: Hydro
@@ -710,6 +770,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 2.3
     unit: '%'
@@ -717,6 +779,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -751,6 +815,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 4.0
     unit: '%'
@@ -758,6 +824,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -804,6 +872,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 11.2
     unit: '%'
@@ -811,6 +881,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -853,6 +925,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 7.6
     unit: '%'
@@ -860,6 +934,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -910,6 +986,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 41.9
     unit: '%'
@@ -917,6 +995,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: coal
     label: Coal
@@ -955,6 +1035,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 40.1
     unit: '%'
@@ -962,6 +1044,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: wind
     label: Wind
@@ -1004,6 +1088,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 36.7
     unit: '%'
@@ -1011,6 +1097,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -1057,6 +1145,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 3.0
     unit: '%'
@@ -1064,6 +1154,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -1110,6 +1202,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 15.2
     unit: '%'
@@ -1117,6 +1211,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: coal
     label: Coal
@@ -1167,6 +1263,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 9.5
     unit: '%'
@@ -1174,6 +1272,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: gas
     label: Natural gas
@@ -1212,6 +1312,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 9.1
     unit: '%'
@@ -1219,6 +1321,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: nuclear
     label: Nuclear
@@ -1257,6 +1361,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   renewable_pct:
     value: 9.9
     unit: '%'
@@ -1264,6 +1370,8 @@ subregions:
     citation: EPA eGRID2023 subregion file (SRL sheet)
     confidence: high
     asof: null
+    low: null
+    high: null
   resource_mix:
   - fuel: nuclear
     label: Nuclear

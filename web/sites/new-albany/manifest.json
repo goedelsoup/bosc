@@ -1,10 +1,10 @@
 {
   "site": "new-albany",
   "bundle_version": "1.0.0",
-  "contract_version": "1.48.0",
-  "generated_at": "2026-07-31T17:09:29+00:00",
+  "contract_version": "1.49.0",
+  "generated_at": "2026-07-31T20:49:03+00:00",
   "feed_count": 28,
-  "row_total": 388,
+  "row_total": 395,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -199,7 +199,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 72
+      "count": 79
     },
     {
       "name": "impact-study",

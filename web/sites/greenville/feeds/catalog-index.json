@@ -1,7 +1,7 @@
 {
   "site": "greenville",
   "catalog_version": "b73a3edb23423848f1c0f914ce3aba9c702c5a730e5ea4dcd674386d17b8a889",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:greenville:7q10",
@@ -768,7 +768,7 @@
       "kind": "dataset",
       "site": "greenville",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

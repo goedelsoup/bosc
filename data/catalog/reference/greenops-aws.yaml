@@ -32,4 +32,7 @@ notes: The cloud-provider slice of Watermark's own compute footprint (#1076/#107
   figure is `reference` (a billing/emissions export), never metered. AWS publishes no electricity/kWh
   figure — the derived electricity number is calibrated against the LBM total in footprint.py
   (#1082/#1083); emissions data lags ~3 months. Regenerate with `watermark greenops aws --write`
-  (needs AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY).
+  (needs AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY). Since issue 1643 both exports carry a `basis`
+  (`illustrative` | `measured`) stamped from the fetch path, and the MBM/LBM totals are no longer
+  read only for a prose reconciliation — they are published as the provider half of the
+  footprint's `CarbonAccount`, market- and location-based side by side.
