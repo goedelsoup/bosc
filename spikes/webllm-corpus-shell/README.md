@@ -8,7 +8,7 @@ yidam corpus mirror + a vector index. The decision this feeds is
 It puts the two halves of `yidam export web` side by side against real data so a reviewer can
 *feel* each cost:
 
-1. **Retrieve** — a lexical index over `corpus.json` (238 real Lima mirror nodes). Instant,
+1. **Retrieve** — a lexical index over `corpus.json` (241 real Lima mirror nodes). Instant,
    zero-dependency, no WebGPU, no download. This is the half the spike **recommends shipping**
    (production swaps the lexical scorer for the committed MiniLM / Arrow vector index —
    `watermark.site.yidam_index` — same nodes, same citations).
@@ -24,7 +24,8 @@ The page fetches `corpus.json`, so serve it over HTTP (a `file://` open is block
 ```sh
 cd spikes/webllm-corpus-shell
 python3 -m http.server 8080
-# open http://localhost:8080/  in Chrome/Edge 113+, Safari 18+, or Firefox 141+
+# open http://localhost:8080/  in Chrome/Edge 113+, Safari 26 (macOS Tahoe 26 / iOS 26),
+#   or Firefox 141+ (Windows) — the chat pane needs WebGPU; see docs/webllm-spike.md
 ```
 
 - The **retrieve** pane works in any browser, offline. Click an example or type a corpus term.
@@ -42,7 +43,7 @@ uv run python spikes/webllm-corpus-shell/make_corpus.py
 ```
 
 Each node is `{id, cls, label, desc, tag, scope}` — the projected `label`/`description` a
-mirror node carries, plus its class and claim tag. 63 KB (16 KB gzipped) for 238 nodes.
+mirror node carries, plus its class and claim tag. 64 KB (17 KB gzipped) for 241 nodes.
 
 ## What was verified
 

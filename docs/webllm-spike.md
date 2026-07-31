@@ -10,7 +10,7 @@ workstream D3.
 This is the decision artifact for [#1576](https://github.com/watermark-directory/the-watermark-directory/issues/1576).
 The runnable prototype is [`spikes/webllm-corpus-shell/`](../spikes/webllm-corpus-shell/) — a
 zero-build page (mirroring [`docs/deckgl-spike.md`](./deckgl-spike.md)'s UMD approach) that puts
-the two halves of `yidam export web` side by side against **238 real Lima mirror nodes**.
+the two halves of `yidam export web` side by side against **241 real Lima mirror nodes**.
 
 ## Why we're looking at this
 
@@ -36,7 +36,7 @@ cost tangible against the real corpus (projected by `watermark corpus-mirror`, #
 
 | Half | What the prototype does | Verdict it evidences |
 |---|---|---|
-| **Retrieval** (Arrow vector index) | Lexical scorer over `corpus.json` (238 nodes); instant, zero-dependency, no WebGPU, no download; returns cited nodes with evidence chips. Every example question returns the right grounded nodes (design low flow → _Dilution_ + _7Q10_; the RDA → _Roadwork Development Agreement_ + _Grant-refund clause_; the Bistrozzi permit → its open-comment question). | **GO** — small, grounded, fits the evidence grammar. |
+| **Retrieval** (Arrow vector index) | Lexical scorer over `corpus.json` (241 nodes); instant, zero-dependency, no WebGPU, no download; returns cited nodes with evidence chips. Every example question returns the right grounded nodes (design low flow → _Dilution_ + _7Q10_; the RDA → _Roadwork Development Agreement_ + _Grant-refund clause_; the Bistrozzi permit → its open-comment question). | **GO** — small, grounded, fits the evidence grammar. |
 | **Generation** (WebLLM) | `@mlc-ai/web-llm` from a CDN, WebGPU-gated; downloads a 0.3–0.9 GB quantised model, then generates from the retrieved nodes under an `/api/ask`-style "cite the nodes, say when the record is silent" system prompt. | **NO-GO** — see the three axes below. |
 
 The retrieval half is the recommended shape made concrete: production swaps the demo's lexical
@@ -50,42 +50,54 @@ small-model hallucination.
 The WebLLM **runtime** is small (~1–3 MB gzipped JS + a few-hundred-KB TVM WASM). The **model
 weights** are the cost, and they dwarf everything the site ships today:
 
-| Artifact | Transfer size | For comparison |
-|---|---|---|
-| Whole committed Lima bundle (`web/sites/lima`, all 21 feeds) | **~3.1 MB** | the entire data tier |
-| Corpus mirror snapshot (238 nodes, `corpus.json`) | **63 KB** (16 KB gzip) | what retrieval needs |
-| MiniLM embedder (in-browser, retrieval) | **~80 MB**, WASM-capable | one-time, WebGPU-optional |
-| WebLLM · SmolLM2-360M q4f16 | **~0.3 GB** | ~100× the bundle |
-| WebLLM · Qwen2.5-0.5B q4f16 | **~0.4 GB** | weakest usable chat model |
-| WebLLM · Llama-3.2-1B q4f16 | **~0.9 GB** | smallest _tolerable_ quality |
-| WebLLM · Llama-3.2-3B / Phi-3.5-mini q4f16 | **~1.7–2.1 GB** | first genuinely useful tier |
+| Artifact | Transfer size | Basis | For comparison |
+|---|---|---|---|
+| Whole committed Lima bundle (`web/sites/lima`, 44 feeds) | **~3.7 MB** | measured | the entire data tier |
+| Corpus mirror snapshot (241 nodes, `corpus.json`) | **64 KB** (17 KB gzip) | measured | what retrieval needs |
+| MiniLM embedder (in-browser, retrieval) | **~80 MB**, WASM-capable | cited | one-time, WebGPU-optional |
+| WebLLM · SmolLM2-360M q4f16 | **~0.3 GB** | cited | ~80× the bundle |
+| WebLLM · Qwen2.5-0.5B q4f16 | **~0.4 GB** | cited | weakest usable chat model |
+| WebLLM · Llama-3.2-1B q4f16 | **~0.9 GB** | cited | smallest _tolerable_ quality |
+| WebLLM · Llama-3.2-3B / Phi-3.5-mini q4f16 | **~1.7–2.1 GB** | cited | first genuinely useful tier |
+
+**Measurement basis** (so the table is reproducible without changing its conclusions): the two
+_measured_ rows are the **uncompressed committed bytes** on this branch on **2026-07-31** —
+`find web/sites/lima -name '*.json' | xargs cat | wc -c` (3,925,480 B ≈ 3.7 MB; `du -sh` reports
+4.8 MB block-rounded) and `wc -c` / `gzip -c` on `corpus.json`. The _cited_ rows are
+**first-load (uncached) transfer** for the `q4f16_1` MLC conversions as published in WebLLM's
+`prebuiltAppConfig` model list / model cards — **not independently re-downloaded in this spike**,
+so they are approximate (±20%) and marked `~`. The WebLLM runtime referenced throughout is pinned
+to **`@mlc-ai/web-llm@0.2.84`** (the prototype's `esm.run` import), the version verified on npm at
+that date.
 
 Weights cache in the browser (Cache API / IndexedDB) after first load, so _repeat_ visits are
-cheap — but the **first-load tax** is a 0.4–2 GB download for a wiki whose current heaviest single
-feed is 536 KB. The whole documentary ethos of the site is lightness and honesty in every
-environment; a multi-hundred-MB-to-GB blob to answer one question is the opposite of that. The
-**retrieval** half, by contrast, is an ~80 MB one-time embedder over a 63 KB corpus — in the same
-order as the existing `/ask` embeddings, and something we already build.
+cheap — but the **first-load tax** is a 0.4–2 GB uncached download for a wiki whose current
+heaviest single feed is ~1.75 MB (`documents.json`). The whole documentary ethos of the site is
+lightness and honesty in every environment; a multi-hundred-MB-to-GB blob to answer one question is
+the opposite of that. The **retrieval** half, by contrast, is an ~80 MB one-time embedder over a
+64 KB corpus — in the same order as the existing `/ask` embeddings, and something we already build.
 
 ## Axis 2 — WebGPU support
 
 WebLLM has **no usable fallback**: no WebGPU means no model (the WASM-only path is too slow to be
-real). WebGPU is now broadly but not universally shipped (≈70% of global users per caniuse, early
-2026), and the gaps land on exactly the users a public-records site must not turn away:
+real). WebGPU is now broadly but not universally shipped — **≈70% of global users, ≈30% without**
+([caniuse: WebGPU](https://caniuse.com/webgpu), read 2026-07-31; the exact share drifts, so treat
+it as approximate) — and the gaps land on exactly the users a public-records site must not turn
+away:
 
 | Browser | WebGPU | Note |
 |---|---|---|
 | Chrome / Edge desktop | ✅ since 113 (2023) | the happy path |
 | Chrome Android | ✅ since 121 (2024) | but a ≥0.4 GB pull on mobile data + phone GPU is punishing |
-| Safari (macOS/iOS) | ✅ Safari 18+ (late 2024) | older iOS/macOS: unsupported |
-| Firefox | ✅ 141+ (Windows, mid-2025); rolling out elsewhere | recent only |
-| Older/locked-down/enterprise browsers | ❌ | silent dead end |
+| Safari (macOS / iOS) | ✅ Safari 26, on macOS Tahoe 26 / iOS 26 (2025) | earlier Safari: unsupported ([WebKit: WebGPU in Safari 26](https://webkit.org/blog/17278/webgpu-in-safari/)) |
+| Firefox | ✅ 141 — **Windows only** (2025); Mac/Linux still rolling out | ([MDN: WebGPU API compatibility](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API#browser_compatibility)) |
+| Older / locked-down / enterprise browsers | ❌ | silent dead end |
 
 The prototype's top banner is a live WebGPU probe: on an unsupported browser the whole generation
 pane disables and only retrieval remains — which is precisely the production failure mode. A
-feature that silently dies for ~30% of visitors (skewed toward mobile and older devices) cannot be
-the default "ask" path. Retrieval degrades far better: the MiniLM embedder runs in WASM where
-WebGPU is absent.
+feature that silently dies for the ~30% of visitors without WebGPU (skewed toward mobile and older
+devices) cannot be the default "ask" path. Retrieval degrades far better: the MiniLM embedder runs
+in WASM where WebGPU is absent.
 
 ## Axis 3 — Swiss-03 / evidentiary fit (the decisive axis)
 
@@ -93,20 +105,27 @@ This is where the WebLLM shell fails hardest, and it is not a styling problem �
 made to look on-brand (the prototype is). It is a **grammar** problem.
 
 - **The corpus is litigation evidence.** The platform's entire discipline is
-  `[verified]` / `[inference]` / `[reference]` / `[open]` tagging and "never guess." A **0.5–1B
-  in-browser model cannot hold that line** the way Claude does: it paraphrases figures, drops or
-  invents `[n]` citations, and confabulates when the record is thin. A fabricated claim about a
-  permit or a dollar figure is not a cosmetic glitch here — it is a **chain-of-custody and
-  defensibility failure**. Shipping a generator we know will invent against evidence contradicts
-  the reason the platform exists.
+  `[verified]` / `[inference]` / `[reference]` / `[open]` tagging and "never guess." The **risk
+  hypothesis** — not demonstrated in this spike, which did not run the model in a WebGPU browser, but
+  the well-documented behaviour of sub-1B instruction models generally — is that a 0.5–1B in-browser
+  model **cannot hold that line** the way Claude does: it is likely to paraphrase figures, drop or
+  invent `[n]` citations, and confabulate when the record is thin. A fabricated claim about a permit
+  or a dollar figure would not be a cosmetic glitch here — it is a **chain-of-custody and
+  defensibility failure**. That risk alone is disqualifying on an evidence platform; confirming it
+  empirically (the manual browser pass in the prototype README) would only sharpen a "no-go" that the
+  size and support axes already establish. Shipping a generator with that failure mode against
+  evidence contradicts the reason the platform exists.
 - **Swiss-03 spends the evidence palette on meaning, never on decoration.** A chat box that emits
   ungrounded prose fights that grammar; a retrieval surface that returns **cited nodes with
   evidence chips** (what the demo's left pane does) _is_ the grammar — it points at the record
   instead of narrating over it.
 - **We already have the better answer.** `/api/ask` is grounded, cited, streaming, and cheap
-  server-side. WebLLM's only genuine wins over it are (a) zero per-query API cost, (b) full
-  client-side privacy, (c) offline once cached. (a) is already inexpensive; (b) and (c) do not
-  outweigh a GB download plus hallucination on evidence for a public wiki.
+  server-side. WebLLM's only genuine wins over it are (a) zero per-query API cost, (b) the
+  **question text stays on-device at inference time** (it is not sent to a server to be answered),
+  and (c) offline once cached. Note (b) is bounded, not "full client-side privacy": the runtime and
+  the multi-hundred-MB model weights are still fetched from a CDN, which sees the visit and can
+  correlate it — only the query itself avoids a round-trip. (a) is already inexpensive; (b) and (c)
+  do not outweigh a GB download plus the hallucination risk on evidence for a public wiki.
 
 ## Recommendation
 
@@ -130,7 +149,7 @@ made to look on-brand (the prototype is). It is a **grammar** problem.
 - **"But it's zero-server."** The server cost `/api/ask` pays is already small and the quality gap
   is large; trading grounded Claude for a hallucinating 0.5B model to save cents is a bad trade on
   an evidence platform.
-- **Retrieval still needs an index artifact.** The MiniLM index over 238 nodes is tiny; exporting
+- **Retrieval still needs an index artifact.** The MiniLM index over 241 nodes is tiny; exporting
   it as a static file (Arrow/JSON) alongside the bundle is a modest D2 task, not a new subsystem —
   we already build the LanceDB table.
 - **Offline demand.** If a genuine offline use case appears, the deferred opt-in flag (item 3)

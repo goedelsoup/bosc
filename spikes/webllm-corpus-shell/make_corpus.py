@@ -39,7 +39,8 @@ def main() -> None:
     }
     path = Path(__file__).parent / "corpus.json"
     path.write_text(
-        json.dumps(out, ensure_ascii=False, indent=0, separators=(",", ":")), encoding="utf-8"
+        json.dumps(out, ensure_ascii=False, indent=0, separators=(",", ":")) + "\n",
+        encoding="utf-8",
     )
     print(f"wrote {path} — {len(nodes)} nodes ({path.stat().st_size} bytes), site={mirror.site}")
 
