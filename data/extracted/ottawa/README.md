@@ -38,6 +38,37 @@ carried with their vintage stated.
 Cadence is **quarterly**, keyed to the ICIS-NPDES and SDWIS extract cycles. The next check's
 questions and thirteen open leads are in the file's own `watch_schedule` and `open_leads` blocks.
 
+## The anchor place (#1420)
+
+[`bosc-site-footprint.yaml`](bosc-site-footprint.yaml) — the **former Sylvania / GTE / Philips
+Display Components (LG.Philips Displays USA) CRT plant campus** at 700 and 804 North Pratt Street,
+the site's anchor place and the geometry that activates the `places` readiness domain. The
+boundary is the recorded ownership holding: the **two contiguous parcels** the works was
+subdivided into and sold as in the 2006 Chapter 11, **38.234 ac deeded / 38.293 ac planar**,
+committed as [`../../reference/ottawa/parcel-assemblage.geojson`](../../reference/ottawa/parcel-assemblage.geojson).
+
+**It is not a data-center campus** — it is a closed industrial works, the county's largest employer
+until 2002-12-31, now a **$4,571,596** three-round Ohio Brownfield Remediation Program remediation.
+Ottawa's `SiteProfile` carries `facilities=()`. Three findings the record carries:
+
+- **A named stream runs through the contaminated campus.** Tawa Run crosses **325.8 m** of the
+  boundary — 305.2 m through 804 N Pratt and **20.5 m through the 22-ac remediation property
+  itself** — and discharges directly into the Blanchard River, 525.9 m away. **4.505 ac (11.8%)**
+  of the campus is Special Flood Hazard Area and **1.221 ac (3.2%)** is regulatory **floodway**.
+  Whether the remediated contamination has any pathway to that stream is `[open]`: no analytical
+  data, monitoring-well record or work plan is in the corpus. The geometry raises the question;
+  it does not answer it.
+- **The soil group was wrong, in both halves.** SSURGO over the committed boundary returns the
+  dual group **C/D**, not the profile's prior `[inference]` flat **D**, and the soils under it are
+  **Toledo/Fulton/Lucas** — none of the Hoytville/Latty/Paulding the inference named. The general
+  reasoning (Great Black Swamp lake plain) survives; the specifics did not. And **61% of the grid
+  is Urban land**, unrated — the group describes the campus's unbuilt remainder.
+- **Ownership is not the brownfield grantee.** The awards went to the Port Authority of
+  Northwestern Ohio (Rounds 1, 11) and the Putnam County Land Reutilization Corp (Round 5);
+  the parcels stand in the names of OTTAWA OH LLC (mail c/o APTM INC, Long Beach CA) and VERHOFF
+  PROPERTIES LLC. No instrument in the corpus connects the two, and the grantor chain is `[open]`
+  (#1421).
+
 ## Primary instruments
 
 - [`drinking-water/oh6900711-2025-ccr.epa.yaml`](drinking-water/oh6900711-2025-ccr.epa.yaml) — the

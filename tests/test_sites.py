@@ -582,6 +582,126 @@ def test_putnam_parcel_schema_is_full_cama() -> None:
     )
     assert (FIXTURES / p.connector / f"{key}.json").is_file(), f"putnam param drift: {key}"
 
+    # Param stability for the committed assemblage's PIN-list pull too (#1420). Ottawa's campus
+    # has TWO unrelated owners, so unlike Van Wert/Sidney it cannot be pulled by an owner scan —
+    # the geojson that produced data/reference/ottawa/parcel-assemblage.geojson is a PIN query.
+    pin_key = cache_key(
+        {
+            "f": "geojson",
+            "returnGeometry": "true",
+            "where": "PIN IN ('322220000000','322260000000')",
+            "outFields": ",".join(p.out_fields),
+            "outSR": "4326",
+            "resultOffset": 0,
+            "resultRecordCount": p.page_size,
+        }
+    )
+    assert (FIXTURES / p.connector / f"{pin_key}.json").is_file(), (
+        f"ottawa assemblage param drift: {pin_key}"
+    )
+
+
+def test_ottawa_hsg_is_ssurgo_verified_dual_over_a_mostly_urban_campus() -> None:
+    """#1420: committing the campus assemblage let SSURGO run, and it corrected the profile's
+    [inference] in BOTH halves. The rating: NRCS rates Toledo/Fulton as the dual group C/D, so a
+    flat "D" pre-committed the undrained letter for every scenario (WS-20/#1620). And the series:
+    the old citation named Hoytville/Latty/Paulding/Nappanee, and NONE of those is under this
+    campus — only the general Black-Swamp reasoning survived. The caveat is load-bearing and must
+    stay in the citation: 61% of the grid is URBAN LAND, so the group describes the campus's
+    unbuilt remainder. A future edit that re-flattens the group, drops the Urban-land caveat, or
+    reinstates the wrong series is the bug this test exists to catch."""
+    s = SITES["ottawa"]
+    assert s.dominant_hsg == "C/D"
+    assert normalize_hsg(s.dominant_hsg) != normalize_hsg("D")  # a dual group, not its letter
+    assert "SSURGO" in s.hsg_citation
+    assert "Toledo" in s.hsg_citation and "Fulton" in s.hsg_citation
+    # The superseded series is still NAMED, but explicitly as what this campus is NOT — the
+    # citation has to keep showing its work, or the correction reads like a silent overwrite.
+    assert "not the Hoytville/Latty/Paulding it named" in s.hsg_citation
+    assert "22 of the 23 RATED" in s.hsg_citation  # the sample the correction rests on
+    assert "URBAN LAND" in s.hsg_citation  # 61% unrated — the caveat is the point of the site
+    # The scenario switch is LIVE here (unlike Sidney's single group) — both conditions resolve.
+    assert (s.pre_drainage_condition, s.post_drainage_condition) == ("drained", "undrained")
+    # A BROWNFIELD, so pre == post: redeveloping it adds no new impervious at screening grade.
+    # That equality is the finding — the knobs were TODO "pending an identified site" before.
+    assert (s.pre_cover, s.post_cover, s.developed_pervious_cover) == (
+        "developed_campus",
+        "developed_campus",
+        "open_space",
+    )
+    # The committed geometry + footprint the SSURGO run and the places domain both read.
+    assert s.parcels_relpath == "reference/ottawa/parcel-assemblage.geojson"
+    assert s.footprint_relpath == "extracted/ottawa/bosc-site-footprint.yaml"
+    # Ottawa's anchor place is a FORMER WORKS, not a campus siting — no facility is disclosed.
+    assert s.facilities == () and s.facility is None and s.campus is None
+
+
+def test_ottawa_zoning_is_a_searched_negative_not_a_pending_discovery() -> None:
+    """#1420 closed the zoning acceptance criterion as a NEGATIVE: the Village publishes no zoning
+    GIS, so there is nothing to wire and `zoning_url` keeps the sentinel the connector contract
+    needs. What must survive is the SEARCH — in particular that the county server's `499 Token
+    Required` on /services/Zoning is not evidence a secured zoning service exists (a folder name
+    that certainly does not exist answers 499 too). Losing that note would turn a documented
+    negative back into a speculative "pending endpoint discovery"."""
+    s = SITES["ottawa"]
+    assert s.gis_zoning is None and s.zoning_url == "TODO"
+    src = (REPO_ROOT / "src" / "watermark" / "sites" / "_profiles.py").read_text()
+    block = src[src.index('slug="ottawa"') : src.index('county_name="Putnam County, OH"')]
+    assert "SEARCHED AND NEGATIVE" in block
+    # The 499 must stay paired with WHY it proves nothing, or a later reader will mistake it
+    # for a secured-but-existing zoning service and go hunting for a token.
+    assert "499 Token Required" in block
+    assert "does not exist" in block and "NOT evidence" in block
+    assert "amlegal.com" in block  # the code is text-only, and where
+    assert "2026-08-04" in block  # the modernization RFP's proposal deadline
+
+
+def test_ottawa_parcel_assemblage_is_the_philips_campus_not_the_inlot_run() -> None:
+    """The committed geometry is the FORMER SYLVANIA/PHILIPS CRT WORKS (#1420) — two contiguous
+    parcels, two unrelated owners, both conveyed by warranty deed in the 2006 Chapter 11 year.
+    The load-bearing correction is that the issue's own table is wrong: it lists inlots 1541-1543
+    as the rest of the subdivided campus, and they are 207-1,090 m away because Putnam issues
+    inlot numbers in PLATTING order, not geographic order. That disproof, the across-the-street
+    IL 1536 lead, and the tax cross-check that settles which of two published improvement values
+    is live all have to keep being stated."""
+    fc = json.loads(
+        (REPO_ROOT / "data" / "reference" / "ottawa" / "parcel-assemblage.geojson").read_text()
+    )
+    assert len(fc["features"]) == 2
+    props = {f["properties"]["parcel_id"]: f["properties"] for f in fc["features"]}
+    assert set(props) == {"322220000000", "322260000000"}
+    # Two UNRELATED owners — this is a broken-up works, not one operator's holding.
+    assert {p["owner"] for p in props.values()} == {"OTTAWA OH LLC", "VERHOFF PROPERTIES LLC"}
+    remediation = props["322220000000"]
+    assert remediation["situs_address"].startswith("700 N PRATT ST")
+    assert remediation["acres"] == 22.842 and remediation["inlot"] == 1540
+    assert remediation["last_sale_date"] == "2006-12-21"
+    assert remediation["last_sale_amount"] == 500000
+    endera = props["322260000000"]
+    assert endera["acres"] == 15.392 and endera["inlot"] == 1544
+    assert endera["last_sale_date"] == "2006-07-11" and endera["last_sale_amount"] == 350000
+    # Both industrial, both warranty deeds, both 2006 — the disposition signature.
+    assert {p["land_use_code"] for p in props.values()} == {350}
+    assert {p["conveyance_type"] for p in props.values()} == {"WAR"}
+    assert all(p["last_sale_date"].startswith("2006-") for p in props.values())
+    # The auditor citation is the LAYER's own PARCELURL, asserted equal at build time.
+    for pid, p in props.items():
+        assert p["auditor_url"].endswith(f"Parcel?Parcel={pid}")
+    prov = fc["bosc:provenance"]
+    assert prov["total_cama_acres"] == 38.234 and prov["total_planar_acres"] == 38.293
+    assert sum(p["acres"] for p in props.values()) == pytest.approx(prov["total_cama_acres"])
+    caveats = prov["caveats"]
+    # The inlot-adjacency disproof — the issue's table said these were part of the campus.
+    assert any("1541" in c and "1,090.26 m" in c and "platting order" in c for c in caveats)
+    # The across-the-street industrial neighbour is a LEAD, excluded, not a member.
+    assert any("IL 1536" in c and "20.13 m" in c for c in caveats)
+    # Contiguity, the two-layer ownership corroboration, and the tax cross-check.
+    assert any("CONTIGUOUS" in c for c in caveats)
+    assert any("ParcelsJoined" in c and "AGREE" in c for c in caveats)
+    assert any("0.0065989" in c and "0.0031671" in c for c in caveats)
+    # It must keep saying this is NOT a data-center campus.
+    assert any("FORMER industrial works" in c and "not a proposed" in c for c in caveats)
+
 
 def test_van_wert_parcel_schema_is_agol_cama() -> None:
     """Van Wert's parcel gap (#421) is closed by the county's ArcGIS Online migration: the

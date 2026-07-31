@@ -1323,31 +1323,72 @@ _OTTAWA = SiteProfile(
     econ_fips="39137",
     eia861_utility_number=14006,  # [reference] Ohio Power Co (AEP Ohio) — the IOU serving the incorporated village
     # GIS — schema-driven (#237): parcels = Putnam County's self-hosted ArcGIS (#420); flood = the
-    # shared national NFHL; zoning still pending (the village's zoning is class-coded / map-only).
+    # shared national NFHL; zoning is a searched negative — the Village publishes none (see below).
     parcels_url=(  # [verified] Putnam County GIS — Parcels layer 0 (auditor CAMA + geometry)
         "https://putnamcountygis.com/arcgis/rest/services/Parcels/Parcels/MapServer/0"
     ),
-    zoning_url="TODO",  # [open] pending the Village of Ottawa, OH GIS REST endpoint discovery
+    # [open] SEARCHED AND NEGATIVE, not undiscovered (#1420, 2026-07-31). The Village publishes
+    # NO zoning GIS of any kind: its ordinances are text-only on American Legal
+    # (codelibrary.amlegal.com/codes/ottawa/latest/ottawa_oh/), its own site offers no mapping
+    # application, and an ArcGIS Online org search for Putnam/Ottawa zoning returns four items,
+    # none of them zoning (an Indiana DNR flood layer, a county drainage web map, and two ODNR
+    # download links). The county's own ArcGIS server publishes only Parcels, Sections and an
+    # Ottawa water-utility folder. Its /services/Zoning path answers `499 Token Required`, but so
+    # does a folder name that certainly does not exist — 499 is this server's generic reply to any
+    # unlisted path, so it is NOT evidence a secured zoning service exists. The posture is also
+    # IN FLUX and dated: the Village issued a Request for Proposals for "Zoning, Development, and
+    # Related Regulatory Code Modernization Services" on 2026-06-23 (questions due 2026-07-14,
+    # proposals due 2026-08-04 16:00; ottawaohio.us/DocumentCenter/View/3308), so the code itself
+    # is under active procurement to be rewritten. Re-check after that award, not before.
+    zoning_url="TODO",
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
     gis_parcel=PUTNAM_PARCEL_SCHEMA,  # [verified] Putnam County Parcels (owner + CAMA values; #420)
-    gis_zoning=None,  # [open] pending Village of Ottawa zoning-layer discovery (class-coded/map-only)
+    gis_zoning=None,  # [open] no Village of Ottawa zoning layer exists to wire — see zoning_url
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "ottawa-gis"}),
     hydro_utm_epsg=32616,  # [verified] UTM 16N (Ottawa ~84.05 degW; zone 16 spans 90-84 degW)
-    # stormwater (the Atlas-14 corridor point = village centroid; cover scenario pending a site)
+    # stormwater (the Atlas-14 corridor point = village centroid; cover scenario from the campus)
     design_lat=41.0192,  # [verified] village centroid = NOAA Atlas-14 point
     design_lon=-84.0472,
     corridor_name="Lower Blanchard River corridor",  # [inference] the receiving-water reach below Findlay
-    dominant_hsg="D",  # [inference] Putnam Co lake-plain Black Swamp clays (Hoytville/Latty/Paulding) → HSG D
+    # [verified] SSURGO over the committed campus assemblage (#1420) — and it CORRECTS the prior
+    # [inference] D by one notch. The geology the inference reasoned from is right (Great Black
+    # Swamp lake plain) but the series it named are not the ones under this ground, and NRCS rates
+    # the ones that are as the DUAL group C/D, not flat D. Recorded verbatim per WS-20/#1620 so
+    # pre_/post_drainage_condition resolve it rather than the profile pre-collapsing a letter.
+    dominant_hsg="C/D",
     hsg_citation=(
-        "Putnam County, OH dominant hydrologic soil group D — very-poorly-drained Great Black "
-        "Swamp lake-plain clays (Hoytville/Latty/Paulding/Nappanee; NRCS Soil Survey of Putnam "
-        "County); [inference] pending an SSURGO area-weighted confirmation (onboard SSURGO step needs a footprint)"
+        "Former Philips/Sylvania CRT campus, 700-804 N Pratt St — SSURGO dominant hydrologic soil "
+        "group C/D at 22 of the 23 RATED grid points over "
+        "data/reference/ottawa/parcel-assemblage.geojson "
+        "(watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8, read 2026-07-31): Toledo "
+        "silty clay loam (10 points) + Fulton silty clay loam 2-6% (7) and 0-2% (5); the lone C "
+        "point is Lucas silty clay loam 6-12%, moderately eroded. The same answer comes back "
+        "unanimously on two coarser grids — the onboard default grid_n=6 (14 of 14 rated points) "
+        "and grid_n=4 (5 of 5). Great Black Swamp lake-plain soils, as the prior "
+        "[inference] read them — but Toledo/Fulton, not the Hoytville/Latty/Paulding it named, and "
+        "NRCS rates these C/D: C where drainage is installed and maintained, D in the natural "
+        "undrained condition. CAVEAT, and it is the point of the site: 36 of the 59 grid points "
+        "(61%) return NO rated component because they map to URBAN LAND — the built-over plant. "
+        "So this group describes the campus's unbuilt remainder, and a runoff model driven by it "
+        "is modelling the soil under a site that is already largely impervious. CORROBORATED "
+        "independently by the county's own per-parcel soil split (Land_Features/LandUseParcels, "
+        "by area): Urban land 57.7% of 38.257 ac, then Toledo/Fulton/Lucas — the same map units, "
+        "and 700 N Pratt alone is 91.4% Urban land. "
+        "See data/extracted/ottawa/bosc-site-footprint.yaml (dominant_hsg)."
     ),
-    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
-    post_cover="TODO",
-    developed_pervious_cover="TODO",
+    # [verified] The pre-development cover here is DEVELOPED, not farmland — this is a brownfield,
+    # not a greenfield, and two independent sources say so: the auditor's use code is 350
+    # (industrial/manufacturing) with standing building value on both parcels, and SSURGO maps 61%
+    # of the campus as Urban land. That makes pre_cover == post_cover, and the equality is the
+    # FINDING, not an unfilled knob: redeveloping this campus adds no new impervious area at
+    # screening grade, unlike every greenfield site in the network. The measured impervious
+    # FRACTION is still [open] — no site plan, Rule-5 SWPPP or floor area is in the corpus (#1421)
+    # — so these stay screening-grade NLCD proxies (24 high-intensity / 21 developed open space).
+    pre_cover="developed_campus",
+    post_cover="developed_campus",
+    developed_pervious_cover="open_space",
     noaa_fallback_24h_depth_in={  # [reference] NOAA Atlas-14 Vol 2 (Ohio River Basin) PDS at 41.0192/-84.0472
         1: 2.07,
         2: 2.48,
@@ -1360,8 +1401,12 @@ _OTTAWA = SiteProfile(
         500: 6.75,
         1000: 7.44,
     },
-    parcels_relpath="reference/ottawa/parcel-assemblage.geojson",  # [open] commit the site's own geometry
-    footprint_relpath="extracted/ottawa/bosc-site-footprint.yaml",  # [open] pending an identified site
+    # [verified] committed #1420 — the two contiguous parcels the former Sylvania/GTE/Philips
+    # Display Components CRT campus was subdivided into and sold as in 2006 (38.234 ac CAMA /
+    # 38.293 ac planar) + the footprint record derived from them. This is the site's anchor PLACE,
+    # a FORMER industrial works — NOT a data-center campus (facilities=() below is not an omission).
+    parcels_relpath="reference/ottawa/parcel-assemblage.geojson",
+    footprint_relpath="extracted/ottawa/bosc-site-footprint.yaml",
     # per-site onboard reach outputs (slug-scoped — never clobber the other sites)
     climatology_relpath="reference/hydrology/ottawa/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/ottawa/atlas14-corridor-ddf.yaml",

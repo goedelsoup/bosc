@@ -71,6 +71,28 @@ notes: >-
   legal description, no grantor, no deed book/page — so the deed CHAIN (Marsh Foundation -> Thor/
   Form8tion -> QTS) is not closable from it and stays a Recorder pull (#1401). The adjacent Marsh
   Foundation remainder (19-041272.0000 et al.) is an [inference] lead, excluded.
+  Ottawa (#1420): the TWO contiguous parcels of the former Sylvania / GTE / Philips Display
+  Components (LG.Philips Displays USA) CRT plant campus at 700-804 N Pratt St, 38.234 ac deeded /
+  38.293 ac planar, from the Putnam County auditor CAMA via the putnam_gis field-map (the county's
+  self-hosted Parcels layer 0, #420). THE ONE ENTRY IN THIS SET THAT IS NOT A DATA-CENTER SITE:
+  it is a closed industrial works — the county's largest employer until 2002-12-31 — now a
+  $4,571,596 three-round Ohio Brownfield Remediation Program remediation, and Ottawa's SiteProfile
+  carries facilities=(). It is committed as the site's anchor PLACE, which is enough to activate
+  the places domain, and must not be read as a siting. Also unlike the others it has TWO unrelated
+  owners (OTTAWA OH LLC and VERHOFF PROPERTIES LLC, both since 2006), so the `parcels --owner`
+  path cannot pull it in one call — the recipe is a PIN-list query, documented in
+  reference/ottawa/README.md. Three notes for a re-pull. The layer's `District` and `Class` columns
+  read 0 on BOTH campus parcels while a neighbour reads 32/3, so a `District = 32` filter silently
+  DROPS the campus — filter on PIN or CLASS_1. The wired layer LAGS its sibling
+  Parcels/ParcelsJoined on ownership (which also keys on a different id column, so a PIN-shaped
+  query against its `Parcel` field returns zero rows rather than an error); the two agree on both
+  campus parcels, so the committed record is corroborated, not affected. And a third county layer,
+  Land_Features/LandUseParcels, publishes a DIFFERENT improvement value for 804 N Pratt — the
+  levied half-year tax reconciles with layer 0's, not with it, at the same effective millage to
+  seven figures. The inlots the #1420 issue text lists as the rest of the campus (1541/1542/1543)
+  are 207-1,090 m away and are excluded: Putnam issues inlot numbers in platting order, not
+  geographic order. The adjacent industrial IL 1536 (Agner Road Investments LLC, one street width
+  off) is an [inference] lead, excluded.
   Distinct from the Periplus frozen import
   (reference/periplus/bosc-parcels.geojson, catalogued under the periplus entry), which covers the
   Lima corridor parcels only.
