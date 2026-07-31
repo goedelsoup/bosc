@@ -60,14 +60,15 @@ Gated on the `stories` toggle in [`features.yaml`](features.yaml) (defaults fals
   password, so the whole URL is sensitive — never commit it):
 
   ```bash
-  pulumi config set --secret bosc-deploy:storiesLakebaseUrl \
+  pulumi config set --secret watermark-deploy:storiesLakebaseUrl \
     postgres://<user>:<oauth-token>@<host>:5432/<database>
   ```
 
   Then export the id into wrangler: `pulumi stack output storiesHyperdriveId` → the
   `[[hyperdrive]]` `id` in `web/wrangler.toml`. **Token refresh:** Hyperdrive caches the origin
   credentials, so a rotated OAuth token needs a fresh `pulumi up` to re-push it — prefer a
-  Databricks service principal with a longer-lived credential, or a scheduled re-apply.
+  Databricks service principal with a longer-lived credential, or a scheduled re-apply
+  ([SECRETS.md](SECRETS.md#storieslakebaseurl--the-token-that-expires-on-its-own)).
 
   The toggle also writes `STORIES_ENABLED` (the Functions kill switch) and
   `PUBLIC_STORIES_ENABLED` (the Astro build-time UI gate) to the Pages project, mirroring `rum`.
@@ -143,11 +144,35 @@ Until `siteDomain` is set the stack manages KV + R2 + Turnstile only and the sit
 JWKS_CACHE KV namespace is always created — it's cheap and needed before the auth wiring can
 be tested; auth prefs live in Lakebase, not KV, since #1171).
 
+**The config namespace is the Pulumi project name — `watermark-deploy:`** ([`Pulumi.yaml`](Pulumi.yaml)),
+which is *not* the `bosc-deploy` S3 state prefix in the backend URL below. `pulumi config set`
+accepts any namespace without complaint, so a key set under the wrong one is written, encrypted,
+committed — and never read.
+
 Provider auth: the Cloudflare **token** is never committed — supply it via
 `CLOUDFLARE_API_TOKEN` (or the `cloudflare:apiToken` Pulumi secret), scoped to **Workers
 KV Storage: Edit** + **Turnstile: Edit** + **Pages: Edit** (the last for the domain
 attach). AWS uses the standard credential chain (env / an OIDC role) and is only exercised
 when `siteDomain` + `route53ZoneId` are set.
+
+## Secrets & rotation
+
+Provisioning a secret the first time is a `pulumi config set --secret` + `pulumi up`
+([`Pulumi.prod.yaml`](Pulumi.prod.yaml) lists the keys). **Replacing** one that is already live is
+not — the ordering, the overlap window, and the blast radius differ per secret, and getting them
+wrong is what produces a user-facing `500 {"error":"endpoint is misconfigured"}`.
+
+- **[`SECRETS.md`](SECRETS.md)** — the rotation runbook: the inventory, the three secret classes,
+  the safe ordering, per-secret procedures (Turnstile's two-hour grace window, the Lakebase token
+  treadmill), the cadence, and the verification tiers.
+- **[`rotate.sh`](rotate.sh)** — the tool. `./rotate.sh list` · `set <configKey>` ·
+  `turnstile` · `verify [--deep]`. Also reachable as `mise run deploy:secrets` /
+  `deploy:rotate` / `deploy:verify`.
+- **[`secret-rotation.yml`](../.github/workflows/secret-rotation.yml)** — the cadence: opens a
+  dated checklist issue quarterly, which is the record that a rotation happened.
+
+`./rotate.sh verify` needs no credentials for its live-endpoint tier, so it is the first thing to
+run when `/api/ask` or `/api/submit` starts 500ing.
 
 ## Prerequisites
 
@@ -169,7 +194,7 @@ cd deploy
 npm install
 pulumi login s3://<bucket>/bosc-deploy
 pulumi stack init prod --secrets-provider "awskms://${KMS_ARN}"
-pulumi config set bosc-deploy:cloudflareAccountId <account-id>
+pulumi config set watermark-deploy:cloudflareAccountId <account-id>
 export CLOUDFLARE_API_TOKEN=...                # KV + Turnstile + Pages edit scope
 pulumi preview                                 # KV + Turnstile (no domain yet)
 pulumi up
@@ -177,8 +202,8 @@ pulumi stack output                            # read the ids/keys to wire in
 pulumi stack output turnstileSecretKey --show-secrets
 
 # Later, once the domain is chosen — the Route53↔Cloudflare exchange:
-pulumi config set bosc-deploy:siteDomain   watermark.example.org
-pulumi config set bosc-deploy:route53ZoneId Z0123456789ABC
+pulumi config set watermark-deploy:siteDomain   watermark.example.org
+pulumi config set watermark-deploy:route53ZoneId Z0123456789ABC
 pulumi up                                      # PagesDomain + the Route53 CNAME
 pulumi stack output siteDomainStatus           # poll until "active"
 ```

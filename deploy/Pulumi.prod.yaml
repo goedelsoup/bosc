@@ -1,25 +1,30 @@
 # Committed stack config — NON-SECRET values only.
 #
+# The config namespace is the Pulumi PROJECT name — `watermark-deploy` (Pulumi.yaml), not
+# the `bosc-deploy` S3 state prefix. A key set under any other namespace is accepted
+# silently and never read, so the rotation lands nowhere. See SECRETS.md.
+#
 # Operator-specific / late-bound keys are NOT committed; set them out of band:
-#   pulumi config set bosc-deploy:cloudflareAccountId <account-id>          # REQUIRED
-#   pulumi config set bosc-deploy:siteDomain watermark.example.org          # when the name is chosen
-#   pulumi config set bosc-deploy:route53ZoneId Z0123456789ABC              # the zone that owns siteDomain
-#   pulumi config set bosc-deploy:pagesProject the-watermark-directory      # only if different from default
+#   pulumi config set watermark-deploy:cloudflareAccountId <account-id>       # REQUIRED
+#   pulumi config set watermark-deploy:siteDomain watermark.example.org      # when the name is chosen
+#   pulumi config set watermark-deploy:route53ZoneId Z0123456789ABC          # the zone that owns siteDomain
+#   pulumi config set watermark-deploy:pagesProject the-watermark-directory  # only if different from default
 #
 # Auth / Cognito (#924):
-#   pulumi config set bosc-deploy:authEnabled true                          # provisions Cognito (DESTRUCTIVE to remove)
-#   pulumi config set bosc-deploy:cognitoDomainPrefix watermark-auth        # Hosted UI prefix (default "watermark-auth")
-#   pulumi config set bosc-deploy:cognitoRegion us-east-1                  # must match AWS provider region
+#   pulumi config set watermark-deploy:authEnabled true                      # provisions Cognito (DESTRUCTIVE to remove)
+#   pulumi config set watermark-deploy:cognitoDomainPrefix watermark-auth    # Hosted UI prefix (default "watermark-auth")
+#   pulumi config set watermark-deploy:cognitoRegion us-east-1               # must match AWS provider region
 #
 # Plain-text Pages vars (optional — omitting them leaves the var absent from the Pages project):
-#   pulumi config set bosc-deploy:notifyGithubUsers "goedelsoup"  # comma-sep logins for submit assignees
+#   pulumi config set watermark-deploy:notifyGithubUsers "goedelsoup"        # comma-sep logins for submit assignees
 #
 # Secrets written directly to the Cloudflare Pages project by `pulumi up`:
 # Set these once — Pulumi owns writing them; no dashboard step required afterwards.
-#   pulumi config set --secret bosc-deploy:anthropicApiKey   <key>          # Claude API — ask + extract
-#   pulumi config set --secret bosc-deploy:honeycombApiKey   <key>          # Edge + RUM OTel spans
-#   pulumi config set --secret bosc-deploy:tipsAppId         <github-app-id># GitHub App for submit
-#   pulumi config set --secret bosc-deploy:tipsAppPrivateKey <pkcs8-pem>   # GitHub App key
+# ROTATING one of them is not just a re-set: the ordering matters. See SECRETS.md.
+#   pulumi config set --secret watermark-deploy:anthropicApiKey   <key>            # Claude API — ask + extract
+#   pulumi config set --secret watermark-deploy:honeycombApiKey   <key>            # Edge + RUM OTel spans
+#   pulumi config set --secret watermark-deploy:tipsAppId         <github-app-id>  # GitHub App for submit
+#   pulumi config set --secret watermark-deploy:tipsAppPrivateKey <pkcs8-pem>      # GitHub App key
 #
 # OpenTelemetry / Honeycomb (#953): honeycombApiKey above covers the Pages Function.
 # The key also goes to two other surfaces (not managed by Pulumi):
