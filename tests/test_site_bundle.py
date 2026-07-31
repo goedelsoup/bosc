@@ -989,6 +989,48 @@ def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     assert {f["properties"]["owner"] for f in campus} == {"QTS VAN WERT LLC"}
 
 
+def test_ottawa_places_activates_on_a_brownfield_not_a_campus_siting(
+    site_bundle: Callable[[str], Path],
+) -> None:
+    """Ottawa's ``places`` went ``absent`` -> ``live`` when #1420 committed the campus geometry —
+    and this one is unlike every other geometry in the network, which is exactly why it is pinned.
+
+    The land is the FORMER Sylvania/GTE/Philips Display Components CRT works at 700-804 N Pratt
+    St: a closed plant under a $4.57M brownfield remediation, not a proposed or built data-center
+    campus. Ottawa's profile carries ``facilities=()``. So this asserts the readiness model does
+    what #1220 says it does — ``places`` activates on *committed geometry a map can be drawn
+    from*, with no facility anywhere in sight — and that committing land does NOT drag ``facility``
+    up with it. ``facility`` must stay ``absent``: a site with no disclosed facility has none,
+    and a brownfield is not a siting.
+
+    The tier does NOT move here (Ottawa was already ``case`` on its live ``record`` — the 2PD00028
+    instrument set and the standing water watch), which is the difference from the Sidney and
+    Van Wert pins above where ``places`` was the domain that carried the tier.
+    """
+    bundle = site_bundle("ottawa")
+    manifest = _manifest(bundle)
+    assert manifest["contract_version"] == _CV  # geo/campus composes from parcels_relpath
+    readiness = manifest["readiness"]
+    assert readiness["tier"] == "case"
+    domains = readiness["domains"]
+    assert domains["backdrop"] == "live"
+    assert domains["places"] == "live"  # committed campus geometry (#1420)
+    assert domains["record"] == "live"  # the 2PD00028 instruments + the water watch (#1422)
+    # Committing land grounds no load — and here there is no facility to ground at all.
+    assert domains["facility"] == "absent"
+    assert domains["story"] == "absent"
+
+    # Two contiguous parcels, two UNRELATED owners — a broken-up works, not one holding.
+    ref = _feeds_by_name(bundle)["geo/campus"]
+    campus = json.loads((bundle / ref["path"]).read_text(encoding="utf-8"))["features"]
+    assert [f["properties"]["parcel_id"] for f in campus] == ["322220000000", "322260000000"]
+    assert {f["properties"]["owner"] for f in campus} == {
+        "OTTAWA OH LLC",
+        "VERHOFF PROPERTIES LLC",
+    }
+    assert sum(f["properties"]["acres"] for f in campus) == pytest.approx(38.234)
+
+
 @pytest.mark.parametrize("slug", ["coshocton", "piketon", "sandusky"])
 def test_stub_site_exports_at_stub_tier(slug: str, site_bundle: Callable[[str], Path]) -> None:
     readiness = _manifest(site_bundle(slug))["readiness"]

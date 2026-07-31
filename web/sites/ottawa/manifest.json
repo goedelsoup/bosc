@@ -2,15 +2,15 @@
   "site": "ottawa",
   "bundle_version": "1.0.0",
   "contract_version": "1.47.0",
-  "generated_at": "2026-07-31T15:30:11+00:00",
-  "feed_count": 28,
-  "row_total": 407,
+  "generated_at": "2026-07-31T16:26:55+00:00",
+  "feed_count": 29,
+  "row_total": 409,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "absent",
-      "places": "absent",
+      "places": "live",
       "record": "live",
       "story": "absent"
     }
@@ -192,6 +192,14 @@
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
       "count": 55
+    },
+    {
+      "name": "geo/campus",
+      "path": "feeds/geo/campus.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 2
     },
     {
       "name": "facts",

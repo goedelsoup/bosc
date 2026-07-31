@@ -1,0 +1,230 @@
+{
+  "type": "FeatureCollection",
+  "feed": "campus",
+  "meta": {
+    "crs": "WGS84 (EPSG:4326)",
+    "layers": [
+      "campus"
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -84.03524425931641,
+              41.02206850764718
+            ],
+            [
+              -84.03524026058679,
+              41.021656801595086
+            ],
+            [
+              -84.03460658372846,
+              41.021659168414935
+            ],
+            [
+              -84.03460662009401,
+              41.02166728462678
+            ],
+            [
+              -84.03461532765917,
+              41.02362304804481
+            ],
+            [
+              -84.03462371489704,
+              41.025754420982146
+            ],
+            [
+              -84.03723799332259,
+              41.025748292697955
+            ],
+            [
+              -84.03723041698423,
+              41.02206106680677
+            ],
+            [
+              -84.03690424449731,
+              41.02206229107418
+            ],
+            [
+              -84.03679552031835,
+              41.02206269835779
+            ],
+            [
+              -84.0365744487626,
+              41.02206352764296
+            ],
+            [
+              -84.03635600038581,
+              41.0220643467217
+            ],
+            [
+              -84.03613755319245,
+              41.02206516537021
+            ],
+            [
+              -84.03591910478386,
+              41.022065982719795
+            ],
+            [
+              -84.0357006563908,
+              41.022066800555336
+            ],
+            [
+              -84.03548220918123,
+              41.022067617960715
+            ],
+            [
+              -84.03526376077734,
+              41.02206843496751
+            ],
+            [
+              -84.03524425931641,
+              41.02206850764718
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "700 N PRATT ST OTTAWA OH  45875",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "OTTAWA OH LLC",
+        "parcel_id": "322220000000",
+        "parcel_id_auditor": "32-222000.0000",
+        "auditor_url": "https://auditor.putnamcountyohio.gov/Parcel?Parcel=322220000000",
+        "owner": "OTTAWA OH LLC",
+        "owner_mailing_address": "6975 LONG BEACH BLVD OFC LONG BEACH CA  90805",
+        "situs_address": "700 N PRATT ST OTTAWA OH  45875",
+        "inlot": 1540,
+        "legal_description": "IL 01540 EX NPT",
+        "acres": 22.842,
+        "planar_acres": 22.888,
+        "land_use_code": 350,
+        "land_use_name": "350 — industrial, manufacturing (Ohio auditor use code)",
+        "appraised_land_value": 222686,
+        "appraised_improvement_value": 386743,
+        "appraised_total_value": null,
+        "half_year_tax": 4021.53,
+        "last_sale_date": "2006-12-21",
+        "last_sale_amount": 500000,
+        "conveyance_type": "WAR",
+        "gis_row_count": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -84.03463576187849,
+              41.02881504753026
+            ],
+            [
+              -84.03463597786825,
+              41.028869943070404
+            ],
+            [
+              -84.03547323924228,
+              41.028866928765844
+            ],
+            [
+              -84.03572378578262,
+              41.02886602495897
+            ],
+            [
+              -84.03572356177582,
+              41.0288111304164
+            ],
+            [
+              -84.03572163484041,
+              41.02834131761092
+            ],
+            [
+              -84.0360840741893,
+              41.028338943261375
+            ],
+            [
+              -84.03608386323086,
+              41.02828758810542
+            ],
+            [
+              -84.03646206799155,
+              41.02828510944273
+            ],
+            [
+              -84.03684027151388,
+              41.02828262865356
+            ],
+            [
+              -84.03683954912373,
+              41.0281068540993
+            ],
+            [
+              -84.03630140435243,
+              41.0281128891189
+            ],
+            [
+              -84.03629985208813,
+              41.02783292451749
+            ],
+            [
+              -84.03629830104695,
+              41.02755296078785
+            ],
+            [
+              -84.03724167471087,
+              41.02753994077209
+            ],
+            [
+              -84.03723799330164,
+              41.025748291797576
+            ],
+            [
+              -84.03462371489704,
+              41.025754420982146
+            ],
+            [
+              -84.03463576187849,
+              41.02881504753026
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "804 N PRATT ST OTTAWA OH  45875",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "VERHOFF PROPERTIES LLC",
+        "parcel_id": "322260000000",
+        "parcel_id_auditor": "32-226000.0000",
+        "auditor_url": "https://auditor.putnamcountyohio.gov/Parcel?Parcel=322260000000",
+        "owner": "VERHOFF PROPERTIES LLC",
+        "owner_mailing_address": "7300 RD 18 CONTINENTAL OH  45831",
+        "situs_address": "804 N PRATT ST OTTAWA OH  45875",
+        "inlot": 1544,
+        "legal_description": "IL 01544",
+        "acres": 15.392,
+        "planar_acres": 15.406,
+        "land_use_code": 350,
+        "land_use_name": "350 — industrial, manufacturing (Ohio auditor use code)",
+        "appraised_land_value": 218543,
+        "appraised_improvement_value": 131457,
+        "appraised_total_value": null,
+        "half_year_tax": 2309.6,
+        "last_sale_date": "2006-07-11",
+        "last_sale_amount": 350000,
+        "conveyance_type": "WAR",
+        "gis_row_count": 1
+      }
+    }
+  ]
+}

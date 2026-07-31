@@ -1,0 +1,89 @@
+{
+  "params": {
+    "f": "json",
+    "returnGeometry": "false",
+    "where": "PIN IN ('322220000000','322260000000')",
+    "outFields": "PIN,PARCELURL,LEGALDESC,LOT,PURCOD,HALFTAX,COMBO",
+    "resultOffset": 0,
+    "resultRecordCount": 1000
+  },
+  "fetched_at": "2026-07-31T16:07:44.839409+00:00",
+  "payload": {
+    "displayFieldName": "PIN",
+    "fieldAliases": {
+      "PIN": "PIN",
+      "PARCELURL": "PARCELURL",
+      "LEGALDESC": "LEGALDESC",
+      "LOT": "LOT",
+      "PURCOD": "PURCOD",
+      "HALFTAX": "HALFTAX",
+      "COMBO": "COMBO"
+    },
+    "fields": [
+      {
+        "name": "PIN",
+        "type": "esriFieldTypeString",
+        "alias": "PIN",
+        "length": 254
+      },
+      {
+        "name": "PARCELURL",
+        "type": "esriFieldTypeString",
+        "alias": "PARCELURL",
+        "length": 254
+      },
+      {
+        "name": "LEGALDESC",
+        "type": "esriFieldTypeString",
+        "alias": "LEGALDESC",
+        "length": 255
+      },
+      {
+        "name": "LOT",
+        "type": "esriFieldTypeDouble",
+        "alias": "LOT"
+      },
+      {
+        "name": "PURCOD",
+        "type": "esriFieldTypeString",
+        "alias": "PURCOD",
+        "length": 255
+      },
+      {
+        "name": "HALFTAX",
+        "type": "esriFieldTypeDouble",
+        "alias": "HALFTAX"
+      },
+      {
+        "name": "COMBO",
+        "type": "esriFieldTypeString",
+        "alias": "COMBO",
+        "length": 3
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "PIN": "322220000000",
+          "PARCELURL": "https://auditor.putnamcountyohio.gov/Parcel?Parcel=322220000000",
+          "LEGALDESC": "IL 01540  EX NPT   ",
+          "LOT": 1540.0,
+          "PURCOD": "WAR",
+          "HALFTAX": 4021.53,
+          "COMBO": ""
+        }
+      },
+      {
+        "attributes": {
+          "PIN": "322260000000",
+          "PARCELURL": "https://auditor.putnamcountyohio.gov/Parcel?Parcel=322260000000",
+          "LEGALDESC": "IL 01544   ",
+          "LOT": 1544.0,
+          "PURCOD": "WAR",
+          "HALFTAX": 2309.6,
+          "COMBO": ""
+        }
+      }
+    ]
+  }
+}

@@ -7,7 +7,7 @@ Living record for the Ottawa watershed point (basin: maumee), scaffolded by `wat
 - [x] **Hydrology** — onboard reach connectors (low-flows, corridor DDF, SSURGO HSG, climatology)
 - [x] **Economics** — county baseline, RSEI toxics, consumer energy, grid profile (AEP Ohio IOU; standard path)
 - [~] **Data-center activity** — self-research first pass run (#247); **affirmatively nothing documented** (no Putnam/Ottawa permit, deed, SOS filing, or meeting record in the corpus). See self-research summary below.
-- [x] **Per-jurisdiction GIS** — parcels **wired** (`PUTNAM_PARCEL_SCHEMA`, #420 — Putnam County's self-hosted valid-cert ArcGIS, owner + auditor CAMA values on one layer) and flood = shared national NFHL (wired). Zoning stays `[open]` (no standalone REST — village zoning is class-coded / map-only). See GIS discovery below.
+- [x] **Per-jurisdiction GIS** — parcels **wired** (`PUTNAM_PARCEL_SCHEMA`, #420 — Putnam County's self-hosted valid-cert ArcGIS, owner + auditor CAMA values on one layer) and flood = shared national NFHL (wired). Zoning stays `[open]` — a **searched negative** as of 2026-07-31 (#1420): the Village publishes no zoning GIS at all, and its zoning code is under an active modernization RFP. See GIS discovery below.
 
 ## Record domain — live (#1422)
 
@@ -47,7 +47,7 @@ Ottawa, Putnam County** on the **Blanchard**, gage 04189260 — *not* Ottawa Cou
 | scaffold | ok | created 6 dir(s); 6 README(s) |
 | derive-low-flows | ok | reference/hydrology/low-flow-7q10.derived.yaml |
 | corridor-ddf | ok | reference/hydrology/ottawa/atlas14-corridor-ddf.yaml |
-| ssurgo-hsg | skipped | footprint missing: extracted/ottawa/bosc-site-footprint.yaml |
+| ssurgo-hsg | ok | HSG C/D; matches profile (dual group: drained C / undrained D) — re-run 2026-07-31 (#1420) once parcel geometry landed; it had been `skipped` for want of it |
 | climatology | ok | reference/hydrology/ottawa/nasa-power-climatology.yaml |
 | basin-screen | ok | 7/129 dischargers screened (1 violations, 2 tight) |
 | econ-baseline | ok | reference/economics/ottawa/baseline.yaml |
@@ -65,8 +65,8 @@ map-only). The parcel `gis_parcel` schema is now **wired** (#420) — `PUTNAM_PA
 `watermark.sites`, field-map confirmed from the live `?f=json` + samples (2026-06-21), with an offline
 fixture/decode test; the `?f=json` field semantics resolved during wiring are recorded in the
 schema comment (OWNERC/OWNERD = situs vs MAILC/MAILD = mailing; `CLASS_1` is the populated land-use
-code, not `Class`; `SALEDATE` is MM-DD-YY). No committed reference *data* yet (a `watermark parcels
---site ottawa` pull is a separate reviewed step). Zoning stays `[open]`.
+code, not `Class`; `SALEDATE` is MM-DD-YY). Reference *data* is now committed (#1420): `data/reference/ottawa/parcel-assemblage.geojson`, the
+former Philips/Sylvania CRT campus at 700-804 N Pratt St. Zoning stays `[open]`.
 
 | layer | endpoint | finding | status |
 |---|---|---|---|
@@ -74,10 +74,15 @@ code, not `Class`; `SALEDATE` is MM-DD-YY). No committed reference *data* yet (a
 | parcels | `putnamcountygis.com/.../Parcels/Parcels/MapServer/0` (polygon) | `PIN`, `OWNER` + situs (`OWNERC`/`OWNERD`) + mailing (`MAILC`/`MAILD`), `CLASS_1` (use code), `SALEDATE`/`PURPRI`, `ACRESOWNED`, `LANDVALUE`/`BLDGVALUE` — owner **and** values on one layer | **wired** (`gis_parcel`, #420) |
 | land use (CAMA) | `putnamcountygis.com/.../Land_Features/LandUseParcels/MapServer/0` (polygon) | full CAMA join: `PPClassCod` (use class), `PPAcres`, `PPLandValu`/`PPImprValu`/`PPTotalVal`, `PPOnCauv`, `PPSaleDate`/`ValidSale`, `SOIL_TYPE` | not needed (Parcels carries owner+value); the CAUV/total/soil split is a follow-up if required |
 | villages | `putnamcountygis.com/.../Boundaries/Villages/MapServer/0` | village boundaries (incl. Ottawa) | reference |
-| zoning | — | no standalone zoning REST found (village zoning is parcel-class-coded / map-only) | `[open]` |
+| zoning | — | **searched negative** (2026-07-31, #1420): no Village zoning GIS exists — ordinances are text-only on American Legal, no mapping app, AGOL org search returns nothing zoning-related. The county server's `/services/Zoning` answers `499 Token Required`, but so does a folder that does not exist, so that is **not** evidence of a secured service. Code under modernization RFP (issued 2026-06-23, proposals due 2026-08-04) | `[open]` |
 
-Follow-up: commit the reviewed Putnam parcel reference *data* (a `watermark parcels --site ottawa`
-pull); accept zoning as class-coded/map-only here (or locate a Village of Ottawa zoning layer).
+**Both follow-ups are closed by #1420.** The reviewed Putnam parcel data is committed as
+`data/reference/ottawa/parcel-assemblage.geojson` (two contiguous parcels, 38.234 ac deeded), and
+zoning is accepted as a documented negative rather than a pending discovery. Two traps found while
+committing it, both recorded in `data/reference/ottawa/README.md`: the layer's `District`/`Class`
+columns read 0 on both campus parcels (so a `District = 32` filter silently drops them), and the
+wired layer lags its sibling `Parcels/ParcelsJoined` on ownership (the two agree on both campus
+parcels, so this record is unaffected).
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 

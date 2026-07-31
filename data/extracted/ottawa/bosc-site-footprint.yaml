@@ -1,0 +1,160 @@
+# Former Sylvania / GTE / Philips Display Components (LG.Philips Displays USA) CRT plant campus,
+# 700-804 N Pratt St — footprint record for the Ottawa, OH (Blanchard River · Maumee) watershed
+# point. LIKE Sidney's / Van Wert's / Troy-Piqua's / Urbana's (and UNLIKE Lima's document-
+# transcribed stormwater-permit footprint), the boundary is the RECORDED OWNERSHIP holding —
+# here the two contiguous Putnam County parcels the campus was subdivided into and sold as in
+# 2006, committed as data/reference/ottawa/parcel-assemblage.geojson.
+#
+# READ THIS FIRST — this is NOT a data-center campus. Every other committed footprint in the
+# network is a proposed or built hyperscale site. This one is a CLOSED INDUSTRIAL WORKS: the
+# county's largest employer until 2002, now a $4.57M state-funded remediation. Ottawa's
+# SiteProfile carries facilities=() and no data-center facility is disclosed anywhere in this
+# site's record. It is committed as the site's anchor PLACE, and the `places` readiness domain
+# activates on it as committed campus geometry — not as a siting.
+#
+# Source tags: reference = committed GIS reference dataset; connector = a live public-data read;
+# document = transcribed from a corpus instrument; assumption = a stated modeling input.
+site: >-
+  700 and 804 North Pratt Street, Village of Ottawa, Putnam County, OH 45875 — inlots 1540 and
+  1544, auditor parcels 32-222000.0000 and 32-226000.0000 (PINs 322220000000 / 322260000000).
+  The former Sylvania Electric (1947) / GTE / Philips Display Components / LG.Philips Displays USA
+  cathode-ray-tube glass and tube works, closed 2002-12-31 and broken up in the 2006 Chapter 11.
+  #1420 (places), sub-issue of #1269.
+operator: >-
+  NO SINGLE OPERATOR — the campus is in two unrelated hands and has been since 2006.
+  700 N Pratt St (22.842 ac, the remediation property) stands in the name of OTTAWA OH LLC,
+  auditor mailing c/o APTM INC, 6975 Long Beach Blvd, Long Beach CA 90805 — an out-of-state
+  holder whose identity is [open] (Ohio SoS + the Putnam County Recorder deed are the pull,
+  #1421). 804 N Pratt St (15.392 ac) stands in the name of VERHOFF PROPERTIES LLC, 7300 Rd 18,
+  Continental OH, and carries the Endera electric-bus plant. Both [verified] from the Putnam
+  County Auditor CAMA and CORROBORATED against the county's sibling ParcelsJoined service.
+  Neither owner is the brownfield grantee — see notes.
+boundary_basis: >-
+  Recorded ownership holding — the two parcels conveyed by WARRANTY DEED in 2006 out of the
+  LG.Philips Displays USA Chapter 11 (IL 1544 on 2006-07-11 for $350,000; IL 1540 on 2006-12-21
+  for $500,000), committed as data/reference/ottawa/parcel-assemblage.geojson from the Putnam
+  County Auditor CAMA via the putnam_gis connector (PUTNAM_PARCEL_SCHEMA, #420). They are
+  CONTIGUOUS: the union is a single polygon, the shared-boundary distance is 0.0 m, and the union
+  area equals the sum of the parts to 5 decimal places. NOT a surveyed earth-disturbance or
+  remediation boundary — the Ohio Brownfield Remediation Program work plans, any Covenant Not to
+  Sue / No Further Action letter, and the plant's original site plan are all absent from the
+  corpus. NOT the historic works boundary either: whether the campus once extended across Agner
+  Street onto IL 1536 is [open] (see notes). Full reconciliation in the geojson
+  `bosc:provenance` and data/reference/ottawa/README.md.
+
+parcel_acres:
+  value: 38.293
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — UTM-16N (EPSG:32616) planar area of the two recorded parcels
+    (watermark.hydrology.geo.parcels_total_acres): 322220000000 22.888 ac, 322260000000 15.406 ac.
+    The county CAMA DEEDED acreage sums to 38.234 ac, 0.059 ac (0.15%) lower; the two are NOT
+    reconciled and neither is adjusted to the other — cite the deeded 38.234 ac for the record and
+    this planar figure for area/runoff modelling. NO independent acreage figure exists to check
+    either against: unlike Van Wert (QTS's own 902 ac) or Sidney, no owner, agency or press source
+    in the corpus states an acreage for this campus. [verified] as the auditor's committed geometry.
+  confidence: high
+
+building_footprint_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No site plan is in the corpus and no measured floor area is on the record. The one
+    building figure that exists is [reference], from the Ohio Brownfield Remediation Program
+    Round 1 award description (2022-06-16): "400,000 sq ft to be marketed" — which is a marketing
+    figure for the space being cleared, not a surveyed footprint, and it is not apportioned
+    between the two parcels. For scale only, 400,000 sq ft is 9.18 ac, i.e. 24% of the campus;
+    that arithmetic is stated so a later reader does not have to redo it, and it is NOT adopted
+    as a value. The auditor's standing improvement values are $386,743 on IL 1540 and $131,457 on
+    IL 1544 ([verified], CAMA). Needs the BRP work plans / site plan extraction (#1421).
+  confidence: null
+
+impervious_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No impervious tabulation on record. What IS established is that the campus is already
+    largely impervious rather than open ground: SSURGO maps 61% of it (36 of 59 grid points) as
+    URBAN LAND, and the auditor's use code on both parcels is 350 (industrial/manufacturing) with
+    standing building value. That is why pre_cover and post_cover are BOTH `developed_campus` on
+    the profile — the equality is a finding about a brownfield, not an unfilled knob. The fraction
+    itself needs an Ohio EPA construction stormwater (NPDES OHC000005 / Rule-5) permit or a site
+    plan, neither of which exists in the corpus for a redevelopment that has not been announced.
+  confidence: null
+
+developed_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] Total developed area is unknown for the same reason. Note that the direction of travel
+    here is the opposite of every other site in the network: the campus is being DE-developed —
+    asbestos and universal wastes removed (BRP Round 1), lead and contaminated soil removed
+    (Round 5), sub-slab depressurization installed against vapor intrusion (Round 11) — and no
+    redevelopment project has been announced for the 700 N Pratt parcel.
+  confidence: null
+
+dominant_hsg:
+  value: C/D
+  source: connector
+  citation: >-
+    [verified] USDA NRCS SSURGO via Soil Data Access (SDA), 8x8 grid sample over
+    parcel-assemblage.geojson (watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8,
+    read 2026-07-31): of the 23 RATED points, C/D 22 (95.7%) + C 1 (4.3%). The rated map units are
+    Toledo silty clay loam (10 points), Fulton silty clay loam 2 to 6 percent slopes (7) and 0 to 2
+    percent slopes (5), all rated C/D; the lone C point is Lucas silty clay loam, 6 to 12 percent
+    slopes, moderately eroded. Two coarser grids agree exactly and unanimously — the onboard
+    step's default grid_n=6 (14 of 14 rated points C/D) and grid_n=4 (5 of 5) — so the answer is
+    not a grid artefact. This CORRECTS the prior profile
+    [inference] of a flat "D", and the correction is to BOTH halves of it. The rating: NRCS rates
+    Toledo and Fulton as the DUAL group C/D — C where drainage is installed and maintained, D in
+    the natural undrained condition (watermark.hsg / WS-20 / #1620) — so a flat "D" pre-committed
+    the undrained letter for every scenario. And the series: the inference named
+    Hoytville/Latty/Paulding/Nappanee, and NONE of those is under this campus. The general
+    reasoning it rested on (Great Black Swamp lake plain) survives; the specific soils do not.
+    THE CAVEAT IS THE POINT OF THE SITE: 36 of the 59 grid points (61%) return no rated component
+    at all because they map to URBAN LAND — the built-over plant. Recorded verbatim, and read as
+    describing the campus's UNBUILT REMAINDER: a runoff model driven by this group is modelling
+    soil that most of this site does not expose.
+    CORROBORATED INDEPENDENTLY BY THE COUNTY'S OWN SOIL LAYER. Putnam's
+    Land_Features/LandUseParcels service carries a per-parcel SOIL_TYPE split BY AREA, and it
+    names exactly the map units the SSURGO point grid returned: over the 38.257 ac it accounts
+    for, Urban land 22.075 ac (57.7%), Toledo 6.611, Fulton A 3.887, Fulton B 3.591, Lucas C2
+    2.035, Dl A 0.059. An area measure and a point sample agreeing to ~3 points on the Urban-land
+    share is about as good as this kind of check gets. It also shows the ASYMMETRY the grid could
+    not: 700 N Pratt — the remediation property — is 91.4% Urban land, while 804 N Pratt is only
+    7.7%. So the rated soils are overwhelmingly under the Endera parcel, and the remediation
+    parcel is very nearly all made ground. The one unit SSURGO missed is Dl A at 0.059 ac (0.4%),
+    too small for a 59-point lattice to land on.
+  confidence: high
+
+receiving_water: >-
+  [verified] A NAMED STREAM RUNS THROUGH THE CONTAMINATED CAMPUS, and the site profile does not
+  model it. TAWA RUN crosses 325.8 m of the committed boundary — 305.2 m through 804 N Pratt
+  (the Endera parcel) and 20.5 m through 700 N Pratt, the 22-ac remediation property itself —
+  and discharges DIRECTLY into the Blanchard River, whose channel is 525.9 m from the campus
+  (USGS NHD large-scale flowlines, hydro.nationalmap.gov nhd/MapServer/6, read 2026-07-31;
+  reach codes 04100008000168 and 04100008000169, ftype 460 StreamRiver + 558 ArtificialPath,
+  HUC-8 04100008 — the same Blanchard HUC as the WWTP outfall's 04100008-06-02). So the campus's
+  first-order receiving water is Tawa Run, NOT the Blanchard directly, and the profile's
+  `corridor_name` ("Lower Blanchard River corridor") and `abstraction_gage` (04189260) both skip
+  that first reach. FEMA agrees the stream is live here: 4.505 ac of the campus (11.8%) sit in the
+  Special Flood Hazard Area and 1.221 ac (3.2%) in the regulatory FLOODWAY (FEMA NFHL
+  S_FLD_HAZ_AR layer 28, DFIRM 39137C, read 2026-07-31 — full split under notes). What this does
+  NOT establish: whether the remediated contamination has any pathway to Tawa Run. No analytical
+  data, no monitoring-well record and no BRP work plan is in the corpus, and the escalating
+  contamination picture across the three awards (asbestos -> lead + soil -> vapor intrusion) is
+  itself [inference] (#1421). The question is recorded because the geometry raises it, and it is
+  a QUESTION.
+
+notes:
+  - 'Holding = 2 parcels / 2 unrelated owners / 38.234 ac CAMA deeded (38.293 ac planar), CONTIGUOUS: 322220000000 (IL 1540, "IL 01540 EX NPT", 700 N Pratt St, 22.842 ac, use code 350, OTTAWA OH LLC, conveyed 2006-12-21 for $500,000, warranty deed, auditor land $222,686 + building $386,743) and 322260000000 (IL 1544, "IL 01544", 804 N Pratt St, 15.392 ac, use code 350, VERHOFF PROPERTIES LLC, conveyed 2006-07-11 for $350,000, warranty deed, auditor land $218,543 + building $131,457). All [verified] from the Putnam County Auditor CAMA (Parcels layer 0, read 2026-07-31), each citable at https://auditor.putnamcountyohio.gov/Parcel?Parcel=<PIN>.'
+  - 'THE ISSUE''S OWN PARCEL TABLE IS WRONG IN TWO PLACES, AND BOTH ARE RECORDED RATHER THAN QUIETLY FIXED. (1) It renders the parcel numbers "3-2222.00.0000" and "3-2226.00.0000"; the layer stores 322220000000 / 322260000000 and the auditor displays 32-222000.0000 / 32-226000.0000 (confirmed against the county''s ParcelsJoined `Parcel` column). The auditor URLs in the issue are correct — only the dashed renderings are not. (2) It lists inlots 1541, 1542 and 1543 as the rest of the subdivided campus "in third-party hands". They are not part of it and are not adjacent to it: measured from the campus boundary in UTM 16N, IL 1543 (Trinity United Methodist Church) is 206.95 m away, IL 1542 is 559.72 m and IL 1541 (Ormsby trust) is 1,090.26 m. None is industrial-class (510 / 420 / 510 against the campus''s 350) and none has a Pratt St situs. Putnam issues inlot numbers in PLATTING order, not geographic order — an adjacent inlot number is not evidence of adjacent ground.'
+  - 'THE ADJACENT INDUSTRIAL PARCEL IS A LEAD, NOT A MEMBER. IL 1536 (32-218000.0000, 615 N Agner St, 16.47 ac, use code 350) lies 20.13 m from the campus — 66.0 ft, i.e. exactly one platted street right-of-way, so it is directly across the street. AGNER ROAD INVESTMENTS LLC (mailing PO Box 810, Royal Oak MI) took it on 2022-07-07 with IL 1548 and IL 1549 for a single recorded $3,950,000 repeated across all three rows. Whether that ground was ever part of the Sylvania/Philips works is [open] — no deed, plat or site plan settles it — so it is excluded from the assemblage. It is the single most likely correction to this boundary if the Recorder pull (#1421) reaches it.'
+  - 'OWNERSHIP IS NOT THE BROWNFIELD GRANTEE, and that gap is on the record. The three Ohio Brownfield Remediation Program awards over this campus total $4,571,596 and went to the Port Authority of Northwestern Ohio (Round 1, 2022-06-16, $2,571,596; Round 11, 2026-05-13, $1,000,000) and the Putnam County Land Reutilization Corp (Round 5, 2024-09-19, $1,000,000) — neither of which is the owner of record on either parcel. Reading that as an acquisition, an option, a receivership or a land-bank forfeiture would each be [inference] and NONE is supported by anything in the corpus. The instrument that would settle it is a Recorder conveyance or a BRP grant agreement (#1421).'
+  - 'FEMA flood exposure over the 38.293 planar acres, from the national NFHL (DFIRM 39137C, read 2026-07-31; the four classes decompose the campus exactly): Zone X "area of minimal flood hazard" 32.925 ac (86.0%); Zone AE, SFHA 3.284 ac (8.6%); Zone AE FLOODWAY, SFHA 1.221 ac (3.2%); Zone X 0.2%-annual-chance (500-year) 0.864 ac (2.3%). 4.505 ac (11.8%) is Special Flood Hazard Area. For a property under an active soil-and-vapor remediation this is a fact worth stating plainly; what it IMPLIES about contaminant mobility is not established here.'
+  - 'THE WIRED PARCEL LAYER LAGS ITS OWN SIBLING, and the campus record is unaffected because both agree on it. Putnam publishes two parcel services. Parcels/Parcels layer 0 (the wired one, PUTNAM_PARCEL_SCHEMA) carries the values, sale date/amount/type and 3-dp acreage; Parcels/ParcelsJoined carries fresher OWNERSHIP — 237 N Pratt St stands as HEEBSH (2021-06-30) on layer 0 and as FAWCETT/AVERESCH with a 2026-06-02 sale on ParcelsJoined, and IL 1542 stands as MELISA WAY LLC on one and MEYER PROPERTIES LLC on the other. For BOTH campus parcels the two services AGREE (OTTAWA OH LLC / VERHOFF PROPERTIES LLC), so this record is corroborated across both. Two traps for a re-pull: ParcelsJoined keys on `Parcel2` (dashless) or `Parcel` (dashed), so a PIN-shaped query against `Parcel` returns ZERO ROWS rather than an error; and on layer 0 the `District` and `Class` columns read 0 on BOTH campus parcels while the neighbouring IL 1536 reads District 32 / Class 3 — a `District = 32` filter silently DROPS the campus. Filter on PIN or on the populated CLASS_1 column.'
+  - 'THE COUNTY PUBLISHES TWO DIFFERENT IMPROVEMENT VALUES FOR 804 N PRATT, AND THE LEVIED TAX SETTLES IT. Land_Features/LandUseParcels (a third county layer, the CAMA join that does carry PPTotalVal) gives 322260000000 an improvement value of $510,700 for a $729,240 total, against the $131,457 / $350,000 on the wired Parcels layer 0 recorded here. Divide each into the levied half-year tax: layer 0''s totals give an effective 0.0065988 on 322220000000 and 0.0065989 on 322260000000 — the same millage to seven figures — while the LandUseParcels total for 322260000000 gives 0.0031671, about half. The two layers agree exactly on 322220000000 ($609,429 vs $609,430), so it is a single-parcel discrepancy, not a systematic one. Layer 0''s values are the ones the tax bill is computed on and are what this record carries. Separately worth a second look on any re-pull, with no conclusion drawn from it here: 322260000000''s land + building sum to EXACTLY its 2006 sale price of $350,000.'
+  - 'ZONING is a SEARCHED NEGATIVE, not an undiscovered layer, and it is in flux. The Village publishes no zoning GIS of any kind: its ordinances are text-only on American Legal, its own site offers no mapping application, and an ArcGIS Online org search for Putnam/Ottawa zoning returns four items, none of them zoning. The county ArcGIS server publishes only Parcels, Sections and an Ottawa water-utility folder; its /services/Zoning path answers `499 Token Required`, but so does a folder name that certainly does not exist, so that 499 is NOT evidence of a secured zoning service. Meanwhile the Village issued an RFP for "Zoning, Development, and Related Regulatory Code Modernization Services" on 2026-06-23 (questions due 2026-07-14, proposals due 2026-08-04 16:00; ottawaohio.us/DocumentCenter/View/3308) — the code itself is under procurement to be rewritten, so the campus''s zoning district stays [open] and the re-check belongs after that award.'
+  - 'This record commits the boundary + measured acreage + the SSURGO-validated HSG so the onboard ssurgo-hsg step no longer skips (it had been skipped for want of committed parcel geometry), and it sets the pre_cover/post_cover/developed_pervious_cover knobs the profile had carried as TODO "pending an identified site".'
+  - 'THE GRANTOR AND THE DEEDS ARE [open]. The Putnam layer carries no grantor, no deed book/page and no instrument number, so the Sylvania (1947) -> GTE -> Philips (1981) -> LG.Philips Displays USA (2001-07-01) -> closure (2002-12-31) -> Delaware Chapter 11 (2006-03) -> OTTAWA OH LLC / VERHOFF PROPERTIES LLC chain is NOT closed by this dataset. The 2006 dates and warranty-deed type are CONSISTENT with the bankruptcy disposition and no more than that; the Putnam County Recorder instruments are the pull (#1421).'
