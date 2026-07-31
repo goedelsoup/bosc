@@ -7,6 +7,15 @@ discipline: `[verified]` = cited public source (two+ independent or a primary in
 BOSC corpus yet** — this records the *verified public record* and the specific primary instruments
 to *pull*. Every figure is cited; none is fabricated.
 
+> **Land committed (2026-07-31, #1403):** the campus geometry is now in the corpus —
+> `data/reference/van-wert/parcel-assemblage.geojson` + `data/extracted/van-wert/bosc-site-footprint.yaml`,
+> the **five Van Wert County parcels deeded to `QTS VAN WERT LLC`** in June 2026, **900.59 ac
+> deeded / 901.502 ac planar**, contiguous. This activates the **places** readiness domain and
+> closes the "deed grantee" `[open]` below; it also corrects the school-taxing-body line (the
+> campus straddles **two** districts) and the SSURGO HSG on the profile (flat `D` → dual `C/D`).
+> The **grantor** and the recorder instrument numbers stay `[open]` — the county's parcel layer
+> carries neither, so the Marsh Foundation → Thor → QTS chain is still #1401's pull.
+>
 > **Profile pin (2026-07-13, #1402):** the campus below is now registered as a SITE-PLAN-grounded
 > `SiteFacility` on the Van Wert `SiteProfile` (the #1327 Urbana precedent) — the 500 MW is carried
 > as a `[reference]` bracket (never a disclosure; QTS declines to state capacity), with closed-loop-dry
@@ -30,13 +39,32 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   Van Wert"). `[verified]` Source: GlobeNewswire (Aug 19, 2025); citybiz; DCD.
 - **Seller:** The Marsh Foundation (local non-profit; owner of the Mega Site). `[verified]`
 - **Project codename:** none disclosed. `[open]`
-- **Deed grantee / shell LLC:** not surfaced in the news record. `[open]` — pull the Van Wert
-  County Recorder deed for the Thor/Form8tion acquisition and the QTS vehicle.
+- **Deed grantee / shell LLC:** **`QTS VAN WERT LLC`** — the operator holds title directly, on all
+  five campus parcels. `[verified]` (#1403; Van Wert County Auditor CAMA, read 2026-07-31.) The
+  intermediate Thor SPE **VAN WERT EAST OWNER LLC**, which held the 221.15-ac anchor as recently as
+  a 2026-07-10 probe, is gone from the county roll; a countywide owner scan returns **zero** parcels
+  for `THOR`, `FORM8TION`, `VAN WERT EAST` or `EQUITIES`, so no surviving nominee holding exists.
+  The **grantor**, the recorder instrument numbers and the deed book/page stay `[open]` — the
+  county's parcel layer carries none of them; pull the Van Wert County Recorder deeds.
 - **Location:** Van Wert Mega Site — north of U.S. Route 30, between Stripe Road and Mendon Road
   (broader Mega Site bounded by Hwy 30, Gilliland Rd, Marsh Rd, US-224). `[verified]`
 - **Acreage (evolving):** Thor's initial acquisition ~221 acres (Aug 2025); ~962 acres annexed by
   the City May 11, 2026; QTS campus footprint quoted at 902 acres, up to seven buildings.
   `[verified]` (221 ac = phase-1 land buy; 902/962 ac = full campus/annexation.)
+- **Acreage, now instrument-grounded (#1403):** the committed holding is **900.59 ac deeded /
+  901.502 ac planar** across five contiguous parcels — `17-034718.0000` (362.23 ac),
+  `.0100` (221.15, the anchor), `.0200` (157.84), `12-034459.0000` (128.13),
+  `33-047500.0000` (31.24). `[verified]` That meets the quoted **902 ac** to **0.16%** — the first
+  independent confirmation of the operator's own figure — but falls **61.4 ac (6.4%) short** of the
+  **~962 ac annexed**. That gap is `[open]`: road right-of-way inside the annexed area and non-QTS
+  parcels inside the annexation description are both live explanations and neither is established,
+  because the ordinances' legal descriptions are not in the corpus.
+- **Consideration (#1403):** four parcels (679.44 ac) conveyed **2026-06-16** at a recorded
+  **$39,117,825**, the anchor **2026-06-18** at **$110,575,000** — exactly **$500,000 × its 221.15
+  CAMA acres**, and a **10.6×** step over the ~$47,000/ac Thor paid ten months earlier. All warranty
+  deeds. `[verified]` The four same-day parcels share one date and one amount, the signature of a
+  single multi-parcel deed, so that figure is **not summed** across them and the campus's total
+  consideration stays `[open]`.
 - **Zoning:** annexed and zoned I-2 General Industrial with conditional data-center use (City
   Council, May 11, 2026). `[verified]`
 - **Investment:** ~$10 billion total capital investment (QTS). `[verified]` Source: q.com; all
@@ -57,9 +85,17 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   for up to 15 years) and has CRA authority, but no executed abatement/PILOT ordinance with
   rates/years was found. `[open]` — pull the Van Wert City Council / County Commissioners
   economic-development agreements.
-- **School taxing bodies:** property taxes flow to Lincolnview Local School District (though the
-  site is inside Van Wert city limits); Vantage Career Center is also a taxing body. A CRA
-  school-compensation agreement would be required for a project of this payroll size. `[reference]`
+- **School taxing bodies — the campus straddles TWO districts** (#1403, correcting the earlier
+  single-district `[reference]`): **772.46 ac Lincolnview** Local School District (the four
+  Ridge/Hoaglin parcels) and **128.13 ac Van Wert City** School District (`12-034459.0000`).
+  `[verified]` — two independent lines for the Lincolnview four (the auditor's own district name
+  carries the "(LV)" suffix, and the county SchoolDistrict layer returns Lincolnview at each
+  parcel's interior point); for `33-047500.0000` only the spatial join is available. Vantage Career
+  Center is also a taxing body. A CRA school-compensation agreement for a project of this payroll
+  size would therefore have to reach **both** boards, not one. The auditor also has all five
+  parcels in Van Wert **Corporation** tax districts (12, 17, 33), consistent with the annexation,
+  while the county's district *polygon* layer still shows townships — a currency gap in the
+  polygons, not a contradiction.
 - **Developer-funded infrastructure (not a tax instrument):** ~$25 million for Bonnewitz Crossing
   (N. Washington St. to Mendon Rd.) and Mendon Road overpass improvements — developer-funded.
   `[reference]`
@@ -102,6 +138,17 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
 - **Abstraction vs. flow:** the facility's specific discharge point / receiving water and a Town
   Creek 7Q10 are not disclosed (closed-loop + still-negotiated water/sewer). `[open]` — no
   assimilative screen possible until the outfall and a low-flow denominator are pinned.
+- **Site drainage — Town Creek is NOT where most of this campus drains** (#1403). Intersecting the
+  committed boundary with the Van Wert County GIS `Watersheds` layer splits the 901.5 planar acres
+  **North Spice Run 371.54 ac (41.2%), Marsh Ditch 347.43 ac (38.5%), Van Wert Corp Ditch 1024
+  102.81 ac (11.4%), Town Creek 61.88 ac (6.9%)**; 17.8 ac (2.0%) fall outside the layer.
+  `[verified]` as the county's own mapping. All four are **petitioned county ditches** with their
+  own numbers (North Spice Run #1966, Marsh Ditch #1592, Town Creek #1391, Ditch 1024), which makes
+  the **Van Wert County Engineer / ditch-maintenance record** the instrument for the campus
+  stormwater path. The site profile's `corridor_name` and `abstraction_gage` model Town Creek as
+  the receiving reach, and Town Creek takes under 7% of the campus — the downstream routing of the
+  other three into the Little Auglaize → Auglaize → Maumee is `[inference]` pending an NHD/NLDI
+  trace and is a live lead, not a settled path.
 
 ### Regulatory record (status as of 2026-07-02)
 
@@ -135,8 +182,13 @@ standard as of 2026-07-02. `[open]` — re-sweep on the next pass.
 
 ## Instruments to pull (priority order)
 
-1. **Van Wert County Recorder / Auditor** — deed grantee LLC + exact parcel IDs for the Thor/
-   Form8tion acquisition (Aug 2025) and the QTS campus footprint (acreage, price, transfer dates).
+1. **Van Wert County Recorder** — the **grantor** side and the instrument numbers. The Auditor half
+   of this item is **done** (#1403): grantee, parcel IDs, acreage, prices and transfer dates are
+   committed from the CAMA. What the auditor layer cannot give is the grantor, the deed book/page
+   and the legal description, so the Marsh Foundation → Thor/Form8tion (Aug 2025) → QTS (Jun 2026)
+   chain still needs the recorded instruments. Add the county Engineer's **survey records** named on
+   the parcels — `VW-SD522-1`, `VW-SD522-2`, `VW-SD522-523`, `VW-SD524` — which are the splits that
+   carved the campus out of the Marsh tract.
 2. **Van Wert City Council / County Commissioners** — executed CRA / PILOT / TIF ordinance(s) with
    %/term, plus the Lincolnview + Vantage school-compensation agreements.
 3. **OEPA air PTI** — emergency generator bank PTI(s) for the Mega Site (NWDO, Van Wert County).

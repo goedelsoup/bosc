@@ -2,15 +2,15 @@
   "site": "van-wert",
   "bundle_version": "1.0.0",
   "contract_version": "1.47.0",
-  "generated_at": "2026-07-31T01:43:50+00:00",
-  "feed_count": 31,
-  "row_total": 403,
+  "generated_at": "2026-07-31T12:04:04+00:00",
+  "feed_count": 32,
+  "row_total": 408,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
-      "places": "absent",
+      "places": "live",
       "record": "absent",
       "story": "absent"
     }
@@ -222,6 +222,14 @@
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
       "count": 56
+    },
+    {
+      "name": "geo/campus",
+      "path": "feeds/geo/campus.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 5
     },
     {
       "name": "facts",

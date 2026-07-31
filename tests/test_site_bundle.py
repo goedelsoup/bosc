@@ -940,6 +940,49 @@ def test_sidney_exports_at_case_tier_on_committed_campus_geometry(
     assert campus[0]["properties"]["owner"] == "AMAZON DATA SERVICES INC"
 
 
+def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
+    site_bundle: Callable[[str], Path],
+) -> None:
+    """Van Wert rose ``backdrop`` -> ``case`` when #1403 committed the campus geometry.
+
+    Same shape as Sidney's pin above and the same reason: the floor was pulled and everything
+    above it was a lead. ``places`` moved on evidence — ``data/reference/van-wert/
+    parcel-assemblage.geojson`` is the Van Wert County auditor CAMA record of the five parcels
+    deeded to QTS Van Wert LLC in June 2026, which the exporter composes into the ``geo/campus``
+    feed that ``PLACES_GEOMETRY_FEED`` gates on.
+
+    The other three stay put, and pinning them is the point: ``facility`` remains ``seeded``
+    because the #1630 downgrade holds (QTS declines to state capacity, so the IT load is an
+    announced-ceiling ``[reference]`` bracket — committing land does not ground a load);
+    ``record`` remains ``absent`` (no in-scope extraction yet — #1401's ingest); ``story`` is
+    absent. A future change that floats any of those off geometry alone fails here.
+    """
+    bundle = site_bundle("van-wert")
+    manifest = _manifest(bundle)
+    assert manifest["contract_version"] == _CV
+    readiness = manifest["readiness"]
+    assert readiness["tier"] == "case", f"van-wert should now be a Case site, got {readiness}"
+    domains = readiness["domains"]
+    assert domains["backdrop"] == "live"
+    assert domains["facility"] == "seeded"  # announced-ceiling bracket, not a disclosure (#1630)
+    assert domains["places"] == "live"  # committed campus geometry (#1403)
+    assert domains["record"] == "absent"
+    assert domains["story"] == "absent"
+
+    # The geometry that activated the domain is the recorded holding, not a stub — and the whole
+    # holding, not just the anchor the issue was written against.
+    ref = _feeds_by_name(bundle)["geo/campus"]
+    campus = json.loads((bundle / ref["path"]).read_text(encoding="utf-8"))["features"]
+    assert [f["properties"]["parcel_id"] for f in campus] == [
+        "12-034459.0000",
+        "17-034718.0000",
+        "17-034718.0100",
+        "17-034718.0200",
+        "33-047500.0000",
+    ]
+    assert {f["properties"]["owner"] for f in campus} == {"QTS VAN WERT LLC"}
+
+
 @pytest.mark.parametrize("slug", ["coshocton", "piketon", "sandusky"])
 def test_stub_site_exports_at_stub_tier(slug: str, site_bundle: Callable[[str], Path]) -> None:
     readiness = _manifest(site_bundle(slug))["readiness"]

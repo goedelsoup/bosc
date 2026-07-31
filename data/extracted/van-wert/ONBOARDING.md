@@ -17,7 +17,7 @@ Living record for the Van Wert watershed point (basin: maumee), scaffolded by `w
 | scaffold | ok | created 6 dir(s); 6 README(s) |
 | derive-low-flows | ok | reference/hydrology/low-flow-7q10.derived.yaml |
 | corridor-ddf | ok | reference/hydrology/van-wert/atlas14-corridor-ddf.yaml |
-| ssurgo-hsg | skipped | footprint missing: extracted/van-wert/bosc-site-footprint.yaml |
+| ssurgo-hsg | ok | HSG C/D; matches profile (dual group: drained C / undrained D) (#1403 — was `skipped` for want of parcel geometry) |
 | climatology | ok | reference/hydrology/van-wert/nasa-power-climatology.yaml |
 | basin-screen | ok | 8/129 dischargers screened (2 violations, 2 tight) — OH0027910 now screened |
 | econ-baseline | ok | reference/economics/van-wert/baseline.yaml |
@@ -56,8 +56,10 @@ connector replays); the deed itself is the Recorder trail in Phase 6 below
 | parcels (county) | `services8.arcgis.com/G5sGKRBVtJMunpVA/.../parcel_joinedVWOH/FeatureServer/0` (AGOL, valid Esri TLS, 19,956 polygons) — `PIN`, `PPOwner`, `PPAddress` (situs street), `PPClassNumber` (use code), `PPAcres`, `PPLandValue`/`PPImprValue`/`PPTotalValue`, `PPSaleDate`/`PPAmount` — owner **and** values on one layer. Replaces the retired `ags.bhamaps.com` PAT MapServer (host dead; ArcGIS Server removed) | **wired** (`gis_parcel`, #421) |
 | zoning | no Van Wert zoning REST anywhere (townships map-only; city zoning = static PDFs + amlegal) — unchanged negative on the 2026-07-10 re-probe | `[open]` |
 
-Follow-up: commit the reviewed Van Wert parcel reference *data* (a `watermark parcels --site van-wert`
-pull is a separate reviewed step, per the Findlay/Ottawa precedent); accept zoning as map-only here.
+Follow-up **done (#1403)**: the reviewed Van Wert parcel reference *data* is committed as
+`data/reference/van-wert/parcel-assemblage.geojson` — the five parcels deeded to QTS Van Wert LLC
+in June 2026 (900.59 ac deeded / 901.502 ac planar, contiguous), which flips the **places**
+readiness domain `absent` → `live`. Accept zoning as map-only here.
 Defiance (#394) is the shared-vendor sibling — equally unblocked on its own AGOL org
 (`services1.arcgis.com/nOy1DpPkzXSFJsGp/.../parcel_joined/FeatureServer/0`), tracked there.
 
@@ -202,8 +204,12 @@ This is **not** a zero-document situation. Documents to ingest in priority order
 - **Campus:** Up to 7 buildings; $10B capital investment (proponent claim); 1,500 construction jobs
   (QTS announcement) vs. 4,500 (select-committee testimony — possibly multi-phase/induced);
   200 permanent QTS positions.
-- **Footprint lead:** Thor Equities / GlobeNewswire press release (Aug 19, 2025) + the Van Wert
-  County Recorder deed are the sources for the parcel geometry. Both needed for `bosc-site-footprint.yaml`.
+- **Footprint — closed (#1403).** The geometry came from the county auditor CAMA, not from the
+  press release or the Recorder: `data/extracted/van-wert/bosc-site-footprint.yaml` +
+  `data/reference/van-wert/parcel-assemblage.geojson`, the five parcels deeded to **QTS Van Wert
+  LLC** in June 2026 — **900.59 ac deeded / 901.502 ac planar**, which meets the quoted **902-acre**
+  campus figure to 0.16% and is 61.4 ac short of the ~962 ac annexed. The Recorder deed is still
+  needed, but for the **grantor / instrument numbers**, not the boundary (#1401).
 
 ### Water-use tension (relevant to hydrology thesis)
 
@@ -219,7 +225,7 @@ Verification: Ohio EPA air permit application (submitted per QTS FAQ; no permit 
 ## Review gate (blocking)
 
 - [ ] Every written reference value is reviewed against a cited source (no fabricated values).
-- [ ] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation.
+- [x] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation. **(#1403 — the profile was updated: `[inference]` flat `"D"` → `[verified]` dual `"C/D"`,** 44 of 45 grid points over the committed campus assemblage. The correction is to the *rating*, not the geology: the old inference read the ground right — Great Black Swamp lake-plain clays, and it named Hoytville — but NRCS rates Hoytville C/D, C where the field tile is installed and maintained, D undrained. A flat D pre-committed the undrained letter for both scenarios, inflating the pre-development CN of ground that is tile-drained CAUV row crop today and so understating the pre-to-post delta. Recorded verbatim per WS-20/#1620.)
 - [x] basin-screen coverage is sane for this site's receiving waters. OH0027910 screened against Town Creek 7Q10 (0.16 cfs annual, source=document); dilution ratio 0.03:1 — 39× effluent dominance, `[verified]`. See self-research summary above.
 - [x] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md). Parcels wired via `VAN_WERT_PARCEL_SCHEMA` (#421 — the county's AGOL `parcel_joinedVWOH`, replacing the dead bhamaps host); zoning stays `[open]` (no REST anywhere; map-only/PDF).
 - [x] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/) — see self-research summary above; 5 proposals filed as sub-issues of #363 (#375–379).

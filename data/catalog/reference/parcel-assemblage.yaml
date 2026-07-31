@@ -57,6 +57,20 @@ notes: >-
   is retired, not wrong, and the reconciliation is a geometric containment test against the 2023
   OGRIP layer. The same-day DP&L conveyance next door (26-03-429-009) is an [inference] lead,
   excluded.
+  Van Wert (#1403): the FIVE parcels deeded to QTS VAN WERT LLC — the "Van Wert Mega Site"
+  campus north of U.S. Route 30 between Stripe and Mendon Roads, 900.59 ac deeded / 901.502 ac
+  planar and CONTIGUOUS (their union is one polygon), from the Van Wert County auditor CAMA via
+  the van_wert_gis field-map (the county's AGOL parcel_joinedVWOH layer, #421). The recorded
+  OWNERSHIP holding, and the only one in the set that reconciles against the operator's own
+  published acreage: 900.59 ac against QTS's quoted 902-ac campus is 0.16%, while it is 61.4 ac
+  short of the ~962 ac the City annexed on 2026-05-11 (that gap stays [open] — the ordinances'
+  legal descriptions are not in the corpus). Two shape notes for re-pulls: the county stores one
+  parcel as SEVERAL polygon rows, so the raw f=geojson pull returns 11 rows for these 5 PINs and
+  the committed file dissolves them per parcel (gis_row_count records how many, an area-lossless
+  merge); and this layer is thinner than Shelby's or Champaign's — no owner mailing address, no
+  legal description, no grantor, no deed book/page — so the deed CHAIN (Marsh Foundation -> Thor/
+  Form8tion -> QTS) is not closable from it and stays a Recorder pull (#1401). The adjacent Marsh
+  Foundation remainder (19-041272.0000 et al.) is an [inference] lead, excluded.
   Distinct from the Periplus frozen import
   (reference/periplus/bosc-parcels.geojson, catalogued under the periplus entry), which covers the
   Lima corridor parcels only.

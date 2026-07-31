@@ -775,15 +775,32 @@ _VAN_WERT = SiteProfile(
     design_lat=40.8696,  # [verified] city centroid = NOAA Atlas-14 point
     design_lon=-84.5829,
     corridor_name="Town Creek / Little Auglaize corridor",  # [inference] the receiving-water reach
-    dominant_hsg="D",  # [inference] Van Wert lake-plain Black Swamp clays (Paulding/Latty/Hoytville) → HSG D
+    # [verified] SSURGO over the committed campus assemblage (#1403). The old [inference] named the
+    # right ground — the Great Black Swamp lake plain — but pre-collapsed a DUAL rating to its
+    # undrained letter. Recorded verbatim per WS-20/#1620 so pre_/post_drainage_condition resolve
+    # it (drained C on the tile-drained CAUV cropland it is today, undrained D once site work
+    # severs that tile) instead of the profile fixing one letter where no scenario can see it.
+    dominant_hsg="C/D",
     hsg_citation=(
-        "Van Wert County, OH dominant hydrologic soil group D — very-poorly-drained Great Black "
-        "Swamp lake-plain clays (Paulding/Latty/Hoytville; NRCS Soil Survey of Van Wert County); "
-        "[inference] pending an SSURGO area-weighted confirmation (onboard SSURGO step needs a footprint)"
+        "Van Wert Mega Site campus — SSURGO dominant hydrologic soil group C/D at 44 of 45 grid "
+        "points over data/reference/van-wert/parcel-assemblage.geojson "
+        "(watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8, read 2026-07-31): "
+        "Hoytville silty clay 0-1% slopes (40 points) + Hoytville silty clay loam 0-1% (1) and "
+        "Wabasha silty clay loam (3), all very poorly drained; the lone D point is Nappanee silt "
+        "loam 0-2%, somewhat poorly drained. Great Black Swamp lake-plain clays, as the prior "
+        "[inference] read them — but NRCS rates Hoytville C/D, not flat D: C where the field tile "
+        "is installed and maintained, D in the natural undrained condition. "
+        "See data/extracted/van-wert/bosc-site-footprint.yaml"
     ),
-    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
-    post_cover="TODO",
-    developed_pervious_cover="TODO",
+    # [verified] pre-development cover from the auditor CAMA land use across the five committed
+    # campus parcels — 110 'cash-grain/general farm' + 199 'other agricultural', three of them
+    # CAUV-flagged, i.e. CAUV row crop with no campus improvement yet on the tax record.
+    # post/developed_pervious are the network's standard screening pair (NLCD 24 high-intensity +
+    # NLCD 21 developed open space): QTS has disclosed NO floor area and no site plan, so those
+    # two stay `source: assumption`-grade until the Rule-5 SWPPP / site plan lands (#1401).
+    pre_cover="cropland",
+    post_cover="developed_campus",
+    developed_pervious_cover="open_space",
     noaa_fallback_24h_depth_in={  # [reference] NOAA Atlas-14 Vol 2 (Ohio River Basin) PDS at 40.8696/-84.5829
         1: 2.13,
         2: 2.56,
@@ -796,8 +813,11 @@ _VAN_WERT = SiteProfile(
         500: 6.98,
         1000: 7.68,
     },
-    parcels_relpath="reference/van-wert/parcel-assemblage.geojson",  # [open] commit the site's own geometry
-    footprint_relpath="extracted/van-wert/bosc-site-footprint.yaml",  # [open] pending an identified site
+    # [verified] committed #1403 — the five parcels deeded to QTS VAN WERT LLC in June 2026
+    # (900.59 ac CAMA / 901.502 ac planar, against the 902-ac campus figure QTS quotes) + the
+    # footprint record derived from them.
+    parcels_relpath="reference/van-wert/parcel-assemblage.geojson",
+    footprint_relpath="extracted/van-wert/bosc-site-footprint.yaml",
     # per-site onboard reach outputs (slug-scoped — never clobber Lima/Findlay/Fort Wayne)
     climatology_relpath="reference/hydrology/van-wert/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/van-wert/atlas14-corridor-ddf.yaml",
