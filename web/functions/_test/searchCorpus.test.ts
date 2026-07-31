@@ -873,3 +873,97 @@ describe("handleSearchCorpus structured filters (#1582)", () => {
     expect(got).toEqual(["records:permit"]);
   });
 });
+
+// The enrichment facets (#1691) reaching the handler: `parseFilters` must lift each one off the
+// bag, and `campus` must resolve to the same facet as `project`. The narrowing behaviour itself is
+// askRetrieval.test.ts's; what's asserted here is the seam.
+describe("handleSearchCorpus enrichment filters (#1691)", () => {
+  // Every unit matches "corridor" so ranking never drops a facet-eligible one.
+  const UNITS: AskUnit[] = [
+    {
+      id: "records:npdes",
+      feed: "records",
+      title: "American II corridor NPDES permit",
+      url: "/x",
+      text: "corridor npdes effluent limit",
+      source_kind: "document",
+      verified: true,
+      site: "lima",
+      county: "Allen County, OH",
+      document_type: "permits-npdes",
+      permit_numbers: ["2PH00006*LD", "OH0037338"],
+      agency: "Ohio EPA, Division of Surface Water",
+      entities: ["BISTROZZI LLC"],
+      project: "project-bosc",
+    },
+    {
+      id: "records:deed",
+      feed: "records",
+      title: "Corridor limited warranty deed",
+      url: "/x",
+      text: "corridor grantor grantee",
+      source_kind: "document",
+      verified: true,
+      site: "lima",
+      county: "Allen County, OH",
+      document_type: "deeds",
+      entities: ["BISTROZZI LLC"],
+    },
+    {
+      id: "concepts:corridor",
+      feed: "concepts",
+      title: "Corridor (definition)",
+      url: "/x",
+      text: "corridor glossary definition",
+      source_kind: "derived",
+      verified: false,
+      site: "lima",
+      county: "Allen County, OH",
+    },
+  ];
+
+  const routes: FetchRoute[] = [
+    { test: (u) => u.pathname === "/ask-index.json", respond: () => jsonResponse(200, UNITS) },
+  ];
+
+  async function ids(args: Record<string, unknown>): Promise<string[]> {
+    _resetAskIndexCache();
+    vi.stubGlobal("fetch", routingFetch(routes));
+    const content = await handleSearchCorpus({ query: "corridor", response_mode: "ids_only", ...args }, REQ);
+    return (JSON.parse(content[0].text) as Envelope).results.map((r) => r.id as string).sort();
+  }
+
+  it("filters.permit_number reaches every action filed under a base number", async () => {
+    expect(await ids({ filters: { permit_number: "2PH00006" } })).toEqual(["records:npdes"]);
+  });
+
+  it("filters.document_type separates genres inside one feed", async () => {
+    expect(await ids({ filters: { feed: "records" } })).toEqual(["records:deed", "records:npdes"]);
+    expect(await ids({ filters: { document_type: "deeds" } })).toEqual(["records:deed"]);
+  });
+
+  it("filters.agency matches the parent agency of a named division", async () => {
+    expect(await ids({ filters: { agency: "Ohio EPA" } })).toEqual(["records:npdes"]);
+  });
+
+  it("filters.entity returns every unit the party touches", async () => {
+    expect(await ids({ filters: { entity: "BISTROZZI LLC" } })).toEqual(["records:deed", "records:npdes"]);
+  });
+
+  it("filters.county accepts the bare county name", async () => {
+    expect(await ids({ filters: { county: "Allen" } })).toHaveLength(3);
+  });
+
+  it("filters.campus is an accepted alias of filters.project", async () => {
+    expect(await ids({ filters: { campus: "project-bosc" } })).toEqual(["records:npdes"]);
+    expect(await ids({ filters: { project: "project-bosc" } })).toEqual(["records:npdes"]);
+  });
+
+  it("AND-combines an enrichment facet with the #1582 facets", async () => {
+    expect(
+      await ids({
+        filters: { site: "lima", verified: true, entity: "BISTROZZI LLC", document_type: "deeds" },
+      }),
+    ).toEqual(["records:deed"]);
+  });
+});

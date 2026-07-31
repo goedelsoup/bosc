@@ -9,6 +9,12 @@
 // The corpus is small (the citation-bearing bundle feeds — low hundreds of units), so
 // preparing the postings once per loaded index and scoring linearly per request is
 // cheap. The Worker caches the prepared index across requests in the same isolate.
+//
+// The one import is `@watermark/core/askFacets` — the facet normalizers the build-time producer
+// stamped the index with (#1691). It is deliberately node-free for exactly this reason: sharing
+// the definition is what keeps a filter from being stricter or looser than the index it queries.
+
+import { agencyMatches, countyKey, facetKey, permitMatches, projectKey } from "@watermark/core/askFacets";
 
 /**
  * One retrieval unit — a citation-bearing thing in the bundle (a record, timeline
@@ -43,6 +49,20 @@ export interface AskUnit {
    * dedup join key (#1590), matching `DocumentItem.rel`. Built into the ask-index; absent for a
    * unit with no documents-feed source. */
   doc_rel?: string | null;
+  /** The site's county, e.g. "Allen County, OH" — stamped at build time like `site` (#1691). */
+  county?: string | null;
+  /** The issuing/administering body, verbatim from the record ("Ohio EPA, Division of Surface
+   * Water"). Records only; free text, so `agencyMatches` compares it by containment (#1691). */
+  agency?: string | null;
+  /** Every permit / case / filing identifier the unit is filed under (#1691). */
+  permit_numbers?: string[] | null;
+  /** The document genre — record group / timeline category / meeting kind. Distinct from `feed`,
+   * which names the bundle collection rather than the instrument (#1691). */
+  document_type?: string | null;
+  /** The entity-graph keys this unit touches, joined exactly at build time (#1691). */
+  entities?: string[] | null;
+  /** The campus / named project slug this unit belongs to (#1691). */
+  project?: string | null;
 }
 
 /** One scored hit: the unit plus its BM25 score. */
@@ -52,10 +72,15 @@ export interface Hit {
 }
 
 /**
- * Structured facet filters over indexed AskUnit fields (#1582). Every field is optional; an
- * absent field imposes no constraint, and every present constraint must hold (AND-combined).
- * These are the facets the ask-index *already carries* — un-indexed facets (county, agency,
- * permit_number, …) await upstream index enrichment and are deliberately not modeled here.
+ * Structured facet filters over indexed AskUnit fields (#1582, extended by #1691). Every field is
+ * optional; an absent field imposes no constraint, and every present constraint must hold
+ * (AND-combined).
+ *
+ * Every facet here is backed by a **real indexed field** — that was the rule #1582 set when it
+ * stopped at six, and #1691 kept it by enriching the index rather than by widening the schema.
+ * The one facet still missing is `fact_category`: the `facts` feed is not part of the ask-index
+ * at all (`buildAskIndex` covers the citation-bearing feeds), so a category constraint over these
+ * units would filter on nothing. `get_facts` / `aggregate_facts` are the tools for that axis.
  */
 export interface CorpusFilters {
   /** Site slug (e.g. "lima"). */
@@ -72,6 +97,22 @@ export interface CorpusFilters {
   date_to?: string;
   /** Citation confidence band (e.g. "high"), matched exactly. */
   confidence?: string;
+  /** County the records were filed in — "Allen", "allen county" and "Allen County, OH" are one
+   * constraint (`countyKey`). */
+  county?: string;
+  /** Issuing/administering body, matched as a substring of the record's own agency string, so
+   * "Ohio EPA" reaches "Ohio EPA, Division of Surface Water" (`agencyMatches`). */
+  agency?: string;
+  /** Permit / case / filing identifier. Separators are ignored and a base number matches every
+   * modification filed under it (`2PH00006` → `2PH00006*LD`) — see `permitMatches`. */
+  permit_number?: string;
+  /** Document genre — record group (`permits-npdes`, `deeds`, `enforcement`, …), timeline
+   * category, or meeting kind. */
+  document_type?: string;
+  /** Entity-graph key, as returned by `get_entities`. */
+  entity?: string;
+  /** Campus / named project slug (`project-bosc`). `project` and `campus` are one facet. */
+  project?: string;
 }
 
 /**
@@ -117,6 +158,37 @@ export function applyCorpusFilters(units: AskUnit[], filters: CorpusFilters): As
   if (filters.confidence) {
     const confidence = filters.confidence;
     out = out.filter((u) => u.confidence === confidence);
+  }
+
+  // --- Enrichment facets (#1691) -------------------------------------------------------------
+  // Same contract as the block above: a unit missing the field fails the constraint. The
+  // difference is the comparison — these facets carry values written by the record rather than by
+  // the exporter, so each compares through the normalizer `@watermark/core/askFacets` defines for
+  // it, and the producer stamps the index with the same functions. See that module for why exact
+  // string equality would answer "no results" to questions the corpus can plainly answer.
+  if (filters.county) {
+    const county = countyKey(filters.county);
+    out = out.filter((u) => typeof u.county === "string" && countyKey(u.county) === county);
+  }
+  if (filters.agency) {
+    const agency = filters.agency;
+    out = out.filter((u) => typeof u.agency === "string" && agencyMatches(u.agency, agency));
+  }
+  if (filters.permit_number) {
+    const permit = filters.permit_number;
+    out = out.filter((u) => Array.isArray(u.permit_numbers) && permitMatches(u.permit_numbers, permit));
+  }
+  if (filters.document_type) {
+    const kind = facetKey(filters.document_type);
+    out = out.filter((u) => typeof u.document_type === "string" && facetKey(u.document_type) === kind);
+  }
+  if (filters.entity) {
+    const entity = facetKey(filters.entity);
+    out = out.filter((u) => (u.entities ?? []).some((e) => facetKey(e) === entity));
+  }
+  if (filters.project) {
+    const project = projectKey(filters.project);
+    out = out.filter((u) => typeof u.project === "string" && projectKey(u.project) === project);
   }
 
   return out;

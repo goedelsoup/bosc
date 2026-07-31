@@ -290,3 +290,131 @@ describe("applyCorpusFilters (#1582)", () => {
     expect(ids(out)).toEqual(["records:permit"]);
   });
 });
+
+// The enrichment facets (#1691). Every one compares through the normalizer @watermark/core/askFacets
+// defines for it — the same function the build stamped the index with — so these cases assert the
+// kernel's *use* of that contract: which units survive, and that a unit lacking the field is
+// excluded rather than passed through.
+describe("applyCorpusFilters enrichment facets (#1691)", () => {
+  const UNITS: AskUnit[] = [
+    {
+      id: "records:npdes",
+      feed: "records",
+      title: "American II NPDES permit",
+      url: "/x",
+      text: "effluent limits",
+      site: "lima",
+      county: "Allen County, OH",
+      document_type: "permits-npdes",
+      permit_numbers: ["2PH00006*LD", "OH0037338"],
+      agency: "Ohio EPA, Division of Surface Water",
+      entities: ["BISTROZZI LLC"],
+      project: "project-bosc",
+    },
+    {
+      id: "records:deed",
+      feed: "records",
+      title: "Limited Warranty Deed",
+      url: "/x",
+      text: "grantor grantee",
+      site: "lima",
+      county: "Allen County, OH",
+      document_type: "deeds",
+      entities: ["BISTROZZI LLC", "AMAZON COM SERVICES"],
+    },
+    {
+      id: "records:usace",
+      feed: "records",
+      title: "Section 404 authorization",
+      url: "/x",
+      text: "wetland fill",
+      site: "lima",
+      county: "Allen County, OH",
+      document_type: "permits-epa",
+      permit_numbers: ["DSW401252260W"],
+      agency: "U.S. Army Corps of Engineers",
+      project: "project-dazzler",
+    },
+    {
+      // A concept unit: carries none of the facets, which is what makes it the exclusion case.
+      id: "concepts:dilution",
+      feed: "concepts",
+      title: "Dilution",
+      url: "/x",
+      text: "glossary",
+      site: "lima",
+      county: "Allen County, OH",
+    },
+  ];
+  const ids = (units: AskUnit[]) => units.map((u) => u.id).sort();
+
+  it("matches county however the caller writes it", () => {
+    for (const county of ["Allen County, OH", "Allen County", "allen"]) {
+      expect(applyCorpusFilters(UNITS, { county })).toHaveLength(4);
+    }
+    expect(applyCorpusFilters(UNITS, { county: "Hancock" })).toEqual([]);
+  });
+
+  it("matches a base permit number to every modification, and the NPDES id to its record", () => {
+    expect(ids(applyCorpusFilters(UNITS, { permit_number: "2PH00006" }))).toEqual(["records:npdes"]);
+    expect(ids(applyCorpusFilters(UNITS, { permit_number: "oh0037338" }))).toEqual(["records:npdes"]);
+    // A unit with no permit id fails the constraint — it is not silently kept.
+    expect(applyCorpusFilters(UNITS, { permit_number: "2PH00006" })).toHaveLength(1);
+  });
+
+  it("reaches an agency's divisions from the parent name, without merging distinct agencies", () => {
+    expect(ids(applyCorpusFilters(UNITS, { agency: "Ohio EPA" }))).toEqual(["records:npdes"]);
+    expect(ids(applyCorpusFilters(UNITS, { agency: "army corps" }))).toEqual(["records:usace"]);
+  });
+
+  it("separates document genres the `feed` facet cannot", () => {
+    // All three are feed:"records" — only document_type tells a deed from a permit.
+    expect(ids(applyCorpusFilters(UNITS, { feed: "records" }))).toHaveLength(3);
+    expect(ids(applyCorpusFilters(UNITS, { document_type: "deeds" }))).toEqual(["records:deed"]);
+  });
+
+  it("returns every unit an entity touches, matched case- and punctuation-insensitively", () => {
+    expect(ids(applyCorpusFilters(UNITS, { entity: "BISTROZZI LLC" }))).toEqual([
+      "records:deed",
+      "records:npdes",
+    ]);
+    expect(ids(applyCorpusFilters(UNITS, { entity: "bistrozzi llc" }))).toEqual([
+      "records:deed",
+      "records:npdes",
+    ]);
+    expect(applyCorpusFilters(UNITS, { entity: "NOT A PARTY" })).toEqual([]);
+  });
+
+  it("constrains to one campus", () => {
+    expect(ids(applyCorpusFilters(UNITS, { project: "project-bosc" }))).toEqual(["records:npdes"]);
+    expect(ids(applyCorpusFilters(UNITS, { project: "Project Dazzler" }))).toEqual(["records:usace"]);
+  });
+
+  it("excludes a unit whose feed carries nothing for the facet", () => {
+    // The concept unit answers none of these — an absent field fails the constraint, exactly as
+    // an absent `date` does under date_from. This is the contract that keeps a facet honest: it
+    // never widens to "everything we couldn't check".
+    for (const filters of [
+      { document_type: "deeds" },
+      { permit_number: "2PH00006" },
+      { agency: "Ohio EPA" },
+      { entity: "BISTROZZI LLC" },
+      { project: "project-bosc" },
+    ]) {
+      expect(ids(applyCorpusFilters(UNITS, filters))).not.toContain("concepts:dilution");
+    }
+  });
+
+  it("AND-combines an enrichment facet with the #1582 facets", () => {
+    expect(
+      ids(
+        applyCorpusFilters(UNITS, {
+          site: "lima",
+          feed: "records",
+          entity: "BISTROZZI LLC",
+          document_type: "deeds",
+        }),
+      ),
+    ).toEqual(["records:deed"]);
+  });
+});

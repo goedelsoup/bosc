@@ -14,6 +14,9 @@
 #   basin_label  receiving-water / sub-basin display string (TypeScript `basin` field)
 #   receiving_water  Python receiving_water_name on the active NPDES (null for tracking-only)
 #   state        two-letter abbreviation (OH, IN)
+#   county       economic/administrative county as it reads in a citation ("Allen County, OH");
+#                back-fills Python county_name, and reaches the frontend registry so the
+#                ask-index can stamp it as a retrieval facet (#1691). null = no profile yet.
 #   codename     switcher badge codename (null = use mono)
 #   mono         three-letter fallback badge
 #   status       live | building | queued | tracking
@@ -30,6 +33,7 @@ sites:
     basin_label: "Ottawa River · Lima, OH"
     receiving_water: "Ottawa River"
     state: "OH"
+    county: "Allen County, OH"
     codename: "BOSC"
     mono: "LIM"
     status: "building"
@@ -44,6 +48,7 @@ sites:
     basin_label: "Maumee headwaters"
     receiving_water: "Maumee River"
     state: "IN"
+    county: "Allen County, IN"
     codename: "GCP"
     mono: "FTW"
     status: "live"
@@ -58,6 +63,7 @@ sites:
     basin_label: "Mad River · Great Miami"
     receiving_water: "Mad River"
     state: "OH"
+    county: "Champaign County, OH"
     codename: null
     mono: "URB"
     status: "live"
@@ -74,6 +80,7 @@ sites:
     basin_label: "Maumee mainstem"
     receiving_water: "Maumee River"
     state: "OH"
+    county: "Defiance County, OH"
     codename: null
     mono: "DEF"
     status: "queued"
@@ -88,6 +95,7 @@ sites:
     basin_label: "Blanchard River"
     receiving_water: "Blanchard River"
     state: "OH"
+    county: "Hancock County, OH"
     codename: null
     mono: "FIN"
     status: "queued"
@@ -102,6 +110,7 @@ sites:
     basin_label: "Lucas Co WRRF"
     receiving_water: "Maumee River"
     state: "OH"
+    county: "Lucas County, OH"
     codename: null
     mono: "TOL"
     status: "queued"
@@ -118,6 +127,7 @@ sites:
     basin_label: "Portage · Maumee divide"
     receiving_water: "North Branch Portage River"
     state: "OH"
+    county: "Wood County, OH"
     codename: null
     mono: "BGN"
     status: "queued"
@@ -132,6 +142,7 @@ sites:
     basin_label: "Town Creek · Little Auglaize"
     receiving_water: "Town Creek"
     state: "OH"
+    county: "Van Wert County, OH"
     codename: null
     mono: "VWT"
     status: "queued"
@@ -146,6 +157,7 @@ sites:
     basin_label: "Prairie Creek · Tiffin River"
     receiving_water: "Prairie Creek"
     state: "OH"
+    county: "Williams County, OH"
     codename: null
     mono: "BRY"
     status: "queued"
@@ -160,6 +172,7 @@ sites:
     basin_label: "Blanchard River (lower)"
     receiving_water: "Blanchard River"
     state: "OH"
+    county: "Putnam County, OH"
     codename: null
     mono: "OTW"
     status: "queued"
@@ -174,6 +187,7 @@ sites:
     basin_label: "Mad River · Great Miami"
     receiving_water: "Mad River"
     state: "OH"
+    county: "Clark County, OH"
     codename: null
     mono: "SPR"
     status: "queued"
@@ -188,6 +202,7 @@ sites:
     basin_label: "Little Miami"
     receiving_water: "Little Miami River"
     state: "OH"
+    county: "Greene County, OH"
     codename: null
     mono: "XEN"
     status: "queued"
@@ -202,6 +217,7 @@ sites:
     basin_label: "Mad River · Great Miami"
     receiving_water: "Mad River"
     state: "OH"
+    county: "Montgomery County, OH"
     codename: null
     mono: "WPA"
     status: "queued"
@@ -216,6 +232,7 @@ sites:
     basin_label: "Great Miami (lower)"
     receiving_water: "Great Miami River"
     state: "OH"
+    county: "Butler County, OH"
     codename: null
     mono: "HAM"
     status: "queued"
@@ -230,6 +247,7 @@ sites:
     basin_label: "Great Miami (upper)"
     receiving_water: "Great Miami River"
     state: "OH"
+    county: "Miami County, OH"
     codename: null
     mono: "TRP"
     status: "queued"
@@ -244,6 +262,7 @@ sites:
     basin_label: "Great Miami · headwaters"
     receiving_water: "Great Miami River"
     state: "OH"
+    county: "Shelby County, OH"
     codename: null
     mono: "SID"
     status: "queued"
@@ -258,6 +277,7 @@ sites:
     basin_label: "Stillwater · basin divide"
     receiving_water: "Greenville Creek"
     state: "OH"
+    county: "Darke County, OH"
     codename: null
     mono: "GRV"
     status: "queued"
@@ -272,6 +292,7 @@ sites:
     basin_label: "Todd Fork · Little Miami"
     receiving_water: "Lytle Creek"
     state: "OH"
+    county: "Clinton County, OH"
     codename: null
     mono: "WIL"
     status: "queued"
@@ -289,6 +310,7 @@ sites:
     basin_label: "Ohio Brush Creek · Ohio River"
     receiving_water: "Ohio Brush Creek"
     state: "OH"
+    county: "Adams County, OH"
     codename: null
     mono: "WUN"
     status: "queued"
@@ -305,6 +327,7 @@ sites:
     basin_label: "Scioto ↔ Muskingum divide"
     receiving_water: "Big Walnut Creek"
     state: "OH"
+    county: "Licking County, OH"
     codename: null
     mono: "NAL"
     status: "tracking"
@@ -319,6 +342,7 @@ sites:
     basin_label: "Scioto · Olentangy"
     receiving_water: "Scioto River"
     state: "OH"
+    county: "Franklin County, OH"
     codename: null
     mono: "COL"
     status: "tracking"
@@ -333,6 +357,7 @@ sites:
     basin_label: "Tuscarawas + Walhonding"
     receiving_water: "Muskingum River"
     state: "OH"
+    county: "Coshocton County, OH"
     codename: null
     mono: "CSH"
     status: "tracking"
@@ -347,6 +372,7 @@ sites:
     basin_label: "Scioto River · PORTS"
     receiving_water: null  # [open] PORTS water/wastewater plan undisclosed; Scioto is the likely (unconfirmed) receiving water — _PIKETON keeps plant_receiving empty
     state: "OH"
+    county: "Pike County, OH"
     codename: null
     mono: "PIK"
     status: "tracking"
@@ -361,6 +387,7 @@ sites:
     basin_label: "Sandusky Bay · Lake Erie"
     receiving_water: "Sandusky Bay"
     state: "OH"
+    county: "Erie County, OH"
     codename: null
     mono: "SAN"
     status: "tracking"
@@ -381,6 +408,7 @@ sites:
     # NPDES receiving water once the record/water domain is active
     receiving_water: null
     state: "OH"
+    county: "Richland County"
     codename: null
     mono: "MFD"
     status: "tracking"
@@ -398,6 +426,7 @@ sites:
     # kept null per the field guide (tracking-only) until the record/water domain is active
     receiving_water: null
     state: "OH"
+    county: "Scioto County, OH"
     codename: null
     mono: "PSM"
     status: "tracking"
@@ -415,6 +444,7 @@ sites:
     basin_label: "Licking River"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "NWK"
     status: "tracking"
@@ -429,6 +459,7 @@ sites:
     basin_label: "Muskingum mainstem"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "ZAN"
     status: "tracking"
@@ -445,6 +476,7 @@ sites:
     basin_label: "Lower Sandusky"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "FRE"
     status: "tracking"
@@ -459,6 +491,7 @@ sites:
     basin_label: "Sandusky (mid)"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "TIF"
     status: "tracking"
@@ -473,6 +506,7 @@ sites:
     basin_label: "Sandusky headwaters"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "BUC"
     status: "tracking"
@@ -489,6 +523,7 @@ sites:
     basin_label: "Lower Cuyahoga"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "CLE"
     status: "tracking"
@@ -503,6 +538,7 @@ sites:
     basin_label: "Upper Cuyahoga · CVNP"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "AKR"
     status: "tracking"
@@ -519,6 +555,7 @@ sites:
     basin_label: "Upper Mahoning"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "LRD"
     status: "tracking"
@@ -533,6 +570,7 @@ sites:
     basin_label: "Mahoning mainstem"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "YNG"
     status: "tracking"
@@ -549,6 +587,7 @@ sites:
     basin_label: "Upper Hocking"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "LAN"
     status: "tracking"
@@ -563,6 +602,7 @@ sites:
     basin_label: "Lower Hocking"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "ATH"
     status: "tracking"
@@ -577,6 +617,7 @@ sites:
     basin_label: "Hocking Hills"
     receiving_water: null
     state: "OH"
+    county: null
     codename: null
     mono: "LOG"
     status: "tracking"

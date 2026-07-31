@@ -147,11 +147,14 @@ const asStr = (v: unknown): string | undefined => (typeof v === "string" && v ? 
 const asBool = (v: unknown): boolean | undefined => (typeof v === "boolean" ? v : undefined);
 
 /**
- * Resolve the structured facet filters (#1582), folding the legacy top-level `site`/`collection`
- * shorthands into the same set — an explicit `filters.*` wins, else the legacy top-level param,
- * else unconstrained. `feed` is the canonical bundle-feed key; `collection` is accepted as an
- * alias (both in `filters` and top-level) but always names a BUNDLE FEED, never a
+ * Resolve the structured facet filters (#1582, extended by #1691), folding the legacy top-level
+ * `site`/`collection` shorthands into the same set — an explicit `filters.*` wins, else the legacy
+ * top-level param, else unconstrained. `feed` is the canonical bundle-feed key; `collection` is
+ * accepted as an alias (both in `filters` and top-level) but always names a BUNDLE FEED, never a
  * document-collection slug — reconciling the historical naming collision with get_documents.
+ *
+ * `campus` is the second such alias: it and `project` name the one facet, because a caller thinks
+ * in whichever word the site uses ("the Cosler Farm campus", "Project Klondike").
  */
 function parseFilters(p: SearchCorpusParams): CorpusFilters {
   const f = (p.filters ?? {}) as Record<string, unknown>;
@@ -163,6 +166,12 @@ function parseFilters(p: SearchCorpusParams): CorpusFilters {
     date_from: asStr(f.date_from),
     date_to: asStr(f.date_to),
     confidence: asStr(f.confidence),
+    county: asStr(f.county),
+    agency: asStr(f.agency),
+    permit_number: asStr(f.permit_number),
+    document_type: asStr(f.document_type),
+    entity: asStr(f.entity),
+    project: asStr(f.project) ?? asStr(f.campus),
   };
 }
 

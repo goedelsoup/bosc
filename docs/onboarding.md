@@ -73,7 +73,7 @@ test asserts every Python-registered site also exists in the frontend registry.)
 | `slug`, `place`, `basin` | identity (`basin` is the shared axis, e.g. `maumee`) |
 | `nwis_sites`, `abstraction_gage`, `supply_gage_primary`, `supply_gage_secondary` | the site's USGS gages (supply + abstraction reach) |
 | `design_lat/lon`, `nasa_power_lat/lon`, `map_view_lat/lon/zoom` | the design point, met point, and map centroid |
-| `rsei_fips`, `econ_fips`, `county_name` | the county (**Fort Wayne = Allen County, *Indiana*, FIPS `18003`** — not Ohio's `39003`) |
+| `rsei_fips`, `econ_fips`, `county_name` | the county (**Fort Wayne = Allen County, *Indiana*, FIPS `18003`** — not Ohio's `39003`). Set `county:` in [`data/sites.yaml`](../data/sites.yaml) rather than `county_name` here: the YAML is the SSOT, back-fills the profile, and carries the county to the frontend registry for the ask-index's `county` search facet (#1691). `watermark sites check` fails if a profile literal disagrees with it. |
 | `eia_state`, `eia861_utility_number`, `lmp_usd_mwh`, `lmp_citation` | the retail utility + its market zone |
 | `hydro_utm_epsg`, `gnis_default_state`, `lsc_default_ga` | projection + state/legislature for lookups |
 | `toxic_corridor_bbox`, `receiving_water_name` | the industrial receiving-water corridor |

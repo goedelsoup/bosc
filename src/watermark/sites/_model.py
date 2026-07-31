@@ -46,6 +46,13 @@ class SiteEntry(BaseModel):
     map_lat: float | None = None
     map_lon: float | None = None
     map_zoom: int | None = None
+    # The site's economic/administrative county, as it reads in a citation ("Allen County, OH").
+    # Identity, not a config knob: it names the *place* a record was filed in, and it reaches the
+    # frontend through `sites-registry.json` so the ask-index can stamp it as a retrieval facet
+    # (#1691). `None` for a tracking-only entry with no registered profile — an unknown county is
+    # left unstated rather than guessed. `SiteProfile.county_name` back-fills from this (below),
+    # and `watermark sites check` fails when a profile's explicit value disagrees.
+    county: str | None = None
 
 
 _IDENTITY: dict[str, SiteEntry] | None = None
@@ -933,6 +940,8 @@ class SiteProfile(BaseModel):
             data.setdefault("map_view_lon", entry.map_lon)
         if entry.map_zoom is not None:
             data.setdefault("map_view_zoom", entry.map_zoom)
+        if entry.county is not None:
+            data.setdefault("county_name", entry.county)
         return data
 
     @model_validator(mode="after")
@@ -1290,6 +1299,10 @@ class SiteProfile(BaseModel):
     corridor_subjects: tuple[str, ...] = ()
 
     # --- RSEI county (rsei.py) ----------------------------------------------------------
+    # Back-filled from ``data/sites.yaml``'s ``county`` (the SSOT, #1691) — a new profile should
+    # set it there, not here, so the one value also reaches the frontend registry as the
+    # ask-index's ``county`` facet. Still required (not defaulted): a profile whose slug is
+    # unregistered gets no back-fill, and RSEI cannot screen a county it can't name.
     county_name: str
     # Optional per-site economic-unit caveat, appended to the ``EconomicBaseline.note`` by
     # ``economics.baseline.build_baseline``. For a site whose single-county econ unit does not

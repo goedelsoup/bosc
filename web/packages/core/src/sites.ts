@@ -72,6 +72,15 @@ export interface NetworkSite {
   place: string;
   /** Receiving water / basin subline shown under the place. */
   basin: string;
+  /**
+   * The economic/administrative county this site's records are filed in, as it reads in a
+   * citation ("Allen County, OH"). Identity, not a bundle value — it names the *place*, so it
+   * comes from `data/sites.yaml` (which also back-fills the Python `SiteProfile.county_name`,
+   * gated by `watermark sites check`). `null` for a tracking-only entry with no registered
+   * profile: an unknown county is left unstated, never guessed. The ask-index stamps it onto
+   * every retrieval unit as the `county` search facet (#1691).
+   */
+  county: string | null;
   status: SiteStatus;
   /** Can a reader switch into this site's build? Only the live reference site today. */
   selectable: boolean;
@@ -93,7 +102,7 @@ export interface NetworkSite {
 }
 
 // TypeScript-only overlays — stories live here, not in the YAML identity registry (#1027).
-// The YAML drives slug/place/basin/status/selectable/codename/mono/map defaults; stories
+// The YAML drives slug/place/basin/county/status/selectable/codename/mono/map defaults; stories
 // are authored here because they reference story codemnames + prose that aren't site-identity.
 //
 // A story surfaces (in the switcher, the hub, the catalog/atoms, the record backlinks) only when
@@ -136,6 +145,7 @@ export const SITES: readonly NetworkSite[] = sitesRegistry.sites.map(
     mono: entry.mono,
     place: entry.place,
     basin: entry.basin,
+    county: entry.county,
     status: entry.status as SiteStatus,
     selectable: entry.selectable,
     href: entry.slug === "lima" ? SITE_BASE : `/network/${entry.slug}`,
