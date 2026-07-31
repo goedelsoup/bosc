@@ -16,6 +16,7 @@ from pydantic import ValidationError
 
 from watermark.config import Settings
 from watermark.connectors._cache import cache_key
+from watermark.hsg import normalize_hsg
 from watermark.sites import (
     ALLEN_IN_PARCEL_SCHEMA,
     FORT_WAYNE_ZONING_SCHEMA,
@@ -614,6 +615,86 @@ def test_van_wert_parcel_schema_is_agol_cama() -> None:
         }
     )
     assert (FIXTURES / p.connector / f"{key}.json").is_file(), f"van wert param drift: {key}"
+
+    # Param stability for the committed assemblage's OWNER scan too (#1403) — the geojson pull
+    # that produced data/reference/van-wert/parcel-assemblage.geojson replays from its fixture.
+    owner_key = cache_key(
+        {
+            "f": "geojson",
+            "returnGeometry": "true",
+            "where": f"UPPER({p.owner_field}) LIKE '%QTS VAN WERT%'",
+            "outFields": ",".join(p.out_fields),
+            "outSR": "4326",
+            "resultOffset": 0,
+            "resultRecordCount": p.page_size,
+        }
+    )
+    assert (FIXTURES / p.connector / f"{owner_key}.json").is_file(), (
+        f"van wert owner-scan param drift: {owner_key}"
+    )
+
+
+def test_van_wert_hsg_is_ssurgo_verified_dual_not_a_flat_d() -> None:
+    """#1403: the committed campus assemblage let SSURGO run, and it CORRECTED the profile's
+    [inference]. The old flat "D" read the ground right — Great Black Swamp lake-plain clays, and
+    it even named Hoytville — but NRCS rates Hoytville C/D, and a dual group is two drainage
+    conditions rather than a spelling (WS-20/#1620). Collapsing it to the undrained letter is not
+    the safe direction: it inflates the PRE-development curve number of ground that is tile-drained
+    CAUV row crop today, and so understates the pre-to-post delta the screen exists to measure.
+    Guard the dual letter AND the reasoning — a future edit that re-flattens it is the bug this
+    test exists to catch."""
+    s = SITES["van-wert"]
+    assert s.dominant_hsg == "C/D"
+    assert normalize_hsg(s.dominant_hsg) != normalize_hsg("D")  # a dual group, not its letter
+    assert "SSURGO" in s.hsg_citation and "Hoytville" in s.hsg_citation
+    assert "44 of 45" in s.hsg_citation  # the sample the correction rests on
+    # The scenario switch is LIVE here (unlike Sidney's single group) — both conditions resolve.
+    assert (s.pre_drainage_condition, s.post_drainage_condition) == ("drained", "undrained")
+    # The cover knobs the assemblage unblocked — no TODO left on the stormwater scenario.
+    assert (s.pre_cover, s.post_cover, s.developed_pervious_cover) == (
+        "cropland",
+        "developed_campus",
+        "open_space",
+    )
+    # The committed geometry + footprint the SSURGO run and the places domain both read.
+    assert s.parcels_relpath == "reference/van-wert/parcel-assemblage.geojson"
+    assert s.footprint_relpath == "extracted/van-wert/bosc-site-footprint.yaml"
+
+
+def test_van_wert_parcel_assemblage_is_the_qts_holding_not_the_annexation() -> None:
+    """The committed geometry closes the register's deed-grantee [open] (#1403): FIVE parcels, all
+    QTS VAN WERT LLC, 900.59 ac deeded / 901.502 ac planar. Two reconciliations are pinned because
+    they point opposite ways — the holding meets QTS's own quoted 902-ac campus to 0.16%, and falls
+    61.4 ac short of the ~962 ac annexed, so the committed boundary is the OWNERSHIP holding and
+    never the annexation. The provenance also has to keep saying that the four same-day parcels'
+    shared consideration is not summed, and that the Marsh remainder next door is excluded."""
+    fc = json.loads(
+        (REPO_ROOT / "data" / "reference" / "van-wert" / "parcel-assemblage.geojson").read_text()
+    )
+    assert len(fc["features"]) == 5
+    props = {f["properties"]["parcel_id"]: f["properties"] for f in fc["features"]}
+    assert {p["owner"] for p in props.values()} == {"QTS VAN WERT LLC"}
+    anchor = props["17-034718.0100"]
+    assert anchor["acres"] == 221.15 and anchor["planar_acres"] == 221.21
+    assert anchor["last_sale_date"] == "2026-06-18" and anchor["last_sale_amount"] == 110575000
+    assert anchor["last_sale_amount"] == round(anchor["acres"] * 500_000)  # exactly $500k/ac
+    # The other four share one date + one consideration — one multi-parcel deed, never summed.
+    others = [p for k, p in props.items() if k != "17-034718.0100"]
+    assert {p["last_sale_date"] for p in others} == {"2026-06-16"}
+    assert {p["last_sale_amount"] for p in others} == {39117825}
+    prov = fc["bosc:provenance"]
+    assert prov["owner_of_record"] == "QTS VAN WERT LLC"
+    assert prov["total_cama_acres"] == 900.59 and prov["total_planar_acres"] == 901.502
+    assert abs(prov["total_cama_acres"] - 902) / 902 < 0.005  # meets the quoted campus figure
+    assert 962 - prov["total_cama_acres"] > 60  # but NOT the annexation — that gap stays [open]
+    assert any("902" in c and "962" in c for c in prov["caveats"])
+    assert any("NOT added across them" in c for c in prov["caveats"])
+    assert any("19-041272.0000" in c and "EXCLUDED" in c for c in prov["caveats"])
+    # The campus straddles two school districts — the register had only Lincolnview.
+    assert {p["school_district"] for p in props.values()} == {
+        "Lincolnview School District",
+        "Van Wert School District",
+    }
 
 
 def test_miami_parcel_schema_is_agol_cama() -> None:

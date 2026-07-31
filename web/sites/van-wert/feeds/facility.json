@@ -28,7 +28,7 @@
     "cooling_model": "closed_loop_dry",
     "cooling_model_source": "reference",
     "cooling_model_citation": "[reference] operator/developer claim (NOT instrument-confirmed): closed-loop cooling (Danfoss-patented equipment); QTS states the campus 'does not consume water for cooling once operational', characterizing ongoing use as 'about what 4 households use per month' (q.com/data-centers/van-wert; vanwert.org/water-treatment). Same closed-loop pattern that undercut the Urbana water thesis (#1327). Carries an [open] discrepancy on the initial closed-loop fill (~660,000 gal from the City of Van Wert — local press frames it 'annually' while the 2026-06-11 event framed it as a one-time fill); reconciling the fill volume + the still-negotiated water/sewer service agreement is the water-service instrument (#1407) / water-contradiction lead (#1409), not this pin. B2 (#1682) ran the A3 cooling-cycling reconciliation harness (`watermark cooling-reconcile`) on this claim: with no metered makeup (A1 built no Van Wert County withdrawal) and no facility-own blowdown (A2 OHD000001 draft), the outcome is a `gap` that KEEPS this [reference] pin — the ~660k gal figure is a single-source self-report, not an instrument, so it can neither upgrade the source nor re-archetype; the initial-fill open quantity is sharpened into a C2 records request (#1688/#1409). Replace with a documented cooling design when an NPDES/mechanical instrument lands (the OHD000001 draft data-center general permit is not yet linked to the facility by name, #1408).",
-    "parcels_relpath": null,
-    "footprint_relpath": null
+    "parcels_relpath": "reference/van-wert/parcel-assemblage.geojson",
+    "footprint_relpath": "extracted/van-wert/bosc-site-footprint.yaml"
   }
 ]

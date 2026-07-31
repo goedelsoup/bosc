@@ -1,0 +1,145 @@
+# QTS "Van Wert Mega Site" data-center campus (QTS Van Wert LLC) — footprint record for the
+# Van Wert, OH (Town Creek / Little Auglaize · upper Maumee) watershed point. LIKE Sidney's /
+# Troy-Piqua's / Urbana's / Fort Wayne's (and UNLIKE Lima's document-transcribed stormwater-permit
+# footprint), the boundary here is the RECORDED OWNERSHIP holding — the five Van Wert County
+# parcels deeded to QTS Van Wert LLC in June 2026, committed as
+# data/reference/van-wert/parcel-assemblage.geojson. parcel_acres is the GIS-measured planar area;
+# building/impervious/developed stay [open] pending a site-plan / stormwater-permit extraction.
+# Source tags: reference = committed GIS reference dataset; connector = a live public-data read;
+# document = transcribed from a corpus instrument; assumption = a stated modeling input.
+site: >-
+  North of U.S. Route 30 between Stripe Road and Mendon Road, Ridge / Hoaglin / Pleasant Townships
+  as annexed into the City of Van Wert, Van Wert County, OH — the QTS "Van Wert Mega Site"
+  data-center campus, auditor situs addresses 8002 Mendon Rd, Stripe Rd and U.S. Route 127
+  (parcels 17-034718.0000 / .0100 / .0200, 33-047500.0000, 12-034459.0000). Carved by county
+  survey out of the Marsh Foundation's Mega Site tract. #1403 (places) / #1402 (facility),
+  sub-issues of #1267.
+operator: >-
+  QTS Data Centers (QTS Realty Trust, LLC; Overland Park, KS; Blackstone-owned) — publicly named
+  as the end user 2026-05-29. QTS VAN WERT LLC is the sole owner of record on all five parcels
+  ([verified], auditor CAMA). Thor Equities Group / its Form8tion data-center division was the
+  land developer, and the intermediate holder VAN WERT EAST OWNER LLC — on the roll as recently as
+  the 2026-07-10 probe recorded in #1403 — no longer appears anywhere in the county, consistent
+  with the June 2026 conveyance. Neither Thor, Form8tion nor any other nominee holds a Van Wert
+  County parcel today. See data/extracted/van-wert/data-centers.md.
+boundary_basis: >-
+  Recorded ownership holding — the five parcels deeded to QTS Van Wert LLC (four on 2026-06-16 for
+  a recorded $39,117,825, the 221.15-ac anchor on 2026-06-18 for $110,575,000, all warranty
+  deeds), committed as data/reference/van-wert/parcel-assemblage.geojson from the Van Wert County
+  auditor CAMA via the county's AGOL parcel_joinedVWOH layer (the van_wert_gis connector, #421).
+  NOT a surveyed earth-disturbance boundary; the Ohio EPA construction stormwater
+  (NPDES OHC000005 / Rule-5) footprint and the campus site plan are not in the corpus. NOT the
+  annexation boundary either: the City annexed ~962 ac on 2026-05-11 and this holding is 900.59 ac
+  deeded, 61.4 ac (6.4%) short of it — road right-of-way inside the annexed area and non-QTS
+  parcels inside the annexation description are both live explanations and NEITHER is established
+  here, because the ordinances' legal descriptions are not in the corpus (#1401). Against the
+  campus figure QTS itself quotes — 902 acres — the holding reconciles to 0.16%. The five parcels
+  are CONTIGUOUS: their union is a single polygon, not a scattered assemblage. Full reconciliation
+  in the geojson `bosc:provenance` + data/reference/van-wert/README.md.
+
+parcel_acres:
+  value: 901.502
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — UTM-16N (EPSG:32616) planar area of the five recorded QTS Van Wert
+    LLC parcels (watermark.hydrology.geo.parcels_total_acres): 17-034718.0000 363.077 ac,
+    17-034718.0100 221.210, 17-034718.0200 157.913, 12-034459.0000 127.927, 33-047500.0000 31.375.
+    The county CAMA DEEDED acreage sums to 900.59 ac, 0.91 ac (0.10%) lower; the two are NOT
+    reconciled and neither is adjusted to the other — cite the deeded 900.59 ac for the record and
+    this planar figure for area/runoff modeling. CORROBORATION: QTS's own public campus figure is
+    902 acres (q.com/data-centers/van-wert; Data Center Dynamics; VW Independent 2026-05-29), which
+    the deeded total meets to 0.16% — so the operator's quoted acreage is an ownership-scoped
+    number, and this is the first independent instrument to confirm it. [verified] as the auditor's
+    committed geometry.
+  confidence: high
+
+building_footprint_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No campus site plan is in the corpus, and — unlike Troy-Piqua (~700k sq ft disclosed) or
+    Urbana (~460k sq ft reported) — QTS has disclosed NEITHER a gross floor area NOR a per-building
+    area for Van Wert; the only building figure on the record is a count, "up to seven buildings"
+    ([verified], q.com). That absence is exactly why the profile's IT load is an announced-ceiling
+    screening bracket rather than a floor-area screen (#1402). Needs the assembled site-plan /
+    Rule-5 SWPPP extraction (#1401).
+  confidence: null
+
+impervious_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No impervious tabulation on record. Requires the Ohio EPA construction stormwater
+    (NPDES OHC000005 / Rule-5) permit or the campus site plan. Note the stakes here are unusually
+    high for a Van Wert screen: 41.2% of the campus drains to North Spice Run and 38.5% to Marsh
+    Ditch (see receiving_water), both petitioned county ditches, so the post-development runoff
+    lands on the county ditch system rather than on the municipal reach the profile models.
+  confidence: null
+
+developed_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] Total disturbed/developed area is unknown pending the SWPPP / construction stormwater
+    permit; it will be >= impervious_acres once that lands. Groundbreaking is planned for Q4 2026
+    ([reference], VW Independent 2026-05-29) and no campus improvement is yet on the tax record —
+    the assemblage's only improvement value is $25,580 on 17-034718.0000, a farm structure with
+    CAMA year-built 1900.
+  confidence: null
+
+dominant_hsg:
+  value: C/D
+  source: connector
+  citation: >-
+    [verified] USDA NRCS SSURGO via Soil Data Access (SDA), 8x8 grid sample (45 interior points)
+    over parcel-assemblage.geojson (watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8,
+    2026-07-31): C/D 44 pts (97.8%) + D 1 pt (2.2%). The dominant map units are Hoytville silty
+    clay, 0 to 1 percent slopes (40 points) and Hoytville silty clay loam, 0 to 1 percent slopes
+    (1) plus Wabasha silty clay loam (3) — all very poorly drained, all rated C/D; the lone D point
+    is Nappanee silt loam, 0 to 2 percent slopes (somewhat poorly drained). This CORRECTS the prior
+    profile [inference] of a flat "D", and the correction is to the RATING, not to the geology: the
+    inference read the ground right — Great Black Swamp lake-plain clays, and it even named
+    Hoytville — but NRCS rates Hoytville as a DUAL group. C where the field tile is installed and
+    maintained, D in the natural undrained condition (watermark.hsg / WS-20 / #1620). A flat "D"
+    pre-committed the undrained letter for BOTH scenarios, which is not conservative in the
+    direction that matters: it inflates the PRE-development curve number of ground that is
+    demonstrably tile-drained CAUV row crop today, and so understates the pre-to-post delta the
+    screen exists to measure. Recorded verbatim so pre_drainage_condition (drained -> C) and
+    post_drainage_condition (undrained -> D) resolve it per scenario. Contrast Sidney, where the
+    same 8x8 sample returned a SINGLE group and the switch is inert.
+  confidence: high
+
+receiving_water: >-
+  [verified] The campus straddles FOUR county drainages, and the largest is not the one the site
+  profile models. Intersecting the committed boundary with the Van Wert County GIS `Watersheds`
+  layer (services8.arcgis.com/G5sGKRBVtJMunpVA .../Watersheds/FeatureServer/2, read 2026-07-31)
+  splits the 901.5 planar acres as: NORTH SPICE RUN 371.54 ac (41.2%), MARSH DITCH 347.43 ac
+  (38.5%), VAN WERT CORP DITCH 1024 102.81 ac (11.4%), TOWN CREEK 61.88 ac (6.9%); 17.8 ac (2.0%)
+  fall outside the layer's polygons. Per parcel: 17-034718.0100 and .0200 are essentially all
+  North Spice Run, 17-034718.0000 is 316.07 ac Marsh Ditch + 41.46 ac Town Creek,
+  33-047500.0000 is all Marsh Ditch, and 12-034459.0000 is 102.81 ac Van Wert Corp Ditch 1024 +
+  20.43 ac Town Creek. All four are PETITIONED COUNTY DITCHES on the same county layer with their
+  own numbers — North Spice Run #1966 (carrying an easement flag), Marsh Ditch #1592, Town Creek
+  #1391, and Ditch 1024 — which makes the Van Wert County Engineer / ditch-maintenance record the
+  instrument to pull for the campus stormwater path (#1401). THE PROFILE'S FRAMING IS TOO NARROW:
+  `SiteProfile.corridor_name` and `abstraction_gage` treat Town Creek as the receiving reach, and
+  Town Creek takes only 6.9% of this campus. The downstream routing of North Spice Run, Marsh Ditch
+  and Ditch 1024 into the Little Auglaize -> Auglaize -> Maumee is [inference] pending an NHD/NLDI
+  trace, and it is a live lead, not a settled path. DISTINCT from the SANITARY pathway, which the
+  record does not close either: QTS is still "in discussions" over water/sewer service and no
+  facility NPDES number exists (q.com; vanwert.org/water-treatment, [verified]/[open]). This is the
+  CONSTRUCTION/site-runoff pathway.
+
+notes:
+  - 'Holding = 5 parcels / 1 owner (QTS Van Wert LLC) / 900.59 ac CAMA deeded (901.502 ac planar), CONTIGUOUS: 17-034718.0000 (362.23 ac, 8002 Mendon Rd, use 199, CAUV), 17-034718.0100 (221.15 ac, Stripe Rd, use 110), 17-034718.0200 (157.84 ac, 8002 Mendon Rd, use 199), 12-034459.0000 (128.13 ac, U.S. Route 127, use 110), 33-047500.0000 (31.24 ac, Stripe Rd, use 110, CAUV). All [verified] from the Van Wert County auditor CAMA (parcel_joinedVWOH layer 0, read 2026-07-31).'
+  - 'THE ROLL REFRESHED UNDER THE ISSUE. #1403 was written against a 2026-07-10 probe in which the anchor 17-034718.0100 stood in the name of VAN WERT EAST OWNER LLC (a Thor SPE), 221.15 ac, sold 2025-08-22 for $10,394,000, and the issue anticipated "the assemblage to firm up as the roll refreshes". It has: the AGOL item was last modified 2026-07-31T03:52Z and now carries the June 2026 conveyances to QTS Van Wert LLC directly. So the deed grantee the register had as `[open]` ("not surfaced in the news record") is now `[verified]` from the auditor — while the GRANTOR, the recorder instrument numbers, and therefore the Marsh Foundation -> Thor -> QTS chain itself remain `[open]`: this layer carries no grantor field and no deed book/page (#1401).'
+  - 'THE PRICE STEP IS ON THE RECORD AND UNEXPLAINED BY IT. The anchor parcel sold for $10,394,000 (~$47,000/ac) in August 2025 and was conveyed on 2026-06-18 for $110,575,000 — EXACTLY $500,000 x its 221.15 CAMA acres, and a 10.6x step on the same 221.15 acres in ten months. The 2025 figure is `[reference]` to the pre-refresh roll cited in #1403 and is no longer on the live layer. The other four parcels all carry one date (2026-06-16) and one consideration ($39,117,825) across 679.44 ac, which is the signature of a single multi-parcel deed; that amount is recorded verbatim per parcel and deliberately NOT summed across them, so the campus`s total consideration stays `[open]` pending the recorder`s instruments.'
+  - 'ACREAGE — this is the first independent confirmation of the 902-acre campus figure. 900.59 ac deeded against QTS`s quoted 902 ac is 0.16%. Note what it is NOT: it is 61.4 ac short of the ~962 ac annexed on 2026-05-11, and that gap is `[open]` rather than attributed to right-of-way.'
+  - 'TAX DISTRICT: the auditor has all five parcels in Van Wert CORPORATION districts (12, 17, 33), while the county`s published TaxDistrict POLYGON layer still shows them in townships (11-Pleasant, 19-Ridge, 15-Hoaglin) — a currency gap in the polygons, not a contradiction; the roll is the current record. District 33 is absent from that layer`s district table entirely and has EXACTLY ONE parcel countywide, this assemblage`s 31.24-ac Hoaglin tract, so it is a district created after the layer`s vintage. Reading that as the effect of the 2026-05-11 annexation is `[inference]` — the ordinances are not in the corpus (#1401). This is the same shape of finding as Sidney`s zoning-layer hole, with the roll and the polygons swapped.'
+  - 'SCHOOL DISTRICTS — the campus straddles TWO, which the register did not have. 772.46 ac (the four Ridge/Hoaglin parcels) are LINCOLNVIEW and 128.13 ac (12-034459.0000) is VAN WERT CITY. The register carries `[reference]` "property taxes flow to Lincolnview Local School District (though the site is inside Van Wert city limits)"; that is incomplete, and a CRA school-compensation agreement for a project of this payroll size would have to reach BOTH boards, plus Vantage Career Center. Two independent lines agree for the Lincolnview four (the auditor district name carries the "(LV)" suffix; the county SchoolDistrict layer returns Lincolnview at each interior point); for 33-047500.0000 only the spatial join is available.'
+  - 'ZONING is `[verified]` from the public record but NOT from GIS: the City annexed and zoned the site I-2 General Industrial with conditional data-center use by emergency ordinance on 2026-05-11 (VW Independent, 6-0). Van Wert publishes NO zoning REST endpoint anywhere (`SiteProfile.gis_zoning is None`, `zoning_url="TODO"` — map-only/PDF), so unlike Sidney there is no layer to test the parcel against; the ordinance text itself is the instrument (#1401).'
+  - 'FEMA Zone A (SFHA) covers 15.62 ac of the 901.5-ac campus (1.7%) per the county`s own FloodPlain layer. `[verified]` as the county`s published mapping; the site`s authoritative floodzone connector is the national NFHL layer.'
+  - 'ADJACENT LEAD, excluded from the holding (not QTS-owned, no instrument ties it to the campus): the Marsh Foundation still holds 19-041272.0000 (200.83 ac, Stripe Rd, ~69 m from this boundary across Stripe Road), 12-031248.0200 (93.62 ac) and 12-031252.0000 (49.35 ac). Reading those as the remainder of the register`s ~1,500-ac Mega Site is `[inference]`. No parcel that actually ADJOINS the campus is Marsh- or QTS-owned — the 26 abutters are farm and residential holdings. There is no Sidney-style same-day utility conveyance next door: no AEP Ohio / Ohio Power parcel appears in the assemblage`s neighbourhood, so the campus substation site is `[open]`.'
+  - 'This record commits the boundary + measured acreage + the SSURGO-validated HSG so the onboard ssurgo-hsg step no longer skips (it had been skipped for want of committed parcel geometry), and it sets the pre_cover/post_cover/developed_pervious_cover scenario knobs the profile had carried as TODO "pending an identified site".'
+  - 'Building/impervious/developed stay `[open]`: QTS disclosed a building COUNT ("up to seven") but no floor area at all, and no grading, Rule-5 construction stormwater or site-plan instrument is in the corpus.'
