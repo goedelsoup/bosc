@@ -23,9 +23,9 @@ import yaml
 from numpy.typing import NDArray
 
 from watermark.config import Settings, get_settings
+from watermark.hsg import HSG_LETTERS as _HSG
+from watermark.hsg import is_dual_hsg, normalize_hsg
 from watermark.hydrology.solver.parameters import initial_abstraction_ratio
-
-_HSG = ("A", "B", "C", "D")
 
 
 @lru_cache(maxsize=4)
@@ -55,14 +55,29 @@ def cn_for(
     *,
     settings: Settings | None = None,
 ) -> float:
-    """Curve number (AMC-II) for one land cover on one hydrologic soil group."""
+    """Curve number (AMC-II) for one land cover on one hydrologic soil group.
+
+    ``hsg`` must be a **resolved** single group A-D. A dual group (``B/D``) is refused rather
+    than sliced to its first letter: its two letters are the drained and undrained conditions
+    of the same soil, and quietly taking the drained one here picked the lower curve number
+    for every scenario (WS-20 / #1620). Resolve it against the scenario's drainage condition
+    with :func:`watermark.hsg.resolve_hsg` first.
+    """
     settings = settings or get_settings()
     table = _load_table(str(settings.data_dir))
     code = _resolve_class(table, land_cover)
     classes = table.get("classes", {})
     row = classes.get(code) or classes.get(str(code))
-    group = hsg.strip().upper()[:1]
-    if row is None or group not in _HSG:
+    group = normalize_hsg(hsg)
+    if group not in _HSG:
+        hint = (
+            " — a dual group carries two drainage conditions; resolve it with "
+            "watermark.hsg.resolve_hsg(group, condition) before asking for a curve number"
+            if is_dual_hsg(group)
+            else ""
+        )
+        raise KeyError(f"no CN for class {code} / HSG {hsg!r}{hint}")
+    if row is None:
         raise KeyError(f"no CN for class {code} / HSG {hsg!r}")
     return float(row[group])
 

@@ -8,9 +8,19 @@ pre-development peak" stormwater test.
 
 Grounding: the footprint area is document-sourced (the recorded Bistrozzi parcels);
 the design storm and the hydrologic soil group are connector-sourced (NOAA Atlas-14;
-USDA SSURGO via SDA, the footprint's grid-sampled dominant HSG), each falling back to a
-cited value offline (HSG -> the "C" assumption). Land cover is a cited assumption (prior
-use "Neff Farms" -> cropland). Curve numbers come from the cited TR-55 table.
+USDA SSURGO via SDA, the footprint's grid-sampled dominant HSG), each falling back to the
+site profile's cited value offline. Land cover is a cited assumption (prior use "Neff
+Farms" -> cropland). Curve numbers come from the cited TR-55 table.
+
+Where SSURGO returns a **dual** group (``B/D`` here), which of its two letters a scenario
+runs on is an explicit, provenance-tagged switch, not a first-character slice (WS-20 /
+#1620): the first letter applies only where field tile is installed and maintained. Lima's
+pre-development cropland is tile-drained, but construction severs or reroutes the tile it
+does not maintain, so the developed ground runs the natural, undrained class — the
+conservative design basis, and worth several curve-number points on a lake-plain clay.
+``_resolve_hsg`` builds that resolution once into an
+:class:`~watermark.hydrology.model.HsgDrainageBasis`; the per-site conditions live on
+``SiteProfile.pre_drainage_condition`` / ``post_drainage_condition``.
 """
 
 from __future__ import annotations
@@ -23,6 +33,7 @@ import numpy as np
 import yaml
 
 from watermark.config import Settings, get_settings
+from watermark.hsg import DUAL_HSG_RULE, DrainageCondition, hsg_code, is_dual_hsg, resolve_hsg
 from watermark.hydrology import geo, network
 from watermark.hydrology.connectors._cache import HydroOfflineError
 from watermark.hydrology.connectors.noaa_atlas14 import design_storm
@@ -32,6 +43,7 @@ from watermark.hydrology.model import (
     CampusDischargeScreen,
     DesignStorm,
     DischargePeak,
+    HsgDrainageBasis,
     HydroFinding,
     Hydrograph,
     NetworkNode,
@@ -108,7 +120,7 @@ def _scenario_tc_hr(impervious_fraction: float, *, settings: Settings) -> float:
 def _post_cover_parts(
     total_acres: float,
     footprint: SiteFootprint,
-    hsg_letter: str,
+    hsg: HsgDrainageBasis,
     *,
     settings: Settings,
 ) -> tuple[list[tuple[float, float]], str]:
@@ -121,21 +133,34 @@ def _post_cover_parts(
     (each cover's CN run separately, runoff depths area-weighted — ``simulate_runoff(cn_parts=)``),
     which does not under-predict runoff the way a single composite CN does once the ~34%
     impervious footprint passes TR-55's ~30% directly-connected threshold (#1611).
+
+    The two **developed** parts run on the post-development drainage condition — construction
+    severs or reroutes the field tile under them — while the undeveloped remainder keeps the
+    pre-development one along with its prior cover: it is still being farmed, and asserting that
+    site work also severed the tile under ground nobody touched would be inventing a fact
+    (WS-20 / #1620). On a single-group site the two conditions resolve to the same letter and
+    this distinction is inert.
     """
     prof = active_profile(settings)
     imperv = max(0.0, min(footprint.impervious_acres.value, total_acres))
     developed = max(0.0, min(footprint.developed_acres.value, total_acres))
     dev_pervious = max(0.0, developed - imperv)
     remainder = max(0.0, total_acres - imperv - dev_pervious)
+    post_letter, pre_letter = hsg.post_letter, hsg.pre_letter
     parts = [
-        (imperv, cn_for(prof.post_cover, hsg_letter, settings=settings)),
-        (dev_pervious, cn_for(prof.developed_pervious_cover, hsg_letter, settings=settings)),
-        (remainder, cn_for(prof.pre_cover, hsg_letter, settings=settings)),
+        (imperv, cn_for(prof.post_cover, post_letter, settings=settings)),
+        (dev_pervious, cn_for(prof.developed_pervious_cover, post_letter, settings=settings)),
+        (remainder, cn_for(prof.pre_cover, pre_letter, settings=settings)),
     ]
     breakdown = (
         f"{imperv:.0f} ac impervious + {dev_pervious:.0f} ac developed-pervious + "
         f"{remainder:.0f} ac undeveloped (of {total_acres:.0f} ac)"
     )
+    if hsg.dual:
+        breakdown += (
+            f"; developed ground on HSG {post_letter} ({hsg.post_condition}), the undeveloped "
+            f"remainder on HSG {pre_letter} ({hsg.pre_condition})"
+        )
     return parts, breakdown
 
 
@@ -155,11 +180,11 @@ def run_storm_scenario(
     area = ProvenancedValue.from_document(
         acres, "acre", citation=f"{path.name} (recorded Bistrozzi parcel footprints)"
     )
-    hsg_letter, hsg = _resolve_hsg(path, settings=settings, live=live)
+    hsg = _resolve_hsg(path, settings=settings, live=live)
 
     storm = _resolve_storm(return_period_yr, settings=settings, live=live)
 
-    pre_cn = cn_for(prof.pre_cover, hsg_letter, settings=settings)
+    pre_cn = cn_for(prof.pre_cover, hsg.pre_letter, settings=settings)
     # Calibrate the post-development cover to the ASWCD-declared footprint when committed:
     # only ~115 of ~344 ac is permanently impervious, so the post runoff is the TR-55
     # weighted-runoff of the impervious/developed-pervious/undeveloped split (each cover's CN
@@ -169,12 +194,12 @@ def run_storm_scenario(
     footprint = load_site_footprint(settings)
     post_parts: list[tuple[float, float]] | None
     if footprint is not None:
-        post_parts, _ = _post_cover_parts(acres, footprint, hsg_letter, settings=settings)
+        post_parts, _ = _post_cover_parts(acres, footprint, hsg, settings=settings)
         post_cn = composite_cn(post_parts)
         post_imperv_frac = min(footprint.impervious_acres.value, acres) / acres if acres else 0.0
     else:
         post_parts = None
-        post_cn = cn_for(prof.post_cover, hsg_letter, settings=settings)
+        post_cn = cn_for(prof.post_cover, hsg.post_letter, settings=settings)
         post_imperv_frac = 1.0  # blanket near-impervious buildout — the shortest Tc
     depth = storm.depth.value
     # Pre-development is fully pervious (impervious fraction 0 -> the longest Tc); the post
@@ -206,11 +231,20 @@ def run_storm_scenario(
         )
 
     runoff = StormRunoff(
-        name="BOSC data-center campus", area=area, hsg=hsg, storm=storm, pre=pre, post=post
+        name="BOSC data-center campus",
+        area=area,
+        hsg=hsg.pre_hsg,
+        hsg_drainage=hsg,
+        storm=storm,
+        pre=pre,
+        post=post,
     )
     log.info(
         "hydro.storm",
         acres=round(acres, 1),
+        hsg=hsg.group,
+        pre_hsg=hsg.pre_letter,
+        post_hsg=hsg.post_letter,
         pre_cn=pre_cn,
         post_cn=post_cn,
         depth_in=depth,
@@ -219,37 +253,64 @@ def run_storm_scenario(
     return runoff, _storm_findings(runoff)
 
 
-def _resolve_hsg(
-    footprint_path: Path, *, settings: Settings, live: bool
-) -> tuple[str, ProvenancedValue]:
-    """Dominant HSG over the footprint from SSURGO (live), else the cited "C" assumption.
+def _resolve_hsg(footprint_path: Path, *, settings: Settings, live: bool) -> HsgDrainageBasis:
+    """The dominant HSG over the footprint, resolved per scenario's drainage condition.
 
-    Returns ``(letter, code)`` where ``letter`` is the single A-D group fed to ``cn_for``
-    (a dual group like "B/D" resolves to its drained first letter — the tile-drained
-    lake-plain / engineered-drainage case) and ``code`` is the 1-4 HSG index, provenance
-    tagged ``connector`` when sourced live, ``assumption`` on the offline fallback.
+    Sourced from SSURGO when live, else the site profile's cited assumption — either way the
+    group is carried **verbatim** (``"B/D"``) and the drained-vs-undrained choice is made here,
+    explicitly, once per scenario (WS-20 / #1620). The pre-development condition
+    (``SiteProfile.pre_drainage_condition``, default ``drained``) and the post-development one
+    (``post_drainage_condition``, default ``undrained``) each yield a single A-D letter for
+    ``cn_for``, tagged with where the soil rating came from *and* why that condition applies.
+
+    The two coded values are provenance-tagged ``connector`` when the rating was sourced live
+    and ``assumption`` on the profile fallback; the drainage condition itself is always a
+    stated modeling assumption, named in the citation, never presented as a survey finding.
     """
+    prof = active_profile(settings)
+    group = prof.dominant_hsg
+    dual_fraction: float | None = None
+    rating = ProvenancedValue.assume(0.0, "hsg_code", why=prof.hsg_citation)
     if live:
         try:
             survey = dominant_hsg(footprint_path, settings=settings)
-            letter = survey.hsg_letter
+            group = survey.dominant_hsg
+            dual_fraction = survey.dual_fraction
             shares = ", ".join(f"{d.hsg} {d.fraction:.0%}" for d in survey.distribution)
-            code = ProvenancedValue.from_connector(
-                float("ABCD".index(letter) + 1),
+            rating = ProvenancedValue.from_connector(
+                0.0,
                 "hsg_code",
                 citation=(
-                    f"SSURGO dominant HSG {survey.dominant_hsg} ({shares}) over "
+                    f"SSURGO dominant HSG {group} ({shares}) over "
                     f"{survey.n_points} footprint grid points — {survey.source}"
                 ),
             )
-            return letter, code
         except (HydroOfflineError, SsurgoError) as exc:
             log.info("hydro.storm.hsg_fallback", error=str(exc).splitlines()[0])
-    prof = active_profile(settings)
-    code = ProvenancedValue.assume(
-        float("ABCD".index(prof.dominant_hsg) + 1), "hsg_code", why=prof.hsg_citation
+
+    dual = is_dual_hsg(group)
+
+    def _resolved(condition: DrainageCondition, scenario: str) -> ProvenancedValue:
+        letter = resolve_hsg(group, condition)
+        why = (
+            f"{scenario} runs hydrologic soil group {letter} — the {condition} letter of the "
+            f"dual group {group}. {rating.citation}"
+            if dual
+            else f"{scenario} runs hydrologic soil group {letter} (not a dual group, so the "
+            f"{condition} condition does not change it). {rating.citation}"
+        )
+        return rating.model_copy(update={"value": hsg_code(letter), "citation": why})
+
+    return HsgDrainageBasis(
+        group=group,
+        dual=dual,
+        dual_fraction=dual_fraction,
+        pre_condition=prof.pre_drainage_condition,
+        post_condition=prof.post_drainage_condition,
+        pre_hsg=_resolved(prof.pre_drainage_condition, "Pre-development"),
+        post_hsg=_resolved(prof.post_drainage_condition, "Post-development"),
+        basis=f"{DUAL_HSG_RULE} {prof.drainage_condition_citation}",
     )
-    return prof.dominant_hsg, code
 
 
 def _resolve_storm(return_period_yr: int, *, settings: Settings, live: bool) -> DesignStorm:
@@ -516,12 +577,14 @@ def screen_campus_discharge(
     prof = active_profile(settings)
     parcels = _parcels_path(settings)
     acres = geo.parcels_total_acres(parcels, settings=settings)
-    hsg_letter, hsg = _resolve_hsg(parcels, settings=settings, live=live)
+    hsg = _resolve_hsg(parcels, settings=settings, live=live)
 
-    pre_cn = cn_for(prof.pre_cover, hsg_letter, settings=settings)
-    post_parts, breakdown = _post_cover_parts(acres, footprint, hsg_letter, settings=settings)
+    pre_cn = cn_for(prof.pre_cover, hsg.pre_letter, settings=settings)
+    post_parts, breakdown = _post_cover_parts(acres, footprint, hsg, settings=settings)
     post_cn = composite_cn(post_parts)  # composite summary; runoff uses the parts (weighted-runoff)
-    full_cn = cn_for(prof.post_cover, hsg_letter, settings=settings)
+    # The full-buildout bound develops the WHOLE parcel, so every acre of it — remainder
+    # included — sits under the post-development drainage condition.
+    full_cn = cn_for(prof.post_cover, hsg.post_letter, settings=settings)
 
     # Tc shortens with imperviousness: pre is pervious (fraction 0), the as-permitted post
     # runs at its declared impervious share, and the full-buildout bound is blanket-impervious
@@ -644,7 +707,8 @@ def screen_campus_discharge(
         ),
         impervious_acres=footprint.impervious_acres,
         developed_acres=footprint.developed_acres,
-        hsg=hsg,
+        hsg=hsg.pre_hsg,
+        hsg_drainage=hsg,
         pre_cn=round(pre_cn, 1),
         post_cn_as_permitted=round(post_cn, 1),
         post_cn_full_buildout=round(full_cn, 1),
@@ -668,7 +732,11 @@ def screen_campus_discharge(
             "discharges straight to the 60-inch outfall."
         ),
         method=(
-            "Tier-0 SCS-CN screening over the measured parcel footprint; post-development "
+            "Tier-0 SCS-CN screening over the measured parcel footprint; the dominant "
+            f"hydrologic soil group {hsg.group} is resolved per scenario to HSG "
+            f"{hsg.pre_letter} pre-development ({hsg.pre_condition}) and HSG {hsg.post_letter} "
+            f"on developed post-development ground ({hsg.post_condition}) — an explicit "
+            "drainage-condition switch, see caveats; post-development "
             "runoff uses the TR-55 weighted-runoff method (each ASWCD-declared cover's CN run "
             "separately over the impervious/developed-pervious/undeveloped split, runoff depths "
             "area-weighted; the reported post CN is the area-weighted composite summary) — "
@@ -712,7 +780,58 @@ def screen_campus_discharge(
             _peak_factor_caveat(
                 resolved_peak_factor, prof.uh_peak_factor, design_post, design_post_flat
             ),
+            _drainage_condition_caveat(hsg, acres, footprint, settings=settings),
         ],
+    )
+
+
+def _drainage_condition_caveat(
+    hsg: HsgDrainageBasis,
+    acres: float,
+    footprint: SiteFootprint,
+    *,
+    settings: Settings,
+) -> str:
+    """State the dual-HSG drainage switch and bracket the composite CN it produced.
+
+    The screen picks one condition per scenario; this says which, why, and — the part a
+    reviewer actually needs — what the *other* choices would have given on this footprint's
+    own numbers. Both ends are recomputed with the same cover split, so the bracket is the
+    switch's sensitivity alone, not a second model.
+    """
+    if not hsg.dual:
+        exposure = (
+            f" {hsg.dual_fraction:.0%} of the sampled footprint is nonetheless rated into a "
+            "dual group, and that share runs a full class wetter undrained."
+            if hsg.dual_fraction
+            else ""
+        )
+        return (
+            f"Hydrologic soil group {hsg.group} is a single class, so the drained/undrained "
+            f"dual-group switch does not bind here: both scenarios run HSG {hsg.pre_letter}."
+            + exposure
+        )
+
+    def _composite(condition: DrainageCondition) -> float:
+        pinned = hsg.model_copy(update={"pre_condition": condition, "post_condition": condition})
+        parts, _ = _post_cover_parts(acres, footprint, pinned, settings=settings)
+        return composite_cn(parts)
+
+    as_modeled = composite_cn(_post_cover_parts(acres, footprint, hsg, settings=settings)[0])
+    return (
+        f"SSURGO rates this footprint into the DUAL group {hsg.group}"
+        + (f" over {hsg.dual_fraction:.0%} of the sampled points" if hsg.dual_fraction else "")
+        + f", whose two letters are two drainage conditions of the same soil, not a spelling. "
+        f"{DUAL_HSG_RULE} This screen runs pre-development on HSG {hsg.pre_letter} "
+        f"({hsg.pre_condition}) and developed post-development ground on HSG {hsg.post_letter} "
+        f"({hsg.post_condition}) — a stated modeling switch, not a survey finding. It is the "
+        f"single largest soils assumption in the post CN: the same cover split gives composite "
+        f"CN {_composite('drained'):.1f} if every acre stayed drained and "
+        f"{_composite('undrained'):.1f} if every acre — including the undeveloped remainder, "
+        f"which this screen keeps farmed and tiled — went undrained, against the "
+        f"{as_modeled:.1f} reported. Whether this specific field's tile survives construction "
+        "is not in the record; a drainage plan that showed it would move the number within "
+        "that bracket."
     )
 
 

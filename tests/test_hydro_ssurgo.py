@@ -61,7 +61,13 @@ def test_dominant_hsg_from_fixture(hydro_settings: Settings) -> None:
     # The recorded SSURGO grid sample: dual B/D lowlands dominate, upland B second —
     # the cited "C" assumption is not what SSURGO shows for this footprint.
     assert survey.dominant_hsg == "B/D"
-    assert survey.hsg_letter == "B"  # cn_for input: a dual group reads as its drained letter
+    # WS-20: the connector reports the group verbatim and has no default condition — the caller
+    # states which one it is modeling, and the two letters are materially different soils.
+    assert survey.dominant_is_dual is True
+    assert survey.letter_for("drained") == "B"
+    assert survey.letter_for("undrained") == "D"
+    # 17 of 31 points (B/D 16 + C/D 1) are dual-rated — the share the switch moves.
+    assert survey.dual_fraction == pytest.approx(0.548, abs=0.01)
     assert survey.n_points == 31
     groups = {d.hsg for d in survey.distribution}
     assert {"B/D", "B"} <= groups
@@ -188,9 +194,11 @@ def test_storm_hsg_falls_back_to_assumption(
         raise ssurgo.SsurgoError("no soil data")
 
     monkeypatch.setattr(stormwater, "dominant_hsg", _boom)
-    letter, code = stormwater._resolve_hsg(
+    basis = stormwater._resolve_hsg(
         stormwater._parcels_path(hydro_settings), settings=hydro_settings, live=True
     )
-    assert letter == "C"
-    assert code.source == "assumption"
-    assert code.value == pytest.approx(3.0)  # HSG C -> code 3
+    assert basis.group == "C"
+    assert basis.dual is False  # a single group — the drainage switch doesn't bind
+    assert basis.pre_letter == basis.post_letter == "C"
+    assert basis.pre_hsg.source == "assumption"
+    assert basis.pre_hsg.value == pytest.approx(3.0)  # HSG C -> code 3

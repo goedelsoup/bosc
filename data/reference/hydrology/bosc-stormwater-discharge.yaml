@@ -24,33 +24,71 @@ hsg:
   value: 2.0
   unit: hsg_code
   source: connector
-  citation: SSURGO dominant HSG B/D (B/D 52%, B 39%, C 3%, C/D 3%, D 3%) over 31 footprint
-    grid points — USDA NRCS SSURGO via Soil Data Access (SDA) Tabular REST
+  citation: Pre-development runs hydrologic soil group B — the drained letter of the
+    dual group B/D. SSURGO dominant HSG B/D (B/D 52%, B 39%, C 3%, C/D 3%, D 3%) over
+    31 footprint grid points — USDA NRCS SSURGO via Soil Data Access (SDA) Tabular
+    REST
   confidence: high
+hsg_drainage:
+  group: B/D
+  dual: true
+  dual_fraction: 0.548
+  pre_condition: drained
+  post_condition: undrained
+  pre_hsg:
+    value: 2.0
+    unit: hsg_code
+    source: connector
+    citation: Pre-development runs hydrologic soil group B — the drained letter of
+      the dual group B/D. SSURGO dominant HSG B/D (B/D 52%, B 39%, C 3%, C/D 3%, D
+      3%) over 31 footprint grid points — USDA NRCS SSURGO via Soil Data Access (SDA)
+      Tabular REST
+    confidence: high
+  post_hsg:
+    value: 4.0
+    unit: hsg_code
+    source: connector
+    citation: Post-development runs hydrologic soil group D — the undrained letter
+      of the dual group B/D. SSURGO dominant HSG B/D (B/D 52%, B 39%, C 3%, C/D 3%,
+      D 3%) over 31 footprint grid points — USDA NRCS SSURGO via Soil Data Access
+      (SDA) Tabular REST
+    confidence: high
+  basis: 'USDA NRCS, National Engineering Handbook Part 630 Ch. 7 ''Hydrologic Soil
+    Groups'' / TR-55 Ch. 2: a dual group (A/D, B/D, C/D) is assigned only to a soil
+    that is group D in its natural condition and that can be drained. The first letter
+    is the group where artificial drainage is installed and maintained; the second
+    is the natural, undrained condition. Stated Tier-0 modeling basis (WS-20). Pre-development
+    runs the DRAINED letter: the prior cover is tile-drained cropland, which is the
+    installed-and-maintained condition TR-55 requires for the drained class. Post-development
+    runs the UNDRAINED letter: site work severs or reroutes field tile it does not
+    then maintain, so the soil''s natural group is the conservative design basis.
+    Neither is a fact about a particular field''s tile — a site whose record shows
+    otherwise overrides both on its SiteProfile with its own citation.'
 pre_cn: 78.0
-post_cn_as_permitted: 80.6
-post_cn_full_buildout: 92.0
+post_cn_as_permitted: 85.2
+post_cn_full_buildout: 95.0
 cover_breakdown: 115 ac impervious + 80 ac developed-pervious + 145 ac undeveloped
-  (of 340 ac)
+  (of 340 ac); developed ground on HSG D (undrained), the undeveloped remainder on
+  HSG B (drained)
 peaks:
 - return_period_yr: 10
   depth_in: 3.58
   pre_peak_cfs: 290.0
-  post_peak_cfs: 380.0
-  full_buildout_peak_cfs: 930.0
-  post_peak_wet_cfs: 550.0
+  post_peak_cfs: 460.0
+  full_buildout_peak_cfs: 1000.0
+  post_peak_wet_cfs: 590.0
 - return_period_yr: 25
   depth_in: 4.25
   pre_peak_cfs: 390.0
-  post_peak_cfs: 500.0
-  full_buildout_peak_cfs: 1100.0
-  post_peak_wet_cfs: 680.0
+  post_peak_cfs: 580.0
+  full_buildout_peak_cfs: 1200.0
+  post_peak_wet_cfs: 720.0
 - return_period_yr: 100
   depth_in: 5.39
   pre_peak_cfs: 570.0
-  post_peak_cfs: 710.0
+  post_peak_cfs: 800.0
   full_buildout_peak_cfs: 1500.0
-  post_peak_wet_cfs: 900.0
+  post_peak_wet_cfs: 940.0
 design_return_period_yr: 25
 outfall_diameter_in:
   value: 60.0
@@ -81,7 +119,7 @@ receiving_note: 'Dug Run: cited 7Q10 0.78 cfs; Warmwater Habitat; impaired (aqua
   a cited dilution violation. A storm peak many times the design low flow is a channel-stability
   / erosion signal — corroborated by the 2026-06-05 ''check the outlet ... not releasing
   sediment'' inspection note — distinct from continuous-effluent dilution.'
-peak_to_7q10_ratio: 641.0
+peak_to_7q10_ratio: 744.0
 detention_design_shown: false
 basin_chronology_note: The 95% SPS grading sheet shows NO detention/retention storage
   (lma1a.storm-inventory.yaml); the ESC inspections show basins under construction
@@ -102,31 +140,34 @@ routed_discharge:
       an UPPER bound on outfall->confluence travel — the outfall''s entry point on
       Dug Run is not in the record'
     confidence: low
-  at_outfall_peak_cfs: 500.0
+  at_outfall_peak_cfs: 580.0
   at_outfall_time_to_peak_hr: 12.6
-  routed_peak_cfs: 400.0
-  routed_time_to_peak_hr: 13.9
-  attenuation_pct: 19.94
-  lag_hr: 1.3
+  routed_peak_cfs: 470.0
+  routed_time_to_peak_hr: 13.8
+  attenuation_pct: 19.78
+  lag_hr: 1.2
   method: Constant-parameter Muskingum-Cunge (watermark.hydrology.solver.routing)
     of the as-permitted post-development outfall hydrograph down the committed reaches.yaml
     Dug Run channel to the Ottawa confluence; reach length/slope/geometry are stated
     Tier-0 assumptions (reaches.yaml), not a calibrated HEC-RAS model.
-method: Tier-0 SCS-CN screening over the measured parcel footprint; post-development
-  runoff uses the TR-55 weighted-runoff method (each ASWCD-declared cover's CN run
-  separately over the impervious/developed-pervious/undeveloped split, runoff depths
-  area-weighted; the reported post CN is the area-weighted composite summary) — compositing
-  a single CN under-predicts runoff once the ~34% impervious footprint passes TR-55's
-  ~30% directly-connected threshold; time of concentration shortens with imperviousness
-  (pre 1 hr -> as-permitted 0.779882 hr -> full-buildout 0.35 hr); peaks are AMC-II
-  (average antecedent moisture) with a wet-antecedent (AMC-III) conservative bound
-  on the as-permitted post peak; the design rainfall is the NRCS Type-II 24-hr distribution
-  built at its published 6-minute resolution (NEH-630 Ch. 4 630.0407) and the unit
-  hydrograph runs at the SCS unit duration D <= 0.133*Tc on the peak factor 484; outfall
-  capacity = Manning full-flow (n=0.013) across an assumed slope band; receiving 7Q10
-  cited from the OEPA NPDES fact sheet (2PH00006). The receiving-water peak is additionally
-  routed down the cited reach chain to the Ottawa confluence (Tier-0 Muskingum-Cunge;
-  see routed_discharge) so it reflects reach travel, not only the at-outfall peak.
+method: Tier-0 SCS-CN screening over the measured parcel footprint; the dominant hydrologic
+  soil group B/D is resolved per scenario to HSG B pre-development (drained) and HSG
+  D on developed post-development ground (undrained) — an explicit drainage-condition
+  switch, see caveats; post-development runoff uses the TR-55 weighted-runoff method
+  (each ASWCD-declared cover's CN run separately over the impervious/developed-pervious/undeveloped
+  split, runoff depths area-weighted; the reported post CN is the area-weighted composite
+  summary) — compositing a single CN under-predicts runoff once the ~34% impervious
+  footprint passes TR-55's ~30% directly-connected threshold; time of concentration
+  shortens with imperviousness (pre 1 hr -> as-permitted 0.779882 hr -> full-buildout
+  0.35 hr); peaks are AMC-II (average antecedent moisture) with a wet-antecedent (AMC-III)
+  conservative bound on the as-permitted post peak; the design rainfall is the NRCS
+  Type-II 24-hr distribution built at its published 6-minute resolution (NEH-630 Ch.
+  4 630.0407) and the unit hydrograph runs at the SCS unit duration D <= 0.133*Tc
+  on the peak factor 484; outfall capacity = Manning full-flow (n=0.013) across an
+  assumed slope band; receiving 7Q10 cited from the OEPA NPDES fact sheet (2PH00006).
+  The receiving-water peak is additionally routed down the cited reach chain to the
+  Ottawa confluence (Tier-0 Muskingum-Cunge; see routed_discharge) so it reflects
+  reach travel, not only the at-outfall peak.
 caveats:
 - Screening-grade — the receiving-water peak is a Tier-0 Muskingum-Cunge reach route
   on stated reach assumptions (reaches.yaml), not a calibrated HEC-RAS model or a
@@ -155,8 +196,22 @@ caveats:
   default; no per-site factor is declared on `SiteProfile.uh_peak_factor`. The factor
   is a TERRAIN property, not a universal constant: NEH-630 Ch. 16 spans ~100 (wetland
   storage) through 300 (flat/swampy) to ~600 (steep). The published flat end, 300,
-  would put the design-storm post-development peak at 350 cfs instead of 500 (~30%
+  would put the design-storm post-development peak at 410 cfs instead of 580 (~29%
   lower). Runoff VOLUME — and so the detention deficit — is unchanged by the peak
   factor; only the rate is. This is the published sensitivity BRACKET around the resolved
   factor, not a correction to it: moving a site off its resolved factor needs a calibrated
   or cited terrain basis for that catchment, recorded on the profile.'
+- 'SSURGO rates this footprint into the DUAL group B/D over 55% of the sampled points,
+  whose two letters are two drainage conditions of the same soil, not a spelling.
+  USDA NRCS, National Engineering Handbook Part 630 Ch. 7 ''Hydrologic Soil Groups''
+  / TR-55 Ch. 2: a dual group (A/D, B/D, C/D) is assigned only to a soil that is group
+  D in its natural condition and that can be drained. The first letter is the group
+  where artificial drainage is installed and maintained; the second is the natural,
+  undrained condition. This screen runs pre-development on HSG B (drained) and developed
+  post-development ground on HSG D (undrained) — a stated modeling switch, not a survey
+  finding. It is the single largest soils assumption in the post CN: the same cover
+  split gives composite CN 80.6 if every acre stayed drained and 89.9 if every acre
+  — including the undeveloped remainder, which this screen keeps farmed and tiled
+  — went undrained, against the 85.2 reported. Whether this specific field''s tile
+  survives construction is not in the record; a drainage plan that showed it would
+  move the number within that bracket.'

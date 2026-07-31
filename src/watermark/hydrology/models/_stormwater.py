@@ -6,6 +6,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
+from watermark.hsg import DrainageCondition, resolve_hsg
 from watermark.hydrology.models._core import ProvenancedValue
 
 
@@ -90,6 +91,47 @@ class Hydrograph(BaseModel):
     tier: Literal["tier0"] = "tier0"
 
 
+class HsgDrainageBasis(BaseModel):
+    """Which letter of a dual hydrologic soil group each scenario runs on (WS-20 / #1620).
+
+    SSURGO rates a drainable, naturally-``D`` soil into a **dual** group — ``B/D``, ``C/D`` —
+    where the first letter is the group where field tile is installed and maintained and the
+    second is the natural, undrained condition. Which one a scenario uses is a modeling
+    decision worth several curve-number points (Lima's ``B/D``: cropland CN 78 drained, 89
+    undrained), so it is recorded here as an explicit, provenance-tagged pair rather than
+    taken silently from the first character of the group string.
+
+    ``pre_hsg`` / ``post_hsg`` are the resolved groups as coded values (A=1…D=4) carrying the
+    citation for *why that condition* — so a reader can see both the soil survey and the
+    drainage assumption that turned it into a curve number. Identical for a site whose
+    dominant group is a single class: only naturally-``D`` soils are ever dual-classed.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    group: str  # the verbatim dominant group ("B/D"), never pre-collapsed
+    dual: bool  # True when `group` carries both conditions
+    # Share of the sampled footprint in *any* dual group — how much ground the switch moves,
+    # which the dominant group alone hides. None when the group came from the profile
+    # assumption rather than a survey (no distribution to measure).
+    dual_fraction: float | None = None
+    pre_condition: DrainageCondition
+    post_condition: DrainageCondition
+    pre_hsg: ProvenancedValue  # hsg_code of the pre-development scenario's resolved group
+    post_hsg: ProvenancedValue  # hsg_code of the post-development scenario's resolved group
+    basis: str = ""  # the published dual-class rule + this site's stated drainage assumption
+
+    @property
+    def pre_letter(self) -> str:
+        """The single A-D group the pre-development scenario runs on — the ``cn_for`` input."""
+        return resolve_hsg(self.group, self.pre_condition)
+
+    @property
+    def post_letter(self) -> str:
+        """The single A-D group the post-development scenario runs on."""
+        return resolve_hsg(self.group, self.post_condition)
+
+
 class StormRunoff(BaseModel):
     """Pre- vs post-development runoff for a design storm over one footprint.
 
@@ -103,7 +145,10 @@ class StormRunoff(BaseModel):
 
     name: str
     area: ProvenancedValue  # acres
-    hsg: ProvenancedValue  # hydrologic soil group as a coded value (A=1..D=4) + citation
+    hsg: ProvenancedValue  # PRE-development resolved group as a coded value (A=1..D=4)
+    # The dual-group drainage switch behind `hsg` (WS-20 / #1620): the verbatim survey group
+    # and the condition each scenario runs on. Optional so pre-#1620 committed artifacts load.
+    hsg_drainage: HsgDrainageBasis | None = None
     storm: DesignStorm
     pre: Hydrograph
     post: Hydrograph
@@ -223,7 +268,8 @@ class CampusDischargeScreen(BaseModel):
     footprint_area: ProvenancedValue  # acres (the measured runoff footprint)
     impervious_acres: ProvenancedValue
     developed_acres: ProvenancedValue
-    hsg: ProvenancedValue
+    hsg: ProvenancedValue  # PRE-development resolved group (A=1..D=4); see `hsg_drainage`
+    hsg_drainage: HsgDrainageBasis | None = None  # the dual-group switch (WS-20 / #1620)
     pre_cn: float
     post_cn_as_permitted: float  # area-weighted composite
     post_cn_full_buildout: float  # blanket near-impervious (whole parcel)

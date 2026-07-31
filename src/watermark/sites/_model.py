@@ -16,6 +16,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
 from watermark.connectors.gis_schema import GisFloodSchema, GisParcelSchema, GisZoningSchema
+from watermark.hsg import DEFAULT_DRAINAGE_BASIS, DrainageCondition
 
 _YAML_PATH = Path(__file__).parents[3] / "data" / "sites.yaml"
 
@@ -1005,11 +1006,29 @@ class SiteProfile(BaseModel):
     # "Corridor" sense 1 (DESIGN-STORM): a rainfall subject label, not a place — unrelated to
     # the corroboration geometry, the toxics bbox, or the civic vocabulary. See the class docstring.
     corridor_name: str  # the Atlas-14 design-storm corridor label (drainage.py meta.subject)
+    # The site's dominant hydrologic soil group, **verbatim** — a single group ("C") or one of
+    # SSURGO's dual ratings ("B/D", "C/D"), which are not a spelling: the first letter is the
+    # group where field tile is installed and maintained, the second the soil's natural,
+    # undrained condition (`watermark.hsg`). Record what the survey found and let the two
+    # switches below resolve it per scenario; a profile that pre-collapses a dual rating to its
+    # drained letter bakes the low-runoff choice in where no scenario can see or override it.
     dominant_hsg: str
     hsg_citation: str
     pre_cover: str
     post_cover: str
     developed_pervious_cover: str
+    # Which condition of a dual group each development scenario is modeled under (WS-20 / #1620)
+    # — an explicit, per-site modeling switch, not an implicit first-letter slice. The defaults
+    # are the stated Tier-0 basis in `watermark.hsg.DEFAULT_DRAINAGE_BASIS`: pre-development
+    # cropland is tile-drained (the condition TR-55 requires for the drained class), and
+    # post-development severs or reroutes tile it does not maintain, so the conservative design
+    # basis is the natural group. They are inert for a site whose `dominant_hsg` is a single
+    # group. A site whose record shows otherwise — maintained drainage carried through the
+    # development, or pre-development ground that was never tiled — overrides here and replaces
+    # `drainage_condition_citation` with its own cited basis.
+    pre_drainage_condition: DrainageCondition = "drained"
+    post_drainage_condition: DrainageCondition = "undrained"
+    drainage_condition_citation: str = DEFAULT_DRAINAGE_BASIS
     # Time of concentration (hr) for the design-storm peak. Impervious paving shortens travel
     # time and sharpens the peak, so pre- and post-development cannot share one Tc: ``pre_tc_hr``
     # is the pervious (prior-cover) catchment and ``post_tc_hr`` the fully-impervious bound. Each

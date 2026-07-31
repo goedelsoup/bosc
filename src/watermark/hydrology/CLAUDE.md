@@ -34,6 +34,24 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   it and returns the series on that finer grid. A caller superposing several catchments (the
   confluence graph in `hydrograph_routing.py`) must therefore share ONE grid — it drops the whole
   network to the finest step required and warns, rather than summing series on different clocks.
+- **A dual hydrologic soil group is two drainage conditions, not a spelling** (WS-20 / #1620).
+  SSURGO rates a drainable, naturally-`D` soil into `A/D` / `B/D` / `C/D`: the **first** letter
+  is the group where field tile is installed **and maintained**, the second the natural,
+  undrained condition. The vocabulary + resolver are the leaf `watermark.hsg`
+  (`resolve_hsg(group, condition)`); `cn_for` and the SWMM Horton table **refuse** an
+  unresolved dual group rather than slicing one, and `connectors.ssurgo` reports the group
+  verbatim with no default condition of its own (`SoilHsgSurvey.letter_for(condition)`). The
+  choice is per **scenario**, per site, and provenance-tagged: `SiteProfile.pre_drainage_condition`
+  (default `drained` — the prior cover is tile-drained cropland) and `post_drainage_condition`
+  (default `undrained` — site work severs tile it doesn't then maintain, so the natural group is
+  the conservative design basis), resolved once into an `HsgDrainageBasis` that rides on
+  `StormRunoff` / `CampusDischargeScreen`. Within the post scenario it is per **part**: the
+  developed acres take the post condition, the undeveloped remainder keeps the pre one — it is
+  still being farmed, and severing its tile is not in the record. This is worth real numbers
+  (Lima's `B/D`: composite post CN 80.6 all-drained → 85.2 as modeled → 89.9 all-undrained), so
+  the screen states that bracket in a caveat rather than picking silently. **Record a dual group
+  verbatim in the profile** — a profile that answers `C` to a surveyed `C/D` has pre-committed
+  the low-runoff letter where no scenario can see or override it.
 - **Cooling is dispatched by archetype** (`cooling_models.py`, epic #1060): the
   `CoolingModelType` enum is keyed on physical **mechanism** — "open loop / closed
   loop" are ambiguous industry labels kept only as documented per-spec aliases.

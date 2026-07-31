@@ -44,12 +44,17 @@ def test_composite_post_cn_is_far_below_full_buildout(hydro_settings: Settings) 
     # Only ~115 of ~340 ac is impervious, so the composite sits just above the cropland
     # baseline and well below the blanket near-impervious value the old default assumed.
     assert screen.pre_cn < screen.post_cn_as_permitted < screen.post_cn_full_buildout
-    # The full-buildout bound IS the blanket near-impervious CN (HSG B fixture -> class 24).
-    assert screen.post_cn_full_buildout == pytest.approx(cn_for("developed_campus", "B"), abs=0.1)
-    # The calibration shrinks the post-vs-pre CN bump by an order of magnitude.
+    # The full-buildout bound IS the blanket near-impervious CN — on the POST-development
+    # drainage condition (WS-20), since that bound develops every acre of the parcel. The
+    # fixture's dominant group is B/D, so that is class 24 on D, not on the drained B.
+    assert screen.post_cn_full_buildout == pytest.approx(cn_for("developed_campus", "D"), abs=0.1)
+    # The calibration still roughly halves the post-vs-pre CN bump. It no longer shrinks it by
+    # an order of magnitude, because part of BOTH bumps is now the drained->undrained switch on
+    # developed ground rather than the paving itself — a soils assumption the calibration to
+    # 115 impervious acres cannot shrink.
     as_permitted_bump = screen.post_cn_as_permitted - screen.pre_cn
     blanket_bump = screen.post_cn_full_buildout - screen.pre_cn
-    assert as_permitted_bump < blanket_bump / 3.0
+    assert as_permitted_bump < blanket_bump / 2.0
 
 
 def test_post_runoff_uses_tr55_weighted_runoff(hydro_settings: Settings) -> None:
@@ -61,6 +66,88 @@ def test_post_runoff_uses_tr55_weighted_runoff(hydro_settings: Settings) -> None
     assert "weighted-runoff" in screen.method
     assert any("weighted-runoff method" in c for c in screen.caveats)
     assert screen.pre_cn < screen.post_cn_as_permitted < screen.post_cn_full_buildout
+
+
+def test_dual_hsg_resolves_per_scenario_with_provenance(hydro_settings: Settings) -> None:
+    # WS-20 / #1620: the fixture's dominant group is the DUAL B/D, whose two letters are two
+    # drainage conditions. The screen resolves it once, per scenario, and records which and why
+    # — rather than taking the drained letter implicitly from the first character.
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    basis = screen.hsg_drainage
+    assert basis is not None
+    assert basis.group == "B/D"  # carried verbatim, never pre-collapsed
+    assert basis.dual is True
+    assert (basis.pre_condition, basis.pre_letter) == ("drained", "B")
+    assert (basis.post_condition, basis.post_letter) == ("undrained", "D")
+    # Both resolved groups are provenance-tagged: the soil rating is the live SSURGO read, and
+    # the citation names the drainage condition that turned it into a curve number.
+    assert basis.pre_hsg.source == "connector" and basis.post_hsg.source == "connector"
+    assert basis.pre_hsg.value == pytest.approx(2.0)  # B
+    assert basis.post_hsg.value == pytest.approx(4.0)  # D
+    assert "SSURGO" in (basis.post_hsg.citation or "")
+    assert "undrained letter of the dual group B/D" in (basis.post_hsg.citation or "")
+    # `hsg` stays the pre-development code, so a reader is never handed one letter for two
+    # scenarios without the basis block that says they differ.
+    assert screen.hsg.value == pytest.approx(basis.pre_hsg.value)
+    # The curve numbers actually run on those letters: cropland drained, developed undrained.
+    assert screen.pre_cn == pytest.approx(cn_for("cropland", "B"), abs=0.1)
+    assert screen.post_cn_full_buildout == pytest.approx(cn_for("developed_campus", "D"), abs=0.1)
+
+
+def test_undeveloped_remainder_keeps_the_pre_drainage_condition(hydro_settings: Settings) -> None:
+    # The switch is per-PART, not blanket: construction severs tile under the developed ground,
+    # but the ~145 undeveloped acres are still farmed, so claiming their tile was severed too
+    # would be inventing a fact. The composite therefore lands strictly between the two blanket
+    # ends, and the caveat states that bracket rather than hiding the choice.
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    all_drained = _blanket_composite(hydro_settings, "drained")
+    all_undrained = _blanket_composite(hydro_settings, "undrained")
+    assert all_drained < screen.post_cn_as_permitted < all_undrained
+    assert all_drained == pytest.approx(80.6, abs=0.2)  # the pre-#1620 value
+    caveat = next(c for c in screen.caveats if "DUAL group" in c)
+    assert f"{all_drained:.1f}" in caveat and f"{all_undrained:.1f}" in caveat
+    assert "not in the record" in caveat
+
+
+def _blanket_composite(settings: Settings, condition: str) -> float:
+    """The as-permitted composite CN with every part pinned to one drainage condition."""
+    from watermark.hydrology.geo import parcels_total_acres
+    from watermark.hydrology.solver.curve_number import composite_cn
+    from watermark.hydrology.stormwater import _parcels_path, _post_cover_parts, _resolve_hsg
+
+    basis = _resolve_hsg(_parcels_path(settings), settings=settings, live=True)
+    pinned = basis.model_copy(update={"pre_condition": condition, "post_condition": condition})
+    footprint = load_site_footprint(settings)
+    assert footprint is not None
+    acres = parcels_total_acres(_parcels_path(settings), settings=settings)
+    parts, _ = _post_cover_parts(acres, footprint, pinned, settings=settings)
+    return composite_cn(parts)
+
+
+def test_drainage_condition_is_a_per_site_switch(hydro_settings: Settings) -> None:
+    # The choice is a cited SiteProfile knob, not a hardcode: a site whose record shows the
+    # drainage is carried through development declares it and the post scenario follows.
+    from watermark.hydrology.stormwater import _parcels_path, _resolve_hsg
+    from watermark.sites import SITES, active_profile
+
+    prof = active_profile(hydro_settings)
+    assert (prof.pre_drainage_condition, prof.post_drainage_condition) == (
+        "drained",
+        "undrained",
+    ), "the shipped default is the conservative post-development basis"
+
+    maintained = prof.model_copy(
+        update={
+            "post_drainage_condition": "drained",
+            "drainage_condition_citation": "test: a maintained-tile record",
+        }
+    )
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setitem(SITES, prof.slug, maintained)
+        basis = _resolve_hsg(_parcels_path(hydro_settings), settings=hydro_settings, live=True)
+    assert basis.post_condition == "drained"
+    assert basis.post_letter == "B"  # back to the drained letter, now on a cited basis
+    assert "maintained-tile record" in basis.basis
 
 
 def test_tc_shortens_with_imperviousness(hydro_settings: Settings) -> None:
@@ -97,9 +184,11 @@ def test_run_storm_default_uses_the_calibrated_composite(hydro_settings: Setting
     # The committed footprint calibrates run_storm's post cover: post CN is the composite,
     # strictly between the cropland pre CN and the blanket near-impervious bound.
     runoff, _ = run_storm(return_period_yr=25, settings=hydro_settings, live=True)
-    blanket = cn_for("developed_campus", "B")
+    blanket = cn_for("developed_campus", "D")  # the full-buildout bound, on the post condition
     assert runoff.pre.curve_number < runoff.post.curve_number < blanket
-    assert runoff.post.curve_number == pytest.approx(80.6, abs=0.3)
+    # 85.2, not the 80.6 of the pre-#1620 drained-everywhere collapse: developed ground now runs
+    # the undrained letter of the fixture's B/D rating (the undeveloped remainder stays drained).
+    assert runoff.post.curve_number == pytest.approx(85.2, abs=0.3)
 
 
 def test_storm_falls_back_to_blanket_when_footprint_absent(tmp_path: Path) -> None:

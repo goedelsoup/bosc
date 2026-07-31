@@ -63,14 +63,17 @@ developed_acres:
   confidence: null
 
 dominant_hsg:
-  value: C
+  value: C/D
   source: connector
   citation: >-
     [verified] USDA NRCS SSURGO via Soil Data Access (SDA), 30-point grid sample over
     bosc-parcels.geojson (watermark.hydrology.connectors.ssurgo.dominant_hsg, 2026-06-27): 50% C/D +
-    50% D (Pewamo/Blount-Glynwood lake-plain clays). hydrologic soil group C on the drained basis
-    (= profile dominant_hsg "C", confirmed); undrained these soils are group D — high runoff,
-    material for the stormwater model.
+    50% D (Pewamo/Blount-Glynwood lake-plain clays) — the DUAL group C/D, recorded verbatim
+    (= profile dominant_hsg "C/D"). Drained it runs as hydrologic soil group C, confirming the
+    prior NRCS-narrative inference; undrained — the natural condition of every point sampled here
+    — these soils are group D, high runoff and material for the stormwater model. Which condition
+    a scenario runs on is the explicit switch in watermark.hsg (WS-20 / #1620), not this record's
+    to decide; the value was "C" before that correction, which pre-committed the drained basis.
   confidence: high
 
 receiving_water: >-

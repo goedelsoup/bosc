@@ -551,14 +551,16 @@ _FORT_WAYNE = SiteProfile(
     design_lat=41.0891,  # [verified] city centroid = NOAA Atlas-14 point
     design_lon=-85.1439,
     corridor_name="Maumee headwaters corridor",  # [inference] the St. Joseph/St. Marys → Maumee reach
-    dominant_hsg="C",  # [verified] SSURGO over the assemblage: 50% C/D + 50% D → HSG C (drained basis)
+    dominant_hsg="C/D",  # [verified] SSURGO over the assemblage: 50% C/D + 50% D — the dual group, verbatim
     hsg_citation=(
-        "Allen County, IN dominant hydrologic soil group C (drained basis) — [verified] USDA NRCS "
-        "SSURGO via Soil Data Access, a 30-point grid sample over the committed Hatchworks parcel "
-        "assemblage (parcel-assemblage.geojson): 50% C/D + 50% D (Pewamo / Blount-Glynwood lake-plain "
-        "clays of the upper Maumee). HSG C confirms the prior NRCS-narrative inference; undrained "
-        "these soils are group D (high runoff). See data/extracted/fort-wayne/bosc-site-footprint.yaml "
-        "(#362). A SURVEYED developed footprint is still pending the stormwater-permit extraction."
+        "Allen County, IN dominant hydrologic soil group C/D — [verified] USDA NRCS SSURGO via Soil "
+        "Data Access, a 30-point grid sample over the committed Hatchworks parcel assemblage "
+        "(parcel-assemblage.geojson): 50% C/D + 50% D (Pewamo / Blount-Glynwood lake-plain clays of "
+        "the upper Maumee). Carried as the DUAL group rather than pre-collapsed to its drained C: "
+        "drained it runs as C — confirming the prior NRCS-narrative inference — and undrained, the "
+        "natural condition of every sampled point here, as D (high runoff). WS-20 / #1620 resolves "
+        "which per scenario. See data/extracted/fort-wayne/bosc-site-footprint.yaml (#362). A "
+        "SURVEYED developed footprint is still pending the stormwater-permit extraction."
     ),
     pre_cover="TODO",  # [open] development land-cover scenario — pending the Project Zodiac stormwater permit (#360)
     post_cover="TODO",
@@ -2154,17 +2156,21 @@ _TROY_PIQUA = SiteProfile(
     design_lat=40.0392,  # [verified] Troy centroid = NOAA Atlas-14 point
     design_lon=-84.2033,
     corridor_name="Upper Great Miami industrial corridor",  # [inference] the Troy-Piqua mainstem reach
-    dominant_hsg="C",  # [verified] SSURGO drained-basis C over the committed footprint (#1483) — see hsg_citation
+    dominant_hsg="C/D",  # [verified] SSURGO dual C/D over the committed footprint (#1483) — see hsg_citation
     hsg_citation=(
         "[verified] USDA NRCS SSURGO via Soil Data Access, 8x8 grid (48 interior points) over the "
         "committed campus footprint (data/reference/troy-piqua/parcel-assemblage.geojson), 2026-07-13: "
-        "C/D 47 pts (97.9%) + C 1 pt (2.1%) -> drained-basis hydrologic soil group C (undrained the "
-        "C/D units run to D). This CORRECTS the prior [inference] of HSG 'B': the deep Great Miami "
-        "Buried Valley Aquifer (glacial outwash sand & gravel, a US-EPA sole-source aquifer the "
-        "Troy/Piqua well fields draw on) is well-drained, but the SURFACE till/lacustrine soils that "
-        "govern the runoff CN across this Farrington-Rd footprint are the C/D units - the same "
-        "surface-vs-aquifer correction found at Urbana (B->C). Runoff-relevant HSG is C. Full survey "
-        "in data/extracted/troy-piqua/bosc-site-footprint.yaml (dominant_hsg)."
+        "C/D 47 pts (97.9%) + C 1 pt (2.1%) -> the DUAL hydrologic soil group C/D, carried verbatim. "
+        "Drained (the tile-drained CAUV cropland now on the ground) it runs as C; undrained — the "
+        "natural condition, and the basis for developed ground that severs the tile — it runs as D "
+        "(WS-20 / #1620 resolves which per scenario; this profile no longer pre-collapses it to the "
+        "drained C, which understated post-development runoff over 98% of the footprint). This also "
+        "CORRECTS the prior [inference] of HSG 'B': the deep Great Miami Buried Valley Aquifer "
+        "(glacial outwash sand & gravel, a US-EPA sole-source aquifer the Troy/Piqua well fields "
+        "draw on) is well-drained, but the SURFACE till/lacustrine soils that govern the runoff CN "
+        "across this Farrington-Rd footprint are the C/D units - the same surface-vs-aquifer "
+        "correction found at Urbana (B->C). Full survey in "
+        "data/extracted/troy-piqua/bosc-site-footprint.yaml (dominant_hsg)."
     ),
     pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
     post_cover="TODO",
