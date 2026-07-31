@@ -229,5 +229,32 @@ export function buildAskIndex(): AskUnit[] {
     }
   }
 
-  return units.map((u) => ({ ...u, site }));
+  return uniquifyIds(units).map((u) => ({ ...u, site }));
+}
+
+/**
+ * Make every unit id unique, disambiguating only where one repeats (#1422).
+ *
+ * A unit id is the retrieval index's JOIN KEY: `retrieval.ts` builds
+ * `new Map(embeddings.map((e) => [e.id, e.embedding]))`, and a `Map` keeps the LAST entry for a
+ * repeated key — so two units sharing an id are scored against one vector and one of them
+ * silently loses its own semantics. The rank-fusion maps a few lines later collapse them too.
+ *
+ * The timeline is where this bites. Its `ref` is documented as a "logical id (instrument /
+ * permit no) for cross-doc dedup" — it is *designed* to be shared by every event about one
+ * instrument, so it was never a unique key. Ottawa's NPDES fact sheet alone yields two dated
+ * events under `2PD00028*PD` (the public notice, and the comment-period close).
+ *
+ * Only the second and later occurrences are suffixed, so every id that was already unique stays
+ * byte-identical and no committed bundle churns. Feed order is deterministic, so the suffixes are
+ * stable. Mirrored exactly by `_uniquify_ids()` in `watermark/site/embeddings.py` — the two must
+ * agree or the BM25 unit and its vector stop joining.
+ */
+export function uniquifyIds<T extends { id: string }>(units: T[]): T[] {
+  const seen = new Map<string, number>();
+  return units.map((u) => {
+    const n = (seen.get(u.id) ?? 0) + 1;
+    seen.set(u.id, n);
+    return n === 1 ? u : { ...u, id: `${u.id}#${n}` };
+  });
 }

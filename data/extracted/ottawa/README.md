@@ -36,7 +36,7 @@ and the 2009 TMDL finding of no apparent impact on fish and macroinvertebrate as
 carried with their vintage stated.
 
 Cadence is **quarterly**, keyed to the ICIS-NPDES and SDWIS extract cycles. The next check's
-questions and eleven open leads are in the file's own `watch_schedule` and `open_leads` blocks.
+questions and thirteen open leads are in the file's own `watch_schedule` and `open_leads` blocks.
 
 ## Primary instruments
 

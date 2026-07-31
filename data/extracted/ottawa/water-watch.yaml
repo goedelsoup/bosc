@@ -278,13 +278,13 @@ discharge_side:
       2026-04: [24.3, 2.80, 88.5]
       2026-05: [11.3, 3.53, 68.8]
     median_removal_pct: 87.5
-    median_influent_ng_l: 17.5
+    median_influent_ng_l: 18.15
     findings:
     - tag: '[verified]'
       statement: >-
         In December 2025 the plant reported MORE mercury leaving than entering — 36.70 ng/L in the
         effluent against 20.3 ng/L in the raw sewage. That is not a high-influent month; 20.3 is
-        within a whisker of the 17.5 ng/L median. Arithmetic only: 36.70 > 20.3.
+        within a whisker of the 18.15 ng/L median. Arithmetic only: 36.70 > 20.3.
     - tag: '[verified]'
       statement: >-
         The two worst effluent months are the two worst removal months and are not high-influent
@@ -294,7 +294,7 @@ discharge_side:
       statement: >-
         The two HIGHEST influent months did not produce violations of comparable size. October
         2025 took in 74.9 ng/L and discharged 1.64 (97.8% removal). February 2026 took in 118 ng/L
-        — 6.7x the median — and discharged 5.55, which is a violation, but at 95.3% removal.
+        — 6.5x the median — and discharged 5.55, which is a violation, but at 95.3% removal.
     - tag: '[inference]'
       statement: >-
         The three exceedances have two different shapes. February 2026 is an influent-driven
@@ -848,12 +848,15 @@ upstream_flood_program:
       tag: '[verified]'
       observation: >-
         Mercury-bearing floodplain soil was excavated in the Blanchard corridor at Findlay between
-        December 2025 and February 2026. Ottawa's two largest mercury exceedances are December
-        2025 (36.70 ng/L) and February 2026 (5.55 ng/L). The windows overlap exactly.
+        December 2025 and February 2026. Two of Ottawa's three mercury exceedances fall inside that
+        window — December 2025 (36.70 ng/L) and February 2026 (5.55 ng/L). It is a date-window
+        overlap and nothing more: they are not the two LARGEST exceedances (September 2025's
+        9.60 ng/L is the second largest, and it precedes the excavation).
       why_it_is_not_a_link: >-
         The Ottawa WWTP treats SEWAGE, not river water. Nothing excavated from a floodplain 34
         river miles upstream enters its influent, and its December 2025 influent mercury was an
-        ordinary 20.3 ng/L — below the 12-month median of the months around it. The Village's
+        ordinary 20.3 ng/L — slightly ABOVE the 18.15 ng/L median of the paired series, and nowhere
+        near the 74.9 and 118 ng/L months that produced no comparable exceedance. The Village's
         drinking-water intake IS on the river and IS downstream of Findlay, but the Village
         publishes no mercury result for finished water and its violation that quarter was
         trihalomethanes, which have nothing to do with mercury.
@@ -936,6 +939,13 @@ open_leads:
   question: What does the water plant's own NPDES general permit OHG8P0080 authorize it to discharge?
   why: It is the third permit on this river at this village and its terms are not held.
   route: Ohio EPA DAM general-permit documents
+- id: OTTAWA-UCMR5-LITHIUM
+  question: What are the Village's four UCMR 5 lithium results, and how was the published average computed?
+  why: >-
+    The CCR's lithium row cannot close arithmetically as printed — a 0 minimum and an 11.9 maximum
+    cap a four-sample mean at 8.925, below the 10.727 published. The likely reading is an average
+    over detects only, but the row is the one unregulated entry carrying no detection count.
+  route: EPA UCMR 5 public data for PWS OH6900711; or the Village, which offers the full results by phone
 - id: OTTAWA-FLOOD-DOWNSTREAM-BENEFIT
   question: Does the Hancock County program's hydraulic modelling produce any figure for Putnam County?
   why: The program quantifies 16% peak reduction at Findlay and nothing downstream. Whether "nothing published" means "modelled as zero" or "not modelled" is unestablished.
@@ -954,7 +964,7 @@ provenance:
     against an influent of 20.3, discharging more mercury than it received. Two of the three
     exceedances would have been violations under the old limit as well. Six quarters of
     noncompliance, two of Category-I significant noncompliance, one warning letter, no formal
-    enforcement, no penalty. Two miles upstream the same village's water plant exceeded the
+    enforcement, no penalty. About a mile and a half upstream the same village's water plant exceeded the
     trihalomethane MCL in two consecutive quarters, 83 then 86 ppb, on a system EPA carries as an
     SDWA Enforcement Priority with twelve of twelve quarters in noncompliance. The mercury streak
     appears to have broken in April 2026; the June DMR was not yet on the record, and the

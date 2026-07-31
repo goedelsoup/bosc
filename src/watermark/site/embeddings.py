@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import os
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -242,7 +242,35 @@ def build_text_units(bundle_dir: Path | str) -> list[_TextUnit]:
             )
         )
 
-    return units
+    return _uniquify_ids(units)
+
+
+def _uniquify_ids(units: list[_TextUnit]) -> list[_TextUnit]:
+    """Make every unit id unique, disambiguating only where one repeats (#1422).
+
+    A unit id is the retrieval index's JOIN KEY: `retrieval.ts` builds
+    ``new Map(embeddings.map(e => [e.id, e.embedding]))``, and a JS ``Map`` keeps the LAST
+    entry for a repeated key — so two units sharing an id are scored against one vector and
+    one of them silently loses its own semantics.
+
+    The timeline is where this bites. Its ``ref`` is documented in ``feeds.py`` as a "logical id
+    (instrument / permit no) for cross-doc dedup" — it is *designed* to be shared by every event
+    about one instrument, so it was never a unique key. Ottawa's fact sheet alone yields two
+    dated events under ``2PD00028*PD`` (the public notice, and the comment-period close).
+
+    Only the second and later occurrences are suffixed, so every id that was already unique stays
+    byte-identical and no other site's committed feed churns. Feed order is deterministic, so the
+    suffixes are stable across exports. Mirrored exactly by ``buildAskIndex()`` in
+    ``web/packages/core/src/askIndex.ts`` — the two must agree or the BM25 unit and its vector
+    stop joining.
+    """
+    seen: dict[str, int] = {}
+    out: list[_TextUnit] = []
+    for u in units:
+        n = seen.get(u.id, 0) + 1
+        seen[u.id] = n
+        out.append(u if n == 1 else replace(u, id=f"{u.id}#{n}"))
+    return out
 
 
 def build_ask_embeddings(bundle_dir: Path | str) -> list[dict[str, Any]]:
