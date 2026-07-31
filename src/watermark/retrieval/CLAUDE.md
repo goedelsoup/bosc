@@ -8,7 +8,16 @@ cosine-similarity retrieval to the research agent. Defers to the root
   embedding providers), `store.py` (`CorpusStore`, the LanceDB wrapper), `__init__.py` (the
   public surface: `Chunk`, `CorpusStore`, `SearchResult`, `EmbeddingProvider`, `get_provider`).
 - **Ingestion is three corpus sources, each with stable provenance (`ingestion.py`).**
-  `iter_document_chunks` (`data/documents/**`, one chunk per PDF page via the text layer),
+  `iter_document_chunks` (`data/documents/**` — one chunk per PDF page via the text layer, plus
+  three non-PDF routes since #1757: **natively readable** `.txt/.htm/.html/.docx/.xlsx` read in
+  process through `watermark.documents.office`; **legacy binaries** `.doc/.dot/.xls/.rtf` read
+  from their committed `-text` sidecars (`watermark.text_sidecars`) and attributed to the
+  **source** document — `source_path` is the `.DOC`, never the derived `.txt`, so a citation
+  names the record and the sidecar path rides in `provenance`; and extensionless files routed by
+  magic bytes. Un-paginated documents use `page=-1`, and `provenance.text_source` names the
+  reader (`txt`/`html`/`docx`/`xlsx`/`sidecar`). Before that, the whole native tranche of the
+  batch-3 sanitary production — 600-odd `.doc`, the `.xls` financing models, the Word-exported
+  email `.htm` — was invisible to retrieval),
   `iter_reference_chunks` (`data/reference/**`, README/CSV/YAML/JSON — CSV rows kept whole),
   `iter_extracted_chunks` (`data/extracted/**` YAML, **site-scoped by the site's
   `effective_corpus_scope`** via the same `relpath_in_scope` predicate the export path uses, so

@@ -1,0 +1,32 @@
+To:	Brian Benedict	From:	Greg Kemper
+Company:	URS	Project:	Allen County Shawnee II WWTP
+Date:	July 4, 2014	Pages:	1
+Answer needed by:	ASAP	RFC No:	848-005
+Drawing Reference:	See below	Spec. Section:	N/A
+
+ Request:  Please respond to the following pump questions:
+    1. Regarding the new submersible pumps, sheet 1P-3 calls out 48” X 72” (clear opening) floor doors over the pumps.  Attached is a drawing showing the KSB pumps that we will be submitting.  The minimum clear opening required by these pumps is 47.25” X 31.5”.  It seems that the size of the floor doors could be reduced, possibly to a W1R3654 as shown on the attached product data sheet from Halliday Products.  Please advise if this is acceptable.  If so, clarify necessary changes to sheet 1S-4.
+    2. Regarding the jet motive pump:
+        a. Attached is a drawing showing the vertical pump that KSB was originally proposing.  This pump will not fit in the 7’ high FRP building that is called out on sheet 2P-3.  KSB is offering to change to a horizontal pump mounting arrangement (see attached info and drawing) that has essentially the same performance characteristics.  This horizontal pump will allow the building height to remain at 7’.  We will likely have to change the building from a 10’ X 10’ square to more of a rectangular footprint.  Also, we would like to have KSB provide the pump with a horizontal discharge (they have confirmed that this is available).  Is this acceptable?
+        b. Sheet 2P-3 does not show any expansion joints on either the suction or discharge side of the jet motive pump.  Is there any thought to consider adding these?  KSB is not requiring it.
+        c. The jet motive pump proposed by KSB has thermal sensors in the motor windings.  Can the Jet Mix Pump schematic on sheet E-15 be modified to show these thermal sensors?
+        d. Item 2.6 in spec 46 4121 Jet Mixing Equipment calls out a local control panel for the jet motive pump.  None of the electrical or instrumentation drawings appear to show a local control panel for this pump.  Sheet E-10 shows a disconnect for the pump.  Is a local control panel required?
+        e. Sheet 2P-3 shows an 8” thick concrete slab for the jet motive pump and FRP building to set on.  There is no foundation shown.  Is the intent that this slab would “float” with frost heave?  If so, how are the 16” DIP pipe penetrations through the slab to be done?  Should these be wrapped with expansion joint and caulked?  Or should a water collar be added to be poured in to the slab?  We are concerned that if the slab heaves up and the DIP riser pipe does not heave up, there could be significant stresses put on the pump flanges.  Any consideration to adding a foundation under the building slab?
+
+Requested By:	Greg Kemper
+
+	PROJECT MANAGER
+
+CC:  GAK/RFI File
+
+Answer:
+    1. Install the floor doors as shown on the base bid documents
+    2. Horizontal pumps are acceptable
+    3. No expansion joints are necessary
+    4. The thermal sensor should be wired into a relay in the starter circuit of the MCC. We can provide a sketch (to follow).
+    5. No LCP is needed as the HOA, I/O and run light are in the MCC.
+    6. An 8” turn down wall should be added to the perimeter of the slab, extending down 3’-0” with #4’s @ 12” hooked into the slab.
+
+CC:  GAK/RFI File/Field Office
+Answered By:	John Krinks/Brian Benedict
+	Date:	07/07/14

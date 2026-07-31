@@ -33,6 +33,7 @@ from watermark.pipeline.corpus import relpath_in_scope
 from watermark.site import exhibits as exhibits_mod
 from watermark.site.feeds import DocumentCollectionItem, DocumentItem, RenderClass
 from watermark.sites import CorpusScopeArg
+from watermark.text_sidecars import in_sidecar_tree
 
 log = get_logger(__name__)
 
@@ -288,6 +289,11 @@ def build_documents(
         if path.name in _SKIP_NAMES or path.suffix.lower() in _SKIP_SUFFIXES:
             continue
         rel_path = path.relative_to(documents_dir)
+        # A `-text` sidecar tree holds machine transcriptions of the legacy binaries beside it
+        # (#1757), not source bytes. The public document catalog lists records, so the derived
+        # text never appears in it — the .DOC is the document; its .txt is a reading aid.
+        if in_sidecar_tree(rel_path.as_posix(), documents_dir):
+            continue
         # A collection is a first-level subdirectory; a file dropped directly under
         # documents_dir has no collection and would otherwise become a single-file
         # "collection" named after the file (#617). Skip it, surfaced for review.

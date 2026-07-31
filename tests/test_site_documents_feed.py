@@ -66,6 +66,31 @@ def test_file_directly_under_documents_dir_is_not_a_single_file_collection(
     assert "stray.pdf" not in slugs
 
 
+def test_a_text_sidecar_tree_is_not_catalogued_as_source_documents(tmp_path: Path) -> None:
+    """#1757: a ``-text`` sibling holds machine transcriptions of the legacy binaries beside it.
+
+    The public catalog lists *records*, so 628 derived .txt files must not inflate it — the .DOC
+    is the document; its sidecar is a reading aid.
+    """
+    docs = tmp_path / "documents"
+    (docs / "legal" / "production").mkdir(parents=True)
+    (docs / "legal" / "production" / "Letter.DOC").write_bytes(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1")
+    (docs / "legal" / "production-text").mkdir(parents=True)
+    (docs / "legal" / "production-text" / "Letter.DOC.txt").write_text("body", encoding="utf-8")
+
+    assert set(_entries(docs)) == {"legal/production/Letter.DOC"}
+
+
+def test_a_folder_merely_named_text_is_still_catalogued(tmp_path: Path) -> None:
+    # Only a de-suffixed sibling DIRECTORY makes a `-text` folder a sidecar tree; an as-received
+    # folder that happens to be named that way stays part of the corpus.
+    docs = tmp_path / "documents"
+    (docs / "legal" / "exhibit-text").mkdir(parents=True)
+    (docs / "legal" / "exhibit-text" / "note.txt").write_text("body", encoding="utf-8")
+
+    assert set(_entries(docs)) == {"legal/exhibit-text/note.txt"}
+
+
 def test_office_override_table(tmp_path: Path) -> None:
     docs = tmp_path / "documents"
     (docs / "plans").mkdir(parents=True)

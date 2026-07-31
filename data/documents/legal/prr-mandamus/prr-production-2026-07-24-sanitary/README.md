@@ -44,3 +44,20 @@ and the item-by-item requested-vs-produced posture is
   Content bytes, names, and structure are verbatim.
 - Paths run to ~290 characters with spaces/`&`/`#` — on Windows, clone with
   `core.longpaths=true`.
+
+## Searchability
+
+Because this is a native file tree rather than a scan bundle, most of it is text — but only
+some of it is text a program can read. The split (#1757):
+
+- **Read directly, nothing committed** — the 472 PDFs (text layer), 69 `.docx`, 20 `.xlsx`,
+  57 `.txt`, 35 `.htm`. `watermark.documents.office` reads these at index time.
+- **Read through a committed sidecar** — the 594 `.doc`, 34 `.xls`, 3 `.rtf`, 2 `.dot`, and one
+  extensionless Word file, which are OLE2/RTF containers with no in-process reader. Their
+  transcriptions live in the sibling
+  [`../prr-production-2026-07-24-sanitary-text/`](../prr-production-2026-07-24-sanitary-text/)
+  — **derived, not evidence**, and deliberately *outside* this tree so the as-received layout
+  above stays exactly as-received. 628 of the 634 carry text; the 6 that don't are scanned
+  signature pages inside a `.doc` wrapper, recorded as such in that tree's manifest.
+- **Not text at all** — the images, media, `Thumbs.db`, and the `_files/` companion folders
+  Word writes beside an exported `.htm`. Those are skipped, not silently indexed as empty.

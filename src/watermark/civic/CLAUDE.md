@@ -72,7 +72,9 @@ Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
   `.gitattributes` alongside the existing `.pdf` (American Twp posts `.docx`).
 - **Index → timeline** (`indexer.py` + `keywords.py`; `watermark subdivisions index
   <slug> [--ocr]`). Reads the download manifest, extracts each file's text (PDF text
-  layer / DOCX / HTML; **`--ocr` also renders + OCRs image-only scans** via
+  layer / DOCX / HTML — the DOCX and HTML readers are `watermark.documents.office`'s, shared with
+  the corpus retrieval path since #1757, not a second copy; **`--ocr` also renders + OCRs
+  image-only scans** via
   `ocr_pdf`, needs the tesseract binary — without it, or without `--ocr`, image-only
   scans get `text_method: none`, honestly surfaced in `counts`). The OCR text is used
   to scan/verify but is **not persisted** — only `hits` + `char_count` land in the
