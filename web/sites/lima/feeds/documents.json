@@ -44261,6 +44261,21 @@
     "description": "**Collection:** `oepa/` · immutable source evidence",
     "entries": [
       {
+        "rel": "oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html",
+        "name": "2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html",
+        "size_bytes": 390056,
+        "suffix": "html",
+        "media_type": "text/html",
+        "render_class": "html",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
         "rel": "oepa/2DP00130.pdf",
         "name": "2DP00130.pdf",
         "size_bytes": 607617,
@@ -44526,21 +44541,6 @@
           "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.pdf",
           "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.pdf"
         ]
-      },
-      {
-        "rel": "oepa/sidney/1PV00037.pdf",
-        "name": "1PV00037.pdf",
-        "size_bytes": 534520,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": true,
-        "available": true,
-        "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
       },
       {
         "rel": "oepa/van-wert/2PD00006.fs.pdf",

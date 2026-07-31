@@ -904,23 +904,29 @@ def test_troy_piqua_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> 
     assert len(records) == 3
 
 
-def test_sidney_exports_at_case_tier_on_committed_campus_geometry(
-    site_bundle: Callable[[str], Path],
-) -> None:
-    """Sidney rose ``backdrop`` -> ``case`` when #1379 committed the campus geometry.
+def test_sidney_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None:
+    """Sidney rose ``backdrop`` -> ``case``, and TWO domains moved to get it there.
 
-    It was a Backdrop site for exactly one reason: the floor was pulled and everything above it
-    was a lead. ``places`` is the domain that moved, and it moved on evidence, not scaffolding —
+    ``places`` moved first, on #1379's committed campus geometry:
     ``data/reference/sidney/parcel-assemblage.geojson`` is the Shelby County auditor CAMA record
     of the single parcel deeded to Amazon Data Services, Inc., which the exporter composes into
     the ``geo/campus`` feed that ``PLACES_GEOMETRY_FEED`` gates on.
 
-    The other three stay put, and that is the point of pinning them here: ``facility`` remains
-    ``seeded`` because the #1630 downgrade still holds (AWS discloses no floor area and no
-    interconnection figure, so the IT load is an investment-scaled ``[inference]`` bracket, never
-    a disclosure — committing land does not ground a load); ``record`` remains ``seeded`` at one
-    in-scope DMR extraction, below ``RECORD_LIVE_THRESHOLD``; ``story`` remains absent. A future
-    change that floats any of those off geometry alone fails here."""
+    ``record`` moved second, on #1383's standing regulatory watch: it landed the City of Sidney
+    WWTP's issued NPDES permit + 2022 fact sheet (``oepa/sidney/1PD00009.npdes.yaml``) and, with
+    it, ``corpus_relpaths=("sidney", "oepa/sidney", "grid/sidney")`` so the campus's permit
+    sub-collections read into Sidney rather than leaking into Lima's whole-tree reference scope
+    (the #1505 rule). Two ``permits-npdes`` records >= ``RECORD_LIVE_THRESHOLD``. That is
+    readiness behaving as the STANDING property it is — it rose because sources landed, twice,
+    independently.
+
+    What did NOT move is equally the point, and pinning it here is what makes this a guard:
+    ``facility`` stays ``seeded`` because the #1630 downgrade still holds — AWS discloses no floor
+    area and no interconnection figure, so the IT load is an investment-scaled ``[inference]``
+    bracket, never a disclosure. Committing land does not ground a load, and neither do permits:
+    five state instruments have now issued across this project and not one states a megawatt.
+    ``story`` remains absent. A future change that floats either off geometry or paperwork alone
+    fails here."""
     manifest = _manifest(site_bundle("sidney"))
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
@@ -929,7 +935,7 @@ def test_sidney_exports_at_case_tier_on_committed_campus_geometry(
     assert domains["backdrop"] == "live"
     assert domains["facility"] == "seeded"  # disclosed but screening-only → seeded (#1630)
     assert domains["places"] == "live"  # committed campus geometry (#1379)
-    assert domains["record"] == "seeded"
+    assert domains["record"] == "live"  # WWTP permit + DMR >= RECORD_LIVE_THRESHOLD (#1383)
     assert domains["story"] == "absent"
 
     # The geometry that activated the domain is the campus parcel itself, not a stub.

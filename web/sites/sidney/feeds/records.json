@@ -1,5 +1,44 @@
 [
   {
+    "rel": "oepa/sidney/1PD00009.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Sidney WWTP",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "tag": "[verified]",
+      "permit_no": "1PD00009*SD",
+      "application_no": "OH0027421",
+      "permit_action": "renewal",
+      "permittee": "City of Sidney",
+      "applicant_of_record": "Mayor and Council, City of Sidney, 201 W Poplar Street, Sidney, OH 45365",
+      "facility_name": "City of Sidney WWTP",
+      "facility_address": "1091 Children's Home Road, Sidney, OH 45365, Shelby County",
+      "action_date": "2022-12-16",
+      "effective_date": "2023-01-01",
+      "expiration_date": "2027-12-31",
+      "signed_by": "Laurie A. Stevenson, Director",
+      "total_pages": 47,
+      "public_notice_no": "163939",
+      "public_notice_date": "2022-11-07",
+      "receiving_water": "Great Miami River at River Mile 128.68",
+      "stream_network": "Great Miami River → Ohio River (Great Miami basin, Shelby County, OH; HUC-8 05080001). The plant discharge enters the mainstem UPSTREAM of the Loramie Creek confluence at Lockington and DOWNSTREAM of the USGS Great Miami River at Sidney gage 03261500.",
+      "renewal_due": "The permit's own text requires the renewal submission \"no later than 180 days prior to\" expiration — i.e. by approximately 2027-07-04 for the 2027-12-31 expiration. As of 2026-07-31 no renewal application, draft permit or public notice exists on the record."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/sidney/1PD00009.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/1PD00009.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "sidney/wwtp-oh0027421.dmr.yaml",
     "group": "permits-npdes",
     "title": "SIDNEY WWTP",

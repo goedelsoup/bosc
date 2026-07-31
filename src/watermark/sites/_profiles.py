@@ -2507,22 +2507,38 @@ _SIDNEY = SiteProfile(
     plant_receiving={
         "sidney-wwtp": (
             "Great Miami River",
-            # ECHO NPDES OH0027421 (Sidney WWTP); outfall 001 → Great Miami River (HUC12 050800010703);
-            # design 7.0 MGD, actual ~5.382 MGD (2023 DMR, 76.9% of design); CSO/bypass outfalls: 1;
-            # no ECHO-flagged exceedances 2023. NPDES fact sheet pending for cited 7Q10 (#833).
-            "ECHO NPDES OH0027421 (Sidney WWTP) → Great Miami River; design 7.0 MGD, "
-            "actual ~4.01 MGD (2023 DMR, MO AVG mean) — data/extracted/sidney/wwtp-oh0027421.dmr.yaml [verified — ECHO]",
+            # Permit-sourced since #1383: Ohio EPA 1PD00009*SD (application OH0027421), City of
+            # Sidney WWTP, 1091 Children's Home Road; outfall 1PD00009001 → Great Miami River at
+            # RM 128.68; average design 7.0 MGD, peak hydraulic 13.5 MGD; effective 2023-01-01,
+            # expires 2027-12-31 (renewal due ~2027-07-04). Serves Sidney, Port Jefferson, the
+            # Mill Creek Subdivision and the Honda of America plant at Anna; allocated jointly
+            # with the Piqua and Troy WWTPs as interactive dischargers. The #833 "fact sheet
+            # pending" note is discharged — the fact sheet is committed and read.
+            "Ohio EPA NPDES 1PD00009*SD / OH0027421 (City of Sidney WWTP) → Great Miami River "
+            "at RM 128.68; average design 7.0 MGD (peak hydraulic 13.5 MGD), actual ~4.01 MGD "
+            "(2023 DMR, MO AVG mean) — data/extracted/oepa/sidney/1PD00009.npdes.yaml + "
+            "data/extracted/sidney/wwtp-oh0027421.dmr.yaml [verified — permit + ECHO]",
         ),
     },
     abstraction_gage="03261500",  # [verified] Great Miami River at Sidney OH
     supply_gage_primary="03261500",  # [verified] Great Miami River at Sidney
     supply_gage_secondary="03262000",  # [verified] Loramie Creek at Lockington (the major local tributary)
-    # [derived] LP3 7Q10 at USGS 03261500 (Great Miami River at Sidney OH, 44 yr 1980-2024) —
-    # conservative abstraction screen floor; regulatory passby minimum pending the OEPA NPDES
-    # fact sheet for OH0027421 (Sidney WWTP) (#833).
-    passby_primary_cfs=30.95,
-    passby_secondary_cfs=0.0,  # [open] Loramie Creek derived 7Q10 = 3.55 cfs (03262000); passby pending
-    # facility CONFIRMED (#1378) — AWS "Project Galaxy", the $3B Amazon hyperscale campus at
+    # [verified] CITED regulatory stream design flow, not a BOSC derivation (#1383). Ohio EPA's
+    # "Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022" (permit 1PD00009*SD,
+    # application OH0027421), Table 14 "Instream Conditions and Discharger Flow", p.32:
+    # Great Miami River above Sidney, annual 7Q10 = 24.0 cfs (USGS 03261500, 1927-2021); the
+    # same table gives annual 1Q10 19.4, summer 30Q10 29.0, harmonic mean 119.2 cfs. This
+    # SUPERSEDES the 30.95 cfs placeholder carried here since onboarding, which was a BOSC LP3
+    # derivation over 1980-2024 explicitly held "pending the OEPA NPDES fact sheet" (#833) — the
+    # regulator's long-record value is 22% lower, so the placeholder was the more permissive of
+    # the two. Source bytes: data/documents/oepa/sidney/1PD00009.c43b66fd.pdf; structured read
+    # data/extracted/oepa/sidney/1PD00009.npdes.yaml.
+    passby_primary_cfs=24.0,
+    # [verified] same Table 14: Loramie Creek at Mouth, annual 7Q10 = 3.43 cfs (USGS 03262000,
+    # 1916-2020). Closes the [open] that carried 0.0 with a derived 3.55 cfs noted alongside —
+    # the derivation corroborates the cited value within 3.5%.
+    passby_secondary_cfs=3.43,
+    # facility CONFIRMED (#1378) — the $3B Amazon hyperscale campus at
     # 2388 W. Millcreek Road (NW corner Vandemark & Millcreek), Sidney. A SITE-PLAN-grounded
     # facility (contrast air-permit-grounded Lima / Fort Wayne): the disclosed non-power
     # attributes (operator/developer, $3B investment, location, construction status, ops target)
@@ -2532,15 +2548,31 @@ _SIDNEY = SiteProfile(
     # screening bracket ([inference], see it_load_citation) — never a disclosure, the MW stays
     # [open]. cooling_model stays UNKNOWN (the register discloses water figures, not a cooling
     # design). genset_count/genset_mw/air_permit_citation stay None (no disclosed on-site
-    # generation / air permit found). See data/extracted/sidney/data-centers.md (2026-07-02).
+    # generation / air permit found). See data/extracted/sidney/data-centers.md (2026-07-02) and
+    # the standing regulatory watch data/extracted/sidney/regulatory-watch.yaml (#1383,
+    # re-checked 2026-07-31) — five state permits have since issued across this project and NONE
+    # of them states a load, so the site-plan grounding stands and the MW stays [open].
     facilities=(
         SiteFacility(
-            name='AWS "Project Galaxy"',
+            # Ohio EPA's own name for it. The local codename "Project Galaxy" is deliberately
+            # NOT in the published identity: on the agency's record that name belongs to a
+            # DIFFERENT Amazon campus in Fayette County (#1383), so publishing it as this site's
+            # primary_name would broadcast the collision the register exists to prevent. It is
+            # kept, with its caveat, in facility_type / disclosure_citation and the register.
+            name="AWS Sidney Data Center Campus",
+            # Pinned rather than minted from `name` (`_fill_key`). This key is a ROUTE segment
+            # (`/study/f/<facility-key>/…`) and a cross-feed join, so it must not move when the
+            # display name is edited — which it just did. CMH-232 is Amazon Data Services' own
+            # project identifier on its Ohio EPA §401 filings: stable, machine-readable, and free
+            # of the codename collision.
+            key="cmh-232",
             status=FacilityLifecycle.CONSTRUCTION,  # grading permit 2026-05-14; groundbreaking ~Jan 2026
             operator="Amazon Web Services, Inc. (operator); Amazon Data Services, Inc. (developer)",
             operator_citation=(
                 "[verified] City of Sidney FAQ (sidneyoh.com/526) + Data Center Dynamics (Oct 2025) — "
-                "Amazon's $3B Project Galaxy; grading permit issued 2026-05-14."
+                "Amazon's $3B campus, locally called 'Project Galaxy'; grading permit issued "
+                "2026-05-14. Ohio EPA permits it as 'Sidney Data Center Campus' / 'CMH-232' "
+                "(#1383) — the codename is not a search key, see disclosure_citation."
             ),
             end_use=DcEndUse.HYPERSCALE,
             end_use_citation=(
@@ -2552,9 +2584,19 @@ _SIDNEY = SiteProfile(
             it_load_source=ItLoadGrounding.SCREENING,
             it_load_citation=(
                 "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
-                "air-permit MW stays [open] (no OEPA air PTI and no PJM interconnection instrument is "
-                "public as of 2026-07-02 — data/extracted/sidney/data-centers.md, 'Regulatory "
-                "record'). AWS discloses NEITHER a gross floor area NOR a load for Project Galaxy, so "
+                "air-permit MW stays [open]. Re-checked 2026-07-31 (#1383) and still absent: Ohio "
+                "EPA's eDocument portal returns ZERO air-permit documents for Shelby County under "
+                "any of the three names this campus is filed as ('Sidney Data Center Campus', "
+                "'CMH-232', 'Amazon Data Services'), and EPA's FRS carries the site with NPDES as "
+                "its ONLY program system — while the same query shape returns 19 Amazon air-permit "
+                "documents statewide (including the Licking County CMH050 draft, public notice and "
+                "permit), so the zero is a zero and not a broken search. The state permits that HAVE "
+                "issued for this project — construction stormwater 1GC10596*AG, isolated-wetland "
+                "authorization 251911W, sanitary-sewer PTI DSWPTI-260517, the City's own road "
+                "wetland permit 252256W, and AES's adjacent transmission-reroute coverage "
+                "1GC11112*AG — carry no megawatt field at all. "
+                "See data/extracted/sidney/regulatory-watch.yaml. "
+                "AWS discloses NEITHER a gross floor area NOR a load for this campus, so "
                 "the floor-area screen used elsewhere in the network (Urbana #1327 / Troy-Piqua / "
                 "Bowling Green) has no input; this brackets instead off the ONE disclosed hard figure "
                 "— the $3 billion campus investment (sidneyoh.com/526; Data Center Dynamics Oct 2025) "
@@ -2567,15 +2609,16 @@ _SIDNEY = SiteProfile(
                 "second source): comparable disclosed AWS-Ohio hyperscale-campus interconnections sit "
                 "~100-250 MW/campus (interconnection.fyi [reference], a DIFFERENT Amazon campus in "
                 "Franklin County — not Sidney's figure). Replace with the disclosed load the moment an "
-                "OEPA air PTI or a PJM interconnection filing names Project Galaxy's MW."
+                "OEPA air PTI or a PJM interconnection filing names this campus's MW."
             ),
             # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
             # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
             facility_type=(
-                'hyperscale data-center campus ("Project Galaxy"; operator Amazon Web Services, Inc.; '
+                'hyperscale data-center campus (Ohio EPA: "Sidney Data Center Campus" / "CMH-232"; '
+                'locally "Project Galaxy"; operator Amazon Web Services, Inc.; '
                 "developer Amazon Data Services, Inc.) — under construction"
             ),  # [verified] operator/developer + status
-            # gross_floor_area_sqft = [open]: AWS has disclosed no building size for Project Galaxy.
+            # gross_floor_area_sqft = [open]: AWS has disclosed no building size for this campus.
             disclosed_investment_usd=3_000_000_000,  # [verified] $3 billion campus (DCD Oct 2025; sidneyoh.com/526)
             disclosure_citation=(
                 "[verified] City of Sidney FAQ (sidneyoh.com/526/Proposed-Data-Center-FAQ) + Data "
@@ -2587,7 +2630,17 @@ _SIDNEY = SiteProfile(
                 "operations target 2028-12-31 (CRA Agreement 80-25 deadline). ~75 long-term jobs by "
                 "2030 / $6.75M annual payroll; 30-yr 100% CRA real-property abatement (Res 18-25); "
                 "$50M PILOT over 15 yr; up to $8.0M AWS Millcreek Road reconstruction (Res 27-26, "
-                "adopted 2026-04-27). Land/parcel acreage [open]. See data/extracted/sidney/data-centers.md."
+                "adopted 2026-04-27). SITE EXTENT now permit-sourced (#1383): Amazon Data Services' "
+                "own Ohio EPA filings state 236.7 acres 'of agricultural and residential land' "
+                "converted (401 application, project name CMH-232) and 230.7 acres of total land "
+                "disturbance (construction-stormwater NOI); coverage 1GC10596*AG under general "
+                "permit OHC000006 ran effective 2025-12-05, 160 days (a little over five months) "
+                "before the City's grading permit of 2026-05-14. NAMING: Ohio EPA files this campus as 'Sidney Data Center Campus' and "
+                "'CMH-232', never as 'Project Galaxy' — that name in Ohio EPA's own records belongs "
+                "to a DIFFERENT Amazon Data Services campus at 1000 Innovation Way, Jeffersonville "
+                "(Fayette County), which does hold an individual NPDES permit and a cooling-water "
+                "discharge force main. See data/extracted/sidney/data-centers.md and "
+                "data/extracted/sidney/regulatory-watch.yaml."
             ),
             # Cooling archetype (#1054): UNKNOWN — the register discloses WATER FIGURES, not a cooling
             # DESIGN, so the method is not on record (a disclosed facility with an undisclosed method
@@ -2602,10 +2655,15 @@ _SIDNEY = SiteProfile(
                 "ceiling, consistent with a largely closed-loop/dry design rather than an evaporative "
                 "tower — but AWS has not stated the cooling design, so this is NOT selected as "
                 "closed_loop_dry. Facility wastewater returns to the Sidney sanitary sewer -> "
-                "OH0027421 -> Great Miami River. Net consumptive draw ~= 0.0195 cfs avg vs the Great "
-                "Miami 7Q10 = 30.95 cfs (<0.1%) — [inference] from the cited water figures (see "
-                "data/extracted/sidney/data-centers.md, 'Water / hydrology hook'); the regulatory "
-                "passby threshold stays SiteProfile.passby_primary_cfs pending the OH0027421 fact sheet."
+                "1PD00009*SD / OH0027421 -> Great Miami River at RM 128.68; the City states flatly "
+                "that 'Cooling systems are not permitted to discharge to the storm sewer system' and "
+                "the campus's own stormwater NOI answers 'Individual NPDES: NO', so there is no "
+                "surface-water cooling discharge to permit here — which is also why Ohio EPA's "
+                "abandonment of the draft data-center general permit OHD000001 (Community Notice "
+                "2026-07-21) changes nothing for this site. Net consumptive draw ~= 0.0195 cfs avg "
+                "vs the CITED regulatory Great Miami 7Q10 of 24.0 cfs (0.08%) — [inference] from the "
+                "cited water figures (see data/extracted/sidney/data-centers.md, 'Water / hydrology "
+                "hook'); the passby is now the fact-sheet value, not a derivation (#1383)."
             ),
         ),
     ),
@@ -2614,11 +2672,26 @@ _SIDNEY = SiteProfile(
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
         "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — AES Ohio (DP&L) "
-        "territory, Shelby County, OH [verified]"
+        "territory, Shelby County, OH [verified]. TARIFF POSTURE (#1383, checked 2026-07-31): the "
+        "retail terms this zone's data centers will actually pay under are not settled — AES Ohio "
+        "announced on 2026-07-21 an UNOPPOSED Stipulation with PUCO Staff and 16 parties in Case "
+        "No. 25-958-EL-AIR for a three-year rate plan including 'a new Data Center Tariff as "
+        "recommended by the PUCO', with distribution rates planned through 2029 [reference — the "
+        "utility's own account of its own filing, data/documents/grid/sidney/]. The four DCT rate "
+        "classes the PUCO Staff Report recommended (secondary / primary / primary-substation / "
+        "high-voltage) are NOT confirmed from the stipulation itself: PUCO's docketing system is "
+        "WAF-blocked, so the docket is unsearched, not empty. No AES service agreement or "
+        "interconnection filing naming this campus is on the record [open]."
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
     lmp_pnode_name="DAY",
     county_name="Shelby County, OH",  # [verified]
+    # Sidney owns two sub-collections outside its slug directory (#1383): the Ohio EPA
+    # permits under oepa/sidney/ (the campus's stormwater / wetland / PTI instruments and
+    # the receiving POTW's NPDES permit) and the utility record under grid/sidney/. Name
+    # them here or Lima's whole-tree reference scope swallows them — the same #1505 leak
+    # that idem/fort-wayne and oepa/troy-piqua are declared against.
+    corpus_relpaths=("sidney", "oepa/sidney", "grid/sidney"),
 )
 
 

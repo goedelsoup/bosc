@@ -1,11 +1,11 @@
 [
   {
     "chapter": "method",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "method",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "data",
       "statusReasons": [],
       "stats": [],
@@ -15,11 +15,11 @@
   },
   {
     "chapter": "project",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "project",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "partial",
       "statusReasons": [
         "the IT load on the record is a screening bracket, not an instrument-grounded figure"
@@ -52,11 +52,11 @@
   },
   {
     "chapter": "water-supply",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "water-supply",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "gap",
       "statusReasons": [
         "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here."
@@ -75,11 +75,11 @@
   },
   {
     "chapter": "discharge",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "discharge",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "partial",
       "statusReasons": [
         "baseline context only — the project-side record has not been produced"
@@ -93,11 +93,11 @@
   },
   {
     "chapter": "heat",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "heat",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "gap",
       "statusReasons": [
         "a thermal characterization for this project — none exists on the record."
@@ -116,11 +116,11 @@
   },
   {
     "chapter": "groundwater",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "groundwater",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "gap",
       "statusReasons": [
         "a well survey and any dewatering record — neither has been produced."
@@ -139,11 +139,11 @@
   },
   {
     "chapter": "stormwater",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "stormwater",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "gap",
       "statusReasons": [
         "the site grading and drainage plan — requested, not produced."
@@ -162,11 +162,11 @@
   },
   {
     "chapter": "air",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "air",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "gap",
       "statusReasons": [
         "an air-permit application for this project — none is on the record."
@@ -185,11 +185,11 @@
   },
   {
     "chapter": "labor",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "labor",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "data",
       "statusReasons": [],
       "stats": [
@@ -212,11 +212,11 @@
   },
   {
     "chapter": "power",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "power",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "partial",
       "statusReasons": [
         "the campus load is a screening bracket — the demand-pressure read is withheld until an instrument grounds it"
@@ -258,11 +258,11 @@
   },
   {
     "chapter": "fiscal",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "fiscal",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "gap",
       "statusReasons": [
         "no fiscal instrument is on the record"
@@ -283,11 +283,11 @@
   },
   {
     "chapter": "balance",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "balance",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "partial",
       "statusReasons": [
         "synthesizes the screened chapters — 1 on the record, 2 partial, 5 gap"
@@ -299,11 +299,11 @@
   },
   {
     "chapter": "missing",
-    "facility_key": "aws-project-galaxy",
+    "facility_key": "cmh-232",
     "lead_ids": [],
     "model": {
       "id": "missing",
-      "facilityKey": "aws-project-galaxy",
+      "facilityKey": "cmh-232",
       "status": "data",
       "statusReasons": [],
       "stats": [],

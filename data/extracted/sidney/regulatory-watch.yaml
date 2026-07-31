@@ -1,0 +1,605 @@
+# Sidney (Shelby County, OH) — standing regulatory watch on the AWS campus.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such
+#   [open]      = not established by any captured source — do NOT assert
+#
+# A watch is only worth as much as its negatives. Every instrument below records
+# what was checked, by what route, on what date, and what came back — including
+# the routes that CANNOT answer the question and the one that is blocked. A blank
+# is never left to imply "nothing happened."
+meta:
+  subject: >-
+    Standing watch on the five regulatory instruments framing the AWS "Sidney Data
+    Center Campus" (Amazon Data Services, Inc., 2388 West Millcreek Road) — air PTI,
+    construction stormwater, the receiving POTW's NPDES permit, the AES Ohio rate
+    case, and City site-plan review
+  kind: regulatory-watch
+  site: sidney
+  captured_for: issue 1383 (epic 1275, readiness(sidney))
+  extracted_at: '2026-07-31'
+  checked_on: '2026-07-31'
+  previous_check: '2026-07-02'      # data/extracted/sidney/data-centers.md, "Regulatory record"
+  method: >-
+    Five routes, run independently and recorded separately: Ohio EPA's eDocument
+    public portal (facility name x county x program), EPA ECHO's CWA services and
+    the Envirofacts ICIS-NPDES / FRS tables, the Ohio EPA DAM permit slots, the City
+    of Sidney's own FAQ page, and open web search for the PUCO docket. Where a route
+    is structurally incapable of answering, that is recorded as a structural finding
+    rather than an empirical negative.
+
+# ── The naming problem, which is why the last check found nothing ──────────────
+# This is the single most useful thing this watch established. The 2026-07-02
+# register searched "Amazon Data Services" and "Project Galaxy" against Shelby
+# County and came back empty on every regulatory instrument. Both keys were wrong.
+naming:
+  tag: '[verified]'
+  finding: >-
+    Ohio EPA's records do not know this campus as "Project Galaxy." They know it as
+    "Sidney Data Center Campus" in the surface-water and NPDES systems, and as
+    "CMH-232" in the 401/wetlands system. Searching either of those names returns
+    the full instrument set immediately; searching "Amazon Data Services" as a
+    FACILITY name against Shelby County returns zero, because the applicant name and
+    the facility name are different fields.
+  keys_that_work:
+    - key: Sidney Data Center Campus
+      where: Ohio EPA eDocument facility name; ICIS-NPDES facility name; EPA FRS primary name
+      evidence: data/documents/oepa/sidney/3931140.pdf (NOI, section II)
+    - key: CMH-232
+      where: Ohio EPA eDocument facility name, 401 WETLANDS program only
+      evidence: data/documents/oepa/sidney/3935117.pdf (401 application, section 2.A)
+    - key: Amazon Data Services, Inc.
+      where: ICIS-NPDES permit_name (NOT the facility name), and the applicant block of every filing
+      evidence: Envirofacts ICIS_PERMIT, external_permit_nmbr OHGC16923
+    - key: 2388 West Millcreek Road / 40.2692, -84.1957
+      where: address and coordinate fields across all systems
+  the_project_galaxy_collision:
+    tag: '[verified]'
+    warning: >-
+      "Project Galaxy" is a live facility name in Ohio EPA's records — for a
+      DIFFERENT Amazon Data Services campus. ICIS-NPDES carries "PROJECT GALAXY"
+      (individual NPDES permit OH0151745, reported average flow 0.451 MGD),
+      "PROJECT GALAXY" (OHGH00907, hydrostatic-test general permit, 1.05 MGD) and
+      "PROJECT GALAXY FORCE MAIN FOR COOLING WATER DISCHARGE" (OHGC17083), all at
+      1000 Innovation Way / Innovation Wy NW & Bluegrass Blvd, JEFFERSONVILLE, OH
+      43128 — Fayette County, roughly 90 miles from Sidney, the AWS campus on the
+      I-71 land AWS bought in Jefferson Township in January 2025. Its permittee name
+      is also "Amazon Data Services, Inc." A records search keyed on "Project
+      Galaxy" therefore returns a real, Amazon-owned, cooling-water-discharging
+      Ohio data center that IS NOT THIS ONE. Do not let those instruments — least of
+      all the cooling-water force main and the individual NPDES permit — migrate
+      onto the Sidney record.
+    checked_on: '2026-07-31'
+    source: EPA ECHO cwa_rest_services.get_facilities, p_st=OH, p_fn=GALAXY (4 rows)
+  where_project_galaxy_is_sourced_for_sidney:
+    tag: '[reference]'
+    statement: >-
+      The Sidney attribution of the codename rests on secondary sources
+      (stopohiodatacenters.org/shelby-county; Data Center Dynamics, Oct 2025) plus
+      one resident-submitted question quoted verbatim on the City's own FAQ page,
+      which refers to "the Project Galaxy/Rey development" in connection with the
+      $6.8 million Millcreek Road line of the 2026 Capital Improvement Fund. The
+      City answered that question without correcting the name. That is enough to
+      record the codename as locally used — it is NOT enough to make it the name
+      under which the campus is permitted, and the register should lead with
+      "Sidney Data Center Campus" / "CMH-232". Note the same FAQ sentence introduces
+      a SECOND, entirely unsourced codename, "Rey", which nothing else corroborates.
+      Left `[open]`.
+    source: >-
+      data/documents/oepa/sidney/ (none) — sidneyoh.com/526/Proposed-Data-Center-FAQ,
+      read 2026-07-31, page self-dated "Last updated: June 24, 2026"
+
+# ── Route hazards found while running this watch ───────────────────────────────
+# Recorded so the next check does not repeat them and mistake a broken query for
+# an absent instrument.
+route_hazards:
+  - route: EPA ECHO get_facilities county filter (p_co)
+    hazard: >-
+      Filtering CWA facilities by p_co=Shelby returns 32 rows and DOES NOT INCLUDE
+      the AWS campus, because ICIS carries a null county on the newer general-permit
+      coverages and the filter drops null-county rows. A "no Amazon facility in
+      Shelby County" negative built on that query would have been false. Query by
+      permit ID, facility name, or ZIP instead.
+  - route: EPA ECHO facility-name search (p_fn)
+    hazard: >-
+      p_fn matches the ICIS FACILITY name, not the permit name. p_fn=AMAZON against
+      Ohio returns exactly one row (an Etna fulfillment center) and misses OHGC16923
+      entirely, whose facility name is "SIDNEY DATA CENTER CAMPUS" while its
+      permit_name is "Amazon Data Services, Inc." Use Envirofacts ICIS_PERMIT
+      PERMIT_NAME/CONTAINING to search the permittee.
+  - route: Ohio EPA eDocument full-text field
+    hazard: >-
+      The free-text box does not behave like a phrase search. Shelby + AIR PERMIT +
+      full text "Amazon" returned 0 while Shelby + AIR PERMIT + full text "data
+      center" returned 232 — i.e. it matched loosely on common words. Only the
+      structured Facility Name x County x Program fields gave reproducible results;
+      full-text counts here are not evidence either way.
+  - route: EPA FRS / ICIS-Air as an air-permit oracle
+    hazard: >-
+      FRS shows registry 110072226204 (SIDNEY DATA CENTER CAMPUS, 2388 West
+      Millcreek Road) with NPDES as its ONLY program system, and ICIS-Air has no
+      Amazon Data Services source in Ohio at all. That is consistent with there
+      being no air permit — but ICIS-Air only carries majors and some synthetic
+      minors, so a state minor-source PTI could exist without ever appearing there.
+      The federal absence corroborates; it does not decide. The deciding route is
+      Ohio EPA's own eDocument search, below.
+
+# ─────────────────────────────────────────────────────────────────────────────
+instruments:
+
+  # 1 ─────────────────────────────────────────────────────────────────────────
+  air_pti:
+    watch_item: 1
+    subject: Ohio EPA air Permit-to-Install for the emergency-generator bank
+    outcome: negative
+    tag: '[verified negative]'
+    checked_on: '2026-07-31'
+    jurisdiction:
+      tag: '[verified]'
+      statement: >-
+        Shelby County air permitting is Ohio EPA DAPC's NORTHWEST District Office
+        (Bowling Green), contact John Pasquarette, 419.373.3057 — confirmed from Ohio
+        EPA's own district/local-air-agency table read 2026-07-31. It is explicitly
+        NOT RAPCA: the Regional Air Pollution Control Agency in Dayton takes
+        applications only for Clark, Darke, Greene, Miami, Montgomery and Preble.
+        (Surface water splits the other way — the campus's own PTI names the
+        SOUTHWEST District Office. The two programs do not share a district for this
+        county, and a search aimed at the wrong one will find nothing.)
+      source: https://epa.ohio.gov/divisions-and-offices/air-pollution-control/permitting/ohio-epa-district-offices-and-local-air-pollution-control-agencies
+    queries_run:
+      - query: eDoc — County=SHELBY, Program=AIR PERMIT, Facility Name="SIDNEY DATA"
+        result: 0 documents
+      - query: eDoc — County=SHELBY, Program=AIR PERMIT, Facility Name="CMH"
+        result: 0 documents
+      - query: eDoc — statewide, Program=AIR PERMIT, Facility Name="CMH-232"
+        result: 0 documents
+      - query: eDoc — County=SHELBY, all programs, Facility Name="AMAZON"
+        result: 0 documents
+      - query: EPA ECHO air_rest_services — p_st=OH, p_fn=AMAZON
+        result: 1 row, AMAZON.COM SERVICES LLC - CAK4, Valley View (a fulfillment center, not a data center)
+      - query: EPA FRS — all program facilities at ZIP 45365
+        result: >-
+          SIDNEY DATA CENTER CAMPUS present, registry 110072226204, with NPDES as its
+          only program system — no AIR program record
+    positive_control:
+      tag: '[verified]'
+      statement: >-
+        The eDoc route DOES surface AWS air permits when they exist. Statewide,
+        Program=AIR PERMIT, Facility Name="AMAZON" returns 19 documents, including
+        "AMAZON DATA SERVICES - CMH050" in LICKING county (facility ID 0145000544)
+        with a draft-for-public-comment 2024-05-22, public notice 2024-08-12, and
+        long-term permit correspondence through 2025-07-22, plus Amazon air permits
+        in Cuyahoga (CLE9/CAK4) and Madison (OOH9). So the query shape is proven
+        against exactly the kind of instrument being looked for, in the same agency
+        system, for the same applicant. The Shelby zero is a zero, not a broken
+        query.
+    conclusion: >-
+      As of 2026-07-31 there is NO Ohio EPA air permit-to-install, draft permit,
+      public notice or permit application on the record for the Sidney campus, under
+      any of the three names it is known by. The generator count, the generator
+      ratings and therefore the campus's backup-power and air-dispatch dimensions
+      all remain `[open]`, and the SiteFacility's genset fields stay None. The
+      comparable shape stays the Hilliard AWS campus (158 generators, Ohio EPA
+      public comment March 2026) — a comparable, never a number for Sidney.
+    what_would_close_it: >-
+      A DRAFT FOR PUBLIC COMMENT or PUBLIC NOTICE document under Program=AIR PERMIT,
+      County=SHELBY, for facility "SIDNEY DATA CENTER CAMPUS" or "CMH-232". Ohio EPA
+      publishes the draft before the final, so the draft is the earliest signal, and
+      it is the document that names generator count and ratings.
+
+  # 2 ─────────────────────────────────────────────────────────────────────────
+  construction_stormwater:
+    watch_item: 2
+    subject: NPDES construction-stormwater coverage for the campus earthwork
+    outcome: issued
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    permit:
+      ohio_facility_permit_number: 1GC10596*AG
+      general_permit: OHC000006      # Construction Site Stormwater General Permit
+      icis_permit_id: OHGC16923
+      icis_master_permit: OHC000000  # ICIS umbrella record, "Construction Site Stormwater General Permit", eff. 2023-04-23
+      permittee: Amazon Data Services, Inc.
+      facility_name: Sidney Data Center Campus
+      facility_address: 2388 West Millcreek Road, Sidney, OH 45365, Shelby County
+      noi_submitted: '2025-12-01'
+      effective: '2025-12-05'
+      expires: '2028-04-22'
+      signed_by: John Logue, Director, Ohio EPA
+    facts_it_puts_on_the_record:
+      - fact: Total land disturbance 230.7 acres
+        tag: '[verified]'
+        source: 3931140.pdf, NOI section III
+      - fact: >-
+          Campus coordinate 40.26920527 / -84.19566214 (the NOI's own point; the 401
+          application gives 40.266278 / -84.194246 for the same project, a ~350 m
+          difference between two filings' chosen reference points — neither is a
+          parcel boundary)
+        tag: '[verified]'
+        source: 3931140.pdf section II; 3935117.pdf section 2.F
+      - fact: >-
+          Receiving stream "Mill Creek, Mill Branch" — NOT the Great Miami River
+          directly. The AES filing next door resolves the drainage explicitly as
+          HUC-12 050800010604 (Mill Creek-Loramie Creek) and 050800010703 (Brush
+          Creek-Great Miami River), and the campus's own 401 application lists the
+          same two HUC-12s. The campus's STORMWATER therefore reaches the Great
+          Miami by way of Loramie Creek, entering below the Sidney gage — a
+          different denominator from the campus's WASTEWATER, which goes to the
+          sanitary sewer and leaves at the Sidney WWTP outfall at RM 128.7.
+        tag: '[verified]'
+        source: 3931140.pdf section II; 3935117.pdf section 2.H/I; grid/sidney/4184081.pdf
+      - fact: >-
+          The applicant's own answers on the NOI: Individual NPDES "NO", individual
+          401 Water Quality Certification "NO", USACE nationwide permit "NO", PTI
+          "YET_TO_APPLY", Isolated Wetland "YET_TO_APPLY". Both "yet to apply" items
+          have since been applied for and granted (see `surface_water_pti` and
+          `isolated_wetland` below).
+        tag: '[verified]'
+        source: 3931140.pdf section III
+      - fact: >-
+          Co-permittee George J. Igel & Co., Inc. (Columbus) approved under the same
+          facility permit number effective 2026-04-22 — the earthwork contractor,
+          named on the state record three weeks before the City issued its grading
+          permit on 2026-05-14.
+        tag: '[verified]'
+        source: 4091850.pdf
+    corpus:
+      - data/documents/oepa/sidney/3931140.pdf
+      - data/documents/oepa/sidney/3931141.pdf
+      - data/documents/oepa/sidney/3931142.pdf
+      - data/documents/oepa/sidney/4091850.pdf
+    supersedes: >-
+      The 2026-07-02 register recorded this as `[open]` — "coverage expected under
+      draft general permit OHD000001 (data-center stormwater general permit) or an
+      individual permit. Not confirmed from open sources." Both halves were wrong.
+      Coverage had already issued 209 days — nearly seven months — before that entry
+      was written, under
+      the ordinary CONSTRUCTION stormwater general permit OHC000006, which is the
+      instrument any 230-acre earthmoving job needs and has nothing to do with
+      data centers.
+
+  # 2b ────────────────────────────────────────────────────────────────────────
+  data_center_general_permit:
+    watch_item: 2
+    subject: The draft statewide data-center NPDES general permit OHD000001
+    outcome: moot
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    finding: >-
+      OHD000001 will never issue. Ohio EPA posted a Community Notice dated
+      2026-07-21: "After carefully reviewing the significant volume of public
+      comments received on the draft National Pollutant Discharge Elimination System
+      (NPDES) general permit for data centers, Ohio EPA has decided not to move
+      forward with finalizing the general permit. The individual NPDES permit
+      issuance process is the most appropriate path forward at this time."
+    source: >-
+      data/documents/oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html
+      (epa.ohio.gov NPDES General Permits page, captured 2026-07-31, "Recent Activities")
+    why_it_barely_matters_here:
+      tag: '[inference]'
+      statement: >-
+        For Sidney specifically the collapse changes little, and saying otherwise
+        would overstate it. OHD000001 would have covered cooling water, cooling-tower
+        and boiler blowdown, compressor condensate and industrial stormwater
+        DISCHARGED TO SURFACE WATER. This campus discloses none of that: all facility
+        wastewater, including any cooling-system discharge, goes to the City's
+        sanitary sewer ("Cooling systems are not permitted to discharge to the storm
+        sewer system" — City FAQ), the NOI answers Individual NPDES "NO", and the
+        surface-water PTI's condition WW restates that a discharge permit would have
+        to be applied for 180 days ahead of any discharge to waters of the state.
+        The live consequence of the collapse is network-wide, not local: any BOSC
+        site record that names OHD000001 as the expected coverage path is now stale.
+    network_note: >-
+      Sandusky's readiness epic and the Sidney register both carried OHD000001 as a
+      standing watch item. Both are now answered — negatively and permanently.
+
+  # 3 ─────────────────────────────────────────────────────────────────────────
+  wwtp_npdes:
+    watch_item: 3
+    subject: NPDES OH0027421 (Sidney WWTP) — the receiving POTW
+    outcome: issued_and_ingested
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    finding: >-
+      The instrument the corpus was waiting on was not pending at all — it has been
+      on Ohio EPA's DAM since 2022 and nobody had pulled it. Ohio EPA Permit No.
+      1PD00009*SD (application OH0027421), City of Sidney WWTP, 1091 Children's Home
+      Road, discharging to the Great Miami River at RM 128.7; action 2022-12-16,
+      effective 2023-01-01, EXPIRES 2027-12-31. Its draft public-notice package (PN
+      163939, 2022-11-07) carries the 39-page Fact Sheet whose Table 14 states the
+      cited regulatory stream design flows for this reach.
+    renewal_cycle:
+      tag: '[verified]'
+      statement: >-
+        The permit's own terms fix the schedule: the permittee "shall submit such
+        information and forms as are required by the Ohio EPA no later than 180 days
+        prior to" the 2027-12-31 expiration — i.e. by roughly 2027-07-04. There is
+        therefore NOTHING to watch on the renewal until mid-2027, and no renewal
+        application, draft permit or public notice exists yet. This replaces the
+        open-ended "watch the renewal cycle" with a date.
+    cited_design_flows:
+      tag: '[verified]'
+      source: 1PD00009.c43b66fd.pdf, Fact Sheet Table 14, "Instream Conditions and Discharger Flow", p.32
+      great_miami_above_sidney:
+        gage: USGS 03261500
+        period: 1927-2021 (30Q10 summer uses 1927-2020)
+        annual_1q10_cfs: 19.4
+        annual_7q10_cfs: 24.0
+        summer_30q10_cfs: 29.0
+        winter_30q10_cfs: 67.2
+        annual_harmonic_mean_cfs: 119.2
+      loramie_creek_at_mouth:
+        gage: USGS 03262000
+        period: 1916-2020 (winter 30Q10 uses 1915-2020)
+        annual_1q10_cfs: 2.71
+        annual_7q10_cfs: 3.43
+        summer_30q10_cfs: 4.29
+        winter_30q10_cfs: 8.34
+        annual_harmonic_mean_cfs: 21.76
+      rush_creek_at_mouth:
+        annual_7q10_cfs: 0.82
+        annual_1q10_cfs: 0.66
+      mixing_assumption: 100% stream-to-discharge ratio, average and maximum
+      sidney_wwtp_outfall_001: 10.83 cfs (7.0 MGD), design, per the NPDES application
+      interactive_dischargers: [Sidney WWTP, Piqua WWTP, Troy WWTP]
+    what_it_changes:
+      tag: '[verified]'
+      statement: >-
+        `SiteProfile('sidney').passby_primary_cfs` was 30.95 — a BOSC-derived LP3
+        7Q10 over 1980-2024 at the same gage, carried explicitly as a placeholder
+        "pending the OEPA NPDES fact sheet." The regulator's own number for the same
+        gage over 1927-2021 is 24.0 cfs, 22% lower, and it is the one the wasteload
+        allocations are actually built on. The derived figure was not wrong as a
+        derivation; it was simply not the regulatory floor, and it made the
+        abstraction screen 29% more permissive than the regulator's. Corrected to
+        24.0. `passby_secondary_cfs` was 0.0 `[open]` with a derived Loramie 7Q10 of
+        3.55 cfs noted alongside; the cited value is 3.43 cfs — close enough that the
+        derivation corroborates well, far enough that the cited one governs.
+    data_center_wastewater_separation:
+      tag: '[verified]'
+      question: Will data-center wastewater be reported separately in the WWTP's DMRs?
+      answer: >-
+        No — and the DMR was never the place to look. A DMR reports what leaves
+        outfall 1PD00009001; an industrial user's contribution is not broken out
+        there. The instrument that would separate it is the CITY's own industrial
+        pretreatment program: the City states it has 16 significant industrial users
+        and that potential chemicals at the site are "reviewed through the City's
+        industrial pretreatment program, with support from Ohio EPA and engineering
+        consultants," with authority to "require pretreatment, operational changes,
+        or prohibit discharges." An AWS significant-industrial-user permit issued by
+        the City of Sidney is a municipal record obtainable under R.C. 149.43 — it is
+        not on Ohio EPA's eDocument portal and no amount of DMR watching will produce
+        it.
+      source: sidneyoh.com/526/Proposed-Data-Center-FAQ, "Utility Concerns", read 2026-07-31
+      status: '[open] — no SIU permit or pretreatment agreement for the campus is on the record'
+    corpus:
+      - data/documents/oepa/sidney/1PD00009.pdf
+      - data/documents/oepa/sidney/1PD00009.c43b66fd.pdf
+    extraction: data/extracted/oepa/sidney/1PD00009.npdes.yaml
+
+  # 4 ─────────────────────────────────────────────────────────────────────────
+  puco_aes_ohio_rate_case:
+    watch_item: 4
+    subject: PUCO Case No. 25-958-EL-AIR — AES Ohio multi-year rate plan and the data-center tariff classes
+    outcome: moved
+    tag: '[reference]'
+    checked_on: '2026-07-31'
+    finding: >-
+      On 2026-07-21 AES Ohio announced it had filed an UNOPPOSED Settlement
+      (Stipulation) with PUCO Staff and 16 parties for a three-year rate plan, and
+      that the settlement includes "Customer protections that ensure data centers
+      will pay for their costs, under a new Data Center Tariff as recommended by the
+      PUCO," with "planned distribution rates through 2029." Public hearings were
+      held in Dayton on 2026-07-09 and 2026-07-16.
+    tag_rationale: >-
+      `[reference]`, not `[verified]`: this is the utility's own press release about
+      its own filing. The stipulation is the record; the press release is a party
+      describing it. Nothing here states the four DCT rate classes (secondary /
+      primary / primary-substation / high-voltage) that the PUCO Staff Report
+      recommended, and nothing names AWS, Sidney, Shelby County or any megawatt
+      figure.
+    what_it_does_to_the_issue_body: >-
+      The issue tracked an "evidentiary hearing 2026-08-04." An unopposed stipulation
+      filed two weeks earlier ordinarily converts that into a settlement hearing, but
+      whether the 2026-08-04 date still stands, and in what form, is `[open]` — the
+      docket is the only place that answers it and the docket is blocked (below).
+    puco_dis:
+      tag: '[open — access blocked]'
+      what_was_checked: >-
+        PUCO's Docketing Information System case record, both
+        dis.puc.state.oh.us/CaseRecord.aspx?CaseNo=25-0958-EL-AIR and the
+        25-958-EL-AIR spelling, with a browser user-agent.
+      result: >-
+        Not a negative — an ACCESS FAILURE, and it must be recorded as one. Both URLs
+        return HTTP 200 with a 244-byte body: "Request Rejected / The requested URL
+        was rejected. Please consult with your administrator. / Your support ID is
+        <5914278294322602041>". That is a WAF block, identical in shape to the one
+        recorded for the Findlay grid work
+        (data/extracted/grid/findlay/megawatt-hub-interconnection.gap.yaml). The
+        docket is UNSEARCHED, not empty. The stipulation text, the DCT tariff sheets,
+        the service list and any AWS-specific service agreement are all behind it.
+    facility_naming_watch: >-
+      The instrument that would matter most here is not the tariff at all — it is an
+      AES Ohio service agreement or interconnection filing that NAMES the Sidney
+      campus and states its contracted load. None is on the record. The City's own
+      FAQ answers a resident question premised on the existence of "the FERC
+      transmission service agreement between AES and Amazon" by explaining that the
+      City has no standing in a FERC proceeding; it neither confirms nor denies that
+      such an agreement exists, so the agreement stays `[open]` and the FAQ exchange
+      is a lead, not a source. FERC eLibrary is the route to try next.
+    corpus:
+      - data/documents/grid/sidney/2026-07-21-aes-ohio-files-unopposed-settlement-for-its-three-year-rate-plan.aes-ohio.html
+
+  # 5 ─────────────────────────────────────────────────────────────────────────
+  city_site_plan:
+    watch_item: 5
+    subject: City of Sidney site-plan review for the campus
+    outcome: negative
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    finding: >-
+      Unchanged. The City's FAQ page still reads "The site plan is under review by
+      City staff," and the page still self-dates to "Last updated: June 24, 2026" —
+      no movement in the five weeks since the issue was written.
+    structural_finding:
+      tag: '[verified]'
+      statement: >-
+        There will be no public hearing record to watch for. Sidney site-plan
+        approval is governed by Zoning Code Section 1115.09 and is "conducted
+        administratively by the Zoning Code Administrator (Community Development
+        Director)" with technical review by Zoning, Engineering, Fire and Underground
+        Utilities; the City states explicitly that "the Sidney Planning Commission
+        does not review or approve site plans for this proposed development,"
+        contrasting itself with Wilmington, where the Planning Commission does. So
+        the approval will surface as an administrative act, not as a noticed agenda
+        item — a records request to the Community Development Director, not a meeting
+        watch, is the route to the approved plan and its building count.
+      source: sidneyoh.com/526/Proposed-Data-Center-FAQ, "Economic Development Process", read 2026-07-31
+    what_did_move: >-
+      The state-side approvals for the same works landed while the City review sat:
+      the Ohio EPA sanitary-sewer-relocation PTI on 2026-06-16 and the City's own
+      wetland permit for the road development on 2026-05-04.
+
+# ── Instruments this watch found that the issue did not know to look for ──────
+newly_surfaced:
+
+  isolated_wetland:
+    subject: Level One Isolated Wetland General Permit — "CMH-232"
+    outcome: issued
+    tag: '[verified]'
+    ohio_epa_id: 251911W
+    edoc_permit_id: DSW401251911W
+    permittee: Amazon Data Services, Inc.
+    pan_received: '2025-12-01'
+    authorized: '2025-12-16'
+    modified: '2026-01-15'
+    fill_deadline: '2027-12-16'
+    impacts: >-
+      0.24 acre of one forested Category 2 wetland and 0.18 acre of two non-forested
+      wetlands (0.42 acre total). The 2026-01-15 modification re-classifies those two
+      non-forested wetlands from Category 2 to Category 1.
+    mitigation: 1.0 forested credit reserved at the Norton Run Mitigation Bank
+    project_description_verbatim: >-
+      "The proposed project will convert 236.7 acres of agricultural and residential
+      land into a data center in Sidney, Shelby County, Ohio."
+    corpus:
+      - data/documents/oepa/sidney/3935117.pdf
+      - data/documents/oepa/sidney/3972773.pdf
+
+  surface_water_pti:
+    subject: Ohio EPA Surface Water Permit to Install — public sanitary sewer relocation
+    outcome: issued
+    tag: '[verified]'
+    permit_number: DSWPTI-260517
+    internal_number: DSW-7167
+    applicant: Amazon Data Services, Inc.
+    plans_received: '2026-05-22'
+    issued: '2026-06-16'
+    what_it_is: >-
+      The campus sits on top of a public sanitary sewer, and this is the permit to
+      move it. Operation and maintenance of the relocated main stays with the City of
+      Sidney (condition AB). Condition WW restates that the PTI authorizes no
+      discharge and that an NPDES permit would have to be applied for 180 days before
+      any discharge to waters of the state.
+    corpus:
+      - data/documents/oepa/sidney/4160653.pdf
+    not_pulled:
+      - edoc: '4158406'
+        what: approved plan set, "CITY OF SIDNEY, OHIO PUBLIC SANITARY SEWER RELOCATION PLAN FOR 2388 WEST MILLCREEK ROAD"
+        bytes: 20834462
+        why: >-
+          20 MB drawing set. It is the closest thing on the public record to a campus
+          layout and is worth pulling when the site-plan work needs it; left out of
+          the corpus for now rather than committed unread.
+      - edoc: '4158414'
+        what: PTI application and support package
+        bytes: 2050505
+        why: superseded by the issued permit for the purposes of this watch
+
+  city_wetland_permit:
+    subject: Isolated Wetland Permit — "West Millcreek Road/Fair Road Development"
+    outcome: issued
+    tag: '[verified]'
+    ohio_epa_id: 252256W
+    edoc_permit_id: DSW401252256W
+    permittee: City of Sidney (Jon Crusey, 201 W Poplar Street)
+    issued: '2026-05-04'
+    mitigation_confirmed: '2026-05-06'
+    consultant: Clune Consulting Services
+    note: >-
+      The ROAD half of the project, and a different permittee from the campus wetland
+      permit. This is the wetland authorization behind the Millcreek Road
+      reconstruction that AWS is contributing up to $8.0 million toward under
+      Resolution 27-26. Do not merge it with Amazon's 251911W.
+    corpus:
+      - data/documents/oepa/sidney/4109706.pdf
+
+  aes_6694_reroute:
+    subject: AES transmission line reroute adjacent to the campus
+    outcome: issued
+    tag: '[verified]'
+    ohio_facility_permit_number: 1GC11112*AG
+    general_permit: OHC000006
+    applicant: The AES Corporation
+    facility_name: 6694 Transmission Line Reroute
+    facility_address: 2522 Mill Creek Road, Sidney, Clinton Township, Shelby County
+    coordinate: 40.26960894 / -84.19750701
+    approved: '2026-07-09'
+    construction_window: 2026-09-01 to 2026-12-31
+    land_disturbance_acres: 1.55
+    what_it_establishes:
+      tag: '[verified]'
+      statement: >-
+        That AES will be building transmission next to this campus starting September
+        2026, on 1.55 acres, and that it filed for it in June 2026. That is all. It
+        corroborates the "Millcreek substation expansion" the City's FAQ answers a
+        question about, and it is the first AES-filed instrument tied to this site.
+    what_it_does_not_establish:
+      tag: '[verified]'
+      statement: >-
+        Voltage, circuit rating, megawatts, customer, or that the reroute serves the
+        AWS campus at all. It is a stormwater permit for an earthmoving job. The
+        campus load stays `[open]`, and this document must never be read as a proxy
+        for it — the same error the Findlay record refused to make when a new 138 kV
+        station was available to stand in for a missing load instrument.
+    corpus:
+      - data/documents/grid/sidney/4184081.pdf
+
+# ── What the next check should do ─────────────────────────────────────────────
+next_check:
+  cadence: >-
+    Quarterly, or immediately on any of the triggers below. The two dated ones are
+    2026-08-04 (the PUCO hearing, if it survives the stipulation) and mid-2027 (the
+    OH0027421 renewal application, due ~2027-07-04).
+  queries:
+    - Ohio EPA eDoc, County=SHELBY, Program=AIR PERMIT, Facility Name "SIDNEY DATA" then "CMH" — the air PTI
+    - Ohio EPA eDoc, County=SHELBY, Facility Name "SIDNEY DATA CENTER CAMPUS" — new DSW instruments (7 documents as of this check)
+    - Ohio EPA eDoc, County=SHELBY, Facility Name "CMH-232" — new 401/wetland instruments (30 documents as of this check)
+    - Envirofacts ICIS_PERMIT, PERMIT_NAME/CONTAINING/Amazon Data Services — new Ohio coverages (16 OH rows of 39 nationwide as of this check)
+    - PUCO 25-958-EL-AIR, if DIS ever becomes reachable
+    - FERC eLibrary for an AES Ohio / Amazon service agreement naming the Sidney campus
+    - City of Sidney: R.C. 149.43 request for the approved site plan and for any AWS significant-industrial-user permit
+  do_not:
+    - Search "Project Galaxy" and treat Fayette County hits as Sidney's.
+    - Filter ECHO by county and read a null-county absence as a negative.
+    - Read the AES reroute permit, or any substation work, as evidence of the campus load.
+
+# ── Loose end this watch surfaced but did not fix ─────────────────────────────
+noted_not_fixed:
+  - what: >-
+      data/extracted/oepa/1PV00037.npdes.yaml — the Hidden Valley MHP permit
+      extraction — sits at the oepa/ ROOT rather than under oepa/sidney/, so it falls
+      outside Sidney's corpus scope and inside Lima's whole-tree reference scope, and
+      renders as a row in Lima's Allen-County record. Its own catalog entry
+      (data/catalog/extracted/oepa-sidney.yaml) already declares site_scope
+      site:sidney, and its source PDF is correctly filed at
+      data/documents/oepa/sidney/1PV00037.pdf. This is the same #1505 class of leak
+      that adding corpus_relpaths=("sidney", "oepa/sidney", "grid/sidney") closed for
+      everything else here.
+    why_not_fixed: >-
+      It concerns a different permit and a different facility from this watch's
+      subject, and moving a committed extracted artifact ripples into the catalog
+      storage relpath and the Wilmington catalog's exclusion note. Left for its own
+      change rather than smuggled into a regulatory watch.

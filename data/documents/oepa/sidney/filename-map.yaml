@@ -1,7 +1,17 @@
 meta:
   subject: OEPA/DAM permit download manifest
-  generated_at: '2026-06-29'
+  generated_at: '2026-07-31'
   policy: non-destructive — originals keep as-received names
+  note: >-
+    Two sources feed this collection. DAM permit slots
+    (dam.assets.ohio.gov/.../Portals/35/permits/{doc,DraftPN}/<ID>.pdf) serve a bare
+    permit-number filename, so the DraftPN copy collides with the issued-permit copy;
+    the second bytes keep their own name suffixed with a sha256 prefix, per the same
+    non-destructive collision rule used in oepa/findlay/. Ohio EPA eDocument
+    (edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=N) sends no
+    Content-Disposition at all, so those files are named by their stable eDoc docid —
+    the same convention as oepa/urbana/. Canonical names below are descriptive only;
+    the bytes on disk keep the as-received name.
 documents:
 - filename: 1PV00037.pdf
   permit_id: 1PV00037
@@ -12,3 +22,207 @@ documents:
   fetched_at: '2026-06-29T00:30:39.121319+00:00'
   status: downloaded
   note: null
+
+# ── City of Sidney WWTP — the receiving POTW (NPDES OH0027421) ────────────────
+- filename: 1PD00009.pdf
+  permit_id: 1PD00009
+  canonical: oepa-1pd00009-sidney-wwtp-permit-2022.pdf
+  type: npdes-permit
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00009.pdf
+  sha256: 8ae3ed0908a93b50a2503d12e0eac0125b3d6bff1114296512f610251a53c124
+  bytes: 350162
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:31.483192+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    Ohio EPA Permit No. 1PD00009*SD, application OH0027421 — City of Sidney WWTP,
+    1091 Children's Home Road, discharging to the Great Miami River. Action date
+    2022-12-16, effective 2023-01-01, expires 2027-12-31; 47 pp. Outfall
+    1PD00009001, average design flow 7.0 MGD. This is the issued permit only — the
+    fact sheet is in the draft public-notice package below.
+- filename: 1PD00009.c43b66fd.pdf
+  permit_id: 1PD00009
+  canonical: oepa-1pd00009-sidney-wwtp-draft-pn-and-fact-sheet-2022.pdf
+  type: npdes-draft-public-notice
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/DraftPN/1PD00009.pdf
+  sha256: c43b66fd64cfbc600e7779fb8eee2ea526e86862e7685c82d4330d1ffd67d7ca
+  bytes: 1747769
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:31.813955+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    Public Notice No. 163939, issued 2022-11-07, for permit 1PD00009*SD — and it
+    carries the 39-page "Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP,
+    2022". Table 14 is the instrument the corpus was missing: the CITED regulatory
+    stream design flows for this reach (Great Miami above Sidney annual 7Q10 = 24.0
+    cfs, 1Q10 = 19.4 cfs, harmonic mean = 119.2 cfs, USGS 03261500 1927-2021;
+    Loramie Creek at mouth annual 7Q10 = 3.43 cfs, USGS 03262000 1916-2020).
+    Structured read: data/extracted/oepa/sidney/1PD00009.npdes.yaml.
+    DAM serves this from a different path under the SAME basename as the issued
+    permit; kept alongside under a sha256-prefixed name (see meta.note).
+
+# ── AWS "Sidney Data Center Campus" (Amazon Data Services, Inc.) ──────────────
+# Ohio EPA knows this campus as "Sidney Data Center Campus" (DSW/NPDES) and
+# "CMH-232" (401/wetlands). It is NEVER filed as "Project Galaxy" — that name in
+# Ohio EPA's own records belongs to the DIFFERENT Amazon Data Services campus at
+# 1000 Innovation Way, Jeffersonville (Fayette County). See
+# data/extracted/sidney/regulatory-watch.yaml, `naming`.
+- filename: 3931140.pdf
+  edoc_id: '3931140'
+  permit_id: 1GC10596
+  canonical: oepa-1gc10596-sidney-data-center-campus-cgp-noi-2025-12-01.pdf
+  type: npdes-general-permit-noi
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3931140
+  sha256: 2e85cbda7dd93a39920bcd29d7ceee06bf30ea301d3436b7a9321c89951e4d0e
+  bytes: 10041
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:24.789795+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    Notice of Intent for coverage under the Construction Site Stormwater General
+    Permit OHC000006. Applicant Amazon Data Services, Inc. (410 Terry Ave N,
+    Seattle WA); facility "Sidney Data Center Campus", 2388 West Millcreek Road,
+    Shelby County; 40.26920527 / -84.19566214; receiving stream "Mill Creek, Mill
+    Branch"; total land disturbance 230.7 acres; project 2025-10-31 to 2027-05-31.
+    Declares PTI "YET_TO_APPLY", Isolated Wetland "YET_TO_APPLY", Individual NPDES
+    "NO", individual 401 WQC "NO", USACE nationwide permit "NO". Electronically
+    submitted 2025-12-01.
+- filename: 3931141.pdf
+  edoc_id: '3931141'
+  permit_id: 1GC10596
+  canonical: oepa-1gc10596-sidney-data-center-campus-noi-site-location-map.pdf
+  type: npdes-general-permit-exhibit
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3931141
+  sha256: d6b2d3c2b85271a9adcc17cfc913621415e62aeae221fc39657a643b69bbf287
+  bytes: 449495
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:25.717219+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    "OHIO EPA NOI EXHIBIT FOR SIDNEY DATA CENTER CAMPUS" site location map, drawn
+    2025-08-14 by Advanced Civil Design; facility contact Seth Bell, Amazon Data
+    Services, Inc.
+- filename: 3931142.pdf
+  edoc_id: '3931142'
+  permit_id: 1GC10596
+  canonical: oepa-1gc10596-sidney-data-center-campus-cgp-approval-2025-12-05.pdf
+  type: npdes-general-permit-coverage-approval
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3931142
+  sha256: 259aef23526e998e9be3380cb7930de5e5b2e3a63e0044c7a1725c19cec8886d
+  bytes: 139164
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:26.339884+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    THE INSTRUMENT. Director John Logue's approval letter, dated December 5, 2025:
+    coverage under the Construction Site
+    Stormwater General Permit OHC000006 for Sidney Data Center Campus, Ohio EPA
+    facility permit number 1GC10596*AG, effective 2025-12-05, expiring 2028-04-22.
+    ICIS federal ID OHGC16923. Closes the register's stormwater `[open]`.
+- filename: 4091850.pdf
+  edoc_id: '4091850'
+  permit_id: 1GC10596
+  canonical: oepa-1gc10596-sidney-data-center-campus-copermittee-igel-2026-04-22.pdf
+  type: npdes-general-permit-copermittee-approval
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4091850
+  sha256: 61b31497183d0d49fa5d109e0b8ec6098fa1d026781c78b3be583c102abca379
+  bytes: 138796
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:26.918668+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    Co-permittee approval under the same facility permit number 1GC10596*AG for
+    George J. Igel & Co., Inc. (3500 Alum Creek Drive, Columbus), effective
+    2026-04-22 — the earthwork contractor named on the record 22 days before the
+    City's grading permit of 2026-05-14.
+- filename: 3935117.pdf
+  edoc_id: '3935117'
+  permit_id: DSW401251911W
+  canonical: oepa-251911w-cmh-232-401-application-2025-12-10.pdf
+  type: 401-wqc-application
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3935117
+  sha256: 38897eb3e860fea2a7b2d62352755124b0d51227ad10b862a5cf9b104fb6fb5b
+  bytes: 1375329
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:29.342735+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    Application for Section 401 Water Quality Certification, project name
+    "CMH-232", applicant Amazon Data Services, Inc., consultant Smart Services, Inc.
+    States the project in the applicant's own words: "convert 236.7 acres of
+    agricultural and residential land into a data center in Sidney, Shelby County,
+    Ohio"; 40.266278 / -84.194246; west of Millcreek Road, west of South Vandemark
+    Road, northwest of Fair Road; Clinton Township; HUC-12s 050800010703 (Brush
+    Creek-Great Miami River) and 050800010604 (Mill Creek-Loramie Creek); USACE
+    Huntington District. This is the document that ties the AWS internal designation
+    CMH-232 to the Sidney campus.
+- filename: 3972773.pdf
+  edoc_id: '3972773'
+  permit_id: DSW401251911W
+  canonical: oepa-251911w-cmh-232-isolated-wetland-permit-modification-2026-01-15.pdf
+  type: isolated-wetland-permit-modification
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3972773
+  sha256: 5b98a971bd45870506d6a52b5a64e1f4d27e17fc0b9ea482f75b3bc58396c918
+  bytes: 811827
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:30.635111+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    MODIFICATION (2026-01-15) of the Level One Isolated Wetland General Permit
+    authorization first granted 2025-12-16 (Ohio EPA ID 251911W). PAN received
+    2025-12-01: impacts of 0.24 acre of one forested Category 2 wetland and 0.18
+    acre of two non-forested wetlands, which this modification RE-CLASSIFIES from
+    Category 2 to Category 1. Compensatory mitigation: 1.0 forested credit reserved
+    at the Norton Run Mitigation Bank. Filling must be completed by 2027-12-16.
+- filename: 4160653.pdf
+  edoc_id: '4160653'
+  permit_id: DSWPTI-260517
+  canonical: oepa-dswpti-260517-sidney-sanitary-sewer-relocation-pti-2026-06-16.pdf
+  type: surface-water-permit-to-install
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4160653
+  sha256: c0cd1d7f5c714ea6f49b51f91b5ab5be8ae355d11589c554790b9873adf2c828
+  bytes: 103605
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:27.490030+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    Ohio EPA Surface Water Permit to Install DSWPTI-260517 (internal DSW-7167),
+    "Public Sanitary Sewer Relocation - 2388 West Millcreek Rd" — applicant Amazon
+    Data Services, Inc. (1812 Boren Ave, Seattle), plans received 2026-05-22, issued
+    and effective 2026-06-16, transmitted by Tony Nosko P.E., PTI Unit. Names the
+    Southwest District Office as the responsible DSW district (contrast the air
+    program, where Shelby County is NWDO). Condition WW restates that the PTI is not
+    an authorization to discharge and that an NPDES permit must be applied for 180
+    days before any discharge to waters of the state; condition AB puts operation
+    and maintenance of the relocated sewer on the City of Sidney. The 20 MB approved
+    plan set (eDoc 4158406) and the 2 MB application package (eDoc 4158414) are on
+    the same permit and are NOT pulled into the corpus — see regulatory-watch.yaml.
+- filename: 4109706.pdf
+  edoc_id: '4109706'
+  permit_id: DSW401252256W
+  canonical: oepa-252256w-west-millcreek-fair-road-mitigation-complete-2026-05-06.pdf
+  type: isolated-wetland-permit-correspondence
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4109706
+  sha256: 77b64f4a804e1024a4bff331040a6e7912ace4cfc49f4e0d74162026919266b5
+  bytes: 176339
+  content_type: application/pdf
+  fetched_at: '2026-07-31T11:04:31.224399+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    The ROAD side of the same development, and a DIFFERENT permittee: Ohio EPA
+    issued an Isolated Wetland Permit to the CITY OF SIDNEY (Jon Crusey, 201 W
+    Poplar Street) for the "West Millcreek Road/Fair Road Development", Ohio EPA ID
+    252256W, on 2026-05-04; this 2026-05-06 letter from Mitigation Coordinator
+    Andrea Kilbourne documents that the required mitigation-credit purchase is
+    complete. Consultant Clune Consulting Services. Do not merge with the Amazon
+    permit 251911W — different applicant, different ID.

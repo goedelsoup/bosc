@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "576b9f4f6815297a9555e97421103febe5f4b8d995395e77c04773796c4f2126",
+  "catalog_version": "ed628ab3f40a7bcc63ee27fcbf131a9919ac850c3dece0f7f92839041394cd5d",
   "contract_version": "1.47.0",
   "atoms": [
     {
@@ -1601,6 +1601,14 @@
       "site": "lima",
       "local_id": "shawnee-township-meetings",
       "title": "Shawnee Township Trustee Meeting Records",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:sidney-regulatory-watch",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "sidney-regulatory-watch",
+      "title": "Sidney — Standing Regulatory Watch (air PTI, construction stormwater, OH0027421, PUCO 25-958-EL-AIR, site plan)",
       "feed": "catalog"
     },
     {

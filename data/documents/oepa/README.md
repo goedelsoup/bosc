@@ -154,3 +154,19 @@ carve-out applied. No alternatives analysis required.
 **Lima relevance:** The 500-yard-upstream-of-intake exclusion is the key eligibility gate
 for any data center on the American Sugar Creek / Ottawa River corridor near Lima's water
 supply intake.
+
+⚠️ **This general permit was abandoned. It will never issue.** On **July 21, 2026** Ohio EPA
+posted a Community Notice on its NPDES General Permits page: *"After carefully reviewing the
+significant volume of public comments received on the draft National Pollutant Discharge
+Elimination System (NPDES) general permit for data centers, Ohio EPA has decided not to move
+forward with finalizing the general permit. The individual NPDES permit issuance process is
+the most appropriate path forward at this time."* The three draft documents above stay in the
+corpus as what they are — a **draft that died at comment**, evidence of what Ohio EPA proposed
+and then withdrew, not a live eligibility screen. Every site record that treats OHD000001 as
+the expected coverage path for a data-center discharge is now wrong on its face; the path is an
+**individual** NPDES permit, facility by facility.
+
+Captured page:
+[`2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html`](2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html)
+— the Ohio EPA page bytes as served on 2026-07-31, carrying the notice verbatim. Provenance in
+[`filename-map.yaml`](filename-map.yaml).

@@ -112,8 +112,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6f193818e4f66672630dade04f460988ee73f5ea4ff47cbf9ce04778b30edaba",
-      "size_bytes": 153616,
+      "sha256": "670b17edcb48bf4d697c5fc4c2d06d3d090462f243b5fc37979c9bb55f684b2b",
+      "size_bytes": 168826,
       "lfs_materialized": true,
       "file_count": 12,
       "stale": false,
@@ -149,7 +149,8 @@
       "data-center",
       "aws",
       "amazon",
-      "project-galaxy",
+      "cmh-232",
+      "sidney-data-center-campus",
       "i75-corridor",
       "shelby-county",
       "sidney",
@@ -164,8 +165,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "7b62e5b9846d413be108a6ecc6f489498b628fa23abf1d6a21f37191cb0ecfdd",
-      "size_bytes": 13526,
+      "sha256": "214d1dd7543dacb3375982ba954c9bfc043a951af519760f67a5c2ef8aed191d",
+      "size_bytes": 24039,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -390,6 +391,67 @@
       "confidence": "medium",
       "note": null,
       "verified": true
+    }
+  },
+  {
+    "id": "sidney-regulatory-watch",
+    "title": "Sidney — Standing Regulatory Watch (air PTI, construction stormwater, OH0027421, PUCO 25-958-EL-AIR, site plan)",
+    "scope": "extracted",
+    "collection": "sidney",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov), searched by Facility Name x County x Program: the Construction Site Stormwater General Permit coverage 1GC10596*AG and its NOI, site map and co-permittee approval; the Level One Isolated Wetland General Permit authorization 251911W (\"CMH-232\") and its 2026-01-15 modification; the Surface Water Permit to Install DSWPTI-260517 for the campus sanitary-sewer relocation; the City of Sidney's own Isolated Wetland Permit 252256W for the West Millcreek Road/Fair Road Development; and The AES Corporation's construction-stormwater coverage 1GC11112*AG for the 6694 Transmission Line Reroute. Plus, from the Ohio EPA DAM permit slots, NPDES permit 1PD00009*SD (application OH0027421, City of Sidney WWTP) and its draft-public-notice package carrying the 2022 renewal Fact Sheet. Cross-checked against EPA ECHO cwa_rest_services / air_rest_services and the Envirofacts ICIS_PERMIT and FRS_PROGRAM_FACILITY tables. Secondary, cited but carried as captured bytes: the Ohio EPA NPDES General Permits page bearing the 2026-07-21 Community Notice abandoning OHD000001, and AES Ohio's 2026-07-21 press release on its unopposed PUCO stipulation. The City of Sidney FAQ (sidneyoh.com/526) was read live and is cited by URL, not carried.",
+    "external_url": null,
+    "license": "Public record (state environmental permits, a filed NPDES permit and fact sheet, agency notices)",
+    "access_tier": "public",
+    "site_scope": "site:sidney",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "regulatory-watch",
+      "npdes",
+      "stormwater",
+      "wetlands",
+      "air-permit",
+      "permit-to-install",
+      "puco",
+      "data-center",
+      "aws",
+      "amazon",
+      "sidney",
+      "shelby-county"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/sidney/regulatory-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/1PD00009.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "2df9e38c1f786955008666f62506ff1c168ae258d5371df1ee5e0d31ecd82113",
+      "size_bytes": 45206,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov), searched by Facility Name x County x Program: the Construction Site Stormwater General Permit coverage 1GC10596*AG and its NOI, site map and co-permittee approval; the Level One Isolated Wetland General Permit authorization 251911W (\"CMH-232\") and its 2026-01-15 modification; the Surface Water Permit to Install DSWPTI-260517 for the campus sanitary-sewer relocation; the City of Sidney's own Isolated Wetland Permit 252256W for the West Millcreek Road/Fair Road Development; and The AES Corporation's construction-stormwater coverage 1GC11112*AG for the 6694 Transmission Line Reroute. Plus, from the Ohio EPA DAM permit slots, NPDES permit 1PD00009*SD (application OH0027421, City of Sidney WWTP) and its draft-public-notice package carrying the 2022 renewal Fact Sheet. Cross-checked against EPA ECHO cwa_rest_services / air_rest_services and the Envirofacts ICIS_PERMIT and FRS_PROGRAM_FACILITY tables. Secondary, cited but carried as captured bytes: the Ohio EPA NPDES General Permits page bearing the 2026-07-21 Community Notice abandoning OHD000001, and AES Ohio's 2026-07-21 press release on its unopposed PUCO stipulation. The City of Sidney FAQ (sidneyoh.com/526) was read live and is cited by URL, not carried.",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -2457,10 +2519,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "1660455e143bdfa526c50bcf4c998b8016b2e7b2876cb4be3ddcf1d3a60ffc09",
-      "size_bytes": 358830,
+      "sha256": "ed0f57e4e11ceba70659890eec8159208f26b18e3dbb535d6e079d98cc193c51",
+      "size_bytes": 391021,
       "lfs_materialized": true,
-      "file_count": 5,
+      "file_count": 6,
       "stale": false,
       "asof": null
     },

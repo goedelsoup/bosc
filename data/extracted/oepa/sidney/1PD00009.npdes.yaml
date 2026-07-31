@@ -1,0 +1,212 @@
+# City of Sidney WWTP — NPDES permit 1PD00009*SD (application OH0027421) and the
+# 2022 renewal Fact Sheet that accompanies it.
+#
+# Hand-read from the committed text layer, not machine-extracted: the figures below
+# are transcribed from the two committed PDFs with the page cited on each block.
+# Nothing here is derived, rounded or inferred unless it says so.
+# The record -> document join (watermark.site.records._source_ref) reads a TOP-LEVEL
+# `source_path`, so the primary instrument is named there as well as in meta.sources —
+# without it this record renders with no link to its own PDF. The permit is the primary;
+# the fact sheet arrived in the draft-public-notice package and is named below.
+source_path: data/documents/oepa/sidney/1PD00009.pdf
+meta:
+  subject: City of Sidney WWTP — issued NPDES permit and renewal fact sheet
+  site: sidney
+  captured_for: issue 1383 (epic 1275, readiness(sidney) — standing regulatory watch)
+  extracted_at: '2026-07-31'
+  method: pdftotext -layout over the committed source PDFs; values transcribed, page-cited
+  sources:
+    permit:
+      path: data/documents/oepa/sidney/1PD00009.pdf
+      sha256: 8ae3ed0908a93b50a2503d12e0eac0125b3d6bff1114296512f610251a53c124
+      url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00009.pdf
+    draft_pn_and_fact_sheet:
+      path: data/documents/oepa/sidney/1PD00009.c43b66fd.pdf
+      sha256: c43b66fd64cfbc600e7779fb8eee2ea526e86862e7685c82d4330d1ffd67d7ca
+      url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/DraftPN/1PD00009.pdf
+
+permit:
+  tag: '[verified]'
+  permit_no: 1PD00009*SD
+  application_no: OH0027421
+  permit_action: renewal
+  permittee: City of Sidney
+  applicant_of_record: Mayor and Council, City of Sidney, 201 W Poplar Street, Sidney, OH 45365
+  facility_name: City of Sidney WWTP
+  facility_address: 1091 Children's Home Road, Sidney, OH 45365, Shelby County
+  action_date: '2022-12-16'
+  effective_date: '2023-01-01'
+  expiration_date: '2027-12-31'
+  signed_by: Laurie A. Stevenson, Director
+  total_pages: 47
+  public_notice_no: '163939'
+  public_notice_date: '2022-11-07'
+  receiving_water: Great Miami River at River Mile 128.68
+  stream_network: >-
+    Great Miami River → Ohio River (Great Miami basin, Shelby County, OH; HUC-8
+    05080001). The plant discharge enters the mainstem UPSTREAM of the Loramie Creek
+    confluence at Lockington and DOWNSTREAM of the USGS Great Miami River at Sidney
+    gage 03261500.
+  renewal_due: >-
+    The permit's own text requires the renewal submission "no later than 180 days
+    prior to" expiration — i.e. by approximately 2027-07-04 for the 2027-12-31
+    expiration. As of 2026-07-31 no renewal application, draft permit or public
+    notice exists on the record.
+
+facility:
+  tag: '[verified]'
+  source_page: Fact Sheet, "FACILITY DESCRIPTION"
+  constructed: 1956
+  last_upgraded: 2017
+  average_design_flow_mgd: 7.0
+  peak_hydraulic_capacity_mgd: 13.5
+  serves:
+    - City of Sidney
+    - Village of Port Jefferson
+    - Mill Creek Subdivision (Shelby County)
+    - Honda of America plant, Anna
+  treatment_train:
+    - influent pumping
+    - screening / grit removal
+    - comminution
+    - flow equalization
+    - primary settling
+    - conventional activated sludge aeration
+    - ultraviolet disinfection
+  equalization_overflow: >-
+    An equalization-basin overflow is monitored at station 602 when influent exceeds
+    13.5 MGD and equalization capacity is exceeded; overflows are chlorine-disinfected,
+    diverted through station 602 and blended with fully treated effluent.
+
+outfalls:
+  tag: '[verified]'
+  source_page: Permit Part II.B, "Description of the location of the required sampling stations"
+  stations:
+    - id: 1PD00009001
+      description: Final effluent from the WWTP after disinfection, prior to discharge to the Great Miami River
+      lat_dms: 40 N 16' 12"
+      lon_dms: 84 W 09' 10"
+    - id: 1PD00009101
+      description: Storm water discharges not associated with industrial activity
+    - id: 1PD00009300
+      description: System-wide sanitary sewer overflow occurrences
+    - id: 1PD00009581
+      description: Sludge disposed by land application at agronomic rates
+    - id: 1PD00009586
+      description: Sludge hauled to a sanitary landfill in an emergency
+    - id: 1PD00009588
+      description: Sludge transferred to a NPDES permit holder in an emergency
+    - id: 1PD00009601
+      description: Raw sewage influent
+      lat_dms: 40 N 16' 23"
+      lon_dms: 84 W 09' 13"
+    - id: 1PD00009602
+      description: Equalization basin overflow, monitored prior to blending with fully treated effluent
+      lat_dms: 40 N 16' 21"
+      lon_dms: 84 W 09' 11"
+    - id: 1PD00009801
+      description: Gearhart Rd. bridge, instream UPSTREAM of outfall 001
+      lat_dms: 40 N 16' 19.92"
+      lon_dms: 84 W 09' 11"
+    - id: 1PD00009901
+      description: Sulphur Heights Road bridge, instream DOWNSTREAM of outfall 001
+      lat_dms: 40 N 15' 94"
+      lon_dms: 84 W 09' 13.68"
+
+# ── The reason this document was pulled ───────────────────────────────────────
+# SiteProfile('sidney') carried a BOSC-DERIVED 7Q10 as a placeholder passby, marked
+# "pending the OEPA NPDES fact sheet." This is that fact sheet.
+stream_design_flows:
+  tag: '[verified]'
+  source_page: Fact Sheet Table 14, "Instream Conditions and Discharger Flow", p. 32
+  great_miami_river_above_sidney:
+    gage: USGS 03261500
+    period: 1927-2021 (the summer 30Q10 row states 1927-2020)
+    annual_1q10_cfs: 19.4
+    annual_7q10_cfs: 24.0
+    summer_30q10_cfs: 29.0
+    winter_30q10_cfs: 67.2
+    annual_harmonic_mean_cfs: 119.2
+  loramie_creek_at_mouth:
+    gage: USGS 03262000
+    period: 1916-2020 (the winter 30Q10 row states 1915-2020)
+    annual_1q10_cfs: 2.71
+    annual_7q10_cfs: 3.43
+    summer_30q10_cfs: 4.29
+    winter_30q10_cfs: 8.34
+    annual_harmonic_mean_cfs: 21.76
+  rush_creek_at_mouth:
+    gage: USGS 03261500 (as stated in the table)
+    annual_1q10_cfs: 0.66
+    annual_7q10_cfs: 0.82
+    summer_30q10_cfs: 0.99
+    winter_30q10_cfs: 2.28
+    annual_harmonic_mean_cfs: 4.05
+  mixing_assumption:
+    average_pct: 100
+    maximum_pct: 100
+    basis: stream-to-discharge ratio, Great Miami River and tributaries
+  discharger_flows:
+    sidney_wwtp_outfall_001_cfs: 10.83      # 7.0 MGD, design, per the NPDES application
+    piqua_wwtp_outfall_001_cfs: 13.46       # 8.7 MGD, design
+    troy_wwtp_outfall_001_cfs: 10.83        # 7.0 MGD, design
+    miami_river_stone_outfall_001_cfs: 1.53 # 0.99 MGD, annual average
+    piqua_minerals_outfall_002_cfs: 4.83    # 3.12 MGD, annual average
+    piqua_minerals_outfall_001_4_cfs: 4.93  # 3.19 MGD, annual average
+    piqua_wtp_intake_cfs: 10.44             # 6.75 MGD, annual average
+  instream_hardness_mg_l: 292               # DMR (Troy 901); 67 values, 2016-2021
+
+wasteload_allocation:
+  tag: '[verified]'
+  source_page: Fact Sheet, "Wasteload Allocation"
+  design_flow_by_use:
+    aquatic_life_wwh_toxics_average: annual 7Q10
+    aquatic_life_wwh_toxics_maximum: annual 1Q10
+    aquatic_life_wwh_ammonia_average: summer/winter 30Q10
+    agricultural_water_supply: harmonic mean flow
+    human_health_nondrinking: harmonic mean flow
+  interactive_dischargers:
+    - Sidney WWTP
+    - Piqua WWTP
+    - Troy WWTP
+  model: CONSWLA (conservative-substance wasteload allocation), allocated jointly except ammonia toxicity
+  wet_wla:
+    acute_tua: 0.84
+    chronic_tuc: 3.22
+  public_water_supply:
+    statement: >-
+      PWS criteria apply in the Great Miami River Study Area at RM 130.2 and RM
+      118.5. The Sidney WTP intake is at RM 130.2, UPSTREAM of all three effluent
+      discharges in the segment. The Piqua WTP intake at RM 118.5 is downstream of
+      the Sidney WWTP discharge at RM 128.7. Troy and Tipp City well fields lie
+      within 1000 yards of the river at RMs 107 and 99. None is within 500 yards of
+      any of the three interactive discharges, so PWS criteria do not apply; the
+      human-health WLAs are calculated to non-drinking criteria.
+
+source_discrepancies:
+  - tag: '[verified]'
+    what: Outfall 001 longitude
+    detail: >-
+      The public notice page states the outfall as "40N 16' 12'' 84W 19' 10''"; the
+      permit's own sampling-station table states "40 N 16' 12"; 84 W 09' 10"". Sidney
+      sits at roughly 84°09'W, so the permit body is right and the public notice
+      digit-transposes 09 to 19. Recorded, not corrected — the source bytes stand as
+      received.
+  - tag: '[verified]'
+    what: Facility address spelling
+    detail: >-
+      "Children's Home Road" on the public notice, "Childrens-Home Road" in the
+      permit's authorization paragraph. Same road.
+
+reconciliation:
+  tag: '[inference]'
+  note: >-
+    The BOSC-derived low-flow table (data/reference/hydrology/low-flow-7q10.derived.yaml)
+    computes a 7Q10 of 30.95 cfs at gage 03261500 over 1980-2024, against this fact
+    sheet's regulatory 24.0 cfs over 1927-2021. The gap is a period-of-record
+    difference, not an error in either — the regulator's window spans the 1930s and
+    1950s drought decades that the 1980-2024 window does not, which is the obvious
+    candidate for the direction of the difference. The REGULATORY number
+    governs the profile's passby, because it is the number the wasteload allocations
+    and the permit limits are actually built on. The derived Loramie 7Q10 of 3.55 cfs
+    against the fact sheet's 3.43 cfs corroborates the method within 3.5%.
