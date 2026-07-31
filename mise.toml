@@ -119,6 +119,27 @@ run = [
 description = "Regenerate the content bundle the web site reads (watermark export → data/site/bundle/)"
 run = "uv run watermark export"
 
+# === deploy secrets (#1539) ==================================================
+# Thin passthroughs to deploy/rotate.sh so a rotation is discoverable from `mise tasks`
+# rather than only from deploy/SECRETS.md. The runbook still governs the ORDERING (issue
+# the new value upstream first, revoke the old one only after production verifies) — these
+# wrap the mechanical half. `deploy:verify` needs no credentials for the live-endpoint tier,
+# so it is the one to reach for when /api/ask or /api/submit is 500ing.
+[tasks."deploy:rotate"]
+description = "Rotate a Pages Function secret — set + pulumi up + verify (see deploy/SECRETS.md)"
+usage = '''
+arg "<key>" help="Pulumi config key, e.g. anthropicApiKey (`mise run deploy:rotate -- --help`)"
+'''
+run = './deploy/rotate.sh set "${usage_key}"'
+
+[tasks."deploy:verify"]
+description = "Post-deploy secret check: Pages project config + a live /api/ask + /api/submit probe"
+run = "./deploy/rotate.sh verify"
+
+[tasks."deploy:secrets"]
+description = "List the deploy stack's rotatable secrets and how each one is set"
+run = "./deploy/rotate.sh list"
+
 # === yidam corpus mirror (epic #1560 / #1561 / #1562) =======================
 # `watermark export` (and `watermark corpus-mirror`) projects the committed corpus into yidam
 # node format under the git-ignored .yidam/corpus/ and regenerates the yidam reports

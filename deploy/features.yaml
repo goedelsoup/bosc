@@ -11,12 +11,12 @@
 # stories controls both STORIES_ENABLED (the /api/stories Functions kill switch) and
 # PUBLIC_STORIES_ENABLED (the Astro build-time UI gate), mirroring rum. Flipping it true
 # also provisions the STORIES_HYPERDRIVE config over Lakebase, which requires the
-# bosc-deploy:storiesLakebaseUrl secret (the guard in index.ts enforces this).
+# watermark-deploy:storiesLakebaseUrl secret (the guard in index.ts enforces this).
 #
 # contacts controls both CONTACTS_ENABLED (the interactive site-contacts Functions kill switch —
 # /api/petition/connect, /api/bulletin, /api/admin/contacts) and PUBLIC_CONTACTS_ENABLED (the Astro
 # build-time UI gate), mirroring stories. It REUSES the stories Lakebase/Hyperdrive (one database),
-# so flipping it true also needs the bosc-deploy:storiesLakebaseUrl secret; the Hyperdrive config is
+# so flipping it true also needs the watermark-deploy:storiesLakebaseUrl secret; the Hyperdrive config is
 # provisioned when EITHER stories OR contacts is on (the guard in index.ts enforces this).
 
 preLaunch: false    # serve pre-launch.astro at / and redirect all other routes to /

@@ -85,16 +85,23 @@ const features = validateFeatures(
 );
 
 // ---------------------------------------------------------------------------
-// Secrets — set out of band via `pulumi config set --secret bosc-deploy:<key>`
+// Secrets — set out of band via `pulumi config set --secret watermark-deploy:<key>`
 // ---------------------------------------------------------------------------
 // These are written as secret_text env vars to the Pages project by `pulumi up`,
 // replacing manual dashboard steps. Each is optional so `pulumi up` doesn't fail
 // before the secret is provisioned; missing vars are simply omitted from Pages.
-//   pulumi config set --secret bosc-deploy:anthropicApiKey   <key>
-//   pulumi config set --secret bosc-deploy:honeycombApiKey   <key>
-//   pulumi config set --secret bosc-deploy:tipsAppId         <github-app-id>
-//   pulumi config set --secret bosc-deploy:tipsAppPrivateKey <pkcs8-pem>
-//   pulumi config set --secret bosc-deploy:earlyAccessSecret <random-32-bytes-hex>
+//
+// The namespace is the Pulumi PROJECT name — `watermark-deploy` (Pulumi.yaml) — not the
+// `bosc-deploy` S3 state prefix. `pulumi config set` accepts any namespace without
+// complaint, so a key set under the wrong one is simply never read here.
+//
+// ROTATION (as opposed to first provisioning) has an ordering the bare command below
+// doesn't convey — new value valid upstream → set → up → verify → revoke old. See SECRETS.md.
+//   pulumi config set --secret watermark-deploy:anthropicApiKey   <key>
+//   pulumi config set --secret watermark-deploy:honeycombApiKey   <key>
+//   pulumi config set --secret watermark-deploy:tipsAppId         <github-app-id>
+//   pulumi config set --secret watermark-deploy:tipsAppPrivateKey <pkcs8-pem>
+//   pulumi config set --secret watermark-deploy:earlyAccessSecret <random-32-bytes-hex>
 const anthropicApiKey = config.getSecret("anthropicApiKey");
 const honeycombApiKey = config.getSecret("honeycombApiKey");
 const tipsAppId = config.getSecret("tipsAppId");
@@ -105,16 +112,18 @@ const notifyGithubUsers = config.get("notifyGithubUsers") ?? "";
 // The Lakebase (Databricks managed Postgres) connection string backing user-authored
 // Stories (#1090). Databricks issues a short-lived OAuth token as the Postgres password,
 // so the whole URL is a secret — set it out of band, never commit it:
-//   pulumi config set --secret bosc-deploy:storiesLakebaseUrl \
+//   pulumi config set --secret watermark-deploy:storiesLakebaseUrl \
 //     postgres://<user>:<oauth-token>@<host>:5432/<database>
 // It becomes the STORIES_HYPERDRIVE origin below (parsed into host/port/user/…), gated on
 // features.stories. Note: because Hyperdrive caches the origin credentials, a rotated OAuth
 // token needs a fresh `pulumi up` to re-push it — prefer a Databricks service principal with
-// a longer-lived credential, or schedule a periodic re-apply (see issue #1138).
+// a longer-lived credential, or schedule a periodic re-apply (see issue #1138). The notify
+// Lambda reads the SAME secret as LAKEBASE_URL, so a re-apply has two consumers to satisfy;
+// SECRETS.md carries the procedure.
 const storiesLakebaseUrl = config.getSecret("storiesLakebaseUrl");
 
 // Cloudflare account that owns the resources (required — set out of band):
-//   pulumi config set bosc-deploy:cloudflareAccountId <account-id>
+//   pulumi config set watermark-deploy:cloudflareAccountId <account-id>
 const accountId = config.require("cloudflareAccountId");
 
 // The Cloudflare Pages project managed by wrangler. Must match `name` in web/wrangler.toml.
@@ -127,12 +136,12 @@ const pagesProject = config.get("pagesProject") ?? "the-watermark-directory";
 // <project>.pages.dev. Decided shape (#240): a **subdomain CNAME** in Route53, because
 // a bare apex can't point cross-provider at pages.dev (CNAME illegal at apex; a Route53
 // ALIAS only targets AWS resources). Set it when the name is chosen:
-//   pulumi config set bosc-deploy:siteDomain bosc.example.org
+//   pulumi config set watermark-deploy:siteDomain bosc.example.org
 const siteDomain = config.get("siteDomain");
 
 // The Route53 hosted-zone id that owns `siteDomain` (required to manage the CNAME here;
 // omit to attach the Pages domain but create the DNS record by hand):
-//   pulumi config set bosc-deploy:route53ZoneId Z0123456789ABCDEFGHIJ
+//   pulumi config set watermark-deploy:route53ZoneId Z0123456789ABCDEFGHIJ
 const route53ZoneId = config.get("route53ZoneId");
 
 // Domains the Turnstile widget may be served on. The custom domain is folded in
@@ -229,7 +238,7 @@ const route53Record =
 // Gated on `authEnabled` (defaults false) — Cognito resources are stateful and
 // destructive to remove (existing users and sessions are lost). Provision the User Pool
 // once and leave `authEnabled` true. Flip to false only when decommissioning.
-//   pulumi config set bosc-deploy:authEnabled true
+//   pulumi config set watermark-deploy:authEnabled true
 //
 // The JWKS_CACHE KV namespace is always created — it's cheap and the bind-in-wrangler.toml
 // step is the actual activation gate, not Pulumi. (Auth prefs live in Lakebase, not KV — #1171.)
@@ -239,14 +248,14 @@ const authEnabled = config.getBoolean("authEnabled") ?? false;
 //   <prefix>.auth.<region>.amazoncognito.com
 // Set a custom domain in the console after pool creation if desired (requires an ACM
 // cert in us-east-1). A custom domain cannot be set here without the cert ARN.
-//   pulumi config set bosc-deploy:cognitoDomainPrefix watermark-auth
+//   pulumi config set watermark-deploy:cognitoDomainPrefix watermark-auth
 const cognitoDomainPrefix = config.get("cognitoDomainPrefix") ?? "watermark-auth";
 
 // The AWS region for Cognito. A dedicated provider is constructed from this value and
 // passed explicitly to every Cognito resource, so the deployed region always matches
 // the issuer/domain strings exported below. Using the ambient provider would silently
 // produce a mismatch if AWS_DEFAULT_REGION differs from the intended Cognito region.
-//   pulumi config set bosc-deploy:cognitoRegion us-east-1
+//   pulumi config set watermark-deploy:cognitoRegion us-east-1
 const cognitoRegion = config.get("cognitoRegion") ?? "us-east-1";
 const cognitoProvider = new aws.Provider("cognito-provider", {
     region: cognitoRegion as aws.Region,
@@ -413,14 +422,14 @@ function parseLakebaseOrigin(url: string): cloudflare.types.input.HyperdriveConf
         parsed = new URL(url);
     } catch {
         throw new Error(
-            "bosc-deploy:storiesLakebaseUrl is not a valid URL — expected " +
+            "watermark-deploy:storiesLakebaseUrl is not a valid URL — expected " +
             "postgres://user:password@host:port/database",
         );
     }
     const scheme = parsed.protocol.replace(/:$/, "");
     if (scheme !== "postgres" && scheme !== "postgresql") {
         throw new Error(
-            `bosc-deploy:storiesLakebaseUrl scheme must be postgres:// or postgresql:// (got "${scheme}://")`,
+            `watermark-deploy:storiesLakebaseUrl scheme must be postgres:// or postgresql:// (got "${scheme}://")`,
         );
     }
     // decodeURIComponent throws URIError on malformed percent-encoding (e.g. a lone "%");
@@ -430,7 +439,7 @@ function parseLakebaseOrigin(url: string): cloudflare.types.input.HyperdriveConf
             return decodeURIComponent(component);
         } catch {
             throw new Error(
-                "bosc-deploy:storiesLakebaseUrl has malformed percent-encoding — expected " +
+                "watermark-deploy:storiesLakebaseUrl has malformed percent-encoding — expected " +
                 "postgres://user:password@host:port/database",
             );
         }
@@ -438,7 +447,7 @@ function parseLakebaseOrigin(url: string): cloudflare.types.input.HyperdriveConf
     const database = decode(parsed.pathname.replace(/^\//, ""));
     if (!parsed.hostname || !parsed.username || !parsed.password || !database) {
         throw new Error(
-            "bosc-deploy:storiesLakebaseUrl must include host, user, password, and database " +
+            "watermark-deploy:storiesLakebaseUrl must include host, user, password, and database " +
             "(postgres://user:password@host:port/database)",
         );
     }
@@ -470,12 +479,12 @@ const storiesHyperdrive =
 // GitHub webhook → Lambda → Lakebase subscriber lookup → SES email dispatch.
 // Gated on `notifyEnabled` (defaults false) — SES identity + Lambda are created
 // only when explicitly enabled. Flip once SES domain verification is complete.
-//   pulumi config set bosc-deploy:notifyEnabled true
-//   pulumi config set --secret bosc-deploy:githubWebhookSecret <secret>
-//   pulumi config set --secret bosc-deploy:unsubSecret <secret>
-//   pulumi config set bosc-deploy:sesFromAddress notifications@watermarkdirectory.org
+//   pulumi config set watermark-deploy:notifyEnabled true
+//   pulumi config set --secret watermark-deploy:githubWebhookSecret <secret>
+//   pulumi config set --secret watermark-deploy:unsubSecret <secret>
+//   pulumi config set watermark-deploy:sesFromAddress notifications@watermarkdirectory.org
 // The Lambda reads subscribers directly from Lakebase (#1206) — it reuses the same
-// `bosc-deploy:storiesLakebaseUrl` secret the Stories/auth Hyperdrive uses, so notify
+// `watermark-deploy:storiesLakebaseUrl` secret the Stories/auth Hyperdrive uses, so notify
 // also requires that secret to be set (guarded below).
 //
 // The Lambda zip must be built before `pulumi up`:
@@ -496,9 +505,9 @@ const unsubSecret = config.getSecret("unsubSecret");
 // same connection-string secret Stories/auth already provisions.
 if (notifyEnabled && !storiesLakebaseUrl) {
     throw new Error(
-        "notifyEnabled=true but bosc-deploy:storiesLakebaseUrl is not set in Pulumi config. " +
+        "notifyEnabled=true but watermark-deploy:storiesLakebaseUrl is not set in Pulumi config. " +
         "The notify Lambda reads subscribers from Lakebase (#1206). " +
-        "Run: pulumi config set --secret bosc-deploy:storiesLakebaseUrl postgres://user:password@host:5432/database",
+        "Run: pulumi config set --secret watermark-deploy:storiesLakebaseUrl postgres://user:password@host:5432/database",
     );
 }
 
@@ -647,20 +656,20 @@ void notifyDigestPermission;
 // Configuration guards — catch mismatches before writing env vars to Pages.
 if (features.ask && !anthropicApiKey) {
     throw new Error(
-        "features.yaml: ask=true but bosc-deploy:anthropicApiKey is not set in Pulumi config. " +
-        "Run: pulumi config set --secret bosc-deploy:anthropicApiKey <key>",
+        "features.yaml: ask=true but watermark-deploy:anthropicApiKey is not set in Pulumi config. " +
+        "Run: pulumi config set --secret watermark-deploy:anthropicApiKey <key>",
     );
 }
 if (features.auth && !authEnabled) {
     throw new Error(
-        "features.yaml: auth=true but bosc-deploy:authEnabled is not set to true in Pulumi config. " +
-        "Run: pulumi config set bosc-deploy:authEnabled true",
+        "features.yaml: auth=true but watermark-deploy:authEnabled is not set to true in Pulumi config. " +
+        "Run: pulumi config set watermark-deploy:authEnabled true",
     );
 }
 if ((features.stories || features.contacts) && !storiesLakebaseUrl) {
     throw new Error(
-        "features.yaml: stories/contacts=true but bosc-deploy:storiesLakebaseUrl is not set in Pulumi config. " +
-        "Run: pulumi config set --secret bosc-deploy:storiesLakebaseUrl postgres://user:password@host:5432/database",
+        "features.yaml: stories/contacts=true but watermark-deploy:storiesLakebaseUrl is not set in Pulumi config. " +
+        "Run: pulumi config set --secret watermark-deploy:storiesLakebaseUrl postgres://user:password@host:5432/database",
     );
 }
 
