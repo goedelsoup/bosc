@@ -1,5 +1,5 @@
 ---
-import { evidenceKind, type Citation } from "@watermark/core/feeds";
+import { evidenceKind, formatCitedPages, type Citation } from "@watermark/core/feeds";
 import EvidenceTag from "./EvidenceTag.astro";
 
 interface Props {
@@ -8,11 +8,14 @@ interface Props {
   also?: string[];
 }
 const { citation, also = [] } = Astro.props;
+// The whole span a claim was read from, not just its first page (#1584) — an 8-page deed cites
+// as `pp. 1-8`, and a non-contiguous permit read as `pp. 1-4, 37, 40`.
+const pages = formatCitedPages(citation?.page, citation?.pages);
 ---
 
 <div class="provenance">
   {citation && <EvidenceTag kind={evidenceKind(citation)} title={citation.note ?? undefined} />}
-  {citation?.source && <code>{citation.source}{citation.page ? ` p.${citation.page}` : ""}</code>}
+  {citation?.source && <code>{citation.source}{pages ? ` ${pages}` : ""}</code>}
   {citation?.confidence && <span> · {citation.confidence} confidence</span>}
   {also.length > 0 && <span> · also: {also.map((s) => <code>{s}</code>)}</span>}
 </div>

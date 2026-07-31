@@ -38,9 +38,19 @@
     "citation": {
       "source": "recorder/202508130008300.deed.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "recorder/bistrozzi-deeds/202508130008300.pdf",
@@ -76,9 +86,16 @@
     "citation": {
       "source": "recorder/202508130008312.deed.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "recorder/bistrozzi-deeds/202508130008312.pdf",
@@ -116,9 +133,15 @@
     "citation": {
       "source": "recorder/202508130008316.deed.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "recorder/bistrozzi-deeds/202508130008316.pdf",
@@ -155,9 +178,17 @@
     "citation": {
       "source": "recorder/202511180011830-amazon-deed.deed.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "recorder/port-authority/202511180011830-amazon-deed.pdf",
@@ -193,9 +224,14 @@
     "citation": {
       "source": "recorder/202603040002064.deed.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "recorder/bistrozzi-deeds/202603040002064.pdf",
@@ -235,9 +271,15 @@
     "citation": {
       "source": "recorder/202604210003890.deed.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "recorder/bistrozzi-deeds/202604210003890.pdf",
@@ -317,9 +359,21 @@
     "citation": {
       "source": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors Final Findings & Orders/2005 Directors Findings and Orders Corr/2005 Correspondence/2005 DFFO - Journalized Orders.pdf",
@@ -370,6 +424,7 @@
       "source": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2011-extension-request.order.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "high",
       "note": null,
       "verified": true
@@ -440,9 +495,19 @@
     "citation": {
       "source": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors Final Findings & Orders/2014 Modified Directors Findings & Orders/DFFO-Revised 2014.pdf",
@@ -487,9 +552,13 @@
     "citation": {
       "source": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2023-extension-letter.order.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
       "confidence": "high",
-      "note": "pages [0, 1]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors Final Findings & Orders/2023.02.02 Shawnee II DFFO Ext. Letter.pdf",
@@ -527,6 +596,7 @@
       "source": "legal/prr-mandamus/prr-production-2026-07-24/sso-closure-amer-bath-2010.order.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "high",
       "note": null,
       "verified": true
@@ -564,6 +634,7 @@
       "source": "legal/prr-mandamus/prr-production-2026-07-24/sso-closure-cam-court-2019.order.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "high",
       "note": null,
       "verified": true
@@ -609,9 +680,22 @@
     "citation": {
       "source": "legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/11/WPCLF Application.pdf",
@@ -651,9 +735,17 @@
     "citation": {
       "source": "legal/prr-mandamus/prr-production-2026-07-24/owda-loan-6718.award.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/9/SH & AB SSO Findings and Orders/Phase 1 SECAP Constr Projects/Financing Loan No-6718 WWTP Ph 1, FM and PS/OWDA application docs FM, PS & WWTP.pdf",
@@ -1067,6 +1159,7 @@
       "source": "aedg/roundabouts.detail.opc.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
@@ -1263,6 +1356,7 @@
       "source": "aedg/roundabouts.summary.opc.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
@@ -1304,9 +1398,14 @@
     "citation": {
       "source": "permits/3702676.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3702676.pdf",
@@ -1342,9 +1441,14 @@
     "citation": {
       "source": "permits/3727059.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3727059.pdf",
@@ -1384,9 +1488,14 @@
     "citation": {
       "source": "permits/3727544.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3727544.pdf",
@@ -1426,9 +1535,14 @@
     "citation": {
       "source": "permits/3788677.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3788677.pdf",
@@ -1468,9 +1582,10 @@
     "citation": {
       "source": "permits/3789048.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": null,
       "confidence": "high",
-      "note": "pages [0]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3789048.pdf",
@@ -1506,9 +1621,13 @@
     "citation": {
       "source": "permits/3796349.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
       "confidence": "high",
-      "note": "pages [0, 1]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3796349.pdf",
@@ -1544,9 +1663,13 @@
     "citation": {
       "source": "permits/3859883.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
       "confidence": "high",
-      "note": "pages [0, 1]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3859883.pdf",
@@ -1586,9 +1709,13 @@
     "citation": {
       "source": "permits/3866942.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
       "confidence": "high",
-      "note": "pages [0, 1]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3866942.pdf",
@@ -1628,9 +1755,13 @@
     "citation": {
       "source": "permits/3949585.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
       "confidence": "high",
-      "note": "pages [0, 1]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3949585.pdf",
@@ -1670,9 +1801,14 @@
     "citation": {
       "source": "permits/3966517.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3966517.pdf",
@@ -1713,9 +1849,13 @@
     "citation": {
       "source": "permits/3969235.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
       "confidence": "high",
-      "note": "pages [0, 1]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3969235.pdf",
@@ -1755,9 +1895,14 @@
     "citation": {
       "source": "permits/3974496.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3974496.pdf",
@@ -1798,9 +1943,14 @@
     "citation": {
       "source": "permits/3977737.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3977737.pdf",
@@ -1840,9 +1990,14 @@
     "citation": {
       "source": "permits/3987141.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3987141.pdf",
@@ -1883,9 +2038,14 @@
     "citation": {
       "source": "permits/3987144.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3987144.pdf",
@@ -1925,9 +2085,14 @@
     "citation": {
       "source": "permits/4006230.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/4006230.pdf",
@@ -1967,9 +2132,14 @@
     "citation": {
       "source": "permits/4007485.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/4007485.pdf",
@@ -2009,9 +2179,13 @@
     "citation": {
       "source": "permits/4009043.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
       "confidence": "high",
-      "note": "pages [0, 1]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/4009043.pdf",
@@ -2050,9 +2224,14 @@
     "citation": {
       "source": "permits/4074527.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/4074527.PDF",
@@ -2139,9 +2318,14 @@
     "citation": {
       "source": "permits/4074529.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "medium",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/4074529.pdf",
@@ -2183,9 +2367,14 @@
     "citation": {
       "source": "permits/4074551.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/4074551.pdf",
@@ -2339,9 +2528,46 @@
     "citation": {
       "source": "permits/4132514.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        50,
+        51,
+        52,
+        53,
+        54,
+        56,
+        57,
+        58,
+        59,
+        60,
+        64,
+        65,
+        66
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 49, 50, 51, 52, 53, 55, 56, 57, 58, 59, 63, 64, 65]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/4132514.pdf",
@@ -2381,9 +2607,13 @@
     "citation": {
       "source": "permits/lma1a-npdes-cgp-coverage.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
       "confidence": "high",
-      "note": "pages [0, 1]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/3898357.pdf",
@@ -2424,9 +2654,17 @@
     "citation": {
       "source": "oepa/1II00129.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/wilmington/1II00129.pdf",
@@ -2467,9 +2705,17 @@
     "citation": {
       "source": "oepa/1IW00240.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/wilmington/1IW00240.pdf",
@@ -2511,9 +2757,17 @@
     "citation": {
       "source": "oepa/1MP00060.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/wilmington/1MP00060.pdf",
@@ -2550,9 +2804,17 @@
     "citation": {
       "source": "oepa/1PD00013.fs.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/wilmington/1PD00013.fs.pdf",
@@ -2592,9 +2854,17 @@
     "citation": {
       "source": "oepa/1PD00013.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/wilmington/1PD00013.pdf",
@@ -2638,9 +2908,17 @@
     "citation": {
       "source": "oepa/1PT00125.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/wilmington/1PT00125.pdf",
@@ -2682,9 +2960,17 @@
     "citation": {
       "source": "oepa/1PV00037.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": null,
@@ -2725,9 +3011,17 @@
     "citation": {
       "source": "oepa/1PV00089.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/wilmington/1PV00089.pdf",
@@ -2767,9 +3061,17 @@
     "citation": {
       "source": "oepa/1PX00010.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/wilmington/1PX00010.pdf",
@@ -2809,9 +3111,17 @@
     "citation": {
       "source": "oepa/2DP00130.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/2DP00130.pdf",
@@ -2846,9 +3156,17 @@
     "citation": {
       "source": "oepa/2PD00006.fs.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/van-wert/2PD00006.fs.pdf",
@@ -2888,9 +3206,17 @@
     "citation": {
       "source": "oepa/2PD00006.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/van-wert/2PD00006.pdf",
@@ -2929,9 +3255,20 @@
     "citation": {
       "source": "oepa/2PE00000.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        37,
+        40,
+        84,
+        85,
+        93
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 36, 39, 83, 84, 92]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/2PE00000.pdf",
@@ -2958,6 +3295,7 @@
       "source": "oepa/lima-wwtp-OH0026069.dmr.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
@@ -2998,9 +3336,17 @@
     "citation": {
       "source": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.pdf",
@@ -3035,9 +3381,17 @@
     "citation": {
       "source": "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/oepa-2PH00006-american-ii-fact-sheet.pdf",
@@ -3077,9 +3431,17 @@
     "citation": {
       "source": "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/oepa-2PH00006-american-ii-permit.pdf",
@@ -3119,9 +3481,17 @@
     "citation": {
       "source": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.pdf",
@@ -3156,9 +3526,17 @@
     "citation": {
       "source": "oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/oepa-2PH00007-american-bath-fact-sheet.pdf",
@@ -3199,9 +3577,17 @@
     "citation": {
       "source": "oepa/oepa-2PH00007-american-bath-permit.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/oepa-2PH00007-american-bath-permit.pdf",
@@ -3240,9 +3626,17 @@
     "citation": {
       "source": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.pdf",
@@ -3277,9 +3671,17 @@
     "citation": {
       "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.pdf",
@@ -3319,9 +3721,17 @@
     "citation": {
       "source": "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/oepa-2PK00002-shawnee-ii-permit.pdf",
@@ -3349,6 +3759,7 @@
       "source": "regulatory/ohc000006-construction-stormwater-gp.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
@@ -3383,9 +3794,15 @@
     "citation": {
       "source": "permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/sos-bistrozzi-addition-llc-2026-04-08.pdf",
@@ -3420,9 +3837,15 @@
     "citation": {
       "source": "permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/sos-magenta-capital-llc-2025-10-17.pdf",
@@ -3460,9 +3883,15 @@
     "citation": {
       "source": "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "permits/bistrozzi-permits/sos-tilted-gate-llc-2025-09-29.pdf",
@@ -3534,9 +3963,10 @@
     "citation": {
       "source": "plans/LMA1A-95-SPS-2025-10-28.plan.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": null,
       "confidence": "high",
-      "note": "pages [0]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "plans/bistrozzi-plans/LMA1A-95-SPS-2025-10-28.odg",

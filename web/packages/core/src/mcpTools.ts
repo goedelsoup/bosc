@@ -234,6 +234,52 @@ function governedEnvelope(items: JsonSchema, resultsDescription: string): JsonSc
   };
 }
 
+/**
+ * The uniform structured-citation object (#1584) every result-bearing tool attaches — the
+ * schema peer of `functions/api/_lib/mcpCitation.ts`.
+ *
+ * Only `verified` / `evidence` / `label` are required: every other field is present **only where
+ * the source genuinely carries it**, and an absent one is OMITTED rather than nulled (a page-less
+ * connector value has no `page`, not a guessed one — the root CLAUDE.md evidence discipline). That
+ * is also what keeps the object cheap enough to ride on every compact discovery card.
+ */
+const CITATION: JsonSchema = {
+  type: "object",
+  description:
+    "Structured provenance for this result — enough to cite it WITHOUT a follow-up fetch. Absent fields mean the source carries no such value; nothing here is inferred.",
+  properties: {
+    document_id: str(
+      "The addressable source document (a `data/documents` rel) — pass to get_document, or to search_passages.document_ids. Absent when the item isn't grounded in a catalogued file.",
+    ),
+    source: str(
+      "The citable artifact the claim was read from: a repo-relative data/ path (usually the reviewed extraction), a dataset label, or an instrument number.",
+    ),
+    source_kind: str("Provenance class — document | connector | reference | assumption | derived."),
+    page: int("1-based FIRST page within the source. Absent where the source carries no page."),
+    pages: arr(
+      "Every 1-based page the claim was read from, when the read spanned more than one. A LIST, not a range — extraction reads are often non-contiguous.",
+      int("A 1-based page number."),
+    ),
+    section: str("Sub-page heading within the source, where one is recorded."),
+    source_url: str("Absolute URL at which the cited source can be inspected."),
+    quote: str(
+      "VERBATIM source text, truncated to a lead excerpt. Populated only by search_passages, whose text IS the document's own text layer; a search_corpus snippet is a window over the record's FLATTENED FIELDS and is deliberately never presented as a quote.",
+    ),
+    note: str(
+      "Free-text provenance the source records instead of a path — a projected fact's ProvenancedValue citation. For most facts this is the ONLY provenance there is.",
+    ),
+    confidence: str("Evidence confidence band recorded on the source (high | medium | low)."),
+    verified: bool("True when grounded in a record or a live gauge — `[verified]` in prose."),
+    evidence: {
+      type: "string",
+      enum: ["verified", "inference"],
+      description: "The evidence tag this citation renders as.",
+    },
+    label: str("One-line human-readable rendering — the string to paste into prose."),
+  },
+  required: ["verified", "evidence", "label"],
+};
+
 const SEARCH_CORPUS_HIT: JsonSchema = {
   type: "object",
   description:
@@ -256,6 +302,7 @@ const SEARCH_CORPUS_HIT: JsonSchema = {
       description: "Evidence role for the query (#1591). Absent in ids_only mode.",
     },
     tier_reason: str("Why the hit earned its tier."),
+    citation: CITATION,
     // full record
     feed: str("Bundle feed (full mode)."),
     text: str("The whole flattened record text (full mode; ~18–24k tokens)."),
@@ -279,8 +326,9 @@ const SEARCH_PASSAGES_HIT: JsonSchema = {
     section: nullable("string", "Sub-page heading, or null."),
     text: str("The page's text-layer excerpt (verbatim; garbled OCR for scans)."),
     score: num("Hybrid (BM25 + vector RRF) relevance score."),
+    citation: CITATION,
   },
-  required: ["id", "document_id", "collection", "title", "page", "section", "text", "score"],
+  required: ["id", "document_id", "collection", "title", "page", "section", "text", "score", "citation"],
 };
 
 const TIMELINE_EVENT: JsonSchema = {
@@ -294,9 +342,9 @@ const TIMELINE_EVENT: JsonSchema = {
     parties: arr("Parties involved.", str("Party name.")),
     detail: str("Prose detail (shed first under a per-result budget)."),
     source: str("Source path."),
-    citation: obj("Structured provenance (verified / confidence / source_kind / page)."),
+    citation: CITATION,
   },
-  required: ["date", "category", "title"],
+  required: ["date", "category", "title", "citation"],
 };
 
 const ENTITY_NODE: JsonSchema = {
@@ -386,7 +434,7 @@ const DOCUMENT_VIEW: JsonSchema = {
       "The record's extracted fields (projected/shrunk — compare Object.keys length to field_count).",
     ),
     field_count: int("True field count before projection/shrink."),
-    citation: nullable("object", "The record's structured Citation, or null."),
+    citation: CITATION,
     warnings: arr("Extraction warnings.", str("Warning.")),
     source_text: str("Flattened extraction text (only when include_source_text)."),
   },
@@ -412,7 +460,8 @@ const FACT_VIEW: JsonSchema = {
     high: nullable("number", "Uncertainty-band high, when present."),
     approximate: bool("True when the value is approximate."),
     feed: str("Source feed."),
-    evidence: obj("Provenance block (only when include_evidence)."),
+    evidence: obj("Raw provenance block (only when include_evidence)."),
+    citation: CITATION,
   },
   required: ["subject", "subject_kind", "predicate", "value", "status", "feed"],
 };
@@ -456,7 +505,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_corpus",
     description:
-      "Hybrid search across the whole corpus — the discovery entrypoint. Ranking fuses semantic (vector) similarity with BM25 keyword scoring via reciprocal-rank-fusion, degrading to keyword-only when query embeddings are unavailable. Use to FIND relevant items across every feed (records, documents, timeline, entities, …); narrow with a `filters` bag over indexed fields (site, feed, source_kind, verified, date_from/date_to, confidence — all AND-combined) so unrelated feeds don't crowd the results. This is NOT the way to pull one known document — use get_document for that. Returns ranked evidence cards (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified, tier, tier_reason) — NO full record text by default; pass a hit's id to get_document to fetch its projected fields + citation. Each hit is tiered by evidence role so you don't treat every match as equal: `tier` is `direct` (top-relevance-band primary evidence — records/documents/timeline/meetings that answer the query), `corroborating` (relevant supporting material — a secondary entity/person/place view, or primary evidence below the top band), or `background` (definitional/derived context — glossary concepts, or a weak-relevance match); `tier_reason` says why. The tier is an evidence-grounded heuristic (evidence class + score band), never score alone — a glossary hit is never `direct`. A filing's versions (e.g. a permit's final + draft + fact sheet) collapse to the canonical member by default — pass deduplicate:\"none\" to see every version, or version_policy to tune which superseded versions survive. Size knobs: response_mode (ids_only|compact|snippets|full — ids_only omits the tier; full reproduces the whole record, ~18–24k tokens/hit, opt-in), limit/max_results, snippet_tokens, max_tokens, cursor.",
+      "Hybrid search across the whole corpus — the discovery entrypoint. Ranking fuses semantic (vector) similarity with BM25 keyword scoring via reciprocal-rank-fusion, degrading to keyword-only when query embeddings are unavailable. Use to FIND relevant items across every feed (records, documents, timeline, entities, …); narrow with a `filters` bag over indexed fields (site, feed, source_kind, verified, date_from/date_to, confidence — all AND-combined) so unrelated feeds don't crowd the results. This is NOT the way to pull one known document — use get_document for that. Returns ranked evidence cards (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified, tier, tier_reason, citation) — NO full record text by default; pass a hit's id to get_document to fetch its projected fields. Every card carries a structured `citation` (document_id, source, page/pages, source_url, evidence, and a paste-ready `label`), so you can CITE A HIT WITHOUT FETCHING IT — a follow-up get_document is for the record's fields, not for its provenance. Absent citation fields mean the source carries no such value; none of it is inferred, and a card's snippet is a window over the record's flattened fields, so it is never offered as a verbatim quote (use search_passages for that). Each hit is tiered by evidence role so you don't treat every match as equal: `tier` is `direct` (top-relevance-band primary evidence — records/documents/timeline/meetings that answer the query), `corroborating` (relevant supporting material — a secondary entity/person/place view, or primary evidence below the top band), or `background` (definitional/derived context — glossary concepts, or a weak-relevance match); `tier_reason` says why. The tier is an evidence-grounded heuristic (evidence class + score band), never score alone — a glossary hit is never `direct`. A filing's versions (e.g. a permit's final + draft + fact sheet) collapse to the canonical member by default — pass deduplicate:\"none\" to see every version, or version_policy to tune which superseded versions survive. Size knobs: response_mode (ids_only|compact|snippets|full — ids_only omits the tier; full reproduces the whole record, ~18–24k tokens/hit, opt-in), limit/max_results, snippet_tokens, max_tokens, cursor.",
     inputSchema: {
       type: "object",
       properties: {
@@ -501,7 +550,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_passages",
     description:
-      'Page-level excerpt search over PUBLISHED source PDFs — returns the exact supporting page(s) with a citation, not a whole record. Use when you need the verbatim passage behind a claim (a permit condition, a board vote, a dollar figure) plus a page cite — especially for PDFs, where one relevant page shouldn\'t require pulling the full extracted document. This is the deeper peer of search_corpus: search_corpus finds WHICH item is relevant; search_passages finds WHICH PAGE says it. Ranking fuses semantic (vector) similarity with BM25, degrading to keyword-only when query embeddings are unavailable. Scoped to the public-publish allowlist, so it covers only documents whose bytes are publicly served — not the whole corpus. Narrow to specific documents with document_ids (the document_id / rel from search_corpus or get_documents). Returns page excerpts (id, document_id, page, section, title, text, score). The text is the PDF text layer verbatim — for scanned pages that is garbled OCR, so treat it as a locator for the cited page, not a transcription; open the page itself with get_document. By default pages from a byte-identical duplicate document are collapsed to the canonical copy (deduplicate:"none" to disable); draft/final page variants are always kept distinct. Size knobs: max_results, max_tokens, max_tokens_per_result (trims the excerpt), cursor, intent.',
+      "Page-level excerpt search over PUBLISHED source PDFs — returns the exact supporting page(s) with a citation, not a whole record. Use when you need the verbatim passage behind a claim (a permit condition, a board vote, a dollar figure) plus a page cite — especially for PDFs, where one relevant page shouldn't require pulling the full extracted document. This is the deeper peer of search_corpus: search_corpus finds WHICH item is relevant; search_passages finds WHICH PAGE says it. Ranking fuses semantic (vector) similarity with BM25, degrading to keyword-only when query embeddings are unavailable. Scoped to the public-publish allowlist, so it covers only documents whose bytes are publicly served — not the whole corpus. Narrow to specific documents with document_ids (the document_id / rel from search_corpus or get_documents). Returns page excerpts (id, document_id, page, section, title, text, score, citation). This is the one tool whose `citation.quote` is populated — the excerpt IS the document's own text layer, so it is genuinely verbatim (a bounded lead excerpt; the hit's `text` carries the full page). The text is the PDF text layer verbatim — for scanned pages that is garbled OCR, so treat it as a locator for the cited page, not a transcription; open the page itself with get_document. By default pages from a byte-identical duplicate document are collapsed to the canonical copy (deduplicate:\"none\" to disable); draft/final page variants are always kept distinct. Size knobs: max_results, max_tokens, max_tokens_per_result (trims the excerpt), cursor, intent.",
     inputSchema: {
       type: "object",
       properties: {
@@ -523,7 +572,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "get_timeline",
     description:
-      "Dated events for a site (permits, filings, meetings, transactions), oldest-first. Use to build a chronology or find what happened in a window; filter by since/until/category. Returns event records directly (date, category, title, parties, detail, citation) — a terminal read, not a discovery index; to open the document behind an event, take its parties/title into search_corpus or get_document. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds detail/parties first), cursor, intent.",
+      "Dated events for a site (permits, filings, meetings, transactions), oldest-first. Use to build a chronology or find what happened in a window; filter by since/until/category. Returns event records directly (date, category, title, parties, detail, citation) — every row carries the same structured `citation` object the search tools return, so an event is citable as it stands. A terminal read, not a discovery index; to open the document behind an event, take its parties/title into search_corpus or get_document. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds detail/parties first), cursor, intent.",
     inputSchema: {
       type: "object",
       properties: {
@@ -593,7 +642,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "get_document",
     description:
-      "Fetch ONE document you already have an id for, with field/section projection — the targeted peer of get_documents (which only lists collections). Use it to pull a specific document's evidence AFTER discovery; for discovery itself use search_corpus or get_documents, and note this does no corpus search. Addressed by its `collection/rel` file path (e.g. recorder/bistrozzi-deeds/202508130008300.pdf) OR the joined extraction-record id (e.g. recorder/202508130008300.deed.yaml); ids returned by search_corpus work directly. Returns the document's metadata joined to its extraction record — structured `fields` and a `Citation` — bounded by max_tokens, projected by fields/sections. IMPORTANT: the bundle carries document metadata + record `fields`, NOT the raw source-document body text. `fields`/`sections` projection operates over those extracted fields; there is no per-page body-text projection here — use search_passages to retrieve a published PDF's page text with a page cite. `include_source_text` returns the record's flattened extraction text, not scanned page text.",
+      "Fetch ONE document you already have an id for, with field/section projection — the targeted peer of get_documents (which only lists collections). Use it to pull a specific document's evidence AFTER discovery; for discovery itself use search_corpus or get_documents, and note this does no corpus search. Addressed by its `collection/rel` file path (e.g. recorder/bistrozzi-deeds/202508130008300.pdf) OR the joined extraction-record id (e.g. recorder/202508130008300.deed.yaml); ids returned by search_corpus work directly. Returns the document's metadata joined to its extraction record — structured `fields` and a structured `citation` (the same object the search tools return: document_id, source, page/pages, source_url, evidence, and a paste-ready `label`) — bounded by max_tokens, projected by fields/sections. IMPORTANT: the bundle carries document metadata + record `fields`, NOT the raw source-document body text. `fields`/`sections` projection operates over those extracted fields; there is no per-page body-text projection here — use search_passages to retrieve a published PDF's page text with a page cite. `include_source_text` returns the record's flattened extraction text, not scanned page text.",
     inputSchema: {
       type: "object",
       properties: {
@@ -635,7 +684,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "get_facts",
     description:
-      'Retrieve normalized (subject, predicate, value, unit, status) FACTS — the numbers a site\'s provenanced feeds already carry (economics, energy, water/cooling, air, facility power), flattened into one queryable table so a fact question is a tiny retrieval + arithmetic instead of a whole-record pull. Use it to look up or compute over specific quantities (e.g. genset_count × genset_rating → backup MW; county employment; demand_share_pct); filter by subject and/or predicate. `subject` matches flexibly (case-insensitive, over the `<kind>:<id>` key + human label + kind — e.g. "Allen County", "facility", "air-scenario"); `predicate` takes one name or a list of the exact snake_case field names. Returns compact tuples by default (subject, predicate, value, unit, status, low/high band); status is the evidence tag (verified|inference|reference|open). NOT a document fetch and NOT search — for the record behind a fact, take its subject into search_corpus/get_document. Pass include_evidence=true to attach each fact\'s provenance (source, source_kind, page, citation, verified); note page is null where the source carries none — never invented. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds evidence then the band), cursor, intent.',
+      'Retrieve normalized (subject, predicate, value, unit, status) FACTS — the numbers a site\'s provenanced feeds already carry (economics, energy, water/cooling, air, facility power), flattened into one queryable table so a fact question is a tiny retrieval + arithmetic instead of a whole-record pull. Use it to look up or compute over specific quantities (e.g. genset_count × genset_rating → backup MW; county employment; demand_share_pct); filter by subject and/or predicate. `subject` matches flexibly (case-insensitive, over the `<kind>:<id>` key + human label + kind — e.g. "Allen County", "facility", "air-scenario"); `predicate` takes one name or a list of the exact snake_case field names. Returns compact tuples by default (subject, predicate, value, unit, status, low/high band); status is the evidence tag (verified|inference|reference|open). NOT a document fetch and NOT search — for the record behind a fact, take its subject into search_corpus/get_document. Pass include_evidence=true to attach each fact\'s provenance — both the raw `evidence` block (source, source_kind, page, citation, verified) and the same structured `citation` object the other tools return; note page is null/absent where the source carries none — never invented, and for most facts the ONLY provenance is a free-text string, which rides in `citation.note` and becomes its label. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds evidence then the band), cursor, intent.',
     inputSchema: {
       type: "object",
       properties: {
@@ -659,7 +708,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
         include_evidence: {
           type: "boolean",
           description:
-            "Attach each fact's evidence block (source, source_kind, page, citation, confidence, asof, verified). Default false — compact tuples only. `page` is null where the source value carries none.",
+            "Attach each fact's evidence block (source, source_kind, page, citation, confidence, asof, verified) plus the uniform structured `citation` object. Default false — compact tuples only. `page` is null where the source value carries none.",
         },
         site: { type: "string", description: "Site slug (default: active site)" },
         ...GOVERNANCE_PROPS,

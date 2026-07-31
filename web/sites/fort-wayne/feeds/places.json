@@ -64,6 +64,7 @@
         "source": "data/reference/fort-wayne/bosc-parcels.geojson",
         "source_kind": "document",
         "page": null,
+        "pages": null,
         "confidence": "medium",
         "note": "(Allen County, IN iMap — 11 parcels, owner of record Hatchworks LLC; bbox derived from the committed geometry)",
         "verified": true
@@ -72,6 +73,7 @@
         "source": "data/extracted/fort-wayne/datacenter-facility.md",
         "source_kind": "document",
         "page": null,
+        "pages": null,
         "confidence": "medium",
         "note": "(Google \"Project Zodiac\", $2B, ~700 ac, operational Dec 11 2025; serving utility I&M)",
         "verified": true
@@ -80,6 +82,7 @@
         "source": "data/extracted/idem/fort-wayne/wqc001454.idem.yaml",
         "source_kind": "document",
         "page": null,
+        "pages": null,
         "confidence": "medium",
         "note": "(IDEM §401 WQC001454; applicant Marc Stern, Hatchworks LLC; 7510 Zodiac Way)",
         "verified": true

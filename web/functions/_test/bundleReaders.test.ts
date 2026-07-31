@@ -26,8 +26,22 @@ interface Envelope {
 }
 
 const TIMELINE = [
-  { date: "2020-05-01", category: "permit", title: "C permit", detail: "z".repeat(4000) },
-  { date: "2018-01-01", category: "permit", title: "A permit", parties: ["p"] },
+  {
+    date: "2020-05-01",
+    category: "permit",
+    title: "C permit",
+    detail: "z".repeat(4000),
+    citation: {
+      source: "oepa/2PE00000.npdes.yaml",
+      source_kind: "document",
+      page: 4,
+      pages: [4, 5],
+      confidence: "high",
+      verified: true,
+    },
+  },
+  // A row whose `source` string is its only provenance — the timeline's standing asymmetry.
+  { date: "2018-01-01", category: "permit", title: "A permit", parties: ["p"], source: "legal/nda.yaml" },
   { date: "2019-03-01", category: "land", title: "B land deal" },
 ];
 
@@ -88,7 +102,7 @@ const DOCUMENTS = [
         render_class: "pdf",
         published: true,
         available: true,
-        download_url: null,
+        download_url: "/api/doc/recorder/scans/deed-1.pdf",
       },
     ],
   },
@@ -106,7 +120,8 @@ const RECORDS = [
     citation: {
       source: "recorder/deed-1.deed.yaml",
       source_kind: "document",
-      page: null,
+      page: 1,
+      pages: [1, 2, 3],
       confidence: "high",
       verified: true,
     },
@@ -548,5 +563,70 @@ describe("handleAggregateFacts (#1588)", () => {
     });
     expect(env.results.map((r) => r.group)).toEqual(["facility"]);
     expect(env.results[0].value).toBe(313.5);
+  });
+});
+
+describe("structured citations on bundle readers (#1584)", () => {
+  it("get_timeline returns the uniform citation, with a page span from the feed's Citation", async () => {
+    const { results } = await run(handleGetTimeline, {});
+    const permit = results.find((r) => r.title === "C permit");
+    expect(permit?.citation).toEqual({
+      source: "oepa/2PE00000.npdes.yaml",
+      source_kind: "document",
+      page: 4,
+      pages: [4, 5],
+      confidence: "high",
+      verified: true,
+      evidence: "verified",
+      label: "oepa/2PE00000.npdes.yaml pp. 4-5 [verified]",
+    });
+  });
+
+  it("get_timeline falls back to a row's bare `source` rather than emitting it uncited", async () => {
+    const { results } = await run(handleGetTimeline, {});
+    const a = results.find((r) => r.title === "A permit");
+    expect(a?.citation).toMatchObject({ source: "legal/nda.yaml", label: "legal/nda.yaml [verified]" });
+    // A row with neither citation nor source says so plainly instead of naming a false source.
+    const b = results.find((r) => r.title === "B land deal");
+    expect(b?.citation).toMatchObject({ label: "uncited [verified]" });
+  });
+
+  it("get_document joins the record's page cite to the document it was extracted from", async () => {
+    const { results } = await run(handleGetDocument, { document_id: "recorder/deed-1.deed.yaml" });
+    expect(results[0].citation).toEqual({
+      document_id: "recorder/scans/deed-1.pdf",
+      source: "recorder/deed-1.deed.yaml",
+      source_kind: "document",
+      page: 1,
+      pages: [1, 2, 3],
+      source_url: "https://directory.example/api/doc/recorder/scans/deed-1.pdf",
+      confidence: "high",
+      verified: true,
+      evidence: "verified",
+      label: "recorder/deed-1.deed.yaml pp. 1-3 [verified]",
+    });
+  });
+
+  it("get_document omits the document join for an unjoined record instead of inventing one", async () => {
+    const { results } = await run(handleGetDocument, { document_id: "aedg/roundabouts.opc.yaml" });
+    const c = results[0].citation as Record<string, unknown>;
+    expect(c).not.toHaveProperty("document_id");
+    expect(c).not.toHaveProperty("source_url");
+    expect(c).not.toHaveProperty("page");
+  });
+
+  it("get_facts attaches the citation with the evidence block, keeping the free-text cite", async () => {
+    const { results } = await run(handleGetFacts, { predicate: "genset_count", include_evidence: true });
+    const c = results[0].citation as Record<string, unknown>;
+    // A projected fact's ProvenancedValue has no path and no page — the free text IS the cite.
+    expect(c.note).toBe("cite");
+    expect(c.label).toBe("cite [verified]");
+    expect(c).not.toHaveProperty("page");
+  });
+
+  it("get_facts omits the citation entirely without include_evidence", async () => {
+    const { results } = await run(handleGetFacts, { predicate: "genset_count" });
+    expect(results[0]).not.toHaveProperty("citation");
+    expect(results[0]).not.toHaveProperty("evidence");
   });
 });

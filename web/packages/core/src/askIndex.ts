@@ -43,6 +43,9 @@ export interface AskUnit {
   text: string;
   source?: string | null;
   page?: number | null;
+  /** Every 1-based page the claim was read from, when the read spanned more than one (#1584).
+   * Lifted from `Citation.pages`; absent for a single-page or page-less source. */
+  pages?: number[] | null;
   source_kind?: string | null;
   confidence?: string | null;
   verified?: boolean;
@@ -96,6 +99,7 @@ function cite(c: Citation | null | undefined): Partial<AskUnit> {
   return {
     source: c.source ?? undefined,
     page: c.page ?? undefined,
+    pages: c.pages ?? undefined,
     source_kind: c.source_kind ?? undefined,
     confidence: c.confidence ?? undefined,
     verified: c.verified,

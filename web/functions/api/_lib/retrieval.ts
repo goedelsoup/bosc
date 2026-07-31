@@ -29,6 +29,8 @@ export interface AskUnit {
   /** Provenance lifted from the item's Citation (#213 resolves these). */
   source?: string | null;
   page?: number | null;
+  /** Every 1-based page the claim was read from, when the read spanned more than one (#1584). */
+  pages?: number[] | null;
   source_kind?: string | null;
   confidence?: string | null;
   verified?: boolean;

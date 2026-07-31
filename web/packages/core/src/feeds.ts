@@ -12,11 +12,15 @@ export type Confidence = "high" | "medium" | "low";
  *  discipline keys on: `document`/`connector` are `[verified]`, the rest are asserted. */
 export type SourceKind = "document" | "connector" | "reference" | "assumption" | "derived";
 
-/** Shared provenance (`bosc.site.feeds.Citation`). */
+/** Shared provenance (`bosc.site.feeds.Citation`). `page` is the 1-based FIRST page the claim
+ *  was read from and `pages` the whole span (ascending, set only when a read covered more than
+ *  one page, and kept as a list because a read is often non-contiguous). Both are populated only
+ *  where the source genuinely carries them — never invented. */
 export interface Citation {
   source?: string | null;
   source_kind: string;
   page?: number | null;
+  pages?: number[] | null;
   confidence?: Confidence | null;
   note?: string | null;
   verified: boolean;
@@ -25,6 +29,39 @@ export interface Citation {
 /** Map a citation/confidence onto an evidence badge kind (see EvidenceTag). */
 export function evidenceKind(c: Pick<Citation, "verified"> | null | undefined): "verified" | "inference" {
   return c?.verified ? "verified" : "inference";
+}
+
+/**
+ * Render a citation's page locator the way a citation reads: `p. 17`, `pp. 17-18`, and — because
+ * an extraction read is often non-contiguous — `pp. 1-4, 37, 40, 84-85, 93` rather than a false
+ * "1-93" range or nine bare numbers (#1584). Returns null when the source carries no page.
+ *
+ * The ONE renderer for a page span: the site's `Provenance.astro` and the MCP server's citation
+ * label both call it, so a page cite reads identically wherever it surfaces. Only positive
+ * integers count; `pages` is deduped and sorted, so a caller may pass the raw feed value.
+ */
+export function formatCitedPages(
+  page: number | null | undefined,
+  pages: number[] | null | undefined,
+): string | null {
+  const ok = (p: unknown): p is number => typeof p === "number" && Number.isInteger(p) && p > 0;
+  const span = Array.isArray(pages) ? [...new Set(pages.filter(ok))].sort((a, b) => a - b) : [];
+  const all = span.length > 1 ? span : ok(page) ? [page] : [];
+  if (all.length === 0) return null;
+
+  const runs: string[] = [];
+  let start = all[0];
+  let prev = all[0];
+  for (const p of all.slice(1)) {
+    if (p !== prev + 1) {
+      runs.push(start === prev ? `${start}` : `${start}-${prev}`);
+      start = p;
+    }
+    prev = p;
+  }
+  runs.push(start === prev ? `${start}` : `${start}-${prev}`);
+  // "pp." whenever more than one page is cited, even where they render as a single run.
+  return `${all.length > 1 ? "pp." : "p."} ${runs.join(", ")}`;
 }
 
 /** What the document viewer dispatches on — derived from the real file (epic #274). */

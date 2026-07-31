@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "ed628ab3f40a7bcc63ee27fcbf131a9919ac850c3dece0f7f92839041394cd5d",
-  "contract_version": "1.47.0",
+  "catalog_version": "db70b202011070a74e7fe733b1de72fba68557b79617738d15588d648f665967",
+  "contract_version": "1.48.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -1505,6 +1505,14 @@
       "site": "lima",
       "local_id": "orc-orc",
       "title": "Ohio Revised Code — Full Text (Cited Sections + Titles)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:ottawa-water-watch",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "ottawa-water-watch",
+      "title": "Ottawa — Standing Water Watch + NPDES 2PD00028 / PWS OH6900711 Instrument Set (Extractions)",
       "feed": "catalog"
     },
     {

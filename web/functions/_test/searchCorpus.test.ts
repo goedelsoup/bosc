@@ -27,6 +27,8 @@ const UNITS: AskUnit[] = [
     text: LONG_TEXT,
     source: "data/documents/aedg/PRR-01-bundle.ocr.pdf",
     page: 318,
+    pages: [318, 319, 320],
+    doc_rel: "aedg/PRR-01-bundle.ocr.pdf",
     source_kind: "document",
     confidence: "high",
     verified: true,
@@ -218,6 +220,73 @@ describe("handleSearchCorpus response_mode", () => {
     const results = (await call({ query: "roundabout", site: "fort-wayne" })) as Record<string, unknown>[];
     expect(results.length).toBeGreaterThan(0);
     for (const r of results) expect(r.site).toBe("fort-wayne");
+  });
+});
+
+describe("handleSearchCorpus structured citations (#1584)", () => {
+  const cited = async (mode: string): Promise<Record<string, unknown>> => {
+    const results = (await call({
+      query: "roundabout",
+      collection: "records",
+      site: "lima",
+      response_mode: mode,
+    })) as Record<string, unknown>[];
+    return results[0].citation as Record<string, unknown>;
+  };
+
+  it("attaches a full citation to a compact discovery card — citable without a fetch", async () => {
+    expect(await cited("compact")).toEqual({
+      document_id: "aedg/PRR-01-bundle.ocr.pdf",
+      source: "data/documents/aedg/PRR-01-bundle.ocr.pdf",
+      source_kind: "document",
+      page: 318,
+      pages: [318, 319, 320],
+      source_url: "https://directory.example/network/lima/site/records/opc/",
+      confidence: "high",
+      verified: true,
+      evidence: "verified",
+      label: "data/documents/aedg/PRR-01-bundle.ocr.pdf pp. 318-320 [verified]",
+    });
+  });
+
+  it("carries the same citation in snippets and full mode", async () => {
+    expect(await cited("snippets")).toEqual(await cited("compact"));
+    expect(await cited("full")).toEqual(await cited("compact"));
+  });
+
+  it("never presents a flattened-field snippet as a verbatim quote", async () => {
+    // The snippet is a window over "key value · key value", not source prose — so `quote` is
+    // absent here by design; search_passages is the tool that has real verbatim text.
+    expect(await cited("snippets")).not.toHaveProperty("quote");
+  });
+
+  it("omits the fields an un-cited unit has no value for, rather than inventing them", async () => {
+    const [fw] = (await call({ query: "roundabout", site: "fort-wayne" })) as Record<string, unknown>[];
+    const c = fw.citation as Record<string, unknown>;
+    expect(c).not.toHaveProperty("page");
+    expect(c).not.toHaveProperty("source");
+    expect(c).not.toHaveProperty("document_id");
+    expect(c).toMatchObject({ verified: false, evidence: "inference", label: "uncited [inference]" });
+  });
+
+  it("leaves ids_only a bare candidate list — no citation", async () => {
+    const results = (await call({ query: "roundabout", response_mode: "ids_only" })) as Record<
+      string,
+      unknown
+    >[];
+    for (const r of results) expect(r).not.toHaveProperty("citation");
+  });
+
+  it("keeps the citation when a per-result budget shrinks the hit's text", async () => {
+    const [rec] = (await call({
+      query: "roundabout",
+      collection: "records",
+      site: "lima",
+      response_mode: "full",
+      max_tokens_per_result: 60,
+    })) as Record<string, unknown>[];
+    expect((rec.text as string).length).toBeLessThan(LONG_TEXT.length);
+    expect((rec.citation as Record<string, unknown>).page).toBe(318);
   });
 });
 

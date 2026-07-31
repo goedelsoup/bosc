@@ -25,9 +25,13 @@
     "citation": {
       "source": "findlay/brownfield/round-11-hancock-2026.award.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 17,
+      "pages": [
+        17,
+        18
+      ],
       "confidence": "high",
-      "note": "pages [16, 17]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "findlay/brownfield/Round 11 Brownfield Descriptions.pdf",
@@ -63,6 +67,7 @@
       "source": "findlay/flood/fema-fma-obligation-2026.epa.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "high",
       "note": null,
       "verified": true
@@ -113,9 +118,13 @@
     "citation": {
       "source": "findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
       "confidence": "high",
-      "note": "pages [0, 1]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "findlay/warn/GoodyearTireRubberCompany.pdf",
@@ -170,9 +179,14 @@
     "citation": {
       "source": "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "findlay/warn/Michigan_Sugar_Company.pdf",
@@ -206,6 +220,7 @@
       "source": "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
@@ -244,6 +259,7 @@
       "source": "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "high",
       "note": null,
       "verified": true
@@ -287,9 +303,17 @@
     "citation": {
       "source": "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/findlay/2PD00008.1abaf306.pdf",
@@ -324,9 +348,17 @@
     "citation": {
       "source": "oepa/findlay/2PD00008.fs.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/findlay/2PD00008.fs.pdf",
@@ -369,9 +401,17 @@
     "citation": {
       "source": "oepa/findlay/2PD00008.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/findlay/2PD00008.pdf",

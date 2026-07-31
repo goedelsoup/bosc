@@ -102,9 +102,15 @@ forms as the row count changes — keeping the drift guard deterministic.
 `passages` feed, optionally filters to `document_ids`, ranks the pool with the shared hybrid
 kernel (BM25 + `passage-embeddings` vector RRF, via a `hybridSearch` that now takes an
 `embeddingsUrl` override pointing at `/feeds/passage-embeddings.json`), and returns page-cited
-hits `{ id, document_id, collection, title, page, section, text, score }` inside the governed
-envelope. An over-cap excerpt is trimmed to the room left after its citation — the page cite is
-never dropped. Degrades to BM25-only when Workers AI or the embeddings feed is absent.
+hits `{ id, document_id, collection, title, page, section, text, score, citation }` inside the
+governed envelope. An over-cap excerpt is trimmed to the room left after its citation — the page
+cite is never dropped. Degrades to BM25-only when Workers AI or the embeddings feed is absent.
+
+`citation` is the uniform structured-provenance object every MCP tool now attaches (#1584,
+`functions/api/_lib/mcpCitation.ts`). `search_passages` is the **only** tool that populates its
+`quote`: the excerpt IS the document's own text layer, so it is genuinely verbatim — and the
+quote is a bounded lead excerpt rather than a copy of the whole page, which would double the
+response of the one tool that can fill it.
 
 ## 7. Honesty / limits
 

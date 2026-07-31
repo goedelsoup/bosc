@@ -21,8 +21,14 @@
 // every semantic match as equally useful. The tier is an evidence-grounded judgment from the
 // hit's evidence class (feed + source_kind) and its relevance band (score ÷ the pool's top
 // score) — see `../mcpTier`. `ids_only` stays a bare id + score list (no tier).
+//
+// Structured citations (#1584): every compact/snippets/full hit carries a `citation` object
+// (document_id, source, page/pages, source_url, evidence, label — see `../mcpCitation`), so a
+// caller can cite the hit straight off the discovery card instead of fetching the record to find
+// out where it came from. That is what makes compact mode a complete answer rather than a stub.
 
 import { loadAskIndex } from "../askIndexLoad";
+import { type McpCitation, buildCitation } from "../mcpCitation";
 import { type VersionInfo, loadDocVersionsSafe } from "../docVersionsLoad";
 import { dedupeByCluster, parseDeduplicate, parseVersionPolicy } from "../mcpDedup";
 import {
@@ -97,6 +103,8 @@ interface CompactHit {
   /** Evidence role for the query (#1591) — direct / corroborating / background. */
   tier: Tier;
   tier_reason: string;
+  /** Structured provenance (#1584) — cite the hit straight from the card, no fetch required. */
+  citation: McpCitation;
 }
 
 /** full: the legacy shape — the whole flattened unit text (opt-in, #1580). */
@@ -115,6 +123,9 @@ interface FullHit {
   /** Evidence role for the query (#1591) — direct / corroborating / background. */
   tier: Tier;
   tier_reason: string;
+  /** Structured provenance (#1584). The flat source/page/source_kind/confidence/verified fields
+   * above are kept for back-compat and say the same thing; `citation` is the portable object. */
+  citation: McpCitation;
 }
 
 type SearchHit = IdsOnlyHit | CompactHit | FullHit;
@@ -188,7 +199,38 @@ function snippetOf(text: string, terms: string[], maxTokens: number): string {
   return `${start > 0 ? "…" : ""}${text.slice(start, end).trim()}${end < text.length ? "…" : ""}`;
 }
 
-function compactCard(h: Hit, terms: string[], snippetTokens: number, topScore: number): CompactHit {
+/**
+ * The hit's provenance as the uniform citation object (#1584).
+ *
+ * `document_id` is the unit's joined source document (`doc_rel`) — the addressable thing to pass
+ * back to `get_document` / `search_passages` — while `source` stays the citable artifact the
+ * ask-index lifted off the item's `Citation` (usually the reviewed extraction, not the PDF).
+ * No `quote`: a search_corpus snippet is a window over the record's flattened FIELDS, not source
+ * prose, and the citation contract reserves `quote` for verbatim text (see mcpCitation).
+ */
+function hitCitation(u: AskUnit, requestUrl: string): McpCitation {
+  return buildCitation(
+    {
+      document_id: u.doc_rel,
+      source: u.source,
+      source_kind: u.source_kind,
+      page: u.page,
+      pages: u.pages,
+      source_url: u.url,
+      confidence: u.confidence,
+      verified: u.verified,
+    },
+    requestUrl,
+  );
+}
+
+function compactCard(
+  h: Hit,
+  terms: string[],
+  snippetTokens: number,
+  topScore: number,
+  requestUrl: string,
+): CompactHit {
   const u = h.unit;
   const verdict = tierHit(u.feed, u.source_kind, h.score, topScore);
   return {
@@ -204,10 +246,11 @@ function compactCard(h: Hit, terms: string[], snippetTokens: number, topScore: n
     verified: u.verified ?? false,
     tier: verdict.tier,
     tier_reason: verdict.reason,
+    citation: hitCitation(u, requestUrl),
   };
 }
 
-function fullHit(h: Hit, topScore: number): FullHit {
+function fullHit(h: Hit, topScore: number, requestUrl: string): FullHit {
   const u = h.unit;
   const verdict = tierHit(u.feed, u.source_kind, h.score, topScore);
   return {
@@ -224,27 +267,30 @@ function fullHit(h: Hit, topScore: number): FullHit {
     score: roundScore(h.score),
     tier: verdict.tier,
     tier_reason: verdict.reason,
+    citation: hitCitation(u, requestUrl),
   };
 }
 
 /** `topScore` is the pool's top score (deduped[0]) so the relevance band that feeds a hit's
- * tier is stable across cursor pages. `ids_only` stays a bare id + score list — no tier. */
+ * tier is stable across cursor pages. `ids_only` stays a bare id + score list — no tier, and no
+ * citation: it is the candidate-list mode, and a caller that wants to cite asks for compact. */
 function renderHits(
   hits: Hit[],
   query: string,
   mode: ResponseMode,
   snippetTokens: number,
   topScore: number,
+  requestUrl: string,
 ): SearchHit[] {
   switch (mode) {
     case "ids_only":
       return hits.map((h) => ({ id: h.unit.id, score: roundScore(h.score) }));
     case "full":
-      return hits.map((h) => fullHit(h, topScore));
+      return hits.map((h) => fullHit(h, topScore, requestUrl));
     case "snippets":
-      return hits.map((h) => compactCard(h, tokenize(query), snippetTokens, topScore));
+      return hits.map((h) => compactCard(h, tokenize(query), snippetTokens, topScore, requestUrl));
     default: // compact — short generic head preview, no query windowing
-      return hits.map((h) => compactCard(h, [], COMPACT_SNIPPET_TOKENS, topScore));
+      return hits.map((h) => compactCard(h, [], COMPACT_SNIPPET_TOKENS, topScore, requestUrl));
   }
 }
 
@@ -339,6 +385,7 @@ export async function handleSearchCorpus(
     mode,
     snippetTokens,
     topScore,
+    requestUrl,
   );
   const governed = govern(window, { knobs, baseOffset: offset, shrink: shrinkSearchHit });
 

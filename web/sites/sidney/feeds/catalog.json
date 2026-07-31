@@ -35,6 +35,7 @@
       "source": "watermark export — assembled from the committed corpus + reference datasets",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark export",
       "verified": false
@@ -75,6 +76,7 @@
       "source": "virtual aggregate — resolved by `watermark catalog run onboard-bundle --site <slug>`",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -123,6 +125,7 @@
       "source": "BOSC site-onboarding discovery — verified public-record register of per-site data-center activity (Columbus/New Albany/Springfield)",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -176,6 +179,7 @@
       "source": "Sidney City Council resolutions (18-25, 26-26, 27-26, 80-25, 81-25, 82-25); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -234,6 +238,7 @@
       "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
@@ -286,6 +291,7 @@
       "source": "Ohio General Assembly / LSC (H.B. 314, 136th G.A. — As Introduced and As Passed by the House) + Project BOSC analysis — provision digest, introduced→passed diff, and relevance to the R.C. 149.43 PRR/mandamus posture",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
@@ -339,6 +345,7 @@
       "source": "Per-site governing bodies (e.g. City of Lima council) — published meeting documents, scraped per watershed-point site",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark subdivisions download",
       "verified": true
@@ -388,6 +395,7 @@
       "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits at facilities in Sidney, Ohio (Shelby County)",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
@@ -449,6 +457,7 @@
       "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov), searched by Facility Name x County x Program: the Construction Site Stormwater General Permit coverage 1GC10596*AG and its NOI, site map and co-permittee approval; the Level One Isolated Wetland General Permit authorization 251911W (\"CMH-232\") and its 2026-01-15 modification; the Surface Water Permit to Install DSWPTI-260517 for the campus sanitary-sewer relocation; the City of Sidney's own Isolated Wetland Permit 252256W for the West Millcreek Road/Fair Road Development; and The AES Corporation's construction-stormwater coverage 1GC11112*AG for the 6694 Transmission Line Reroute. Plus, from the Ohio EPA DAM permit slots, NPDES permit 1PD00009*SD (application OH0027421, City of Sidney WWTP) and its draft-public-notice package carrying the 2022 renewal Fact Sheet. Cross-checked against EPA ECHO cwa_rest_services / air_rest_services and the Envirofacts ICIS_PERMIT and FRS_PROGRAM_FACILITY tables. Secondary, cited but carried as captured bytes: the Ohio EPA NPDES General Permits page bearing the 2026-07-21 Community Notice abandoning OHD000001, and AES Ohio's 2026-07-21 press release on its unopposed PUCO stipulation. The City of Sidney FAQ (sidneyoh.com/526) was read live and is cited by URL, not carried.",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -499,6 +508,7 @@
       "source": "EPA ECHO eff_rest_services DMR for NPDES OH0027421 (Sidney WWTP), Shelby County OH",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark dmr OH0027421 --start 2023-01-01 --end 2023-12-31 --design-flow 7.0",
       "verified": true
@@ -555,6 +565,7 @@
       "source": "Ohio Revised Code (5715.01 assessment ratio; 122.175 DCTE scope; 3735.671(A)(2) school-compensation floor) + Ohio Department of Taxation county sales-and-use rate + a stated commercial-millage assumption; the withheld-knob bands are cross-referenced to reference/datacenter-industry/priors.yaml",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -604,6 +615,7 @@
       "source": "EPA AP-42, 5th ed., Vol. I, Ch. 3.4 (Large Stationary Diesel Engines, 10/96) — verbatim transcription of Table 3.4-1 (gaseous) and Table 3.4-2 (particle sizing) from the cited EPA PDF",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -653,6 +665,7 @@
       "source": "40 CFR Part 50 / EPA NAAQS Table — verbatim transcription of the primary criteria-pollutant standards (µg/m³) from the cited EPA source",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -707,6 +720,7 @@
       "source": "Vendor datasheets (NVIDIA H100/H200/B200/GB200; Google TPU v5e/v5p/v6e) + in-corpus relator data appendix",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -756,6 +770,7 @@
       "source": "Pooled meta-analysis of published industry reports (Epoch AI, US Chamber CTEC, McKinsey, Good Jobs First, Brookings, Virginia JLARC, DOE/LBNL, Green Grid/Vertiv)",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -814,6 +829,7 @@
       "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark npdes --basin great-miami",
       "verified": true
@@ -871,6 +887,7 @@
       "source": "BLS QCEW annual averages (keyless) + US Census ACS 5-year (B01003_001E population, B19013_001E median household income)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark economics",
       "verified": true
@@ -920,6 +937,7 @@
       "source": "U.S. EIA — Form EIA-930 Hourly Electric Grid Monitor (PJM region demand/net-gen/interchange)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark interchange",
       "verified": true
@@ -974,6 +992,7 @@
       "source": "U.S. EIA — API v2 seriesid route (OH residential electricity/gas price, total retail sales)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark eia",
       "verified": true
@@ -1028,6 +1047,7 @@
       "source": "Derived — facility draw (air permit, #87) sized against EIA state retail sales + residential price (#91)",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark eia",
       "verified": false
@@ -1084,6 +1104,7 @@
       "source": "U.S. EIA — Form EIA-861 (AEP Ohio retail sales) + Form EIA-930 (PJM hourly demand)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark grid",
       "verified": true
@@ -1134,6 +1155,7 @@
       "source": "DoD MIRTA (Military Installations, Ranges, and Training Areas) site-boundary register, published via Esri US Federal Data; boundaries encompass federally owned or otherwise managed lands as defined in the Base Structure Report",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark enclave",
       "verified": true
@@ -1184,6 +1206,7 @@
       "source": "DoD MIRTA (site boundary) × EPA SDWIS (public water systems) × EPA ECHO CWA (NPDES discharges) × EPA RSEI/TRI (toxic releases), joined to the enclave's committed grounding record (its CERCLA §120 Federal Facility Agreement) — a multi-source assembly",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark enclave",
       "verified": false
@@ -1233,6 +1256,7 @@
       "source": "EIA national series (net generation, retail price) + LBNL/DOE 2024 Data Center Energy Usage Report + Inflation Reduction Act (Pub. L. 117-169)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark federal",
       "verified": true
@@ -1282,6 +1306,7 @@
       "source": "Federal Power Act §§205/206/201(b) + FERC eLibrary dockets (ER24-2172, AD24-11-000) + FERC Form 1 (Ohio Power Co.)",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark ferc",
       "verified": false
@@ -1331,6 +1356,7 @@
       "source": "GLEIF — REST API api.gleif.org (Golden Copy)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark gleif",
       "verified": true
@@ -1379,6 +1405,7 @@
       "source": "Anthropic Admin API — usage_report/messages + cost_report (org usage & cost, by model/workspace)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark greenops anthropic",
       "verified": true
@@ -1432,6 +1459,7 @@
       "source": "AWS Cost Explorer (ce:GetCostAndUsage) + AWS Sustainability API (GetEstimatedCarbonEmissions, the Customer Carbon Footprint Tool's successor)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark greenops aws",
       "verified": true
@@ -1486,6 +1514,7 @@
       "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark greenops egrid",
       "verified": true
@@ -1535,6 +1564,7 @@
       "source": "derived from the GreenOps connector exports (AWS / GitHub / Anthropic) + the eGRID/WUE factor tables — the modeled usage → electricity → CO2e → water assembly",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark greenops footprint --write",
       "verified": false
@@ -1584,6 +1614,7 @@
       "source": "GitHub enhanced billing platform — /organizations/{org}/settings/billing/usage (Actions minutes by runner + Git LFS/Packages/shared storage, net cost)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark greenops github",
       "verified": true
@@ -1638,6 +1669,7 @@
       "source": "NOAA NWS HDSC Atlas-14 — precipitation-frequency point query (Partial-Duration Series, English depths)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
@@ -1692,6 +1724,7 @@
       "source": "NASA POWER (Prediction Of Worldwide Energy Resources) — climatology point REST API (satellite-derived monthly/annual normals)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark nasa-power --write",
       "verified": true
@@ -1741,6 +1774,7 @@
       "source": "Ohio DNR, Division of Water — 'Principal Streams and Their Drainage Areas' (C.E. Sherman map, July 1925; reprinted 1999)",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -1817,6 +1851,7 @@
       "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark reaches --write",
       "verified": true
@@ -1876,6 +1911,7 @@
       "source": "Ohio Legislative Service Commission — Status Report of Legislation (statusreport.lsc.ohio.gov)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark lsc",
       "verified": true
@@ -1924,8 +1960,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "83dee16bb8bbc6a89b404fa0a5e722ab452223b785010af0a32cd753597e3254",
-      "size_bytes": 22598,
+      "sha256": "343e2ed72adaa2ee49d13fe6379992e864cc101d46b2ecff48c7a9f7007ebbeb",
+      "size_bytes": 28459,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -1935,6 +1971,7 @@
       "source": "Registered watermark.sites SiteProfiles + per-node committed artifacts (economics, grid, RSEI, low-flow screen) joined over a curated cited basin topology",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark network",
       "verified": false
@@ -1987,6 +2024,7 @@
       "source": "Ohio Department of Development public transparency portal — direct export",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -2038,6 +2076,7 @@
       "source": "Ohio Department of Development public transparency portal — direct export",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -2105,6 +2144,7 @@
       "source": "Ohio Tax Credit Authority public meeting minutes",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -2155,6 +2195,7 @@
       "source": "DriveOhio (Ohio DOT) — prepared by AECOM; deliverable item 15",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -2210,6 +2251,7 @@
       "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark cooling-reconcile --write",
       "verified": false
@@ -2262,6 +2304,7 @@
       "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark oepa coverage --write",
       "verified": false
@@ -2324,6 +2367,7 @@
       "source": "Ohio EPA Division of Surface Water — public notice and permit package",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -2373,6 +2417,7 @@
       "source": "Ohio LSC code portal — codes.ohio.gov",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark orc",
       "verified": true
@@ -2482,6 +2527,7 @@
       "source": "Ohio LSC code portal — codes.ohio.gov",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark orc",
       "verified": true
@@ -2519,10 +2565,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "ed0f57e4e11ceba70659890eec8159208f26b18e3dbb535d6e079d98cc193c51",
-      "size_bytes": 391021,
+      "sha256": "74c2184904b607c34aae6b3401e5968264dd30d71786b0a19b52262f550d704f",
+      "size_bytes": 405678,
       "lfs_materialized": true,
-      "file_count": 6,
+      "file_count": 7,
       "stale": false,
       "asof": null
     },
@@ -2530,6 +2576,7 @@
       "source": "Per-site county parcel GIS via the gis_parcel field-map, pulled as f=geojson reprojected to WGS84 (Fort Wayne = Allen County, IN iMap, parcel layer 10)",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson",
       "verified": true
@@ -2594,6 +2641,7 @@
       "source": "Periplus GIS project (the ../gis repository), copied unmodified at the BOSC fork-point commit",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -2643,6 +2691,7 @@
       "source": "PJM Data Miner 2 (da_hrl_lmps, AEP zone) for LMP; PJM RPM Base Residual Auction + interconnection-queue reporting (transcribed) for capacity/queue",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark pjm",
       "verified": true
@@ -2692,6 +2741,7 @@
       "source": "EPA RSEI (per-chemical water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited design low flows (1Q10/7Q10/harmonic mean) × Ohio WQS criteria (OAC 3745-1) — a multi-source derivation",
       "source_kind": "derived",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark rsei",
       "verified": false
@@ -2750,6 +2800,7 @@
       "source": "EPA RSEI Public Data Set v2.3.12 (EPA gaftp Public Release Data), version v2312",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark rsei",
       "verified": true
@@ -2802,6 +2853,7 @@
       "source": "EPA Office of Water, Water Permits Division, Office of Wastewater Management",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -2854,6 +2906,7 @@
       "source": "EPA-833-F-23-007 \"Thermal Discharges in NPDES Permits\" (June 2023), Tables 3-4/3-5/3-6 — verbatim transcription of the Great Lakes Representative Important Species thermal tolerances",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -2908,6 +2961,7 @@
       "source": "USASpending.gov API (api.usaspending.gov), U.S. Treasury",
       "source_kind": "connector",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": "watermark usaspending",
       "verified": true
@@ -2957,6 +3011,7 @@
       "source": "OAC 3745-1-35 (aquatic life, Tables 35-1/35-2/35-5/35-9) + 3745-1-33 (human health, Table 33-1) — verbatim transcription of the numeric criteria, cross-checked against EPA's National Recommended Water Quality Criteria",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false
@@ -3008,6 +3063,7 @@
       "source": "OAC 3745-1-35 Table 35-11 (inland streams/rivers, by geographic zone) + 3745-1-31 Table 31-1 (Lake Erie) + 3745-1-06 (O) Table 1 (thermal mixing zones) — verbatim transcription of the numeric temperature criteria (degF primary, degC derived)",
       "source_kind": "reference",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": false

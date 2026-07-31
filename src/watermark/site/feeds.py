@@ -469,7 +469,20 @@ from watermark.sites import (
 #   additive for feed READERS (a pre-1.47 records.json stays valid) but a pre-1.47
 #   records.schema.json rejects the new group value — MINOR, back-compatible for data, schema
 #   refresh required.
-CONTRACT_VERSION = "1.47.0"
+# 1.48.0: the shared `Citation` gains `pages` — the whole 1-based span a claim was read from —
+#   and the `records` builder finally populates the `page` that has been null on every record
+#   the bundle has ever shipped (#1584). It had the page all along: `DocExtraction.pages_read`
+#   carries the 0-based indices, and the builder was formatting them into the prose `note` as
+#   `"pages [16, 17]"` — off by one against every other page cite in the bundle, unparseable,
+#   and invisible to the field a consumer actually reads. `page` is now the first page and
+#   `pages` the span, both 1-based; `pages` is null for a single-page read and stays a LIST
+#   because a read is often non-contiguous (one Lima permit record cites pages 1-4, 37, 40,
+#   84-85, 93). The immediate consumer is the public MCP server, which now returns a structured
+#   `citation` object on every result instead of burying provenance in prose. `Citation` is
+#   `extra="forbid"`, so this refreshes every schema that embeds it (records, timeline,
+#   meetings, places, people, catalog, exhibits, …) — MINOR, back-compatible for data, schema
+#   refresh required.
+CONTRACT_VERSION = "1.48.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -502,13 +515,23 @@ class Citation(BaseModel):
     came from, ``source`` is the citable artifact (a repo-relative ``data/`` path, an
     external dataset label, a permit/instrument number), ``page`` locates it within a
     multi-page source, and ``verified`` is derived so a consumer never re-computes it.
+
+    ``page`` is the **first** page the claim was read from and ``pages`` the whole span when
+    a read covered more than one — both 1-based, both **only where the source genuinely
+    carries them** and never invented (the chain-of-custody discipline in the root
+    ``CLAUDE.md``). Structuring the span is what lets a consumer cite a page without parsing
+    prose: the records builder used to stuff the raw 0-based ``pages_read`` list into ``note``
+    as ``"pages [16, 17]"``, which is a locator no machine (and no reader) can act on (#1584).
     """
 
     model_config = ConfigDict(extra="forbid")
 
     source: str | None = None  # repo-relative artifact path, dataset label, or doc id
     source_kind: SourceKind = "document"
-    page: int | None = None  # 1-based page within the source, if applicable
+    page: int | None = None  # 1-based first page within the source, if applicable
+    # Every 1-based page the claim was read from, ascending — set only when the read spans
+    # more than one page (a single-page read is fully described by `page` alone).
+    pages: list[int] | None = None
     confidence: Confidence = "medium"
     note: str | None = None
 
