@@ -24,9 +24,16 @@
     "citation": {
       "source": "wpafb/cercla-ffa-1991.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        9,
+        10,
+        11,
+        72
+      ],
       "confidence": "high",
-      "note": "pages [0, 8, 9, 10, 71]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "wpafb/cercla/wright-pattersonafb.pdf",
@@ -59,9 +66,14 @@
     "citation": {
       "source": "wpafb/ssa-53fr15876.epa.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "wpafb/ssa/SSA_greatmiaminorth_FR.pdf",

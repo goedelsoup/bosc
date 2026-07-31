@@ -250,7 +250,7 @@
     },
     "Citation": {
       "additionalProperties": false,
-      "description": "Structured provenance for a feed item or a single figure.\n\nMirrors :class:`watermark.hydrology.model.ProvenancedValue`'s evidence discipline so the\nwhole bundle speaks one provenance language: ``source_kind`` says where the value\ncame from, ``source`` is the citable artifact (a repo-relative ``data/`` path, an\nexternal dataset label, a permit/instrument number), ``page`` locates it within a\nmulti-page source, and ``verified`` is derived so a consumer never re-computes it.",
+      "description": "Structured provenance for a feed item or a single figure.\n\nMirrors :class:`watermark.hydrology.model.ProvenancedValue`'s evidence discipline so the\nwhole bundle speaks one provenance language: ``source_kind`` says where the value\ncame from, ``source`` is the citable artifact (a repo-relative ``data/`` path, an\nexternal dataset label, a permit/instrument number), ``page`` locates it within a\nmulti-page source, and ``verified`` is derived so a consumer never re-computes it.\n\n``page`` is the **first** page the claim was read from and ``pages`` the whole span when\na read covered more than one — both 1-based, both **only where the source genuinely\ncarries them** and never invented (the chain-of-custody discipline in the root\n``CLAUDE.md``). Structuring the span is what lets a consumer cite a page without parsing\nprose: the records builder used to stuff the raw 0-based ``pages_read`` list into ``note``\nas ``\"pages [16, 17]\"``, which is a locator no machine (and no reader) can act on (#1584).",
       "properties": {
         "source": {
           "anyOf": [
@@ -287,6 +287,21 @@
           ],
           "default": null,
           "title": "Page"
+        },
+        "pages": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pages"
         },
         "confidence": {
           "default": "medium",

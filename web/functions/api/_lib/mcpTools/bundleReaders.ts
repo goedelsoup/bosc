@@ -11,6 +11,11 @@
 // returns the uniform `{ results, token_estimate, truncated, next_cursor }` envelope. The
 // cursor pages the deterministic ordered feed; over-cap items shed their heaviest optional
 // fields (prose detail, variant lists, assessment internals, entry lists) before counting.
+//
+// Structured citations (#1584): the readers that carry provenance — get_timeline, get_document
+// and get_facts (with include_evidence) — return it as the uniform `citation` object from
+// `../mcpCitation`, the same shape search_corpus and search_passages emit, rather than each
+// passing through whatever shape its own feed happens to use.
 
 import {
   FACT_METRICS,
@@ -28,6 +33,7 @@ import type {
   RecordItem,
 } from "@watermark/core/feeds";
 import { fetchWithTimeout } from "../http";
+import { type McpCitation, buildCitation } from "../mcpCitation";
 import {
   type BudgetKnobs,
   type Governed,
@@ -77,13 +83,33 @@ interface TimelineEntry {
   parties?: string[];
   detail?: string;
   source?: string;
-  citation?: { verified?: boolean; confidence?: string; source_kind?: string; page?: number | null };
+  citation?: Citation | null;
 }
+
+/** The emitted row: the feed entry with its raw feed `Citation` replaced by the uniform
+ * structured one (#1584), so every tool speaks the same provenance shape. */
+type TimelineView = Omit<TimelineEntry, "citation"> & { citation: McpCitation };
 
 interface GetTimelineParams {
   since?: unknown;
   until?: unknown;
   category?: unknown;
+}
+
+/** A timeline row carries an explicit `source` string even where `citation` is null (the same
+ * asymmetry `@watermark/core/askIndex` handles), so fall back to it rather than emitting an
+ * uncited event for a row that names its source. */
+function timelineCitation(e: TimelineEntry): McpCitation {
+  const c = e.citation;
+  return buildCitation({
+    source: c?.source ?? e.source,
+    source_kind: c?.source_kind ?? "document",
+    page: c?.page,
+    pages: c?.pages,
+    note: c?.note,
+    confidence: c?.confidence,
+    verified: c?.verified,
+  });
 }
 
 export async function handleGetTimeline(params: unknown, requestUrl: string): Promise<McpContent[]> {
@@ -100,9 +126,11 @@ export async function handleGetTimeline(params: unknown, requestUrl: string): Pr
   if (category) entries = entries.filter((e) => e.category === category);
 
   // Return ascending (oldest-first); clients may reverse as needed.
-  entries = [...entries].sort((a, b) => a.date.localeCompare(b.date));
+  const views: TimelineView[] = [...entries]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .map((e) => ({ ...e, citation: timelineCitation(e) }));
 
-  return paginate(entries, knobs, offset, (e, cap) => dropKeysUntilUnderCap(e, ["detail", "parties"], cap));
+  return paginate(views, knobs, offset, (e, cap) => dropKeysUntilUnderCap(e, ["detail", "parties"], cap));
 }
 
 // --- get_entities ----------------------------------------------------------------
@@ -330,7 +358,10 @@ interface DocumentView {
   /** The record's true field count — a `fields` subset (projection or budget shrink) is
    * detectable as `Object.keys(fields).length < field_count` (mirrors documents' entry_count). */
   field_count?: number;
-  citation?: Citation | null;
+  /** The record's provenance as the uniform structured citation (#1584) — the record's own
+   * `Citation` joined to the document file it was extracted from, so the caller holds a
+   * page-level, addressable cite without a second call. */
+  citation?: McpCitation;
   warnings?: string[];
   source_text?: string;
 }
@@ -482,7 +513,24 @@ export async function handleGetDocument(params: unknown, requestUrl: string): Pr
       : record.fields;
     view.field_count = Object.keys(record.fields).length;
   }
-  if (record && sections.has("citation")) view.citation = record.citation;
+  if (record && sections.has("citation")) {
+    // The record supplies the page cite; the joined document entry supplies the addressable id
+    // and the URL its bytes are served at — neither half is complete on its own.
+    view.citation = buildCitation(
+      {
+        document_id: record.source_doc_rel,
+        source: record.citation?.source ?? record.rel,
+        source_kind: record.citation?.source_kind,
+        page: record.citation?.page,
+        pages: record.citation?.pages,
+        note: record.citation?.note,
+        source_url: doc?.entry.download_url,
+        confidence: record.citation?.confidence ?? record.confidence,
+        verified: record.citation?.verified,
+      },
+      requestUrl,
+    );
+  }
   if (record && sections.has("warnings")) view.warnings = record.warnings;
   if (record && includeSourceText) view.source_text = flattenFields(record.fields);
 
@@ -524,6 +572,11 @@ interface FactView {
   approximate?: boolean;
   feed: string;
   evidence?: FactItem["evidence"];
+  /** The evidence block as the uniform structured citation (#1584), attached with it. A
+   * projected fact usually has no path and no page — a `ProvenancedValue` records provenance as
+   * one free-text string — so that text rides in `citation.note` and becomes the label rather
+   * than being dropped in the name of structure. */
+  citation?: McpCitation;
 }
 
 /** Flexible subject match (case-insensitive substring over the key + human label + kind) — the
@@ -544,6 +597,20 @@ function parsePredicates(raw: unknown): Set<string> | null {
   return cleaned.length ? new Set(cleaned.map((s) => s.trim().toLowerCase())) : null;
 }
 
+/** A fact's evidence block as the uniform citation object (#1584). `evidence.citation` is the
+ * `ProvenancedValue`'s free-text provenance, not a path, so it lands in `note` — for most rows it
+ * is the ONLY provenance there is, and the structured cite would otherwise be empty. */
+function factCitation(e: FactItem["evidence"]): McpCitation {
+  return buildCitation({
+    source: e.source,
+    source_kind: e.source_kind,
+    page: e.page,
+    note: e.citation,
+    confidence: e.confidence,
+    verified: e.verified,
+  });
+}
+
 function toView(f: FactItem, includeEvidence: boolean): FactView {
   const view: FactView = {
     subject: f.subject,
@@ -558,7 +625,10 @@ function toView(f: FactItem, includeEvidence: boolean): FactView {
   if (f.low != null) view.low = f.low;
   if (f.high != null) view.high = f.high;
   if (f.approximate) view.approximate = true;
-  if (includeEvidence) view.evidence = f.evidence;
+  if (includeEvidence) {
+    view.evidence = f.evidence;
+    view.citation = factCitation(f.evidence);
+  }
   return view;
 }
 
@@ -584,8 +654,9 @@ export async function handleGetFacts(params: unknown, requestUrl: string): Promi
   );
 
   const views = facts.map((f) => toView(f, includeEvidence));
-  // Over-cap shed: drop the evidence block first, then the uncertainty band — never the
-  // subject/predicate/value/status that make the fact answerable.
+  // Over-cap shed: drop the raw evidence block first (the structured `citation` says the same
+  // thing more compactly), then the uncertainty band — never the subject/predicate/value/status
+  // that make the fact answerable, and never `citation` while any cheaper field remains.
   return paginate(views, knobs, offset, (v, cap) =>
     dropKeysUntilUnderCap(v, ["evidence", "low", "high", "subject_label"], cap),
   );

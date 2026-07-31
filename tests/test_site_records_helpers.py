@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from watermark.site.records import (
     _approx_paths,
+    _cited_pages,
     _classify,
     _normalize_source_rel,
     _Record,
@@ -109,3 +110,31 @@ def test_record_title_prefers_the_most_identifying_field() -> None:
         payload={"case": {"caption": "Thor Equities, LLC et al. v. City of Urbana, Ohio et al."}},
     )
     assert _record_title(rec5) == "Thor Equities, LLC et al. v. City of Urbana, Ohio et al."
+
+
+def test_cited_pages_lifts_the_zero_based_pages_read_to_a_one_based_cite() -> None:
+    # `DocExtraction.pages_read` is 0-based; a citation locates a claim by the page a viewer
+    # shows, so every index gains one (#1584). The findlay Round-11 award is the worked example:
+    # its envelope records `[16, 17]` and its own method note says "0-based pages 16-17, printed
+    # sheets 17-18".
+    assert _cited_pages({"pages_read": [16, 17]}) == (17, [17, 18])
+    # A single-page read is fully described by `page`; no span is emitted to repeat it.
+    assert _cited_pages({"pages_read": [0]}) == (1, None)
+    # Unsorted / duplicated indices normalize; the span stays a LIST because a real read is
+    # often non-contiguous (data/extracted/oepa/2PE00000.npdes.yaml reads 9 pages in 4 runs).
+    assert _cited_pages({"pages_read": [3, 0, 3, 1]}) == (1, [1, 2, 4])
+    assert _cited_pages({"pages_read": [0, 1, 2, 3, 36, 39, 83, 84, 92]}) == (
+        1,
+        [1, 2, 3, 4, 37, 40, 84, 85, 93],
+    )
+
+
+def test_cited_pages_never_invents_a_page() -> None:
+    # No envelope, an empty list, or a non-list → no page cite at all. A connector-sourced
+    # extraction genuinely has no page, and guessing one would fabricate provenance.
+    assert _cited_pages({}) == (None, None)
+    assert _cited_pages({"pages_read": []}) == (None, None)
+    assert _cited_pages({"pages_read": "pages 1-3"}) == (None, None)
+    # Junk in a hand-authored list is dropped, not coerced — `bool` is an `int` subclass, so a
+    # stray `true` would otherwise become page 2.
+    assert _cited_pages({"pages_read": [True, "4", None, -1, 5]}) == (6, None)

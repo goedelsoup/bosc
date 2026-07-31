@@ -147,10 +147,15 @@ Every figure-bearing feed carries provenance as **data**, so a consumer renders
 ([#60](../../../README.md)). Two shapes, both in
 [`watermark.site.feeds`](../../../src/watermark/site/feeds.py) (and `schemas/citation.schema.json`):
 
-* **`Citation`** — `{ source, source_kind, page, confidence, note, verified }`. `source_kind`
-  is `document` / `connector` / `reference` / `assumption` / `derived`; `verified` is a
-  derived boolean (`document`/`connector` → `true`), mirroring the hydrology
+* **`Citation`** — `{ source, source_kind, page, pages, confidence, note, verified }`.
+  `source_kind` is `document` / `connector` / `reference` / `assumption` / `derived`;
+  `verified` is a derived boolean (`document`/`connector` → `true`), mirroring the hydrology
   `ProvenancedValue` evidence discipline so the whole bundle speaks one provenance language.
+  `page` is the **first** page a claim was read from and `pages` the whole span when a read
+  covered more than one — both **1-based**, both populated only where the source genuinely
+  carries them, never invented. `pages` stays a **list**, not a range, because a real read is
+  often non-contiguous (one Lima permit record cites pages 1-4, 37, 40, 84-85, 93 of a single
+  document).
 * **`Figure`** — `{ value, approximate, unit, citation }`. `approximate` is the transcription
   `~` marker lifted out of the YAML string, preserved as a boolean rather than formatted text.
 

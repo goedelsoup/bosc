@@ -178,6 +178,37 @@ def load_records(extracted_dir: Path, *, scope: CorpusScopeArg = None) -> list[_
     return records
 
 
+def _cited_pages(data: dict[str, Any]) -> tuple[int | None, list[int] | None]:
+    """The 1-based page locator for a record's citation, from its 0-based ``pages_read``.
+
+    :attr:`~watermark.models.DocExtraction.pages_read` records the **0-based** page indices an
+    extraction consulted; a citation locates a claim the way a reader does — by the page number
+    a viewer shows — so the indices are lifted to 1-based here (#1584). Until then the builder
+    stuffed the raw list into the citation's prose ``note`` (``"pages [16, 17]"``): off by one,
+    unparseable, and invisible to `Citation.page`, which stayed null on every record in the
+    bundle.
+
+    Returns ``(page, pages)`` — the first page read, and the whole span ascending. ``pages`` is
+    ``None`` for a single-page read (``page`` already describes it in full) and the span is kept
+    as a list, not a range: a read is often **non-contiguous** (``2PE00000.npdes.yaml`` cites
+    pages 1-4, 37, 40, 84-85, 93 of one permit), and collapsing that to "1-93" would claim 88
+    pages the extraction never read. A record with no ``pages_read`` — a connector-sourced
+    extraction, or an envelope that never recorded one — yields ``(None, None)``: a page cite is
+    never invented.
+    """
+    raw = data.get("pages_read")
+    if not isinstance(raw, list):
+        return None, None
+    # `bool` is an `int` subclass; a stray `true` in a YAML list must not become page 2.
+    zero_based = sorted(
+        {p for p in raw if isinstance(p, int) and not isinstance(p, bool) and p >= 0}
+    )
+    if not zero_based:
+        return None, None
+    pages = [p + 1 for p in zero_based]
+    return pages[0], (pages if len(pages) > 1 else None)
+
+
 def _approx_paths(value: Any, prefix: str = "") -> list[str]:
     """Dotted paths of every scalar that kept the ``~`` approximate transcription marker.
 
@@ -262,7 +293,7 @@ def export_records(
         raw_warnings = payload.get("warnings") or []
         warnings = [str(w) for w in raw_warnings] if isinstance(raw_warnings, list) else []
         fields = {k: v for k, v in payload.items() if k not in ("confidence", "warnings")}
-        pages = rec.data.get("pages_read") or None
+        page, pages = _cited_pages(rec.data)
 
         # Join to the real source document, but only when it's actually catalogued.
         src_rel = _normalize_source_rel(_source_ref(rec.data))
@@ -283,8 +314,9 @@ def export_records(
                 citation=Citation(
                     source=rec.rel,
                     source_kind="document",
+                    page=page,
+                    pages=pages,
                     confidence=confidence,
-                    note=(f"pages {pages}" if pages else None),
                 ),
                 source_doc_rel=source_doc_rel,
                 source_doc_render_class=source_doc_render_class,

@@ -27,9 +27,17 @@
     "citation": {
       "source": "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/troy-piqua/1PD00008.fs.pdf",
@@ -70,9 +78,17 @@
     "citation": {
       "source": "oepa/troy-piqua/1PD00008.npdes.yaml",
       "source_kind": "document",
-      "page": null,
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "note": null,
       "verified": true
     },
     "source_doc_rel": "oepa/troy-piqua/1PD00008.pdf",
@@ -99,6 +115,7 @@
       "source": "troy-piqua/wwtp-oh0027049.dmr.yaml",
       "source_kind": "document",
       "page": null,
+      "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true

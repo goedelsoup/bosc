@@ -355,3 +355,45 @@ describe("handleSearchPassages duplicate-cluster dedup (#1590)", () => {
     expect(got).toEqual(expect.arrayContaining([`${PERMIT}#p1`, `${COPY}#p1`, `${DRAFT}#p1`]));
   });
 });
+
+describe("handleSearchPassages structured citations (#1584)", () => {
+  const results = async (): Promise<Record<string, unknown>[]> =>
+    (await envelope({ query: "phosphorus" })).results;
+
+  it("emits a real page cite against the source document", async () => {
+    const hit = (await results()).find((r) => r.id === "oepa/2PE00000.pdf#p12");
+    const c = hit?.citation as Record<string, unknown>;
+    expect(c).toMatchObject({
+      document_id: "oepa/2PE00000.pdf",
+      source: "data/documents/oepa/2PE00000.pdf",
+      source_kind: "document",
+      page: 12,
+      verified: true,
+      evidence: "verified",
+      label: "data/documents/oepa/2PE00000.pdf p. 12 [verified]",
+    });
+    // One page, so there is no span to report beyond `page` itself.
+    expect(c).not.toHaveProperty("pages");
+  });
+
+  it("is the one tool that populates `quote` — the excerpt IS the document's text layer", async () => {
+    const hit = (await results()).find((r) => r.id === "aedg/PRR-01-bundle.ocr.pdf#p318");
+    expect((hit?.citation as Record<string, unknown>).quote).toBe(
+      "Roundabout intersection earthwork subtotal opinion of probable cost phosphorus.",
+    );
+  });
+
+  it("caps the quote so the citation can't duplicate a whole page of text", async () => {
+    const hit = (await results()).find((r) => r.id === "oepa/2PE00000.pdf#p12");
+    const quote = (hit?.citation as Record<string, unknown>).quote as string;
+    expect(quote.length).toBeLessThan((hit?.text as string).length);
+    expect(quote.endsWith("…")).toBe(true);
+  });
+
+  it("keeps the page cite when the per-result budget trims the excerpt to a marker", async () => {
+    const { results } = await envelope({ query: "phosphorus", max_tokens_per_result: 40 });
+    const hit = results.find((r) => r.id === "oepa/2PE00000.pdf#p12");
+    expect((hit?.text as string).length).toBeLessThan(LONG_TEXT.length);
+    expect((hit?.citation as Record<string, unknown>).page).toBe(12);
+  });
+});

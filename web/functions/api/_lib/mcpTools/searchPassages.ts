@@ -13,6 +13,7 @@
 // trimmed to the room left after its citation, and the cursor pages through the ranked pool.
 
 import { type VersionInfo, loadDocVersionsSafe } from "../docVersionsLoad";
+import { type McpCitation, buildCitation } from "../mcpCitation";
 import { dedupeByCluster, parseDeduplicate, parseVersionPolicy } from "../mcpDedup";
 import { type HybridRetrievalEnv, hybridSearch } from "../hybridRetrieve";
 import {
@@ -56,10 +57,28 @@ interface PassageHit {
   section: string | null;
   text: string;
   score: number;
+  /** Structured provenance (#1584). This is the one tool whose `citation.quote` is populated:
+   * the excerpt IS the source document's own text layer, so it is genuinely verbatim — with the
+   * standing caveat that on a scan the text layer is garbled OCR (a locator, not a transcription).
+   * The quote is a bounded lead excerpt; `text` below stays the full page. */
+  citation: McpCitation;
 }
 
 function roundScore(score: number): number {
   return Math.round(score * 1000) / 1000;
+}
+
+/** The passage's provenance as the uniform citation object — a real page cite against a
+ * published source document, which is exactly what this tool exists to produce. */
+function passageCitation(row: PassageRow): McpCitation {
+  return buildCitation({
+    document_id: row.document_id,
+    source: `data/documents/${row.document_id}`,
+    source_kind: "document",
+    page: row.page,
+    section: row.section,
+    quote: row.text,
+  });
 }
 
 /** Project a passage row into a retrieval unit for the BM25/vector kernel (id/title/text only). */
@@ -76,8 +95,8 @@ function parseDocumentIds(v: unknown): Set<string> | null {
 
 /**
  * Per-result shrink: trim the excerpt to the room left under `capTokens` after the hit's citation
- * metadata (document_id/page/…), which is never dropped — the evidentiary contract requires the
- * page cite even when the excerpt collapses to a marker.
+ * metadata (document_id/page/…, and the `citation` object itself), which is never dropped — the
+ * evidentiary contract requires the page cite even when the excerpt collapses to a marker.
  */
 function shrinkPassageHit(item: PassageHit, capTokens: number): PassageHit {
   const budget = Math.max(0, capTokens - estimateTokens({ ...item, text: "" }));
@@ -153,6 +172,7 @@ export async function handleSearchPassages(
       section: row.section,
       text: row.text,
       score: roundScore(h.score),
+      citation: passageCitation(row),
     });
   }
   const governed = govern(window, { knobs, baseOffset: offset, shrink: shrinkPassageHit });

@@ -30,13 +30,15 @@ document + page vs. free text):
 | carrier | where | shape | `page`? |
 |---|---|---|---|
 | **`ProvenancedValue`** | `watermark.hydrology.models._core` (shared) | `value, unit, source: SourceKind, citation: str \| None, confidence, asof, low/high` | **no** — `citation` is one free-text string |
-| **`feeds.Citation`** | `watermark.site.feeds` | `source, source_kind, page: int \| None, confidence, note, verified` | **yes** (typed) |
+| **`feeds.Citation`** | `watermark.site.feeds` | `source, source_kind, page: int \| None, pages: list[int] \| None, confidence, note, verified` | **yes** (typed) |
 
 Every **typed numeric fact** in the bundle (economics, greenops, hydrology, air, facility
 power) is a `ProvenancedValue` — clean `value`/`unit`/`source`, but a **free-text citation
 with no page**. The structured, page-bearing `Citation` is used only by the record/document
-side (`records`, `hypotheses`, `exhibits`) — and even `records` writes the page into the
-free-text `note`, not the typed `page` field (`records.py`). `feeds.Figure` (`{value,
+side (`records`, `hypotheses`, `exhibits`). `records` used to write the page into the free-text
+`note` rather than the typed `page` field; #1584 fixed that, so a record now carries a real
+1-based `page` (and a `pages` span) — but the `ProvenancedValue` side is unchanged, and that
+asymmetry is what the rest of this document is about. `feeds.Figure` (`{value,
 approximate, unit, citation}`) is the closest existing shape to the target, but it is a
 **latent, never-constructed** model.
 
@@ -65,7 +67,7 @@ Two headline feeds carry facts **without** `ProvenancedValue`:
   provenance from the shared `meta`.
 - **`records.fields`** — the raw extraction payloads, **untyped** `dict[str, Any]` with the
   `~` marker as a string (OPC cost estimates, deed amounts, permit limits). Structured
-  `Citation` (with a page in `note`), but no predicate normalization.
+  `Citation` (with a real 1-based `page`/`pages` since #1584), but no predicate normalization.
 
 ### The motivating example is not in the bundle yet
 

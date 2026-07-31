@@ -19,12 +19,27 @@ interface ToolSchema {
   }>;
 }
 
+/** The structured provenance every result-bearing tool now attaches (#1584) — see
+ * `functions/api/_lib/mcpCitation.ts`. Absent fields mean the source carries no such value. */
+interface ResultCitation {
+  source?: string;
+  document_id?: string;
+  page?: number;
+  pages?: number[];
+  evidence?: string;
+  label?: string;
+}
+
 interface CorpusResult {
   _type?: string;
+  /** The uniform citation object — the row's real provenance. */
+  citation?: ResultCitation;
   evidence?: string;
   source?: string;
   page?: number;
   text?: string;
+  snippet?: string;
+  title?: string;
   // timeline / entity / hypothesis / document fields
   date?: string;
   category?: string;
@@ -364,11 +379,23 @@ function renderResponse(data: unknown, raw: string, ms: number): void {
   setMeta(`${content.length} result${content.length !== 1 ? "s" : ""} · ${ms} ms`);
 }
 
+/** The page locator a row cites — `pp. 4-5` for a span, `p. 4` for one page, "" for none. */
+function pageLabel(c: ResultCitation | undefined, fallback: number | undefined): string {
+  const pages = c?.pages;
+  if (pages && pages.length > 1) return `pp. ${pages[0]}-${pages[pages.length - 1]}`;
+  const one = c?.page ?? fallback;
+  return one != null ? `p. ${one}` : "";
+}
+
 function buildResultRow(r: CorpusResult): string {
-  const evidence = (r.evidence ?? "open") as EvidenceKind;
-  const source = r.source ?? "";
-  const page = r.page != null ? `p. ${r.page}` : "";
-  const text = r.text ?? r.description ?? JSON.stringify(r);
+  // Prefer the structured `citation` (#1584); the bare top-level fields are the legacy shape
+  // some rows still carry. Before citations landed, every row rendered as `open` with no
+  // source, because no tool ever emitted a top-level `evidence`.
+  const c = r.citation;
+  const evidence = (c?.evidence ?? r.evidence ?? "open") as EvidenceKind;
+  const source = c?.source ?? c?.document_id ?? r.source ?? "";
+  const page = pageLabel(c, r.page);
+  const text = r.text ?? r.snippet ?? r.description ?? r.title ?? JSON.stringify(r);
 
   return `
     <div class="result-row">
