@@ -15,6 +15,7 @@ in the mirrored [`data/extracted/legal/prr-mandamus/`](../../../extracted/legal/
 | [`prr-production-2026-06-12/`](prr-production-2026-06-12/) | Batch 2 (2026-06-12): the Category-B wastewater bundle, as-received `Parent Records June 12.pdf`. |
 | [`prr-production-2026-06-12-aswcd/`](prr-production-2026-06-12-aswcd/) | The separate Allen SWCD production (Parts A–E request + response). |
 | [`prr-production-2026-07-24-sanitary/`](prr-production-2026-07-24-sanitary/) | Batch 3 (2026-07-24): the Sanitary Engineer's per-item native file trees for items 9/11/13/14/15 — see its own `README.md`. |
+| [`prr-production-2026-07-24-sanitary-text/`](prr-production-2026-07-24-sanitary-text/) | **Derived, not evidence** (#1757): machine text transcriptions of that batch's 634 legacy `.doc`/`.xls`/`.rtf` files, which have no in-process reader. Regenerable — `watermark text-sidecars`. Cite the source, never the sidecar. |
 
 The produced resolutions are cross-referenced page-by-page in the
 [commissioners minutes corpus](../../../extracted/commissioners/minutes/README.md)

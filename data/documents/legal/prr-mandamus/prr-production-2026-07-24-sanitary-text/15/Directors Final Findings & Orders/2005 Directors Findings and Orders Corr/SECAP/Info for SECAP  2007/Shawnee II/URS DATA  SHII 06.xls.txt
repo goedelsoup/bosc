@@ -1,0 +1,4132 @@
+### JAN 06
+Jan, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Sun	3.7114																			AN	3.7114						AN					AN				AN																																		1.8557					1.293									1.293			0.095	0		45900	1.02		49500	1.1								1.8557					1.293
+2 Mon	3.8207																			AN	3.8207						AN					AN				AN																																		1.9104					1.256									1.256			0.114	0		58950	1.31		55350	1.23								1.9104					1.256
+3 Tue	3.9578																			10.1	3.9578						7					12.4				12.1																												8		28				1.9789					1.213		8.15							1.213			0.048	0		28350	0.63		19350	0.43		8.3		30				1.9789					1.213
+4 Wed	3.6205	2294.822	1618.454	70.526	676.369	1962.677	1962.677	100	0											9.4	3.6205	22.4		AA	0.6	AA	7.3					12.8				12.5							8.22	0		0		306.74																7.2		25				1.8103					1.326	73.409	7.4							1.326		73.409	0.08	0		32400	0.72		47250	1.05		7.6		30				1.8103					1.326	73.409
+5 Thu	3.6126	3404.594	3404.594	100	0	5549.79	5549.79	100	0											9.2	3.6126	AA	AA	0.13		AA	7.2	2.62				12.8				12.8								0		1.78		0												1.7				10.6		20				1.8063					1.329	207.577	9							1.329		207.577	0.116	0		54000	1.2		61650	1.37		7.4		28				1.8063					1.329	207.577
+6 Fri	3.3393	3119.219	3119.219	100	0	3436.711	3436.711	100	0											9	3.3393	AA		0.44		AA	7.1					12.1				12.1								0		5.56		0																7.2		20				1.6697					1.437	128.542	7.45							1.437		128.542	0.117	0		62550	1.39		54000	1.2		7.7		24				1.6697					1.437	128.542
+7 Sat	2.9612																			AN	2.9612						AN					AN				AN									0		2.44		102.25																					1.4806					1.621									1.621			0.104	0		53550	1.19		49950	1.11								1.4806					1.621
+8 Sun	2.9765																			AN	2.9765						AN					AN				AN																																		1.4883					1.613									1.613			0.098	0		44550	0.99		53550	1.19								1.4883					1.613
+9 Mon	1.6032																			8	1.6032						7.2					13				13																												5.5		22				0.8016					2.994		5.95							2.994			0.063	0		33300	0.74		29250	0.65		6.4		23				0.8016					2.994
+10 Tue	2.1963																			8.2	2.1963						7					11.7				13.2																												5.4		21				1.0981					2.186		5.85							2.186			0.072	0		37350	0.83		35100	0.78		6.3		24				1.0981					2.186
+11 Wed	1.455	2354.099	2354.099	100	0	2730.27	2686.586	98.4	43.684											8.7	1.455	AA		0.41	0.25	3.6	7.2					11.9				13.9							1.38	19.81		2.26		0																6.8		23				0.7275					3.299	102.119	6.4							3.299		102.119	0.075	0		37350	0.83		37350	0.83		6		25				0.7275					3.299	102.119
+12 Thu	2.2169	3864.106	3864.106	100	0	2605.036	2605.036	100	0											9	2.2169	AA		0.18		AA	7.1					11.9				13.2								0		1.51		0																6.5		22				1.1084					2.165	97.435	6.8							2.165		97.435	0.07	0		30150	0.67		39600	0.88		7.1		25				1.1084					2.165	97.435
+13 Fri	1.92	2081.634	2081.634	100	0	2068.824	2068.824	100	0											8.7	1.92	AA		0.31		AA	7.2					12.9				13.4								0		2.25		0																5.7		20				0.96					2.5	77.379	5.05							2.5		77.379	0.075	0		37350	0.83		37350	0.83		4.4		22				0.96					2.5	77.379
+14 Sat	3.5238																			AN	3.5238						AN					AN				AN									6.6		2.01		0																					1.7619					1.362									1.362			0.084	0		42750	0.95		40950	0.91								1.7619					1.362
+15 Sun	2.9806																			AN	2.9806						AN					AN				AN																																		1.4903					1.61									1.61			0.089	0		45000	1		44100	0.98								1.4903					1.61
+16 Mon	2.2499																			AN	2.2499						AN					AN				AN																																		1.1249					2.133									2.133			0.056	0		26100	0.58		29700	0.66								1.1249					2.133
+17 Tue	2.5208																			7.9	2.5208						7.2					12.1				14																												4.2		21				1.2604					1.904		5.1							1.904			0.082	0		44550	0.99		37350	0.83		6		21				1.2604					1.904
+18 Wed	3.3902	475.01	475.01	100	0	3653.053	3653.053	100	0											9.2	3.3902	AA	AA	0.1	0.23	AA	7					11.5				11.4							2.95	0		1.28		0																5.9		22				1.6951					1.416	136.634	6							1.416		136.634	0.075	0		37350	0.83		37350	0.83		6.1		22				1.6951					1.416	136.634
+19 Thu	3.4564	1210.71	1210.71	100	0	2017.849	2017.849	100	0											7.7	3.4564	AA		0.064		AA	7.3					11.8				11								0		0.84		0																6.3		22				1.7282					1.389	75.473	7.1							1.389		75.473	0.103	0		52200	1.16		50850	1.13		7.9		20				1.7282					1.389	75.473
+20 Fri	3.3376	1169.1	1169.1	100	0	1856.643	1856.643	100	0											7.6	3.3376	AA		0.095		AA	7.3					14.2				14.8								0		1.2		0																5.7		19				1.6688					1.438	69.443	6							1.438		69.443	0.097	0		45000	1		52200	1.16		6.3		32				1.6688					1.438	69.443
+21 Sat	3.3484																			AN	3.3484						AN					AN				AN									0		1.11		0																					1.6742					1.434									1.434			0.097	0		52200	1.16		44550	0.99								1.6742					1.434
+22 Sun	2.8305																			AN	2.8305						AN					AN				AN																																		1.4153					1.696									1.696			0.097	0		44550	0.99		52200	1.16								1.4153					1.696
+23 Mon	1.893																			8	1.893						6.9					12.6				12.6																												5		17				0.9465					2.536		5.6							2.536			0.075	0		37350	0.83		37350	0.83		6.2		16				0.9465					2.536
+24 Tue	2.0448																			6.8	2.0448						7					12.6				12.5																												5.1		19				1.0224					2.347		6.6							2.347			0.082	0		45000	1		37350	0.83		8.1		17				1.0224					2.347
+25 Wed	2.0984	3255.196	3255.196	100	0	3062.685	3062.685	100	0											5.7	2.0984	AA		0.33	0.2	AA	7.2					14.5				9.2							1.59	0		2.62		0																						1.0492					2.287	114.552	6.5							2.287		114.552	0.072	0		34650	0.77		37350	0.83		6.5		19				1.0492					2.287	114.552
+26 Thu	2.2832	3618.009	3618.009	100	0	2888.695	2888.695	100	0											6.3	2.2832	AA		0.32		AA	7.2					12.4				12.4								0		2.76		0																5.6		20				1.1416					2.102	108.045	6.1							2.102		108.045	0.061	0		29700	0.66		31050	0.69		6.6		18				1.1416					2.102	108.045
+27 Fri	2.1001	2732.312	2732.312	100	0	2802.371	2802.371	100	0											12.4	2.1001	AA		0.33		AA	7.4					9.8				12.4								0		2.62		0																4.7		19				1.05					2.286	104.816	5.75							2.286		104.816	0.059	0		29700	0.66		29700	0.66		6.8		20				1.05					2.286	104.816
+28 Sat	1.9491																			AN	1.9491						AN					AN				AN									0				0																					0.9746					2.463									2.463			0.059	0		30150	0.67		29250	0.65								0.9746					2.463
+29 Sun	1.5164																			AN	1.5164						AN					AN				AN																																		0.7582					3.165									3.165			0.059	0		29700	0.66		29700	0.66								0.7582					3.165
+30 Mon	1.8769																			5.9	1.8769						7.2					16				12.6																												6.6		20				0.9384					2.557		5.7							2.557			0.054	0		21600	0.48		32400	0.72		4.8		20				0.9384					2.557
+31 Tue	1.8198																			6.2	1.8198						7.1					12.4				12.4																												6.6		25				0.9099					2.638		6.05							2.638			0.06	0		29700	0.66		30600	0.68		5.5		22				0.9099					2.638
+Sum	82.61132	29578.811807472	28902.44317176	1170.52631578947	676.368635712	34634.602449366	34590.918129846	1198.4	43.68431952											164	82.61132	22.4	0	2.709	1.28	3.6	143.1	2.62				251.4				251.5							14.1287863597279	19.8114827755102	6.60382759183673	24.6727028643537	5.55624821664399	306.743145447619	102.247715149206											1.71				118.6		405				41.30566					60.9954647334494	1295.42409181788	128.55							60.9954647334494		1295.42409181788	2.48625	0		1233000	27.4		1253250	27.85		132		458				41.30566					60.9954647334494	1295.42409181788
+Avg	2.66488129032258	2464.900983956	2408.53693098	97.5438596491228	56.364052976	2886.2168707805	2882.5765108205	99.8666666666667	3.64035996											8.2	2.66488129032258	1.86666666666667	0	0.22575	0.32	0.3	7.155	2.62				12.57				12.575							3.53219658993197	1.65095689795918	1.65095689795918	2.05605857202948	1.85208273888133	25.5619287873016	25.5619287873016											1.71				6.24210526315789		21.3157894736842				1.33244064516129					1.96759563656288	107.95200765149	6.4275							1.96759563656288		107.95200765149	0.0802016129032258	0		39774.1935483871	0.883870967741935		40427.4193548387	0.898387096774193		6.6		22.9				1.33244064516129					1.96759563656288	107.95200765149
+Max	3.957773	3864.10604712	3864.10604712	100	676.368635712	5549.789562624	5549.789562624	100	43.68431952											12.4	3.957773	22.4	0	0.44	0.6	3.6	7.4	2.62				16				14.8							8.21633425306122	19.8114827755102	6.60382759183673	5.55740366911565	2.4445751600907	306.743145447619	102.247715149206											1.71				10.6		28				1.9788865					3.29901441944219	207.576544712848	9							3.29901441944219		207.576544712848	0.11655	0		62550	1.39		61650	1.37		8.3		32				1.9788865					3.29901441944219	207.576544712848
+Min	1.45498	475.009944192	475.009944192	70.5263157894737	0	1856.642909526	1856.642909526	98.4	0											5.7	1.45498	0	0	0	0.2	0	6.9	2.62				9.8				9.2							1.37579741496599	0	0	0	1.10608085047619	0	0											1.71				4.2		17				0.72749					1.2128032608237	69.4432672763897	5.05							1.2128032608237		69.4432672763897	0.0477	0		21600	0.48		19350	0.43		4.4		16				0.72749					1.2128032608237	69.4432672763897
+
+### FEB 06
+Feb, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Wed	1.6906	2002.197	2002.197	100	0	1986.687	1986.687	100	0											6.2	1.6906	AA	AA	0.11	0.26	AA	7.3	5.17				12.1				13.1							1.66	0		0.7		0												1.6				6.6		24	1167			0.8453	973.278		20.566	1.021	2.839	74.307	5.75	1054	1758.072			21.972	1.143	2.839		74.307	0.054	465.211	3.779	23850	0.53	1167	29700	0.66	941	4.9		22	941			0.8453	784.794		23.379	1.266	2.839	74.307
+2 Thu	2.0841	3545.855	3545.855	100	0	2781.063	2781.063	100	0											5.7	2.0841	AA		0.16		AA	7.3					13.1				13.3								0		1.26		0																5.8		22	1167			1.0421	973.278		18.852	1.429	2.303	104.019	5.15	1054	1758.072			22.178	1.6	2.303		104.019	0.057	500.11	3.515	29250	0.65	1167	27450	0.61	941	4.5		24	941			1.0421	784.794		25.505	1.772	2.303	104.019
+3 Fri	2.9822	4924.533	4924.533	100	0	2984.566	2984.566	100	0											8.3	2.9822	AA		0.1		AA	7					9.4				12.2								0		1.13		0																6.4		24	1167			1.4911	973.278		20.566	1.533	1.61	111.631	6.9	1054	1758.072			19.316	1.717	1.61		111.631	0.048	414.35	4.243	19350	0.43	1167	28800	0.64	941	7.4		17	941			1.4911	784.794		18.066	1.901	1.61	111.631
+4 Sat	3.0635																			AN	3.0635						AN					AN				AN																															1167			1.5317	973.278				1.567			1054	1758.072					1.567			0.065	568.906	3.09	30150	0.67	1167	35100	0.78	941				941			1.5317	784.794				1.567
+5 Sun	3.044																			AN	3.044						AN					AN				AN																															1167			1.522	973.278				1.577			1054	1758.072					1.577			0.071	624.995	2.813	35550	0.79	1167	35550	0.79	941				941			1.522	784.794				1.577
+6 Mon	3.0312																			10.5	3.0312						7.2					9.5				8.5																												8.5		20	1172			1.5156	977.448		17.065		1.584		7.25	1051	1753.068			21.436		1.584			0.077	680.396	2.577	41400	0.92	1172	35550	0.79	930	6		24	930			1.5156	775.62		25.806		1.584
+7 Tue	2.9406																			10.1	2.9406						7.2					10.5				10.5									0		1.03		0															6.4		20	1172			1.4703	977.448		17.065		1.632		6.85	1051	1753.068			20.898		1.632			0.071	623.216	2.813	35550	0.79	1172	35550	0.79	930	7.3		23	930			1.4703	775.62		24.731		1.632
+8 Wed	2.9312	4644.78	4644.78	100	0	3464.028	3464.028	100	0											9.5	2.9312	AA		0.17	0.35	AA	7					9.8				11.5							3.88	0		1.88		0																6.6		21	1172			1.4656	977.448		17.918	1.772	1.638	129.564	7.1	1051	1753.068			19.712	2.003	1.638		129.564	0.053	459.99	3.811	23850	0.53	1172	29250	0.65	930	7.6		20	930			1.4656	775.62		21.505	2.233	1.638	129.564
+9 Thu	2.5066	2675.846	2675.846	100	0	3223.558	3223.558	100	0											8.8	2.5066	AA		0.28		AA	7.2					11.6				11.6								0		2.65		0																			1172			1.2533	977.448			1.649	1.915	120.569	7.5	1051	1753.068			25.806	1.864	1.915		120.569	0.059	520.661	3.367	29700	0.66	1172	29700	0.66	930	7.5		24	930			1.2533	775.62		25.806	2.078	1.915	120.569
+10 Fri	2.36	18304.632	18304.632	100	0															9	2.36	AA		0.21		AA	7.1					10.3				11.9								0		1.87		0																7.1		23	1172			1.18	977.448		19.625		2.034		7.35	1051	1753.068			21.64		2.034			0.059	520.661	3.367	29700	0.66	1172	29700	0.66	930	7.6		22	930			1.18	775.62		23.656		2.034
+11 Sat	2.3274																			AN	2.3274						AN					AN				AN																															1172			1.1637	977.448				2.062			1051	1753.068					2.062			0.059	520.661	3.367	29700	0.66	1172	29700	0.66	930				930			1.1637	775.62				2.062
+12 Sun	2.3769																			AN	2.3769						AN					AN				AN																															1172			1.1884	977.448				2.019			1051	1753.068					2.019			0.059	520.661	3.367	29700	0.66	1172	29700	0.66	930				930			1.1884	775.62				2.019
+13 Mon	2.2308																			8.2	2.2308						7.1					11.1				11.7																												7.4		28	1747			1.1154	1456.998		16.027		2.152		6.85	1500	2502			17.99		2.152			0.06	738.527	3.388	27450	0.61	1747	32400	0.72	1253	6.3		25	1253			1.1154	1045.002		19.952		2.152
+14 Tue	2.1622																			9.7	2.1622						7.2					10.2				11.7									0		2.14		0															7.8		22	1747			1.0811	1456.998		12.593		2.22		7	1500	2502			17.47		2.22			0.056	710.176	3.523	29700	0.66	1747	26550	0.59	1253	6.2		28	1253			1.0811	1045.002		22.346		2.22
+15 Wed	2.559	3798.887	3798.887	100	0	2971.107	2971.107	100	0											9.3	2.559	AA	AA	0.09	0.36	AA	7.3					11.1				12							3.48	0		0.87		0																8.6		25	1747			1.2795	1456.998		14.31	1.02	1.876	111.127	8.6	1500	2502			14.31	1.221	1.876		111.127	0.059	743.094	3.367	29700	0.66	1747	29700	0.66	1253				1253			1.2795	1045.002			1.422	1.876	111.127
+16 Thu	2.6634	5619.827	5619.827	100	0	3054.254	3054.254	100	0											9.6	2.6634	AA		0.07		AA	7.1					10.9				13.1								0		0.71		0																6.4		25	1747			1.3317	1456.998		14.31	1.048	1.802	114.237	6.9	1500	2502			18.328	1.255	1.802		114.237	0.066	810.783	3.086	30150	0.67	1747	35550	0.79	1253	7.4		28	1253			1.3317	1045.002		22.346	1.461	1.802	114.237
+17 Fri	2.9818	2785.202	2785.202	100	0	1740.751	1740.751	100	0											10.9	2.9818	AA		AA		AA	7.2					10.8				11.7								0		0		0																6.7		22	1747			1.4909	1456.998		12.593	0.597	1.61	65.109	6.7	1500	2502			12.593	0.715	1.61		65.109	0.059	743.094	3.367	29700	0.66	1747	29700	0.66	1253				1253			1.4909	1045.002			0.833	1.61	65.109
+18 Sat	3.3097																			AN	3.3097						AN					AN				AN																															1747			1.6548	1456.998				1.45			1500	2502					1.45			0.049	585.738	4.272	18900	0.42	1747	29700	0.66	1253				1253			1.6548	1045.002				1.45
+19 Sun	3.1252																			AN	3.1252						AN					AN				AN																															1747			1.5626	1456.998				1.536			1500	2502					1.536			0.042	520.763	4.804	20250	0.45	1747	21600	0.48	1253				1253			1.5626	1045.002				1.536
+20 Mon	2.2522																			AN	2.2522						AN					AN				AN																															1747			1.1261	1456.998				2.131			1500	2502					2.131			0.048	599.576	4.173	23400	0.52	1747	24750	0.55	1253				1253			1.1261	1045.002				2.131
+21 Tue	2.3216																			9.3	2.3216						7.5					10.8				11.6									0		0.53		0															9		25	1357			1.1608	1131.738		18.423		2.068		8.55	1349	2250.132			20.397		2.068			0.06	673.322	3.342	29700	0.66	1357	30150	0.67	1341	8.1		30	1341			1.1608	1118.394		22.371		2.068
+22 Wed	2.04	3708.95	3708.95	100	0	1914.022	1914.022	100	0											9.1	2.04	AA		0.076	0.56	AA	7.3					10.8				10.8							4.32	0		0.59		0																5.9		29	1357			1.02	1131.738		21.371	0.846	2.353	71.589	5.5	1349	2250.132			23.362	0.851	2.353		71.589	0.058	653.131	3.445	29250	0.65	1357	28800	0.64	1341	5.1		34	1341			1.02	1118.394		25.354	0.856	2.353	71.589
+23 Thu	1.9035	2428.873	2428.873	100	0	1733.549	1733.549	100	0											9.1	1.9035	AA		0.091		AA	7.4					10.8				7								0		0.66		0																7.1		28	1357			0.9517	1131.738		20.634	0.766	2.522	64.839	7.1	1349	2250.132			20.634	0.77	2.522		64.839	0.064	718.617	3.131	29700	0.66	1357	34200	0.76	1341				1341			0.9517	1118.394			0.775	2.522	64.839
+24 Fri	1.8209	2186.793	2186.793	100	0	2139.716	2139.716	100	0											9.1	1.8209	AA		0.12		AA	7.2					10.8				11.4								0		0.83		0																7.5		40	1357			0.9104	1131.738		29.477	0.945	2.636	80.031	6.5	1349	2250.132			26.67	0.951	2.636		80.031	0.054	612.929	3.671	29700	0.66	1357	24750	0.55	1341	5.5		32	1341			0.9104	1118.394		23.863	0.957	2.636	80.031
+25 Sat	1.7254																			AN	1.7254						AN					AN				AN																															1357			0.8627	1131.738				2.782			1349	2250.132					2.782			0.073	820.293	2.743	37350	0.83	1357	35550	0.79	1341				1341			0.8627	1118.394				2.782
+26 Sun	1.3023																			AN	1.3023						AN					AN				AN																															1357			0.6512	1131.738				3.686			1349	2250.132					3.686			0.067	754.867	2.981	37350	0.83	1357	29700	0.66	1341				1341			0.6512	1118.394				3.686
+27 Mon	1.6445																			8.1	1.6445						7.2					11.5				12.2																												4.5		45	2355			0.8222	1964.07		19.108		2.919		4.75	2119.5	3535.326			22.824		2.919			0.067	1193.173	2.963	37350	0.83	2355	29250	0.65	1884	5		50	1884			0.8222	1571.256		26.539		2.919
+28 Tue	1.8203																			8.6	1.8203						7.1					10.9				11.4									0				0															7.2		30	2355			0.9101	1964.07		12.739		2.637		6.2	2119.5	3535.326			19.108		2.637			0.082	1433.575	2.466	37350	0.83	2355	44550	0.99	1884	5.2		48	1884			0.9101	1571.256		25.478		2.637
+Sum	67.201044	56626.37637252	56626.37637252	1200	0	27993.301755846	27993.301755846	1100	0											169.1	67.201044	0	0	1.477	1.53	0	136.9	5.17				206				217.15							13.3482483695238	0	0	13.1507615494422	3.69424775736961	0	0											1.64				125.5		473	40867			33.600522	34083.078		323.240552333156	12.6254440751084	59.1581471044916	1047.02219570921	128.5	36960	61649.28			386.644825732555	14.0894001384124	59.1581471044916		1047.02219570921	1.6974	18731.474451	94.8312738789461	834750	18.55	40867	862650	19.17	33053	101.6		451	33053			33.600522	27566.202		376.705633861783	15.5533562017165	59.1581471044916	1047.02219570921
+Avg	2.40003728571429	4718.86469771	4718.86469771	100	0	2544.84561416782	2544.84561416782	100	0											8.9	2.40003728571429	0	0	0.123083333333333	0.3825	0	7.20526315789474	5.17				10.8421052631579				11.4289473684211							3.33706209238095	0	0	1.09589679578685	1.2314159191232	0	0											1.64				6.97222222222222		26.2777777777778	1459.53571428571			1.20001864285714	1217.25278571429		17.9578084629531	1.14776764319167	2.11279096801756	95.1838359735642	6.76315789473684	1320	2201.76			20.3497276701345	1.28085455803749	2.11279096801756		95.1838359735642	0.0606214285714286	668.981230392857	3.38683120996236	29812.5	0.6625	1459.53571428571	30808.9285714286	0.684642857142857	1180.46428571429	6.35		28.1875	1180.46428571429			1.20001864285714	984.507214285715		23.5441021163614	1.41394147288332	2.11279096801756	95.1838359735642
+Max	3.309669	18304.632	18304.632	100	0	3464.0276736	3464.0276736	100	0											10.9	3.309669	0	0	0.28	0.56	0	7.5	5.17				13.1				13.3							4.32089734095238	0	0	2.65460876190476	2.13795490249433	0	0											1.64				9		45	2355			1.6548345	1964.07		29.4767870302137	1.77197542662116	3.68569895057401	129.563632487643	8.6	2119.5	3535.326			26.6697879968369	2.00252276707402	3.68569895057401		129.563632487643	0.0819	1433.574693	4.80449316200511	41400	0.92	2355	44550	0.99	1884	8.1		50	1884			1.6548345	1571.256		26.5392781316348	2.23307010752688	3.68569895057401	129.563632487643
+Min	1.302331	2002.1970606	2002.1970606	100	0	1733.548890528	1733.548890528	100	0											5.7	1.302331	0	0	0	0.26	0	7	5.17				9.4				7							1.66258259319728	0	0	0	0.525423782312925	0	0											1.64				4.5		20	1167			0.6511655	973.278		12.5930165998855	0.59737607326846	1.45029608701051	64.8392312404104	4.75	1051	1753.068			12.5930165998855	0.715134964008532	1.45029608701051		64.8392312404104	0.04185	414.349965	2.46609124537608	18900	0.42	1167	21600	0.48	930	4.5		17	930			0.6511655	775.62		18.0658873538789	0.775017073825503	1.45029608701051	64.8392312404104
+
+### MARCH 06
+Mar, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Wed	1.2236	1979.783	1918.552	96.907	61.23	1522.596	1522.596	100	0											7.5	1.2236	6		AA	0.16	AA	7.1					11.1				13.2							0.74	0		0		27.77													7.1			7.8		33	2355			0.6118	1964.07		14.013	0.388	3.923	56.949	6.4	2119.5	3535.326			14.968	0.436	3.923		56.949	0.112	0		55800	1.24		55800	1.24		5		30	1884			0.6118	1571.256		15.924	0.485	3.923	56.949
+2 Thu	1.5221	1307.506	1241.496	94.951	66.01	1312.583	1312.583	100	0											6.7	1.5221	5.2		AA		AA	7.2					11				13.3								0		0		29.94													7.2			6.9		40	2355			0.761	1964.07		16.985	0.334	3.154	49.094	6.3	2119.5	3535.326			18.047	0.376	3.154		49.094	0.112	0		55800	1.24		55800	1.24		5.7		36	1884			0.761	1571.256		19.108	0.418	3.154	49.094
+3 Fri	1.7142	2344.55	2227.322	95	117.227	2371.712	2371.712	100	0											6.1	1.7142	8.2		AA		AA	7.1					10.7				12								0		0		53.16													7.1			7.6		42	2355			0.8571	1964.07		17.834	0.604	2.8	88.708	6.8	2119.5	3535.326			19.533	0.679	2.8		88.708	0.112	0		55800	1.24		55800	1.24		6		40	1884			0.8571	1571.256		21.231	0.755	2.8	88.708
+4 Sat	1.8146																			AN	1.8146						AN					A N				AN																									AN						2355			0.9073	1964.07				2.645			2119.5	3535.326					2.645			0.123	0		67050	1.49		55800	1.24					1884			0.9073	1571.256				2.645
+5 Sun	1.5269																			AN	1.5269						AN					AN				AN																									AN						2355			0.7634	1964.07				3.144			2119.5	3535.326					3.144			0.12	0		64350	1.43		55800	1.24					1884			0.7634	1571.256				3.144
+6 Mon	1.3307																			6.3	1.3307						7					11.4				14.1																									7			5.4		40	1253			0.6654	1045.002		31.923		3.607		5.7	1248	2081.664			28.029		3.607			0.1	0		44550	0.99		55800	1.24		6		30	1243			0.6654	1036.662		24.135		3.607
+7 Tue	1.7526																			6.6	1.7526						7.2					10.9				12.4									0		0		36.96												7.2			7.9		40	1253			0.8763	1045.002		31.923		2.739		7.3	1248	2081.664			30.845		2.739			0.123	0		67500	1.5		55800	1.24		6.7		37	1243			0.8763	1036.662		29.767		2.739
+8 Wed	1.4085	1691.513	1691.513	100	0	1625.731	1625.731	100	0											6.1	1.4085	AA		0.08	1.06	AA	7					11.7				12.5							5.65	0		0.43		0			AA										7			5.4		31	1253			0.7042	1045.002		24.741	0.778	3.408	60.807	6	1248	2081.664			26.851	0.781	3.408		60.807	0.112	0		55800	1.24		55800	1.24		6.6		36	1243			0.7042	1036.662		28.962	0.784	3.408	60.807
+9 Thu	1.7697	3837.433	3837.433	100	0	2693.583	2693.583	100	0											5.1	1.7697	AA		0.11		AA	6.8					10.8				14.1								0		0.74		0													6.8			5.6		34	1253			0.8849	1045.002		27.135	1.289	2.712	100.747	5.85	1248	2081.664			24.831	1.294	2.712		100.747	0.112	0		55800	1.24		55800	1.24		6.1		28	1243			0.8849	1036.662		22.526	1.299	2.712	100.747
+10 Fri	2.6087	5308.614	5225.939	98.443	82.675	3045.926	2976.305	97.714	69.621											7.8	2.6087	3.8		0.074		3.2	7					11.1				13.2								31.57		0.73		37.49													7			7.3		27	1253			1.3044	1045.002		21.548	1.457	1.84	113.926	7.25	1248	2081.664			22.037	1.463	1.84		113.926	0.099	0		54900	1.22		44550	0.99		7.2		28	1243			1.3044	1036.662		22.526	1.469	1.84	113.926
+11 Sat	3.5988																			AN	3.5988						AN					AN				AN																									AN						1253			1.7994	1045.002				1.334			1248	2081.664					1.334			0.118	0		64800	1.44		53550	1.19					1243			1.7994	1036.662				1.334
+12 Sun	3.489																			AN	3.489						AN					AN				AN																									AN						1253			1.7445	1045.002				1.376			1248	2081.664					1.376			0.117	0		71550	1.59		45900	1.02					1243			1.7445	1036.662				1.376
+13 Mon	3.3512																			10.1	3.3512					8.1	7.1					10.8				13.4								102.67									AA	AA	AA		AA		AA		7.1			9		26	1182			1.6756	985.788		21.997		1.432		8.05	1196.5	1995.762			24.623		1.432			0.075	0		39150	0.87		36000	0.8		7.1		33	1211			1.6756	1009.974		27.25		1.432
+14 Tue	3.8548																			10.7	3.8548						7.2					11.3				11.3									33.56		0.63		12.5												7.2			9.2		26	1182			1.9274	985.788		21.997		1.245		8.75	1196.5	1995.762			21.32		1.245			0.094	0		47250	1.05		46800	1.04		8.3		25	1211			1.9274	1009.974		20.644		1.245
+15 Wed	3.265	2777.503	2777.503	100	0	2543.322	2486.138	97.752	57.184											10.1	3.265	AA		0.1	0.71	2.1	7.2					10.2				12							8.77	25.93		1.23		0			AA								AA		7.2						1182			1.6325	985.788			1.29	1.47	95.127	7.8	1196.5	1995.762			28.076	1.275	1.47		95.127	0.168	0		93600	2.08		74250	1.65		7.8		34	1211			1.6325	1009.974		28.076	1.259	1.47	95.127
+16 Thu	2.5431	2375.455	2375.455	100	0	2280.013	2280.013	100	0											9.2	2.5431	AA		0.542		AA	7.2					11.8				11.8								0		5.21		0													7.2			7		26	1182			1.2715	985.788		21.997	1.156	1.887	85.278	7.056	1196.5	1995.762			22.559	1.143	1.887		85.278	0.1	0		55800	1.24		44550	0.99		7.11		28	1211			1.2715	1009.974		23.121	1.129	1.887	85.278
+17 Fri	2.3957	1118.908	1118.908	100	0	1532.504	1472.563	96.089	59.941											9.8	2.3957	AA		0.55	1.09	3	7.4	4.33	AA	23	AA	11.3				11.8							9.88	27.18		4.98		0		495	AA	650				AA		AA	AA	2.2	7.4	AA	AA	8.2		29	1182			1.1979	985.788		24.535	0.777	2.004	57.32	7.65	1196.5	1995.762			23.002	0.768	2.004		57.32	0.097	0		44550	0.99		52650	1.17		7.1		26	1211			1.1979	1009.974		21.47	0.759	2.004	57.32
+18 Sat	2.3001																			AN	2.3001						AN					AN				AN																									AN						1182			1.15	985.788				2.087			1196.5	1995.762					2.087			0.09	0		44550	0.99		45450	1.01					1211			1.15	1009.974				2.087
+19 Sun	2.0526																			AN	2.0526						AN					AN				AN																									AN						1182			1.0263	985.788				2.339			1196.5	1995.762					2.339			0.097	0		52650	1.17		44550	0.99					1211			1.0263	1009.974				2.339
+20 Mon	1.5736																			9	1.5736						7.3					12.4				12																									7.3			7.1		26	882			0.7868	735.588		29.478		3.05		7.05	955.5	1593.774			26.887		3.05			0.08	0		35550	0.79		44550	0.99		7		25	1029			0.7868	858.186		24.295		3.05
+21 Tue	1.8777																			8.9	1.8777						7.2					10.8				11.7									17.71		3.81		0												7.2			7.8		26	882			0.9388	735.588		29.478		2.556		7.5	955.5	1593.774			26.401		2.556			0.075	0		37350	0.83		37350	0.83		7.2		24	1029			0.9388	858.186		23.324		2.556
+22 Wed	1.717	1403.374	1403.374	100	0	2053.508	1994.795	97.141	58.713											9.3	1.717	AA		0.711	0.38	4.1	7.1					10.1				11.3							2.47	26.63		4.62		0													7.1			7.7		28	882			0.8585	735.588		31.746	1.396	2.796	76.807	7.65	955.5	1593.774			30.45	1.296	2.796		76.807	0.075	0		37350	0.83		37350	0.83		7.6		30	1029			0.8585	858.186		29.155	1.196	2.796	76.807
+23 Thu	1.6303	3072.857	3072.857	100	0	2141.482	2097.972	97.968	43.509											9.2	1.6303	AA		0.807		3.2	7.1					11.2				12.2								19.73		4.98		0													7.1			7.8		27	882			0.8152	735.588		30.612	1.456	2.944	80.097	7.55	955.5	1593.774			27.94	1.352	2.944		80.097	0.075	0		37350	0.83		37350	0.83		7.3		26	1029			0.8152	858.186		25.267	1.248	2.944	80.097
+24 Fri	1.5768	2735.345	2735.345	100	0															8.2	1.5768	AA		0.549		4.1	7					12.6				13.3								24.45		3.27		0													7			5.4		25	882			0.7884	735.588		28.345		3.044		5.4	955.5	1593.774			27.292		3.044			0.075	0		37350	0.83		37350	0.83		5.4		27	1029			0.7884	858.186		26.239		3.044
+25 Sat	1.5317																			AN	1.5317						AN					AN				AN																									AN						882			0.7658	735.588				3.134			955.5	1593.774					3.134			0.075	0		37350	0.83		37350	0.83					1029			0.7658	858.186				3.134
+26 Sun	1.7034																			AN	1.7034						AN					AN				AN																									AN						882			0.8517	735.588				2.818			955.5	1593.774					2.818			0.075	0		37350	0.83		37350	0.83					1029			0.8517	858.186				2.818
+27 Mon	1.6828																			8.1	1.6828						7.3					13.1				13.3																									7.3			5.3		27	1209			0.8414	1008.306		22.333		2.852		5.35	1265	2110.02			24.035		2.852			0.075	0		37350	0.83		37350	0.83		5.4		34	1321			0.8414	1101.714		25.738		2.852
+28 Tue	1.1428																			8.5	1.1428						7.2					12.1				12.8									23.6				0												7.2						1209			0.5714	1008.306				4.2		5.9	1265	2110.02			24.981		4.2			0.074	0		37350	0.83		36900	0.82		5.9		33	1321			0.5714	1101.714		24.981		4.2
+29 Wed	2.0979																			8.3	2.0979						7					12.3				12.1																									7						1209			1.049	1008.306				2.288		6.4	1265	2110.02			30.28		2.288			0.089	0		44550	0.99		44550	0.99		6.4		40	1321			1.049	1101.714		30.28		2.288
+30 Thu	1.899																			7.1	1.899						6.9					13.5				13.5																									6.9			4.6		25	1209			0.9495	1008.306		20.678		2.528		4.65	1265	2110.02			22.83		2.528			0.093	0		44550	0.99		48600	1.08		4.7		33	1321			0.9495	1101.714		24.981		2.528
+31 Fri	1.8528																			6.9	1.8528						6.8					14.4				14.4																									6.8			4.8		26	1209			0.9264	1008.306		21.505		2.591		6.15	1265	2110.02			24		2.591			0.108	0		44550	0.99		63450	1.41		7.5		35	1321			0.9264	1101.714		26.495		2.591
+Sum	63.807865	29952.83910012	29625.696068232	1185.30129575634	327.143031888	23122.960249668	22833.991652916	1086.66366749795	288.968596752											185.6	63.807865	23.2		3.523	3.4	27.8	163.4	4.33	0	23	0	266.6				291.7							27.5003256827211	258.174465553741	74.8711022464853	26.1927280144762	4.44158271356009	148.364186797279	49.4547289324263	495	0	650	0	0	0	0	0	0	0	2.24	163.4	0	0	137.8		604	41039			31.9039325	34226.526		490.803350105387	10.9247562056323	79.9460175502269	864.858773111612	154.506	40722.5	67925.13			569.818443735087	10.8623488614897	79.9460175502269		864.858773111612	3.0492	0		1559250	34.65		1489950	33.11		151.112		718	40406			31.9039325	33698.604		565.496401308787	10.7999415173471	79.9460175502269	864.858773111612
+Avg	2.05831822580645	2496.06992501	2468.808005686	98.7751079796954	27.261919324	2102.08729542436	2075.81742299236	98.7876061361773	26.269872432											8.0695652173913	2.05831822580645	1.93333333333333		0.293583333333333	0.68	2.13846153846154	7.10434782608696	4.33	0	23	0	11.5913043478261				12.6826086956522							5.50006513654422	19.8595742733647	18.7177755616213	2.18272733453968	1.4805275711867	12.3636822331066	12.3636822331066	495	0	650	0	0	0	0	0	0	0	2.24	7.10434782608696	0	0	6.89		30.2	1323.83870967742			1.02915911290323	1104.08148387097		24.5401675052694	0.993159655057482	2.5789037919428	78.6235248283283	6.71765217391305	1313.62903225806	2191.13322580645			24.7747149450038	0.987486260135429	2.5789037919428		78.6235248283283	0.0983612903225807	0		50298.3870967742	1.11774193548387		48062.9032258065	1.06806451612903		6.57008695652174		31.2173913043478	1303.41935483871			1.02915911290323	1087.05174193548		24.5868000569038	0.981812865213375	2.5789037919428	78.6235248283283
+Max	3.854809	5308.61439672	5225.939254476	100	117.227495364	3045.9262932	2976.305120784	100	69.621172416											10.7	3.854809	8.2		0.807	1.09	8.1	7.4	4.33	0	23	0	14.4				14.4							9.87698018857143	102.670407404082	33.5611588142857	5.21338139994558	3.81070622129705	53.1643969904762	36.9565970739229	495	0	650	0	0	0	0	0	0	0	2.24	7.4	0	0	9.2		42	2355			1.9274045	1964.07		31.9233838786911	1.4573782122905	4.2000519756432	113.925554880594	8.75	2119.5	3535.326			30.8450386810994	1.46324055425466	4.2000519756432		113.925554880594	0.16785	0		93600	2.08		74250	1.65		8.3		40	1884			1.9274045	1571.256		30.2800908402725	1.46910289621883	4.2000519756432	113.925554880594
+Min	1.142843	1118.90781072	1118.90781072	94.9514563106796	0	1312.58344404	1312.58344404	96.0886571056063	0											5.1	1.142843	0		0	0.16	0	6.8	4.33	0	23	0	10.1				11.3							0.740503645170068	0	0	0	0	0	0	495	0	650	0	0	0	0	0	0	0	2.24	6.8	0	0	4.6		25	882			0.5714215	735.588		14.0127388535032	0.334148845010616	1.24519788139957	49.0940301225206	4.65	955.5	1593.774			14.968152866242	0.375917450636943	1.24519788139957		49.0940301225206	0.07425	0		35550	0.79		36000	0.8		4.7		24	1029			0.5714215	858.186		15.9235668789809	0.41768605626327	1.24519788139957	49.0940301225206
+
+### APRIL 06
+Apr, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Sat	2.1005																			AN	2.1005						AN					AN				AN																																		1.0503					2.285									2.285			0.074	0		27000	0.6		46800	1.04								1.0503					2.285
+2 Sun	1.8801																			AN	1.8801						AN					AN				AN																																		0.9401					2.553									2.553			0.089	0		44550	0.99		44550	0.99								0.9401					2.553
+3 Mon	2.6137																			5.6	2.6137						6.7					13.5				13.5																												7.5		35	986			1.3069	822.324		35.497		1.836		4.75	1250.5	2085.834			26.989		1.836			0.024	0		0	0		23850	0.53		2		28	1515			1.3069	1263.51		18.482		1.836
+4 Tue	2.3736																			8.6	2.3736						7.1					11.9				11.9																												7		30	986			1.1868	822.324		30.426		2.022		6.7	1250.5	2085.834			25.114		2.022			0.08	0		35550	0.79		44550	0.99		6.4		30	1515			1.1868	1263.51		19.802		2.022
+5 Wed	2.1848	3207.003	3207.003	100	0	2961.011	2904.524	98.092	56.487											6.1	2.1848	AA		0.615	0.61	3.1	7.1	2.78				13.2				13.2							5.04	25.62		5.08		0												1.6				7.1		32	986			1.0924	822.324		32.454	1.8	2.197	110.75	7.1	1250.5	2085.834			32.454	1.486	2.197		110.75	0.089	0		44550	0.99		44550	0.99					1515			1.0924	1263.51			1.172	2.197	110.75
+6 Thu	3.5519	5272.81	5272.81	100	0	4321.927	4321.927	100	0											5.3	3.5519	AA	AA	0.406		AA	6.8					13.9				13.9								0		5.45		0																5.5		29	986			1.7759	822.324		29.412	2.628	1.351	161.651	6.3	1250.5	2085.834			23.947	2.169	1.351		161.651	0.089	0		44550	0.99		44550	0.99		7.1		28	1515			1.7759	1263.51		18.482	1.71	1.351	161.651
+7 Fri	3.9928	6193.774	6193.774	100	0	6023.945	6023.945	100	0											7.7	3.9928	AA		0.386		AA	6.8					14.7				14.7								0	8.54	5.83	5.46	0	0																		986			1.9964	822.324			3.663	1.202	225.311	7.3	1250.5	2085.834			18.482	3.023	1.202		225.311	0.089	0		44550	0.99		44550	0.99		7.3		28	1515			1.9964	1263.51		18.482	2.384	1.202	225.311
+8 Sat	2.8199																			AN	2.8199						AN					AN				AN																															986			1.4099	822.324				1.702			1250.5	2085.834					1.702			0.077	0		32850	0.73		44550	0.99					1515			1.4099	1263.51				1.702
+9 Sun	2.3191																			AN	2.3191						AN					AN				AN																															986			1.1595	822.324				2.07			1250.5	2085.834					2.07			0.092	0		47700	1.06		44550	0.99					1515			1.1595	1263.51				2.07
+10 Mon	1.9289																			7.6	1.9289						7.2					13.7				13.7																												5.4		28	1269			0.9645	1058.346		22.065		2.488		6.3	1203.5	2007.438			26.41		2.488			0.089	0		44550	0.99		44550	0.99		7.2		35	1138			0.9645	949.092		30.756		2.488
+11 Tue	1.7774																			5.7	1.7774						6.9					15.6				15.6																												5.2		25	1269			0.8887	1058.346		19.701		2.701		5.2	1203.5	2007.438			19.701		2.701			0.109	0		55800	1.24		53550	1.19					1138			0.8887	949.092				2.701
+12 Wed	1.7146	3346.137	3346.137	100	0	2716.949	2716.949	100	0											5.6	1.7146	AA		0.311	0.81	AA	7					16.9				16.9							5.25	0		2.02		0																6.4		22	1269			0.8573	1058.346		17.336	1.284	2.799	101.621	6.95	1203.5	2007.438			21.849	1.357	2.799		101.621	0.111	0		55800	1.24		54900	1.22		7.5		30	1138			0.8573	949.092		26.362	1.431	2.799	101.621
+13 Thu	1.6657	3000.597	3000.597	100	0	2674.143	2674.143	100	0											6.9	1.6657	AA		0.4		AA	7.1					14.1				14.1								0		2.52		0																			1269			0.8328	1058.346			1.263	2.882	100.02	7.8	1203.5	2007.438			27.241	1.336	2.882		100.02	0.112	0		55800	1.24		55800	1.24		7.8		31	1138			0.8328	949.092		27.241	1.409	2.882	100.02
+14 Fri	1.864	3591.067	3591.067	100	0	3264.606	3217.969	98.571	46.637											8.4	1.864	AA		0.286		3	7					13.8				14.8								21.15	7.05	2.02	2.18	0	0															7.1		19	1269			0.932	1058.346		14.972	1.542	2.575	122.105	6.65	1203.5	2007.438			19.349	1.631	2.575		122.105	0.112	0		55800	1.24		55800	1.24		6.2		27	1138			0.932	949.092		23.726	1.72	2.575	122.105
+15 Sat	2.4864																			AN	2.4864						AN					AN				AN																															1269			1.2432	1058.346				1.931			1203.5	2007.438					1.931			0.104	0		48600	1.08		55800	1.24					1138			1.2432	949.092				1.931
+16 Sun	2.2952																			AN	2.2952						AN					AN				AN																															1269			1.1476	1058.346				2.091			1203.5	2007.438					2.091			0.112	0		55800	1.24		55800	1.24					1138			1.1476	949.092				2.091
+17 Mon	2.2016																			9.1	2.2016						7.1					18				13.7																												7.4		19	959			1.1008	799.806		19.812		2.18		6.75	992	1654.656			20.638		2.18			0.112	0		55800	1.24		55800	1.24		6.1		22	1025			1.1008	854.85		21.463		2.18
+18 Tue	2.8155																			10	2.8155						7.4					14.8				13.3																												6.9		19	959			1.4078	799.806		19.812		1.705		6.9	992	1654.656			22.101		1.705			0.092	0		43200	0.96		48600	1.08		6.9		25	1025			1.4078	854.85		24.39		1.705
+19 Wed	2.2171	2292.806	2292.806	100	0	2481.408	2481.408	100	0											9.1	2.2171	AA	AA	0.584	0.262	AA	7.1					14.6				14							2.2	0		4.9		0																5.8		20	959			1.1085	799.806		20.855	1.551	2.165	92.811	5.5	992	1654.656			22.135	1.501	2.165		92.811	0.075	0		37350	0.83		37350	0.83		5.2		24	1025			1.1085	854.85		23.415	1.451	2.165	92.811
+20 Thu	1.6387	2378.019	2378.019	100	0	2438.153	2438.153	100	0											8.9	1.6387	AA		0.649		AA	7.4					16.1				13.9								0		4.02		0																6.2		20	959			0.8194	799.806		20.855	1.524	2.929	91.193	6.75	992	1654.656			21.159	1.475	2.929		91.193	0.074	0		37350	0.83		36900	0.82		7.3		22	1025			0.8194	854.85		21.463	1.426	2.929	91.193
+21 Fri	1.6685	2602.144	2602.144	100	0	2099.805	2058.059	98.012	41.746											8.7	1.6685	AA		0.764		3	7.1					14.6				14.9								18.93	6.31	4.82	4.58	0	0																		959			0.8342	799.806			1.313	2.877	78.538	5.8	992	1654.656			33.171	1.27	2.877		78.538	0.075	0		37350	0.83		37350	0.83		5.8		34	1025			0.8342	854.85		33.171	1.228	2.877	78.538
+22 Sat	1.6477																			AN	1.6477						AN					AN				AN																															959			0.8238	799.806				2.913			992	1654.656					2.913			0.075	0		37350	0.83		37350	0.83					1025			0.8238	854.85				2.913
+23 Sun	1.5534																			AN	1.5534						AN					AN				AN																															959			0.7767	799.806				3.09			992	1654.656					3.09			0.074	0		36900	0.82		37350	0.83					1025			0.7767	854.85				3.09
+24 Mon	1.6404																			8.1	1.6404						7.1					16.6				14.7																												3.6		20	975			0.8202	813.15		20.513		2.926		4.05	975	1626.3			21.538		2.926			0.074	0		36900	0.82		37350	0.83		4.5		22	975			0.8202	813.15		22.564		2.926
+25 Tue	1.4363																			8.1	1.4363						7.2					15.4				14.4																												4		22	975			0.7181	813.15		22.564		3.342		4.6	975	1626.3			23.59		3.342			0.071	0		37350	0.83		33750	0.75		5.2		24	975			0.7181	813.15		24.615		3.342
+26 Wed	2.0013	3571.828	3571.828	100	0	2643.82	2587.071	97.854	56.749											9.4	2.0013	AA		1.04	0.44	3.4	7.4					13.6				13.4							3.33	25.74		7.87		0																6.5		22	975			1.0006	813.15		22.564	1.626	2.398	98.886	6.3	975	1626.3			23.59	1.626	2.398		98.886	0.074	0		36900	0.82		37350	0.83		6.1		24	975			1.0006	813.15		24.615	1.626	2.398	98.886
+27 Thu	1.6786	2575.968	2575.968	100	0	2147.573	2098.574	97.718	48.999											8.5	1.6786	AA		0.697		3.5	7					14.6				14								22.22		4.43		0																5.8		20	975			0.8393	813.15		20.513	1.321	2.859	80.325	5.65	975	1626.3			22.564	1.321	2.859		80.325	0.081	0		37350	0.83		44100	0.98		5.5		24	975			0.8393	813.15		24.615	1.321	2.859	80.325
+28 Fri	1.5748	2915.716	2915.716	100	0	2441.584	2402.182	98.386	39.402											8.9	1.5748	AA		0.852		3	7.1					15.2				14.5								17.87	21.94	5.07		0	0															5.4		20	975			0.7874	813.15		20.513	1.501	3.048	91.322	5.7	975	1626.3			22.564	1.501	3.048		91.322	0.075	0		37350	0.83		37350	0.83		6		24	975			0.7874	813.15		24.615	1.501	3.048	91.322
+29 Sat	1.5368																			AN	1.5368						AN					AN				AN																															975			0.7684	813.15				3.123			975	1626.3					3.123			0.067	0		29700	0.66		37350	0.83					975			0.7684	813.15				3.123
+30 Sun	1.5071																			AN	1.5071						AN					AN				AN																															975			0.7536	813.15				3.185			975	1626.3					3.185			0.082	0		44550	0.99		37350	0.83					975			0.7536	813.15				3.185
+Sum	62.686299	40947.86829228	40947.86829228	1200	0	36214.923702438	35924.90424984	1188.63381251376	290.019452598											156.3	62.686299	0	0	6.99	2.122	19	141.6	2.78				294.8				283.1							15.821489598585	131.528096416327	43.8426988054422	54.0328401503401	12.2201169902313	0	0											1.64				102.8		402	29323			31.3431495	24455.382		389.864511064375	21.0159515071564	73.4281586734731	1354.53221142266	123.05	30947	51619.596			474.586370119711	19.6974488486917	73.4281586734731		1354.53221142266	2.55285	0		1238850	27.53		1314000	29.2		110.1		482	32571			31.3431495	27164.214		428.259963326232	18.378946190227	73.4281586734731	1354.53221142266
+Avg	2.0895433	3412.32235769	3412.32235769	100	0	3017.9103085365	2993.74202082	99.0528177094799	24.1682877165											7.815	2.0895433	0	0	0.5825	0.5305	1.58333333333333	7.08	2.78				14.74				14.155							3.95537239964626	10.9606747013605	10.9606747013605	4.50273667919501	4.0733723300771	0	0											1.64				6.04705882352941		23.6470588235294	1047.25			1.04477165	873.4065		22.9332065331985	1.75132929226303	2.44760528911577	112.877684285222	6.1525	1105.25	1843.557			23.7293185059856	1.64145407072431	2.44760528911577		112.877684285222	0.085095	0		41295	0.917666666666666		43800	0.973333333333333		6.11666666666667		26.7777777777778	1163.25			1.04477165	970.1505		23.7922201847907	1.53157884918558	2.44760528911577	112.877684285222
+Max	3.992789	6193.77400836	6193.77400836	100	0	6023.944721034	6023.944721034	100	56.748664308											10	3.992789	0	0	1.04	0.81	3.5	7.4	2.78				18				16.9							5.25296227591837	25.7363556952381	21.942497385941	7.87229703619048	5.45529574547846	0	0											1.64				7.5		35	1269			1.9963945	1058.346		35.4969574036511	3.66275623782962	3.34198768895285	225.311179212032	7.8	1250.5	2085.834			33.1707317073171	3.02328493426134	3.34198768895285		225.311179212032	0.1116	0		55800	1.24		55800	1.24		7.8		35	1515			1.9963945	1263.51		33.1707317073171	2.38381363069307	3.34198768895285	225.311179212032
+Min	1.436271	2292.80614536	2292.80614536	100	0	2099.80467594	2058.05905614	97.7183833116037	0											5.3	1.436271	0	0	0.286	0.262	0	6.7	2.78				11.9				11.9							2.19704195042177	0	6.31075129251701	2.01636398617687	2.18442337030385	0	0											1.64				3.6		19	959			0.7181355	799.806		14.9724192277384	1.26335975177305	1.2021672069323	78.5381489307178	4.05	975	1626.3			18.4818481848185	1.27043383540782	1.2021672069323		78.5381489307178	0.02385	0		0	0		23850	0.53		2		22	975			0.7181355	813.15		18.4818481848185	1.17174030528053	1.2021672069323	78.5381489307178
+
+### MAY 06
+May, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Mon	1.742																			9.5	1.742						6.9					16.1			0.01	15.2																															1138			0.871	949.092				2.755		3	1142.5	1905.69			19.18		2.755			0.067	0		29700	0.66		37350	0.83		3		22	1147			0.871	956.598		19.18		2.755
+2 Tue	1.7659																			5.3	1.7659						6.6					17.6		282	0.02	15																												4.8		20	1138			0.8829	949.092		17.575		2.718		4.4	1142.5	1905.69			18.378		2.718			0.075	0		37350	0.83		37350	0.83		4		22	1147			0.8829	956.598		19.18		2.718
+3 Wed	2.8738	4889.419	4889.419	100	0	3875.584	3875.584	100	0											5.1	2.8738	AA	AA	0.406	0.372	AA	6.8	3.57				14.6		100	AA	14.7							4.04	0		4.41		0												2.4				5.1		22	1138			1.4369	949.092		19.332	2.042	1.67	144.957	5.25	1142.5	1905.69			18.384	2.034	1.67		144.957	0.08	0		42300	0.94		37350	0.83		5.4		20	1147			1.4369	956.598		17.437	2.026	1.67	144.957
+4 Thu	1.9219	3061.526	3061.526	100	0	2070.938	2070.938	100	0											8.4	1.9219	AA		0.584		AA	7.1					15.2		633	0.03	15.9								0		4.25		0																			1138			0.961	949.092			1.091	2.497	77.458	4.1	1142.5	1905.69			22.668	1.087	2.497		77.458	0.071	0		33750	0.75		37350	0.83		4.1		26	1147			0.961	956.598		22.668	1.082	2.497	77.458
+5 Fri	1.7271	2938.381	2938.381	100	0	2376.632	2376.632	100	0											9	1.7271	AA		0.647		AA	6.8					17.7			0.03	14.7								0		4.23		0																			1138			0.8635	949.092			1.252	2.779	88.892	5.8	1142.5	1905.69			20.924	1.247	2.779		88.892	0.07	0		32850	0.73		37350	0.83		5.8		24	1147			0.8635	956.598		20.924	1.242	2.779	88.892
+6 Sat	1.6798																			AN	1.6798						AN					AN			AN	AN																															1138			0.8399	949.092				2.858			1142.5	1905.69					2.858			0.082	0		44550	0.99		37350	0.83					1147			0.8399	956.598				2.858
+7 Sun	1.654																			AN	1.654						AN					AN			AN	AN									0		4.29		0																		1138			0.827	949.092				2.902			1142.5	1905.69					2.902			0.082	0		37350	0.83		44550	0.99					1147			0.827	956.598				2.902
+8 Mon	1.4165																			9	1.4165						7.7					18.5			0.03	14.7																												5.6		28	1114			0.7082	929.076		25.135		3.389		5.7	1158.5	1932.378			23.374		3.389			0.067	0		37350	0.83		29700	0.66		5.8		26	1203			0.7082	1003.302		21.613		3.389
+9 Tue	1.5723																			7.6	1.5723						7.1					16.4		112	0.02	16.1																												4		20	1114			0.7861	929.076		17.953		3.053		4.45	1158.5	1932.378			17.289		3.053			0.075	0		37350	0.83		37350	0.83		4.9		20	1203			0.7861	1003.302		16.625		3.053
+10 Wed	1.5205	2637.683	2637.683	100	0	2652.901	2652.901	100	0											8.5	1.5205	AA		1.11	0.819	AA	6.9					17.3		4	0.03	16.2							4.71	0		6.38		0																3		22	1114			0.7603	929.076		19.749	1.428	3.157	99.225	3.95	1158.5	1932.378			18.187	1.375	3.157		99.225	0.082	0		37350	0.83		44550	0.99		4.9		20	1203			0.7603	1003.302		16.625	1.322	3.157	99.225
+11 Thu	2.0446	5252.074	5252.074	100	0	3637.232	3637.232	100	0											5.8	2.0446	AA		1.27		AA	6.7					15.7		19	0.01	15.7								0		9.82		0																5.3		17	1114			1.0223	929.076		15.26	1.957	2.348	136.042	5.4	1158.5	1932.378			15.943	1.885	2.348		136.042	0.067	0		37350	0.83		29700	0.66		5.5		20	1203			1.0223	1003.302		16.625	1.813	2.348	136.042
+12 Fri	2.8372	4779.853	4779.853	100	0	3686.639	3686.639	100	0											5.7	2.8372	AA		0.637		AA	6.8					18			0.03	15								0		6.84		0																			1114			1.4186	929.076			1.984	1.692	137.89	5.8	1158.5	1932.378			18.288	1.911	1.692		137.89	0.075	0		37350	0.83		37350	0.83		5.8		22	1203			1.4186	1003.302		18.288	1.837	1.692	137.89
+13 Sat	3.0073																			AN	3.0073						AN					AN			AN	AN																															1114			1.5037	929.076				1.596			1158.5	1932.378					1.596			0.089	0		44100	0.98		44550	0.99					1203			1.5037	1003.302				1.596
+14 Sun	3.2329																			AN	3.2329						AN					AN			AN	AN									0		7.68		0																		1114			1.6165	929.076				1.485			1158.5	1932.378					1.485			0.097	0		44550	0.99		52200	1.16					1203			1.6165	1003.302				1.485
+15 Mon	3.1679																			6	3.1679						6.9					14.4			0.02	15.2																												5.2		18	635			1.584	529.59		28.346		1.515		5.7	919.5	1533.726			22.479		1.515			0.089	0		44550	0.99		44550	0.99		6.2		20	1204			1.584	1004.136		16.611		1.515
+16 Tue	3.1613																			6.4	3.1613						6.9					14.4		63	0.03	15.8																												6.2		17	635			1.5807	529.59		26.772		1.518		6.95	919.5	1533.726			20.861		1.518			0.092	0		47250	1.05		44550	0.99		7.7		18	1204			1.5807	1004.136		14.95		1.518
+17 Wed	3.203	4167.234	4167.234	100	0	3427.283	3427.283	100	0											7	3.203	AA	AA	0.174	0.26	AA	6.8					14.9		22	0.02	15.8							3.15	0		2.11		0																6.9		18	635			1.6015	529.59		28.346	3.236	1.499	128.189	6.8	919.5	1533.726			22.479	2.471	1.499		128.189	0.094	0		49050	1.09		44550	0.99		6.7		20	1204			1.6015	1004.136		16.611	1.707	1.499	128.189
+18 Thu	3.0896	4174.349	4174.349	100	0	3027.692	3027.692	100	0											8.2	3.0896	AA		0.539		AA	7					16		33	0.03	14.7								0		6.3		0																			635			1.5448	529.59			2.859	1.554	113.244		919.5	1533.726				2.183	1.554		113.244	0.089	0		44550	0.99		44550	0.99					1204			1.5448	1004.136			1.508	1.554	113.244
+19 Fri	3.3598	1793.326	1793.326	100	0	2311.71	2311.71	100	0											8	3.3598	AA		0.149		AA	7.2					15.4			0.03	15.8								0		1.89		0																6.6		27	635			1.6799	529.59		42.52	2.183	1.429	86.464	6.6	919.5	1533.726			42.52	1.667	1.429		86.464	0.097	0		44550	0.99		52200	1.16					1204			1.6799	1004.136			1.151	1.429	86.464
+20 Sat	3.1818																			AN	3.1818						AN					AN			AN	AN																															635			1.5909	529.59				1.509			919.5	1533.726					1.509			0.089	0		44550	0.99		44550	0.99					1204			1.5909	1004.136				1.509
+21 Sun	2.7185																			AN	2.7185						AN					AN			AN	AN									0		3.43		0																		635			1.3592	529.59				1.766			919.5	1533.726					1.766			0.082	0		44550	0.99		37350	0.83					1204			1.3592	1004.136				1.766
+22 Mon	2.301																			7.1	2.301						7.2					16			0.03	15.3																															1239			1.1505	1033.326				2.086		5.8	1113	1856.484			15.198		2.086			0.052	0		22500	0.5		29700	0.66		5.8		15	987			1.1505	823.158		15.198		2.086
+23 Tue	2.0025																			5.3	2.0025						6.8					15.8		4	0.03	15																												4.8		17	1239			1.0012	1033.326		13.721		2.397		5.3	1113	1856.484			15.472		2.397			0.075	0		37350	0.83		37350	0.83		5.8		17	987			1.0012	823.158		17.224		2.397
+24 Wed	1.8102	16757.338	16757.338	100	0															6.6	1.8102	AA		0.721	0.89	AA	7.1					15.8		56	0.02	15.2							6.09	0		4.94		0																5.3		18	1239			0.9051	1033.326		14.528		2.652		5.8	1113	1856.484			15.876		2.652			0.075	0		37350	0.83		37350	0.83		6.3		17	987			0.9051	823.158		17.224		2.652
+25 Thu	1.7793	11982.677	11982.677	100	0															9.6	1.7793	AA		0.821		AA	7.5					15.8		33	0.01	16.6								0		5.53		0																6.1		16	123			0.8896	102.582		130.081		2.698		5.4	555	925.74			73.653		2.698			0.075	0		37350	0.83		37350	0.83		4.7		17	987			0.8896	823.158		17.224		2.698
+26 Fri	2.4209	7571.305	7571.305	100	0															8.8	2.4209	AA		0.66		AA	7.1					22.7			0.02	16.5								0		6.04		0																5.7		17	1239			1.2104	1033.326		13.721		1.983		5.7	1113	1856.484			13.721		1.983			0.075	0		37350	0.83		37350	0.83					987			1.2104	823.158				1.983
+27 Sat	3.139																			AN	3.139						AN					AN			AN	AN																															1239			1.5695	1033.326				1.529			1113	1856.484					1.529			0.064	0		34650	0.77		29700	0.66					987			1.5695	823.158				1.529
+28 Sun	2.227																			AN	2.227						AN					AN			AN	AN									0				0																		1239			1.1135	1033.326				2.155			1113	1856.484					2.155			0.064	0		34650	0.77		29700	0.66					987			1.1135	823.158				2.155
+29 Mon	1.8001																			AN	1.8001						AN					AN			AN	AN																															1270			0.9001	1059.18				2.666			1245	2076.66					2.666			0.059	0		29700	0.66		29700	0.66					1220			0.9001	1017.48				2.666
+30 Tue	1.7713																			7.7	1.7713						7					16.8			0.03	17.8																												5.4		21	1270			0.8857	1059.18		16.535		2.71		5.45	1245	2076.66			16.055		2.71			0.059	0		29700	0.66		29700	0.66		5.5		19	1220			0.8857	1017.48		15.574		2.71
+31 Wed	1.6548																			7.1	1.6548						6.8					17			0.01	17.7																												3.3		22	1270			0.8274	1059.18		17.323		2.901		2.8	1245	2076.66			16.858		2.901			0.059	0		29700	0.66		29700	0.66		2.3		20	1220			0.8274	1017.48		16.393		2.901
+Sum	71.783825	70005.16735806	70005.16735806	1200	0	27066.609753186	27066.609753186	900	0											161.7	71.783825	0	0	7.718	2.341	0	153.7	3.57				362.1		1361	0.49	344.55							17.9969759282721	0	0	62.7309159360272	15.408683925161	0	0											2.4				83.3		320	31576			35.8919125	26334.384		446.896952668392	18.0308481241644	69.464315566313	1012.36150781202	110.15	33511.5	55897.182			467.784778844911	15.859248235314	69.464315566313		1012.36150781202	2.36655	0		1182600	26.28		1183950	26.31		100.2		385	35447			35.8919125	29562.798		336.174544891886	13.6876483464636	69.464315566313	1012.36150781202
+Avg	2.31560725806452	5833.763946505	5833.763946505	100	0	3007.40108368733	3007.40108368733	100	0											7.35	2.31560725806452	0	0	0.643166666666667	0.58525	0	6.98636363636364	3.57				16.4590909090909		43.9096824963765	0.0222727272727273	15.6613636363636							4.49924398206803	0	0	5.22757632800227	5.13622797505367	0	0											2.4				5.20625		20	1018.58064516129			1.15780362903226	849.496258064516		27.9310595417745	2.0034275693516	2.24078437310687	112.484611979113	5.2452380952381	1081.01612903226	1803.13490322581			22.2754656592815	1.76213869281267	2.24078437310687		112.484611979113	0.0763403225806452	0		38148.3870967742	0.847741935483871		38191.935483871	0.848709677419355		5.27368421052632		20.2631578947368	1143.45161290323			1.15780362903226	953.63864516129		17.693397099573	1.52084981627373	2.24078437310687	112.484611979113
+Max	3.359799	16757.3381544	16757.3381544	100	0	3875.58391374	3875.58391374	100	0											9.6	3.359799	0	0	1.27	0.89	0	7.7	3.57				22.7		633	0.03	17.8							6.09345302748299	0	0	9.82144229414966	7.68034479266213	0	0											2.4				6.9		28	1270			1.6798995	1059.18		130.081300813008	3.23578863464567	3.38866744888407	144.956904848565	6.95	1245	2076.66			73.6526058269701	2.47118575544576	3.38866744888407		144.956904848565	0.09675	0		49050	1.09		52200	1.16		7.7		26	1220			1.6798995	1017.48		22.667829119442	2.02571190496949	3.38866744888407	144.956904848565
+Min	1.416486	1793.32631424	1793.32631424	100	0	2070.937699152	2070.937699152	100	0											5.1	1.416486	0	0	0.149	0.26	0	6.6	3.57				14.4		4	0	14.7							3.14983652462585	0	0	1.89346386636735	3.4333918093424	0	0											2.4				3		16	123			0.708243	102.582		13.7207425343019	1.09100998594025	1.4286568928677	77.4584490195151	2.8	555	925.74			13.7207425343019	1.08672965033717	1.4286568928677		77.4584490195151	0.0522	0		22500	0.5		29700	0.66		2.3		15	987			0.708243	823.158		14.9501661129568	1.08244931473409	1.4286568928677	77.4584490195151
+
+### JUNE 06
+Jun, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Thu	1.6031	2353.058	2353.058	100	0	2362.416	2362.416	100	0											8.5	1.6031	AA		0.936		AA	6.9					17.3		352	0.03	17.3								0		5.68		0																3.1		28	1270			0.8015	1059.18		22.047	1.115	2.994	88.361	3.1	1245	2076.66			22.047	1.138	2.994		88.361	0.059	0		29700	0.66		29700	0.66					1220			0.8015	1017.48			1.161	2.994	88.361
+2 Fri	2.0015	4223.285	4103.097	97.154	120.188	3019.732	3019.732	100	0											8.9	2.0015	7.2		0.578		AA	7.4					16.8			0.03	17.3								0		4.38		54.51																6.2		20	1270			1.0008	1059.18		15.748	1.426	2.398	112.946	5.6	1245	2076.66			14.841	1.455	2.398		112.946	0.055	0		25650	0.57		29700	0.66		5		17	1220			1.0008	1017.48		13.934	1.484	2.398	112.946
+3 Sat	3.5021																			AN	3.5021						AN					AN			AN	AN																															1270			1.7511	1059.18				1.371			1245	2076.66					1.371			0.041	0		22950	0.51		18000	0.4					1220			1.7511	1017.48				1.371
+4 Sun	3.1854																			AN	3.1854						AN					AN			AN	AN																															1270			1.5927	1059.18				1.507			1245	2076.66					1.507			0.052	0		27900	0.62		23850	0.53					1220			1.5927	1017.48				1.507
+5 Mon	2.3405																			8.5	2.3405						7.2					16.9			0.02	16.2																												5.9		20	1240			1.1703	1034.16		16.129		2.051		5.6	1240	2068.32			15.323		2.051			0.059	0		29700	0.66		29700	0.66		5.3		18	1240			1.1703	1034.16		14.516		2.051
+6 Tue	2.022																			9.6	2.022						7.1					17		AA	0.03	16.6																												5.6		20	1240			1.011	1034.16		16.129		2.374		5.25	1240	2068.32			15.726		2.374			0.059	0		29250	0.65		29700	0.66		4.9		19	1240			1.011	1034.16		15.323		2.374
+7 Wed	1.8257	3106.105	3045.201	98.039	60.904	2994.955	2994.955	100	0											8.1	1.8257	4	AA	0.224	0.842	AA	7					19.2		281	0.01	17.6							5.81	0	0	1.55	3.87	27.62	27.38															5.7		21	1240			0.9128	1034.16		16.935	1.448	2.629	112.019	5.7	1240	2068.32			16.935	1.448	2.629		112.019	0.059	0		29700	0.66		29700	0.66					1240			0.9128	1034.16			1.448	2.629	112.019
+8 Thu	2.6753	3726.097	3592.226	96.407	133.872	3422.655	3422.655	100	0											8.8	2.6753	6		0.179		AA	7.3					17.1		124	0.03	17.5								0		1.81		60.71																5.8		19	1240			1.3376	1034.16		15.323	1.655	1.794	128.016	5.6	1240	2068.32			15.726	1.655	1.794		128.016	0.062	0		31950	0.71		29700	0.66		5.4		20	1240			1.3376	1034.16		16.129	1.655	1.794	128.016
+9 Fri	2.4011	1962.469	1962.469	100	0	2437.066	2437.066	100	0											5.2	2.4011	AA		0.103		AA	6.9					17.5			0	17.6								0		0.94		0																3		20	1240			1.2006	1034.16		16.129	1.178	1.999	91.153	4.45	1240	2068.32			16.532	1.178	1.999		91.153	0.047	0		17550	0.39		29700	0.66		5.9		21	1240			1.2006	1034.16		16.935	1.178	1.999	91.153
+10 Sat	1.8528																			AN	1.8528						AN					AN			AN	AN																															1240			0.9264	1034.16				2.591			1240	2068.32					2.591			0.059	0		29700	0.66		29700	0.66					1240			0.9264	1034.16				2.591
+11 Sun	2.0229																			AN	2.0229						AN					AN			AN	AN																															1240			1.0114	1034.16				2.373			1240	2068.32					2.373			0.059	0		29700	0.66		29700	0.66					1240			1.0114	1034.16				2.373
+12 Mon	1.8001																			8.3	1.8001						7.2					17.3			0.02	17.1																												3		21				0.9001					2.666		4.55							2.666			0.059	0		29250	0.65		29700	0.66		6.1		21				0.9001					2.666
+13 Tue	1.678																			8	1.678						7.3					17.5		304	0.03	17.3																												2.9		23				0.839					2.861		4.45							2.861			0.059	0		29700	0.66		29700	0.66		6		23				0.839					2.861
+14 Wed	1.5127	1816.695	1768.754	97.361	47.941	1850.758	1850.758	100	0											8.1	1.5127	3.8		0.188	0.987	AA	7.1					17.1		260	0.02	18.5							5.65	0	0	1.08	1.27	21.74	27.48															2.9		23				0.7564					3.173	69.223	4.35							3.173		69.223	0.059	0		29700	0.66		29700	0.66		5.8		24				0.7564					3.173	69.223
+15 Thu	1.5776	2841.932	2841.932	100	0	2401.169	2401.169	100	0											8.6	1.5776	AA		0.113		AA	6.9					17.2		124	0.02	17.8								0		0.67		0																3.9		22				0.7888					3.043	89.81	5.05							3.043		89.81	0.065	0		35550	0.79		29700	0.66		6.2		26				0.7888					3.043	89.81
+16 Fri	1.4379	3465.727	3465.727	100	0	2178.971	2178.971	100	0											8.1	1.4379	AA		0.172		AA	6.9					17.6			0.01	18.1								0		0.94		0																						0.719					3.338	81.499	6.2							3.338		81.499	0.059	0		29700	0.66		29700	0.66		6.2		27				0.719					3.338	81.499
+17 Sat	1.44																			AN	1.44						AN					AN			AN	AN																																		0.72					3.333									3.333			0.065	0		29700	0.66		35100	0.78								0.72					3.333
+18 Sun	1.3432																			AN	1.3432						AN					AN			AN	AN																																		0.6716					3.573									3.573			0.06	0		29700	0.66		30150	0.67								0.6716					3.573
+19 Mon	2.11																			8	2.11						6.9					18.5			0.03	18.8																												2.3		21				1.055					2.275		2.3							2.275			0.048	0		23850	0.53		23850	0.53		2.3		24				1.055					2.275
+20 Tue	3.2199																			8	3.2199						7.3					18.2		108	0.01	18.6																												3.9		23				1.6099					1.491		3.6							1.491			0.059	0		28350	0.63		30600	0.68		3.3		25				1.6099					1.491
+21 Wed	2.4509	3515.744	3515.744	100	0	2503.946	2503.946	100	0											7.8	2.4509	AA		0.362	0.538	AA	7					17.7		514	0.01	18.6							4.99	0	0	3.36	1.66	0	0																					1.2254					1.958	93.654	3							1.958		93.654	0.065	0		35550	0.79		29700	0.66		3		24				1.2254					1.958	93.654
+22 Thu	3.3234	5875.996	5875.996	100	0	3326.036	3326.036	100	0											8	3.3234	AA		AA		AA	7.3					17.9		208	0	19.8								0		0		0																3.4		24				1.6617					1.444	124.402	4.15							1.444		124.402	0.072	0		30150	0.67		41400	0.92		4.9		26				1.6617					1.444	124.402
+23 Fri	2.3969	2598.701	2490.755	95.846	107.946	2132.933	2132.933	100	0											8.1	2.3969	5.4		AA		AA	7.1					17.9			0.03	18.4								0		0		48.96																3.8		27				1.1984					2.003	79.777	4.65							2.003		79.777	0.054	0		29700	0.66		23850	0.53		5.5		27				1.1984					2.003	79.777
+24 Sat	2.0697																			AN	2.0697						AN					AN			AN	AN																																		1.0349					2.319									2.319			0.065	0		35550	0.79		29700	0.66								1.0349					2.319
+25 Sun	2.0154																			AN	2.0154						AN					AN			AN	AN																																		1.0077					2.382									2.382			0.065	0		29700	0.66		35550	0.79								1.0077					2.382
+26 Mon	1.4512																			8.4	1.4512	AA	AA	0.75	0.67		7.3	2.03	AA	29	AA	19.8		4200	0.03	18.5		AA	AA	AA	1.0785		3.68			4.12		0		498	AA	761	AA	AA	1.9		AA		AA	1.4				2.2		27				0.7256					3.308		3.3							3.308			0.054	0		29700	0.66		23850	0.53		4.4		28				0.7256					3.308
+27 Tue	1.1073																			7.8	1.1073						7.1					18		104	0.02	18.7																												3.5		26				0.5536					4.335		4.6							4.335			0.059	0		29700	0.66		29700	0.66		5.7		28				0.5536					4.335
+28 Wed	1.5107	1587.517	1524.52	96.032	62.997	1617.755	1617.755	100	0											8.1	1.5107	5		0.053	0.201	AA	7.1					18.5		88	0.02	18.8							1.15	0	0	0.3		28.57	19.38															3.5		27				0.7554					3.177	60.508	3.5							3.177		60.508	0.059	0		29700	0.66		29700	0.66								0.7554					3.177	60.508
+29 Thu	1.3216																			8.6	1.3216						7.2					18.6			0.03	18.5																												4.4		30				0.6608					3.632		4.4							3.632			0.059	0		29700	0.66		29700	0.66								0.6608					3.632
+30 Fri	1.2338																			7.9	1.2338					5.3	7.1					19		780	0.02	19.2								24.73															AA					5.1		31				0.6169					3.89		3.7							3.89			0.118	0		58950	1.31		58950	1.31		2.3		32				0.6169					3.89
+Sum	60.432478	37073.3252439	36539.477845704	1180.83956250166	533.847398196	30248.392104354	30248.392104354	1200	0											179.4	60.432478	31.4	0	3.658	3.238	5.3	156.6	2.03	0	29	0	392.6		7447	0.45	396.8		0	0	0	1.0785		21.2746020253605	24.7337352680272	0	24.8049837329524	6.79517945244444	242.107663580952	74.2421345274377	498	0	761	0	0	1.9		0		0	1.42				80.1		473	13760			30.216239	11475.84		118.440436880874	6.82181038663957	78.2825486654846	1131.3684321343	97.1	13660	22784.88			117.130408441145	6.87387421592026	78.2825486654846		1131.3684321343	1.8171	0		907650	20.17		909450	20.21		88.2		430	13560			30.216239	11309.04		76.8376520359598	6.92593804520095	78.2825486654846	1131.3684321343
+Avg	2.01441593333333	3089.443770325	3044.956487142	98.403296875138	44.487283183	2520.6993420295	2520.6993420295	100	0											8.15454545454545	2.01441593333333	2.41538461538462	0	0.281384615384615	0.6476	0.407692307692308	7.11818181818182	2.03	0	29	0	17.8454545454545		0	0.0204545454545455	18.0363636363636		0	0	0	1.0785		4.25492040507211	1.90259502061748	0	1.90807567176557	2.26505981748148	18.623666429304	18.5605336318594	498	0	761	0	0	1.9		0		0	1.42				4.005		23.65	1250.90909090909			1.00720796666667	1043.25818181818		16.9200624115534	1.36436207732791	2.60941828884949	94.2807026778581	4.41363636363636	1241.81818181818	2071.35272727273			16.7329154915921	1.37477484318405	2.60941828884949		94.2807026778581	0.06057	0		30255	0.672333333333333		30315	0.673666666666667		4.9		23.8888888888889	1232.72727272727			1.00720796666667	1028.09454545455		15.367530407192	1.38518760904019	2.60941828884949	94.2807026778581
+Max	3.50214	5875.99640616	5875.99640616	100	133.8717618	3422.65471002	3422.65471002	100	0											9.6	3.50214	7.2	0	0.936	0.987	5.3	7.4	2.03	0	29	0	19.8		4200	0.03	19.8		0	0	0	1.0785		5.81419306340136	24.7337352680272	0	5.67527808979592	3.86592095742404	60.7128171428571	27.4848546612245	498	0	761	0	0	1.9		0		0	1.42				6.2		31	1270			1.75107	1059.18		22.0472440944882	1.65479940725806	4.33487251410866	128.016176187263	6.2	1245	2076.66			22.0472440944882	1.65479940725806	4.33487251410866		128.016176187263	0.1179	0		58950	1.31		58950	1.31		6.2		32	1240			1.75107	1034.16		16.9354838709677	1.65479940725806	4.33487251410866	128.016176187263
+Min	1.107299	1587.51659808	1524.51990768	95.8461538461539	0	1617.755009472	1617.755009472	100	0											5.2	1.107299	0	0	0	0.201	0	6.9	2.03	0	29	0	16.8		0	0	16.2		0	0	0	1.0785		1.14851109028571	0	0	0	1.27410903304308	0	0	498	0	761	0	0	1.9		0		0	1.42				2.2		19	1240			0.5536495	1034.16		15.3225806451613	1.1152100492126	1.37059055320461	60.5082393249025	2.3	1240	2068.32			14.8412288627856	1.13806271415548	1.37059055320461		60.5082393249025	0.04095	0		17550	0.39		18000	0.4		2.3		17	1220			0.5536495	1017.48		13.9344262295082	1.16091537909836	1.37059055320461	60.5082393249025
+
+### JULY 06
+Jul, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Sat	1.7819																				1.7819											AN																																			1417			0.891	1181.778				2.694			1488.5	2482.818					2.694			0.065	0		29700	0.66		35550	0.79					1560			0.891	1301.04				2.694
+2 Sun	1.5877																				1.5877											AN																																			1417			0.7938	1181.778				3.023			1488.5	2482.818					3.023			0.065	0		35100	0.78		29700	0.66					1560			0.7938	1301.04				3.023
+3 Mon	1.4413																			7.6	1.4413						6.9					26.4			0.02	19.7																												2.1		30	1243			0.7207	1036.662		24.135		3.33		3.55	1229	2049.972			12.644		3.33			0.054	0		23850	0.53		29700	0.66		5		1.4	1215			0.7207	1013.31		1.152		3.33
+4 Tue	1.8763																				1.8763											AN																																			1243			0.9382	1036.662				2.558			1229	2049.972					2.558			0.065	0		35550	0.79		29700	0.66					1215			0.9382	1013.31				2.558
+5 Wed	1.9662	3541.946	3541.946	100	0	1967.748	1967.748	100	0											7.9	1.9662	AA	5.5	0.479	0.164	AA	7					22.7		56	0.03	18.6							1.22	0		3.56		0																3.8		33	1243			0.9831	1036.662		26.549	0.949	2.441	73.599	4.9	1229	2049.972			27.678	0.96	2.441		73.599	0.054	0		23850	0.53		29700	0.66		6		35	1215			0.9831	1013.31		28.807	0.971	2.441	73.599
+6 Thu	1.767	2505.209	2505.209	100	0	1694.7	1694.7	100	0											8.8	1.767	AA		0.066		AA	7					23.7		1	0.03	18.4								0		0.44		0																3.2		33	1243			0.8835	1036.662		26.549	0.817	2.717	63.386	3.15	1229	2049.972			28.089	0.827	2.717		63.386	0.006	0		2925	0.065		2970	0.066		3.1		36	1215			0.8835	1013.31		29.63	0.836	2.717	63.386
+7 Fri	1.5535	2435.764	2435.764	100	0	1943.429	1943.429	100	0											8.9	1.5535	AA		0.087		AA	7.1					23.1		760	0.03	20.1								0	0	0.51	1.5	0	0															2.9		25	1243			0.7768	1036.662		20.113	0.937	3.09	72.689	2.9	1229	2049.972			20.113	0.948	3.09		72.689	0.077	0		35550	0.79		41850	0.93					1215			0.7768	1013.31			0.959	3.09	72.689
+8 Sat	2.024																				2.024											AN			AN																																1243			1.012	1036.662				2.372			1229	2049.972					2.372			0.075	0		37350	0.83		37350	0.83					1215			1.012	1013.31				2.372
+9 Sun	1.8145																				1.8145											AN			AN																																1243			0.9073	1036.662				2.645			1229	2049.972					2.645			0.089	0		44550	0.99		44550	0.99					1215			0.9073	1013.31				2.645
+10 Mon	1.333																			7.7	1.333						7					25.7			0.03	19.9																															1652			0.6665	1377.768				3.601		2.9	1766.5	2946.522			15.949		3.601			0.06	0		30150	0.67		29700	0.66		2.9		30	1881			0.6665	1568.754		15.949		3.601
+11 Tue	1.3126																			7.2	1.3126						7.1					24.4			0.03	19.7																												4.1		33	1652			0.6563	1377.768		19.976		3.657		3.25	1766.5	2946.522			19.291		3.657			0.081	0		44100	0.98		37350	0.83		2.4		35	1881			0.6563	1568.754		18.607		3.657
+12 Wed	1.8804	5143.875	5143.875	100	0	3175.715	3175.715	100	0											7.6	1.8804	AA		0.798	0.819	AA	6.9					19.5		2400	0.03	19.9							5.82	0		5.68		0																1.6		30	1652			0.9402	1377.768		18.16	1.152	2.553	118.78	2.15	1766.5	2946.522			17.586	1.082	2.553		118.78	0.081	0		37350	0.83		43650	0.97		2.7		32	1881			0.9402	1568.754		17.012	1.012	2.553	118.78
+13 Thu	2.3889	7132.587	7132.587	100	0	3504.531	3504.531	100	0											8.3	2.3889	AA		0.161		AA	6.9					20.9		1	0.03	19.7								0		1.45		0																1.2		29	1652			1.1945	1377.768		17.554	1.272	2.009	131.079	1.2	1766.5	2946.522			15.688	1.194	2.009		131.079	0.075	0		37350	0.83		37800	0.84		1.2		26	1881			1.1945	1568.754		13.822	1.117	2.009	131.079
+14 Fri	2.9872	1395.124	1395.124	100	0	1454.915	1454.915	100	0											7.8	2.9872	AA		1.13		AA	7.1	2.98				20.5		26	0.01	19.9								0	0	12.77	6.63	0	0											3.8				5.1		31	1652			1.4936	1377.768		18.765	0.528	1.607	54.418	5.1	1766.5	2946.522			18.765	0.496	1.607		54.418	0.089	0		44550	0.99		44550	0.99					1881			1.4936	1568.754			0.464	1.607	54.418
+15 Sat	1.9813																			AN	1.9813						AN					AN			AN	AN																															1652			0.9907	1377.768				2.423			1766.5	2946.522					2.423			0.075	0		37350	0.83		37350	0.83					1881			0.9907	1568.754				2.423
+16 Sun	1.8165																			AN	1.8165						AN					AN			AN	AN																															1652			0.9082	1377.768				2.642			1766.5	2946.522					2.642			0.082	0		44550	0.99		37350	0.83					1881			0.9082	1568.754				2.642
+17 Mon	1.5347																			7.9	1.5347						7.6					24.1			0.03	19.8																												2		25	1415			0.7674	1180.11		17.668		3.128		3.5	1639	2733.852			16.349		3.128			0.067	0		29700	0.66		37350	0.83		5		28	1863			0.7674	1553.742		15.03		3.128
+18 Tue	1.4641																			7.8	1.4641						7.4					20		1	0.03	19.8																												2.1		30	1415			0.7321	1180.11		21.201		3.278		3.85	1639	2733.852			17.579		3.278			0.075	0		37350	0.83		37350	0.83		5.6		26	1863			0.7321	1553.742		13.956		3.278
+19 Wed	1.4878	1861.299	1779.402	95.6	81.897	1675.169	1625.535	97.037	49.635											7.9	1.4878	6.6	AA	AA	0.487	4	7.1					19.5		96	0.03	19.6							2.74	22.51		0		37.14																3.7		28	1415			0.7439	1180.11		19.788	0.71	3.226	62.656	4.75	1639	2733.852			15.798	0.624	3.226		62.656	0.075	0		37350	0.83		37350	0.83		5.8		22	1863			0.7439	1553.742		11.809	0.539	3.226	62.656
+20 Thu	1.5818	3720.246	3720.246	100	0	2430.033	2381.221	97.991	48.812											8.2	1.5818	AA		1.3		3.7	7					20.1		1	0.03	20.6								22.14		7.78		0																2.3		27	1415			0.7909	1180.11		19.081	1.03	3.034	90.89	1.3	1639	2733.852			16.25	0.906	3.034		90.89	0.082	0		44550	0.99		37350	0.83		0.3		25	1863			0.7909	1553.742		13.419	0.782	3.034	90.89
+21 Fri	1.8154	4723.92	4723.92	100	0	3179.562	3115.97	98	63.591											7.4	1.8154	AA		1.16		4.2	7.2					19.9			0.03	20.1								28.84	24.5	7.97	5.25	0	12.38															3.6		26	1415			0.9077	1180.11		18.375	1.347	2.644	118.924	4.45	1639	2733.852			16.165	1.185	2.644		118.924	0.067	0		37350	0.83		29700	0.66		5.3		26	1863			0.9077	1553.742		13.956	1.023	2.644	118.924
+22 Sat	1.9052																			AN	1.9052						AN					AN			AN	AN																															1415			0.9526	1180.11				2.519			1639	2733.852					2.519			0.075	0		37350	0.83		37350	0.83					1863			0.9526	1553.742				2.519
+23 Sun	2.2514																			AN	2.2514						AN					AN			AN	AN																															1415			1.1257	1180.11				2.132			1639	2733.852					2.132			0.098	0		37350	0.83		60750	1.35					1863			1.1257	1553.742				2.132
+24 Mon	3.2439																			7.7	3.2439						7.2					20.2			0.02	19.5																												1.6		31	1850			1.6219	1542.9		16.757		1.48		3.9	1728	2882.304			16.784		1.48			0.037	0		0	0		37350	0.83		6.2		27	1606			1.6219	1339.404		16.812		1.48
+25 Tue	1.1502																			8.6	1.1502						6.9					19.8		7	0.03	19.9																												4		30	1850			0.5751	1542.9		16.216		4.173		4.9	1728	2882.304			15.891		4.173			0.101	0		63450	1.41		37350	0.83		5.8		25	1606			0.5751	1339.404		15.567		4.173
+26 Wed	1.3437	2420.599	2420.599	100	0	2251.381	2251.381	100	0											7.8	1.3437	AA		0.139	0.832	AA	7.2					19.9		67	0.03	20.8							4.23	0		0.71		0																4.6		29	1850			0.6719	1542.9		15.676	0.73	3.572	84.207	4.6	1728	2882.304			16.555	0.785	3.572		84.207	0.093	0		55800	1.24		37350	0.83		4.6		28	1606			0.6719	1339.404		17.435	0.84	3.572	84.207
+27 Thu	1.5352	4404.491	4404.491	100	0	2603.003	2564.591	98.524	38.411											8.4	1.5352	AA		0.102		3	7.3					22		4	0.02	20.5								17.42		0.59		0																4.6		26	1850			0.7676	1542.9		14.054	0.844	3.127	97.359	4.55	1728	2882.304			15.744	0.908	3.127		97.359	0.085	0		55800	1.24		29700	0.66		4.5		28	1606			0.7676	1339.404		17.435	0.972	3.127	97.359
+28 Fri	2.0744	4498.168	4498.168	100	0	2768.103	2768.103	100	0											6.1	2.0744	AA		0.059		AA	6.6					20.2			0.03	20.7								0	5.81	0.46		0	0																		1850			1.0372	1542.9			0.897	2.314	103.534	4.6	1728	2882.304			16.812	0.965	2.314		103.534	0.089	0		51300	1.14		37350	0.83		4.6		27	1606			1.0372	1339.404		16.812	1.033	2.314	103.534
+29 Sat	2.214																			AN	2.214						AN					AN			AN	AN																															1850			1.107	1542.9				2.168			1728	2882.304					2.168			0.087	0		49950	1.11		37350	0.83					1606			1.107	1339.404				2.168
+30 Sun	1.6034																			AN	1.6034						AN					AN			AN	AN																															1850			0.8017	1542.9				2.994			1728	2882.304					2.994			0.098	0		60300	1.34		37350	0.83					1606			0.8017	1339.404				2.994
+31 Mon	1.4807																			7.5	1.4807						7					22.1			0.03	20.8																												4		23	1196			0.7403	997.464		19.231		3.242		2.15	1257	2096.676			17.961		3.242			0.093	0		55800	1.24		37350	0.83		0.3		22	1318			0.7403	1099.212		16.692		3.242
+Sum	56.198363	43783.2257484	43701.328588044	1195.6	81.897160356	28648.287684066	28447.838814822	1191.55269908021	200.448869244											157.1	56.198363	6.6	5.5	5.481	2.302	14.9	141.5	2.98				434.7		3420	0.55	398							14.013634470585	90.9065166639456	30.3021722213152	41.9166084884082	13.3849888079184	37.141569322449	12.380523107483											3.78				56.5		519	47150			28.0991815	39323.1		349.84688469292	11.2127664268406	86.3927487501094	1071.52037069067	71.65	48771.5	81350.862			357.693073148101	10.8807511184179	86.3927487501094		1071.52037069067	2.314395	0		1197225	26.605		1117170	24.826		71.3		479.4	50393			28.0991815	42027.762		293.900579213766	10.5487358099952	86.3927487501094	1071.52037069067
+Avg	1.81285041935484	3648.6021457	3641.777382337	99.6333333333333	6.824763363	2387.3573070055	2370.6532345685	99.2960582566841	16.704072437											7.855	1.81285041935484	0.55	2.75	0.45675	0.5755	1.24166666666667	7.075	2.98				21.735		16.7227432908475	0.0275	19.9							3.50340861764626	7.5755430553288	7.5755430553288	3.49305070736735	4.46166293597279	3.09513077687075	3.09513077687075											3.78				3.13888888888889		28.8333333333333	1520.96774193548			0.906425209677419	1268.48709677419		19.4359380384955	0.934397202236718	2.78686286290676	89.2933642242222	3.5825	1573.27419354839	2624.22135483871			17.8846536574051	0.906729259868159	2.78686286290676		89.2933642242222	0.0746579032258064	0		38620.1612903226	0.858225806451613		36037.7419354839	0.800838709677419		3.96111111111111		26.6333333333333	1625.58064516129			0.906425209677419	1355.73425806452		16.3278099563204	0.8790613174996	2.78686286290676	89.2933642242222
+Max	3.24388	7132.586508	7132.586508	100	81.897160356	3504.5306334	3504.5306334	100	63.59123232											8.9	3.24388	6.6	5.5	1.3	0.832	4.2	7.6	2.98				26.4		2400	0.03	20.8							5.82494504057143	28.8395611428571	24.4954822077097	12.7671667556463	6.63249352464399	37.141569322449	12.380523107483											3.78				5.1		33	1850			1.62194	1542.9		26.5486725663717	1.34714628975265	4.17316913072018	131.078548386896	5.1	1766.5	2946.522			28.0891510980007	1.19439676234597	4.17316913072018		131.078548386896	0.1008	0		63450	1.41		60750	1.35		6.2		36	1881			1.62194	1568.754		29.6296296296296	1.11697902711324	4.17316913072018	131.078548386896
+Min	1.150205	1395.12367344	1395.12367344	95.6	0	1454.914688016	1454.914688016	97.037037037037	0											6.1	1.150205	0	0	0	0.164	0	6.6	2.98				19.5		1	0.01	18.4							1.21961701496599	0	0	0	1.50482128599546	0	0											3.78				1.2		23	1196			0.5751025	997.464		14.0540540540541	0.52799698062954	1.4797094837047	54.4175883396092	1.2	1229	2049.972			12.6437101265027	0.495856813547093	1.4797094837047		54.4175883396092	0.005895	0		0	0		2970	0.066		0.3		1.4	1215			0.5751025	1013.31		1.1522633744856	0.463716646464646	1.4797094837047	54.4175883396092
+
+### AUG 06
+Aug, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Tue	1.4205																			7.9	1.4205						7.3					20.6		92	0.01	21.2																												4.7		22	1850			0.7102	1542.9		11.892		3.379		2.5	1728	2882.304			14.041		3.379			0.093	0		55800	1.24		37350	0.83		0.3		26	1606			0.7102	1339.404		16.189		3.379
+2 Wed	1.3074	2769.55	2769.55	100	0	2126.229	2083.705	98	42.525											7.6	1.3074	AA		0.493	0.4	3.9	7.3					21.5		1	0.02	22.8							1.98	19.29		2.44		0																4.1		23	1850			0.6537	1542.9		12.432	0.689	3.671	79.527	4.75	1728	2882.304			14.934	0.741	3.671		79.527	0.033	0		18450	0.41		14850	0.33		5.4		28	1606			0.6537	1339.404		17.435	0.794	3.671	79.527
+3 Thu	1.3449	4980.268	4980.268	100	0	2290.474	2290.474	100	0											7.8	1.3449	AA	AA	0.61		AA	7.2					21.9		33	0.02	21.8								0		3.1		0																0.3		23	1850			0.6725	1542.9		12.432	0.742	3.569	85.67	0.35	1728	2882.304			15.556	0.799	3.569		85.67	0.067	0		44550	0.99		22500	0.5		0.4		30	1606			0.6725	1339.404		18.68	0.855	3.569	85.67
+4 Fri	1.2821	3100.974	3100.974	100	0	2593.056	2557.769	98.639	35.287											7.4	1.2821	AA		0.749		3.3	7.5					21.1			0.03	21.7								16		3.63		0																6.8		23	1850			0.6411	1542.9		12.432	0.84	3.744	96.987	4.1	1728	2882.304			14	0.904	3.744		96.987	0.03	0		22500	0.5		7650	0.17		1.4		25	1606			0.6411	1339.404		15.567	0.968	3.744	96.987
+5 Sat	1.3327																			AN	1.3327						AN					AN			AN	AN																															1850			0.6663	1542.9				3.602			1728	2882.304					3.602			0.187	0		79200	1.76		108000	2.4					1606			0.6663	1339.404				3.602
+6 Sun	1.2654																			AN	1.2654						AN					AN			AN	AN																															1850			0.6327	1542.9				3.793			1728	2882.304					3.793			0.093	0		55800	1.24		37350	0.83					1606			0.6327	1339.404				3.793
+7 Mon	1.248																			7.2	1.248						7.1					21.8			0.03	21									11.76		3.06		0															4		20	1174			0.624	979.116		17.036		3.846		3.4	1304	2175.072			16.189		3.846			0.1	0		55800	1.24		44550	0.99		2.8		22	1434			0.624	1195.956		15.342		3.846
+8 Tue	1.2663																			7.7	1.2663						7.2					20.9		168	0.03	19.8																												3.6		19	1174			0.6331	979.116		16.184		3.791		4.75	1304	2175.072			16.112		3.791			0.093	0		55800	1.24		37350	0.83		5.9		23	1434			0.6331	1195.956		16.039		3.791
+9 Wed	1.2121	2830.489	2830.489	100	0	4683.448	4651.1	99.309	32.348											7.6	1.2121	AA		0.118	0.67	3.2	7.3					20.8		44	0.03	21.1							3.07	14.67		0.54		0																4.3		19	1174			0.606	979.116		16.184	2.392	3.96	175.173	4.9	1304	2175.072			16.809	2.175	3.96		175.173	0.078	0		48150	1.07		29700	0.66		5.5		25	1434			0.606	1195.956		17.434	1.958	3.96	175.173
+10 Thu	1.2034	1585.707	1585.707	100	0	1781.412	1745.282	97.972	36.13											7.6	1.2034	AA		0.555		3.6	6.9					20.7		22	0.03	20.9								16.39		2.53		0																4.6		21	1174			0.6017	979.116		17.888	0.91	3.989	66.629	4.2	1304	2175.072			16.963	0.827	3.989		66.629	0.082	0		37350	0.83		44550	0.99		3.8		23	1434			0.6017	1195.956		16.039	0.745	3.989	66.629
+11 Fri	0.994	1856.888	1856.888	100	0	1367.797	1367.797	100	0											7.6	0.994	AA		0.353		AA	7.1					20.5			0.03	20.9								0		1.33		0																2.1		22	1174			0.497	979.116		18.739	0.698	4.829	51.159	3.7	1304	2175.072			17.389	0.635	4.829		51.159	0.075	0		37350	0.83		37350	0.83		5.3		23	1434			0.497	1195.956		16.039	0.572	4.829	51.159
+12 Sat	0.9103																			AN	0.9103						AN					AN			AN	AN																															1174			0.4552	979.116				5.273			1304	2175.072					5.273			0.082	0		44550	0.99		37350	0.83					1434			0.4552	1195.956				5.273
+13 Sun	0.5623																			AN	0.5623						AN					AN			AN	AN																															1174			0.2812	979.116				8.536			1304	2175.072					8.536			0.082	0		37350	0.83		44550	0.99					1434			0.2812	1195.956				8.536
+14 Mon	0.6011																			7.8	0.6011						7.3					21.2			0.03	21.3									10.35		1.46		0																		1448			0.3006	1207.632				7.985		5.9	1344.5	2242.626			18.533		7.985			0.082	0		44550	0.99		37350	0.83		5.9		23	1241			0.3006	1034.994		18.533		7.985
+15 Tue	1.3149																			8	1.3149						6.8					20.7		4	0.03	20.2																												5.9		24	1448			0.6575	1207.632		16.575		3.65		5.8	1344.5	2242.626			17.151		3.65			0.075	0		37350	0.83		37350	0.83		5.7		22	1241			0.6575	1034.994		17.728		3.65
+16 Wed	1.2204	2524.273	2524.273	100	0	2162.935	2105.936	97.365	57											7.6	1.2204	AA		0.518	0.92	5.6	6.7					20.8		7	0.03	20.3							4.25	25.85		2.39		0																4.3		23	1448			0.6102	1207.632		15.884	0.896	3.933	80.899	4.3	1344.5	2242.626			15.884	0.97	3.933		80.899	0.082	0		37350	0.83		44550	0.99					1241			0.6102	1034.994			1.045	3.933	80.899
+17 Thu	1.1922	3102.234	3102.234	100	0	2444.998	2399.26	98.129	45.738											7.5	1.1922	AA	AA	0.573		4.6	7					20.5		11	0.03	20.2								20.74		2.58		0																2		20	1448			0.5961	1207.632		13.812	1.012	4.026	91.449	3.9	1344.5	2242.626			14.964	1.097	4.026		91.449	0.075	0		37350	0.83		37350	0.83		5.8		20	1241			0.5961	1034.994		16.116	1.181	4.026	91.449
+18 Fri	1.2284	2069.488	2069.488	100	0	2476.214	2431.136	98.18	45.078											7.6	1.2284	AA		0.656		4.4	6.9					20.6			0.03	21.6								20.44		3.05		0																2		22	1448			0.6142	1207.632		15.193	1.025	3.907	92.617	4	1344.5	2242.626			15.655	1.111	3.907		92.617	0.082	0		44550	0.99		37350	0.83		6		20	1241			0.6142	1034.994		16.116	1.196	3.907	92.617
+19 Sat	1.1981																			AN	1.1981						AN					AN			AN	AN																															1448			0.599	1207.632				4.006			1344.5	2242.626					4.006			0.082	0		37350	0.83		44550	0.99					1241			0.599	1034.994				4.006
+20 Sun	1.5433																			AN	1.5433						AN					AN			AN	AN																															1448			0.7717	1207.632				3.11			1344.5	2242.626					3.11			0.075	0		37350	0.83		37350	0.83					1241			0.7717	1034.994				3.11
+21 Mon	1.3539																			7.3	1.3539					2.5	6.8					20.1		AK	0.01	21.5								12.8	19.96		2.67		0										AA					2.1		19	878			0.6769	732.252		21.64		3.545		3.85	865	1442.82			21.383		3.545			0.082	0		44550	0.99		37350	0.83		5.6		18	852			0.6769	710.568		21.127		3.545
+22 Tue	1.2058																			7.6	1.2058						6.6					20.9		7	0.03	20.6																												3.7		20	878			0.6029	732.252		22.779		3.981		3.7	865	1442.82			22.779		3.981			0.074	0		37350	0.83		36900	0.82					852			0.6029	710.568				3.981
+23 Wed	2.4653	5633.55	5633.55	100	0	4609.642	4575.717	99.264	33.925											7.6	2.4653	AA		0.918	0.83	1.65	7					23.7		130.5	0.03	20.6							7.74	15.39		8.56		0											AA								878			1.2326	732.252			3.148	1.947	172.413	4.9	865	1442.82			21.127	3.196	1.947		172.413	0.082	0		37350	0.83		44550	0.99		4.9		18	852			1.2326	710.568		21.127	3.244	1.947	172.413
+24 Thu	1.394	3720.195	3720.195	100	0	2519.27	2519.27	100	0											7.9	1.394	AA		0.892		AA	6.7					20.9		7	0.03	21								0		4.7		0																5.9		20	878			0.697	732.252		22.779	1.72	3.443	94.227	5.6	865	1442.82			21.953	1.746	3.443		94.227	0.082	0		44550	0.99		37350	0.83		5.3		18	852			0.697	710.568		21.127	1.773	3.443	94.227
+25 Fri	0.9544	1814.875	1814.875	100	0	1950.195	1950.195	100	0											7.3	0.9544	AA	AA	1.18	0.35	AA	6.8	3.18	AA	34	AA	21		2000	0.02	21.1		AA	AA	AA	2.72		1.26	0		4.26		0		477		192	AA	AA	AA		AA		AA	3.6				2.8		20	878			0.4772	732.252		22.779	1.332	5.029	72.942	2.9	865	1442.82			21.953	1.352	5.029		72.942	0.059	0		29700	0.66		29700	0.66		3		18	852			0.4772	710.568		21.127	1.372	5.029	72.942
+26 Sat	0.908																			AN	0.908						AN					AN			AN	AN																															878			0.454	732.252				5.286			865	1442.82					5.286			0.065	0		29700	0.66		35550	0.79					852			0.454	710.568				5.286
+27 Sun	1.6514																			AN	1.6514						AN					AN			AN	AN																															878			0.8257	732.252				2.907			865	1442.82					2.907			0.125	0		59400	1.32		65250	1.45					852			0.8257	710.568				2.907
+28 Mon	3.8914																			7.4	3.8914						6.8					26			0.03	20.8									5.13				0															1.7		22	1534			1.9457	1279.356		14.342		1.234		1.9	1366.5	2279.322			14.677		1.234			0.059	0		29700	0.66		29700	0.66		2.1		18	1199			1.9457	999.966		15.013		1.234
+29 Tue	3.2777																			7.8	3.2777						6.7					25.5			0.03	20.6																												2.3		21	1534			1.6388	1279.356		13.69		1.464		4.25	1366.5	2279.322			13.934		1.464			0.062	0		33300	0.74		28800	0.64		6.2		17	1199			1.6388	999.966		14.178		1.464
+30 Wed	2.5																			7.7	2.5						7.4					23			0.03	20.6																												3.1		20	1534			1.25	1279.356		13.038		1.92		2.65	1366.5	2279.322			14.859		1.92			0.062	0		33300	0.74		28800	0.64		2.2		20	1199			1.25	999.966		16.681		1.92
+31 Thu	2.5																			7.5	2.5						7.2					18			0.03	20.6																												1.4		21	1534			1.25	1279.356		13.69		1.92		1.25	1366.5	2279.322			15.185		1.92			0.06	0		29700	0.66		30600	0.68		1.1		20	1199			1.25	999.966		16.681		1.92
+Sum	45.7495793	35988.490571568	35988.490571568	1200	0	31005.6701204964	30677.6397117744	1186.85794721088	328.030408722											175	45.7495793	0	0	7.615	3.17	32.75	161.6	3.18	0	34	0	492.7		2526.5	0.62	482.2		0	0	0	2.72		18.2992364927891	161.568430712925	47.2029423596372	39.1128572879728	7.19676215870295	0	0	477		192	0	0	0		0		0	3.58				71.7		444	41736			22.87478965	34807.824		341.419963460441	15.4039946802168	119.277236001047	1159.6925968984	87.55	40428.5	67434.738			392.029299728427	15.5531611584588	119.277236001047		1159.6925968984	2.4606	0		1277100	28.38		1183500	26.3		84.6		457	39121			22.87478965	32626.914		364.315413478729	15.7023276367007	119.277236001047	1159.6925968984
+Avg	1.47579288064516	2999.040880964	2999.040880964	100	0	2583.8058433747	2556.4699759812	98.9048289342399	27.3358673935											7.60869565217391	1.47579288064516	0	0	0.634583333333333	0.634	2.51923076923077	7.02608695652174	3.18	0	34	0	21.4217391304348		25.5174010428218	0.0269565217391305	20.9652173913044		0	0	0	2.72		3.65984729855782	12.4283408240712	11.8007355899093	3.25940477399773	2.39892071956765	0	0	477		192	0	0	0		0		0	3.58				3.41428571428571		21.1428571428571	1346.32258064516			0.737896440322581	1122.83303225807		16.2580934981163	1.2836662233514	3.84765277422731	96.641049741533	3.80652173913044	1304.14516129032	2175.31412903226			17.0447521621055	1.2960967632049	3.84765277422731		96.641049741533	0.0793741935483871	0		41196.7741935484	0.915483870967741		38177.4193548387	0.848387096774193		4.02857142857143		21.7619047619048	1261.96774193548			0.737896440322581	1052.48109677419		17.3483530227966	1.30852730305839	3.84765277422731	96.641049741533
+Max	3.89135	5633.55010416	5633.55010416	100	0	4683.448264434	4651.099819698	100	56.999709984											8	3.89135	0	0	1.18	0.92	5.6	7.5	3.18	0	34	0	26		2000	0.03	22.8		0	0	0	2.72		7.7392895814966	25.8502086095238	19.9596036340136	8.55984076604082	3.05772810969615	0	0	477		192	0	0	0		0		0	3.58				6.8		24	1850			1.945675	1542.9		22.7790432801822	3.14757903872437	8.53576128320945	175.17312991827	5.9	1728	2882.304			22.7790432801822	3.19560547945608	8.53576128320945		175.17312991827	0.1872	0		79200	1.76		108000	2.4		6.2		30	1606			1.945675	1339.404		21.1267605633803	3.24363192018779	8.53576128320945	175.17312991827
+Min	0.56234	1585.70735184	1585.70735184	100	0	1367.7966126	1367.7966126	97.364705882353	0											7.2	0.56234	0	0	0.118	0.35	0	6.6	3.18	0	34	0	18		1	0.01	19.8		0	0	0	2.72		1.26348881904762	0	5.12844490340136	0.540974557659864	1.46472451388662	0	0	477		192	0	0	0		0		0	3.58				0.3		19	878			0.28117	732.252		11.8918918918919	0.689036716216216	1.23350508178396	51.1591460378192	0.35	865	1442.82			13.9340910993842	0.63516392050922	1.23350508178396		51.1591460378192	0.03015	0		18450	0.41		7650	0.17		0.3		17	852			0.28117	710.568		14.1784820683903	0.571842364016737	1.23350508178396	51.1591460378192
+
+### SEPT 06
+Sep, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Fri	2.7247	5817.399	5817.399	100	0	5303.832	5215.207	98.329	88.624											8	2.7247	AA		3.8		3.9	7.1					18			0.03	20.3								40.19		39.16		0																2.2		20	1534			1.3624	1279.356		13.038	2.073	1.762	198.377	2.75	1366.5	2279.322			15.693	2.362	1.762		198.377	0.078	0		48150	1.07		29700	0.66		3.3		22	1199			1.3624	999.966		18.349	2.652	1.762	198.377
+2 Sat	1.4505																			AN	1.4505						AN					AN			AN	AN																															1534			0.7252	1279.356				3.309			1366.5	2279.322					3.309			0.03	0		29700	0.66								1199			0.7252	999.966				3.309
+3 Sun	1.3978																			AN	1.3978						AN					AN			AN	AN																															1534			0.6989	1279.356				3.434			1366.5	2279.322					3.434			0.051	0		29700	0.66		21600	0.48					1199			0.6989	999.966				3.434
+4 Mon	1.3173																			AN	1.3173						AN					AN			AN	AN																															1534			0.6587	1279.356				3.644			1366.5	2279.322					3.644			0.054	0		35550	0.79		18450	0.41					1199			0.6587	999.966				3.644
+5 Tue	1.3022																			8.5	1.3022						6.8					20.1		1	0.02	19.7																												0.6		22	1088			0.6511	907.392		20.221		3.686		0.5	1299	2166.732			18.72		3.686			0.048	0		29700	0.66		18450	0.41		0.4		26	1510			0.6511	1259.34		17.219		3.686
+6 Wed	1.2767	1916.621	1916.621	100	0	1783.522	1783.522	100	0											7.7	1.2767	AA	AA	0.073	0.6	AA	6.7	2.23				22		4	0.03	20.2							2.9	0		0.35		0												5.1				4.6		48	1088			0.6384	907.392		44.118	0.983	3.76	66.708	4.35	1299	2166.732			31.33	0.845	3.76		66.708	0.052	0		29700	0.66		22050	0.49		4.1		28	1510			0.6384	1259.34		18.543	0.708	3.76	66.708
+7 Thu	1.2472	936.17	936.17	100	0	936.17	936.17	100	0											8.1	1.2472	AA		0.323		AA	7.4					14.1		341	0	20.8								0	13.4	1.52	13.68	0	0															6		22	1088			0.6236	907.392		20.221	0.516	3.849	35.015	5.55	1299	2166.732			20.375	0.444	3.849		35.015	0.04	0		22050	0.49		18450	0.41		5.1		31	1510			0.6236	1259.34		20.53	0.372	3.849	35.015
+8 Fri	1.1835	1776.657	1776.657	100	0	1916.815	1916.815	100	0											8	1.1835	AA		0.095		AA	7.5					14.4			0	20.4								0		0.43		0																			1088			0.5917	907.392			1.056	4.056	71.694	6.4	1299	2166.732			19.205	0.909	4.056		71.694	0.05	0		26100	0.58		24300	0.54		6.4		29	1510			0.5917	1259.34		19.205	0.761	4.056	71.694
+9 Sat	1.211																			AN	1.211						AN					AN			AN	AN																															1088			0.6055	907.392				3.964			1299	2166.732					3.964			0.06	0		22950	0.51		37350	0.83					1510			0.6055	1259.34				3.964
+10 Sun	1.2149																			AN	1.2149						AN					AN			AN	AN																															1088			0.6075	907.392				3.951			1299	2166.732					3.951			0.054	0		22500	0.5		31050	0.69					1510			0.6075	1259.34				3.951
+11 Mon	1.0739																			8.2	1.0739						7					14.7			0.02	20.1																												6.6		34	1931			0.537	1610.454		17.607		4.47		6.35	1813	3024.084			17.063		4.47			0.045	0		20700	0.46		23850	0.53		6.1		28	1695			0.537	1413.63		16.519		4.47
+12 Tue	1.2306																			7.6	1.2306						6.9					18.8		52	0.03	20.6																												4.9		38	1931			0.6153	1610.454		19.679		3.901		2.8	1813	3024.084			18.099		3.901			0.098	0		53550	1.19		44550	0.99		0.7		28	1695			0.6153	1413.63		16.519		3.901
+13 Wed	3.3879	9041.7	9041.7	100	0	4263.726	4263.726	100	0											8.2	3.3879	AA		0.168	0.84	AA	6.8					18.3		7	0.02	20.1							10.76	0		2.15		0																4.6		26	1931			1.694	1610.454		13.465	1.324	1.417	159.474	5.35	1813	3024.084			15.582	1.416	1.417		159.474	0.109	0		52650	1.17		56250	1.25		6.1		30	1695			1.694	1413.63		17.699	1.508	1.417	159.474
+14 Thu	2.5873	2287.273	2287.273	100	0	1978.707	1978.707	100	0											7.9	2.5873	AA		0.445		AA	6.7					20.1		152	0.02	20.4								0	0	4.35	2.31	0	0															6.6		35	1931			1.2936	1610.454		18.125	0.614	1.855	74.009	5.35	1813	3024.084			16.437	0.657	1.855		74.009	0.107	0		58050	1.29		48600	1.08		4.1		25	1695			1.2936	1413.63		14.749	0.7	1.855	74.009
+15 Fri	1.8771	1753.371	1753.371	100	0	2218.327	2218.327	100	0											8.2	1.8771	AA		1.03		AA	7.2					20.1			0	20.3								0		7.31		0																6.5		26	1931			0.9386	1610.454		13.465	0.689	2.557	82.971	5.5	1813	3024.084			14.107	0.737	2.557		82.971	0.112	0		63900	1.42		48600	1.08		4.5		25	1695			0.9386	1413.63		14.749	0.785	2.557	82.971
+16 Sat	1.4772																			AN	1.4772						AN					AN			AN	AN																															1931			0.7386	1610.454				3.249			1813	3024.084					3.249			0.058	0		29250	0.65		28800	0.64					1695			0.7386	1413.63				3.249
+17 Sun	1.4639																			AN	1.4639						AN					AN			AN	AN																															1931			0.732	1610.454				3.279			1813	3024.084					3.279			0.097	0		48600	1.08		48600	1.08					1695			0.732	1413.63				3.279
+18 Mon	1.5686																			10	1.5686						7.3					21			0.03	20.4																												4.6		25	1015			0.7843	846.51		24.631		3.06		6.05	1110.5	1852.314			22.266		3.06			0.116	0		58050	1.29		58050	1.29		7.5		24	1206			0.7843	1005.804		19.9		3.06
+19 Tue	2.6486																			8.6	2.6486						7.3					21		4	0.03	18.9																												5.6		19	1015			1.3243	846.51		18.719		1.812		5.6	1110.5	1852.314			18.719		1.812			0.085	0		46350	1.03		38700	0.86					1206			1.3243	1005.804				1.812
+20 Wed	2.1023	2454.624	2454.624	100	0	2586.122	2586.122	100	0											8.4	2.1023	AA	AA	0.815	0.301	AA	7					18.6		4	0.02	19.2							2.39	0		6.48		0																7.2		23	1015			1.0511	846.51		22.66	1.528	2.283	96.728	6.05	1110.5	1852.314			21.28	1.407	2.283		96.728	0.107	0		48600	1.08		58050	1.29		4.9		24	1206			1.0511	1005.804		19.9	1.286	2.283	96.728
+21 Thu	1.4897	944.214	944.214	100	0	1273.447	1273.447	100	0											8.3	1.4897	AA		0.79		AA	7.5					18.3		26	0.03	18.7								0	0	4.45	6.08	0	0															5.4		23	1015			0.7448	846.51		22.66	0.752	3.222	47.63	5.4	1110.5	1852.314			22.66	0.693	3.222		47.63	0.097	0		48600	1.08		48600	1.08					1206			0.7448	1005.804			0.633	3.222	47.63
+22 Fri	1.4331	430.28	430.28	100	0	946.616	946.616	100	0											8.4	1.4331	AA		0.105		AA	7.3					17.8			0.01	19.5								0		0.57		0																4.7		20	1015			0.7166	846.51		19.704	0.559	3.349	35.406	5.7	1110.5	1852.314			20.632	0.515	3.349		35.406	0.077	0		39600	0.88		37350	0.83		6.7		26	1206			0.7166	1005.804		21.559	0.471	3.349	35.406
+23 Sat	1.1063																			AN	1.1063						AN					AN			AN	AN																															1015			0.5531	846.51				4.339			1110.5	1852.314					4.339			0.075	0		37350	0.83		37350	0.83					1206			0.5531	1005.804				4.339
+24 Sun	1.2887																			AN	1.2887						AN					AN			AN	AN																															1015			0.6444	846.51				3.725			1110.5	1852.314					3.725			0.082	0		44550	0.99		37350	0.83					1206			0.6444	1005.804				3.725
+25 Mon	1.3887																			9	1.3887						7.3					23.1			0.02	19.5																															853			0.6944	711.402				3.456		3.7	890	1484.52			23.732		3.456			0.149	0		74250	1.65		74250	1.65		3.7		22	927			0.6944	773.118		23.732		3.456
+26 Tue	1.5263																			8.3	1.5263						7.6					22.1		56	0.03	18.9																												3.6		22	853			0.7632	711.402		25.791		3.145		3.6	890	1484.52			25.791		3.145			0.089	0		44550	0.99		44550	0.99					927			0.7632	773.118				3.145
+27 Wed	1.1237	1780.536	1780.536	100	0	1937.036	1937.036	100	0											8.3	1.1237	AA		0.398	0.25	AA	6.7					23		63	0.03	19.3							1.06	0		1.69		0																4.7		25	853			0.5618	711.402		29.308	1.361	4.272	72.45	4.7	890	1484.52			29.308	1.307	4.272		72.45	0.067	0		29700	0.66		37350	0.83					927			0.5618	773.118			1.253	4.272	72.45
+28 Thu	1.6901	3523.954	3523.954	100	0	2490.731	2442.805	98.076	47.926											7.9	1.6901	AA		0.946		3.4	7					24.8		1	0.03	19.3								21.74	7.25	6.05		0	0															4.8		18	853			0.8451	711.402		21.102	1.751	2.84	93.16	5.3	890	1484.52			21.878	1.681	2.84		93.16	0.074	0		37350	0.83		36900	0.82		5.8		21	927			0.8451	773.118		22.654	1.611	2.84	93.16
+29 Fri	1.5515																			8.7	1.5515						7.2					20.4			0.03	19.1																												3.9		20	853			0.7757	711.402		23.447		3.094		5.5	890	1484.52			25.208		3.094			0.075	0		37350	0.83		37350	0.83		7.1		25	927			0.7757	773.118		26.969		3.094
+30 Sat	1.3083																			AN	1.3083						AN					AN			AN	AN																															853			0.6542	711.402				3.669			890	1484.52					3.669			0.075	0		37350	0.83		37350	0.83					927			0.6542	773.118				3.669
+Sum	47.64967	32662.7994354	32662.7994354	1200	0	27635.051742432	27498.50152458	1196.40488359135	136.550217852											166.3	47.64967	0	0	8.988	1.991	7.3	142.3	2.23				390.7		711	0.43	395.7							17.1172114018503	61.9275364408163	20.6425121469388	74.5235094802177	22.0718001231202	0	0											5.08				87.1		466	38404			23.824835	32028.936		387.960073616008	13.2053544939767	98.4072779761624	1033.62271468588	96.5	39064.5	65159.586			418.086438520257	12.9717885895089	98.4072779761624		1033.62271468588	2.3103	0		1206450	26.81		1103850	24.53		76.5		414	39725			23.824835	33130.65		308.796076431904	12.7382226850412	98.4072779761624	1033.62271468588
+Avg	1.58832233333333	2721.89995295	2721.89995295	100	0	2302.920978536	2291.541793715	99.7004069659457	11.379184821											8.315	1.58832233333333	0	0	0.749	0.49775	0.608333333333333	7.115	2.23				19.535		14.803523725956	0.0215	19.785							4.27930285046258	5.16062803673469	5.16062803673469	6.21029245668481	7.35726670770673	0	0											5.08				4.83888888888889		25.8888888888889	1280.13333333333			0.794161166666667	1067.6312		21.5533374231115	1.10044620783139	3.28024259920541	86.1352262238237	4.825	1302.15	2171.9862			20.9043219260128	1.08098238245908	3.28024259920541		86.1352262238237	0.07701	0		40215	0.893666666666666		38063.7931034483	0.845862068965517		4.78125		25.875	1324.16666666667			0.794161166666667	1104.355		19.299754776994	1.06151855708677	3.28024259920541	86.1352262238237
+Max	3.387927	9041.6995776	9041.6995776	100	0	5303.831743656	5215.20730578	100	88.624437876											10	3.387927	0	0	3.8	0.84	3.9	7.6	2.23				24.8		341	0.03	20.8							10.7639280685714	40.1924888326531	13.397496277551	39.1619121959184	13.6793836946485	0	0											5.08				7.2		48	1931			1.6939635	1610.454		44.1176470588235	2.07285217861799	4.46950678992573	198.37708343051	6.4	1813	3024.084			31.3303467082197	2.36242910932568	4.46950678992573		198.37708343051	0.1485	0		74250	1.65		74250	1.65		7.5		31	1695			1.6939635	1413.63		26.9687162891046	2.65200604003336	4.46950678992573	198.37708343051
+Min	1.073944	430.2799488	430.2799488	100	0	936.1700874	936.1700874	98.0758347481607	0											7.6	1.073944	0	0	0.073	0.25	0	6.7	2.23				14.1		1	0	18.7							1.06249897959184	0	0	0.35251533937415	2.31093028606803	0	0											5.08				0.6		18	853			0.536972	711.402		13.0378096479791	0.515857582720588	1.41679558030619	35.0151928849239	0.5	890	1484.52			14.1068943445629	0.443774172154996	1.41679558030619		35.0151928849239	0.0297	0		20700	0.46		18450	0.41		0.4		21	927			0.536972	773.118		14.7492625368732	0.371690761589404	1.41679558030619	35.0151928849239
+
+### OCT 06
+Oct, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Sun	2.343																			AN	2.343						AN					AN			AN	AN																															853			1.1715	711.402				2.049			890	1484.52					2.049			0.082	0		44550	0.99		37350	0.83					927			1.1715	773.118				2.049
+2 Mon	1.7534																			8.8	1.7534						7.4					26.3			0.03	18.8																															1347			0.8767	1123.398				2.738		5.1	1042.5	1738.89			27.1		2.738			0.075	0		37350	0.83		37350	0.83		5.1		20	738			0.8767	615.492		27.1		2.738
+3 Tue	1.988																			8.7	1.988						7					26.3		30	0.03	19.2																												5		24	1347			0.994	1123.398		17.817		2.415		5	1042.5	1738.89			17.817		2.415			0.075	0		37350	0.83		37350	0.83					738			0.994	615.492				2.415
+4 Wed	1.7184	2952.218	2952.218	100	0	1779.93	1779.93	100	0					79.538	68.646	86.306	10.892			8.8	1.7184	AA	AA	0.572	0.76	AA	7.4	4.93				19.9		33	0	19.9							4.94	0		3.72		0												3				5.1		22	1347			0.8592	1123.398		16.333	0.792	2.793	66.574	5.1	1042.5	1738.89			16.333	1.119	2.793		66.574	0.075	0		37350	0.83		37350	0.83					738			0.8592	615.492			1.446	2.793	66.574
+5 Thu	1.5563	1843.145	1843.145	100	0	1763.967	1763.967	100	0											8.4	1.5563	AA		0.915		AA	6.7					19.5		1	0.01	19								0		5.39		0																7.5		20	1347			0.7782	1123.398		14.848	0.785	3.084	65.977	6.2	1042.5	1738.89			20.974	1.109	3.084		65.977	0.075	0		37350	0.83		37350	0.83		4.9		20	738			0.7782	615.492		27.1	1.433	3.084	65.977
+6 Fri	1.4591	2531.18	2531.18	100	0	2281.713	2281.713	100	0											8.2	1.4591	AA		0.261		AA	6.7					19.1			0.03	18.7								0		1.44		0																			1347			0.7296	1123.398			1.016	3.29	85.342	6.4	1042.5	1738.89			27.1	1.435	3.29		85.342	0.067	0		29700	0.66		36900	0.82		6.4		20	738			0.7296	615.492		27.1	1.854	3.29	85.342
+7 Sat	1.3																			AN	1.3						AN					AN			AN	AN									0		3.51		0																		1347			0.65	1123.398				3.692			1042.5	1738.89					3.692			0.065	0		35550	0.79		29700	0.66					738			0.65	615.492				3.692
+8 Sun	1.2529																			AN	1.2529						AN					AN			AN	AN																															1347			0.6264	1123.398				3.831			1042.5	1738.89					3.831			0.059	0		29700	0.66		29700	0.66					738			0.6264	615.492				3.831
+9 Mon	1.2984																			AN	1.2984						AN					AN			AN	AN																															1206			0.6492	1005.804				3.697			1290.5	2152.554					3.697			0.065	0		29700	0.66		35550	0.79					1375			0.6492	1146.75				3.697
+10 Tue	1.2708																			7.5	1.2708						6.6					19.2		7	0.02	19.8																															1206			0.6354	1005.804				3.777		5	1290.5	2152.554			14.545		3.777			0.059	0		29700	0.66		29700	0.66		5		20	1375			0.6354	1146.75		14.545		3.777
+11 Wed	1.2053	2131.111	2131.111	100	0	2019.529	2019.529	100	0											7.6	1.2053	AA		0.095	0.72	AA	6.6					20.6		19	0.03	19.8							3.28	0		0.43		0																3.3		21	1206			0.6027	1005.804		17.413	1.004	3.982	75.536	4.35	1290.5	2152.554			17.434	0.942	3.982		75.536	0.065	0		35550	0.79		29700	0.66		5.4		24	1375			0.6027	1146.75		17.455	0.881	3.982	75.536
+12 Thu	1.5902	4031.684	4031.684	100	0	2818.2	2818.2	100	0					62.067						8.3	1.5902	AA		0.227		AA	7					21.4		41	0	16.1								0		1.37		0																			1206			0.7951	1005.804			1.401	3.019	105.408	5.9	1290.5	2152.554			16	1.315	3.019		105.408	0.059	0		29700	0.66		29700	0.66		5.9		22	1375			0.7951	1146.75		16	1.229	3.019	105.408
+13 Fri	1.2688	1269.805	1269.805	100	0	1507.893	1507.893	100	0											8.2	1.2688	AA		0.056		AA	6.8					18.2			0.03	17.4								0		0.27		0																4.8		23	1206			0.6344	1005.804		19.071	0.75	3.783	56.399	4.8	1290.5	2152.554			19.071	0.704	3.783		56.399	0.054	0		23850	0.53		29700	0.66					1375			0.6344	1146.75			0.657	3.783	56.399
+14 Sat	1.2499																			AN	1.2499						AN					AN			AN	AN									0		0.69		0																		1206			0.6249	1005.804				3.84			1290.5	2152.554					3.84			0.065	0		29700	0.66		35550	0.79					1375			0.6249	1146.75				3.84
+15 Sun	1.2842																			AN	1.2842						AN					AN			AN	AN																															1206			0.6421	1005.804				3.738			1290.5	2152.554					3.738			0.065	0		35550	0.79		29700	0.66					1375			0.6421	1146.75				3.738
+16 Mon	1.2867																			7.5	1.2867						6.5					16.6			0	18.5																												4.5		22	1379			0.6433	1150.086		15.954		3.731		3.5	1296.5	2162.562			17.861		3.731			0.065	0		29700	0.66		35550	0.79		2.5		24	1214			0.6433	1012.476		19.769		3.731
+17 Tue	2.1007																			7.9	2.1007						7					18.6		1	0.03	18.6																												6.6		22	1379			1.0504	1150.086		15.954		2.285		6.6	1296.5	2162.562			15.954		2.285			0.048	0		29700	0.66		18000	0.4					1214			1.0504	1012.476				2.285
+18 Wed	3.9694	1456.624	1191.783	81.818	264.841	2208.109	2102.173	95.202	105.936											8.4	3.9694	8		AA	0.45	3.2	7.1					18.9		15	0.01	18.2							6.76	48.04		0		120.11																5.2		23	1379			1.9847	1150.086		16.679	0.96	1.209	82.589	4.75	1296.5	2162.562			17.812	1.025	1.209		82.589	0.039	0		12150	0.27		26550	0.59		4.3		23	1214			1.9847	1012.476		18.946	1.09	1.209	82.589
+19 Thu	2.9753	843.676	843.676	100	0	1736.98	1736.98	100	0					44.417						8	2.9753	AA	AA	AA		AA	7.1					18.4		426	0.03	18.2								0		0		0																3.3		24	1379			1.4877	1150.086		17.404	0.755	1.613	64.968	4.75	1296.5	2162.562			18.587	0.806	1.613		64.968	0.052	0		24300	0.54		27900	0.62		6.2		24	1214			1.4877	1012.476		19.769	0.858	1.613	64.968
+20 Fri	2.8223	1129.812	1129.812	100	0	1960.694	1960.694	100	0											8.1	2.8223	AA		0.11		AA	7					10.3		108	0.03	17.6								0		1.17		0																4.1		22	1379			1.4111	1150.086		15.954	0.852	1.701	73.335	4.1	1296.5	2162.562			15.954	0.91	1.701		73.335	0.065	0		35550	0.79		29700	0.66					1214			1.4111	1012.476			0.968	1.701	73.335
+21 Sat	3.0684																			AN	3.0684						AN					AN			AN	AN									16.01		0.39		40.04																		1379			1.5342	1150.086				1.564			1296.5	2162.562					1.564			0.076	0		35100	0.78		40500	0.9					1214			1.5342	1012.476				1.564
+22 Sun	2.1079																			AN	2.1079						AN					AN			AN	AN																															1379			1.054	1150.086				2.277			1296.5	2162.562					2.277			0.059	0		29700	0.66		29700	0.66					1214			1.054	1012.476				2.277
+23 Mon	1.7735																			7.2	1.7735						6.9					19			0	17.3																												4.7		25	957			0.8868	798.138		26.123		2.707		4.1	1152	1921.536			22.342		2.707			0.054	0		29700	0.66		23850	0.53		3.5		25	1347			0.8868	1123.398		18.56		2.707
+24 Tue	1.7285																			8.2	1.7285						7.1					10.3		48	0.03	16.8																												6.7		24	957			0.8643	798.138		25.078		2.777		5.95	1152	1921.536			22.561		2.777			0.065	0		29250	0.65		35550	0.79		5.2		27	1347			0.8643	1123.398		20.045		2.777
+25 Wed	3.2938	6482.989	6340.143	97.797	142.846	4257.895	4257.895	100	0											8.6	3.2938	5.2		AA	0.16	AA	7.4					16.8		1	0.01	16.9							1.99	0		0		64.78																6.5		26	957			1.6469	798.138		27.168	2.667	1.457	159.256	6.05	1152	1921.536			24.349	2.281	1.457		159.256	0.124	0		58950	1.31		65250	1.45		5.6		29	1347			1.6469	1123.398		21.529	1.895	1.457	159.256
+26 Thu	1.477	2217.272	2217.272	100	0	2228.359	2228.359	100	0					60.359						8.7	1.477	AA		AA		AA	6.8					16.8			0	16.8								0		0		0																			957			0.7385	798.138			1.396	3.25	83.346	5	1152	1921.536			22.272	1.194	3.25		83.346	0.059	0		29700	0.66		29700	0.66		5		30	1347			0.7385	1123.398		22.272	0.992	3.25	83.346
+27 Fri	1.7759	3525.019	3525.019	100	0	2617.105	2617.105	100	0											7.7	1.7759	AA		AA		AA	6.9					12.3			0	17.5								0		0		0																3.3		28	957			0.888	798.138		29.258	1.64	2.703	97.887	3.3	1152	1921.536			29.258	1.402	2.703		97.887	0.059	0		29700	0.66		29700	0.66					1347			0.888	1123.398			1.165	2.703	97.887
+28 Sat	3.6904																			AN	3.6904						AN					AN			AN	AN									0				21.59																		957			1.8452	798.138				1.301			1152	1921.536					1.301			0.076	0		36900	0.82		38700	0.86					1347			1.8452	1123.398				1.301
+29 Sun	3.5661																			AN	3.5661						AN					AN			AN	AN																															957			1.783	798.138				1.346			1152	1921.536					1.346			0.077	0		35550	0.79		41400	0.92					1347			1.783	1123.398				1.346
+30 Mon	2.2624																			8.7	2.2624						7					14.2			0.03	17																												4.7		23	947			1.1312	789.798		24.287		2.122		4.95	1084	1808.112			23.61		2.122			0.059	0		29700	0.66		29700	0.66		5.2		28	1221			1.1312	1018.314		22.932		2.122
+31 Tue	2.1744																			8.2	2.1744						6.9					24.2			0	18																												5.2		22	947			1.0872	789.798		23.231		2.208		5.4	1084	1808.112			23.901		2.208			0.059	0		29700	0.66		29700	0.66		5.6		30	1221			1.0872	1018.314		24.57		2.208
+Sum	62.611304	30414.53477808	30006.8486232	1179.61479198767	407.68615488	27180.374156958	27074.437902366	1195.2023988006	105.936254592					246.3807717264	68.6462360904	86.3063063063063	10.8916783776			171.7	62.611304	13.2	0	2.236	2.09	3.2	145.9	4.93				386.9		730	0.35	380.1							16.971404290068	48.0436528761905	16.0145509587302	13.7856570719456	4.59521902398186	184.891680217687	61.6305600725624											2.96				80.5		371	36970			31.305652	30832.98		322.571939129751	14.0177671084649	83.9771154894217	1016.61659200572	106.3	36528.5	60929.538			430.83437795928	14.2426234136892	83.9771154894217		1016.61659200572	2.0421	0		1008000	22.4		1034100	22.98		75.8		366	36087			31.305652	30096.558		317.692554980408	14.4674797189134	83.9771154894217	1016.61659200572
+Avg	2.01971948387097	2534.54456484	2500.5707186	98.3012326656394	33.97384624	2265.0311797465	2256.2031585305	99.60019990005	8.828021216					61.5951929316	68.6462360904	86.3063063063063	10.8916783776			8.17619047619047	2.01971948387097	1.1	0	0.186333333333333	0.5225	0.266666666666667	6.94761904761905	4.93				18.4238095238095		15.4064665473334	0.0166666666666667	18.1							4.24285107251701	4.00363773968254	4.00363773968254	1.14880475599546	1.53173967466062	15.4076400181406	15.4076400181406											2.96				5.03125		23.1875	1192.58064516129			1.00985974193548	994.612258064516		20.1607461956094	1.16814725903874	2.70893920933618	84.7180493338101	5.06190476190476	1178.33870967742	1965.46896774194			20.5159227599657	1.1868852844741	2.70893920933618		84.7180493338101	0.0658741935483871	0		32516.1290322581	0.72258064516129		33358.064516129	0.741290322580645		5.05333333333333		24.4	1164.09677419355			1.00985974193548	970.85670967742		21.1795036653605	1.20562330990945	2.70893920933618	84.7180493338101
+Max	3.969434	6482.988912	6340.1433936	100	264.84063648	4257.89526	4257.89526	100	105.936254592					79.537914468	68.6462360904	86.3063063063063	10.8916783776			8.8	3.969434	8	0	0.915	0.76	3.2	7.4	4.93				26.3		426	0.03	19.9							6.75613868571429	48.0436528761905	16.0145509587302	5.38621380326531	3.51476447322449	120.109132190476	40.0363773968254											2.96				7.5		28	1379			1.984717	1150.086		29.2580982236155	2.66739289446186	3.98232841764669	159.256342217438	6.6	1296.5	2162.562			29.2580982236155	2.28124470261326	3.98232841764669		159.256342217438	0.1242	0		58950	1.31		65250	1.45		6.4		30	1375			1.984717	1146.75		27.10027100271	1.89509651076466	3.98232841764669	159.256342217438
+Min	1.205325	843.676068	843.676068	81.8181818181818	0	1507.8934755	1507.8934755	95.2023988005997	0					44.41706358	68.6462360904	86.3063063063063	10.8916783776			7.2	1.205325	0	0	0	0.16	0	6.5	4.93				10.3		1	0	16.1							1.99330917006803	0	0	0	0.391406109659864	0	0											2.96				3.3		20	853			0.6026625	711.402		14.8478099480327	0.749596082089552	1.20924041059758	56.399132599065	3.3	890	1484.52			14.5454545454545	0.703529995590231	1.20924041059758		56.399132599065	0.0387	0		12150	0.27		18000	0.4		2.5		20	738			0.6026625	615.492		14.5454545454545	0.657463909090909	1.20924041059758	56.399132599065
+
+### NOV 06
+Nov, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Wed	2.7706	4898.642	4792.351	97.83	106.291	3408.254	3408.254	100	0											8.2	2.7706	4.6	5	0.101	0.47	AA	7.3	3.1				22.4				17.4							4.93	0		1.06		48.2												1.1				5.3		24	947			1.3853	789.798		25.343	2.158	1.732	127.478	5.3	1084	1808.112			25.343	1.916	1.732		127.478	0.054	0		29700	0.66		23850	0.53					1221			1.3853	1018.314			1.673	1.732	127.478
+2 Thu	2.2513	1727.404	1727.404	100	0	1894.512	1894.512	100	0					53.324						8.6	2.2513	AA		AA		AA	6.9					16				16.1								0		0		0																7.6		25	947			1.1257	789.798		26.399	1.199	2.132	70.86	5.95	1084	1808.112			26.304	1.065	2.132		70.86	0.018	0		5850	0.13		11700	0.26		4.3		32	1221			1.1257	1018.314		26.208	0.93	2.132	70.86
+3 Fri	1.7835	1993.14	1993.14	100	0	1984.216	1984.216	100	0											8.3	1.7835	AA		AA		AA	7.3					16.3				15.4								0		0		0																4.5		25	947			0.8917	789.798		26.399	1.256	2.691	74.215	4.65	1084	1808.112			27.532	1.115	2.691		74.215	0	0		0	0		0	0		4.8		35	1221			0.8917	1018.314		28.665	0.974	2.691	74.215
+4 Sat	1.913																			AN	1.913						AN					AN				AN																															947			0.9565	789.798				2.509			1084	1808.112					2.509			0.029	0		14850	0.33		14400	0.32					1221			0.9565	1018.314				2.509
+5 Sun	1.6036																			AN	1.6036						AN					AN				AN																															947			0.8018	789.798				2.993			1084	1808.112					2.993			0.036	0		18000	0.4		18000	0.4					1221			0.8018	1018.314				2.993
+6 Mon	1.51																			7.5	1.51						6.9					17.3				17.3																												2.4		28	1547			0.755	1290.198		18.1		3.179		3.4	1695	2827.26			18.816		3.179			0.033	0		14850	0.33		18450	0.41		4.4		36	1843			0.755	1537.062		19.533		3.179
+7 Tue	1.5741																			11.9	1.5741						7.3					17.4				17.3									0		0.35		16.07															3.5		28	1547			0.787	1290.198		18.1		3.049		2.7	1695	2827.26			19.359		3.049			0.045	0		18450	0.41		27000	0.6		1.9		38	1843			0.787	1537.062		20.619		3.049
+8 Wed	2.8117	4080.285	4080.285	100	0	2267.606	2267.606	100	0											9.2	2.8117	AA		0.12	0.72	AA	6.9					17.7				17.7							7.66	0		1.28		0																4.1		30	1547			1.4059	1290.198		19.392	0.879	1.707	84.814	5.25	1695	2827.26			21.362	0.808	1.707		84.814	0.058	0		22050	0.49		35550	0.79		6.4		43	1843			1.4059	1537.062		23.332	0.738	1.707	84.814
+9 Thu	2.0025	2104.342	2104.342	100	0	2019.166	2019.166	100	0					80.165						7.5	2.0025	AA		0.052		AA	7.2					17.3				17.3								0		0.39		0																3.6		28	1547			1.0013	1290.198		18.1	0.783	2.397	75.522	3.6	1695	2827.26			18.1	0.72	2.397		75.522	0.048	0		18450	0.41		29700	0.66					1843			1.0013	1537.062			0.657	2.397	75.522
+10 Fri	1.748																			AN	1.748						AN					AN				AN																															1547			0.874	1290.198				2.746			1695	2827.26					2.746			0.042	0		18450	0.41		23850	0.53					1843			0.874	1537.062				2.746
+11 Sat	1.6641																			AN	1.6641						AN					AN				AN																															1547			0.832	1290.198				2.884			1695	2827.26					2.884			0.048	0		18000	0.4		29700	0.66					1843			0.832	1537.062				2.884
+12 Sun	1.9105																			AN	1.9105						AN					AN				AN																															1547			0.9553	1290.198				2.512			1695	2827.26					2.512			0.051	0		18000	0.4		32850	0.73					1843			0.9553	1537.062				2.512
+13 Mon	2.0416																			8.1	2.0416						7					20.1				16.5																															1064			1.0208	887.376				2.351		4.9	1355.5	2260.974			21.251		2.351			0.054	0		21600	0.48		32400	0.72		4.9		35	1647			1.0208	1373.598		21.251		2.351
+14 Tue	1.4435	1926.208	1882.868	97.75	43.34	1585.51														7.8	1.4435	3.6		0.053			7					17.8				16									0	0.29	0.65	19.66	6.55																		1064			0.7218	887.376			0.893	3.325	59.302	5.1	1355.5	2260.974			32.18	0.735	3.325		59.302	0.03	0		0	0		29700	0.66		5.1		53	1647			0.7218	1373.598		32.18	0.577	3.325	59.302
+15 Wed	1.2574	1677.875	1640.122	97.75	37.752	1407.317														8.2	1.2574	3.6		AA	1.04		7.2					16.2				16.2							4.95			0		17.12																5		39	1064			0.6287	887.376		36.654	0.793	3.817	52.637	5.5	1355.5	2260.974			32.899	0.653	3.817		52.637	0.091	0		35550	0.79		55800	1.24		6		48	1647			0.6287	1373.598		29.144	0.512	3.817	52.637
+16 Thu	2.5887	6174.683	6174.683	100	0	3076.546								114.426						8.2	2.5887	AA	AA	0.13			6.8					16				16										1.27		0																6.8		37	1064			1.2944	887.376		34.774	1.734	1.854	115.071	6.5	1355.5	2260.974			27.709	1.427	1.854		115.071	0.186	0		82350	1.83		103500	2.3		6.2		34	1647			1.2944	1373.598		20.644	1.12	1.854	115.071
+17 Fri	3.6917	3140.472	3140.472	100	0	1539.447	1539.447	100	0											8.9	3.6917	AA		AA		AA	6.8					15				15.6								0		0		0																4.1		33	1064			1.8459	887.376		31.015	0.867	1.3	57.579	5.15	1355.5	2260.974			27.954	0.714	1.3		57.579	0.09	0		28800	0.64		60750	1.35		6.2		41	1647			1.8459	1373.598		24.894	0.56	1.3	57.579
+18 Sat	3.5384																			AN	3.5384						AN					AN				AN																															1064			1.7692	887.376				1.357			1355.5	2260.974					1.357			0.088	0		16650	0.37		71550	1.59					1647			1.7692	1373.598				1.357
+19 Sun	2.5982																			AN	2.5982						AN					AN				AN																															1064			1.2991	887.376				1.847			1355.5	2260.974					1.847			0.086	0		41400	0.92		44550	0.99					1647			1.2991	1373.598				1.847
+20 Mon	2.2219																			8.9	2.2219						7					14.9				14.9																												7		33	1534			1.1109	1279.356		21.512		2.16		7	1555.5	2594.574			21.512		2.16			0.103	0		48150	1.07		54900	1.22					1577			1.1109	1315.218				2.16
+21 Tue	2.0013																			9	2.0013						7.1					15.8				15.8									0		0.42		5.71															7.5		30	1534			1.0007	1279.356		19.557		2.398		6.25	1555.5	2594.574			18.339		2.398			0.198	0		71100	1.58		126900	2.82		5		27	1577			1.0007	1315.218		17.121		2.398
+22 Wed	1.6531	2867.579	2867.579	100	0	1677.809	1677.809	100	0					71.689	57.903	80.769	13.786			8.8	1.6531	AA		0.059	1	AA	7					18.7				15.7							6.25	0		0.37		0																7.7		30	1534			0.8265	1279.356		19.557	0.656	2.904	62.754	5.75	1555.5	2594.574			18.022	0.647	2.904		62.754	0.135	0		74700	1.66		60750	1.35		3.8		26	1577			0.8265	1315.218		16.487	0.638	2.904	62.754
+23 Thu	1.7049																			AN	1.7049						AN					AN				AN																															1534			0.8525	1279.356				2.815			1555.5	2594.574					2.815			0.082	0		37350	0.83		44550	0.99					1577			0.8525	1315.218				2.815
+24 Fri	1.7102																			AN	1.7102						AN					AN				AN																															1534			0.8551	1279.356				2.807			1555.5	2594.574					2.807			0.075	0		37350	0.83		37350	0.83					1577			0.8551	1315.218				2.807
+25 Sat	1.6405																			AN	1.6405						AN					AN				AN																															1534			0.8203	1279.356				2.926			1555.5	2594.574					2.926			0.075	0		37350	0.83		37350	0.83					1577			0.8203	1315.218				2.926
+26 Sun	1.6359																			AN	1.6359						AN					AN				AN																															1534			0.8179	1279.356				2.934			1555.5	2594.574					2.934			0.082	0		37350	0.83		44550	0.99					1577			0.8179	1315.218				2.934
+27 Mon	1.6336	3269.774	3269.774	100	0	2656.691	2609.007	98.205	47.684											7.6	1.6336	AA		0.617		3.5	7					19.6				17.2								21.63		3.81		0																2.1		31	1150			0.8168	959.1		26.957	1.385	2.938	99.367	2.9	1183.5	1974.078			27.036	1.347	2.938		99.367	0.075	0		37350	0.83		37350	0.83		3.7		33	1217			0.8168	1014.978		27.116	1.309	2.938	99.367
+28 Tue	0.9044	724.1	724.1	100	0	798.773	774.637	96.978	24.137											8.6	0.9044	AA		0.132		3.2	7.2					18.1				16.5								10.95	10.86	0.45		0	0															4.6		30	1150			0.4522	959.1		26.087	0.416	5.307	29.876	4.35	1183.5	1974.078			25.369	0.405	5.307		29.876	0.075	0		37350	0.83		37350	0.83		4.1		30	1217			0.4522	1014.978		24.651	0.393	5.307	29.876
+29 Wed	0.8575																			8.4	0.8575						7.4					19.4				16.9																												5		26	1150			0.4287	959.1		22.609		5.598		5.05	1183.5	1974.078			19.521		5.598			0.075	0		37350	0.83		37350	0.83		5.1		20	1217			0.4287	1014.978		16.434		5.598
+30 Thu	0.7815																			8.3	0.7815						7.5					18.6				17.8																															1150			0.3908	959.1				6.142		0.2	1183.5	1974.078			24.651		6.142			0.082	0		44550	0.99		37350	0.83		0.2		30	1217			0.3908	1014.978		24.651		6.142
+Sum	57.447063	34584.5039034	34397.120753376	1193.33018867925	187.383150024	24315.848338968	18174.653972364	895.183409602673	71.820880776					319.605032142	57.9030354	80.7692307692308	13.786437			162	57.447063	11.8	5	1.264	3.23	6.7	134.8	3.1				334.6				313.6							23.7808416653061	32.5718280163265	10.8572760054422	8.92337711093878	1.43022908245805	84.9810204190476	28.3270068063492											1.13				80.8		477	38350			28.7235315	31983.9		390.554112138205	13.0188704533692	85.3158932499884	909.475886069122	89.5	42396	70716.528			453.259054599781	11.5505262790434	85.3158932499884		909.475886069122	2.142	0		922950	20.51		1219050	27.09		72.1		561	46442			28.7235315	38732.628		372.927614344887	10.0821821047177	85.3158932499884	909.475886069122
+Avg	1.9149021	2882.04199195	2866.426729448	99.4441823899371	15.615262502	2026.320694914	2019.40599692933	99.4648232891859	7.980097864					79.9012580355	57.9030354	80.7692307692308	13.786437			8.52631578947369	1.9149021	0.983333333333333	2.5	0.105333333333333	0.8075	0.744444444444445	7.09473684210526	3.1				17.6105263157895				16.5052631578947							5.94521041632653	3.61909200181406	2.71431900136054	0.743614759244898	0.476743027486017	7.0817517015873	7.0817517015873											1.13				5.05		29.8125	1278.33333333333			0.95745105	1066.13		24.4096320086378	1.0849058711141	2.84386310833295	75.7896571724268	4.71052631578947	1413.2	2357.2176			23.8557397157779	0.962543856586951	2.84386310833295		75.7896571724268	0.0714	0		30765	0.683666666666666		40635	0.903		4.50625		35.0625	1548.06666666667			0.95745105	1291.0876		23.3079758965554	0.840181842059806	2.84386310833295	75.7896571724268
+Max	3.69172	6174.6827142	6174.6827142	100	106.2912984	3408.25359	3408.25359	100	47.6842002					114.42593841	57.9030354	80.7692307692308	13.786437			11.9	3.69172	4.6	5	0.617	1.04	3.5	7.5	3.1				22.4				17.8							7.65711399183673	21.6254876190476	10.8572760054422	3.81226453170068	0.653137447537415	48.2046704761905	16.0682234920635											1.13				7.7		39	1547			1.84586	1290.198		36.6541353383459	2.1576742344245	6.14179877931749	127.477536892923	7	1695	2827.26			32.8990166673514	1.9155764702016	6.14179877931749		127.477536892923	0.198	0		82350	1.83		126900	2.82		6.4		53	1843			1.84586	1537.062		32.1797207043109	1.67347870597871	6.14179877931749	127.477536892923
+Min	0.78153	724.10041728	724.10041728	97.75	0	798.773272812	774.636592236	96.9782813975449	0					53.324220276	57.9030354	80.7692307692308	13.786437			7.5	0.78153	0	0	0	0.47	0	6.8	3.1				14.9				14.9							4.92525980952381	0	0	0	0.352802298412698	0	0											1.13				2.1		24	947			0.390765	789.798		18.0995475113122	0.41641813826087	1.30020694960615	29.8761951436755	0.2	1084	1808.112			18.0218575530421	0.404955519007181	1.30020694960615		29.8761951436755	0	0		0	0		0	0		0.2		20	1217			0.390765	1014.978		16.4338537387017	0.393492899753492	1.30020694960615	29.8761951436755
+
+### DEC 06
+Dec, 2006
+SHAWNEE II	SBR Process
+Flow Mgd
+MGD
+Formula	SBR Process
+~LSolids TSS
+LB	SBR Process
+~RSolids TSS
+LB	SBR Process
+~PSolids TSS
+%	SBR Process
+~XSolids TSS
+LB	SBR Process
+~LBOD Carb 5
+LB	SBR Process
+~RBOD Carb 5
+LB	SBR Process
+~PBOD Carb 5
+%	SBR Process
+~XBOD Carb 5
+LB	SBR Process
+~LNh3 N Ammonia
+LB	SBR Process
+~RNh3 N Ammonia
+LB	SBR Process
+~PNh3 N Ammonia
+%	SBR Process
+~XNh3 N Ammonia
+LB	SBR Process
+~LPhos Total Wet
+LB	SBR Process
+~RPhos Total Wet
+LB	SBR Process
+~PPhos Total Wet
+%	SBR Process
+~XPhos Total Wet
+LB	SBR Process
+~LNON NPDES S.S.
+LB	SBR Process
+~LNON NPDES S.~0
+LB	SHII EFF
+Diss Oxygen
+MG/L
+Daily	SHII EFF
+Flow Mgd
+MGD
+Daily	SHII EFF
+Solids TSS
+MG/L
+Daily	SHII EFF
+Oil Grease Grv
+MG/L
+Daily	SHII EFF
+Nh3 N Ammonia
+MG/L
+Daily	SHII EFF
+Phos Total Wet
+MG/L
+Daily	SHII EFF
+BOD Carb 5
+MG/L
+Daily	SHII EFF
+pH
+S.U.
+Daily	SHII EFF
+NO2 & NO3
+MG/L
+Daily	SHII EFF
+Nickel Rec
+UG/L
+Daily	SHII EFF
+Zinc Tot Recov
+UG/L
+Daily	SHII EFF
+Chromium Rec
+UG/L
+Daily	SHII EFF
+Temp Water C
+Degrees C
+Daily	SHII EFF
+CHROMIUM HEXAV
+UGL
+Daily	SHII EFF
+Fecal Coli Mf
+#/100ML
+Daily	SHII EFF
+Cl2 Residual
+MG/L
+Daily	SHII EFF
+D.O. PROBE TEM
+DEG C
+Daily	SHII EFF
+METER READING
+NUMBER
+Daily	SHII EFF
+LEAD FINAL
+UGL
+Daily	SHII EFF
+COPPER
+UGL
+Daily	SHII EFF
+CADMIUM
+UGL
+Daily	SHII EFF
+MERCURY TOTA~0
+UGL
+Daily	SHII EFF
+CYANIDE FREE~0
+MGL
+Daily	SHII EFF
+PHOS LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD LOADING
+KG/D
+Daily+Formula	SHII EFF
+BOD 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+AMMONIA LOADIN
+KG/D
+Daily+Formula	SHII EFF
+AMN. 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+TSS LOADING
+KG/D
+Daily+Formula	SHII EFF
+TSS 7 DAY AVG
+KG/D
+Daily+Formula	SHII EFF
+Solids Diss
+MG/L
+Daily	SHII EFF
+OIL AND GREASE
+MGL
+Daily	SHII EFF
+Strontum Total
+UG/L
+Daily	SHII EFF
+Toxcty Pimphal
+TUc
+Daily	SHII EFF
+Acute Toxicity
+TUa
+Daily	SHII EFF
+Toxicity Dubia
+TUc
+Daily	SHII EFF
+MercuryTotal (
+NG/L
+Daily	SHII EFF
+Acute Toxici~0
+TUa
+Daily	SHII EFF
+Cadmium Rec
+UG/L
+Daily	SHII EFF
+Chromium Diss.
+UGL
+Daily	SHII EFF
+TKN
+MG/L
+Daily	SHII EFF
+pH Field
+S.U.
+Daily	SHII EFF
+Lead Tot Recov
+UG/L
+Daily	SHII EFF
+Copper Tot Rec
+UG/L
+Daily	SBR East
+Diss Oxygen
+MG/L
+Daily	SBR East
+pH
+S.U.
+Daily	SBR East
+Solids Settlbl
+ML/L
+Daily	SBR East
+Solids TSS
+MG/L
+Daily	SBR East
+Solids TVSS
+MG/L
+Daily	SBR East
+Temp Water C
+Degrees C
+Daily	SBR East
+Flow Mgd
+MGD
+Formula	SBR East
+~ISolids TSS
+LB
+Formula	SBR East
+~ISolids TVSS
+LB
+Formula	SBR East
+SVI
+Ratio
+Formula	SBR East
+F/M
+Ratio
+Formula	SBR East
+Detent Time H
+Hours
+Formula	SBR East
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+~ADiss Oxygen
+MG/L
+Formula	SBR Summary
+~ASolids TSS
+MG/L
+Formula	SBR Summary
+~ISolids TSS
+LB
+Formula	SBR Summary
+~ASolids TVSS
+MG/L
+Formula	SBR Summary
+~ISolids TVSS
+LB
+Formula	SBR Summary
+SVI
+Ratio
+Formula	SBR Summary
+F/M
+Ratio
+Formula	SBR Summary
+Detent Time H
+Hours
+Formula	SBR Summary
+~ApH
+SU
+Formula	SBR Summary
+Solids Ld /kcf
+LB/D/KCF
+Formula	SBR Summary
+Flow Waste MGD
+MGD
+Formula	SBR Summary
+Waste SS
+LB
+Formula	SBR Summary
+MCRT
+Day
+Formula	Waste East
+Flow Gpd
+GPD
+Formula	Waste East
+Run Hours
+HRS/DAY
+Daily	Waste East
+Solids TSS
+MG/L
+Daily	Waste West
+Flow Gpd
+GPD
+Formula	Waste West
+Run Hours
+HRS/DAY
+Daily	Waste West
+Solids TSS
+MG/L
+Daily	SBR West
+Diss Oxygen
+MG/L
+Daily	SBR West
+pH
+S.U.
+Daily	SBR West
+Solids Settlbl
+ML/L
+Daily	SBR West
+Solids TSS
+MG/L
+Daily	SBR West
+Solids TVSS
+MG/L
+Daily	SBR West
+Temp Water C
+Degrees C
+Daily	SBR West
+Flow Mgd
+MGD
+Formula	SBR West
+~ISolids TSS
+LB
+Formula	SBR West
+~ISolids TVSS
+LB
+Formula	SBR West
+SVI
+Ratio
+Formula	SBR West
+F/M
+Ratio
+Formula	SBR West
+Detent Time H
+Hours
+Formula	SBR West
+Solids Ld /kcf
+LB/D/KCF
+Formula
+1 Fri	3.2925	6041.079	6041.079	100	0	2608.648	2608.648	100	0											9.4	3.2925	AA		0.299		AA	6.6	0.73				16.1				14.6								0		3.72		0			AA									1.9	6.6			8.5		40	1150			1.6463	959.1		347.826	1.36	1.458	97.57	8.25	1183.5	1974.078			338.252	1.323	1.458		97.57	0.039	0		15300	0.34		23850	0.53		8		40	1217			1.6463	1014.978		328.677	1.285	1.458	97.57
+2 Sat	4.0204																			AN	4.0204						AN					AN				AN																									AN						1150			2.0102	959.1				1.194			1183.5	1974.078					1.194			0.07	0		31950	0.71		38250	0.85					1217			2.0102	1014.978				1.194
+3 Sun	3.8285																			AN	3.8285						AN					AN				AN																									AN						1150			1.9142	959.1				1.254			1183.5	1974.078					1.254			0.063	0		42300	0.94		20700	0.46					1217			1.9142	1014.978				1.254
+4 Mon	3.3394																			9.9	3.3394						7.3					11.6				11.6																							AA		7.3			6.5		30	978			1.6697	815.652		306.748		1.437		7.15	1109.5	1850.646			298.419		1.437			0.082	775.329	2.387	47250	1.05	1241	35100	0.78	978	7.8		36	1241			1.6697	1034.994		290.089		1.437
+5 Tue	2.6984																			9.8	2.6984						7.9					14.1				13.2																									7.9			7.5		30	978			1.3492	815.652		306.748		1.779		6.15	1109.5	1850.646			286.332		1.779			0.083	0		48600	1.08		34650	0.77		4.8		33	1241			1.3492	1034.994		265.915		1.779
+6 Wed	2.4111	1608.679	1608.679	100	0	1206.509	1206.509	100	0					54.293	42.831	78.889	11.462			9.9	2.4111	AA		0.059	0.57	AA	7.1					14.7				14.1							5.2	0		0.54		0											AA		7.1			7.8		30	978			1.2055	815.652		306.748	0.74	1.991	45.127	6.55	1109.5	1850.646			290.361	0.661	1.991		45.127	0.082	0		40950	0.91		40950	0.91		5.3		34	1241			1.2055	1034.994		273.973	0.583	1.991	45.127
+7 Thu	2.2232	1297.875	1297.875	100	0	958.573	958.573	100	0											8.8	2.2232	AA		AA		AA	7					20.3				20.3								0	0	0	1.42	0	0												7			6.9		32	978			1.1116	815.652		327.198	0.588	2.159	35.853	6.9	1109.5	1850.646			327.198	0.525	2.159		35.853	0.095	0		43200	0.96		52200	1.16					1241			1.1116	1034.994			0.463	2.159	35.853
+8 Fri	2.0503	2291.29	2291.29	100	0	1995.474	1995.474	100	0											9.7	2.0503	AA		AA		AA	7.1	3.52	AA	26	AA	13.1				13.1								0		0		0		477	AA	713	1	AA	AA	1.73	AA	AA	AA	1.6	7.1	AA	AA	7.4		32	978			1.0251	815.652		327.198	1.223	2.341	74.636	7.15	1109.5	1850.646			292.527	1.094	2.341		74.636	0.1	0		44550	0.99		55800	1.24		6.9		32	1241			1.0251	1034.994		257.857	0.964	2.341	74.636
+9 Sat	2.0915																			AN	2.0915						AN					AN				AN																									AN						978			1.0458	815.652				2.295			1109.5	1850.646					2.295			0.112	0		44550	0.99		67050	1.49					1241			1.0458	1034.994				2.295
+10 Sun	1.998																			AN	1.998						AN					AN				AN																									AN						978			0.999	815.652				2.402			1109.5	1850.646					2.402			0.109	0		53550	1.19		55800	1.24					1241			0.999	1034.994				2.402
+11 Mon	1.7398																			9.2	1.7398						7					14.9				14.9																									7			5		28	1229			0.8699	1024.986		227.828		2.759		5	1235	2059.98			227.828		2.759			0.091	0		35550	0.79		55800	1.24					1241			0.8699	1034.994				2.759
+12 Tue	1.6481																			8.7	1.6481						7.4					15.3				15.3																									7.4			7.2		26	1229			0.8241	1024.986		211.554		2.912		7.2	1235	2059.98			211.554		2.912			0.1	0		44550	0.99		55800	1.24					1241			0.8241	1034.994				2.912
+13 Wed	2.2898	7447.849	7447.849	100	0	3263.686	3263.686	100	0											8.2	2.2898	AA		AA	0.59	AA	7					15.6				15.6							5.11	0		0		0													7			7.3		26	1229			1.1449	1024.986		211.554	1.592	2.096	122.07	5.95	1235	2059.98			222.618	1.584	2.096		122.07	0.089	0		44550	0.99		44550	0.99		4.6		29	1241			1.1449	1034.994		233.683	1.577	2.096	122.07
+14 Thu	2.3888	2828.949	2828.949	100	0	1328.809	1328.809	100	0					57.774						9	2.3888	AA		AA		AA	7.2					15.3				15.3								0	0	0	0	0	0												7.2			5.6		27	1229			1.1944	1024.986		219.691	0.648	2.009	49.701	5.6	1235	2059.98			219.691	0.645	2.009		49.701	0.07	0		31500	0.7		38700	0.86					1241			1.1944	1034.994			0.642	2.009	49.701
+15 Fri	1.8987	1710.188	1710.188	100	0	1266.806	1219.301	96.25	47.505											8.7	1.8987	AA		AA		3	6.9					14.9				14.9								21.54		0		0													6.9			5.6		29	1229			0.9493	1024.986		235.964	0.618	2.528	47.382	5.85	1235	2059.98				0.615	2.528		47.382	0.075	0		37350	0.83		37350	0.83		6.1		30	1241			0.9493	1034.994		241.741	0.612	2.528	47.382
+16 Sat	2.2315																			AN	2.2315						AN					AN				AN																									AN						1229			1.1157	1024.986				2.151			1235	2059.98					2.151			0.089	0		44550	0.99		44550	0.99					1241			1.1157	1034.994				2.151
+17 Sun	1.7054																			AN	1.7054						AN					AN				AN																									AN						1229			0.8527	1024.986				2.815			1235	2059.98					2.815			0.067	0		37350	0.83		29700	0.66					1241			0.8527	1034.994				2.815
+18 Mon	2.208																			8.7	2.208						6.7					15.7				14.9																									6.7			5.2		31	1093			1.104	911.562		283.623		2.174		4.15	1173	1956.564					2.174			0.067	0		29700	0.66		37350	0.83		3.1		35	1253			1.104	1045.002		279.33		2.174
+19 Tue	2.692																			9.2	2.692						7.2					14.9				13.8																									7.2			7.8		30	1093			1.346	911.562		274.474		1.783		6.95	1173	1956.564					1.783			0.071	0		37350	0.83		33300	0.74		6.1		37	1253			1.346	1045.002		295.291		1.783
+20 Wed	2.1574	899.635	899.635	100	0	825.865	825.865	100	0					46.781	42.283	90.385	4.498			9.5	2.1574	AA		0.115	0.25	AA	7.1					14.1				13.9							2.04	0		0.94		0			AA										7.1			7.8		30	1093			1.0787	911.562		274.474	0.453	2.225	30.89	6.75	1173	1956.564				0.424	2.225		30.89	0.077	0		37350	0.83		39150	0.87		5.7		35	1253			1.0787	1045.002		279.33	0.395	2.225	30.89
+21 Thu	2.0911	2546.231	2546.231	100	0	1627.146	1573.083	96.677	54.064											8.7	2.0911	AA		0.06		3.1	7.1					15				15								24.52	15.35	0.47	0.47	0	0												7.1			7.7		33	1093			1.0456	911.562		301.921	0.893	2.295	60.86	5.65	1173	1956.564				0.836	2.295		60.86	0.084	0		37350	0.83		46350	1.03		3.6		34	1253			1.0456	1045.002		271.349	0.779	2.295	60.86
+22 Fri	3.3367	3506.338	3506.338	100	0	2039.798	2039.798	100	0											8.8	3.3367	AA		AA		AA	7.1					17.6				14.9								0		0		0													7.1			6.5		32	1093			1.6684	911.562		292.772	1.119	1.439	76.294	5.95	1173	1956.564				1.047	1.439		76.294	0.055	0		3735	0.083		50850	1.13		5.4		31	1253			1.6684	1045.002		247.406	0.976	1.439	76.294
+23 Sat	3.939																			AN	3.939						AN					AN				AN																									AN						1093			1.9695	911.562				1.219			1173	1956.564					1.219			0.114	0		58500	1.3		55800	1.24					1253			1.9695	1045.002				1.219
+24 Sun	2.9988																			AN	2.9988						AN					AN				AN																									AN						1093			1.4994	911.562				1.601			1173	1956.564					1.601			0.091	0		37350	0.83		53550	1.19					1253			1.4994	1045.002				1.601
+25 Mon	3.0336																			AN	3.0336						AN					AN				AN																									AN						1093			1.5168	911.562				1.582			1173	1956.564					1.582			0.098	0		44550	0.99		53550	1.19					1253			1.5168	1045.002				1.582
+26 Tue	2.5513																			8.5	2.5513						7.2					13.6				13.6																									7.2			7.7		28	1087			1.2756	906.558		257.59		1.881		7.5	1239	2066.652					1.881			0.082	0		37350	0.83		44550	0.99		7.3		37	1391			1.2756	1160.094		265.996		1.881
+27 Wed	3.3389	1782.171	1782.171	100	0									27.846	25.619	92	2.228			10.3	3.3389	AA		AA	0.08	3	6.9					13.3				12.6							1.01	37.89		0		0													6.9			8.2		27	1087			1.6695	906.558		248.39		1.438		7.15	1239	2066.652					1.438			0.098	0		44550	0.99		53550	1.19		6.1		35	1391			1.6695	1160.094		251.618		1.438
+28 Thu	3.2776	2186.808	2186.808	100	0															9.7	3.2776	AA		AA		AA	7.2					13.7				13.5								0	12.63	0		0	0												7.2			7.2		27	1087			1.6388	906.558		248.39		1.464		7.35	1239	2066.652					1.464			0.098	0		44550	0.99		53550	1.19		7.5		32	1391			1.6388	1160.094		230.05		1.464
+29 Fri	3.0415																			10	3.0415						7.1					14.9				14.1																									7.1			6		25	1087			1.5207	906.558		229.991		1.578		5.85	1239	2066.652					1.578			0.089	0		44550	0.99		44550	0.99		5.7		30	1391			1.5207	1160.094		215.672		1.578
+30 Sat	3.105																			AN	3.105						AN					AN				AN																									AN						1087			1.5525	906.558				1.546			1239	2066.652					1.546			0.098	0		44550	0.99		53550	1.19					1391			1.5525	1160.094				1.546
+31 Sun	2.4125																			AN	2.4125						AN					AN				AN																									AN						1087			1.2062	906.558				1.99			1239	2066.652					1.99			0.074	0		29700	0.66		44550	0.99					1391			1.2062	1160.094				1.99
+Sum	82.038552	34147.09270416	34147.09270416	1200	0	17121.315031476	17019.745991196	992.927384780279	101.56904028					186.694698036	110.732659899	261.273504273504	18.187730637			184.7	82.038552	0		0.533	1.49	9.1	142.1	4.25	0	26	0	298.7				289.2							13.3582718391837	83.9493506938775	27.9831168979592	5.67452803823129	1.8915093460771	0	0	477	0	713	1	0	0	1.73	0	0	0	3.46	142.1	0	0	139.4		593	34165			41.019276	28493.61		5440.68397336792	9.23297542005944	59.795419643849	640.381653226789	129.05	36780	61349.04			2714.77875104518	8.7541279972838	59.795419643849		640.381653226789	2.613735	775.328517	2.38691852475742	1218735	27.083	1241	1395000	31	978	94		540	39395			41.019276	32855.43		4227.97375041059	8.27528057450816	59.795419643849	640.381653226789
+Avg	2.64640490322581	2845.59105868	2845.59105868	100	0	1712.1315031476	1701.9745991196	99.2927384780279	10.156904028					46.673674509	36.910886633	87.0911680911681	6.062576879			9.235	2.64640490322581	0		0.0444166666666667	0.3725	0.758333333333333	7.105	2.125	0	26	0	14.935				14.46							3.33956795979592	6.99577922448979	6.99577922448979	0.472877336519274	0.630503115359033	0	0	477	0	713	1	0	0	1.73	0	0	0	1.73	7.105	0	0	6.97		29.65	1102.09677419355			1.3232024516129	919.14870967742		272.034198668396	0.923297542005944	1.92888450464029	64.0381653226789	6.4525	1186.45161290323	1979.00129032258			271.477875104518	0.87541279972838	1.92888450464029		64.0381653226789	0.0843140322580645	25.0105973225806	2.38691852475742	39314.0322580645	0.873645161290322	1241	45000	1	978	5.875		33.75	1270.8064516129			1.3232024516129	1059.85258064516		264.248359400662	0.827528057450816	1.92888450464029	64.0381653226789
+Max	4.020368	7447.8490164	7447.8490164	100	0	3263.685633084	3263.685633084	100	54.06381648					57.7743075	42.831084978	92	11.461839642			10.3	4.020368	0		0.299	0.59	3.1	7.9	3.52	0	26	0	20.3				20.3							5.19811321632653	37.886293877551	15.3543522721088	3.72352632653061	1.42052554730159	0	0	477	0	713	1	0	0	1.73	0	0	0	1.9	7.9	0	0	8.5		40	1229			2.010184	1024.986		347.826086956522	1.5920635174939	2.91238808542034	122.070319802221	8.25	1239	2066.652			338.251580865278	1.5843661918654	2.91238808542034		122.070319802221	0.1143	775.328517	2.38691852475742	58500	1.3	1241	67050	1.49	978	8		40	1391			2.010184	1160.094		328.677074774035	1.57666886623691	2.91238808542034	122.070319802221
+Min	1.648132	899.635383	899.635383	100	0	825.865281594	825.865281594	96.25	0					27.846426	25.61871192	78.8888888888889	2.22771408			8.2	1.648132	0		0	0.08	0	6.6	0.73	0	26	0	11.6				11.6							1.01030117006803	0	0	0	0	0	0	477	0	713	1	0	0	1.73	0	0	0	1.56	6.6	0	0	5		25	978			0.824066	815.652		211.554109031733	0.452994575022873	1.19392055652617	30.8895066411368	4.15	1109.5	1850.646			211.554109031733	0.424072335596033	1.19392055652617		30.8895066411368	0.03915	0	2.38691852475742	3735	0.083	1241	20700	0.46	978	3.1		29	1217			0.824066	1014.978		215.672178289001	0.395150096169194	1.19392055652617	30.8895066411368

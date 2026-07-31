@@ -1,8 +1,10 @@
 """Index downloaded meeting documents: extract text, verify dates, scan for corridor topics.
 
 Reads a body's ``download-manifest.yaml``, opens each downloaded file from the
-evidence tree, pulls its text (PDF text layer / DOCX / HTML — **no OCR**, see below),
-and writes ``data/extracted/<slug>/meetings/meeting-index.yaml`` with, per file:
+evidence tree, pulls its text (PDF text layer / DOCX / HTML — **no OCR**, see below;
+the DOCX and HTML readers are :mod:`watermark.documents.office`'s, shared with the corpus
+retrieval path rather than duplicated here, #1757), and writes
+``data/extracted/<slug>/meetings/meeting-index.yaml`` with, per file:
 
 * ``date_verified`` — the listing date **only when it appears in the file's own
   text** (content verification), with ``date_evidence`` naming how (``pdf_text`` /
@@ -19,9 +21,7 @@ here; the manifest/index ``counts`` make the gap visible rather than silent.
 
 from __future__ import annotations
 
-import html as _html
 import re
-import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -33,6 +33,7 @@ from watermark.civic.keywords import scan_text
 from watermark.civic.layout import meetings_dir
 from watermark.civic.models import Subdivision
 from watermark.config import Settings, get_settings
+from watermark.documents import office
 from watermark.documents.pdf import PdfDocument
 from watermark.logging import get_logger
 
@@ -101,17 +102,6 @@ class IndexReport(BaseModel):
         return sum(1 for d in self.docs if d.hits)
 
 
-def _docx_text(path: Path) -> str:
-    try:
-        with zipfile.ZipFile(path) as z:
-            xml = z.read("word/document.xml").decode("utf-8", "ignore")
-    except (zipfile.BadZipFile, KeyError, OSError):
-        return ""
-    # <w:t> runs hold the visible text; join with spaces, decode entities.
-    runs = re.findall(r"<w:t[^>]*>(.*?)</w:t>", xml, re.DOTALL)
-    return _html.unescape(" ".join(runs))
-
-
 class OcrUnavailableError(RuntimeError):
     """OCR was requested but pytesseract / the tesseract binary isn't available."""
 
@@ -173,10 +163,9 @@ def extract_text(path: Path, *, ocr: bool = False) -> tuple[str, str]:
         if not text.strip() and ocr:
             text, method = ocr_pdf(path), "ocr"
     elif suffix == ".docx":
-        text, method = _docx_text(path), "docx"
+        text, method = office.docx_text(path), "docx"
     elif suffix in {".htm", ".html"}:
-        raw = path.read_text(encoding="utf-8", errors="ignore")
-        text, method = _html.unescape(re.sub(r"<[^>]+>", " ", raw)), "html"
+        text, method = office.html_text(path), "html"
     else:
         text, method = "", "none"
     # Normalize whitespace: PDF/DOCX/OCR runs split words and inject newlines, which

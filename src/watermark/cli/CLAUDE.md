@@ -18,7 +18,8 @@ The Typer command surface. Defers to the root [`CLAUDE.md`](../../../CLAUDE.md)
 - **One module per command group**, plus root-level modules whose commands attach directly to
   `app` (no sub-app): `pipeline.py` (`version`, `onboard`, `ingest`, `extract`, `export`,
   `network`, …), `gis.py`, `grid.py` (grid + economics + federal-filings verbs), `hydrology.py`,
-  `reference.py` (`npdes`, `dmr`, `nasa-power`, `rsei`, …), `retrieval.py` (`index`). Sub-app
+  `reference.py` (`npdes`, `dmr`, `nasa-power`, `rsei`, …), `retrieval.py` (`index`),
+  `sidecars.py` (`text-sidecars`). Sub-app
   modules: `sites.py`, `catalog.py`, `hypotheses.py`, `research.py`, `objectstore.py`,
   `subdivisions.py`, `imagery.py`, `poi.py`, `leads.py`, `oepa.py`, `sweep.py`. A verb's
   implementation usually lives in the matching `watermark.<domain>` package — the CLI module is

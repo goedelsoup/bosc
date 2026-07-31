@@ -176,6 +176,14 @@ so it is *reconciled* with them, not a competing index (the `/ask` feed stays ca
   surveys) and nests **by site** (`history/allen-oh/`, `history/allen-in/`, …) so
   books for different watershed points don't collide. All claims from `history/`
   sources are tagged `[reference]`, never `[verified]`.
+  A directory named `<dir>-text/` is the one derived thing that tree admits (#1757): committed
+  **text sidecars** for the legacy binaries (`.doc/.dot/.xls/.rtf`) in its `<dir>/` sibling,
+  which have no in-process reader and would otherwise be unsearchable. They mirror the source
+  layout, keep the source's full name plus `.txt`, and are pinned to their source's sha256 by a
+  `text-sidecars.yaml` manifest — `watermark text-sidecars <dir>` regenerates, `--check` reports
+  drift. **Never hand-edit one** (the next run reverts it) and **never cite one**: the sidecar is
+  a reading aid, the source is the record. Everything else (`.txt/.htm/.docx/.xlsx`) is read in
+  process by `watermark.documents.office`; no sidecar exists for a format that can be read.
 - `data/extracted/**` is the committed, reviewed artifact and what tests run on.
 - `data/reference/**` is committed **authoritative data from outside sources**
   (EPA ECHO, USGS/NOAA, parcels). Each folder carries a `README.md` naming its

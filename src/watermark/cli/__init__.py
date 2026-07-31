@@ -35,6 +35,7 @@ from watermark.cli import (  # noqa: F401
     reference,
     research,
     retrieval,
+    sidecars,
     sites,
     subdivisions,
     sweep,

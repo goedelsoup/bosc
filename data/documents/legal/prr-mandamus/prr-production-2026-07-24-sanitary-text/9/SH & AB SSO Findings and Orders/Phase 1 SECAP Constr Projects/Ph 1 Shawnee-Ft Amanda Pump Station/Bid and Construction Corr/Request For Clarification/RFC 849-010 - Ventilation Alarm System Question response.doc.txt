@@ -1,0 +1,22 @@
+To:	Brian Benedict	From:	Greg Kemper
+Company:	URS	Project:	Allen County Fort Amanda Pump Station
+Date:	June 20, 2014	Pages:	1
+Answer needed by:	ASAP	RFC No:	849-010
+Drawing Reference:	N/A	Spec. Section:	28 3102
+
+ Request:  Please respond to the following question from our ventilation panel supplier:
+Reference Specification Section 28 3102, Item 2.2F.
+“Within the descriptive specification for this section, there is an item “F” – Emergency Power System. This portion calls for a Battery System that is capable of powering the Monitoring System, including the Alerting Devices for a period of time of 24 Hours using Ni-Cad Batteries. What research I have been able to put into this item hasn’t returned any good prospects – this would appear to be a large Amp-Hour Application and I am not finding anything that fits using the Ni-Cad Batteries. Can you please find out what the engineer might have had in mind when inserting this item into the specification? This looks more like a lead-acid battery type application but even that might be difficult. We are probably looking at an amp load in the neighborhood of 2-3 amps which translates to 50-70 AH. We will most likely be looking at 24 VDC as the overall control voltage which make a significant battery pack to start with using Ni-Cad from what I have been advised so far.”
+
+Requested By:	Greg Kemper
+
+	PROJECT MANAGER
+
+CC:  GAK/RFI File
+
+Answer:
+The battery back-up is a code requirement. The manufacturer may supply an alternate battery type that will run the alarms in accordance with the code requirements.
+
+CC:  GAK/RFI File/Field Office
+Answered By:	R. Tackett./ B. Benedict
+	Date:	07/11/14

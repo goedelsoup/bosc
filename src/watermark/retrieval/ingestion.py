@@ -9,7 +9,7 @@ missing it.
 from __future__ import annotations
 
 from collections.abc import Iterator
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING, Any
 
 from watermark.retrieval.store import Chunk
@@ -49,49 +49,147 @@ def _prov(**kw: Any) -> dict[str, Any]:
     return {k: v for k, v in kw.items() if v is not None}
 
 
+def _pdf_chunks(path: Path, source_rel: str, collection: str) -> Iterator[Chunk]:
+    """One chunk per page of a PDF, from its pypdf text layer."""
+    import pypdf  # already a core dep
+
+    try:
+        reader = pypdf.PdfReader(str(path), strict=False)
+    except Exception:
+        return
+
+    for page_idx, page in enumerate(reader.pages):
+        try:
+            text = (page.extract_text() or "").strip()
+        except Exception:
+            text = ""
+
+        if not text:
+            text = f"[image-only page; no text layer — source: {path.name} p.{page_idx + 1}]"
+
+        yield Chunk(
+            chunk_id=_chunk_id("document", source_rel, str(page_idx)),
+            text=text[:_MAX_CHUNK_CHARS],
+            site="",
+            collection=collection,
+            doc_kind="document",
+            source_path=source_rel,
+            page=page_idx,
+            provenance=_prov(
+                filename=path.name,
+                page_1indexed=page_idx + 1,
+                collection=collection or None,
+            ),
+        )
+
+
+def _text_chunks(
+    text: str,
+    *,
+    source_rel: str,
+    filename: str,
+    collection: str,
+    text_source: str,
+    sidecar: str | None = None,
+) -> Iterator[Chunk]:
+    """Paragraph-split chunks for a document with no page structure.
+
+    ``page`` is ``-1`` (the same "not paginated" convention the reference iterator uses); the
+    provenance names the reader that produced the text, and — for a converted legacy format — the
+    committed sidecar it was read from, so a result can always be traced back to how it was made.
+    """
+    for chunk_idx, chunk_text in enumerate(_split_text(text)):
+        yield Chunk(
+            chunk_id=_chunk_id("document", source_rel, str(chunk_idx)),
+            text=chunk_text[:_MAX_CHUNK_CHARS],
+            site="",
+            collection=collection,
+            doc_kind="document",
+            source_path=source_rel,
+            page=-1,
+            provenance=_prov(
+                filename=filename,
+                chunk=chunk_idx if chunk_idx else None,
+                collection=collection or None,
+                text_source=text_source,
+                sidecar=sidecar,
+            ),
+        )
+
+
 def iter_document_chunks(documents_dir: Path) -> Iterator[Chunk]:
-    """Yield one chunk per PDF page (pypdf text layer) under *documents_dir*.
+    """Yield retrieval chunks for every readable source document under *documents_dir*.
 
     Documents are corpus-global (not site-scoped); the agent retrieves them with
     no site filter when looking for any site's source context.
+
+    Three routes, by what the bytes are (#1757 — before it, only the first existed, which left
+    the whole native Office/browser tranche of the batch-3 sanitary production unsearchable):
+
+    * **PDF** → one chunk per page, from the pypdf text layer. An image-only page still yields a
+      chunk, marked as having no text layer, so the gap is retrievable rather than absent.
+    * **Natively readable** (``.txt``/``.htm``/``.html``/``.docx``/``.xlsx``, via
+      :mod:`watermark.documents.office`) → paragraph-split chunks, ``page=-1``.
+    * **Legacy binary** (``.doc``/``.dot``/``.xls``/``.rtf``) → read from its committed
+      ``-text`` sidecar (:mod:`watermark.text_sidecars`), and attributed to the **source**
+      document: ``source_path`` is the ``.DOC``, never the derived ``.txt``, so a citation names
+      the record. The sidecar's own path is carried in the provenance.
+
+    Files with no extension are routed by their magic bytes (three arrived that way and are never
+    renamed). Anything else — images, media, the sidecar trees' own manifests — is skipped.
     """
-    import pypdf  # already a core dep
+    from watermark.documents.office import (
+        NATIVE_TEXT_SUFFIXES,
+        detect_suffix,
+        plain_text,
+        read_native_text,
+    )
+    from watermark.text_sidecars import in_sidecar_tree, sidecar_source_rel
 
-    for pdf_path in sorted(documents_dir.rglob("*.pdf")):
-        rel = pdf_path.relative_to(documents_dir)
-        collection = rel.parts[0] if len(rel.parts) > 1 else ""
-        source_rel = str(rel)
+    for path in sorted(documents_dir.rglob("*")):
+        if not path.is_file():
+            continue
+        rel = path.relative_to(documents_dir)
+        rel_posix = rel.as_posix()
 
-        try:
-            reader = pypdf.PdfReader(str(pdf_path), strict=False)
-        except Exception:
+        if in_sidecar_tree(rel_posix, documents_dir):
+            source = sidecar_source_rel(rel_posix, documents_dir)
+            if source is None:
+                continue  # the tree's own manifest/README, or a sidecar whose source is gone
+            text = plain_text(path).strip()
+            if not text:
+                continue
+            source_rel = str(source)
+            yield from _text_chunks(
+                text,
+                source_rel=source_rel,
+                filename=PurePosixPath(source_rel).name,
+                collection=source.parts[0] if len(source.parts) > 1 else "",
+                text_source="sidecar",
+                sidecar=rel_posix,
+            )
             continue
 
-        for page_idx, page in enumerate(reader.pages):
-            try:
-                text = (page.extract_text() or "").strip()
-            except Exception:
-                text = ""
+        suffix = detect_suffix(path)
+        if suffix not in {".pdf", *NATIVE_TEXT_SUFFIXES}:
+            continue
 
-            if not text:
-                text = (
-                    f"[image-only page; no text layer — source: {pdf_path.name} p.{page_idx + 1}]"
-                )
+        source_rel = str(rel)
+        collection = rel.parts[0] if len(rel.parts) > 1 else ""
+        if suffix == ".pdf":
+            yield from _pdf_chunks(path, source_rel, collection)
+            continue
 
-            yield Chunk(
-                chunk_id=_chunk_id("document", source_rel, str(page_idx)),
-                text=text[:_MAX_CHUNK_CHARS],
-                site="",
-                collection=collection,
-                doc_kind="document",
-                source_path=source_rel,
-                page=page_idx,
-                provenance=_prov(
-                    filename=pdf_path.name,
-                    page_1indexed=page_idx + 1,
-                    collection=collection or None,
-                ),
-            )
+        text, method = read_native_text(path, suffix=suffix)
+        if not text:
+            continue
+        yield from _text_chunks(
+            text,
+            source_rel=source_rel,
+            filename=path.name,
+            collection=collection,
+            text_source=method,
+        )
 
 
 def iter_reference_chunks(reference_dir: Path) -> Iterator[Chunk]:

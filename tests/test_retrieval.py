@@ -20,6 +20,7 @@ from watermark.retrieval.embeddings import (
 )
 from watermark.retrieval.ingestion import (
     _split_text,
+    iter_document_chunks,
     iter_extracted_chunks,
     iter_reference_chunks,
 )
@@ -334,6 +335,100 @@ def test_iter_extracted_chunks_lima_excludes_peer_subtrees(tmp_path: Path) -> No
     sources = {c.source_path for c in chunks}
     assert sources == {"recorder/deed.yaml", "oepa/1PD00013.npdes.yaml"}
     assert all(c.site == "lima" for c in chunks)
+
+
+# ---------------------------------------------------------------------------
+# #1757 — native-format documents and their text sidecars
+# ---------------------------------------------------------------------------
+
+
+def _mini_corpus(tmp_path: Path) -> Path:
+    """A documents tree carrying one of each route: PDF, native, and sidecar-backed."""
+    import zipfile
+
+    prod = tmp_path / "legal" / "production"
+    prod.mkdir(parents=True)
+    (prod / "notes.txt").write_text("Shawnee II DFFO extension letter", encoding="utf-8")
+    (prod / "email.htm").write_text(
+        "<html><head><style>p{margin:0}</style></head><body><p>Bath Trunk Sizing</p></body></html>",
+        encoding="utf-8",
+    )
+    with zipfile.ZipFile(prod / "memo.docx", "w") as z:
+        z.writestr("word/document.xml", "<w:p><w:t>Hume Road WPCLF</w:t></w:p>")
+    (prod / "Letter to Chase.DOC").write_bytes(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1")
+
+    sidecars = tmp_path / "legal" / "production-text"
+    sidecars.mkdir(parents=True)
+    (sidecars / "Letter to Chase.DOC.txt").write_text("retainage account", encoding="utf-8")
+    (sidecars / "text-sidecars.yaml").write_text("meta: {}\n", encoding="utf-8")
+    (sidecars / "README.md").write_text("# derived", encoding="utf-8")
+    return tmp_path
+
+
+def test_iter_document_chunks_reads_the_native_office_and_browser_formats(tmp_path: Path) -> None:
+    chunks = {c.source_path: c for c in iter_document_chunks(_mini_corpus(tmp_path))}
+
+    assert chunks["legal/production/notes.txt"].provenance["text_source"] == "txt"
+    assert chunks["legal/production/email.htm"].provenance["text_source"] == "html"
+    assert "margin" not in chunks["legal/production/email.htm"].text
+    assert chunks["legal/production/memo.docx"].text == "Hume Road WPCLF"
+    # Un-paginated documents use the reference iterator's page convention.
+    assert chunks["legal/production/notes.txt"].page == -1
+    assert chunks["legal/production/notes.txt"].collection == "legal"
+
+
+def test_iter_document_chunks_attributes_a_sidecar_to_the_record_it_transcribes(
+    tmp_path: Path,
+) -> None:
+    # A citation has to name the .DOC — the .txt is a derived reading aid, and indexing it under
+    # its own path would cite a file the county never produced.
+    chunks = [
+        c
+        for c in iter_document_chunks(_mini_corpus(tmp_path))
+        if c.provenance.get("text_source") == "sidecar"
+    ]
+    assert len(chunks) == 1
+    chunk = chunks[0]
+    assert chunk.source_path == "legal/production/Letter to Chase.DOC"
+    assert chunk.provenance["sidecar"] == "legal/production-text/Letter to Chase.DOC.txt"
+    assert chunk.provenance["filename"] == "Letter to Chase.DOC"
+    assert chunk.collection == "legal"
+    assert chunk.text == "retainage account"
+
+
+def test_iter_document_chunks_does_not_index_a_sidecar_tree_under_its_own_path(
+    tmp_path: Path,
+) -> None:
+    # The .txt must not appear twice — once as the record's text and once as a document of its
+    # own — and the tree's manifest/README are not corpus text at all.
+    sources = {c.source_path for c in iter_document_chunks(_mini_corpus(tmp_path))}
+    assert not any(s.startswith("legal/production-text/") for s in sources)
+
+
+def test_iter_document_chunks_routes_an_extensionless_pdf_by_its_magic_bytes(
+    tmp_path: Path,
+) -> None:
+    import pypdf
+
+    coll = tmp_path / "legal"
+    coll.mkdir()
+    writer = pypdf.PdfWriter()
+    writer.add_blank_page(width=200, height=200)
+    with (coll / "Flow Calculations feb 6, 2008").open("wb") as fh:
+        writer.write(fh)
+
+    chunks = list(iter_document_chunks(tmp_path))
+    assert [c.page for c in chunks] == [0]  # paginated, i.e. read as a PDF
+    assert chunks[0].source_path == "legal/Flow Calculations feb 6, 2008"
+
+
+def test_iter_document_chunks_skips_formats_it_cannot_read(tmp_path: Path) -> None:
+    coll = tmp_path / "legal"
+    coll.mkdir()
+    (coll / "scan.jpg").write_bytes(b"\xff\xd8\xff\xe0")
+    (coll / "thumbs.db").write_bytes(b"\x00\x01")
+    (coll / "filelist.xml").write_text("<xml/>", encoding="utf-8")  # a Word _files/ companion
+    assert list(iter_document_chunks(tmp_path)) == []
 
 
 # ---------------------------------------------------------------------------

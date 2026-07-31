@@ -44,6 +44,8 @@ data/documents/**/3-3-16?Natale?Revised?Change?Order filter=lfs diff=lfs merge=l
 # CRLF line endings — never normalize a source byte under data/documents (chain of
 # custody). Small enough to stay in-repo (not LFS), unlike the scans above.
 data/documents/**/*.html -text
+# Also covers the derived `<dir>-text/` sidecars (#1757) — small UTF-8 transcriptions of the
+# legacy binaries, in-repo like the captured evidence above, not LFS.
 data/documents/**/*.txt -text
 # The sanitary production's native web/markup formats stay raw bytes like .html/.txt.
 data/documents/**/*.htm -text
