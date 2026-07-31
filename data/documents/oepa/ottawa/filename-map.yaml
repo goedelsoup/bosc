@@ -1,0 +1,79 @@
+meta:
+  subject: >-
+    OEPA/DAM permit download manifest — Village of Ottawa Wastewater Treatment Plant,
+    NPDES 2PD00028 / application OH0026921 (issue 1422; the pull #415 had left open)
+  generated_at: '2026-07-31'
+  policy: >-
+    non-destructive — originals keep as-received names. As at Findlay, the Ohio EPA DAM serves
+    TWO different documents under the same basename `2PD00028.pdf`: the issued permit from
+    `permits/doc/` and the draft public-notice package from `permits/DraftPN/`. Both byte-streams
+    are kept; the second landed with its content-hash suffix (`2PD00028.e00560a8.pdf`) under the
+    fetcher's non-destructive collision rule. Neither file is renamed to "fix" the collision. The
+    canonical name of each is recorded below beside its source URL, and every content-verified
+    date is read from that document's own text layer — never from its filename.
+
+documents:
+- filename: 2PD00028.pdf
+  canonical_name: >-
+    Authorization to Discharge Under the NPDES — permit 2PD00028*PD as issued, Village of Ottawa
+    (Ottawa Wastewater Treatment Plant), with the Fact Sheet for NPDES Permit Renewal bound in
+    from p. 44. Action date 2025-01-22; effective 2025-03-01; expires 2030-02-28. 78 pp.
+  content_verified_date: '2025-01-22'   # "Action Date: January 22, 2025", printed on p. 1 of the text layer
+  permit_id: 2PD00028
+  application_no: OH0026921
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00028.pdf
+  sha256: 51415abd16af49f7cc939043c7bb05ce9f2cc0ca014bbf93f2af4d0f9bf3cdb1
+  bytes: 2349456
+  content_type: application/pdf
+  fetched_at: '2026-07-31'
+  status: downloaded
+  note: >-
+    The instrument the standing water watch is anchored on. Part II, Item X is the general
+    mercury variance renewed under OAC 3745-1-38(H) — the 4.5 ng/L monthly-average limit whose
+    breach put the plant into Category-I noncompliance in 2025-26 — and Part II, Item X.3 is the
+    clause that ties the two sides of this river together in the permittee's own instrument.
+    Discharges to the Blanchard River at RIVER MILE 22.1. See
+    data/extracted/oepa/ottawa/2PD00028.npdes.yaml.
+- filename: 2PD00028.fs.pdf
+  canonical_name: >-
+    Fact Sheet for NPDES Permit Renewal, Ottawa WWTP, 2024 — permit 2PD00028*PD, application
+    OH0026921, Public Notice No. 208357. 35 pp.
+  content_verified_date: '2024-12-17'   # "Public Notice Date: December 17, 2024", printed on p. 1 of the text layer
+  permit_id: 2PD00028
+  application_no: OH0026921
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00028.fs.pdf
+  sha256: b70590a39131c95ac9b045e46ce2b833e34b8de90ca52269b7c72c0b54e0d298
+  bytes: 1344785
+  content_type: application/pdf
+  fetched_at: '2026-07-31'
+  status: downloaded
+  note: >-
+    The anchor water record: Table 12 (p. 28) carries the REGULATORY low-flow set — annual 7Q10
+    7.78 cfs, 1Q10 5.42 cfs, harmonic mean 55.13 cfs, all drainage-adjusted from USGS gauge
+    04189500 (Glandorf) over 1921-1951 — plus the 2.2:1 acute dilution ratio (p. 11), the
+    mercury variance derivation (pp. 13-14: PEQavg 7.1 -> 4.5 ng/L over 63 samples), the receiving
+    water's use designations, and the TMDL aquatic-life passage the watch is required to carry
+    alongside the violations. Standalone bytes, though the same fact sheet is also bound into
+    2PD00028.pdf from p. 44 — the standalone copy is the citable one and its own page numbering is
+    what the extraction cites. See data/extracted/oepa/ottawa/2PD00028.fs.npdes.yaml.
+- filename: 2PD00028.e00560a8.pdf
+  canonical_name: >-
+    Public Notice of NPDES Permit — Public Notice No. 208357, date of issue 2024-12-17, comment
+    period ending 2025-01-16: the draft permit as noticed plus the fact sheet. 80 pp.
+  content_verified_date: '2024-12-17'   # "Date of Issue of Public Notice: 12/17/2024", printed on p. 1 of the text layer
+  as_received_name: 2PD00028.pdf
+  permit_id: 2PD00028
+  application_no: OH0026921
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/DraftPN/2PD00028.pdf
+  sha256: e00560a80c388020897697c2f50ce0f7f6aa2264e4b6d0869fc24d7bd399e4b8
+  bytes: 2327954
+  content_type: application/pdf
+  fetched_at: '2026-07-31'
+  status: conflict
+  note: >-
+    same name, different bytes — kept alongside the issued permit. The as-received DAM basename
+    is `2PD00028.pdf`; the `.e00560a8` infix is this file's own sha256 prefix, added by the
+    non-destructive collision rule, not a rename of the source. Its Outfall Flow and Location List
+    (p. 1) is the only instrument in this set that states outfall 001's COORDINATES — lat
+    41.031111, long -84.055278 — which differ from the ICIS-NPDES pair for the same outfall
+    (41.028889 / -84.049167). Both are recorded; neither is corrected against the other.

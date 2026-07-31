@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-31T12:33:57.303802+00:00'
+reconciled_at: '2026-07-31T13:34:20.203875+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -902,8 +902,8 @@ entries:
     site_scope: slug-scoped
   network:
     exists: true
-    sha256: 83dee16bb8bbc6a89b404fa0a5e722ab452223b785010af0a32cd753597e3254
-    size_bytes: 22598
+    sha256: 343e2ed72adaa2ee49d13fe6379992e864cc101d46b2ecff48c7a9f7007ebbeb
+    size_bytes: 28459
     lfs_materialized: true
     file_count: 3
     missing: []
@@ -1080,6 +1080,16 @@ entries:
     asof: null
     stale: false
     site_scope: state:OH
+  ottawa-water-watch:
+    exists: true
+    sha256: a1eb5108817709ce41d85e57eedb4211049610ab46e1b6e841c51a6d5443f9f5
+    size_bytes: 107702
+    lfs_materialized: true
+    file_count: 4
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:ottawa
   parcel-assemblage:
     exists: true
     sha256: ed0f57e4e11ceba70659890eec8159208f26b18e3dbb535d6e079d98cc193c51

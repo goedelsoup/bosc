@@ -9,6 +9,27 @@ Living record for the Ottawa watershed point (basin: maumee), scaffolded by `wat
 - [~] **Data-center activity** — self-research first pass run (#247); **affirmatively nothing documented** (no Putnam/Ottawa permit, deed, SOS filing, or meeting record in the corpus). See self-research summary below.
 - [x] **Per-jurisdiction GIS** — parcels **wired** (`PUTNAM_PARCEL_SCHEMA`, #420 — Putnam County's self-hosted valid-cert ArcGIS, owner + auditor CAMA values on one layer) and flood = shared national NFHL (wired). Zoning stays `[open]` (no standalone REST — village zoning is class-coded / map-only). See GIS discovery below.
 
+## Record domain — live (#1422)
+
+The `record` domain activated on 2026-07-31 and the site's tier rose **backdrop → case**. Three
+committed record rows: the `2PD00028*PD` NPDES permit and its fact sheet (two `permits-npdes`), and
+the Village's 2025 Consumer Confidence Report (one `permits-epa`). The standing watch that reads
+both sides of the river together is [`water-watch.yaml`](water-watch.yaml) — quarterly cadence,
+eleven open leads.
+
+This closes the Ottawa WWTP fact-sheet pull that had been open since **#415**. Its Table 12 supplies
+the **regulatory** low-flow set (annual 7Q10 **7.78 cfs**, 1Q10 5.42, 90Q10 21.66, harmonic mean
+55.13, drainage-adjusted from USGS 04189500 at Glandorf over 1921-1951), which now populates
+`_OTTAWA.plant_receiving` and the `regulatory_denominators` block of
+`data/reference/network/findlay-ottawa-comparison.yaml` alongside the network's **derived** 8.67 cfs.
+Neither is preferred. Ottawa screens in the TIGHT band on either (1.87:1 derived, 1.68:1 regulatory),
+so no finding here turns on the choice — unlike at Findlay, where the two bases are ~41x apart and
+the reconciliation is #1458.
+
+Still `[open]` on the water side: the site has no committed `watch-items.geojson`, so the routed
+balance does not yet read `plant_receiving` (#829); leads are recorded in the watch artifact rather
+than a `data/site/ottawa/leads.yaml` bundle, which belongs to #1424.
+
 ## Same-river sibling of Findlay (#237) — the intra-tributary control
 
 Ottawa and **Findlay** sit on the **same receiving river** (the Blanchard), ~40 river-mi apart — the

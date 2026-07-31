@@ -2,16 +2,16 @@
   "site": "ottawa",
   "bundle_version": "1.0.0",
   "contract_version": "1.47.0",
-  "generated_at": "2026-07-31T01:38:23+00:00",
-  "feed_count": 28,
-  "row_total": 383,
+  "generated_at": "2026-07-31T13:41:06+00:00",
+  "feed_count": 30,
+  "row_total": 495,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "absent",
       "places": "absent",
-      "record": "absent",
+      "record": "live",
       "story": "absent"
     }
   },
@@ -23,7 +23,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 3
     },
     {
       "name": "timeline",
@@ -31,7 +31,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 3
     },
     {
       "name": "entities",
@@ -39,7 +39,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 5
     },
     {
       "name": "relationships",
@@ -47,7 +47,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 3
     },
     {
       "name": "people",
@@ -95,7 +95,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "exhibits",
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 54
+      "count": 55
     },
     {
       "name": "facts",
@@ -210,6 +210,14 @@
       "count": 13
     },
     {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
       "name": "catalog-index",
       "path": "feeds/catalog-index.json",
       "media_type": "application/json",
@@ -223,7 +231,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 84
     },
     {
       "name": "corpus-nodes",
@@ -231,13 +239,21 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 84
     },
     {
       "name": "ask-embeddings",
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 88
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }

@@ -2,7 +2,8 @@
 #
 # Findlay (upstream, Hancock County) and the Village of Ottawa (downstream, Putnam County) both
 # discharge to the SAME river — the Blanchard (Blanchard → Auglaize → Maumee → Lake Erie, HUC-8
-# 04100008) — ~40 river-miles apart, under the SAME 2023 Maumee Watershed Nutrient TMDL and the
+# 04100008) — 34.32 river-miles apart (RM 56.42 vs RM 22.1, each cited to its own Ohio EPA fact
+# sheet; #1422), under the SAME 2023 Maumee Watershed Nutrient TMDL and the
 # SAME AEP Ohio / PJM AEP grid zone. That makes them a natural experiment: the watershed identity
 # is held constant and only the discharge point (position + plant size) is varied. This is the
 # analytical payoff the whole Findlay/Ottawa control was scaffolded for (#417), unblocked by the
@@ -12,14 +13,19 @@
 # leaves both nodes honestly `no_receiving_water`, because ECHO carries no receiving-water name for
 # OH0025135 / OH0026921, so the shared-denominator comparison has to be assembled deliberately).
 # Screening-grade, NOT a permit determination — the binding wasteload allocation is in each plant's
-# Ohio EPA NPDES fact sheet (still an open pull: #352 Findlay, #415 Ottawa).
+# Ohio EPA NPDES fact sheet. BOTH fact sheets are now committed (#352 Findlay, closed; #415 Ottawa,
+# closed by #1422), and the `regulatory_denominators` block below carries what each one states.
 meta:
   subject: Findlay (upstream) vs Ottawa (downstream) effluent screened against a shared Blanchard 7Q10
-  issues: "#417 (this comparison); depends on #414 (the Blanchard 7Q10 derivation, now committed)"
+  issues: >-
+    #417 (this comparison); depends on #414 (the Blanchard 7Q10 derivation, now committed);
+    #1422 added the regulatory denominators from both plants' fact sheets and the cited river-mile
+    separation. Reconciling the derived and regulatory 7Q10s is #1458 and is deliberately NOT done
+    here — this artifact now states both and prefers neither.
   control_design: >
     Watershed identity held CONSTANT (same Blanchard River, same 7Q10, same TMDL, same grid zone);
     discharge-point location + plant size VARIED (upstream Findlay 15 MGD vs downstream Ottawa 3 MGD,
-    ~40 river-miles apart). The network's only intra-tributary (along-one-river) pair.
+    34.32 river-miles apart). The network's only intra-tributary (along-one-river) pair.
   discipline: >
     The 7Q10 is DERIVED (LP3 over the USGS daily record), not a cited fact-sheet value; design flows
     are ECHO design_flow_mgd; the dilution bands are a screening taxonomy, not an Ohio EPA
@@ -49,12 +55,106 @@ shared_denominator:
       The at-Ottawa gage (2009-2024, ~14 yr) sits BELOW the 20-climatic-year LP3 floor, so it is NOT
       a committed screening denominator (omit-don't-guess) — but its 7Q10 (8.98 cfs) is within 3.6%
       of the near-Findlay value (8.67 cfs). That confirms the Blanchard's low flow barely grows over
-      the ~40-mile reach, so a single shared denominator is honest and downstream position confers
+      the 34-mile reach, so a single shared denominator is honest and downstream position confers
       essentially no dilution gain.
     excluded_gage:
       gage: "04189500"
       gage_name: Blanchard River at Glandorf OH
-      note: no daily-discharge record in the 1980-2024 window — unusable as an LP3 denominator.
+      note: >-
+        no daily-discharge record in the 1980-2024 window — unusable as an LP3 denominator. NOTE
+        (#1422): this is the SAME gage Ohio EPA's Ottawa fact sheet uses, over 1921-1951. The two
+        artifacts do not disagree about the gage; they reach for different halves of its life,
+        because the record the regulator used had ended before the window the derivation needs
+        began. See `regulatory_denominators` below.
+
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+# THE REGULATORY DENOMINATORS (#1422). What each plant's own Ohio EPA fact sheet states, beside
+# the derived value the screen above runs on. Neither is silently preferred: they answer different
+# questions. The regulatory value is what the wasteload allocation and the permit limits were
+# actually computed against; the derived value is the network's own consistent screening basis,
+# computed the same way at every site so sites can be compared with each other.
+regulatory_denominators:
+  discipline: >-
+    A fact-sheet low flow is the binding number for that permit and ONLY for that permit. It is
+    computed at the outfall, from whatever gage record Ohio EPA had, by whatever period that record
+    covers — which is why the two plants on this one river carry values 37x apart. The derived LP3
+    value is the opposite: one method, one window, applied identically network-wide, which is what
+    makes cross-site screening meaningful and what makes it wrong to substitute for a permit
+    figure. Carry both. Never average them.
+  ottawa:
+    node: ottawa
+    permit: 2PD00028*PD (application OH0026921)
+    outfall: 2PD00028001
+    river_mile: 22.1
+    seven_q10_cfs: 7.78
+    one_q10_cfs: 5.42
+    thirty_q10_summer_cfs: 9.75
+    thirty_q10_winter_cfs: 58.08
+    ninety_q10_cfs: 21.66
+    harmonic_mean_cfs: 55.13
+    design_flow_cfs: 4.6417
+    mixing_assumption_pct: {average: 25, maximum: 100}
+    acute_dilution_ratio: 2.2
+    basis: USGS gauge 04189500 (Blanchard River at Glandorf), 1921-1951, drainage-adjusted
+    role: regulatory — the denominator the WLA and the permit limits were computed against
+    citation: >-
+      Ohio EPA, Fact Sheet for NPDES Permit Renewal, Ottawa WWTP, 2024, Table 12 (p. 28) and the
+      acute dilution calculation (p. 11) — data/documents/oepa/ottawa/2PD00028.fs.pdf; structured
+      read at data/extracted/oepa/ottawa/2PD00028.fs.npdes.yaml.
+  findlay:
+    node: findlay
+    permit: 2PD00008*UD (application OH0025135)
+    outfall: 2PD00008001
+    river_mile: 56.42
+    seven_q10_cfs: 0.21
+    one_q10_cfs: 0.17
+    thirty_q10_summer_cfs: 0.31
+    thirty_q10_winter_cfs: 1.24
+    ninety_q10_cfs: 0.32
+    harmonic_mean_cfs: 1.84
+    design_flow_cfs: 23.208
+    mixing_assumption_pct: {average: 25, maximum: 100}
+    acute_dilution_ratio: 1.0
+    basis: USGS gages 04188300 and 04189000
+    role: regulatory — the denominator the WLA and the permit limits were computed against
+    citation: >-
+      Ohio EPA, Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024, Table 12 (p. 28) —
+      data/documents/oepa/findlay/2PD00008.fs.pdf; structured read at
+      data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml.
+  derived:
+    seven_q10_cfs: 8.67
+    basis: LP3 over USGS 04189000, 44 climatic years 1980-2024
+    role: screening — the network's consistent cross-site basis (see `shared_denominator` above)
+    citation: data/reference/hydrology/low-flow-7q10.derived.yaml
+  what_the_three_numbers_do_and_do_not_show:
+    ordering_is_physically_sensible: >-
+      Between the two REGULATORY values, low flow grows downstream as drainage area grows:
+      0.21 cfs at RM 56.42, 7.78 cfs at RM 22.1, 34.32 river miles apart. That is the expected
+      direction and it is internally consistent.
+    the_discrepancy_is_at_findlay_not_at_ottawa: >-
+      The derived 8.67 cfs was computed at USGS 04189000 (near Findlay), where Ohio EPA's own
+      instrument states 0.21 cfs — a factor of ~41. At OTTAWA the derived value and the regulatory
+      value are within 11% of each other (8.67 vs 7.78). So the reconciliation #1458 owes is about
+      the upstream node; downstream the two bases very nearly agree.
+    ottawa_screening_is_robust_to_the_choice:
+      derived_dilution_ratio: 1.87      # 8.67 / 4.64
+      regulatory_dilution_ratio: 1.68   # 7.78 / 4.6417
+      derived_effluent_fraction: 0.54
+      regulatory_effluent_fraction: 0.60
+      band_under_both: tight
+      note: >-
+        Ottawa screens in the TIGHT band on either denominator, so no finding about this node turns
+        on which is used. Recording that is the point of carrying both: it shows where the choice
+        matters (Findlay) and where it does not (Ottawa).
+    findlay_screening_is_not:
+      derived_dilution_ratio: 0.37
+      regulatory_dilution_ratio: 0.009  # 0.21 / 23.208
+      band_under_both: violation
+      note: >-
+        Both put Findlay in the violation band, but they are not the same statement. On the derived
+        value the effluent is 2.68x the low flow; on Ohio EPA's own value it is 110x it, and the
+        fact sheet computes the acute dilution ratio as 1.0 outright — at design flow the river
+        below that outfall IS the effluent.
 
 # Screening bands (watermark.hydrology.models._lowflow): dilution-ratio = 7Q10 / discharge.
 dilution_bands:
@@ -77,7 +177,7 @@ comparison:
       effluent is MORE than the river's entire 7-day/10-yr low flow. A violation-band,
       effluent-dominated reach despite discharging to a real, gaged tributary river.
   - node: ottawa
-    position: downstream (~40 river-miles below Findlay)
+    position: downstream (34.32 river-miles below Findlay — RM 22.1 vs RM 56.42, both cited)
     discharger: Village of Ottawa Wastewater Treatment Plant (WWTP)
     npdes: OH0026921
     design_flow_mgd: 3.0             # ECHO design_flow_mgd (maumee-wwtp.potw.yaml)
@@ -97,8 +197,8 @@ finding: >
   effluent-fraction ratio between the two plants equals the design-flow ratio exactly (15.0 / 3.0 =
   5.0) — the rounded displayed fractions (2.68 / 0.54) only approximate it: with the watershed held
   constant the entire screen difference collapses to plant size. And because the
-  Blanchard's low flow barely grows over the 40-mile reach (the 14-yr Ottawa gage confirms +3.6%),
+  Blanchard's low flow barely grows over the 34-mile reach (the 14-yr Ottawa gage confirms +3.6%),
   downstream position confers essentially NO assimilative advantage on this stretch — Ottawa is the
-  cleaner site only because it is the smaller plant, not because it sits 40 miles further down a
+  cleaner site only because it is the smaller plant, not because it sits 34 miles further down a
   bigger river. That is the uniquely clean siting lesson this along-one-river control was built to
   expose.

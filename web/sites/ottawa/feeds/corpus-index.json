@@ -1,13 +1,46 @@
 [
   {
+    "id": "artifact/blanchard-river",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Blanchard River",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-2pd00028",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Ottawa Wastewater Treatment Plant",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 13,
+    "updated": null
+  },
+  {
     "id": "artifact/site-ottawa",
     "node_class": "artifact",
     "kind": "site",
     "label": "Ottawa",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 6,
     "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/village-of-ottawa",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Village of Ottawa",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 14,
     "updated": null
   },
   {
@@ -866,6 +899,28 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 10,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-2pd00028--discharges-to--blanchard-river",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:2PD00028 discharges_to BLANCHARD RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/village-of-ottawa--operates--npdes-2pd00028",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "VILLAGE OF OTTAWA operates npdes:2PD00028",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]

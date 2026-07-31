@@ -1,6 +1,6 @@
 {
   "site": "ottawa",
-  "catalog_version": "3b3fb081ccf73d5fb640b979987c0fa3cd6dc1cc11791f511645d85ec9d3ffcf",
+  "catalog_version": "973a75e2729fe0d139c337ea1679ea9030be7cc6000cbd311025baf9926f32c9",
   "contract_version": "1.47.0",
   "atoms": [
     {
@@ -956,6 +956,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:ottawa:ottawa-water-watch",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "ottawa-water-watch",
+      "title": "Ottawa — Standing Water Watch + NPDES 2PD00028 / PWS OH6900711 Instrument Set (Extractions)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:ottawa:parcel-assemblage",
       "kind": "dataset",
       "site": "ottawa",
@@ -1036,6 +1044,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:ottawa:BLANCHARD RIVER",
+      "kind": "entity",
+      "site": "ottawa",
+      "local_id": "BLANCHARD RIVER",
+      "title": "Blanchard River",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:ottawa:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "ottawa",
@@ -1050,6 +1066,62 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:ottawa:VILLAGE OF OTTAWA",
+      "kind": "entity",
+      "site": "ottawa",
+      "local_id": "VILLAGE OF OTTAWA",
+      "title": "Village of Ottawa",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:ottawa:npdes:2PD00028",
+      "kind": "entity",
+      "site": "ottawa",
+      "local_id": "npdes:2PD00028",
+      "title": "Ottawa Wastewater Treatment Plant",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:ottawa:oepa/ottawa/2PD00028.fs.npdes.yaml",
+      "kind": "record",
+      "site": "ottawa",
+      "local_id": "oepa/ottawa/2PD00028.fs.npdes.yaml",
+      "title": "Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:ottawa:oepa/ottawa/2PD00028.npdes.yaml",
+      "kind": "record",
+      "site": "ottawa",
+      "local_id": "oepa/ottawa/2PD00028.npdes.yaml",
+      "title": "Ottawa Wastewater Treatment Plant",
+      "feed": "records"
+    },
+    {
+      "handle": "record:ottawa:ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml",
+      "kind": "record",
+      "site": "ottawa",
+      "local_id": "ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml",
+      "title": "Village of Ottawa 2025 Calendar Year Drinking Water Consumer Confidence Report",
+      "feed": "records"
+    },
+    {
+      "handle": "timeline:ottawa:2PD00028*PD",
+      "kind": "timeline",
+      "site": "ottawa",
+      "local_id": "2PD00028*PD",
+      "title": "NPDES 2PD00028*PD (Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)) — public notice",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:ottawa:PWS ID OH6900711",
+      "kind": "timeline",
+      "site": "ottawa",
+      "local_id": "PWS ID OH6900711",
+      "title": "Safe Drinking Water Act — Consumer Confidence Report, Stage 2 DBPR public notice, Lead and Copper Rule Revisions public notice PWS ID OH6900711 — annual consumer confidence report published, carrying two Tier-3 public notices and four Ohio-EPA-directed corrections (Village of Ottawa 2025 Calendar Year Drinking Water Consumer Confidence Report)",
+      "feed": "timeline"
     }
   ]
 }

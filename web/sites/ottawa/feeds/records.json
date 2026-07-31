@@ -1,1 +1,121 @@
-[]
+[
+  {
+    "rel": "ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml",
+    "group": "permits-epa",
+    "title": "Village of Ottawa 2025 Calendar Year Drinking Water Consumer Confidence Report",
+    "confidence": "high",
+    "warnings": [
+      "The file is served under a URL slug reading \"2024-CCR\" but is the 2025-CALENDAR-YEAR report, distributed 2026-07-01. The as-received name is kept per the chain-of-custody rule; see data/documents/ottawa/drinking-water/filename-map.yaml. The 2024-data-year CCR is not held.",
+      "A Consumer Confidence REPORT is not the same thing as the Consumer Confidence RULE. This document is the report. EPA's SDWIS carried two OPEN \"Consumer Confidence Rule\" violations against this system on the 2026-07-09 extract, one of them since 2020-01-27. Publishing the report does not by itself clear a rule violation, and nothing here establishes that it did.",
+      "A calendar-year CCR reports its calendar year. This one states an expectation of \"return to compliance by the second quarter of 2026\" without disclosing that the FOLLOWING quarter's TTHM locational running annual average — Q1 2026, recorded by SDWIS at 0.086 mg/L — was higher than the violation it reports. That later quarter is outside the report's period and its omission is not a rule violation; it is recorded because a reader of this document alone would take the trend to be improving."
+    ],
+    "fields": {
+      "agency": "Village of Ottawa (permittee-issued) under Ohio EPA oversight; Ohio EPA NOV and warning letter cited within",
+      "program": "Safe Drinking Water Act — Consumer Confidence Report, Stage 2 DBPR public notice, Lead and Copper Rule Revisions public notice",
+      "permit_no": "PWS ID OH6900711",
+      "action": "annual consumer confidence report published, carrying two Tier-3 public notices and four Ohio-EPA-directed corrections",
+      "action_date": "2026-07-01",
+      "applicant": "Village of Ottawa",
+      "applicant_address": "136 North Oak Street, Ottawa, Ohio 45875, Putnam County",
+      "facility": "Village of Ottawa Public Water System, PWS ID OH6900711 — community water system, surface water source, population served 4,393",
+      "site_address": "Water treatment plant, 1972 Agner Street, Ottawa, OH 45875, Putnam County",
+      "project_name": "Village of Ottawa 2025 Calendar Year Drinking Water Consumer Confidence Report",
+      "affected_resource": "Blanchard River (source water) → the Village distribution system",
+      "contact": "Richard Knowlton, Water Treatment Director, (419) 523-5020",
+      "note": "[verified] The Village of Ottawa drinks from the Blanchard River and discharges to it. This report is the intake half of that loop. It records a Total Trihalomethanes MCL violation for the 2025 fourth quarter — a locational running annual average of 83.4 ppb against an 80 ppb MCL, with individual results across the year ranging 37.9 to 129.4 ppb — and a lead service-line notification reporting violation cured 2026-01-09. It reports no mercury result of any kind."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "ottawa/drinking-water/2024-CCR.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/ottawa/2PD00028.fs.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)",
+    "confidence": "high",
+    "warnings": [
+      "Table 12's low flows are NOT measured at Ottawa. They are drainage-adjusted from USGS gauge 04189500 (Blanchard River at Glandorf) over 1921-1951 — a record that ended before the network's own derived 7Q10 window (1980-2024) begins. The 7.78 cfs here and the 8.67 cfs in data/reference/hydrology/low-flow-7q10.derived.yaml are two different rivers-worth of arithmetic, not a disagreement to be resolved by preferring one. See data/reference/network/findlay-ottawa-comparison.yaml.",
+      "The background in-stream mercury concentration used in the wasteload allocation is ZERO, stated in Table 12 as \"No representative data available.\" Nothing here establishes that the Blanchard carries no mercury above Ottawa; it establishes that Ohio EPA had no ambient datum to put in the equation.",
+      "The aquatic-life finding quoted below (\"No impact attributed to the Ottawa WWTP discharge was apparent...\") is quoted BY this 2024 fact sheet FROM the July 2009 Blanchard River TMDL. The biological sampling behind it predates the 2025-26 mercury exceedances by more than fifteen years. It is carried because the discipline requires it, not because it speaks to them."
+    ],
+    "fields": {
+      "facility_name": "Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)",
+      "permit_no": "2PD00028*PD",
+      "permit_action": "renewal",
+      "applicant": "Village of Ottawa, 1371 North Defiance St., Ottawa, OH 45875",
+      "application_no": "OH0026921",
+      "public_notice_no": "208357",
+      "public_notice_date": "2024-12-17",
+      "comment_period_end": "2025-01-16",
+      "facility_address": "Ottawa WWTP, 1371 North Defiance St., Ottawa, OH 45875, Putnam County",
+      "discharge_address": null,
+      "receiving_water": "Blanchard River",
+      "stream_network": "Auglaize River, Maumee River, Lake Erie",
+      "outfalls": [
+        "001",
+        "002"
+      ],
+      "note": "Discharge address is the same as the facility address. Outfall 001 is the final effluent outfall; outfall 002 is the overflow of the 3.0 MG equalization basin and may discharge only under the Part III bypass conditions. Monitoring stations 601 (raw sewage influent), 801 (upstream ambient) and 901 (downstream ambient) are stations, not outfalls."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/ottawa/2PD00028.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/ottawa/2PD00028.fs.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/ottawa/2PD00028.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Ottawa Wastewater Treatment Plant",
+    "confidence": "high",
+    "warnings": [
+      "The permit spells its own outfall three ways. Part II Item X.1.a writes \"outfall 2DP00028001\", X.2.c writes \"outfall 2DP00028\", and Part II Item AA.1 writes \"outfall 2PD00028001\". The permit number is 2PD00028; the \"2DP\" spellings are transpositions in the source. Preserved as printed. A records search keyed on \"2DP00028\" will hit this document; one keyed only on \"2PD00028\" will still find it, because the cover page and limit tables use the correct form.",
+      "ICIS-NPDES codes the mercury limit set for this permit as running 2025-03-01 to 2028-02-29, two years short of the permit's own 2030-02-28 expiration. The permit itself carries the 4.5 ng/L monthly average in BOTH of its Part I.A limit tables, and both tables state the period \"beginning March 1, 2025, and lasting until February 28, 2030.\" The instrument governs; the ICIS end date appears to be a coding artifact. Both are recorded, neither corrected."
+    ],
+    "fields": {
+      "facility_name": "Ottawa Wastewater Treatment Plant",
+      "permit_no": "2PD00028*PD",
+      "permit_action": "renewal",
+      "applicant": "Village of Ottawa",
+      "application_no": "OH0026921",
+      "facility_address": "1371 North Defiance Street, Ottawa, Ohio, Putnam County",
+      "receiving_water": "Blanchard River at River Mile 22.1",
+      "action_date": "2025-01-22",
+      "effective_date": "2025-03-01",
+      "expiration_date": "2030-02-28",
+      "outfalls": [
+        "001",
+        "002"
+      ],
+      "note": "Renewal of the permit last renewed 2014-04-01. The renewal that cut the mercury monthly average from 6.8 ng/L to 4.5 ng/L; see the DMR record in data/extracted/ottawa/water-watch.yaml for what the plant then reported against it."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/ottawa/2PD00028.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/ottawa/2PD00028.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  }
+]

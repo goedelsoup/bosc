@@ -1377,13 +1377,28 @@ _OTTAWA = SiteProfile(
         0.0,
         0.0,
     ),  # [open] pending an identified corridor on the Blanchard
-    # balance (per-WWTP receiving waters pending the site's NPDES fact sheets)
+    # balance — the Ottawa WWTP fact sheet is now committed (#1422, closing the #415 pull).
     # Findlay↔Ottawa intra-tributary comparison (#417): the Ottawa WWTP (OH0026921, 3.0 MGD →
-    # 4.64 cfs) screens TIGHT (0.54x) against the shared derived Blanchard 7Q10 (8.67 cfs, USGS
-    # 04189000; low-flow-7q10.derived.yaml, #414) vs its upstream Findlay sibling's VIOLATION band
-    # (2.68x) — the network's only along-one-river control. See the committed artifact
-    # data/reference/network/findlay-ottawa-comparison.yaml (watershed held constant, discharge point varied).
-    plant_receiving={},  # [open] cited fact-sheet 7Q10 still pending the Ottawa WWTP NPDES fact sheet (#415)
+    # 4.64 cfs) screens TIGHT against the shared derived Blanchard 7Q10 (8.67 cfs, USGS 04189000;
+    # low-flow-7q10.derived.yaml, #414) at 0.54x, and TIGHT again at 0.60x against Ohio EPA's own
+    # 7.78 cfs — the band does not turn on the choice here, unlike at Findlay. Its upstream sibling
+    # screens VIOLATION on either basis. The outfalls are 34.32 river miles apart (RM 56.42 vs
+    # RM 22.1), now cited to both fact sheets rather than estimated. See the committed artifact
+    # data/reference/network/findlay-ottawa-comparison.yaml, whose `regulatory_denominators` block
+    # carries the derived and regulatory values side by side and prefers neither.
+    plant_receiving={
+        "ottawa-wwtp": (
+            "Blanchard River at River Mile 22.1",
+            "Ohio EPA NPDES fact sheet 2PD00028*PD (data/documents/oepa/ottawa/2PD00028.fs.pdf), "
+            "p. 6 — outfall 2PD00028001, HUC 04100008-06-02, Ohio EPA river code 04-160; Table 12 "
+            "(p. 28) annual 7Q10 7.78 cfs / 1Q10 5.42 cfs / 90Q10 21.66 cfs / harmonic mean "
+            "55.13 cfs (USGS gauge 04189500 at Glandorf, 1921-1951, drainage-adjusted), design "
+            "flow 4.6417 cfs, acute dilution ratio 2.2 (p. 11) — "
+            "data/extracted/oepa/ottawa/2PD00028.fs.npdes.yaml",
+        ),
+    },  # [verified: OEPA 2PD00028*PD fact sheet]. Key is the future watch-item id (#829) — Ottawa
+    # has no committed watch-items.geojson yet, so the routed balance does not read this entry; it
+    # is the cited datum of record until that file lands, and the two must match then.
     abstraction_gage="04189260",  # [inference] the Blanchard-at-Ottawa receiving-reach gage
     # refill (the water-balance supply model is not yet designed for Ottawa)
     supply_gage_primary="TODO",  # [open] refill supply gage — pending the site's water-balance model
@@ -1405,6 +1420,14 @@ _OTTAWA = SiteProfile(
     ),
     lmp_pnode_id=8445784,
     lmp_pnode_name="AEP",
+    # OEPA permit registry — what `watermark oepa discover` annotates as "known" (#844).
+    npdes_permits=["2PD00028"],  # Village of Ottawa WWTP / application OH0026921
+    # Corpus scope (#762/#780/#1505). Ottawa's worked record spans two collections: its own
+    # `ottawa/` tree (the standing water watch and the drinking-water instruments — the SDWA half
+    # of this site's story) and the site-scoped OEPA sub-collection `oepa/ottawa/` holding the
+    # 2PD00028 instrument set (the CWA half). Naming both here is also what SUBTRACTS them from
+    # Lima's reference-build scope, the same treatment findlay, troy-piqua, urbana and sidney get.
+    corpus_relpaths=("ottawa", "oepa/ottawa"),
     # rsei
     county_name="Putnam County, OH",  # [verified]
 )

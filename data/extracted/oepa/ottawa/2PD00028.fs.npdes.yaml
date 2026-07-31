@@ -1,0 +1,437 @@
+doc_id: 2PD00028.fs-b70590a3
+source_path: data/documents/oepa/ottawa/2PD00028.fs.pdf
+kind: npdes
+pages_read: []
+image_pages_read: []
+dpi: 0
+source_text_excerpt: >-
+  "Fact Sheet for NPDES Permit Renewal, Ottawa WWTP, 2024 / Page 1 of 35 / National Pollutant
+  Discharge Elimination System (NPDES) Permit Program / FACT SHEET / Regarding an NPDES Permit to
+  Discharge to Waters of the State of Ohio for Village of Ottawa Wastewater Treatment Plant (WWTP)
+  / Ohio EPA Permit No.: 2PD00028*PD / Application No.: OH0026921 / Public Notice No.: 208357 /
+  Public Notice Date: December 17, 2024 / Comment Period Ends: January 16, 2025 / Receiving Water:
+  Blanchard River / Subsequent Stream Network: Auglaize River, Maumee River, Lake Erie"
+
+# Method note (important, and different from the OCR-scan rule in CLAUDE.md): this is a
+# DIGITALLY GENERATED Ohio EPA PDF, not a scan. Its text layer is the document's own embedded
+# text, not an OCR guess, so every figure below is read from it verbatim rather than re-keyed
+# from a render. This is a REVIEWED TRANSCRIPTION, not a `watermark extract --kind npdes` run:
+# no vision pass was made, `pages_read` is therefore empty, and each block cites the 1-based
+# printed sheet ("Page N of 35") it was transcribed from.
+permit:
+  confidence: high
+  warnings:
+  - >-
+    Table 12's low flows are NOT measured at Ottawa. They are drainage-adjusted from USGS gauge
+    04189500 (Blanchard River at Glandorf) over 1921-1951 — a record that ended before the
+    network's own derived 7Q10 window (1980-2024) begins. The 7.78 cfs here and the 8.67 cfs in
+    data/reference/hydrology/low-flow-7q10.derived.yaml are two different rivers-worth of
+    arithmetic, not a disagreement to be resolved by preferring one. See
+    data/reference/network/findlay-ottawa-comparison.yaml.
+  - >-
+    The background in-stream mercury concentration used in the wasteload allocation is ZERO,
+    stated in Table 12 as "No representative data available." Nothing here establishes that the
+    Blanchard carries no mercury above Ottawa; it establishes that Ohio EPA had no ambient datum
+    to put in the equation.
+  - >-
+    The aquatic-life finding quoted below ("No impact attributed to the Ottawa WWTP discharge was
+    apparent...") is quoted BY this 2024 fact sheet FROM the July 2009 Blanchard River TMDL. The
+    biological sampling behind it predates the 2025-26 mercury exceedances by more than fifteen
+    years. It is carried because the discipline requires it, not because it speaks to them.
+  facility_name: Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)
+  permit_no: 2PD00028*PD
+  permit_action: renewal
+  applicant: Village of Ottawa, 1371 North Defiance St., Ottawa, OH 45875
+  application_no: OH0026921
+  public_notice_no: '208357'
+  public_notice_date: '2024-12-17'
+  comment_period_end: '2025-01-16'
+  facility_address: Ottawa WWTP, 1371 North Defiance St., Ottawa, OH 45875, Putnam County
+  discharge_address: null
+  receiving_water: Blanchard River
+  stream_network: Auglaize River, Maumee River, Lake Erie
+  outfalls:
+  - '001'
+  - '002'
+  note: >-
+    Discharge address is the same as the facility address. Outfall 001 is the final effluent
+    outfall; outfall 002 is the overflow of the 3.0 MG equalization basin and may discharge only
+    under the Part III bypass conditions. Monitoring stations 601 (raw sewage influent), 801
+    (upstream ambient) and 901 (downstream ambient) are stations, not outfalls.
+
+# --- reviewed transcription (issue 1422) ------------------------------------------------------
+review:
+  issue: 1422
+  reviewed_on: '2026-07-31'
+  method: >-
+    Verbatim transcription from the PDF's embedded text layer (pypdf), page by page. No figure is
+    derived, rounded or carried over from another document except where a block says so
+    explicitly and names the other instrument. Where a value is computed here rather than printed,
+    the block says `derived: true` and shows the arithmetic.
+
+discharge_location:
+  page: 6
+  receiving_water: Blanchard River
+  river_mile: 22.1
+  ohio_epa_river_code: 04-160
+  hydrologic_unit_code: 04100008-06-02
+  county: Putnam
+  ecoregion: Huron-Erie Lake Plains
+  quote: >-
+    "Ottawa WWTP discharges to Blanchard River at River Mile 22.1 ... This segment of the
+    Blanchard River is described by Ohio EPA River Code: 04-160 Hydrologic Unit Code:
+    04100008-06-02, County: Putnam, Ecoregion: Huron-Erie Lake Plains."
+  same_river_as_findlay:
+    finding: >-
+      Findlay WPCC's outfall is at River Mile 56.42 of the same river under the same Ohio EPA
+      river code 04-160 (data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml). The two outfalls
+      are therefore 34.32 river miles apart, read off the two fact sheets' own river miles.
+    derived: true
+    arithmetic: 56.42 - 22.1 = 34.32 river miles
+    note: >-
+      This REPLACES the "~40 river-miles apart" estimate the committed comparison artifact was
+      scaffolded with. Both endpoints are now cited to a primary instrument.
+
+use_designations:
+  page: 6
+  rule: OAC 3745-1-11
+  designated_uses:
+  - Warmwater Habitat
+  - Agricultural Water Supply
+  - Industrial Water Supply
+  - Primary Contact Recreation
+  public_water_supply_designation: absent
+  quote: >-
+    "The Blanchard River is designated for the following uses under Ohio's WQS (OAC 3745-1-11):
+    Warmwater Habitat, Agricultural Water Supply, Industrial Water Supply, and Primary Contact
+    Recreation."
+  the_reach_below_the_village_is_not_a_drinking_water_reach:
+    tag: '[verified]'
+    finding: >-
+      The reach Ottawa discharges to at RM 22.1 carries NO Public Water Supply use designation,
+      and the fact sheet states the rule that explains why: "Public Water Supply designations
+      apply near existing water intakes so that waters are safe to drink with standard treatment.
+      Most other waters are designated for agricultural water supply and industrial water supply"
+      (p. 6). The Village's own intake is upstream of this outfall, so the reach below it reverts
+      to agricultural/industrial water supply.
+    consequence: >-
+      It follows from the fact sheet's own wasteload-allocation table (p. 10) that the human-health
+      criterion applied to this discharge is the NONDRINKING one — the list of applicable uses
+      reads "Human Health (nondrinking) ... Harmonic mean flow". The mercury human-health criterion
+      used is accordingly 3.1 ng/L (Table 11), and the binding criterion overall is the WILDLIFE
+      value of 1.3 ng/L, not any drinking-water number.
+    discipline: >-
+      This is ordinary and correct regulatory practice, not a finding of wrongdoing. It is
+      recorded because it is the precise structural fact behind this site's "one river, both
+      sides" framing: the same river is a public drinking-water source above the village and a
+      non-drinking reach below it, and the permit is written against the second.
+
+instream_conditions:   # Table 12, "Instream Conditions and Discharger Flow"
+  page: 28
+  low_flows_cfs:
+    q1_10_annual: 5.42
+    q7_10_annual: 7.78
+    q30_10_summer: 9.75
+    q30_10_winter: 58.08
+    q90_10_annual: 21.66
+    harmonic_mean_annual: 55.13
+  low_flow_basis: USGS gauge 04189500 (Blanchard River at Glandorf), 1921-1951
+  low_flow_basis_footnote_marker: >-
+    Every low-flow row in Table 12 carries an asterisk against the gauge citation. The asterisk's
+    own footnote text is not reproduced on the table page; the standard Ohio EPA meaning is a
+    drainage-area adjustment from the cited gauge to the discharge point. Recorded as
+    [inference] — the marker is [verified], its expansion is not printed here.
+  mixing_assumption_pct:
+    average: 25
+    maximum: 100
+  hardness_mg_l: 300        # Station 901, median, n=61 (both OMZ and IMZ)
+  ph_su:
+    summer: 8.0             # Station 901, 75th percentile, n=20
+    winter: 8.2             # Station 901, 75th percentile, n=16
+  temperature_c:
+    summer: 23.6            # Station 901, 75th percentile, n=20
+    winter: 7.5             # Station 901, 75th percentile, n=16
+  discharger_flow_cfs: 4.6417
+  background_mercury_ng_l: 0
+  background_mercury_basis: No representative data available.
+  note: >-
+    The 7Q10 of 7.78 cfs is the REGULATORY denominator at this outfall, and it is 37x the 0.21 cfs
+    the Findlay fact sheet states 34.3 river miles upstream. The two are consistent in direction —
+    low flow grows with drainage area — but the network's derived LP3 value of 8.67 cfs was
+    computed at USGS 04189000, near Findlay, where Ohio EPA's own instrument says 0.21. That
+    discrepancy belongs to the hydrology sub-issue (1458) and is not touched here.
+
+wasteload_allocation_method:
+  page: 10
+  applicable_uses_and_design_flows:
+    aquatic_life_warmwater_habitat_toxics_average: Annual 7Q10
+    aquatic_life_warmwater_habitat_toxics_maximum: Annual 1Q10
+    ammonia_average: Summer 30Q10 / Winter 30Q10
+    wildlife: Annual 90Q10
+    agricultural_water_supply: Harmonic mean flow
+    human_health_nondrinking: Harmonic mean flow
+  general_equation: Discharger WLA = (Downstream Flow x WQS) - (Upstream Flow x Background Concentration)
+  bioaccumulative_rule:
+    quote: >-
+      "By rule, mixing zones are not authorized for pollutants, such as mercury, which have been
+      designated as bioaccumulative chemicals of concern (BCCs). For BCCs, the WLA is set equal to
+      the respective WQS value."
+    consequence: The mercury WLA is the 1.3 ng/L wildlife WQS itself, with no mixing credit.
+
+water_quality_criteria_mercury:   # Table 11, "Water Quality Criteria in the Study Area"
+  page: 27
+  units: ng/L
+  wildlife: 1.3
+  human_health_nondrinking: 3.1
+  agriculture: 10000
+  aquatic_life_average: 910
+  aquatic_life_maximum: 1700
+  inside_mixing_zone_maximum: 3400
+  binding_criterion: wildlife, 1.3 ng/L
+
+acute_dilution:
+  page: 11
+  formula: (1Q10 + WWTP flow rate) / WWTP flow rate
+  computed_as: (5.42 cfs + 4.64 cfs) / 4.64 cfs
+  ratio: 2.2
+  acute_wla: 40 percent mortality in 100 percent effluent
+  note: >-
+    At 2.2-to-1 Ottawa sits inside the band the fact sheet flags: "If the acute dilution ratio is
+    less than 3.3 to 1.0, and there is evidence that effluent values between 0.3 TUa and 1.0 TUa
+    cause or contribute to violations of WQS, the permittee may be required to investigate and
+    remediate toxicity in this range." Its upstream sibling Findlay is at 1.0-to-1.
+
+whole_effluent_toxicity:
+  pages: [11, 14]
+  wla_values_outfall_001:
+    acute_tua: 0.7
+    chronic_tuc: 1.42
+  reasonable_potential:
+    chronic_peq_ceriodaphnia_dubia_tuc: 2.8
+    chronic_peq_pimephales_promelas_tuc: 2.3
+    finding: >-
+      "Reasonable potential for toxicity is demonstrated since these values exceed the WLA value
+      1.4 TUc."
+  limits_proposed:
+    monthly_average_tuc: 1.4
+    daily_maximum_tua: 1.0
+    species: both Ceriodaphnia dubia and Pimephales promelas
+    monitoring: increased to twice a year
+  note: >-
+    This is the limit the plant then exceeded — 1.7 TUc against 1.4 on the June 2025 DMR, 21% over.
+    See data/extracted/ottawa/water-watch.yaml.
+
+mercury_variance:
+  pages: [13, 14]
+  authority: OAC 3745-1-38(H)
+  authority_discrepancy: >-
+    The fact sheet's own basis-code key (p. 33) expands VAR as "Variance from a WQS (Mercury
+    variance (OAC 3745-1-38(J)))" — subsection (J), where the narrative text on p. 13 and the
+    permit's Part II Item X both cite subsection (H). Both citations are recorded as printed;
+    neither is corrected against the other.
+  wqbel_monthly_average_ng_l: 1.3
+  variance_limit_monthly_average_ng_l: 4.5
+  variance_limit_daily_maximum_ng_l: 1250
+  daily_maximum_basis: >-
+    antibacksliding — "The current daily max value in the existing permit is lower than the WQC of
+    1700 ng/L Due to antibacksliding provisions the existing limit of 1250 ng/L will be kept."
+  annual_average_condition_ng_l: 12
+  prior_permit_history:
+    renewed: '2014-04-01'
+    note: The 2014 renewal already carried the general mercury variance and variance-based limits.
+  how_the_4_5_was_set:
+    tag: '[verified]'
+    quote: >-
+      "The calculation of the PEQavg value from 2019 to 2024 compared to the PEQavg calculated at
+      the time the original variance was issued shows a reduction from 7.1 to 4.5 ng/L."
+    peq_table_page: 24
+    peq_table: Table 8, "Projected Effluent Quality for Outfall 001"
+    peq_table_columns: [Parameter, Units, Samples, 'of > MDL', PEQ Average, PEQ Maximum]
+    peq_table_row: 'Mercury | ng/L | 63 | 63 | 4.5 | 7.1'
+    finding: >-
+      The monthly-average limit is not a treatment standard and is not derived from the water
+      quality criterion. It is the plant's own projected effluent quality over 63 samples,
+      2019-2024 — every one of them above the method detection limit — adopted as the limit. Ohio
+      EPA set the limit AT the plant's demonstrated average performance, which is exactly why an
+      ordinary bad month becomes a permit violation.
+    what_the_two_numbers_are:
+      tag: '[verified]'
+      note: >-
+        In Table 8 the 4.5 and the 7.1 are the PEQ AVERAGE and the PEQ MAXIMUM of the SAME 63-sample
+        2019-2024 dataset. They are not a before-and-after pair.
+    narrative_table_tension:
+      tag: '[open]'
+      statement: >-
+        The p. 14 narrative describes 7.1 and 4.5 as a time series — "the PEQavg value from 2019 to
+        2024 compared to the PEQavg calculated at the time the original variance was issued shows a
+        reduction from 7.1 to 4.5 ng/L" — i.e. it calls 7.1 the ORIGINAL variance's PEQ average.
+        Table 8 four pages later prints 7.1 as the CURRENT dataset's PEQ maximum. Both readings
+        cannot be got from Table 8 alone, and the original variance's PEQavg is not reproduced in
+        this document.
+      why_it_matters: >-
+        The narrative's reading is the one that supports the variance renewal, because a fall from
+        7.1 to 4.5 is the "reasonable progress" the rule requires. If 7.1 is instead just this
+        dataset's maximum, the document contains no figure demonstrating progress at all.
+      resolution: >-
+        Not resolvable from the committed bytes. The 2014 permit and its variance application would
+        settle it. Lead OTTAWA-PEQ-2014-BASELINE.
+  demonstration_accepted:
+    quote: >-
+      "the Ottawa WWTP has determined that the facility will not be able to meet a 30-day average
+      permit limit of 1.3 ng/l based on complying with the water quality criteria. However, the
+      effluent data shows that the permittee can meet the mercury annual average value of 12 ng/l.
+      The permittee's application has also demonstrated to the satisfaction of Ohio EPA that there
+      is no readily apparent means of complying with the WQBEL without constructing prohibitively
+      expensive end-of-pipe controls for mercury."
+  minimization_actions_credited:
+    quote: >-
+      "The permittee performed monitoring, contacting dentists, performed wastewater line
+      flushing, eliminated infiltration, and monitored industrial users to reduce the amount of
+      mercury coming being discharged."
+    note: Transcribed verbatim, including the "coming being" typo in the source.
+  modified_allowable_ambient_concentration_ng_l: 2.08
+  maac_source: >-
+    Ohio EPA, "January 2026 List of Variances" (data/documents/oepa/Jan_2026_List_of_Variances.pdf),
+    row "Ottawa WWTP | 2PD00028*PD | 001 | 3/1/2025 | 2/28/2030 | Blanchard River | Mercury | 2.08".
+  maac_derivation:
+    tag: '[inference]'
+    formula: MAAC = (monthly variance limit x discharger flow) / (discharger flow + 0.25 x annual 90Q10)
+    arithmetic: (4.5 x 4.6417) / (4.6417 + 0.25 x 21.66) = 20.8877 / 10.0567 = 2.077
+    printed_value: 2.08
+    why_the_90q10: >-
+      Mercury's binding criterion is the WILDLIFE value (Table 11), and the fact sheet's own list
+      of applicable uses (p. 10) assigns wildlife the annual 90Q10 design flow. The 25% factor is
+      Table 12's average mixing assumption.
+    cross_check:
+      site: findlay
+      arithmetic: (3.3 x 23.208) / (23.208 + 0.25 x 0.32) = 76.5864 / 23.288 = 3.2887
+      printed_value: 3.29
+      source: >-
+        Findlay's own variance-list row and its committed fact-sheet extraction
+        (data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml — monthly limit 3.3 ng/L, discharger
+        flow 23.208 cfs, annual 90Q10 0.32 cfs).
+      note: >-
+        The formula reproduces BOTH sites' published MAACs to the printed precision from values
+        each site's own fact sheet prints. That is what promotes this from a guess to a recorded
+        [inference]; it is still not a statement of Ohio EPA's method.
+    what_it_means:
+      tag: '[inference]'
+      statement: >-
+        The variance's effect in the river, stated in the river's own units: the allowable ambient
+        mercury concentration below this outfall is raised from the 1.3 ng/L wildlife water quality
+        standard to 2.08 ng/L — a factor of 1.6. Against a background the same fact sheet records
+        as unmeasured.
+
+phosphorus_tmdl:
+  page: 13
+  tmdl: Maumee Watershed Nutrient TMDL, approved by US EPA September 2023
+  individual_wasteload_allocation_kg_total_phosphorus: 750
+  critical_season: March through July
+  enforced_through: Maumee Watershed Total Phosphorus NPDES General Permit (OHP000001)
+  quote: >-
+    "The TMDL assigned Ottawa WWTP an individual wasteload allocation of 750 kg of total
+    phosphorus for the critical season (March through July). Compliance with this individual
+    wasteload allocation will be regulated through the Maumee Watershed Total Phosphorus NPDES
+    General Permit, under which Ottawa WWTP has been granted coverage"
+  sibling_comparison:
+    findlay_allocation_kg: 3200
+    ratio: 4.27
+    note: >-
+      Findlay's allocation is 3,200 kg (data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml).
+      The 4.27:1 ratio tracks the 5:1 design-flow ratio without matching it. Under OHP000001
+      Part IV.C.3 an individual exceedance is a violation only when the 39-facility cumulative
+      load also breaches its cap.
+
+facility_description:
+  pages: [6, 7]
+  constructed: 1998
+  last_upgraded: 2019
+  average_design_flow_mgd: 3.0
+  serves:
+  - Village of Ottawa
+  - Village of Glandorf
+  - Sewer District #1
+  - Sewer District #2
+  - Pohle Road District
+  treatment_processes:
+  - Fine Screen
+  - Grit Removal
+  - Flow Equalization
+  - Oxidation Ditch
+  - Addition of Alum
+  - Secondary Clarifiers
+  - Ultraviolet Disinfection
+  disinfection_is_uv_not_chlorine:
+    tag: '[verified]'
+    note: >-
+      The WWTP disinfects with ULTRAVIOLET light, not chlorine. It therefore adds no chlorine to
+      the Blanchard. Any account of the Village's trihalomethane problem that runs through the
+      sewage plant is wrong: TTHM is formed at the WATER plant, where chlorine meets the river's
+      natural organic carbon. The two sides of this river share a river, not a chemical pathway.
+  sewers: 100% separated
+  csos: none
+  bypass:
+    outfall: '002'
+    description: >-
+      Flows exceeding the WWTP's hydraulic capacity are diverted to a 3.0 MG equalization basin
+      whose overflow is outfall 002; overflows are disinfected before discharge and may discharge
+      only under the Part III bypass conditions.
+  pretreatment_program: none approved
+  industrial_users: 2
+  industrial_user_flow_mgd: 0.014
+  sludge:
+    treatment: [Aerobic Digestion, 'Polymer/Lime/Ferric Chloride/Alum Addition', Sand Bed Dewatering]
+    disposal: land applied
+  icis_discrepancy:
+    tag: '[verified]'
+    note: >-
+      EPA's ICIS-NPDES record for OH0026921 lists the facility's areas as "Biosolids, CSO, POTW,
+      Pretreatment". The permit and fact sheet state the Village has 100% separated sewers (no
+      CSOs) and no approved pretreatment program. Both records are stated as they stand. The
+      instrument is the better authority on what the plant is; the discrepancy is recorded so a
+      later reader does not mistake an ICIS flag for a combined sewer.
+
+receiving_water_assessment:
+  pages: [7, 8]
+  assessment_unit: Pike Run-Blanchard River
+  section_303d_status: impaired for aquatic life and recreation
+  impairment_causes_named:
+  - point sources such as CSOs
+  - failing home sewage treatment systems (HSTS)
+  - manure from livestock operations
+  reach_below_the_outfall: full attainment for aquatic life
+  ohio_epa_conclusion: >-
+    "The river section downstream of the WWTP is in full attainment for aquatic life. Ottawa WWTP
+    is not likely contributing to the impairments in the Blanchard River."
+  tmdl_quoted: Blanchard River TMDL, approved July 2009
+  tmdl_quote: >-
+    "No impact attributed to the Ottawa WWTP discharge was apparent in the performance of the fish
+    and macroinvertebrate assemblages. Siltation and generally slow current velocity appeared to be
+    the principle determinants of macroinvertebrate and fish community structure in the Blanchard
+    River Large River Assessment Unit (LRAU)."
+  both_statements_stand:
+    tag: '[verified]'
+    note: >-
+      The assessment UNIT is impaired for aquatic life and the reach BELOW THE OUTFALL is in full
+      attainment. Both sentences are in this one document, four paragraphs apart, and neither
+      cancels the other. Quoting either alone misrepresents the record.
+  vintage_caveat:
+    tag: '[verified]'
+    note: >-
+      The exculpatory quote is from the JULY 2009 TMDL. Whatever it establishes, it establishes
+      about biological sampling conducted before 2009 — not about a discharge that exceeded its
+      mercury limit by 716% in December 2025. None of the impairment causes named is mercury.
+
+provenance:
+  extracted_at: '2026-07-31'
+  extractor: reviewed transcription (pypdf text layer), issue 1422
+  tags: [verified, npdes, oepa, ottawa, putnam-county, blanchard-river, mercury, variance,
+    7q10, dilution, tmdl, wet, one-river]
+  confidence: high
+  summary: >-
+    The instrument the standing water watch is anchored on. It supplies the regulatory low-flow
+    set (7Q10 7.78 cfs) the network's derived value has to be stated beside, the derivation of the
+    4.5 ng/L mercury limit from the plant's own 63-sample projected effluent quality, the 1.3 ng/L
+    wildlife standard that limit varies from, the reach's use designations — which do NOT include
+    public water supply — and the 2009 aquatic-life finding the watch is required to carry
+    alongside the violations it records.
