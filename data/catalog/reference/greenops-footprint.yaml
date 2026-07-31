@@ -31,11 +31,18 @@ tags:
 - water
 notes: The assembled compute-footprint report the /about/sustainability feed lifts (#1076/#1083/#1084)
   — not a provider export but the modeled derivation over them. `watermark greenops footprint
-  --write` lifts the AWS Cost Explorer/CCFT, GitHub Actions and Anthropic Admin exports plus the
-  eGRID subregion + WUE factor tables and runs vCPU/GPU-hours ×(W/vCPU·PUE) → electricity, ×(eGRID
-  lb/MWh) → CO2e / source mix (reconciled against the AWS CCFT total), ×(WUE L/kWh) → water (direct
-  on-site cooling + upstream generation). Every conversion is `derived`; the modeling levers
-  (per-vCPU watts, PUE, the eGRID subregion via WATERMARK_GREENOPS_GRID_SUBREGION, average
-  tokens/call, the internal water budget) are stated `assumption`s — nothing is
+  --write` lifts the AWS Cost Explorer/Sustainability, GitHub Actions and Anthropic Admin exports
+  plus the eGRID subregion, WUE and inference-energy factor tables and runs this chain — vCPU-hours
+  ×(W/vCPU·PUE) → infrastructure electricity PLUS model output tokens ×(Wh/1k·PUE) → inference
+  electricity; ×(eGRID lb/MWh) → CO2e / source mix, each fleet priced at its OWN subregion and
+  reconciled against AWS's location- and market-based totals; ×(WUE L/kWh) → water. Every
+  conversion is `derived`; the modeling levers (per-vCPU watts, PUE, the eGRID subregions via
+  WATERMARK_GREENOPS_GRID_SUBREGION / _CI_GRID_SUBREGION, average tokens/call, the per-token
+  inference coefficients, the internal water budget) are stated `assumption`s — nothing is
   `connector`-`verified` as a metered fact about our own consumption. A source not on disk degrades
-  that dimension to a modeled assumption rather than fabricating a figure.
+  that dimension to a modeled assumption rather than fabricating a figure. Issue 1643 changed what
+  this artifact reports — CO2e is a first-class dual-method figure rather than a prose sentence,
+  inference energy is IN the chain rather than scoped out, the water boundary is tenant-attributed
+  (our provider's cooling per IT-kWh, PUE divided back out — we operate no data center), every
+  coefficient carries a dated citation and a band that propagates into the published low/high, and
+  the report's own `basis` says whether the usage exports behind it are real or a sample.

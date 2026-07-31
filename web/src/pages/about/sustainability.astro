@@ -3,7 +3,7 @@
 // standard as the sites we track: every figure labeled, every derivation disclosed.
 // Design: Sustainability.dc.html (c897e79f-df78-4b0d-be58-7b43bae699c0)
 import Base from "~/layouts/Base.astro";
-import EvidenceTag from "~/components/EvidenceTag.astro";
+import EvidenceTag, { type EvidenceKind } from "~/components/EvidenceTag.astro";
 import FigureStat from "~/components/FigureStat.astro";
 import Icon from "~/components/Icon.astro";
 import DonutChart from "~/components/charts/DonutChart.astro";
@@ -13,7 +13,7 @@ import RankedBarChart from "~/components/charts/RankedBarChart.astro";
 import type { DonutSlice, LinePoint, RankedBarDatum } from "@watermark/charts/charts";
 import type { FigureStatData } from "@watermark/core/viz";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import { type GreenopsReport, provenanceEvidence } from "@watermark/core/feeds";
+import { type GreenopsReport, type ProvenancedValue, provenanceEvidence } from "@watermark/core/feeds";
 
 // Editorial cards (the architecture principles + how models touch the record) are prose, not
 // metered data — they stay authored here. Everything numeric comes from the greenops feed below.
@@ -105,15 +105,22 @@ const FALLBACK: GreenopsReport = {
       key: "electricity",
       label: "Electricity drawn",
       value: pv(37.4, "MWh"),
-      sub: "compute + cooling, all regions",
-      source_label: "eGRID RFCW factors",
+      sub: "infrastructure + model inference, all regions",
+      source_label: "eGRID SRVC factors",
     },
     {
       key: "water",
       label: "Water drawn",
       value: pv(37500, "gal"),
-      sub: "direct cooling + generation upstream",
+      sub: "provider cooling + generation upstream",
       source_label: "EPRI / Uptime WUE benchmarks",
+    },
+    {
+      key: "carbon",
+      label: "Carbon emitted",
+      value: pv(15.0, "MTCO2e"),
+      sub: "location-based, our model",
+      source_label: "EPA eGRID SRVC intensity",
     },
   ],
   compute_by_function: {
@@ -154,6 +161,18 @@ const FALLBACK: GreenopsReport = {
     grid: pv(23.2, "MWh"),
     renewable: pv(14.2, "MWh"),
   },
+  energy: {
+    unit: "MWh",
+    infrastructure: pv(24.5, "MWh"),
+    inference: pv(12.9, "MWh"),
+  },
+  carbon: {
+    unit: "MTCO2e",
+    derived_location_based: pv(15.0, "MTCO2e"),
+    subregion: "SRVC",
+    reconciliation:
+      "Placeholder: no provider emissions export wired, so there is nothing to reconcile the modeled location-based figure against.",
+  },
   water: {
     unit: "gal",
     direct: pv(15800, "gal"),
@@ -176,9 +195,10 @@ const FALLBACK: GreenopsReport = {
   ],
   sources: [
     "cloud billing export FY26",
-    "EPA eGRID subregion RFCW factors 2025",
+    "EPA eGRID subregion SRVC factors 2025",
     "EPRI / Uptime Institute WUE benchmarks 2024",
   ],
+  basis: "illustrative",
   note: "figures are inferred, not metered — see methodology below",
 };
 
@@ -239,6 +259,43 @@ const waterCap = report.water.budget_cap.value ?? 0;
 const waterUnit = report.water.unit;
 const waterDirectPct = (waterTotal ? (waterDirect / waterTotal) * 100 : 0).toFixed(1);
 const waterIndirectPct = (waterTotal ? (waterIndirect / waterTotal) * 100 : 0).toFixed(1);
+
+// Electricity by scope — rented infrastructure vs model inference (#1643/F2). Inference used
+// to be scoped out of the energy chain entirely; showing its share is the point, so the strip
+// renders only when the feed carries the split.
+const energy = report.energy ?? null;
+const energyInfra = energy?.infrastructure.value ?? 0;
+const energyInference = energy?.inference.value ?? 0;
+const energyTotal = energyInfra + energyInference;
+const energyInfraPct = (energyTotal ? (energyInfra / energyTotal) * 100 : 0).toFixed(1);
+const energyInferencePct = (energyTotal ? (energyInference / energyTotal) * 100 : 0).toFixed(1);
+
+// Carbon — location-based (ours and the provider's) beside market-based. The two GHG-Protocol
+// methods are not interchangeable and neither substitutes for the other, so both are listed
+// with their method named rather than one headline number standing in for "carbon".
+const carbon = report.carbon ?? null;
+// The provenance genuinely differs down this list and the evidence grammar should show it: our
+// figure is a derivation over the grid rate ([inference]); the provider's are published exports
+// ([reference]). `provenanceEvidence` collapses both to "inference", which would flatten the one
+// distinction the panel exists to make.
+const carbonEvidence = (pv: ProvenancedValue): EvidenceKind =>
+  pv.source === "reference" ? "reference" : provenanceEvidence(pv);
+const carbonRows = carbon
+  ? [
+      { label: "Location-based · our model", pv: carbon.derived_location_based },
+      { label: "Location-based · provider estimate", pv: carbon.provider_location_based },
+      { label: "Market-based · provider estimate", pv: carbon.market_based },
+    ].filter((r): r is { label: string; pv: ProvenancedValue } => !!r.pv)
+  : [];
+
+// A band is data, not decoration: a figure whose low/high the derivation propagated says so
+// under the stat, because a modeled central value alone reads more precise than it is.
+const band = (pv: ProvenancedValue | null | undefined): string | null => {
+  if (!pv || (pv.low == null && pv.high == null)) return null;
+  return `${fmt(pv.low ?? pv.value ?? 0)}–${fmt(pv.high ?? pv.value ?? 0)}`;
+};
+
+const isIllustrative = (report.basis ?? "illustrative") === "illustrative";
 
 const methodology = report.methodology;
 const sourcesLine = `sources · ${report.sources.join(" · ")}`;
@@ -326,6 +383,22 @@ const sourcesLine = `sources · ${report.sources.join(" · ")}`;
         <span class="sust-report-note">figures are inferred, not metered — see methodology below</span>
       </div>
 
+      {
+        isIllustrative && (
+          <div class="sust-illustrative">
+            <EvidenceTag kind="inference" label="illustrative" />
+            <p class="sust-illustrative-text">
+              <strong>These magnitudes are a sample, not our footprint.</strong> The usage
+              exports behind them are committed fixtures rather than a live pull from our cloud,
+              CI and model providers — the derivation, the factors and the provenance are real,
+              the quantities are placeholders. This banner disappears on its own once the
+              provider pulls are wired: each export records whether it came from a real fetch,
+              and the page reads that rather than being told.
+            </p>
+          </div>
+        )
+      }
+
       <div class="sust-headline-grid">
         {headline.map((s) => <FigureStat stat={s} size="lg" />)}
       </div>
@@ -347,8 +420,9 @@ const sourcesLine = `sources · ${report.sources.join(" · ")}`;
             unit="vCPU-hrs"
           />
           <p class="sust-panel-note">
-            Hosting &amp; serving the record still costs more than reading it with a model — the
-            site is mostly static pages, not live inference.
+            vCPU-hours are the infrastructure we rent — hosting, search, CI. Model inference runs
+            on the provider's accelerators and bills as tokens, not hours, so it appears in none
+            of these bars; its energy is in the electricity panel's scope split.
           </p>
         </div>
 
@@ -382,6 +456,46 @@ const sourcesLine = `sources · ${report.sources.join(" · ")}`;
             title="Electricity drawn by month"
             endLabel={elecEndLabel}
           />
+          {
+            energy && (
+              <>
+                <hr class="sust-divider" />
+                <div class="sust-stack-label">By scope</div>
+                <div
+                  class="sust-stack-track"
+                  role="img"
+                  aria-label={`Infrastructure ${energyInfraPct}%, model inference ${energyInferencePct}%`}
+                >
+                  <div class="sust-stack-seg sust-stack-seg--1" style={`width:${energyInfraPct}%`} />
+                  <div
+                    class="sust-stack-seg sust-stack-seg--2"
+                    style={`width:${energyInferencePct}%`}
+                  />
+                </div>
+                <ul class="sust-stack-legend">
+                  <li class="sust-stack-item">
+                    <span class="sust-stack-dot sust-stack-dot--1" aria-hidden="true" />
+                    Infrastructure — instances &amp; CI · {fmt(energyInfra)} {energy.unit} ·{" "}
+                    {energyInfraPct}%
+                  </li>
+                  <li class="sust-stack-item">
+                    <span class="sust-stack-dot sust-stack-dot--2" aria-hidden="true" />
+                    Model inference · {fmt(energyInference)} {energy.unit} · {energyInferencePct}%
+                  </li>
+                </ul>
+                <p class="sust-panel-note">
+                  Inference runs on the provider's accelerators and bills as tokens, never as
+                  energy — so it is priced from published per-token measurements rather than a
+                  meter, and reported here instead of being left out of the total.
+                  {band(energy.inference) && (
+                    <>
+                      {" "}Plausible range {band(energy.inference)} {energy.unit}.
+                    </>
+                  )}
+                </p>
+              </>
+            )
+          }
           <hr class="sust-divider" />
           <div class="sust-stack-label">Source mix</div>
           <div class="sust-stack-track" role="img" aria-label={`Grid ${elecGridPct}%, renewable ${elecRenewPct}%`}>
@@ -427,10 +541,54 @@ const sourcesLine = `sources · ${report.sources.join(" · ")}`;
             </li>
             <li class="sust-stack-item">
               <span class="sust-stack-dot sust-stack-dot--2" aria-hidden="true"></span>
-              Indirect — grid generation upstream · {fmt(waterIndirect)} {waterUnit} · {waterIndirectPct}%
+              Upstream — water to generate the power · {fmt(waterIndirect)} {waterUnit} · {waterIndirectPct}%
             </li>
           </ul>
+          <p class="sust-panel-note">
+            We run no data center. The cooling figure is our provider's, attributed to us by the
+            IT load we bill; the upstream figure is the water consumed generating the power
+            delivered. The two are on composable bases, so the total is a source-basis figure —
+            not two different measures added together.
+          </p>
         </div>
+
+        <!-- Carbon — both GHG-Protocol methods, neither standing in for the other -->
+        {
+          carbon && (
+            <div class="sust-chart-panel">
+              <div class="sust-panel-head">
+                <span class="sust-panel-icon">
+                  <Icon name="power" size={18} />
+                </span>
+                <span class="sust-panel-label">
+                  Carbon · by accounting method{" "}
+                  <span class="sust-panel-unit">({carbon.unit})</span>
+                </span>
+              </div>
+              <ul class="sust-carbon-rows">
+                {carbonRows.map((r) => (
+                  <li class="sust-carbon-row">
+                    <span class="sust-carbon-label">
+                      {r.label} <EvidenceTag kind={carbonEvidence(r.pv)} />
+                    </span>
+                    <span class="sust-carbon-value">
+                      {fmt(r.pv.value ?? 0)} {r.pv.unit ?? carbon.unit}
+                      {band(r.pv) && <span class="sust-carbon-band"> ({band(r.pv)})</span>}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {carbon.intensity && (
+                <p class="sust-panel-note">
+                  Grid intensity {fmt(carbon.intensity.value ?? 0)} {carbon.intensity.unit}
+                  {carbon.subregion && <> · eGRID subregion {carbon.subregion}</>}
+                </p>
+              )}
+              <hr class="sust-divider" />
+              <p class="sust-panel-note">{carbon.reconciliation}</p>
+            </div>
+          )
+        }
 
       </div>
     </section>
@@ -690,6 +848,67 @@ const sourcesLine = `sources · ${report.sources.join(" · ")}`;
     background: var(--bosc-rule);
     border: 1px solid var(--bosc-rule);
     margin-bottom: 16px;
+  }
+
+  /* ── Illustrative-figures banner ─────────────────────────────────────── */
+
+  .sust-illustrative {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    flex-wrap: wrap;
+    background: var(--bosc-surface);
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--bosc-inference);
+    padding: 16px 18px;
+    margin-bottom: 16px;
+  }
+
+  .sust-illustrative-text {
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    flex: 1 1 320px;
+    margin: 0;
+  }
+  .sust-illustrative-text strong { color: var(--bosc-ink); }
+
+  /* ── Carbon rows ─────────────────────────────────────────────────────── */
+
+  .sust-carbon-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sust-carbon-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--bosc-rule);
+  }
+  .sust-carbon-row:last-child { border-bottom: none; }
+
+  .sust-carbon-label {
+    font-size: 0.84rem;
+    color: var(--bosc-muted);
+  }
+
+  .sust-carbon-value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-family: var(--bosc-mono);
+    color: var(--bosc-ink);
+    white-space: nowrap;
+  }
+
+  .sust-carbon-band {
+    font-weight: 400;
+    color: var(--bosc-faint);
   }
 
   /* ── Chart panels ────────────────────────────────────────────────────── */

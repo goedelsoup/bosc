@@ -242,6 +242,41 @@ def _project_greenops(feed: Mapping[str, Any], site: str) -> list[FactItem]:
                     feed="greenops",
                 )
             )
+    # The two blocks a fact question is most likely to actually ask about (#1643): how much of
+    # our electricity is model inference, and what the carbon figure is under each accounting
+    # method. Both are optional — a report with no eGRID factors carries no carbon account, and
+    # projecting a missing block as anything but absent would invent one.
+    energy = feed.get("energy") or {}
+    for key in ("infrastructure", "inference"):
+        pv = energy.get(key)
+        if _is_pv(pv):
+            facts.append(
+                _fact(
+                    subject=subject,
+                    subject_label=label,
+                    subject_kind=kind,
+                    predicate=f"electricity_{key}",
+                    pv=pv,
+                    feed="greenops",
+                )
+            )
+    carbon = feed.get("carbon") or {}
+    # `derived_location_based` and `provider_location_based` are BOTH location-based and are not
+    # duplicates — one is our model over the grid rate, one is the provider's over its own scope.
+    # `market_based` prices contracted procurement and is never a substitute for either.
+    for key in ("derived_location_based", "provider_location_based", "market_based", "intensity"):
+        pv = carbon.get(key)
+        if _is_pv(pv):
+            facts.append(
+                _fact(
+                    subject=subject,
+                    subject_label=label,
+                    subject_kind=kind,
+                    predicate=f"carbon_{key}" if key != "intensity" else "grid_carbon_intensity",
+                    pv=pv,
+                    feed="greenops",
+                )
+            )
     return facts
 
 

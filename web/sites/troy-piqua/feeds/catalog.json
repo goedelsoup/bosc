@@ -1409,14 +1409,14 @@
   },
   {
     "id": "greenops-factors",
-    "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+    "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
     "scope": "reference",
     "collection": "greenops",
     "status": "reviewed",
     "producer_kind": "connector",
     "command": "greenops egrid",
     "connector_ref": "watermark.greenops.connectors.egrid",
-    "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)",
+    "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (AWS / EPRI / Uptime Institute / Macknick et al.) + hand-curated LLM inference-energy coefficients (Epoch AI / Jegham et al. / Google)",
     "external_url": "https://www.epa.gov/egrid/download-data",
     "license": null,
     "access_tier": "public",
@@ -1429,7 +1429,8 @@
       "egrid",
       "carbon",
       "water",
-      "wue"
+      "wue",
+      "inference"
     ],
     "storage": [
       {
@@ -1441,19 +1442,24 @@
         "relpath": "reference/greenops/factors/wue-benchmarks.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "reference/greenops/factors/inference-energy.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "1140d87f292f822ec9588ecd4b44a6cc7e6fa944dbc3edf48c33b22dd557a83d",
-      "size_bytes": 28705,
+      "sha256": "a9594a0d70a79af84d3609d7d75b0ea71ffdc3955c90f239053f4d30fc9e88b8",
+      "size_bytes": 36171,
       "lfs_materialized": true,
-      "file_count": 2,
+      "file_count": 3,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)",
+      "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (AWS / EPRI / Uptime Institute / Macknick et al.) + hand-curated LLM inference-energy coefficients (Epoch AI / Jegham et al. / Google)",
       "source_kind": "connector",
       "page": null,
       "pages": null,
@@ -1495,8 +1501,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "273d32241340ec91c85c2e4b59ae68c01571e904f07f6db228fd8ff0bf6e9418",
-      "size_bytes": 9565,
+      "sha256": "3b48b25d1f87cd1df8d4776a37ecc59726f5b3d4a39db7ff29b78c07c7abecbb",
+      "size_bytes": 16585,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,

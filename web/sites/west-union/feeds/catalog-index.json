@@ -1,7 +1,7 @@
 {
   "site": "west-union",
   "catalog_version": "151fbf08cd79a80c3cb830fc6e8c818db486f3bfb770ddf1c66bab8f31a5f6eb",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:west-union:7q10",
@@ -760,7 +760,7 @@
       "kind": "dataset",
       "site": "west-union",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

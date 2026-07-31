@@ -42,33 +42,49 @@
       "key": "electricity",
       "label": "Electricity drawn",
       "value": {
-        "value": 0.0535,
+        "value": 0.0551,
         "unit": "MWh",
         "source": "derived",
-        "citation": "6366 vCPU-hrs x 7 W/vCPU x PUE 1.2",
+        "citation": "6366 vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model inference energy; band from the coefficient ranges",
         "confidence": "low",
         "asof": null,
-        "low": null,
-        "high": null
+        "low": 0.0158,
+        "high": 0.1352
       },
-      "sub": "compute + cooling, all regions",
+      "sub": "infrastructure + model inference, all regions",
       "source_label": "power-draw specs x PUE"
     },
     {
       "key": "water",
       "label": "Water drawn",
       "value": {
-        "value": 52.2,
+        "value": 29.1,
         "unit": "gal",
         "source": "derived",
-        "citation": "direct on-site cooling (site WUE) + upstream generation (source WUE)",
+        "citation": "tenant-attributed provider facility cooling (site WUE x IT-kWh) + the upstream generation increment (x facility kWh) — a source-basis total, not two bases summed",
         "confidence": "low",
         "asof": null,
-        "low": null,
-        "high": null
+        "low": 3.7,
+        "high": 115.7
       },
-      "sub": "direct cooling + generation upstream",
+      "sub": "provider cooling + generation upstream",
       "source_label": "WUE benchmarks"
+    },
+    {
+      "key": "carbon",
+      "label": "Carbon emitted",
+      "value": {
+        "value": 0.0149,
+        "unit": "MTCO2e",
+        "source": "derived",
+        "citation": "electricity x eGRID subregion CO2e output rate, apportioned by fleet: SRVC 596.326 lb/MWh (100% of vCPU-hrs); inference at SRVC (the model provider does not disclose a serving region, so inference energy is attributed to the primary subregion)",
+        "confidence": "low",
+        "asof": null,
+        "low": 0.00428,
+        "high": 0.03656
+      },
+      "sub": "location-based, our model · 0.018 market-based (AWS)",
+      "source_label": "EPA eGRID SRVC intensity"
     }
   ],
   "compute_by_function": {
@@ -178,10 +194,10 @@
       {
         "label": "Jul",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -191,10 +207,10 @@
       {
         "label": "Aug",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -204,10 +220,10 @@
       {
         "label": "Sep",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -217,10 +233,10 @@
       {
         "label": "Oct",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -230,10 +246,10 @@
       {
         "label": "Nov",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -243,10 +259,10 @@
       {
         "label": "Dec",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -256,10 +272,10 @@
       {
         "label": "Jan",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -269,10 +285,10 @@
       {
         "label": "Feb",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -282,10 +298,10 @@
       {
         "label": "Mar",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -295,10 +311,10 @@
       {
         "label": "Apr",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -308,10 +324,10 @@
       {
         "label": "May",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -321,10 +337,10 @@
       {
         "label": "Jun",
         "value": {
-          "value": 0.0045,
+          "value": 0.0046,
           "unit": "MWh",
           "source": "derived",
-          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
+          "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (infrastructure) + model output tokens x Wh/1k output tokens x PUE (inference), distributed evenly across the window",
           "confidence": "low",
           "asof": null,
           "low": null,
@@ -333,7 +349,7 @@
       }
     ],
     "grid": {
-      "value": 0.0482,
+      "value": 0.0496,
       "unit": "MWh",
       "source": "derived",
       "citation": "electricity x eGRID SRVC renewables share 9.9% (SERC Virginia/Carolina)",
@@ -343,7 +359,7 @@
       "high": null
     },
     "renewable": {
-      "value": 0.0053,
+      "value": 0.0055,
       "unit": "MWh",
       "source": "derived",
       "citation": "electricity x eGRID SRVC renewables share 9.9% (SERC Virginia/Carolina)",
@@ -353,27 +369,95 @@
       "high": null
     }
   },
-  "water": {
-    "unit": "gal",
-    "direct": {
-      "value": 25.4,
-      "unit": "gal",
+  "energy": {
+    "unit": "MWh",
+    "infrastructure": {
+      "value": 0.0535,
+      "unit": "MWh",
       "source": "derived",
-      "citation": "electricity x 1.8 L/kWh site WUE (direct on-site cooling), L → gal",
+      "citation": "6366 vCPU-hrs x 7 W/vCPU x PUE 1.2 (instances + CI runners)",
       "confidence": "low",
+      "asof": null,
+      "low": 0.0152,
+      "high": 0.1192
+    },
+    "inference": {
+      "value": 0.0016,
+      "unit": "MWh",
+      "source": "derived",
+      "citation": "Anthropic output tokens x per-model-class Wh/1k output tokens (Epoch AI 2025-02 / Jegham et al. 2025-05 / Google 2025-08) x PUE 1.2 — the published coefficients are accelerator+host, so facility overhead is added here — claude-sonnet-4-6 (950,000 output tokens) at the mid_tier coefficient 0.6 Wh/1k [0.3-6]; claude-opus-4-8 (380,000 output tokens) at the frontier coefficient 2 Wh/1k [0.6-12]",
+      "confidence": "low",
+      "asof": null,
+      "low": 0.0006,
+      "high": 0.016
+    }
+  },
+  "carbon": {
+    "unit": "MTCO2e",
+    "derived_location_based": {
+      "value": 0.0149,
+      "unit": "MTCO2e",
+      "source": "derived",
+      "citation": "electricity x eGRID subregion CO2e output rate, apportioned by fleet: SRVC 596.326 lb/MWh (100% of vCPU-hrs); inference at SRVC (the model provider does not disclose a serving region, so inference energy is attributed to the primary subregion)",
+      "confidence": "low",
+      "asof": null,
+      "low": 0.00428,
+      "high": 0.03656
+    },
+    "provider_location_based": {
+      "value": 0.045,
+      "unit": "MTCO2e",
+      "source": "reference",
+      "citation": "AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)",
+      "confidence": "high",
       "asof": null,
       "low": null,
       "high": null
     },
-    "indirect": {
-      "value": 26.8,
-      "unit": "gal",
-      "source": "derived",
-      "citation": "electricity x 1.9 L/kWh source WUE (upstream generation), L → gal",
-      "confidence": "low",
+    "market_based": {
+      "value": 0.018,
+      "unit": "MTCO2e",
+      "source": "reference",
+      "citation": "AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)",
+      "confidence": "high",
       "asof": null,
       "low": null,
       "high": null
+    },
+    "intensity": {
+      "value": 596.326,
+      "unit": "lb CO2e/MWh",
+      "source": "reference",
+      "citation": "EPA eGRID2023 subregion file (SRL sheet)",
+      "confidence": "high",
+      "asof": null,
+      "low": null,
+      "high": null
+    },
+    "subregion": "SRVC",
+    "reconciliation": "Derived ~0.0149 MTCO2e (electricity x 596.326 lb/MWh, SRVC) vs AWS's own estimate — 0.045 MTCO2e location-based, 0.018 MTCO2e market-based. Ours is ~33% of the location-based figure. They differ by scope: our model covers billed instance compute plus model inference, whereas AWS's estimate spans every service it bills (storage, transfer, managed-service and idle-capacity overhead) and none of our inference. The market-based figure is lower because it prices AWS's contracted renewable procurement, not the physical grid — it is reported alongside the location-based one, never instead of it."
+  },
+  "water": {
+    "unit": "gal",
+    "direct": {
+      "value": 1.5,
+      "unit": "gal",
+      "source": "derived",
+      "citation": "IT-kWh (electricity / PUE 1.2) x 0.12 L/kWh provider site WUE — cooling water drawn by our cloud provider's facility, attributed to us by billed IT load; we operate no data center. L → gal",
+      "confidence": "low",
+      "asof": null,
+      "low": 0.4,
+      "high": 25.0
+    },
+    "indirect": {
+      "value": 27.6,
+      "unit": "gal",
+      "source": "derived",
+      "citation": "facility kWh x 1.9 L/kWh upstream water-for-electricity increment (generation, per delivered kWh), L → gal",
+      "confidence": "low",
+      "asof": null,
+      "low": 3.3,
+      "high": 90.7
     },
     "budget_cap": {
       "value": 150.0,
@@ -389,27 +473,29 @@
   "methodology": [
     {
       "title": "Compute",
-      "body": "AWS Cost Explorer instance-hours (by service, folded into platform functions) converted to vCPU-hours by instance size, plus GitHub Actions minutes converted by runner core count. Model inference runs on third-party/serverless infra (Anthropic, Bedrock) and is reported as AI volume, not our vCPU-hours; we run no GPU instances."
+      "body": "AWS Cost Explorer instance-hours (by service, folded into platform functions) converted to vCPU-hours by instance size, plus GitHub Actions minutes converted by runner core count. We run no GPU instances: model inference happens on the provider's accelerators and appears on no bill of ours as energy, only as tokens — so it is priced separately below rather than counted here."
     },
     {
       "title": "Electricity & carbon",
-      "body": "vCPU-hours x 7 W per allocated vCPU (an average-operational assumption folding utilization) x PUE 1.2. Derived ~0.0145 MTCO2e (electricity x 596.326 lb/MWh, SRVC) vs AWS's location-based estimate 0.045 MTCO2e — ~32% of it. The two agree in order of magnitude; they differ because the vCPU model captures only active instance compute, whereas AWS's estimate spans every service (storage, transfer, managed-service and idle-capacity overhead)."
+      "body": "Infrastructure: vCPU-hours x 7 W per allocated vCPU (range 2.1-12, an average-operational assumption folding utilization) x PUE 1.2 (range 1.14-1.56). Inference: output tokens x a published per-model-class Wh/1k-output-token coefficient x PUE. Each fleet's electricity is priced at its own eGRID subregion's CO2e output rate — SRVC (6,366 vCPU-hrs); the model provider does not disclose a serving region, so inference energy is attributed to the primary subregion. Every headline figure carries the band its coefficients imply. Derived ~0.0149 MTCO2e (electricity x 596.326 lb/MWh, SRVC) vs AWS's own estimate — 0.045 MTCO2e location-based, 0.018 MTCO2e market-based. Ours is ~33% of the location-based figure. They differ by scope: our model covers billed instance compute plus model inference, whereas AWS's estimate spans every service it bills (storage, transfer, managed-service and idle-capacity overhead) and none of our inference. The market-based figure is lower because it prices AWS's contracted renewable procurement, not the physical grid — it is reported alongside the location-based one, never instead of it."
     },
     {
       "title": "Water",
-      "body": "Modeled from electricity using published Water Usage Effectiveness (WUE) benchmarks — a site WUE for direct on-site cooling and a source WUE for the water withdrawn upstream to generate the power drawn. The two bases are reported separately, never summed across bases."
+      "body": "We operate no data center. The cooling water below is our cloud provider's, attributed to us by billed IT load using its own published site WUE (liters per kWh of IT load — so the figure divides PUE back out rather than applying an IT-load benchmark to a facility-load number). Added to it is the upstream increment: the water consumed generating each kWh actually delivered to the facility. Site plus upstream is the source-basis total by definition; a site-basis and an already-source-basis benchmark are never summed, and the derivation refuses a benchmark row whose basis would make that happen."
     },
     {
       "title": "AI inferences",
-      "body": "The Anthropic Admin API exposes token aggregates only, so the call count is total tokens ÷ 4000 avg tokens/call (a stated assumption), and the by-task split is modeled until the per-task workspace keys (#1080) are named so the by-workspace usage can be labeled and metered by task."
+      "body": "The Anthropic Admin API exposes token aggregates only, so the call count is total tokens / 4000 avg tokens/call (a stated assumption), and the by-task split is modeled until the per-task workspace keys (#1080) are named so the by-workspace usage can be labeled and metered by task. The energy those calls drew is priced against OUTPUT tokens, not this count and not the input+output total: decode dominates inference energy, prefill is far cheaper per token, and no provider publishes a per-token figure — so the coefficients are third-party published estimates, banded across roughly an order of magnitude because that is the spread of what has been measured."
     }
   ],
   "sources": [
-    "AWS Cost Explorer + Sustainability/CCFT (Jul 2025-Jun 2026)",
+    "AWS Cost Explorer + Sustainability (Jul 2025-Jun 2026)",
     "GitHub Actions/storage billing (Jul 2025-Jun 2026)",
     "Anthropic Admin usage + cost (Jul 2025-Jun 2026)",
     "EPA eGRID2023 subregion SRVC factors",
-    "WUE benchmarks (EPRI 2024 / Uptime Institute 2023 / NREL 2012)"
+    "WUE benchmarks (AWS 2025 / EPRI 2024 / Uptime Institute 2023 / Macknick et al. 2012)",
+    "inference-energy coefficients (Epoch AI 2025-02 / Jegham et al. 2025-05 / Google 2025-08)"
   ],
-  "note": "Derived footprint (#1083): usage → electricity → water from the committed connector exports and reference factor tables. Every conversion is `derived`; the modeling levers (≈7 W/vCPU, PUE 1.2, eGRID subregion SRVC, 4000 tokens/call, the water budget) are stated `assumption`s. Nothing here is metered."
+  "basis": "illustrative",
+  "note": "Derived footprint (#1083): usage → electricity → CO2e → water from the committed connector exports and reference factor tables. Every conversion is `derived`; the modeling levers (≈7 W/vCPU, PUE 1.2, eGRID subregions SRVC (cloud) / SRVC (CI), 4000 tokens/call, the per-token inference coefficients, the water budget) are stated `assumption`s. Nothing here is metered. ILLUSTRATIVE: the usage exports behind these figures are committed samples, not a live provider pull, so the magnitudes are shaped like a real footprint but are not one. Wire the `watermark greenops <source> --write` pulls to flip this (#1643/F3)."
 }

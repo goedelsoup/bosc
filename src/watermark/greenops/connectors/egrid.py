@@ -1,8 +1,10 @@
 """EPA eGRID subregion factors + the WUE benchmark table — the derivation's inputs (#1082).
 
-Two committed ``reference`` factor tables the footprint derivation (#1083) multiplies the
+The committed ``reference`` factor tables the footprint derivation (#1083) multiplies the
 electricity figure by, so the electricity → CO2e / source-mix / water conversion reads
-authoritative published factors rather than a hand-maintained constant:
+authoritative published factors rather than a hand-maintained constant. Two live here; the
+third (inference energy, #1643/F2) has its own module but is written by the same command and
+shares this one's README:
 
 1. **EPA eGRID** (:func:`fetch_egrid_factors`) — the annual Emissions & Generation Resource
    Integrated Database subregion file, pulled through the shared ``cached_get`` machinery.
@@ -13,10 +15,13 @@ authoritative published factors rather than a hand-maintained constant:
    re-order between vintages doesn't silently mis-read. The reduced rows (not the ~20 MB
    xlsx) are what land in the cache/fixture, keeping tests hermetic.
 
-2. **WUE benchmarks** (:data:`WUE_BENCHMARKS`) — a hand-curated Water Usage Effectiveness
-   table (EPRI / Uptime Institute / NREL), transcribed once with its source + vintage.
-   Not a live pull; it's an in-code canonical the ``--write`` emits so it stays
-   regenerable and schema-checked rather than an orphaned hand-edited YAML.
+2. **WUE benchmarks** (:func:`build_wue_table`) — a hand-curated Water Usage Effectiveness
+   table (AWS's published WUE / EPRI / Uptime Institute / Macknick et al.), transcribed once
+   with each row's dated source and band. Not a live pull; it's an in-code canonical the
+   ``--write`` emits so it stays regenerable and schema-checked rather than an orphaned
+   hand-edited YAML. Three bases (``site`` / ``upstream`` / ``source``) — see
+   :class:`~watermark.greenops.model.WueBenchmark`; the derivation selects the AWS row
+   because we are a tenant, not an operator (#1643/F4).
 
 **Discipline.** Every figure in both tables is ``reference`` — an authoritative published
 factor, *not* a metered fact about our own consumption. The derivation applies them;
@@ -42,6 +47,7 @@ from watermark.greenops.model import (
     EgridFactors,
     EgridResourceShare,
     EgridSubregion,
+    InferenceEnergyTable,
     WueBenchmark,
     WueTable,
 )
@@ -295,28 +301,57 @@ def fetch_egrid_factors(*, settings: Settings | None = None) -> EgridFactors:
 # vintage. The derivation (#1083) multiplies electricity by the site + source benchmarks for
 # the modeled facility type; it stays a modeled `derived` number, never `verified`.
 
-WUE_VINTAGE = "EPRI 2024 / Uptime Institute 2023 / NREL 2012"
+WUE_VINTAGE = "AWS 2025 / EPRI 2024 / Uptime Institute 2023 / Macknick et al. 2012"
 
+# Every row carries a *dated* citation and a band (#1643/F5) — a benchmark quoted as a bare
+# scalar hid a spread wide enough to change the answer. `basis` is three-way (#1643/F4):
+# `site` (cooling per IT-kWh), `upstream` (the generation increment per facility-kWh — a term
+# you ADD to a site WUE, not a WUE), `source` (an already-complete site+upstream figure).
 _WUE_ROWS: list[dict[str, Any]] = [
+    {
+        "facility_type": "aws_published_site",
+        "label": "AWS data centers, published site WUE",
+        "value": 0.12,
+        "low": 0.12,
+        "high": 0.84,
+        "basis": "site",
+        "confidence": "medium",
+        "cite": "AWS published global data-center WUE — 0.12 L/kWh water withdrawn per kWh "
+        "of IT load (2025; 0.15 in 2024), sustainability.aboutamazon.com/products-services/"
+        "aws-cloud, accessed 2026-07-31. Band: AWS's global average (low) to the "
+        "industry-average withdrawal WUE of 0.84 L/kWh it compares itself against (high).",
+        "note": "The row the derivation selects, because our compute is an AWS tenancy: "
+        "the cooling water is drawn by AWS's facility, apportioned to us by billed IT-kWh. "
+        "A global average — a specific region's WUE can be several times either bound, "
+        "which is what the band carries.",
+    },
     {
         "facility_type": "industry_average_site",
         "label": "Data center, industry-average site WUE",
         "value": 1.8,
+        "low": 0.84,
+        "high": 2.2,
         "basis": "site",
-        "confidence": "medium",
-        "cite": "Uptime Institute Global Data Center Survey — average site WUE across "
-        "operators that measure it",
-        "note": "Direct on-site cooling water per kWh of IT load; operators that measure "
-        "WUE, so it skews toward the more instrumented (often more efficient) fleet.",
+        "confidence": "low",
+        "cite": "Commonly-quoted industry-average data-center site WUE (~1.8 L/kWh); no "
+        "single dated primary source — the figure recurs across Uptime Institute survey "
+        "commentary and secondary literature. Band: AWS's stated industry-average "
+        "withdrawal WUE 0.84 L/kWh (2025) to the EPRI evaporative row below.",
+        "note": "Kept for comparison, NOT applied: it is an undated composite whose "
+        "boundary (withdrawal vs consumption, cooling-only vs total) is not stated in any "
+        "one primary source, hence low confidence and a band wider than its own value.",
     },
     {
         "facility_type": "hyperscale_evaporative",
         "label": "Hyperscale, evaporative-tower cooling",
         "value": 2.2,
+        "low": 1.8,
+        "high": 3.0,
         "basis": "site",
         "confidence": "low",
         "cite": "EPRI data-center water-use characterization — evaporative (open-loop "
-        "cooling-tower) facilities",
+        "cooling-tower) facilities; a representative published upper range, not a dated "
+        "single measurement.",
         "note": "Wet cooling trades electricity for water; a representative upper-range "
         "site WUE for evaporatively cooled campuses.",
     },
@@ -324,23 +359,33 @@ _WUE_ROWS: list[dict[str, Any]] = [
         "facility_type": "closed_loop_airside",
         "label": "Closed-loop / air-side economized cooling",
         "value": 0.3,
+        "low": 0.05,
+        "high": 0.6,
         "basis": "site",
         "confidence": "low",
-        "cite": "EPRI / industry closed-loop + air-side-economizer data-center WUE",
+        "cite": "EPRI / industry closed-loop + air-side-economizer data-center WUE; a "
+        "representative published range, not a dated single measurement.",
         "note": "Dry / closed-loop cooling draws little on-site water but more electricity; "
         "a representative low-water site WUE.",
     },
     {
         "facility_type": "grid_upstream",
-        "label": "Grid generation, upstream (source WUE)",
+        "label": "Grid generation, upstream increment (water for electricity)",
         "value": 1.9,
-        "basis": "source",
+        "low": 0.78,
+        "high": 2.54,
+        "basis": "upstream",
         "confidence": "low",
-        "cite": "Macknick et al. (NREL 2012) operational water-consumption factors / EPRI "
-        "water-for-electricity — US thermoelectric fleet average",
-        "note": "Water consumed upstream to generate 1 kWh delivered — added to site WUE "
-        "for a source WUE; varies with the subregion generation mix (eGRID), so the "
-        "derivation scales it by the workload's subregion.",
+        "cite": "Macknick, Newmark, Heath & Hallett, 'Operational water consumption and "
+        "withdrawal factors for electricity generating technologies', Environ. Res. Lett. 7 "
+        "045802 (2012-12-20), median operational water-CONSUMPTION factors. Central: US "
+        "thermoelectric fleet average. Band: gas combined-cycle with cooling tower "
+        "205 gal/MWh = 0.78 L/kWh (low) to nuclear with cooling tower 672 gal/MWh = "
+        "2.54 L/kWh (high).",
+        "note": "Water consumed upstream to generate 1 kWh DELIVERED — the increment added "
+        "to a site WUE to reach a source WUE, never a WUE on its own. It applies to the "
+        "whole facility draw (IT x PUE), not the IT load. The band is the generation-mix "
+        "spread the subregion (eGRID) determines.",
     },
 ]
 
@@ -354,7 +399,12 @@ def build_wue_table() -> WueTable:
                 facility_type=str(r["facility_type"]),
                 label=str(r["label"]),
                 wue=ProvenancedValue.from_reference(
-                    float(r["value"]), "L/kWh", str(r["cite"]), confidence=r["confidence"]
+                    float(r["value"]),
+                    "L/kWh",
+                    str(r["cite"]),
+                    confidence=r["confidence"],
+                    low=float(r["low"]),
+                    high=float(r["high"]),
                 ),
                 basis=str(r["basis"]),
                 note=str(r["note"]),
@@ -363,12 +413,15 @@ def build_wue_table() -> WueTable:
         ],
         note=(
             "Water Usage Effectiveness benchmarks (liters of water per kWh), hand-curated "
-            f"from published sources ({WUE_VINTAGE}). SITE WUE is direct on-site cooling "
-            "water; SOURCE WUE is the water consumed upstream to generate the electricity "
-            "drawn — the two are on different bases and must never be summed across bases or "
-            "compared. Every figure is `reference` (a published benchmark), never a metered "
-            "fact about our own cooling; the derivation (#1083) applies them and stays "
-            "`derived`. Representative rows are marked low-confidence."
+            f"from published sources ({WUE_VINTAGE}); every row carries a dated citation and "
+            "a band. THREE bases, and the distinction is load-bearing: SITE is facility "
+            "cooling water per kWh of IT load; UPSTREAM is the increment consumed generating "
+            "the electricity delivered to the whole facility (per facility-kWh) — a term you "
+            "ADD to a site WUE, not a WUE on its own; SOURCE is an already-complete "
+            "site+upstream figure. Site + upstream compose; site + source double-counts "
+            "cooling and must never be summed. Every figure is `reference` (a published "
+            "benchmark), never a metered fact about our own cooling; the derivation (#1083) "
+            "applies them and stays `derived`. Representative rows are marked low-confidence."
         ),
     )
 
@@ -414,16 +467,37 @@ own consumption. Nothing here is `verified`; the derivation that applies these s
 ## WUE benchmarks (`wue-benchmarks.yaml`, #1082)
 
 - **Source:** hand-curated Water Usage Effectiveness benchmarks (liters of water per kWh)
-  from published data-center water studies (EPRI, Uptime Institute) plus the upstream
-  water-for-electricity intensity (NREL / EPRI). Not a live pull — an in-code canonical
-  emitted by `watermark greenops egrid --write`, so it stays regenerable and schema-checked.
-- **Bases:** `site` WUE is direct on-site cooling water; `source` WUE is the water consumed
-  upstream to generate the electricity drawn. The two are on different bases and must never
-  be summed across bases or compared. Representative rows are marked low-confidence.
+  from published data-center water studies (AWS's own published WUE, EPRI, Uptime Institute)
+  plus the upstream water-for-electricity intensity (Macknick et al. 2012). Not a live pull —
+  an in-code canonical emitted by `watermark greenops egrid --write`, so it stays regenerable
+  and schema-checked. Every row carries a dated citation and a band (#1643/F5).
+- **Bases — three, and the distinction is load-bearing:** `site` is facility cooling water
+  per kWh of **IT** load; `upstream` is the increment consumed generating the electricity
+  delivered to the **whole facility** (IT x PUE) — a term you *add* to a site WUE, not a WUE
+  on its own; `source` is an already-complete site+upstream figure. Site + upstream compose
+  into a source-basis total; site + source double-counts cooling and must never be summed.
+- **Which row applies:** the derivation selects `aws_published_site`, because the platform
+  runs no data center — the cooling water is AWS's, apportioned to us by billed IT-kWh
+  (#1643/F4). `industry_average_site` is kept for comparison and deliberately not applied.
+
+## Inference energy (`inference-energy.yaml`, #1643/F2)
+
+- **Source:** hand-curated per-1,000-**output**-token energy coefficients by model class,
+  from published third-party measurements (Epoch AI 2025-02, Jegham et al. 2025-05, Google
+  2025-08). No provider publishes a per-token energy figure for its hosted models, so this
+  is a `reference` table of outside estimates, never a metered fact. Emitted alongside the
+  other factor tables by `watermark greenops egrid --write`.
+- **Banded on purpose:** published estimates of the same quantity span roughly an order of
+  magnitude, driven mostly by boundary — an accelerator-only figure excludes host CPU/DRAM,
+  idle capacity and facility overhead, and Google's 2025-08 production measurement found the
+  accelerator is only 58% of full-stack energy.
+- **Basis:** output tokens. Decode dominates inference energy; prefill is far cheaper per
+  token, so applying these to an input+output total would overstate a cache-heavy agentic
+  workload several-fold. An unmapped model id is priced at `default_class`, never dropped.
 """
 
 
-def _write_yaml(out: Path, table: EgridFactors | WueTable) -> Path:
+def _write_yaml(out: Path, table: EgridFactors | WueTable | InferenceEnergyTable) -> Path:
     # The factor tables live in their own `factors/` dir, so they carry _FACTORS_README rather
     # than the shared `data/reference/greenops/` one.
     return write_reference_yaml(
@@ -441,6 +515,19 @@ def write_wue_table(table: WueTable, *, settings: Settings | None = None) -> Pat
     """Persist the WUE benchmark table as committed reference YAML + the factors README."""
     settings = settings or get_settings()
     return _write_yaml(settings.data_dir / _WUE_RELPATH, table)
+
+
+def write_inference_energy(
+    table: InferenceEnergyTable, *, settings: Settings | None = None
+) -> Path:
+    """Persist the inference-energy table as committed reference YAML + the factors README.
+
+    Lives here rather than beside its builder so all three factor tables share one writer and
+    one README (the folder's contract is written once, not three times).
+    """
+    from .inference_energy import inference_energy_path
+
+    return _write_yaml(inference_energy_path(settings), table)
 
 
 def load_egrid_factors(path: Path) -> EgridFactors:

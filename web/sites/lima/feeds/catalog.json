@@ -1863,8 +1863,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8b739414d60dbd3f2927c95f846cd9afdf2f736c8180a4eb3eba36a6976b67e5",
-      "size_bytes": 539136,
+      "sha256": "96702421c7873a468b0ff78e01ad27ee22e8293d9d3d1a42f3393768db88305f",
+      "size_bytes": 540186,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -1949,7 +1949,7 @@
     "site_scope": "lima-legacy",
     "cadence": "static",
     "ttl_days": null,
-    "last_refreshed": "2026-07-24",
+    "last_refreshed": "2026-07-31",
     "tags": [
       "public-records",
       "wastewater",
@@ -2012,14 +2012,19 @@
         "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-reports-2019.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/american-bath-cole-street-condition-survey-2009.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "49484a61af01e6d91d3c35dd3be9c4e4380176094511f25570ab32d9e54964f3",
-      "size_bytes": 45884,
+      "sha256": "d02cf7d430a446127f2c0963d161686306aa6b1f36d4ea4c43610de8ae393a11",
+      "size_bytes": 65881,
       "lfs_materialized": true,
-      "file_count": 11,
+      "file_count": 12,
       "stale": false,
       "asof": null
     },
@@ -5931,14 +5936,14 @@
   },
   {
     "id": "greenops-factors",
-    "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+    "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
     "scope": "reference",
     "collection": "greenops",
     "status": "reviewed",
     "producer_kind": "connector",
     "command": "greenops egrid",
     "connector_ref": "watermark.greenops.connectors.egrid",
-    "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)",
+    "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (AWS / EPRI / Uptime Institute / Macknick et al.) + hand-curated LLM inference-energy coefficients (Epoch AI / Jegham et al. / Google)",
     "external_url": "https://www.epa.gov/egrid/download-data",
     "license": null,
     "access_tier": "public",
@@ -5951,7 +5956,8 @@
       "egrid",
       "carbon",
       "water",
-      "wue"
+      "wue",
+      "inference"
     ],
     "storage": [
       {
@@ -5963,19 +5969,24 @@
         "relpath": "reference/greenops/factors/wue-benchmarks.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "reference/greenops/factors/inference-energy.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "1140d87f292f822ec9588ecd4b44a6cc7e6fa944dbc3edf48c33b22dd557a83d",
-      "size_bytes": 28705,
+      "sha256": "a9594a0d70a79af84d3609d7d75b0ea71ffdc3955c90f239053f4d30fc9e88b8",
+      "size_bytes": 36171,
       "lfs_materialized": true,
-      "file_count": 2,
+      "file_count": 3,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)",
+      "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (AWS / EPRI / Uptime Institute / Macknick et al.) + hand-curated LLM inference-energy coefficients (Epoch AI / Jegham et al. / Google)",
       "source_kind": "connector",
       "page": null,
       "pages": null,
@@ -6017,8 +6028,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "273d32241340ec91c85c2e4b59ae68c01571e904f07f6db228fd8ff0bf6e9418",
-      "size_bytes": 9565,
+      "sha256": "3b48b25d1f87cd1df8d4776a37ecc59726f5b3d4a39db7ff29b78c07c7abecbb",
+      "size_bytes": 16585,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,

@@ -389,7 +389,16 @@ class Settings(BaseSettings):
     # factors. A stated modeling `assumption`, not a metered fact: our primary AWS region is
     # us-east-1 (Northern Virginia), whose eGRID subregion is SERC Virginia/Carolina (SRVC).
     # Override when the workload's region changes; must be a code present in the eGRID table.
+    #
+    # NOTE: this models where *our own compute* runs, not any tracked site's local grid — no
+    # site-local grid-carbon intensity is modeled from it (that is the `grid` feed's job).
     greenops_grid_subregion: str = "SRVC"
+    # CI compute runs somewhere else, and used to be attributed here anyway (#1643/F5).
+    # GitHub-hosted Actions runners are Azure VMs, currently in the East US 2 region — also
+    # Virginia, so also SRVC today. That the two codes coincide is a fact about Azure's and
+    # AWS's siting, not a modeling shortcut: the knob is separate so a larger-runner SKU or a
+    # region move re-attributes CI without silently re-attributing everything else.
+    greenops_ci_grid_subregion: str = "SRVC"
 
     # --- GIS / satellite imagery -------------------------------------------
     # Pull AOI-clipped satellite imagery for tracking sites (the campus/footprints

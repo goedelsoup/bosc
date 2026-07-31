@@ -98,9 +98,9 @@ Regenerate: `watermark greenops aws`
 | `reference/greenops/aws-costs.yaml` | application/x-yaml | no |
 | `reference/greenops/aws-carbon.yaml` | application/x-yaml | no |
 
-### `greenops-factors` — GreenOps — eGRID carbon-intensity & WUE water factors
+### `greenops-factors` — GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors
 
-Source: EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL) · License: unspecified · Access: public · Site scope: basin-shared · Refresh: on-demand
+Source: EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (AWS / EPRI / Uptime Institute / Macknick et al.) + hand-curated LLM inference-energy coefficients (Epoch AI / Jegham et al. / Google) · License: unspecified · Access: public · Site scope: basin-shared · Refresh: on-demand
 
 Regenerate: `watermark greenops egrid`
 
@@ -108,6 +108,7 @@ Regenerate: `watermark greenops egrid`
 | --- | --- | --- |
 | `reference/greenops/factors/egrid-2023.yaml` | application/x-yaml | no |
 | `reference/greenops/factors/wue-benchmarks.yaml` | application/x-yaml | no |
+| `reference/greenops/factors/inference-energy.yaml` | application/x-yaml | no |
 
 ### `greenops-footprint` — GreenOps — derived compute footprint (usage → electricity → water)
 

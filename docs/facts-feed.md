@@ -55,7 +55,7 @@ Exported bundle feeds whose fields are `ProvenancedValue`:
 | `consumer-energy` | `economics.export_consumer_energy` | **state/area**, series keyed by `series_id/fuel/metric` ✓ | latest `price` (¢/kWh, $/Mcf), `sales` (M kWh) |
 | `economics-demand-pressure` | `economics.export_demand_pressure` | **facility × state** (facility id *implicit* — per-slug) | `facility_draw_mw`, `demand_share_pct`, `households_equivalent`, `price_pressure_pct_low/high` |
 | `energy-burden` | `economics.export_energy_burden` | **household in area** (area ✓) | `electricity_burden_pct`, `gas_burden_pct`, `combined_burden_pct`, annual costs (USD) |
-| `greenops` | `greenops.export_greenops` | **the platform** (global singleton, no site) | headline compute/electricity/water; `WaterDraw.direct/indirect/budget_cap` (gal); never `[verified]` by rule |
+| `greenops` | `greenops.export_greenops` | **the platform** (global singleton, no site) | headline compute/electricity/water/**carbon**; `EnergyBreakdown.infrastructure/inference` (MWh, #1643 — model inference is in the energy chain, not scoped out); `CarbonAccount` location-based (ours and the provider's) + market-based + grid intensity; `WaterDraw.direct/indirect/budget_cap` (gal, tenant-attributed — the cooling is our provider's, apportioned by billed IT-kWh); never `[verified]` by rule |
 | `hydrology-scenarios` | `_load_scenarios` | **receiving water + campus node** (`receiving_water_name`, `Node.id/role`) ✓ | `consumptive_loss` (cfs), `receiving_7q10` (cfs), `cooling_demand` (MGD), basis `it_load`/`wue`/`makeup_demand` |
 | `air-scenarios` | `_load_air_scenarios` | **genset fleet** (facility id *implicit*), per `pollutant` | `engine_mw` (MW), `runtime_hours` (hr/yr), `PollutantTonnage.tpy` |
 

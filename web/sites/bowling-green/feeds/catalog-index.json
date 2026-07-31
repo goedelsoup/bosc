@@ -1,7 +1,7 @@
 {
   "site": "bowling-green",
   "catalog_version": "80b35fc06eeced5101dcd3de82db3b0a2bc048c256062b5eb793f51ac798fe23",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:bowling-green:7q10",
@@ -760,7 +760,7 @@
       "kind": "dataset",
       "site": "bowling-green",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

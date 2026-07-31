@@ -1,10 +1,10 @@
 {
   "site": "findlay",
   "bundle_version": "1.0.0",
-  "contract_version": "1.48.0",
-  "generated_at": "2026-07-31T17:05:39+00:00",
+  "contract_version": "1.49.0",
+  "generated_at": "2026-07-31T20:45:01+00:00",
   "feed_count": 32,
-  "row_total": 527,
+  "row_total": 534,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -229,7 +229,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 87
+      "count": 94
     },
     {
       "name": "open-questions",

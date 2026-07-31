@@ -1,10 +1,10 @@
 {
   "site": "sidney",
   "bundle_version": "1.0.0",
-  "contract_version": "1.48.0",
-  "generated_at": "2026-07-31T17:12:34+00:00",
+  "contract_version": "1.49.0",
+  "generated_at": "2026-07-31T20:52:58+00:00",
   "feed_count": 31,
-  "row_total": 404,
+  "row_total": 411,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -229,7 +229,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 81
+      "count": 88
     },
     {
       "name": "impact-study",

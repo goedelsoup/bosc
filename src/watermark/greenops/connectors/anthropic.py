@@ -27,19 +27,23 @@ headline stays a modeled figure derived downstream (#4/#1083), never metered her
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, cast
+from typing import Any
 
 import httpx
 import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
-from watermark.connectors import cached_get
-from watermark.greenops.model import GreenopsPeriod, period_from_window
+from watermark.greenops.model import (
+    GreenopsPeriod,
+    SourceBasis,
+    combine_basis,
+    period_from_window,
+)
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
 
-from . import GreenopsOfflineError
+from ._fetch import greenops_cached_get
 from ._readme import write_reference_yaml
 
 log = get_logger(__name__)
@@ -102,6 +106,7 @@ class AnthropicUsageReport(BaseModel):
     web_search_requests: ProvenancedValue  # the one real request count the API exposes
     by_model: list[AnthropicUsageByModel]
     by_workspace: list[AnthropicUsageByWorkspace]
+    basis: SourceBasis = "illustrative"  # live pull vs replayed sample (#1643/F3)
     note: str = ""
 
     def all_values(self) -> list[ProvenancedValue]:
@@ -119,11 +124,15 @@ class AnthropicUsageReport(BaseModel):
         return values
 
 
-def _fetch_report(report: str, key_params: dict[str, Any], settings: Settings) -> dict[str, Any]:
+def _fetch_report(
+    report: str, key_params: dict[str, Any], settings: Settings
+) -> tuple[dict[str, Any], SourceBasis]:
     """Fetch one Admin report, following pagination, reduced to ``{"data": [<buckets>]}``.
 
     The Admin key is deliberately absent from ``key_params`` (the cache key) and added only
     inside the live ``fetch``; the merged multi-page ``data`` is what lands in the cache/fixture.
+    Returns the payload with the :data:`SourceBasis` its resolution rung implies (#1643/F3) —
+    a committed fixture is a sample, a live pull is this org's real usage.
     """
     # The live query mirrors key_params but spells `group_by` as the API's `group_by[]` array
     # and drops the connector-internal `report` marker (which is the path, not a query param).
@@ -164,19 +173,7 @@ def _fetch_report(report: str, key_params: dict[str, Any], settings: Settings) -
                 break
         return {"data": buckets}
 
-    return cast(
-        "dict[str, Any]",
-        cached_get(
-            "anthropic",
-            key_params,
-            fetch,
-            cache_dir=settings.greenops_cache_dir,
-            offline=settings.greenops_offline,
-            fixtures_dir=settings.greenops_fixtures_dir,
-            ttl_hours=settings.greenops_cache_ttl_hours,
-            offline_error=GreenopsOfflineError,
-        ),
-    )
+    return greenops_cached_get("anthropic", key_params, fetch, settings)
 
 
 def _results(payload: dict[str, Any]) -> list[dict[str, Any]]:
@@ -195,11 +192,15 @@ def build_usage_report(
     usage_payload: dict[str, Any],
     cost_payload: dict[str, Any],
     period: GreenopsPeriod,
+    *,
+    basis: SourceBasis = "illustrative",
 ) -> AnthropicUsageReport:
     """Reduce the raw usage + cost report payloads into an :class:`AnthropicUsageReport`.
 
     Pure over the two payloads (no I/O) so the offline fixtures exercise the real parsing,
-    grouping, and USD conversion — not a pre-reduced blob.
+    grouping, and USD conversion — not a pre-reduced blob. ``basis`` is the caller's finding
+    about where the payloads came from (#1643/F3); it defaults to ``illustrative`` because a
+    payload with no stated origin must not read as a real pull.
     """
     usage_cite = f"Anthropic Admin usage_report/messages ({period.label})"
     cost_cite = f"Anthropic Admin cost_report ({period.label})"
@@ -285,6 +286,7 @@ def build_usage_report(
         web_search_requests=ref(float(tot["web_search"]), "requests", usage_cite),
         by_model=by_model,
         by_workspace=by_workspace,
+        basis=basis,
         note=(
             "Anthropic Admin usage_report/messages + cost_report over the window, attributed "
             "by model and by workspace. Figures are `reference` (a usage/billing export), not "
@@ -321,10 +323,13 @@ def fetch_anthropic_usage(
         "bucket_width": "1d",
         "group_by": ["workspace_id", "description"],
     }
-    usage_payload = _fetch_report("usage_report/messages", usage_key, settings)
-    cost_payload = _fetch_report("cost_report", cost_key, settings)
+    usage_payload, usage_basis = _fetch_report("usage_report/messages", usage_key, settings)
+    cost_payload, cost_basis = _fetch_report("cost_report", cost_key, settings)
     return build_usage_report(
-        usage_payload, cost_payload, period_from_window(starting_at, ending_at)
+        usage_payload,
+        cost_payload,
+        period_from_window(starting_at, ending_at),
+        basis=combine_basis([usage_basis, cost_basis]),
     )
 
 

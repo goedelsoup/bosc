@@ -1,7 +1,7 @@
 {
   "site": "sidney",
   "catalog_version": "30d6b566173a7fa2bcf4556d284ac5f5ed25206b8247b4d9854a51f5ac6de1fd",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:sidney:7q10",
@@ -776,7 +776,7 @@
       "kind": "dataset",
       "site": "sidney",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

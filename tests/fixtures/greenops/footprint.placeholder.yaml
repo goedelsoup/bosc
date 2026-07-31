@@ -13,6 +13,8 @@ headline:
     citation: modeled placeholder pending the wired source (#1078-#1083)
     confidence: low
     asof: null
+    low: null
+    high: null
   sub: hosting, ingestion, search, AI
   source_label: cloud billing export
 - key: ai_inferences
@@ -24,6 +26,8 @@ headline:
     citation: modeled placeholder pending the wired source (#1078-#1083)
     confidence: low
     asof: null
+    low: null
+    high: null
   sub: extraction, ask, corroboration, drafting
   source_label: model-provider usage logs
 - key: electricity
@@ -35,6 +39,8 @@ headline:
     citation: modeled placeholder pending the wired source (#1078-#1083)
     confidence: low
     asof: null
+    low: null
+    high: null
   sub: compute + cooling, all regions
   source_label: eGRID factors
 - key: water
@@ -46,8 +52,23 @@ headline:
     citation: modeled placeholder pending the wired source (#1078-#1083)
     confidence: low
     asof: null
-  sub: direct cooling + generation upstream
+    low: null
+    high: null
+  sub: provider cooling + generation upstream
   source_label: WUE benchmarks
+- key: carbon
+  label: Carbon emitted
+  value:
+    value: 15.0
+    unit: MTCO2e
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+    low: null
+    high: null
+  sub: location-based, our model
+  source_label: EPA eGRID SRVC intensity
 compute_by_function:
   unit: vCPU-hrs
   functions:
@@ -59,6 +80,8 @@ compute_by_function:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Ingestion
     value:
       value: 3400.0
@@ -67,6 +90,8 @@ compute_by_function:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: AI inference
     value:
       value: 3050.0
@@ -75,6 +100,8 @@ compute_by_function:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Search index
     value:
       value: 980.0
@@ -83,6 +110,8 @@ compute_by_function:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Corroboration
     value:
       value: 590.0
@@ -91,6 +120,8 @@ compute_by_function:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
 ai_by_task:
   unit: calls
   tasks:
@@ -102,6 +133,8 @@ ai_by_task:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Search & Ask
     value:
       value: 725000.0
@@ -110,6 +143,8 @@ ai_by_task:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Corroboration assist
     value:
       value: 255000.0
@@ -118,6 +153,8 @@ ai_by_task:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Drafting summaries
     value:
       value: 140000.0
@@ -126,6 +163,8 @@ ai_by_task:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
 electricity:
   unit: MWh
   monthly:
@@ -137,6 +176,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Aug
     value:
       value: 3.1
@@ -145,6 +186,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Sep
     value:
       value: 3.3
@@ -153,6 +196,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Oct
     value:
       value: 3.0
@@ -161,6 +206,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Nov
     value:
       value: 2.9
@@ -169,6 +216,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Dec
     value:
       value: 3.2
@@ -177,6 +226,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Jan
     value:
       value: 3.6
@@ -185,6 +236,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Feb
     value:
       value: 3.3
@@ -193,6 +246,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Mar
     value:
       value: 3.0
@@ -201,6 +256,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Apr
     value:
       value: 2.9
@@ -209,6 +266,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: May
     value:
       value: 3.1
@@ -217,6 +276,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   - label: Jun
     value:
       value: 3.2
@@ -225,6 +286,8 @@ electricity:
       citation: modeled placeholder pending the wired source (#1078-#1083)
       confidence: low
       asof: null
+      low: null
+      high: null
   grid:
     value: 23.2
     unit: MWh
@@ -232,6 +295,8 @@ electricity:
     citation: modeled placeholder pending the wired source (#1078-#1083)
     confidence: low
     asof: null
+    low: null
+    high: null
   renewable:
     value: 14.2
     unit: MWh
@@ -239,6 +304,45 @@ electricity:
     citation: modeled placeholder pending the wired source (#1078-#1083)
     confidence: low
     asof: null
+    low: null
+    high: null
+energy:
+  unit: MWh
+  infrastructure:
+    value: 24.5
+    unit: MWh
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+    low: null
+    high: null
+  inference:
+    value: 12.9
+    unit: MWh
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+    low: null
+    high: null
+carbon:
+  unit: MTCO2e
+  derived_location_based:
+    value: 15.0
+    unit: MTCO2e
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+    low: null
+    high: null
+  provider_location_based: null
+  market_based: null
+  intensity: null
+  subregion: SRVC
+  reconciliation: 'Placeholder: no provider emissions export wired, so there is nothing
+    to reconcile the modeled location-based figure against.'
 water:
   unit: gal
   direct:
@@ -248,6 +352,8 @@ water:
     citation: modeled placeholder pending the wired source (#1078-#1083)
     confidence: low
     asof: null
+    low: null
+    high: null
   indirect:
     value: 21700.0
     unit: gal
@@ -255,6 +361,8 @@ water:
     citation: modeled placeholder pending the wired source (#1078-#1083)
     confidence: low
     asof: null
+    low: null
+    high: null
   budget_cap:
     value: 45000.0
     unit: gal
@@ -262,6 +370,8 @@ water:
     citation: modeled placeholder pending the wired source (#1078-#1083)
     confidence: low
     asof: null
+    low: null
+    high: null
 methodology:
 - title: Compute
   body: Read from cloud vendor billing exports, split by service tag (hosting, ingestion,
@@ -271,11 +381,13 @@ methodology:
     by EPA eGRID subregion carbon-intensity factors for where each workload runs.
 - title: Water
   body: Modeled from the electricity figure using published Water Usage Effectiveness
-    (WUE) benchmarks — direct on-site cooling plus the water withdrawn upstream to
-    generate the power we draw.
+    (WUE) benchmarks — our provider's facility cooling, attributed to us by billed
+    IT load, plus the water consumed upstream to generate the power delivered. We
+    operate no data center.
 sources:
 - cloud billing export FY26
-- EPA eGRID subregion RFCW factors 2025
+- EPA eGRID subregion SRVC factors 2025
 - EPRI / Uptime Institute WUE benchmarks 2024
+basis: illustrative
 note: 'Placeholder scaffold (#1077): every figure is a modeled assumption pending
   its wired source. Nothing here is metered.'

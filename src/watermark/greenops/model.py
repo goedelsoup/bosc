@@ -16,12 +16,50 @@ assumptions land in #1078-#1083.
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from datetime import datetime, timedelta
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
+from watermark.connectors import CacheOrigin
 from watermark.hydrology.model import ProvenancedValue
+
+SourceBasis = Literal["illustrative", "measured"]
+"""Whether a usage export describes *real* consumption or is a shaped sample (#1643/F3).
+
+``measured`` — the export came from a live provider pull (or its cache entry): the numbers
+are this organization's actual billed usage over the window. ``illustrative`` — the export
+was replayed from a committed fixture, so its magnitudes are a **sample**, correct in shape
+and internally consistent but not a real footprint.
+
+**It is stamped from the fetch path, never by hand** (:data:`watermark.connectors.CacheOrigin`),
+and defaults to ``illustrative``: an artifact that does not say where it came from is not
+allowed to read as a real pull. :meth:`GreenopsReport.assert_no_verified`'s sibling discipline —
+a report is ``measured`` only when every wired source is, so one sample export keeps the whole
+report (and the ``/about/sustainability`` banner) honest.
+"""
+
+
+def basis_for_origin(origin: CacheOrigin) -> SourceBasis:
+    """Map the rung that served a connector payload onto the export's :data:`SourceBasis`.
+
+    A committed **fixture** replay is a sample (``illustrative``); a **live** fetch and the
+    **cache** entry it wrote are the organization's real usage (``measured``). Keeping this
+    one-liner in the model (rather than inline in each connector) is what makes the four
+    exports agree on the rule.
+    """
+    return "illustrative" if origin == "fixture" else "measured"
+
+
+def combine_basis(bases: Iterable[SourceBasis]) -> SourceBasis:
+    """The basis of a report assembled from several exports: ``measured`` only if all are.
+
+    An empty iterable (nothing wired) is ``illustrative`` — a report with no source behind it
+    is the least measured thing there is.
+    """
+    seen = list(bases)
+    return "measured" if seen and all(b == "measured" for b in seen) else "illustrative"
 
 
 class GreenopsPeriod(BaseModel):
@@ -106,18 +144,91 @@ class ElectricitySeries(BaseModel):
 
 
 class WaterDraw(BaseModel):
-    """Water draw split direct/indirect (the stacked bar) against the internal budget cap."""
+    """Water attributable to our draw, on the **source** basis, against the internal budget cap.
+
+    **The boundary is tenancy, not ownership** (#1643/F4). We operate no data center: the
+    cooling water in ``direct`` is drawn by *our cloud provider's* facility, apportioned to us
+    by the kWh we bill. Calling it "our direct on-site cooling" claimed a facility we do not
+    have; it is **tenant-attributed facility cooling**, and the field name is kept only for
+    feed stability.
+
+    **The two components compose; they are not two bases summed.** ``direct`` is site-basis
+    cooling water per kWh of *IT* load; ``indirect`` is the *upstream increment* — water
+    consumed generating the electricity delivered to the whole facility (IT x PUE). Site WUE
+    plus that increment **is** the source WUE by definition (The Green Grid WP#35), so
+    :attr:`total` is a well-formed source-basis figure. What must never be summed is a
+    site-basis WUE and an already-source-basis WUE; the benchmark table marks the increment
+    ``basis="upstream"`` precisely so the derivation cannot pick a source-basis row here.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
     unit: str = "gal"
-    direct: ProvenancedValue  # on-site cooling
-    indirect: ProvenancedValue  # grid generation upstream
+    direct: ProvenancedValue  # tenant-attributed provider facility cooling (site WUE x IT kWh)
+    indirect: ProvenancedValue  # upstream generation increment (EWIF x facility kWh)
     budget_cap: ProvenancedValue  # the internal annual budget the gauge reads against
 
     @property
     def total(self) -> float:
+        """Source-basis total: facility cooling + the upstream generation increment."""
         return self.direct.value + self.indirect.value
+
+
+class CarbonAccount(BaseModel):
+    """The report's CO2e figures — the thing eGRID exists to produce (#1643/F1).
+
+    Carbon was previously computed only to build a prose reconciliation sentence, so a
+    sustainability page reported every dimension *except* the one its factor table is for.
+    This is the first-class account.
+
+    **Dual reporting is the GHG-Protocol Scope-2 convention, and the two are not
+    interchangeable.** ``location_based`` prices electricity at the *physical grid's* average
+    intensity (our eGRID subregion factor) — what the grid actually emitted to serve us.
+    ``market_based`` prices it at the *contractual* intensity the supplier claims (PPAs,
+    RECs) — what our provider reports after procurement. A market-based figure is always the
+    smaller and is never a substitute for the location-based one; both are published.
+
+    ``derived_location_based`` is *our* model (electricity x the eGRID rate);
+    ``provider_location_based`` / ``market_based`` are the provider's own estimate over its
+    whole service surface. They differ by scope, which is why ``reconciliation`` states the
+    ratio in prose rather than picking a winner.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    unit: str = "MTCO2e"
+    derived_location_based: ProvenancedValue  # our electricity x eGRID subregion rate
+    provider_location_based: ProvenancedValue | None = None  # AWS's own LBM total
+    market_based: ProvenancedValue | None = None  # AWS's own MBM total (contractual)
+    intensity: ProvenancedValue | None = None  # the eGRID rate applied, lb CO2e/MWh
+    subregion: str | None = None  # the eGRID subregion the rate came from, e.g. "SRVC"
+    reconciliation: str = ""  # why our model and the provider's estimate differ
+
+    def all_values(self) -> list[ProvenancedValue]:
+        """Every :class:`ProvenancedValue` in the account, for provenance auditing."""
+        maybe = [self.provider_location_based, self.market_based, self.intensity]
+        return [self.derived_location_based, *(v for v in maybe if v is not None)]
+
+
+class EnergyBreakdown(BaseModel):
+    """Electricity split by **scope of the workload**, not by function (#1643/F2).
+
+    The vCPU chain models the infrastructure we rent (instances + CI runners). Model
+    inference runs on the provider's accelerators and appears on no bill of ours as energy —
+    only as tokens. Scoping it out entirely made the electricity, carbon and water headlines
+    structurally unable to represent a Claude-driven platform's real footprint, so it is
+    folded in here as its own component and reported separately rather than hidden inside
+    the infrastructure number.
+
+    Both components carry the same unit as :class:`ElectricitySeries`; ``inference`` is a
+    banded assumption (see :class:`InferenceEnergyTable`) and stays visibly low-confidence.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    unit: str = "MWh"
+    infrastructure: ProvenancedValue  # vCPU-hrs x W/vCPU x PUE (instances + CI runners)
+    inference: ProvenancedValue  # tokens x Wh/1k-tokens x PUE, by model class
 
 
 class MethodologyItem(BaseModel):
@@ -184,6 +295,7 @@ class AwsCostReport(BaseModel):
     total_cost: ProvenancedValue  # USD across every service
     by_function: list[AwsFunctionCost]
     lines: list[AwsUsageLine]
+    basis: SourceBasis = "illustrative"  # live pull vs replayed sample (#1643/F3)
     note: str = ""
 
     def all_values(self) -> list[ProvenancedValue]:
@@ -221,6 +333,7 @@ class AwsCarbonReport(BaseModel):
     lbm_total: ProvenancedValue  # location-based method total, MTCO2e
     monthly: list[AwsCarbonMonth]
     model_version: str  # AWS's emissions-model version, e.g. "v3.0.0"
+    basis: SourceBasis = "illustrative"  # live pull vs replayed sample (#1643/F3)
     note: str = ""
 
     def all_values(self) -> list[ProvenancedValue]:
@@ -309,6 +422,7 @@ class GithubUsageReport(BaseModel):
     by_runner: list[GithubRunnerMinutes]  # ranked by minutes desc
     storage: list[GithubStorageProduct]  # ranked by cost desc
     lines: list[GithubUsageLine]  # full detail, ranked by cost desc
+    basis: SourceBasis = "illustrative"  # live pull vs replayed sample (#1643/F3)
     note: str = ""
 
     def all_values(self) -> list[ProvenancedValue]:
@@ -393,10 +507,17 @@ class EgridFactors(BaseModel):
 class WueBenchmark(BaseModel):
     """One Water Usage Effectiveness benchmark — liters of water per kWh, for a facility type.
 
-    ``basis`` distinguishes **site** WUE (direct on-site cooling water only) from **source**
-    WUE (adds the water withdrawn/consumed upstream to generate the electricity drawn) — the
-    two must never be summed or compared across bases. The figure is ``reference`` (a
-    published benchmark), never a metered fact about our own cooling.
+    ``basis`` is a three-way distinction, and conflating the last two is what let the old
+    derivation sum figures its own docstring forbade summing (#1643/F4):
+
+    - ``site`` — facility cooling water only, per kWh of **IT** load.
+    - ``upstream`` — the *increment* consumed generating the electricity delivered, per kWh
+      of **facility** load. Not a WUE on its own; it is the term you add to a site WUE.
+    - ``source`` — an already-complete site + upstream figure.
+
+    ``site`` + ``upstream`` compose into a source-basis total (The Green Grid WP#35). A
+    ``site`` and a ``source`` row must never be summed — that double-counts cooling. The
+    figure is ``reference`` (a published benchmark), never a metered fact about our cooling.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -404,7 +525,7 @@ class WueBenchmark(BaseModel):
     facility_type: str  # "hyperscale_evaporative" | "closed_loop_airside" | "grid_upstream" | ...
     label: str  # "Hyperscale, evaporative cooling", ...
     wue: ProvenancedValue  # L/kWh, reference
-    basis: Literal["site", "source"]  # site = direct on-site cooling; source = incl. upstream
+    basis: Literal["site", "upstream", "source"]
     note: str = ""
 
 
@@ -428,6 +549,74 @@ class WueTable(BaseModel):
         return [b.wue for b in self.benchmarks]
 
 
+# --- LLM inference energy coefficients (#1643/F2) -------------------------------------------
+# The factor table that puts model inference into the energy chain. Unlike eGRID this is not a
+# pull — no provider publishes a per-token energy figure for its hosted models — so it is a
+# hand-curated `reference` table of *published third-party measurements*, each with a dated
+# citation and an explicit band. The published per-query figures span an order of magnitude;
+# the band is how that spread stays visible instead of hiding behind a point estimate.
+
+
+class InferenceEnergyBenchmark(BaseModel):
+    """Energy per 1,000 tokens for one class of hosted model, as a banded published estimate.
+
+    ``wh_per_1k_tokens`` carries the central estimate **and** a ``low``/``high`` band (#760);
+    a consumer that drops the band is overstating what is known. ``basis`` names which tokens
+    the coefficient is priced against — decode (output) dominates inference energy, so a
+    coefficient measured per *output* token cannot be applied to an input+output total.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    model_class: str  # "frontier" | "mid_tier" | "small"
+    label: str  # "Frontier (Opus-class)", ...
+    wh_per_1k_tokens: ProvenancedValue  # Wh per 1,000 tokens of `basis`, reference, banded
+    basis: Literal["output_tokens", "total_tokens"]
+    note: str = ""
+
+
+class InferenceEnergyTable(BaseModel):
+    """The committed per-token inference-energy table the derivation applies (#1643/F2).
+
+    Hand-curated from published inference-energy measurements, transcribed with source and
+    date. Every figure is ``reference`` — a published third-party estimate, never a metered
+    fact about our own inference (no provider exposes one). ``models`` maps a provider model
+    id onto a ``model_class``; an id not in the map falls to ``default_class``, so a new model
+    is priced conservatively rather than silently dropped from the energy chain.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    vintage: str  # "Epoch AI 2025-02 / Jegham et al. 2025-05 / Google 2025-08"
+    benchmarks: list[InferenceEnergyBenchmark]
+    models: dict[str, str] = {}  # provider model id -> model_class
+    default_class: str = "frontier"  # the conservative fallback for an unmapped model id
+    note: str = ""
+
+    def all_values(self) -> list[ProvenancedValue]:
+        """Every :class:`ProvenancedValue` in the table, for provenance auditing."""
+        return [b.wh_per_1k_tokens for b in self.benchmarks]
+
+    def by_class(self) -> dict[str, InferenceEnergyBenchmark]:
+        """Benchmarks keyed by model class, for the derivation's lookup."""
+        return {b.model_class: b for b in self.benchmarks}
+
+    def benchmark_for(self, model_id: str) -> InferenceEnergyBenchmark | None:
+        """The benchmark for a provider model id via ``models`` → ``default_class``.
+
+        Matches the longest declared id prefix, so ``claude-opus-4-8-20260115`` resolves
+        through the ``claude-opus-4-8`` entry without the map chasing point releases.
+        """
+        by_class = self.by_class()
+        matches = [k for k in self.models if model_id.startswith(k)]
+        if matches:
+            key = max(matches, key=len)
+            found = by_class.get(self.models[key])
+            if found is not None:
+                return found
+        return by_class.get(self.default_class)
+
+
 class GreenopsReport(BaseModel):
     """The assembled compute-footprint report the sustainability page reads.
 
@@ -444,9 +633,15 @@ class GreenopsReport(BaseModel):
     compute_by_function: ComputeByFunction
     ai_by_task: AiByTask
     electricity: ElectricitySeries
+    energy: EnergyBreakdown | None = None  # infrastructure vs inference (#1643/F2)
+    carbon: CarbonAccount | None = None  # the CO2e account (#1643/F1)
     water: WaterDraw
     methodology: list[MethodologyItem]
     sources: list[str] = []  # display source-line credits ("EPA eGRID … 2025", …)
+    # Whether the usage exports behind these figures are a real pull or a shaped sample
+    # (#1643/F3). Composed from the source exports by the derivation, never hand-set; an
+    # artifact that omits it reads as `illustrative`, which is the honest default.
+    basis: SourceBasis = "illustrative"
     note: str = ""
 
     def all_values(self) -> list[ProvenancedValue]:
@@ -456,6 +651,10 @@ class GreenopsReport(BaseModel):
         values += [t.value for t in self.ai_by_task.tasks]
         values += [m.value for m in self.electricity.monthly]
         values += [self.electricity.grid, self.electricity.renewable]
+        if self.energy is not None:
+            values += [self.energy.infrastructure, self.energy.inference]
+        if self.carbon is not None:
+            values += self.carbon.all_values()
         values += [self.water.direct, self.water.indirect, self.water.budget_cap]
         return values
 

@@ -25,11 +25,21 @@ import json
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from watermark.logging import get_logger
 
 log = get_logger(__name__)
+
+CacheOrigin = Literal["cache", "fixture", "live"]
+"""Which rung of the resolution order actually served a payload.
+
+``cache`` — a fresh on-disk entry (written by an earlier live fetch); ``fixture`` — a
+committed offline fixture; ``live`` — a fresh fetch. Callers that must distinguish a
+*replayed sample* from a *real pull* (the GreenOps ``illustrative``/``measured`` basis,
+#1643) read this via :func:`cached_get_traced`; everyone else uses :func:`cached_get`
+and never sees it.
+"""
 
 # The single source of truth for the cache freshness window. Subsystems whose
 # settings expose a ``*_cache_ttl_hours`` knob default it to this; the others
@@ -82,12 +92,43 @@ def cached_get(
     / ``ttl_hours`` (see the per-subsystem ``settings.<x>_cache_dir`` accessors) and,
     optionally, an ``offline_error`` subclass to raise on an offline miss.
     """
+    return cached_get_traced(
+        connector,
+        params,
+        fetch,
+        cache_dir=cache_dir,
+        offline=offline,
+        fixtures_dir=fixtures_dir,
+        ttl_hours=ttl_hours,
+        offline_error=offline_error,
+    )[0]
+
+
+def cached_get_traced(
+    connector: str,
+    params: dict[str, Any],
+    fetch: Callable[[], Any],
+    *,
+    cache_dir: Path,
+    offline: bool = False,
+    fixtures_dir: Path | None = None,
+    ttl_hours: int = DEFAULT_CACHE_TTL_HOURS,
+    offline_error: type[OfflineError] = OfflineError,
+) -> tuple[Any, CacheOrigin]:
+    """:func:`cached_get`, additionally reporting *which rung* served the payload.
+
+    Identical resolution and side effects — this is the implementation :func:`cached_get`
+    delegates to — but returns ``(payload, origin)`` so a caller can tell a replayed
+    committed **fixture** (a sample) from a real **live** pull or its **cache** entry.
+    Only a caller that publishes that distinction should need it; see
+    :data:`CacheOrigin`.
+    """
     key = cache_key(params)
     path = _cache_path(cache_dir, connector, key)
 
     cached = _read(path)
     if cached is not None and _is_fresh(cached.get("fetched_at", ""), ttl_hours):
-        return cached["payload"]
+        return cached["payload"], "cache"
 
     if offline:
         # Resolution order (per the subsystem CLAUDE.md): fresh cache → committed
@@ -98,7 +139,7 @@ def cached_get(
         if fixtures_dir is not None:
             fixture = _read(fixtures_dir / connector / f"{key}.json")
             if fixture is not None:
-                return fixture["payload"]
+                return fixture["payload"], "fixture"
         if cached is not None:
             log.info("connector.cache.stale_offline", connector=connector, key=key)
         raise offline_error(
@@ -109,7 +150,7 @@ def cached_get(
     log.info("connector.fetch", connector=connector, key=key)
     payload = fetch()
     _write(path, {"params": params, "fetched_at": _now().isoformat(), "payload": payload})
-    return payload
+    return payload, "live"
 
 
 def _read(path: Path) -> dict[str, Any] | None:

@@ -1944,7 +1944,7 @@ export interface GreenopsQuantity {
   value: ProvenancedValue;
 }
 
-/** One of the four report headline stats (compute / AI inferences / electricity / water). */
+/** One report headline stat (compute / AI inferences / electricity / water / carbon). */
 export interface GreenopsHeadline {
   key: string;
   label: string;
@@ -1959,6 +1959,33 @@ export interface GreenopsMethodology {
   body: string;
 }
 
+/** Whether the usage exports behind the figures are a real pull or a shaped sample (#1643/F3).
+ *  Composed Python-side from each export's own marker, which the connectors stamp from the
+ *  fetch path — the page must not present `illustrative` magnitudes as a measured footprint. */
+export type GreenopsBasis = "illustrative" | "measured";
+
+/** Electricity split by workload scope: rented infrastructure vs model inference (#1643/F2).
+ *  Inference runs on the provider's accelerators and bills as tokens, not energy; reporting it
+ *  separately is what lets the total include it without implying it is metered like the rest. */
+export interface GreenopsEnergy {
+  unit: string;
+  infrastructure: ProvenancedValue;
+  inference: ProvenancedValue;
+}
+
+/** The CO2e account (#1643/F1). `derived_location_based` is our model over the eGRID subregion
+ *  rate; the provider figures are AWS's own. Location- and market-based are NOT interchangeable
+ *  — market-based prices contracted procurement, so it is shown beside, never instead. */
+export interface GreenopsCarbon {
+  unit: string;
+  derived_location_based: ProvenancedValue;
+  provider_location_based?: ProvenancedValue | null;
+  market_based?: ProvenancedValue | null;
+  intensity?: ProvenancedValue | null;
+  subregion?: string | null;
+  reconciliation: string;
+}
+
 /** The assembled compute-footprint report the sustainability page reads. */
 export interface GreenopsReport {
   period: { label: string; start: string; end: string; kind: string };
@@ -1971,14 +1998,20 @@ export interface GreenopsReport {
     grid: ProvenancedValue;
     renewable: ProvenancedValue;
   };
+  energy?: GreenopsEnergy | null;
+  carbon?: GreenopsCarbon | null;
   water: {
     unit: string;
+    // Tenant-attributed: `direct` is our PROVIDER's facility cooling apportioned to us by
+    // billed IT-kWh (we run no data center), `indirect` the upstream generation increment.
+    // Field names kept for feed stability; see `WaterDraw` for why they compose (#1643/F4).
     direct: ProvenancedValue;
     indirect: ProvenancedValue;
     budget_cap: ProvenancedValue;
   };
   methodology: GreenopsMethodology[];
   sources: string[];
+  basis?: GreenopsBasis;
   note: string;
 }
 

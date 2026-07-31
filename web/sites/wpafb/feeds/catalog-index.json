@@ -1,7 +1,7 @@
 {
   "site": "wpafb",
   "catalog_version": "847940e66ba1d7ee5b38cf00411779373b3e0731d0e6b1630b464a14eeef079d",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:wpafb:7q10",
@@ -776,7 +776,7 @@
       "kind": "dataset",
       "site": "wpafb",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {
