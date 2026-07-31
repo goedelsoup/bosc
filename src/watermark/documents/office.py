@@ -71,13 +71,30 @@ def is_lfs_pointer(path: Path) -> bool:
         return False
 
 
+def _sniff_zip_suffix(path: Path) -> str:
+    """``.xlsx`` when an extensionless OOXML zip is a workbook, else ``.docx``.
+
+    Both formats are zips with the same magic, so the part name decides: a workbook keeps its
+    sheets under ``xl/``, a document its body under ``word/``. An unreadable archive falls back
+    to ``.docx`` — :func:`docx_text` reports it as an empty read, which is the same visible gap
+    any other broken container produces.
+    """
+    try:
+        with zipfile.ZipFile(path) as z:
+            names = z.namelist()
+    except (zipfile.BadZipFile, OSError):
+        return ".docx"
+    return ".xlsx" if any(n.startswith("xl/") for n in names) else ".docx"
+
+
 def detect_suffix(path: Path) -> str:
     """The effective lower-case format suffix for *path*.
 
     Normally just its extension. Three files in the sanitary production arrived with **no**
     extension and are kept that way (chain of custody), so a suffix-less file is sniffed from its
-    magic bytes instead: ``%PDF`` → ``.pdf``; an OLE2 container → ``.xls`` when it carries a
-    workbook stream, else ``.doc``. Returns ``""`` when the format can't be identified.
+    magic bytes instead: ``%PDF`` → ``.pdf``; a zip → the OOXML kind its parts name
+    (:func:`_sniff_zip_suffix`); an OLE2 container → ``.xls`` when it carries a workbook stream,
+    else ``.doc``. Returns ``""`` when the format can't be identified.
     """
     suffix = path.suffix.lower()
     if suffix:
@@ -88,7 +105,7 @@ def detect_suffix(path: Path) -> str:
             if head.startswith(_PDF_MAGIC):
                 return ".pdf"
             if head.startswith(_ZIP_MAGIC):
-                return ".docx"
+                return _sniff_zip_suffix(path)
             if not head.startswith(_OLE2_MAGIC):
                 return ""
             body = head + fh.read(_OLE2_SNIFF_BYTES)

@@ -14,6 +14,7 @@ import yaml
 from watermark import text_sidecars
 from watermark.text_sidecars import (
     ConverterUnavailableError,
+    SidecarGenerationError,
     check,
     generate,
     in_sidecar_tree,
@@ -106,6 +107,30 @@ def test_a_sidecar_whose_source_vanished_resolves_to_nothing(docs: Path) -> None
     tree.mkdir(parents=True)
     (tree / "Deleted.doc.txt").write_text("stale", encoding="utf-8")
     assert sidecar_source_rel(f"{PROD}-text/14/Deleted.doc.txt", docs) is None
+
+
+# --- converter artifacts -------------------------------------------------------------------------
+def test_a_filename_field_resolves_to_the_source_not_our_staging_copy() -> None:
+    # Writer resolves Word's FILENAME field at export time, against the file it was handed — so
+    # 255 of the sanitary production's 634 documents came back naming a per-run temp path. That is
+    # both wrong (our scratch dir, not anything the county wrote) and non-deterministic, which
+    # would churn every regeneration and defeat the manifest's sidecar hashes.
+    staged = Path("/tmp/watermark-sidecars-ab12/in/00016.doc")
+    text = "SMK\n/tmp/watermark-sidecars-ab12/in/00016.doc\n"
+    assert (
+        text_sidecars._restore_source_name(
+            text, staged=staged, source_name="Cover Letter for Findings and Orders.doc"
+        )
+        == "SMK\nCover Letter for Findings and Orders.doc\n"
+    )
+
+
+def test_a_bare_staged_filename_is_restored_too() -> None:
+    staged = Path("/tmp/watermark-sidecars-ab12/in/00016.doc")
+    got = text_sidecars._restore_source_name(
+        "Document: 00016.doc", staged=staged, source_name="Shawnee Oaks Letter.DOC"
+    )
+    assert got == "Document: Shawnee Oaks Letter.DOC"
 
 
 # --- generation ----------------------------------------------------------------------------------
@@ -221,6 +246,49 @@ def test_generate_is_deterministic_apart_from_its_timestamp(
     assert strip(first) == strip(second)
 
 
+def test_generate_refuses_to_prune_when_it_converted_nothing(
+    docs: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A broken LibreOffice must not read as "the corpus has nothing to say" and delete the whole
+    # committed tree, then rewrite the manifest to agree with itself.
+    _stub_converter(monkeypatch, {"Shawnee Oaks Letter.DOC": "body", "EPA - Amort.xls": "rows"})
+    generate(docs, PROD)
+    sidecar = docs / f"{PROD}-text" / "14" / "EPA - Amort.xls.txt"
+    manifest_before = (docs / f"{PROD}-text" / "text-sidecars.yaml").read_bytes()
+
+    _stub_converter(monkeypatch, {})  # the converter now produces no output for anything
+    with pytest.raises(SidecarGenerationError):
+        generate(docs, PROD)
+
+    assert sidecar.is_file()
+    assert (docs / f"{PROD}-text" / "text-sidecars.yaml").read_bytes() == manifest_before
+
+
+def test_generate_refuses_a_pointer_only_run(docs: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    # Same protection for the other way a run converts nothing: a checkout without `git lfs pull`.
+    _stub_converter(monkeypatch, {"Shawnee Oaks Letter.DOC": "body", "EPA - Amort.xls": "rows"})
+    generate(docs, PROD)
+
+    for name in ("14/Correspondence/Shawnee Oaks Letter.DOC", "14/EPA - Amort.xls"):
+        (docs / PROD / name).write_text(
+            "version https://git-lfs.github.com/spec/v1\noid sha256:x\n", encoding="utf-8"
+        )
+    with pytest.raises(SidecarGenerationError):
+        generate(docs, PROD)
+
+    assert (docs / f"{PROD}-text" / "14" / "EPA - Amort.xls.txt").is_file()
+
+
+def test_generate_allows_a_directory_whose_documents_are_all_image_only(
+    docs: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # No failures and no pointers: the converter worked and the documents really are scans. That
+    # is a real outcome and must still write its (empty) manifest.
+    _stub_converter(monkeypatch, {"Shawnee Oaks Letter.DOC": "", "EPA - Amort.xls": ""})
+    report = generate(docs, PROD)
+    assert (report.written, report.empty, report.failed) == (0, 2, 0)
+
+
 def test_generate_refuses_a_missing_source_directory(docs: Path) -> None:
     with pytest.raises(FileNotFoundError):
         generate(docs, "legal/no-such-production")
@@ -283,6 +351,60 @@ def test_check_reports_a_removed_source_once_not_twice(
     findings = check(docs, PROD)
     assert [f.kind for f in findings] == ["source-gone"]
     assert findings[0].path.endswith("EPA - Amort.xls")
+
+
+def test_check_catches_a_deleted_sidecar(docs: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    _stub_converter(monkeypatch, {"Shawnee Oaks Letter.DOC": "body", "EPA - Amort.xls": "rows"})
+    generate(docs, PROD)
+    (docs / f"{PROD}-text" / "14" / "EPA - Amort.xls.txt").unlink()
+
+    findings = check(docs, PROD)
+    assert [f.kind for f in findings] == ["sidecar-missing"]
+    assert findings[0].path.endswith("EPA - Amort.xls.txt")
+
+
+def test_check_catches_a_hand_edited_sidecar(docs: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    # "Never hand-edit a sidecar" is only a rule if something enforces it — a redaction or a
+    # tidy-up applied here would otherwise survive silently until the next regeneration.
+    _stub_converter(monkeypatch, {"Shawnee Oaks Letter.DOC": "body", "EPA - Amort.xls": "rows"})
+    generate(docs, PROD)
+    (docs / f"{PROD}-text" / "14" / "EPA - Amort.xls.txt").write_text(
+        "redacted\n", encoding="utf-8"
+    )
+
+    findings = check(docs, PROD)
+    assert [f.kind for f in findings] == ["sidecar-changed"]
+    assert "data/extracted/" in findings[0].detail
+
+
+def test_check_verifies_sidecars_even_on_an_lfs_less_checkout(
+    docs: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # Sidecars are never LFS-tracked, so this half of the check still works where CI runs.
+    _stub_converter(monkeypatch, {"Shawnee Oaks Letter.DOC": "body", "EPA - Amort.xls": "rows"})
+    generate(docs, PROD)
+    (docs / PROD / "14" / "EPA - Amort.xls").write_text(
+        "version https://git-lfs.github.com/spec/v1\noid sha256:x\n", encoding="utf-8"
+    )
+    (docs / f"{PROD}-text" / "14" / "EPA - Amort.xls.txt").write_text("edited\n", encoding="utf-8")
+
+    assert [f.kind for f in check(docs, PROD)] == ["sidecar-changed"]
+
+
+def test_check_tolerates_a_manifest_written_before_sidecar_hashes(
+    docs: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # An older manifest can still assert existence; it just can't detect an edit.
+    _stub_converter(monkeypatch, {"Shawnee Oaks Letter.DOC": "body", "EPA - Amort.xls": "rows"})
+    generate(docs, PROD)
+    path = docs / f"{PROD}-text" / "text-sidecars.yaml"
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    for entry in raw["files"]:
+        entry.pop("sidecar_sha256")
+    path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+    (docs / f"{PROD}-text" / "14" / "EPA - Amort.xls.txt").write_text("edited\n", encoding="utf-8")
+
+    assert check(docs, PROD) == []
 
 
 def test_check_catches_a_sidecar_no_manifest_entry_accounts_for(

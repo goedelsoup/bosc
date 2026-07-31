@@ -38,7 +38,11 @@ def text_sidecars_cmd(
     ] = False,
 ) -> None:
     """Generate (or verify) the committed ``-text`` sidecars for a source directory."""
-    from watermark.text_sidecars import ConverterUnavailableError, generate
+    from watermark.text_sidecars import (
+        ConverterUnavailableError,
+        SidecarGenerationError,
+        generate,
+    )
     from watermark.text_sidecars import check as check_tree
 
     settings = get_settings()
@@ -56,7 +60,7 @@ def text_sidecars_cmd(
 
     try:
         report = generate(settings.documents_dir, rel)
-    except ConverterUnavailableError as exc:
+    except (ConverterUnavailableError, SidecarGenerationError) as exc:
         console.print(f"[red]{exc}[/]")
         raise typer.Exit(1) from exc
     except FileNotFoundError as exc:

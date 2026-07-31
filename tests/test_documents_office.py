@@ -163,6 +163,29 @@ def test_detect_suffix_tells_an_ole2_workbook_from_an_ole2_document(tmp_path: Pa
     assert detect_suffix(xls) == ".xls"
 
 
+def test_detect_suffix_tells_an_extensionless_workbook_zip_from_a_document_zip(
+    tmp_path: Path,
+) -> None:
+    # .docx and .xlsx are both zips with the same magic; the OOXML part names decide, so a
+    # suffix-less workbook isn't handed to the docx reader (which would find no body and
+    # report an empty read).
+    book = tmp_path / "Amort"
+    with zipfile.ZipFile(book, "w") as z:
+        z.writestr("xl/workbook.xml", "<workbook/>")
+    assert detect_suffix(book) == ".xlsx"
+
+    doc = tmp_path / "Memo"
+    with zipfile.ZipFile(doc, "w") as z:
+        z.writestr("word/document.xml", "<w:p/>")
+    assert detect_suffix(doc) == ".docx"
+
+
+def test_detect_suffix_falls_back_to_docx_for_a_truncated_zip(tmp_path: Path) -> None:
+    path = tmp_path / "Truncated"
+    path.write_bytes(b"PK\x03\x04 not really an archive")
+    assert detect_suffix(path) == ".docx"  # read as a gap downstream, not a crash
+
+
 def test_detect_suffix_is_empty_for_an_unidentifiable_extensionless_file(tmp_path: Path) -> None:
     path = tmp_path / "mystery"
     path.write_bytes(b"\x01\x02\x03\x04")
