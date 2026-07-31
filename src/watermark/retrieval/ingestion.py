@@ -58,29 +58,36 @@ def _pdf_chunks(path: Path, source_rel: str, collection: str) -> Iterator[Chunk]
     except Exception:
         return
 
-    for page_idx, page in enumerate(reader.pages):
-        try:
-            text = (page.extract_text() or "").strip()
-        except Exception:
-            text = ""
+    # Iterating reader.pages lazily parses each page, and a malformed PDF can raise mid-traversal
+    # (not just in extract_text) — wrap the loop so a broken document contributes the pages it
+    # could and is then dropped, never aborting the whole index build. Same guard as the export
+    # side's watermark.site.passages.build_passages.
+    try:
+        for page_idx, page in enumerate(reader.pages):
+            try:
+                text = (page.extract_text() or "").strip()
+            except Exception:
+                text = ""
 
-        if not text:
-            text = f"[image-only page; no text layer — source: {path.name} p.{page_idx + 1}]"
+            if not text:
+                text = f"[image-only page; no text layer — source: {path.name} p.{page_idx + 1}]"
 
-        yield Chunk(
-            chunk_id=_chunk_id("document", source_rel, str(page_idx)),
-            text=text[:_MAX_CHUNK_CHARS],
-            site="",
-            collection=collection,
-            doc_kind="document",
-            source_path=source_rel,
-            page=page_idx,
-            provenance=_prov(
-                filename=path.name,
-                page_1indexed=page_idx + 1,
-                collection=collection or None,
-            ),
-        )
+            yield Chunk(
+                chunk_id=_chunk_id("document", source_rel, str(page_idx)),
+                text=text[:_MAX_CHUNK_CHARS],
+                site="",
+                collection=collection,
+                doc_kind="document",
+                source_path=source_rel,
+                page=page_idx,
+                provenance=_prov(
+                    filename=path.name,
+                    page_1indexed=page_idx + 1,
+                    collection=collection or None,
+                ),
+            )
+    except Exception:
+        return
 
 
 def _text_chunks(

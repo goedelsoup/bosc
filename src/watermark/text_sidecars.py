@@ -23,10 +23,14 @@ from — a citation names the ``.DOC``, never the derived ``.txt``.
 
 **Derived, and marked as such.** Every tree carries a ``text-sidecars.yaml`` manifest (the
 ``derived_files`` precedent of ``data/documents/aedg/PRR-01-bundle.ocr.pdf.index.yaml``) recording,
-per source: its sha256, the converter that read it, and the character count — or, when the
-conversion yielded nothing, an explicit note. That makes the sidecars *regenerable* (never
-hand-edited: the next run reverts an edit) and *falsifiable* (:func:`check` re-hashes every source
-and reports drift, so a sidecar can't quietly outlive the bytes it claims to transcribe).
+per source: its sha256, **the sidecar's own sha256**, the converter that read it, and the character
+count — or, when the conversion yielded nothing, an explicit note. That makes the sidecars
+*regenerable* and *falsifiable* in both directions: :func:`check` re-hashes every source, so a
+sidecar can't quietly outlive the bytes it claims to transcribe, and re-hashes every sidecar, so
+"never hand-edit one" is enforced rather than merely asserted. Regeneration is likewise
+non-destructive by construction — a run that converts nothing (a broken LibreOffice, a checkout
+without ``git lfs pull``) raises :class:`SidecarGenerationError` instead of pruning the committed
+tree and rewriting the manifest to agree with itself.
 
 **Chain of custody.** Nothing here reads or writes a byte under a source directory; the conversion
 input is opened read-only and every write lands under the ``-text`` sibling. A source that is an
@@ -148,6 +152,10 @@ class SidecarEntry(BaseModel):
     source_bytes: int
     chars: int
     converter: str
+    # The sidecar's own bytes, so check() can catch a hand-edited or deleted transcription — the
+    # "never hand-edit one" rule is only a rule if something enforces it. Optional so a manifest
+    # written before this field still loads (it just can't be checked for edits).
+    sidecar_sha256: str | None = None
     note: str | None = None
 
 
@@ -227,6 +235,10 @@ class ConverterUnavailableError(RuntimeError):
     """LibreOffice (``soffice``) isn't on PATH, so legacy formats can't be converted."""
 
 
+class SidecarGenerationError(RuntimeError):
+    """A run produced no text at all — refused before it could prune the committed tree."""
+
+
 def _soffice() -> str:
     exe = shutil.which("soffice") or shutil.which("libreoffice")
     if exe is None:
@@ -292,6 +304,18 @@ def _convert_batch(exe: str, sources: Sequence[Path], target: str, outdir: Path)
         )
 
 
+def _restore_source_name(text: str, *, staged: Path, source_name: str) -> str:
+    """Undo LibreOffice's expansion of Word's ``FILENAME`` field against our staging copy.
+
+    Writer resolves a ``FILENAME`` field at export time, so a document carrying one comes back
+    naming the *staged* file — an absolute path into a per-run temp directory. That is wrong twice
+    over: it is our scratch path rather than anything the county wrote, and it changes every run,
+    which would make the sidecars non-regenerable and the manifest's hashes churn. Substituting the
+    source's as-received filename gives the field the value it actually means, deterministically.
+    """
+    return text.replace(str(staged), source_name).replace(staged.name, source_name)
+
+
 def _normalize(text: str) -> str:
     """Trim the converter's artifacts: the UTF-8 BOM, CRLF, trailing spaces, blank-line runs."""
     text = text.lstrip("﻿").replace("\r\n", "\n").replace("\r", "\n")
@@ -345,14 +369,17 @@ def _extract_batch(
     for start in range(0, len(staged), _BATCH):
         window = staged[start : start + _BATCH]
         _convert_batch(exe, [copy for _, copy, _ in window], target, outdir)
-        for source, _, stem in window:
+        for source, copy, stem in window:
             produced = outdir / f"{stem}.{target.split(':')[0]}"
             if not produced.is_file():
                 continue
             if render == "writer":
-                texts[source] = _normalize(produced.read_text(encoding="utf-8", errors="replace"))
+                raw = produced.read_text(encoding="utf-8", errors="replace")
             else:
-                texts[source] = _normalize(xlsx_text(produced))
+                raw = xlsx_text(produced)
+            texts[source] = _normalize(
+                _restore_source_name(raw, staged=copy, source_name=source.name)
+            )
     return texts
 
 
@@ -428,6 +455,7 @@ def generate(
         text = texts.get(path)
         note: str | None = None
         out_rel: str | None = None
+        out_sha: str | None = None
         if text is None:
             failed += 1
             note = "conversion failed: the converter produced no output for this file"
@@ -442,6 +470,7 @@ def generate(
             target.write_text(text + "\n", encoding="utf-8")
             keep.add(target)
             out_rel = str(target_rel)
+            out_sha = _sha256(target)
         entries.append(
             SidecarEntry(
                 source=str(rel),
@@ -450,8 +479,23 @@ def generate(
                 source_bytes=path.stat().st_size,
                 chars=len(text or ""),
                 converter=converter,
+                sidecar_sha256=out_sha,
                 note=note,
             )
+        )
+
+    # Pruning and the manifest rewrite are the only destructive steps here, and a run that
+    # converted *nothing* is almost never a corpus that legitimately has nothing to say — it is a
+    # broken LibreOffice, or a checkout that never ran `git lfs pull`. Left unguarded, such a run
+    # would delete the whole committed tree and then rewrite the manifest to agree with itself.
+    # (An all-image-only directory is a real, if odd, outcome: no failures, no pointers, so it
+    # passes.)
+    if written == 0 and (failed or pointers):
+        raise SidecarGenerationError(
+            f"converted 0 of {len(sources)} legacy documents under {source_root} "
+            f"({failed} conversion failure(s), {len(pointers)} unresolved Git-LFS pointer(s)) — "
+            "refusing to prune the committed sidecars. Check that LibreOffice runs and that "
+            "`git lfs pull` has been done, then re-run."
         )
 
     pruned = _prune(tree_dir, keep)
@@ -531,9 +575,44 @@ class SidecarFinding(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    kind: str  # missing-manifest | source-changed | source-gone | unmanifested-source | orphan
+    kind: str  # missing-manifest | source-changed | source-gone | unmanifested-source |
+    # sidecar-missing | sidecar-changed | orphan
     path: str
     detail: str
+
+
+def _sidecar_findings(documents_dir: Path, entry: SidecarEntry) -> list[SidecarFinding]:
+    """Whether *entry*'s committed transcription is still there and still what was written.
+
+    ``sidecar_sha256`` is what makes "never hand-edit a sidecar" enforceable rather than merely
+    stated; an entry from a manifest predating the field can only be checked for existence.
+    """
+    if not entry.sidecar:
+        return []
+    path = documents_dir / entry.sidecar
+    if not path.is_file():
+        return [
+            SidecarFinding(
+                kind="sidecar-missing",
+                path=entry.sidecar,
+                detail="manifested sidecar is not on disk; regenerate",
+            )
+        ]
+    if entry.sidecar_sha256 is None:
+        return []  # manifest predates the field — existence is all it can assert
+    actual = _sha256(path)
+    if actual != entry.sidecar_sha256:
+        return [
+            SidecarFinding(
+                kind="sidecar-changed",
+                path=entry.sidecar,
+                detail=(
+                    f"sha256 {actual[:12]}… != manifested {entry.sidecar_sha256[:12]}… — a sidecar "
+                    "is machine output; put a reviewed correction in data/extracted/ instead"
+                ),
+            )
+        ]
+    return []
 
 
 def check(documents_dir: Path, source_root: str | PurePosixPath) -> list[SidecarFinding]:
@@ -575,6 +654,10 @@ def check(documents_dir: Path, source_root: str | PurePosixPath) -> list[Sidecar
                 )
             )
             continue
+        # The sidecar's own bytes are checked before the source's, because sidecars are never
+        # LFS-tracked: this half still works on a checkout that skipped `git lfs pull`, which is
+        # exactly where CI runs.
+        findings.extend(_sidecar_findings(documents_dir, entry))
         if is_lfs_pointer(source):
             continue  # can't hash real bytes on an LFS-less checkout; not drift
         actual = _sha256(source)

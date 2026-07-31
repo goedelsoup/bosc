@@ -422,6 +422,18 @@ def test_iter_document_chunks_routes_an_extensionless_pdf_by_its_magic_bytes(
     assert chunks[0].source_path == "legal/Flow Calculations feb 6, 2008"
 
 
+def test_iter_document_chunks_survives_a_pdf_that_breaks_mid_traversal(tmp_path: Path) -> None:
+    # reader.pages parses each page lazily, so a malformed PDF can raise partway through the
+    # loop, not just in extract_text. One broken document must not abort the whole index build.
+    coll = tmp_path / "legal"
+    coll.mkdir()
+    (coll / "broken.pdf").write_bytes(b"%PDF-1.4\n%%EOF\n")  # header only, no page tree
+    (coll / "notes.txt").write_text("Shawnee II DFFO", encoding="utf-8")
+
+    sources = {c.source_path for c in iter_document_chunks(tmp_path)}
+    assert "legal/notes.txt" in sources  # the readable neighbour still lands
+
+
 def test_iter_document_chunks_skips_formats_it_cannot_read(tmp_path: Path) -> None:
     coll = tmp_path / "legal"
     coll.mkdir()
