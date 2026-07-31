@@ -1,0 +1,37 @@
+id: legal-datacenter-legislation-hb983-3744
+title: Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced)
+    + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744
+    and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling,
+    discharge, grid, subsidy, and public-records work
+license: Public record (Ohio legislative document)
+access_tier: public
+site_scope: state:OH
+storage:
+- relpath: extracted/legal/datacenter-legislation/hb983-3744.analysis.md
+  media_type: text/markdown
+  lfs: false
+- relpath: extracted/legal/datacenter-legislation/hb983-3744.digest.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-07-31'
+provenance: document
+tags:
+- data-centers
+- legislation
+- r.c.-3744
+- r.c.-9.66
+- public-records
+notes: Reviewed reads of H.B. 983 (136th G.A., As Introduced), the "Data Center Accountability
+  and Citizen Protection Act," which enacts a new R.C. Chapter 3744 (5-mile citizen vote,
+  air/water cooling-discharge standards incl. PFAS, open-/closed-loop permit gate, water-supply
+  liability, enforcement ladder, grid-independence, revolving door, local tax-incentive ban) and
+  amends R.C. 9.66 to strip the confidentiality of data-center development-and-supply agreements.
+  Source bill text lives under documents/legal/datacenter-legislation/. As-introduced only — no
+  committee substitute yet; Senate/enacted versions remain open.
