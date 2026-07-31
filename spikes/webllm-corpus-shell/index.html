@@ -10,7 +10,7 @@
 
   Zero-build, mirrors the deckgl spike's UMD-scripting approach so it runs against the
   real committed corpus with no node_modules. Two panes:
-    1. Retrieval  — lexical search over corpus.json (238 real Lima mirror nodes). Instant,
+    1. Retrieval  — lexical search over corpus.json (241 real Lima mirror nodes). Instant,
                     zero-dependency, no WebGPU, no model download. This is the half the
                     spike recommends shipping (production would swap in the MiniLM/Arrow
                     vector index — watermark.site.yidam_index).
@@ -144,6 +144,7 @@
   .ev.artifact { color: var(--ink-muted); border-color: var(--line-2); background: var(--bone-sunk); }
   .ev.question { color: var(--ev-open-fg); border-color: var(--ev-open-border); background: var(--ev-open-bg); }
   .ev.hypothesis { color: var(--ev-inference-fg); border-color: var(--ev-inference-border); background: var(--ev-inference-bg); }
+  .ev.inference { color: var(--ev-inference-fg); border-color: var(--ev-inference-border); background: var(--ev-inference-bg); }
   .ev.open { color: var(--ev-open-fg); border-color: var(--ev-open-border); background: var(--ev-open-bg); }
 
   /* ---- WebLLM chat ---- */
@@ -173,15 +174,15 @@
   <h1>An in-browser LLM over the corpus — does it earn its weight?</h1>
   <p class="lede">
     This prototype puts the two halves of <code>yidam export web</code> side by side against
-    <strong>238 real Lima mirror nodes</strong>: an <strong>in-browser retrieval</strong> index (cheap,
-    grounded, cites its sources) and a <strong>WebLLM chat model</strong> that generates prose from
-    what retrieval finds (heavy, WebGPU-only, and prone to inventing citations against evidence
-    that is <em>litigation record</em>).
+    <strong><span id="node-total">…</span> real <span id="site-name">…</span> mirror nodes</strong>:
+    an <strong>in-browser retrieval</strong> index (cheap, grounded, cites its sources) and a
+    <strong>WebLLM chat model</strong> that generates prose from what retrieval finds (heavy,
+    WebGPU-only, and prone to inventing citations against evidence that is <em>litigation record</em>).
   </p>
   <p class="fineprint">
     Corpus: <code>corpus.json</code> — projected by <code>watermark corpus-mirror</code> (Epic #1560 E1/#1561),
-    concept 77 · relation 60 · artifact 71 · question 27 · hypothesis 3. The retrieval pane needs no
-    network. The chat pane downloads a model from a CDN and needs WebGPU.
+    <span id="counts-line">…</span>. The retrieval pane needs no network. The chat pane downloads a
+    model from a CDN and needs WebGPU.
   </p>
 
   <div id="gpu-banner" class="gpu-banner">
@@ -234,7 +235,7 @@
         <select id="model"></select>
 
         <div class="row">
-          <button class="btn" id="load">Download &amp; load model</button>
+          <button class="btn" id="load" disabled>Download &amp; load model</button>
           <button class="btn ghost" id="ask" disabled>Answer grounded question</button>
         </div>
         <div class="progress" id="progress" hidden><i></i></div>
@@ -273,7 +274,8 @@
   let engine = null;
 
   const $ = (id) => document.getElementById(id);
-  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   // ---------------------------------------------------------------------------
   // 1. WebGPU detection — the gate for the whole chat pane
@@ -283,7 +285,8 @@
     if (!("gpu" in navigator)) {
       banner.className = "gpu-banner bad";
       text.innerHTML = "<b>WebGPU is not available in this browser.</b> The retrieval pane still works; " +
-        "the WebLLM chat pane is disabled. WebLLM requires WebGPU — Chrome/Edge 113+, Safari 18+, or Firefox 141+.";
+        "the WebLLM chat pane is disabled. WebLLM requires WebGPU — Chrome/Edge 113+, " +
+        "Safari 26 (macOS Tahoe 26 / iOS 26), or Firefox 141+ (Windows).";
       $("load").disabled = true;
       return false;
     }
@@ -313,12 +316,14 @@
   function score(qTokens, node) {
     const label = node.label.toLowerCase();
     const desc = (node.desc || "").toLowerCase();
+    const labelWords = label.split(/[^a-z0-9]+/);   // tokenize once per node, not per query token
+    const descWords = desc.split(/[^a-z0-9]+/);
     let s = 0;
     for (const t of qTokens) {
-      if (label.split(/[^a-z0-9]+/).includes(t)) s += 6;         // exact word in label
-      else if (label.includes(t)) s += 3;                        // substring in label
-      if (desc.split(/[^a-z0-9]+/).includes(t)) s += 2;          // exact word in description
-      else if (desc.includes(t)) s += 1;                         // substring in description
+      if (labelWords.includes(t)) s += 6;            // exact word in label
+      else if (label.includes(t)) s += 3;            // substring in label
+      if (descWords.includes(t)) s += 2;             // exact word in description
+      else if (desc.includes(t)) s += 1;             // substring in description
     }
     return s;
   }
@@ -337,11 +342,11 @@
     const el = $("hits");
     if (!scored.length) { el.innerHTML = '<p class="faint" style="padding:12px 2px">No nodes matched — the record may be silent on this. Try a corpus term.</p>'; return; }
     el.innerHTML = scored.map(({ n, s }, i) => {
-      const evCls = n.tag === "open" ? "open" : n.cls;
-      const evLabel = n.tag === "open" ? "open" : n.cls;
+      // claim tag wins the evidence tier (open / inference), else the node class colours it.
+      const tier = n.tag === "open" ? "open" : n.tag === "inference" ? "inference" : n.cls;
       return `<div class="hit">
         <span class="rank">${String(i + 1).padStart(2, "0")}</span>
-        <span><span class="label">${esc(n.label)}</span> <span class="ev ${evCls}">${esc(evLabel)}</span></span>
+        <span><span class="label">${esc(n.label)}</span> <span class="ev ${esc(tier)}">${esc(tier)}</span></span>
         <span class="score">${s}</span>
         <span class="desc">${esc(n.desc || "—")}</span>
         <span class="uri">yidam://corpus/${esc(n.id)}</span>
@@ -351,9 +356,13 @@
 
   function doSearch() {
     const query = $("q").value.trim();
+    const t0 = performance.now();
     lastHits = retrieve(query);
+    const ms = performance.now() - t0;
     renderHits(lastHits);
-    $("ret-meta").textContent = lastHits.length ? `${lastHits.length} nodes · scored ${CORPUS.length} in <1ms` : "";
+    $("ret-meta").textContent = lastHits.length
+      ? `${lastHits.length} nodes · scored ${CORPUS.length} in ${ms < 1 ? "<1" : ms.toFixed(1)}ms`
+      : "";
     $("ask").disabled = !(engine && lastHits.length);
   }
 
@@ -379,7 +388,9 @@
     log.textContent = "Fetching WebLLM runtime from CDN…";
     let webllm;
     try {
-      webllm = await import("https://esm.run/@mlc-ai/web-llm");
+      // Pinned to a verified published version (npm @mlc-ai/web-llm@0.2.84) so model
+      // loading + streaming stay reproducible — see docs/webllm-spike.md.
+      webllm = await import("https://esm.run/@mlc-ai/web-llm@0.2.84");
     } catch (e) {
       log.textContent = "Could not load the WebLLM runtime (needs network access to the CDN).";
       $("load").disabled = false;
@@ -413,7 +424,7 @@
   async function ask() {
     if (!engine) return;
     const query = $("q").value.trim();
-    if (!lastHits.length) { doSearch(); }
+    doSearch();  // always re-ground on the current textarea value (hits, count, pane all match)
     if (!lastHits.length) return;
     const answer = $("answer"), metric = $("metric");
     answer.textContent = "";
@@ -463,14 +474,26 @@
     $("load").addEventListener("click", loadModel);
     $("ask").addEventListener("click", ask);
     populateModels();
-    detectGPU();
+    // Gate the model download on settled WebGPU detection — the button stays disabled
+    // (from the markup) until detection succeeds, so nobody starts a GB download blind.
+    const gpuOK = await detectGPU();
+    if (gpuOK) $("load").disabled = false;
     try {
       const res = await fetch("./corpus.json");
       const data = await res.json();
       CORPUS = data.nodes || [];
       $("ret-meta").textContent = `${CORPUS.length} nodes loaded`;
+      // Fill the corpus placeholders from the snapshot — no hardcoded counts to drift.
+      $("node-total").textContent = String(CORPUS.length);
+      if (data.site) $("site-name").textContent = String(data.site).replace(/(^|[\s-])\S/g, (m) => m.toUpperCase());
+      if (data.counts) {
+        $("counts-line").textContent = Object.entries(data.counts).map(([k, v]) => `${k} ${v}`).join(" · ");
+      }
     } catch (e) {
       $("hits").innerHTML = '<p class="faint" style="padding:12px 2px">Could not load corpus.json — serve this file over HTTP (see README).</p>';
+      $("node-total").textContent = "the";
+      $("site-name").textContent = "corpus";
+      $("counts-line").textContent = "counts unavailable — corpus.json did not load";
     }
   }
   boot();

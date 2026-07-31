@@ -5,7 +5,7 @@
 "concept":77,
 "relation":60,
 "artifact":71,
-"question":27,
+"question":30,
 "hypothesis":3
 },
 "nodes":[
@@ -1706,6 +1706,14 @@
 "scope":"site"
 },
 {
+"id":"question/lead-dewatering-drywell-nw",
+"cls":"question",
+"label":"A reportedly dry-and-replaced shallow well sits ~3.7 mi down-gradient of the dewatering field",
+"desc":"A shallow domestic well near 40.83613, -84.16757 (about 3.7 mi northwest of the construction-dewatering wellfield centroid) was reported to have run dry and needed replacement. Our Cooper-Jacob screen puts zero [inference] drawdown there — the modeled radius of influence is ~2,000 ft and no defensible homogeneous cone reaches 3.7 mi in this aquifer, so the field's cone AS MODELED is not the mechanism. Two facts keep it a lead rather than a dismissal — the site sits DOWN-gradient of the field (the regional water table falls ~12 ft/mi toward compass ~315 deg, the direction a dewatering field's…",
+"tag":"open",
+"scope":"site"
+},
+{
 "id":"question/lead-lima-limedust",
 "cls":"question",
 "label":"Ohio EPA is monitoring lime-kiln dust drifting off the data-center construction site",
@@ -1773,7 +1781,7 @@
 "id":"question/lead-forcemain-mgd",
 "cls":"question",
 "label":"Nobody owns the forcemain's MGD design capacity",
-"desc":"The Hume / Shawnee forcemain's design capacity (item 9) is disclaimed by every county body — each points to Ohio EPA or the townships. Batch 2 produced the financing and the engineering contract, not the MGD figure. (Distinct from the City of Lima WWTP's own 18.5 MGD design flow, now in the corpus via the public NPDES permit — see LIMA-WWTP-SHARE.)",
+"desc":"The Hume / Shawnee forcemain's design capacity (item 9) is disclaimed by every county body — each points to Ohio EPA or the townships. Batch 2 produced the financing and the engineering contract, not the MGD figure. **Batch 3 (2026-07-24) did not close it either:** the item-11 Hume Road WPCLF application was produced in full (all 11 pages read) but is a financial/loan form end to end — no forcemain design-capacity figure, no feasibility study, no engineering attachment anywhere in it (a verified absence from the produced document). [inference] The design capacity would sit in the project's de…",
 "tag":"open",
 "scope":"site"
 },
@@ -1782,6 +1790,14 @@
 "cls":"question",
 "label":"The campus's allocated share into the City of Lima WWTP is unquantified",
 "desc":"The City of Lima WWTP's own NPDES permit + design flow are now in the corpus (Ohio EPA 2PE00000 / OH0026069, 18.5 MGD average / 70 MGD peak design; pulled from the public record without a records request, and counted in the routed water balance — the Ottawa leaving Lima now computes 98% treated effluent). What the permit does NOT quantify is the campus's allocated share of that capacity — the ~2.5 MGD FM-2 industrial stream routed to the plant via Lima's 78\" sewer. The headroom / allocation / IU-pretreatment record is City-held (Water Pollution Control) and needs the first City of Lima R.C. 1…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-thermal-no-limit",
+"cls":"question",
+"label":"Nothing on the Ottawa corridor holds a thermal limit against the heat already in the river",
+"desc":"Ohio's numeric temperature criterion for this reach is a 29.4 degC daily maximum (OAC 3745-1-35 Table 35-11, zone G, Jun 16-30). Two permitted dischargers report peak daily-maximum effluent temperatures at or over it from their own submissions — Lima Refinery (OH0002623) at 32.2 degC and PCS Nitrogen (OH0002615) at 30.0 degC — and neither outfall carrying those reported temperatures has a numeric thermal limit. The refinery's permit does hold an 85 degF ceiling, but on outfall 003; the reported temperature above is outfall 001's, which carries none, so the ceiling does not bind the discharge…",
 "tag":"open",
 "scope":"site"
 },
@@ -1902,6 +1918,14 @@
 "cls":"question",
 "label":"AEP Ohio's Lyka 345kV substation/line has no OPSB case yet — filing expected early 2027, final route undetermined",
 "desc":"AEP Ohio's own project fact sheet (captured 2026-07-11, dated 2026-04-08) schedules the Ohio Power Siting Board (OPSB) regulatory filing for \"Early 2027\" and an anticipated OPSB decision for \"Spring 2027\" — as of this writing no OPSB case number has been assigned or filed (confirmed by direct search of opsb.ohio.gov and AEP's own regulatory-filings index). The Lyka Substation site (a customer-owned parcel between N West St and N Cole St, Sugar Creek Township) is fixed, but the ~4-mile 345kV line route is not — AEP's own map shows 45 numbered \"study segments\" still under consideration, and the…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-wwtp-param-assim",
+"cls":"question",
+"label":"The municipal-WWTP dilution check is hydraulic only — no per-parameter assimilative capacity on record",
+"desc":"The industrial toxic screen now reads each RSEI water discharger's per-chemical load against its own Ohio water-quality criterion (WS-07, issue 1607; data/reference/wqs/). The parallel check for the three municipal WWTPs (hydrology/assimilative.py) is still a purely HYDRAULIC dilution ratio (7Q10 / effluent flow) — a true per-parameter assimilative-capacity screen (ammonia, CBOD, total residual chlorine, metals against their WQBEL-driving criteria) needs each plant's reported effluent CONCENTRATIONS by parameter, which the corpus does not yet hold. The Ohio EPA NPDES DMR record (effluent moni…",
 "tag":"open",
 "scope":"site"
 },
