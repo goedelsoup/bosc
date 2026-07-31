@@ -42,5 +42,83 @@
     "lei": "875500ULXB4CYQSJVA03",
     "uei": null,
     "federal_obligations": null
+  },
+  {
+    "key": "npdes:2PD00028",
+    "display": "Ottawa Wastewater Treatment Plant",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)",
+      "Ottawa Wastewater Treatment Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/ottawa/2PD00028.fs.npdes.yaml",
+      "oepa/ottawa/2PD00028.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "VILLAGE OF OTTAWA",
+    "display": "Village of Ottawa",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Village of Ottawa",
+      "Village of Ottawa, 1371 North Defiance St., Ottawa, OH 45875"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 2,
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "136 North Oak Street, Ottawa, Ohio 45875, Putnam County"
+    ],
+    "sources": [
+      "oepa/ottawa/2PD00028.fs.npdes.yaml",
+      "oepa/ottawa/2PD00028.npdes.yaml",
+      "ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "BLANCHARD RIVER",
+    "display": "Blanchard River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Blanchard River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/ottawa/2PD00028.fs.npdes.yaml",
+      "oepa/ottawa/2PD00028.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]

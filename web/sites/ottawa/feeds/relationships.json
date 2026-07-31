@@ -1,5 +1,25 @@
 [
   {
+    "src": "VILLAGE OF OTTAWA",
+    "rel": "operates",
+    "dst": "npdes:2PD00028",
+    "date": "",
+    "ref": "2PD00028*PD",
+    "source": "oepa/ottawa/2PD00028.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PD00028",
+    "rel": "discharges_to",
+    "dst": "BLANCHARD RIVER",
+    "date": "",
+    "ref": "2PD00028*PD",
+    "source": "oepa/ottawa/2PD00028.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

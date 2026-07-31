@@ -1,0 +1,962 @@
+# Village of Ottawa (Putnam County, OH) — standing water watch.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page) or read from a named
+#                 federal system on a named extract date
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# One village, one river, two permits. Ottawa draws its drinking water from the Blanchard River
+# and returns its treated sewage to the same river about a mile and a half downstream. Both sides
+# into violation in the same twelve months. This watch records both, or it records neither.
+#
+# Violations here are data with citations, not a gotcha. Every quarter that came back clean is
+# recorded as such; every route that cannot answer a question says so; the exculpatory findings
+# in the plant's own fact sheet are carried at the same weight as the exceedances.
+meta:
+  subject: >-
+    Standing watch on the two sides of the Blanchard River at Ottawa — the WWTP's mercury
+    Category-I significant noncompliance under NPDES OH0026921 / 2PD00028*PD, and the public water
+    system's Stage 2 DBPR violations under PWS OH6900711
+  kind: water-watch
+  site: ottawa
+  captured_for: issue 1422 (epic 1269, readiness(ottawa))
+  extracted_at: '2026-07-31'
+  checked_on: '2026-07-31'
+  previous_check: '2026-07-10'      # the research refresh recorded in the issue body
+  federal_extract_dates:
+    ICIS-NPDES: '2026-07-24'
+    SDWIS: '2026-07-09'
+  method: >-
+    Four routes, run independently and recorded separately: EPA ECHO's detailed facility report
+    and effluent-chart services for the CWA side (OH0026921) and the SDWA side (OH6900711); the
+    Ohio EPA DAM permit slots for the controlling instruments; the Village's own DocumentCenter
+    for the Consumer Confidence Report; and the Hancock County Flood-Risk Reduction Program's own
+    project pages for the upstream milestones. Each federal figure is stamped with the system
+    extract date it was read against, because a quarter that reads clean today may only be a
+    quarter whose DMRs have not landed.
+
+# ── What changed since the 2026-07-10 refresh ─────────────────────────────────
+# Recorded first because a standing watch is worth having only if it says what moved.
+delta_since_previous_check:
+- item: The mercury exceedance streak broke.
+  tag: '[verified]'
+  detail: >-
+    The previous check recorded "violations continuing into Q2 2026." On the 2026-07-24 ICIS
+    extract the Q2 2026 mercury monthly averages are 2.80 ng/L (April) and 3.53 ng/L (May) —
+    both compliant, the first two clean months since the streak began. There IS a violation
+    identified in Q2 2026, but it is dissolved oxygen, not mercury. See `did_it_actually_break`
+    below before treating this as a return to compliance.
+- item: The Q1 2026 quarter is worse than recorded, on the intake side.
+  tag: '[verified]'
+  detail: >-
+    The previous check recorded one TTHM MCL violation (Q4 2025, 83.4 ppb). SDWIS carries TWO
+    consecutive TTHM MCL violations — Q4 2025 at 0.083 mg/L and Q1 2026 at 0.086 mg/L. The
+    second is higher than the first. The Village's own CCR, published 2026-07-01, reports only
+    the first.
+- item: The drinking-water side is not a two-violation story; it is a twelve-quarter one.
+  tag: '[verified]'
+  detail: >-
+    ECHO records PWS OH6900711 as an SDWA "Enforcement Priority" with 12 of the last 12 quarters
+    in noncompliance, 3 in significant noncompliance, and 16 informal enforcement actions. Two
+    Consumer Confidence Rule violations are carried as UNADDRESSED, one of them since 2020-01-27.
+- item: The 2026-03-04 warning letter is not only about mercury.
+  tag: '[verified]'
+  detail: >-
+    ICIS ties warning letter OH-I00108139 to TWO single-event violations — "Effluent Violations -
+    Narrative Effluent Violation" and "WW SSO - Improper Operation and Maintenance." Both are
+    still open ("--->") on the 2026-07-24 extract. The SSO half was not previously recorded.
+- item: The instruments themselves are now in the corpus.
+  tag: '[verified]'
+  detail: >-
+    The 2PD00028*PD permit, its fact sheet and its public notice are committed under
+    data/documents/oepa/ottawa/, and the CCR under data/documents/ottawa/drinking-water/. The
+    fact-sheet pull that had been open since issue 415 is closed; the regulatory 7Q10 is now a
+    cited primary figure rather than a number carried in an issue body.
+
+# ── Route hazards ─────────────────────────────────────────────────────────────
+# Recorded so the next check does not repeat them and mistake an artifact for a fact.
+route_hazards:
+- route: ECHO CWA3YrCompliance quarterly grid, current quarter
+  hazard: >-
+    The right-most quarter is a PARTIAL quarter running to the extract date, and monthly-average
+    DMRs are due on the 20th of the following month. On the 2026-07-24 extract the June 2026 DMR
+    is absent — not late on its face, just not yet reflected. Reading "no mercury exceedance in
+    Q2 2026" off that column as a return to compliance would be reading a reporting lag.
+- route: ECHO facility-level RNC status vs the effluent-chart parameter status
+  hazard: >-
+    They disagree about Q3 2025 by design. CWARNCCompliance calls Jul-Sep 2025 "Other Violation";
+    the per-parameter chart marks the same quarter "S" for mercury. The reason is in the violation
+    record itself: the September exceedance carries RNCDetectionDate 2025-12-31 — the technical
+    review criterion was tripped only when the December value landed, and the September quarter
+    was then re-designated. Neither field is wrong; they are answering different questions on
+    different dates.
+- route: ECHO eff_rest_services.get_effluent_chart parameter filter
+  hazard: >-
+    Passing a parameter-code filter did not restrict the response; all 35 outfall-001 parameters
+    came back regardless. Filter client-side on ParameterCode. (Consistent with the known
+    one-code-only behaviour of the ECHO parameter filters recorded elsewhere in this corpus.)
+- route: ECHO sdw_rest_services.get_systems with a PWSID
+  hazard: >-
+    p_pwsid is not honoured by get_systems — the query returned a whole-universe row count and
+    errored on the queryset limit. The SDWA record for a single system comes from
+    dfr_rest_services.get_dfr with p_system=SDWIS.
+- route: SDWIS violation Status field
+  hazard: >-
+    An MCL violation for a running-annual-average contaminant is marked "Archived" with a
+    ResolvedDate equal to the END of its compliance quarter. That is the quarter closing, not the
+    system returning to compliance. Both TTHM violations here read "Archived"; neither means what
+    the word suggests.
+- route: The Village's DocumentCenter URL slug
+  hazard: >-
+    The 2025 Consumer Confidence Report is served from a path reading "2024-CCR". Trusting the
+    slug would date the document, and its TTHM violation, a year early. See
+    data/documents/ottawa/drinking-water/filename-map.yaml.
+
+# ═════════════════════════════════════════════════════════════════════════════
+# THE DISCHARGE SIDE — NPDES OH0026921 / Ohio EPA 2PD00028*PD
+# ═════════════════════════════════════════════════════════════════════════════
+discharge_side:
+  facility: Ottawa Wastewater Treatment Plant, 1371 North Defiance Street
+  outfall: 2PD00028001, Blanchard River at River Mile 22.1
+  design_flow_mgd: 3.0
+  permit_term: 2025-03-01 to 2030-02-28
+  instruments:
+    permit: data/extracted/oepa/ottawa/2PD00028.npdes.yaml
+    fact_sheet: data/extracted/oepa/ottawa/2PD00028.fs.npdes.yaml
+
+  # ── 1 ── The limit that was cut ──────────────────────────────────────────────
+  the_limit_change:
+    watch_item: 1
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    source: ECHO eff_rest_services.get_effluent_chart, OH0026921, limit sets on parameter 50092
+    prior_limit:
+      monthly_average_ng_l: 6.8
+      term: 2019-08-01 to 2024-07-31
+      dmrs_reported_against_it_through: '2025-02-28'
+      note: >-
+        The prior permit's limit term ended 2024-07-31 but DMRs were reported against 6.8 ng/L
+        through February 2025 — the permit was administratively continued until the renewal took
+        effect 2025-03-01.
+    current_limit:
+      monthly_average_ng_l: 4.5
+      daily_maximum_ng_l: 1250
+      monthly_average_kg_d: 0.00007
+      daily_maximum_kg_d: 0.014
+      term: 2025-03-01 to 2028-02-29 (as coded in ICIS) / 2030-02-28 (as written in the permit)
+    what_actually_changed:
+      concentration_monthly_average: 6.8 -> 4.5 ng/L
+      concentration_daily_maximum: unchanged at 1250 ng/L
+      loading_monthly_average: unchanged at 0.00007 kg/d
+      loading_daily_maximum: unchanged at 0.014 kg/d
+      finding: >-
+        One number moved. The renewal cut the monthly-average CONCENTRATION by 34% and left the
+        daily maximum and both mass loadings exactly where they were.
+    where_4_5_came_from:
+      quote: >-
+        "A variance-based monthly average effluent limit of 4.5 ng/l, which was developed from
+        sampling data submitted by the permittee" — 2PD00028 fact sheet, p. 14.
+      detail: >-
+        Table 8 of the fact sheet (p. 24) gives this plant's projected effluent quality over 63
+        mercury samples, 2019-2024, all 63 above the method detection limit: PEQ average 4.5 ng/L.
+        The limit is the plant's own average performance, adopted as its ceiling. The
+        water-quality-based effluent limit it varies from is 1.3 ng/L — the wildlife criterion.
+      consequence:
+        tag: '[inference]'
+        statement: >-
+          A limit set at a plant's demonstrated mean has, by construction, roughly half its own
+          historical months above it. It is not a treatment standard the plant is failing to meet;
+          it is a benchmark that converts ordinary upward variance into a permit violation. That
+          is what the renewal did, and it is the single most important thing to understand about
+          this SNC.
+        counterweight: >-
+          It is also what the general mercury variance rule intends. OAC 3745-1-38 conditions the
+          variance on "reasonable progress" toward the WQBEL, and ratcheting the limit down to
+          demonstrated performance at each renewal is the mechanism by which progress is made to
+          bite. Recording the arithmetic is not an argument that the limit is wrong.
+
+  # ── 2 ── The exceedances ─────────────────────────────────────────────────────
+  mercury_exceedances:
+    watch_item: 2
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    source: >-
+      ECHO eff_rest_services.get_effluent_chart, OH0026921, permit feature 001 "Effluent Gross",
+      parameter 50092 "Mercury, total low level", MO AVG rows; ICIS-NPDES extract 2026-07-24.
+    monthly_series_ng_l:
+      # Every reported monthly average since the 4.5 ng/L limit took effect. `*` marks a violation.
+      2025-03: {value: null, nodi: Below Detection Limit/No Detection}
+      2025-04: {value: 1.91}
+      2025-05: {value: 0.728}
+      2025-06: {value: 0.913}
+      2025-07: {value: 1.06}
+      2025-08: {value: 1.62}
+      2025-09: {value: 9.60, exceedance_pct: 113, violation: E90, severity: Significant/Category I}
+      2025-10: {value: 1.64}
+      2025-11: {value: 2.30}
+      2025-12: {value: 36.70, exceedance_pct: 716, violation: E90, severity: Significant/Category I}
+      2026-01: {value: 2.45}
+      2026-02: {value: 5.55, exceedance_pct: 23, violation: E90, severity: Significant/Category I}
+      2026-03: {value: 4.34}
+      2026-04: {value: 2.80}
+      2026-05: {value: 3.53}
+      2026-06: {value: null, note: not present on the 2026-07-24 extract}
+    loading_violation:
+      month: 2025-12
+      value_kg_d: 0.000125
+      limit_kg_d: 0.00007
+      exceedance_pct: 79
+      note: >-
+        December 2025 breached the mass loading limit as well as the concentration limit. That
+        loading limit was NOT changed by the renewal, so this violation would have occurred under
+        the prior permit too.
+    rnc_status:
+      all_four_violations: NC - Unresolved RNC
+      detection_code: T (TRC Limitations Exceeded)
+      detection_dates: {2025-09: '2025-12-31', 2025-12: '2025-12-31', 2026-02: '2026-02-28'}
+      note: >-
+        The September violation's technical-review-criterion detection is dated 2025-12-31 — the
+        criterion is a pattern test, and the pattern was completed by the December value. All four
+        mercury violations remain unresolved on the 2026-07-24 extract.
+    counterfactual_under_the_old_limit:
+      tag: '[inference]'
+      arithmetic:
+        2025-09: 9.60 vs 6.8 = 41% over — still a violation
+        2025-12: 36.70 vs 6.8 = 440% over — still a violation
+        2026-02: 5.55 vs 6.8 = 18% UNDER — not a violation
+      finding: >-
+        Two of the three exceedances survive the counterfactual. The February 2026 one exists only
+        because the limit was tightened. So the tightened limit did not manufacture this SNC — it
+        added a third quarter to it.
+      trc_note:
+        tag: '[inference]'
+        detail: >-
+          The technical review criterion for a Group II (toxic) pollutant is 1.2x the limit. At
+          the current limit that is 5.4 ng/L, and ECHO flagged the 5.55 ng/L February value "T",
+          which is consistent with 1.2 and not with 1.4. Applying 1.2 to the prior 6.8 ng/L limit
+          gives 8.16 ng/L: September (9.60) and December (36.70) clear it, February does not.
+          Significant noncompliance requires two TRC exceedances in six months, so on this
+          arithmetic the SNC designation would have arisen under the old limit as well.
+        caveat: >-
+          The TRC group assignment is reasoned from ECHO's own flag, not read from a rule cited in
+          any committed document. Recorded as an inference.
+    the_prior_record:
+      tag: '[verified]'
+      period: 2023-04 to 2025-02, 23 reported months under the 6.8 ng/L limit
+      range_ng_l: [0.561, 4.66]
+      exceedances: 0
+      note: >-
+        Not one exceedance in the 23 months before the renewal, and the highest single month
+        (4.66 ng/L, June 2023) sits just above what is now the limit. The plant did not begin
+        failing; the target moved and then two bad months arrived.
+
+  # ── 3 ── The finding the influent record forces ──────────────────────────────
+  influent_vs_effluent:
+    watch_item: 3
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    source: >-
+      Same ECHO effluent chart, permit feature 601 "Raw Sewage Influent" (mercury influent
+      monitoring is required monthly by permit Part II Item X.1.c, EPA Method 1631) against
+      feature 001. Both series are monthly averages of grab samples.
+    paired_series_ng_l:
+      # month: [influent, effluent, removal_pct]
+      2025-04: [10.8, 1.91, 82.3]
+      2025-05: [20.1, 0.728, 96.4]
+      2025-06: [19.2, 0.913, 95.2]
+      2025-07: [12.2, 1.06, 91.3]
+      2025-08: [34.4, 1.62, 95.3]
+      2025-09: [16.6, 9.60, 42.2]
+      2025-10: [74.9, 1.64, 97.8]
+      2025-11: [17.1, 2.30, 86.5]
+      2025-12: [20.3, 36.70, -80.8]
+      2026-01: [12.6, 2.45, 80.6]
+      2026-02: [118, 5.55, 95.3]
+      2026-03: [12.2, 4.34, 64.4]
+      2026-04: [24.3, 2.80, 88.5]
+      2026-05: [11.3, 3.53, 68.8]
+    median_removal_pct: 87.5
+    median_influent_ng_l: 17.5
+    findings:
+    - tag: '[verified]'
+      statement: >-
+        In December 2025 the plant reported MORE mercury leaving than entering — 36.70 ng/L in the
+        effluent against 20.3 ng/L in the raw sewage. That is not a high-influent month; 20.3 is
+        within a whisker of the 17.5 ng/L median. Arithmetic only: 36.70 > 20.3.
+    - tag: '[verified]'
+      statement: >-
+        The two worst effluent months are the two worst removal months and are not high-influent
+        months. September 2025 (influent 16.6, removal 42%) and December 2025 (influent 20.3,
+        removal negative) are the only two months below 64% removal in the whole series.
+    - tag: '[verified]'
+      statement: >-
+        The two HIGHEST influent months did not produce violations of comparable size. October
+        2025 took in 74.9 ng/L and discharged 1.64 (97.8% removal). February 2026 took in 118 ng/L
+        — 6.7x the median — and discharged 5.55, which is a violation, but at 95.3% removal.
+    - tag: '[inference]'
+      statement: >-
+        The three exceedances have two different shapes. February 2026 is an influent-driven
+        exceedance: a very large slug arrived and normal treatment could not bring it under a
+        limit set at the plant's mean. September and December 2025 are not — ordinary loads
+        arrived and the plant failed to remove them, December to the point of releasing more than
+        it received.
+      what_would_explain_it:
+        tag: '[open]'
+        candidates:
+        - Release of previously captured mercury from the solids train. The plant aerobically digests and sand-bed dewaters its sludge and land-applies it; solids-phase mercury returned to the liquid train would show as effluent exceeding influent without any new source.
+        - A sampling or laboratory artifact in one or both December grabs.
+        - An unsampled input entering downstream of the influent monitoring point.
+        note: >-
+          Nothing in the committed record chooses among these. The instrument that would is the
+          annual Pollutant Minimization Program report the permit requires by March 1 each year
+          (Part II Item X.1.g) — which the corpus does not hold. Lead OTTAWA-PMP-REPORTS.
+      discipline: >-
+        Monthly averages of grab samples on two streams separated by the plant's hydraulic
+        residence time are not a mass balance. This block reports what the permittee reported and
+        the arithmetic that follows from it. It does not establish a mechanism, and no claim here
+        depends on one.
+
+  # ── 4 ── Did the streak actually break? ──────────────────────────────────────
+  did_it_actually_break:
+    watch_item: 4
+    tag: '[open]'
+    checked_on: '2026-07-31'
+    what_is_verified: >-
+      April 2026 (2.80 ng/L) and May 2026 (3.53 ng/L) are compliant monthly averages, and no
+      mercury violation is recorded for Q2 2026 on the 2026-07-24 ICIS extract.
+    what_is_not: >-
+      The June 2026 DMR is not on that extract. A monthly-average DMR is due on the 20th of the
+      following month, so June's was due 2026-07-20, four days before the extract — the absence is
+      as consistent with normal system lag as with a missing filing. Two clean months out of three
+      is not a resolved SNC in any case: ECHO still carries CurrentSNC=Yes as of 2026-03-31, all
+      four mercury violations remain "NC - Unresolved RNC", and RNC resolution is a determination
+      the state makes, not something that expires.
+    also: >-
+      March 2026 came in at 4.34 ng/L — 96% of the limit. The margin in the clean months is thin.
+    next_check: >-
+      Re-read the effluent chart after the 2026-08-20 DMR due date. The question to answer is
+      whether June, July and August 2026 are reported and compliant, and whether the four
+      unresolved RNC records have been resolved.
+
+  # ── 5 ── The other violations, which are not mercury ─────────────────────────
+  non_mercury_violations:
+    watch_item: 5
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    dissolved_oxygen:
+      month: 2026-04
+      parameter: 00300 Oxygen, dissolved [DO], effluent gross
+      limit_type: daily minimum
+      limit_mg_l: 5.4
+      value_mg_l: 1.07
+      shortfall_pct: 80
+      violation: E90, severity 2 (Non-Reportable Noncompliance Effluent Violation)
+      dmr_received: '2026-05-13'
+      permit_citation: 2PD00028*PD Part I.A, both limit tables — "00300 - Dissolved Oxygen - mg/l - 5.4 - 1/Day Multiple Grab All"
+      why_it_is_worth_recording:
+        tag: '[verified]'
+        note: >-
+          This is the violation that makes Q2 2026 a violation quarter, and it is not mercury. It
+          also lands on the one parameter EPA's own watershed record singles out for this reach:
+          the HUC-12 the outfall sits in (041000080602, Pike Run-Blanchard River) carries
+          "Oxygen, dissolved (DO)" as its E90 possible impairing parameter, and the assessment
+          unit is 303(d)-listed in part for ORGANIC ENRICHMENT/OXYGEN DEPLETION.
+        limit_of_the_point: >-
+          A daily-minimum DO limit is measured in the EFFLUENT, not in the river. One low effluent
+          reading is not an instream depression and nothing here measures one. The coincidence of
+          parameter is worth a look, not a claim.
+    chronic_whole_effluent_toxicity:
+      month: 2025-06
+      parameter: 61426 Toxicity [chronic], Ceriodaphnia dubia
+      limit_tuc: 1.4
+      value_tuc: 1.7
+      exceedance_pct: 21
+      violation: E90, severity 2
+      context: >-
+        The renewal imposed this limit for the first time. The fact sheet (p. 14) found reasonable
+        potential from chronic PEQs of 2.8 TUc (C. dubia) and 2.3 TUc (P. promelas) against a WLA
+        of 1.42 TUc. The plant exceeded it in the fourth month the limit was in force.
+    e_coli:
+      month: 2023-09
+      value_mpn_100ml: 817
+      limit_mpn_100ml: 284
+      exceedance_pct: 188
+      note: A weekly-geometric-mean exceedance under the prior permit; the only violation in the 2023-2024 record.
+    dmr_non_receipt:
+      month: 2024-08
+      parameters: [61425 Acute Toxicity C. dubia, 61426 Chronic Toxicity C. dubia]
+      violation: D90 (DMR, Limited - Overdue)
+      resolved: '2024-10-21'
+      resolution: RE - Manual by Back into Compliance/Administratively Resolved
+
+  # ── 6 ── Enforcement: what issued, and what did not ──────────────────────────
+  enforcement:
+    watch_item: 6
+    checked_on: '2026-07-31'
+    source: ECHO dfr_rest_services.get_dfr, OH0026921; ICIS-NPDES extract 2026-07-24
+    informal_action:
+      tag: '[verified]'
+      type: Base Program - Letter of Violation/ Warning Letter
+      enforcement_identifier: OH-I00108139
+      date: '2026-03-04'
+      lead_agency: State
+      official: true
+      covers_two_violations:
+        tag: '[verified]'
+        detail: >-
+          ICIS ties the 2026-03-04 date to TWO single-event violation records, not one:
+          NPDESViolationId 3687543993 "Effluent Violations - Narrative Effluent Violation" and
+          3687543994 "WW SSO - Improper Operation and Maintenance". Both carry "--->" in the
+          current quarter, i.e. neither is closed on the 2026-07-24 extract.
+        the_sso_half:
+          tag: '[verified]'
+          note: >-
+            The second is a sanitary sewer overflow / operation-and-maintenance violation, and it
+            is a distinct problem from the mercury. Ottawa runs 100% separated sewers with no CSOs
+            (permit fact sheet p. 6), so an overflow here is an SSO — which the permit prohibits
+            outright ("All SSOs are prohibited", Part II Item C) and monitors through its own
+            system-wide station 2PD00028300. What the overflow was, when, and how much is not
+            established by ICIS. Lead OTTAWA-SSO-2026.
+    formal_enforcement:
+      tag: '[verified negative]'
+      finding: >-
+        ZERO. ECHO's FormalActions, ICISFormalActions and CaseFormalActions blocks are all empty
+        for OH0026921; InspectionEnforcementSummary reports FormalEnfActCount 0 and TotalPenalties
+        $0 over the five-year window beginning 2021-07-25. No Director's Final Findings and Orders,
+        no administrative order, no penalty.
+      positive_control: >-
+        The same DFR call returns a populated Notices block for this facility (the 2026-03-04
+        warning letter) and populated violation and DMR blocks, so the empty formal-action blocks
+        are an empty result, not a broken query.
+      as_of: ICIS-NPDES extract 2026-07-24; formal-action window closes 2026-03-31
+      note: >-
+        Six quarters of noncompliance and two of Category-I significant noncompliance have drawn
+        one warning letter and no formal action. That is the enforcement posture as of this check,
+        and it is the thing this watch exists to keep watching.
+    inspections:
+      tag: '[verified]'
+      count_five_year: 4
+      most_recent: {date: '2026-02-24', type: Base Program - Evaluation, agency: State, snc_flag: 'N', id: OH000NQ0000115015}
+      prior:
+      - {date: '2023-11-27', type: Base Program - Sampling}
+      - {date: '2023-08-08', type: Biosolids - Evaluation}
+      - {date: '2023-07-25', type: Base Program - Evaluation}
+      note: >-
+        The 2026-02-24 evaluation sits between the December exceedance and the March warning
+        letter. Its findings are not published in ICIS (the Finding field is null). The inspection
+        report itself would be a records request. Lead OTTAWA-INSPECTION-2026-02.
+    compliance_summary:
+      current_snc: 'Yes'
+      current_as_of: '2026-03-31'
+      quarters_in_noncompliance: 6
+      quarters_in_significant_noncompliance: 2
+      informal_actions: 1
+      formal_actions: 0
+      total_penalties: $0
+    quarterly_status:
+      # ECHO CWA3YrCompliance, 2023-04-01 through the 2026-07-24 extract
+      2023Q2: No Violation Identified
+      2023Q3: Violation Identified
+      2023Q4: No Violation Identified
+      2024Q1: No Violation Identified
+      2024Q2: No Violation Identified
+      2024Q3: No Violation Identified
+      2024Q4: No Violation Identified
+      2025Q1: No Violation Identified
+      2025Q2: Violation Identified
+      2025Q3: Violation Identified
+      2025Q4: Significant/Category I Noncompliance
+      2026Q1: Significant/Category I Noncompliance
+      2026Q2: Violation Identified (partial quarter to 2026-07-24)
+
+  # ── 7 ── What the record says on the other side of the ledger ────────────────
+  the_exculpatory_record:
+    watch_item: 7
+    tag: '[verified]'
+    note: >-
+      Carried at the same weight as the violations, because a watch that reports only the bad
+      quarters is not a record.
+    ohio_epa_conclusion:
+      source: 2PD00028 fact sheet, p. 8
+      quote: >-
+        "The river section downstream of the WWTP is in full attainment for aquatic life. Ottawa
+        WWTP is not likely contributing to the impairments in the Blanchard River."
+    tmdl_finding:
+      source: Blanchard River TMDL (July 2009), quoted at 2PD00028 fact sheet p. 8
+      quote: >-
+        "No impact attributed to the Ottawa WWTP discharge was apparent in the performance of the
+        fish and macroinvertebrate assemblages."
+      vintage_caveat: >-
+        The sampling behind that sentence predates the 2025-26 exceedances by more than fifteen
+        years. It is evidence about the plant's ordinary operation, not about December 2025.
+    the_other_half_of_the_same_document:
+      source: 2PD00028 fact sheet, p. 7
+      quote: >-
+        "The Pike Run-Blanchard River watershed assessment unit, which includes the Blanchard
+        River in the vicinity of Ottawa WWTP, is listed as impaired for aquatic life and recreation
+        on Ohio's 303(d) list."
+      note: >-
+        The assessment unit is impaired for aquatic life; the reach below the outfall is in full
+        attainment. Both sentences are in one fact sheet, one page apart. Quoting either alone
+        misrepresents it. Ohio's 2024 integrated report, read through ECHO, carries the same
+        split: assessment unit OH041000080602 (Pike Run-Blanchard River) aquatic-life use "Not
+        Supporting"; the downstream mainstem unit OHLR041000089001 (Dukes Run to mouth)
+        "Fully Supporting" for aquatic life but "Not Supporting" for fish consumption.
+    none_of_the_impairment_causes_is_mercury:
+      tag: '[verified]'
+      pike_run_blanchard_causes: [AMMONIA, NUTRIENTS, ORGANIC ENRICHMENT/OXYGEN DEPLETION, PATHOGENS, SEDIMENT]
+      mainstem_causes: [PATHOGENS, POLYCHLORINATED BIPHENYLS (PCBS)]
+      note: >-
+        The mainstem's fish-consumption impairment is caused by PCBs, not mercury. Nothing in the
+        303(d) record attributes a mercury impairment to this reach.
+      but: >-
+        The fact sheet's own Table 12 records the ambient mercury concentration in this river as
+        "0 — No representative data available." There is no measured background. An absence of
+        mercury impairment findings on a reach nobody has measured for mercury is not evidence
+        that the reach is clean.
+    phosphorus_performance:
+      tag: '[open]'
+      note: >-
+        The previous check recorded "strong effluent-P performance (median 0.11-0.22 mg/L)". That
+        figure is not reproduced here — this check pulled the mercury, DO, toxicity and E. coli
+        series and did not verify the phosphorus series against a primary source. It is left
+        [open] rather than carried forward on the strength of the earlier note.
+        Lead OTTAWA-EFFLUENT-P.
+
+# ═════════════════════════════════════════════════════════════════════════════
+# THE INTAKE SIDE — PWS OH6900711
+# ═════════════════════════════════════════════════════════════════════════════
+intake_side:
+  system: Ottawa Village, PWS OH6900711 — community water system, surface water, population 4,393
+  water_treatment_plant: 1972 Agner Street, Ottawa OH 45875
+  source: the Blanchard River and its tributaries
+  instrument: data/extracted/ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml
+
+  # ── 8 ── The TTHM violations ─────────────────────────────────────────────────
+  tthm:
+    watch_item: 8
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    source: ECHO dfr_rest_services.get_dfr p_system=SDWIS, OH6900711; SDWIS extract 2026-07-09
+    rule: Stage 2 Disinfectants and Disinfection Byproducts Rule
+    mcl_mg_l: 0.080
+    violations:
+    - id: '8263939'
+      compliance_period: 2025-10-01 to 2025-12-31
+      value_mg_l: 0.083
+      status: Archived
+      resolved_date: '2025-12-31'
+      enforcement:
+      - {date: '2025-12-10', type: Informal, action: State Violation/Reminder Notice}
+      - {date: '2025-12-10', type: Informal, action: State Public Notification requested}
+      - {date: '2025-12-29', type: Informal, action: State Public Notification received}
+    - id: '8263940'
+      compliance_period: 2026-01-01 to 2026-03-31
+      value_mg_l: 0.086
+      status: Archived
+      resolved_date: '2026-03-31'
+      enforcement:
+      - {date: '2026-03-13', type: Informal, action: State Violation/Reminder Notice}
+      - {date: '2026-03-13', type: Informal, action: State Public Notification requested}
+      - {date: '2026-03-30', type: Informal, action: State Public Notification received}
+    the_trend_went_the_wrong_way:
+      tag: '[verified]'
+      statement: >-
+        Two consecutive quarters, and the second is higher: 0.083 mg/L then 0.086 mg/L. The
+        previous check recorded only the first.
+    return_to_compliance_is_not_confirmed:
+      tag: '[open]'
+      what_the_village_said: >-
+        "We expect to return to compliance by the second quarter of 2026" — 2025 CCR, p. 5, in the
+        bound public notice, repeated in the report body at p. 2.
+      what_the_federal_record_says: >-
+        The Q2 2026 compliance quarter (2026-04-01 to 2026-06-30) closed nine days before the
+        SDWIS extract, and the Stage 2 DBPR row for that quarter reads "Und" — undetermined. There
+        is no third violation AND no determination of compliance. The question the acceptance
+        criterion asks cannot be answered from SDWIS as it stands.
+      what_would_answer_it: >-
+        The Q2 2026 locational running annual average, which will appear either in the next SDWIS
+        refresh, in an Ohio EPA action, or in the 2026-calendar-year CCR due 2027-07-01. The
+        2025 CCR — published 2026-07-01, after the Q1 2026 violation was noticed — does not
+        report it.
+      note: >-
+        The Q1 2026 LRAA of 0.086 mg/L includes two quarters of 2025 in its own average, so a
+        clean Q2 2026 quarter alone would not necessarily bring the running average under the MCL.
+        Whether it does is arithmetic on sample values this record does not hold.
+    what_the_ccr_reports_and_does_not:
+      tag: '[verified]'
+      reported: Q4 2025, LRAA 83.4 ppb, range across the year 37.9-129.4 ppb, violation flag "Yes"
+      not_reported: the Q1 2026 violation at 0.086 mg/L, noticed 2026-03-13 and publicly noticed 2026-03-30
+      fairness_note: >-
+        A calendar-year CCR reports its calendar year, and the Q1 2026 violation falls outside
+        2025. Its omission is not a rule violation. It is recorded because the report forecasts a
+        return to compliance in Q2 2026 without mentioning that the quarter in between was worse.
+
+  # ── 9 ── The posture the previous check did not capture ──────────────────────
+  sdwa_enforcement_posture:
+    watch_item: 9
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    source: ECHO dfr_rest_services.get_dfr p_system=SDWIS, OH6900711; SDWIS extract 2026-07-09
+    current_snc: 'Yes'
+    current_status: Enforcement Priority
+    quarters_in_noncompliance: 12
+    of_quarters: 12
+    quarters_in_significant_noncompliance: 3
+    informal_actions: 16
+    formal_actions: 0
+    quarterly_status:
+      2023Q2: Violation
+      2023Q3: Violation
+      2023Q4: Violation
+      2024Q1: Violation
+      2024Q2: Violation
+      2024Q3: Violation
+      2024Q4: Violation
+      2025Q1: Violation
+      2025Q2: Enforcement Priority
+      2025Q3: Violation
+      2025Q4: Enforcement Priority
+      2026Q1: Enforcement Priority
+      2026Q2: In Progress (SDWIS extract 2026-07-09)
+    finding: >-
+      The drinking-water system has been in violation of something in every one of the last twelve
+      quarters, and EPA carries it as an Enforcement Priority. The TTHM exceedances are the acute
+      event on top of a chronic one.
+    what_is_driving_the_streak:
+      tag: '[verified]'
+      answer: two UNADDRESSED Consumer Confidence Rule violations
+      violations:
+      - {id: '8263895', begins: '2020-01-27', ends: '--->', status: Unaddressed, enforcement: one State Violation/Reminder Notice on 2020-01-27}
+      - {id: '8263937', begins: '2025-11-13', ends: '--->', status: Unaddressed, enforcement: one State Violation/Reminder Notice on 2025-11-13}
+      note: >-
+        Neither is a health-based violation. The 2020 one has been open for six and a half years
+        and has drawn exactly one notice, on the day it opened. Because an open violation carries
+        forward into every subsequent quarter, these two are what put twelve of twelve quarters in
+        noncompliance — not twelve quarters of new problems.
+      the_rule_and_the_report_are_different_things:
+        tag: '[verified]'
+        note: >-
+          The Consumer Confidence RULE requires the annual report be prepared, delivered and
+          certified. The Village published its 2025 Consumer Confidence REPORT on 2026-07-01,
+          carrying the four corrections Ohio EPA's 2025-11-13 NOV required. SDWIS, extracted
+          2026-07-09, still shows violation 8263937 (opened on that same NOV date) as Unaddressed.
+          Eight days is well inside normal state-to-federal reporting lag; this is very likely the
+          federal record trailing the cure rather than an uncured violation. Recorded as a watch
+          item, not as a finding against the Village. Re-check on the next SDWIS refresh.
+    lead_and_copper:
+      resolved:
+      - {id: '8263935', type: Reporting Violation, period: 2024-10-17 to 2024-10-23, resolved: '2024-10-23'}
+      - {id: '8263936', type: Treatment Technique Violation, period: 2024-10-17 to 2024-10-23, resolved: '2024-10-23'}
+      - {id: '8263938', type: Reporting Violation, period: 2025-07-02 to 2026-01-09, resolved: '2026-01-09'}
+      note: >-
+        The 2025-10-21 warning letter and its 2026-01-09 cure, which the previous check recorded,
+        are confirmed exactly — violation 8263938, "State Compliance achieved" 2026-01-09. Two
+        earlier 2024 LCRR violations drew FEDERAL public-notification requests from EPA (both
+        2025-06-17) on top of the state notices; those are resolved.
+    lead_and_copper_90th_percentile:
+      pb90_mg_l: 0
+      sample_window: 2021-01-01 to 2023-12-31
+      action_level_mg_l: 0.015
+      note: >-
+        Zero of 25 samples over the lead action level, zero over the copper action level (CCR
+        p. 4). The LCRR violations here are reporting and treatment-technique failures, not
+        elevated lead.
+    sanitary_survey:
+      date: '2025-06-12'
+      type: Sanitary Survey, Complete
+      agency: District
+      findings:
+        management_operation: Minor deficiencies
+        finished_water_storage: Minor deficiencies
+        source: Recommendations made
+        treatment: Recommendations made
+        data_verification: No deficiencies or recommendations
+        distribution: No deficiencies or recommendations
+        operator_compliance: No deficiencies or recommendations
+        pumps: No deficiencies or recommendations
+        security: No deficiencies or recommendations
+        financial: No deficiencies or recommendations
+      note: >-
+        Conducted five months before the first TTHM violation. "Recommendations made" against
+        both Source and Treatment. The survey report itself is not in the corpus and would be a
+        records request. Lead OTTAWA-SANITARY-SURVEY-2025.
+
+  # ── 10 ── The water plant is itself a discharger ─────────────────────────────
+  the_intake_plant_also_discharges:
+    watch_item: 10
+    tag: '[verified]'
+    checked_on: '2026-07-31'
+    source: ECHO dfr_rest_services.get_dfr p_system=SDWIS, OH6900711 — Permits block
+    permits:
+    - {id: OHG8P0080, name: OTTAWA WATER TREATMENT PLANT, universe: 'Non-Major: General Permit Covered Facility', status: Effective, expires: '2027-10-17', lat: 41.016247, lon: -84.02328}
+    - {id: OH0041963, name: OTTAWA WTP, universe: 'Non-Major: NPDES Individual Permit', status: Terminated; Compliance Tracking Off, expired: '2017-11-30'}
+    compliance: Both carry CurrentSNC "No" and 0 quarters in noncompliance as of 2026-03-31.
+    finding: >-
+      The Village's WATER plant holds its own live NPDES general-permit coverage, OHG8P0080,
+      effective through 2027-10-17. So the loop has three points on one river, not two: the
+      intake, the water plant's own discharge beside it, and the sewage plant's outfall a mile and
+      a half downstream. The water plant's discharge is in compliance and is not part of this watch's
+      violation record; it is recorded because a description of this village's relationship with
+      the Blanchard that names only two of its three permits is incomplete.
+    what_it_discharges:
+      tag: '[open]'
+      note: >-
+        The general permit's scope is not established here — a water-treatment-plant general
+        permit in Ohio typically covers filter backwash and sedimentation-basin solids, but
+        OHG8P0080's own terms are not in the corpus. Lead OTTAWA-WTP-OHG8P0080.
+
+# ═════════════════════════════════════════════════════════════════════════════
+# THE GEOMETRY — why this is one story and not two
+# ═════════════════════════════════════════════════════════════════════════════
+one_river:
+  tag: '[verified]'
+  intake:
+    facility: Village of Ottawa Water Treatment Plant, 1972 Agner Street
+    coordinates: [41.016247, -84.02328]
+    source: EPA FRS / ICIS-NPDES record for OHG8P0080
+    ccr_quote: >-
+      "The Village of Ottawa public water system draws its drinking water from the Blanchard River
+      and its tributaries (surface waters), which run south of the water treatment plant."
+  outfall:
+    facility: Ottawa WWTP outfall 2PD00028001
+    river_mile: 22.1
+    coordinates_permit_and_icis: [41.0289, -84.0492]
+    coordinates_public_notice: [41.031111, -84.055278]
+  relative_position:
+    tag: '[inference]'
+    finding: >-
+      The intake sits UPSTREAM of the outfall. The Blanchard flows west-north-west through this
+      reach — the USGS gage sequence runs 04189260 (at Ottawa) then 04189500 (at Glandorf, to the
+      north-west) before the Auglaize confluence — and the water plant is east and south of the
+      sewage plant on every coordinate set held (-84.0233 against -84.0492).
+    straight_line_separation_km: 2.59
+    straight_line_separation_mi: 1.61
+    arithmetic: >-
+      dlat 0.012653 deg x 111.0 km = 1.404 km north; dlon 0.02592 deg x 111.320 km x cos(41.02 deg)
+      = 2.177 km west; hypotenuse 2.591 km = 1.610 mi. River distance is longer than straight-line because the channel
+      meanders; the "about a mile and a half" used elsewhere in this record is this straight-line
+      figure, NOT a river mile. The river distance between the two is unestablished.
+    why_it_is_inference: >-
+      The intake's own river mile is not stated in any committed document. The ordering is
+      reasoned from coordinates and flow direction, not read off an instrument. It is also what
+      the regulatory record implies — see below — but implication is not statement.
+      Lead OTTAWA-INTAKE-RIVER-MILE.
+  the_use_designation_confirms_the_ordering:
+    tag: '[verified]'
+    detail: >-
+      The reach at RM 22.1 is designated for Warmwater Habitat, Agricultural Water Supply,
+      Industrial Water Supply and Primary Contact Recreation — and NOT for Public Water Supply.
+      The same fact sheet states the rule: "Public Water Supply designations apply near existing
+      water intakes." A village that drinks from this river, on a reach below its own outfall,
+      would put that outfall inside a PWS-designated segment. It is not.
+    consequence: >-
+      The mercury wasteload allocation for this discharge is therefore computed against the
+      wildlife criterion (1.3 ng/L) and the human-health NONDRINKING criterion (3.1 ng/L). No
+      drinking-water criterion enters it, and correctly so — the drinking-water intake is above
+      the outfall. This is the structural fact the "one river, both sides" framing rests on, and
+      it is not an irregularity.
+  the_permit_writes_the_loop_down_itself:
+    tag: '[verified]'
+    source: 2PD00028*PD Part II Item X.3, p. 28
+    quote: >-
+      "The requirements of Part II, Item AA.2 shall not apply if the permittee demonstrates to the
+      satisfaction of the Director that the mercury concentration in the permittee's effluent
+      exceeds 12 ng/L due primarily to the presence of mercury in the permittee's intake water."
+    note: >-
+      The controlling instrument anticipates that the mercury in this plant's effluent may have
+      arrived in the water the village took out of the same river, and provides relief on that
+      basis. Whether it ever has is [open] — and unanswerable from the committed record, because
+      the Village publishes no mercury result for its finished water and the corpus holds no raw-
+      water mercury sampling.
+  what_does_NOT_connect_the_two_sides:
+    tag: '[verified]'
+    killed_inferences:
+    - claim: The sewage plant's chlorine causes the tap-water trihalomethanes.
+      why_it_is_false: >-
+        The WWTP disinfects with ULTRAVIOLET light (fact sheet p. 6). It adds no chlorine to the
+        river. TTHM forms at the WATER plant, where its own chlorine meets the river's natural
+        organic carbon — the Village says so in its own public notice.
+    - claim: The mercury exceedances show up in the drinking water.
+      why_it_is_unsupported: >-
+        The intake is upstream of the outfall, so effluent from the WWTP does not reach the
+        Village's own intake at all. And the 2025 CCR publishes no mercury result of any kind.
+    - claim: The upstream floodplain excavation released the mercury.
+      why_it_is_false: >-
+        See the flood-program block below. The WWTP treats sewage, not river water; its influent
+        mercury in December 2025 was an ordinary 20.3 ng/L. There is no pathway from a Findlay
+        floodplain to an Ottawa sewer.
+    discipline: >-
+      These are recorded because each is a plausible-sounding link a reader could draw from this
+      record, and each is wrong. Naming the tempting inference and killing it is cheaper than
+      correcting it later.
+
+# ═════════════════════════════════════════════════════════════════════════════
+# UPSTREAM — the flood program, whose benefits this site does not get
+# ═════════════════════════════════════════════════════════════════════════════
+upstream_flood_program:
+  watch_item: 11
+  checked_on: '2026-07-31'
+  program: Hancock County Flood-Risk Reduction Program (Maumee Watershed Conservancy District)
+  framing:
+    tag: '[verified]'
+    statement: >-
+      Every structural measure in this program is in Hancock County, 34.3 river miles upstream of
+      Ottawa's outfall. The program's published modelling quantifies its benefit at Findlay and
+      states no benefit for Ottawa or Putnam County. Relief for Ottawa, if any, is entirely
+      upstream-derived and entirely unquantified. That framing is held even where it makes the
+      program look worse than it may be.
+  eagle_creek_dry_storage:
+    tag: '[reference]'
+    source: https://hancockcountyflooding.com/eagle-creek-dry-storage (read 2026-07-31)
+    status: final design complete; property acquisition complete; obtaining easements and permits
+    construction_start: near the end of 2026 (pending FEMA grant award and completion of review/environmental assessments)
+    construction_duration: approximately 18 to 24 months
+    dam_safety_permit: obtained through ODNR Division of Water Resources Dam Safety Program
+    funding:
+      state_capital_budget_grants_usd: 60000000
+      fema: being pursued to complete the funding
+    modelled_effect_at_findlay:
+      event: 1% Annual Chance Exceedance
+      blanchard_peak_flow_reduction_cfs: 2550
+      blanchard_peak_flow_reduction_pct: 16
+      water_surface_elevation_reduction_ft: 2.2
+      location: near the confluence in downtown Findlay
+      floodplain_removed: approximately 1,830 parcels and 1,400 acres
+    downstream_benefit_for_ottawa:
+      tag: '[open]'
+      note: >-
+        The project page describes benefits to "Eagle Creek and the Blanchard River" and gives no
+        figure for any point below Findlay. No Ottawa or Putnam County benefit is quantified
+        anywhere in the source read. Lead OTTAWA-FLOOD-DOWNSTREAM-BENEFIT.
+  phase_2_benching:
+    tag: '[reference]'
+    milestone: soil remediation completed
+    period: December 2025 to February 2026
+    materials_removed:
+      impacted_soil_tons: 7325
+      glass_fill_tons: 1070
+      asphalt_tons: 432
+      disposal: Hancock County Landfill
+    contaminants_named: [lead, arsenic, mercury, cadmium, polycyclic aromatic hydrocarbons]
+    implemented_by: [Civil & Environmental Consultants Inc. (CEC), Buckeye Elm Contracting]
+    source: WFIN local news report of the Hancock County Commissioners / City of Findlay announcement (read 2026-07-31)
+    status: precursor step complete; main Phase 2 benching construction not yet begun
+    the_coincidence_that_is_not_a_mechanism:
+      tag: '[verified]'
+      observation: >-
+        Mercury-bearing floodplain soil was excavated in the Blanchard corridor at Findlay between
+        December 2025 and February 2026. Ottawa's two largest mercury exceedances are December
+        2025 (36.70 ng/L) and February 2026 (5.55 ng/L). The windows overlap exactly.
+      why_it_is_not_a_link: >-
+        The Ottawa WWTP treats SEWAGE, not river water. Nothing excavated from a floodplain 34
+        river miles upstream enters its influent, and its December 2025 influent mercury was an
+        ordinary 20.3 ng/L — below the 12-month median of the months around it. The Village's
+        drinking-water intake IS on the river and IS downstream of Findlay, but the Village
+        publishes no mercury result for finished water and its violation that quarter was
+        trihalomethanes, which have nothing to do with mercury.
+      why_it_is_recorded_anyway: >-
+        Because the dates line up and someone will notice. Recording the coincidence together with
+        the reason it cannot be causal is the only way to stop it being asserted later.
+      the_one_thing_it_does_establish:
+        tag: '[verified]'
+        note: >-
+          There is documented mercury in the Blanchard River floodplain upstream of Ottawa's
+          drinking-water intake. That is a fact about the watershed worth carrying independently
+          of these violations, and it sits against Table 12's "Mercury ng/L annual 0 — No
+          representative data available."
+
+# ═════════════════════════════════════════════════════════════════════════════
+watch_schedule:
+  cadence: quarterly, keyed to the ICIS-NPDES and SDWIS extract cycles
+  next_check_not_before: '2026-08-21'    # the day after the 2026-07 DMR due date
+  questions_for_the_next_check:
+  - Are the June, July and August 2026 mercury monthly averages reported, and are they under 4.5 ng/L?
+  - Have the four unresolved mercury RNC records (2025-09, 2025-12 x2, 2026-02) been resolved, and how?
+  - Have the two 2026-03-04 single-event violations — the narrative effluent violation and the SSO O&M violation — closed?
+  - Has any FORMAL enforcement issued? Director's Final Findings and Orders, an administrative order, any penalty. The answer on 2026-07-31 was none.
+  - Did the Q2 2026 Stage 2 DBPR determination land, and was it a violation? It read "Und" on the 2026-07-09 SDWIS extract.
+  - Did SDWIS clear Consumer Confidence Rule violation 8263937 after the 2026-07-01 report? And is 8263895, open since 2020, still unaddressed?
+  - Was a 2026 licence to operate issued for PWS OH6900711, and is it unconditional?
+  - Did Eagle Creek dry storage construction start, and did FEMA award?
+  standing_negatives_to_re_verify:
+  - Formal CWA enforcement against OH0026921 — zero as of the 2026-07-24 ICIS extract, $0 penalties over five years.
+  - Formal SDWA enforcement against OH6900711 — zero as of the 2026-07-09 SDWIS extract, against 16 informal actions.
+
+open_leads:
+- id: OTTAWA-PMP-REPORTS
+  question: What do the annual Pollutant Minimization Program reports say about the source of the mercury?
+  why: >-
+    Permit Part II Item X.1.g requires one by March 1 each year, listing all minimization
+    monitoring results, potential sources of mercury, and actions taken. The 2026 report would
+    cover the December 2025 spike. It is the single document most likely to explain the
+    influent/effluent inversion.
+  route: Ohio EPA records request, Division of Surface Water NPDES Permit Unit
+- id: OTTAWA-SSO-2026
+  question: What sanitary sewer overflow drew the O&M half of the 2026-03-04 warning letter?
+  why: ICIS records the violation but no date, volume or location. The village runs fully separated sewers, so an SSO is a prohibited discharge, not a permitted wet-weather event.
+  route: The warning letter itself (Ohio EPA NWDO) and the permit's Part II Item C SSO reports
+- id: OTTAWA-INSPECTION-2026-02
+  question: What did the 2026-02-24 state evaluation find?
+  why: It sits between the December exceedance and the March warning letter; ICIS publishes no finding.
+  route: Ohio EPA records request, compliance monitoring report OH000NQ0000115015
+- id: OTTAWA-FINISHED-WATER-MERCURY
+  question: Does the Village sample its raw or finished drinking water for mercury, and what are the results?
+  why: >-
+    The permit's own Item X.3 makes intake-water mercury a defence to the annual ceiling. The CCR
+    publishes no mercury figure. Both facts are established; the link between them is not.
+  route: Ohio EPA Division of Drinking and Ground Waters sampling record for OH6900711
+- id: OTTAWA-INTAKE-RIVER-MILE
+  question: At what river mile does the Village's intake sit?
+  why: The outfall's river mile (22.1) is cited; the intake's is not, so the separation between them is an inference from coordinates.
+  route: The Village's Drinking Water Source Assessment (Ohio EPA, November 2003), named in the CCR
+- id: OTTAWA-PEQ-2014-BASELINE
+  question: What was the projected effluent quality average in the ORIGINAL mercury variance?
+  why: The fact sheet's narrative and its Table 8 give incompatible readings of the figure 7.1 ng/L; only the 2014 permit settles which.
+  route: Ohio EPA DAM / records request for the 2014 permit and its variance application
+- id: OTTAWA-EFFLUENT-P
+  question: What is this plant's effluent total-phosphorus record against its 750 kg seasonal allocation?
+  why: The previous check recorded strong performance; this check did not verify it and will not carry it unverified.
+  route: ECHO effluent chart parameter 00665; the annual Season Report required by OHP000001 Part IV.D
+- id: OTTAWA-SANITARY-SURVEY-2025
+  question: What recommendations did the 2025-06-12 sanitary survey make against Source and Treatment?
+  why: Five months before the first TTHM violation, with recommendations recorded against exactly the two categories a disinfection-byproduct problem would implicate.
+  route: Ohio EPA / Putnam County district health department records request
+- id: OTTAWA-CCR-2020-VIOLATION
+  question: What is Consumer Confidence Rule violation 8263895, unaddressed since 2020-01-27, actually about?
+  why: It is one of the two records keeping this system at twelve of twelve quarters in noncompliance. SDWIS publishes no reason text.
+  route: Ohio EPA Division of Drinking and Ground Waters
+- id: OTTAWA-LTO-2026
+  question: Was a 2026 licence to operate issued for OH6900711, and was it unconditional?
+  why: The 2025 licence expired 2026-01-30; the report published 2026-07-01 says nothing about 2026.
+  route: Ohio EPA licence-to-operate register
+- id: OTTAWA-WTP-OHG8P0080
+  question: What does the water plant's own NPDES general permit OHG8P0080 authorize it to discharge?
+  why: It is the third permit on this river at this village and its terms are not held.
+  route: Ohio EPA DAM general-permit documents
+- id: OTTAWA-FLOOD-DOWNSTREAM-BENEFIT
+  question: Does the Hancock County program's hydraulic modelling produce any figure for Putnam County?
+  why: The program quantifies 16% peak reduction at Findlay and nothing downstream. Whether "nothing published" means "modelled as zero" or "not modelled" is unestablished.
+  route: The program's Draft Environmental Assessment (Ohio EMA, EMC-2023-FM-003-0004) and the Maumee Watershed Conservancy District
+
+provenance:
+  extracted_at: '2026-07-31'
+  extractor: standing water watch, issue 1422
+  tags: [verified, inference, open, ottawa, putnam-county, blanchard-river, npdes, sdwa, mercury,
+    variance, snc, tthm, dbpr, one-river, flood, enforcement]
+  confidence: high
+  summary: >-
+    One village on one river, in violation on both sides of it. The sewage plant's mercury
+    monthly-average limit was cut from 6.8 to 4.5 ng/L at the 2025 renewal — to the plant's own
+    63-sample mean — and it then exceeded it three times, hardest in December 2025 at 36.70 ng/L
+    against an influent of 20.3, discharging more mercury than it received. Two of the three
+    exceedances would have been violations under the old limit as well. Six quarters of
+    noncompliance, two of Category-I significant noncompliance, one warning letter, no formal
+    enforcement, no penalty. Two miles upstream the same village's water plant exceeded the
+    trihalomethane MCL in two consecutive quarters, 83 then 86 ppb, on a system EPA carries as an
+    SDWA Enforcement Priority with twelve of twelve quarters in noncompliance. The mercury streak
+    appears to have broken in April 2026; the June DMR was not yet on the record, and the
+    trihalomethane return to compliance is undetermined in the federal system. The plant's own
+    permit anticipates that its mercury may have come out of the water the village drank.

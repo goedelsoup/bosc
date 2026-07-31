@@ -1,0 +1,35 @@
+meta:
+  subject: >-
+    Village of Ottawa (PWS OH6900711) drinking-water instruments — the annual Consumer Confidence
+    Report and the public notices bound into it (issue 1422)
+  generated_at: '2026-07-31'
+  policy: >-
+    non-destructive — the file keeps the basename the Village's own DocumentCenter serves it
+    under. That basename is WRONG about the document's year, and it is kept wrong on purpose:
+    the canonical name and the content-verified date below are read from the document's own
+    text layer, never from the filename or the URL slug.
+
+documents:
+- filename: 2024-CCR.pdf
+  canonical_name: >-
+    Village of Ottawa, PWS ID OH6900711 — 2025 Calendar Year Drinking Water Consumer Confidence
+    Report, date distributed July 1, 2026. Carries three bound public notices: the Q4-2025 TTHM
+    MCL violation notice, the lead service-line notification reporting violation (Template 3b),
+    and the UCMR-5 results. 6 pp.
+  content_verified_date: '2026-07-01'   # "Date Distributed: July 1, 2026", printed in the running header of every page
+  pws_id: OH6900711
+  source_url: https://ottawaohio.us/DocumentCenter/View/3094/2024-CCR
+  sha256: a931709d021a61138c5c56ebbe819c57614339024eee6dee3a471819e19aefb1
+  bytes: 385881
+  content_type: application/pdf
+  fetched_at: '2026-07-31'
+  status: downloaded
+  note: >-
+    NAME/CONTENT MISMATCH — the Village serves this document from a DocumentCenter path whose
+    slug reads `2024-CCR`, but the document's own running header on all six pages reads "2025
+    Consumer Confidence Report", its title block reads "2025 Calendar Year Drinking Water
+    Consumer Confidence Report", and it is dated "Date Distributed: July 1, 2026". It is the
+    2025-data-year report, not the 2024 one. The slug is plausibly a stale DocumentCenter entry
+    reused for the new year. Anyone searching this corpus for the 2024-data-year CCR will not
+    find it here; that document is NOT held. See
+    data/extracted/ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml.

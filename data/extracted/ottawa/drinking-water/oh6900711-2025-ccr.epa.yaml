@@ -1,0 +1,270 @@
+doc_id: oh6900711-2025-ccr
+source_path: data/documents/ottawa/drinking-water/2024-CCR.pdf
+kind: epa
+pages_read: []
+image_pages_read: []
+dpi: 0
+method: >-
+  Reviewed transcription from the PDF's embedded text layer (pypdf). This is a digitally generated
+  document, not a scan. Every figure below is read verbatim from the page named on its block; the
+  document's own pagination is not printed, so pages are 1-based positions in the 6-page PDF.
+source_text_excerpt: >-
+  "Village of Ottawa • PWS ID: OH6900711 • 2025 Consumer Confidence Report ... Date Distributed:
+  July 1, 2026 ... 2025 TTHM MCL Violation: During the 2025 fourth quarter, the Village of Ottawa
+  exceeded the Maximum Contaminant Level (MCL) for Total Trihalomethanes (TTHMs). The MCL for TTHMs
+  is 80 ppb. Our highest locational running annual average was 83.4 ppb."
+
+action:
+  confidence: high
+  warnings:
+  - >-
+    The file is served under a URL slug reading "2024-CCR" but is the 2025-CALENDAR-YEAR report,
+    distributed 2026-07-01. The as-received name is kept per the chain-of-custody rule; see
+    data/documents/ottawa/drinking-water/filename-map.yaml. The 2024-data-year CCR is not held.
+  - >-
+    A Consumer Confidence REPORT is not the same thing as the Consumer Confidence RULE. This
+    document is the report. EPA's SDWIS carried two OPEN "Consumer Confidence Rule" violations
+    against this system on the 2026-07-09 extract, one of them since 2020-01-27. Publishing the
+    report does not by itself clear a rule violation, and nothing here establishes that it did.
+  - >-
+    A calendar-year CCR reports its calendar year. This one states an expectation of "return to
+    compliance by the second quarter of 2026" without disclosing that the FOLLOWING quarter's TTHM
+    locational running annual average — Q1 2026, recorded by SDWIS at 0.086 mg/L — was higher than
+    the violation it reports. That later quarter is outside the report's period and its omission is
+    not a rule violation; it is recorded because a reader of this document alone would take the
+    trend to be improving.
+  agency: Village of Ottawa (permittee-issued) under Ohio EPA oversight; Ohio EPA NOV and warning letter cited within
+  program: Safe Drinking Water Act — Consumer Confidence Report, Stage 2 DBPR public notice, Lead and Copper Rule Revisions public notice
+  permit_no: PWS ID OH6900711
+  action: annual consumer confidence report published, carrying two Tier-3 public notices and four Ohio-EPA-directed corrections
+  action_date: '2026-07-01'
+  applicant: Village of Ottawa
+  applicant_address: 136 North Oak Street, Ottawa, Ohio 45875, Putnam County
+  facility: Village of Ottawa Public Water System, PWS ID OH6900711 — community water system, surface water source, population served 4,393
+  site_address: Water treatment plant, 1972 Agner Street, Ottawa, OH 45875, Putnam County
+  project_name: Village of Ottawa 2025 Calendar Year Drinking Water Consumer Confidence Report
+  affected_resource: Blanchard River (source water) → the Village distribution system
+  contact: Richard Knowlton, Water Treatment Director, (419) 523-5020
+  note: >-
+    [verified] The Village of Ottawa drinks from the Blanchard River and discharges to it. This
+    report is the intake half of that loop. It records a Total Trihalomethanes MCL violation for
+    the 2025 fourth quarter — a locational running annual average of 83.4 ppb against an 80 ppb
+    MCL, with individual results across the year ranging 37.9 to 129.4 ppb — and a lead
+    service-line notification reporting violation cured 2026-01-09. It reports no mercury result
+    of any kind.
+
+# --- source water ------------------------------------------------------------------------------
+source_water:
+  page: 1
+  source: the Blanchard River and its tributaries (surface waters)
+  quote: >-
+    "The Village of Ottawa public water system draws its drinking water from the Blanchard River
+    and its tributaries (surface waters), which run south of the water treatment plant."
+  source_water_assessment_date: November 2003
+  potential_contaminant_sources_named:
+  - agricultural runoff
+  - home construction
+  - feed lot runoff
+  - unsewered areas
+  - combined sewer overflows
+  - wastewater treatment discharges
+  - commercial and industrial sources
+  - junk yard runoff
+  - pesticide and fertilizer tank farms
+  - roadways
+  - railways
+  - gas line ruptures
+  accident_exposure:
+    quote: >-
+      "Ohio EPA's 'Drinking Water Source Assessment for the Village of Ottawa' lists 162 miles of
+      roads and 75 miles of rail lines, containing 1,066 road intersections and 48 rail crossings,
+      as potential accident sites located in the surface water area draining upstream of where
+      Ottawa draws water from the Blanchard River."
+  the_village_lists_its_own_outfall_type:
+    tag: '[verified]'
+    note: >-
+      "wastewater treatment discharges" appears in the Village's own list of potential contaminant
+      sources in its drinking-water source protection area. The Village's own WWTP is the largest
+      such discharge on this reach — but it is ~1.6 mi DOWNSTREAM of the intake, so it is not in
+      the intake's own protection area. The upstream wastewater discharges that ARE in it include
+      Findlay WPCC, 34.3 river miles above the Ottawa outfall.
+
+# --- the violation ------------------------------------------------------------------------------
+tthm_violation:
+  pages: [2, 5]
+  contaminant: Total Trihalomethanes (TTHM)
+  quarter: 2025 fourth quarter
+  metric: highest locational running annual average (LRAA)
+  value_ppb: 83.4
+  mcl_ppb: 80
+  exceedance_pct: 4.25
+  individual_result_range_ppb: [37.9, 129.4]
+  violation_flag_in_table: 'Yes'
+  health_language_quote: >-
+    "Some people who drink water containing trihalomethanes in excess of the MCL over many years
+    may experience problems with their liver, kidneys, or central nervous systems, and may have an
+    increased risk of getting cancer."
+  cause_stated: >-
+    "TTHMs are disinfection by-products that form when chlorine used to treat drinking water reacts
+    with naturally occurring organic matter in the source water."
+  corrective_steps:
+  - Adjusting treatment processes at the water plant to optimize disinfection and reduce by-product formation
+  - Optimizing chlorine feed rates and reducing chlorine residual levels where appropriate while still maintaining proper disinfection
+  - Increasing system monitoring and sampling to better track disinfectant residuals and TTHM levels
+  return_to_compliance_expected: second quarter of 2026
+  the_maximum_is_the_number_that_is_not_quoted:
+    tag: '[verified]'
+    note: >-
+      The narrative and the public notice both lead with the 83.4 ppb annual average, which is 4%
+      over the MCL. The table of detected contaminants on p. 4 gives the year's RANGE as
+      37.9-129.4 ppb. The high individual result is 62% over the MCL and is stated nowhere in the
+      prose. Both figures are the Village's own and both are required table entries; the average
+      is what the MCL is written against.
+  speciation:
+    page: 4
+    unregulated_thm_species_ppb:
+      chloroform_trichloromethane: {level_found: 87, range: [22.5, 87.0]}
+      bromodichloromethane: {level_found: 28.1, range: [9.2, 28.1]}
+      dibromochloromethane: {level_found: 13.7, range: [5.6, 13.7]}
+      bromoform: {level_found: 1.6, range: [0.6, 1.6]}
+    finding:
+      tag: '[inference]'
+      note: >-
+        Chloroform dominates the four species by a wide margin. Chloroform-dominated
+        trihalomethane formation is the signature of chlorinating water rich in natural organic
+        carbon rather than bromide — consistent with an agricultural surface-water source and with
+        the plant's reported total organic carbon (1.47-2.28). Recorded as an inference from the
+        speciation the Village itself reports; no treatment study in the corpus tests it.
+  haa5_did_not_violate:
+    page: 4
+    level_found_ppb: 31.8
+    range_ppb: [20.7, 51.0]
+    mcl_ppb: 60
+    note: >-
+      The other regulated disinfection by-product group stayed comfortably inside its MCL through
+      the same year. Whatever is driving the TTHM result is not driving HAA5 with it.
+
+lead_service_line_reporting_violation:
+  pages: [2, 5]
+  rule: 40 CFR 141.85(e) and 40 CFR 141.90(f)(4)
+  instrument: Ohio EPA Warning Letter
+  warning_letter_date: '2025-10-21'
+  requirement_missed: annual service-line material notifications to affected consumers, due 2025-07-01
+  cured_date: '2026-01-09'
+  quote: >-
+    "The Village of Ottawa failed to adequately demonstrate to the State that it delivered annual
+    notifications and information to affected consumers with lead, galvanized requiring
+    replacement, or lead status unknown service lines as required by July 1, 2025."
+  remediation: >-
+    "We are currently working with Arcadis engineering to gain the information needed to build and
+    maintain a complete service line inventory. While we did not certify and notify the State as
+    quickly as we should have, we provided the required notifications to persons served, as well as
+    the missing information to the State on January 9, 2026. We are no longer in violation."
+  corroboration: >-
+    EPA SDWIS carries this as violation 8263938 (Lead and Copper Rule Revisions, Reporting
+    Violation), non-compliance 2025-07-02 to 2026-01-09, "State Compliance achieved" 2026-01-09 —
+    matching the Village's account date for date.
+  service_line_inventory_url: https://pws-ptd.120wateraudit.com/ottawavillageoh
+
+ccr_corrections_directed_by_ohio_epa:
+  page: 1
+  nov_date: '2025-11-13'
+  applies_to: the preceding (2024-data-year) Consumer Confidence Report
+  corrections:
+  - Copper 90th percentile corrected to 0.075 ppm
+  - Gross Alpha 2022 result added
+  - Atrazine removed (non-detect)
+  - Lead Service Line Inventory information added
+  older_uncorrected_set:
+    page: 2
+    year: 2018
+    quote: >-
+      "2018 CCR Violations: In the 2018 CCR, MCLG was not defined, turbidity was not updated, and
+      in the Table of Detected Contaminants, nitrate was not updated, simazine was reported
+      incorrectly, lead should be reported in ppb, and contaminants not detected in the most recent
+      sample should be removed."
+    note:
+      tag: '[inference]'
+      statement: >-
+        A 2018-report defect list is still being reprinted in the 2025 report. EPA SDWIS carries an
+        UNADDRESSED Consumer Confidence Rule violation (id 8263895) whose compliance period begins
+        2020-01-27 — the date of the only enforcement action against it, a State Violation/Reminder
+        Notice. The dates and the subject line up, and it is the obvious candidate for what that
+        open violation is about.
+      why_it_is_not_verified: >-
+        SDWIS publishes no reason text for violation 8263895 and this report does not cite it.
+        The link between the reprinted 2018 defect list and the open 2020 rule violation is
+        reasoned, not stated by either source. Lead OTTAWA-CCR-2020-VIOLATION.
+
+licence_to_operate:
+  page: 2
+  quote: >-
+    "In 2025, the Village of Ottawa was issued an unconditional license to operate our water
+    system. License (6900711-1669735-2025) 'Green,' pursuant to ORC §6109.21, expires January 30,
+    2026."
+  licence_number: 6900711-1669735-2025
+  status: unconditional ("Green")
+  expires: '2026-01-30'
+  gap:
+    tag: '[open]'
+    note: >-
+      This report was distributed 2026-07-01 and reports a licence that expired 2026-01-30. It says
+      nothing about the 2026 licence. Whether Ohio EPA issued an unconditional 2026 licence to a
+      system that EPA had by then designated a Safe Drinking Water Act "Enforcement Priority" is
+      not established by any committed source. Lead OTTAWA-LTO-2026.
+
+other_results_2025:
+  page: 4
+  microcystins_ug_l: {level_found: '< 0.240', action_level: 0.3, violation: false}
+  total_organic_carbon: {level_found: 1.860, range: [1.47, 2.28], standard: TT, violation: false}
+  turbidity_ntu: {highest: 0.23, range: [0.03, 0.23], pct_meeting_limits: 100, violation: false}
+  nitrate_ppm: {level_found: 3.0, range: [0.53, 3.0], mcl: 10, violation: false}
+  fluoride_ppm: {level_found: 1.12, range: [0.83, 1.30], mcl: 4, violation: false}
+  barium_ppm: {level_found: 0.016, mcl: 2, violation: false}
+  total_chlorine_ppm: {level_found: 1.858, range: [1.4, 2.1], mrdl: 4, violation: false}
+  lead_ppb: {level_found: '< 2.0', action_level: 15, year: 2023, samples_over_al: 0, of_samples: 25}
+  copper_ppm: {level_found: 0.075, action_level: 1.3, year: 2023, samples_over_al: 0, of_samples: 25}
+  total_coliform: no positive samples during 2025; no Level 1 or Level 2 assessment triggered
+  mercury:
+    tag: '[open]'
+    note: >-
+      NO mercury result appears anywhere in this report. The Village states it sampled "more than
+      80 different contaminants, most of which were not detected", and one of the Ohio EPA
+      corrections it implements is that "contaminants not detected in the most recent sample should
+      be removed" from the table — so a non-detect would be omitted by design. Absence from this
+      table is therefore NOT evidence that finished water was not sampled for mercury, and still
+      less evidence of a detection. It means this document publishes no mercury figure. What the
+      Village's raw and finished water carry is unestablished. Lead OTTAWA-FINISHED-WATER-MERCURY.
+
+ucmr5_pfas_2024:
+  pages: [5, 6]
+  sampling_events: March, June, September and December 2024
+  regulated_pfas_all_non_detect: true
+  results_ng_l:
+    PFOA: {avg: '< MRL', mcl: 4}
+    PFOS: {avg: '< MRL', mcl: 4}
+    PFHxS: {avg: '< MRL', mcl: 10}
+    PFNA: {avg: '< MRL', mcl: 10}
+    HFPO-DA: {avg: '< MRL', mcl: 10}
+    PFHxA: {avg: 0.029, range: [0.015, 0.052], detected_events: 3, regulated: false}
+    PFPeA: {avg: 0.049, range: [0.018, 0.090], detected_events: 3, regulated: false}
+    PFBS: {avg: 0.006, range: [0.003, 0.008], detected_events: 3, regulated: false}
+    PFBA: {avg: 0.011, range: [0.009, 0.012], detected_events: 2, regulated: false}
+    Lithium: {avg: 10.727, range: [0, 11.9], regulated: false}
+  finding: >-
+    All six PFAS regulated by the 2024 rule were non-detect; four unregulated short-chain PFAS and
+    lithium were detected at low concentrations. The Village states it is in compliance with the
+    2024 PFAS drinking water standards.
+
+provenance:
+  extracted_at: '2026-07-31'
+  extractor: reviewed transcription (pypdf text layer), issue 1422
+  tags: [verified, sdwa, ccr, ottawa, putnam-county, blanchard-river, tthm, lead-and-copper,
+    pfas, one-river]
+  confidence: high
+  summary: >-
+    The intake half of the Ottawa water loop, in the Village's own words. A Q4-2025 TTHM MCL
+    violation at 83.4 ppb against an 80 ppb standard, with individual results reaching 129.4; a
+    lead service-line notification failure cured 2026-01-09; four corrections to the previous
+    year's report directed by an Ohio EPA NOV; a clean PFAS and microcystin record; and no mercury
+    figure at all.

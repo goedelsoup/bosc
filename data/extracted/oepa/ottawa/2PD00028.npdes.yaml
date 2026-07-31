@@ -1,0 +1,229 @@
+doc_id: 2PD00028-51415abd
+source_path: data/documents/oepa/ottawa/2PD00028.pdf
+kind: npdes
+pages_read: []
+image_pages_read: []
+dpi: 0
+source_text_excerpt: >-
+  "Ohio EPA Permit No.: 2PD00028*PD / Application No: OH0026921 / Action Date: January 22, 2025 /
+  Effective Date: March 1, 2025 / Expiration Date: February 28, 2030 ... Village of Ottawa is
+  authorized by the Ohio Environmental Protection Agency ... to discharge from the Ottawa
+  Wastewater Treatment Plant wastewater treatment works, located at 1371 North Defiance Street,
+  Ottawa, Ohio, Putnam County, and discharging to Blanchard River at River Mile 22.1"
+
+# Reviewed transcription from this digitally generated PDF's embedded text layer (pypdf).
+# Page citations are the permit's own printed sheet numbers. The Fact Sheet for NPDES Permit
+# Renewal is BOUND INTO this PDF from PDF page 44 onward; it is also held standalone as
+# 2PD00028.fs.pdf, and the fact-sheet content is cited to that file's own pagination in
+# data/extracted/oepa/ottawa/2PD00028.fs.npdes.yaml, not re-cited here.
+permit:
+  confidence: high
+  warnings:
+  - >-
+    The permit spells its own outfall three ways. Part II Item X.1.a writes "outfall 2DP00028001",
+    X.2.c writes "outfall 2DP00028", and Part II Item AA.1 writes "outfall 2PD00028001". The
+    permit number is 2PD00028; the "2DP" spellings are transpositions in the source. Preserved as
+    printed. A records search keyed on "2DP00028" will hit this document; one keyed only on
+    "2PD00028" will still find it, because the cover page and limit tables use the correct form.
+  - >-
+    ICIS-NPDES codes the mercury limit set for this permit as running 2025-03-01 to 2028-02-29,
+    two years short of the permit's own 2030-02-28 expiration. The permit itself carries the
+    4.5 ng/L monthly average in BOTH of its Part I.A limit tables, and both tables state the
+    period "beginning March 1, 2025, and lasting until February 28, 2030." The instrument governs;
+    the ICIS end date appears to be a coding artifact. Both are recorded, neither corrected.
+  facility_name: Ottawa Wastewater Treatment Plant
+  permit_no: 2PD00028*PD
+  permit_action: renewal
+  applicant: Village of Ottawa
+  application_no: OH0026921
+  facility_address: 1371 North Defiance Street, Ottawa, Ohio, Putnam County
+  receiving_water: Blanchard River at River Mile 22.1
+  action_date: '2025-01-22'
+  effective_date: '2025-03-01'
+  expiration_date: '2030-02-28'
+  outfalls:
+  - '001'
+  - '002'
+  note: >-
+    Renewal of the permit last renewed 2014-04-01. The renewal that cut the mercury monthly average
+    from 6.8 ng/L to 4.5 ng/L; see the DMR record in data/extracted/ottawa/water-watch.yaml for
+    what the plant then reported against it.
+
+# --- reviewed transcription (issue 1422) ------------------------------------------------------
+review:
+  issue: 1422
+  reviewed_on: '2026-07-31'
+  method: >-
+    Verbatim transcription from the PDF's embedded text layer (pypdf). Nothing is derived except
+    where a block says so and shows its arithmetic.
+
+monitoring_stations:
+  page: 22
+  stations:
+  - id: 2PD00028001
+    description: Final effluent
+    lat: 41.0289
+    lon: -84.0492
+  - id: 2PD00028002
+    description: Equalization basin bypass
+  - id: 2PD00028300
+    description: System-wide sanitary sewer overflows
+  - id: 2PD00028581
+    description: Beneficial use of class B Biosolids
+  - id: 2PD00028586
+    description: Disposal of sewage sludge or biosolids in an authorized landfill
+  - id: 2PD00028588
+    description: Transfer of sewage sludge or biosolids to another NPDES permittee
+  - id: 2PD00028601
+    description: Influent monitoring
+  - id: 2PD00028801
+    description: Upstream monitoring on State Route 224
+  - id: 2PD00028901
+    description: Downstream monitoring on Route I-9
+  coordinate_discrepancy:
+    tag: '[verified]'
+    note: >-
+      This permit and EPA's ICIS-NPDES both place outfall 001 at 41.0289 / -84.0492. The draft
+      public notice for the same permit (data/documents/oepa/ottawa/2PD00028.e00560a8.pdf, p. 1,
+      "Outfall Flow and Location List") places it at 41.031111 / -84.055278 — about 550 m
+      north-west. Recorded as a discrepancy between two Ohio EPA instruments for the same outfall.
+      Nothing here decides which is right.
+
+final_effluent_limits_outfall_001:
+  pages: [3, 6]
+  term: >-
+    Both Part I.A limit tables state "During the period beginning March 1, 2025, and lasting until
+    February 28, 2030". Table 1 is headed "Final Outfall - 001 - Initial" and Table 2 "Final
+    Outfall - 001 - Final"; their stated periods are identical, and the only difference between
+    them relevant to this watch is that the "Final" table adds pentachlorophenol limits (46 ug/L
+    daily maximum, 6.4 ug/L monthly) where the "Initial" table has none. Mercury is 4.5 ng/L in
+    both.
+  mercury:
+    parameter_code: '50092'
+    parameter: Mercury, Total (Low Level)
+    daily_maximum_ng_l: 1250
+    monthly_average_ng_l: 4.5
+    daily_maximum_kg_d: 0.014
+    monthly_average_kg_d: 0.00007
+    measuring_frequency: 1/Month
+    sampling_type: Grab
+    monitoring_months: All
+    basis_code: ABS/VAR
+    basis_expansion: >-
+      "ABS" antibacksliding; "VAR = Variance from a WQS (Mercury variance (OAC 3745-1-38(J)))" —
+      the basis key on the fact sheet's p. 33.
+  chronic_toxicity_ceriodaphnia_dubia_tuc: 1.4
+  chronic_toxicity_pimephales_promelas_tuc: 1.4
+  acute_toxicity_tua: 1.0
+  e_coli_weekly_geomean_per_100ml: 284
+  e_coli_monthly_geomean_per_100ml: 126
+  loading_basis: Effluent loadings based on average design discharge flow of 3.0 MGD.
+
+mercury_variance_conditions:   # Part II, Item X — "General Mercury Variance"
+  pages: [26, 27, 28]
+  authority: Rule 3745-01-38(H) of the Ohio Administrative Code
+  wqbel_monthly_average_ng_l: 1.3
+  annual_average_ceiling_ng_l: 12
+  annual_average_definition:
+    quote: >-
+      "For general mercury variance purposes, the annual average mercury effluent concentration is
+      defined as the average of the most recent 12 months of effluent data."
+    note: >-
+      A ROLLING twelve-month mean, not a calendar-year one. This is the permit's own definition and
+      it is what data/extracted/ottawa/water-watch.yaml computes the annual-average series against.
+  variance_application_submitted: '2024-05-07'
+  analytical_method: EPA Method 1631
+  pmp_activities_required:
+  - Continued monitoring for mercury throughout the community
+  - Continued research into better techniques to remove mercury from the system
+  - Continued involvement with the local dental community
+  - Continued wastewater line flushing
+  - Continued infiltration elimination
+  - Additional monitoring of industrial users
+  annual_pmp_report_due: on or prior to March 1 of each year, to Ohio EPA Division of Surface Water
+  consequences_of_exceeding_the_annual_ceiling:
+    page: 28
+    trigger: annual average mercury effluent concentration exceeds 12 ng/L
+    required_steps:
+    - Notify Ohio EPA's Northwest District Office not later than 30 days from the date of the exceedance
+    - Submit an individual variance application, if a variance is desired, not later than 6 months from the date of the exceedance
+    - or Request a permit modification not later than 6 months from the date of the exceedance for a compliance schedule
+    failure_clause_quote: >-
+      "If the permittee does not comply with either 2.a.ii or 2.a.iii, above, a monthly water-quality
+      based effluent limit for mercury of 4.5 ng/L shall apply at outfall 2DP00028 beginning 6
+      months from the date of the exceedance."
+    apparent_drafting_artifact:
+      tag: '[inference]'
+      statement: >-
+        As written, the consequence of blowing the annual ceiling and then failing to respond is
+        that a 4.5 ng/L monthly limit "shall apply" — which is the limit the plant already has. The
+        clause imposes nothing. The water-quality-based effluent limit this permit is a variance
+        FROM is 1.3 ng/L (Part II X, first paragraph), so the number the clause reads as intending
+        is 1.3.
+      discipline: >-
+        Recorded as an [inference] about the drafting, not as a statement of Ohio EPA's intent, and
+        the clause is quoted verbatim above so a reader can judge it. Nothing in this record treats
+        the plant as subject to a 1.3 ng/L limit.
+  the_intake_water_clause:
+    page: 28
+    tag: '[verified]'
+    quote: >-
+      "The requirements of Part II, Item AA.2 shall not apply if the permittee demonstrates to the
+      satisfaction of the Director that the mercury concentration in the permittee's effluent
+      exceeds 12 ng/L due primarily to the presence of mercury in the permittee's intake water."
+    finding: >-
+      The permit itself contemplates that the mercury leaving this plant may have arrived in the
+      water the Village took in — and provides an off-ramp on exactly that basis. That is the
+      "one river, both sides" loop written into the controlling instrument: Blanchard River ->
+      the Village's own water treatment plant intake -> the distribution system -> the sanitary
+      sewers -> this outfall -> the Blanchard River, about a mile and a half downstream of where
+      it started.
+    what_it_does_not_establish:
+      tag: '[open]'
+      note: >-
+        The clause is a conditional. Nothing in the committed record shows the Village has ever
+        invoked it, and nothing here establishes that intake-water mercury is in fact a source.
+        The Village's own 2025 Consumer Confidence Report publishes no mercury result for finished
+        water at all. Whether the Village samples its raw or finished water for mercury is [open];
+        the plant's INFLUENT is sampled for mercury monthly under this permit (station 601), and
+        that series is in the water-watch record.
+
+other_conditions:
+  phosphorus_tmdl:
+    page: 26
+    individual_wasteload_allocation_kg: 750
+    critical_season: March through July
+    enforced_through: Maumee Watershed Total Phosphorus NPDES General Permit
+    note: >-
+      Part II Item V names the permittee here as "City of Ottawa WWTP" twice, though Ottawa is a
+      village and every other page of the instrument says so. Preserved as printed.
+  stormwater_no_exposure_certification:
+    page: 26
+    certification_number: 2GRN00443
+    signed: '2024-04-24'
+    reaffirm_by: '2029-04-23'
+  outfall_signage:
+    page: 26
+    note: >-
+      Part II Item U requires a permanent 2 ft x 2 ft marker on the stream bank at each regulated
+      outfall carrying the permittee's name, the Ohio EPA permit number, the outfall number and a
+      contact telephone number, legible to "persons in boats or persons swimming on the river or
+      someone fishing or walking along the shore."
+  permit_reopener:
+    page: 28
+    note: >-
+      Part II Item Y — Ohio EPA may reopen and modify the permit at any time based on water quality
+      standard revisions to the mercury variance.
+
+provenance:
+  extracted_at: '2026-07-31'
+  extractor: reviewed transcription (pypdf text layer), issue 1422
+  tags: [verified, npdes, oepa, ottawa, putnam-county, blanchard-river, mercury, variance,
+    one-river, sso]
+  confidence: high
+  summary: >-
+    The issued instrument behind the standing water watch. It carries the 4.5 ng/L monthly mercury
+    limit and the 12 ng/L rolling-annual ceiling, the pollutant-minimization conditions the
+    variance runs on, a consequence clause that imposes the limit already in force, and — Part II
+    Item X.3 — the clause in which the permit anticipates that this plant's mercury may have come
+    out of the same river the Village drinks from.

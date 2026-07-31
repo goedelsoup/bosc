@@ -1,0 +1,85 @@
+id: ottawa-water-watch
+title: Ottawa — Standing Water Watch + NPDES 2PD00028 / PWS OH6900711 Instrument Set (Extractions)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Three primary instruments plus two federal compliance systems. Ohio EPA NPDES permit 2PD00028 /
+    application OH0026921 — the *PD renewal as issued (action date 2025-01-22, effective
+    2025-03-01), its Fact Sheet for NPDES Permit Renewal (Public Notice 208357), and the draft
+    public notice of the same permit — all fetched from the Ohio DAM 2026-07-31
+    (data/documents/oepa/ottawa/filename-map.yaml). The Village of Ottawa's 2025 Calendar Year
+    Consumer Confidence Report, distributed 2026-07-01, fetched from the Village's own
+    DocumentCenter (data/documents/ottawa/drinking-water/filename-map.yaml). All three permit:/
+    action:/ blocks are REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text
+    layer — these are digitally generated documents, not scans, and no vision pass was run. The
+    water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0026921 and for
+    OH6900711 with p_system=SDWIS; eff_rest_services.get_effluent_chart for the DMR series), read
+    2026-07-31 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09, and the Hancock
+    County Flood-Risk Reduction Program's own project pages.
+license: public record / public domain
+access_tier: public
+site_scope: site:ottawa
+storage:
+- relpath: extracted/oepa/ottawa/2PD00028.fs.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/ottawa/2PD00028.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/ottawa/water-watch.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+provenance: document
+tags:
+- npdes
+- sdwa
+- oepa
+- ottawa
+- putnam-county
+- blanchard-river
+- mercury
+- variance
+- snc
+- tthm
+- dbpr
+- 7q10
+- dilution
+- enforcement
+- one-river
+notes: >-
+  Issue 1422 (under epic 1269); closes the fact-sheet pull left open by issue 415. Two
+  permits-npdes rows plus one permits-epa row; water-watch.yaml is the standing digest and is
+  deliberately NOT a record. The fact sheet is the anchor: outfall 2PD00028001 to the Blanchard
+  River at RIVER MILE 22.1, HUC 04100008-06-02, Table 12 annual 7Q10 of 7.78 cfs against a 4.6417
+  cfs design flow and an acute dilution ratio of 2.2. Those values populate _OTTAWA.plant_receiving
+  and the new `regulatory_denominators` block of
+  data/reference/network/findlay-ottawa-comparison.yaml, which now carries the derived (8.67 cfs)
+  and regulatory (7.78 cfs) denominators side by side and prefers neither; the two outfalls are
+  34.32 river miles apart (RM 56.42 vs RM 22.1), cited to both fact sheets rather than estimated.
+  THINGS TO CARRY. (1) The 4.5 ng/L mercury monthly-average limit is the plant's OWN 63-sample
+  projected effluent quality average (fact sheet Table 8), adopted as its limit — a limit set at a
+  plant's demonstrated mean converts ordinary variance into violation, and that is what the
+  2025-03-01 renewal did when it cut the limit from 6.8 ng/L. Two of the three subsequent
+  exceedances would have violated the old limit too; only February 2026 is new. (2) In December
+  2025 the plant reported MORE mercury leaving (36.70 ng/L) than entering (20.3 ng/L influent), on
+  an ordinary influent month — while the two HIGHEST influent months (74.9 and 118 ng/L) produced
+  97.8% and 95.3% removal. The exceedances do not track the influent, and no committed source
+  explains it; the annual PMP report would (lead OTTAWA-PMP-REPORTS). (3) The 2026-03-04 warning
+  letter OH-I00108139 covers TWO violations, a narrative effluent violation AND an SSO
+  improper-O&M violation, both still open. Formal enforcement is a VERIFIED NEGATIVE on both
+  statutes: zero formal actions and $0 penalties on the CWA side over five years, zero formal
+  actions against 16 informal ones on the SDWA side. (4) The intake side is worse than a
+  two-violation story: TWO consecutive TTHM MCL violations (0.083 then 0.086 mg/L, the second
+  higher), on a system EPA carries as an SDWA Enforcement Priority with 12 of 12 quarters in
+  noncompliance — driven by two UNADDRESSED Consumer Confidence Rule violations, one open since
+  2020-01-27. Return to compliance is NOT confirmed: the Q2 2026 Stage 2 DBPR determination read
+  "Und" on the SDWIS extract. (5) The one-river loop is written into the permit itself — Part II
+  Item X.3 excuses the annual mercury ceiling where the mercury came from "the permittee's intake
+  water." Eleven open threads are recorded in the digest's own `open_leads` block.

@@ -1,1 +1,64 @@
-[]
+[
+  {
+    "date": "2024-12-17",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PD00028*PD (Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)) — public notice",
+    "ref": "2PD00028*PD",
+    "parties": [
+      "Village of Ottawa, 1371 North Defiance St., Ottawa, OH 45875",
+      "Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)"
+    ],
+    "detail": "action renewal; receiving Blanchard River",
+    "source": "oepa/ottawa/2PD00028.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/ottawa/2PD00028.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-01-16",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PD00028*PD (Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)) — comment period ends",
+    "ref": "2PD00028*PD",
+    "parties": [
+      "Village of Ottawa, 1371 North Defiance St., Ottawa, OH 45875",
+      "Ottawa WWTP (Village of Ottawa Wastewater Treatment Plant)"
+    ],
+    "detail": "",
+    "source": "oepa/ottawa/2PD00028.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/ottawa/2PD00028.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-07-01",
+    "category": "epa_permit_action",
+    "title": "Safe Drinking Water Act — Consumer Confidence Report, Stage 2 DBPR public notice, Lead and Copper Rule Revisions public notice PWS ID OH6900711 — annual consumer confidence report published, carrying two Tier-3 public notices and four Ohio-EPA-directed corrections (Village of Ottawa 2025 Calendar Year Drinking Water Consumer Confidence Report)",
+    "ref": "PWS ID OH6900711",
+    "parties": [
+      "Village of Ottawa"
+    ],
+    "detail": "affected Blanchard River (source water) → the Village distribution system",
+    "source": "ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  }
+]

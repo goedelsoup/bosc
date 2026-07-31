@@ -1,1 +1,76 @@
-[]
+[
+  {
+    "slug": "oepa",
+    "title": "Ohio EPA",
+    "description": "**Collection:** `oepa/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "oepa/ottawa/2PD00028.e00560a8.pdf",
+        "name": "2PD00028.e00560a8.pdf",
+        "size_bytes": 2327954,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/ottawa/2PD00028.fs.pdf",
+        "name": "2PD00028.fs.pdf",
+        "size_bytes": 1344785,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/ottawa/2PD00028.pdf",
+        "name": "2PD00028.pdf",
+        "size_bytes": 2349456,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  },
+  {
+    "slug": "ottawa",
+    "title": "Ottawa",
+    "description": "**Collection:** `ottawa/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "ottawa/drinking-water/2024-CCR.pdf",
+        "name": "2024-CCR.pdf",
+        "size_bytes": 385881,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  }
+]

@@ -112,8 +112,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e611ec3cc39491e055f7a6c63c6a13383408516f2b59f898f84117c2dca73dbe",
-      "size_bytes": 144471,
+      "sha256": "670b17edcb48bf4d697c5fc4c2d06d3d090462f243b5fc37979c9bb55f684b2b",
+      "size_bytes": 168826,
       "lfs_materialized": true,
       "file_count": 12,
       "stale": false,
@@ -289,6 +289,80 @@
       "confidence": "medium",
       "note": "watermark subdivisions download",
       "verified": true
+    }
+  },
+  {
+    "id": "ottawa-water-watch",
+    "title": "Ottawa — Standing Water Watch + NPDES 2PD00028 / PWS OH6900711 Instrument Set (Extractions)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Three primary instruments plus two federal compliance systems. Ohio EPA NPDES permit 2PD00028 / application OH0026921 — the *PD renewal as issued (action date 2025-01-22, effective 2025-03-01), its Fact Sheet for NPDES Permit Renewal (Public Notice 208357), and the draft public notice of the same permit — all fetched from the Ohio DAM 2026-07-31 (data/documents/oepa/ottawa/filename-map.yaml). The Village of Ottawa's 2025 Calendar Year Consumer Confidence Report, distributed 2026-07-01, fetched from the Village's own DocumentCenter (data/documents/ottawa/drinking-water/filename-map.yaml). All three permit:/ action:/ blocks are REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text layer — these are digitally generated documents, not scans, and no vision pass was run. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0026921 and for OH6900711 with p_system=SDWIS; eff_rest_services.get_effluent_chart for the DMR series), read 2026-07-31 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09, and the Hancock County Flood-Risk Reduction Program's own project pages.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:ottawa",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "sdwa",
+      "oepa",
+      "ottawa",
+      "putnam-county",
+      "blanchard-river",
+      "mercury",
+      "variance",
+      "snc",
+      "tthm",
+      "dbpr",
+      "7q10",
+      "dilution",
+      "enforcement",
+      "one-river"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/ottawa/2PD00028.fs.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/ottawa/2PD00028.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/ottawa/water-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "a1eb5108817709ce41d85e57eedb4211049610ab46e1b6e841c51a6d5443f9f5",
+      "size_bytes": 107702,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Three primary instruments plus two federal compliance systems. Ohio EPA NPDES permit 2PD00028 / application OH0026921 — the *PD renewal as issued (action date 2025-01-22, effective 2025-03-01), its Fact Sheet for NPDES Permit Renewal (Public Notice 208357), and the draft public notice of the same permit — all fetched from the Ohio DAM 2026-07-31 (data/documents/oepa/ottawa/filename-map.yaml). The Village of Ottawa's 2025 Calendar Year Consumer Confidence Report, distributed 2026-07-01, fetched from the Village's own DocumentCenter (data/documents/ottawa/drinking-water/filename-map.yaml). All three permit:/ action:/ blocks are REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text layer — these are digitally generated documents, not scans, and no vision pass was run. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0026921 and for OH6900711 with p_system=SDWIS; eff_rest_services.get_effluent_chart for the DMR series), read 2026-07-31 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09, and the Hancock County Flood-Risk Reduction Program's own project pages.",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -910,8 +984,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4505fe62c61bacb61be5efe50abcfaad440f34aee9ef134657242bbdc47c797d",
-      "size_bytes": 104135,
+      "sha256": "7f5e29511e137d0b882ac94655ac684e9dc37b22d2d8f0ccc3478f0c94adb5b7",
+      "size_bytes": 104545,
       "lfs_materialized": true,
       "file_count": 22,
       "stale": false,
@@ -1910,8 +1984,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "83dee16bb8bbc6a89b404fa0a5e722ab452223b785010af0a32cd753597e3254",
-      "size_bytes": 22598,
+      "sha256": "343e2ed72adaa2ee49d13fe6379992e864cc101d46b2ecff48c7a9f7007ebbeb",
+      "size_bytes": 28459,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -2505,10 +2579,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "279a8ad713688631ef11dd25e82da5e0ee25476239750bb108b2eb2dfe4b47e8",
-      "size_bytes": 346783,
+      "sha256": "ed0f57e4e11ceba70659890eec8159208f26b18e3dbb535d6e079d98cc193c51",
+      "size_bytes": 391021,
       "lfs_materialized": true,
-      "file_count": 4,
+      "file_count": 6,
       "stale": false,
       "asof": null
     },
