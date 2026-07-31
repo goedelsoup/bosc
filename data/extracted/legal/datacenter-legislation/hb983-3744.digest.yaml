@@ -1,0 +1,418 @@
+kind: legislation
+subject: >-
+  H.B. No. 983, 136th Ohio General Assembly — As Introduced. The "Data Center
+  Accountability and Citizen Protection Act." Enacts a new R.C. Chapter 3744 imposing
+  air/wastewater discharge standards on data-center and associated-power-plant cooling
+  systems, a local citizen-vote requirement, water-supply liability, grid-independence,
+  and a local tax-incentive ban; and amends R.C. 9.66 to strip the confidentiality of
+  data-center development-and-supply agreements.
+
+provenance:
+  source: data/documents/legal/datacenter-legislation/hb983_00_IN.pdf
+  canonical: ohio-hb983-136ga-as-introduced-datacenter-3744-2026.pdf
+  sha256: "ff8b8fc736ba5fc7f0f9a80d63afa231e310df0d17f9537b76d0452f6286d8c7"
+  pages: 21
+  content_verified: '2026-07-31'   # read from the bill's native text layer
+  version: As Introduced            # as-introduced House text; not enacted law
+  general_assembly: "136th (2025-2026)"
+  introduced: "2026-07-28"
+  note: >-
+    Provision reads below are tagged [verified] — they trace to the cited section and
+    printed page of the bill text (printed page N equals PDF page N for this document).
+    The relevance-to-the-corpus synthesis is tagged [inference]; unresolved questions
+    (enacted text, whether the bill advances, definitional edges) are [open]. R.C. 9.66's
+    strike/underline amendatory markup is lost in the plain text layer; verify exact
+    new-vs-existing wording against the source PDF and against existing R.C. 9.66 before
+    quoting in a filing. This is a single as-introduced version — there is no
+    introduced->passed diff to track yet.
+
+versions_ingested:
+  - version: As Introduced
+    file: data/documents/legal/datacenter-legislation/hb983_00_IN.pdf
+    sha256: "ff8b8fc736ba5fc7f0f9a80d63afa231e310df0d17f9537b76d0452f6286d8c7"
+    pages: 21
+    bill: "H.B. No. 983"
+    cosponsors: 4
+
+bill:
+  number: "H.B. No. 983"
+  short_title: Data Center Accountability and Citizen Protection Act
+  title: >-
+    To amend section 9.66 and to enact sections 3744.01 through 3744.12 of the Revised
+    Code to impose various requirements concerning data centers, to name this act the
+    Data Center Accountability and Citizen Protection Act, and to declare an emergency.
+  primary_sponsors: ["Rep. Gross", "Rep. Teska"]
+  cosponsors: ["Rep. Barhorst", "Rep. Mullins", "Rep. Dean", "Rep. Swearingen"]
+  emergency:
+    tag: verified
+    section: "Section 4"
+    location: "printed p. 21"
+    note: >-
+      Declared an emergency measure; would take immediate effect ON PASSAGE (requires a
+      two-thirds vote of each house). It has NOT passed — only "Introduced" was recorded
+      at capture — so the immediate-effect clause is prospective, not operative. [open:
+      whether the bill advances at all.]
+  vehicle: >-
+    Amends R.C. 9.66 in the standard Ohio amendatory form (Section 1 re-enacts the
+    section with a new division (D)(2); Section 2 repeals the existing section — NOT a
+    wholesale repeal of 9.66) and enacts a new Chapter 3744 (sixteen sections).
+
+# ----------------------------------------------------------------------------
+# Threshold definitions that scope the whole chapter (Sec. 3744.01)
+# ----------------------------------------------------------------------------
+definitions:
+  tag: verified
+  section: "R.C. 3744.01"
+  location: "printed pp. 4-6"
+  key_terms:
+    data_center: >-
+      One or more buildings/facilities/infrastructure on a single parcel or contiguous/
+      aggregated parcels used primarily or exclusively for digital information services
+      (management, storage, processing, dissemination of electronic data) OR virtual
+      currency mining, with a PEAK ELECTRIC LOAD EXCEEDING ONE MEGAWATT. The 1 MW floor
+      and the crypto-mining inclusion are the scope gates for every downstream duty.
+    expanded_data_center: >-
+      An existing data center seeking to add buildings/infrastructure housing server
+      components with a peak load >1 MW. Expressly EXCLUDES expansions needed to build an
+      on-site water-treatment facility sized to meet state wastewater-discharge
+      requirements (i.e., adding compliance treatment capacity is not a triggering
+      "expansion").
+    associated_power_generating_facility: >-
+      An electric generating facility built primarily to supply electricity to a data
+      center. Pulled into nearly every data-center duty in the chapter (the vote, the
+      permit bars, the discharge/emissions regime, the water-burden liability).
+    closed_loop_system: >-
+      A sealed cooling/heat-removal system whose working fluid does not contact the
+      ambient atmosphere and does not expose/emit/discharge air, water vapor, or
+      wastewater to outdoor air/water/soils, except during scheduled maintenance/repairs.
+    open_loop_system: >-
+      A cooling/heat-removal system that directly exposes/emits/discharges air, water
+      vapor, or wastewater to the ambient atmosphere. Open-loop is the trigger for the
+      harshest existing-facility duties (Sec. 3744.04(D) permit revocation; 3744.041
+      air-assessment; 3744.042 controls).
+    voter_approved_data_center: >-
+      A data center approved by a citizen vote under Sec. 3744.02.
+  note: >-
+    "Best available control technology," "wastewater treatment facility," and the
+    metals/glycols/organics (incl. PFAS) chemistry are used throughout but not separately
+    defined here; the standards are delegated to director rulemaking (Sec. 3744.03).
+
+# ----------------------------------------------------------------------------
+# The R.C. 9.66 amendment — the corpus's public-records / transparency lever
+# ----------------------------------------------------------------------------
+section_9_66_amendment:
+  tag: verified
+  section: "R.C. 9.66(D)"
+  location: "printed p. 4 (new (D)(2)); Section 2 repeal at printed p. 21"
+  existing_lever: >-
+    Existing R.C. 9.66(D) makes individualized compensation/payroll information submitted
+    to a political subdivision, port authority, or tax-incentive-review council by an
+    applicant/recipient of economic-development assistance CONFIDENTIAL and not a public
+    record under R.C. 149.43. This is the "sibling confidentiality lever" the H.B. 314
+    records-legislation digest flags and the select-committee-2026 record covers as part
+    of the R.C. 9.66(D) dispute.
+  change:
+    - tag: verified
+      division: "(D)(2) [new]"
+      finding: >-
+        NEW carve-out FROM the confidentiality: "Division (D)(1) of this section does not
+        apply to any development and supply agreement related to a data center or
+        associated power generating facility." Read with Sec. 3744.10, this switches OFF
+        the 9.66(D) confidentiality for exactly the class of agreements a data-center deal
+        runs through.
+      direction: transparency-expanding
+  drafting_note: >-
+    The as-passed text renumbers existing (D) to (D)(1) (the plain text layer shows the
+    artifact "(D)(D)(1)"); the operative existing language is unchanged and the only
+    substantive addition is (D)(2). Verify against current R.C. 9.66 before quoting.
+
+# ----------------------------------------------------------------------------
+# Chapter 3744 — provision-by-provision (all [verified] to section + printed page)
+# ----------------------------------------------------------------------------
+chapter_3744:
+
+  citizen_vote:
+    tag: verified
+    section: "R.C. 3744.02"
+    location: "printed pp. 6-8"
+    summary: >-
+      A CITIZEN VOTE is required before any new or expanded data center (INCLUDING its
+      associated power generating facility) may be approved, in EVERY city, village, or
+      township located within FIVE MILES of the proposed perimeter.
+    mechanics:
+      - "The owner submits a written approval request to the local legislative authority / township trustees, with a plain description of facility type, size, location, associated power infrastructure, closed-loop-system details, and projected noise/light emission levels and range. [(B)]"
+      - "The legislative authority/trustees certify the question to the board(s) of elections of every county containing a jurisdiction within 5 miles; the question goes to electors at the next election held at least NINETY DAYS after certification. [(C)]"
+      - "A SIMPLE MAJORITY of votes cast approves. [(D)]"
+      - "The ballot must plainly describe the facility and be posted on the board of elections web site at least 30 days before the election. [(E)]"
+      - "Except per (K), the vote must occur BEFORE any permit, zoning approval, or development-and-supply agreement is executed; approvals or permits granted without a completed vote are VOID. [(F)]"
+      - "Approval under this section is required in ADDITION to (and before) any local zoning; approval does not guarantee the center may operate. [(G)]"
+      - "No emergency order, administrative action, or development agreement may substitute for or circumvent the vote. [(H)]"
+      - "After a rejection, the owner may not resubmit for TWO YEARS. [(I)]"
+      - "An official who authorizes development/expansion without the vote is guilty of misconduct in office under R.C. 3.07; a zoning-board member who does so is subject to immediate removal. [(J)]"
+    carve_out:
+      division: "(K)"
+      finding: >-
+        Does not apply to a new/expanded center already under ACTIVE CONSTRUCTION with all
+        required permits before the effective date. A center that has all permits but has
+        NOT begun construction must CEASE until it obtains voter approval; if later
+        approved, previously issued director-of-EPA permits remain valid so long as it
+        stays compliant.
+
+  epa_rulemaking:
+    tag: verified
+    section: "R.C. 3744.03"
+    location: "printed pp. 8-10"
+    summary: >-
+      Within ONE YEAR, the director of environmental protection shall adopt Chapter 119
+      rules setting air-emission and wastewater-discharge safety standards and limits for
+      data centers and associated power plants, IN ADDITION to existing R.C. Ch. 3704 (air)
+      and 6111 (water) standards.
+    mechanics:
+      - "Standards for the discharge/emission of all NONREGULATED metals, glycols, and organics — INCLUDING PFAS — used in or produced by cooling systems/towers or present in discharged wastewater. [(A)(1)]"
+      - "Wastewater and air sampling/testing requirements. [(A)(2)]"
+      - "Attached air-cleaning and emissions-control facility requirements. [(A)(3)]"
+      - "Best-available-control-technology (BACT) standards. [(A)(4)]"
+      - "Any other limits the director deems necessary. [(A)(5)]"
+      - "Standards must be posted on the EPA web site. [(B)]"
+      - "The director SHALL NOT issue any operating/discharge/emissions permit to a center or power plant that does not meet these rules, and shall NOT grant any waiver or exemption. [(C)]"
+
+  existing_centers_duties:
+    tag: verified
+    section: "R.C. 3744.04"
+    location: "printed pp. 10-11"
+    summary: >-
+      Beginning EIGHTEEN MONTHS after the effective date, an existing data center may not
+      discharge wastewater without an attached treatment facility ensuring compliance, and
+      may not operate unless it (and any associated power plant/equipment) uses BACT for
+      metals and organics including PFAS (activated carbon and ion exchange to be
+      considered in the BACT review). [(B)]
+    mechanics:
+      - "Existing centers must comply with all chapter air/water standards and are subject to penalties, including Sec. 3744.08 and R.C. Ch. 3704/6111. [(C)]"
+      - "The director SHALL REVOKE an existing center's or power plant's permit(s) if it (1) operates an OPEN LOOP SYSTEM and (2) is out of compliance with (B) or any chapter/permit standard. [(D)]"
+
+  existing_open_loop_air_assessment:
+    tag: verified
+    section: "R.C. 3744.041"
+    location: "printed pp. 11-12"
+    summary: >-
+      An existing OPEN-LOOP center must complete an independent air-quality and
+      public-health impact assessment within 90 days and annually thereafter, and conduct
+      independent biologic testing of cooling-tower emissions twice a year (May/June and
+      Sept/Oct). The assessing entity is selected and supervised by the director; results
+      are submitted within 30 days and posted; the OWNER pays all costs.
+
+  existing_open_loop_power_controls:
+    tag: verified
+    section: "R.C. 3744.042"
+    location: "printed p. 12"
+    summary: >-
+      Within 18 months, the owner of an existing OPEN-LOOP associated power plant must
+      install and use attached air-cleaning and emissions-control facilities per the
+      Sec. 3744.03 rules.
+
+  voter_approved_center_permitting:
+    tag: verified
+    section: "R.C. 3744.05"
+    location: "printed pp. 12-14"
+    summary: >-
+      For a voter-approved NEW/expanded center (and its power plant — including a
+      combustion turbine, natural-gas plant, or other generation built primarily to serve
+      it), the director SHALL NOT issue an operating/discharge/emissions permit unless the
+      center and facility (1) use a CLOSED-LOOP system and (2) comply with the chapter and
+      rules. [(A)]
+    mechanics:
+      - "No operation without an attached wastewater-treatment facility ensuring compliance. [(B)]"
+      - "No permit-to-install under R.C. Ch. 6111 without an owner-submitted plan describing the design and expected wastewater discharges. [(C)]"
+      - "Post-construction wastewater-discharge testing (incl. the power plant) must be provided to the director BEFORE the NPDES permit issues and before full operations. [(D)]"
+      - "All required testing results must be authenticated by the CEO's signature; a false certification of a PILOT-SCALE test result is falsification under R.C. 2921.13 and exposes the CEO to criminal prosecution. [(E)]"
+      - "Owner must use BACT and minimize water consumption using best available methodologies. [(F)]"
+      - "Owner is subject to Sec. 3744.08 and R.C. Ch. 3704/6111 penalties. [(G)]"
+
+  permit_specification:
+    tag: verified
+    section: "R.C. 3744.06"
+    location: "printed pp. 14-15"
+    summary: >-
+      A permit-to-install issued under R.C. Ch. 3704 or 6111 to a data center or power
+      plant must specify (A) all applicable discharge/emission limits, INCLUDING for
+      chemicals that were previously non-regulated, and (B) that non-compliance exposes the
+      owner to Sec. 3744.08 and Ch. 3704/6111 penalties.
+
+  chemical_disclosure:
+    tag: verified
+    section: "R.C. 3744.061"
+    location: "printed pp. 15-16"
+    summary: >-
+      A data-center owner must disclose ALL chemicals, cooling agents, and
+      wastewater-treatment substances (and their concentrations, and any changes) to (1)
+      the director and (2) the local legislative authority; both must publicly post the
+      disclosures on their web sites before operations begin and before any change.
+    mechanics:
+      - "All discharged wastewater must meet the Sec. 3744.03 safety/discharge standards for all contained chemicals before discharge. [(C)]"
+      - "An INDEPENDENT third-party water-testing company selected and supervised by the director must test before any discharge or recycling; results are submitted within 30 days and posted within 30 days. [(D)]"
+      - "The OWNER pays all testing/assessment/monitoring costs. [(E)]"
+
+  metering_and_sampling:
+    tag: verified
+    section: "R.C. 3744.062"
+    location: "printed p. 16"
+    summary: >-
+      The owner must install meters monitoring chemical-additive levels in non-contact
+      water supplies, sample wastewater discharge and air emissions WEEKLY (may sample
+      continuously), and adjust chemical levels accordingly. Associated-power-plant cooling
+      emissions must be sampled in spring and fall to control biologics including
+      Legionella.
+
+  water_supply_burden:
+    tag: verified
+    section: "R.C. 3744.07"
+    location: "printed pp. 16-18"
+    summary: >-
+      If a data center or power plant places a burden on the LOCAL WATER SUPPLY that
+      reduces water pressure or supply to any residence/business within a FIVE-MILE RADIUS,
+      the owner bears FULL financial responsibility for correcting the impact AND pays a
+      fine of $5,000 PER DAY until resolved.
+    covered_costs:
+      - "Water-infrastructure upgrades to restore pressure. [(A)(1)]"
+      - "Water towers / storage facilities. [(A)(2)]"
+      - "Temporary water-supply measures during construction/operations. [(A)(3)]"
+      - "Costs related to negative impacts on AQUIFERS serving public/private entities. [(A)(4)]"
+      - "Full reimbursement to any municipality/township/water district for expenditures addressing the impact. [(A)(5)]"
+    mechanics:
+      - "The owner must take BASELINE water-pressure and supply measurements before construction and submit them to the ODNR Division of Water Resources chief. [(B)]"
+      - "REBUTTABLE PRESUMPTION: the owner is responsible for any burden if, at any time within the 5-mile radius, measured pressure/supply is below the submitted baseline; the owner bears the full burden of rebutting it. [(C)]"
+
+  enforcement_and_penalties:
+    tag: verified
+    section: "R.C. 3744.08"
+    location: "printed pp. 18-19"
+    summary: >-
+      A graduated enforcement ladder for exceeding any federal or state discharge/emission
+      standard (including the newly established limits for previously unregulated
+      chemicals).
+    mechanics:
+      - "Written warning on exceedance; owner must correct within 10 business days and report within 10 business days. [(A)(1)-(3)]"
+      - "Fine of NOT LESS THAN $10,000/day until compliant, collected by the director and disbursed EVENLY to municipalities/townships within 5 miles that are in violation of the safe levels, into their general funds. [(A)(4)]"
+      - "If still non-compliant after 10 days, the fine rises to $25,000/day (same disbursement). [(B)(1)]"
+      - "The director issues written notice that operating permits will be revoked if not compliant within 30 days. [(B)(2)]"
+      - "After 30 days' notice, non-compliance on wastewater -> the director SHALL REVOKE the NPDES permit (R.C. Ch. 6111); on air -> revoke the permit to operate (R.C. Ch. 3704). [(B)(3)-(4)]"
+
+  grid_independence:
+    tag: verified
+    section: "R.C. 3744.09"
+    location: "printed pp. 19-20"
+    summary: >-
+      All voter-approved data centers and the expanded portions of expanded centers must
+      generate 100% of their own electricity via on-site/off-grid associated power
+      facilities [(A)], be built and operated FULLY INDEPENDENTLY OF THE PUBLIC GRID [(B)],
+      and Ohio RATEPAYERS SHALL BEAR NO COST associated with the center's power generation
+      or grid infrastructure under any circumstances [(C)].
+
+  development_agreement_disclosure:
+    tag: verified
+    section: "R.C. 3744.10"
+    location: "printed p. 20"
+    summary: >-
+      Full public disclosure of ALL development-and-supply agreements is required; all such
+      agreements are public records under R.C. 149.43 WITHOUT EXCEPTION; R.C. 9.66(D)(1)
+      does not apply to them; no public official may be penalized for disclosing one; and
+      any such agreement in effect before passage is VOID after passage, with that
+      information available via public-records request. (The operative pair with the
+      Sec. 9.66(D)(2) carve-out.)
+
+  revolving_door:
+    tag: verified
+    section: "R.C. 3744.11"
+    location: "printed p. 20"
+    summary: >-
+      No person who participated in drafting/revising OPSB or PUCO rules may represent any
+      applicant before those bodies for three years; and no person who represented a
+      data-center or power-plant applicant may take any position at OPSB, PUCO, or a related
+      state agency for three years.
+
+  tax_incentive_ban:
+    tag: verified
+    section: "R.C. 3744.12"
+    location: "printed pp. 20-21"
+    summary: >-
+      No political subdivision may authorize a LOCAL TAX INCENTIVE (the abatement/exemption
+      programs under R.C. Ch. 725, 1728, and the 5709 CRA/TIF/enterprise-zone sections) for
+      a data center or power plant on or after the effective date; a violating authorization
+      is VOID [(B)]. Neither the tax commissioner nor a county auditor may approve a
+      data-center tax exemption under R.C. 5715.27 on or after the effective date [(C)].
+
+# ----------------------------------------------------------------------------
+# Relevance to the corpus (Cory Parent / BOSC watershed-point network)
+# ----------------------------------------------------------------------------
+bosc_relevance:
+  - tag: inference
+    point: >-
+      HB 983 is the single legislative instrument that lands on nearly every domain the
+      platform already models. Where the corpus documents each site's data-center risk
+      empirically (parcels, permits, hydrology, grid), this bill would convert several of
+      those observations into statutory triggers — most sharply the 5-mile spatial radius,
+      which the platform already computes for water-supply and dilution work.
+  - tag: inference
+    point: >-
+      Water: Sec. 3744.07 makes aquifer/pressure drawdown a per-day liability with a
+      baseline-to-ODNR filing and a rebuttable presumption keyed to a 5-mile radius — the
+      exact geometry and mechanism the well-drawdown/dewatering epic and the routed water
+      balance model. The "goes-dry vulnerability" and discharge-screen work map directly
+      onto the presumption's baseline comparison.
+  - tag: inference
+    point: >-
+      Cooling: the open-loop vs closed-loop distinction (Sec. 3744.01, .04, .05) is the
+      statutory form of the closed-loop-cooling-cycling epic's central question. The bill
+      would forbid a new center from permitting on anything but a closed loop and would
+      revoke an existing open-loop center's permits on non-compliance — turning the
+      corpus's CLOSED_LOOP_DRY / cooling-reconciliation outcome into a permitting gate.
+  - tag: inference
+    point: >-
+      Discharge/air: the NPDES (Ch. 6111) and air (Ch. 3704) permit revocation ladder and
+      the PFAS/metals/glycol cooling-chemistry rules bear on the thermal-discharge epic,
+      the NPDES ingest, and the AERMET/AERMAP air pipeline. The previously-unregulated-
+      chemical limits (Sec. 3744.03/.06) are a new evidentiary surface for the chemical-
+      criteria (WQS) screen.
+  - tag: inference
+    point: >-
+      Grid: Sec. 3744.09's 100%-self-generation / off-grid / no-ratepayer-cost mandate is
+      the legislative counterpart to the grid-power domain and the ratepayer-cost dispute
+      already captured in the select-committee-2026 record (Schedule DCT, the OPSB siting
+      cases). Sec. 3744.11's OPSB/PUCO revolving-door bar bears on the grid-profile and
+      siting-case work.
+  - tag: inference
+    point: >-
+      Local control + subsidy: the citizen-vote requirement (Sec. 3744.02) is the
+      statewide form of the site-level moratoria and zoning fights the network already
+      tracks (Mansfield's rejection, Defiance's/Springfield's moratoria). The
+      Sec. 3744.12 tax-incentive ban and the Sec. 9.66(D)(2)/3744.10 transparency pair
+      target the CRA/TIF and DCTE subsidy levers the select-committee record disputes.
+  - tag: inference
+    point: >-
+      Public records: Sec. 3744.10 + Sec. 9.66(D)(2) would make data-center development-
+      and-supply agreements public records under R.C. 149.43 without exception and void
+      pre-existing confidentiality — directly relevant to the relator's PRR program and
+      the 9.66(D) lever the HB 314 digest and mandamus analysis already flag.
+  - tag: open
+    point: >-
+      Legal status. This is an as-introduced bill, three days old, with only "Introduced"
+      recorded and no committee referral — it may never advance. Nothing here is law. Any
+      committee substitute, Senate action, the effective date, and the enacted Chapter 3744
+      / R.C. 9.66 text are [open] ingest targets before any read is relied on as current
+      law. The emergency clause is prospective (immediate effect only ON passage by a
+      two-thirds vote).
+  - tag: open
+    point: >-
+      Definitional edges to watch if it advances: the 1 MW peak-load floor and the
+      crypto-mining inclusion (which network sites clear the floor); whether a
+      behind-the-meter generation project reads as an "associated power generating
+      facility"; and how the 5-mile radius interacts with multi-jurisdiction siting (the
+      vote must run in EVERY city/village/township within 5 miles).
+
+related:
+  - "R.C. 9.66 — the amended section; the confidentiality lever also covered in the select-committee record and the HB 314 digest"
+  - "R.C. Chapter 3744 — the enacted chapter (this bill)"
+  - "R.C. 149.43 — the Public Records Act that Sec. 3744.10 routes data-center agreements into; corpus refs in docs/legal/mandamus-analysis.md"
+  - "data/extracted/legal/select-committee-2026/witness-submissions.digest.yaml — the parallel 136th-GA data-center hearing record (R.C. 9.66(D) repeal, DCTE subsidy, ratepayer-cost dispute)"
+  - "data/extracted/legal/records-legislation/hb314-149-43.digest.yaml — the sibling records-legislation read; shares the R.C. 9.66(D) / 149.43 confidentiality lever"
+  - "docs/legal/mandamus-analysis.md — the PRR mandamus posture the transparency provisions bear on"
