@@ -26,6 +26,7 @@ const site = (slug: string, over: Partial<NetworkSite> = {}): NetworkSite => ({
   mono: slug.slice(0, 3).toUpperCase(),
   place: slug[0].toUpperCase() + slug.slice(1),
   basin: "Test River",
+  county: null,
   status: "queued",
   selectable: false,
   href: `/network/${slug}`,

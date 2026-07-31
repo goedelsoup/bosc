@@ -30,6 +30,9 @@ def _build_registry_json() -> str:
                 "place": entry.place,
                 "basin": entry.basin_label,
                 "state": entry.state,
+                # The county the site's records are filed in (#1691) — the ask-index stamps it
+                # onto every retrieval unit as the `county` facet, the way `site` is stamped.
+                "county": entry.county,
                 "codename": entry.codename,
                 "mono": entry.mono,
                 "status": entry.status,
@@ -117,6 +120,7 @@ def sites_check() -> None:
 
     Checks:
     - Every Python SITES slug has an entry in data/sites.yaml.
+    - Every registered profile's county_name agrees with the YAML's `county`.
     - The @watermark/core registry byte-matches what `watermark sites sync` would write.
     - No registered profile carries a raw 'TODO' grid-identity citation (B3/#1639).
     """
@@ -131,6 +135,25 @@ def sites_check() -> None:
             errors.append(
                 f"Python profile {slug!r} is missing from data/sites.yaml — "
                 "add it there and run `watermark sites sync`"
+            )
+            continue
+        # `county` is one datum published twice — the profile reads it (RSEI subject lines,
+        # the ODNR county slug, the sweep scope) and the frontend registry carries it for the
+        # ask-index facet (#1691). The YAML is the SSOT and back-fills the profile, so a
+        # disagreement means a profile is overriding it with a stale literal. Fail rather than
+        # let the two copies drift: a site would then screen toxics against one county and
+        # answer `filters.county` with another.
+        entry_county = identity[slug].county
+        if entry_county is not None and SITES[slug].county_name != entry_county:
+            errors.append(
+                f"site {slug!r}: profile county_name {SITES[slug].county_name!r} disagrees with "
+                f"data/sites.yaml county {entry_county!r} — the YAML is the SSOT; drop the "
+                "profile literal or fix the YAML"
+            )
+        elif entry_county is None:
+            errors.append(
+                f"site {slug!r} has a registered profile but no `county` in data/sites.yaml — "
+                f'add `county: "{SITES[slug].county_name}"` there and run `watermark sites sync`'
             )
 
     for violation in grid_identity_todo_violations():

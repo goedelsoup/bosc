@@ -144,7 +144,7 @@ const SEARCH_FILTERS_PROP = {
   filters: {
     type: "object",
     description:
-      "Structured facet constraints over indexed corpus fields — all optional and AND-combined, applied before ranking so unrelated feeds/records don't crowd the results. Facets: site, feed (alias collection), source_kind, verified, date_from, date_to, confidence. NOTE: `feed`/`collection` here is a BUNDLE FEED, not a document-collection slug — for oepa/recorder/aedg collections use get_documents.",
+      "Structured facet constraints over indexed corpus fields — all optional and AND-combined, applied before ranking so unrelated feeds/records don't crowd the results. Facets: site, feed (alias collection), source_kind, verified, date_from, date_to, confidence, county, agency, permit_number, document_type, entity, project (alias campus). Every one is a real indexed field: a unit whose feed carries no value for a facet is EXCLUDED when you set it, so combining a narrow facet with a broad one can legitimately return nothing. NOTE: `feed`/`collection` here is a BUNDLE FEED, not a document-collection slug — for oepa/recorder/aedg collections use get_documents. For fact categories (economics / energy / water / air) use get_facts — normalized facts are not part of this index.",
     properties: {
       site: {
         type: "string",
@@ -183,6 +183,41 @@ const SEARCH_FILTERS_PROP = {
       confidence: {
         type: "string",
         description: "Citation confidence band (e.g. high, medium, low), matched exactly.",
+      },
+      // --- Enrichment facets (#1691) ---------------------------------------------------------
+      county: {
+        type: "string",
+        description:
+          "County the site's records are filed in. The state suffix and the word 'county' are optional — 'Allen', 'Allen County' and 'Allen County, OH' are the same constraint.",
+      },
+      agency: {
+        type: "string",
+        description:
+          "Issuing/administering body, matched as a case-insensitive SUBSTRING of the record's own agency text (which is the document's wording, e.g. 'Ohio EPA (Division of Surface Water)'). So `Ohio EPA` reaches every Ohio EPA division; `USACE` will not — try 'Army Corps'. Records only; other feeds carry no issuing body and are excluded when this is set.",
+      },
+      permit_number: {
+        type: "string",
+        description:
+          "Permit / case / filing identifier (NPDES `OH0026069`, Ohio `2PH00006*LD`, an OPSB case number, a WPCLF award no). Separators and case are ignored, and a BASE number matches every modification filed under it — `2PH00006` returns `*LD`, `*MD`, `*PD`; asking for `2PH00006*LD` returns only that one.",
+      },
+      document_type: {
+        type: "string",
+        description:
+          "Document genre, the axis `feed` can't express (a `records` feed spans all of these): permits-npdes, permits-epa, permits-sos, deeds, land-assembly, enforcement, litigation, finance, labor, plans, opc — plus timeline categories (epa_permit_action, county_resolution, deed_recorded, …) and meeting kinds (minutes).",
+      },
+      entity: {
+        type: "string",
+        description:
+          "Entity-graph key, exactly as get_entities returns it (e.g. `AMAZON COM SERVICES`) — case and punctuation are ignored. Returns the party's own node plus every record/timeline/meeting/place it is attributed to, joined on the extraction path the entity was read from (never on a name match).",
+      },
+      project: {
+        type: "string",
+        description:
+          "Campus / named project slug — the `facility` feed's key (`project-bosc`, `project-klondike`, `van-wert-mega-site`), or the slug of a project the corpus names but no facility row covers (`project-dazzler`). `campus` is an accepted alias.",
+      },
+      campus: {
+        type: "string",
+        description: "Alias of `project`; names the same campus/project facet.",
       },
     },
   },
@@ -505,7 +540,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_corpus",
     description:
-      "Hybrid search across the whole corpus — the discovery entrypoint. Ranking fuses semantic (vector) similarity with BM25 keyword scoring via reciprocal-rank-fusion, degrading to keyword-only when query embeddings are unavailable. Use to FIND relevant items across every feed (records, documents, timeline, entities, …); narrow with a `filters` bag over indexed fields (site, feed, source_kind, verified, date_from/date_to, confidence — all AND-combined) so unrelated feeds don't crowd the results. This is NOT the way to pull one known document — use get_document for that. Returns ranked evidence cards (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified, tier, tier_reason, citation) — NO full record text by default; pass a hit's id to get_document to fetch its projected fields. Every card carries a structured `citation` (document_id, source, page/pages, source_url, evidence, and a paste-ready `label`), so you can CITE A HIT WITHOUT FETCHING IT — a follow-up get_document is for the record's fields, not for its provenance. Absent citation fields mean the source carries no such value; none of it is inferred, and a card's snippet is a window over the record's flattened fields, so it is never offered as a verbatim quote (use search_passages for that). Each hit is tiered by evidence role so you don't treat every match as equal: `tier` is `direct` (top-relevance-band primary evidence — records/documents/timeline/meetings that answer the query), `corroborating` (relevant supporting material — a secondary entity/person/place view, or primary evidence below the top band), or `background` (definitional/derived context — glossary concepts, or a weak-relevance match); `tier_reason` says why. The tier is an evidence-grounded heuristic (evidence class + score band), never score alone — a glossary hit is never `direct`. A filing's versions (e.g. a permit's final + draft + fact sheet) collapse to the canonical member by default — pass deduplicate:\"none\" to see every version, or version_policy to tune which superseded versions survive. Size knobs: response_mode (ids_only|compact|snippets|full — ids_only omits the tier; full reproduces the whole record, ~18–24k tokens/hit, opt-in), limit/max_results, snippet_tokens, max_tokens, cursor.",
+      "Hybrid search across the whole corpus — the discovery entrypoint. Ranking fuses semantic (vector) similarity with BM25 keyword scoring via reciprocal-rank-fusion, degrading to keyword-only when query embeddings are unavailable. Use to FIND relevant items across every feed (records, documents, timeline, entities, …); narrow with a `filters` bag over indexed fields (site, feed, source_kind, verified, date_from/date_to, confidence, county, agency, permit_number, document_type, entity, project/campus — all AND-combined) so unrelated feeds don't crowd the results. Prefer a facet over a keyword when you have one: `filters.permit_number:\"2PH00006\"` finds every action filed under that permit including its modifications, where the same string in `query` merely ranks. This is NOT the way to pull one known document — use get_document for that. Returns ranked evidence cards (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified, tier, tier_reason, citation) — NO full record text by default; pass a hit's id to get_document to fetch its projected fields. Every card carries a structured `citation` (document_id, source, page/pages, source_url, evidence, and a paste-ready `label`), so you can CITE A HIT WITHOUT FETCHING IT — a follow-up get_document is for the record's fields, not for its provenance. Absent citation fields mean the source carries no such value; none of it is inferred, and a card's snippet is a window over the record's flattened fields, so it is never offered as a verbatim quote (use search_passages for that). Each hit is tiered by evidence role so you don't treat every match as equal: `tier` is `direct` (top-relevance-band primary evidence — records/documents/timeline/meetings that answer the query), `corroborating` (relevant supporting material — a secondary entity/person/place view, or primary evidence below the top band), or `background` (definitional/derived context — glossary concepts, or a weak-relevance match); `tier_reason` says why. The tier is an evidence-grounded heuristic (evidence class + score band), never score alone — a glossary hit is never `direct`. A filing's versions (e.g. a permit's final + draft + fact sheet) collapse to the canonical member by default — pass deduplicate:\"none\" to see every version, or version_policy to tune which superseded versions survive. Size knobs: response_mode (ids_only|compact|snippets|full — ids_only omits the tier; full reproduces the whole record, ~18–24k tokens/hit, opt-in), limit/max_results, snippet_tokens, max_tokens, cursor.",
     inputSchema: {
       type: "object",
       properties: {
@@ -545,7 +580,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
       "Ranked evidence cards (shape governed by response_mode), most-relevant first.",
     ),
     example:
-      '{"query": "NPDES permit violations", "filters": {"site": "lima", "feed": "records", "verified": true}, "limit": 5}',
+      '{"query": "effluent limits", "filters": {"site": "lima", "permit_number": "2PH00006", "document_type": "permits-npdes"}, "limit": 5}',
   },
   {
     name: "search_passages",

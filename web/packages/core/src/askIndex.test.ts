@@ -155,3 +155,167 @@ describe("buildAskIndex", () => {
     expect(units[0].text).not.toBe(units[1].text);
   });
 });
+
+// The enrichment facets (#1691) — the ones #1582 refused to expose as filters because the index
+// didn't carry them. Each is projected from a value the bundle ALREADY holds, so the tests here
+// assert the *projection* (which feed field becomes which facet, and what stays absent); the
+// matching semantics they're consumed under are `askFacets.test.ts`'s.
+describe("buildAskIndex enrichment facets (#1691)", () => {
+  const PERMIT_RECORD = {
+    ...RECORD,
+    rel: "oepa/2PH00006.npdes.yaml",
+    group: "permits-npdes",
+    fields: {
+      permit_no: "2PH00006*LD",
+      npdes_id: "OH0037338",
+      agency: "Ohio EPA, Division of Surface Water",
+      project_name: "Project Bosc Lvl 2 IWP",
+    },
+  };
+  const FACILITY = {
+    key: "project-bosc",
+    name: "Project BOSC",
+    is_primary: true,
+    status: "construction",
+    air_permit_relpath: "permits/4132514.epa.yaml",
+  };
+
+  it("projects a record's genre, permit ids, agency and project onto the unit", async () => {
+    const dir = makeBundle(
+      [feedRef("records", "feeds/records.json", 1), feedRef("facility", "feeds/facility.json", 1)],
+      {
+        "feeds/records.json": JSON.stringify([PERMIT_RECORD]),
+        "feeds/facility.json": JSON.stringify([FACILITY]),
+      },
+    );
+    const [u] = (await loadAskIndex(dir)).buildAskIndex();
+    // `document_type` is the axis `feed` can't express — this unit's feed is "records".
+    expect(u.feed).toBe("records");
+    expect(u.document_type).toBe("permits-npdes");
+    // Both identifiers, not just the first: the record is findable by state permit no AND NPDES id.
+    expect(u.permit_numbers).toEqual(["2PH00006*LD", "OH0037338"]);
+    // Verbatim — no taxonomy key is invented from the document's own words.
+    expect(u.agency).toBe("Ohio EPA, Division of Surface Water");
+    // "Project Bosc Lvl 2 IWP" resolves to the disclosed campus by segment prefix.
+    expect(u.project).toBe("project-bosc");
+  });
+
+  it("attributes a record to the campus that cites it as its air permit, over any stated name", async () => {
+    const dir = makeBundle(
+      [feedRef("records", "feeds/records.json", 1), feedRef("facility", "feeds/facility.json", 1)],
+      {
+        "feeds/records.json": JSON.stringify([
+          {
+            ...RECORD,
+            rel: "permits/4132514.epa.yaml",
+            group: "permits-epa",
+            fields: { project_name: "Bistrozzi LLC Allen County air pollution source" },
+          },
+        ]),
+        "feeds/facility.json": JSON.stringify([FACILITY]),
+      },
+    );
+    const [u] = (await loadAskIndex(dir)).buildAskIndex();
+    expect(u.project).toBe("project-bosc");
+  });
+
+  it("keeps a named project the facility feed doesn't cover, as its own slug", async () => {
+    const dir = makeBundle([feedRef("records", "feeds/records.json", 1)], {
+      "feeds/records.json": JSON.stringify([
+        { ...RECORD, rel: "oepa/dazzler.npdes.yaml", fields: { project_name: "Project Dazzler" } },
+      ]),
+    });
+    const [u] = (await loadAskIndex(dir)).buildAskIndex();
+    // No facility row to resolve against — but it is a real named project, so it stays findable.
+    expect(u.project).toBe("project-dazzler");
+  });
+
+  it("omits a facet the feed has nothing to say about, rather than emitting an empty value", async () => {
+    const dir = makeBundle([feedRef("records", "feeds/records.json", 1)], {
+      "feeds/records.json": JSON.stringify([RECORD]), // fields carry no permit/agency/project
+    });
+    const [u] = (await loadAskIndex(dir)).buildAskIndex();
+    expect(u.permit_numbers).toBeUndefined();
+    expect(u.agency).toBeUndefined();
+    expect(u.project).toBeUndefined();
+    expect(u.entities).toBeUndefined();
+  });
+
+  it("takes a timeline entry's ref as its permit id and its category as the document type", async () => {
+    const dir = makeBundle([feedRef("timeline", "feeds/timeline.json", 1)], {
+      "feeds/timeline.json": JSON.stringify([
+        { ...TIMELINE, ref: "2PH00006*LD", category: "epa_permit_action" },
+      ]),
+    });
+    const [u] = (await loadAskIndex(dir)).buildAskIndex();
+    expect(u.permit_numbers).toEqual(["2PH00006*LD"]);
+    expect(u.document_type).toBe("epa_permit_action");
+  });
+
+  // The entity join is on the extraction PATH an entity was read from, which is the same string a
+  // record is keyed by — an exact identifier match, never a name match.
+  it("joins entities to the records and timeline entries they were read from", async () => {
+    const dir = makeBundle(
+      [
+        feedRef("records", "feeds/records.json", 1),
+        feedRef("timeline", "feeds/timeline.json", 1),
+        feedRef("entities", "feeds/entities.json", 1),
+      ],
+      {
+        "feeds/records.json": JSON.stringify([PERMIT_RECORD]),
+        "feeds/timeline.json": JSON.stringify([TIMELINE]),
+        "feeds/entities.json": JSON.stringify([
+          { ...ENTITY, sources: ["oepa/2PH00006.npdes.yaml", "data/extracted/legal/nda.yaml"] },
+        ]),
+      },
+    );
+    const units = (await loadAskIndex(dir)).buildAskIndex();
+    const byFeed = Object.fromEntries(units.map((u) => [u.feed, u]));
+    expect(byFeed.records.entities).toEqual(["AMAZON COM SERVICES"]);
+    expect(byFeed.timeline.entities).toEqual(["AMAZON COM SERVICES"]);
+    // The party's own node is attributed to itself, so `filters.entity` returns it alongside the
+    // filings rather than only the filings.
+    expect(byFeed.entities.entities).toEqual(["AMAZON COM SERVICES"]);
+  });
+
+  it("resolves a place's party names to graph keys, keeping an unresolvable one as stated", async () => {
+    const dir = makeBundle(
+      [feedRef("places", "feeds/places.json", 1), feedRef("entities", "feeds/entities.json", 1)],
+      {
+        "feeds/places.json": JSON.stringify([
+          {
+            slug: "campus",
+            name: "The campus",
+            kind: "composite",
+            depth: "site",
+            parcels: [],
+            members: [],
+            aliases: [],
+            tags: ["datacenter", "project-bosc"],
+            relationships: [
+              // Display name, not a key — resolved through the node's `display`.
+              { role: "owner", entity: "Amazon.com Services LLC" },
+              { role: "operator", entity: "Some Unmodeled Partner" },
+            ],
+            citations: [],
+            body: "",
+          },
+        ]),
+        "feeds/entities.json": JSON.stringify([ENTITY]),
+      },
+    );
+    const [u] = (await loadAskIndex(dir)).buildAskIndex();
+    expect(u.entities).toEqual(["AMAZON COM SERVICES", "Some Unmodeled Partner"]);
+    // Only a tag naming a disclosed facility is a project — `datacenter` is vocabulary.
+    expect(u.project).toBeUndefined(); // no facility feed in this bundle to resolve against
+  });
+
+  it("stamps the site's county from the registry, like `site`", async () => {
+    const dir = makeBundle([feedRef("records", "feeds/records.json", 1)], {
+      "feeds/records.json": JSON.stringify([RECORD]),
+    });
+    const [u] = (await loadAskIndex(dir)).buildAskIndex();
+    expect(u.site).toBe("lima");
+    expect(u.county).toBe("Allen County, OH");
+  });
+});
