@@ -44,9 +44,12 @@ storage:
 - relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-reports-2019.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/american-bath-cole-street-condition-survey-2009.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: static
-  last_refreshed: '2026-07-24'
+  last_refreshed: '2026-07-31'
 provenance: document
 tags:
 - public-records
@@ -59,4 +62,8 @@ notes: 'The instrument-level layer of the batch-3 production: the DFFO enforceme
   notices) as `order` records, the Hume Road WPCLF application as an `award` record, and the
   2019 monthly SSO reports as a structured corpus artifact. First records in the contract-1.34.0
   `enforcement`/`finance` groups (#1746/#1747). The arc is summarized in
-  extracted/regulatory/wastewater-enforcement-history.yaml (`dffo_chain`).'
+  extracted/regulatory/wastewater-enforcement-history.yaml (`dffo_chain`).
+  Also carries the Cole Street condition-survey inventory (#1759): the reviewed read of the
+  production''s only two ZIP archives (cap001.zip / ConcDr.zip), whose 20 GPS-stamped 2009-05-13
+  video frames the county ALSO produced expanded and byte-identical at item 9 — so the artifact
+  indexes and georeferences already-committed source bytes rather than adding any.'

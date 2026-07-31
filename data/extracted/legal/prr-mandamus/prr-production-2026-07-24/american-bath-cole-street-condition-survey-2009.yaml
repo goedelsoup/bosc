@@ -1,0 +1,317 @@
+meta:
+  subject: >-
+    American-Bath Trunk Sewer — Cole Street pre-construction condition survey (2009-05-13),
+    the 20 video frames filed in the two change-order archives cap001.zip and ConcDr.zip
+  collection: legal
+  custodian: Allen County Sanitary Engineering department (batch-3 PRR production, 2026-07-24)
+  method: >-
+    Archives expanded to a scratch area and their members sha256-hashed; every member proved
+    byte-identical to a file the county ALSO produced in expanded form (see expansion_finding).
+    Each frame is an uncompressed 640x480 24-bit BMP (921,654 bytes = 640*480*3 + 54) carrying a
+    burned-in video-log overlay — route name, direction of travel, GPS latitude/longitude in
+    DDMM.mmmm, capture date and clock time. The overlay is pixels, not metadata: every value
+    below is a VISION transcription of the image, cross-checked a second time against upscaled
+    crops of the two overlay bands. Decimal degrees are computed from the transcribed
+    degree-minute values, not separately read.
+  source_paths:
+  - >-
+    9/SH & AB SSO Findings and Orders/Phase 1 SECAP Constr Projects/Ph 1 SECAP American-Bath
+    Trunk Sewer-URS/Construction Corr/Change Order/Final Change Order Correspondence/
+  - >-
+    15/Directors Final Findings & Orders/2005 Directors Findings and Orders Corr/Shawnee &
+    American-Bath SECAP Projects/American-Bath Trunk Sewer/Final Change Order Correspondence/
+  source_dir_root: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/
+  issue: expand + review the two change-order zips (GH-1759, follow-up to epic GH-1744)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# The archives, and the finding that drove the "what becomes a derived artifact"
+# decision: there is nothing inside them the county did not already produce loose.
+# ─────────────────────────────────────────────────────────────────────────────
+archives:
+- name: cap001.zip
+  sha256: 958a250e180b426453327e685992e440c152b8cef6cf8ef0e83796fcb05e4d17
+  bytes: 9050318
+  members: 15
+  member_timestamps: 2009-11-20, 08:12-08:16 local (zip local time, no zone stored)
+  filed_under_items: ['9', '15']
+  dup_group: 133
+  contents: >-
+    The Cole Street roadway run (13 frames) plus two frames at a dead-end side street. Despite
+    the name, it holds no file called cap001.zip's namesake CAD sheet — cap001.bmp is simply its
+    first member, and the archive is named for it.
+- name: ConcDr.zip
+  sha256: f946f9fffdffedd9e0e90bff4921ce3c577f3e792cb6a4899763cecbb7c5cb1e
+  bytes: 2745592
+  members: 5
+  member_timestamps: 2009-11-25, 11:17-11:19 local (zip local time, no zone stored)
+  filed_under_items: ['9', '15']
+  dup_group: 130
+  contents: >-
+    Five frames of ONE property's concrete apron/parking pad, shot from the roadway. "ConcDr"
+    reads as concrete drive(s) — not "concrete drawings"; there is no CAD or drawing content in
+    either archive.
+
+expansion_finding:
+  status: >-
+    RESOLVED — no derived image artifact is warranted, because the archives are already
+    expanded byte-for-byte inside the production itself.
+  detail: >-
+    At item 9 the county produced BOTH archives AND their expanded contents as sibling folders
+    (`cap001/` = 15 BMPs, `ConcDr/` = 5 BMPs) in the same Final Change Order Correspondence
+    directory. All 20 extracted members hash identically to those already-committed,
+    already-custody-manifested files. Extracting the archives therefore recovers ZERO bytes that
+    are not already in the corpus under their as-received names.
+  corroboration: >-
+    The zip members' stored local timestamps match the as-received sibling files' recorded mtimes
+    at exactly UTC-5 (EST for late November) — e.g. cap001.bmp is 08:12 in the archive and
+    2009-11-20T13:12:40Z in the custody manifest. Archive and loose copy are the same capture
+    event, not two passes.
+  item_15_asymmetry: >-
+    Item 15 produced the two archives WITHOUT the sibling expanded folders. Its copies are
+    byte-identical to item 9's (custody dup_groups 133 and 130), so nothing is lost — but a reader
+    working only from item 15 sees two opaque archives where item 9 shows the frames.
+  decision: >-
+    Commit this reviewed inventory only. Do NOT commit extracted BMPs, PNG derivatives, or a
+    re-packed archive: that would duplicate ~18 MB of Git-LFS payload already present under
+    `data/documents/**` for no evidentiary gain, and would introduce a second, non-as-received
+    copy of source bytes into a corpus whose whole discipline is that there is one.
+  numbering_gaps:
+    present: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20, 21, 22, 23]
+    absent: [12, 13, 16]
+    note: >-
+      [verified] cap012, cap013 and cap016 are absent from the archives AND from the expanded
+      folders — they were never produced, not lost in transit. The filed set is a curated
+      selection from a longer capture sequence. [open] why those three were dropped.
+
+# ─────────────────────────────────────────────────────────────────────────────
+survey:
+  captured: '2009-05-13'
+  clock_window: 12:20:19 - 12:52:30 (overlay clock; zone not stated on the overlay)
+  route_label_as_printed: COLE
+  location: Cole Street, Bath/American Township, Allen County, Ohio
+  extent: >-
+    40.773308 N to 40.780170 N along -84.1280 W — 764 m north-south, and only 7.4 m of
+    east-west spread across all 20 frames: a dead-straight north-south corridor.
+  camera: >-
+    Vehicle-mounted forward camera with a GPS video-log overlay; frames are VGA (640x480)
+    uncompressed BMP. Successive fixes imply roughly 8 mph on the roadway run and ~3 mph past
+    the concrete apron [inference, from the frame-to-frame distance/time].
+  runs:
+  - id: concrete-apron
+    archive: ConcDr.zip
+    window: 12:20:19 - 12:20:36
+    direction: southbound
+    subject: a single property's concrete apron/parking pad
+  - id: side-street
+    archive: cap001.zip
+    window: 12:37:14 - 12:37:27
+    direction: northbound
+    subject: concrete street surface and curb return at a dead-end side street
+  - id: intersection
+    archive: cap001.zip
+    window: '12:42:33'
+    direction: northbound
+    subject: curb return, sidewalk and apron at a Cole Street intersection
+  - id: roadway
+    archive: cap001.zip
+    window: 12:49:10 - 12:52:30
+    direction: southbound
+    subject: the Cole Street asphalt roadway, north end to south end
+  caveats:
+  - >-
+    The GPS fix locates the CAMERA (on the roadway), not the subject. The concrete-apron frames
+    carry the same longitude as the roadway frames because the vehicle never left the road.
+  - >-
+    Overlay clock time is as-printed. No timezone is shown, and it is not independently verified
+    against any other record.
+  - >-
+    Frame count overstates coverage: 20 files, but only 16 unique images. Three filenames
+    (cap002/cap003/cap018) are one frame, and two pairs (cap001/cap014, cap019/cap020) are each
+    one frame.
+
+frames:
+- {file: cap001.bmp, archive: cap001.zip, dir: S.B., lat: 40.773308, lon: -84.128015,
+   time: '12:52:30', sha256: d3ba9ce362a92a16d2a8e851675c0b1c63fd3f70ecefd9df749685920e213153,
+   same_image_as: null,
+   view: 'Southbound two-lane asphalt, double-yellow centerline; sedan oncoming; dark patching
+     and longitudinal cracking along and left of the centerline; fresh asphalt drive apron right.'}
+- {file: cap002.bmp, archive: cap001.zip, dir: N.B., lat: 40.776328, lon: -84.128020,
+   time: '12:42:33', sha256: fd140b1a06536f44e071b550411ece341c2882cb360f1fd6de3335511fb8c87d,
+   same_image_as: null,
+   view: 'Northbound at an intersection; concrete curb return, sidewalk and drive apron; stop
+     sign; hydrant at left; a realtor sign on the corner lot.'}
+- {file: cap003.bmp, archive: cap001.zip, dir: N.B., lat: 40.776328, lon: -84.128020,
+   time: '12:42:33', sha256: fd140b1a06536f44e071b550411ece341c2882cb360f1fd6de3335511fb8c87d,
+   same_image_as: cap002.bmp, view: 'Byte-identical to cap002.bmp.'}
+- {file: cap004.bmp, archive: cap001.zip, dir: S.B., lat: 40.780170, lon: -84.128058,
+   time: '12:49:10', sha256: c4344997e18f03a429c9e02a8be5b1eda9824b305dda117f1d05035b2399560b,
+   same_image_as: null,
+   view: 'North end of the run; extensive dark patching and longitudinal cracking left of the
+     centerline; yellow utility marker post at right.'}
+- {file: cap005.bmp, archive: cap001.zip, dir: S.B., lat: 40.779880, lon: -84.128062,
+   time: '12:49:19', sha256: eac2466a6b2369da3a1ec78f61b93d36d434c5385724be2c00b75907560cb4a4,
+   same_image_as: null,
+   view: 'Centerline longitudinal cracking; residential drives and a mailbox row at right.'}
+- {file: cap006.bmp, archive: cap001.zip, dir: S.B., lat: 40.779752, lon: -84.128062,
+   time: '12:49:24', sha256: 6fc0230673ef354947cd84563f6a957175821d4d08d20038450d0a3e2293ea30,
+   same_image_as: null,
+   view: 'Centerline cracking and a dark seam down the southbound lane; parked vehicles and a
+     lot at right.'}
+- {file: cap007.bmp, archive: cap001.zip, dir: S.B., lat: 40.778887, lon: -84.128057,
+   time: '12:49:53', sha256: 7f7344369c7fdb2354b84dbf9e30bb6bc8b11654a825e0be6c589b4b2bac9ab2,
+   same_image_as: null,
+   view: 'Patch strip in the northbound lane and edge distress at left; box truck oncoming.'}
+- {file: cap008.bmp, archive: cap001.zip, dir: S.B., lat: 40.777975, lon: -84.128050,
+   time: '12:50:27', sha256: 2eb7ca28a26bead856ddc4c99533c01d217ee6241e3314da771361465d8269b5,
+   same_image_as: null,
+   view: 'Longitudinal crack and patch band left of the centerline; wooded left verge.'}
+- {file: cap009.bmp, archive: cap001.zip, dir: S.B., lat: 40.777363, lon: -84.128053,
+   time: '12:50:45', sha256: cb03f1f9294a81c9caf0b43742e303490b1c27f8ea2340d4ece1d669a652c34c,
+   same_image_as: null,
+   view: 'Patched potholes left of the centerline and a patch at the right edge next to a gravel
+     drive; mailbox at right.'}
+- {file: cap010.bmp, archive: cap001.zip, dir: S.B., lat: 40.776508, lon: -84.128043,
+   time: '12:51:10', sha256: 511c94a3e515b3c5f0a14fa238f0601fecb31e15bf74d563caf527449b000c4b,
+   same_image_as: null,
+   view: 'Approaching an intersection; centerline paint worn away over the near half; SUV parked
+     in the oncoming lane.'}
+- {file: cap011.bmp, archive: cap001.zip, dir: S.B., lat: 40.776008, lon: -84.128038,
+   time: '12:51:22', sha256: ceb3bef2ae8bdd049072723e970747e3e2679bcbc0c9722719d64734229b2d7c,
+   same_image_as: null,
+   view: 'Residential frontage both sides; weathered surface, centerline stripe faded.'}
+- {file: cap014.bmp, archive: cap001.zip, dir: S.B., lat: 40.773308, lon: -84.128015,
+   time: '12:52:30', sha256: d3ba9ce362a92a16d2a8e851675c0b1c63fd3f70ecefd9df749685920e213153,
+   same_image_as: cap001.bmp, view: 'Byte-identical to cap001.bmp.'}
+- {file: cap015.bmp, archive: cap001.zip, dir: N.B., lat: 40.773625, lon: -84.127977,
+   time: '12:37:14', sha256: b45943d0f109f018588d705a4e84eabd68d9d347bab559814f4d4eeb4304ceb7,
+   same_image_as: null,
+   view: 'Dead-end side street; CONCRETE pavement and curb return with map-cracking and multiple
+     patched areas; DEAD END sign at right.'}
+- {file: cap017.bmp, archive: cap001.zip, dir: N.B., lat: 40.773752, lon: -84.127973,
+   time: '12:37:27', sha256: 00cead42d1bdc8a0405ed185b8945c28930548b1ee862ddce64faa21466d8dec,
+   same_image_as: null,
+   view: 'Same side street, 13 s later; concrete curb return and street panels with joint
+     cracking; 35 mph sign at left; brick ranch house on the corner lot.'}
+- {file: cap018.bmp, archive: cap001.zip, dir: N.B., lat: 40.776328, lon: -84.128020,
+   time: '12:42:33', sha256: fd140b1a06536f44e071b550411ece341c2882cb360f1fd6de3335511fb8c87d,
+   same_image_as: cap002.bmp, view: 'Byte-identical to cap002.bmp.'}
+- {file: cap019.bmp, archive: ConcDr.zip, dir: S.B., lat: 40.774822, lon: -84.128038,
+   time: '12:20:19', sha256: 5cabf8590e7289937d352929354041ca092da84f4493cf2595ca4e4ae4e734a1,
+   same_image_as: null,
+   view: 'Wet concrete apron/parking pad fronting a tan metal building with three overhead doors;
+     car parked at the building; jointing pattern visible across the pad.'}
+- {file: cap020.bmp, archive: ConcDr.zip, dir: S.B., lat: 40.774822, lon: -84.128038,
+   time: '12:20:19', sha256: 5cabf8590e7289937d352929354041ca092da84f4493cf2595ca4e4ae4e734a1,
+   same_image_as: cap019.bmp, view: 'Byte-identical to cap019.bmp.'}
+- {file: cap021.bmp, archive: ConcDr.zip, dir: S.B., lat: 40.774790, lon: -84.128037,
+   time: '12:20:20', sha256: ba3270173b512bfb2c4b39cf2fa8f4f081bd8259f8e0d755a2d8071a2a9d66da,
+   same_image_as: null,
+   view: 'Same property, wider framing of the apron; joint grid and surface staining under wet
+     conditions.'}
+- {file: cap022.bmp, archive: ConcDr.zip, dir: S.B., lat: 40.774703, lon: -84.128035,
+   time: '12:20:27', sha256: cb05be0491c7350a40c9a68c6c0525e4149b2f6f01494815a460ed01c8e7790e,
+   same_image_as: null,
+   view: 'Same property, further south; tire scuffs and dark marks on the wet apron; building
+     frontage and a car at the door.'}
+- {file: cap023.bmp, archive: ConcDr.zip, dir: S.B., lat: 40.774607, lon: -84.128035,
+   time: '12:20:36', sha256: 4ace946b239f60df9c1638145b4448ba6500f114e0fd8954cff8c8a3123df881,
+   same_image_as: null,
+   view: 'South end of the property; striped parking stalls at the building; apron edge meeting
+     lawn and the roadside walk.'}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Why the frames are in this folder at all. Cited to the correspondence filed
+# beside them; not extracted here as a record of its own (see `open`).
+# ─────────────────────────────────────────────────────────────────────────────
+claim_context:
+  filed_beside: >-
+    Addl_Pymt_Memo.pdf, BCI_Claim_Memo.doc, BCI_Claim_Memo_062510.pdf, BCI_DownTime.pdf,
+    Final_Claim_BackupDoc.pdf, Final_Claim_Ltr_052010.pdf — the Final Change Order
+    Correspondence for the American Bath Trunk Sewer Project.
+  matter: "Beaverdam Contracting, Inc. (BCI) Claim #1, evaluated for Allen County by URS
+    Corporation (project 14576153; Michael A. Frommer, P.E.) and addressed to Steve Kayatin,
+    P.E., Allen County Sanitary Engineer, 3230 N. Cole Street, Lima."
+  claimed_work_window: >-
+    Work on the Cole Street portion performed 2009-06-09 to 2009-11-12 (URS letter, 2010-05-20).
+  why_it_matters: >-
+    The survey is dated 2009-05-13 — about four weeks BEFORE the claimed work began. It is
+    therefore the pre-construction condition of record for the alignment the claim is about:
+    what Cole Street's pavement, the side-street concrete, and the abutting concrete apron
+    looked like before BCI mobilized. That is the ordinary evidentiary function of a
+    video log filed into a construction claim file.
+  claim_figures:
+    note: >-
+      [verified] transcribed from the two URS letters filed beside the archives. Recorded here
+      only as the frames' context; the claim record itself is not extracted (see `open`).
+    urs_evaluation_2010_05_20:
+      basis: trench width installed vs. trench width assumed at bid, priced at 4 ft, 5 ft and 6 ft
+      original_claim_2010_04_28: 167453.28
+      total_at_4ft: 203443.27
+      total_at_5ft: 144577.33
+      total_at_6ft: 85835.05
+      aggregate_line_at_4ft: -17097.60
+    urs_final_memo_2010_06_25:
+      trench_width_decided: 4 ft (Allen County decision at the 2010-06-22 meeting)
+      scope_added: Knollwood Drive, alongside Cole Street
+      labor_and_equipment: 200549.10
+      aggregate: 29212.88
+      asphalt: 41716.66
+      traffic_control: 3423.24
+      total: 274901.88
+    quantities:
+      aggregate_backfill_estimated_tons: 13500
+      aggregate_backfill_installed_tons: 20309
+      aggregate_backfill_calculated_at_4ft_tons: 17266
+      traffic_control_claimed: 23818.00
+      traffic_control_allowed: 3423.24
+      transcription_note: >-
+        The memo prints its own aggregate line as "3,043 Tons * $9.60/Ton = $29,212.88" and
+        repeats $29,212.88 in the Final Claim Amount block, but 3,043 x 9.60 = $29,212.80. The
+        figures above are as-printed; the $0.08 is URS's arithmetic, not a transcription error
+        (both occurrences re-read at 500 dpi). Immaterial in amount, recorded because the
+        printed total $274,901.88 carries it.
+
+open:
+- id: aggregate-sign-flip
+  question: >-
+    At the SAME 4 ft trench width, URS's 2010-05-20 letter carries the aggregate line as a
+    CREDIT to the county of $17,097.60, while its 2010-06-25 memo carries it as a CHARGE of
+    $29,212.88 — a $46,310.48 swing on the assumption the parties had just settled. The June
+    memo shows its basis (20,309 t installed less 17,266 t calculated, at $9.60/t); the May
+    basis is in an enclosed spreadsheet not identified in the produced folder. Unresolved on
+    the produced record. [open]
+- id: claim-record-not-extracted
+  question: >-
+    The BCI Claim #1 evaluation chain (URS 2010-05-20 letter + 2010-06-25 memo + BCI_DownTime +
+    Final_Claim_BackupDoc, and the five BCI letters they recite, dated 2010-03-08, 03-30, 04-08,
+    05-12 and 05-28) is a substantive construction-claim record in its own right. It is cited
+    here for context only; a structured extraction is a separate piece of work. [open]
+- id: concrete-apron-property
+  question: >-
+    Whose concrete apron is in ConcDr.zip? The five frames sit at ~40.7746-40.7748 N on Cole
+    Street, and the county's own Sanitary Engineering office is at 3230 N. Cole Street — but the
+    building is NOT identified in the frames and the committed Allen County CAMA subset carries
+    no 3230 N Cole parcel. Resolving it matters: if the documented drive is the county's own
+    facility the frames read differently than if it is a third-party abutter. [open]
+- id: knollwood-side-street
+  question: >-
+    The two dead-end side-street frames (cap015, cap017) are unlabelled beyond the route tag
+    COLE. The claim's scope is "the Cole Street and Knollwood Drive portions", so Knollwood is
+    the obvious candidate, but the overlay does not name it and no plan sheet in the produced
+    folder was matched to it. [inference, unconfirmed]
+
+relevance:
+  tags: [verified, corpus-hygiene, construction-claim, american-bath, secap, change-order,
+    cole-street, prr-item-9, prr-item-15]
+  note: >-
+    Batch-3 corpus hygiene: the last two opaque containers in the change-order correspondence are
+    now read and inventoried. The headline is negative in the useful sense — the archives hid
+    nothing. Their contents were already produced loose at item 9, byte-identical and already
+    custody-manifested, so the corpus gains a reviewed reading and a georeferenced index rather
+    than any new bytes. What IS new is machine-readable: the GPS/route/time overlay was burned
+    into pixels and readable by nothing in the repo until now.
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.custody-manifest.yaml
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.analysis.md
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closure-amer-bath-2010.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2011-extension-request.order.yaml
