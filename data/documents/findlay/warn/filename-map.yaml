@@ -1,0 +1,40 @@
+meta:
+  subject: >-
+    ODJFS WARN Act notices — Findlay, Hancock County (download manifest, issue 1460)
+  generated_at: '2026-07-31'
+  policy: non-destructive — originals keep as-received names
+documents:
+- filename: GoodyearTireRubberCompany.pdf
+  permit_id: null
+  source_url: https://dam.assets.ohio.gov/image/upload/v1770048815/jfs.ohio.gov/warn/WARN%202026/GoodyearTireRubberCompany.pdf
+  sha256: 09c36ff721910a215aa4707f9470b654e8b310f7a5db6ac70c9a65371223c330
+  bytes: 244268
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:41:19.464651+00:00'
+  status: downloaded
+  content_verified: '2026-01-30'
+  note: >-
+    As-received ODJFS/DAM name kept. Content-verified from the text layer 2026-07-31: letter
+    dated January 30, 2026 from The Goodyear Tire & Rubber Company to ODJFS Director Matt
+    Damschroder noticing the permanent closing of the Tall Timbers Mold facility, 2025
+    Production Drive, Findlay OH 45840, under the Ohio WARN Act and the federal WARN Act of
+    1988; 85 impacted positions, separations from on or around March 31, 2026. Received stamp
+    "1/30/2026 @ 2:33pm". 2 pp. (letter + job-title schedule). Structured read:
+    data/extracted/findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml (issue 1460).
+- filename: Michigan_Sugar_Company.pdf
+  permit_id: null
+  source_url: https://dam.assets.ohio.gov/image/upload/v1765564504/jfs.ohio.gov/warn/WARN%202025/Michigan_Sugar_Company.pdf
+  sha256: 8d583681d55323d011be18d1ee6ce08bc1386e01ae1e7985ebf3d22f30e73373
+  bytes: 257745
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:41:19.664506+00:00'
+  status: downloaded
+  content_verified: '2025-12-11'
+  note: >-
+    As-received ODJFS/DAM name kept. Content-verified from the text layer 2026-07-31: letter
+    from Mario A. Spadafora, Director of Labor & Employee Relations, Michigan Sugar Company, to
+    ODJFS and to Mayor Christina Muryn, closing the warehouse at 1343 Greenwood Street, Findlay
+    OH 45840; 4 employees; received stamp "12/11/2025 @ 4:56pm". 3 pp. (letter + Exhibit 1).
+    A COURTESY filing — the company states it does not believe the closure required notice.
+    Structured read: data/extracted/findlay/warn/michigan-sugar-findlay-2025.warn.yaml
+    (issue 1460).

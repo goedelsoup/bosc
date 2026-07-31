@@ -39,6 +39,68 @@ never Lima's plant). Obtained from the Ohio EPA DAM as a **public record — no 
 request** (issue #1536). The reported effluent record (DMRs) is a sibling artifact:
 [`data/extracted/oepa/lima-wwtp-OH0026069.dmr.yaml`](../../extracted/oepa/lima-wwtp-OH0026069.dmr.yaml).
 
+### Site sub-collections
+
+Permits belonging to a non-Lima network site sit in a slug sub-directory with their own
+`filename-map.yaml`: `sidney/`, `troy-piqua/`, `urbana/`, `van-wert/`, `wilmington/`, and —
+
+#### `findlay/` — City of Findlay Water Pollution Control Center, `2PD00008` / `OH0025135`
+
+The Blanchard subbasin's anchor POTW (15 MGD average design, 40 MGD peak) and the third-largest
+grouped-load phosphorus discharger in the Maumee watershed. Three files:
+
+- `2PD00008.fs.pdf` — Fact Sheet for NPDES Permit Renewal, 2024 (`2PD00008*UD`, Public Notice
+  205259, noticed 2024-08-09), 33 pp. The anchor instrument: outfall `2PD00008001` to the
+  **Blanchard River at River Mile 56.42**, HUC `04100008-03-04`; Table 12's annual **7Q10 of 0.21
+  cfs** against a 23.208 cfs design flow, giving an **acute dilution ratio of 1.0**; the renewed
+  mercury variance (3.3 ng/L monthly against a 1.3 ng/L WQBEL, annual condition ≤ 12 ng/L); WET
+  limits removed to monitoring only; total phosphorus 1.0 mg/L / 56.8 kg/day on a technology basis;
+  ten authorized CSOs and eight significant industrial users.
+- `2PD00008.pdf` — the **`2PD00008*VD` modification package** (52 pp.): Director's transmittal
+  letter 2025-11-07, the modified permit effective 2026-02-01 (expiring 2029-10-31), and the
+  modification's own 8-page fact sheet from p. 45. Its whole substance is moving the Municipal CSO
+  Schedule milestone (event 34099) and the LTCP Addendum to **2026-11-01**.
+- `2PD00008.1abaf306.pdf` — the **draft public notice** of that modification (PN 216133, noticed
+  2025-11-14), 55 pp. Ohio EPA serves it from `permits/DraftPN/` under the *same* basename as the
+  issued permit, so the fetcher's non-destructive collision rule kept both bytes and suffixed this
+  one with its own sha256 prefix. See [`findlay/filename-map.yaml`](findlay/filename-map.yaml).
+
+⚠️ **The DAM's `permits/doc/` slot for this permit serves the MODIFIED package, not the 2024 `*UD`
+renewal it modified.** The `*UD` permit as issued is not obtainable from that slot; its term
+(effective 2024-11-01, expires 2029-10-31) is recorded instead from the January 2026 variance list
+below. Structured reads: [`data/extracted/oepa/findlay/`](../../extracted/oepa/findlay/).
+
+### Basin general permits
+
+#### `OHP000001.pdf` / `OHP000001_FS.pdf`
+
+**Maumee Watershed Total Phosphorus NPDES General Permit** — effective 2023-11-01, expires
+2028-10-31, signed by Director Anne M. Vogel. The instrument that makes the Maumee Watershed
+Nutrient TMDL's individual wasteload allocations enforceable across **39 facilities**, supplementing
+each permittee's own NPDES permit rather than superseding it (Part IV.C.6). Part I.C.1 lists the
+eligible facilities with their receiving streams; Part IV.A.1 lists each one's seasonal Individual
+Load Limit in kg of total phosphorus for the March-July spring season.
+
+Its compliance rule is the load-bearing clause (Part IV.C.3): a permittee is in violation of its
+Individual Load Limit **only if** the 39-facility Cumulative Load *also* exceeds the Cumulative Load
+Limit. Compliance is evaluated at the group first, so an individual plant over its own allocation is
+in compliance while the bubble holds. Basin-wide, not site-specific — Lima (`2PE00000`, 4000 kg),
+Van Wert (`2PD00006`, 1000 kg), Defiance, Bowling Green and Findlay (`2PD00008`, 3200 kg) are all
+covered rows. Structured read of the Findlay row:
+[`data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml`](../../extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml).
+
+#### `Jan_2026_List_of_Variances.pdf`
+
+Ohio EPA's **statewide list of water-quality-standards variances**, January 2026 — one row per
+variance with the discharger, permit number, outfall, permit effective and expiration dates,
+affected water body, pollutant, and Modified Allowable Ambient Concentration. Statewide, not
+site-specific.
+
+It is the only committed instrument that states the term of Findlay's `2PD00008*UD` permit
+(`11/1/2024` – `10/31/2029`), because the DAM no longer serves that issuance; it also carries
+Findlay's mercury MAAC of 3.29 ng/L and independently names the Blanchard River as the affected
+water body.
+
 ### Indirect discharge permits (pretreatment)
 
 #### `2DP00130.pdf`

@@ -1,0 +1,311 @@
+doc_id: 2PD00008.fs-f96223dd
+source_path: data/documents/oepa/findlay/2PD00008.fs.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: " \nFact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024 \n\
+  Page 1 of 33 \n \nNational Pollutant Discharge Elimination System (NPDES) Permit\
+  \ Program \n \nFACT SHEET \n \nRegarding an NPDES Permit to Discharge to Waters\
+  \ of the State of Ohio \nFor City of Findlay Water Pollution Control Center (WPCC)\
+  \  \n \nPublic Notice No.: 205259 Ohio EPA Permit No.: 2PD00008*UD \nPublic Notice\
+  \ Date: August 9, 2024 Application No.: OH0025135 \nComment Period Ends: September\
+  \ 8, 2024 \n \n \n Name and Address of Facility Where \nName and Address of Applicant:\
+  \ Discharge Occurs:                  \nCity of Findlay Findlay WPCC \n120"
+# The `permit:` block below is the pipeline's own read (`watermark extract --kind npdes`,
+# text-primary over the first six pages + the page-1 image). Everything after it is a REVIEWED
+# augmentation transcribed from this PDF's embedded text layer at the pages cited on each block.
+#
+# Method note (important, and different from the OCR-scan rule in CLAUDE.md): this is a
+# DIGITALLY GENERATED Ohio EPA PDF, not a scan. Its text layer is the document's own embedded
+# text, not an OCR guess, so figures below are read from it verbatim rather than re-keyed from a
+# render. Table 12 / Table 14 numerals were spot-checked against the rendered page images.
+permit:
+  confidence: high
+  warnings: []
+  facility_name: Findlay WPCC (City of Findlay Water Pollution Control Center)
+  permit_no: 2PD00008*UD
+  permit_action: renewal
+  applicant: City of Findlay, 1201 South River Road, Findlay, OH 45804
+  application_no: OH0025135
+  public_notice_no: '205259'
+  public_notice_date: '2024-08-09'
+  comment_period_end: '2024-09-08'
+  facility_address: Findlay WPCC, 1201 South River Road, Findlay, OH 45804, Hancock
+    County
+  discharge_address: null
+  receiving_water: Blanchard River
+  stream_network: Auglaize River to Maumee River to Lake Erie
+  outfalls:
+  - '001'
+  note: Discharge address is the same as the facility address. Outfall 001 is the
+    primary discharge outfall referenced throughout the fact sheet; additional monitoring
+    stations (021, 601, 801, 901) are also referenced but are not discharge outfalls.
+
+# --- reviewed augmentation (issue 1460) -------------------------------------------------------
+# Fields the six-page text-primary read does not reach. Every value is transcribed from the page
+# named in its own `page` key (1-based printed sheet, matching the "Page N of 33" running head).
+
+review:
+  issue: 1460
+  reviewed_on: '2026-07-31'
+  method: >-
+    Verbatim transcription from the PDF's embedded text layer (pypdf), page by page. No figure is
+    derived, rounded or carried over from any other document except where a block says so
+    explicitly and names the other instrument.
+  zip_code_discrepancy: >-
+    This fact sheet prints the applicant/facility ZIP as 45804 on its cover page; the issued
+    permit package (data/documents/oepa/findlay/2PD00008.pdf, cover letter) and the *VD public
+    notice (2PD00008.1abaf306.pdf) both print 45840. Both are preserved as printed in their
+    respective records; neither is "corrected". (45840 is Findlay's; 45804 is a Lima ZIP.)
+  effective_dates_are_not_in_this_document: >-
+    Neither the *UD renewal's effective date nor its expiration date is printed anywhere in this
+    fact sheet or in the permit PDF the Ohio EPA DAM now serves at the `doc/2PD00008.pdf` slot
+    (that slot carries the LATER *VD modification package). They are recorded on the
+    `permit_term:` block below from a THIRD Ohio EPA instrument that states them outright — the
+    January 2026 statewide variance list — and are cited to it, not to this fact sheet.
+
+permit_term:
+  permit_no: 2PD00008*UD
+  effective: '2024-11-01'
+  expires: '2029-10-31'
+  outfall: '001'
+  citation: >-
+    Ohio EPA, "January 2026 List of Variances" (data/documents/oepa/Jan_2026_List_of_Variances.pdf,
+    p. 2), row "Findlay WPCF | 2PD00008*UD | 001 | 11/1/2024 | 10/31/2029 | Blanchard River |
+    Mercury | 3.29".
+  caveat: >-
+    [verified] as to the dates, from a different Ohio EPA instrument than this fact sheet. The
+    January 2026 list predates the *VD modification's 2026-02-01 effective date, so it still
+    carries the *UD permit number; the modification did not change the permit's term (the
+    modified permit's own expiration is likewise 2029-10-31 — see 2PD00008.npdes.yaml).
+
+discharge_location:
+  page: 7
+  receiving_water: Blanchard River
+  river_mile: 56.42
+  ohio_epa_river_code: 04-160
+  hydrologic_unit_code: 04100008-03-04
+  county: Hancock
+  ecoregion: Eastern Corn Belt Plains
+  use_designations:
+  - Warmwater Habitat
+  - Agricultural Water Supply
+  - Industrial Water Supply
+  - Primary Contact Recreation
+  wqs_rule: OAC 3745-1-11
+  outfall_coordinates:   # from the *VD public notice's discharge-location table, not this page
+    latitude: 41.049722
+    longitude: -83.667778
+    source: data/documents/oepa/findlay/2PD00008.1abaf306.pdf (Location of Discharge, p. 1)
+  note: >-
+    "Findlay WPCC discharges to Blanchard River at River Mile 56.42." This is the datum issue 352
+    asked for: the specific outfall receiving water, named by the plant's own fact sheet, against
+    ECHO's null.
+
+facility:
+  page: 7
+  constructed: 1988
+  last_upgraded: 2001
+  average_design_flow_mgd: 15
+  peak_hydraulic_capacity_mgd: 40
+  design_flow_cfs: 23.208   # Table 12, "Findlay WPCC flow ... Average Design Flow"
+  service_area:
+  - City of Findlay
+  - Village of Arcadia
+  - Village of Van Buren
+  - parts of Hancock County
+  treatment_processes:
+  - Influent Pumping
+  - Influent Screening
+  - Oxidation Ditch
+  - Secondary Clarification
+  - Chemical Precipitation (ferric chloride)
+  - Ultraviolet Disinfection
+  - Post Aeration
+  sludge_processes:
+  - Aerobic Digestion
+  - Mechanical Dewatering — Belt Filter Press
+  sludge_disposal: municipal landfill
+  infiltration_inflow_mgd: 1.6
+  compliance_history: >-
+    "The City of Findlay WPCC has not reported any effluent limit violations in the previous five
+    years." (p. 8)
+
+collection_system:
+  page: 8
+  separate_sewer_pct: 93
+  combined_sewer_pct: 7
+  known_csos: 10
+  ltcp_original: '1998'
+  ltcp_evaluation_report: '2018'
+  level_of_control_attained: false
+  level_of_control_target: four overflows per typical year
+  reclassified_outfalls: 12   # CSO outfalls with no combined sewer upstream -> now SSOs
+  updated_ltcp_submitted: '2020-01-31'
+  updated_ltcp_approved: '2021-07-08'
+  updated_ltcp_measures:
+  - reducing inflow and infiltration
+  - increasing weir elevations at CSOs
+  - upsizing sewer pipes
+  - installing a new 5 MGD lift station
+  - installing equalization basins
+  cso_reduction_actions:
+  - new screening at the plant
+  - sewer separation
+  - sewer lining
+  note: >-
+    The City "has requested additional time to evaluate their treatment system and to develop a
+    new plan to address the overflows," so a compliance schedule for the revised plan is proposed
+    in the permit. That schedule is the clock the *VD modification later moved — see
+    2PD00008.npdes.yaml (`modification:`).
+
+pretreatment:
+  page: 8
+  program_approved: true
+  significant_industrial_users: 8
+  categorical_users: 5
+  siu_flow_mgd: 0.428
+
+instream_conditions:   # Table 12, "Instream Conditions and Discharger Flow"
+  page: 28
+  low_flows_cfs:
+    q1_10_annual: 0.17
+    q7_10_annual: 0.21
+    q30_10_summer: 0.31
+    q30_10_winter: 1.24
+    q90_10_annual: 0.32
+    harmonic_mean_annual: 1.84
+  low_flow_basis: USGS gages 04188300 and 04189000 (the 30Q10 rows cite 04188300 alone)
+  mixing_assumption_pct:
+    average: 25
+    maximum: 100
+  hardness_mg_l: 274        # Station 901, median, n=86 (both OMZ and IMZ)
+  ph_su:
+    summer: 7.8             # Station 901, 75th percentile, n=20
+    winter: 7.9             # Station 901, 75th percentile, n=17
+  temperature_c:
+    summer: 23              # Station 901, 75th percentile, n=20
+    winter: 5               # Station 901, 75th percentile, n=17
+  discharger_flow_cfs: 23.208
+  note: >-
+    The 7Q10 of 0.21 cfs is the low flow AT THE OUTFALL (RM 56.42), and it is roughly two orders
+    of magnitude below the 8.67 cfs figure the network's derived Blanchard low-flow artifact
+    carries at gage 04189000. Reconciling the two is the hydrology sub-issue (1458); this record
+    only states what the permit says.
+
+acute_dilution:
+  page: 13
+  formula: (1Q10 + WWTP flow rate) / WWTP flow rate
+  computed_as: (0.17 cfs + 23.2 cfs) / 23.2 cfs
+  ratio: 1.0
+  acute_wla: 30 percent mortality in 100 percent effluent
+  note: >-
+    A dilution ratio of 1.0 means the receiving water contributes essentially no dilution at
+    design flow: below the outfall the Blanchard River at low flow IS the effluent. The fact
+    sheet adds that below 3.3-to-1, "the permittee may be required to investigate and remediate
+    toxicity" in the 0.3-1.0 TUa range.
+
+mercury_variance:
+  pages: [15, 16]
+  first_granted: '2010'   # "The Findlay WPCC permit was modified in 2010 to include a mercury variance"
+  renewed_in_this_action: true
+  authority: OAC 3745-1-38(H)
+  wqbel_ng_l: 1.3                       # the water-quality-based limit the variance departs from
+  variance_limit_monthly_avg_ng_l: 3.3  # Table 14 basis "VAR" (OAC 3745-1-38(J))
+  variance_limit_daily_max_ng_l: 1700
+  annual_average_condition_ng_l: 12     # variance condition: annual average <= 12 ng/L
+  observed_reduction_ng_l:
+    at_variance_issue: 8.5
+    current: 2.2
+  modified_allowable_ambient_concentration_ng_l: 3.29
+  maac_citation: >-
+    Ohio EPA, "January 2026 List of Variances"
+    (data/documents/oepa/Jan_2026_List_of_Variances.pdf, p. 2) — Findlay WPCF, outfall 001,
+    Blanchard River, Mercury, MAAC 3.29 ng/L.
+  conditions:
+  - variance-based monthly average effluent limit of 3.3 ng/L
+  - reasonable progress toward the mercury WQBEL
+  - low-level mercury monitoring of plant influent and effluent
+  - annual average mercury effluent concentration <= 12 ng/L
+  - continued Pollutant Minimization Program (PMP)
+  note: >-
+    The MAAC (3.29 ng/L, an in-stream ambient concentration) and the variance-based effluent
+    limit (3.3 ng/L) are DIFFERENT quantities that happen to coincide here — which is what a
+    1.0 acute dilution ratio implies: with no dilution available, the allowed ambient
+    concentration and the allowed effluent concentration converge.
+
+whole_effluent_toxicity:
+  page: 16
+  reasonable_potential: not demonstrated
+  finding: >-
+    "The acute and chronic toxicity results in Table 9, show that there have been no detections
+    of toxicity... Reasonable potential for toxicity is not demonstrated."
+  limits_removed: final effluent limits for Ceriodaphnia dubia
+  retained: annual chronic toxicity testing with determination of acute endpoints
+  final_limits_status: monitoring only
+  final_limits_citation: >-
+    Table 14 (p. 31) lists all four WET endpoints — acute and chronic Ceriodaphnia dubia and
+    Pimephales promelas — as "Monitor", with no numeric limit.
+
+final_effluent_limits:   # Table 14, "Proposed Final Effluent Limits", outfall 001
+  page: 31
+  loading_basis: average design discharge flow of 15 MGD
+  total_phosphorus:
+    average_30_day_mg_l: 1.0
+    daily_maximum_mg_l: 1.5
+    average_30_day_kg_day: 56.8
+    daily_maximum_kg_day: 85.2
+    basis: PTS — Phosphorus Treatment Standards, OAC 3745-33-06(C)
+    basis_class: technology-based
+  mercury:
+    average_30_day_ng_l: 3.3
+    daily_maximum_ng_l: 1700
+    average_30_day_kg_day: 0.00019
+    daily_maximum_kg_day: 0.0966
+    basis: VAR — Mercury variance, OAC 3745-1-38(J)
+  other_limited_parameters:
+  - {parameter: TSS (summer), average_30_day_mg_l: 14, daily_maximum_mg_l: 22, basis: PD}
+  - {parameter: TSS (winter), average_30_day_mg_l: 18, daily_maximum_mg_l: 27, basis: PD}
+  - {parameter: CBOD5 (summer), average_30_day_mg_l: 10, daily_maximum_mg_l: 15, basis: PD}
+  - {parameter: CBOD5 (winter), average_30_day_mg_l: 13, daily_maximum_mg_l: 20, basis: PD}
+  - {parameter: Ammonia (summer), average_30_day_mg_l: 0.91, daily_maximum_mg_l: 1.4, basis: PD}
+  - {parameter: Ammonia (winter), average_30_day_mg_l: 3.5, daily_maximum_mg_l: 5.3, basis: PD}
+  - {parameter: E. coli, average_30_day_per_100ml: 126, daily_maximum_per_100ml: 284, basis: WQS}
+  - {parameter: Oil & Grease, daily_maximum_mg_l: 10, basis: WQS}
+  note: >-
+    The phosphorus limit's basis is PTS — a TECHNOLOGY standard (OAC 3745-33-06(C)), not a
+    water-quality-based or TMDL-derived one. The TMDL's own load allocation for this plant is
+    carried by a separate instrument, the Maumee Watershed Total Phosphorus general permit
+    OHP000001 — see data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml.
+
+tmdl_reference:
+  page: 11
+  statement: >-
+    "The TMDL assigned an individual wasteload allocation to Findlay WPCC of 3,200 kg of total
+    phosphorus for the critical season (March through July). Compliance with this individual
+    wasteload allocation will be regulated through the Maumee Watershed Total Phosphorus NPDES
+    General Permit, under which Findlay WPCC has been granted coverage."
+  cross_ref: data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml
+
+relevance:
+  tags: [verified, npdes, oepa, findlay, hancock-county, blanchard-river, 7q10, dilution,
+         mercury-variance, cso, tmdl, issue-352]
+  note: >-
+    The anchor water-record instrument for Findlay and the direct answer to issue 352: the plant's
+    own fact sheet supplies the receiving water (Blanchard River, RM 56.42), the cited low-flow
+    denominator (7Q10 0.21 cfs) and the stated dilution ratio (1.0) that ECHO's null and the
+    profile's empty `plant_receiving` were missing.
+  cross_refs:
+  - data/extracted/oepa/findlay/2PD00008.npdes.yaml
+  - data/extracted/oepa/findlay/2PD00008.1abaf306.npdes.yaml
+  - data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml
+  - data/reference/echo/curation/maumee-wwtp.receiving-water.yaml
+  - data/reference/network/findlay-ottawa-comparison.yaml

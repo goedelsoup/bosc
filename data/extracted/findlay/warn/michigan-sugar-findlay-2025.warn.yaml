@@ -1,0 +1,99 @@
+doc_id: warn-michigan-sugar-findlay-2025-12-11
+source_path: data/documents/findlay/warn/Michigan_Sugar_Company.pdf
+kind: warn
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read: []
+dpi: 0
+method: >-
+  Verbatim transcription from the PDF's embedded text layer (pypdf). Three pages: the notice
+  letter (2 pp.) and Exhibit 1, the position schedule. Digitally generated letter, not a scan.
+source_text_excerpt: >-
+  "I am writing to inform you that, after careful consideration by our senior leaders, the
+  Michigan Sugar Company will be closing its warehouse facility located at 1343 Greenwood Street,
+  Findlay, OH 45840... Rail service was previously severed to the Findlay site and Ohio has
+  stricter limits on truck weights than Michigan which means it is often difficult to transport
+  sugar from our Michigan factories to the site... Although we do not believe the closure required
+  any notice, we are sending this as a courtesy to be considered notice of a facility closing
+  under the Worker Adjustment and Retraining Notification Act (WARN Act)." Stamped: "Received:
+  12/11/2025 @ 4:56pm".
+layoff_notice:
+  confidence: high
+  warnings:
+  - >-
+    The employer expressly disclaims that WARN was triggered — "Although we do not believe the
+    closure required any notice, we are sending this as a courtesy." This is a COURTESY filing.
+    Treating it as a statutory WARN trigger would misstate the employer's own position; four
+    employees is far below the federal threshold.
+  - >-
+    No final day of operations is stated. The letter says it "has yet to be determined." The only
+    fixed date is that the two BCTGM-represented employees "will remain on our active roll until
+    January 31, 2026". No closure date is asserted here.
+  - >-
+    Three notification dates appear and are distinct: verbal notice to employees 2025-12-04,
+    written notice to BCTGM Local 19 on 2025-12-03, written notice to the two represented
+    employees on 2025-12-11. They are recorded separately below rather than collapsed.
+  statute:
+  - Worker Adjustment and Retraining Notification Act (WARN Act) — filed as a courtesy, the
+    employer stating it does not believe notice was required
+  filed_with: Ohio Department of Job and Family Services (ODJFS) and the Mayor of Findlay
+  addressee: >-
+    Breeyn Tarr, Rapid Response & WIOA Adult and Dislocated Worker Program Administrator, Ohio
+    Job & Family Services; and Christina Muryn, Mayor of Findlay
+  filed_by: Michigan Sugar Company, 122 Uptown Drive, Suite 300, Bay City, Michigan 48708
+  signatory: Mario A. Spadafora, Director, Labor & Employee Relations
+  notice_date: '2025-12-11'
+  received_stamp: 'Received: 12/11/2025 @ 4:56pm'
+  facility_name: Michigan Sugar Company Findlay warehouse
+  employer: Michigan Sugar Company
+  site_address: 1343 Greenwood Street, Findlay, OH 45840
+  county: Hancock
+  action: facility closing (warehouse)
+  scope: the warehouse operation; the site does not produce sugar
+  permanent: true
+  employees_affected: 4
+  final_day_of_operations: null   # "has yet to be determined"
+  union: Bakery, Confectionery, Tobacco Workers and Grain Millers Local 19 (BCTGM)
+  represented_employees: 2
+  notice_dates:
+    union_written: '2025-12-03'
+    employees_verbal: '2025-12-04'
+    represented_employees_written: '2025-12-11'
+    represented_employees_on_roll_until: '2026-01-31'
+  stated_rationale:
+  - an evolving product mix and customer base that lets the company serve customers from other
+    warehousing sites
+  - >-
+    "Rail service was previously severed to the Findlay site and Ohio has stricter limits on truck
+    weights than Michigan which means it is often difficult to transport sugar from our Michigan
+    factories to the site."
+  - outdated and obsolete equipment that would require significant capital investment at a site
+    that neither produces sugar nor has rail service
+  note: >-
+    [verified] A four-employee warehouse closure, noticed to ODJFS and to the Mayor of Findlay on
+    2025-12-11. Small in headcount, but the stated rationale is an INFRASTRUCTURE finding on the
+    record: rail service to the site had already been severed, and the employer names that
+    severance — together with Ohio's truck-weight limits — as a reason the site is no longer
+    serviceable. That is a freight-access datum about a Findlay industrial parcel, from the
+    tenant, in a filed instrument.
+
+# --- Exhibit 1, verbatim (p. 3) ----------------------------------------------------------------
+impacted_positions:
+- {title: Warehouse Manager, classification: salary, count: 1}
+- {title: Warehouse Assistant, classification: salary, count: 1}
+- {title: Warehouse Utility Person, classification: hourly, count: 2}
+grand_total: 4
+
+relevance:
+  tags: [verified, warn, odjfs, findlay, hancock-county, michigan-sugar, plant-closure,
+         rail, freight, labor]
+  note: >-
+    Filed as a courtesy, not a statutory trigger — and the more interesting of the two WARN
+    letters for the site's infrastructure record, because the employer puts a severed rail spur
+    and Ohio truck-weight limits on the record as the reason a Findlay industrial site stopped
+    working. A rail-access lead, not just a layoff.
+  cross_refs:
+  - data/extracted/findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml
+  - data/extracted/findlay/dislocation-and-brownfields.md

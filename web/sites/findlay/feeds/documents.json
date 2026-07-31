@@ -1,1 +1,106 @@
-[]
+[
+  {
+    "slug": "findlay",
+    "title": "Findlay",
+    "description": "**Collection:** `findlay/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "findlay/brownfield/Round 11 Brownfield Descriptions.pdf",
+        "name": "Round 11 Brownfield Descriptions.pdf",
+        "size_bytes": 463172,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "findlay/warn/GoodyearTireRubberCompany.pdf",
+        "name": "GoodyearTireRubberCompany.pdf",
+        "size_bytes": 244268,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "findlay/warn/Michigan_Sugar_Company.pdf",
+        "name": "Michigan_Sugar_Company.pdf",
+        "size_bytes": 257745,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  },
+  {
+    "slug": "oepa",
+    "title": "Ohio EPA",
+    "description": "**Collection:** `oepa/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "oepa/findlay/2PD00008.1abaf306.pdf",
+        "name": "2PD00008.1abaf306.pdf",
+        "size_bytes": 1265367,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/findlay/2PD00008.fs.pdf",
+        "name": "2PD00008.fs.pdf",
+        "size_bytes": 1377067,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/findlay/2PD00008.pdf",
+        "name": "2PD00008.pdf",
+        "size_bytes": 1160870,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  }
+]

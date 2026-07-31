@@ -1,5 +1,25 @@
 [
   {
+    "date": "2023-09-28",
+    "category": "epa_permit_action",
+    "title": "TMDL wasteload allocation + NPDES watershed general permit (total phosphorus) OHP000001 (general) / 2PD00008 (individual) / OH0025135 (application) — allocation assigned and made enforceable through a watershed general permit (Maumee Watershed Nutrient TMDL — Findlay WPCF total-phosphorus wasteload allocation)",
+    "ref": "OHP000001 (general) / 2PD00008 (individual) / OH0025135 (application)",
+    "parties": [
+      "City of Findlay"
+    ],
+    "detail": "affected Blanchard River (RM 56.42) → Auglaize River → Maumee River → Lake Erie Western Basin",
+    "source": "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2024-01-11",
     "category": "epa_permit_action",
     "title": "Feasibility Study — flood risk management and ecosystem restoration (Review Plan) — Review Plan published (Blanchard River Watershed, Ohio — Feasibility Report)",
@@ -10,6 +30,94 @@
     "also_sources": [],
     "citation": {
       "source": "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-08-09",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PD00008*UD (Findlay WPCC (City of Findlay Water Pollution Control Center)) — public notice",
+    "ref": "2PD00008*UD",
+    "parties": [
+      "City of Findlay, 1201 South River Road, Findlay, OH 45804",
+      "Findlay WPCC (City of Findlay Water Pollution Control Center)"
+    ],
+    "detail": "action renewal; receiving Blanchard River",
+    "source": "oepa/findlay/2PD00008.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/findlay/2PD00008.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-09-08",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PD00008*UD (Findlay WPCC (City of Findlay Water Pollution Control Center)) — comment period ends",
+    "ref": "2PD00008*UD",
+    "parties": [
+      "City of Findlay, 1201 South River Road, Findlay, OH 45804",
+      "Findlay WPCC (City of Findlay Water Pollution Control Center)"
+    ],
+    "detail": "",
+    "source": "oepa/findlay/2PD00008.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/findlay/2PD00008.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-11-14",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PD00008*VD (City of Findlay Water Pollution Control Center) — public notice",
+    "ref": "2PD00008*VD",
+    "parties": [
+      "City of Findlay, 1201 South River Road, Findlay, OH, 45840",
+      "City of Findlay Water Pollution Control Center"
+    ],
+    "detail": "action modification; receiving Blanchard River",
+    "source": "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+    "also_sources": [
+      "oepa/findlay/2PD00008.npdes.yaml"
+    ],
+    "citation": {
+      "source": "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-14",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PD00008*VD (City of Findlay Water Pollution Control Center) — comment period ends",
+    "ref": "2PD00008*VD",
+    "parties": [
+      "City of Findlay, 1201 South River Road, Findlay, OH, 45840",
+      "City of Findlay Water Pollution Control Center"
+    ],
+    "detail": "",
+    "source": "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+    "also_sources": [
+      "oepa/findlay/2PD00008.npdes.yaml"
+    ],
+    "citation": {
+      "source": "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
       "source_kind": "document",
       "page": null,
       "confidence": "medium",

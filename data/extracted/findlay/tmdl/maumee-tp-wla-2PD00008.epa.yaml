@@ -1,0 +1,199 @@
+doc_id: maumee-tp-wla-2PD00008-2023
+source_path: data/documents/maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf
+kind: epa
+pages_read: []
+image_pages_read: []
+dpi: 0
+method: >-
+  Reviewed transcription of the Findlay WPCF rows from THREE committed Ohio EPA instruments, read
+  verbatim from each PDF's embedded text layer (these are digitally generated documents, not
+  scans). Each figure below names the instrument and page it came from. Nothing is derived,
+  averaged, or carried between instruments except where a field says so explicitly.
+source_text_excerpt: >-
+  Table A4.1 (Appendix 4, p. A4-1): "2PD00008 Findlay WPCF 3.2 21.0". Table A4.3 (p. A4-8):
+  "2PD00008 Findlay WPCF 0.016 0.11". Table A4.5 (p. A4-10): "2PD00008 Findlay WPCF 4.4 3.2 4.8
+  5.5 5.3 5.5 5.4". OHP000001 Part IV.A.1 (p. 8): "City of Findlay WPCF 3200". OHP000001 Part
+  I.C.1 (p. 2): "City of Findlay WPCF  OH0025135  2PD00008  Blanchard River".
+action:
+  confidence: high
+  warnings:
+  - >-
+    The 3.2 metric tons (Table A4.1) and the 3,200 kg (OHP000001 Part IV.A.1) are the SAME
+    allocation stated in two units by two instruments, not two allocations. Do not add them.
+  - >-
+    Table A4.5's seven numeric columns are, in order, 2008 / WLA / 2017 / 2018 / 2019 / 2020 /
+    2021. The first column is a 2008 baseline load and the second is the allocation — reading the
+    row left-to-right as a time series would misreport both.
+  - >-
+    The most recent per-facility spring load on this record is 2021. The 2024 Biennial Report
+    publishes only the BASIN GROUP total, not Findlay's own load, so no post-2021 Findlay figure
+    is asserted here. Whether Findlay is still over its allocation is [open] — the annual Season
+    Report required by OHP000001 Part IV.D is the record that would answer it (a records-request
+    lead).
+  agency: Ohio Environmental Protection Agency
+  program: TMDL wasteload allocation + NPDES watershed general permit (total phosphorus)
+  permit_no: OHP000001 (general) / 2PD00008 (individual) / OH0025135 (application)
+  action: allocation assigned and made enforceable through a watershed general permit
+  action_date: '2023-09-28'   # US EPA approval of the Maumee Watershed Nutrient TMDL
+  expiration_date: '2028-10-31'   # OHP000001's own expiration
+  # Bare permittee name on purpose: the cross-document entity graph keys on this field, and a
+  # parenthetical facility gloss here forks the City of Findlay into a second node. The facility
+  # is named in `facility` and the instruments name it "Findlay WPCF" throughout.
+  applicant: City of Findlay
+  applicant_address: 1201 South River Road, Findlay, OH 45840, Hancock County
+  facility: Findlay Water Pollution Control Center (WPCC/WPCF), NPDES 2PD00008 / OH0025135
+  site_address: 1201 South River Road, Findlay, OH 45840, Hancock County
+  project_name: Maumee Watershed Nutrient TMDL — Findlay WPCF total-phosphorus wasteload allocation
+  affected_resource: Blanchard River (RM 56.42) → Auglaize River → Maumee River → Lake Erie
+    Western Basin
+  note: >-
+    [verified] Findlay WPCF's spring-season total-phosphorus wasteload allocation is 3.2 metric
+    tons (3,200 kg), and its reported spring loads for every year on the TMDL's own record —
+    2017 through 2021 — were 4.8, 5.5, 5.3, 5.5 and 5.4 metric tons. Its 2008 baseline load, 4.4
+    MT, was also above it. The allocation is enforced not through the plant's individual permit
+    but through the Maumee Watershed Total Phosphorus general permit OHP000001, whose compliance
+    rule (Part IV.C.3) makes an individual exceedance a violation ONLY when the 39-facility
+    CUMULATIVE load also exceeds its cap. In the 2024 spring season the group reported 43,304 kg
+    against a 64,170 kg cap — 20,866 kg of headroom — so an over-allocation Findlay load was not,
+    on that record, a violation of anything.
+
+# --- the allocation, as each instrument states it ---------------------------------------------
+
+allocation:
+  permit_no: 2PD00008
+  facility_as_named: Findlay WPCF
+  season: spring — March through July inclusive
+  regular_discharge:
+    spring_total_phosphorus_metric_tons: 3.2
+    daily_total_phosphorus_kg: 21.0
+    source: data/documents/maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf
+    table: A4.1 — wasteload allocations for individual discharging NPDES permits in the grouped
+      load category
+    page: A4-1
+  combined_sewer_overflows:
+    spring_total_phosphorus_metric_tons: 0.016
+    daily_total_phosphorus_kg: 0.11
+    source: data/documents/maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf
+    table: A4.3 — wasteload allocations for combined sewer overflows
+    page: A4-8
+    note: >-
+      A separate, additional allocation for the ten authorized CSOs. Findlay's CSO allocation is
+      the third largest in the basin, behind Toledo (0.17 MT) and Lima (0.083 MT).
+  general_permit_limit:
+    seasonal_individual_load_limit_kg: 3200
+    source: data/documents/oepa/OHP000001.pdf
+    part: IV.A.1 — Individual Load Limits and Reporting
+    page: 8
+  coverage_row:
+    facility_name: City of Findlay WPCF
+    application_no: OH0025135
+    ohio_npdes_no: 2PD00008
+    receiving_stream: Blanchard River
+    source: data/documents/oepa/OHP000001.pdf
+    part: I.C.1 — Eligibility (the 39 identified facilities)
+    page: 2
+
+existing_loads:   # Table A4.5, "Existing loads for NPDES permits in the grouped load category"
+  source: data/documents/maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf
+  table: A4.5
+  page: A4-10
+  units: metric tons of total phosphorus, spring season
+  baseline_2008: 4.4
+  wla: 3.2
+  reported:
+    '2017': 4.8
+    '2018': 5.5
+    '2019': 5.3
+    '2020': 5.5
+    '2021': 5.4
+  years_above_wla: 5    # of 5 reported
+  ratio_to_wla_range: [1.50, 1.72]   # 4.8/3.2 .. 5.5/3.2, computed from the transcribed row
+  peer_context: >-
+    Among the basin's five largest grouped-load POTWs, Findlay is the only one over its
+    allocation in every reported year. Toledo Bay View (WLA 27.9) reported 15.1-23.8; Lucas Co
+    WRRF (4.8) reported 5.4-6.7 and is also chronically over; Lima WWTP (4.0) reported 2.4-5.0
+    and is over in one year of five; Perrysburg (2.0) reported 1.2-2.1.
+
+general_permit:
+  permit_no: OHP000001
+  title: General Permit Authorization to Discharge Total Phosphorus from Point Source Facilities
+    in the Maumee Watershed under the NPDES
+  issued: '2023-11-01'          # printed as the Effective Date on p. 1
+  expires: '2028-10-31'
+  signed_by: Anne M. Vogel, Director, Ohio Environmental Protection Agency
+  facilities_covered: 39
+  source: data/documents/oepa/OHP000001.pdf
+  compliance_rule:
+    part: IV.C
+    page: 8-9
+    cumulative_rule: >-
+      "The sum of the Individual Loads from all facilities covered under this general permit
+      ('Cumulative Load') shall not exceed the Cumulative Load Limit."
+    individual_compliance: >-
+      "For any given season, individual permittees shall be in compliance with its Individual Load
+      Limit if: a. The Cumulative Load does not exceed the Cumulative Load Limit or; b. The
+      Cumulative Load exceeds the Cumulative Load Limit but the permittee's Individual Load does
+      not exceed their respective Individual Load Limit."
+    individual_violation: >-
+      "For any given season, individual permittees are in violation of their Individual Load
+      Limit only if: a. The Cumulative Load exceeds the Cumulative Load Limit and; b. The
+      permittee's Individual Load exceeds their respective Individual Load Limit."
+    director_remedy: >-
+      Part IV.C.4 — on review of each Season Report the Director "may re-evaluate the eligibility"
+      of permittees over their Individual Load Limits; Part IV.C.5 makes any future exceedance by
+      a permittee determined ineligible a violation regardless of the cumulative total.
+    individual_permit_not_superseded: >-
+      Part IV.C.6 — "The total phosphorus limitations in this permit do not supersede total
+      phosphorus limitations in the permittees' respective individual NPDES permits."
+  season_report:
+    part: IV.D
+    due: September 1 of each year
+    contents: the calculated Individual Load and an assessment against the Individual Load Limit;
+      a summary of load-reduction activities; any other relevant information
+    status: '[open] — Findlay''s own Season Reports are not in the corpus. They are the record
+      that would say whether the plant is still over 3,200 kg. A records-request lead.'
+
+group_performance_2024:
+  source: data/documents/maumee-tmdl/2024_Maumee_Biennial_Report_Final_clean.pdf
+  document: Maumee Watershed Nutrient TMDL Biennial Report, December 2024
+  page: 13-14
+  season: March – July 2024
+  facilities_covered: 39
+  cumulative_load_limit_kg_tp: 64170
+  allowance_for_future_growth_kg_tp: 1400
+  cumulative_load_reported_kg_tp: 43304
+  headroom_kg_tp: 20866
+  finding: >-
+    The group bubble had 20,866 kg of headroom in its first reported season, so under Part IV.C.3
+    no covered facility could be in violation of its individual limit that season — including one
+    running ~50-70% over its own allocation.
+  note: >-
+    The report publishes the group total only. It does not publish per-facility 2024 loads, so it
+    neither confirms nor refutes a continuing Findlay exceedance.
+
+individual_permit_phosphorus_limit:
+  note: >-
+    Distinct from the allocation above and easy to conflate. NPDES permit 2PD00008 carries its own
+    total-phosphorus limit of 1.0 mg/L (30-day average) / 56.8 kg/day, on basis "PTS" —
+    Phosphorus Treatment Standards, OAC 3745-33-06(C), a TECHNOLOGY standard, not the TMDL. The
+    TMDL allocation reaches the plant only through OHP000001. Both bind
+    (OHP000001 Part IV.C.6).
+  source: data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml (Table 14, p. 31)
+  local_limits_evaluation: >-
+    The *VD permit's Schedule of Compliance (event 52599, due 2026-05-01) requires the City to
+    evaluate whether local industrial-user limits for total phosphorus would make substantial
+    progress toward a 0.5 mg/L monthly average — half the permit limit — or to submit evidence
+    that they would not.
+
+relevance:
+  tags: [verified, tmdl, phosphorus, oepa, findlay, hancock-county, blanchard-river,
+         ohp000001, general-permit, lake-erie, western-basin]
+  note: >-
+    The allocation chain for the standing water watch (issue 1461). Three instruments, one
+    number: the TMDL assigns 3.2 MT, the general permit restates it as 3,200 kg and makes it
+    enforceable, and the group's own compliance rule is what keeps a 50-70% individual overage
+    from being a violation.
+  cross_refs:
+  - data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml
+  - data/extracted/oepa/findlay/2PD00008.npdes.yaml
+  - data/extracted/findlay/discharge-record.md

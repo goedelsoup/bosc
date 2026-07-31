@@ -110,12 +110,28 @@ def test_committed_overlay_survives_a_repull() -> None:
             design_flow_mgd=None,
             county="VAN WERT",
         ),
+        # The Blanchard's anchor POTW (#1460 / closing #352) — a second subbasin in the same
+        # pull, so this also exercises a multi-HUC scope rather than the Auglaize alone.
+        _facility(
+            name="CITY OF FINDLAY WATER POLLUTION CONTROL CENTER",
+            frs_registry_id="110064593177",
+            npdes_id="OH0025135",
+            npdes_ids_all="OH0025135",
+            design_flow_mgd=15.0,
+            county="HANCOCK",
+            huc8=_OTHER_HUC,
+            queried_huc8=_OTHER_HUC,
+        ),
     ]
     curation = echo_curation.curate(
-        facilities, echo.MAUMEE, queried_huc8s=_SCOPE, settings=settings
+        facilities,
+        echo.MAUMEE,
+        queried_huc8s=frozenset({_HUC, _OTHER_HUC}),
+        settings=settings,
     )
     outcomes = {a.correction.npdes_id: a.outcome for a in curation.applied}
     assert outcomes == {
+        "OH0025135": "applied",
         "OH0026069": "applied",
         "OH0027910": "applied",
         "OH0135569": "documented",
@@ -125,6 +141,7 @@ def test_committed_overlay_survives_a_repull() -> None:
     assert facilities[1].receiving_water == "Town Creek"
     # The `caveat` correction leaves ECHO's value strictly alone (#379).
     assert facilities[2].receiving_water is None
+    assert facilities[3].receiving_water == "Blanchard River"
 
 
 def test_committed_inventory_carries_the_curated_provenance() -> None:
@@ -139,10 +156,22 @@ def test_committed_inventory_carries_the_curated_provenance() -> None:
     assert "2PE00000" in lima["receiving_water_citation"]
     assert lima["ottawa_discharge"] is True  # derived from the curated value
 
+    findlay = next(f for f in potw["facilities"] if f["npdes_id"] == "OH0025135")
+    assert findlay["receiving_water"] == "Blanchard River"
+    assert findlay["receiving_water_source"] == "curated"
+    assert findlay["receiving_water_echo"] is None
+    assert "2PD00008" in findlay["receiving_water_citation"]
+    # A Blanchard plant is NOT an Ottawa discharger — the curated value drives the flag both ways.
+    assert findlay["ottawa_discharge"] is False
+
     block = potw["meta"]["receiving_water_curation"]
     assert block["overlay"] == "reference/echo/curation/maumee-wwtp.receiving-water.yaml"
     # The POTW-only file must not advertise the non-POTW OH0135569 correction it lacks.
-    assert {c["npdes_id"] for c in block["corrections"]} == {"OH0026069", "OH0027910"}
+    assert {c["npdes_id"] for c in block["corrections"]} == {
+        "OH0025135",
+        "OH0026069",
+        "OH0027910",
+    }
 
     all_doc = yaml.safe_load(
         (REPO_ROOT / "data" / "reference" / "echo" / "maumee-wwtp.all-npdes.yaml").read_text()

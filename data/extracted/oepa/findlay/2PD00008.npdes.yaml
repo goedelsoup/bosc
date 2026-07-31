@@ -1,0 +1,204 @@
+doc_id: 2PD00008-62524317
+source_path: data/documents/oepa/findlay/2PD00008.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "50 W. Town Street\nSuite 700\nColumbus, Ohio 43215 U.S.A.\n\
+  614 | 644 3020\nepa.ohio.gov\nThe State of Ohio is an Equal Opportunity Employer\
+  \ and Provider of ADA Services\nNovember 7, 2025\nOhio EPA permit No.  2PD00008*UD\n\
+  Application No. OH0025135\nEffective Date: February 1, 2026  \nFacility Name:  City\
+  \ of Findlay Water Pollution Control \nCenter\nCity of Findlay Water Pollution Control\
+  \ Center\nDavid Beach\n1201 South River Road\nFindlay, OH 45840\nDear Ladies and\
+  \ Gentlemen:\nIn accordance with Rule 3745-33-04 (D) of the Ohio Administrative\
+  \ Code, the above referenced NPDES \nPermit is hereby modified as follow"
+# WHAT THIS FILE IS — read this before quoting the permit number.
+#
+# The Ohio EPA DAM slot `permits/doc/2PD00008.pdf` does NOT serve the original 2024 *UD renewal.
+# It serves the LATER modification package: a 2025-11-07 transmittal letter from Director John
+# Logue, the modified permit as issued (2PD00008*VD, effective 2026-02-01), and — from 0-based
+# page 44 — the modification's own 8-page fact sheet (Public Notice 216133). 52 pages total.
+# The original *UD issuance is therefore NOT a byte we hold; its term is recorded in
+# 2PD00008.fs.npdes.yaml (`permit_term:`) from the Ohio EPA variance list that states it.
+#
+# The `permit:` block is the pipeline's read of the first six pages. The header fields were
+# CORRECTED on review from the *VD fact sheet inside this same PDF (p. 45), which prints the
+# public-notice fields the six-page window could not see; the extractor's three warnings about
+# them are superseded and are preserved below as `superseded_warnings` rather than deleted.
+permit:
+  confidence: high
+  warnings:
+  - >-
+    The permit number transitions from 2PD00008*UD (the permit being modified) to 2PD00008*VD
+    (as modified, effective 2026-02-01); the number recorded here is the effective one, *VD.
+  - >-
+    This PDF is a COMPOSITE — transmittal letter + modified permit + the modification's own fact
+    sheet (from 0-based p. 44). Cite the sub-document, not just the file.
+  superseded_warnings:   # the extractor's, corrected on review; kept for audit
+  - 'No public notice number found in document — SUPERSEDED: Public Notice No. 216133 is printed
+    on p. 45 (the attached *VD fact sheet), outside the six-page read window.'
+  - 'No comment period end date found — SUPERSEDED: "Comment Period Ends: 12/14/2025" is printed
+    on p. 45.'
+  facility_name: City of Findlay Water Pollution Control Center
+  permit_no: 2PD00008*VD
+  permit_action: modification
+  # Normalized to the bare permittee. The letter is addressed "City of Findlay Water Pollution
+  # Control Center / David Beach / 1201 South River Road" — David Beach is the ADDRESSEE, not a
+  # co-applicant, and folding him into this field forks the City of Findlay into a second entity
+  # node ("CITY OF FINDLAY DAVID BEACH") in the cross-document graph. He is recorded as `contact`.
+  applicant: City of Findlay, 1201 South River Road, Findlay, OH 45840
+  contact: David Beach
+  application_no: OH0025135
+  public_notice_no: '216133'
+  public_notice_date: '2025-11-14'
+  comment_period_end: '2025-12-14'
+  facility_address: 1201 South River Road, Findlay, OH 45840
+  discharge_address: 1201 South River Road, Findlay, Ohio, Hancock County
+  receiving_water: Blanchard River at River Mile 56 (and associated tributaries)
+  stream_network: Blanchard River to Maumee River to Lake Erie
+  outfalls:
+  - '001'
+  note: >-
+    Outfall 001 (station 2PD00008001) is the sole FINAL outfall — "Final effluent prior to
+    discharge to the Blanchard River", Lat/Long 41.0497 N / 83.6678 W (Part II, B, p. 18). The
+    ten station numbers the pipeline first read into this field (002, 003, 011, 012, 015, 016,
+    018, 024, 025, 026) are SANITARY SEWER OVERFLOWS, not outfalls; they are recorded under
+    `stations:` below with the ten CSOs and the sludge/influent/in-stream stations.
+
+# --- reviewed augmentation (issue 1460) -------------------------------------------------------
+
+review:
+  issue: 1460
+  reviewed_on: '2026-07-31'
+  method: >-
+    Verbatim transcription from this PDF's embedded text layer (pypdf), page by page. Page
+    numbers below are 1-based printed sheets of the 52-page composite.
+
+modification:
+  action: NPDES permit modification under OAC 3745-33-04(D)
+  issued: '2025-11-07'
+  signed_by: John Logue, Director, Ohio Environmental Protection Agency
+  public_notice_no: '216133'
+  public_notice_date: '2025-11-14'
+  comment_period_end: '2025-12-14'
+  effective: '2026-02-01'
+  expires: '2029-10-31'
+  permit_no_before: 2PD00008*UD
+  permit_no_after: 2PD00008*VD
+  application_no: OH0025135   # unchanged by the modification
+  revisions:
+  - >-
+    "Page 14 - Part I, C, Schedule of Compliance, change the milestone summary report for the
+    Municipal CSO Schedule event code 34099 Due Date to November 1, 2026."
+  - >-
+    "Page 15 - Part I, C, 2, Long-Term Control Plan (LTCP) Addendum section (b.), change the
+    language to No later than November 1, 2026."
+  scope_statement: >-
+    "All terms and conditions of the existing permit not recommended for modification by this
+    document will remain in effect."
+  finding: >-
+    The whole substance of this modification is a DATE. It moves the CSO long-term-control
+    deadline — and nothing else. The plant's limits, its mercury variance and its low-flow basis
+    are untouched.
+
+schedule_of_compliance:
+  page: 15
+  milestones:
+  - section: Municipal Pretreatment Schedule
+    report_event: Eff Limits For Pollutants
+    event_code: '52599'
+    due: '2026-05-01'
+    note: >-
+      Requires the City to evaluate local industrial-user limits, including specifically whether
+      local limits for TOTAL PHOSPHORUS would make substantial progress toward a monthly average
+      effluent concentration target of 0.5 mg/L — half the permit's own 1.0 mg/L limit. The City
+      may instead submit evidence that local limits are not appropriate.
+  - section: Municipal CSO Schedule
+    report_event: Submit Study Plan
+    event_code: '34099'
+    due: '2026-11-01'
+    note: The date this modification moved; the LTCP Addendum deadline moved with it.
+
+stations:
+  page: 18
+  final_outfall:
+  - {station: 2PD00008001, kind: final effluent, description: Final effluent prior to discharge
+     to the Blanchard River, lat: 41.0497, lon: -83.6678}
+  sanitary_sewer_overflows:
+  - {station: 2PD00008002, description: West end of Edinborough Drive, lat: 41.06992, lon: -83.65997}
+  - {station: 2PD00008003, description: Howard Run, lat: 41.05672, lon: -83.66877}
+  - {station: 2PD00008011, description: First and Bank Street, lat: 41.02801, lon: -83.64215}
+  - {station: 2PD00008012, description: Sixth and South Main Street, lat: 41.02289, lon: -83.64991}
+  - {station: 2PD00008015, description: Findlay and Shinkle Street, lat: 41.04269, lon: -83.66129}
+  - {station: 2PD00008016, description: Northwest of Hull and Milton, lat: 41.05243, lon: -83.63605}
+  - {station: 2PD00008018, description: East End of Tioga Avenue, lat: 41.06926, lon: -83.64578}
+  - {station: 2PD00008024, description: Washington Street and Marshall Street, lat: 41.02306, lon: -83.66278}
+  - {station: 2PD00008025, description: Park and First Street, lat: 41.01444, lon: -83.64389}
+  - {station: 2PD00008026, description: Fairway and Greendale, lat: 41.02556, lon: -83.62694}
+  combined_sewer_overflows:   # Part II, D (p. 19) — authorized wet-weather discharges only
+  - {station: 2PD00008004, description: East of Old WWTP, lat: 41.04632, lon: -83.65865, receiving_stream: Blanchard River}
+  - {station: 2PD00008005, description: North West and High Street, lat: 41.04467, lon: -83.65387, receiving_stream: Blanchard River}
+  - {station: 2PD00008006, description: North Side of Liberty Street Dam, lat: 41.04253, lon: -83.65535, receiving_stream: Blanchard River}
+  - {station: 2PD00008007, description: Liberty and Washington, lat: 41.04187, lon: -83.65436, receiving_stream: Blanchard River}
+  - {station: 2PD00008010, description: Hancock and Bank Street, lat: 41.02999, lon: -83.64248, receiving_stream: Eagle Creek}
+  - {station: 2PD00008013, description: East Sandusky and Blanchard Street, lat: 41.03642, lon: -83.64166, receiving_stream: Eagle Creek}
+  - {station: 2PD00008014, description: South West and West Front Street, lat: 41.04104, lon: -83.65073, receiving_stream: Blanchard River}
+  - {station: 2PD00008019, description: North Cory at Walnut Street Alley, lat: 41.04253, lon: -83.65172, receiving_stream: Blanchard River}
+  - {station: 2PD00008022, description: West Front and North Main, lat: 41.02278, lon: -83.65028, receiving_stream: Blanchard River}
+  - {station: 2PD00008023, description: East and West Sandusky Street, lat: 41.02139, lon: -83.64667, receiving_stream: Blanchard River}
+  other:
+  - {station: 2PD00008300, kind: SSO reporting station}
+  - {station: 2PD00008586, kind: sludge — disposal in an authorized landfill}
+  - {station: 2PD00008588, kind: sludge — transfer to another NPDES permittee}
+  - {station: 2PD00008601, kind: influent monitoring}
+  - {station: 2PD00008801, kind: in-stream upstream, description: Main Street Bridge}
+  - {station: 2PD00008901, kind: in-stream downstream, description: County Road 140 bridge}
+  note: >-
+    Eight of the ten CSOs discharge to the Blanchard River and two (010, 013) to Eagle Creek —
+    the same Eagle Creek the flood-mitigation program is building a dry storage basin on
+    (data/extracted/findlay/flood-mitigation.md). The two overlap geographically and are being
+    tracked as separate instrument chains.
+
+cso_public_access_areas:   # Part II, D (p. 20) — areas the permit names as potentially impacted
+  page: 20
+  areas:
+  - {name: Great Karg Well, location: Liberty & River Street, cso: 2PD00008004}
+  - {name: Liberty Landing, location: Township Road 89, cso: 2PD00008004}
+  - {name: Blanchard Landing, location: State Route 235, cso: 2PD00008004}
+  notification_rule: 40 CFR 122.38(a) — Public Notification Requirements for CSO discharges to
+    the Lake Erie Basin
+
+attached_fact_sheet:
+  pages: [45, 52]
+  title: Fact Sheet for NPDES Permit Modification, Findlay WPCC, 2025
+  public_notice_no: '216133'
+  public_notice_date: '2025-11-14'
+  comment_period_end: '2025-12-14'
+  contact: Michael Donnelly, Ohio EPA, 419-373-3070
+  river_mile: 56.42
+  stream_network_as_printed: Blanchard River to Maumee River to Lake Erie
+  discrepancy: >-
+    This *VD fact sheet prints the subsequent stream network as "Blanchard River to Maumee River
+    to Lake Erie"; the 2024 *UD renewal fact sheet prints "Auglaize River to Maumee River to Lake
+    Erie" for the same outfall. The Blanchard is a tributary of the AUGLAIZE, which is the
+    Maumee's tributary, so the *UD wording is the complete chain and the *VD wording drops the
+    Auglaize. Both preserved as printed; neither "corrected".
+
+relevance:
+  tags: [verified, npdes, oepa, findlay, hancock-county, blanchard-river, cso, modification,
+         schedule-of-compliance]
+  note: >-
+    The instrument in force. Its one substantive act is to move the Municipal CSO Schedule event
+    34099 and the LTCP Addendum to 2026-11-01 — a live, dated deadline for the standing water
+    watch (issue 1461).
+  cross_refs:
+  - data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml
+  - data/extracted/oepa/findlay/2PD00008.1abaf306.npdes.yaml
+  - data/extracted/findlay/flood-mitigation.md

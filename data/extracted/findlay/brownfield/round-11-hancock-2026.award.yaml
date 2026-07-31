@@ -1,0 +1,130 @@
+doc_id: brownfield-round-11-hancock-2026-05-13
+source_path: data/documents/findlay/brownfield/Round 11 Brownfield Descriptions.pdf
+kind: award
+pages_read:
+- 16
+- 17
+image_pages_read: []
+dpi: 0
+method: >-
+  Verbatim transcription of the three Hancock County entries from the statewide Round 11 award
+  descriptions packet (53 pp.), read from the PDF's embedded text layer (pypdf). The packet is
+  organised alphabetically by awardee; the Hancock entries sit on 0-based pages 16-17, printed
+  sheets 17-18.
+source_text_excerpt: >-
+  "Hancock County Commissioners Office (Hancock County) / Project Name: Bluffton Former Gas
+  America Assessment / $98,000 / Assessment... City of Findlay (Hancock County) / Project Name:
+  Former Lincoln Elementary School Remediation / $663,998 / Cleanup/Remediation... City of Findlay
+  (Hancock County) / Project Name: Tiffin Ave Abandoned Gas Station Assessment / $238,000 /
+  Assessment"
+award:
+  confidence: high
+  warnings:
+  - >-
+    Three awards to TWO different recipients. Two are the City of Findlay; the Bluffton Former Gas
+    America assessment is awarded to the HANCOCK COUNTY COMMISSIONERS OFFICE, not the City.
+    `amount_usd` below is the county-wide Round 11 total; the per-project rows are the awards.
+  - >-
+    This packet is the AWARD-DESCRIPTION document distributed with the announcement. It is not a
+    grant agreement and carries no agreement number, execution date, or disbursement terms; none
+    are asserted here.
+  - >-
+    The job figures are the packet's own forward-looking expectations for each redevelopment
+    ("expected to create 24 jobs, retain 28 positions"), not outcomes. They are recorded as
+    stated projections, not as employment on the record.
+  - >-
+    Hancock County's presence in Rounds 4-10 of this program is [open] — not researched here. The
+    "Round 11" framing below says nothing about whether the county was awarded in earlier rounds.
+  program: Ohio Brownfield Remediation Program — Round 11
+  agency: State of Ohio (announced by the Governor's office, 2026-05-13); program administered by
+    the Ohio Department of Development
+  instrument: grant
+  award_no: null
+  borrower: City of Findlay (2 awards) and Hancock County Commissioners Office (1 award)
+  project_name: Hancock County Round 11 brownfield awards
+  amount_usd: 999998   # 663998 + 238000 + 98000, transcribed and summed from the three rows
+  award_date: '2026-05-13'
+  note: >-
+    [verified] Three Hancock County brownfield awards totalling $999,998 were announced in Round
+    11 on 2026-05-13: $663,998 to remediate the former Lincoln Elementary School in Findlay,
+    $238,000 to assess an abandoned Tiffin Avenue gas station, and $98,000 to the county for a
+    BUSTR assessment at a former Gas America station in Bluffton. Two of the three are petroleum
+    underground-storage-tank sites; the third is asbestos in a vacant school.
+
+projects:
+- project_name: Former Lincoln Elementary School Remediation
+  recipient: City of Findlay
+  county: Hancock
+  amount_usd: 663998
+  category: Cleanup/Remediation
+  contaminant: asbestos
+  description: >-
+    "This project will support asbestos abatement and selective demolition activities at the
+    former Lincoln Elementary School in Findlay, a historic school building vacant since 2021.
+    Cleanup activities will include pre-renovation asbestos abatement and demolition work
+    necessary to access impacted building materials."
+  vacant_since: '2021'
+  planned_reuse: >-
+    mixed-use development featuring 32 residential units, office and collaborative work space,
+    and potential retail amenities, including a beer garden
+  projected_jobs_created: 24
+  projected_jobs_retained: 28
+  stated_rationale: >-
+    "expand housing opportunities in Findlay's highly constrained rental market, and support
+    continued investment and revitalization within the surrounding neighborhood"
+- project_name: Tiffin Ave Abandoned Gas Station Assessment
+  recipient: City of Findlay
+  county: Hancock
+  amount_usd: 238000
+  category: Assessment
+  contaminant: petroleum (underground storage tanks)
+  regulator: BUSTR — Ohio Bureau of Underground Storage Tank Regulations
+  description: >-
+    "This project will remove underground storage tanks and conduct Tier 1 and 2 BUSTR
+    assessments at a long-abandoned former gas station. Closing the UST system and investigating
+    subsurface conditions will support property cleanup and redevelopment."
+  planned_reuse: Holistic Health & Resilience Center offering community mental wellness and
+    support services
+  projected_jobs_created: 12
+- project_name: Bluffton Former Gas America Assessment
+  recipient: Hancock County Commissioners Office
+  county: Hancock
+  amount_usd: 98000
+  category: Assessment
+  contaminant: petroleum (a release discovered beneath a dispenser island)
+  regulator: BUSTR — Ohio Bureau of Underground Storage Tank Regulations
+  description: >-
+    "This project will complete BUSTR-regulated environmental assessment activities following the
+    removal of four underground storage tanks at a former gas station, where a petroleum release
+    was discovered beneath a dispenser island. Work includes a Tier 1 assessment, potential
+    interim response actions, and Tier 2 evaluation to secure a No Further Action designation."
+  tanks_removed: 4
+  target_outcome: No Further Action designation
+  planned_reuse: support space for an adjoining motel
+  note: >-
+    Bluffton straddles the Hancock/Allen county line. This award is filed under Hancock in the
+    packet and is awarded to the Hancock County Commissioners Office; the site's own county is
+    not stated in the entry.
+
+totals:
+  hancock_round_11_usd: 999998
+  awards: 3
+  by_category:
+    cleanup_remediation_usd: 663998
+    assessment_usd: 336000
+  projected_jobs_created: 36   # 24 + 12; the Bluffton entry projects none
+  projected_jobs_retained: 28
+
+relevance:
+  tags: [verified, brownfield, ohio-development, findlay, hancock-county, bluffton,
+         bustr, underground-storage-tank, asbestos, redevelopment]
+  note: >-
+    The public-money side of Findlay's contaminated-land record, and the counterweight to the
+    WARN pair in the same window: state dollars going into two petroleum UST sites and one
+    asbestos-laden school while two employers file closure notices. Two of the three projects are
+    subsurface petroleum — the same contaminant class that would matter to any groundwater
+    question on those parcels.
+  cross_refs:
+  - data/extracted/findlay/dislocation-and-brownfields.md
+  - data/extracted/findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml
+  - data/extracted/findlay/warn/michigan-sugar-findlay-2025.warn.yaml

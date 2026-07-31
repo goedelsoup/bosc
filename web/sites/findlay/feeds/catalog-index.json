@@ -1,7 +1,7 @@
 {
   "site": "findlay",
-  "catalog_version": "c659eab56f5712572a4dba8f02e8ee01edcf0f7e105c5915f172f2b589519a31",
-  "contract_version": "1.46.0",
+  "catalog_version": "ff1f651779a05402d5463a1879fc3dc96cf6c8b26044be704c840905d8c33447",
+  "contract_version": "1.47.0",
   "atoms": [
     {
       "handle": "concept:findlay:7q10",
@@ -748,6 +748,22 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:findlay-discharge-record",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "findlay-discharge-record",
+      "title": "Findlay — NPDES 2PD00008 Instrument Set + Maumee TP Allocation Chain (Extractions)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:findlay-dislocation",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "findlay-dislocation",
+      "title": "Findlay — WARN Notices + Brownfield Round 11 Awards (Extractions)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:findlay-flood",
       "kind": "dataset",
       "site": "findlay",
@@ -1052,6 +1068,22 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:findlay:BLANCHARD RIVER",
+      "kind": "entity",
+      "site": "findlay",
+      "local_id": "BLANCHARD RIVER",
+      "title": "Blanchard River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:findlay:CITY OF FINDLAY",
+      "kind": "entity",
+      "site": "findlay",
+      "local_id": "CITY OF FINDLAY",
+      "title": "City of Findlay",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:findlay:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "findlay",
@@ -1065,6 +1097,14 @@
       "site": "findlay",
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:findlay:npdes:2PD00008",
+      "kind": "entity",
+      "site": "findlay",
+      "local_id": "npdes:2PD00008",
+      "title": "City of Findlay Water Pollution Control Center",
       "feed": "entities"
     },
     {
@@ -1084,6 +1124,14 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:BROWNFIELD-ROUNDS-4-10",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "BROWNFIELD-ROUNDS-4-10",
+      "title": "Establish Hancock County's presence in Ohio Brownfield Remediation Rounds 4-10",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:CONSERVANCY-COURT-2021",
       "kind": "lead",
       "site": "findlay",
@@ -1092,11 +1140,43 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:CSO-LTCP-2026-11-01",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "CSO-LTCP-2026-11-01",
+      "title": "The CSO Long-Term Control Plan addendum is due 2026-11-01 — a dated deadline on an issued permit",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:EMINENT-DOMAIN-DOCKETS",
       "kind": "lead",
       "site": "findlay",
       "local_id": "EMINENT-DOMAIN-DOCKETS",
       "title": "Locate the Eagle Creek appropriation dockets — landowner names, court, case number, status",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:ENTITY-CORPORATE-FILINGS",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "ENTITY-CORPORATE-FILINGS",
+      "title": "Seed the corporate chain in the entity graph — One Power, OnSite, Basalt, MARA (≠ Marathon)",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:FINDLAY-RAIL-SEVERANCE",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "FINDLAY-RAIL-SEVERANCE",
+      "title": "Michigan Sugar puts a severed Findlay rail spur on the record — map what else lost service",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:MERCURY-VARIANCE-RENEWAL",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "MERCURY-VARIANCE-RENEWAL",
+      "title": "The mercury variance runs with the permit to 2029-10-31 — track the annual 12 ng/L condition",
       "feed": "leads"
     },
     {
@@ -1116,12 +1196,44 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:TP-SEASON-REPORTS",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "TP-SEASON-REPORTS",
+      "title": "Request Findlay WPCF's annual OHP000001 Total Phosphorus Season Reports (is it still over 3,200 kg?)",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:UD-ISSUANCE-BYTES",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "UD-ISSUANCE-BYTES",
+      "title": "Obtain the original 2PD00008*UD issuance — the DAM now serves only the *VD modification package",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:USACE-2024-REVIEW",
       "kind": "lead",
       "site": "findlay",
       "local_id": "USACE-2024-REVIEW",
       "title": "Resolve whether the 2024-01-11 USACE Blanchard feasibility Review Plan is a renewed effort or archival",
       "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:WARN-GOODYEAR-DESTINATION",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "WARN-GOODYEAR-DESTINATION",
+      "title": "Where does Goodyear's Tall Timbers mold work go — the WARN letter does not say",
+      "feed": "leads"
+    },
+    {
+      "handle": "record:findlay:findlay/brownfield/round-11-hancock-2026.award.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/brownfield/round-11-hancock-2026.award.yaml",
+      "title": "Hancock County Round 11 brownfield awards",
+      "feed": "records"
     },
     {
       "handle": "record:findlay:findlay/flood/fema-fma-obligation-2026.epa.yaml",
@@ -1138,6 +1250,78 @@
       "local_id": "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
       "title": "Blanchard River Watershed, Ohio — Feasibility Report",
       "feed": "records"
+    },
+    {
+      "handle": "record:findlay:findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
+      "title": "Maumee Watershed Nutrient TMDL — Findlay WPCF total-phosphorus wasteload allocation",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
+      "title": "Goodyear Tall Timbers Mold facility",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
+      "title": "Michigan Sugar Company Findlay warehouse",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+      "title": "City of Findlay Water Pollution Control Center",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:oepa/findlay/2PD00008.fs.npdes.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "oepa/findlay/2PD00008.fs.npdes.yaml",
+      "title": "Findlay WPCC (City of Findlay Water Pollution Control Center)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:oepa/findlay/2PD00008.npdes.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "oepa/findlay/2PD00008.npdes.yaml",
+      "title": "City of Findlay Water Pollution Control Center",
+      "feed": "records"
+    },
+    {
+      "handle": "timeline:findlay:2PD00008*UD",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "2PD00008*UD",
+      "title": "NPDES 2PD00008*UD (Findlay WPCC (City of Findlay Water Pollution Control Center)) — public notice",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:2PD00008*VD",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "2PD00008*VD",
+      "title": "NPDES 2PD00008*VD (City of Findlay Water Pollution Control Center) — public notice",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:OHP000001 (general) / 2PD00008 (individual) / OH0025135 (application)",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "OHP000001 (general) / 2PD00008 (individual) / OH0025135 (application)",
+      "title": "TMDL wasteload allocation + NPDES watershed general permit (total phosphorus) OHP000001 (general) / 2PD00008 (individual) / OH0025135 (application) — allocation assigned and made enforceable through a watershed general permit (Maumee Watershed Nutrient TMDL — Findlay WPCF total-phosphorus wasteload allocation)",
+      "feed": "timeline"
     }
   ]
 }

@@ -1,0 +1,101 @@
+doc_id: 2PD00008.1abaf306-29eeb07b
+source_path: data/documents/oepa/findlay/2PD00008.1abaf306.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "  Application No.:  OH0025135 \n  Ohio EPA Permit No.:  2PD00008*VD\
+  \ \nPublic Notice No.:  \n \n \n \n \nNational Pollutant Discharge Elimination System\
+  \ (NPDES) Permit Program \n \n P U B L I C  N O T I C E  \n \n NPDES Permit Modification\
+  \ to Discharge to State Waters \n \nOhio Environmental Protection Agency \nPermits\
+  \ Section \n50 West Town St., Suite 700 \nP. O. Box 1049 \nColumbus, Ohio 43216-1049\
+  \ \n(614) 644-2001 \n \nPublic Notice No.: 216133  \n \nDate of Issuance of Proposed\
+  \ Modification: November 7, 2025 \nDate of Public Notice: November 14, 2025   \n\
+  Effective Date of Modification: PROPOSED \n \nName and Address"
+# FILENAME NOTE (chain of custody). This file's as-received DAM name is `2PD00008.pdf` — the
+# same name the issued-permit package carries, because Ohio EPA serves the draft public notice
+# from a different DAM path (`permits/DraftPN/`) under the same basename. The fetcher's
+# non-destructive collision rule kept both bytes and suffixed this one with its content hash
+# (`2PD00008.1abaf306.pdf`); the two source URLs are recorded in
+# data/documents/oepa/findlay/filename-map.yaml. Canonical name: "2PD00008 *VD modification
+# public notice (PN 216133)".
+permit:
+  confidence: high
+  warnings:
+  - >-
+    "Effective Date of Modification: PROPOSED" — this is the DRAFT public notice, not the issued
+    action. The modification was subsequently issued effective 2026-02-01; the issued package is
+    data/extracted/oepa/findlay/2PD00008.npdes.yaml. Do not read this document's *VD number as
+    proof the modification took effect.
+  - >-
+    Two permit numbers appear: 2PD00008*UD (pre-modification) and 2PD00008*VD (post-modification);
+    the number recorded here is the proposed post-modification one, *VD.
+  - >-
+    The header's "Public Notice No.:" field is blank on the first line; the number 216133 is
+    printed in the notice body below it.
+  superseded_warnings:   # the extractor's, corrected on review; kept for audit
+  - 'Comment period end inferred as 30 days from the public notice date (Nov 14 + 30 = Dec 14,
+    2025) — SUPERSEDED: 12/14/2025 is printed outright on p. 45 of the issued package
+    (data/documents/oepa/findlay/2PD00008.pdf), so the field below is transcribed, not computed.'
+  facility_name: City of Findlay Water Pollution Control Center
+  permit_no: 2PD00008*VD
+  permit_action: modification
+  applicant: City of Findlay, 1201 South River Road, Findlay, OH, 45840
+  application_no: OH0025135
+  public_notice_no: '216133'
+  public_notice_date: '2025-11-14'
+  comment_period_end: '2025-12-14'
+  facility_address: 1201 South River Road, Findlay, OH, 45840, Hancock County
+  discharge_address: 'Lat: 41.049722, Long: -83.667778'
+  receiving_water: Blanchard River
+  stream_network: null
+  outfalls:
+  - '001'
+  note: >-
+    The discharge-location table prints outfall 001 at 15,000,000 GPD with coordinates
+    41.049722 N / -83.667778 — the only place in the instrument set where the outfall's
+    coordinates are given to six decimals. Elsewhere the permit gives 41.0497 / -83.6678.
+
+# --- reviewed augmentation (issue 1460) -------------------------------------------------------
+
+review:
+  issue: 1460
+  reviewed_on: '2026-07-31'
+  method: Verbatim transcription from the PDF's embedded text layer (pypdf).
+
+notice:
+  date_of_issuance_of_proposed_modification: '2025-11-07'
+  date_of_public_notice: '2025-11-14'
+  effective_date_of_modification_as_noticed: PROPOSED
+  outfall_001_design_flow_gpd: 15000000
+  purpose:
+  - >-
+    "Page 14 - Part I, C, Schedule of Compliance, change the milestone summary report for the
+    Municipal CSO Schedule event code 34099 Due Date to November 1, 2026."
+  - >-
+    "Page 15 - Part I, C, 2, Long-Term Control Plan (LTCP) Addendum section (b.), change the
+    language to No later than November 1, 2026."
+  comment_channel: epa.dswcomments@epa.ohio.gov, or by mail to Ohio EPA, Division of Surface
+    Water, Permits Processing Unit, P.O. Box 1049, Columbus, Ohio 43216-1049
+  comment_window_rule: >-
+    "Within thirty days of publication of this notice, any person may submit written comments, a
+    statement..." — the notice states the 30-day rule but prints no end date of its own; the
+    12/14/2025 date recorded above comes from the modification's fact sheet in the issued
+    package.
+
+relevance:
+  tags: [verified, npdes, oepa, findlay, public-notice, draft, cso]
+  note: >-
+    The draft leg of the *VD modification: what was proposed and the window in which it could be
+    contested. Held alongside the issued package so the record shows the proposal AND the action,
+    not only the outcome.
+  cross_refs:
+  - data/extracted/oepa/findlay/2PD00008.npdes.yaml
+  - data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml

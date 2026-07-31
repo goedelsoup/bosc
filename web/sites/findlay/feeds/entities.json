@@ -42,5 +42,88 @@
     "lei": "875500ULXB4CYQSJVA03",
     "uei": null,
     "federal_obligations": null
+  },
+  {
+    "key": "CITY OF FINDLAY",
+    "display": "City of Findlay",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Findlay",
+      "City of Findlay, 1201 South River Road, Findlay, OH 45804",
+      "City of Findlay, 1201 South River Road, Findlay, OH 45840",
+      "City of Findlay, 1201 South River Road, Findlay, OH, 45840"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 3,
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "1201 South River Road, Findlay, OH 45840, Hancock County"
+    ],
+    "sources": [
+      "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
+      "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+      "oepa/findlay/2PD00008.fs.npdes.yaml",
+      "oepa/findlay/2PD00008.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:2PD00008",
+    "display": "City of Findlay Water Pollution Control Center",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Findlay Water Pollution Control Center",
+      "Findlay WPCC (City of Findlay Water Pollution Control Center)"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+      "oepa/findlay/2PD00008.fs.npdes.yaml",
+      "oepa/findlay/2PD00008.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "BLANCHARD RIVER",
+    "display": "Blanchard River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Blanchard River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+      "oepa/findlay/2PD00008.fs.npdes.yaml",
+      "oepa/findlay/2PD00008.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]

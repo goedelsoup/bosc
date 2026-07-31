@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "da3445b3791d75d44b450a45a6ba15e00180cfb4575736e9d1a358b95774371a",
-  "contract_version": "1.46.0",
+  "catalog_version": "acb138329b78db3feefd89637a59483112f61ef2e8a1f9c233a1f11471050d89",
+  "contract_version": "1.47.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -961,6 +961,22 @@
       "site": "lima",
       "local_id": "ferc",
       "title": "FERC↔PUCO Regulatory Seam (Federal Power Act + FERC eLibrary)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:findlay-discharge-record",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "findlay-discharge-record",
+      "title": "Findlay — NPDES 2PD00008 Instrument Set + Maumee TP Allocation Chain (Extractions)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:findlay-dislocation",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "findlay-dislocation",
+      "title": "Findlay — WARN Notices + Brownfield Round 11 Awards (Extractions)",
       "feed": "catalog"
     },
     {

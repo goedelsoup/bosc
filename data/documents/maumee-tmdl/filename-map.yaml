@@ -1,0 +1,25 @@
+meta:
+  subject: >-
+    Maumee Watershed Nutrient TMDL — biennial reporting (download manifest, issue 1460). The
+    2023 TMDL report and its appendices predate this manifest; their provenance is in
+    MANIFEST.yaml.
+  generated_at: '2026-07-31'
+  policy: non-destructive — originals keep as-received names
+documents:
+- filename: 2024_Maumee_Biennial_Report_Final_clean.pdf
+  permit_id: null
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/tmdl/2024_Maumee_Biennial_Report_Final_clean.pdf
+  sha256: 42eb0d018a15f552776e58d6f4b3ec94b79e95847fc4b9b06f22776f05c05d1f
+  bytes: 7735357
+  content_type: application/pdf
+  fetched_at: '2026-07-31T00:41:15.702498+00:00'
+  status: downloaded
+  content_verified: '2024-12'
+  note: >-
+    As-received DAM name kept. Content-verified from the text layer 2026-07-31: "Maumee
+    Watershed Nutrient TMDL Biennial Report", December 2024 (the running head on every page;
+    the document states a month and year, not a day). 57 pp. Pages 13-14 publish the phosphorus
+    general permit's first reported season — 39 facilities, a Cumulative Load Limit of
+    64,170 kg-TP for March-July 2024 (incl. a 1,400 kg allowance for future growth) against a
+    reported Cumulative Load of 43,304 kg-TP. Group totals only; no per-facility 2024 loads
+    (issue 1460).

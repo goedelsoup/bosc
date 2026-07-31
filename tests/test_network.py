@@ -88,7 +88,8 @@ def test_subtree_generalizes_across_basins() -> None:
 
 
 def test_screen_is_one_dimension_honestly_sparse(net: BasinNetwork) -> None:
-    # Lima (violation), Defiance (tight), and Van Wert (violation) are cleanly screenable.
+    # Lima (violation), Defiance (tight), Van Wert (violation) and — since #1460 — Findlay
+    # (violation) are cleanly screenable.
     lima = _node(net, "lima").screen
     assert lima.status == "screened" and lima.flag == "violation" and lima.dilution_ratio < 0.1
     defiance = _node(net, "defiance").screen
@@ -97,9 +98,16 @@ def test_screen_is_one_dimension_honestly_sparse(net: BasinNetwork) -> None:
     van_wert = _node(net, "van-wert").screen
     assert van_wert.status == "screened" and van_wert.flag == "violation"
     assert (van_wert.dilution_ratio or 0) < 0.05  # 0.026:1 — 39x effluent dominance
+    # Findlay became screenable when the curated overlay gave OH0025135 the receiving water
+    # its own NPDES fact sheet names (#1460, closing #352). This uses the DERIVED Blanchard
+    # 7Q10 (8.67 cfs at USGS 04189000); the permit's own cited 7Q10 at the outfall is 0.21 cfs,
+    # ~41x smaller, so the cited screen is far worse than this one. Reconciling the two is #1458.
+    findlay = _node(net, "findlay").screen
+    assert findlay.status == "screened" and findlay.flag == "violation"
+    assert 0.3 < (findlay.dilution_ratio or 0) < 0.45  # 0.37:1 against the derived low flow
     # The rest are reported unscreened, with the reason (omit, don't guess) — the data gap.
     screened = [n for n in net.nodes if n.screen.status == "screened"]
-    assert len(screened) == 3
+    assert len(screened) == 4
     assert _node(net, "bryan").screen.status == "no_7q10"  # ungaged Prairie Creek
     assert _node(net, "toledo").screen.status == "no_receiving_water"  # null in ECHO
 
