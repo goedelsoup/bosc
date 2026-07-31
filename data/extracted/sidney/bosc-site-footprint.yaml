@@ -1,0 +1,118 @@
+# AWS "Project Galaxy" (Amazon Data Services, Inc.) data-center campus — footprint record for the
+# Sidney, OH (upper Great Miami headwaters) watershed point. LIKE Troy-Piqua's / Urbana's /
+# Fort Wayne's (and UNLIKE Lima's document-transcribed stormwater-permit footprint), the boundary
+# here is the RECORDED OWNERSHIP holding — the single consolidated Shelby County parcel now deeded
+# to Amazon Data Services, Inc., committed as data/reference/sidney/parcel-assemblage.geojson.
+# parcel_acres is the GIS-measured planar area; building/impervious/developed stay [open] pending a
+# full site-plan / stormwater-permit extraction.
+# Source tags: reference = committed GIS reference dataset; connector = a live public-data read;
+# document = transcribed from a corpus instrument; assumption = a stated modeling input.
+site: >-
+  Northwest corner of S Vandemark Road & W Millcreek Road, Clinton Township / City of Sidney
+  corporate limits, Shelby County, OH 45365 — the AWS "Project Galaxy" data-center campus, auditor
+  situs 1151 S Vandemark Rd (parcel 26-03-201-002). The #511 register's street address,
+  "2388 W. Millcreek Road", is a RETIRED pre-consolidation situs — see boundary_basis. #1379
+  (places) / #1378 (facility), sub-issues of #1275.
+operator: >-
+  Amazon Web Services, Inc. (operator); Amazon Data Services, Inc. (developer and sole owner of
+  record, auditor mailing PO Box 80416, Seattle WA 98108-0416). No nominee or shell-entity holding
+  was found — a countywide CAMA owner scan returns this one parcel. See
+  data/extracted/sidney/data-centers.md.
+boundary_basis: >-
+  Recorded ownership holding — the single parcel deeded to Amazon Data Services, Inc.
+  (26-03-201-002, deed OR2329/454, conveyed 2025-11-24 for $5,621,490), committed as
+  data/reference/sidney/parcel-assemblage.geojson (Shelby County auditor CAMA via the SCEO Parcels
+  layer). NOT a surveyed earth-disturbance boundary; the Ohio EPA construction stormwater
+  (NPDES OHC000005 / Rule-5) footprint and the campus site plan are not yet in the corpus. This is
+  a CONSOLIDATION rather than a surviving assemblage: the legal description reads "R06 T07 S03
+  PT OF E1/2 NE QR / LOT 7658 COSOLIDATION & ROADWAY DEDICATION PLAT / PLAT V37 P50" (sic), and
+  five predecessor tracts standing in the 2023-05-23 OGRIP statewide extract — including
+  26-03-226-001, situs "2388 MILLCREEK RD", the address the register carries — lie 85-99% inside
+  this polygon and are gone from the current CAMA. So the register's address is not wrong, it is
+  superseded; the parcel of record is 1151 S Vandemark Rd. Full reconciliation in the geojson
+  `bosc:provenance` + data/reference/sidney/README.md.
+
+parcel_acres:
+  value: 235.468
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — UTM-16N (EPSG:32616) planar area of the one recorded Amazon Data
+    Services parcel 26-03-201-002 (watermark.hydrology.geo.parcels_total_acres). The county CAMA
+    DEEDED acreage is 243.092 ac, 7.6 ac (3.1%) higher; the two are NOT reconciled and neither is
+    adjusted to the other — cite the deeded 243.092 ac for the record and this planar figure for
+    area/runoff modeling. CORROBORATION of the consolidation: the five predecessor tracts in the
+    2023 OGRIP extract sum to 239.524 ac planar (235.24 ac CAUV), so ~4 ac of planar area left the
+    parcel, consistent with the plat's own "ROADWAY DEDICATION" — [inference]; PLAT V37 P50 is not
+    in the corpus. No campus acreage is disclosed in the public record, so there is no third,
+    independent figure to check either against. [verified] as the auditor's committed geometry.
+  confidence: high
+
+building_footprint_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No campus site plan is in the corpus, and — unlike Troy-Piqua (~700k sq ft disclosed) or
+    Urbana (~460k sq ft reported) — AWS has disclosed NEITHER a gross floor area NOR a building
+    count for Project Galaxy. The only disclosed hard figure is the $3 billion investment
+    (sidneyoh.com/526; Data Center Dynamics Oct 2025), which is why the profile's IT load is an
+    investment-scaled screening bracket rather than a floor-area screen (#1378). Needs the
+    assembled site-plan / Rule-5 SWPPP extraction.
+  confidence: null
+
+impervious_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No impervious tabulation on record. Requires the Ohio EPA construction stormwater
+    (NPDES OHC000005 / Rule-5) permit or the campus site plan. The city FAQ does confirm the
+    stormwater DESIGN basis — "retention/detention basins per Ohio EPA regulations; no on-site
+    waste ponds" (sidneyoh.com/526, [verified]) — but a design basis is not an area.
+  confidence: null
+
+developed_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] Total disturbed/developed area is unknown pending the SWPPP / construction stormwater
+    permit; it will be >= impervious_acres once that lands. A grading permit was issued 2026-05-14
+    (sidneyoh.com/526, [verified]) — that permit's disturbed-acreage figure is the specific
+    instrument to pull (#1380).
+  confidence: null
+
+dominant_hsg:
+  value: D
+  source: connector
+  citation: >-
+    [verified] USDA NRCS SSURGO via Soil Data Access (SDA), 8x8 grid sample (64 interior points)
+    over parcel-assemblage.geojson (watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8,
+    2026-07-31): D 62 pts (96.9%) + C/D 2 pts (3.1%). A SINGLE group, so the drained-vs-undrained
+    switch (watermark.hsg / WS-20 / #1620) is inert here; only 3.1% of the footprint carries a dual
+    rating. The dominant map units are Blount silt loam, end moraine, 2-4% slopes (mukey 2765022,
+    Blount 85%, HSG D, somewhat poorly drained) and Glynwood silt loam, end moraine, 2-6% slopes
+    (mukey 2856692, Glynwood 85%, HSG D). This CORRECTS the prior profile [inference] of HSG "B" —
+    and corrects its REASONING, not just its letter: that inference argued from the Great Miami
+    buried-valley sole-source aquifer (glacial outwash sand & gravel, well-drained), but the campus
+    does not sit in the buried valley. It sits ~2 mi west of it on the Wisconsinan END MORAINE, and
+    the till surface that governs the runoff CN is group D. Same surface-vs-aquifer correction found
+    at Urbana (B->C) and Troy-Piqua (B->C/D), sharper here because the site is on moraine rather
+    than valley fill. The aquifer claim in the profile's old hsg_citation remains true of the Sidney
+    WELL FIELD; it was never true of this footprint.
+  confidence: high
+
+receiving_water: >-
+  [inference] Great Miami River watershed (HUC-8 05080001, upper Great Miami headwaters), the same
+  basin the Sidney WWTP (NPDES 1PV00037 / OH0027421) discharges to at outfall 001. The campus sits
+  on the moraine upland west of the Great Miami mainstem, in the Millcreek Road drainage; the
+  specific stormwater receptor (a Great Miami tributary vs. the mainstem) is [open] pending the
+  construction stormwater permit. DISTINCT from the SANITARY pathway, which the record does close:
+  all facility wastewater goes to the Sidney municipal sanitary sewer -> OH0027421 -> Great Miami
+  River (sidneyoh.com/526, [verified]). This is the CONSTRUCTION/site-runoff pathway.
+
+notes:
+  - 'Holding = 1 parcel / 1 owner (Amazon Data Services, Inc.) / 243.092 ac CAMA deeded (235.468 ac planar): 26-03-201-002, situs 1151 S Vandemark Rd, land use 110 "Agricultural vacant land (CAUV)", tax district 01 (Clinton Twp / Sidney Corp / Sidney CSD), conveyed 2025-11-24 for $5,621,490 at OR2329/454. All [verified] from the Shelby County auditor CAMA (SCEO Parcels layer 0, tax year 2025).'
+  - 'ACREAGE — this closes the #511 register`s `[open]` on "Land / parcel acreage". The answer is 243.092 ac deeded / 235.468 ac planar, and the reason it was open is that the register was searching on a street address the consolidation plat had already retired. Note what it is NOT: no campus acreage is disclosed by AWS or the City, so the parcel acreage is the OUTER BOUND of the campus, not a measurement of it.'
+  - 'ZONING stays `[open]` (#1379 acceptance item 5) and the reason is documented rather than absent: the City of Sidney DOES publish a zoning REST endpoint (SidneyGIS_AllLayers/MapServer/270, 9 districts, "officially adopted on October 24, 2016"), now wired as SIDNEY_ZONING_SCHEMA. It is polygon-only (no parcel id), city-limits-only, and this parcel falls in a HOLE in it — the zoning, corp-limits and annexation layers ALL miss the parcel`s interior point, while its two district-01 neighbours hit all three (SEMCORP 26-03-301-001 -> IIM "Industry Innovation Manufacturing"; DP&L 26-03-429-009 -> CC "Corridor Commerce"). The annexation layer stops at ordinance A-3145, 2023-08-28. Since the auditor`s TY2025 tax district already places the parcel inside the corporate limits, this is a CURRENCY GAP in the city`s layers, not an unzoned or extraterritorial site. The instrument to pull is the annexation/rezoning ordinance itself (#1380).'
+  - 'ADJACENT LEAD, excluded from the holding (not Amazon-owned): Dayton Power & Light Co. (AES Ohio, the campus`s disclosed utility) took 26-03-429-009 — 7.305 ac at "Fair & Vandemark Rd" — from the Shelby County Commissioners on the SAME DAY as the Amazon closing, 2025-11-24, for $547,875 at OR2329/497, 43 pages after the Amazon deed in the same record volume. A campus substation is the obvious reading and it is `[inference]` only: the parcel abuts DP&L`s pre-existing 26-03-429-008 (2305 Fair Rd, held since 2006), so an unrelated substation expansion is not excluded, and no PJM interconnection or OPSB siting instrument is public. Worth pulling with the deeds (#1380).'
+  - 'This record commits the boundary + measured acreage + the SSURGO-validated HSG so the onboard SSURGO/HSG step no longer skips (it had been skipped for want of a committed footprint), and it sets the pre_cover/post_cover/developed_pervious_cover scenario knobs the profile had carried as TODO "pending an identified site".'
+  - 'Building/impervious/developed stay `[open]`: AWS disclosed no floor area at all for Project Galaxy, and neither the grading permit (issued 2026-05-14) nor the Rule-5 construction stormwater permit is in the corpus.'

@@ -28,7 +28,7 @@
     "cooling_model": "unknown",
     "cooling_model_source": "reference",
     "cooling_model_citation": "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed range). The Res 26-26 water/sewer agreement (adopted 2026-04-27; sidneyoh.com/526) discloses a 1.0 MGD peak-withdrawal ceiling (694 gpm) and a projected 4.6M gal/yr (~12,600 GPD avg) cooling-water CONSUMPTION; that consumption is <1.3% of the 1.0 MGD ceiling, consistent with a largely closed-loop/dry design rather than an evaporative tower — but AWS has not stated the cooling design, so this is NOT selected as closed_loop_dry. Facility wastewater returns to the Sidney sanitary sewer -> OH0027421 -> Great Miami River. Net consumptive draw ~= 0.0195 cfs avg vs the Great Miami 7Q10 = 30.95 cfs (<0.1%) — [inference] from the cited water figures (see data/extracted/sidney/data-centers.md, 'Water / hydrology hook'); the regulatory passby threshold stays SiteProfile.passby_primary_cfs pending the OH0027421 fact sheet.",
-    "parcels_relpath": null,
-    "footprint_relpath": null
+    "parcels_relpath": "reference/sidney/parcel-assemblage.geojson",
+    "footprint_relpath": "extracted/sidney/bosc-site-footprint.yaml"
   }
 ]

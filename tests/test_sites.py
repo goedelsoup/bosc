@@ -27,6 +27,8 @@ from watermark.sites import (
     MIAMI_PARCEL_SCHEMA,
     PER_SITE_OUTPUT_FIELDS,
     PUTNAM_PARCEL_SCHEMA,
+    SHELBY_PARCEL_SCHEMA,
+    SIDNEY_ZONING_SCHEMA,
     SITES,
     VAN_WERT_PARCEL_SCHEMA,
     SiteFacility,
@@ -633,6 +635,110 @@ def test_miami_parcel_schema_is_agol_cama() -> None:
     assert p.query_scope == ""  # single-jurisdiction layer (no statewide County= scope)
     assert "services3.arcgis.com/wCWf4EGMg4PzHwzA" in p.meta.source_url
     assert "wCWf4EGMg4PzHwzA" in SITES["troy-piqua"].parcels_url  # profile endpoint matches schema
+
+
+def test_shelby_parcel_schema_replaces_the_ogrip_substitute() -> None:
+    """Sidney's parcel gap (#1379) is closed by the Shelby County Engineer's Office AGOL Parcels
+    layer — the FULL auditor CAMA join (owner, deed book/page, conveyance, appraised values),
+    replacing the OGRIP statewide substitute the profile carried. That substitute was not merely
+    partial here: for Shelby it is owner-redacted AND a 2023-05-23 extract, so it predates the
+    whole Project Galaxy transfer and can name no grantee. Golden field-map lock + the param-
+    stability guard against the committed owner-scan fixture."""
+    p = SITES["sidney"].gis_parcel
+    assert p is not None and p is SHELBY_PARCEL_SCHEMA
+    assert p.connector == "shelby_gis" and p.reference_dir == "sidney-gis"
+    assert p.id_field == "PIN" and p.id_normalize == "verbatim"  # dashed "26-03-201-002"
+    assert p.owner_field == "Listed_Name" and p.defense is None  # owner present; no enclave scan
+    assert p.land_use_field == "Land_Use_Code" and p.land_use_decode == "int"
+    assert p.date_decode == "epoch_millis"  # esriFieldTypeDate Date_Conveyed
+    assert p.market_total_field == "Appraised_Total_100"  # the 100% market value, NOT Taxable_*
+    assert p.cauv_field == ""  # Has_CAUV is a YES/NO flag, not a value
+    assert p.valid_sale_field == "Valid_Sale"
+    assert p.query_scope == ""  # single-jurisdiction layer (no statewide County= scope)
+    assert "services6.arcgis.com/fzPZZJiNVtryYcsC" in p.meta.source_url
+    assert "fzPZZJiNVtryYcsC" in SITES["sidney"].parcels_url  # profile endpoint matches schema
+    # The OGRIP substitute is gone from Sidney — its stale extract is the reason (#1379).
+    assert "OhioStatewidePacels_full_view" not in SITES["sidney"].parcels_url
+    assert p.connector != "ohio_parcels"
+
+    # Param stability: the committed assemblage's owner scan replays from its fixture.
+    key = cache_key(
+        {
+            "f": "geojson",
+            "returnGeometry": "true",
+            "where": f"UPPER({p.owner_field}) LIKE '%AMAZON DATA SERVICES%'",
+            "outFields": ",".join(p.out_fields),
+            "outSR": "4326",
+            "resultOffset": 0,
+            "resultRecordCount": p.page_size,
+        }
+    )
+    assert (FIXTURES / p.connector / f"{key}.json").is_file(), f"shelby param drift: {key}"
+
+
+def test_sidney_zoning_schema_is_polygon_only_and_predates_the_campus() -> None:
+    """Sidney's zoning endpoint EXISTS and is now wired (#1379) — but it cannot answer the campus
+    question, and the schema says so rather than leaving the profile's `zoning_url="TODO"`. It is
+    the Findlay shape (polygon-only, no parcel id -> per-parcel joins refuse cleanly), city-limits
+    only, and a 2016-adopted layer whose sibling annexation layer stops at 2023-08-28 — so the
+    2025-conveyed campus parcel falls in a hole in it and its district stays [open]."""
+    z = SITES["sidney"].gis_zoning
+    assert z is not None and z is SIDNEY_ZONING_SCHEMA
+    assert z.connector == "sidney_gis" and z.reference_dir == "sidney-gis"
+    assert z.parcel_field is None  # polygon-only: the district catalog works, parcel joins don't
+    assert z.out_fields == ("OBJECTID_1", "CODE")  # the parcel field drops out of the request
+    assert z.zoning_field == "CODE" and z.cited_meta is None  # no parcel join -> no cited scan
+    assert "SidneyGIS_AllLayers/MapServer/270" in z.meta.source_url
+    assert SITES["sidney"].zoning_url == z.meta.source_url  # profile endpoint matches schema
+    # The currency gap is recorded as a caveat, not discovered again at read time.
+    assert any("2023-08-28" in c for c in z.meta.caveats)
+    assert any("26-03-201-002" in c for c in z.meta.caveats)
+
+
+def test_sidney_hsg_is_ssurgo_verified_end_moraine_not_buried_valley() -> None:
+    """#1379: the committed campus footprint let SSURGO run, and it INVERTED the profile's
+    [inference]. The old "B" argued from the Great Miami buried-valley sole-source aquifer; the
+    campus sits ~2 mi west of the valley on the Wisconsinan end moraine, whose till surface is
+    group D (62/64 sampled points). Guard the letter AND the reasoning — a future edit that
+    restores the aquifer argument for this footprint is the bug this test exists to catch."""
+    s = SITES["sidney"]
+    assert s.dominant_hsg == "D"
+    # The claim's OWN register leads the citation; the later "[inference]" mention is the
+    # superseded reading being narrated, not this value's tag.
+    assert s.hsg_citation.startswith("[verified]") and "SSURGO" in s.hsg_citation
+    assert "end moraine" in s.hsg_citation.lower()
+    assert "prior [inference] of HSG 'B'" in s.hsg_citation
+    # The cover knobs the footprint unblocked — no TODO left on the stormwater scenario.
+    assert (s.pre_cover, s.post_cover, s.developed_pervious_cover) == (
+        "cropland",
+        "developed_campus",
+        "open_space",
+    )
+    # The committed geometry + footprint the SSURGO run and the places domain both read.
+    assert s.parcels_relpath == "reference/sidney/parcel-assemblage.geojson"
+    assert s.footprint_relpath == "extracted/sidney/bosc-site-footprint.yaml"
+
+
+def test_sidney_parcel_assemblage_is_the_consolidated_amazon_parcel() -> None:
+    """The committed geometry backs the register's closed acreage [open] (#1379/#511): ONE parcel,
+    Amazon Data Services Inc, 243.092 ac deeded vs 235.468 ac planar (the two are deliberately not
+    reconciled), and the provenance records that the register's "2388 W. Millcreek Rd" situs was
+    retired by a consolidation plat rather than being wrong."""
+    fc = json.loads(
+        (REPO_ROOT / "data" / "reference" / "sidney" / "parcel-assemblage.geojson").read_text()
+    )
+    assert len(fc["features"]) == 1
+    props = fc["features"][0]["properties"]
+    assert props["parcel_id"] == "26-03-201-002"
+    assert props["owner"] == "AMAZON DATA SERVICES INC"
+    assert props["acres"] == 243.092 and props["planar_acres"] == 235.468
+    assert props["deed_reference"] == "OR2329/454"
+    assert props["last_sale_date"] == "2025-11-24" and props["last_sale_amount"] == 5621490
+    prov = fc["bosc:provenance"]
+    assert prov["parcel_ids"] == ["26-03-201-002"] and prov["total_cama_acres"] == 243.092
+    # The retired-situs reconciliation and the excluded DP&L lead are both on the record.
+    assert any("26-03-226-001" in c and "2388" in c for c in prov["caveats"])
+    assert any("26-03-429-009" in c and "[inference]" in c for c in prov["caveats"])
 
 
 def test_bryan_parcel_schema_is_ogrip_statewide_williams() -> None:

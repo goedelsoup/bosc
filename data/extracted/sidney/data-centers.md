@@ -21,10 +21,44 @@ council resolution references are primary-source verified. `[verified]`
 - **Location:** 2388 W. Millcreek Road, Sidney, OH — northwest corner of Vandemark and Millcreek
   Roads, north side of Millcreek Road, pre-existing industrial corridor. `[verified]`
   Source: Obedio / Sidney City Council resolution references.
+  *Note (#1379): that street address is a **retired pre-consolidation situs**. The parcel of
+  record is now `26-03-201-002`, situs **1151 S Vandemark Rd** — see "Land / parcel acreage".*
 - **Investment:** $3 billion campus. `[verified]`
   Source: Data Center Dynamics (DCD), Oct 2025; baxtel.com.
-- **Land / parcel acreage:** `[open]` — not confirmed from open sources; Shelby County GIS pull
-  needed against parcel at 2388 W. Millcreek Rd.
+- **Land / parcel acreage:** **243.092 ac deeded / 235.468 ac planar** (UTM 16N) — Shelby County
+  parcel **`26-03-201-002`** (auditor number `01-2603201.002`), owner of record **Amazon Data
+  Services, Inc.** (mailing PO Box 80416, Seattle WA), conveyed **2025-11-24 for $5,621,490**,
+  deed **OR2329/454**, land use 110 "Agricultural vacant land (CAUV)", tax district 01 (Clinton
+  Twp / Sidney Corp / Sidney CSD). `[verified]`
+  Source: Shelby County Auditor CAMA via the Shelby County Engineer's Office ArcGIS `Parcels`
+  layer, tax year 2025 (read 2026-07-31) — committed as
+  `data/reference/sidney/parcel-assemblage.geojson` (#1379).
+  *Why this was `[open]`: the search was keyed on a street address the consolidation plat had
+  already retired. `26-03-201-002` is **Lot 7658, Consolidation & Roadway Dedication Plat, Plat
+  V37 P50**, which absorbed five predecessor tracts — including `26-03-226-001` (77.6 ac), the
+  parcel that carried situs "2388 Millcreek Rd" — plus `26-03-126-001` (78.26 ac),
+  `26-03-201-001` (56.14 ac), `26-03-251-001` (21.24 ac) and `26-03-251-002` (2 ac). All five
+  stand in the 2023-05-23 OGRIP statewide extract, lie 85–99% inside the current polygon, and are
+  gone from the current CAMA. `[verified]` as a geometric containment test of the two layers.*
+  *Scope caveat: Amazon Data Services owns **exactly one** parcel in Shelby County (countywide
+  owner scan) — but no **campus** acreage is disclosed by AWS or the City, so this parcel acreage
+  is the campus's **outer bound**, not a measurement of it.*
+- **Zoning district:** `[open]` — the City of Sidney publishes a zoning REST layer
+  (`SidneyGIS_AllLayers/MapServer/270`, 9 districts, "officially adopted October 24, 2016") but
+  the campus parcel falls in a **hole** in it: zoning, corp-limits and annexation layers all miss
+  the parcel's interior point while its two district-01 neighbours hit all three (SEMCORP
+  `26-03-301-001` → IIM; DP&L `26-03-429-009` → CC), and the annexation layer stops at ordinance
+  A-3145 (2023-08-28). Since the auditor's TY2025 tax district already places the parcel inside
+  the corporate limits, this is a **currency gap**, not an unzoned site. Instrument to pull: the
+  City of Sidney annexation / rezoning ordinance for the campus.
+- **Dominant hydrologic soil group:** **D** — SSURGO/SDA 64-point grid over the committed parcel
+  geometry (2026-07-31): D 62 pts (96.9%) + C/D 2 pts (3.1%); dominant map units Blount and
+  Glynwood silt loams, *end moraine*. `[verified]`
+  *This corrects the prior `[inference]` of HSG "B" and its reasoning: the campus is not in the
+  Great Miami buried valley at all — it sits ~2 mi west of it on the Wisconsinan end moraine.
+  The sole-source-aquifer claim below remains true of the Sidney **well field**; it was never
+  true of this footprint. Consequence: post-development runoff off this site screens materially
+  higher than a buried-valley outwash assumption would have given.*
 - **Construction:** grading permit issued 2026-05-14; ground breaking ~January 2026. `[verified]`
   Source: sidneyoh.com/526.
 - **Operations target:** December 31, 2028. `[verified]`
@@ -116,15 +150,27 @@ assembly beyond Project Galaxy. `[verified]` Source: stopohiodatacenters.org; Cl
 
 1. **City of Sidney council resolutions 18-25, 80-25, 81-25, 82-25, 26-26, 27-26** — CRA agreement,
    PILOT terms, water/sewer contract, infrastructure agreement. Primary instruments cited above.
-2. **Shelby County Recorder** — deed(s) for 2388 W. Millcreek Road parcel(s): grantee "Amazon Data
-   Services" or nominee LLC; identify acreage, transfer date, price if disclosed.
+2. **Shelby County Recorder** — the deed behind **OR2329/454** (parcel `26-03-201-002`, grantee
+   Amazon Data Services, Inc., 2025-11-24, $5,621,490). Acreage, transfer date and price are now
+   `[verified]` from the auditor CAMA (#1379); what the recorder still owes is the **sequential
+   instrument number**, the **grantor**, and any recorded easements — plus the companion
+   **OR2329/497** (Shelby County Commissioners → Dayton Power & Light Co., `26-03-429-009`,
+   7.305 ac, same day, $547,875), the likely campus substation conveyance (`[inference]`).
+   Also pull **Plat V37 P50** (Lot 7658 Consolidation & Roadway Dedication Plat), which is the
+   instrument that retired the "2388 W. Millcreek Rd" parcel and would close the ~4-ac
+   planar-acreage difference as a roadway dedication.
 3. **Ohio SOS** — Ohio foreign-corp registration for Amazon Data Services, Inc. and Amazon Web
    Services, Inc.
 4. **OEPA Air PTI** — emergency generator bank PTI(s) for Project Galaxy site (NWDO district,
    Shelby County, entity "Amazon Data Services").
 5. **OEPA stormwater permit** — coverage letter or individual permit number.
-6. **Shelby County Auditor / GIS** — parcel record at 2388 W. Millcreek Rd: acreage, owner of
-   record, assessed value, transfer history.
+6. ~~**Shelby County Auditor / GIS** — parcel record at 2388 W. Millcreek Rd~~ — **DONE** (#1379):
+   wired as the `shelby_gis` connector and committed as
+   `data/reference/sidney/parcel-assemblage.geojson`. Note the assessed value is genuinely 0 in
+   the TY2025 extract (an unvalued new consolidation parcel), so the appraisal record is the
+   remaining ask on that line.
+7. **City of Sidney annexation / rezoning ordinance** for the campus parcel — the instrument that
+   would close the zoning `[open]` the city's published GIS layers cannot (see "Zoning district").
 
 ## Sources
 

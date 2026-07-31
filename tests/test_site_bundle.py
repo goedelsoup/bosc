@@ -904,25 +904,40 @@ def test_troy_piqua_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> 
     assert len(records) == 3
 
 
-def test_sidney_exports_at_backdrop_tier(site_bundle: Callable[[str], Path]) -> None:
-    """Sidney's floor (economics-baseline, consumer-energy, rsei) is committed, and it carries the
-    disclosed AWS "Project Galaxy" ``SiteFacility`` (#1378). But that facility is SCREENING-only —
-    AWS discloses no floor area or interconnection figure, so the IT load is an investment-scaled
-    ``[inference]`` bracket, never a disclosure — so facility grades ``seeded``, not ``live`` (#1630).
-    With ``record`` also only ``seeded`` (one in-scope DMR extraction, below ``RECORD_LIVE_THRESHOLD``)
-    and ``places``/``story`` absent, NOTHING above the floor is live: the honest tier is ``backdrop``,
-    a floor plus a facility LEAD, not a ``case``. This is the #1630 downgrade — a screening-only
-    facility seeds the domain and asks for the source (an air PTI / PJM filing), it doesn't lift it."""
+def test_sidney_exports_at_case_tier_on_committed_campus_geometry(
+    site_bundle: Callable[[str], Path],
+) -> None:
+    """Sidney rose ``backdrop`` -> ``case`` when #1379 committed the campus geometry.
+
+    It was a Backdrop site for exactly one reason: the floor was pulled and everything above it
+    was a lead. ``places`` is the domain that moved, and it moved on evidence, not scaffolding —
+    ``data/reference/sidney/parcel-assemblage.geojson`` is the Shelby County auditor CAMA record
+    of the single parcel deeded to Amazon Data Services, Inc., which the exporter composes into
+    the ``geo/campus`` feed that ``PLACES_GEOMETRY_FEED`` gates on.
+
+    The other three stay put, and that is the point of pinning them here: ``facility`` remains
+    ``seeded`` because the #1630 downgrade still holds (AWS discloses no floor area and no
+    interconnection figure, so the IT load is an investment-scaled ``[inference]`` bracket, never
+    a disclosure — committing land does not ground a load); ``record`` remains ``seeded`` at one
+    in-scope DMR extraction, below ``RECORD_LIVE_THRESHOLD``; ``story`` remains absent. A future
+    change that floats any of those off geometry alone fails here."""
     manifest = _manifest(site_bundle("sidney"))
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
-    assert readiness["tier"] == "backdrop", f"sidney should be a Backdrop site, got {readiness}"
+    assert readiness["tier"] == "case", f"sidney should now be a Case site, got {readiness}"
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
     assert domains["facility"] == "seeded"  # disclosed but screening-only → seeded (#1630)
-    assert domains["places"] == "absent"
+    assert domains["places"] == "live"  # committed campus geometry (#1379)
     assert domains["record"] == "seeded"
     assert domains["story"] == "absent"
+
+    # The geometry that activated the domain is the campus parcel itself, not a stub.
+    bundle = site_bundle("sidney")
+    ref = _feeds_by_name(bundle)["geo/campus"]
+    campus = json.loads((bundle / ref["path"]).read_text(encoding="utf-8"))["features"]
+    assert [f["properties"]["parcel_id"] for f in campus] == ["26-03-201-002"]
+    assert campus[0]["properties"]["owner"] == "AMAZON DATA SERVICES INC"
 
 
 @pytest.mark.parametrize("slug", ["coshocton", "piketon", "sandusky"])

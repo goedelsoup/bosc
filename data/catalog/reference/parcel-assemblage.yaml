@@ -47,6 +47,16 @@ notes: >-
   Miami County auditor parcel_joined CAMA layer via the miami_gis field-map. The recorded OWNERSHIP
   campus (a nested scope within the larger ~1,026-ac annexation record / ~1,200-ac business park);
   the adjacent J3 Development LLC parcel is an [inference] lead, excluded.
+  Sidney (#1379): the ONE parcel deeded to Amazon Data Services, Inc. — the AWS "Project Galaxy"
+  campus at the NW corner of S Vandemark Rd & W Millcreek Rd, 243.092 ac deeded / 235.468 ac
+  planar, from the Shelby County auditor CAMA via the new shelby_gis field-map (the SCEO AGOL
+  Parcels layer, which REPLACED the OGRIP statewide substitute — for Shelby that view is both
+  owner-redacted and a 2023-05-23 extract, predating the whole transfer). A CONSOLIDATION rather
+  than a surviving assemblage: Lot 7658 / Plat V37 P50 absorbed five predecessor tracts, one of
+  which carried the "2388 W. Millcreek Rd" situs the #511 register searches on — so that address
+  is retired, not wrong, and the reconciliation is a geometric containment test against the 2023
+  OGRIP layer. The same-day DP&L conveyance next door (26-03-429-009) is an [inference] lead,
+  excluded.
   Distinct from the Periplus frozen import
   (reference/periplus/bosc-parcels.geojson, catalogued under the periplus entry), which covers the
   Lima corridor parcels only.

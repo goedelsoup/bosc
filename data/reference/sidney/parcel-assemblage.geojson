@@ -1,0 +1,291 @@
+{
+  "type": "FeatureCollection",
+  "bosc:provenance": {
+    "subject": "AWS \"Project Galaxy\" data-center campus land holding (Amazon Data Services, Inc.) \u2014 the single consolidated Shelby County parcel 26-03-201-002, 243.092 ac deeded, at the northwest corner of S Vandemark Rd & W Millcreek Rd, Clinton Township / City of Sidney corporate limits, Shelby County OH (FIPS 39149). #1379 / register #511.",
+    "source": "Shelby County Engineer's Office ArcGIS Online org (BHA_sceo, fzPZZJiNVtryYcsC) \u2014 Parcels FeatureServer layer 0 (Shelby County Auditor CAMA join + geometry), tax year 2025",
+    "source_url": "https://services6.arcgis.com/fzPZZJiNVtryYcsC/arcgis/rest/services/Parcels/FeatureServer/0",
+    "crs": "EPSG:4326 (WGS84)",
+    "count": 1,
+    "distinct_parcels": 1,
+    "parcel_ids": [
+      "26-03-201-002"
+    ],
+    "total_cama_acres": 243.092,
+    "total_planar_acres": 235.468,
+    "caveats": [
+      "[verified] Owner of record, deeded acreage, land use, conveyance date/consideration, deed book/page, legal description and tax district are verbatim from the Shelby County Auditor CAMA (SCEO Parcels layer 0, tax year 2025, read 2026-07-31); null means the service had no value.",
+      "Assembly membership: Amazon Data Services, Inc. owns EXACTLY ONE parcel in Shelby County \u2014 a countywide owner scan (Listed_Name / Owner_Contact_Name / Taxpayer_Contact_Name LIKE '%AMAZON%') returns only 26-03-201-002. No nominee or shell-entity holding was found; that absence is [open], not a negative finding.",
+      "acres (243.092) is the auditor's DEEDED figure; planar_acres (235.468) is measured from this geometry in UTM 16N (EPSG:32616). The 7.6-ac (3.1%) spread is the deed-vs-GIS difference and is NOT reconciled \u2014 cite the deeded figure for the record and the planar one for area/runoff modeling.",
+      "CONSOLIDATION, not an assemblage of surviving parcels. The legal description reads 'R06 T07 S03 PT OF E1/2 NE QR / LOT 7658 COSOLIDATION & ROADWAY DEDICATION PLAT / PLAT V37 P50' (sic \u2014 'COSOLIDATION' is the auditor's spelling, kept verbatim). Five predecessor tracts standing in the 2023-05-23 OGRIP statewide extract lie 85-99% inside this polygon and are gone from the current CAMA: 26-03-126-001 (78.26 ac), 26-03-226-001 (77.6 ac \u2014 situs '2388 MILLCREEK RD', the address the #511 register carries), 26-03-201-001 (56.14 ac), 26-03-251-001 (21.24 ac) and 26-03-251-002 (2 ac, situs '2522 MILLCREEK RD'). [verified] as a geometric containment test of the two committed layers; the predecessor CAUV acreage sums to 235.24 ac and their planar areas to 239.524 ac, against this parcel's 235.468 ac planar \u2014 the ~4-ac loss is consistent with the plat's roadway dedication, an [inference] the plat itself would close (PLAT V37 P50 is not in the corpus).",
+      "The register's street address is therefore RETIRED: '2388 W. Millcreek Rd' resolves to nothing in the current CAMA; the parcel of record is situs '1151 S VANDEMARK RD'.",
+      "Appraised land/improvement/total values are all 0 and Current_Tax/Prior_Tax are 0 \u2014 the consolidated parcel had not been valued at this extract. That is an unvalued NEW parcel, NOT a $0 property; the $5,621,490 consideration is the only price on the record.",
+      "has_abatement is NO verbatim from CAMA. That does NOT contradict the 30-year 100% CRA (Sidney City Council Resolution 18-25): the CRA exempts real-property improvements per building on completion, and no improvement is on the tax record yet.",
+      "valid_sale is 'False' verbatim \u2014 the auditor's arms-length-sale flag, which is routinely False for a plat-consolidation transfer. It is NOT a judgment about the conveyance.",
+      "deed_reference is the auditor CAMA Official-Record book/page (OR2329/454 = vol 2329 p 454) \u2014 [verified] as the deed locator; the Shelby County Recorder's sequential instrument number, the grantor, and any recorded easements remain [open] (#1380).",
+      "Adjacent lead, deliberately EXCLUDED (not Amazon-owned): Dayton Power & Light Co. took 26-03-429-009 (7.305 ac, situs 'FAIR & VANDEMARK RD') from the Shelby County Commissioners on the SAME DAY, 2025-11-24, for $547,875 at OR2329/497 \u2014 43 pages after the Amazon deed in the same record volume. A campus substation is the obvious reading and it is [inference] only: the parcel also abuts DP&L's pre-existing 26-03-429-008 (2305 Fair Rd, held since 2006), so an unrelated substation expansion is not excluded. No interconnection instrument is public.",
+      "Zoning is [open]: the City of Sidney zoning layer, its corp-limits layer and its annexation layer (most recent record ordinance A-3145, 2023-08-28) all MISS this parcel's interior point, while its two district-01 neighbours hit all three (SEMCORP 26-03-301-001 -> IIM; DP&L 26-03-429-009 -> CC). The auditor's TY2025 tax district 01 ('CLINTON TWP SIDNEY CORP \u2026', as against district 02 'CLINTON TWP \u2026' for the unincorporated township) does place the parcel inside the corporate limits, so this is a currency gap in the city's published layers, not an unzoned or extraterritorial site.",
+      "Right-county guard: Shelby County OHIO (FIPS 39149), City of Sidney 45365, Sidney CSD. Not the same-named Shelby County in TN / KY / IN / IL / AL / MO / TX.",
+      "Regenerable: WATERMARK_SITE=sidney watermark parcels --owner 'AMAZON DATA SERVICES' --geojson data/reference/sidney/parcel-assemblage.geojson, then the enrichment recipe in data/reference/sidney/README.md (2026-07-31 auditor vintage, Extract_ID 5966)."
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -84.1881062562881,
+              40.2662974358119
+            ],
+            [
+              -84.1887506474858,
+              40.2661624572916
+            ],
+            [
+              -84.1890047027263,
+              40.266099210587
+            ],
+            [
+              -84.1891735913895,
+              40.2660595752058
+            ],
+            [
+              -84.1893477154343,
+              40.2660368412132
+            ],
+            [
+              -84.1895973931844,
+              40.2660279596956
+            ],
+            [
+              -84.1898467295747,
+              40.2660413371511
+            ],
+            [
+              -84.1901852372316,
+              40.2660962226656
+            ],
+            [
+              -84.1903550718209,
+              40.2661252800072
+            ],
+            [
+              -84.1905285248242,
+              40.2661360492686
+            ],
+            [
+              -84.1907022509153,
+              40.2661283213932
+            ],
+            [
+              -84.1908729092597,
+              40.2661022444341
+            ],
+            [
+              -84.1912961217597,
+              40.266033554428
+            ],
+            [
+              -84.1918851048707,
+              40.265980310543
+            ],
+            [
+              -84.1924774360027,
+              40.2659576484972
+            ],
+            [
+              -84.1924783702506,
+              40.2659576354734
+            ],
+            [
+              -84.1924821171237,
+              40.265957588862
+            ],
+            [
+              -84.1924935769318,
+              40.2659574421732
+            ],
+            [
+              -84.1973295521609,
+              40.2659041413349
+            ],
+            [
+              -84.1973432317061,
+              40.2659039905332
+            ],
+            [
+              -84.1973439350869,
+              40.2659039829931
+            ],
+            [
+              -84.202152659922,
+              40.265850777392
+            ],
+            [
+              -84.2021651635724,
+              40.2663499364112
+            ],
+            [
+              -84.2021732555965,
+              40.2666730528759
+            ],
+            [
+              -84.2021813664852,
+              40.2669968923189
+            ],
+            [
+              -84.2021894773739,
+              40.267320730897
+            ],
+            [
+              -84.2021975882626,
+              40.267644569981
+            ],
+            [
+              -84.2022041118282,
+              40.2679050555695
+            ],
+            [
+              -84.2022106362921,
+              40.2681655415257
+            ],
+            [
+              -84.2022171598577,
+              40.2684260278496
+            ],
+            [
+              -84.2022188792331,
+              40.2684946379718
+            ],
+            [
+              -84.2022205977103,
+              40.2685632480244
+            ],
+            [
+              -84.2022271545135,
+              40.2688250700957
+            ],
+            [
+              -84.2022336798758,
+              40.2690855559359
+            ],
+            [
+              -84.2022403426802,
+              40.2693515845092
+            ],
+            [
+              -84.2022465302759,
+              40.2695985805335
+            ],
+            [
+              -84.2022527160749,
+              40.2698455756557
+            ],
+            [
+              -84.2022589036706,
+              40.2700925719322
+            ],
+            [
+              -84.2022650894697,
+              40.270339567992
+            ],
+            [
+              -84.2022712770654,
+              40.2705865631498
+            ],
+            [
+              -84.2022774628644,
+              40.2708335587764
+            ],
+            [
+              -84.2022836495618,
+              40.2710805548718
+            ],
+            [
+              -84.2022898371574,
+              40.2713275507504
+            ],
+            [
+              -84.2023081672808,
+              40.2721522832923
+            ],
+            [
+              -84.2023227846671,
+              40.2728099683479
+            ],
+            [
+              -84.1974744908405,
+              40.2729153301921
+            ],
+            [
+              -84.192619285376,
+              40.2730206342993
+            ],
+            [
+              -84.187904374301,
+              40.2731226963522
+            ],
+            [
+              -84.1877728232142,
+              40.2667658695153
+            ],
+            [
+              -84.1877884889344,
+              40.2666558774413
+            ],
+            [
+              -84.1877945579525,
+              40.2666489118509
+            ],
+            [
+              -84.1877986497786,
+              40.266644216486
+            ],
+            [
+              -84.1880968688934,
+              40.2663019331035
+            ],
+            [
+              -84.1880972830167,
+              40.2663017350061
+            ],
+            [
+              -84.1881062562881,
+              40.2662974358119
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "26-03-201-002",
+        "parcel_id_dashless": "2603201002",
+        "parcel_number": "01-2603201.002",
+        "owner": "AMAZON DATA SERVICES INC",
+        "owner_mailing_address": "PO BOX 80416 SEATTLE WA 98108-0416",
+        "situs_address": "1151 S VANDEMARK RD SIDNEY OH 45365",
+        "tax_district": "CLINTON TWP SIDNEY CORP SIDNEY SD SAD SFD",
+        "tax_district_code": 1,
+        "school_district": "SIDNEY CSD",
+        "acres": 243.092,
+        "planar_acres": 235.468,
+        "land_use_code": 110,
+        "land_use_name": "AGRICULTURAL VACANT LAND \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+        "class": "Agriculture",
+        "appraised_land_value": 0,
+        "appraised_improvement_value": 0,
+        "appraised_total_value": 0,
+        "last_sale_date": "2025-11-24",
+        "last_sale_amount": 5621490,
+        "valid_sale": "False",
+        "deed_reference": "OR2329/454",
+        "legal_description": "R06 T07 S03 PT OF E1/2 NE QR \nLOT 7658 COSOLIDATION & ROADWAY DEDICATION PLAT\nPLAT V37 P50",
+        "has_cauv": false,
+        "has_exemption": false,
+        "has_abatement": false,
+        "tax_year": 2025
+      }
+    }
+  ]
+}
