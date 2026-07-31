@@ -19,6 +19,7 @@ from watermark.cli._base import (
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
+    from watermark.hydrology.model import HsgDrainageBasis, ProvenancedValue
     from watermark.hydrology.thermal import ThermalFlowScreen
 
 
@@ -633,6 +634,23 @@ def dewatering_discharge_cmd(
         console.print(f"[green]Wrote[/] {path}")
 
 
+def _hsg_label(basis: HsgDrainageBasis | None, coded: ProvenancedValue) -> str:
+    """The soil group as displayed: the verbatim group, plus both letters when it is dual.
+
+    A dual group printed as one letter is the WS-20 bug in the terminal: it reads as a survey
+    result when it is really a survey result *plus* a drainage assumption. Falls back to the
+    coded value for a pre-#1620 artifact that carries no basis block.
+    """
+    if basis is None:
+        return "ABCD"[int(coded.value) - 1]
+    if not basis.dual:
+        return basis.group
+    return (
+        f"{basis.group} (pre {basis.pre_letter}/{basis.pre_condition}, "
+        f"post {basis.post_letter}/{basis.post_condition})"
+    )
+
+
 @app.command()
 def storm(
     return_period: int = typer.Option(
@@ -694,8 +712,8 @@ def storm(
         else ("cited NOAA Atlas-14 depth (offline)")
     )
     console.print(
-        f"\n[dim]Tier-0 SCS screening. HSG {('ABCD'[int(runoff.hsg.value) - 1])} and land cover "
-        f"are cited assumptions; footprint is document-sourced; rainfall is {rainfall_src}. "
+        f"\n[dim]Tier-0 SCS screening. HSG {_hsg_label(runoff.hsg_drainage, runoff.hsg)} and land "
+        f"cover are cited assumptions; footprint is document-sourced; rainfall is {rainfall_src}. "
         f"See `watermark storm-discharge` for the 60-in outfall + Dug Run screen.[/]"
     )
 
@@ -741,7 +759,8 @@ def storm_discharge(
         f"[bold]{screen.site}[/]\n"
         f"footprint {screen.footprint_area.value:,.0f} ac "
         f"[dim]({tag[screen.footprint_area.source]})[/]  HSG "
-        f"{'ABCD'[int(screen.hsg.value) - 1]}  outfall {screen.outfall_diameter_in.value:.0f} in "
+        f"{_hsg_label(screen.hsg_drainage, screen.hsg)}  "
+        f"outfall {screen.outfall_diameter_in.value:.0f} in "
         f"[dim]({tag[screen.outfall_diameter_in.source]})[/]"
     )
     console.print(

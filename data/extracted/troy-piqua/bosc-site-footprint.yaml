@@ -66,18 +66,22 @@ developed_acres:
   confidence: null
 
 dominant_hsg:
-  value: C
+  value: C/D
   source: connector
   citation: >-
     [verified] USDA NRCS SSURGO via Soil Data Access (SDA), 8x8 grid sample (48 interior points)
     over parcel-assemblage.geojson (watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8,
-    2026-07-13): C/D 47 pts (97.9%) + C 1 pt (2.1%) — drained-basis hydrologic soil group C
-    (undrained the C/D units run to group D). This CORRECTS the prior profile [inference] of HSG
-    "B": the deep Great Miami buried-valley aquifer (glacial outwash sand & gravel, an EPA
-    sole-source aquifer) is well-drained, but the SURFACE soils that govern the runoff CN across
-    this specific Farrington-Rd footprint are dominantly the C/D till/lacustrine units — the same
+    2026-07-13): C/D 47 pts (97.9%) + C 1 pt (2.1%) — the DUAL hydrologic soil group C/D, recorded
+    verbatim. Drained it runs as group C, undrained as group D; which condition applies to a given
+    scenario is the explicit switch in watermark.hsg (WS-20 / #1620), not this record's to decide.
+    The value was "C" before that correction, which committed the drained basis across 98% of the
+    footprint. This also CORRECTS the prior profile [inference] of HSG "B": the deep Great Miami
+    buried-valley aquifer (glacial outwash sand & gravel, an EPA sole-source aquifer) is
+    well-drained, but the SURFACE soils that govern the runoff CN across this specific
+    Farrington-Rd footprint are dominantly the C/D till/lacustrine units — the same
     surface-vs-aquifer correction found at Urbana (B->C). The parcels are actively-farmed CAUV
-    cropland (class 101), consistent with tile-drained C/D. Runoff-relevant HSG is C, not B.
+    cropland (class 101), consistent with tile-drained C/D — so the drained C is the condition on
+    the ground TODAY, and the undrained D the basis once development severs that tile.
   confidence: high
 
 receiving_water: >-

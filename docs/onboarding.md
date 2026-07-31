@@ -79,7 +79,8 @@ test asserts every Python-registered site also exists in the frontend registry.)
 | `toxic_corridor_bbox`, `receiving_water_name` | the industrial receiving-water corridor |
 | `plant_receiving` | per-WWTP receiving-water fallback (Lima's are Lima WWTPs — **replace**) |
 | `climatology_relpath`, `corridor_ddf_relpath`, `baseline_relpath`, `rsei_relpath`, `consumer_energy_relpath`, `grid_relpath` | the six per-site **output** relpaths — slug-scope all of them (`reference/<source>/<slug>/…`); `parcels_relpath`/`footprint_relpath` point at the site's own committed geometry |
-| `dominant_hsg`, `hsg_citation`, `pre_cover`, `post_cover`, `developed_pervious_cover`, `noaa_fallback_24h_depth_in` | stormwater design assumptions (onboarding's SSURGO step validates `dominant_hsg`) |
+| `dominant_hsg`, `hsg_citation`, `pre_cover`, `post_cover`, `developed_pervious_cover`, `noaa_fallback_24h_depth_in` | stormwater design assumptions (onboarding's SSURGO step validates `dominant_hsg`; record a dual group like `B/D` **verbatim**) |
+| `pre_drainage_condition`, `post_drainage_condition`, `drainage_condition_citation` | which letter of a dual HSG each scenario runs on — defaults `drained`/`undrained`; override only with a cited drainage record |
 | `passby_primary_cfs`, `passby_secondary_cfs` | the two supply rivers' in-stream passby minimums |
 
 **Reused from the basin** (don't regenerate for a Maumee site): the curated mainstem 7Q10s
@@ -167,7 +168,10 @@ dimension-coverage and review-gate boxes; your checks survive re-runs). It is th
 before promotion:
 
 1. Every written reference value reviewed against a cited source (no fabricated values).
-2. SSURGO dominant HSG matches the profile, or the profile is updated **with a citation**.
+2. SSURGO dominant HSG matches the profile **verbatim**, or the profile is updated **with a
+   citation**. A dual rating (`B/D`, `C/D`) is recorded as the dual group, never collapsed to
+   its first letter — the drained-vs-undrained choice belongs to
+   `pre_drainage_condition`/`post_drainage_condition`, not to this field.
 3. `basin-screen` coverage is sane for the site's receiving waters.
 4. The site's GIS field-maps are registered (`gis_parcel`/`gis_zoning`/`gis_flood`) for the
    layers it publishes — field names taken from the live `/<layer>?f=json`, not fabricated; a

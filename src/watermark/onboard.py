@@ -35,6 +35,7 @@ from watermark.connectors import OfflineError
 from watermark.economics import baseline as econ_baseline
 from watermark.economics import energy as econ_energy
 from watermark.grid import utility as grid_utility
+from watermark.hsg import normalize_hsg
 from watermark.hydrology import basin, climate, drainage
 from watermark.hydrology.connectors.nasa_power import fetch_climatology
 from watermark.hydrology.connectors.ssurgo import dominant_hsg
@@ -389,11 +390,20 @@ def _exec_hsg(settings: Settings, prof: SiteProfile) -> OnboardStep:
             detail=f"parcel geometry missing: {prof.parcels_relpath}",
         )
     survey = dominant_hsg(geometry, settings=settings)
+    # Compare the survey's group to the profile VERBATIM: a profile that answered "C" to a
+    # surveyed "C/D" has pre-collapsed the dual rating to its drained letter, which is exactly
+    # the low-runoff choice the scenario switch exists to make visible (WS-20 / #1620).
     match = (
         "matches profile"
-        if survey.hsg_letter == prof.dominant_hsg
+        if normalize_hsg(survey.dominant_hsg) == normalize_hsg(prof.dominant_hsg)
         else (f"DIFFERS from profile {prof.dominant_hsg!r} — update SiteProfile with a citation")
     )
+    if survey.dominant_is_dual:
+        match += (
+            f" (dual group: drained {survey.letter_for('drained')} / undrained "
+            f"{survey.letter_for('undrained')}; record it verbatim and let "
+            "pre_drainage_condition/post_drainage_condition resolve it)"
+        )
     return OnboardStep(name="ssurgo-hsg", status="ok", detail=f"HSG {survey.dominant_hsg}; {match}")
 
 

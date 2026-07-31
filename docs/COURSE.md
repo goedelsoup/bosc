@@ -316,9 +316,12 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    the 7Q10 dilution"; the `stormwater` node seam stays inert until a wet-weather scenario
    couples event runoff into the balance. The HSG is now **SSURGO-sourced** (`connectors.
    ssurgo`: the footprint's grid-sampled dominant hydrologic soil group via USDA Soil Data
-   Access), falling back to the cited "C" assumption offline — SSURGO actually shows the
-   footprint is predominantly dual **B/D** (tile-drainable lake-plain lows) with upland B,
-   not C.
+   Access), falling back to the site profile's cited assumption offline — SSURGO actually
+   shows the footprint is predominantly dual **B/D** (tile-drainable lake-plain lows) with
+   upland B, not C. A dual group's two letters are two *drainage conditions*, so which one a
+   scenario runs on is an explicit switch, not a first-letter slice (WS-20): pre-development
+   cropland runs the drained **B**, developed post-development ground the undrained **D**,
+   because construction severs field tile it does not then maintain.
 10. **Scenario diffing + dossier.** `[done]` — Increment 3. `watermark scenario` (+ agent
    `hydrology_scenario` tool) evaluates **baseline vs data-center buildout** on the
    cooling consumptive-fraction knob (`watermark.hydrology.scenario`): the campus draws

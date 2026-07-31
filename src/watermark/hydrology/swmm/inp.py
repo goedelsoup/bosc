@@ -18,6 +18,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from watermark.hsg import is_dual_hsg, normalize_hsg
 from watermark.hydrology import units
 from watermark.hydrology.solver.rainfall import scs_type_ii_hyetograph
 
@@ -108,8 +109,20 @@ _HORTON_BY_HSG = {
 
 
 def _horton_for(hsg: str) -> str:
-    """Horton infiltration string for an HSG (first letter; a dual group -> drained)."""
-    return _HORTON_BY_HSG.get(hsg.strip().upper()[:1], _HORTON_BY_HSG["C"])
+    """Horton infiltration string for a **resolved** single HSG; unrated falls back to "C".
+
+    A dual group is refused, not sliced: ``B/D``'s two letters are the drained and undrained
+    conditions of one soil, and their Horton rates differ 6-fold (0.30 vs 0.05 in/hr), so the
+    deck's caller states the condition (:func:`watermark.hsg.resolve_hsg`) rather than
+    inheriting the drained one by accident (WS-20 / #1620).
+    """
+    group = normalize_hsg(hsg)
+    if is_dual_hsg(group):
+        raise ValueError(
+            f"SWMM infiltration needs a resolved hydrologic soil group, got the dual group "
+            f"{hsg!r} — resolve it with watermark.hsg.resolve_hsg(group, condition) first"
+        )
+    return _HORTON_BY_HSG.get(group, _HORTON_BY_HSG["C"])
 
 
 def stormwater_inp(
@@ -126,8 +139,10 @@ def stormwater_inp(
 ) -> tuple[str, str, str, str]:
     """Build a stormwater ``.inp``. Returns (text, outfall, orifice_link, storage_node).
 
-    ``hsg`` selects the Horton infiltration (default "C" = the legacy assumption);
-    pass a SSURGO-sourced group to ground the deck's soils.
+    ``hsg`` selects the Horton infiltration (default "C" = the legacy assumption); pass a
+    SSURGO-sourced group to ground the deck's soils — **resolved** to a single A-D letter for
+    the scenario's drainage condition (``watermark.hsg.resolve_hsg``), since SSURGO's dual
+    ratings carry two.
 
     ``pct_slope`` is the subcatchment surface slope (%). ``None`` keeps the generic ``1.0`` %
     screening default; pass a value derived from the graded rim relief (WS-25 / #1625) to ground

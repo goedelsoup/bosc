@@ -19,12 +19,17 @@ Response columns are resolved through the ``JSON+COLUMNNAME`` header by **name**
 a header that doesn't carry them is schema drift and fails loudly rather than being
 read positionally.
 
-HSG drives the TR-55 curve number (``solver.curve_number.cn_for``), which reads the
-**first letter** of the group — so a dual group like ``B/D`` resolves to its drained
-class ``B``, appropriate for the tile-drained lake-plain cropland here and the campus's
-engineered storm drainage. Field values are verbatim from SDA; an ``hydgrp`` of ``None``
-(no rated dominant component) is skipped, never backfilled. Synchronous (``httpx``),
-reusing the shared connector cache/offline/fixture machinery.
+HSG drives the TR-55 curve number (``solver.curve_number.cn_for``), which takes a single
+A-D group — but SSURGO routinely rates a lake-plain soil into a **dual** group like ``B/D``,
+whose two letters are two different drainage conditions, not a spelling. This connector
+therefore reports the group **verbatim** and hands the drained-vs-undrained choice to the
+caller as an explicit argument (:meth:`SoilHsgSurvey.letter_for`, over
+:mod:`watermark.hsg`); it has no opinion of its own about whether a footprint's field tile
+is installed and maintained. Collapsing ``B/D`` to ``B`` in here — as an implicit ``[:1]``
+once did — silently applied the drained, lower-runoff class to every scenario including
+post-development (WS-20 / #1620). Field values are verbatim from SDA; an ``hydgrp`` of
+``None`` (no rated dominant component) is skipped, never backfilled. Synchronous
+(``httpx``), reusing the shared connector cache/offline/fixture machinery.
 """
 
 from __future__ import annotations
@@ -36,6 +41,7 @@ import httpx
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
+from watermark.hsg import DrainageCondition, is_dual_hsg, resolve_hsg
 from watermark.hydrology import geo
 from watermark.hydrology.connectors._cache import cached_get
 from watermark.logging import get_logger
@@ -73,9 +79,27 @@ class SoilHsgSurvey(BaseModel):
     source: str = "USDA NRCS SSURGO via Soil Data Access (SDA) Tabular REST"
 
     @property
-    def hsg_letter(self) -> str:
-        """The dominant group's drained (first) HSG letter — the ``cn_for`` input."""
-        return self.dominant_hsg.strip().upper()[:1]
+    def dominant_is_dual(self) -> bool:
+        """True when the dominant group carries both a drained and an undrained letter."""
+        return is_dual_hsg(self.dominant_hsg)
+
+    @property
+    def dual_fraction(self) -> float:
+        """Share of the sampled footprint rated into a dual group, dominant or not.
+
+        The dominant group alone hides how much of a footprint the switch moves: a survey
+        whose *dominant* group is a plain ``C`` can still be a third ``C/D``, which runs as
+        ``D`` undrained. Reported alongside the resolution so that exposure is visible.
+        """
+        return round(sum(d.fraction for d in self.distribution if is_dual_hsg(d.hsg)), 3)
+
+    def letter_for(self, condition: DrainageCondition) -> str:
+        """The dominant group's single A-D letter under ``condition`` — the ``cn_for`` input.
+
+        There is no default: a dual group's drained and undrained letters are two different
+        soils to TR-55, so the caller states which condition it is modeling (WS-20 / #1620).
+        """
+        return resolve_hsg(self.dominant_hsg, condition)
 
 
 def _build_query(points: list[tuple[float, float]]) -> str:

@@ -158,6 +158,9 @@ from watermark.hydrology.models._stormwater import (
     DischargePeak as DischargePeak,
 )
 from watermark.hydrology.models._stormwater import (
+    HsgDrainageBasis as HsgDrainageBasis,
+)
+from watermark.hydrology.models._stormwater import (
     Hydrograph as Hydrograph,
 )
 from watermark.hydrology.models._stormwater import (
@@ -218,6 +221,7 @@ __all__ = [
     "DroughtDrawdown",
     "Flag",
     "HarmonicMeanFlow",
+    "HsgDrainageBasis",
     "HydroFinding",
     "Hydrograph",
     "LowFlowFrequency",
