@@ -717,8 +717,8 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
     # (#1465) as the two flood records; #1460 added the City of Findlay WPCC's own NPDES
     # instrument set, the TMDL phosphorus-allocation chain, the WARN pair and the Brownfield
     # Round 11 awards; #1463 added the filed appellate opinion. Note the two record-bearing
-    # collections: ``oepa/findlay/**`` reaches this site only because ``_FINDLAY.corpus_relpaths``
-    # names it (which also subtracts it from Lima's reference-build scope, #1505).
+    # collections: ``oepa/findlay/**`` reaches this site because ``*/findlay`` is derived from the
+    # slug (#1405), which also subtracts it from Lima's reference-build scope (#1505).
     records = _rows(out, _feeds_by_name(out)["records"])
     assert {r["rel"] for r in records} == {
         "findlay/brownfield/round-11-hancock-2026.award.yaml",
@@ -767,7 +767,7 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
     docs = {e["rel"] for c in doc_collections for e in c["entries"]}
     assert "oepa/findlay/2PD00008.fs.pdf" in docs
     assert "findlay/warn/GoodyearTireRubberCompany.pdf" in docs
-    # ``grid/findlay/**`` reaches this site only because ``_FINDLAY.corpus_relpaths`` names it,
+    # ``grid/findlay/**`` reaches this site because ``*/findlay`` is derived from the slug (#1405),
     # which is also what keeps a Hancock County siting docket out of Lima's whole-tree reference
     # build (#1505) — the ``grid/`` collection root is otherwise basin-shared.
     assert "grid/findlay/Rocky Ford 138 kV Station Project Letter of Notification.pdf" in docs
@@ -890,9 +890,10 @@ def test_troy_piqua_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> 
     bracket, MW [open]) → ``facility`` grades ``seeded`` on documentary depth (#1630), NOT live.
     ``places`` and ``record`` carry the tier: the committed J5 campus assemblage (#1483) and the
     Piqua WWTP NPDES permit + fact sheet (1PD00008) + DMR are
-    all in-scope now that #1484 relocated the two OEPA extractions under ``oepa/troy-piqua/`` and
-    set ``corpus_relpaths=("troy-piqua", "oepa/troy-piqua")`` — three extractions clearing
-    ``RECORD_LIVE_THRESHOLD`` (previously the two permit extractions orphaned in the flat
+    all in-scope now that #1484 relocated the two OEPA extractions under ``oepa/troy-piqua/`` —
+    which reaches this site because ``*/troy-piqua`` is derived from the slug (#1405; the profile
+    enumerated ``oepa/troy-piqua`` until then, now dropped as redundant) — three extractions
+    clearing ``RECORD_LIVE_THRESHOLD`` (previously the two permit extractions orphaned in the flat
     ``oepa/`` tree, leaving only the sub-threshold DMR). Its own test rather than the shared
     parametrize group above, since that group asserts ``record``/``facility`` stay fully
     unscaffolded."""
@@ -935,10 +936,11 @@ def test_sidney_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None
     the ``geo/campus`` feed that ``PLACES_GEOMETRY_FEED`` gates on.
 
     ``record`` moved second, on #1383's standing regulatory watch: it landed the City of Sidney
-    WWTP's issued NPDES permit + 2022 fact sheet (``oepa/sidney/1PD00009.npdes.yaml``) and, with
-    it, ``corpus_relpaths=("sidney", "oepa/sidney", "grid/sidney")`` so the campus's permit
-    sub-collections read into Sidney rather than leaking into Lima's whole-tree reference scope
-    (the #1505 rule). Two ``permits-npdes`` records >= ``RECORD_LIVE_THRESHOLD``. That is
+    WWTP's issued NPDES permit + 2022 fact sheet (``oepa/sidney/1PD00009.npdes.yaml``). Its
+    ``oepa/sidney`` and ``grid/sidney`` sub-collections read into Sidney rather than leaking into
+    Lima's whole-tree reference scope (the #1505 rule) because both are eponymous — derived from
+    the slug by ``*/sidney`` since #1405, so the profile no longer enumerates them. Two
+    ``permits-npdes`` records >= ``RECORD_LIVE_THRESHOLD``. That is
     readiness behaving as the STANDING property it is — it rose because sources landed, twice,
     independently.
 
@@ -1083,10 +1085,12 @@ def fort_wayne_bundle(site_bundle: Callable[[str], Path]) -> Path:
 
 @pytest.fixture(scope="session")
 def urbana_bundle(site_bundle: Callable[[str], Path]) -> Path:
-    """An Urbana bundle (#782's validation candidate) — a sibling with an **explicit**
-    ``corpus_relpaths`` (``("urbana", "permits/highland55", "oepa/urbana")`` — its own slug plus the
-    Highland55 land-assembly permit + OEPA prefixes, #1328), so it exercises a slug-plus-jurisdiction
-    scope. Hermetic: no network, same committed data."""
+    """An Urbana bundle (#782's validation candidate) — the sibling that still needs an **explicit**
+    ``corpus_relpaths`` (``("permits/highland55", "legal/thor-v-urbana")`` — the Highland55
+    land-assembly permit set and the filed complaint, #1328/#1724), because those are filed by
+    project and by case and no rule derives them from a slug. Its own ``urbana/`` and ``oepa/urbana``
+    prefixes are eponymous and dropped from the field since #1405, so it exercises the
+    derived-plus-explicit scope. Hermetic: no network, same committed data."""
     return site_bundle("urbana")
 
 

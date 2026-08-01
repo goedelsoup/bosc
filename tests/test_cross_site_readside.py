@@ -28,6 +28,20 @@ from watermark.hydrology.cooling import derive_cooling_basis
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+def _documents_rel(source: str) -> str | None:
+    """The path a ``source_path`` names under ``data/documents/``, tolerant of how it was recorded —
+    repo-relative, absolute (a pre-existing wart on one Lima extraction), or without the ``data/``
+    prefix — so a differently-recorded but valid source is checked, not silently skipped (#1405
+    review). ``None`` when the source is not a ``data/documents`` artifact at all."""
+    norm = source.replace("\\", "/")
+    marker = "data/documents/"
+    if marker in norm:
+        return norm.split(marker, 1)[1]
+    if norm.startswith("documents/"):  # a `data/`-less relative record — still a real source
+        return norm[len("documents/") :]
+    return None
+
+
 @pytest.fixture
 def fw_settings() -> Settings:
     """Fort Wayne, IN — a non-Lima, non-Ohio registered site with committed reference data."""
@@ -153,11 +167,12 @@ def test_extraction_reaches_the_site_its_source_is_filed_under() -> None:
         if not isinstance(doc, dict):
             continue
         source = doc.get("source_path")
-        if not isinstance(source, str) or "data/documents/" not in source:
+        # The rel under data/documents, however the path was recorded — absolute, repo-relative, or
+        # (a wart) without the `data/` prefix. A source that resolves to None is genuinely not a
+        # documents artifact; one recorded in a tolerated shape must NOT be silently skipped (#1405 review).
+        source_rel = _documents_rel(source) if isinstance(source, str) else None
+        if source_rel is None:
             continue
-        # Tolerate an absolute source_path (a pre-existing wart on one Lima extraction): what
-        # matters is the rel under data/documents, however the path happened to be recorded.
-        source_rel = source.split("data/documents/", 1)[1]
         segments = source_rel.split("/")
         if len(segments) < 3 or segments[1] not in SITES:
             continue  # not a site-attributed source — nothing to preserve
@@ -171,6 +186,61 @@ def test_extraction_reaches_the_site_its_source_is_filed_under() -> None:
     assert not offenders, (
         "extractions orphaned from the site their source is filed under (#1405):\n"
         + "\n".join(offenders)
+    )
+
+
+def test_star_slug_exclusions_are_real_attribution_not_name_collision() -> None:
+    """#1405 review — guard the ONE broad term against a name collision. ``*/<slug>`` matches the
+    SECOND path segment under ANY collection, so an extraction that merely *sits* at
+    ``<collection>/<peer-slug>/`` is pulled out of Lima's reference build by it — correct only when
+    the artifact genuinely belongs to that peer. The collision is not hypothetical vocabulary:
+    ``ottawa`` is a registered peer AND Lima's own receiving river, and several peer slugs are
+    common Ohio place-names, so a future Lima artifact parked under, say, ``hydrology/ottawa/`` would
+    be silently subtracted from Lima with nothing to catch it.
+
+    So for every extraction whose second path segment is a peer slug, require its own ``source_path``
+    to corroborate that slug (the source is filed under ``<slug>/`` or ``<collection>/<slug>/`` too).
+    A physical location that collides with a peer name but whose source attributes elsewhere is the
+    exact failure mode. This targets only the ``*/<slug>`` mechanism — a first-segment slug
+    collection (``findlay/…``) or a project/case prefix (``permits/dazzler-permits/…``) is exact,
+    not broad, and is the sibling guard's concern. Narrow by design: an extraction with no
+    ``data/documents`` source is skipped, since there is nothing to corroborate against.
+    """
+    import yaml
+
+    from watermark.sites import SITES
+
+    extracted = REPO_ROOT / "data" / "extracted"
+    offenders: list[str] = []
+    examined = 0
+    for path in sorted(extracted.rglob("*.yaml")):
+        rel_segments = str(path.relative_to(extracted)).split("/")
+        # Only the broad `*/<slug>` mechanism: a SECOND segment that is a (non-Lima) peer slug.
+        if len(rel_segments) < 2 or rel_segments[1] not in SITES or rel_segments[1] == "lima":
+            continue
+        slug = rel_segments[1]
+        examined += 1
+        try:
+            doc = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except yaml.YAMLError:
+            continue  # schema validity is test_extracted_yaml_valid.py's job, not this one's
+        if not isinstance(doc, dict):
+            continue
+        source = doc.get("source_path")
+        source_rel = _documents_rel(source) if isinstance(source, str) else None
+        if source_rel is None:
+            continue  # nothing to corroborate against — narrow by design, like the sibling guard
+        src = source_rel.split("/")
+        attributed = src[0] == slug or (len(src) >= 2 and src[1] == slug)
+        if not attributed:
+            offenders.append(
+                f"{path.relative_to(REPO_ROOT)} sits under `*/{slug}` (so Lima's build drops it) but "
+                f"its source {source_rel} attributes elsewhere — a name collision, not {slug}'s record"
+            )
+    assert examined, "saw no `<collection>/<peer-slug>` extractions — the guard went vacuous"
+    assert not offenders, (
+        "`*/<slug>` subtracted an artifact from Lima on a name collision, not real attribution "
+        "(#1405 review):\n" + "\n".join(offenders)
     )
 
 

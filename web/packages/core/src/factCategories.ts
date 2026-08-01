@@ -105,18 +105,31 @@ export const FACT_CATEGORIES: readonly FactCategory[] = [
 ] as const;
 
 /**
- * Names a caller may plausibly reach for that aren't the canonical key. Deliberately tiny: it
- * covers the vocabulary #1691 published (`water-cooling`) and the two obvious near-misses. Not a
- * general synonym layer — anything else fails loudly with the vocabulary attached, which is the
- * whole point of this issue (a mistyped constraint must never return a silent empty set).
+ * Names a caller may plausibly reach for that aren't the canonical key — the vocabulary #1691
+ * published (`water-cooling`) plus a few obvious near-misses. Deliberately tiny, and deliberately
+ * carries no FEED name: a feed name is not a category, so aliasing one here would silently widen a
+ * `feed=<x>` question to its whole grouping. `greenops` is the trap that makes this concrete — it
+ * is the `platform` category's only feed today, so `fact_category=greenops` would look harmless
+ * until platform gains a second feed, at which point the query silently broadens. So feed names
+ * fail the same way an unknown value does — loudly, with the vocabulary and a "pass it as `feed`"
+ * hint (#1827 review) — instead of resolving. Not a general synonym layer: a mistyped constraint
+ * must never return a silent empty set.
  */
 const CATEGORY_ALIASES: Readonly<Record<string, string>> = {
   "water-cooling": "water",
   cooling: "water",
   hydrology: "water",
-  greenops: "platform",
   power: "facility-power",
 };
+
+/** Every token the `fact_category` param accepts: the canonical keys plus the small alias set. The
+ * tool-schema enum is built from this, so it advertises exactly what {@link resolveFactCategory}
+ * will resolve — including the #1691-published `water-cooling` — and a schema-validating client is
+ * never told a value is invalid that the handler in fact accepts (#1827 review). */
+export const FACT_CATEGORY_INPUTS: readonly string[] = [
+  ...FACT_CATEGORIES.map((c) => c.key),
+  ...Object.keys(CATEGORY_ALIASES),
+];
 
 /** Normalize a caller's token: trimmed, lowercased, underscores folded to hyphens. */
 function normalize(raw: string): string {

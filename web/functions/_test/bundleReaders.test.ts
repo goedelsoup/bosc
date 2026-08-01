@@ -667,6 +667,11 @@ describe("fact_category / feed filter (#1827)", () => {
     const env = await run(handleGetFacts, { fact_category: "economics-baseline" });
     expect(env.results[0].hint).toContain("`feed`");
     expect(env.results[0].error).toContain("economics-baseline");
+    // greenops is platform's only feed AND a plausible category typo — it must fail the same way,
+    // not silently resolve to the platform grouping (#1827 review).
+    const gn = await run(handleGetFacts, { fact_category: "greenops" });
+    expect(gn.results[0].hint).toContain("`feed`");
+    expect(gn.results[0].error).toContain("greenops");
   });
 
   it("reports an impossible category/feed pair as a contradiction, not an empty set", async () => {

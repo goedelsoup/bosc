@@ -3,7 +3,7 @@
 // /network/connect page so the tool reference table is generated from the real schemas,
 // not duplicated by hand.
 
-import { FACT_CATEGORIES, FACT_FEEDS, factCategorySummary } from "./factCategories";
+import { FACT_CATEGORY_INPUTS, FACT_FEEDS, factCategorySummary } from "./factCategories";
 
 /** A JSON-Schema property node. `items` is set on `type: "array"` params (e.g. the
  * get_document `fields`/`sections` projections); `properties` on a nested `type: "object"`
@@ -144,7 +144,9 @@ const PASSAGE_DEDUP_PROPS = {
 // registry, so schema and filter cannot drift.
 const FACT_CATEGORY_PROP: ToolProperty = {
   type: "string",
-  enum: FACT_CATEGORIES.map((c) => c.key),
+  // Canonical keys AND the accepted aliases (`water-cooling`, …) — the enum must not reject a
+  // value the handler resolves, or a schema-strict client can't use the #1691-published names (#1827).
+  enum: [...FACT_CATEGORY_INPUTS],
   description: `Restrict to one fact category — a named grouping over the source feeds each fact was projected from: ${factCategorySummary()}. Note \`economics-demand-pressure\` is grouped under \`energy\`, not \`economics\`: its predicates are grid quantities (demand_share_pct, load_factor, state_retail_sales_gwh, price pressure), not labor-market ones. \`facility-power\` (what the facility draws) is kept separate from \`energy\` (what power costs the public). An unrecognized value returns the vocabulary, not an empty set. For one exact source feed instead of a grouping, use \`feed\`.`,
 };
 
