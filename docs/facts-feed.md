@@ -136,7 +136,8 @@ Design notes:
   populated only where a structured page genuinely exists (records; a permit page). It is
   **never fabricated** — a `ProvenancedValue` with no page yields `page=null`, honestly.
 - **`feed`** makes every fact traceable back to the row it was projected from (the
-  `catalog-index` "pointer, not copy" discipline), and lets `get_facts` filter by source.
+  `catalog-index` "pointer, not copy" discipline), and is what `get_facts` /
+  `aggregate_facts` filter on for the `fact_category` axis (#1827 — see §5).
 - **`low`/`high`** carry the existing uncertainty band so a bracketed estimate stays a band.
 
 ## 5. Subject & predicate grammar
@@ -160,6 +161,50 @@ without the caller knowing the key grammar. Granularity rides on the **subject**
 sector, the node, the pollutant), keeping **predicate** a small, clean vocabulary of
 snake_case field names (`genset_count`, `total_employment`, `consumptive_loss`,
 `demand_share_pct`, …), which is what the caller filters on.
+
+### Fact categories — the grouping over `feed` (#1827)
+
+`FactItem.feed` **is** the category axis, so `get_facts` / `aggregate_facts` expose it two
+ways: `feed` takes one exact source (or a list), and `fact_category` takes a named grouping
+over them. The vocabulary lives in **one** place —
+`web/packages/core/src/factCategories.ts` — which both the tool schema and the handlers read,
+so the enum and the filter cannot drift.
+
+| category | feeds | what it answers |
+|---|---|---|
+| `economics` | `economics-baseline` | the county labor market and household income the facility lands in |
+| `energy` | `consumer-energy`, `energy-burden`, `economics-demand-pressure` | what power costs the public here, and what a new load does to that |
+| `facility-power` | `facility-power` | what the facility itself draws (gensets, IT load, PUE) |
+| `water` | `hydrology-scenarios` | the cooling water balance against the receiving stream |
+| `air` | `air-scenarios` | the genset fleet's modeled annual emissions |
+| `platform` | `greenops` | Watermark/BOSC's **own** compute/carbon/water footprint |
+
+A grouping is an **editorial claim** — it asserts that two feeds answer the same *kind* of
+question — so two calls are written down rather than inferred from feed names:
+
+- **`economics-demand-pressure` is filed under `energy`, not `economics`.** Its predicates are
+  grid quantities (`demand_share_pct`, `load_factor`, `state_retail_sales_gwh`,
+  `price_pressure_pct_low/high`): it measures the facility's load against the state retail
+  market and the ratepayer pressure that follows. The feed's *name* is economics; its
+  *content* is the electricity market, and a caller asking for `economics` wants the
+  labor-market baseline.
+- **`facility-power` is not part of `energy`.** `energy` is what power costs the public;
+  `facility-power` is what the facility draws — a different subject (`facility:<site>`, not
+  the ratepayer) and a different evidence posture (mostly `[inference]`, derived off a
+  disclosed backup fleet). Merging them would return a document-anchored retail price beside
+  a derived draw as though they answered the same question.
+
+The grouping is a **partition** (every feed belongs to exactly one category), and
+`factCategories.test.ts` sweeps the committed per-site bundles to keep it total as the Python
+projectors grow — a new `feed=` literal in `watermark.site.facts` fails there, named, rather
+than at runtime.
+
+**A constraint that names nothing real fails loudly.** An unknown `fact_category`, an unknown
+`feed`, or a `fact_category`/`feed` pair that can't both hold each return an error row
+carrying the vocabulary — never an empty result set, which would be indistinguishable from
+"the corpus has no such facts" for a question the corpus can plainly answer. This is why the
+axis is **not** a `search_corpus` facet (#1691 proposed it there): the `facts` feed is not in
+the ask index, so the constraint would have filtered on a field no unit carries.
 
 ## 6. Status → the evidence vocabulary
 
@@ -236,6 +281,8 @@ introduce it.
     subject             flexible match over subject/label/key (e.g. "Project BOSC", "Allen County")
     predicate           string | string[] — filter to these predicates
     status              filter by verified|inference|reference|open
+    fact_category       economics|energy|facility-power|water|air|platform (#1827, §5)
+    feed                string | string[] — one exact source feed instead of a grouping
     include_evidence    bool (default false) — attach the evidence block (source/page/citation)
     site, intent, max_results, max_tokens, cursor   (shared governance knobs)
   ```
@@ -245,8 +292,10 @@ introduce it.
   `evidence{source, source_kind, page, citation, verified}` per fact.
 
 - **`web/functions/api/_lib/mcpTools/bundleReaders.ts`**: `handleGetFacts(params,
-  requestUrl)` — `fetchFeed<FactItem[]>("facts")`, filter by subject/predicate/status,
-  strip `evidence` unless requested, paginate via `govern(...)`.
+  requestUrl)` — resolve the `fact_category`/`feed` gate (`resolveFeedGate`, shared with
+  `handleAggregateFacts`), `fetchFeed<FactItem[]>("facts")`, filter by
+  category/subject/predicate/status, strip `evidence` unless requested, paginate via
+  `govern(...)`.
 - **`mcpDispatch.ts`**: import + `case "get_facts":`.
 - **Resources**: add `facts` to `READABLE_FEEDS` + a `FEED_DESCRIPTIONS` entry.
 - **Tests**: a `handleGetFacts` block mirroring `handleGetDocument` (filter, projection,

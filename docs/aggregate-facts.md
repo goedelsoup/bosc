@@ -110,9 +110,12 @@ Every result carries provenance, following the same discipline as the rest of th
   `resolveMetric`, `aggregateFacts`, `listMetrics`, `parseGroupBy`. Unit-tested in
   `factAggregate.test.ts`.
 - **`web/functions/api/_lib/mcpTools/bundleReaders.ts`** — `handleAggregateFacts`: fetch
-  `facts.json`, filter by `subject`/`status`, call the engine, wrap in the governed
-  `{ results, token_estimate, truncated, next_cursor }` envelope (shed order: `evidence_ids` →
-  prose → never the value/unit/group).
+  `facts.json`, filter by `fact_category`/`feed`/`subject`/`status`, call the engine, wrap in
+  the governed `{ results, token_estimate, truncated, next_cursor }` envelope (shed order:
+  `evidence_ids` → prose → never the value/unit/group). The category gate is
+  `resolveFeedGate`, **shared with `handleGetFacts`** (#1827) — the two tools take the same
+  pre-filter pair, so a total and the tuples behind it are always computed over the same rows,
+  and `group_by: "feed"` now has a matching drill-in (`feed: "<one>"`).
 - **`web/packages/core/src/mcpTools.ts`** — the `aggregate_facts` `MCP_TOOLS` schema.
 - **`web/functions/api/_lib/mcpDispatch.ts`** — the `case "aggregate_facts"`.
 

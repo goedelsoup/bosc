@@ -566,6 +566,140 @@ describe("handleAggregateFacts (#1588)", () => {
   });
 });
 
+// --- the fact_category / feed gate (#1827) ------------------------------------------------
+// Its own fixture: one fact per source feed, so every category can be exercised end-to-end
+// without perturbing the ordering/pagination assertions the blocks above pin on FACTS. The
+// nested beforeEach re-stubs the facts route after the outer one has run.
+
+const CATEGORY_FACTS = [
+  factRow("economics-baseline", "county:39003", "county", "total_employment", 49690),
+  factRow("consumer-energy", "state:oh", "state", "electricity_price", 12.4),
+  factRow("energy-burden", "household:oh", "household", "combined_burden_pct", 3.9),
+  // Filed under `energy` despite the feed's name — a grid quantity, not a labor-market one.
+  factRow("economics-demand-pressure", "facility:lima", "facility", "demand_share_pct", 6.1),
+  factRow("facility-power", "facility:lima", "facility", "genset_count", 114),
+  factRow("hydrology-scenarios", "hydrology-scenario:base", "hydrology-scenario", "consumptive_loss", 2.1),
+  factRow("air-scenarios", "air-scenario:base", "air-scenario", "nox_tpy", 88),
+  factRow("greenops", "platform:bosc", "platform", "water_direct", 0.4),
+];
+
+function factRow(feed: string, subject: string, kind: string, predicate: string, value: number) {
+  return {
+    subject,
+    subject_label: subject,
+    subject_kind: kind,
+    predicate,
+    value,
+    unit: "unit",
+    status: "verified",
+    low: null,
+    high: null,
+    evidence: ev("connector"),
+    feed,
+  };
+}
+
+describe("fact_category / feed filter (#1827)", () => {
+  beforeEach(() => {
+    vi.stubGlobal("fetch", routingFetch([feedRoute("facts", CATEGORY_FACTS)]));
+  });
+
+  const feedsFor = async (handler: typeof handleGetFacts, args: Record<string, unknown>): Promise<string[]> =>
+    (await run(handler, args)).results.map((f) => f.feed as string).sort();
+
+  it("constrains get_facts to each category's feeds", async () => {
+    expect(await feedsFor(handleGetFacts, { fact_category: "economics" })).toEqual(["economics-baseline"]);
+    // The load-bearing grouping: demand-pressure rides with the energy market, not the economy.
+    expect(await feedsFor(handleGetFacts, { fact_category: "energy" })).toEqual([
+      "consumer-energy",
+      "economics-demand-pressure",
+      "energy-burden",
+    ]);
+    expect(await feedsFor(handleGetFacts, { fact_category: "facility-power" })).toEqual(["facility-power"]);
+    expect(await feedsFor(handleGetFacts, { fact_category: "water" })).toEqual(["hydrology-scenarios"]);
+    expect(await feedsFor(handleGetFacts, { fact_category: "air" })).toEqual(["air-scenarios"]);
+    expect(await feedsFor(handleGetFacts, { fact_category: "platform" })).toEqual(["greenops"]);
+  });
+
+  it("accepts case, underscores and the published `water-cooling` alias", async () => {
+    expect(await feedsFor(handleGetFacts, { fact_category: "ENERGY" })).toHaveLength(3);
+    expect(await feedsFor(handleGetFacts, { fact_category: "facility_power" })).toEqual(["facility-power"]);
+    expect(await feedsFor(handleGetFacts, { fact_category: "water-cooling" })).toEqual([
+      "hydrology-scenarios",
+    ]);
+  });
+
+  it("AND-combines the category with the other filters", async () => {
+    const env = await run(handleGetFacts, { fact_category: "energy", subject: "facility" });
+    expect(env.results.map((f) => f.predicate)).toEqual(["demand_share_pct"]);
+    // Same subject, different category — the facility-power fact, not the demand-pressure one.
+    const power = await run(handleGetFacts, { fact_category: "facility-power", subject: "facility" });
+    expect(power.results.map((f) => f.predicate)).toEqual(["genset_count"]);
+  });
+
+  it("takes one exact source feed, or a list, via `feed`", async () => {
+    expect(await feedsFor(handleGetFacts, { feed: "greenops" })).toEqual(["greenops"]);
+    expect(await feedsFor(handleGetFacts, { feed: ["air-scenarios", "hydrology-scenarios"] })).toEqual([
+      "air-scenarios",
+      "hydrology-scenarios",
+    ]);
+    // Narrower than its category: energy has three feeds, this pins one of them.
+    expect(await feedsFor(handleGetFacts, { fact_category: "energy", feed: "energy-burden" })).toEqual([
+      "energy-burden",
+    ]);
+  });
+
+  it("names the vocabulary instead of silently returning nothing", async () => {
+    // The whole point of #1827: a constraint that matches no real field must not read as
+    // "the corpus has no such facts".
+    const bad = await run(handleGetFacts, { fact_category: "econ" });
+    expect(bad.results).toHaveLength(1);
+    expect(bad.results[0].error).toContain("econ");
+    const categories = bad.results[0].available_categories as Array<{ category: string }>;
+    expect(categories.map((c) => c.category)).toContain("economics");
+
+    const badFeed = await run(handleGetFacts, { feed: "no-such-feed" });
+    expect(badFeed.results[0].error).toContain("no-such-feed");
+    expect(badFeed.results[0].available_feeds).toContain("greenops");
+  });
+
+  it("tells a caller who passed a feed name as a category to use `feed`", async () => {
+    const env = await run(handleGetFacts, { fact_category: "economics-baseline" });
+    expect(env.results[0].hint).toContain("`feed`");
+    expect(env.results[0].error).toContain("economics-baseline");
+  });
+
+  it("reports an impossible category/feed pair as a contradiction, not an empty set", async () => {
+    const env = await run(handleGetFacts, { fact_category: "air", feed: "greenops" });
+    expect(env.results).toHaveLength(1);
+    expect(env.results[0].error).toContain("cannot both hold");
+  });
+
+  it("gates aggregate_facts on the same vocabulary", async () => {
+    const energy = await run(handleAggregateFacts, {
+      metric: "count",
+      group_by: "feed",
+      fact_category: "energy",
+    });
+    expect(energy.results.map((r) => r.group).sort()).toEqual([
+      "consumer-energy",
+      "economics-demand-pressure",
+      "energy-burden",
+    ]);
+    // A total over one exact feed — the drill-in that `group_by: "feed"` alone couldn't do.
+    const one = await run(handleAggregateFacts, {
+      metric: "count",
+      group_by: "all",
+      feed: "greenops",
+    });
+    expect(one.results[0].value).toBe(1);
+    // And the same loud failure on a miss.
+    const bad = await run(handleAggregateFacts, { metric: "count", fact_category: "nope" });
+    expect(bad.results[0].error).toContain("nope");
+    expect(bad.results[0].available_categories).toBeDefined();
+  });
+});
+
 describe("structured citations on bundle readers (#1584)", () => {
   it("get_timeline returns the uniform citation, with a page span from the feed's Citation", async () => {
     const { results } = await run(handleGetTimeline, {});
