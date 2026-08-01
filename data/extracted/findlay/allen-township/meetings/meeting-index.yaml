@@ -2,9 +2,8 @@ meta:
   subject: allen-township meeting index (text-verified dates + corridor hits)
   slug: allen-township
   generated_at: '2026-08-01'
-  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML — NO OCR. An image-only scanned
-    PDF has text_method: none (date unverified, text unscanned); those need an OCR
-    pass not wired here.'
+  text_extraction: PDF text layer (pypdf) / DOCX / HTML — NO OCR was run on this index.
+    Every file yielded text.
   date_evidence: date_verified is the listing date CONFIRMED in the file's own text;
     null means unconfirmed (date_listing still stands).
   counts:

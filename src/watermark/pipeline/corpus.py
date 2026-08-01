@@ -113,6 +113,15 @@ def assert_meeting_layout_depth(rel: str) -> None:
             "invisible to the timeline, committed summaries and the bundle. Widen the globs in "
             "iter_meeting_artifacts together with watermark.civic.layout.meetings_dir."
         )
+    # Both globs end `meetings/<filename>` — the artifact is a direct child. A sub-directory
+    # (`meetings/archive/meeting-index.yaml`) is just as invisible as a too-deep prefix, and for
+    # the same reason, so it fails the same way.
+    if len(parts) - depth != 2:
+        raise ValueError(
+            f"meeting artifact {rel!r} is not a direct child of its 'meetings/' directory — "
+            "iter_meeting_artifacts globs 'meetings/<filename>' exactly, so anything nested "
+            "below it would be silently invisible."
+        )
 
 
 @dataclass(frozen=True)

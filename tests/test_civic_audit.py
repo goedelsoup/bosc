@@ -20,14 +20,33 @@ from watermark.config import Settings
 
 
 def test_parse_cadence() -> None:
-    assert parse_cadence("2nd & 4th Monday, 7:00 PM") == Cadence(0, (2, 4))
-    assert parse_cadence("2nd & last Monday, 7:30 PM") == Cadence(0, (2, "last"))
-    assert parse_cadence("1st Tuesday, 7:30 PM") == Cadence(1, (1,))
-    assert parse_cadence("2nd Tuesday, 8:00 PM") == Cadence(1, (2,))
+    assert parse_cadence("2nd & 4th Monday, 7:00 PM") == Cadence((0,), (2, 4))
+    assert parse_cadence("2nd & last Monday, 7:30 PM") == Cadence((0,), (2, "last"))
+    assert parse_cadence("1st Tuesday, 7:30 PM") == Cadence((1,), (1,))
+    assert parse_cadence("2nd Tuesday, 8:00 PM") == Cadence((1,), (2,))
     # Irregular ("after" clause) and empty -> not machine-parseable.
     assert parse_cadence("1st Thursday after 1st Monday, 7:30 PM (Community Building)") is None
     assert parse_cadence(None) is None
     assert parse_cadence("when needed") is None
+
+
+def test_parse_cadence_reads_a_weekly_board() -> None:
+    """A schedule with weekday(s) and NO ordinal is weekly, not unparseable (#1839).
+
+    Lima's six bodies are all monthly nth-weekday boards, so a bare "Tuesday & Thursday" —
+    Hancock County's commissioners, the first peer county board ingested — used to fall through
+    to `None` and the audit reported no coverage at all for it.
+    """
+    assert parse_cadence("Regular Meeting: 9:30 am Tuesday & Thursday") == Cadence((1, 3), ())
+    assert parse_cadence("Every Wednesday, 7:00 PM") == Cadence((2,), ())
+    # An ordinal still wins — "2nd Tuesday" is monthly, not every Tuesday.
+    assert parse_cadence("2nd Tuesday, 8:00 PM") == Cadence((1,), (2,))
+
+
+def test_weekly_expected_dates_are_every_occurrence_in_the_span() -> None:
+    # 2026-01-05 (Mon) .. 2026-01-18: Tuesdays 6th/13th, Thursdays 8th/15th.
+    got = expected_dates(Cadence((1, 3), ()), date(2026, 1, 5), date(2026, 1, 18))
+    assert got == [date(2026, 1, 6), date(2026, 1, 8), date(2026, 1, 13), date(2026, 1, 15)]
 
 
 def test_nth_weekday() -> None:
@@ -38,7 +57,7 @@ def test_nth_weekday() -> None:
 
 
 def test_expected_dates_in_span() -> None:
-    cadence = Cadence(0, (2, 4))  # 2nd & 4th Monday
+    cadence = Cadence((0,), (2, 4))  # 2nd & 4th Monday
     got = expected_dates(cadence, date(2026, 1, 1), date(2026, 2, 28))
     assert got == [date(2026, 1, 12), date(2026, 1, 26), date(2026, 2, 9), date(2026, 2, 23)]
 

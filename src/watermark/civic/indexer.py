@@ -306,6 +306,25 @@ def index_meetings(
     return IndexReport(slug=subdivision.slug, docs=indexed)
 
 
+def _text_extraction_note(report: IndexReport) -> str:
+    """How this index's text was actually read, from the documents' own ``text_method``."""
+    ocr = sum(1 for d in report.docs if d.text_method == "ocr")
+    unread = sum(1 for d in report.docs if d.text_method == "none")
+    note = "PDF text layer (pypdf) / DOCX / HTML"
+    note += (
+        f", plus OCR (tesseract) on {ocr} image-only scan(s)"
+        if ocr
+        else " — NO OCR was run on this index"
+    )
+    note += (
+        f". {unread} file(s) yielded no text (text_method: none — date unverified, text "
+        "unscanned); an image-only scan needs `index --ocr`."
+        if unread
+        else ". Every file yielded text."
+    )
+    return note
+
+
 def write_index(report: IndexReport, out_path: Path) -> Path:
     """Write the meeting index YAML (a timeline source; corridor hits drive events)."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -314,9 +333,11 @@ def write_index(report: IndexReport, out_path: Path) -> Path:
             "subject": f"{report.slug} meeting index (text-verified dates + corridor hits)",
             "slug": report.slug,
             "generated_at": datetime.now(UTC).date().isoformat(),
-            "text_extraction": "PDF text layer (pypdf) / DOCX / HTML — NO OCR. An "
-            "image-only scanned PDF has text_method: none (date unverified, text "
-            "unscanned); those need an OCR pass not wired here.",
+            # State what this run actually did, per file. The fixed "NO OCR" string predated
+            # `index --ocr` and outlived it: the Hancock County commissioners' index was written
+            # claiming no OCR over 53 files it had just OCR'd (#1839). Each document's own
+            # `text_method` is the record; this summarises it.
+            "text_extraction": _text_extraction_note(report),
             "date_evidence": "date_verified is the listing date CONFIRMED in the file's "
             "own text; null means unconfirmed (date_listing still stands).",
             "counts": {

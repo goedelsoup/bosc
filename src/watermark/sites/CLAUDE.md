@@ -30,6 +30,14 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   in the corpus connects it to a data center. Naming it here would manufacture the link that
   artifact refuses to draw. The vocabulary is where a site's editorial thesis can leak into
   what reads as mechanical selection, so hold it to the same standard as prose.
+- **A Lima-curated list must be gated on `is_reference_site`, not applied to everyone** (#1839).
+  The entity fold-in's curated corridor actors
+  (`watermark.pipeline.entities._enrich._CORRIDOR_ACTORS`) are substring needles on Allen County's
+  project actors. Applied to a peer, Hancock County's *Economic Development Advisory Board*
+  matched "ECONOMIC DEVELOPMENT" and was folded into Lima's ALLEN ECONOMIC DEVELOPMENT GROUP —
+  a Lima entity in Findlay's committed feed, carrying two `discussed_at` edges neither set of
+  minutes supports. A peer now folds in only parties that already resolve to **its own** corpus.
+  When you find a module constant curated from one site's record, that is the shape of the bug.
 - **"Corridor" names four unrelated things — check which sense before reusing one** (#1634;
   the full glossary is the `SiteProfile` docstring). (1) **design-storm** — `corridor_name` +
   `corridor_ddf_relpath`, a NOAA Atlas-14 *rainfall* subject anchored to `design_lat/lon`, not

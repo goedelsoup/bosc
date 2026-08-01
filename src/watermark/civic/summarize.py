@@ -169,17 +169,24 @@ def summarize_corridor_meetings(
         if method == "none" or not text:
             skipped.append(filename)
             continue
+        hits = [str(h) for h in d.get("hits", [])]
         entries.append(
             SummaryEntry(
                 date=d.get("date_verified") or d.get("date_listing"),
                 kind=str(d.get("kind", "other")),
                 filename=filename,
-                hits=[str(h) for h in d.get("hits", [])],
+                # The entry records EVERY hit — that's the index's finding, and the searchable
+                # provenance. The PROMPT gets only the corridor subjects (#1839): it tells the
+                # model "this site's corridor subjects: …", and a generic topic listed there is a
+                # false statement the model then reasons from. It did: told `tax_abatement` was a
+                # corridor subject, it wrote a sentence about a keyword that had matched
+                # "asbestos abatement" in a demolition bid.
+                hits=hits,
                 summary=summarize_meeting(
                     text,
                     extractor=extractor,
                     county=profile.county_name,
-                    hits=[str(h) for h in d.get("hits", [])],
+                    hits=[h for h in hits if h in subjects],
                 ),
             )
         )

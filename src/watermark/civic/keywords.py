@@ -25,7 +25,9 @@ _TERMS: dict[str, str] = {
     # ``\bmara\b`` alone would be a coin-flip against a surname, and MARA Holdings is NOT
     # Marathon Petroleum (headquartered in Findlay) — see data/extracted/findlay/data-centers.md,
     # which makes that guard explicit. So each requires the full name or the facility's own name.
-    "one_power": r"one\s+power\s+(?:co\b|company)|megawatt\s+hub|\bmwhub\b",
+    # `megawatt hub` alone is a unit + a noun, not a name ("a 150 megawatt hub project"), so the
+    # facility alternative carries its town: the disclosed name is the "Findlay Megawatt Hub".
+    "one_power": r"one\s+power\s+(?:co\b|company)|findlay\s+megawatt\s+hub|\bmwhub\b",
     "mara_holdings": r"mara\s+holdings|marathon\s+digital",
     # topics
     "datacenter": r"data\s*\-?\s*cent(?:er|re)|hyperscale",
@@ -39,7 +41,13 @@ _TERMS: dict[str, str] = {
     "bess": r"\bbess\b|battery\s+energy\s+storage",
     "solar": r"\bsolar\b",
     "setback": r"set\s*back",
-    "tax_abatement": r"abatement|\bcra\b|\btif\b|enterprise\s+zone",
+    # A bare `abatement` is not a tax term. Hancock County's commissioners let 7 asbestos-
+    # abatement demolition bids through it before anyone noticed (#1839) — so require the tax
+    # sense explicitly, or one of the named instruments.
+    "tax_abatement": (
+        r"tax\s+abatement|abatement\s+(?:agreement|application|schedule)"
+        r"|\bcra\b|\btif\b|enterprise\s+zone"
+    ),
 }
 _COMPILED: dict[str, re.Pattern[str]] = {k: re.compile(v, re.IGNORECASE) for k, v in _TERMS.items()}
 

@@ -16,7 +16,7 @@ from __future__ import annotations
 import calendar
 import re
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -58,30 +58,51 @@ _WEEKDAY_RE = re.compile(
 
 @dataclass(frozen=True)
 class Cadence:
-    """A parsed standing schedule: a weekday + which occurrences in the month."""
+    """A parsed standing schedule: weekday(s) + which occurrences in the month.
 
-    weekday: int  # Monday=0 .. Sunday=6
-    ordinals: tuple[int | str, ...]  # e.g. (2, 4) or (2, "last") or (1,)
+    ``ordinals`` empty means **every** occurrence of those weekdays — a weekly board
+    ("9:30 am Tuesday & Thursday"), not a monthly one.
+    """
+
+    weekdays: tuple[int, ...]  # Monday=0 .. Sunday=6
+    ordinals: tuple[int | str, ...]  # e.g. (2, 4) or (2, "last") or (1,); () = weekly
 
 
 def parse_cadence(schedule: str | None) -> Cadence | None:
-    """Parse "2nd & 4th Monday" / "2nd & last Monday" / "1st Tuesday" into a Cadence.
+    """Parse a standing schedule into a Cadence.
+
+    Handles the monthly nth-weekday forms ("2nd & 4th Monday", "2nd & last Monday",
+    "1st Tuesday") and the **weekly** form — one or more weekdays with no ordinal at
+    all ("Regular Meeting: 9:30 am Tuesday & Thursday", Hancock County's board, #1839).
+    A weekly board is the shape Lima's six bodies never had, so it used to parse to
+    ``None`` and the audit reported no coverage at all for it.
 
     Returns ``None`` for an empty/irregular schedule (e.g. Lafayette's "1st Thursday
     after 1st Monday" — the "after" clause can't be a simple nth-weekday rule).
     """
     if not schedule or "after" in schedule.lower():
         return None
-    wd = _WEEKDAY_RE.search(schedule)
+    wds = _WEEKDAY_RE.findall(schedule)
     ords = _ORDINAL_RE.findall(schedule)
-    if not wd or not ords:
+    if not wds:
         return None
+    seen_wd: list[int] = []
+    for w in wds:
+        day = _WEEKDAYS[w.lower()]
+        if day not in seen_wd:
+            seen_wd.append(day)
     seen: list[int | str] = []
     for o in ords:
         val = _ORDINALS[o.lower()]
         if val not in seen:
             seen.append(val)
-    return Cadence(weekday=_WEEKDAYS[wd.group(1).lower()], ordinals=tuple(seen))
+    # An ordinal list is read as applying to the ONE weekday it qualifies; "2nd & 4th Monday"
+    # names a single day. Multiple weekdays alongside ordinals is a shape no committed roster
+    # uses and would be ambiguous ("1st Monday & 3rd Tuesday"), so keep the historical
+    # single-weekday reading there rather than guessing a cross product.
+    if seen:
+        return Cadence(weekdays=(seen_wd[0],), ordinals=tuple(seen))
+    return Cadence(weekdays=tuple(seen_wd), ordinals=())
 
 
 def nth_weekday(year: int, month: int, weekday: int, n: int | str) -> date | None:
@@ -98,14 +119,28 @@ def nth_weekday(year: int, month: int, weekday: int, n: int | str) -> date | Non
 
 
 def expected_dates(cadence: Cadence, start: date, end: date) -> list[date]:
-    """Every scheduled meeting date the cadence implies within ``[start, end]``."""
+    """Every scheduled meeting date the cadence implies within ``[start, end]``.
+
+    Ordinals apply to **every month in the span** — a month-range qualifier printed in the
+    schedule text ("First Tuesday of the Month, 7:00 pm February-December") is not honoured, so
+    a body that recesses is expected to have met in its recess month. With no ordinals the
+    cadence is weekly: every occurrence of each named weekday in the span.
+    """
     out: list[date] = []
+    if not cadence.ordinals:
+        d = start
+        while d <= end:
+            if d.weekday() in cadence.weekdays:
+                out.append(d)
+            d += timedelta(days=1)
+        return out
     year, month = start.year, start.month
     while (year, month) <= (end.year, end.month):
-        for n in cadence.ordinals:
-            d = nth_weekday(year, month, cadence.weekday, n)
-            if d and start <= d <= end:
-                out.append(d)
+        for weekday in cadence.weekdays:
+            for n in cadence.ordinals:
+                d2 = nth_weekday(year, month, weekday, n)
+                if d2 and start <= d2 <= end:
+                    out.append(d2)
         month += 1
         if month > 12:
             year, month = year + 1, 1
@@ -227,7 +262,12 @@ def write_audit(report: AuditReport, out_path: Path) -> Path:
             "slug": report.slug,
             "schedule": report.schedule,
             "method": "expected meeting dates from the standing cadence vs. ingested "
-            "meeting-index dates, bounded to the ingested span.",
+            "meeting-index dates, bounded to the ingested span. The cadence model reads "
+            "weekday(s) + ordinal(s) only: ordinals are applied to EVERY month in the span "
+            "and a schedule with no ordinal is read as weekly. A month-range qualifier in "
+            "the schedule text (e.g. 'February-December') is NOT honoured, so a body that "
+            "recesses is expected to have met in its recess month and `expected` overcounts "
+            "there.",
             "caveat": "A missing date is a CANDIDATE to verify/request, not proof of "
             "withholding — cadences change and meetings get cancelled.",
             "span": [report.span_start, report.span_end],
