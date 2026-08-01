@@ -6,7 +6,7 @@ stays **undisclosed**; the `[inference]` screening bracket is **retained** (neve
 the end-use tag stays **`[reference]`** (no facility-naming primary instrument surfaced).
 
 This closes the #1353 acceptance path by the *explicitly-permitted* alternative: "the
-`[inference]` 35/70/115 MW screening bracket … **explicitly retained with a documented
+`[inference]` 34.5/74.8/115 MW screening bracket … **explicitly retained with a documented
 negative-search note** (never fabricate a figure)." Two primary-instrument paths were searched;
 neither surfaced a load or a genset fleet for this campus. Re-run the two searches when a permit
 or interconnection filing is expected to have posted (triggers in §5).
@@ -122,12 +122,12 @@ resolve it. The tenant/operator question remains `[open]` (#1263).
 
 ## 5. Disciplined outcome + re-verify triggers
 
-- The **`[inference]` 35 / 70 / 115 MW screening bracket is RETAINED** (`_URBANA.facility.it_load_citation`),
+- The **`[inference]` 34.5 / 74.8 / 115 MW screening bracket is RETAINED** (`_URBANA.facility.it_load_citation`),
   now annotated with this negative search. **No MW figure was fabricated** to close the load.
 - The **end-use tag stays `[reference]`** (public disclosure) in `datacenter-facility.md` §7 and
   `highland55-findings.md` — no facility-naming primary instrument surfaced to take it to `[verified]`.
 - `genset_count` / `genset_mw` / `air_permit_citation` stay **`None`**.
-- `economics-demand-pressure` continues to run off the retained 70 MW central bracket (unchanged).
+- `economics-demand-pressure` continues to run off the retained 74.8 MW central bracket (unchanged).
 
 **Re-run this search when:**
 
