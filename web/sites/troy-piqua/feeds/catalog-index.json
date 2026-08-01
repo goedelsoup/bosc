@@ -1,6 +1,6 @@
 {
   "site": "troy-piqua",
-  "catalog_version": "ff7215cfbd87ceadd7e6f314043e69e8b766a8c24798d6b4f511547e70e0df0d",
+  "catalog_version": "02e31cd2f4dc16c786d1f125909e1f4a9f3a226828d053ccd510d44f4f7cc9c5",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -833,6 +833,14 @@
       "site": "troy-piqua",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:troy-piqua:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "troy-piqua",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

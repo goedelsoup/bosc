@@ -296,6 +296,31 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 2.5
     pounds: 28780.0
+  top_water_chemicals:
+  - chemical: Nitrate compounds (water dissociable; reportable only when in aqueous solution)
+    cas: N511
+    water_pounds: 187994.9
+    reporting_years: 28
+  - chemical: Manganese
+    cas: 7439-96-5
+    water_pounds: 8968.5
+    reporting_years: 33
+  - chemical: Zinc compounds
+    cas: N982
+    water_pounds: 3721.8
+    reporting_years: 34
+  - chemical: Nickel
+    cas: 7440-02-0
+    water_pounds: 693.4
+    reporting_years: 31
+  - chemical: Chromium
+    cas: 7440-47-3
+    water_pounds: 170.6
+    reporting_years: 34
+  - chemical: Lead
+    cas: 7439-92-1
+    water_pounds: 11.1
+    reporting_years: 20
 - facility_id: 44901MPRDT913BO
   facility_number: '54851'
   name: CLEVELAND-CLIFFS STEEL CORP - MANSFIELD WORKS
@@ -576,6 +601,59 @@ facilities:
     toxicity_category: Mixed
     score: 4851.7
     pounds: 242943.0
+  top_water_chemicals:
+  - chemical: Manganese compounds
+    cas: N450
+    water_pounds: 17962.0
+    reporting_years: 21
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa
+      and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid
+      waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda
+      ash and kiln roasted at approximately 2,000 F.)
+    cas: N090
+    water_pounds: 8946.0
+    reporting_years: 27
+  - chemical: Zinc compounds
+    cas: N982
+    water_pounds: 2999.0
+    reporting_years: 27
+  - chemical: Copper
+    cas: 7440-50-8
+    water_pounds: 1286.0
+    reporting_years: 6
+  - chemical: Copper compounds (this category does not include copper phthalocyanine compounds that are
+      substituted with only hydrogen, and/or chlorine, and/or bromine.)
+    cas: N100
+    water_pounds: 1168.0
+    reporting_years: 27
+  - chemical: Lead compounds
+    cas: N420
+    water_pounds: 708.0
+    reporting_years: 27
+  - chemical: Nickel compounds
+    cas: N495
+    water_pounds: 391.0
+    reporting_years: 27
+  - chemical: Nickel
+    cas: 7440-02-0
+    water_pounds: 358.0
+    reporting_years: 6
+  - chemical: Lead
+    cas: 7439-92-1
+    water_pounds: 328.0
+    reporting_years: 8
+  - chemical: Zinc (fume or dust)
+    cas: 7440-66-6
+    water_pounds: 239.0
+    reporting_years: 8
+  - chemical: Chromium
+    cas: 7440-47-3
+    water_pounds: 19.0
+    reporting_years: 6
+  - chemical: Mercury
+    cas: 7439-97-6
+    water_pounds: 1.7
+    reporting_years: 14
 - facility_id: 44903NWMNT100CA
   facility_number: '33610'
   name: NEWMAN TECHNOLOGY INC
@@ -768,6 +846,15 @@ facilities:
     cas: 872-50-4
     score: 0.0
     pounds: 10693.0
+  top_water_chemicals:
+  - chemical: Chromium
+    cas: 7440-47-3
+    water_pounds: 19.0
+    reporting_years: 4
+  - chemical: Nickel
+    cas: 7440-02-0
+    water_pounds: 11.0
+    reporting_years: 3
 - facility_id: 44907THRMD1320S
   facility_number: '55310'
   name: THERM-O-DISC INC
@@ -1047,6 +1134,35 @@ facilities:
     toxicity_category: Mixed
     score: 13.9
     pounds: 1740977.0
+  top_water_chemicals:
+  - chemical: Manganese
+    cas: 7439-96-5
+    water_pounds: 408.0
+    reporting_years: 12
+  - chemical: Copper
+    cas: 7440-50-8
+    water_pounds: 249.5
+    reporting_years: 30
+  - chemical: Phenol
+    cas: 108-95-2
+    water_pounds: 112.4
+    reporting_years: 22
+  - chemical: Nickel
+    cas: 7440-02-0
+    water_pounds: 93.7
+    reporting_years: 28
+  - chemical: Chromium
+    cas: 7440-47-3
+    water_pounds: 30.5
+    reporting_years: 22
+  - chemical: Tetrachloroethylene
+    cas: 127-18-4
+    water_pounds: 3.0
+    reporting_years: 2
+  - chemical: 1,1,1-Trichloroethane
+    cas: 71-55-6
+    water_pounds: 1.0
+    reporting_years: 1
 - facility_id: 44902GLPCH153EA
   facility_number: '47323'
   name: BUNTING BEARINGS LLC
@@ -1292,6 +1408,11 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 100.7
     pounds: 290.0
+  top_water_chemicals:
+  - chemical: Copper
+    cas: 7440-50-8
+    water_pounds: 584.0
+    reporting_years: 26
 - facility_id: 44904HSTTM345SO
   facility_number: '1120'
   name: STONERIDGE INC HI-STAT DIV
@@ -1499,6 +1620,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 5750.0
+  top_water_chemicals: []
 - facility_id: 44903TYLRM700SP
   facility_number: '40693'
   name: TAYLOR METAL PRODUCTS CO INC
@@ -1535,6 +1657,7 @@ facilities:
     toxicity_category: Carcinogen
     score: 12472.5
     pounds: 17940.0
+  top_water_chemicals: []
 - facility_id: 44905JYPLS150EL
   facility_number: '3423'
   name: NANOGATE N.A. LLC
@@ -1740,6 +1863,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.4
     pounds: 1000.0
+  top_water_chemicals: []
 - facility_id: 44904HMLTN147PL
   facility_number: '11906'
   name: COLUMBUS ELECTRIC MANUFACTURING CO LEXINGTON DIV
@@ -1811,6 +1935,7 @@ facilities:
     toxicity_category: Carcinogen
     score: 7.3
     pounds: 14640.0
+  top_water_chemicals: []
 - facility_id: 44875TCHFR15ESM
   facility_number: '23311'
   name: TECH FORM IND
@@ -1853,6 +1978,7 @@ facilities:
     toxicity_category: Carcinogen
     score: 5634.0
     pounds: 31.0
+  top_water_chemicals: []
 - facility_id: 44875SHLBY34MAN
   facility_number: '39878'
   name: SHELBY MUNICIPAL LIGHT PLANT
@@ -1989,6 +2115,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 0.0
+  top_water_chemicals: []
 - facility_id: 44903MNSFL500NO
   facility_number: '47322'
   name: CITATION MANSFIELD
@@ -2120,6 +2247,19 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 720184.0
+  top_water_chemicals:
+  - chemical: Zinc (fume or dust)
+    cas: 7440-66-6
+    water_pounds: 21869.0
+    reporting_years: 2
+  - chemical: Copper
+    cas: 7440-50-8
+    water_pounds: 1146.0
+    reporting_years: 2
+  - chemical: Zinc compounds
+    cas: N982
+    water_pounds: 22.0
+    reporting_years: 2
 - facility_id: 44903GRMNR1RUPP
   facility_number: '3443'
   name: GORMAN RUPP CO
@@ -2263,6 +2403,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.4
     pounds: 18585.5
+  top_water_chemicals: []
 - facility_id: 44827PPGND5066S
   facility_number: '36532'
   name: PITTSBURGH GLASS WORKS LLC
@@ -2535,6 +2676,7 @@ facilities:
     toxicity_category: Mixed
     score: 0.0
     pounds: 2117.0
+  top_water_chemicals: []
 - facility_id: 44904MNSFL145IN
   facility_number: '26003'
   name: MANSFIELD SCREW MACHINE PRODUCTS CO INC
@@ -2639,6 +2781,11 @@ facilities:
     toxicity_category: Carcinogen
     score: 3360.2
     pounds: 217692.0
+  top_water_chemicals:
+  - chemical: Trichloroethylene
+    cas: 79-01-6
+    water_pounds: 5.0
+    reporting_years: 1
 - facility_id: 44902WHTCN246EA
   facility_number: '22875'
   name: WHITE CONSOLIDATED INDUSTRIES INC LAUNDRY DIV
@@ -2715,6 +2862,19 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 2.1
     pounds: 58076.0
+  top_water_chemicals:
+  - chemical: n-Butyl alcohol (1-Butanol)
+    cas: 71-36-3
+    water_pounds: 114.0
+    reporting_years: 1
+  - chemical: Toluene
+    cas: 108-88-3
+    water_pounds: 9.0
+    reporting_years: 1
+  - chemical: Xylene (mixed isomers)
+    cas: 1330-20-7
+    water_pounds: 3.0
+    reporting_years: 1
 - facility_id: 44903HRSCC1490O
   facility_number: '24512'
   name: HARSCO METALS - MANSFIELD
@@ -2860,6 +3020,7 @@ facilities:
     cas: 1344-28-1
     score: 0.0
     pounds: 500.0
+  top_water_chemicals: []
 - facility_id: 44905SHLHC42NIN
   facility_number: '47951'
   name: SHILOH CORP  MANSFIELD BLANKING
@@ -2954,6 +3115,27 @@ facilities:
     toxicity_category: Carcinogen
     score: 0.0
     pounds: 66097.0
+  top_water_chemicals:
+  - chemical: Manganese
+    cas: 7439-96-5
+    water_pounds: 35.0
+    reporting_years: 7
+  - chemical: Nickel
+    cas: 7440-02-0
+    water_pounds: 35.0
+    reporting_years: 7
+  - chemical: Chromium
+    cas: 7440-47-3
+    water_pounds: 35.0
+    reporting_years: 7
+  - chemical: Cobalt
+    cas: 7440-48-4
+    water_pounds: 35.0
+    reporting_years: 7
+  - chemical: Copper
+    cas: 7440-50-8
+    water_pounds: 35.0
+    reporting_years: 7
 - facility_id: 44902LDGBR198WA
   facility_number: '12963'
   name: CSM HORVATH LEDGEBROOK
@@ -3097,6 +3279,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 542.6
     pounds: 694568.0
+  top_water_chemicals: []
 - facility_id: 44903TYLRP700SP
   facility_number: '49752'
   name: TAYLOR PLATING CO
@@ -3181,6 +3364,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 16000.0
+  top_water_chemicals: []
 - facility_id: 44902NWRTS210NE
   facility_number: '49187'
   name: NEWARTESIAN MANAGEMENT CO
@@ -3249,6 +3433,7 @@ facilities:
     cas: 131-11-3
     score: 0.0
     pounds: 2050.0
+  top_water_chemicals: []
 - facility_id: 44903DLLCT330EA
   facility_number: '58052'
   name: HYUNDAI IDEAL ELECTRIC CO
@@ -3344,6 +3529,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 2.6
     pounds: 260777.0
+  top_water_chemicals: []
 - facility_id: 44904NRMNF265MI
   facility_number: '27274'
   name: EGS NEER
@@ -3460,6 +3646,11 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.1
     pounds: 119.7
+  top_water_chemicals:
+  - chemical: Lead
+    cas: 7439-92-1
+    water_pounds: 0.0
+    reporting_years: 2
 - facility_id: 44903CRNPL41CAI
   facility_number: '48001'
   name: AMERICAN STANDARD BRANDS INC
@@ -3609,6 +3800,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 46.8
     pounds: 800339.0
+  top_water_chemicals: []
 - facility_id: 44902TYCLC175ND
   facility_number: '1133'
   name: TE CONNECTIVITY CORP
@@ -3748,6 +3940,11 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 38.3
     pounds: 907.4
+  top_water_chemicals:
+  - chemical: Lead
+    cas: 7439-92-1
+    water_pounds: 10.0
+    reporting_years: 2
 - facility_id: 44905MNSFL169WL
   facility_number: '9306'
   name: MANSFIELD PAINT CO
@@ -3885,6 +4082,7 @@ facilities:
     cas: 67-64-1
     score: 0.0
     pounds: 192698.0
+  top_water_chemicals: []
 - facility_id: 44903HNTRP48PAR
   facility_number: '35297'
   name: HUNTER PROTECTIVE SYSTEMS
@@ -3938,6 +4136,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 2.0
     pounds: 4592.8
+  top_water_chemicals: []
 - facility_id: 44865PLYMT607BE
   facility_number: '17797'
   name: PLYMOUTH INDUSTRIES INC
@@ -4020,6 +4219,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 1998.0
+  top_water_chemicals: []
 - facility_id: 44901GRMNR305BO
   facility_number: '38319'
   name: GORMAN RUPP CO
@@ -4166,6 +4366,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.3
     pounds: 6064.0
+  top_water_chemicals: []
 - facility_id: 44902PBDYB651NO
   facility_number: '49454'
   name: BARNES PUMPS INC
@@ -4201,6 +4402,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 24.8
     pounds: 250.0
+  top_water_chemicals: []
 - facility_id: 44902DSGND119EL
   facility_number: '19811'
   name: DESIGNED METAL PRODUCTS INC.
@@ -4348,6 +4550,7 @@ facilities:
     toxicity_category: Carcinogen
     score: 0.0
     pounds: 4.0
+  top_water_chemicals: []
 - facility_id: 44901CRSTL515NE
   facility_number: '7088'
   name: CRESTLINE PAINT
@@ -4415,6 +4618,11 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 10.9
     pounds: 323203.0
+  top_water_chemicals:
+  - chemical: Methyl ethyl ketone
+    cas: 78-93-3
+    water_pounds: 13300.0
+    reporting_years: 1
 - facility_id: 44903RCHLN531GR
   facility_number: '47981'
   name: RICHLAND SCREW MACHINE PRODUCTS INC
@@ -4654,6 +4862,11 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 7.8
     pounds: 1763373.0
+  top_water_chemicals:
+  - chemical: Copper
+    cas: 7440-50-8
+    water_pounds: 80.0
+    reporting_years: 10
 - facility_id: 44903WSSND2472N
   facility_number: '19812'
   name: WEISS IND
@@ -4737,6 +4950,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.9
     pounds: 4.0
+  top_water_chemicals: []
 - facility_id: 4490WMRTZN665NM
   facility_number: '1973'
   name: MORITZ INTERNATIONAL INC. (0370010048)
@@ -4771,6 +4985,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 6.5
     pounds: 10357.9
+  top_water_chemicals: []
 - facility_id: 44902GRMNR180E4
   facility_number: '46811'
   name: GORMAN-RUPP CO
@@ -4832,6 +5047,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 2.3
     pounds: 134423.0
+  top_water_chemicals: []
 - facility_id: 44901GTNDS179EA
   facility_number: '26612'
   name: G & T INDUSTRIES OF OHIO INC
@@ -4879,6 +5095,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 1.4
     pounds: 36412.0
+  top_water_chemicals: []
 - facility_id: 4490WSTNLL149LD
   facility_number: '29877'
   name: STEIN,LLC
@@ -4919,6 +5136,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 0.0
+  top_water_chemicals: []
 - facility_id: 44907GRSNQ440SI
   facility_number: '5370'
   name: GRASAN EQUIPMENT CO INC
@@ -4972,6 +5190,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.6
     pounds: 72290.0
+  top_water_chemicals: []
 - facility_id: 44902WRRNR800NM
   facility_number: '7035'
   name: WARREN RUPP INC
@@ -5026,6 +5245,7 @@ facilities:
     toxicity_category: Carcinogen
     score: 0.5
     pounds: 7611.0
+  top_water_chemicals: []
 - facility_id: 44902SNSMR375NM
   facility_number: '9717'
   name: RELADYNE INC
@@ -5094,6 +5314,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 2502.0
+  top_water_chemicals: []
 - facility_id: 44875FRMSH40HIG
   facility_number: '9261'
   name: MIAMI SYSTEMS CORP SHELBY BUSINESS FORMS DIV
@@ -5141,6 +5362,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.2
     pounds: 2250.0
+  top_water_chemicals: []
 - facility_id: 44903PNGLM1711N
   facility_number: '53853'
   name: PAN GLO MANSFIELD
@@ -5211,6 +5433,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 2688.8
+  top_water_chemicals: []
 - facility_id: 44905DVRSF555PA
   facility_number: '18155'
   name: DIVERSIFIED ASSEMBLIES INC
@@ -5245,6 +5468,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.2
     pounds: 707.0
+  top_water_chemicals: []
 - facility_id: 44906NVRSL525BE
   facility_number: '45617'
   name: BURNER SYSTEMS INTERNATIONAL INC.
@@ -5364,6 +5588,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 7454296.0
+  top_water_chemicals: []
 - facility_id: 4487WSHLBY5578S
   facility_number: '6161'
   name: PHILLIPS TUBE GROUP - SHELBY
@@ -5463,6 +5688,7 @@ facilities:
     toxicity_category: Mixed
     score: 0.0
     pounds: 12731.7
+  top_water_chemicals: []
 - facility_id: 44875LTVCP21ALL
   facility_number: '41002'
   name: ARCELORMITTAL TUBULAR PRODUCTS SHELBY LLC.
@@ -5515,6 +5741,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 105.0
+  top_water_chemicals: []
 - facility_id: 44903BTRNS380NO
   facility_number: '40947'
   name: OB TRANSIT PRODS INC
@@ -5551,6 +5778,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 6725.0
+  top_water_chemicals: []
 - facility_id: 44906NVNSY535BE
   facility_number: '56133'
   name: INVENSYS INC
@@ -5609,6 +5837,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 4966.0
+  top_water_chemicals: []
 - facility_id: 44903SRFRC1947H
   facility_number: '4271'
   name: U.S. DOD, USAF, MANSFIELD ANG
@@ -5656,6 +5885,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 1352.6
+  top_water_chemicals: []
 - facility_id: 4490WMRSCR653LI
   facility_number: '32614'
   name: AMERASCREW INC
@@ -5702,6 +5932,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 152.0
+  top_water_chemicals: []
 - facility_id: 4490WBRSHC1595W
   facility_number: '53475'
   name: JAY INDUSTRIES INC.
@@ -5797,6 +6028,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 55.0
+  top_water_chemicals: []
 - facility_id: 44903NTCHC140MA
   facility_number: '28760'
   name: ANOTECH CORP
@@ -5817,6 +6049,7 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []
 - facility_id: 44906CPCGR2525W
   facility_number: '9224'
   name: GENERAL MOTORS CORP CLCD MANSFIELD PLANT
@@ -5838,6 +6071,7 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []
 - facility_id: 4487WMTDCN35MAN
   facility_number: '24523'
   name: MTD CONSUMER GROUP INC - SHELBY FACILITY
@@ -5858,6 +6092,7 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []
 - facility_id: 44875MTDSHCOIPB
   facility_number: '5040'
   name: MTD SHELBY
@@ -5879,6 +6114,7 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []
 - facility_id: 44906PPSCL1820N
   facility_number: '51281'
   name: PEPSI-COLA BOTTLING OF MANSFIELD
@@ -5900,6 +6136,7 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []
 - facility_id: 44902WHTCN250WA
   facility_number: '52321'
   name: WHITE CONSOLIDATED INDUSTRIES INC RANGE DIV
@@ -5921,3 +6158,4 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []

@@ -2,9 +2,9 @@
   "site": "wpafb",
   "bundle_version": "1.0.0",
   "contract_version": "1.49.0",
-  "generated_at": "2026-07-31T20:58:51+00:00",
+  "generated_at": "2026-08-01T12:09:24+00:00",
   "feed_count": 32,
-  "row_total": 462,
+  "row_total": 463,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 54
+      "count": 55
     },
     {
       "name": "geo/enclave",

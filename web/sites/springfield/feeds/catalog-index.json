@@ -1,6 +1,6 @@
 {
   "site": "springfield",
-  "catalog_version": "000a0d2208221b7a8f5adc7c4e8465ec1e4968c00a1a916a33e75e84fc9038cd",
+  "catalog_version": "425a8e6427bc40c5ee00ed366bc2f205e45aa891644ce285e662a6f7b13c6c3e",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -825,6 +825,14 @@
       "site": "springfield",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:springfield:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "springfield",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

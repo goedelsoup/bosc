@@ -1,6 +1,6 @@
 {
   "site": "hamilton-middletown",
-  "catalog_version": "4d08fa48042be74e4379939227e66991805ac90579a20f2da754d195308b7d36",
+  "catalog_version": "38f19346ebd67782be7cde7426994aa9180d870c1bc9786e0741f27f8420fc3e",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -833,6 +833,14 @@
       "site": "hamilton-middletown",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:hamilton-middletown:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "hamilton-middletown",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

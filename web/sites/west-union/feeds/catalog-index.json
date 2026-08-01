@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "151fbf08cd79a80c3cb830fc6e8c818db486f3bfb770ddf1c66bab8f31a5f6eb",
+  "catalog_version": "1c5048a70cf6d59dc6c15104573ce972dbe16b39ba4d18b1dd16bdc290fce4f4",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -817,6 +817,14 @@
       "site": "west-union",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

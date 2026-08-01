@@ -19,7 +19,7 @@ entities:
   - name: General Dynamics Land Systems Inc.
     lei: 875500ULXB4CYQSJVA03
     note: JSMC / Lima Army Tank Plant operator — Allen County RSEI #4 toxic-release Score.
-    rsei_parents: ["GENERAL DYNAMICS"]
+    rsei_parents: ["GENERAL DYNAMICS CORP", "GENERAL DYNAMICS"]
   - name: Cenovus Energy Inc.
     lei: 254900LJGL2N2XEMD470
     note: Successor to Husky Energy (the RSEI Lima Refining Co parent), post-2021 merger.

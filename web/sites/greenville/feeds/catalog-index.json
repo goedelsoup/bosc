@@ -1,6 +1,6 @@
 {
   "site": "greenville",
-  "catalog_version": "b73a3edb23423848f1c0f914ce3aba9c702c5a730e5ea4dcd674386d17b8a889",
+  "catalog_version": "635467bb2b9eaae234abe3283eaef0022094b78e32954edd3762d43cbd586c5d",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -828,6 +828,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:greenville:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:greenville:legal-records-legislation",
       "kind": "dataset",
       "site": "greenville",
@@ -1048,7 +1056,7 @@
       "kind": "entity",
       "site": "greenville",
       "local_id": "TEXTRON INC CADILLAC GAGE TEXTRON",
-      "title": "TEXTRON INC. CADILLAC GAGE TEXTRON",
+      "title": "TEXTRON INC CADILLAC GAGE TEXTRON",
       "feed": "entities"
     }
   ]

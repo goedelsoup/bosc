@@ -1,6 +1,6 @@
 {
   "site": "urbana",
-  "catalog_version": "b5ba482c98b2d2c20e518f9766fb557f14a0f90ab55a4a22ccdd3edab7e04eba",
+  "catalog_version": "b5fc8c2c0c984a7a7e4eef2ac3cfedaed4187a736629836289896f2f59f7fc15",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -825,6 +825,14 @@
       "site": "urbana",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

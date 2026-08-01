@@ -114,10 +114,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "670b17edcb48bf4d697c5fc4c2d06d3d090462f243b5fc37979c9bb55f684b2b",
-      "size_bytes": 168826,
+      "sha256": "4710cd51cdd93dab4f855e44902485ef648e3e1889886be222d0cb4895a08a88",
+      "size_bytes": 198670,
       "lfs_materialized": true,
-      "file_count": 12,
+      "file_count": 13,
       "stale": false,
       "asof": null
     },
@@ -182,6 +182,61 @@
     },
     "citation": {
       "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "legal-datacenter-legislation-hb983-3744",
+    "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
+    "external_url": null,
+    "license": "Public record (Ohio legislative document)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-31",
+    "tags": [
+      "data-centers",
+      "legislation",
+      "r.c.-3744",
+      "r.c.-9.66",
+      "public-records"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.analysis.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.digest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "872eddc22e6d6c2f2fe9e77c90098205194ecfdb54e4c31371c913a691813516",
+      "size_bytes": 33606,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -2053,8 +2108,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "343e2ed72adaa2ee49d13fe6379992e864cc101d46b2ecff48c7a9f7007ebbeb",
-      "size_bytes": 28459,
+      "sha256": "292c011fddcac9c50a1ca6d4696825c68cd5f1ccf68cee47d4f2efa69d968f9b",
+      "size_bytes": 28607,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -2823,7 +2878,7 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "1e58be1c6b489f56a0d0a1c60563c2f19047f94d6dd5ea557313ad98485f6d32",
+      "sha256": "55a028aeca6401035261a9cad9016f6b38510ae75abd8d5354bcd1f588b7c2ce",
       "size_bytes": 99958,
       "lfs_materialized": true,
       "file_count": 1,
@@ -2882,8 +2937,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "48b14c7a9814753a8396096a2f30cc27d8312b89298deef4243d6a39da248d8f",
-      "size_bytes": 2738433,
+      "sha256": "00f8b228c15b0a21aee41c7d9fee91f7951b751520348929ee8e83ae48b266dc",
+      "size_bytes": 3360686,
       "lfs_materialized": true,
       "file_count": 23,
       "stale": false,
