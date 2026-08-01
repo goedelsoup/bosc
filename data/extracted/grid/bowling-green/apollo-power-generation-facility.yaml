@@ -118,9 +118,16 @@ capacity:
       atmospheric weather conditions. At those weather conditions, various generation
       units may be derated to still account for onsite equipment load and unplanned
       equipment downtime to still achieve a maximum 350 MW net output."
-      (Staff Report p. 2.) So the installed fleet is ~40% larger than the certified
-      output — the margin absorbs parasitic load, derate and outages. A 491 MW figure
-      is NOT a second capacity claim and must never be reported as the plant's size.
+      (Staff Report p. 2.) A 491 MW figure is NOT a second capacity claim and must
+      never be reported as the plant's size.
+    margin_over_certified_output:
+      tag: '[inference]'
+      statement: >-
+        491 / 350 = 1.40, so the installed fleet is about 40% larger than the
+        certified net output. The Staff Report names both figures and names what the
+        margin absorbs — parasitic onsite equipment load, derate at design
+        atmospheric conditions, and unplanned downtime — but never states the ratio.
+        The arithmetic is ours.
   bess:
     tag: '[verified]'
     power_mw: 119.5
@@ -132,11 +139,22 @@ capacity:
       approximately 119.5 MW of BESS capacity (for delivery of 239 MW-h of energy).
       This BESS equipment would consist of approximately 31 Tesla Megapack 2XL
       battery energy storage containers with inverters." (Staff Report p. 2.) The
-      widely reported "~120 MW battery" rounds this. The 239 MWh — i.e. a 2-hour
-      duration — is the figure that says what the storage is FOR, and it is absent
-      from every secondary account: at 119.5 MW it carries the plant for roughly two
-      hours, which is a ride-through and demand-following asset, not a supply
-      resource.
+      widely reported "~120 MW battery" rounds the power rating and drops the energy
+      rating, which is the half that says what the storage is for. Both are recorded
+      here because they answer different questions: 119.5 MW is how hard it can push,
+      239 MWh is how long it can push for.
+    duration:
+      tag: '[inference]'
+      statement: >-
+        239 MWh / 119.5 MW = 2.0 hours — two hours AT THE BATTERY'S OWN 119.5 MW
+        rating, which is 34% of the plant's 350 MW certified output. It is NOT two
+        hours of the plant's output; discharged against the full 350 MW the same
+        239 MWh would last about 41 minutes, and the BESS is not rated to deliver
+        350 MW in any case. The Staff Report states the purpose in its own words —
+        "to accommodate fluctuations in demand from the associated Liames facility
+        and to mitigate any unplanned outages" — which is a demand-following and
+        ride-through role, not a supply resource. The division is ours; the framing
+        is the record's.
     purpose:
       tag: '[verified]'
       statement: >-
@@ -375,7 +393,16 @@ land:
       project, including approximately 75.143 acres classified as Agricultural
       District Land. This designation would not be retained, as the parcel would be
       incorporated into a permanent electric generation facility." (Staff Report
-      p. 3.) 96.8% of the project area is farmland being converted.
+      p. 3.)
+    share_of_project_area:
+      tag: '[inference]'
+      statement: >-
+        142.12 / 146.84 = 0.968, so about 96.8% of the project area is farmland being
+        converted, and roughly half of that (75.143 ac) carries an Agricultural
+        District designation it will lose. The Staff Report gives both acreages and
+        neither ratio. Note the denominator: this uses the 146.84-acre project area,
+        not the 163 or 165.11 figures the same report gives for other boundaries —
+        see acreage_discrepancy above.
   location:
     tag: '[verified]'
     statement: >-
@@ -550,6 +577,24 @@ surface_water_and_species:
     basin. The project area is not in a FEMA 100-year floodplain. Construction
     stormwater runs under Ohio NPDES general permit OHC000006 with a SWPPP.
     (Staff Report pp. 12, 14-15.)
+  construction_stormwater_number_divergence:
+    tag: '[open]'
+    statement: >-
+      THREE DIFFERENT NUMBERS NAME THIS SITE'S CONSTRUCTION-STORMWATER AUTHORITY AND
+      NONE OF THE SOURCES RECONCILES THEM. The Staff Report says twice that coverage
+      would be obtained under Ohio NPDES construction general permit **OHC000006**
+      (pp. 12, 14). The ECHO Wood County sweep in
+      data/extracted/bowling-green/water-watch.yaml keys its coverages to master
+      external permit **OHC000000**, under which APOLLO POWER GEN holds coverage
+      **OHGC17963**. The final air permit (Responses 34 and 41) says Ohio EPA's
+      Division of Surface Water "issued a Construction Stormwater Permit
+      (**2GC08564\*AG**) to the Will-Power site on Jan. 4, 2026." The likely reading
+      is that these are a general permit, its ICIS master-permit key, a site coverage
+      under it, and an Ohio-format coverage number — i.e. different layers rather than
+      competing claims — but NO captured source states that, and OHC000006 vs
+      OHC000000 differ in a single digit in a way a transcription error would also
+      produce. Cite whichever number the source you are quoting uses, and do not
+      silently normalise one to another. Lead APOLLO-CGP-NUMBER-RECONCILIATION.
   listed_species:
     tag: '[verified]'
     statement: >-

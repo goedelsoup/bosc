@@ -3983,7 +3983,7 @@ _BOWLING_GREEN = SiteProfile(
     # operator/type/floor-area/investment are disclosed [verified]; the IT load is carried as the
     # disclosed ~180 MW peak [reference] (a design ceiling, NOT an air-permit disclosure of the DC's
     # own load — that stays [open]); the campus is designed self-powered BEHIND THE METER by the
-    # Apollo plant (350 MW gas + ~120 MW BESS, OPSB 25-0973-EL-BLN — the power sub-issue #1437), so
+    # Apollo plant (350 MW net gas + 119.5 MW / 239 MWh BESS, OPSB 25-0973-EL-BLN — #1437), so
     # the ~2x 350-vs-180 MW oversizing is a Phase-2 signal. No on-site emergency gensets are disclosed
     # for the DC itself (the Apollo gensets are a SEPARATE OPSB-permitted power facility), so
     # genset_count/genset_mw/air_permit_citation stay None. Because the load is served behind the
@@ -4069,7 +4069,7 @@ _BOWLING_GREEN = SiteProfile(
         "Power member) serving the city proper — EIA-861 2024 Service_Territory confirms it as "
         "utility #2054 (resolved, #1434). The Meta campus in Middleton Twp interconnects to Toledo "
         "Edison (FirstEnergy / PJM ATSI), NOT the muni, and is designed self-powered BEHIND THE "
-        "METER by the Apollo plant (OPSB 25-0973-EL-BLN) — so its real grid draw is ~0. The "
+        "METER by the Apollo plant (OPSB 25-0973-EL-BLN) — so its modelled grid draw is ~0. The "
         "per-utility load share below is therefore a MAGNITUDE comparison against the muni's retail "
         "(the campus dwarfs it at ~3.5x — the point being that the muni could never serve it), NOT "
         "the campus's actual interconnecting utility; a per-facility serving-utility denominator is "

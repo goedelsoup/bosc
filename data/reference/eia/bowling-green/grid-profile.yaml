@@ -7,7 +7,7 @@ serving_utility:
       confirms it as utility #2054 (resolved, #1434). The Meta campus in Middleton
       Twp interconnects to Toledo Edison (FirstEnergy / PJM ATSI), NOT the muni, and
       is designed self-powered BEHIND THE METER by the Apollo plant (OPSB 25-0973-EL-BLN)
-      — so its real grid draw is ~0. The per-utility load share below is therefore
+      — so its modelled grid draw is ~0. The per-utility load share below is therefore
       a MAGNITUDE comparison against the muni''s retail (the campus dwarfs it at ~3.5x
       — the point being that the muni could never serve it), NOT the campus''s actual
       interconnecting utility; a per-facility serving-utility denominator is a grid-model

@@ -1,0 +1,54 @@
+# Curated document version / duplicate-cluster manifest — Bowling Green (#1590, epic #1579 P3).
+#
+# Slug-scoped peer of data/site/document-versions.yaml (Lima's). Declares which catalogued source
+# documents are versions of ONE filing, so retrieval can collapse a cluster to its canonical
+# (authoritative) member without losing the distinct evidence a superseded version carries.
+#
+# Chain of custody: a READING of already-committed evidence — it renames/alters nothing and
+# invents no documents. A member whose rel is not in the catalog is skipped at export; a cluster
+# with fewer than two present members is dropped.
+
+meta:
+  subject: Document version / duplicate clusters for retrieval dedup — Bowling Green
+  generated_for: bowling-green
+  policy: >
+    Curated from the capture manifests in data/documents/oepa/bowling-green/air/filename-map.yaml,
+    which records each document's Ohio EPA eDocument doc-type label (DRAFT FOR PUBLIC COMMENT vs
+    APPROVAL OR ACKNOWLEDGEMENT) against one permit number. Canonical = the authoritative member.
+
+clusters:
+  # Ohio EPA air permit-to-install lifecycle for the Apollo Power Generation Facility (#1437).
+  # One permit number, P0139272, filed as an application (acknowledged complete), noticed as a
+  # draft for public comment, and issued as a final permit. All three are the same filing and a
+  # naive search returns them as three unrelated hits.
+  #
+  # The final is authoritative — it carries the enforceable terms AND the Response to Comments.
+  # The draft is NOT collapsible-and-discardable: it alone carries the Permit Strategy Write-Up
+  # and its facility-wide controlled-PTE table (the final does not reprint it), and it alone
+  # carries the two write-up defects recorded in P0139272.draft-pti.yaml. This is exactly the
+  # "a draft's figure the final omits" case version_policy exists to protect.
+  - id: oepa-air:P0139272
+    canonical: oepa/bowling-green/air/edoc-4139063.pdf
+    source: >-
+      Ohio EPA eDocument doc-type labels for facility 0387022027 / permit P0139272
+      (data/documents/oepa/bowling-green/air/filename-map.yaml)
+    members:
+      - rel: oepa/bowling-green/air/edoc-4139063.pdf
+        version: final
+        evidence_note: >
+          Issued and effective 2026-06-02. Carries the 42-comment Response to Comments — the
+          fullest available account of public opposition, since the OPSB siting docket that holds
+          the siting-case comments is access-blocked.
+      - rel: oepa/bowling-green/air/edoc-4032135.pdf
+        version: draft
+        evidence_note: >
+          Public-noticed 2026-03-05. Carries the Permit Strategy Write-Up and Table 1, the
+          facility-wide controlled potential-to-emit the final never reprints, plus the 15.37 tpy
+          line-heater NOx figure that Response 18 of the final gives as 14.68. Do not drop it as
+          a superseded duplicate — its pages carry evidence the canonical member does not.
+      - rel: oepa/bowling-green/air/edoc-3938595.pdf
+        version: public_notice
+        evidence_note: >
+          The 2025-12-08 application-completeness letter. Not a permit body; it dates the filing
+          (application received 2025-12-05) and conveys the OAC 3745-31-33 pre-permit
+          site-preparation allowance that the public later objected to.

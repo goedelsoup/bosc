@@ -73,7 +73,11 @@ permit:
         Decimal degrees are a conversion of the permit's own DMS, shown for use, not a second
         source. ICIS-NPDES carries 41.38309 / -83.61074 for the same facility and FRS carries
         41.385022 / -83.611078. All three are recorded; none is corrected against the others.
-    '2PD00009002': {description: Combined sewer overflow - see Part II, Item D}
+    # Value QUOTED deliberately: unquoted, YAML flow-mapping syntax reads the comma in the
+    # permit's own cross-reference as an entry separator and silently invents an `Item D:
+    # null` key. Permit p. 923 of the text layer reads "Combined sewer overflow - see Part
+    # II, Item D" as one string.
+    '2PD00009002': {description: 'Combined sewer overflow - see Part II, Item D'}
     '2PD00009300': {description: System-wide sanitary sewer overflows}
     '2PD00009581': {description: Land application of Class B sewage sludge}
     '2PD00009584': {description: Land application of exceptional quality sewage sludge}
