@@ -19,6 +19,7 @@ from watermark.connectors._cache import cache_key
 from watermark.hsg import normalize_hsg
 from watermark.sites import (
     ALLEN_IN_PARCEL_SCHEMA,
+    CLINTON_PARCEL_SCHEMA,
     FORT_WAYNE_ZONING_SCHEMA,
     LIMA_FLOOD_SCHEMA,
     LIMA_PARCEL_SCHEMA,
@@ -32,6 +33,7 @@ from watermark.sites import (
     SIDNEY_ZONING_SCHEMA,
     SITES,
     VAN_WERT_PARCEL_SCHEMA,
+    WILMINGTON_ZONING_SCHEMA,
     SiteFacility,
     SiteProfile,
     active_profile,
@@ -942,6 +944,155 @@ def test_sidney_parcel_assemblage_is_the_consolidated_amazon_parcel() -> None:
     assert any("26-03-429-009" in c and "[inference]" in c for c in prov["caveats"])
 
 
+def test_clinton_parcel_schema_replaces_the_ogrip_substitute() -> None:
+    """Wilmington's parcel gap (#1470) is closed by the Clinton County GIS Department's own
+    auditor CAMA join — the layer the City's published zoning application uses as its Parcel
+    layer — replacing the OGRIP statewide substitute the profile carried scoped to
+    ``County='Clinton'``. That substitute is owner-redacted by construction AND, for Clinton,
+    reports a NULL ``CurrentTo`` (no stated export date at all), so it can name no grantee: the
+    whole Cosler Farm / Ardent-TAC corridor was invisible through it. Golden field-map lock +
+    the param-stability guard against the committed assemblage fixture."""
+    p = SITES["wilmington"].gis_parcel
+    assert p is not None and p is CLINTON_PARCEL_SCHEMA
+    assert p.connector == "clinton_gis" and p.reference_dir == "wilmington-gis"
+    assert p.id_field == "PIN" and p.id_normalize == "verbatim"  # dashed "285-13-02-01-0000-00"
+    assert p.owner_field == "Listed_Name" and p.defense is None  # owner present; no enclave scan
+    assert p.land_use_field == "Land_Use_Code" and p.land_use_decode == "int"
+    # Clinton serves Date_Conveyed as pre-formatted TEXT ("12/10/2025 12:00:00 AM"), NOT as an
+    # esriFieldTypeDate — decoding it as "iso" would carry that whole string through as a date.
+    assert p.date_decode == "mdyyyy_slash"
+    assert p.market_total_field == "Appraised_Total_100"  # the 100% market value, NOT Taxable_*
+    assert p.cauv_field == ""  # Has_CAUV is a YES/NO flag, not a value
+    assert p.valid_sale_field == "Valid_Sale"
+    assert p.query_scope == ""  # single-jurisdiction layer (no statewide County= scope)
+    assert "services1.arcgis.com/tAhcHWpOD9ygNPbJ" in p.meta.source_url
+    assert "tAhcHWpOD9ygNPbJ" in SITES["wilmington"].parcels_url  # profile matches schema
+    # The OGRIP substitute is gone from Wilmington — its null CurrentTo is the reason (#1470).
+    assert "OhioStatewidePacels_full_view" not in SITES["wilmington"].parcels_url
+    assert p.connector != "ohio_parcels"
+    # The two traps that cost the most on this layer are caveats, not rediscoveries.
+    assert any("Consideration is the WHOLE DEED" in c for c in p.meta.caveats)
+    assert any("cntyparcels" in c and "2023-08-28" in c for c in p.meta.caveats)
+
+    # Param stability: the committed assemblage's PIN-list query replays from its fixture.
+    pins = (
+        "285-13-02-01-0000-00",
+        "290-26-01-12-0000-00",
+        "270-13-02-01-0000-00",
+        "285-13-02-02-0000-00",
+        "285-13-04-01-0000-00",
+        "285-13-11-02-0000-00",
+        "285-13-03-01-0000-00",
+    )
+    key = cache_key(
+        {
+            "f": "geojson",
+            "returnGeometry": "true",
+            "where": f"PIN IN ({','.join(repr(pin) for pin in pins)})",
+            "outFields": ",".join(p.out_fields),
+            "outSR": "4326",
+            "resultOffset": 0,
+            "resultRecordCount": p.page_size,
+        }
+    )
+    assert (FIXTURES / p.connector / f"{key}.json").is_file(), f"clinton param drift: {key}"
+
+
+def test_wilmington_zoning_schema_postdates_the_campus_and_predates_the_rezonings() -> None:
+    """Wilmington's zoning endpoint EXISTS and is now wired (#1470), replacing the profile's
+    ``zoning_url="TODO"``. It is the Findlay/Sidney shape (polygon-only, no parcel id -> per-parcel
+    joins refuse cleanly) and city-limits only. Its CURRENCY is the finding: last edited
+    2026-02-10, it DOES carry the Cosler Farm map rezoning and CANNOT carry the four Ardent/TAC
+    rezonings Council passed nine days later — so those four parcels reading no city district is a
+    publication lag, not a fact about their zoning. The schema says that rather than leaving a
+    reader to re-derive it."""
+    z = SITES["wilmington"].gis_zoning
+    assert z is not None and z is WILMINGTON_ZONING_SCHEMA
+    assert z.connector == "wilmington_gis" and z.reference_dir == "wilmington-gis"
+    assert z.parcel_field is None  # polygon-only: the district catalog works, parcel joins don't
+    assert z.out_fields == ("OBJECTID", "ZONING")  # the parcel field drops out of the request
+    assert z.zoning_field == "ZONING" and z.cited_meta is None  # no parcel join -> no cited scan
+    assert "ProposedZoning9/FeatureServer/0" in z.meta.source_url
+    assert SITES["wilmington"].zoning_url == z.meta.source_url  # profile endpoint matches schema
+    # The publication lag and the remand are recorded as caveats, not discovered at read time.
+    assert any("2026-02-10" in c and "2026-02-19/20" in c for c in z.meta.caveats)
+    assert any("Sharp" in c for c in z.meta.caveats)
+    # "ProposedZoning9" is a publication artifact, not a status — say so once, here.
+    assert any("publication artifact" in c for c in z.meta.caveats)
+
+
+def test_wilmington_hsg_is_ssurgo_verified_and_confirms_the_prior_inference() -> None:
+    """#1470: the committed corridor geometry let SSURGO run, and unlike Sidney (B->D), Urbana
+    (B->C) and Troy-Piqua (B->C/D) it CONFIRMED the profile's prior [inference] rather than
+    inverting it — the old reasoning argued from the surface (glaciated till plain, not
+    buried-valley outwash) and was right. Guard the letter, the upgrade to [verified], and the two
+    caveats that keep 'C' from being read as settled: it is a plurality on a mosaic where ~60% of
+    campus points carry a dual rating whose undrained letter is D, and it is grid-stable for the
+    campus but not for the whole corridor."""
+    s = SITES["wilmington"]
+    assert s.dominant_hsg == "C"
+    assert s.hsg_citation.startswith("[verified]") and "SSURGO" in s.hsg_citation
+    assert "PLURALITY" in s.hsg_citation and "undrained letter is D" in s.hsg_citation
+    assert "prior [inference]" in s.hsg_citation
+    # The cover knobs the footprint unblocked — no TODO left on the stormwater scenario.
+    assert (s.pre_cover, s.post_cover, s.developed_pervious_cover) == (
+        "cropland",
+        "developed_campus",
+        "open_space",
+    )
+    # The committed geometry + footprint the SSURGO run and the places domain both read.
+    assert s.parcels_relpath == "reference/wilmington/parcel-assemblage.geojson"
+    assert s.footprint_relpath == "extracted/wilmington/bosc-site-footprint.yaml"
+    # The toxics window is DERIVED from that geometry, not drawn: it contains the corridor's
+    # union bounds and nothing much more.
+    lat_min, lat_max, lon_min, lon_max = s.toxic_corridor_bbox
+    assert (lat_min, lat_max, lon_min, lon_max) == (39.400, 39.429, -83.870, -83.833)
+    fc = json.loads(
+        (REPO_ROOT / "data" / "reference" / "wilmington" / "parcel-assemblage.geojson").read_text()
+    )
+    lons = [x for f in fc["features"] for ring in f["geometry"]["coordinates"] for x, _ in ring]
+    lats = [y for f in fc["features"] for ring in f["geometry"]["coordinates"] for _, y in ring]
+    assert lat_min <= min(lats) and max(lats) <= lat_max
+    assert lon_min <= min(lons) and max(lons) <= lon_max
+
+
+def test_wilmington_parcel_assemblage_keeps_ownership_and_rezoning_apart() -> None:
+    """The committed corridor is the one assemblage in the network that mixes two kinds of
+    boundary, and ``corridor_role`` is what keeps them from being read as one campus (#1470):
+    three parcels DEEDED to Amazon Data Services Inc on a single instrument, and four tracts that
+    are a REZONING SCHEDULE still in their original owners' names. The union being a single
+    polygon is what upgrades the register's '~1,000+ acre corridor' from a sum of press acreages
+    to a measurement."""
+    fc = json.loads(
+        (REPO_ROOT / "data" / "reference" / "wilmington" / "parcel-assemblage.geojson").read_text()
+    )
+    props = [f["properties"] for f in fc["features"]]
+    assert len(props) == 7
+    campus = [p for p in props if p["corridor_role"] == "campus_holding"]
+    rezone = [p for p in props if p["corridor_role"] == "petitioned_rezoning"]
+    assert len(campus) == 3 and len(rezone) == 4
+    # Ownership: one grantee, one deed, one consideration repeated across the three rows.
+    assert {p["owner"] for p in campus} == {"AMAZON DATA SERVICES INC"}
+    assert {p["deed_reference"] for p in campus} == {"2025-00005287"}
+    assert {p["last_sale_date"] for p in campus} == {"2025-12-10"}
+    assert {p["last_sale_amount"] for p in campus} == {86436000}
+    tract = next(p for p in campus if p["parcel_id"] == "285-13-02-01-0000-00")
+    assert tract["situs_address"].startswith("1488 S US 68") and tract["acres"] == 471.609
+    # Rezoning: four ordinances, four DIFFERENT owners, none of them an Ardent/TAC entity.
+    assert {p["rezoning_ordinance"] for p in rezone} == {"O-26-04", "O-26-05", "O-26-06", "O-26-07"}
+    assert len({p["owner"] for p in rezone}) == 4
+    assert not any("ARDENT" in p["owner"].upper() for p in rezone)
+    assert all(p["rezoning_ordinance"] is None for p in campus)
+    prov = fc["bosc:provenance"]
+    assert prov["campus_holding_cama_acres"] == 478.885
+    assert prov["petitioned_rezoning_cama_acres"] == 544.879
+    assert prov["total_cama_acres"] == 1023.764
+    # One contiguous block: the union equals the sum of the parts, so nothing overlaps.
+    assert prov["union_planar_acres"] == prov["total_planar_acres"]
+    assert any("SINGLE polygon" in c for c in prov["caveats"])
+    assert any("NO Ardent/TAC entity holds any land" in c for c in prov["caveats"])
+
+
 def test_bryan_parcel_schema_is_ogrip_statewide_williams() -> None:
     """Bryan's parcel gap (#410) is closed by the OGRIP Ohio statewide layer scoped to County=
     'Williams' — the same owner-redacted substitute as Findlay (Hancock has no county REST; Williams'
@@ -1417,8 +1568,18 @@ def test_facility_feed_keeps_permit_vs_screening_grounding_distinct() -> None:
 
 def test_secondary_facility_does_not_inherit_the_primary_geometry() -> None:
     """A non-primary campus carries only its own geometry (None when unset) — never the primary
-    campus's parcels/footprint, which would misattribute one campus's geometry to another; and a
-    placeholder path that isn't committed on disk ships as null, not a phantom link (#1628 review)."""
+    campus's parcels/footprint, which would misattribute one campus's geometry to another
+    (#1628 review).
+
+    Wilmington is the sharp case, and #1470 sharpened it further. Before that issue the site's
+    geometry knobs were uncommitted ``[open]`` placeholders, so BOTH rows shipped null and the
+    test could only prove that a placeholder path doesn't become a phantom link. Now the geometry
+    IS committed — and it deliberately covers the Ardent/TAC tracts too, because they adjoin the
+    Cosler Farm campus in one contiguous corridor. So the primary inherits the site-level paths
+    and the secondary still must not: the same file would otherwise read as *the Ardent campus's*
+    footprint, when it is a rezoning schedule the corridor record keeps explicitly apart from the
+    ownership holding. Ardent's own figures are all ``[open]`` (#1471) and its geometry stays
+    null until it has one of its own."""
     from watermark.config import Settings
     from watermark.site.facility import build_facility_feed
 
@@ -1426,6 +1587,8 @@ def test_secondary_facility_does_not_inherit_the_primary_geometry() -> None:
     assert feed is not None and len(feed) == 2
     ardent = feed[1]
     assert not ardent.is_primary and ardent.name == "Ardent/TAC corridor"
-    # Wilmington's site-level geometry is an [open] placeholder (not committed) → both rows null.
     assert ardent.parcels_relpath is None and ardent.footprint_relpath is None
-    assert feed[0].parcels_relpath is None and feed[0].footprint_relpath is None
+    # The primary DOES inherit the site-level geometry #1470 committed.
+    assert feed[0].is_primary and feed[0].name == "Cosler Farm campus"
+    assert feed[0].parcels_relpath == "reference/wilmington/parcel-assemblage.geojson"
+    assert feed[0].footprint_relpath == "extracted/wilmington/bosc-site-footprint.yaml"

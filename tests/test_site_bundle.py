@@ -970,6 +970,53 @@ def test_sidney_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None
     assert campus[0]["properties"]["owner"] == "AMAZON DATA SERVICES INC"
 
 
+def test_wilmington_exports_at_case_tier_on_committed_corridor_geometry(
+    site_bundle: Callable[[str], Path],
+) -> None:
+    """Wilmington's ``places`` domain went absent -> live when #1470 committed the corridor
+    geometry. The TIER was already ``case``: #1405 derived a site's corpus scope from its slug, so
+    the ``oepa/wilmington`` permits that had been sitting outside the very site they document read
+    into it and floated ``record`` to live. Two independent domains, two issues — which is
+    readiness behaving as the standing property it is.
+
+    Same geometry shape as Sidney's and Van Wert's pins above, with one difference that matters:
+    ``data/reference/wilmington/parcel-assemblage.geojson`` is NOT one campus. It is the Clinton
+    County auditor CAMA record of SEVEN contiguous parcels in two legally distinct groups — three
+    DEEDED to Amazon Data Services, Inc. and four that are a REZONING SCHEDULE (ordinances
+    O-26-04 to O-26-07) still in their original owners' names — and the exporter composes all seven
+    into the ``geo/campus`` feed that ``PLACES_GEOMETRY_FEED`` gates on. The ``corridor_role``
+    property is what keeps a reader from collapsing them into one 1,023-ac campus; this test pins
+    that it survives the export.
+
+    What did NOT move is equally the point: ``facility`` remains ``seeded`` because the #1630
+    downgrade holds — the campus IT load is a floor-area SCREENING bracket (#1468), and committing
+    land does not ground a load, least of all land whose zoning is in remand; ``story`` is absent.
+    A future change that floats either off geometry alone fails here."""
+    manifest = _manifest(site_bundle("wilmington"))
+    assert manifest["contract_version"] == _CV
+    readiness = manifest["readiness"]
+    assert readiness["tier"] == "case", f"wilmington should now be a Case site, got {readiness}"
+    domains = readiness["domains"]
+    assert domains["backdrop"] == "live"
+    assert domains["facility"] == "seeded"  # disclosed but screening-only → seeded (#1630)
+    assert domains["places"] == "live"  # committed corridor geometry (#1470)
+    assert domains["record"] == "live"  # oepa/wilmington permits, in scope since #1405
+    assert domains["story"] == "absent"
+
+    # The geometry that activated the domain is the corridor itself, and it stays legible as two
+    # kinds of claim rather than one campus.
+    bundle = site_bundle("wilmington")
+    ref = _feeds_by_name(bundle)["geo/campus"]
+    corridor = json.loads((bundle / ref["path"]).read_text(encoding="utf-8"))["features"]
+    assert len(corridor) == 7
+    props = [f["properties"] for f in corridor]
+    owned = [p for p in props if p["corridor_role"] == "campus_holding"]
+    assert {p["owner"] for p in owned} == {"AMAZON DATA SERVICES INC"}
+    assert next(p["parcel_id"] for p in owned) == "285-13-02-01-0000-00"  # 1488 S US 68
+    rezoned = [p for p in props if p["corridor_role"] == "petitioned_rezoning"]
+    assert len(rezoned) == 4 and not any("ARDENT" in p["owner"].upper() for p in rezoned)
+
+
 def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     site_bundle: Callable[[str], Path],
 ) -> None:

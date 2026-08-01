@@ -93,6 +93,28 @@ notes: >-
   are 207-1,090 m away and are excluded: Putnam issues inlot numbers in platting order, not
   geographic order. The adjacent industrial IL 1536 (Agner Road Investments LLC, one street width
   off) is an [inference] lead, excluded.
+  Wilmington (#1470): the SEVEN contiguous parcels of the US-68 S / SR-730 corridor, 1,023.764 ac
+  deeded / 1,023.786 ac planar, from the Clinton County auditor CAMA via the new clinton_gis
+  field-map (the county GIS Department's cntyparcelsRealPropData_gdb layer 0, which REPLACED the
+  OGRIP statewide substitute — for Clinton that view is owner-redacted AND reports a NULL
+  CurrentTo, i.e. no stated export date at all). THE ONLY ENTRY IN THIS SET THAT MIXES TWO KINDS
+  OF BOUNDARY IN ONE FILE, kept apart by a `corridor_role` property that must be read before any
+  acreage is quoted: three parcels of RECORDED OWNERSHIP (Amazon Data Services, Inc. — the
+  471.609-ac Cosler Farm campus tract at 1488 S US 68 plus two ROW strips, all on one deed,
+  instrument 2025-00005287, 2025-12-10, $86,436,000) ADJOINING four tracts that are a LEGISLATIVE
+  REZONING SCHEDULE (ordinances O-26-04 – O-26-07, 5-2 on 2026-02-19/20, 544.879 ac) still deeded
+  to their original owners — no Ardent/TAC entity holds land in Clinton County, so the second
+  campus is a rezoning, not an assemblage (the Mansfield shape). Five owners, so `parcels --owner`
+  cannot pull it in one call; the recipe is a PIN-list query documented in
+  reference/wilmington/README.md. Its union is a SINGLE polygon whose area equals the sum of the
+  parts to three decimals, which is what upgrades the register's "~1,000+ ac corridor" from an
+  [inference] sum of press acreages to a measured [verified] contiguity. Three notes for a
+  re-pull. Consideration is the WHOLE DEED's, repeated on every parcel it conveyed — summing it
+  across the three Amazon rows triples the price. Date_Conveyed is served as pre-formatted TEXT
+  ("12/10/2025 12:00:00 AM"), not an esriFieldTypeDate, hence the new `mdyyyy_slash` date decode.
+  And the county publishes two STALE twins of this layer — `cntyparcels` on the CCRPC org is tax
+  year 2022 (last edited 2023-08-28) and returns zero rows for "AMAZON" — so check
+  editingInfo.dataLastEditDate before believing a negative.
   Distinct from the Periplus frozen import
   (reference/periplus/bosc-parcels.geojson, catalogued under the periplus entry), which covers the
   Lima corridor parcels only.

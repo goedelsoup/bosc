@@ -1,0 +1,202 @@
+# The US-68 S / SR-730 data-center corridor — footprint record for the Wilmington, OH
+# (Lytle Creek → Todd Fork → Little Miami) watershed point. LIKE Sidney's / Troy-Piqua's /
+# Urbana's (and UNLIKE Lima's document-transcribed stormwater-permit footprint), the boundary here
+# is drawn from the auditor's parcels, committed as
+# data/reference/wilmington/parcel-assemblage.geojson. UNLIKE all of those, it is NOT one thing:
+# it is a recorded OWNERSHIP holding (the three parcels deeded to Amazon Data Services, Inc.)
+# ADJOINING a legislative REZONING schedule (the four tracts of ordinances O-26-04 – O-26-07,
+# still in their original owners' names). Read `boundary_basis` before quoting any acreage.
+# parcel_acres is the GIS-measured planar area; building/impervious/developed stay [open] pending
+# the site-plan PDFs. Source tags: reference = committed GIS reference dataset; connector = a live
+# public-data read; document = transcribed from a corpus instrument; assumption = a stated
+# modeling input.
+site: >-
+  1488 S US Route 68, at the US-68 S / SR-730 corner south-west of the City of Wilmington, Union
+  Township / City of Wilmington, Clinton County, OH 45177 — the Amazon Data Services, Inc. "Cosler
+  Farm" data-center campus (parcel 285-13-02-01-0000-00), together with the adjoining four-tract
+  Ardent/TAC rezoning corridor. #1470 (places) / #1468 (facility), sub-issues of #1277.
+operator: >-
+  Amazon Web Services (operator) / Amazon Data Services, Inc. (developer and owner of record of
+  the campus tract; auditor mailing "ATTN: GENERAL COUNSEL (REAL ESTATE) [CMH165], PO Box 80416,
+  Seattle WA 98108-0416"; the defendant-intervenor in Sharp v. City of Wilmington). Bohler
+  Engineering is the site-plan agent of record before the City Planning Commission [verified —
+  Planning Commission agendas 2026-01-06 and 2026-03-25]. The second campus's operator is
+  reported as Ardent/TAC (Ardent Technologies) and holds NO land here: all four rezoned tracts
+  remain deeded to L T Land Development LLC, Matthew E Thompson, the June 11 2001 Ralph Larry
+  Roberts II FT and the Jack L Webb RLT. See data/extracted/wilmington/data-centers.md.
+boundary_basis: >-
+  TWO LEGALLY DISTINCT BOUNDARIES, committed in one file and kept apart by the geojson's
+  `corridor_role` property — never sum them into a single "campus".
+  (1) RECORDED OWNERSHIP — the three Clinton County parcels deeded to Amazon Data Services, Inc.
+  on 2025-12-10 by recorder instrument 2025-00005287: the 471.609-ac campus tract
+  285-13-02-01-0000-00 (situs 1488 S US 68) plus two right-of-way strips, 290-26-01-12-0000-00
+  (7.040 ac on US 68) and 270-13-02-01-0000-00 (0.236 ac on SR 730) — 478.885 ac deeded /
+  479.226 ac planar in total. The $86,436,000 consideration is the ONE deed's, repeated on each
+  parcel; it is not a per-parcel price.
+  (2) A LEGISLATIVE REZONING SCHEDULE — the four tracts City Council rezoned 5-2 on 2026-02-19/20
+  by ordinances O-26-04 (L T Land Development LLC, 119.375 ac), O-26-05 (Matthew E Thompson,
+  65.323 ac), O-26-06 (Roberts II FT, 190.065 ac) and O-26-07 (Jack L Webb RLT, 170.116 ac) —
+  544.879 ac deeded / 544.561 ac planar, ownership unchanged. This is the Mansfield #1431 shape
+  (a rezone footprint), not an assemblage.
+  NOT a surveyed earth-disturbance boundary: neither site-plan PDF nor the Ohio EPA construction
+  stormwater (NPDES OHC000005 / Rule-5) footprint is in the corpus. LEGAL STATUS RIDES WITH THE
+  GEOMETRY: the campus map rezoning is one of three ordinances a federal court ordered the City to
+  redo for defective 30-day notice (Sharp v. City of Wilmington, S.D. Ohio 1:26-cv-00448, ruling
+  ~2026-07-09/10 [reported]), and the four-tract rezoning is the subject of a November 2026
+  citizen referendum [reported]. These are disclosed and petitioned footprints, not settled
+  entitlements.
+
+parcel_acres:
+  value: 472.221
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — UTM-17N (EPSG:32617) planar area of the ONE Amazon Data Services
+    campus tract 285-13-02-01-0000-00 (watermark.hydrology.geo._to_utm_area_sqm). This is the
+    campus figure and the one to use for area/runoff modeling; the county CAMA DEEDED acreage is
+    471.609 ac, 0.6 ac (0.13%) lower, and the two are NOT reconciled — cite the deeded figure for
+    the record. It CORROBORATES the disclosed "~471-acre" campus in the joint Clinton County Port
+    Authority / City of Wilmington Data Center FAQs [verified] to within 0.2%, and the parcel's own
+    legal description reads "RES TO BE 472.09AC 2026DUP". Three other totals exist in this file
+    and are deliberately kept separate: 478.885 ac deeded is the whole Amazon HOLDING (the campus
+    tract plus two ROW strips), 544.879 ac deeded is the four petitioned Ardent/TAC tracts, and
+    1,023.764 ac deeded / 1,023.786 ac planar is the whole corridor. [verified] as the auditor's
+    committed geometry (tax year 2025, read 2026-08-01).
+  confidence: high
+
+corridor_acres:
+  value: 1023.786
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — the UTM-17N planar area of the UNION of all seven parcels, which
+    is a SINGLE polygon: the union area equals the sum of the parts to three decimals
+    (1,023.786 ac), so the parcels abut without overlapping across a 3,185 m x 3,126 m extent.
+    This UPGRADES the register's "~1,000+ acres of one US-68 S / SR-730 corridor" from
+    [inference — the ~471-ac and 545.893-ac press figures summed] to [verified] — a measured
+    contiguity, not an arithmetic sum. The auditor's deeded total is 1,023.764 ac. NOT a campus
+    figure: 544.879 ac of it is rezoned land in third-party hands and 7.276 ac is road
+    right-of-way.
+  confidence: high
+
+building_footprint_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] Neither site-plan PDF is in the corpus and the building COUNT is contradicted on the
+    public record: the November/December 2025 plan is reported as NINE buildings totalling
+    1,920,299 sq ft (~44.08 ac of building footprint if built as reported), the revision the
+    Planning Commission tabled 2026-03-27 as TWELVE, and the phase-1 description given to the
+    2026-01-06 commission as THREE data-center buildings plus a substation, an administrative
+    building, a water-treatment building and stormwater ponds — all [reported]. #1470 could not
+    resolve this from the published record and did not guess: the City's WordPress media library
+    publishes Planning Commission AGENDAS but no site-plan exhibits and no 2026 Planning
+    Commission MINUTES (searched 2026-08-01), and the county GIS site-plan layers
+    (Clinton_County_Site_Plans, Wilmington_Staff_Reports) stop at 2024. What IS committed from
+    that record is the two agendas naming the applications — see notes. The instrument is an
+    R.C. 149.43 request to the City of Wilmington Planning & Zoning office for the site-plan
+    submittals of the 2026-01-06 and 2026-03-25 hearings.
+  confidence: null
+
+impervious_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No impervious tabulation is on record. Requires the site plan or the Ohio EPA
+    construction stormwater (NPDES OHC000005 / Rule-5) permit. NOTE a local instrument that would
+    corroborate one when it lands: the Clinton County GIS Department publishes measured
+    impervious-surface layers (ImperviousSurfaceParcelData, ImperviousSurfaceWilmington) — those
+    are the pre-construction condition of this farmland, not a design figure, and are not
+    transcribed here.
+  confidence: null
+
+developed_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] Total disturbed/developed area is unknown pending the SWPPP / construction stormwater
+    permit; it will be >= impervious_acres once that lands. The campus tract is the OUTER BOUND
+    (472.221 ac planar), not a measurement of the developed area.
+  confidence: null
+
+dominant_hsg:
+  value: C
+  source: connector
+  citation: >-
+    [verified] USDA NRCS SSURGO via Soil Data Access (SDA), grid-sampled over
+    parcel-assemblage.geojson (watermark.hydrology.connectors.ssurgo.dominant_hsg, 2026-08-01).
+    Over the CAMPUS TRACT the answer is C at every resolution tested — 8x8 (41 interior points:
+    C 16, B/D 15, C/D 10), 10x10 (61 pts), 12x12 (89 pts) and 16x16 (158 pts: C 43.7%, B/D 34.8%,
+    C/D 21.5%) — so the letter is not a grid artefact. The map units are the Southern Ohio Till
+    Plain association: Miamian silt loam 6-12% eroded (C, 9 pts), Treaty silty clay loam 0-1%
+    (B/D, 10 pts), Fincastle silt loam 2-4% (C/D, 7 pts) and 0-2% (B/D, 4 pts), Xenia silt loam
+    2-6% (C, 4 pts) and its eroded phase (C/D, 3 pts), Sligo silt loam occasionally flooded
+    (C, 3 pts), Treaty silt loam overwash (B/D, 1 pt). This CONFIRMS the profile's prior
+    [inference] letter "C" and its reasoning — glaciated till plain, not the buried-valley
+    outwash of the Mad River / Great Miami sites — and upgrades it to [verified]. It is the
+    opposite outcome from Sidney (B->D), Urbana (B->C) and Troy-Piqua (B->C/D), where the prior
+    inference had argued from an aquifer rather than the surface. TWO CAVEATS. (1) It is a
+    PLURALITY on a mixed mosaic, not a uniform C: ~60% of campus points carry a DUAL rating whose
+    UNDRAINED letter is D, so under the post-development condition (tile severed;
+    watermark.hsg / WS-20) the runoff basis brackets materially above a flat C, and any screen
+    should state that bracket rather than read C as settled. (2) The letter is grid-stable for the
+    campus but NOT for the whole 1,023-ac corridor, which returns C/D at 8x8, 10x10 and 12x12 and
+    C at 6x6 and 16x16 as the four petitioned tracts pull it wetter — this record characterizes
+    the disclosed campus, which is what the stormwater screen models.
+  confidence: high
+
+zoning_district:
+  value: LI
+  source: connector
+  citation: >-
+    [verified] "LI" (Light Industrial), City of Wilmington. TWO INDEPENDENT SOURCES AGREE and
+    neither is a press map. (a) The City's published zoning layer (WILMINGTON_ZONING_SCHEMA — the
+    Zoning layer of the City's own "Wilmington Zoning Map 2024" application, CCRPC
+    ProposedZoning9 layer 0, dataLastEditDate 2026-02-10) carries a DISCRETE 471.27-ac LI polygon
+    covering 99.73% of the campus tract; the City's LI total across 8 polygons is 4,859.88 ac, of
+    which the 3,768.78-ac Air Park block is the pre-existing industrial area. (b) The City
+    Planning Commission agendas of 2026-01-06 and 2026-03-25 both print the application's zoning
+    as "Light Industrial" (Property Owner: Amazon Data Services, Inc; Address: 1488 S US 68;
+    Agent: Bohler Engineering). THE ENTITLEMENT IS IN REMAND: this map rezoning is one of the
+    three ordinances the federal court ordered the City to redo for defective 30-day mailed
+    notice (Sharp, ~2026-07-09/10 [reported]). Cite the district and the status together.
+  confidence: high
+
+rezoning_corridor_zoning:
+  value: null
+  source: connector
+  citation: >-
+    [open] — and the reason is a publication lag, documented rather than absent. The four
+    petitioned Ardent/TAC tracts' interior points fall in NO City zoning polygon; they still read
+    the COUNTY's "S-R" (Suburban Residential District) on CountyWideZoning. That is because the
+    City layer was last edited 2026-02-10 and Council passed O-26-04 – O-26-07 on 2026-02-19/20 —
+    nine days later. So the layer CANNOT show the rezoning and its silence is not evidence about
+    it. (Note the press describes the change as "Rural Residential to Light Industrial"; the
+    county layer's pre-annexation district on all four is S-R, Suburban Residential, and the
+    City's own RR district is a separate 1,067.43-ac polygon — the "R-R" abbreviation is used by
+    both jurisdictions for different districts. Resolve the FROM-district from the ordinances,
+    not from the press.) The instruments to pull are ordinances O-26-04 – O-26-07 themselves
+    (#1471); the November 2026 referendum may moot them.
+  confidence: null
+
+receiving_water: >-
+  [inference] Lytle Creek → Todd Fork → Little Miami River (HUC-8 05090202). The corridor sits on
+  the till upland south-west of the City; the specific stormwater receptor for the built campus is
+  [open] pending the construction stormwater permit. DISTINCT from the SANITARY pathway, which the
+  record does close: campus wastewater goes to the City of Wilmington WWTP → NPDES OH0028134 /
+  Ohio EPA 1PD00013*QD → outfall 001 to Lytle Creek at RM 6.83 [verified — Ohio EPA NPDES fact
+  sheet 1PD00013.fs, 2023-05-19]. And DISTINCT again from the WITHDRAWAL side, which is Caesar
+  Creek Lake, not this basin (#1472). One SSURGO map unit on the campus, Sligo silt loam, is rated
+  "occasionally flooded" — a flag for the site-plan/floodplain review, not a delineation.
+
+notes:
+  - 'CORRIDOR = 7 parcels / 1,023.764 ac deeded / 1,023.786 ac planar / ONE contiguous polygon. Amazon holding (3 parcels, 478.885 ac deeded): 285-13-02-01-0000-00 (471.609 ac, situs 1488 S US 68, use 111 cash-grain farm CAUV, tax district 285-UNION TWP-WILMINGTON), 290-26-01-12-0000-00 (7.040 ac ROW on US 68, annexed to city district 290 in 1988) and 270-13-02-01-0000-00 (0.236 ac ROW on SR 730) — all conveyed 2025-12-10 on recorder instrument 2025-00005287 for a single $86,436,000 consideration, valid_sale True. Petitioned rezoning (4 parcels, 544.879 ac deeded): 285-13-11-02-0000-00 / O-26-04 / L T Land Development LLC / 119.375 ac; 285-13-03-01-0000-00 / O-26-05 / Matthew E Thompson / 65.323 ac (situs 1957 SR 730); 285-13-02-02-0000-00 / O-26-06 / June 11 2001 Ralph Larry Roberts II FT / 190.065 ac; 285-13-04-01-0000-00 / O-26-07 / Jack L Webb RLT / 170.116 ac. All [verified] from the Clinton County Auditor CAMA (cntyparcelsRealPropData_gdb layer 0, tax year 2025, read 2026-08-01).'
+  - 'PRICE — this closes an `[open]` the register carried as "Recorder deed pull (grantee, price)". The answer is $86,436,000 on instrument 2025-00005287, conveyed 2025-12-10, against a TY2025 appraised total of $6,092,700 on the campus tract. Note what it is NOT: it is the whole deed''s consideration covering all three parcels, so it must not be summed across them, and the auditor CAMA gives the instrument number but not the grantor — the Recorder pull for the grantor and any recorded easements stays `[open]` (#1471).'
+  - 'ACREAGE — the four petitioned acreages differ from the wnewsj 2026-01-16 figures (119.373 + 65.29 + 191.12 + 170.11 = 545.893 ac) by 1.014 ac, and the whole difference is one split. The petition quotes the Roberts tract''s PARENT 270-13-05-01 at 191.117 ac; the auditor''s surviving 285-13-02-02 is the 190.065 ac that actually annexed ("SPLIT FROM 270130501000000(191.117AC) 26DUP PER ANNEX"). The other three agree to within 0.033 ac. Cite 544.879 ac for the rezoned land of record.'
+  - 'ANNEXATION — the campus tract''s legal reads "SPLIT/FR 270130201000000(480.202AC) 25DUP DUE TO TYPE II ANNEX" and the residual''s reads "REM 8.593AC RW SR 730". 480.202 − 471.609 − 0.236 = 8.357 ac against that 8.593 ac, a 0.236-ac difference left UNRECONCILED: the annexation plat and the 2025-08-07 annexation ordinance are the instruments that would close it (#1471), and neither is in the corpus. The tax record moves with it — all five non-ROW tracts now sit in district 285 "UNION TWP-WILMINGTON", the Type-II annexed block, with legals reading "2026 ANNEX TO 285-UNION-WILMINGTON CITY".'
+  - 'TAX — the campus tract''s own legal description carries "TY26 TIF 100% 30YRS -FINAL", a `[verified]` auditor record of the 30-year 100% TIF the register had as `[reported]` (council 2025-12-18/19). Do NOT read the layer''s `has_abatement: NO` as "no incentive": a TIF is not a real-property abatement, and the TY2025 record still shows CAUV farmland with $17,339.93 of current tax. Three of the four petitioned tracts show appraised_total_value 0 and current_tax 0 — unvalued NEW split parcels at this extract, not $0 properties.'
+  - 'PROXIMITY TO THE WWTP is real but is not adjacency. The FAQ gives proximity to the wastewater plant as the disclosed site-selection driver. Measured in UTM 17N from the ECHO/FRS plant point (39.4391, -83.85132), the nearest campus-tract boundary is 1,224 m (0.76 mi) and the four petitioned tracts are 1,990–2,853 m away. The `[verified]` $25M AWS-funded 3.5 mi of new sewer trunk line is what closes that distance.'
+  - 'CONNECTOR — this record is only reachable because the profile''s parcel layer changed. Wilmington had been pointed at the OGRIP Ohio statewide substitute scoped to `County=''Clinton''`, which is owner-redacted by construction and, for Clinton, reports a NULL `CurrentTo` (no stated export date) with situs and land-area null on a large share of rows: a silent false negative for any owner search. CLINTON_PARCEL_SCHEMA (`clinton_gis`) reads the Clinton County GIS Department''s own auditor CAMA join instead. Two older twins of that layer exist and are stale — `cntyparcels` on the CCRPC org is tax year 2022 (last edited 2023-08-28) and returns ZERO rows for "AMAZON". Check `editingInfo.dataLastEditDate` before believing a negative.'
+  - 'SITE-PLAN RECORD — what was obtained, and what was not. Obtained `[verified]`: the City Planning Commission agendas of 2026-01-06 (regular) and 2026-03-25 (special), both listing "Property Owner: Amazon Data Services, Inc / Address: 1488 S US 68 / Agent: Bohler Engineering / Zoning: Light Industrial / Request for site plan review of data center facility". Bohler Engineering is a new entity for the graph. NOT obtained: the site-plan exhibits themselves, and therefore the 9-vs-12 building count. The City publishes agendas but no exhibits and no 2026 Planning Commission minutes; the county GIS site-plan layers stop at 2024. The pull is an R.C. 149.43 request, not a web fetch.'
+  - 'This record commits the boundary + measured acreage + the SSURGO-validated HSG so the onboard SSURGO/HSG step no longer skips (it had been skipped for want of a committed footprint), and it sets the pre_cover/post_cover/developed_pervious_cover scenario knobs and the toxic_corridor_bbox the profile had carried as TODO / (0,0,0,0) "pending an identified site".'
+  - 'Building/impervious/developed stay `[open]`: no site plan, no grading permit and no Rule-5 construction stormwater permit is in the corpus, and the reported floor area (1,920,299 sq ft) is the basis of the facility profile''s SCREENING IT-load bracket (#1468), not a surveyed footprint.'

@@ -1142,3 +1142,177 @@ SIDNEY_ZONING_SCHEMA = GisZoningSchema(
         ),
     ),
 )
+
+
+# Clinton County, OH parcels (Wilmington watershed point; #1470). Wilmington's profile had been
+# pointed at the OGRIP statewide substitute scoped to `County='Clinton'` — a layer that is
+# owner-redacted by construction AND, for Clinton, carries a NULL `CurrentTo` (no stated export
+# date at all) with `SitusAddressAll` / `LandArea` null on a large share of rows. It cannot name a
+# grantee, so the whole Cosler Farm / Ardent-TAC corridor was invisible through it. The Clinton
+# County GIS Department publishes the auditor CAMA join on its own AGOL org instead
+# (`cntyparcelsRealPropData_gdb` layer 0 — the layer the City's own "Wilmington Zoning Updated" web
+# map uses as its Parcel layer): owner, deed instrument, conveyance date + consideration, appraised
+# values, CAUV / exemption / abatement flags, legal description, tax district, situs and a
+# per-parcel county-zoning join, all with the geometry. That upgrade is what makes the corridor
+# readable — it resolves 1488 S US 68 to `285-13-02-01-0000-00` (471.609 ac, AMAZON DATA SERVICES
+# INC, conveyed 2025-12-10 for $86,436,000 on instrument 2025-00005287) and puts the four
+# Ardent/TAC rezoning tracts in the annexed tax district 285. Field names + samples confirmed from
+# the live layer-0 metadata + queries (2026-08-01).
+#
+# NOTE the county publishes THREE parcel layers on two orgs and only this one is current:
+# `cntyparcels` (the CCRPC org, services7/5ML1cxkkvVfOhDrS) is a TAX-YEAR-2022 snapshot whose
+# `dataLastEditDate` is 2023-08-28, and `cntyparcelsRealPropData_gdb_ZONING` is a 2026-06-03 cut of
+# the same join. Pull from `cntyparcelsRealPropData_gdb`; check `editingInfo.dataLastEditDate`
+# before believing a negative.
+CLINTON_PARCEL_SCHEMA = GisParcelSchema(
+    connector="clinton_gis",
+    reference_dir="wilmington-gis",
+    page_size=2000,  # the layer's maxRecordCount
+    out_fields=(
+        "PIN",
+        "Listed_Name",
+        "Location_Address",
+        "Location_City_State_Zip",
+        "Acres",
+        "Land_Use_Code",
+        "District_Name",
+        "School_District",
+        "Neighborhood_Name",
+        "Appraised_Land_100",
+        "Appraised_Improvement_100",
+        "Appraised_Total_100",
+        "Date_Conveyed",
+        "Consideration",
+        "Valid_Sale",
+        "Owner_Contact_Address",
+        "Owner_Contact_City",
+        "Owner_Contact_State",
+        "Owner_Contact_ZipCode",
+    ),
+    id_field="PIN",  # the dashed auditor parcel number, e.g. "285-13-02-01-0000-00"
+    owner_field="Listed_Name",  # the CAMA owner of record
+    owner_2_field="",  # no second-owner field (Listed_Name carries the whole string)
+    deeded_owner_field="",  # Owner_Contact_Name duplicates Listed_Name here — not a distinct slot
+    situs_fields=("Location_Address", "Location_City_State_Zip"),
+    owner_addr_fields=(
+        "Owner_Contact_Address",
+        "Owner_Contact_City",
+        "Owner_Contact_State",
+        "Owner_Contact_ZipCode",
+    ),
+    land_use_field="Land_Use_Code",  # bare numeric Ohio use code (Land_Use_Name = the label)
+    acres_field="Acres",  # the auditor's DEEDED acreage, not a GIS planar measure
+    market_land_field="Appraised_Land_100",
+    market_improvement_field="Appraised_Improvement_100",
+    market_total_field="Appraised_Total_100",
+    cauv_field="",  # Has_CAUV is a YES/NO flag, not a value — unmapped, like Shelby/Miami
+    tax_district_field="District_Name",
+    school_field="School_District",
+    neighborhood_field="Neighborhood_Name",
+    sale_date_field="Date_Conveyed",  # an already-formatted "M/D/YYYY h:mm:ss AM" STRING, not a date
+    sale_amount_field="Consideration",
+    valid_sale_field="Valid_Sale",  # a "True"/"False" string, stored verbatim
+    id_normalize="verbatim",  # the dashed PIN is stored verbatim (PARCELID is the dashless twin)
+    date_decode="mdyyyy_slash",  # "12/10/2025 12:00:00 AM" -> 2025-12-10 (text, not an Esri date)
+    land_use_decode="int",
+    deed_id_regex=r"\b\d{3}-\d{2}-\d{2}-\d{2}-\d{4}-\d{2}\b",  # 285-13-02-01-0000-00
+    meta=GisMeta(
+        subject="Clinton County, Ohio parcels (auditor CAMA + geometry)",
+        source="Clinton County GIS Department ArcGIS Online org (tAhcHWpOD9ygNPbJ) — "
+        "cntyparcelsRealPropData_gdb FeatureServer layer 0 (auditor CAMA join)",
+        source_url=(
+            "https://services1.arcgis.com/tAhcHWpOD9ygNPbJ/arcgis/rest/services/"
+            "cntyparcelsRealPropData_gdb/FeatureServer/0"
+        ),
+        caveats=(
+            "Values are verbatim from the county CAMA join; null means the service had no value.",
+            "Acres is the auditor's DEEDED acreage from the tax record, not a GIS planar measure — "
+            "the two differ, so a planar acreage must be measured from the geometry and reported "
+            "as a separate figure.",
+            "Appraised_*_100 are the 100% appraised (market) values; the Taxable_*_100 twins are "
+            "the assessed 35% figures and are NOT what market_* carries here.",
+            "Has_CAUV / Has_Exemption / Has_Abatement are YES/NO flags, not values — cauv_value is "
+            "always null; the committed assemblage geojson carries the booleans separately.",
+            "Deed_Volume carries the RECORDER INSTRUMENT NUMBER (e.g. '2025-00005287') for recent "
+            "conveyances and a book number for older ones, with Deed_Page empty in the first case; "
+            "it has no GisParcelSchema slot, so the assemblage recipe reads it directly.",
+            "Consideration is the WHOLE DEED's consideration repeated on every parcel it conveyed "
+            "— the three Amazon parcels each read $86,436,000 for the one instrument "
+            "2025-00005287. Never sum it across parcels.",
+            "Date_Conveyed is a STRING ('12/10/2025 12:00:00 AM'), not an esriFieldTypeDate — a "
+            "date-typed query predicate against it will not behave; filter on it as text.",
+            "Auditor_Link is published with an UNSUBSTITUTED '{Property ID}' placeholder and does "
+            "not resolve; AudWeb (…/RealEstate/Default/Lookup?number=<dashless PIN>) is the "
+            "working per-parcel auditor URL.",
+            "ZoningDist / ZoningDi_1 / CntyZoning / Township are the COUNTY (township) zoning "
+            "join and are NULL for any parcel inside a municipality — a null there means "
+            "'municipally zoned, look at the city layer', not 'unzoned'.",
+            "The county publishes older twins of this layer: 'cntyparcels' on the CCRPC org "
+            "(services7/5ML1cxkkvVfOhDrS) is a tax-year-2022 snapshot last edited 2023-08-28, and "
+            "'cntyparcelsRealPropData_gdb_ZONING' is a 2026-06-03 cut. Check "
+            "editingInfo.dataLastEditDate before believing a negative result.",
+            "Right-state guard: Clinton County OHIO (FIPS 39027), districts '285-UNION "
+            "TWP-WILMINGTON' / '290-CITY OF WILMINGTON', WKID 3857 as served. Not the same-named "
+            "Clinton County in PA / NY / IN / MI / IA / IL / KY / MO / OH-adjacent usages — the "
+            "Clinton County, PA data-center moratorium is a live search trap for this site.",
+            "Field names + samples confirmed from the live layer-0 metadata + queries "
+            "(2026-08-01); tax year 2025, Extract_ID 1135, dataLastEditDate 2026-07-30.",
+        ),
+    ),
+)
+
+
+# City of Wilmington, OH zoning (Wilmington watershed point; #1470). The City's districts are
+# published by the Clinton County Regional Planning Commission as a polygon-only layer (a single
+# `ZONING` code, no parcel id) — the Findlay/Sidney shape, not Piqua's: the district catalog works,
+# per-parcel joins do not. Thirteen districts over 29 polygons, city limits only. The service is
+# named "ProposedZoning9" but it is the layer the City's published "Wilmington Zoning Map 2024"
+# application and the CCRPC "Wilmington Zoning Updated" web map both render as **Zoning**; its
+# `dataLastEditDate` is 2026-02-10, which is the fact that matters here — see the caveats.
+WILMINGTON_ZONING_SCHEMA = GisZoningSchema(
+    connector="wilmington_gis",
+    reference_dir="wilmington-gis",  # shared with the Clinton parcel + NFHL flood schemas
+    page_size=2000,  # the layer's maxRecordCount
+    object_id_field="OBJECTID",
+    parcel_field=None,  # polygon-only layer — no parcel id to join on (the Findlay case)
+    zoning_field="ZONING",
+    http_method="GET",
+    id_normalize="verbatim",
+    meta=GisMeta(
+        subject="City of Wilmington, Ohio zoning districts (catalog)",
+        source="Clinton County Regional Planning Commission ArcGIS Online org "
+        "(services7/5ML1cxkkvVfOhDrS) — 'ProposedZoning9' FeatureServer layer 0, the Zoning layer "
+        "of the City's 'Wilmington Zoning Map 2024' application and the CCRPC 'Wilmington Zoning "
+        "Updated' web map",
+        source_url=(
+            "https://services7.arcgis.com/5ML1cxkkvVfOhDrS/arcgis/rest/services/"
+            "ProposedZoning9/FeatureServer/0"
+        ),
+        caveats=(
+            "Values are verbatim from the CCRPC zoning layer.",
+            "Polygon-only layer (no parcel id): the district catalog is supported; per-parcel "
+            "zoning joins are not.",
+            "Coverage is Wilmington CITY LIMITS ONLY; unincorporated Clinton County townships "
+            "carry their district on the county layers instead (CountyWideZoning, or the "
+            "ZoningDist column of the parcel CAMA join).",
+            "CURRENCY IS THE POINT OF THIS LAYER FOR #1470: dataLastEditDate is 2026-02-10. It "
+            "therefore DOES carry the Cosler Farm map rezoning (a discrete 471.27-ac LI polygon "
+            "covering 99.7% of parcel 285-13-02-01-0000-00) and CANNOT carry the four Ardent/TAC "
+            "rezonings, which City Council passed 5-2 on 2026-02-19/20 — nine days later. Those "
+            "four parcels' interior points fall in NO city polygon and still read the COUNTY's "
+            "'S-R' Suburban Residential; that is a publication lag, not a finding about their "
+            "zoning.",
+            "The Cosler Farm LI polygon is one of the three ordinances a federal court ordered the "
+            "City to redo for defective 30-day notice (Sharp v. City of Wilmington, S.D. Ohio "
+            "1:26-cv-00448, ~2026-07-09/10) — a published district here is a MAPPED entitlement, "
+            "not an adjudicated one. Carry the legal status with any zoning claim about it.",
+            "The service name 'ProposedZoning9' is a publication artifact, not a status: the "
+            "City's own zoning application and the CCRPC web map both render this layer as the "
+            "City's zoning. The genuinely proposed/undecided layers are the sibling "
+            "ZoningProposedChanges_gdb / ZoningChangeParcels services.",
+            "Right-state guard: City of Wilmington, CLINTON County OHIO 45177 (the Air Park is "
+            "ILN). Not Wilmington DE / NC (ILM) / MA / VT, and not Clinton County PA.",
+            "Field names confirmed from the live layer-0 metadata + queries (2026-08-01).",
+        ),
+    ),
+)

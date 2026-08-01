@@ -33,6 +33,9 @@ from watermark.sites._gis_schemas import (
     ALLEN_IN_PARCEL_SCHEMA as ALLEN_IN_PARCEL_SCHEMA,
 )
 from watermark.sites._gis_schemas import (
+    CLINTON_PARCEL_SCHEMA as CLINTON_PARCEL_SCHEMA,
+)
+from watermark.sites._gis_schemas import (
     FINDLAY_ZONING_SCHEMA as FINDLAY_ZONING_SCHEMA,
 )
 from watermark.sites._gis_schemas import (
@@ -76,6 +79,9 @@ from watermark.sites._gis_schemas import (
 )
 from watermark.sites._gis_schemas import (
     VAN_WERT_PARCEL_SCHEMA as VAN_WERT_PARCEL_SCHEMA,
+)
+from watermark.sites._gis_schemas import (
+    WILMINGTON_ZONING_SCHEMA as WILMINGTON_ZONING_SCHEMA,
 )
 from watermark.sites._model import (
     PROFILE_SETTINGS_FIELDS as PROFILE_SETTINGS_FIELDS,

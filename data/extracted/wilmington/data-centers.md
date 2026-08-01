@@ -9,8 +9,10 @@ Discover-and-pin register for the Wilmington watershed point (Lytle Creek → To
 flat-no-activity finding reflected only an empty corpus (#519 first pass): publicly disclosed
 since Nov 2025 are a ~471-acre / **$4B Amazon Data Services Inc.** campus on the former
 **Cosler Farm** (§1) and a second ~545-acre **Ardent/TAC** rezoning corridor (§2) — together
-~1,000+ acres of one US-68 S / SR-730 corridor `[inference — the §1 ~471-ac and §2 545.893-ac
-figures summed]`. Neither is on Air Park land; the
+**1,023.764 ac deeded / 1,023.786 ac planar** of one US-68 S / SR-730 corridor
+`[verified — #1470; the union of the seven committed auditor parcels is a SINGLE polygon whose
+area equals the sum of the parts, so this is a measured contiguity, not the sum of two press
+acreages it used to be]`. Neither is on Air Park land; the
 **Wilmington Air Park (ILN)** remains the *cargo* comparator #519 framed (§3). The web
 research sweep ran **2026-07-11** (#1277 grooming refresh); committing this register and
 pulling its instruments is tracked as **#1471**, which closes #519. **Nothing here is
@@ -40,20 +42,53 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
 - `[verified]` **AWS project disclosed Nov 2025**: $4B investment on a **471-acre** parcel
   (former Cosler Farm), minimum **100 permanent jobs**, ~$8M annual payroll (Clinton County
   Port Authority data-center FAQ).
-- `[reported]` Situs **1488 S US-68**, southwest Wilmington; operating entity **Amazon Data
-  Services Inc.** (the name under which it intervened in the Sharp litigation, §1.2). SOS
-  foreign-qualification pull `[open]`.
+- `[verified — Clinton County Auditor CAMA, 2026-08-01]` Situs **1488 S US-68** = parcel
+  **285-13-02-01-0000-00**, **471.609 ac** deeded / 472.221 ac planar, owner of record **AMAZON
+  DATA SERVICES INC** (auditor mailing "ATTN: GENERAL COUNSEL (REAL ESTATE) [CMH165], PO Box
+  80416, Seattle WA"). SOS foreign-qualification pull `[open]`.
 - `[verified]` The land sale was a **private transaction** between a private landowner and
   AWS — not guided by the Port Authority, the City, or any public entity (FAQ). Consistent
   with that, **no JobsOhio instrument found** in the 2026-07-11 web sweep `[open — negative
-  search only, no auditable JobsOhio-record check yet]`. Recorder deed pull (grantee, price)
-  `[open]`.
+  search only, no auditable JobsOhio-record check yet]`.
+- `[verified — auditor CAMA, #1470]` **The price.** AWS took **three** parcels on **one** deed —
+  recorder instrument **2025-00005287**, conveyed **2025-12-10**, consideration **$86,436,000**,
+  the auditor's arms-length flag `True`. The three are the 471.609-ac campus tract plus two
+  right-of-way strips (7.040 ac on US-68, 0.236 ac on SR-730): **478.885 ac** in all. The
+  consideration is the **whole deed's**, repeated on each parcel row — do not sum it. Against a
+  TY2025 appraised total of **$6,092,700** on the campus tract. This closes the register's
+  `[open]` on the price; the **grantor** and any recorded easements are still `[open]` (the CAMA
+  gives the instrument number, not the grantor — Recorder pull, #1471).
+- `[verified — auditor CAMA, #1470]` The campus tract's legal description carries
+  **"TY26 TIF 100% 30YRS -FINAL"** — the auditor's own record of the 30-year 100% TIF §1.1 had as
+  `[reported]`. Its `Has_Abatement` flag reads `NO`; a TIF is not a real-property abatement, so
+  that is not "no incentive".
 - `[verified]` **Annexation** of the project site approved by Wilmington City Council
-  **2025-08-07** (FAQ).
+  **2025-08-07** (FAQ). `[verified — auditor CAMA]` It was a **Type II** annexation and the tax
+  record moved with it: the campus tract was split off parent `270-13-02-01` (480.202 ac) into the
+  new district **285 "UNION TWP-WILMINGTON"**. The split does not reconcile to the acre —
+  480.202 − 471.609 − 0.236 = 8.357 ac against the residual's own legal, "REM 8.593AC RW SR 730" —
+  and is left that way; the annexation plat is the instrument (`[open]`, #1471).
 - `[verified]` AWS selected the site **for proximity to the City's wastewater treatment
-  plant** (FAQ) — the water/sewer thread is constitutive, not incidental.
-- `[reported]` Site plan revised **9 → 12 buildings**; the two versions are unreconciled —
-  pull both site-plan PDFs (shared instrument with #1470).
+  plant** (FAQ) — the water/sewer thread is constitutive, not incidental. `[verified — measured,
+  #1470]` **Proximity, not adjacency**: from the ECHO/FRS plant point (39.4391, -83.85132) the
+  nearest campus-tract boundary is **1,224 m (0.76 mi)** and the four §2 tracts are 1,990–2,853 m
+  away. The `[verified]` $25M AWS-funded 3.5 mi of new sewer trunk line is what closes that gap.
+- `[verified — City of Wilmington zoning layer + Planning Commission agendas, #1470]` The campus
+  tract is zoned **LI (Light Industrial)** — a discrete **471.27-ac** LI polygon covering 99.73%
+  of it, corroborated independently by the City Planning Commission agendas of **2026-01-06** and
+  **2026-03-25**, which print *Property Owner: Amazon Data Services, Inc / Address: 1488 S US 68 /
+  Agent: **Bohler Engineering** / Zoning: Light Industrial*. **Bohler Engineering** is the
+  site-plan agent of record — a new entity for the graph. Carry the *Sharp* remand with the
+  district: this is the map rezoning the court ordered redone (§1.2).
+- `[reported]` Site plan revised **9 → 12 buildings**; the two versions are **unreconciled and
+  still `[open]` after #1470**. A third count is on the record — the phase-1 description given to
+  the 2026-01-06 commission was **three** data-center buildings plus a substation, an
+  administrative building, a water-treatment building and stormwater ponds (`[reported]` — WYSO /
+  Ideastream 2026-01-08). The site-plan exhibits are **not published**: the City's site carries
+  Planning Commission agendas but no exhibits and no 2026 Planning Commission minutes, and the
+  county GIS site-plan layers (`Clinton_County_Site_Plans`, `Wilmington_Staff_Reports`) stop at
+  **2024** (searched 2026-08-01). The pull is an **R.C. 149.43 request** to City Planning &
+  Zoning for the submittals of the 2026-01-06 and 2026-03-25 hearings — not a web fetch.
 - `[reported]` **252 Tier-4 diesel generators** on the site plan — the air-permit trigger
   (§1.5).
 - `[reported]` **Direct evaporative cooling**, projected **~6M gal/yr** cooling-water
@@ -154,6 +189,23 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
 - `[reported — wnewsj]` Four parcels totaling **545.893 acres** rezoned by ordinances
   **O-26-04 – O-26-07**, approved **5–2 on 2026-02-19/20**. Operator entity reported as
   **Ardent/TAC** (Ardent Technologies); investment, MW, and end user **undisclosed** `[open]`.
+- `[verified — Clinton County Auditor CAMA, #1470]` The four tracts of record, with their
+  ordinances: **O-26-04** `285-13-11-02-0000-00` **L T Land Development LLC** 119.375 ac ·
+  **O-26-05** `285-13-03-01-0000-00` **Matthew E Thompson** 65.323 ac (situs 1957 SR 730) ·
+  **O-26-06** `285-13-02-02-0000-00` **June 11 2001 Ralph Larry Roberts II FT** 190.065 ac ·
+  **O-26-07** `285-13-04-01-0000-00` **Jack L Webb RLT** 170.116 ac. Total **544.879 ac**, all
+  now in tax district 285. **THIS IS A REZONING, NOT A LAND ASSEMBLY** — every tract is still
+  deeded to its original owner, and a countywide CAMA owner scan for "ARDENT" / "TAC" returns
+  **nothing** but unrelated surname matches. The 1.014-ac gap against the reported 545.893 ac is
+  entirely the Roberts tract, where the petition quotes the **parent** `270-13-05-01` (191.117 ac)
+  and the auditor carries the 190.065 ac that actually annexed. Cite **544.879 ac**.
+- `[open]` Their **city zoning district** — the City's published layer was last edited
+  **2026-02-10**, nine days before Council voted, so it cannot show the rezoning and its silence
+  is not evidence about it; the four interior points still read the **county's `S-R` Suburban
+  Residential**. Note the press describes the change as "Rural Residential → Light Industrial"
+  while the county's pre-annexation district is S-R and the City has its own separate `RR`
+  district — resolve the *from*-district from ordinances O-26-04 – O-26-07, not from the press
+  (#1471). The November 2026 referendum may moot them.
 - `[reported]` A citizen **referendum** against the rezoning qualified for the **Nov 2026
   ballot** (1,529 signatures in ~25 days).
 - `[reported — wnewsj 2026-07-03]` **O-26-33** (conditional-use ordinance): final vote
@@ -205,7 +257,13 @@ worth tracking but is a separate thread.
 2. **The ordinance stack** (municipal clerk / Municode): O-25-73, the TIF, the paused CRA,
    the PILOT, the School Compensation Agreement, the 2025-08-07 annexation, O-26-04–07,
    O-26-33 (+ its 2026-07-16 outcome).
-3. **The site-plan PDFs** (9-building original vs. 12-building revision) — shared with #1470.
+3. **The site-plan PDFs** (9-building original vs. 12-building revision) — **not published**;
+   #1470 established that as a dated negative (2026-08-01) and the pull is an **R.C. 149.43
+   request** to City Planning & Zoning, not a fetch. Ready to ingest alongside them: the two
+   Planning Commission agendas already located,
+   <https://storage.googleapis.com/proudcity/wilmingtonoh/2025/12/b85539a8-planning-commission-agenda-2026-01-06.pdf>
+   and
+   <https://storage.googleapis.com/proudcity/wilmingtonoh/2026/03/ed6d12c5-planning-commission-agenda-2026-03-25-special.pdf>.
 4. **OPSB 25-0871-EL-BLN** docket documents — shared with #1469.
 5. **OHD000001** final permit when issued; any site coverage/individual-permit application.
 6. **Compliance/entity pulls:** ECHO OH0028134 history (REST API); SWOAQA permit index;

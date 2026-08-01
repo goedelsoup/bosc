@@ -1,0 +1,386 @@
+{
+  "params": {
+    "f": "json",
+    "returnGeometry": "false",
+    "where": "PIN IN ('285-13-02-01-0000-00','290-26-01-12-0000-00','270-13-02-01-0000-00','285-13-02-02-0000-00','285-13-04-01-0000-00','285-13-11-02-0000-00','285-13-03-01-0000-00')",
+    "outFields": "PIN,Parcel_Number,PARCELID,District_Code,District_Name,Land_Use_Code,Land_Use_Name,Class,Legal_Description,Deed_Volume,Deed_Page,Has_CAUV,Has_Exemption,Has_Abatement,Tax_Year,AudWeb,ZoningDist,ZoningDi_1,CntyZoning,Current_Tax,Extract_ID",
+    "resultRecordCount": 2000
+  },
+  "fetched_at": "2026-08-01T10:50:07.247421+00:00",
+  "payload": {
+    "objectIdFieldName": "OBJECTID",
+    "uniqueIdField": {
+      "name": "OBJECTID",
+      "isSystemMaintained": true
+    },
+    "globalIdFieldName": "",
+    "geometryType": "esriGeometryPolygon",
+    "spatialReference": {
+      "wkid": 102100,
+      "latestWkid": 3857
+    },
+    "fields": [
+      {
+        "name": "PIN",
+        "type": "esriFieldTypeString",
+        "alias": "PIN",
+        "sqlType": "sqlTypeOther",
+        "length": 100,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Parcel_Number",
+        "type": "esriFieldTypeString",
+        "alias": "Parcel Number",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PARCELID",
+        "type": "esriFieldTypeString",
+        "alias": "PARCELID",
+        "sqlType": "sqlTypeOther",
+        "length": 30,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "District_Code",
+        "type": "esriFieldTypeDouble",
+        "alias": "District Code",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "District_Name",
+        "type": "esriFieldTypeString",
+        "alias": "District Name",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Land_Use_Code",
+        "type": "esriFieldTypeDouble",
+        "alias": "Land Use Code",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Land_Use_Name",
+        "type": "esriFieldTypeString",
+        "alias": "Land Use Name",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Class",
+        "type": "esriFieldTypeString",
+        "alias": "Class",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Legal_Description",
+        "type": "esriFieldTypeString",
+        "alias": "Legal Description",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Deed_Volume",
+        "type": "esriFieldTypeString",
+        "alias": "Deed Volume",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Deed_Page",
+        "type": "esriFieldTypeString",
+        "alias": "Deed Page",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Has_CAUV",
+        "type": "esriFieldTypeString",
+        "alias": "Has CAUV",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Has_Exemption",
+        "type": "esriFieldTypeString",
+        "alias": "Has Exemption",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Has_Abatement",
+        "type": "esriFieldTypeString",
+        "alias": "Has Abatement",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Tax_Year",
+        "type": "esriFieldTypeDouble",
+        "alias": "Tax Year",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "AudWeb",
+        "type": "esriFieldTypeString",
+        "alias": "AudWeb",
+        "sqlType": "sqlTypeOther",
+        "length": 150,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "ZoningDist",
+        "type": "esriFieldTypeString",
+        "alias": "ZoningDist",
+        "sqlType": "sqlTypeOther",
+        "length": 12,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "ZoningDi_1",
+        "type": "esriFieldTypeString",
+        "alias": "ZoningDi_1",
+        "sqlType": "sqlTypeOther",
+        "length": 254,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "CntyZoning",
+        "type": "esriFieldTypeString",
+        "alias": "CntyZoning",
+        "sqlType": "sqlTypeOther",
+        "length": 254,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Current_Tax",
+        "type": "esriFieldTypeDouble",
+        "alias": "Current Tax",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Extract_ID",
+        "type": "esriFieldTypeDouble",
+        "alias": "Extract ID",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "PIN": "285-13-03-01-0000-00",
+          "Parcel_Number": "285-13-03-01-0000-00",
+          "PARCELID": "285130301000000",
+          "District_Code": 285,
+          "District_Name": "UNION TWP-WILMINGTON",
+          "Land_Use_Code": 111,
+          "Land_Use_Name": "CASH-GRAIN OR GENERAL FARM \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+          "Class": "Agriculture",
+          "Legal_Description": "MS 1096\n2026 ANNEX TO 285-UNION-WILMINGTON CITY",
+          "Deed_Volume": "",
+          "Deed_Page": "",
+          "Has_CAUV": "YES",
+          "Has_Exemption": "NO",
+          "Has_Abatement": "NO",
+          "Tax_Year": 2025,
+          "AudWeb": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285130301000000",
+          "ZoningDist": null,
+          "ZoningDi_1": null,
+          "CntyZoning": null,
+          "Current_Tax": 2575.08,
+          "Extract_ID": 1135
+        }
+      },
+      {
+        "attributes": {
+          "PIN": "290-26-01-12-0000-00",
+          "Parcel_Number": "290-26-01-12-0000-00",
+          "PARCELID": "290260112000000",
+          "District_Code": 290,
+          "District_Name": "CITY OF WILMINGTON",
+          "Land_Use_Code": 100,
+          "Land_Use_Name": "AGRICULTURAL VACANT LAND",
+          "Class": "Agriculture",
+          "Legal_Description": "MS 1338 & 2471\nRES TO BE 7.040AC ROW 2026 DUP\nANNEXED FROM 270130201000000 TO 290 IN 1988\nRIGHT OF WAY",
+          "Deed_Volume": "2025-00005287",
+          "Deed_Page": "",
+          "Has_CAUV": "NO",
+          "Has_Exemption": "NO",
+          "Has_Abatement": "NO",
+          "Tax_Year": 2025,
+          "AudWeb": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=290260112000000",
+          "ZoningDist": null,
+          "ZoningDi_1": null,
+          "CntyZoning": null,
+          "Current_Tax": 0,
+          "Extract_ID": 1135
+        }
+      },
+      {
+        "attributes": {
+          "PIN": "270-13-02-01-0000-00",
+          "Parcel_Number": "270-13-02-01-0000-00",
+          "PARCELID": "270130201000000",
+          "District_Code": 270,
+          "District_Name": "UNION TWP-WILMINGTON CSD",
+          "Land_Use_Code": 110,
+          "Land_Use_Name": "AGRICULTURAL VACANT LAND \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+          "Class": "Agriculture",
+          "Legal_Description": "MS 2471-1338\nRES .236AC ROW 2026DUP\nSPLT 270130201000100(471.609AC) REM 8.593AC RW SR 730 25DUP TYPE II ANNEX\n0001-00 RE# TO 285130201000000 2025DUP (NEW DISTRICT 2025DUP)",
+          "Deed_Volume": "2025-00005287",
+          "Deed_Page": "",
+          "Has_CAUV": "YES",
+          "Has_Exemption": "NO",
+          "Has_Abatement": "NO",
+          "Tax_Year": 2025,
+          "AudWeb": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=270130201000000",
+          "ZoningDist": "S-R",
+          "ZoningDi_1": "Suburban Residential District",
+          "CntyZoning": "Yes",
+          "Current_Tax": 41.66,
+          "Extract_ID": 1135
+        }
+      },
+      {
+        "attributes": {
+          "PIN": "285-13-02-01-0000-00",
+          "Parcel_Number": "285-13-02-01-0000-00",
+          "PARCELID": "285130201000000",
+          "District_Code": 285,
+          "District_Name": "UNION TWP-WILMINGTON",
+          "Land_Use_Code": 111,
+          "Land_Use_Name": "CASH-GRAIN OR GENERAL FARM \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+          "Class": "Agriculture",
+          "Legal_Description": "MS 2471-1338\nTY26 TIF 100% 30YRS -FINAL \nRES TO BE 472.09AC 2026DUP\nSPLIT/FR 270130201000000(480.202AC) 25DUP DUE TO TYPE II ANNEX \n(MOVE BUILDINGS HERE)",
+          "Deed_Volume": "2025-00005287",
+          "Deed_Page": "",
+          "Has_CAUV": "YES",
+          "Has_Exemption": "NO",
+          "Has_Abatement": "NO",
+          "Tax_Year": 2025,
+          "AudWeb": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285130201000000",
+          "ZoningDist": null,
+          "ZoningDi_1": null,
+          "CntyZoning": null,
+          "Current_Tax": 17339.93,
+          "Extract_ID": 1135
+        }
+      },
+      {
+        "attributes": {
+          "PIN": "285-13-04-01-0000-00",
+          "Parcel_Number": "285-13-04-01-0000-00",
+          "PARCELID": "285130401000000",
+          "District_Code": 285,
+          "District_Name": "UNION TWP-WILMINGTON",
+          "Land_Use_Code": 111,
+          "Land_Use_Name": "CASH-GRAIN OR GENERAL FARM \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+          "Class": "Agriculture",
+          "Legal_Description": "MS 1096\n2026 ANNEX TO 285-UNION-WILMINGTON CITY\nRES TO BE 170.116AC 26DUP PER ANNEXATION",
+          "Deed_Volume": "37",
+          "Deed_Page": "182",
+          "Has_CAUV": "YES",
+          "Has_Exemption": "NO",
+          "Has_Abatement": "NO",
+          "Tax_Year": 2025,
+          "AudWeb": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285130401000000",
+          "ZoningDist": null,
+          "ZoningDi_1": null,
+          "CntyZoning": null,
+          "Current_Tax": 2930.4,
+          "Extract_ID": 1135
+        }
+      },
+      {
+        "attributes": {
+          "PIN": "285-13-02-02-0000-00",
+          "Parcel_Number": "285-13-02-02-0000-00",
+          "PARCELID": "285130202000000",
+          "District_Code": 285,
+          "District_Name": "UNION TWP-WILMINGTON",
+          "Land_Use_Code": 111,
+          "Land_Use_Name": "CASH-GRAIN OR GENERAL FARM \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+          "Class": "Agriculture",
+          "Legal_Description": "MS 1096\n2026 ANNEX TO 285-UNION-WILMINGTON CITY\nSPLIT FROM 270130501000000(191.117AC) 26DUP PER ANNEX",
+          "Deed_Volume": "42",
+          "Deed_Page": "186",
+          "Has_CAUV": "NO",
+          "Has_Exemption": "NO",
+          "Has_Abatement": "NO",
+          "Tax_Year": 2025,
+          "AudWeb": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285130202000000",
+          "ZoningDist": null,
+          "ZoningDi_1": null,
+          "CntyZoning": null,
+          "Current_Tax": 0,
+          "Extract_ID": 1135
+        }
+      },
+      {
+        "attributes": {
+          "PIN": "285-13-11-02-0000-00",
+          "Parcel_Number": "285-13-11-02-0000-00",
+          "PARCELID": "285131102000000",
+          "District_Code": 285,
+          "District_Name": "UNION TWP-WILMINGTON",
+          "Land_Use_Code": 110,
+          "Land_Use_Name": "AGRICULTURAL VACANT LAND \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+          "Class": "Agriculture",
+          "Legal_Description": "MS 2312 4558 1096\n2026 ANNEX TO 285-UNION-WILMINGTON CITY\nSPLIT/FR 270131102000100(149.639AC) 26DUP",
+          "Deed_Volume": "38",
+          "Deed_Page": "289",
+          "Has_CAUV": "NO",
+          "Has_Exemption": "NO",
+          "Has_Abatement": "NO",
+          "Tax_Year": 2025,
+          "AudWeb": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285131102000000",
+          "ZoningDist": null,
+          "ZoningDi_1": null,
+          "CntyZoning": null,
+          "Current_Tax": 0,
+          "Extract_ID": 1135
+        }
+      }
+    ]
+  }
+}

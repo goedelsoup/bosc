@@ -118,6 +118,24 @@ def test_parse_mmddyy() -> None:
     assert allen_gis._parse_mmddyy("13-40-99") is None  # invalid month/day
 
 
+def test_parse_mdyyyy_slash() -> None:
+    # M/D/YYYY with an optional trailing clock (Clinton County's Date_Conveyed, served as
+    # pre-formatted TEXT rather than an esriFieldTypeDate). Four-digit year, so no century pivot
+    # applies — unlike the mmddyy path above. The midnight clock is discarded, not parsed.
+    assert allen_gis._parse_mdyyyy_slash("12/10/2025 12:00:00 AM") == "2025-12-10"
+    assert allen_gis._parse_mdyyyy_slash("1/4/2001 12:00:00 AM") == "2001-01-04"
+    assert allen_gis._parse_mdyyyy_slash("10/1/2008") == "2008-10-01"
+    assert allen_gis._parse_mdyyyy_slash(None) is None
+    assert allen_gis._parse_mdyyyy_slash("") is None
+    assert allen_gis._parse_mdyyyy_slash("2025-12-10") is None  # already ISO -> not this encoding
+    assert allen_gis._parse_mdyyyy_slash("13/40/2025") is None  # invalid month/day
+    assert allen_gis._parse_mdyyyy_slash("12/10/25") is None  # two-digit year is NOT assumed
+    # And it is reachable through the schema-driven decoder, not just directly.
+    assert allen_gis._decode_sale_date("12/10/2025 12:00:00 AM", "mdyyyy_slash") == "2025-12-10"
+    # The "iso" mode would have carried the whole string through — the bug this mode exists for.
+    assert allen_gis._decode_sale_date("12/10/2025 12:00:00 AM", "iso") == "12/10/2025 12:00:00 AM"
+
+
 def test_parcels_geojson_by_owner_fort_wayne() -> None:
     # The Hatchworks (Project Zodiac) assemblage as a WGS84 GeoJSON FeatureCollection, offline.
     fc = allen_gis.parcels_geojson_by_owner("Hatchworks", settings=_fort_wayne_offline())

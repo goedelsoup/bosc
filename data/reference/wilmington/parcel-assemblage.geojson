@@ -1,0 +1,968 @@
+{
+  "type": "FeatureCollection",
+  "bosc:provenance": {
+    "subject": "The US-68 S / SR-730 data-center corridor, Union Township / City of Wilmington, Clinton County OH (FIPS 39027) \u2014 SEVEN contiguous auditor parcels, 1,023.764 ac deeded / 1023.786 ac planar, in TWO legally distinct groups: the three parcels deeded to AMAZON DATA SERVICES INC (the ~471-ac former Cosler Farm campus tract at 1488 S US 68 plus two right-of-way strips) and the four tracts rezoned by City ordinances O-26-04 \u2013 O-26-07 for the second, Ardent/TAC campus, which remain in their original owners' names. #1470, sub-issue of #1277.",
+    "source": "Clinton County GIS Department ArcGIS Online org (tAhcHWpOD9ygNPbJ) \u2014 cntyparcelsRealPropData_gdb FeatureServer layer 0 (Clinton County Auditor CAMA join + geometry), tax year 2025, Extract_ID 1135, read through the new clinton_gis connector (CLINTON_PARCEL_SCHEMA)",
+    "source_url": "https://services1.arcgis.com/tAhcHWpOD9ygNPbJ/arcgis/rest/services/cntyparcelsRealPropData_gdb/FeatureServer/0",
+    "read": "2026-08-01",
+    "crs": "EPSG:4326 (WGS84)",
+    "count": 7,
+    "distinct_parcels": 7,
+    "parcel_ids": [
+      "285-13-02-01-0000-00",
+      "290-26-01-12-0000-00",
+      "270-13-02-01-0000-00",
+      "285-13-02-02-0000-00",
+      "285-13-04-01-0000-00",
+      "285-13-11-02-0000-00",
+      "285-13-03-01-0000-00"
+    ],
+    "campus_holding_cama_acres": 478.885,
+    "campus_holding_planar_acres": 479.226,
+    "petitioned_rezoning_cama_acres": 544.879,
+    "petitioned_rezoning_planar_acres": 544.561,
+    "total_cama_acres": 1023.764,
+    "total_planar_acres": 1023.786,
+    "union_planar_acres": 1023.786,
+    "caveats": [
+      "[verified] Owner of record, deeded acreage, land use, tax district, school district, conveyance date/consideration, deed reference, appraised values, half-year tax, legal description and the CAUV/exemption/abatement flags are verbatim from the Clinton County Auditor CAMA on the county GIS Department's cntyparcelsRealPropData_gdb layer 0 (tax year 2025, dataLastEditDate 2026-07-30, read 2026-08-01); null means the service had no value. auditor_url is the layer's own AudWeb column, not a constructed URL \u2014 the sibling Auditor_Link column is published with an unsubstituted '{Property ID}' placeholder and does not resolve.",
+      "THE CORRIDOR IS ONE CONTIGUOUS BLOCK, AND THAT IS A MEASUREMENT, NOT A SUM. The union of the seven polygons is a SINGLE polygon of 1023.786 ac, equal to the sum of the parts (1023.786 ac) to three decimals \u2014 they abut without overlapping, over a 3,185 m x 3,126 m extent. The register's '~1,000+ acres of one corridor' had been [inference \u2014 the ~471-ac and 545.893-ac press figures summed]; it is now [verified] as the geometric union of the committed auditor parcels.",
+      "TWO KINDS OF ROW, AND THEY ARE NOT THE SAME CLAIM \u2014 read corridor_role before quoting anything. corridor_role='campus_holding' is RECORDED OWNERSHIP: three parcels deeded to AMAZON DATA SERVICES INC. corridor_role='petitioned_rezoning' is a LEGISLATIVE SCHEDULE: the four tracts City Council rezoned 5-2 on 2026-02-19/20 by ordinances O-26-04 \u2013 O-26-07, still owned by L T Land Development LLC, Matthew E Thompson, the June 11 2001 Ralph Larry Roberts II FT and the Jack L Webb RLT. NO Ardent/TAC entity holds any land in Clinton County \u2014 a countywide CAMA owner scan on '%ARDENT%' / 'TAC%' returns nothing but unrelated surname matches (Taulbee/Tackett). The second campus is a rezoning, not a land assembly; never read these four as an assemblage.",
+      "AMAZON'S HOLDING IS ONE TRACT PLUS TWO RIGHT-OF-WAY STRIPS. The campus tract is 285-13-02-01-0000-00, 471.609 ac deeded / 472.221 ac planar, situs 1488 S US 68. The other two are ROW: 290-26-01-12-0000-00 (7.040 ac along US 68, legal 'RIGHT OF WAY', annexed to city district 290 in 1988) and 270-13-02-01-0000-00 (0.236 ac, legal 'RES .236AC ROW 2026DUP', on SR 730). Quote 471.609 ac for the campus and 478.885 ac only for the whole holding.",
+      "CONSIDERATION IS PER DEED, NOT PER PARCEL. All three Amazon parcels read $86,436,000 conveyed 2025-12-10 on recorder instrument 2025-00005287 \u2014 that is the ONE deed's consideration repeated on each parcel it conveyed. Summing it across the three triples the price. valid_sale is 'True' on all three (the auditor's arms-length flag).",
+      "THE ANNEXATION SPLIT DOES NOT RECONCILE TO THE ACRE, AND IS NOT FORCED TO. The campus tract's legal reads 'SPLIT/FR 270130201000000(480.202AC) 25DUP DUE TO TYPE II ANNEX', and the residual parcel's reads 'SPLT 270130201000100(471.609AC) REM 8.593AC RW SR 730'. 480.202 - 471.609 - 0.236 = 8.357 ac against the legal's own 8.593 ac, a 0.236-ac difference. [open] \u2014 the annexation plat and the 2025-08-07 annexation ordinance are the instruments that would close it (#1471); neither is in the corpus.",
+      "THE PETITIONED ACREAGES DIFFER FROM THE PRESS FIGURES BY EXACTLY ONE SPLIT. The 2026-01-16 wnewsj report gives 119.373 + 65.29 + 191.12 + 170.11 = 545.893 ac; the post-annexation auditor figures give 119.375 + 65.323 + 190.065 + 170.116 = 544.879 ac. The 1.014-ac gap is the Roberts tract: the petition quotes its PARENT 270-13-05-01 at 191.117 ac, while the auditor's surviving 285-13-02-02 is the 190.065 ac that actually annexed ('SPLIT FROM 270130501000000(191.117AC) 26DUP PER ANNEX'). The other three agree to within 0.033 ac. Cite 544.879 ac for the rezoned land of record.",
+      "ZONING IS VERIFIED FOR THE CAMPUS AND UNPUBLISHED FOR THE OTHER FOUR \u2014 a publication lag, not a finding. The City of Wilmington zoning layer (WILMINGTON_ZONING_SCHEMA, dataLastEditDate 2026-02-10) carries a discrete 471.27-ac 'LI' Light Industrial polygon covering 99.73% of the campus tract, and the City's own Planning Commission agendas of 2026-01-06 and 2026-03-25 print the parcel's zoning as 'Light Industrial'. The four petitioned tracts' interior points fall in NO city polygon and still read the COUNTY's 'S-R' Suburban Residential, because Council passed their rezonings on 2026-02-19/20 \u2014 nine days AFTER that layer was last edited. county_zoning_district is null for every parcel inside a municipality; that means 'municipally zoned', not 'unzoned'.",
+      "THE CAMPUS'S LI DESIGNATION IS A MAPPED ENTITLEMENT IN REMAND. The Cosler Farm map rezoning is one of three ordinances a federal court ordered the City to redo for defective 30-day mailed notice (Sharp v. City of Wilmington, S.D. Ohio 1:26-cv-00448, ruling ~2026-07-09/10, [reported]), and the four petitioned rezonings are the subject of a citizen referendum on the November 2026 ballot ([reported]). Carry that status with any zoning claim about this corridor; the geometry is committed as disclosed and petitioned footprints, not as settled entitlements.",
+      "has_abatement READS FALSE ON THE CAMPUS AND THAT IS NOT 'NO INCENTIVE'. The campus tract's own legal description carries 'TY26 TIF 100% 30YRS -FINAL' \u2014 a 30-year, 100% tax-increment financing exemption first effective for tax year 2026 \u2014 while the TY2025 record still shows has_cauv true and $17,339.93 of current tax on farmland. Three of the four petitioned tracts show appraised_total_value 0 and current_tax 0: they are unvalued NEW split parcels at this extract, not $0 properties.",
+      "PROXIMITY TO THE WWTP IS REAL BUT IT IS NOT ADJACENCY. The Port Authority / City FAQ gives proximity to the wastewater plant as the site-selection driver. Measured in UTM 17N from the ECHO/FRS plant point (39.4391, -83.85132), the nearest campus-tract boundary is 1,224 m (0.76 mi) away and the four petitioned tracts are 1,990-2,853 m away. The $25M AWS-funded 3.5 mi of new sewer trunk line ([verified], FAQ) is what closes that distance.",
+      "acres is the auditor's DEEDED figure; planar_acres is measured from this geometry in UTM 17N (EPSG:32617). They differ by -1.5 to +1.4 ac per parcel and by 0.023 ac in total; the two are NOT reconciled and neither is adjusted to the other \u2014 cite the deeded figures for the record and the planar ones for area/runoff modeling.",
+      "Right-county guard: Clinton County OHIO (FIPS 39027), tax districts '285-UNION TWP-WILMINGTON' (the Type-II-annexed block) and '290-CITY OF WILMINGTON'. Not Clinton County PA (a live data-center-moratorium search trap for this site), and not Wilmington DE / NC / MA \u2014 the local airport is ILN, not ILM."
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.8546421190108,
+              39.4283808407884
+            ],
+            [
+              -83.8545327388704,
+              39.4276143892722
+            ],
+            [
+              -83.8542508719772,
+              39.4255327982657
+            ],
+            [
+              -83.8496104941145,
+              39.4258451234039
+            ],
+            [
+              -83.849666318931,
+              39.4267043118961
+            ],
+            [
+              -83.8486151121809,
+              39.4266641522744
+            ],
+            [
+              -83.8470952499267,
+              39.42656411826
+            ],
+            [
+              -83.8464656183156,
+              39.4265226685503
+            ],
+            [
+              -83.8445770572344,
+              39.4263983276183
+            ],
+            [
+              -83.8443654036098,
+              39.4263843805692
+            ],
+            [
+              -83.8441537644204,
+              39.4263704545904
+            ],
+            [
+              -83.8439421181398,
+              39.4263565174994
+            ],
+            [
+              -83.8437304719435,
+              39.4263425800236
+            ],
+            [
+              -83.8435188258314,
+              39.426328642163
+            ],
+            [
+              -83.8433071798035,
+              39.4263147039177
+            ],
+            [
+              -83.8430955338599,
+              39.4263007652875
+            ],
+            [
+              -83.8428838880005,
+              39.4262868262727
+            ],
+            [
+              -83.8426722528501,
+              39.4262728957592
+            ],
+            [
+              -83.8422468680704,
+              39.4262448786866
+            ],
+            [
+              -83.8419534528372,
+              39.4262255475945
+            ],
+            [
+              -83.8419173398915,
+              39.4265561799909
+            ],
+            [
+              -83.8418909517567,
+              39.4267975388329
+            ],
+            [
+              -83.8417112179274,
+              39.4284422593748
+            ],
+            [
+              -83.8386002614228,
+              39.428297004893
+            ],
+            [
+              -83.8348426114805,
+              39.4280821993811
+            ],
+            [
+              -83.8338591966832,
+              39.4280326141632
+            ],
+            [
+              -83.8338002781129,
+              39.428030216315
+            ],
+            [
+              -83.8391603762473,
+              39.4210987760958
+            ],
+            [
+              -83.8396193974854,
+              39.4211242828807
+            ],
+            [
+              -83.8410862103438,
+              39.4212057781179
+            ],
+            [
+              -83.8413983630564,
+              39.4188411347081
+            ],
+            [
+              -83.8447973975002,
+              39.4183824492924
+            ],
+            [
+              -83.8446715363349,
+              39.4178816431435
+            ],
+            [
+              -83.8448034291559,
+              39.4178587815661
+            ],
+            [
+              -83.8450106985474,
+              39.4178228538888
+            ],
+            [
+              -83.8452179677264,
+              39.4177869258423
+            ],
+            [
+              -83.8454252366927,
+              39.4177509974265
+            ],
+            [
+              -83.8456325054463,
+              39.4177150686415
+            ],
+            [
+              -83.8458397739873,
+              39.4176791394872
+            ],
+            [
+              -83.8460470423157,
+              39.4176432099637
+            ],
+            [
+              -83.8462543104313,
+              39.4176072800709
+            ],
+            [
+              -83.8464615783344,
+              39.4175713498088
+            ],
+            [
+              -83.8466688460248,
+              39.4175354191775
+            ],
+            [
+              -83.8469143542135,
+              39.4174928585472
+            ],
+            [
+              -83.8470870365378,
+              39.4174629298383
+            ],
+            [
+              -83.8478831261791,
+              39.4173249651806
+            ],
+            [
+              -83.8485910810198,
+              39.4172879260798
+            ],
+            [
+              -83.8515990511444,
+              39.4171305050583
+            ],
+            [
+              -83.8513245905837,
+              39.4148664374192
+            ],
+            [
+              -83.8536703979251,
+              39.4149561024626
+            ],
+            [
+              -83.8570058807896,
+              39.4149935785344
+            ],
+            [
+              -83.857777910041,
+              39.4150058093214
+            ],
+            [
+              -83.8578233568192,
+              39.4157811584073
+            ],
+            [
+              -83.8580215265443,
+              39.419161816831
+            ],
+            [
+              -83.8581723472749,
+              39.4217345077646
+            ],
+            [
+              -83.8573955240093,
+              39.4217463410079
+            ],
+            [
+              -83.8574050399749,
+              39.4218100233137
+            ],
+            [
+              -83.8580711839053,
+              39.4272900913517
+            ],
+            [
+              -83.8581537285678,
+              39.4279630087202
+            ],
+            [
+              -83.857148190274,
+              39.4284715705173
+            ],
+            [
+              -83.8564777466469,
+              39.4276458600061
+            ],
+            [
+              -83.8556243382006,
+              39.4280754514395
+            ],
+            [
+              -83.8551374529907,
+              39.4283205360545
+            ],
+            [
+              -83.8550430321966,
+              39.4282013475382
+            ],
+            [
+              -83.8546421190108,
+              39.4283808407884
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "285-13-02-01-0000-00",
+        "parcel_id_dashless": "285130201000000",
+        "auditor_url": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285130201000000",
+        "corridor_role": "campus_holding",
+        "rezoning_ordinance": null,
+        "owner": "AMAZON DATA SERVICES INC",
+        "owner_mailing_address": "ATTN: GENERAL COUNSEL (REAL ESTATE) [CMH165]\nPO BOX 80416 SEATTLE WA 98108-0416",
+        "situs_address": "1488 S US 68",
+        "legal_description": "MS 2471-1338\nTY26 TIF 100% 30YRS -FINAL \nRES TO BE 472.09AC 2026DUP\nSPLIT/FR 270130201000000(480.202AC) 25DUP DUE TO TYPE II ANNEX \n(MOVE BUILDINGS HERE)",
+        "acres": 471.609,
+        "planar_acres": 472.221,
+        "land_use_code": 111,
+        "land_use_name": "CASH-GRAIN OR GENERAL FARM \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+        "class": "Agriculture",
+        "tax_district_code": 285,
+        "tax_district": "UNION TWP-WILMINGTON",
+        "school_district": "WILMINGTON CSD",
+        "neighborhood": "CITY OF WILMINGTON",
+        "county_zoning_district": null,
+        "county_zoning_name": null,
+        "appraised_land_value": 5808100,
+        "appraised_improvement_value": 284600,
+        "appraised_total_value": 6092700,
+        "current_tax": 17339.93,
+        "last_sale_date": "2025-12-10",
+        "last_sale_amount": 86436000,
+        "valid_sale": "True",
+        "deed_reference": "2025-00005287",
+        "deed_page": null,
+        "has_cauv": true,
+        "has_exemption": false,
+        "has_abatement": false,
+        "tax_year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.8334000581047,
+              39.4280139267162
+            ],
+            [
+              -83.8387633174659,
+              39.4210767115484
+            ],
+            [
+              -83.8389611846531,
+              39.421087707465
+            ],
+            [
+              -83.8391603762473,
+              39.4210987760958
+            ],
+            [
+              -83.8338002781129,
+              39.428030216315
+            ],
+            [
+              -83.8334000581047,
+              39.4280139267162
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "290-26-01-12-0000-00",
+        "parcel_id_dashless": "290260112000000",
+        "auditor_url": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=290260112000000",
+        "corridor_role": "campus_holding",
+        "rezoning_ordinance": null,
+        "owner": "AMAZON DATA SERVICES INC",
+        "owner_mailing_address": "ATTN: GENERAL COUNSEL (REAL ESTATE) [CMH165]\nPO BOX 80416 SEATTLE WA 98108-0416",
+        "situs_address": "US 68",
+        "legal_description": "MS 1338 & 2471\nRES TO BE 7.040AC ROW 2026 DUP\nANNEXED FROM 270130201000000 TO 290 IN 1988\nRIGHT OF WAY",
+        "acres": 7.04,
+        "planar_acres": 6.777,
+        "land_use_code": 100,
+        "land_use_name": "AGRICULTURAL VACANT LAND",
+        "class": "Agriculture",
+        "tax_district_code": 290,
+        "tax_district": "CITY OF WILMINGTON",
+        "school_district": "WILMINGTON CSD",
+        "neighborhood": "CITY OF WILMINGTON",
+        "county_zoning_district": null,
+        "county_zoning_name": null,
+        "appraised_land_value": 0,
+        "appraised_improvement_value": 0,
+        "appraised_total_value": 0,
+        "current_tax": 0,
+        "last_sale_date": "2025-12-10",
+        "last_sale_amount": 86436000,
+        "valid_sale": "True",
+        "deed_reference": "2025-00005287",
+        "deed_page": null,
+        "has_cauv": false,
+        "has_exemption": false,
+        "has_abatement": false,
+        "tax_year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.8572047834532,
+              39.428541269519
+            ],
+            [
+              -83.857148190274,
+              39.4284715705173
+            ],
+            [
+              -83.8581537285678,
+              39.4279630087202
+            ],
+            [
+              -83.8581652277585,
+              39.4280567540766
+            ],
+            [
+              -83.8580465180645,
+              39.4281145917511
+            ],
+            [
+              -83.8572047834532,
+              39.428541269519
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "270-13-02-01-0000-00",
+        "parcel_id_dashless": "270130201000000",
+        "auditor_url": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=270130201000000",
+        "corridor_role": "campus_holding",
+        "rezoning_ordinance": null,
+        "owner": "AMAZON DATA SERVICES INC",
+        "owner_mailing_address": "ATTN: GENERAL COUNSEL (REAL ESTATE) [CMH165]\nPO BOX 80416 SEATTLE WA 98108-0416",
+        "situs_address": "SR 730",
+        "legal_description": "MS 2471-1338\nRES .236AC ROW 2026DUP\nSPLT 270130201000100(471.609AC) REM 8.593AC RW SR 730 25DUP TYPE II ANNEX\n0001-00 RE# TO 285130201000000 2025DUP (NEW DISTRICT 2025DUP)",
+        "acres": 0.236,
+        "planar_acres": 0.228,
+        "land_use_code": 110,
+        "land_use_name": "AGRICULTURAL VACANT LAND \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+        "class": "Agriculture",
+        "tax_district_code": 270,
+        "tax_district": "UNION TWP-WILMINGTON CSD",
+        "school_district": "WILMINGTON CSD",
+        "neighborhood": "UNION TWP",
+        "county_zoning_district": "S-R",
+        "county_zoning_name": "Suburban Residential District",
+        "appraised_land_value": 17700,
+        "appraised_improvement_value": 0,
+        "appraised_total_value": 17700,
+        "current_tax": 41.66,
+        "last_sale_date": "2025-12-10",
+        "last_sale_amount": 86436000,
+        "valid_sale": "True",
+        "deed_reference": "2025-00005287",
+        "deed_page": null,
+        "has_cauv": true,
+        "has_exemption": false,
+        "has_abatement": false,
+        "tax_year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.8611357535551,
+              39.4037947326216
+            ],
+            [
+              -83.8615424762795,
+              39.4041544728887
+            ],
+            [
+              -83.8625992590326,
+              39.4035987778293
+            ],
+            [
+              -83.8646323198704,
+              39.4069650574713
+            ],
+            [
+              -83.8645682317735,
+              39.4069883685255
+            ],
+            [
+              -83.8636495206735,
+              39.407322527676
+            ],
+            [
+              -83.864050182552,
+              39.4079854352623
+            ],
+            [
+              -83.8644508508529,
+              39.4086483414042
+            ],
+            [
+              -83.8648515278984,
+              39.4093112460743
+            ],
+            [
+              -83.8651520318549,
+              39.4098084187683
+            ],
+            [
+              -83.8654525400772,
+              39.410305590642
+            ],
+            [
+              -83.8664353823232,
+              39.4099481025807
+            ],
+            [
+              -83.8665405692928,
+              39.4101221099267
+            ],
+            [
+              -83.8655577182107,
+              39.410479600748
+            ],
+            [
+              -83.8659258492854,
+              39.4110886357368
+            ],
+            [
+              -83.8668452289561,
+              39.4106261266491
+            ],
+            [
+              -83.8671483074336,
+              39.4111275071813
+            ],
+            [
+              -83.8647259875241,
+              39.4125780719055
+            ],
+            [
+              -83.8648010195171,
+              39.4151395012336
+            ],
+            [
+              -83.8631503649483,
+              39.4151088870404
+            ],
+            [
+              -83.8597692928032,
+              39.4112909390145
+            ],
+            [
+              -83.85747330082,
+              39.4086615303051
+            ],
+            [
+              -83.8576806448771,
+              39.4085460371923
+            ],
+            [
+              -83.8545520144251,
+              39.4048642357324
+            ],
+            [
+              -83.8542315690186,
+              39.404487114062
+            ],
+            [
+              -83.8564317425784,
+              39.4016627968684
+            ],
+            [
+              -83.856310138278,
+              39.4016057808261
+            ],
+            [
+              -83.8548689255473,
+              39.4008016155729
+            ],
+            [
+              -83.8551529023968,
+              39.4004289785268
+            ],
+            [
+              -83.8611357535551,
+              39.4037947326216
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "285-13-02-02-0000-00",
+        "parcel_id_dashless": "285130202000000",
+        "auditor_url": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285130202000000",
+        "corridor_role": "petitioned_rezoning",
+        "rezoning_ordinance": "O-26-06",
+        "owner": "JUNE 11 2001 RALPH LARRY ROBERTS II FT",
+        "owner_mailing_address": "48 NORTH SOUTH ST. WILMINGTON OH 45177",
+        "situs_address": "MCGUINN RD",
+        "legal_description": "MS 1096\n2026 ANNEX TO 285-UNION-WILMINGTON CITY\nSPLIT FROM 270130501000000(191.117AC) 26DUP PER ANNEX",
+        "acres": 190.065,
+        "planar_acres": 188.606,
+        "land_use_code": 111,
+        "land_use_name": "CASH-GRAIN OR GENERAL FARM \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+        "class": "Agriculture",
+        "tax_district_code": 285,
+        "tax_district": "UNION TWP-WILMINGTON",
+        "school_district": "WILMINGTON CSD",
+        "neighborhood": "UNION TWP",
+        "county_zoning_district": null,
+        "county_zoning_name": null,
+        "appraised_land_value": 0,
+        "appraised_improvement_value": 0,
+        "appraised_total_value": 0,
+        "current_tax": 0,
+        "last_sale_date": "2019-01-17",
+        "last_sale_amount": 1337900,
+        "valid_sale": "False",
+        "deed_reference": "42",
+        "deed_page": "186",
+        "has_cauv": false,
+        "has_exemption": false,
+        "has_abatement": false,
+        "tax_year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.8570058807896,
+              39.4149935785344
+            ],
+            [
+              -83.8536703979251,
+              39.4149561024626
+            ],
+            [
+              -83.8484180156438,
+              39.4088637367955
+            ],
+            [
+              -83.8483094864545,
+              39.4087473620425
+            ],
+            [
+              -83.8501004832454,
+              39.4064296792731
+            ],
+            [
+              -83.8504943119987,
+              39.4059734126674
+            ],
+            [
+              -83.8507362933906,
+              39.4056068527319
+            ],
+            [
+              -83.8522682917142,
+              39.4036239805182
+            ],
+            [
+              -83.8523679872789,
+              39.4037416713942
+            ],
+            [
+              -83.8537302550909,
+              39.4052980055165
+            ],
+            [
+              -83.8545520144251,
+              39.4048642357324
+            ],
+            [
+              -83.8576806448771,
+              39.4085460371923
+            ],
+            [
+              -83.85747330082,
+              39.4086615303051
+            ],
+            [
+              -83.8597692928032,
+              39.4112909390145
+            ],
+            [
+              -83.8589166075669,
+              39.4128937977189
+            ],
+            [
+              -83.8575720009016,
+              39.4137958265005
+            ],
+            [
+              -83.8570058807896,
+              39.4149935785344
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "285-13-04-01-0000-00",
+        "parcel_id_dashless": "285130401000000",
+        "auditor_url": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285130401000000",
+        "corridor_role": "petitioned_rezoning",
+        "rezoning_ordinance": "O-26-07",
+        "owner": "JACK L WEBB RLT",
+        "owner_mailing_address": "787 E PRIMA VISTA BLVD PORT ST LUCIE FL 34952",
+        "situs_address": "US 68 RD",
+        "legal_description": "MS 1096\n2026 ANNEX TO 285-UNION-WILMINGTON CITY\nRES TO BE 170.116AC 26DUP PER ANNEXATION",
+        "acres": 170.116,
+        "planar_acres": 171.559,
+        "land_use_code": 111,
+        "land_use_name": "CASH-GRAIN OR GENERAL FARM \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+        "class": "Agriculture",
+        "tax_district_code": 285,
+        "tax_district": "UNION TWP-WILMINGTON",
+        "school_district": "WILMINGTON CSD",
+        "neighborhood": "UNION TWP",
+        "county_zoning_district": null,
+        "county_zoning_name": null,
+        "appraised_land_value": 1667800,
+        "appraised_improvement_value": 2800,
+        "appraised_total_value": 1670600,
+        "current_tax": 2930.4,
+        "last_sale_date": "2008-10-01",
+        "last_sale_amount": 0,
+        "valid_sale": "False",
+        "deed_reference": "37",
+        "deed_page": "182",
+        "has_cauv": true,
+        "has_exemption": false,
+        "has_abatement": false,
+        "tax_year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.8671483074336,
+              39.4111275071813
+            ],
+            [
+              -83.8695134096443,
+              39.4150525470522
+            ],
+            [
+              -83.869889576213,
+              39.4156772683406
+            ],
+            [
+              -83.8656609828444,
+              39.4173178600426
+            ],
+            [
+              -83.8658897363584,
+              39.4196000728508
+            ],
+            [
+              -83.8633481144829,
+              39.4216076360463
+            ],
+            [
+              -83.8606771048418,
+              39.4215605662499
+            ],
+            [
+              -83.8602314147506,
+              39.4150546927417
+            ],
+            [
+              -83.8631503649483,
+              39.4151088870404
+            ],
+            [
+              -83.8648010195171,
+              39.4151395012336
+            ],
+            [
+              -83.8647259875241,
+              39.4125780719055
+            ],
+            [
+              -83.8671483074336,
+              39.4111275071813
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "285-13-11-02-0000-00",
+        "parcel_id_dashless": "285131102000000",
+        "auditor_url": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285131102000000",
+        "corridor_role": "petitioned_rezoning",
+        "rezoning_ordinance": "O-26-04",
+        "owner": "L T LAND DEVELOPMENT LLC",
+        "owner_mailing_address": "2176 SR 730 WILMINGTON OH 45177",
+        "situs_address": "NOT ON FILE",
+        "legal_description": "MS 2312 4558 1096\n2026 ANNEX TO 285-UNION-WILMINGTON CITY\nSPLIT/FR 270131102000100(149.639AC) 26DUP",
+        "acres": 119.375,
+        "planar_acres": 118.964,
+        "land_use_code": 110,
+        "land_use_name": "AGRICULTURAL VACANT LAND \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+        "class": "Agriculture",
+        "tax_district_code": 285,
+        "tax_district": "UNION TWP-WILMINGTON",
+        "school_district": "WILMINGTON CSD",
+        "neighborhood": "UNION TWP",
+        "county_zoning_district": null,
+        "county_zoning_name": null,
+        "appraised_land_value": 0,
+        "appraised_improvement_value": 0,
+        "appraised_total_value": 0,
+        "current_tax": 0,
+        "last_sale_date": "2011-04-22",
+        "last_sale_amount": 538800,
+        "valid_sale": "False",
+        "deed_reference": "38",
+        "deed_page": "289",
+        "has_cauv": false,
+        "has_exemption": false,
+        "has_abatement": false,
+        "tax_year": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.8582453697716,
+              39.4217950761917
+            ],
+            [
+              -83.8574050399749,
+              39.4218100233137
+            ],
+            [
+              -83.8573955240093,
+              39.4217463410079
+            ],
+            [
+              -83.8581723472749,
+              39.4217345077646
+            ],
+            [
+              -83.8580215265443,
+              39.419161816831
+            ],
+            [
+              -83.8578233568192,
+              39.4157811584073
+            ],
+            [
+              -83.857777910041,
+              39.4150058093214
+            ],
+            [
+              -83.8570058807896,
+              39.4149935785344
+            ],
+            [
+              -83.8575720009016,
+              39.4137958265005
+            ],
+            [
+              -83.8589166075669,
+              39.4128937977189
+            ],
+            [
+              -83.8597692928032,
+              39.4112909390145
+            ],
+            [
+              -83.8631503649483,
+              39.4151088870404
+            ],
+            [
+              -83.8602314147506,
+              39.4150546927417
+            ],
+            [
+              -83.8606771048418,
+              39.4215605662499
+            ],
+            [
+              -83.8582330206938,
+              39.4215211009943
+            ],
+            [
+              -83.8582453697716,
+              39.4217950761917
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "285-13-03-01-0000-00",
+        "parcel_id_dashless": "285130301000000",
+        "auditor_url": "https://clintoncountyauditor.org/RealEstate/Default/Lookup?number=285130301000000",
+        "corridor_role": "petitioned_rezoning",
+        "rezoning_ordinance": "O-26-05",
+        "owner": "THOMPSON MATTHEW E",
+        "owner_mailing_address": "1508 MCGUINN RD WILMINGTON OH 45177-9761",
+        "situs_address": "1957 SR 730",
+        "legal_description": "MS 1096\n2026 ANNEX TO 285-UNION-WILMINGTON CITY",
+        "acres": 65.323,
+        "planar_acres": 65.432,
+        "land_use_code": 111,
+        "land_use_name": "CASH-GRAIN OR GENERAL FARM \"QUALIFIED FOR CURRENT AGRICULTURAL USE VALUE\"",
+        "class": "Agriculture",
+        "tax_district_code": 285,
+        "tax_district": "UNION TWP-WILMINGTON",
+        "school_district": "WILMINGTON CSD",
+        "neighborhood": "UNION TWP",
+        "county_zoning_district": null,
+        "county_zoning_name": null,
+        "appraised_land_value": 655700,
+        "appraised_improvement_value": 116400,
+        "appraised_total_value": 772100,
+        "current_tax": 2575.08,
+        "last_sale_date": "2001-01-04",
+        "last_sale_amount": 0,
+        "valid_sale": "False",
+        "deed_reference": null,
+        "deed_page": null,
+        "has_cauv": true,
+        "has_exemption": false,
+        "has_abatement": false,
+        "tax_year": 2025
+      }
+    }
+  ]
+}

@@ -13,6 +13,7 @@ from watermark.facility.screening import ceiling_screen, floor_area_screen, inve
 from watermark.sites._gis_schemas import (
     ALLEN_IN_PARCEL_SCHEMA,
     CHAMPAIGN_PARCEL_SCHEMA,
+    CLINTON_PARCEL_SCHEMA,
     FINDLAY_ZONING_SCHEMA,
     FORT_WAYNE_ZONING_SCHEMA,
     LIMA_FLOOD_SCHEMA,
@@ -29,6 +30,7 @@ from watermark.sites._gis_schemas import (
     SHELBY_PARCEL_SCHEMA,
     SIDNEY_ZONING_SCHEMA,
     VAN_WERT_PARCEL_SCHEMA,
+    WILMINGTON_ZONING_SCHEMA,
 )
 from watermark.sites._model import (
     CoolingModelType,
@@ -2957,39 +2959,63 @@ _WILMINGTON = SiteProfile(
     rsei_fips="39027",  # [verified] Clinton County, OH
     econ_fips="39027",
     eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — EIA-861 2024 Service_Territory, Clinton Co [verified]
-    parcels_url=(  # [reference] Clinton County has no confirmed county-hosted parcel REST;
-        # substitute = the OGRIP Ohio statewide parcels public view, scoped to County='Clinton'
-        # (Ohio-only layer → situs-safe; 26,962 Clinton parcels, ~99% with SitusAddressAll +
-        # StateLUC + geometry, e.g. "1475 TODDS FORK RD" — verified 2026-07-03). [verified — situs]
-        "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
-        "OhioStatewidePacels_full_view/FeatureServer/0"
+    parcels_url=(  # [verified] the Clinton County GIS Department's own auditor CAMA join, which
+        # REPLACED the OGRIP Ohio statewide substitute this profile carried (#1470). That layer is
+        # owner-redacted by construction and for Clinton reports a NULL `CurrentTo` — no stated
+        # export date at all — with SitusAddressAll/LandArea null on a large share of rows, so the
+        # whole Cosler Farm / Ardent-TAC corridor was unreadable through it. This layer names the
+        # grantee and carries deed instrument + conveyance + appraised values (2026-07-30 extract).
+        "https://services1.arcgis.com/tAhcHWpOD9ygNPbJ/arcgis/rest/services/"
+        "cntyparcelsRealPropData_gdb/FeatureServer/0"
     ),
-    zoning_url="TODO",  # [open] pending the City of Wilmington / Clinton County zoning REST endpoint discovery
+    zoning_url=(  # [verified] City of Wilmington zoning, published by the Clinton County Regional
+        # Planning Commission — the Zoning layer of the City's own "Wilmington Zoning Map 2024"
+        # app. Polygon-only (13 districts / 29 polygons), city limits only, edited 2026-02-10.
+        "https://services7.arcgis.com/5ML1cxkkvVfOhDrS/arcgis/rest/services/"
+        "ProposedZoning9/FeatureServer/0"
+    ),
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
     hydro_utm_epsg=32617,  # [verified] UTM 17N (Wilmington ~83.83 degW; zone 17 spans 84-78 degW) — east of 84 degW
-    gis_parcel=OHIO_STATEWIDE_PARCEL_SCHEMA.model_copy(
-        update={"reference_dir": "wilmington-gis", "query_scope": "County='Clinton'"}
-    ),  # [reference] OGRIP scoped to Clinton (situs-verified 2026-07-03; LandArea sparse but present)
-    gis_zoning=None,  # [open] pending City of Wilmington / Clinton County zoning-layer discovery
+    gis_parcel=CLINTON_PARCEL_SCHEMA,  # [verified] Clinton County auditor CAMA join (#1470)
+    gis_zoning=WILMINGTON_ZONING_SCHEMA,  # [verified] City of Wilmington districts, catalog-only (#1470)
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "wilmington-gis"}),
     design_lat=39.4453,  # [verified] Wilmington centroid = NOAA Atlas-14 point
     design_lon=-83.8285,
     corridor_name="Wilmington Air Park (single-tenant) corridor",  # [reference] ILN — Amazon Air / ATSG cargo hub
-    dominant_hsg="C",  # [inference] Clinton County glaciated till plain — less-permeable HSG C/D uplands (cf. Xenia uplands)
+    dominant_hsg="C",  # [verified] SSURGO over the committed campus geometry (#1470) — see citation
     hsg_citation=(
-        "Clinton County is glaciated till plain - likely less-permeable HSG C/D uplands (cf. the "
-        "Xenia inter-valley till uplands), NOT the buried-valley outwash of the Mad River / Great "
-        "Miami sites; [inference] pending an SSURGO area-weighted confirmation (onboard SSURGO "
-        "needs a footprint)"
+        "[verified] USDA NRCS SSURGO via Soil Data Access (SDA), grid-sampled over the committed "
+        "data/reference/wilmington/parcel-assemblage.geojson "
+        "(watermark.hydrology.connectors.ssurgo.dominant_hsg, 2026-08-01). The AWS campus tract "
+        "285-13-02-01 alone returns C at EVERY grid resolution tested — 8x8 (41 interior points: "
+        "C 16 / B/D 15 / C/D 10), 10x10 (61), 12x12 (89) and 16x16 (158 pts: C 43.7%, B/D 34.8%, "
+        "C/D 21.5%) — so the letter is not a grid artefact. Dominant map units are the Southern "
+        "Ohio Till Plain association: Miamian silt loam 6-12% eroded (C), Xenia silt loam 2-6% "
+        "(C), Sligo silt loam occasionally flooded (C), Fincastle silt loam 0-4% (B/D and C/D) "
+        "and Treaty silty clay loam 0-1% (B/D). This CONFIRMS the prior [inference] letter 'C' "
+        "and its reasoning (glaciated till plain, NOT buried-valley outwash) and upgrades it to "
+        "[verified]. TWO CAVEATS THAT MATTER. (1) It is a PLURALITY over a genuinely mixed "
+        "mosaic, not a uniform C: ~60% of sampled campus points carry a DUAL rating whose "
+        "undrained letter is D, so post-development (tile severed, watermark.hsg / WS-20 "
+        "post_drainage_condition='undrained') the runoff basis brackets materially above a flat "
+        "C — the screen should state that bracket rather than read C as settled. (2) The letter "
+        "is grid-STABLE for the campus but NOT for the whole 1,023-ac corridor, which flips C/D "
+        "at 8x8/10x10/12x12 and back to C at 16x16 as the four petitioned Ardent/TAC tracts pull "
+        "it wetter; the profile value characterizes the disclosed CAMPUS, which is what the "
+        "stormwater screen models. onboard's default 6x6 over the corridor also returns C."
     ),
-    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
-    post_cover="TODO",
-    developed_pervious_cover="TODO",
+    # [verified] land-cover scenario — grounded on the corridor's own auditor land use: every one
+    # of the five annexed tracts is Ohio use 111 "CASH-GRAIN OR GENERAL FARM (CAUV)" or 110
+    # "AGRICULTURAL VACANT LAND (CAUV)", i.e. working cropland, and the disclosed build is a
+    # near-impervious data-center campus (#1468).
+    pre_cover="cropland",
+    post_cover="developed_campus",
+    developed_pervious_cover="open_space",
     noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
-    parcels_relpath="reference/wilmington/parcel-assemblage.geojson",  # [open] commit the site's own geometry
-    footprint_relpath="extracted/wilmington/bosc-site-footprint.yaml",  # [open] pending an identified site
+    parcels_relpath="reference/wilmington/parcel-assemblage.geojson",  # [verified] the US-68 S / SR-730 corridor (#1470)
+    footprint_relpath="extracted/wilmington/bosc-site-footprint.yaml",  # [verified] parcel-grounded (#1470)
     climatology_relpath="reference/hydrology/wilmington/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/wilmington/atlas14-corridor-ddf.yaml",
     baseline_relpath="reference/economics/wilmington/baseline.yaml",
@@ -2997,7 +3023,23 @@ _WILMINGTON = SiteProfile(
     consumer_energy_relpath="reference/eia/wilmington/consumer-energy.yaml",
     demand_pressure_relpath="reference/eia/wilmington/demand-pressure.yaml",
     grid_relpath="reference/eia/wilmington/grid-profile.yaml",
-    toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending the corridor (the Air Park reach)
+    # "Corridor" sense 3 (TOXICS SCREENING WINDOW) — DERIVED, not drawn: the WGS84 envelope of the
+    # committed corridor geometry (data/reference/wilmington/parcel-assemblage.geojson: seven
+    # contiguous auditor parcels, union bounds 39.400429-39.428541 N / -83.869890--83.833400 W),
+    # rounded OUTWARD to 3 decimals. #1470. Deliberately NOT the Air Park reach the profile's
+    # corridor_name (sense 1) refers to, and deliberately NOT extended north to the Wilmington
+    # WWTP (39.4391, -83.85132), which is 1,224 m beyond the nearest campus boundary: this is a
+    # land window for the RSEI receiving-water inference, not a discharge window. It captures
+    # exactly one inventoried facility — AHRESTY WILMINGTON CORP (39.413526, -83.844830, NAICS
+    # 331523 aluminum die-casting), whose RSEI record has water_releases false and no NPDES id,
+    # so the inference it licenses is the POTW pathway (844.7 lb to the Wilmington WWTP ->
+    # NPDES OH0028134 -> Lytle Creek), which is this site's receiving_water_name.
+    toxic_corridor_bbox=(
+        39.400,
+        39.429,
+        -83.870,
+        -83.833,
+    ),  # [verified — derived from the geometry]
     plant_receiving={
         "wilmington-wwtp": (
             "Lytle Creek",
