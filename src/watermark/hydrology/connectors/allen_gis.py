@@ -144,6 +144,8 @@ def _decode_sale_date(value: Any, mode: str) -> str | None:
         return _s(value)
     if mode == "mmddyy":
         return _parse_mmddyy(value)
+    if mode == "mdyyyy_slash":
+        return _parse_mdyyyy_slash(value)
     if mode == "epoch_millis":
         return _parse_epoch_millis(value)
     return None
@@ -175,6 +177,27 @@ def _parse_parcel_date(value: Any) -> str | None:
         return None
     digits = f"{n:08d}"  # MMDDYYYY zero-padded
     month, day, year = int(digits[:2]), int(digits[2:4]), int(digits[4:])
+    if not (1 <= month <= 12 and 1 <= day <= 31 and 1800 <= year <= 2100):
+        return None
+    return f"{year:04d}-{month:02d}-{day:02d}"
+
+
+def _parse_mdyyyy_slash(value: Any) -> str | None:
+    """Decode an ``M/D/YYYY`` sale string, with an optional trailing clock, to ISO ``yyyy-mm-dd``.
+
+    e.g. ``"12/10/2025 12:00:00 AM"`` -> ``2025-12-10``; ``"1/4/2001"`` -> ``2001-01-04``. Clinton
+    County serves its CAMA ``Date_Conveyed`` pre-formatted as **text**, not as an
+    ``esriFieldTypeDate``, so the year is already four digits and no century pivot applies (unlike
+    ``mmddyy``). The time component is always midnight and is discarded rather than parsed.
+    Returns ``None`` for missing/unparseable values.
+    """
+    text = _s(value)
+    if text is None:
+        return None
+    m = re.match(r"(\d{1,2})/(\d{1,2})/(\d{4})\b", text)
+    if not m:
+        return None
+    month, day, year = int(m.group(1)), int(m.group(2)), int(m.group(3))
     if not (1 <= month <= 12 and 1 <= day <= 31 and 1800 <= year <= 2100):
         return None
     return f"{year:04d}-{month:02d}-{day:02d}"

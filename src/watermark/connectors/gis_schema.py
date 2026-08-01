@@ -116,10 +116,12 @@ class GisParcelSchema(BaseModel):
     id_normalize: _IdNormalize  # how a deed id is normalized to the layer's stored id
     # the sale-date field's encoding: an ``M(M)DDYYYY`` integer ("mmddyyyy", Lima), an already-ISO
     # string ("iso"), a ``MM-DD-YY`` two-digit-year string ("mmddyy", Putnam - pivoted by the
-    # standard C/strptime ``%y`` convention 69-99 -> 1900s / 00-68 -> 2000s), an Esri epoch-
-    # milliseconds integer ("epoch_millis", an esriFieldTypeDate - e.g. Allen County, IN), or
-    # dropped ("none").
-    date_decode: Literal["mmddyyyy", "iso", "mmddyy", "epoch_millis", "none"]
+    # standard C/strptime ``%y`` convention 69-99 -> 1900s / 00-68 -> 2000s), an ``M/D/YYYY``
+    # four-digit-year string with an optional trailing clock time ("mdyyyy_slash", Clinton - the
+    # county serves its CAMA conveyance date pre-formatted as text, e.g.
+    # "12/10/2025 12:00:00 AM", NOT as an esriFieldTypeDate), an Esri epoch-milliseconds integer
+    # ("epoch_millis", an esriFieldTypeDate - e.g. Allen County, IN), or dropped ("none").
+    date_decode: Literal["mmddyyyy", "iso", "mmddyy", "mdyyyy_slash", "epoch_millis", "none"]
     # the land-use field's encoding: a bare numeric code ("int", the default — Lima's LANDUSE) or a
     # "<code>: <label>" string whose leading integer is the code ("leading_int" — Ohio's StateLUC).
     land_use_decode: Literal["int", "leading_int"] = "int"

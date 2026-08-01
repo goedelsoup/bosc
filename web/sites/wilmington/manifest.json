@@ -2,15 +2,15 @@
   "site": "wilmington",
   "bundle_version": "1.0.0",
   "contract_version": "1.49.0",
-  "generated_at": "2026-08-01T10:49:13+00:00",
-  "feed_count": 31,
-  "row_total": 519,
+  "generated_at": "2026-08-01T11:21:40+00:00",
+  "feed_count": 34,
+  "row_total": 861,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
-      "places": "absent",
+      "places": "live",
       "record": "live",
       "story": "absent"
     }
@@ -224,6 +224,14 @@
       "count": 57
     },
     {
+      "name": "geo/campus",
+      "path": "feeds/geo/campus.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 7
+    },
+    {
       "name": "facts",
       "path": "feeds/facts.json",
       "media_type": "application/json",
@@ -238,6 +246,14 @@
       "schema": "schemas/impact-study.schema.json",
       "kind": "collection",
       "count": 13
+    },
+    {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 335
     },
     {
       "name": "catalog-index",
@@ -268,6 +284,14 @@
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }
