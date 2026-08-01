@@ -53,10 +53,13 @@ Dates are `[reference]` as recited by the complaint unless a corpus instrument c
 | Date | Event | Cite | Tag |
 |---|---|---|---|
 | Dec 2024 | Thor begins working with Urbana Planning & Zoning staff on the data-center project | ¶41 | ref |
+| 2024-11-19 → 12-17 | **Ord. 4612-24** — the City authorises a **Pre-Annexation Agreement** with `Urbana0624C, LLC` (which the City identifies as "Highland"); passed **5-0**. Its §3(c) obliges the City to **de-annex on the developer's demand** if the rezoning disappoints. Not pleaded in Doc #1 (#1354) | Ord. 4612-24 Ex. A | verified |
+| 2024-12-03 | Annexation petition filed (Expedited Type II, R.C. 709.023) by agent Andrew Wecker for the landowners — Organ Farms LLC, the County Commissioners, MCESC, Urbana Health Facilities | Ord. 4612-24 · minutes | verified |
+| 2024-12-17 | **Ord. 4613-24** (statement of services) and **Ord. 4614-24** (land use / zoning buffers) for the 219.986 ac — both emergency, both **5-0** | minutes | verified |
 | 2025-04-22 | Council unanimously adopts **Ord. 4619-25** (annexation, 9 parcels ~219.986 ac), **4625-25** (zoning map → M-1), **4620-25** (Ch. 1102 data-center definitions), **4621-25** (Ch. 1126 — data centers principally permitted in M-1) | ¶¶36–40 | ref |
 | 2025-08-22 | Vance Brands parcel conveyed to Urbana Owner I LLC (OR601/4948) | land-assembly.yaml | verified |
-| 2025-11-04 | Council adopts **Ord. 4631-25** — CRA #2 tax-incentive district supporting the Project | ¶46 | ref |
-| 2025-11-18 | Highland55 parcel conveyed (OR603/1927) — aligns with the Nov-2025 CRA | land-assembly.yaml | verified / inference |
+| 2025-11-04 | Council adopts **Ord. 4631-25** — CRA #2. Instrument now in corpus (#1354): passed **5-2**; it designates an *area* with ceilings, names no project, and **excludes** Thor's two first-bought parcels | ¶46 · Ord. 4631-25 | verified |
+| 2025-11-18 | Highland55 parcel conveyed (OR603/1927) | land-assembly.yaml | verified |
 | 2026-02-13 | Thor submits its **site-plan application** (Zoning Code Ch. 1110) for a data center | ¶54 | ref |
 | 2026-02-17 | Moratorium placed on the Council agenda, then removed without a vote | ¶60 | ref |
 | 2026-02-20 | City (Dir. of Admin. Spencer Mitchell) rejects the application as "incomplete" (cites Ch. 1161 subdivision items + a traffic study) | ¶56 | ref |
@@ -67,6 +70,7 @@ Dates are `[reference]` as recited by the complaint unless a corpus instrument c
 | 2026-05-05 | Council refers **Resolution 2731-26** to the Planning Commission — initiates permanent removal of data centers from M-1 | ¶87 | ref |
 | 2026-05-18 | Planning Commission recommends approval of the permanent removal | ¶88 | ref |
 | 2026-06-02 | First reading of **Ordinance 4635-26** (permanent removal of data-center use from M-1) | ¶89 | ref |
+| **2026-06-16** | **Ord. 4635-26 PASSES 6-0** — Ch. 1126 reverts to its pre-4621-25 text; data centers are no longer permitted in M-1. Three days before filing; Doc #1 recites only the June-2 first reading (#1354) | 2026-06-16 minutes | verified |
 | **2026-06-19** | **Federal complaint filed** (3:26-cv-00196-MJN-CHG) | ECF header | verified |
 
 ## The eight counts

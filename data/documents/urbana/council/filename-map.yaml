@@ -1,0 +1,127 @@
+meta:
+  subject: >
+    Canonical filename map for urbana/council/ — the City of Urbana legislative record behind the
+    Urbana Technology Hub incentive instruments (#1354): the pre-annexation agreement (Ord.
+    4612-24), the Community Reinvestment Area #2 designation (Ord. 4631-25), the votes that
+    carried them, and the City's own public response/timeline.
+  note: >
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their as-received
+    names — including the City's own typo "technolody" (for "technology") in the project-overview
+    upload, which is NOT corrected here or on disk. Names are the City's Weebly upload names,
+    served from https://www.urbanaohio.com/uploads/1/2/4/6/124631710/. `content_verified` records
+    HOW the date below was established from the document's own bytes (OCR of the scanned body, or
+    the native text layer) — never from the filename. Where a document carries no date in its own
+    body, `date` is null and the filename's apparent date is recorded separately as
+    `filename_date_unverified`.
+  retrieved: "2026-08-01"
+  source_base_url: "https://www.urbanaohio.com/uploads/1/2/4/6/124631710/"
+
+documents:
+  - filename: 2024-11-19_regular_meeting_packet.pdf
+    canonical: urbana-council-packet-2024-11-19.pdf
+    type: council-meeting-packet
+    date: "2024-11-19"
+    content_verified: ocr        # body: "URBANA CITY COUNCIL / REGULAR SESSION MEETING / November 19, 2024"
+    pages: 207
+    sha256: "c3a6b0cdedc8801fa6f95276c4c1e32ea0b49f6dbcc00ceaf362a4a34b9f6a7d"
+    carries:
+      - "Ordinance 4612-24 (first reading) — authorizing a PRE-ANNEXATION AGREEMENT with Urbana0624C, LLC (pp. 180-181)"
+      - "EXHIBIT A to Ord. 4612-24 — the Pre-Annexation Agreement itself, full text (pp. 182-188)"
+    notes: >
+      The instrument that matters for #1354 is Exhibit A: the City's only contract with the
+      developer. Scanned (no text layer) — page references are 0-based PDF page indices read by
+      OCR at 200 DPI.
+
+  - filename: 2024-12-17_approved_city_council_meeting_minutes.pdf
+    canonical: urbana-council-minutes-2024-12-17-approved.pdf
+    type: council-minutes-approved
+    date: "2024-12-17"
+    content_verified: ocr
+    pages: 8
+    sha256: "07d6c875cf04d53c0946c26e489c577fa91fcbb5d9f0ca781d98ba7c1b3aa538"
+    carries:
+      - "Ord. 4612-24 third reading — PASSED 5-0 (pre-annexation agreement with Urbana0624C, LLC)"
+      - "Ord. 4613-24 — statement of services for the 219.986 ac, emergency, one reading — PASSED 5-0"
+      - "Ord. 4614-24 — land use and zoning buffers for the same territory, emergency — PASSED 5-0"
+
+  - filename: 2025-10-21_approved_city_council_meeting_minutes.pdf
+    canonical: urbana-council-minutes-2025-10-21-approved.pdf
+    type: council-minutes-approved
+    date: "2025-10-21"
+    content_verified: ocr
+    pages: 7
+    sha256: "d26d24f65411187c08023bfa121594063b3898d79c41aa28d5ffe6a5f7b9102a"
+    carries:
+      - "PUBLIC HEARING on Community Reinvestment Area #2 (the R.C. 3735.66 hearing) — sole topic"
+      - "Ord. 4631-25 second reading"
+      - "Urbana City Schools treasurer Mandy Hildebrand on the 75% school-consent threshold and payroll revenue sharing"
+
+  - filename: 2025-11-04_regular_meeting_packet.pdf
+    canonical: urbana-council-packet-2025-11-04.pdf
+    type: council-meeting-packet
+    date: "2025-11-04"
+    content_verified: ocr        # body: "URBANA CITY COUNCIL / REGULAR SESSION MEETING / November 4, 2025"
+    pages: 161
+    sha256: "14ad9dfb43f152ac64e487644d014cebde1ee5ccf14b10fa8ccb72f91a5136a7"
+    carries:
+      - "ORDINANCE NO. 4631-25 full text, third reading (pp. 45-50)"
+      - "EXHIBIT A-1 — the 2010 Urbana CRA housing survey (pp. 51-99)"
+      - "EXHIBIT B — Description of Boundaries for CRA #2: five map sheets + parcel lists (pp. 100-109)"
+      - "EXHIBIT C — map of CRA #2 (p. 110)"
+      - "Communications: AES Ohio letter dated 2025-10-10 + its PUCO rate filing (Case 25-0958-EL-AIR) (pp. 9-43)"
+      - "Minutes of the 2025-10-21 public hearing and regular session (pp. 2-8)"
+    notes: >
+      The AES Ohio attachment is a system-wide ESP/rate-case customer notice under H.B. 15 — it is
+      NOT project-specific and names no Urbana large-load request. Recorded here so the packet's
+      contents are not over-read.
+
+  - filename: 2025-11-04_approved_city_council_meeting_minutes.pdf
+    canonical: urbana-council-minutes-2025-11-04-approved.pdf
+    type: council-minutes-approved
+    date: "2025-11-04"
+    content_verified: ocr
+    pages: 5
+    sha256: "7614a8373c053f9ba93129f4b9364a841e0479007be8982629a1dfa1a3ae33ae"
+    carries:
+      - "Ord. 4631-25 third reading — PASSED 5-2 (Scott no, Jumper no)"
+      - "Director of Law Feinstein on the record: 'there are no current agreements on the table'"
+
+  - filename: data_center_timeline_public_notice_2.26.26.docx.pdf
+    canonical: urbana-city-response-datacenter-transparency-timeline.pdf
+    type: city-public-notice
+    date: null
+    content_verified: none
+    filename_date_unverified: "2026-02-26"
+    pages: 6
+    sha256: "760b4844ff2f2637bf55695f252281c44410875c67097ad87a384c1cc40c547e"
+    carries:
+      - "CITY OF URBANA'S RESPONSE TO ALLEGATIONS OF LACK OF TRANSPARENCY TO COUNCIL — OVERVIEW AND TIMELINE OF EVENTS"
+      - "The City's eight-point overview, including: 'Other than the Pre-Annexation Agreement, there are no contracts between the developer and the City' and 'There are no Community Reinvestment Agreements with the developer'"
+      - "The City's identification of Urbana0624C, LLC as 'Highland'"
+    notes: >
+      DATE DISCIPLINE: the "2.26.26" in the as-received filename is the ONLY date evidence — the
+      document body carries no date line, so `date` stays null and the corpus must not cite
+      2026-02-26 as a verified date for it. The document has a native text layer (it is a .docx
+      export), so its TEXT is verified even though its date is not. Authored by the City (its
+      letterhead + administration footer); it is the City's advocacy in its own defence, and its
+      assertions about the City's own contracts are read as party admissions.
+
+  - filename: project_overview_-_urbana_technolody_hub.pdf
+    canonical: urbana-technology-hub-project-overview.pdf
+    type: developer-disclosure-posted-by-city
+    date: null
+    content_verified: none
+    pages: 3
+    sha256: "d2749bde23e243a7d91e74a9c7efdcb5d4868071ce26d92717429dfbfaa84464"
+    carries:
+      - "The disclosed 460,000 sq ft / ~40 ft single-storey form factor and site diagram"
+      - "The 65 dB day / 55 dB night decibel commitment 'via a formal CRA agreement' — OFFERED, not executed"
+      - "'Over $3,000,000' annual City tax revenue and 'Over $2,800,000' for Urbana Schools '(from the total revenue)'"
+      - "Closed-loop cooling, no-uplighting, berm, and proposed Rte 55-Rte 68 loop road"
+    notes: >
+      AS-RECEIVED NAME CONTAINS A TYPO — "technolody" for "technology". Not corrected (chain of
+      custody). Scanned, no text layer; read by 200 DPI render. UNDATED in its own body: the City
+      posts it on /city-council-minutes.html adjacent to the 2026-02-17 minutes, which is a
+      PLACEMENT inference about which meeting it accompanied, not a content-verified date. Written
+      in the project's own voice ("we pay for the electricity we use", "our fair share of grid
+      costs") — a developer document that the City published, so its claims are the developer's.

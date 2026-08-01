@@ -4,7 +4,7 @@ scope: extracted
 status: reviewed
 producer:
   kind: extracted
-  source: Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/)
+  source: Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/), City of Urbana council packets and approved minutes (urbana/council/)
 license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:urbana
@@ -33,6 +33,12 @@ storage:
 - relpath: extracted/urbana/litigation-thor-v-urbana.md
   media_type: text/markdown
   lfs: false
+- relpath: extracted/urbana/incentive-instruments.yaml
+  media_type: application/yaml
+  lfs: false
+- relpath: extracted/urbana/incentive-instruments.md
+  media_type: text/markdown
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -47,6 +53,9 @@ tags:
 - land-assembly
 - recorder-deeds
 - litigation
+- community-reinvestment-area
+- pre-annexation-agreement
+- tax-incentives
 notes: >
   Onboarding record and investigative findings for the Urbana watershed point (Mad River corridor,
   Champaign County OH). highland55-findings.md documents the Thor Equities data-center project west
@@ -68,3 +77,18 @@ notes: >
   complaint (S.D. Ohio 3:26-cv-00196-MJN-CHG, filed 2026-06-19; source in
   documents/legal/thor-v-urbana/) — docket, parties, the eight counts, the recited ordinance /
   moratorium record, and the zoning + litigation timeline (#1329).
+  incentive-instruments.{yaml,md} is the incentive/development-instrument record (#1354), read from
+  the City of Urbana's own legislative documents (documents/urbana/council/ — reachable after all,
+  reversing the 2026-06-28 "City documents unavailable" note). Its finding is a NEGATIVE: there is
+  NO tax abatement. Ord. 4631-25 designated Community Reinvestment Area #2 (passed 5-2) — an area
+  with ceilings only (15 yr / 100%, or 30 yr for a state-designated megaproject) — and no
+  R.C. 3735.671 CRA Agreement has ever come before Council, which Ord. 4631-25 Section Five makes a
+  precondition to execution; the City's own public notice says the same. The 65/55 dB noise limits
+  are an OFFER in a developer handout, not a condition of anything, and the disclosed tax figure was
+  double-counted (the source's >$2.8M schools line is drawn FROM the >$3M total, so the aggregate is
+  "over $3,000,000", not ~$5.8M). The City's one contract with the developer is the December-2024
+  Pre-Annexation Agreement (Ord. 4612-24, passed 5-0) with Urbana0624C, LLC — an entity new to the
+  corpus, which the City identifies as "Highland" and whose 720 E. Broad St address matches the
+  §401 WQC filings; it carries a clause obliging the City to de-annex on the developer's demand.
+  Exhibit B's enacted parcel list EXCLUDES 133.256 of the assembly's 230.346 ac.
+  JobsOhio / ODOD / R.C. 122.175 searched negative.

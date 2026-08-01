@@ -1,4 +1,64 @@
 leads:
+- id: URB-PREANNEX
+  kind: signal
+  status: unanswered
+  tag: open
+  title: 'Urbana pre-committed to de-annex the data-center land on the developer''s demand — and the executed agreement is not public'
+  detail: >
+    Ordinance 4612-24 (passed 5-0, 2024-12-17) authorised a Pre-Annexation Agreement between the
+    City of Urbana and Urbana0624C, LLC — the City's ONLY contract with the data-center developer,
+    and an entity the corpus did not previously hold. Section 3(c) of the attached draft obliges
+    the City to "execute a petition to detach the entire Property from its jurisdiction upon the
+    request of Developer or Company" if the land is annexed but then not rezoned to the developer's
+    satisfaction, if its appeals are exhausted, if a referendum rejects the rezoning, or if water
+    and sewer capacity is not made available on the developer's schedule. Every trigger has
+    arguably fired: Ord. 4635-26 repealed the M-1 data-center use 6-0 on 2026-06-16. OPEN — what is
+    in corpus is the DRAFT attached as Exhibit A; the signed, dated counterpart and its Exhibits B
+    and C legal descriptions have not been produced, and the federal complaint does not plead the
+    clause. Request the executed agreement under R.C. 149.43 and establish whether detachment has
+    been demanded.
+  source: 'Ordinance 4612-24 Exhibit A · data/documents/urbana/council/2024-11-19_regular_meeting_packet.pdf pp.182-188 · data/extracted/urbana/incentive-instruments.yaml'
+  issue: 1354
+- id: URB-0624C
+  kind: question
+  status: unanswered
+  tag: open
+  title: 'Resolve Urbana0624C, LLC — the City calls it "Highland", but no corporate filing has been read'
+  detail: >
+    The City of Urbana's public notice states the pre-annexation agreement was "with Urbana0624C,
+    LLC (which is Highland)", and Exhibit A gives the entity's mailing address as 720 E. Broad
+    Street, Columbus — the same street address the OEPA §401 WQC preliminary-JD cover (eDoc
+    3938251) carries for "Highland Realty Development LLC / Urbana Owner I LLC". Two independent
+    primary instruments therefore place the development vehicle at that address. OPEN — common
+    control with the Thor SPE graph in land-assembly.yaml remains [inference]: a shared address is
+    not corporate identity, and businesssearch.ohiosos.gov still returns HTTP 403 from this
+    environment (the same block recorded in #1328). Pull the Ohio SoS filing for registered agent,
+    members and formation date. Also unsourced: a reported September-2024 purchase agreement
+    between the Champaign Economic Partnership / Board of County Commissioners and Urbana0624C.
+  source: 'City of Urbana public notice + Ord. 4612-24 Exhibit A · data/extracted/urbana/incentive-instruments.yaml counterparty'
+  issue: 1354
+- id: URB-CRA-GAP
+  kind: signal
+  status: unanswered
+  tag: open
+  title: 'No abatement exists — and most of the Thor assembly is outside the CRA it is associated with'
+  detail: >
+    Community Reinvestment Area #2 (Ord. 4631-25, passed 5-2 on 2025-11-04) grants nothing: it sets
+    ceilings (15 yr / 100% for new construction; 30 yr only on a state-designated R.C. 122.17
+    megaproject) and requires a separate R.C. 3735.671 CRA Agreement with prior Council approval.
+    None has ever come before Council through the 2026-08-04 agenda, and the City's own notice says
+    "There are no Community Reinvestment Agreements with the developer." Two consequences the
+    corpus previously had wrong: the 65 dB day / 55 dB night limits are an OFFER in a developer
+    handout, not an enforceable condition; and the disclosed tax figure is "over $3,000,000"
+    annually, not ~$5.8M (the schools' >$2.8M is drawn FROM that total, not added to it).
+    Separately, Exhibit B's enacted parcel list covers only 97.09 of the assembly's 230.346 ac —
+    the 133.256 ac bought first from Brand Investments are outside CRA #2 entirely. OPEN — the ODOD
+    designation number that Ord. 4631-25 Section Eleven makes a precondition to any exemption, the
+    R.C. 3735.672 annual reports, the Champaign County TIRC report, and the county effective
+    millage are all unretrieved: development.ohio.gov returns 404 on every path and five Champaign
+    County auditor hosts fail DNS.
+  source: 'Ordinance 4631-25 + Exhibit B · data/documents/urbana/council/2025-11-04_regular_meeting_packet.pdf · data/extracted/urbana/incentive-instruments.md'
+  issue: 1354
 - id: THOR-FED
   kind: signal
   status: unanswered
