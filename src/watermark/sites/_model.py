@@ -1273,14 +1273,22 @@ class SiteProfile(BaseModel):
     # artifact. A new site sets this once it commits its own extracted inventory.
     storm_inventory_relpath: str | None = None
 
-    # --- Corpus scope — the content bundle's extracted-tree feeds (#762) -----------------
-    # The ``data/extracted/**`` collection prefixes that hold THIS site's records. The bundle's
-    # corpus-derived feeds (records/timeline/entities/relationships, via ``load_corpus`` +
-    # ``load_records``) read only artifacts whose rel-path is under one of these prefixes, so a
-    # non-Lima site never inherits Lima's deeds/permits/filings/meetings. A prefix is a path
-    # segment, so it spans both a slug-named collection (``"fort-wayne"``) and a jurisdiction+site
-    # hybrid (``"idem/fort-wayne"``). ``None`` = the whole extracted tree — Lima, the reference
-    # build that owns the un-slugged Allen-County-OH collections (keeps its bundle byte-identical).
+    # --- Corpus scope — the content bundle's extracted-tree feeds (#762/#1405) ------------
+    # ADDITIONAL ``data/extracted/**`` prefixes holding this site's records, beyond the two it gets
+    # for free. The bundle's corpus-derived feeds (records/timeline/entities/relationships, via
+    # ``load_corpus`` + ``load_records``) read only artifacts whose rel-path is in the site's
+    # ``effective_corpus_scope``, so a non-Lima site never inherits Lima's deeds/permits/meetings.
+    #
+    # Do NOT list a site's own ``<slug>/`` collection or its ``<collection>/<slug>/`` nesting
+    # (``oepa/van-wert``, ``idem/fort-wayne``, ``grid/sidney``): those are EPONYMOUS and derived
+    # from the slug by ``_eponymous_prefixes`` (#1405). Enumerating them was the bug — it had to be
+    # remembered at ingest time, one site at a time, and a site that forgot owned no record at all
+    # while its permits rendered inside Lima's.
+    #
+    # What belongs here is what no rule can derive: a corpus filed by PROJECT or CASE name
+    # (``permits/highland55``, ``legal/thor-v-urbana``, ``permits/dazzler-permits``). Read it
+    # through ``effective_corpus_scope``, never directly — on its own this field is the exceptions,
+    # not the scope. ``None`` (the common case) = the eponymous prefixes and nothing else.
     corpus_relpaths: tuple[str, ...] | None = None
 
     # --- Civic subject vocabulary (civic.keywords / pipeline.timeline, #1523) -------------

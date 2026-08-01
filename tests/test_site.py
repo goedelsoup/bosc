@@ -49,7 +49,7 @@ def test_corpus_feeds_are_site_scoped_not_lima_bound() -> None:
     from watermark.config import Settings
     from watermark.pipeline.corpus import load_corpus
     from watermark.site.records import load_records
-    from watermark.sites import active_profile
+    from watermark.sites import active_profile, effective_corpus_scope
 
     fw = Settings(site="fort-wayne", data_dir=REPO_ROOT / "data")
     lima = Settings(site="lima", data_dir=REPO_ROOT / "data")
@@ -67,8 +67,11 @@ def test_corpus_feeds_are_site_scoped_not_lima_bound() -> None:
     # Lima (scope None) keeps reading the whole tree — strictly larger than Fort Wayne's slice.
     assert len(load_corpus(lima)) > len(fw_corpus)
 
-    # The `records` feed reads the extracted tree separately; it honors the same scope.
-    fw_records = load_records(fw.extracted_dir, scope=active_profile(fw).corpus_relpaths)
+    # The `records` feed reads the extracted tree separately; it honors the same scope. Resolve it
+    # through `effective_corpus_scope`, never off the raw `corpus_relpaths` field: since #1405 the
+    # field carries only the prefixes no rule can derive (a case/project name), so reading it
+    # directly would hand a peer `None` — i.e. Lima's whole tree — which is the bug this guards.
+    fw_records = load_records(fw.extracted_dir, scope=effective_corpus_scope(active_profile(fw)))
     assert fw_records, "expected Fort Wayne to have at least one in-scope record"
     bad_records = [
         r.rel
@@ -101,11 +104,11 @@ def test_curated_stores_are_per_site_not_lima_bound() -> None:
     from watermark.config import Settings
     from watermark.people import load_people
     from watermark.poi.store import load_pois
-    from watermark.sites import active_profile, site_scoped_path
+    from watermark.sites import active_profile, effective_corpus_scope, site_scoped_path
 
     fw = Settings(site="fort-wayne", data_dir=REPO_ROOT / "data")
     lima = Settings(site="lima", data_dir=REPO_ROOT / "data")
-    fw_scope = active_profile(fw).corpus_relpaths
+    fw_scope = effective_corpus_scope(active_profile(fw))  # resolved, not the raw field (#1405)
 
     # POIs (places + imagery tracking): FW reads data/entities/poi/fort-wayne/ — its own campus, not Lima's.
     fw_poi_slugs = {p.slug for p in load_pois(settings=fw)}

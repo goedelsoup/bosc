@@ -73,8 +73,22 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   **minus** every registered peer's own prefixes (`_peer_scope_prefixes`), so the reference build
   no longer swallows a sibling's slug-scoped records — a Piqua NPDES permit under `oepa/troy-piqua/`
   or a Fort Wayne §401 under `idem/fort-wayne/` stops rendering in Lima's Allen-County record
-  (#1505). Non-Lima sites default to `corpus_relpaths = (slug,)` (the #762/#780 safe default): a
-  fresh site reads **only its own** extracted subtree and never silently inherits Lima's record.
+  (#1505). A non-Lima site reads **only its own** extracted subtree and never silently inherits
+  Lima's record (the #762/#780 safe default).
+- **A site's scope is DERIVED from its slug — don't enumerate what a rule already knows** (#1405).
+  `_eponymous_prefixes` gives every site two: its own `<slug>/` collection **and** `*/<slug>` —
+  the site subdirectory inside a collection named for the issuing agency (`oepa/van-wert/`,
+  `idem/fort-wayne/`, `grid/sidney/`), which is how the corpus files an artifact whose collection
+  isn't named for the site. `corpus_relpaths` **adds** to that; it does not replace it, and it is
+  for the prefixes no rule can derive — a corpus filed by PROJECT or CASE name
+  (`permits/highland55`, `legal/thor-v-urbana`, `permits/dazzler-permits`). List the exceptions,
+  derive the rule: enumerating the eponymous ones per profile is what let Van Wert's and
+  Wilmington's NPDES permits sit outside the sites they document (and inside Lima's record) for
+  as long as they did. **Never read `profile.corpus_relpaths` as a scope** — on its own it is the
+  exceptions, so a peer would come back `None`, i.e. Lima's whole tree; always go through
+  `effective_corpus_scope`. Two sweeps in `tests/test_cross_site_readside.py` hold both halves:
+  no `<collection>/<slug>` directory may fall outside its site's scope, and an extraction whose
+  source document is filed under one must land in that site's scope.
 - **GIS field maps are data, not code (`_gis_schemas.py`).** The schema *models*
   (`GisParcelSchema`/`GisZoningSchema`/`GisFloodSchema`) live in `watermark.connectors.gis_schema`
   (broken out to avoid an import cycle); this file holds the per-jurisdiction *instances*

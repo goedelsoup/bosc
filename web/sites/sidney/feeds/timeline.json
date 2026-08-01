@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "date": "2025-07-21",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PV00037*ED (Hidden Valley Mobile Home Park) — public notice",
+    "ref": "1PV00037*ED",
+    "parties": [
+      "Alexander R. Reck dba Hidden Valley MHP",
+      "Hidden Valley Mobile Home Park"
+    ],
+    "detail": "action renewal; receiving Tawawa Creek at River Mile 3.3",
+    "source": "oepa/sidney/1PV00037.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/sidney/1PV00037.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  }
+]

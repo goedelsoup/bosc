@@ -1,13 +1,57 @@
 [
   {
+    "id": "artifact/city-of-van-wert",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-2pd00006",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Van Wert WWTP",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 3,
+    "lines": 13,
+    "updated": null
+  },
+  {
     "id": "artifact/site-van-wert",
     "node_class": "artifact",
     "kind": "site",
     "label": "Van Wert",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 7,
     "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/town-creek",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Town Creek",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/van-wert-wwtp",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Van Wert WWTP",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
     "updated": null
   },
   {
@@ -866,6 +910,39 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 10,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-van-wert--operates--npdes-2pd00006",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF VAN WERT operates npdes:2PD00006",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-2pd00006--discharges-to--town-creek",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:2PD00006 discharges_to TOWN CREEK",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/van-wert-wwtp--operates--npdes-2pd00006",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "VAN WERT WWTP operates npdes:2PD00006",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]

@@ -1,5 +1,35 @@
 [
   {
+    "src": "CITY OF VAN WERT",
+    "rel": "operates",
+    "dst": "npdes:2PD00006",
+    "date": "",
+    "ref": "2PD00006*VD",
+    "source": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PD00006",
+    "rel": "discharges_to",
+    "dst": "TOWN CREEK",
+    "date": "",
+    "ref": "2PD00006*VD",
+    "source": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "VAN WERT WWTP",
+    "rel": "operates",
+    "dst": "npdes:2PD00006",
+    "date": "",
+    "ref": "2PD00006*VD",
+    "source": "oepa/van-wert/2PD00006.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

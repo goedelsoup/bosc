@@ -214,6 +214,12 @@ Tech OPC estimates at 0-based PDF pages **317 (summary), 318-327 (detail)** of
 `data/documents/aedg/PRR-01-bundle.ocr.pdf` (printed sheets `pdf_page` 318-328).
 The extracted tree **mirrors `data/documents/` by collection** — an artifact lands
 under the same first-level collection as its source (`recorder/`, `oepa/`, `aedg/`).
+When the source is filed under a **site** subdirectory of that collection
+(`oepa/van-wert/`), the extraction must keep it: `<collection>/<slug>/` *is* the site
+attribution the corpus scope reads (#1405 — `watermark.sites._eponymous_prefixes`), so
+an extraction shelved flat lands in Lima's reference record instead of its own site's,
+and that site's record domain can never rise from permit ingest. Other sub-nesting
+(`permits/bistrozzi-permits/` → `permits/`) carries no such meaning and need not mirror.
 
 The extract stage is **implemented as a hybrid, profile-driven read**
 (`watermark.pipeline.extract`): OCR text layer (pypdf, hint only) + 300 DPI render

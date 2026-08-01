@@ -979,11 +979,17 @@ def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     deeded to QTS Van Wert LLC in June 2026, which the exporter composes into the ``geo/campus``
     feed that ``PLACES_GEOMETRY_FEED`` gates on.
 
-    The other three stay put, and pinning them is the point: ``facility`` remains ``seeded``
+    ``record`` then rose to ``live`` in #1405 — not on new evidence, on plumbing. The 2PD00006*VD
+    permit and its fact sheet had been ingested and extracted since #837, but the extractions sat
+    flat at ``data/extracted/oepa/`` while the site's scope reached only ``van-wert/``, so they
+    rendered inside Lima's Allen-County record and Van Wert owned nothing. Two ``RecordItem``s
+    clear ``RECORD_LIVE_THRESHOLD``; the count is the honest one (a permit and its fact sheet),
+    not a fabricated breadth.
+
+    The other two stay put, and pinning them is the point: ``facility`` remains ``seeded``
     because the #1630 downgrade holds (QTS declines to state capacity, so the IT load is an
-    announced-ceiling ``[reference]`` bracket — committing land does not ground a load);
-    ``record`` remains ``absent`` (no in-scope extraction yet — #1401's ingest); ``story`` is
-    absent. A future change that floats any of those off geometry alone fails here.
+    announced-ceiling ``[reference]`` bracket — committing land does not ground a load); ``story``
+    is absent. A future change that floats either off geometry alone fails here.
     """
     bundle = site_bundle("van-wert")
     manifest = _manifest(bundle)
@@ -994,8 +1000,16 @@ def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     assert domains["backdrop"] == "live"
     assert domains["facility"] == "seeded"  # announced-ceiling bracket, not a disclosure (#1630)
     assert domains["places"] == "live"  # committed campus geometry (#1403)
-    assert domains["record"] == "absent"
+    assert domains["record"] == "live"  # the 2PD00006 permit + fact sheet, in scope since #1405
     assert domains["story"] == "absent"
+
+    # The records that activated the domain are this site's OEPA instruments — read from the
+    # site-attributed subtree that mirrors their source at data/documents/oepa/van-wert/.
+    rels = sorted(r["rel"] for r in _rows(bundle, _feeds_by_name(bundle)["records"]))
+    assert rels == [
+        "oepa/van-wert/2PD00006.fs.npdes.yaml",
+        "oepa/van-wert/2PD00006.npdes.yaml",
+    ]
 
     # The geometry that activated the domain is the recorded holding, not a stub — and the whole
     # holding, not just the anchor the issue was written against.
@@ -1101,8 +1115,9 @@ def _assert_corpus_feeds_lima_free(slug: str, bundle_dir: Path) -> None:
     Several feeds are built by readers that once globbed the whole extracted tree (the timeline
     civic builders, the entity-graph subdivision/relation-class overlays, the flat
     ``data/scenarios`` dir); each is now bounded by the site's *effective* corpus scope. A site's
-    scope is its explicit ``corpus_relpaths`` or, when unset, its own slug — **never** the
-    reference build's whole tree (only Lima resolves to ``None``).
+    scope is its two eponymous prefixes (``<slug>`` and the ``*/<slug>`` nesting inside an agency
+    collection) plus any non-derivable ``corpus_relpaths`` — **never** the reference build's whole
+    tree (only Lima resolves to ``include=None``).
 
     The basin-/network-shared lenses (``network``, ``concepts``, the ``hypotheses`` *definitions*)
     are cross-site by design. ``catalog`` and ``hypothesis-assessments`` are narrowed separately
@@ -1141,15 +1156,28 @@ def _assert_corpus_feeds_lima_free(slug: str, bundle_dir: Path) -> None:
             assert marker not in text, f"{slug} feed {name!r} leaks Lima marker {marker!r}"
 
 
-def test_explicit_scoped_sibling_bundle_carries_no_lima_corpus(fort_wayne_bundle: Path) -> None:
-    """Fort Wayne — a sibling with an *explicit* ``corpus_relpaths`` — is Lima-free (#762)."""
-    assert get_profile("fort-wayne").corpus_relpaths is not None, "FW sets an explicit scope"
+def test_collection_nested_sibling_bundle_carries_no_lima_corpus(fort_wayne_bundle: Path) -> None:
+    """Fort Wayne — a sibling whose corpus lives under an *agency* collection — is Lima-free
+    (#762). Its IDEM (Indiana) records sit at ``idem/fort-wayne/``, which reached the site by an
+    enumerated ``corpus_relpaths`` entry until #1405 made the ``*/<slug>`` nesting derivable. The
+    profile now names nothing at all, and the subtree must still be the site's."""
+    assert get_profile("fort-wayne").corpus_relpaths is None, "FW is fully derived since #1405"
+    assert effective_corpus_scope(get_profile("fort-wayne")).contains("idem/fort-wayne/wqc.yaml")
     _assert_corpus_feeds_lima_free("fort-wayne", fort_wayne_bundle)
+
+
+def test_explicit_scoped_sibling_bundle_carries_no_lima_corpus(urbana_bundle: Path) -> None:
+    """Urbana — the sibling that still *needs* an explicit ``corpus_relpaths`` — is Lima-free
+    (#762). Its corpus is filed by project and by case (``permits/highland55``,
+    ``legal/thor-v-urbana``), which no rule derives from a slug, so this is the shape the field
+    exists for after #1405 and the shape that must keep working."""
+    assert get_profile("urbana").corpus_relpaths, "Urbana's project/case prefixes are not derivable"
+    _assert_corpus_feeds_lima_free("urbana", urbana_bundle)
 
 
 def test_default_scoped_sibling_bundle_carries_no_lima_corpus(springfield_bundle: Path) -> None:
     """The new-site smoke test (#780): a freshly-registered site on the **default** scope is also
-    Lima-free. Springfield leaves ``corpus_relpaths`` unset (so it defaults to ``('springfield',)``)
+    Lima-free. Springfield leaves ``corpus_relpaths`` unset (so its scope is the eponymous pair)
     and has no committed corpus — before #780 its ``None`` scope meant the whole tree, silently
     inheriting Lima's 174 timeline events and 72 entities. Adding a new site to this guard is one
     line. (Urbana, the prior stand-in, gained an explicit scope + real corpus in #1328.)"""

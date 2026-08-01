@@ -42,5 +42,100 @@
     "lei": "875500ULXB4CYQSJVA03",
     "uei": null,
     "federal_obligations": null
+  },
+  {
+    "key": "VAN WERT WWTP",
+    "display": "Van Wert WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Van Wert WWTP"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/van-wert/2PD00006.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:2PD00006",
+    "display": "Van Wert WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Van Wert WWTP",
+      "Van Wert Wastewater Treatment Plant (WWTP)"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/van-wert/2PD00006.fs.npdes.yaml",
+      "oepa/van-wert/2PD00006.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF VAN WERT",
+    "display": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Van Wert, 515 North Main Street, Van Wert, OH 45891"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/van-wert/2PD00006.fs.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "TOWN CREEK",
+    "display": "Town Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Town Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/van-wert/2PD00006.fs.npdes.yaml",
+      "oepa/van-wert/2PD00006.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]

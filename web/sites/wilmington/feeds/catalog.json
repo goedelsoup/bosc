@@ -114,10 +114,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "670b17edcb48bf4d697c5fc4c2d06d3d090462f243b5fc37979c9bb55f684b2b",
-      "size_bytes": 168826,
+      "sha256": "4710cd51cdd93dab4f855e44902485ef648e3e1889886be222d0cb4895a08a88",
+      "size_bytes": 198670,
       "lfs_materialized": true,
-      "file_count": 12,
+      "file_count": 13,
       "stale": false,
       "asof": null
     },
@@ -239,6 +239,61 @@
     },
     "citation": {
       "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "legal-datacenter-legislation-hb983-3744",
+    "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
+    "external_url": null,
+    "license": "Public record (Ohio legislative document)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-31",
+    "tags": [
+      "data-centers",
+      "legislation",
+      "r.c.-3744",
+      "r.c.-9.66",
+      "public-records"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.analysis.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.digest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "872eddc22e6d6c2f2fe9e77c90098205194ecfdb54e4c31371c913a691813516",
+      "size_bytes": 33606,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -380,49 +435,49 @@
     ],
     "storage": [
       {
-        "relpath": "extracted/oepa/1PD00013.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PD00013.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1PX00010.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PX00010.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1PV00089.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PV00089.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1IW00240.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1IW00240.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1II00129.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1II00129.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1PT00125.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PT00125.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1MP00060.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1MP00060.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1PD00013.fs.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PD00013.fs.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "b2cf8bdb55fb0a3866dc14f2aa28e61533921f62413c6b3f153171e4ca65dcc6",
+      "sha256": "a83c6da106423b9f6c096e307c11e8637f3496dbd9642a12ef65b613a0ef0415",
       "size_bytes": 16755,
       "lfs_materialized": true,
       "file_count": 8,

@@ -6,7 +6,7 @@ Living record for the Van Wert watershed point (basin: maumee), scaffolded by `w
 
 - [x] **Hydrology** — onboard reach connectors (low-flows, corridor DDF, SSURGO HSG, climatology)
 - [x] **Economics** — county baseline, RSEI toxics, consumer energy, grid profile
-- [x] **OEPA permit ingest** — NPDES permit `2PD00006` (OH0027910) + fact sheet `2PD00006.fs` fetched and extracted (`data/documents/oepa/van-wert/`, `data/extracted/oepa/2PD00006*.npdes.yaml`). Town Creek 7Q10 = 0.16 cfs (annual; summer/winter = 0 — intermittent). Design flow confirmed 4.0 MGD. See `data/reference/hydrology/low-flow-7q10.yaml`. Resolves #837.
+- [x] **OEPA permit ingest** — NPDES permit `2PD00006` (OH0027910) + fact sheet `2PD00006.fs` fetched and extracted (`data/documents/oepa/van-wert/`, `data/extracted/oepa/van-wert/2PD00006*.npdes.yaml`). Town Creek 7Q10 = 0.16 cfs (annual; summer/winter = 0 — intermittent). Design flow confirmed 4.0 MGD. See `data/reference/hydrology/low-flow-7q10.yaml`. Resolves #837.
 - [~] **Data-center activity** — QTS/Thor confirmed same project (Phase 6 research, 2026-07-02); Van Wert-jurisdiction instruments exist but **not yet ingested** — see Phase 6 below. Closes #378/#840; #377 tracks ingest.
 - [x] **Per-jurisdiction GIS** — parcels **wired** (`VAN_WERT_PARCEL_SCHEMA`, #421 — the county's ArcGIS Online auditor-CAMA join `parcel_joinedVWOH`; the bhamaps PAT MapServer died with its expired cert and was retired, never re-wired) and flood = shared national NFHL (wired). Zoning stays `[open]` (no REST anywhere — townships map-only, city zoning static PDFs + amlegal). See GIS discovery below.
 

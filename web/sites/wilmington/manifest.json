@@ -2,16 +2,16 @@
   "site": "wilmington",
   "bundle_version": "1.0.0",
   "contract_version": "1.49.0",
-  "generated_at": "2026-07-31T20:58:15+00:00",
+  "generated_at": "2026-08-01T09:48:49+00:00",
   "feed_count": 31,
-  "row_total": 417,
+  "row_total": 522,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
       "places": "absent",
-      "record": "absent",
+      "record": "live",
       "story": "absent"
     }
   },
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 8
     },
     {
       "name": "timeline",
@@ -37,7 +37,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 5
     },
     {
       "name": "entities",
@@ -45,7 +45,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 4
+      "count": 21
     },
     {
       "name": "relationships",
@@ -53,7 +53,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 15
     },
     {
       "name": "people",
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 1
     },
     {
       "name": "exhibits",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 56
+      "count": 57
     },
     {
       "name": "facts",
@@ -253,7 +253,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 109
     },
     {
       "name": "corpus-nodes",
@@ -261,7 +261,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 109
     },
     {
       "name": "ask-embeddings",

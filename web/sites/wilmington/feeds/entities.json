@@ -44,6 +44,29 @@
     "federal_obligations": null
   },
   {
+    "key": "RLR INVESTMENTS",
+    "display": "RLR Investments, LLC dba Pine Hills Mobile Home Park",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "RLR Investments, LLC dba Pine Hills Mobile Home Park"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1PV00089.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "TEXTRON",
     "display": "TEXTRON INC.",
     "kind": "corporate",
@@ -82,6 +105,384 @@
     "addresses": [],
     "sources": [
       "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PD00013",
+    "display": "City of Wilmington WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Wilmington WWTP",
+      "Wilmington Wastewater Treatment Plant (WWTP)"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1PD00013.fs.npdes.yaml",
+      "oepa/wilmington/1PD00013.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF WILMINGTON",
+    "display": "City of Wilmington",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Wilmington",
+      "City of Wilmington, 69 North South Street, Wilmington, OH 45177",
+      "City of Wilmington, Steven Honeycutt"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1II00129.npdes.yaml",
+      "oepa/wilmington/1PD00013.fs.npdes.yaml",
+      "oepa/wilmington/1PD00013.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CLINTON COUNTY BOARD OF DEVELOPMENTAL DISABILITIES",
+    "display": "Clinton County Board of Developmental Disabilities",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Clinton County Board of Developmental Disabilities"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1PT00125.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PT00125",
+    "display": "Clinton County Board of Developmental Disabilities",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Clinton County Board of Developmental Disabilities"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1PT00125.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KYLE ISLER",
+    "display": "Kyle Isler, Wilmington Nursery",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Kyle Isler, Wilmington Nursery"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1MP00060.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MHC TT",
+    "display": "MHC TT, L.P.",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "MHC TT, L.P."
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1PX00010.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "UNNAMED TRIBUTARY OF TODD FORK",
+    "display": "unnamed tributary of Todd Fork",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "unnamed tributary of Todd Fork"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1PX00010.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "WILMINGTON WATER PLANT",
+    "display": "Wilmington Water Plant",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington Water Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1IW00240.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1II00129",
+    "display": "Wilmington Sanitary Landfill",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington Sanitary Landfill"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1II00129.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1IW00240",
+    "display": "Wilmington Water Plant",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington Water Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1IW00240.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1MP00060",
+    "display": "Wilmington Nursery",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington Nursery"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1MP00060.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PV00089",
+    "display": "Pine Hills Mobile Home Park",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Pine Hills Mobile Home Park"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1PV00089.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PX00010",
+    "display": "Wilmington RV Resort",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington RV Resort"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1PX00010.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "LYTLE CREEK",
+    "display": "Lytle Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Lytle Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1II00129.npdes.yaml",
+      "oepa/wilmington/1PD00013.fs.npdes.yaml",
+      "oepa/wilmington/1PD00013.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "UNNAMED TRIBUTARY OF LYTLE CREEK",
+    "display": "Unnamed Tributary of Lytle Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Unnamed Tributary of Lytle Creek",
+      "unnamed tributary of Lytle Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1IW00240.npdes.yaml",
+      "oepa/wilmington/1PV00089.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "UNNAMED TRIBUTARY OF WILSON CREEK",
+    "display": "unnamed tributary of Wilson Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "unnamed tributary of Wilson Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/wilmington/1PT00125.npdes.yaml"
     ],
     "lei": null,
     "uei": null,

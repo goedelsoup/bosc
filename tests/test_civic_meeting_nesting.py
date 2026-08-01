@@ -28,10 +28,10 @@ from watermark.pipeline.timeline import _subdivision_meeting_events
 from watermark.retrieval.ingestion import iter_extracted_chunks
 from watermark.sites import SITES, active_profile, effective_corpus_scope
 
-# A registered peer with the plain default corpus scope (`("defiance",)`, unset `corpus_relpaths`) —
-# the epic's happy path: `<site>/<body>/meetings/` under the bare slug. This was findlay until
-# #1460 gave that site an explicit two-prefix scope (`findlay` + `oepa/findlay`) for its NPDES
-# instrument set; the case under test here is the UNSET one, so it moved to another Maumee peer.
+# A registered peer with the plain default corpus scope (unset `corpus_relpaths`, so purely its
+# eponymous prefixes) — the epic's happy path: `<site>/<body>/meetings/` under the bare slug. This
+# was findlay until #1460 gave that site an explicit scope for records filed by CASE name rather
+# than by site; the case under test here is the UNSET one, so it moved to another Maumee peer.
 PEER = "defiance"
 PEER_BODY = "allen-cty-comm"
 LIMA_BODY = "commissioners"  # one of Lima's six flat bodies
@@ -55,7 +55,7 @@ def test_lima_scope_excludes_a_nested_peer_meeting_tree() -> None:
     assert relpath_in_scope(flat, lima)  # Lima's own flat body stays in
 
     peer = effective_corpus_scope(SITES[PEER])
-    assert peer.include == (PEER,)  # unset scope → owns its own slug subtree
+    assert peer.include == (f"*/{PEER}", PEER)  # unset scope → its two eponymous prefixes (#1405)
     assert relpath_in_scope(nested, peer)  # ... which owns the nested tree for free
     assert not relpath_in_scope(flat, peer)  # and never Lima's flat bodies
 

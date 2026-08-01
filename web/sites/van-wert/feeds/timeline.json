@@ -1,1 +1,46 @@
-[]
+[
+  {
+    "date": "2025-03-17",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — public notice",
+    "ref": "2PD00006*VD",
+    "parties": [
+      "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+      "Van Wert Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "action renewal; receiving Town Creek",
+    "source": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-04-16",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — comment period ends",
+    "ref": "2PD00006*VD",
+    "parties": [
+      "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+      "Van Wert Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "",
+    "source": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  }
+]

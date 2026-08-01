@@ -10,10 +10,10 @@ license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:van-wert
 storage:
-- relpath: extracted/oepa/2PD00006.npdes.yaml
+- relpath: extracted/oepa/van-wert/2PD00006.npdes.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/oepa/2PD00006.fs.npdes.yaml
+- relpath: extracted/oepa/van-wert/2PD00006.fs.npdes.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:

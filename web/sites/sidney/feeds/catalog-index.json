@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "30d6b566173a7fa2bcf4556d284ac5f5ed25206b8247b4d9854a51f5ac6de1fd",
+  "catalog_version": "1321879770082e3eb4aff63de5fb264c28e9c87a7977daf19a68404769400569",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -836,6 +836,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:sidney:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:sidney:legal-records-legislation",
       "kind": "dataset",
       "site": "sidney",
@@ -1052,6 +1060,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:sidney:ALEXANDER RECK DBA HIDDEN VALLEY MHP",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "ALEXANDER RECK DBA HIDDEN VALLEY MHP",
+      "title": "Alexander R. Reck dba Hidden Valley MHP",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:sidney:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "sidney",
@@ -1068,11 +1084,35 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:sidney:TAWAWA CREEK",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "TAWAWA CREEK",
+      "title": "Tawawa Creek",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:sidney:npdes:1PV00037",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "npdes:1PV00037",
+      "title": "Hidden Valley Mobile Home Park",
+      "feed": "entities"
+    },
+    {
       "handle": "record:sidney:oepa/sidney/1PD00009.npdes.yaml",
       "kind": "record",
       "site": "sidney",
       "local_id": "oepa/sidney/1PD00009.npdes.yaml",
       "title": "City of Sidney WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:oepa/sidney/1PV00037.npdes.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "oepa/sidney/1PV00037.npdes.yaml",
+      "title": "Hidden Valley Mobile Home Park",
       "feed": "records"
     },
     {
@@ -1082,6 +1122,14 @@
       "local_id": "sidney/wwtp-oh0027421.dmr.yaml",
       "title": "SIDNEY WWTP",
       "feed": "records"
+    },
+    {
+      "handle": "timeline:sidney:1PV00037*ED",
+      "kind": "timeline",
+      "site": "sidney",
+      "local_id": "1PV00037*ED",
+      "title": "NPDES 1PV00037*ED (Hidden Valley Mobile Home Park) — public notice",
+      "feed": "timeline"
     }
   ]
 }
