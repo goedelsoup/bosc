@@ -1,0 +1,1579 @@
+{
+  "type": "FeatureCollection",
+  "feed": "campus",
+  "meta": {
+    "crs": "WGS84 (EPSG:4326)",
+    "layers": [
+      "campus"
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6313650660585,
+              41.46537004813276
+            ],
+            [
+              -83.62894978731366,
+              41.4653206154282
+            ],
+            [
+              -83.62892195660783,
+              41.468891778577266
+            ],
+            [
+              -83.62892140414394,
+              41.46896258485738
+            ],
+            [
+              -83.628919227526,
+              41.469241952239464
+            ],
+            [
+              -83.62891315850794,
+              41.470020594772855
+            ],
+            [
+              -83.62890986258917,
+              41.47044347054468
+            ],
+            [
+              -83.62890515272213,
+              41.47104765987337
+            ],
+            [
+              -83.62890400198025,
+              41.47119531677486
+            ],
+            [
+              -83.62889659626904,
+              41.472145433427784
+            ],
+            [
+              -83.62889317728107,
+              41.472584069043926
+            ],
+            [
+              -83.63523784967373,
+              41.47273335130326
+            ],
+            [
+              -83.63857450435434,
+              41.47281417286813
+            ],
+            [
+              -83.64285102768919,
+              41.47291317017893
+            ],
+            [
+              -83.64336521796794,
+              41.47292406935758
+            ],
+            [
+              -83.64338723028567,
+              41.46983916182917
+            ],
+            [
+              -83.64341735349207,
+              41.469270765041244
+            ],
+            [
+              -83.6434230919301,
+              41.46697262100239
+            ],
+            [
+              -83.6434264713922,
+              41.46561916526079
+            ],
+            [
+              -83.64104892458425,
+              41.465571839051
+            ],
+            [
+              -83.6386005968201,
+              41.46552305407673
+            ],
+            [
+              -83.6361953423755,
+              41.46547443196969
+            ],
+            [
+              -83.63622814256148,
+              41.4582026274947
+            ],
+            [
+              -83.63381712362771,
+              41.45816192384967
+            ],
+            [
+              -83.63141174521562,
+              41.458121264612544
+            ],
+            [
+              -83.63140186464581,
+              41.459572193312944
+            ],
+            [
+              -83.63139877623784,
+              41.460169420609716
+            ],
+            [
+              -83.63140005364218,
+              41.461026226006545
+            ],
+            [
+              -83.63137344374684,
+              41.46400671446942
+            ],
+            [
+              -83.6313650660585,
+              41.46537004813276
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "0 MERCER",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000003500",
+        "parcel_id_auditor": "J36-611-190000003500",
+        "legacy_cama_id": null,
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "1 META WAY MENLOW PARK CA 94025",
+        "situs_address": "0 MERCER",
+        "legal_description": "322.50A PT COM NECOR NE",
+        "acres": 322.5,
+        "planar_acres": 322.216,
+        "land_use_code": 101,
+        "tax_district": "J36",
+        "school_code": "8702",
+        "market_land_value": 2836700,
+        "market_improvement_value": 181600,
+        "cauv_value": 0,
+        "last_sale_date": "2025-04-09",
+        "last_sale_amount": 0,
+        "valid_sale": "Q",
+        "instrument_code": "QC",
+        "conveyance_number": "0",
+        "deed_number": "0519",
+        "rezoning_contestable_2026_07_07": false,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "M-1: Light Industrial",
+            "pct_of_parcel": 99.82,
+            "zoning_fabric_parcels": [
+              "611190000002500",
+              "611190000002501",
+              "611190000003000",
+              "611190000004000",
+              "611190000005000",
+              "611190000032000",
+              "611190000032002"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.64139502480197,
+              41.45827988490847
+            ],
+            [
+              -83.64138194712805,
+              41.46143774501107
+            ],
+            [
+              -83.64021367103307,
+              41.461420251936886
+            ],
+            [
+              -83.63861782740557,
+              41.46139575893227
+            ],
+            [
+              -83.63861650239052,
+              41.46171334664459
+            ],
+            [
+              -83.63860705121542,
+              41.463702002370724
+            ],
+            [
+              -83.6386005968201,
+              41.46552305407673
+            ],
+            [
+              -83.64104892458425,
+              41.465571839051
+            ],
+            [
+              -83.6434264713922,
+              41.46561916526079
+            ],
+            [
+              -83.6434230919301,
+              41.46697262100239
+            ],
+            [
+              -83.64341735349207,
+              41.469270765041244
+            ],
+            [
+              -83.645408684915,
+              41.46931646162717
+            ],
+            [
+              -83.64823813731147,
+              41.46938133123048
+            ],
+            [
+              -83.64847403849835,
+              41.469386736354686
+            ],
+            [
+              -83.64869333702212,
+              41.46832636351492
+            ],
+            [
+              -83.64846783652962,
+              41.46832188654493
+            ],
+            [
+              -83.64759906863183,
+              41.46830463832693
+            ],
+            [
+              -83.64772292924151,
+              41.46770576407758
+            ],
+            [
+              -83.64780329342516,
+              41.46731719442696
+            ],
+            [
+              -83.647884609823,
+              41.46692401411838
+            ],
+            [
+              -83.64793548501079,
+              41.46667802270147
+            ],
+            [
+              -83.64800407228105,
+              41.46634638512986
+            ],
+            [
+              -83.64806164710423,
+              41.46606798941713
+            ],
+            [
+              -83.6481081474966,
+              41.465843147245884
+            ],
+            [
+              -83.6481351122265,
+              41.46571276005105
+            ],
+            [
+              -83.6490927369806,
+              41.465731691844255
+            ],
+            [
+              -83.64922933749766,
+              41.46573448004915
+            ],
+            [
+              -83.64923850121187,
+              41.465734572944456
+            ],
+            [
+              -83.64924081437373,
+              41.465723329921516
+            ],
+            [
+              -83.64933608160793,
+              41.46521828178774
+            ],
+            [
+              -83.64943700643178,
+              41.46473022174466
+            ],
+            [
+              -83.64960804296693,
+              41.46390308693594
+            ],
+            [
+              -83.64903407339929,
+              41.46389262111063
+            ],
+            [
+              -83.64891501608143,
+              41.46389044945335
+            ],
+            [
+              -83.64892285927218,
+              41.462764059049
+            ],
+            [
+              -83.64892553086183,
+              41.4623803094373
+            ],
+            [
+              -83.64895665119822,
+              41.46230787762052
+            ],
+            [
+              -83.64943286519832,
+              41.46119946651737
+            ],
+            [
+              -83.64943927377955,
+              41.46091702698436
+            ],
+            [
+              -83.64945119801665,
+              41.4603914899809
+            ],
+            [
+              -83.64947309984159,
+              41.459426118935475
+            ],
+            [
+              -83.64878002354874,
+              41.45941695978051
+            ],
+            [
+              -83.64880428884119,
+              41.45837805142961
+            ],
+            [
+              -83.64772694381253,
+              41.45836380721498
+            ],
+            [
+              -83.6474345682387,
+              41.45835993950426
+            ],
+            [
+              -83.644945156025,
+              41.45832698080934
+            ],
+            [
+              -83.64344736979898,
+              41.45830712385413
+            ],
+            [
+              -83.64183001511368,
+              41.458285661235536
+            ],
+            [
+              -83.64139502480197,
+              41.45827988490847
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "0 DIXIE",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000029510",
+        "parcel_id_auditor": "J34-611-190000029510",
+        "legacy_cama_id": "J34-02506-00",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "1 META WAY MENLOW PARK CA 94025",
+        "situs_address": "0 DIXIE",
+        "legal_description": "196.50A PT COM 757.74' W SECOR SW",
+        "acres": 196.5,
+        "planar_acres": 196.608,
+        "land_use_code": 101,
+        "tax_district": "J34",
+        "school_code": "8707",
+        "market_land_value": 1566300,
+        "market_improvement_value": 0,
+        "cauv_value": 0,
+        "last_sale_date": "2025-04-09",
+        "last_sale_amount": 0,
+        "valid_sale": "Q",
+        "instrument_code": "QC",
+        "conveyance_number": "0",
+        "deed_number": "0520",
+        "rezoning_contestable_2026_07_07": false,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "M-1: Light Industrial",
+            "pct_of_parcel": 99.88,
+            "zoning_fabric_parcels": [
+              "611190000007000",
+              "611190000020000",
+              "611190000029500"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.63017300796467,
+              41.458100308204024
+            ],
+            [
+              -83.63141174521562,
+              41.458121264612544
+            ],
+            [
+              -83.63381712362771,
+              41.45816192384967
+            ],
+            [
+              -83.63622814256148,
+              41.4582026274947
+            ],
+            [
+              -83.63863101557226,
+              41.45824314260919
+            ],
+            [
+              -83.63859924036403,
+              41.45164992260235
+            ],
+            [
+              -83.63862385240616,
+              41.45104093229135
+            ],
+            [
+              -83.63619821428946,
+              41.45098982896161
+            ],
+            [
+              -83.63375039766672,
+              41.45093820647133
+            ],
+            [
+              -83.62898356666328,
+              41.45083753004085
+            ],
+            [
+              -83.62898913531973,
+              41.45261958917847
+            ],
+            [
+              -83.6290011350153,
+              41.456459167720176
+            ],
+            [
+              -83.62900559694731,
+              41.457886983052035
+            ],
+            [
+              -83.62900602634201,
+              41.45802390087123
+            ],
+            [
+              -83.62900620241182,
+              41.45808055418415
+            ],
+            [
+              -83.63017300796467,
+              41.458100308204024
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "12279 MIDDLETON",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611300000001000",
+        "parcel_id_auditor": "J36-611-300000001000",
+        "legacy_cama_id": "J36-01501-00",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "1 META WAY MENLO PARK CA 94025",
+        "situs_address": "12279 MIDDLETON",
+        "legal_description": "NE",
+        "acres": 160.0,
+        "planar_acres": 159.383,
+        "land_use_code": 101,
+        "tax_district": "J36",
+        "school_code": "8702",
+        "market_land_value": 1354900,
+        "market_improvement_value": 0,
+        "cauv_value": 585960,
+        "last_sale_date": "2023-11-14",
+        "last_sale_amount": 0,
+        "valid_sale": "U",
+        "instrument_code": "QC",
+        "conveyance_number": "0",
+        "deed_number": "1588",
+        "rezoning_contestable_2026_07_07": false,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "M-1: Light Industrial",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611300000001000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.64343899839884,
+              41.45602401348026
+            ],
+            [
+              -83.64343488411485,
+              41.45524749263138
+            ],
+            [
+              -83.64343164748489,
+              41.45463656476126
+            ],
+            [
+              -83.64342974125984,
+              41.45316496151385
+            ],
+            [
+              -83.64343621451978,
+              41.45172764027865
+            ],
+            [
+              -83.643438990314,
+              41.45116270509063
+            ],
+            [
+              -83.63862385240616,
+              41.45104093229135
+            ],
+            [
+              -83.6385979171456,
+              41.451375473317555
+            ],
+            [
+              -83.63896270321955,
+              41.45137447750199
+            ],
+            [
+              -83.63896402823458,
+              41.451648926790995
+            ],
+            [
+              -83.6387086821151,
+              41.45164962365696
+            ],
+            [
+              -83.63874048247614,
+              41.45824461227464
+            ],
+            [
+              -83.6393099990949,
+              41.458252254803696
+            ],
+            [
+              -83.64022746825752,
+              41.458264372303624
+            ],
+            [
+              -83.64139502480197,
+              41.45827988490847
+            ],
+            [
+              -83.64183001511368,
+              41.458285661235536
+            ],
+            [
+              -83.64184295085377,
+              41.45755056024188
+            ],
+            [
+              -83.64250711127593,
+              41.45755774033746
+            ],
+            [
+              -83.64345134035254,
+              41.457569510575865
+            ],
+            [
+              -83.64344956078996,
+              41.45738785360992
+            ],
+            [
+              -83.64344249104867,
+              41.45645885533197
+            ],
+            [
+              -83.64343899839884,
+              41.45602401348026
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "12499 MIDDLETON",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611300000002000",
+        "parcel_id_auditor": "J36-611-300000002000",
+        "legacy_cama_id": "J36-01502-10",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "1 META WAY MENLO PARK CA 94025",
+        "situs_address": "12499 MIDDLETON",
+        "legal_description": "ENW LESS N280' W442' LESS 1.66A PT\n& LESS S100' N2502.35' E100'",
+        "acres": 74.65,
+        "planar_acres": 74.759,
+        "land_use_code": 101,
+        "tax_district": "J36",
+        "school_code": "8702",
+        "market_land_value": 622000,
+        "market_improvement_value": 0,
+        "cauv_value": 255360,
+        "last_sale_date": "2023-11-14",
+        "last_sale_amount": 2923960,
+        "valid_sale": "Q",
+        "instrument_code": "LW",
+        "conveyance_number": "1750",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": false,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "M-1: Light Industrial",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611300000002000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6289604395363,
+              41.46395375733956
+            ],
+            [
+              -83.62894978731366,
+              41.4653206154282
+            ],
+            [
+              -83.6313650660585,
+              41.46537004813276
+            ],
+            [
+              -83.63137344374684,
+              41.46400671446942
+            ],
+            [
+              -83.630137786819,
+              41.46397737492691
+            ],
+            [
+              -83.6289604395363,
+              41.46395375733956
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "21443 MERCER",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000037000",
+        "parcel_id_auditor": "J36-611-190000037000",
+        "legacy_cama_id": "J36-01003-31",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "1 META WAY MENLO PARK CA 94025",
+        "situs_address": "21443 MERCER",
+        "legal_description": "N495.41' E661.28' NE SE",
+        "acres": 7.52,
+        "planar_acres": 7.566,
+        "land_use_code": 511,
+        "tax_district": "J36",
+        "school_code": "8702",
+        "market_land_value": 102800,
+        "market_improvement_value": 324600,
+        "cauv_value": 0,
+        "last_sale_date": "2024-11-22",
+        "last_sale_amount": 650000,
+        "valid_sale": "U",
+        "instrument_code": "WD",
+        "conveyance_number": "1937",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": true,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "A-1: Agricultural",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611190000037000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.63016771688766,
+              41.4588251369449
+            ],
+            [
+              -83.63016652572159,
+              41.45897847676727
+            ],
+            [
+              -83.63014985388823,
+              41.4595510778205
+            ],
+            [
+              -83.63140186464581,
+              41.459572193312944
+            ],
+            [
+              -83.63141174521562,
+              41.458121264612544
+            ],
+            [
+              -83.63017300796467,
+              41.458100308204024
+            ],
+            [
+              -83.63016771688766,
+              41.4588251369449
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "12090 MIDDLETON",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000033000",
+        "parcel_id_auditor": "J36-611-190000033000",
+        "legacy_cama_id": "J36-01003-20",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "52 E GAY ST COLUMBUS OH 43215",
+        "situs_address": "12090 MIDDLETON",
+        "legal_description": "W339.88' E659.89' S498.72\nE1/4 SE",
+        "acres": 3.89,
+        "planar_acres": 4.133,
+        "land_use_code": 511,
+        "tax_district": "J36",
+        "school_code": "8702",
+        "market_land_value": 72600,
+        "market_improvement_value": 114300,
+        "cauv_value": 0,
+        "last_sale_date": "2025-07-15",
+        "last_sale_amount": 450000,
+        "valid_sale": "U",
+        "instrument_code": "WD",
+        "conveyance_number": "1131",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": true,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "A-1: Agricultural",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611190000033000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.62975621841893,
+              41.45954443652039
+            ],
+            [
+              -83.62899487824933,
+              41.45953392825211
+            ],
+            [
+              -83.62899016568736,
+              41.460138823116836
+            ],
+            [
+              -83.63139877623784,
+              41.460169420609716
+            ],
+            [
+              -83.63140186464581,
+              41.459572193312944
+            ],
+            [
+              -83.63014985388823,
+              41.4595510778205
+            ],
+            [
+              -83.62975621841893,
+              41.45954443652039
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "21123 MERCER",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000036001",
+        "parcel_id_auditor": "J36-611-190000036001",
+        "legacy_cama_id": null,
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "52 EAST GAY ST COLUMBUS OH 43215",
+        "situs_address": "21123 MERCER",
+        "legal_description": "N220' S748.71' W660.09'  \nSE SE",
+        "acres": 3.33,
+        "planar_acres": 3.324,
+        "land_use_code": 511,
+        "tax_district": "J36",
+        "school_code": "8702",
+        "market_land_value": 68700,
+        "market_improvement_value": 227200,
+        "cauv_value": 0,
+        "last_sale_date": "2025-07-21",
+        "last_sale_amount": 570000,
+        "valid_sale": "U",
+        "instrument_code": "LW",
+        "conveyance_number": "1170",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": true,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "A-1: Agricultural",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611190000036001"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.62900620241182,
+              41.45808055418415
+            ],
+            [
+              -83.62900538674153,
+              41.45818515307159
+            ],
+            [
+              -83.6289993608426,
+              41.45895877956575
+            ],
+            [
+              -83.63016652572159,
+              41.45897847676727
+            ],
+            [
+              -83.63016771688766,
+              41.4588251369449
+            ],
+            [
+              -83.63017300796467,
+              41.458100308204024
+            ],
+            [
+              -83.62900620241182,
+              41.45808055418415
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "12018 MIDDLETON",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000034000",
+        "parcel_id_auditor": "J36-611-190000034000",
+        "legacy_cama_id": "J36-01004-00",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "1 META WAY MENLOW PARK CA 94025",
+        "situs_address": "12018 MIDDLETON",
+        "legal_description": "SECOR E1/4 SE (290'X300')",
+        "acres": 2.0,
+        "planar_acres": 2.351,
+        "land_use_code": 511,
+        "tax_district": "J36",
+        "school_code": "8702",
+        "market_land_value": 55900,
+        "market_improvement_value": 190200,
+        "cauv_value": 0,
+        "last_sale_date": "2025-05-01",
+        "last_sale_amount": 615000,
+        "valid_sale": "U",
+        "instrument_code": "WD",
+        "conveyance_number": "0617",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": true,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "A-1: Agricultural",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611190000034000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.64759906863183,
+              41.46830463832693
+            ],
+            [
+              -83.64846783652962,
+              41.46832188654493
+            ],
+            [
+              -83.64869333702212,
+              41.46832636351492
+            ],
+            [
+              -83.6488283627925,
+              41.46772808317006
+            ],
+            [
+              -83.64772292924151,
+              41.46770576407758
+            ],
+            [
+              -83.64759906863183,
+              41.46830463832693
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "21698 DIXIE",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000008000",
+        "parcel_id_auditor": "J34-611-190000008000",
+        "legacy_cama_id": "J34-02500-00",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "1 META WAY MENLO PARK CA 94025",
+        "situs_address": "21698 DIXIE",
+        "legal_description": "N1.59A PT COM 723.55' NE \nLINE NW & DIXIE HWY SW NW\nE OF HWY (300'X232.20')",
+        "acres": 1.59,
+        "planar_acres": 1.516,
+        "land_use_code": 511,
+        "tax_district": "J34",
+        "school_code": "8707",
+        "market_land_value": 52900,
+        "market_improvement_value": 139700,
+        "cauv_value": 0,
+        "last_sale_date": "2024-09-04",
+        "last_sale_amount": 450000,
+        "valid_sale": "U",
+        "instrument_code": "WD",
+        "conveyance_number": "1424",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": true,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "A-1: Agricultural",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611190000008000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.63016652572159,
+              41.45897847676727
+            ],
+            [
+              -83.6289993608426,
+              41.45895877956575
+            ],
+            [
+              -83.62899487824933,
+              41.45953392825211
+            ],
+            [
+              -83.62975621841893,
+              41.45954443652039
+            ],
+            [
+              -83.63014985388823,
+              41.4595510778205
+            ],
+            [
+              -83.63016652572159,
+              41.45897847676727
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "21067 MERCER",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000035000",
+        "parcel_id_auditor": "J36-611-190000035000",
+        "legacy_cama_id": "J36-01003-10",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "52 E GAY ST COLUMBUS OH 43215",
+        "situs_address": "21067 MERCER",
+        "legal_description": "E320' N208.71' S498.71'  \nSE SE",
+        "acres": 1.53,
+        "planar_acres": 1.528,
+        "land_use_code": 511,
+        "tax_district": "J36",
+        "school_code": "8702",
+        "market_land_value": 53600,
+        "market_improvement_value": 163200,
+        "cauv_value": 0,
+        "last_sale_date": "2025-05-23",
+        "last_sale_amount": 472500,
+        "valid_sale": "U",
+        "instrument_code": "WD",
+        "conveyance_number": "0778",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": true,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "A-1: Agricultural",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611190000035000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.64890885453688,
+              41.46733685610602
+            ],
+            [
+              -83.64780329342516,
+              41.46731719442696
+            ],
+            [
+              -83.64772292924151,
+              41.46770576407758
+            ],
+            [
+              -83.6488283627925,
+              41.46772808317006
+            ],
+            [
+              -83.64890885453688,
+              41.46733685610602
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "21630 DIXIE",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000009000",
+        "parcel_id_auditor": "J34-611-190000009000",
+        "legacy_cama_id": "J34-02501-01",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "52 E GAY ST COLUMBUS OH 43215",
+        "situs_address": "21630 DIXIE",
+        "legal_description": "PT COM 577.15' NE'LY SUR \nLINE RT 25 S LINE NW1/4  \n(146.40'X300')",
+        "acres": 1.01,
+        "planar_acres": 0.992,
+        "land_use_code": 511,
+        "tax_district": "J34",
+        "school_code": "8707",
+        "market_land_value": 46800,
+        "market_improvement_value": 130700,
+        "cauv_value": 46750,
+        "last_sale_date": "2025-05-27",
+        "last_sale_amount": 475000,
+        "valid_sale": "U",
+        "instrument_code": "WD",
+        "conveyance_number": "0782",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": true,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "A-1: Agricultural",
+            "pct_of_parcel": 99.7,
+            "zoning_fabric_parcels": [
+              "611190000009000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.65022788949612,
+              41.46092506504254
+            ],
+            [
+              -83.64943927377955,
+              41.46091702698436
+            ],
+            [
+              -83.64943286519832,
+              41.46119946651737
+            ],
+            [
+              -83.65016721368856,
+              41.46122003483385
+            ],
+            [
+              -83.65022788949612,
+              41.46092506504254
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "21186 DIXIE",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "LIAMES LLC",
+        "parcel_id": "611190000025000",
+        "parcel_id_auditor": "J34-611-190000025000",
+        "legacy_cama_id": "J34-02509-00",
+        "parcel_role": "liames_assembly",
+        "owner": "LIAMES LLC",
+        "owner_mailing_address": "1 META WAY MENLOW PARK CA 94025",
+        "situs_address": "21186 DIXIE",
+        "legal_description": "IRREG PT COM 929.34' NE O\nSWCOR",
+        "acres": 0.5,
+        "planar_acres": 0.505,
+        "land_use_code": 511,
+        "tax_district": "J34",
+        "school_code": "8707",
+        "market_land_value": 32200,
+        "market_improvement_value": 99400,
+        "cauv_value": 0,
+        "last_sale_date": "2025-05-02",
+        "last_sale_amount": 315000,
+        "valid_sale": "U",
+        "instrument_code": "LW",
+        "conveyance_number": "0627",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": true,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "R-4: Multiple Dwelling",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611190000025000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.64336521796794,
+              41.47292406935758
+            ],
+            [
+              -83.64338723028567,
+              41.46983916182917
+            ],
+            [
+              -83.64341735349207,
+              41.469270765041244
+            ],
+            [
+              -83.645408684915,
+              41.46931646162717
+            ],
+            [
+              -83.64823813731147,
+              41.46938133123048
+            ],
+            [
+              -83.64847403849835,
+              41.469386736354686
+            ],
+            [
+              -83.6487292992779,
+              41.46939935257255
+            ],
+            [
+              -83.65113401922491,
+              41.46944931729443
+            ],
+            [
+              -83.65111510070501,
+              41.47310539674438
+            ],
+            [
+              -83.6490878052297,
+              41.473058012729865
+            ],
+            [
+              -83.64773817095696,
+              41.4730264480471
+            ],
+            [
+              -83.64336521796794,
+              41.47292406935758
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "0 DIXIE",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "A SCHALLER LIMITED PARTNERSHIP",
+        "parcel_id": "611190000006000",
+        "parcel_id_auditor": "J34-611-190000006000",
+        "legacy_cama_id": "J34-02504-00",
+        "parcel_role": "rezoning_pending",
+        "owner": "A SCHALLER LIMITED PARTNERSHIP",
+        "owner_mailing_address": "850 STRAWBERRY HILL RD COLUMBUS OH 43213",
+        "situs_address": "0 DIXIE",
+        "legal_description": "N64.550A WNWFR",
+        "acres": 64.55,
+        "planar_acres": 64.915,
+        "land_use_code": 101,
+        "tax_district": "J34",
+        "school_code": "8707",
+        "market_land_value": 504200,
+        "market_improvement_value": 0,
+        "cauv_value": 207860,
+        "last_sale_date": "1999-12-23",
+        "last_sale_amount": 0,
+        "valid_sale": "Q",
+        "instrument_code": "NA",
+        "conveyance_number": "1842",
+        "deed_number": "1842",
+        "rezoning_contestable_2026_07_07": false,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "A-1: Agricultural",
+            "pct_of_parcel": 61.03,
+            "zoning_fabric_parcels": [
+              "611190000006000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.62422894915444,
+              41.46196096178972
+            ],
+            [
+              -83.62420011503046,
+              41.46450697572558
+            ],
+            [
+              -83.62420043213577,
+              41.46452547165881
+            ],
+            [
+              -83.62419525963635,
+              41.46494326993119
+            ],
+            [
+              -83.62419500271818,
+              41.4649538668536
+            ],
+            [
+              -83.62419509973624,
+              41.46495952007066
+            ],
+            [
+              -83.62417771284389,
+              41.46525233086412
+            ],
+            [
+              -83.62601267542362,
+              41.465276189642644
+            ],
+            [
+              -83.62894978731366,
+              41.4653206154282
+            ],
+            [
+              -83.6289604395363,
+              41.46395375733956
+            ],
+            [
+              -83.62899016568736,
+              41.460138823116836
+            ],
+            [
+              -83.62899487824933,
+              41.45953392825211
+            ],
+            [
+              -83.6289993608426,
+              41.45895877956575
+            ],
+            [
+              -83.62900538674153,
+              41.45818515307159
+            ],
+            [
+              -83.62889087310238,
+              41.45818370360177
+            ],
+            [
+              -83.62711399828386,
+              41.45816130447545
+            ],
+            [
+              -83.62446679070234,
+              41.458313104841025
+            ],
+            [
+              -83.62446417750316,
+              41.458531007222106
+            ],
+            [
+              -83.6242543193747,
+              41.45883391917695
+            ],
+            [
+              -83.62422894915444,
+              41.46196096178972
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "11902 MIDDLETON",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "JJJ FAMILY PROPERTIES LLC",
+        "parcel_id": "611200000011000",
+        "parcel_id_auditor": "J36-611-200000011000",
+        "legacy_cama_id": "J36-01110-00",
+        "parcel_role": "apollo_permit_situs",
+        "owner": "JJJ FAMILY PROPERTIES LLC",
+        "owner_mailing_address": "20022 MERCER RD BOWLING GREEN OH 43402",
+        "situs_address": "11902 MIDDLETON",
+        "legal_description": "WSW LESS SE'LY PT FOR HWY",
+        "acres": 79.07,
+        "planar_acres": 76.852,
+        "land_use_code": 101,
+        "tax_district": "J36",
+        "school_code": "8702",
+        "market_land_value": 643200,
+        "market_improvement_value": 7300,
+        "cauv_value": 266990,
+        "last_sale_date": "2008-12-22",
+        "last_sale_amount": 0,
+        "valid_sale": "U",
+        "instrument_code": "WD",
+        "conveyance_number": "0",
+        "deed_number": "1783",
+        "rezoning_contestable_2026_07_07": false,
+        "township_zoning_2025_11_13": [
+          {
+            "district": "M-1: Light Industrial",
+            "pct_of_parcel": 100.0,
+            "zoning_fabric_parcels": [
+              "611200000011000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.59584549556978,
+              41.38508014832738
+            ],
+            [
+              -83.59739876534103,
+              41.38504360655189
+            ],
+            [
+              -83.59739522148725,
+              41.38191758609732
+            ],
+            [
+              -83.59759419922096,
+              41.381713177981396
+            ],
+            [
+              -83.5969168380557,
+              41.381719821853444
+            ],
+            [
+              -83.59609054609781,
+              41.38182859334041
+            ],
+            [
+              -83.59601543346534,
+              41.381836163310446
+            ],
+            [
+              -83.59593975579256,
+              41.3818391890065
+            ],
+            [
+              -83.59583693193018,
+              41.381840189258874
+            ],
+            [
+              -83.59584549556978,
+              41.38508014832738
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "2371 WOODSTREAM",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "CLOP BOWLING GREEN OH LLC",
+        "parcel_id": "511210000002003",
+        "parcel_id_auditor": "B07-511-210000002003",
+        "legacy_cama_id": null,
+        "parcel_role": "oppidan_colo",
+        "owner": "CLOP BOWLING GREEN OH LLC",
+        "owner_mailing_address": "400 WATER ST SUITE 200 EXCELSIOR MN 55331",
+        "situs_address": "2371 WOODSTREAM",
+        "legal_description": "11.80A PT COM NECOR NW NR",
+        "acres": 11.8,
+        "planar_acres": 11.818,
+        "land_use_code": 350,
+        "tax_district": "B07",
+        "school_code": "8701",
+        "market_land_value": 172500,
+        "market_improvement_value": 0,
+        "cauv_value": 0,
+        "last_sale_date": "2025-02-03",
+        "last_sale_amount": 1105000,
+        "valid_sale": "Q",
+        "instrument_code": "WD",
+        "conveyance_number": "0144",
+        "deed_number": null,
+        "rezoning_contestable_2026_07_07": false,
+        "township_zoning_2025_11_13": null
+      }
+    }
+  ]
+}

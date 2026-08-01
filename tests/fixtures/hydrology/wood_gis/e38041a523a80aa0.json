@@ -1,0 +1,187 @@
+{
+  "params": {
+    "f": "json",
+    "returnGeometry": "false",
+    "where": "Name='611190000003500'",
+    "outFields": "Name,Owner_Name,Deeded_Name,Street_Number,Street_Name,Suffix,Primary_Use,Land_Acres,Total_Land,Total_Improved,Prc_Ttl_Apprais_Lnd_Alt,District,School_District,Sale_Date,Transfer_Price,Qualified,Mail_Address_Line_1,Mail_Address_Line_2,Mail_City,Mail_State,Mail_Zip",
+    "resultOffset": 0,
+    "resultRecordCount": 2000
+  },
+  "fetched_at": "2026-08-01T20:49:42.518832+00:00",
+  "payload": {
+    "displayFieldName": "Name",
+    "fieldAliases": {
+      "Name": "Name",
+      "Owner_Name": "Owner_Name",
+      "Deeded_Name": "Deeded_Name",
+      "Street_Number": "Street_Number",
+      "Street_Name": "Street_Name",
+      "Suffix": "Suffix",
+      "Primary_Use": "Primary_Use",
+      "Land_Acres": "Land_Acres",
+      "Total_Land": "Total_Land",
+      "Total_Improved": "Total_Improved",
+      "Prc_Ttl_Apprais_Lnd_Alt": "Prc_Ttl_Apprais_Lnd_Alt",
+      "District": "District",
+      "School_District": "School_District",
+      "Sale_Date": "Sale_Date",
+      "Transfer_Price": "Transfer_Price",
+      "Qualified": "Qualified",
+      "Mail_Address_Line_1": "Mail_Address_Line_1",
+      "Mail_Address_Line_2": "Mail_Address_Line_2",
+      "Mail_City": "Mail_City",
+      "Mail_State": "Mail_State",
+      "Mail_Zip": "Mail_Zip"
+    },
+    "fields": [
+      {
+        "name": "Name",
+        "type": "esriFieldTypeString",
+        "alias": "Name",
+        "length": 50
+      },
+      {
+        "name": "Owner_Name",
+        "type": "esriFieldTypeString",
+        "alias": "Owner_Name",
+        "length": 255
+      },
+      {
+        "name": "Deeded_Name",
+        "type": "esriFieldTypeString",
+        "alias": "Deeded_Name",
+        "length": 255
+      },
+      {
+        "name": "Street_Number",
+        "type": "esriFieldTypeString",
+        "alias": "Street_Number",
+        "length": 255
+      },
+      {
+        "name": "Street_Name",
+        "type": "esriFieldTypeString",
+        "alias": "Street_Name",
+        "length": 255
+      },
+      {
+        "name": "Suffix",
+        "type": "esriFieldTypeString",
+        "alias": "Suffix",
+        "length": 255
+      },
+      {
+        "name": "Primary_Use",
+        "type": "esriFieldTypeString",
+        "alias": "Primary_Use",
+        "length": 255
+      },
+      {
+        "name": "Land_Acres",
+        "type": "esriFieldTypeDouble",
+        "alias": "Land_Acres"
+      },
+      {
+        "name": "Total_Land",
+        "type": "esriFieldTypeInteger",
+        "alias": "Total_Land"
+      },
+      {
+        "name": "Total_Improved",
+        "type": "esriFieldTypeInteger",
+        "alias": "Total_Improved"
+      },
+      {
+        "name": "Prc_Ttl_Apprais_Lnd_Alt",
+        "type": "esriFieldTypeInteger",
+        "alias": "Prc_Ttl_Apprais_Lnd_Alt"
+      },
+      {
+        "name": "District",
+        "type": "esriFieldTypeString",
+        "alias": "District",
+        "length": 255
+      },
+      {
+        "name": "School_District",
+        "type": "esriFieldTypeString",
+        "alias": "School_District",
+        "length": 255
+      },
+      {
+        "name": "Sale_Date",
+        "type": "esriFieldTypeDate",
+        "alias": "Sale_Date",
+        "length": 8
+      },
+      {
+        "name": "Transfer_Price",
+        "type": "esriFieldTypeInteger",
+        "alias": "Transfer_Price"
+      },
+      {
+        "name": "Qualified",
+        "type": "esriFieldTypeString",
+        "alias": "Qualified",
+        "length": 255
+      },
+      {
+        "name": "Mail_Address_Line_1",
+        "type": "esriFieldTypeString",
+        "alias": "Mail_Address_Line_1",
+        "length": 255
+      },
+      {
+        "name": "Mail_Address_Line_2",
+        "type": "esriFieldTypeString",
+        "alias": "Mail_Address_Line_2",
+        "length": 255
+      },
+      {
+        "name": "Mail_City",
+        "type": "esriFieldTypeString",
+        "alias": "Mail_City",
+        "length": 255
+      },
+      {
+        "name": "Mail_State",
+        "type": "esriFieldTypeString",
+        "alias": "Mail_State",
+        "length": 255
+      },
+      {
+        "name": "Mail_Zip",
+        "type": "esriFieldTypeString",
+        "alias": "Mail_Zip",
+        "length": 255
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "Name": "611190000003500",
+          "Owner_Name": "LIAMES LLC",
+          "Deeded_Name": "LIAMES LLC",
+          "Street_Number": "0",
+          "Street_Name": "MERCER",
+          "Suffix": "",
+          "Primary_Use": "101",
+          "Land_Acres": 322.5,
+          "Total_Land": 2836700,
+          "Total_Improved": 181600,
+          "Prc_Ttl_Apprais_Lnd_Alt": 0,
+          "District": "J36",
+          "School_District": "8702",
+          "Sale_Date": 1744156800000,
+          "Transfer_Price": 0,
+          "Qualified": "Q",
+          "Mail_Address_Line_1": "1 META WAY",
+          "Mail_Address_Line_2": "",
+          "Mail_City": "MENLOW PARK",
+          "Mail_State": "CA",
+          "Mail_Zip": "94025"
+        }
+      }
+    ]
+  }
+}

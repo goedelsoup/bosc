@@ -1017,6 +1017,80 @@ def test_wilmington_exports_at_case_tier_on_committed_corridor_geometry(
     assert len(rezoned) == 4 and not any("ARDENT" in p["owner"].upper() for p in rezoned)
 
 
+def test_bowling_green_exports_at_case_tier_on_committed_assembly_geometry(
+    site_bundle: Callable[[str], Path],
+) -> None:
+    """Bowling Green rose ``backdrop`` -> ``case`` when #1436 committed the land assembly.
+
+    Two domains moved between the last committed bundle and this one, from two different issues,
+    which is readiness behaving as the standing property it is: ``places`` absent -> live on this
+    geometry, and ``record`` absent -> live from #1439's water-permit ingest, which had already
+    landed on main while the committed bundle still showed the old value.
+
+    The file behind ``geo/campus`` is FOUR kinds of claim, not one campus, and the ``role``
+    property is what keeps them apart — this pins that the distinction survives the export.
+    Twelve parcels are the recorded LIAMES, LLC holding; the other three are a rezoning still in
+    its owner's name, the parcel of record for a *different* facility's air permit, and a
+    competitor's colo 4.83 miles away in another jurisdiction. A reader who sums the acreage of
+    this feed gets a number that describes no thing.
+
+    What did NOT move is equally the point. ``facility`` stays ``seeded``: the #1630 downgrade
+    holds, because the campus IT load is still the disclosed ~180 MW peak carried as
+    ``[reference]``, and committing land does not ground a load. ``story`` stays absent. A future
+    change that floats either off geometry alone fails here.
+    """
+    bundle = site_bundle("bowling-green")
+    manifest = _manifest(bundle)
+    assert manifest["contract_version"] == _CV
+    readiness = manifest["readiness"]
+    assert readiness["tier"] == "case", f"bowling-green should now be a Case site, got {readiness}"
+    domains = readiness["domains"]
+    assert domains["backdrop"] == "live"
+    assert domains["facility"] == "seeded"  # ~180 MW peak is [reference], not an instrument (#1630)
+    assert domains["places"] == "live"  # committed land-assembly geometry (#1436)
+    assert domains["record"] == "live"  # the 2PD00009 water instruments (#1439)
+    assert domains["story"] == "absent"
+
+    ref = _feeds_by_name(bundle)["geo/campus"]
+    features = json.loads((bundle / ref["path"]).read_text(encoding="utf-8"))["features"]
+    assert len(features) == 15
+    props = [f["properties"] for f in features]
+
+    # (1) The campus: twelve parcels, one owner, 775.020 ac deeded.
+    assembly = [p for p in props if p["parcel_role"] == "liames_assembly"]
+    assert len(assembly) == 12
+    assert {p["owner"] for p in assembly} == {"LIAMES LLC"}
+    assert round(sum(p["acres"] for p in assembly), 3) == 775.020
+    # The county tax roll bills eight of them to Meta's own headquarters — the operator
+    # attribution corroborated in the record, independent of the company's announcement.
+    assert sum("META WAY" in (p["owner_mailing_address"] or "") for p in assembly) == 8
+
+    # (2) The eight small parcels whose M-1 zoning was still inside its referendum window at pull
+    # time. They are flagged rather than quietly folded into the campus, and they still read their
+    # PRE-rezoning districts because no published Wood County layer carries the 2026-07-07 grant.
+    contestable = [p for p in assembly if p["rezoning_contestable_2026_07_07"]]
+    assert len(contestable) == 8
+    assert round(sum(p["acres"] for p in contestable), 2) == 21.37
+    assert {z["district"] for p in contestable for z in p["township_zoning_2025_11_13"]} == {
+        "A-1: Agricultural",
+        "R-4: Multiple Dwelling",
+    }
+    # while the four core tracts are already M-1, from the 2023 rezonings.
+    core = [p for p in assembly if not p["rezoning_contestable_2026_07_07"]]
+    assert len(core) == 4
+    assert all(
+        p["township_zoning_2025_11_13"][0]["district"] == "M-1: Light Industrial" for p in core
+    )
+
+    # (3) The three rows that are NOT the holding, each a different claim.
+    others = {p["parcel_role"]: p for p in props if p["parcel_role"] != "liames_assembly"}
+    assert set(others) == {"rezoning_pending", "apollo_permit_situs", "oppidan_colo"}
+    assert others["rezoning_pending"]["owner"] == "A SCHALLER LIMITED PARTNERSHIP"
+    assert others["apollo_permit_situs"]["owner"] == "JJJ FAMILY PROPERTIES LLC"
+    assert others["oppidan_colo"]["owner"] == "CLOP BOWLING GREEN OH LLC"
+    assert "LIAMES" not in {p["owner"] for p in others.values()}
+
+
 def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     site_bundle: Callable[[str], Path],
 ) -> None:

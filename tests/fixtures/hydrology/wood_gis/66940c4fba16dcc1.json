@@ -1,0 +1,314 @@
+{
+  "params": {
+    "f": "json",
+    "returnGeometry": "false",
+    "where": "Name IN ('611190000003500','611190000029510','611300000001000','611300000002000','611190000037000','611190000033000','611190000036001','611190000034000','611190000008000','611190000035000','611190000009000','611190000025000','611190000006000','611200000011000','511210000002003')",
+    "outFields": "Name,Identification__,Old_CAMA_Id,Legal_Description,Instrument_Code,Conveyance__,Deed_Number,Num_Transferred,Primary_Use,Prc_Assng_Dist",
+    "resultOffset": 0,
+    "resultRecordCount": 2000
+  },
+  "fetched_at": "2026-08-01T20:27:34.053544+00:00",
+  "payload": {
+    "displayFieldName": "Name",
+    "fieldAliases": {
+      "Name": "Name",
+      "Identification__": "Identification__",
+      "Old_CAMA_Id": "Old_CAMA_Id",
+      "Legal_Description": "Legal_Description",
+      "Instrument_Code": "Instrument_Code",
+      "Conveyance__": "Conveyance__",
+      "Deed_Number": "Deed_Number",
+      "Num_Transferred": "Num_Transferred",
+      "Primary_Use": "Primary_Use",
+      "Prc_Assng_Dist": "Prc_Assng_Dist"
+    },
+    "fields": [
+      {
+        "name": "Name",
+        "type": "esriFieldTypeString",
+        "alias": "Name",
+        "length": 50
+      },
+      {
+        "name": "Identification__",
+        "type": "esriFieldTypeString",
+        "alias": "Identification__",
+        "length": 255
+      },
+      {
+        "name": "Old_CAMA_Id",
+        "type": "esriFieldTypeString",
+        "alias": "Old_CAMA_Id",
+        "length": 255
+      },
+      {
+        "name": "Legal_Description",
+        "type": "esriFieldTypeString",
+        "alias": "Legal_Description",
+        "length": 255
+      },
+      {
+        "name": "Instrument_Code",
+        "type": "esriFieldTypeString",
+        "alias": "Instrument_Code",
+        "length": 255
+      },
+      {
+        "name": "Conveyance__",
+        "type": "esriFieldTypeString",
+        "alias": "Conveyance__",
+        "length": 255
+      },
+      {
+        "name": "Deed_Number",
+        "type": "esriFieldTypeString",
+        "alias": "Deed_Number",
+        "length": 255
+      },
+      {
+        "name": "Num_Transferred",
+        "type": "esriFieldTypeString",
+        "alias": "Num_Transferred",
+        "length": 255
+      },
+      {
+        "name": "Primary_Use",
+        "type": "esriFieldTypeString",
+        "alias": "Primary_Use",
+        "length": 255
+      },
+      {
+        "name": "Prc_Assng_Dist",
+        "type": "esriFieldTypeString",
+        "alias": "Prc_Assng_Dist",
+        "length": 255
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "Name": "511210000002003",
+          "Identification__": "B07-511-210000002003",
+          "Old_CAMA_Id": "",
+          "Legal_Description": "11.80A PT COM NECOR NW NR",
+          "Instrument_Code": "WD",
+          "Conveyance__": "0144",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "350",
+          "Prc_Assng_Dist": "00300"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000006000",
+          "Identification__": "J34-611-190000006000",
+          "Old_CAMA_Id": "J34-02504-00",
+          "Legal_Description": "N64.550A WNWFR           \n                         \n                         \n",
+          "Instrument_Code": "NA",
+          "Conveyance__": "1842",
+          "Deed_Number": "1842",
+          "Num_Transferred": "8",
+          "Primary_Use": "101",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000006000",
+          "Identification__": "J34-611-190000006000",
+          "Old_CAMA_Id": "J34-02504-00",
+          "Legal_Description": "N64.550A WNWFR           \n                         \n                         \n",
+          "Instrument_Code": "NA",
+          "Conveyance__": "1842",
+          "Deed_Number": "1842",
+          "Num_Transferred": "8",
+          "Primary_Use": "101",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000008000",
+          "Identification__": "J34-611-190000008000",
+          "Old_CAMA_Id": "J34-02500-00",
+          "Legal_Description": "N1.59A PT COM 723.55' NE \nLINE NW & DIXIE HWY SW NW\nE OF HWY (300'X232.20')  \n",
+          "Instrument_Code": "WD",
+          "Conveyance__": "1424",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "511",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000009000",
+          "Identification__": "J34-611-190000009000",
+          "Old_CAMA_Id": "J34-02501-01",
+          "Legal_Description": "PT COM 577.15' NE'LY SUR \nLINE RT 25 S LINE NW1/4  \n(146.40'X300')           \n",
+          "Instrument_Code": "WD",
+          "Conveyance__": "0782",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "511",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000025000",
+          "Identification__": "J34-611-190000025000",
+          "Old_CAMA_Id": "J34-02509-00",
+          "Legal_Description": "IRREG PT COM 929.34' NE O\nSWCOR                    \n                         \n",
+          "Instrument_Code": "LW",
+          "Conveyance__": "0627",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "511",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000029510",
+          "Identification__": "J34-611-190000029510",
+          "Old_CAMA_Id": "J34-02506-00",
+          "Legal_Description": "196.50A PT COM 757.74' W SECOR SW",
+          "Instrument_Code": "QC",
+          "Conveyance__": "0",
+          "Deed_Number": "0520",
+          "Num_Transferred": "1",
+          "Primary_Use": "101",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000003500",
+          "Identification__": "J36-611-190000003500",
+          "Old_CAMA_Id": "",
+          "Legal_Description": "322.50A PT COM NECOR NE",
+          "Instrument_Code": "QC",
+          "Conveyance__": "0",
+          "Deed_Number": "0519",
+          "Num_Transferred": "1",
+          "Primary_Use": "101",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000033000",
+          "Identification__": "J36-611-190000033000",
+          "Old_CAMA_Id": "J36-01003-20",
+          "Legal_Description": "W339.88' E659.89' S498.72\nE1/4 SE                  \n                         \n",
+          "Instrument_Code": "WD",
+          "Conveyance__": "1131",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "511",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000034000",
+          "Identification__": "J36-611-190000034000",
+          "Old_CAMA_Id": "J36-01004-00",
+          "Legal_Description": "SECOR E1/4 SE (290'X300')\n                         \n                         \n",
+          "Instrument_Code": "WD",
+          "Conveyance__": "0617",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "511",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000035000",
+          "Identification__": "J36-611-190000035000",
+          "Old_CAMA_Id": "J36-01003-10",
+          "Legal_Description": "E320' N208.71' S498.71'  \nSE SE                    \n                         \n",
+          "Instrument_Code": "WD",
+          "Conveyance__": "0778",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "511",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000036001",
+          "Identification__": "J36-611-190000036001",
+          "Old_CAMA_Id": "",
+          "Legal_Description": "N220' S748.71' W660.09'  \nSE SE                    \n                         \n",
+          "Instrument_Code": "LW",
+          "Conveyance__": "1170",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "511",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611190000037000",
+          "Identification__": "J36-611-190000037000",
+          "Old_CAMA_Id": "J36-01003-31",
+          "Legal_Description": "N495.41' E661.28' NE SE  \n                         \n                         \n",
+          "Instrument_Code": "WD",
+          "Conveyance__": "1937",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "511",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611200000011000",
+          "Identification__": "J36-611-200000011000",
+          "Old_CAMA_Id": "J36-01110-00",
+          "Legal_Description": "WSW LESS SE'LY PT FOR HWY\n                         \n                         \n",
+          "Instrument_Code": "WD",
+          "Conveyance__": "0",
+          "Deed_Number": "1783",
+          "Num_Transferred": "4",
+          "Primary_Use": "101",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611300000001000",
+          "Identification__": "J36-611-300000001000",
+          "Old_CAMA_Id": "J36-01501-00",
+          "Legal_Description": "NE                       \n                         \n                         \n",
+          "Instrument_Code": "QC",
+          "Conveyance__": "0",
+          "Deed_Number": "1588",
+          "Num_Transferred": "1",
+          "Primary_Use": "101",
+          "Prc_Assng_Dist": "01400"
+        }
+      },
+      {
+        "attributes": {
+          "Name": "611300000002000",
+          "Identification__": "J36-611-300000002000",
+          "Old_CAMA_Id": "J36-01502-10",
+          "Legal_Description": "ENW LESS N280' W442' LESS 1.66A PT\n& LESS S100' N2502.35' E100'\n                         \n                         \n",
+          "Instrument_Code": "LW",
+          "Conveyance__": "1750",
+          "Deed_Number": "",
+          "Num_Transferred": "1",
+          "Primary_Use": "101",
+          "Prc_Assng_Dist": "01400"
+        }
+      }
+    ]
+  }
+}

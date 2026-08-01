@@ -27,6 +27,7 @@ from watermark.sites import (
     LUCAS_AREIS_PARCEL_SCHEMA,
     LUCAS_ZONING_SCHEMA,
     MIAMI_PARCEL_SCHEMA,
+    MIDDLETON_ZONING_SCHEMA,
     PER_SITE_OUTPUT_FIELDS,
     PUTNAM_PARCEL_SCHEMA,
     SHELBY_PARCEL_SCHEMA,
@@ -34,6 +35,7 @@ from watermark.sites import (
     SITES,
     VAN_WERT_PARCEL_SCHEMA,
     WILMINGTON_ZONING_SCHEMA,
+    WOOD_PARCEL_SCHEMA,
     SiteFacility,
     SiteProfile,
     active_profile,
@@ -1592,3 +1594,185 @@ def test_secondary_facility_does_not_inherit_the_primary_geometry() -> None:
     assert feed[0].is_primary and feed[0].name == "Cosler Farm campus"
     assert feed[0].parcels_relpath == "reference/wilmington/parcel-assemblage.geojson"
     assert feed[0].footprint_relpath == "extracted/wilmington/bosc-site-footprint.yaml"
+
+
+def test_wood_parcel_schema_probes_a_vintage_the_server_does_not_publish() -> None:
+    """Bowling Green's parcel gap (#1436) is closed by Wood County's own Vision CAMA join.
+
+    Three field mappings on this layer are traps rather than conventions, and each is pinned here
+    because the obvious reading is wrong. The deeded owner is ``Deeded_Name``: the column
+    literally named ``Deeded_Owner`` is empty on every row. There is NO total-value column, so
+    ``market_total_field`` is deliberately empty and ``market_total_value`` is null by
+    construction — reading ``Prc_Ttl_Apprais_Lnd_Alt`` as the total would be wrong twice over,
+    because that column is the CAUV land value. And the corpus deed pattern starts at the ``611-``
+    rather than the auditor's printed ``J36-611-…`` prefix, because ``dashless`` normalization
+    keeps the ``36`` of ``J36`` and would produce a 17-digit string matching nothing.
+    """
+    p = SITES["bowling-green"].gis_parcel
+    assert p is not None and p is WOOD_PARCEL_SCHEMA
+    assert p.connector == "wood_gis" and p.reference_dir == "bowling-green-gis"
+    assert p.id_field == "Name" and p.id_normalize == "dashless"
+    assert p.owner_field == "Owner_Name" and p.defense is None  # owner present; no enclave scan
+    assert p.deeded_owner_field == "Deeded_Name"  # NOT the empty Deeded_Owner column
+    assert p.date_decode == "epoch_millis"  # an esriFieldTypeDate, unlike Clinton's text field
+    assert p.land_use_field == "Primary_Use" and p.land_use_decode == "int"  # a numeric STRING
+    assert p.market_total_field == ""  # the layer publishes no total column at all
+    assert p.cauv_field == "Prc_Ttl_Apprais_Lnd_Alt"  # the CAUV land value, despite the name
+    assert p.valid_sale_field == "Qualified"  # "Q"/"U", the auditor's arms-length flag
+    assert p.neighborhood_field == ""
+    assert p.query_scope == ""  # single-jurisdiction layer (no statewide County= scope)
+    assert p.deed_id_regex == r"\b\d{3}-\d{12}\b"  # the printed id MINUS its district prefix
+    assert "Vision_Parcels/MapServer/0" in p.meta.source_url
+    assert SITES["bowling-green"].parcels_url == p.meta.source_url  # profile matches schema
+    # The vintage this server does not publish, and the row shape that reads as duplication.
+    assert any("2025-07-25" in c and "editingInfo" in c for c in p.meta.caveats)
+    assert any("ONE ROW PER POLYGON PART" in c for c in p.meta.caveats)
+    assert any("CAUV LAND VALUE" in c.upper() for c in p.meta.caveats)
+    assert any("Bowling Green KENTUCKY" in c for c in p.meta.caveats)
+
+    # Param stability: the committed assemblage's Name-list query replays from its fixture.
+    names = (
+        "611190000003500",
+        "611190000029510",
+        "611300000001000",
+        "611300000002000",
+        "611190000037000",
+        "611190000033000",
+        "611190000036001",
+        "611190000034000",
+        "611190000008000",
+        "611190000035000",
+        "611190000009000",
+        "611190000025000",
+        "611190000006000",
+        "611200000011000",
+        "511210000002003",
+    )
+    key = cache_key(
+        {
+            "f": "geojson",
+            "returnGeometry": "true",
+            "where": "Name IN ('" + "','".join(names) + "')",
+            "outFields": ",".join(p.out_fields),
+            "outSR": "4326",
+            "resultOffset": 0,
+            "resultRecordCount": p.page_size,
+        }
+    )
+    assert (FIXTURES / p.connector / f"{key}.json").is_file(), f"wood param drift: {key}"
+
+
+def test_middleton_zoning_schema_is_the_townships_not_the_citys() -> None:
+    """Bowling Green's zoning endpoint is the TOWNSHIP'S, and that is the finding (#1436).
+
+    The campus sits in Middleton Township about 6 mi north of the corporation limits, so the City
+    of Bowling Green's own ``Current Zoning`` layer — the endpoint the profile's TODO comment
+    named — covers the Oppidan colo and not the campus. Of the two layers that do cover the
+    township, the countywide one is a 2013 snapshot; this hosted one was built 2025-11-13 and
+    therefore carries the 2023 agricultural-to-M-1 rezonings of the campus core. Neither carries
+    the 2026-07-07 rezoning of the thirteen small parcels, which is a publication lag rather than
+    a fact about their zoning — and the schema says so instead of leaving it to be rediscovered.
+    """
+    z = SITES["bowling-green"].gis_zoning
+    assert z is not None and z is MIDDLETON_ZONING_SCHEMA
+    assert z.connector == "middleton_gis" and z.reference_dir == "bowling-green-gis"
+    assert z.parcel_field == "name"  # parcel-joined, unlike Findlay/Sidney/Wilmington's polygons
+    assert z.zoning_field == "zone" and z.cited_meta is None
+    assert z.page_size == 1000  # half the parcel layer's — a paging trap if assumed equal
+    assert "Middleton_Twp_Zoning_Viewer26/FeatureServer/1" in z.meta.source_url
+    assert SITES["bowling-green"].zoning_url == z.meta.source_url  # profile matches schema
+    # It is NOT the city layer, and the reason is jurisdictional, not editorial.
+    assert "gis.bgohio.org" not in z.meta.source_url
+    assert any("gis.bgohio.org" in c and "Oppidan" in c for c in z.meta.caveats)
+    # The three facts a reader would otherwise have to rediscover the hard way.
+    assert any("2026-07-07" in c and "publication lag" in c for c in z.meta.caveats)
+    assert any("OLDER PARCEL FABRIC" in c for c in z.meta.caveats)
+    assert any("ZONE STRING IS CODE AND LABEL TOGETHER" in c for c in z.meta.caveats)
+
+
+def test_bowling_green_hsg_corrects_the_form_of_the_rating_not_just_the_letter() -> None:
+    """#1436: the committed geometry let SSURGO run and it returned a DUAL rating, C/D, where the
+    profile carried a plain ``D``.
+
+    Unlike Sidney (B->D), Urbana (B->C), Troy-Piqua (B->C/D) and Wilmington (C confirmed), the
+    correction here is not about which letter: the prior inference read the Great Black Swamp
+    lakebed clays correctly. What it got wrong is that the survey rates them dual — C where field
+    tile is maintained, D in the natural undrained condition. Collapsing that to D pre-selects the
+    high-runoff condition for every scenario including the pre-development one, where the ground
+    IS drained, and puts the choice somewhere no per-scenario switch can see it.
+    """
+    s = SITES["bowling-green"]
+    assert s.dominant_hsg == "C/D"  # the dual rating VERBATIM — never pre-collapsed
+    assert s.hsg_citation.startswith("Hydrologic soil group C/D") and "SSURGO" in s.hsg_citation
+    assert "428 of 428" in s.hsg_citation  # every point, every grid density
+    assert "REPLACES the pre-#1436 [inference]" in s.hsg_citation
+    # The dual-rating switches are live for this site in a way they are inert for a single group.
+    assert (s.pre_drainage_condition, s.post_drainage_condition) == ("drained", "undrained")
+    # The cover knobs the footprint unblocked — no TODO left on the stormwater scenario.
+    assert (s.pre_cover, s.post_cover, s.developed_pervious_cover) == (
+        "cropland",
+        "developed_campus",
+        "open_space",
+    )
+    assert s.parcels_relpath == "reference/bowling-green/parcel-assemblage.geojson"
+    assert s.footprint_relpath == "extracted/bowling-green/bosc-site-footprint.yaml"
+    # The toxics window is DERIVED from the campus geometry, not drawn.
+    lat_min, lat_max, lon_min, lon_max = s.toxic_corridor_bbox
+    assert (lat_min, lat_max, lon_min, lon_max) == (41.448, 41.475, -83.653, -83.626)
+    fc = json.loads(
+        (
+            REPO_ROOT / "data" / "reference" / "bowling-green" / "parcel-assemblage.geojson"
+        ).read_text()
+    )
+    campus = [f for f in fc["features"] if f["properties"]["parcel_role"] == "liames_assembly"]
+    lons = [x for f in campus for ring in f["geometry"]["coordinates"] for x, _ in ring]
+    lats = [y for f in campus for ring in f["geometry"]["coordinates"] for _, y in ring]
+    assert lat_min <= min(lats) and max(lats) <= lat_max
+    assert lon_min <= min(lons) and max(lons) <= lon_max
+
+
+def test_bowling_green_assemblage_is_one_holding_and_three_other_claims() -> None:
+    """``parcel_role`` keeps four different claims from being read as one 775-acre campus (#1436).
+
+    The name is not cosmetic: the exporter's ``campus_from_parcels`` reserves ``role`` for its own
+    display field and drops a source property of that name, so a discriminator called ``role``
+    would vanish from the published feed and leave fifteen parcels all reading as campus.
+
+    The measurement that matters is the contiguity. The register carried "~750-ac Liames
+    assembly" as a press figure; the union of the twelve deeded parcels is a SINGLE polygon whose
+    area equals the sum of the parts to within 0.005 ac, so the acreage is now a measurement of
+    one block rather than an arithmetic total.
+    """
+    fc = json.loads(
+        (
+            REPO_ROOT / "data" / "reference" / "bowling-green" / "parcel-assemblage.geojson"
+        ).read_text()
+    )
+    props = [f["properties"] for f in fc["features"]]
+    assert len(props) == 15
+    assembly = [p for p in props if p["parcel_role"] == "liames_assembly"]
+    assert len(assembly) == 12 and {p["owner"] for p in assembly} == {"LIAMES LLC"}
+    assert {p["parcel_role"] for p in props if p["parcel_role"] != "liames_assembly"} == {
+        "rezoning_pending",
+        "apollo_permit_situs",
+        "oppidan_colo",
+    }
+
+    prov = fc["bosc:provenance"]
+    assert prov["liames_cama_acres"] == 775.020
+    assert prov["liames_union_planar_acres"] == 774.878  # ONE polygon, not a sum
+    assert abs(prov["liames_planar_acres"] - prov["liames_union_planar_acres"]) < 0.01
+    assert prov["liames_core_cama_acres"] == 753.65
+    assert prov["liames_small_parcel_cama_acres"] == 21.37
+
+    # The eight parcels whose zoning was still contestable are flagged, not folded in silently.
+    contestable = [p for p in assembly if p["rezoning_contestable_2026_07_07"]]
+    assert len(contestable) == 8
+    assert round(sum(p["acres"] for p in contestable), 2) == 21.37
+
+    # The traps that would have produced a wrong number are caveats, not rediscoveries.
+    assert any("SUM OF THE TRANSFER PRICES IS NOT WHAT THE LAND COST" in c for c in prov["caveats"])
+    assert any("PARCEL FABRIC MOVED" in c for c in prov["caveats"])
+    assert any("`parcel_role`, NOT `role`" in c for c in prov["caveats"])
+    assert any("THE WINDOW WAS STILL OPEN" in c and "2026-08-06" in c for c in prov["caveats"])
+    assert any("LIMES" in c and "one letter" in c for c in prov["caveats"])

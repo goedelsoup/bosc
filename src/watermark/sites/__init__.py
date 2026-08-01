@@ -60,6 +60,9 @@ from watermark.sites._gis_schemas import (
     MIAMI_PARCEL_SCHEMA as MIAMI_PARCEL_SCHEMA,
 )
 from watermark.sites._gis_schemas import (
+    MIDDLETON_ZONING_SCHEMA as MIDDLETON_ZONING_SCHEMA,
+)
+from watermark.sites._gis_schemas import (
     NATIONAL_NFHL_FLOOD_SCHEMA as NATIONAL_NFHL_FLOOD_SCHEMA,
 )
 from watermark.sites._gis_schemas import (
@@ -82,6 +85,9 @@ from watermark.sites._gis_schemas import (
 )
 from watermark.sites._gis_schemas import (
     WILMINGTON_ZONING_SCHEMA as WILMINGTON_ZONING_SCHEMA,
+)
+from watermark.sites._gis_schemas import (
+    WOOD_PARCEL_SCHEMA as WOOD_PARCEL_SCHEMA,
 )
 from watermark.sites._model import (
     PROFILE_SETTINGS_FIELDS as PROFILE_SETTINGS_FIELDS,

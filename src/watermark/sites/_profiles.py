@@ -22,6 +22,7 @@ from watermark.sites._gis_schemas import (
     LUCAS_AREIS_PARCEL_SCHEMA,
     LUCAS_ZONING_SCHEMA,
     MIAMI_PARCEL_SCHEMA,
+    MIDDLETON_ZONING_SCHEMA,
     NATIONAL_NFHL_FLOOD_SCHEMA,
     OHIO_STATEWIDE_PARCEL_SCHEMA,
     PIQUA_ZONING_SCHEMA,
@@ -31,6 +32,7 @@ from watermark.sites._gis_schemas import (
     SIDNEY_ZONING_SCHEMA,
     VAN_WERT_PARCEL_SCHEMA,
     WILMINGTON_ZONING_SCHEMA,
+    WOOD_PARCEL_SCHEMA,
 )
 from watermark.sites._model import (
     CoolingModelType,
@@ -3898,36 +3900,57 @@ _BOWLING_GREEN = SiteProfile(
     # EIA-861 2024 Utility_Data / Sales_Ult_Cust (f8612024.zip, released 2025-10-06), BA=PJM.
     # NB the Bowling Green, KY muni is #2056 (SERC/TVA) — the KY disambiguation trap, avoided here.
     eia_state="OH",
-    # GIS — schema-driven (#237): flood = the shared national NFHL; parcels/zoning REST endpoints
-    # are DISCOVERED (both live, owner/district-bearing) but the per-jurisdiction field-map schemas
-    # (gis_parcel/gis_zoning) are the places-domain lift (#1436) — left None here so the connector
-    # refuses cleanly rather than half-wiring a facility-scoped PR. Endpoints for #1436 to wire:
-    #   parcels: https://wcohiogis.woodcountyohio.gov/server/rest/services/Services_for_Web_Apps/Vision_Parcels/MapServer/0
-    #            (Wood County Vision/CAMA — Owner_Name + Deeded_Owner + Sale_Date/Transfer_Price; parcel id in Name; 73,839 features)
-    #   zoning:  https://gis.bgohio.org/arcgis/rest/services/PublicData/UtilitiesWithZoning/MapServer/2
-    #            (City of Bowling Green "Current Zoning" — district in F2023_Desc; 14 districts)
-    parcels_url="TODO",  # [open] endpoint discovered (see above); field-map schema pending #1436
-    zoning_url="TODO",  # [open] endpoint discovered (see above); field-map schema pending #1436
+    # GIS — schema-driven (#237): flood = the shared national NFHL; parcels + zoning wired in #1436.
+    # The parcel layer is Wood County's own Vision/CAMA join (owner-bearing, 73,839 features); its
+    # vintage is NOT published by the server and has to be probed — max(Sale_Date) is 2025-07-25,
+    # so it is a ~2025-07 snapshot and a negative owner read is a statement about July 2025.
+    # ZONING IS THE TOWNSHIP'S, NOT THE CITY'S, and that is the whole point: the Meta campus is in
+    # MIDDLETON TOWNSHIP ~6 mi north of the corporation limits, so the City of Bowling Green's
+    # "Current Zoning" layer (gis.bgohio.org/.../UtilitiesWithZoning/MapServer/2, F2023_Desc, 14
+    # districts) covers the Oppidan colo in the Woodbridge Business Park and NOT the campus. The
+    # countywide township layer (Services_for_Web_Apps/Zoning_Districts/MapServer/1) is a 2013
+    # snapshot (LASTUPDATE 2013-07-18..2013-08-08 on 1,338 of 1,339 polygons) and predates every
+    # rezoning this site is about; the hosted Middleton service below was built 2025-11-13 and
+    # carries the 2023 ag -> M-1 rezonings of the campus core. Neither carries the 2026-07-07
+    # rezoning of the thirteen 31.82-ac parcels — see MIDDLETON_ZONING_SCHEMA's caveats.
+    parcels_url=(  # [verified] Wood County Vision/CAMA join (WOOD_PARCEL_SCHEMA, #1436)
+        "https://wcohiogis.woodcountyohio.gov/server/rest/services/"
+        "Services_for_Web_Apps/Vision_Parcels/MapServer/0"
+    ),
+    zoning_url=(  # [verified] Middleton Twp parcel-joined zoning (MIDDLETON_ZONING_SCHEMA, #1436)
+        "https://wcohiogis.woodcountyohio.gov/server/rest/services/"
+        "Hosted/Middleton_Twp_Zoning_Viewer26/FeatureServer/1"
+    ),
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
-    gis_parcel=None,  # [open] pending Wood County, OH parcel-layer discovery (#1436)
-    gis_zoning=None,  # [open] pending City of Bowling Green zoning-layer discovery (#1436)
+    gis_parcel=WOOD_PARCEL_SCHEMA,
+    gis_zoning=MIDDLETON_ZONING_SCHEMA,
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "bowling-green-gis"}),
     hydro_utm_epsg=32617,  # [verified] UTM 17N (Bowling Green ~83.65 degW; zone 17 spans 84-78 degW)
-    # stormwater (the Atlas-14 corridor point = city centroid; cover scenario pending a site)
+    # stormwater (the Atlas-14 corridor point = city centroid; the cover scenario is the campus)
     design_lat=41.3748,  # [verified] city centroid = NOAA Atlas-14 point
     design_lon=-83.6513,
     corridor_name="North Branch Portage corridor",  # [inference] the effluent receiving-water reach
-    dominant_hsg="D",  # [inference] Wood County Great Black Swamp lakebed clays (Hoytville/Nappanee/Latty) → HSG D
+    dominant_hsg="C/D",  # [verified] SSURGO over the committed campus — a DUAL rating, not "D" (#1436)
     hsg_citation=(
-        "Wood County, OH dominant hydrologic soil group D — very-poorly-drained Great Black Swamp "
-        "lakebed clays (Hoytville/Nappanee/Latty; NRCS Soil Survey of Wood County); [inference] "
-        "pending an SSURGO area-weighted confirmation (onboard SSURGO step needs a footprint)"
+        "Hydrologic soil group C/D over the Liames campus — SSURGO via the USDA Soil Data Access "
+        "service, grid-sampled over the twelve committed parcels "
+        "(data/reference/bowling-green/parcel-assemblage.geojson, parcel_role=liames_assembly) at 6x6, "
+        "8x8, 10x10, 12x12 and 16x16: 428 of 428 interior points returned C/D, with no other "
+        "group appearing at any density, so the letter is not a grid artefact. [verified] — this "
+        "REPLACES the pre-#1436 [inference] of a plain 'D' argued from the Great Black Swamp "
+        "lakebed clays (Hoytville/Nappanee/Latty). The soils are those clays and the inference "
+        "was reading them correctly; what it missed is that the survey rates them DUAL. C is the "
+        "group where field tile is installed and maintained, D the natural undrained condition, "
+        "and this is tiled farm ground — collapsing it to D pre-selects the high-runoff "
+        "condition for every scenario, including the pre-development one, where the ground IS "
+        "drained. The per-scenario switch (pre_drainage_condition / post_drainage_condition) is "
+        "what resolves it; see data/extracted/bowling-green/bosc-site-footprint.yaml."
     ),
-    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified stormwater site (#1436)
-    post_cover="TODO",
-    developed_pervious_cover="TODO",
+    pre_cover="cropland",  # [verified] CAMA use code 101 (cash-grain/general farm) on all four campus tracts
+    post_cover="developed_campus",
+    developed_pervious_cover="open_space",
     noaa_fallback_24h_depth_in={  # [reference] NOAA Atlas-14 Vol 2 (Ohio River Basin) PDS at 41.3748/-83.6513
         1: 1.99,
         2: 2.40,
@@ -3940,8 +3963,13 @@ _BOWLING_GREEN = SiteProfile(
         500: 6.76,
         1000: 7.47,
     },
-    parcels_relpath="reference/bowling-green/parcel-assemblage.geojson",  # [open] commit the campus geometry (#1436)
-    footprint_relpath="extracted/bowling-green/bosc-site-footprint.yaml",  # [open] pending the site footprint (#1436)
+    # [verified] the committed land assembly (#1436): twelve contiguous Wood County parcels deeded
+    # to LIAMES, LLC, 775.020 ac deeded / 774.878 ac planar as ONE polygon, plus three rows that
+    # are NOT part of that holding and are held apart by a `parcel_role` property — the A. Schaller tract
+    # with a rezoning pending, the Apollo air permit's parcel of record, and the Oppidan colo
+    # 4.83 mi away in the city. Read `parcel_role` before quoting an acreage off this file.
+    parcels_relpath="reference/bowling-green/parcel-assemblage.geojson",
+    footprint_relpath="extracted/bowling-green/bosc-site-footprint.yaml",
     # per-site onboard reach outputs (slug-scoped — never clobber Lima/the other sites)
     climatology_relpath="reference/hydrology/bowling-green/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/bowling-green/atlas14-corridor-ddf.yaml",
@@ -3950,8 +3978,15 @@ _BOWLING_GREEN = SiteProfile(
     consumer_energy_relpath="reference/eia/bowling-green/consumer-energy.yaml",
     demand_pressure_relpath="reference/eia/bowling-green/demand-pressure.yaml",
     grid_relpath="reference/eia/bowling-green/grid-profile.yaml",
-    # toxics (no identified industrial corridor yet)
-    toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor
+    # toxics — the screening window is now the committed campus, expanded to the nearest 0.003 deg
+    # (#1436). Coarser than the geometry by design; NOT the campus boundary. The committed union
+    # of the twelve Liames parcels spans 41.45084-41.47292 N, -83.65023 to -83.62889 W.
+    toxic_corridor_bbox=(
+        41.448,
+        41.475,
+        -83.653,
+        -83.626,
+    ),  # [verified — derived from the geometry]
     # balance — the Portage-side receiving chain, resolved from the permit's own fact sheet (#1439).
     # The city's only municipal POTW. NB the receiving water is NOT the Maumee: BG drinks the Maumee
     # (see `abstraction_gage` below) and discharges to the Portage. Effluent screens key on the North

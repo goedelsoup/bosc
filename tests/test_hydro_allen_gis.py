@@ -313,3 +313,115 @@ def test_dedupe_keeps_first_per_parcel_no() -> None:
     out = allen_gis._dedupe([a, dup, b])
     assert [p.parcel_no for p in out] == ["1", "2"]
     assert out[0].owner == "A"  # first row wins
+
+
+def _bowling_green_offline() -> Settings:
+    return Settings(
+        site="bowling-green",
+        data_dir=REPO_ROOT / "data",
+        hydro_offline=True,
+        hydro_fixtures_dir=FIXTURES / "hydrology",
+    )
+
+
+def test_bowling_green_wood_county_parcel_decode() -> None:
+    """Wood County's Vision CAMA through the new ``wood_gis`` field-map (#1436).
+
+    Three encodings here are unlike every other wired jurisdiction and each of them is a way to
+    read this layer wrong: the deeded owner lives in ``Deeded_Name`` while the column literally
+    called ``Deeded_Owner`` is empty on every row; there is NO total-value column, so
+    ``market_total_value`` is null by construction and a reader has to add the two halves; and
+    ``Prc_Ttl_Apprais_Lnd_Alt``, whose name suggests an alternate appraisal, is the CAUV land
+    value — 0 meaning NOT ENROLLED rather than unvalued.
+    """
+    p = allen_gis.fetch_parcel("611190000003500", settings=_bowling_green_offline())
+    assert p is not None
+    assert p.parcel_no == "611190000003500"
+    assert p.owner == "LIAMES LLC"
+    assert p.deeded_owner == "LIAMES LLC"  # Deeded_Name, not the empty Deeded_Owner column
+    assert p.situs_address == "0 MERCER"  # number + street NAME; no street type, no city token
+    # The tax roll bills the nominee entity at Meta's own headquarters (served "MENLOW PARK").
+    assert p.owner_address == "1 META WAY MENLOW PARK CA 94025"
+    assert p.land_use_code == 101  # Ohio CAMA cash-grain/general farm, served as the STRING "101"
+    assert p.acres == pytest.approx(322.5)
+    assert p.market_land_value == 2836700
+    assert p.market_improvement_value == 181600
+    assert p.market_total_value is None  # the layer publishes no total column
+    assert p.cauv_value == 0  # Prc_Ttl_Apprais_Lnd_Alt: 0 = not enrolled, NOT unvalued
+    assert p.tax_district == "J36"  # Middleton Twp
+    assert p.last_sale_date == "2025-04-09"  # esriFieldTypeDate epoch-millis -> ISO
+    assert p.last_sale_amount == 0  # the consolidation quitclaim, not a purchase
+    assert p.valid_sale == "Q"
+
+
+def test_bowling_green_parcel_id_normalizes_without_the_district_prefix() -> None:
+    """The auditor PRINTS ``J36-611-190000003500``; the layer STORES the 15-digit remainder.
+
+    ``dashless`` maps the printed id minus its district prefix onto the stored one, which is why
+    ``deed_id_regex`` starts at the ``611-``. Feeding the full printed form through would keep the
+    ``36`` of ``J36`` and produce a 17-digit string that matches nothing — the failure this
+    convention exists to avoid, pinned here so a later "fix" to the regex has to face it.
+    """
+    assert allen_gis.normalize_parcel_id("611-190000003500") == "611190000003500"
+    assert allen_gis.normalize_parcel_id("611190000003500") == "611190000003500"
+    assert allen_gis.normalize_parcel_id("J36-611-190000003500") == "36611190000003500"
+
+
+def test_bowling_green_assemblage_geojson_is_one_row_per_polygon_part() -> None:
+    """The layer serves one row per polygon PART, not per parcel — and both fixes are wrong.
+
+    Fifteen parcels come back as SIXTEEN features because the A. Schaller tract is served as two
+    rows. They are not duplicates: the parts are disjoint and the pair sums to the deeded acreage.
+    Deduping on ``parcel_id`` drops 25 of that parcel's 64 acres; summing ``Land_Acres`` over the
+    raw rows double-counts, because the acreage is the whole parcel's repeated on each part.
+    """
+    fc = allen_gis.query_parcels_geojson(
+        "Name IN ('611190000003500','611190000029510','611300000001000','611300000002000',"
+        "'611190000037000','611190000033000','611190000036001','611190000034000',"
+        "'611190000008000','611190000035000','611190000009000','611190000025000',"
+        "'611190000006000','611200000011000','511210000002003')",
+        settings=_bowling_green_offline(),
+    )
+    ids = [f["properties"]["parcel_id"] for f in fc["features"]]
+    assert len(ids) == 16 and len(set(ids)) == 15
+    assert ids.count("611190000006000") == 2  # the Schaller tract, in two disjoint parts
+
+    liames = {
+        f["properties"]["parcel_id"]
+        for f in fc["features"]
+        if f["properties"]["owner"] == "LIAMES LLC"
+    }
+    assert len(liames) == 12
+    # The three rows that are NOT the campus, each a different kind of claim.
+    others = {
+        f["properties"]["parcel_id"]: f["properties"]["owner"]
+        for f in fc["features"]
+        if f["properties"]["owner"] != "LIAMES LLC"
+    }
+    assert others["611190000006000"] == "A SCHALLER LIMITED PARTNERSHIP"  # rezoning pending
+    assert others["611200000011000"] == "JJJ FAMILY PROPERTIES LLC"  # the Apollo air-permit situs
+    assert others["511210000002003"] == "CLOP BOWLING GREEN OH LLC"  # the Oppidan colo, 4.83 mi off
+
+
+def test_bowling_green_two_operators_are_invisible_to_an_owner_search() -> None:
+    """Two dated negatives, and they mean different things — neither means "no land".
+
+    ``WILL-POWER`` returns nothing because Will-Power OH, LLC really does hold no Wood County
+    land: the 350 MW behind-the-meter Apollo plant sits on a parcel still deeded to JJJ Family
+    Properties LLC. ``OPPIDAN`` returns nothing because the colo's owner of record is an SPE named
+    CLOP BOWLING GREEN OH LLC — the thing that identifies it is its mailing address, Oppidan's own
+    headquarters at 400 Water St Suite 200, Excelsior MN. An owner-name search is the wrong
+    instrument for a company that buys through a shell, which is the general case here.
+
+    And both are statements about JULY 2025: this layer's newest conveyance anywhere in the county
+    is 2025-07-25, so an empty result can never rule out a later acquisition.
+    """
+    bg = _bowling_green_offline()
+    assert allen_gis.parcels_by_owner("WILL-POWER", settings=bg) == []
+    assert allen_gis.parcels_by_owner("OPPIDAN", settings=bg) == []
+    clop = allen_gis.parcels_by_owner("CLOP BOWLING GREEN", settings=bg)
+    assert [p.parcel_no for p in clop] == ["511210000002003"]
+    assert clop[0].owner_address == "400 WATER ST SUITE 200 EXCELSIOR MN 55331"
+    assert clop[0].acres == pytest.approx(11.8)
+    assert clop[0].last_sale_date == "2025-02-03"
+    assert clop[0].last_sale_amount == 1_105_000

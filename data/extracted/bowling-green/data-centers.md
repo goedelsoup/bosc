@@ -33,9 +33,29 @@ Meta (Middleton Twp) and Oppidan (city proper) — are **distinct projects**; do
   LLC entity record with a Meta entity in the graph on the codename alone** — the pre-reveal link
   was press; the post-reveal Meta operator attribution is what carries `[verified]`.
 - **Site:** Middleton Township, **SR-582 between SR-25 and I-75**, adjacent the FirstEnergy
-  **Mercer Rd substation**; **~280-ac initial site** inside a **~750-ac Liames land assembly**
-  (codename framing). `[verified]` township/company for the location · `[reference]` for the
-  acreage split. Deeds recorded from **2023-09-05**.
+  **Mercer Rd substation**; **~280-ac initial site** inside the Liames land assembly.
+  `[verified]` township/company for the location · `[reference]` for the ~280-ac initial-site
+  split (a site-plan figure, not derivable from the parcels). Deeds recorded from **2023-09-05**.
+- **Land of record (#1436, the places domain):** **twelve contiguous Wood County parcels deeded
+  to LIAMES, LLC — 775.020 ac deeded / 774.878 ac planar**, whose union is a **single polygon**
+  over a 1,821 m × 2,489 m extent. `[verified]` — the county auditor's Vision CAMA, committed as
+  `data/reference/bowling-green/parcel-assemblage.geojson`. This **replaces the "~750-ac"
+  `[reference]` press figure with a measurement**, and the contiguity is measured, not summed.
+  Four tracts over 50 ac carry 753.65 ac; the other 21.37 ac are eight small parcels along SR-25,
+  Mercer Rd and Middleton Pike. **Eight of the twelve parcels are billed to `1 META WAY, MENLO
+  PARK, CA 94025`** — Meta's own headquarters, in the tax record, independent of the
+  announcement; the other four go to `52 E GAY ST, COLUMBUS, OH 43215`. A billing address is not
+  ownership of the LLC, and the Ohio SOS registration for Liames stays `[open]`. **Do not sum
+  the transfer prices**: the CAMA keeps only the last conveyance per parcel, and the 2025-04-09
+  consolidation quitclaims ($0) erased eleven predecessor tracts' purchase prices, so the
+  $6,921,460 that survives is a floor on a fraction of the assembly. The **FirstEnergy/ATSI
+  transmission tract** (72.43 ac, 22105 Mercer Rd) and the **Northwestern Water & Sewer
+  District's** 20-ac tract at 12560 Dixie Hwy both **share a boundary with the assembly at
+  0.0 m** — the profile's "adjacent the Mercer Rd substation" is now a measurement too.
+- **Zoning:** the campus core reads **99.8–100% `M-1: Light Industrial`** in Middleton Township's
+  own parcel-joined layer. `[verified]` The eight small parcels still read `A-1` / `R-4` there:
+  they are part of the **thirteen parcels / 31.82 ac the trustees rezoned to M-1 by 2–1 on
+  2026-07-07**, and **no published Wood County layer carries that change** — see §4.
 - **Building program:** **715,000 sq ft** initial phase + **~1,700 parking spaces**. `[verified]`
   Source: Meta. **Phase 2 signaled** in Meta's **2026-01-07** letter to the township trustees.
 - **Investment:** **>$800M**. `[verified]` (Meta) · an earlier Liames pro-forma put it at **$240M
@@ -67,7 +87,17 @@ average); `cooling_model` records the company's **closed-loop dry** claim as `[r
 
 - **Developer:** **Oppidan Investment Company**. Site: **2501 Woodstream Dr**, Woodbridge Business
   Park, **City of Bowling Green** (city proper — *not* the Middleton Twp Meta campus). `[reference]`
-- **Building:** **61,554 sq ft / ~12 ac**. `[reference]`
+- **Land of record (#1436):** parcel **`511210000002003`**, **11.80 ac deeded**, conveyed to
+  **CLOP BOWLING GREEN OH LLC** on **2025-02-03 for $1,105,000** by warranty deed. `[verified]`
+  — Wood County Auditor Vision CAMA. The owner's mailing address, **400 Water St Suite 200,
+  Excelsior MN 55331**, is Oppidan's own headquarters, which is what identifies the SPE. This
+  upgrades the "~12 ac" `[reference]` above to a deeded figure. The site is **7,771 m
+  (4.83 mi)** from the nearest Meta campus boundary, measured in UTM 17N. Its situs reads
+  **2371 Woodstream** in the ~2025-07 CAMA snapshot; the building address is 2501 Woodstream Dr.
+  Zoning here is the **City's** layer, not Middleton Township's.
+- **Building:** **61,554 sq ft / ~12 ac**. `[reference]` — note a competing figure of **98,695
+  sq ft** appears in the vendor/engineering trade record. `[reference]` The two are not
+  reconciled and neither is an instrument; the city building permit is the pull. `[open]`
 - **Power:** **6 MW avg / 8 MW peak**, on **city (BGMU-implied) power**. `[reference]` — the muni
   serving assumption is `[open]` (BGMU-implied, not instrument-confirmed).
 - **End user:** **undisclosed**; an "Amazon blue" exterior stripe is **unconfirmed** and must not
@@ -111,6 +141,46 @@ pointer; the transcriptions are canonical.
 - **Scope note:** the Apollo gensets are a **separate OPSB-permitted power facility**, not the data
   center's own emergency gensets, so `SiteFacility.genset_count` / `genset_mw` stay `None` on
   `_BOWLING_GREEN`. Grid posture vs the FirstEnergy data-center tariff remains **#1440**.
+
+## 4 — The land-use track: three rezonings, one of them contested (#1436)
+
+The assembly is still moving, and the township's own bodies do not agree with its trustees. Dates
+and tallies here are `[verified]` from the Sentinel-Tribune and BG Independent News reports of the
+meetings; the resolutions themselves are `[open]`.
+
+- **The 13 parcels / 31.82 ac** (former homes and a strip of motel rooms, since razed), **R-4
+  Residential and A-1 Agricultural → M-1 Industrial**, applicant Liames LLC, stated purpose
+  "construction logistics" and consistent zoning across the holding. Their positions —
+  north of SR-582, **eight on the east side of SR-25 and five on the west side of Mercer Rd** —
+  are `[reference]` **press** (BG Independent News, 2026-06-03 and 2026-07-08), *not* a parcel
+  schedule: the record names only eight of the thirteen, so that 8/5 split cannot be checked
+  against the CAMA and the five unnamed parcels stay `[open]`. The application's own parcel
+  schedule at the county planning commission is the instrument:
+  - Wood County Planning Commission **recommended, 6–2, 2026-06-02**
+  - Middleton Township Zoning Commission **REJECTED it, 2026-06-10**
+  - Middleton Township Trustees **granted it anyway, 2–1, 2026-07-07** — Mike Moulton and Fred
+    Vetter in favor, Melissa Petrea against
+  - **R.C. 519.12 referendum window: 30 days, closing ~2026-08-06.** A petition drive needing
+    **971 valid signatures** for the **November 2026** ballot was circulating as of **2026-07-18**
+    (organizers targeting ~1,300 to absorb rejections; Leslie Harper coordinating). `[reference]`
+    — The Blade via thecooldown.com. **As of 2026-08-01 the window is still open and the outcome
+    is `[open]`.** Watch: whether a petition is filed with the Wood County Board of Elections by
+    ~2026-08-06, and its certification.
+  - The record shows **8 of the 13** parcels (21.37 ac) in Liames' name; the press reports all
+    thirteen as already Meta-owned. The gap is the CAMA layer's ~2025-07 vintage, not a research
+    gap. `[open]`
+- **A. Schaller Limited Partnership, 39.265 ac** of parcel `611190000006000` (64.55 ac total),
+  **A-1 → M-1**, for **Liames construction parking**, with Liames **in contract to purchase**:
+  county planning commission **recommended 6–2 on 2026-07-07**; **township action pending**.
+  The application describes moving construction parking "from the southwest corner to the
+  northwest corner of the campus **once construction of building five starts**" — a
+  **five-or-more-building** campus against a 715,000 sq ft "initial phase", and a Phase-2 signal
+  independent of the 2026-01-07 trustees letter. `[verified]`
+- **Devils Hole Rd, ~112 ac**, ag → light-industrial, township zoning commission voted against
+  recommending. `[reference]` — **not resolved by #1436**: no such request appears in the
+  2026-06 / 2026-07 meeting coverage and the parcel is unidentified. Beware the neighbouring
+  **LIMES** family holdings there (Dale Limes LLC, Limes Real Estate Holdings LLC, Limes Galen
+  E) — one letter from **LIAMES**, and several hundred acres of it. `[open]`
 
 ## Instruments to pull (record / water sub-issues #1438 / #1439)
 
