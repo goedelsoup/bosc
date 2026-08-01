@@ -20,8 +20,12 @@ source_text_excerpt: "Form EPA  4429 \nO hio Environmental Protection Agency \nM
 permit:
   confidence: high
   warnings:
-  - No public notice number found in document
-  - No comment period end date stated
+  - No public notice number, public notice date, or comment period end date found in
+    the document — it carries no public notice block at all. public_notice_date previously
+    held 2023-05-05, which is the ACTION date printed on the permit (retained in note),
+    not a noticed date; corrected to null (#1405 review). The permit's real public notice
+    (No. 183565, dated 2023-05-12) is carried by its fact sheet,
+    oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml.
   - Facility address on cover page lists 'Lima, OH 45805' but permit body states 'Shawnee
     Township, Ohio' — same physical address
   - Downstream stream network beyond Ottawa River not specified in document
@@ -31,7 +35,7 @@ permit:
   applicant: Allen County Board of Commissioners
   application_no: OH0023850
   public_notice_no: null
-  public_notice_date: '2023-05-05'
+  public_notice_date: null
   comment_period_end: null
   facility_address: 3640 Spencerville Road, Lima, OH 45805, Allen County
   discharge_address: 3640 Spencerville Road, Shawnee Township, Ohio, Allen County
@@ -42,6 +46,8 @@ permit:
   note: 'Existing permit 2PK00002*KD modified; new permit number 2PK00002*LD effective
     July 1, 2023. Modification includes Antidegradation Paragraph, added Final Effluent
     table for outfall 2PK00002001 effective after plant upgrades, and Schedule of
-    Compliance marked complete. Expiration date: October 31, 2025. Action date (public
-    notice date) is May 5, 2023; no separate public notice number or comment period
-    end date is stated.'
+    Compliance marked complete. Expiration date: October 31, 2025. Action date is May
+    5, 2023; no public notice number, public notice date, or comment period end date
+    is stated. (The parenthetical "(public notice date)" on the action date was the
+    extractor''s conflation, corrected in the #1405 review: the real notice is No. 183565
+    of 2023-05-12, on the fact sheet.)'

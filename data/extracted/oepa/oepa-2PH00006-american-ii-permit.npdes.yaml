@@ -21,10 +21,11 @@ source_text_excerpt: "Ohio EPA Permit No.: 2PH00006*LD \nApplication No: OH00373
 permit:
   confidence: high
   warnings:
-  - No public notice number found in document
-  - No comment period end date found in document
-  - Action Date (June 17, 2025) used as public_notice_date; this is the permit action
-    date, not necessarily a formal public notice date
+  - No public notice number, public notice date, or comment period end date found in
+    the document — it carries no public notice block at all. public_notice_date previously
+    held 2025-06-17, which is the ACTION date printed on the permit (now retained in
+    note); the extractor recorded it knowing it was "not necessarily a formal public
+    notice date", so it is corrected to null (#1405 review).
   - No downstream stream network chain stated beyond Dug Run
   facility_name: American II Wastewater Treatment Plant
   permit_no: 2PH00006*LD
@@ -32,7 +33,7 @@ permit:
   applicant: Allen County Board of Commissioners
   application_no: OH0037338
   public_notice_no: null
-  public_notice_date: '2025-06-17'
+  public_notice_date: null
   comment_period_end: null
   facility_address: 4140 Diller Road, Lima, Ohio, Allen County
   discharge_address: null
@@ -40,6 +41,6 @@ permit:
   stream_network: null
   outfalls:
   - 2PH00006001
-  note: 'Permit effective August 1, 2025; expires July 31, 2030. Two discharge periods:
-    Initial (first 36 months) and Final (month 37 through expiration), with toxicity
-    limits added in Final period. Design flow 1.2 MGD.'
+  note: 'Action date June 17, 2025; permit effective August 1, 2025; expires July 31,
+    2030. Two discharge periods: Initial (first 36 months) and Final (month 37 through
+    expiration), with toxicity limits added in Final period. Design flow 1.2 MGD.'

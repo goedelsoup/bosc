@@ -1,6 +1,6 @@
 {
   "site": "wilmington",
-  "catalog_version": "649a70eb894c6b9595110a2317616dfeecc917a158c86eaae6987e492bf0ef23",
+  "catalog_version": "bc174aeb1e13de83d83ab02ef3317dc4c06f1901d2a652339f56dd72626faa53",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -1292,27 +1292,11 @@
       "feed": "records"
     },
     {
-      "handle": "timeline:wilmington:1II00129*HD",
-      "kind": "timeline",
-      "site": "wilmington",
-      "local_id": "1II00129*HD",
-      "title": "NPDES 1II00129*HD (Wilmington Sanitary Landfill) — public notice",
-      "feed": "timeline"
-    },
-    {
       "handle": "timeline:wilmington:1PD00013*QD",
       "kind": "timeline",
       "site": "wilmington",
       "local_id": "1PD00013*QD",
-      "title": "NPDES 1PD00013*QD (City of Wilmington WWTP) — public notice",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:wilmington:1PT00125*BD",
-      "kind": "timeline",
-      "site": "wilmington",
-      "local_id": "1PT00125*BD",
-      "title": "NPDES 1PT00125*BD (Clinton County Board of Developmental Disabilities) — public notice",
+      "title": "NPDES 1PD00013*QD (Wilmington Wastewater Treatment Plant (WWTP)) — public notice",
       "feed": "timeline"
     }
   ]

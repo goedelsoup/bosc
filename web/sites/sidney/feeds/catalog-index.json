@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "1321879770082e3eb4aff63de5fb264c28e9c87a7977daf19a68404769400569",
+  "catalog_version": "2503eb354ea249058fb8bef65a754a87a4109de873720834dc13db42c710fbd3",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -1122,14 +1122,6 @@
       "local_id": "sidney/wwtp-oh0027421.dmr.yaml",
       "title": "SIDNEY WWTP",
       "feed": "records"
-    },
-    {
-      "handle": "timeline:sidney:1PV00037*ED",
-      "kind": "timeline",
-      "site": "sidney",
-      "local_id": "1PV00037*ED",
-      "title": "NPDES 1PV00037*ED (Hidden Valley Mobile Home Park) — public notice",
-      "feed": "timeline"
     }
   ]
 }

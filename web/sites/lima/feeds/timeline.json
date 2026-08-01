@@ -1,27 +1,5 @@
 [
   {
-    "date": "2023-05-05",
-    "category": "npdes_public_notice",
-    "title": "NPDES 2PK00002*LD (Shawnee II WWTP) — public notice",
-    "ref": "2PK00002*LD",
-    "parties": [
-      "Allen County Board of Commissioners",
-      "Shawnee II WWTP"
-    ],
-    "detail": "action modification; receiving Ottawa River",
-    "source": "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
     "date": "2023-05-12",
     "category": "npdes_public_notice",
     "title": "NPDES 2PK00002*LD (Shawnee II Wastewater Treatment Works (Shawnee II WWTP)) — public notice",
@@ -1264,28 +1242,6 @@
     ],
     "citation": {
       "source": "commissioners/meetings/meeting-index.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2025-06-17",
-    "category": "npdes_public_notice",
-    "title": "NPDES 2PH00006*LD (American II Wastewater Treatment Plant) — public notice",
-    "ref": "2PH00006*LD",
-    "parties": [
-      "Allen County Board of Commissioners",
-      "American II Wastewater Treatment Plant"
-    ],
-    "detail": "action renewal; receiving Dug Run at River Mile 3.1",
-    "source": "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
