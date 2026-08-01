@@ -248,7 +248,20 @@ ordinance_record:
     adopted: "2025-11-04"                     # ¶46
     action: "Approves CRA #2 (Community Reinvestment Area) tax-incentive district supporting the Project"
     tag: reference
-    corroboration: "Aligns with the Nov-18-2025 Highland55 deed (OR603/1927) in land-assembly.yaml. [inference]"
+    instrument_now_in_corpus: true            # #1354 — the ordinance itself is ingested
+    corroboration: >
+      [verified] The adoption date and the 5-2 vote are confirmed from the ordinance and the
+      approved minutes (data/documents/urbana/council/, read in incentive-instruments.yaml). The
+      complaint's CHARACTERIZATION — a district "supporting the Project" — is the pleader's, and
+      the enacted text does not bear it out: Ord. 4631-25 designates an AREA with ceilings, grants
+      nothing, names no project, and its Exhibit B EXCLUDES the two parcels Thor bought first
+      (Urbana Owner I -30-001 and Highland55 -32-005, 133.256 of the assembly's 230.346 ac).
+    correction: >
+      WITHDRAWN (#1354): this entry previously read "Aligns with the Nov-18-2025 Highland55 deed
+      (OR603/1927) in land-assembly.yaml. [inference]". That inference is refuted by the primary
+      instrument — the Highland55 parcel is NOT within Community Reinvestment Area #2. Only the
+      Urbana Owner II parcels (97.09 ac, conveyed 2026-06-12) fall inside it. Do not restate the
+      deed/CRA temporal alignment as evidentiary.
   - id: "Resolution 2727-26 (the Moratorium)"
     exhibit: 5
     adopted: "2026-03-03"                     # ¶61

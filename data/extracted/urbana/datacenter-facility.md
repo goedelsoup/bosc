@@ -25,7 +25,7 @@ Champaign Recorder / Ohio SoS). So the *end-use* is `[reference]` (public disclo
 | Cooling | **Closed-loop** — water use "comparable to a standard office building" (see §5) |
 | Serving utility | **AES Ohio (Dayton Power & Light)** — confirms the profile's `[verified]` serving utility (EIA-861 #4922 / DP&L, PJM **DAY** zone) |
 | Jobs | 30–80 permanent operations; 1,000+ construction |
-| Incentives | CRA agreement offered (noise limits 65 dB day / 55 dB night); ~$5.8M/yr combined city + school tax |
+| Incentives | **None granted** — a CRA *area* exists (Ord. 4631-25), but no CRA agreement, no abatement, and no enforceable noise limit. See §8 |
 | Power (MW) | **NOT disclosed** — a floor-area screening bracket only; the interconnection/air-permit load stays `[open]` (see §4) |
 | Named tenant/operator | none yet `[open]` |
 
@@ -138,4 +138,28 @@ to `[verified]`. It flips the moment any lead below resolves.
   take the end-use `[reference]` → `[verified]`.
 - `[open]` **Named tenant/operator** — "Vance Brands" appears in the Corps JD filings but is not
   resolved to a data-center operator; neither the PJM nor the air search named an operator (#1353).
-- `[open]` The **CRA/PILOT agreement** and the **development agreement** — incentive instruments.
+
+## 8. Incentive instruments — resolved (#1354)
+
+The CRA / development-agreement lead is **closed**: the City of Urbana's legislative record is
+reachable and is now in corpus ([`data/documents/urbana/council/`](../../documents/urbana/council/)),
+read in [`incentive-instruments.md`](incentive-instruments.md) /
+[`incentive-instruments.yaml`](incentive-instruments.yaml). Three corrections land on this file:
+
+- **No abatement exists.** Ord. 4631-25 designated Community Reinvestment Area **#2** (passed 5-2,
+  2025-11-04) — an *area* with ceilings (15 yr / 100% for new construction; 30 yr only for a
+  state-designated `megaproject`). An actual exemption needs a separate R.C. 3735.671 **CRA
+  Agreement** with Council approval, and none has ever come before Council. `[verified]`
+- **The 65/55 dB limits are not a condition of anything.** The Project Overview says the project is
+  "offering to commit to decibel limits *via a formal CRA agreement*" — an offer for an instrument
+  that does not exist. Ord. 4631-25 contains no acoustic condition. `[verified]`
+- **The tax figure was double-counted.** The disclosed aggregate is **"over $3,000,000" annually**,
+  not ~$5.8M: the source states the schools' ">$2,800,000" is drawn "(from the total revenue)."
+  `[verified]`
+
+The City *did* sign one contract with the developer — the December-2024 **Pre-Annexation Agreement**
+with `Urbana0624C, LLC` (Ord. 4612-24, passed 5-0), which the City itself identifies as "Highland"
+and which carries a clause obliging the City to **de-annex the property on the developer's demand**
+if the zoning disappointed it. The disclosed §1 attributes (460k sq ft, ~$1B, closed-loop cooling,
+AES Ohio, 30-80 / 1,000+ jobs) are all corroborated by that same City-posted Project Overview,
+which remains a **developer** document — so they stay `[reference]`, not `[verified]`.

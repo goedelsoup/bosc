@@ -127,7 +127,12 @@ instrument is still wanted — any of:
 
 - A utility interconnection application showing the expected load (MW)
 - An air permit or building permit that names the facility type
-- An ODOD/JobsOhio or CRA/PILOT record identifying the tenant
+- ~~An ODOD/JobsOhio or CRA/PILOT record identifying the tenant~~ — **searched, negative (#1354).**
+  There is no CRA agreement and no PILOT: the City designated an *area* only, and its own public
+  notice states there are no Community Reinvestment Agreements with the developer. No JobsOhio or
+  ODOD award surfaced, and *JobsOhio*, *ODOD*, *122.17* and *122.175* appear **zero** times across
+  all 37 approved 2025–2026 council minutes. See
+  [`incentive-instruments.md`](incentive-instruments.md).
 
 These are tracked in the sibling #1263 catch-up issues, not lead #447 (now closed).
 
@@ -163,7 +168,9 @@ constraint shifts to:
   (Dayton Power & Light)**, PJM **DAY** zone. The campus MW load, PJM interconnection queue
   position, and any genset air permit stay `[open]` (#1263 sub-leads).
 - **Land use** — the ~230-ac assembly (four parcels, three Thor single-purpose entities) west of
-  US-68 / SR-55, and the CRA/PILOT + development-agreement incentives.
+  US-68 / SR-55. The incentive thread is resolved (#1354): **no** CRA agreement or PILOT exists;
+  the City's one contract with the developer is the December-2024 **Pre-Annexation Agreement**
+  (Ord. 4612-24) with `Urbana0624C, LLC`.
 
 The `abstraction_gage`/`supply_gage`/`passby` fields are **retained as a reach-level source-water
 screen** — still valid for the Mad River sole-source aquifer generally, and for any future

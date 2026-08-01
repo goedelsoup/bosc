@@ -214,6 +214,15 @@ entities:
       is [inference]/[open] pending the Ohio SoS registered-agent pull. The complaint caption lists
       all four SPEs at 3040 Riverside, but the auditor records Urbana Owner I/II at 25 W 39th St —
       so "all four share 3040 Riverside" holds only for the caption, not the auditor record.
+      UPDATE (#1354, 2026-08-01): the 720 E Broad line is no longer a lone WQC artefact. The City
+      of Urbana's Ord. 4612-24 Exhibit A — the Pre-Annexation Agreement, executed-draft text —
+      gives "Urbana0624C, LLC, an Ohio Limited Liability Company ('Company' or 'Developer'), whose
+      mailing address is 720 E. Broad Street Columbus, OH 43215", and the City's own public notice
+      identifies that entity as "Highland". So TWO independent primary instruments — an OEPA §401
+      filing and a City ordinance exhibit — put the project's development vehicle at 720 E Broad,
+      and a third (the City's notice) names it Highland. Common control with this SPE graph is a
+      strongly corroborated [inference], still not [verified]: no Ohio SoS filing has been read
+      (businesssearch.ohiosos.gov remains HTTP 403). See incentive-instruments.yaml.
   - name: "Brand Investments LTD"
     role: seller
     tag: verified                  # PPOwner on the retained residual parcel; grantor of vance-brands + highland55 [reference]
