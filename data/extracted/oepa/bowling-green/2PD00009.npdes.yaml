@@ -1,0 +1,215 @@
+doc_id: 2PD00009-7e68611c
+source_path: data/documents/oepa/bowling-green/2PD00009.pdf
+kind: npdes
+pages_read: []
+image_pages_read: []
+dpi: 0
+source_text_excerpt: >-
+  "2PD00009*TD / Application No. OH0024139 / Action Date: March 28, 2022 / Effective Date: May
+  1, 2022 / Expiration Date: April 30, 2027 ... City of Bowling Green is authorized by the Ohio
+  Environmental Protection Agency ... to discharge from the Bowling Green Water Pollution
+  Control facility located at 901 North Dunbridge Road, Bowling Green, Ohio, Wood County and
+  discharging to Poe Ditch in accordance with the conditions specified in Parts I, II, and III
+  of this permit. ... Laurie A. Stevenson, Director ... Total Pages: 54"
+
+# Reviewed transcription from this digitally generated PDF's embedded text layer. Page citations
+# are the permit's own printed sheet numbers. The Fact Sheet is NOT bound into this PDF (unlike
+# Ottawa's 2PD00028); it is a separate 35-page document held as 2PD00009.fs.pdf and transcribed
+# in data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml. Fact-sheet content is cited there,
+# not re-cited here.
+
+permit:
+  confidence: high
+  warnings:
+  - >-
+    THE LIMIT TABLE YOU WANT DEPENDS ON THE DATE. Part I.A carries TWO complete limit tables for
+    the same outfall. Item 1 governs "the period beginning on the effective date of this permit
+    and lasting through the 36th month"; Item 2 governs "the period beginning on 37th month
+    after the effective date of this permit and lasting until the expiration date." The interim
+    table has NO MBAS limit and NO B2EHP limit, and its ammonia limits are looser (winter
+    7.3/4.8 mg/L, summer 2.7/1.8 mg/L). Reading the final table against a 2023 DMR, or the
+    interim table against a 2026 DMR, produces a wrong answer in both directions.
+  - >-
+    The permit itself never prints a calendar date for the interim/final changeover — it is
+    expressed only as "the 36th month" and "37th month after the effective date." With an
+    effective date of 2022-05-01 that resolves to on or about 2025-05-01. ICIS-NPDES
+    independently carries the interim limit set as ending 30-APR-25, which agrees. Both are
+    recorded; the arithmetic is [inference] and the ICIS date is [verified] as what the federal
+    system holds. See data/extracted/bowling-green/water-watch.yaml, which turns on this date.
+  - >-
+    Ambient stations 801 and 902 monitor the NORTH BRANCH PORTAGE RIVER, not Poe Ditch. The
+    permit's own upstream/downstream biology and chemistry are therefore measured a stream
+    removed from the outfall's immediate receptor. Poe Ditch itself is not monitored under this
+    permit at all.
+
+  facility_name: Bowling Green Water Pollution Control
+  permit_no: 2PD00009*TD
+  permit_action: renewal
+  applicant: City of Bowling Green
+  application_no: OH0024139
+  facility_address: 901 North Dunbridge Road, Bowling Green, Ohio, Wood County
+  receiving_water: Poe Ditch
+  action_date: '2022-03-28'
+  effective_date: '2022-05-01'
+  expiration_date: '2027-04-30'
+  signed_by: Laurie A. Stevenson, Director
+  page_count: 54
+  renewal_application_due: >-
+    "no later than 180 days prior to the above date of expiration" — i.e. on or about
+    2026-11-01 for the 2027-04-30 expiration. As of the 2026-07-24 ICIS extract the permit is
+    still carried as Effective with expiration 04/30/2027; no successor action appears.
+
+  # ── Sampling stations (Part II, Item B, p. 25) ──
+  sampling_stations:
+    citation: 'Permit 2PD00009*TD, Page 25, Part II Item B'
+    tag: '[verified]'
+    '2PD00009001':
+      description: Final effluent, prior to discharge to Poe Ditch
+      latitude_dms: 41 N 23 ' 06 "
+      longitude_dms: 83 W 36 ' 38 "
+      latitude_dd: 41.385
+      longitude_dd: -83.6106
+      coordinate_note: >-
+        Decimal degrees are a conversion of the permit's own DMS, shown for use, not a second
+        source. ICIS-NPDES carries 41.38309 / -83.61074 for the same facility and FRS carries
+        41.385022 / -83.611078. All three are recorded; none is corrected against the others.
+    '2PD00009002': {description: Combined sewer overflow - see Part II, Item D}
+    '2PD00009300': {description: System-wide sanitary sewer overflows}
+    '2PD00009581': {description: Land application of Class B sewage sludge}
+    '2PD00009584': {description: Land application of exceptional quality sewage sludge}
+    '2PD00009586': {description: Sludge disposal via landfill}
+    '2PD00009588': {description: Sludge disposal via transfer to another NPDES permit holder}
+    '2PD00009601': {description: Influent monitoring}
+    '2PD00009801': {description: Upstream monitoring on North Branch Portage River at Bowling Green Road East}
+    '2PD00009901': {description: Downstream monitoring on North Branch Portage River at Chamberlain Road}
+    transcription_note: >-
+      Station 588's description is printed "Sludge disoposal via transfer to another NPDES
+      permit holder" in the source. The typo is the document's; it is normalized here and
+      recorded in this note rather than silently fixed.
+
+  # ── CSO (Part II, Items D & E, pp. 26-27) ──
+  combined_sewer_overflow:
+    citation: 'Permit 2PD00009*TD, Pages 26-27, Part II Items D and E'
+    tag: '[verified]'
+    authorization: >-
+      "The permittee is authorized to discharge from the following combined sewer overflows
+      (CSOs) only during wet weather periods when the flow in the sewer system exceeds the
+      capacity of the sewer system."
+    outfalls:
+    - station: '2PD00009002'
+      location: Mercer Road Diversion Chamber
+      receiving_stream: Poe Ditch
+    level_of_control: >-
+      "The permittee shall discharge no more than four untreated combined sewer overflow (CSO)
+      events per typical year. This level of control is based on the City of Bowling Green's
+      Combined Sewer Overflow Long Term Control Plan (LTCP), which was approved by Ohio EPA in
+      March 2008. The City completed the LTCP and submitted the Wet Weather Characterization
+      Report on January 1, 2015, which concluded that the City had met the goals of the LTCP.
+      The City must maintain compliance with the LTCP level of control."
+    lake_erie_basin_public_notification: >-
+      Part II, Item G imposes signage, local-health-department notification, public notification
+      and an annual report specifically because these CSOs discharge to the Lake Erie Basin.
+
+  # ── Part I.A.1 — INTERIM limits (effective date through month 36) ──
+  interim_effluent_limits:
+    citation: 'Permit 2PD00009*TD, Pages 2-4, Part I.A.1'
+    tag: '[verified]'
+    period: >-
+      "During the period beginning on the effective date of this permit and lasting through the
+      36th month" — 2022-05-01 through on or about 2025-04-30
+    outfall: '2PD00009001'
+    selected_limits:
+      total_suspended_solids: {units: mg/l, weekly: 18, monthly: 12, load_weekly_kg: 682, load_monthly_kg: 455}
+      oil_and_grease: {units: mg/l, maximum: 10}
+      ammonia_winter: {units: mg/l, weekly: 7.3, monthly: 4.8, load_weekly_kg: 277, load_monthly_kg: 182}
+      ammonia_summer: {units: mg/l, weekly: 2.7, monthly: 1.8, load_weekly_kg: 103, load_monthly_kg: 68.2}
+      phosphorus_total: {units: mg/l, weekly: 1.1, monthly: 0.7, load_weekly_kg: 41.7, load_monthly_kg: 26.5}
+      dissolved_oxygen: {units: mg/l, minimum: 5.0}
+      mbas: {limit: null, note: 'MONITOR ONLY in the interim table — 1/Week, Grab. No numeric limit applies before the 37th month.'}
+
+  # ── Part I.A.2 — FINAL limits (month 37 through expiration) ──
+  final_effluent_limits:
+    citation: 'Permit 2PD00009*TD, Pages 5-7, Part I.A.2'
+    tag: '[verified]'
+    period: >-
+      "During the period beginning on 37th month after the effective date of this permit and
+      lasting until the expiration date" — on or about 2025-05-01 through 2027-04-30
+    outfall: '2PD00009001'
+    new_or_tightened:
+      mbas:
+        units: mg/l
+        maximum: 0.51
+        load_daily_kg: 19.4
+        monitoring: 1/Week, Grab
+        note: >-
+          NEW. No MBAS limit existed under the interim table. This is the limit the plant first
+          exceeded in the monitoring period ending 2025-05-31 — the first full month it was in
+          force.
+      note_other: >-
+        B2EHP and the lower summer/winter ammonia limits also first apply here. The full final
+        set matches Table 15 of the fact sheet; see
+        data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml rather than duplicating it.
+
+  # ── Part I.C — Schedule of Compliance (pp. 20-21) ──
+  schedule_of_compliance:
+    citation: 'Permit 2PD00009*TD, Pages 20-21, Part I.C'
+    tag: '[verified]'
+    subject: Final Effluent Limits for Ammonia, B2EHP, and MBAS
+    preamble: >-
+      "New final effluent limits are proposed for bis(2-ethylhexyl) phthalate (B2EHP), and
+      methyl blue activated substances (MBAS). Also, lower final effluent limits are proposed
+      for ammonia (summer and winter). The permittee shall attain compliance with the effluent
+      limits for ammonia, B2EHP, and MBAS as expeditiously as possible but no later than the
+      dates in the following schedule."
+    milestones:
+    - month: 12
+      due: '2023-05-01'
+      event_code: '07099'
+      requirement: >-
+        Progress report to Ohio EPA Northwest District Office (NWDO) including five years of
+        influent/effluent/sludge data for ammonia, B2EHP and MBAS; a list of significant and
+        non-significant industrial users; actions taken in the previous 12 months; actions
+        planned for the next 12.
+    - month: 24
+      due: '2024-05-01'
+      event_code: '07099'
+      requirement: Second progress report, same contents.
+    - month: 36
+      due: '2025-05-01'
+      event_code: '05699'
+      requirement: >-
+        "As soon as possible but no later than 36 months after the effective date of this
+        permit, the permittee shall attain compliance with the new effluent limits for ammonia,
+        B2EHP, and MBAS. The permittee shall notify Ohio EPA NWDO within seven days of attaining
+        compliance."
+    due_date_note: >-
+      The calendar dates in `due` are [inference] — computed from the 2022-05-01 effective date;
+      the permit states only the month offsets. Whether the two progress reports and the
+      compliance notification were actually submitted is NOT established by any captured source.
+      [open] — a records request to Ohio EPA NWDO for the 07099 and 05699 submittals would
+      settle it, and would speak directly to what the plant knew about its MBAS position before
+      the limit took effect.
+    other_schedules:
+      phosphorus_optimization: >-
+        Part I.C.B — the permittee must complete and submit the "Evaluation for Reducing
+        Discharge of Phosphorus" form with its next NPDES renewal application.
+      municipal_pretreatment: >-
+        Part I.C.C — evaluate the adequacy of local industrial user limitations, submit a
+        revised local limit technical justification report, and implement revisions if needed.
+        Relevant to any new significant industrial user in the service area.
+
+  other_requirements_of_note:
+    citation: 'Permit 2PD00009*TD, Part II'
+    tag: '[verified]'
+    percent_removal: >-
+      Item M — "The treatment works must obtain at least 85 percent removal of carbonaceous
+      [BOD5 and TSS]."
+    reopener: >-
+      Item N — "Water quality based permit limitations in this permit may be revised based on
+      updated [information]." A reopener exists; nothing in the captured record shows it used.
+    weekend_monitoring: >-
+      Item C — all parameters except flow "need not be monitored on days when the plant is not
+      normally staffed (Saturdays, Sundays, and Holidays)." Report "AN" on those days. Worth
+      carrying: a daily-maximum limit is only sampled on staffed days, so the reported daily
+      maxima are not a seven-day-per-week record.
+    ssos: Item H — SSO reporting, including a separate track for SSOs that imminently and substantially endanger human health.

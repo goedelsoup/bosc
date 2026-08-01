@@ -1,0 +1,113 @@
+id: bowling-green-water-watch
+title: Bowling Green — Standing Water Watch + NPDES 2PD00009 / PWS OH8700311 Instrument Set (Extractions)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Three primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00009*TD /
+    application OH0024139 — the *TD renewal as issued (action date 2022-03-28, effective
+    2022-05-01, expires 2027-04-30) and its Fact Sheet Regarding an NPDES Permit to Discharge
+    (Public Notice 22-02-025) — both fetched from the Ohio DAM 2026-08-01
+    (data/documents/oepa/bowling-green/filename-map.yaml). The City of Bowling Green's 2025
+    Drinking Water Consumer Confidence Report, PWS OH8700311, fetched from the City's own
+    CivicPlus DocumentCenter 2026-08-01
+    (data/documents/bowling-green/drinking-water/filename-map.yaml). Both permit: blocks are
+    REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text layer — these are
+    digitally generated documents, not scans, and no vision pass was run. The water-watch digest
+    additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0024139/FRS 110002321005 and
+    for PWS OH8700311 and OH8752212; eff_rest_services.get_effluent_chart for the DMR series;
+    cwa_rest_services.get_facility_info over Wood County FIPS 39173 for the construction
+    general-permit sweep), read 2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS
+    extract 2026-07-09.
+license: public record / public domain
+access_tier: public
+site_scope: site:bowling-green
+storage:
+- relpath: extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/bowling-green/2PD00009.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/bowling-green/water-watch.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+provenance: document
+tags:
+- npdes
+- sdwa
+- oepa
+- bowling-green
+- wood-county
+- portage-river
+- poe-ditch
+- maumee
+- phosphorus
+- mbas
+- surfactants
+- snc
+- cso
+- tmdl
+- 7q10
+- dilution
+- enforcement
+- construction-stormwater
+- cgp
+- two-basins
+notes: >-
+  Issue 1439 (under epic 1433). Populates _BOWLING_GREEN.plant_receiving, which had been carried
+  as an empty dict with the chain pending. The fact sheet is the anchor: outfall 2PD00009001 to
+  POE DITCH at RIVER MILE 2.5, HUC 04100010-03-01, entering the North Branch Portage at RM 8.56,
+  Table 12 annual 7Q10 of 0.364 cfs against a 15.47 cfs (10 MGD) design flow — the plant is about
+  42x the low flow of the water it enters, so under design low-flow conditions Poe Ditch below
+  this outfall is effluent rather than diluted effluent. THINGS TO CARRY. (1) THE TWO-PLANT TRAP
+  IS THE STANDING HAZARD AT THIS SITE: the Water Treatment Plant (drinking, ~10 MGD, MAUMEE,
+  Waterville intake, PWS OH8700311) and the Water Pollution Control plant (wastewater, 10 MGD
+  average design, PORTAGE, NPDES 2PD00009) are different buildings on different rivers with
+  nearly identical capacity numbers. A "10 MGD" figure with no plant named is unusable.
+  (2) Both 2025 Category-I SNC quarters are MBAS exceedances of a limit that was ONE MONTH OLD.
+  Ohio EPA created the MBAS limit in this 2022 renewal with a 36-month compliance schedule; the
+  interim table carried MBAS as monitor-only; the final limit took force at the 37th month, on or
+  about 2025-05-01 (ICIS independently carries the interim limit set ending 30-APR-25); the first
+  exceedance is the period ending 2025-05-31. Whether the plant filed its three required
+  compliance-schedule submittals (event codes 07099 x2, 05699) is [open] and is the highest-value
+  request on this side. (3) PHOSPHORUS, NOT MBAS, IS THE LARGER RECORD — 11 exceedances 2022-2026
+  against 2 for MBAS, continuing into 2026-02 at a 1.2 mg/L monthly average, which is above the
+  0.7 limit it is under, above the 1.0 limit it used to be under, and more than double the 0.5
+  mg/L the TMDL said the stream needed. The fact sheet names this plant as a source of the
+  nutrient impairment DOWNSTREAM of it, and ECHO independently flags the facility's effluent
+  violations as being for its receiving water's own impairing parameters. Correction to the epic:
+  the 1.0 -> 0.7 mg/L reduction happened in the PRIOR permit action 2PD00009*SD, not in this 2022
+  renewal, which merely continued it. (4) THE CONSTRUCTION-STORMWATER CRITERION IS CLOSED, and
+  not as a gap: a sweep of Wood County's 158 active OHC000000 coverages found the entire build-out
+  — PROJECT ACCORDION (OHGC15219, the Meta campus, filed under the CODENAME so a name search for
+  Meta returns nothing), APOLLO POWER GENERATION FACILITY (OHGC17963), APOLLO LAYDOWN YARD
+  (OHGC18721), APOLLO NORTH PIPELINE (OHGC19094), ACCORDION-DOWLING 138KV INTERCONNECT
+  (OHGC15929), NWWSD (OHGC11188), OPPIDAN BOWLING GREEN DATA CENTER (OHGC15293) and Abbott
+  (OHGC08916, filed as a nutritional product manufacturing facility). All Effective, all zero
+  quarters in noncompliance. The NOIs — and therefore the disturbed acreage — are NOT in ECHO and
+  remain [open]. (5) THE CAMPUS IS IN A DIFFERENT HUC-12 FROM THE PLANT'S RECEIVING WATER. Every
+  Accordion/Apollo coverage sits in WBD12 041000100703 (Cedar Creek-Frontal Lake Erie); the WPC
+  and the Oppidan colo are in 041000100301 (North Branch Portage); NWWSD's is in 041000090901
+  (Grassy Creek Diversion, a MAUMEE sub-watershed). Any model routing campus construction runoff
+  into Poe Ditch is wrong. (6) THE OHD000001 WATCH IS CLOSED BY A NEGATIVE: Ohio EPA's Community
+  Notice of 2026-07-21 states it will NOT finalize the data-center general permit and that
+  individual NPDES permits are the path forward — eleven days after the issue set the watch. The
+  replacement watch, shared with Sandusky (1384), is whether an individual NPDES application
+  appears for either facility. (7) Enforcement is a VERIFIED NEGATIVE: nine noncompliant quarters
+  and two Category-I quarters produced one warning letter (OH-I00107014, 2025-02-19), zero formal
+  actions and $0 in penalties — and that letter PREDATES both SNC quarters, so it is not about
+  MBAS; what it does cite is [open]. (8) THE DRINKING-WATER SIDE IS CLEAN and is recorded at equal
+  weight: zero quarters in noncompliance, no SDWA violation in the window, Pb90 of 0 mg/L across
+  five rounds, and a 2025 CCR reporting no violation for any regulated contaminant. The one number
+  to watch is TTHM, whose range of detection tops out at 85.7 ppb against an 80 ppb MCL (no
+  violation — the MCL is a running annual average) and which the City's own source water
+  assessment names as its single standing exception. The no-2017-drinking-water-advisory
+  correction is carried in the digest so the myth cannot re-enter. (9) The 50,000-vs-600,000 gpd
+  Meta demand conflict is recorded UNRESOLVED with both figures attributed and neither preferred;
+  a possible reconciliation (operational consumption vs contractual reservation) is stated as a
+  hypothesis to test, not as an answer. Nine open threads are recorded in the digest's own
+  `open_leads` block.

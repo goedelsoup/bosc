@@ -1,0 +1,54 @@
+meta:
+  subject: >-
+    City of Bowling Green (PWS OH8700311) drinking-water instruments — the annual Consumer
+    Confidence Report published by the Utilities Department, Water Supply Division (issue 1439)
+  generated_at: '2026-08-01'
+  policy: >-
+    non-destructive — the file keeps the basename the City's own CivicPlus DocumentCenter serves
+    it under. Unlike Ottawa's, this slug and this document agree about their year; the
+    content-verified date below is nonetheless read from the document's own text, not from the
+    slug.
+  plant_note: >-
+    This directory is the DRINKING-water side only — the Water Treatment Plant, which draws the
+    MAUMEE at the Waterville intake into a 170 MG off-stream reservoir. The city's wastewater
+    plant (Water Pollution Control, NPDES 2PD00009, discharging to Poe Ditch in the PORTAGE
+    basin) is a different facility on a different river and its records live under
+    data/documents/oepa/bowling-green/. The two plants have nearly identical capacity numbers
+    and conflating them is the standing trap at this site.
+
+documents:
+- filename: 2025-Drinking-Water-Consumer-Confidence-Report.pdf
+  canonical_name: >-
+    City of Bowling Green, Utilities Department / Water Supply Division — 2025 Drinking Water
+    Consumer Confidence Report, PWS ID OH8700311. Carries the 2025 regulated-contaminant
+    detection table, the lead-and-copper 90th-percentile results, the source water assessment
+    summary, and the UCMR 5 participation note. 5 pp.
+  content_verified_date: '2025'   # "2025 Drinking Water Consumer Confidence Report" title block, p. 1; running footer "2025 Bowling Green CCR" on pp. 2-5
+  content_verified_note: >-
+    The document states its reporting YEAR (2025) on every page but prints no distribution date,
+    so no day-precision date is recorded. Do not infer one from the fetch date.
+  pws_id: OH8700311
+  source_url: https://www.bgohio.gov/DocumentCenter/View/6013/2025-Drinking-Water-Consumer-Confidence-Report-PDF
+  landing_page: https://www.bgohio.gov/350/Consumer-Confidence-Report
+  sha256: 593623f81a124e47c151bc3a890c14c5741a199466470802c76ed53c66ec8d72
+  bytes: 148277
+  content_type: application/pdf
+  fetched_at: '2026-08-01'
+  status: downloaded
+  note: >-
+    Obtained as a published public record — no records request. THREE things in it are
+    load-bearing. (1) It reports NO violation for any regulated contaminant in 2025, which
+    corroborates the SDWIS record of zero quarters in noncompliance and settles that the
+    drinking-water side of this site is not a water-quality story. (2) Its TTHM row carries a
+    range of detection topping out at 85.7 ppb against an 80 ppb MCL — no violation, because the
+    MCL is assessed on a locational running annual average, but the City's own source water
+    assessment on p. 1 names TTHM as its one standing exception. (3) It describes the six rebuilt
+    rapid sand filters and TWO ADDED MICROFILTRATION TRAINS as recently completed — the first
+    captured indication that the ~$4M membrane/RO expansion moved from planning to done.
+  structured_read: >-
+    DEVIATION FROM THE OTTAWA LAYOUT, recorded deliberately. Ottawa's CCR has its own extraction
+    file (data/extracted/ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml). This one does not.
+    Its structured read lives in the `intake_side.consumer_confidence_report_2025` block of
+    data/extracted/bowling-green/water-watch.yaml, because the watch is the only consumer of it
+    and a second copy of the same detection table is a drift risk, not a redundancy. If this
+    site later grows a multi-year CCR series, split it out then.

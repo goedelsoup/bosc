@@ -1,0 +1,776 @@
+# City of Bowling Green (Wood County, OH) — standing water watch.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page) or read from a named
+#                 federal system on a named extract date
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Bowling Green is the network's cleanest CROSS-BASIN water point, and that is the whole
+# discipline of this file. The city DRINKS the Maumee (HUC 04100009) through an intake near
+# Waterville and a 170 MG off-stream reservoir. It DISCHARGES to the Portage (HUC 04100010)
+# through Poe Ditch. The two sides share a city and share nothing else — not a river, not a
+# basin, not a permit, not a regulator's docket. They are recorded here together because the
+# same municipal utility runs both and the same growth is pushing on both, not because they are
+# hydrologically connected. They are not.
+#
+# THE CONFLATION TRAP, stated once: the WATER TREATMENT PLANT (WTP — drinking, ~10 MGD, Maumee,
+# 17549 W. River Rd, PWS OH8700311) and the WATER POLLUTION CONTROL plant (WPC — wastewater, 10
+# MGD average design, Poe Ditch, 901 N. Dunbridge Rd, NPDES 2PD00009 / OH0024139) are DIFFERENT
+# PLANTS on DIFFERENT RIVERS with NEARLY IDENTICAL CAPACITY NUMBERS. A "10 MGD" figure with no
+# plant named is unusable here.
+#
+# Violations below are data with citations, not a gotcha. Every quarter that came back clean is
+# recorded as such; the drinking-water side, which is clean, is recorded at the same weight as
+# the wastewater side, which is not.
+
+meta:
+  subject: >-
+    Standing watch on the two sides of Bowling Green's water — the Water Pollution Control
+    plant's Category-I significant noncompliance under NPDES 2PD00009*TD / OH0024139 on a
+    surfactants limit that had been in force for one month, and the Maumee-sourced drinking
+    water system PWS OH8700311, which is in compliance
+  kind: water-watch
+  site: bowling-green
+  captured_for: issue 1439 (epic 1433, readiness(bowling-green))
+  extracted_at: '2026-08-01'
+  checked_on: '2026-08-01'
+  previous_check: '2026-07-10'      # the discovery-sweep research recorded in the issue body
+  federal_extract_dates:
+    ICIS-NPDES: '2026-07-24'
+    SDWIS: '2026-07-09'
+  method: >-
+    Four routes, run independently and recorded separately. (1) The two controlling Ohio EPA
+    instruments — permit 2PD00009*TD and its Fact Sheet — pulled from the Ohio EPA DAM on
+    2026-08-01 and transcribed page-by-page from their embedded text layers
+    (data/documents/oepa/bowling-green/filename-map.yaml). (2) EPA ECHO for both statutes:
+    dfr_rest_services.get_dfr and eff_rest_services.get_effluent_chart for the CWA side
+    (OH0024139, FRS 110002321005), get_dfr for the SDWA side (OH8700311 and OH8752212), all read
+    2026-08-01 against the ICIS-NPDES and SDWIS extract dates above. (3) ECHO's CWA facility
+    index for Wood County (FIPS 39173), swept for construction general permit coverages under
+    master permit OHC000000 — the route that answered the construction-stormwater question the
+    issue had carried as open. (4) The City's own Utilities Department publications for the
+    Consumer Confidence Report. Each federal figure is stamped with the system extract date it
+    was read against, because a quarter that reads clean today may only be a quarter whose DMRs
+    have not landed.
+
+# ── What changed since the 2026-07-10 research ────────────────────────────────
+# Recorded first because a standing watch is worth having only if it says what moved. Four of
+# these are corrections to the issue body's own premises, made against the primary instruments.
+delta_since_previous_check:
+- item: The construction-stormwater chain is not open. It was never open; it was unsearched.
+  tag: '[verified]'
+  detail: >-
+    The issue carried CGP/SWP3 coverage for the Meta earthwork and the Apollo site as "[open]
+    until pulled." ECHO's Wood County index carries 158 active construction general permit
+    coverages under master permit OHC000000, and the entire build-out is in it under its own
+    codename — PROJECT ACCORDION (OHGC15219), APOLLO POWER GENERATION FACILITY (OHGC17963),
+    APOLLO LAYDOWN YARD (OHGC18721), APOLLO NORTH PIPELINE (OHGC19094), ACCORDION-DOWLING 138KV
+    INTERCONNECT (OHGC15929), plus NORTHWESTERN WATER AND SEWER DISTRICT (OHGC11188), OPPIDAN
+    BOWLING GREEN DATA CENTER (OHGC15293) and Abbott (OHGC08916, filed as NUTRITIONAL PRODUCT
+    MANUFACTURING FACILITY). See `construction_stormwater` below. All eight are Effective with
+    zero quarters in noncompliance.
+- item: The campus does not drain to the plant's receiving water.
+  tag: '[verified]'
+  detail: >-
+    Every Accordion/Apollo coverage is assigned by ECHO to WBD12 041000100703, "Cedar Creek-
+    Frontal Lake Erie." The WPC and its receiving water are WBD12 041000100301, "North Branch
+    Portage River." NWWSD's coverage is 041000090901, "Grassy Creek Diversion" — a MAUMEE
+    (04100009) sub-watershed. Three of the four actors in this story are in three different
+    HUC-12s. Any model that puts the campus's construction runoff into Poe Ditch is wrong.
+- item: The 2022 renewal did not tighten the phosphorus limit.
+  tag: '[verified]'
+  detail: >-
+    The issue body records "total-P limit tightened 1.0 -> 0.7 mg/L in the 2022 renewal." The
+    fact sheet says the reduction happened in the PRIOR permit action: "the monthly average
+    limit for total phosphorus was reduced from 1.0 to 0.7 mg/L in permit 2PD00009*SD" (p. 9).
+    The 2022 *TD renewal CONTINUES that limit — it declined to go further to the TMDL's own 0.5
+    mg/L target while Ohio EPA waited to resurvey the stream. The correction matters because it
+    changes who did what and when.
+- item: The SNC is younger than it looks, and it is not a story about a plant ignoring a limit.
+  tag: '[verified]'
+  detail: >-
+    Both 2025 Category-I quarters are MBAS (surfactants). The MBAS limit did not exist before
+    2025. It was created by this permit with a 36-month compliance schedule, and it first took
+    force at the 37th month — on or about 2025-05-01. The plant's first exceedance is the
+    monitoring period ending 2025-05-31, the first full month the limit was in force. See
+    `the_mbas_limit_is_one_month_old` below, which is the central finding of this watch.
+- item: The drinking-water side is clean and should stop being narrated as if it were at risk.
+  tag: '[verified]'
+  detail: >-
+    PWS OH8700311 carries ZERO quarters in noncompliance over 04/2023-03/2026, CurrentSNC "No,"
+    and no SDWA violation of any kind in the window. The only enforcement action on its entire
+    ECHO record is a state public notification received 1985-06-26. The 2025 CCR reports no
+    violation for any regulated contaminant. Whatever the water story at Bowling Green is, it is
+    not a tap-water-quality story.
+
+# ══════════════════════════════════════════════════════════════════════════════
+# THE DISCHARGE SIDE — Portage basin
+# ══════════════════════════════════════════════════════════════════════════════
+
+discharge_side:
+  facility: Bowling Green Water Pollution Control (WPC)
+  address: 901 North Dunbridge Road, Bowling Green, OH 43402, Wood County
+  npdes_permit: 2PD00009*TD
+  application_no: OH0024139
+  frs_registry_id: '110002321005'
+  icis_universe: 'Major: NPDES Individual Permit'
+  icis_areas: Biosolids, POTW, Pretreatment
+  sic: '4952'
+  effective: '2022-05-01'
+  expires: '2027-04-30'
+  instruments:
+  - data/extracted/oepa/bowling-green/2PD00009.npdes.yaml
+  - data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml
+
+  receiving_water_chain:
+    tag: '[verified]'
+    citation: 'Fact Sheet 2PD00009, Pages 1 and 6 of 35'
+    chain: Outfall 2PD00009001 -> Poe Ditch RM 2.5 -> North Branch Portage River RM 8.56 -> Portage River -> Lake Erie
+    huc: 04100010-03-01
+    wbd12: '041000100301'
+    wbd12_name: North Branch Portage River
+    icis_waterbody_name: POE DITCH
+    note: >-
+      This chain is the answer to the acceptance criterion that asked for `plant_receiving` to
+      come from the fact sheet rather than from assumption. It is now wired into
+      _BOWLING_GREEN.plant_receiving in src/watermark/sites/_profiles.py. Effluent screens use
+      the North Branch Portage (active gage 04195061), never the Maumee.
+
+  the_plant_is_bigger_than_its_river:
+    tag: '[verified]'
+    citation: 'Fact Sheet 2PD00009, Page 30 of 35, Table 12'
+    discharger_flow_cfs: 15.47
+    discharger_flow_mgd: 10
+    receiving_7q10_cfs: 0.364
+    receiving_1q10_cfs: 0.285
+    harmonic_mean_cfs: 3.233
+    ratio_note: >-
+      Design flow is roughly 42x the annual 7Q10 of the water it enters — 15.47 against 0.364
+      cfs, both printed in the same table. [inference] on the ratio (division), [verified] on
+      both inputs. Under design-flow low-flow conditions Poe Ditch below this outfall is
+      effluent rather than diluted effluent. This is the single most important hydrologic fact
+      about the discharge side and it is not a violation of anything; it is the physical setting
+      every limit on this permit was written against.
+    low_flow_provenance_warning: >-
+      These are REGULATORY denominators, drainage-area-adjusted from USGS gage 04195500 (Portage
+      River at Woodville) over 1951-97. They are not measurements of Poe Ditch, and the record
+      closed before the network's derived 7Q10 window (1980-2024) opens. Do not reconcile them
+      against a derived value by preferring one. Same posture as Ottawa.
+
+  compliance_record:
+    tag: '[verified]'
+    source: EPA ECHO detailed facility report, FRS 110002321005 / OH0024139
+    read_on: '2026-08-01'
+    icis_extract_date: '2026-07-24'
+    window: 2023-04-01 .. 2026-03-31
+    current_snc: 'No'
+    quarters_in_noncompliance: 9      # of 12 — ECHO's own count, not derived here
+    quarters_in_snc: 2
+    inspections: 6
+    last_inspection: '2025-10-15'
+    informal_actions: 1
+    formal_actions: 0
+    total_penalties: 0
+    verified_negative: >-
+      Zero formal actions and $0 in penalties over the five-year enforcement window, against
+      nine noncompliant quarters and two Category-I quarters. That is a VERIFIED NEGATIVE and is
+      recorded as a finding in its own right: Ohio EPA has responded to this plant's record with
+      one warning letter and nothing else.
+    quarterly_status:
+      Q1_2023Q2: Violation Identified
+      Q2_2023Q3: Violation Identified
+      Q3_2023Q4: Violation Identified
+      Q4_2024Q1: Violation Identified
+      Q5_2024Q2: No Violation Identified
+      Q6_2024Q3: Violation Identified
+      Q7_2024Q4: Violation Identified
+      Q8_2025Q1: No Violation Identified
+      Q9_2025Q2: Significant/Category I Noncompliance
+      Q10_2025Q3: No Violation Identified
+      Q11_2025Q4: Significant/Category I Noncompliance
+      Q12_2026Q1: Violation Identified
+      Q13_2026Q2plus: Undetermined
+    quarterly_status_note: >-
+      Three quarters in the window came back clean and are recorded as such. The Q13 column runs
+      04/01/2026 to the 2026-07-24 extract date and reads "Undetermined" — that is a quarter
+      whose DMRs have not fully landed, NOT a quarter that came back clean.
+
+  warning_letter:
+    tag: '[verified]'
+    source: EPA ECHO Notices block, ICIS-NPDES
+    action_type: Base Program - Letter of Violation/ Warning Letter
+    lead_agency: State
+    notice_date: '2025-02-19'
+    enforcement_identifier: OH-I00107014
+    official_flag: 'Y'
+    note: >-
+      The only enforcement action of any kind on the CWA side in the five-year window. It
+      predates BOTH Category-I quarters — it landed 2025-02-19, and the first MBAS exceedance is
+      the period ending 2025-05-31. So it cannot have been issued for the MBAS noncompliance.
+      What it WAS issued for is [open]: ECHO carries the action type and date but not the
+      violations cited. The document itself is not captured. Given the Q4-2024 phosphorus
+      exceedances immediately preceding it (2024-10, 2024-11), phosphorus is the plausible
+      subject — but plausible is not established, and this file does not assert it. A records
+      request to Ohio EPA NWDO for OH-I00107014 would settle it.
+
+  the_mbas_limit_is_one_month_old:
+    tag: '[verified]'
+    finding: >-
+      Both Category-I quarters are exceedances of a limit that had just come into existence.
+    chronology:
+    - date: '2022-02-22'
+      event: >-
+        Fact sheet proposes NEW limits for MBAS and B2EHP "due to reasonable potential to exceed
+        the wasteload allocation," with "a 36-month compliance schedule ... for the permittee to
+        attain compliance with the new limits."
+      citation: Fact Sheet 2PD00009 p. 2
+    - date: '2022-05-01'
+      event: Permit 2PD00009*TD effective. Part I.A.1 interim table carries MBAS as MONITOR ONLY — no numeric limit.
+      citation: Permit 2PD00009*TD p. 1, pp. 2-4
+    - date: '2025-04-30'
+      event: >-
+        Interim limit set ends. ICIS-NPDES independently carries LimitEndDate 30-APR-25 on the
+        interim limits, which agrees with the permit's "through the 36th month" from a
+        2022-05-01 effective date.
+      citation: ICIS-NPDES via ECHO effluent chart, extract 2026-07-24
+    - date: '2025-05-01'
+      event: >-
+        Final limits take force — "the period beginning on 37th month after the effective date."
+        MBAS daily maximum 0.51 mg/L and 19.4 kg/day now apply. Part I.C.A.3 required compliance
+        "no later than 36 months after the effective date."
+      citation: Permit 2PD00009*TD pp. 5-7, pp. 20-21
+      tag: '[inference]'
+      inference_note: >-
+        The calendar date is arithmetic on the permit's month-offsets; the permit prints no
+        calendar date for the changeover. The ICIS interim end date of 2025-04-30 corroborates
+        it from an independent system.
+    - date: '2025-05-31'
+      event: >-
+        FIRST MBAS exceedance. Monitoring period ending 2025-05-31, outfall 001, daily maximum,
+        reported 28 against a 19.4 kg/day limit — 44% over. RNC code R, "TRC Limitations
+        Exceeded, Non-Monthly Average." Resolution code 2, "RE - Back into Compliance."
+      citation: ICIS-NPDES DMR via ECHO effluent chart
+    - date: '2025-10-31'
+      event: >-
+        SECOND MBAS exceedance. Daily maximum 1.24 mg/L against the 0.51 mg/L limit — 143% over.
+        Same RNC code R, same resolution code 2.
+      citation: ICIS-NPDES DMR via ECHO effluent chart
+    why_it_matters: >-
+      The plain reading — "a plant in significant noncompliance on surfactants" — is true and
+      incomplete. Ohio EPA identified reasonable potential in 2022, gave the plant three years
+      to prepare, and the limit was breached in the first month it applied and again five months
+      later. Three years of compliance-schedule progress reports were required (Part I.C.A.1 and
+      .2, event code 07099) and a compliance notification was due within seven days of attaining
+      compliance (event code 05699). Whether any of the three was submitted is [open] and is the
+      highest-value records request on this side of the story.
+    unresolved_coding_conflict:
+      tag: '[verified]'
+      detail: >-
+        ECHO codes these two quarters' reportable-noncompliance status as "Effluent - Monthly
+        Average Limit," but the underlying DMR violations are both on the DAILY MAXIMUM
+        statistical base and both carry RNC code R, which ECHO itself defines as "TRC
+        Limitations Exceeded, NON-Monthly Average." The quarter-level label and the row-level
+        code disagree. Both are recorded; neither is corrected against the other. The permit
+        itself sets MBAS only as a daily maximum — there is no MBAS monthly average in Table 15
+        — which favours the row-level coding, but the permit is not evidence about what ECHO
+        meant.
+    units_warning: >-
+      The two MBAS exceedances are NOT in the same units and must not be plotted on one axis.
+      2025-05 is a LOADING exceedance (28 vs 19.4 kg/day); 2025-10 is a CONCENTRATION exceedance
+      (1.24 vs 0.51 mg/L). The "143% over" figure that appears in the issue body is the October
+      concentration exceedance and is correct as such.
+
+  the_phosphorus_record_is_the_larger_one:
+    tag: '[verified]'
+    finding: >-
+      MBAS produced the two Category-I quarters, but phosphorus is the most-violated parameter
+      on this permit and the one the receiving water is impaired for.
+    counts_2022_2026:
+      total_phosphorus: 11
+      ammonia: 9
+      cbod5: 7
+      total_suspended_solids: 6
+      surfactants_mbas: 2
+      nitrite_nitrate_non_receipt: 2
+      mercury: 1
+      oil_and_grease: 1
+    exceedance_dates_total_phosphorus:
+    - {period: '2023-01-31', basis: WKLY MAX, value: 56, limit: 41.7, units: kg/day, pct_over: 34}
+    - {period: '2023-08-31', basis: WKLY MAX, value: 1.8, limit: 1.1, units: mg/L, pct_over: 64}
+    - {period: '2024-06-30', basis: MO AVG, value: 0.73, limit: 0.7, units: mg/L, pct_over: 4}
+    - {period: '2024-07-31', basis: WKLY MAX, value: 1.3, limit: 1.1, units: mg/L, pct_over: 18}
+    - {period: '2024-08-31', basis: WKLY MAX, value: 2.2, limit: 1.1, units: mg/L, pct_over: 100}
+    - {period: '2024-10-31', basis: WKLY MAX, value: 1.6, limit: 1.1, units: mg/L, pct_over: 45}
+    - {period: '2024-11-30', basis: MO AVG, value: 0.93, limit: 0.7, units: mg/L, pct_over: 33}
+    - {period: '2024-11-30', basis: WKLY MAX, value: 1.3, limit: 1.1, units: mg/L, pct_over: 18}
+    - {period: '2026-01-31', basis: MO AVG, value: 0.8, limit: 0.7, units: mg/L, pct_over: 14}
+    - {period: '2026-02-28', basis: MO AVG, value: 1.2, limit: 0.7, units: mg/L, pct_over: 71}
+    - {period: '2026-02-28', basis: WKLY MAX, value: 1.6, limit: 1.1, units: mg/L, pct_over: 45}
+    the_closing_of_the_loop: >-
+      The fact sheet says the North Branch Portage "is impaired for aquatic life use due to
+      nutrient enrichment DOWNSTREAM of Bowling Green WPC," names the plant as a source, records
+      that the TMDL's own 0.5 mg/L target for this plant was never adopted as a wasteload
+      allocation, and sets 0.7 mg/L as an adaptive-management limit pending a resurvey. ECHO
+      independently flags this facility's E90 effluent violations as being for parameters that
+      impair its own receiving water — "BOD, carbonaceous, 05 day, 20 C | Phosphorus, total (as
+      P)". As of 2026-02-28 the plant reported a monthly average of 1.2 mg/L: above the 0.7
+      limit it is under, above the 1.0 limit it used to be under, and more than double the 0.5
+      mg/L the TMDL said the stream needed.
+    resurvey_status: >-
+      [open] — the fact sheet states Ohio EPA "has not yet resurveyed the North Branch Portage
+      River." Whether a resurvey has occurred since 2022 is not established by any captured
+      source. The 2024 assessment cycle (below) is an Integrated Report listing, not necessarily
+      a new biological survey.
+    other_notable_exceedances:
+    - {period: '2024-03-31', parameter: Oil and grease hexane extr method, basis: DAILY MX, value: 91.7, limit: 10, units: mg/L, pct_over: 817, note: 'the single largest exceedance on the permit, and unexplained by any captured source'}
+    - {period: '2023-03-31', parameter: Mercury total low level, basis: MO AVG, value: 1.51, limit: 1.3, units: ng/L, pct_over: 16}
+    - {period: '2023-02-28', parameter: 'Nitrite + Nitrate (station 801, ambient)', basis: 'non-receipt', note: 'DMR non-receipt, administratively resolved — a reporting failure at the UPSTREAM ambient station, not an effluent violation'}
+    ammonia_note: >-
+      All nine ammonia violations fall in 2022, immediately after the permit took effect and
+      during the period the fact sheet attributes to the 2020-21 aeration rebuild ("the aeration
+      treatment systems were operating at half capacity"). None occur after 2022. The
+      permittee's explanation is carried at the same weight as the violations.
+
+  receiving_water_status:
+    tag: '[verified]'
+    source: EPA ECHO AssessedWaters, Ohio 2024 reporting cycle
+    assessment_unit: OH041000100301
+    name: North Branch Portage River
+    condition: Impaired - 303(d) Listed - With Restoration Plan
+    causes_impaired: [HABITAT ALTERATIONS, NUTRIENTS, ORGANIC ENRICHMENT/OXYGEN DEPLETION, PATHOGENS, POLYCHLORINATED BIPHENYLS (PCBS), SEDIMENT]
+    uses:
+      aquatic_life: Not Supporting
+      ecological: Not Supporting
+      fish_consumption: Not Supporting
+      recreation: Not Supporting
+      drinking_water: null
+    note: >-
+      Every assessed use is Not Supporting on the 2024 cycle — two cycles newer than the 2020
+      Integrated Report the fact sheet cites. Two of the six impairment causes (PCBs, sediment
+      from channelization) are ones the fact sheet does NOT attribute to this discharger.
+
+# ══════════════════════════════════════════════════════════════════════════════
+# THE INTAKE SIDE — Maumee basin. Clean, and recorded at equal weight.
+# ══════════════════════════════════════════════════════════════════════════════
+
+intake_side:
+  facility: City of Bowling Green Water Treatment Plant (WTP)
+  pws_id: OH8700311
+  pws_name: BOWLING GREEN CITY
+  frs_registry_id: '110006258815'
+  source: Maumee River intake near Waterville, into a 170 million gallon off-stream reservoir
+  reservoir_storage_days: ~30
+  basin: Maumee, HUC 04100009 — a DIFFERENT basin from the discharge side
+
+  sdwa_compliance:
+    tag: '[verified]'
+    source: EPA ECHO detailed facility report, SDWIS
+    read_on: '2026-08-01'
+    sdwis_extract_date: '2026-07-09'
+    window: 2023-04-01 .. 2026-03-31
+    quarters_in_noncompliance: 0
+    current_snc: 'No'
+    violations_in_window: none
+    only_enforcement_on_record:
+      date: '1985-06-26'
+      type: Informal
+      description: State Public Notification received
+      note: Forty-one years old. Recorded because it is the entire enforcement history, not because it is relevant.
+    sanitary_surveys:
+    - {date: '2025-02-26', type: 'Sanitary Survey, Complete', agency: District, result: 'Recommendations made for management/operation, finished water storage, pumps, source and treatment; no deficiencies anywhere'}
+    - {date: '2022-02-10', type: 'Sanitary Survey, Complete', agency: District, result: 'Minor deficiencies in Treatment; recommendations elsewhere'}
+    lead_and_copper:
+      pb90_2021_2025: 0 mg/L in all five annual rounds
+      action_level: 0.015 mg/L
+      violations: none
+    other_permits_at_the_city:
+    - {id: OHGQ00435, statute: CWA, quarters_in_noncompliance: 0}
+    - {id: OHR000159020, statute: RCRA, quarters_in_noncompliance: 0}
+
+  consumer_confidence_report_2025:
+    tag: '[verified]'
+    source_document: data/documents/bowling-green/drinking-water/oh8700311-2025-ccr.pdf
+    sha256: 593623f81a124e47c151bc3a890c14c5741a199466470802c76ed53c66ec8d72
+    source_url: https://www.bgohio.gov/DocumentCenter/View/6013/2025-Drinking-Water-Consumer-Confidence-Report-PDF
+    fetched_at: '2026-08-01'
+    pages: 5
+    license_status: '"The City of Bowling Green has a current unconditional license to operate our Water System." (p. 1)'
+    violations_reported: none — every regulated contaminant row reads "No" in the Violation? column
+    detections_2025:
+      turbidity_ntu: {detected: 0.10, range: 0.02-0.10, tt: 0.3}
+      total_organic_carbon: {detected: 2.9, range: 2.4-3.4, basis: 'removal ratio; >1 is compliant'}
+      barium_ppm: {detected: 0.013, mcl: 2}
+      fluoride_ppm: {detected: 1.03, range: 0.87-1.18, mcl: 4}
+      nitrate_ppm_as_n: {detected: 7.3, range: <0.2-7.3, mcl: 10}
+      tthm_ppb: {detected: 66.6, range: 34.3-85.7, mcl: 80}
+      haa5_ppb: {detected: 23.1, range: 8.3-27.7, mcl: 60}
+      total_chlorine_ppm: {detected: 1.5, range: 1.3-1.6, mrdl: 4.0}
+      copper_ppm: {p90: 0.029, al: 1.3, samples_over_al: '0 of 31'}
+      lead_ppb: {p90: <4, al: 15, samples_over_al: '0 of 31'}
+    the_two_numbers_worth_watching:
+      tthm: >-
+        The MCL is 80 ppb and the reported RANGE OF DETECTION tops out at 85.7 ppb — an
+        individual sample above the MCL. There is no violation, because the TTHM MCL is assessed
+        on a locational running annual average, not on a single sample, and the LRAA-equivalent
+        "Detected Level" is 66.6. But the city's own source water assessment names TTHM as its
+        one standing exception: "historically, the City has effectively treated this source
+        water to meet drinking water quality standards WITH THE EXCEPTION OF TTHMs" (p. 1,
+        emphasis added here). TTHM is a disinfection by-product of chlorinating organic-rich
+        water; a Maumee source with high organic load is exactly the setting that produces it.
+      nitrate: >-
+        7.3 ppm against a 10 ppm MCL — 73% of the standard, in a river draining the most
+        intensively fertilized watershed in the state. No violation. The CCR carries the
+        blue-baby-syndrome advisory and notes "nitrate levels may rise quickly for short periods
+        of time because of rainfall or agricultural activity."
+    treatment_train:
+      described: >-
+        "two independent treatment systems; a multi-barrier Conventional Treatment process and
+        an Integrated Membrane Treatment process," blended for finished water (p. 1)
+      recent_improvements: >-
+        "The six Rapid Sand Filters were upgraded by completely rebuilding the filter bottoms
+        and adding air to the backwash cycle. Also, two Microfiltration trains were added which
+        will improve the plants ability to utilize the Reverse Osmosis Membranes." (p. 1)
+      corroborates: >-
+        This is the ~$4M membrane/RO expansion the issue body tracked as approved 2024-03 and
+        still in "planning stages" as of Sept 2025. The 2025 CCR describes the microfiltration
+        trains as COMPLETED ("were recently completed"). That is a self-published [reference]
+        statement by the utility, not a construction record, but it is the first captured source
+        indicating the expansion moved from planning to done.
+    source_water_assessment: >-
+      Revised by Ohio EPA in 2025 (p. 1). The revision itself is not captured. [open]
+    pfas: >-
+      Bowling Green participated in UCMR 5 in 2023-2024. The CCR does not print the results and
+      directs readers to phone the Water Supply Superintendent for a copy. [open] — UCMR 5
+      results are also published federally and could be pulled without a request.
+
+  hab_and_cyanotoxin:
+    tag: '[verified]'
+    finding_in_the_2025_ccr: >-
+      The 2025 CCR contains NO microcystin or cyanotoxin row in its regulated-contaminant table
+      and NO harmful-algal-bloom narrative anywhere in its five pages. Recorded as an absence,
+      which is what it is: the report does not say cyanotoxins were absent, it does not discuss
+      them. Consistent with the issue body's note that the 2024 CCR reported no microcystin
+      detections.
+    premise_correction_that_must_not_regress:
+      tag: '[reference]'
+      claim_to_reject: >-
+        That Bowling Green had a 2017 drinking-water advisory. It did not. The 2017 advisory on
+        the lower Maumee near Toledo was a RECREATIONAL advisory; tap water was declared safe.
+        This correction was made during the 2026-07-10 discovery research and is carried here so
+        the myth does not re-enter through a later summary.
+      what_actually_happened: >-
+        Bowling Green's documented HAB fight was with cyanobacteria in ITS OWN off-stream
+        reservoir — roughly 68% of algal composition in 2016, a RADOR aeration system installed
+        2017, reported resolved January 2025 — plus daily microcystin testing adopted after the
+        2014 Toledo event and a PhycoSens early-warning pilot.
+      evidentiary_status: >-
+        [reference] throughout. None of the reservoir-cyanobacteria record, the RADOR
+        installation, or the PhycoSens pilot is backed by a captured primary document in this
+        corpus. They rest on secondary reporting and city self-publication. They must NOT be
+        cited as [verified] until the underlying records are pulled. See open_leads.
+    oepa_advisory_table_check:
+      status: '[open]'
+      detail: >-
+        The acceptance criterion asked for an Ohio EPA advisory-table check across 2016-2026 for
+        this public water system. Not performed in this pass. The SDWIS compliance record is a
+        strong negative for that period — zero quarters in noncompliance, no violations — but a
+        public-water-system advisory is not the same instrument as an SDWA violation and the
+        absence of the latter does not establish the absence of the former.
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CONSTRUCTION STORMWATER — the criterion the issue carried as [open]
+# ══════════════════════════════════════════════════════════════════════════════
+
+construction_stormwater:
+  tag: '[verified]'
+  source: EPA ECHO CWA facility index for Wood County (FIPS 39173), read 2026-08-01, ICIS extract 2026-07-24
+  master_permit: OHC000000
+  master_permit_note: >-
+    OHC000000 is the master external permit number Ohio's NPDES construction general permit
+    coverages are issued under; each site's coverage carries its own OHGCnnnnn identifier. 158
+    such coverages are active in Wood County.
+  method_note: >-
+    Found by sweeping the county index, not by searching for the operators' names. That matters:
+    PROJECT ACCORDION is filed under the CODENAME, not under Meta, and a name-based search for
+    "Meta" would have returned nothing and been reported as an absence of coverage.
+  coverages:
+  - id: OHGC15219
+    name: PROJECT ACCORDION
+    address: 12356 Middleton Pike, Bowling Green
+    lat: 41.4583333
+    lon: -83.6355556
+    wbd12: '041000100703'
+    wbd12_name: Cedar Creek-Frontal Lake Erie
+    status: Effective
+    expires: '2028-04-22'
+    quarters_in_noncompliance: 0
+    note: The Meta campus earthwork. Filed under the codename; the operator is not named in the ICIS record.
+  - id: OHGC17963
+    name: APOLLO POWER GENERATION FACILITY
+    address: 11902 Middleton Pike, Bowling Green
+    lat: 41.458602
+    lon: -83.62679
+    wbd12: '041000100703'
+    status: Effective
+    expires: '2028-04-22'
+    quarters_in_noncompliance: 0
+    note: The 350 MW BTM gas plant, OPSB 25-0973-EL-BGN. Roughly 600 m east of the Accordion coverage point.
+  - id: OHGC18721
+    name: APOLLO LAYDOWN YARD
+    address: 21950 Mercer Rd., Bowling Green
+    lat: 41.472371
+    lon: -83.628371
+    wbd12: '041000100703'
+    status: Effective
+    expires: '2028-04-22'
+    quarters_in_noncompliance: 0
+  - id: OHGC19094
+    name: APOLLO NORTH PIPELINE
+    address: 21837 Mercer Rd., Bowling Green
+    lat: 41.471955
+    lon: -83.625931
+    wbd12: '041000100703'
+    status: Effective
+    expires: '2028-04-22'
+    quarters_in_noncompliance: 0
+    note: >-
+      The Apollo North lateral, which the epic had queued as a watch item. Its existence as a
+      permitted earthwork is now [verified]; its gas-transmission filings are a separate matter
+      for the power sub-issue (1437) and are not established here.
+  - id: OHGC15929
+    name: ACCORDION-DOWLING 138KV INTERCONNECT
+    address: Getz Road, west of Mercer Road, Middleton Township
+    lat: 41.4725
+    lon: -83.6327778
+    wbd12: '041000100703'
+    status: Effective
+    expires: '2028-04-22'
+    quarters_in_noncompliance: 0
+    note: >-
+      Names both ends of the electrical connection in the coverage title — Accordion (the
+      campus) and Dowling (the substation). A behind-the-meter campus still built a 138 kV
+      interconnect.
+  - id: OHGC11188
+    name: NORTHWESTERN WATER AND SEWER DISTRICT
+    address: 12560 Middleton Pike, Bowling Green
+    lat: 41.4580556
+    lon: -83.6394444
+    wbd12: '041000090901'
+    wbd12_name: Grassy Creek Diversion (MAUMEE basin, HUC 04100009)
+    status: Effective
+    expires: '2028-04-22'
+    quarters_in_noncompliance: 0
+    note: >-
+      NWWSD's own earthwork, roughly 300 m west of the PROJECT ACCORDION coverage point on the
+      same road. Consistent with the Meta-funded 2 MG elevated tank and 16-inch main, but the
+      coverage record does not state what is being built, so that identification is [inference],
+      not [verified].
+  - id: OHGC15293
+    name: OPPIDAN BOWLING GREEN DATA CENTER
+    address: 2501 Woodstream Drive, Bowling Green
+    lat: 41.3822222
+    lon: -83.5966667
+    wbd12: '041000100301'
+    wbd12_name: North Branch Portage River
+    status: Effective
+    expires: '2028-04-22'
+    quarters_in_noncompliance: 0
+    note: >-
+      The in-city Oppidan colocation facility (6-8 MW). NOTE THE WATERSHED — this is the ONLY
+      data-center coverage in the same HUC-12 as the WPC's receiving water.
+  - id: OHGC08916
+    name: NUTRITIONAL PRODUCT MANUFACTURING FACILITY
+    address: Southeast of Nims Road and N. Dixie, Bowling Green
+    lat: 41.4091667
+    lon: -83.6480556
+    wbd12: '041000100601'
+    wbd12_name: Upper Toussaint Creek
+    status: Effective
+    expires: '2028-04-22'
+    quarters_in_noncompliance: 0
+    note: >-
+      Abbott's plant, filed by function rather than by company name. Identification as Abbott is
+      [inference] from the description, location and the epic's record of a $536M Abbott
+      nutritional plant; the ICIS record does not name Abbott.
+  - id: OHGC17556
+    name: BOWLING GREEN (45126)
+    address: 901 N Dunbridge Rd, Bowling Green
+    wbd12: '041000100301'
+    status: Effective
+    expires: '2028-04-22'
+    quarters_in_noncompliance: 0
+    note: >-
+      Construction general permit coverage at the WPC's own address — i.e. the wastewater plant
+      is itself a construction site. Consistent with the [reference]-grade ~$10.1M WWTP
+      expansion the issue body tracked, but the coverage record does not say what is being
+      built. [inference].
+  what_this_does_not_establish:
+    tag: '[open]'
+    detail: >-
+      Coverage under a general permit is not a SWP3. The Stormwater Pollution Prevention Plans
+      themselves, the Notices of Intent (which state disturbed acreage and receiving water as
+      the applicant declared them), and any inspection reports are NOT in ECHO and are not
+      captured here. The issue's ~280-acre Meta earthwork and 147-acre Apollo figures remain
+      uncorroborated by any permit document — no acreage appears in any record captured in this
+      pass. The NOIs are the next pull and would be an Ohio EPA records request or an eBusiness
+      Center lookup.
+
+# ══════════════════════════════════════════════════════════════════════════════
+# THE UNRESOLVED NUMBER
+# ══════════════════════════════════════════════════════════════════════════════
+
+meta_water_demand_conflict:
+  tag: '[open]'
+  status: UNRESOLVED — both figures recorded, neither preferred, no reconciliation asserted
+  question: How much water will the Meta campus actually take, and through whom?
+  figure_a:
+    value_gpd: 50000
+    attribution: Meta's own public announcement of the Bowling Green Data Center
+    tag: '[reference]'
+  figure_b:
+    value_gpd: 600000
+    attribution: >-
+      Local reporting and NWWSD-linked coverage, characterized as a design commitment of "up
+      to" roughly 600,000 gpd
+    tag: '[reference]'
+  spread: 12x
+  what_would_settle_it:
+    instrument: The NWWSD-Meta water service agreement
+    secondary_instrument: >-
+      The Bowling Green-NWWSD wholesale contract, whose ceiling was raised to 1.5 MGD in August
+      2024 (against roughly 860,000 gpd actually purchased)
+    route: R.C. 149.43 records request to NWWSD and to the City of Bowling Green
+    status: not requested in this pass — recording the conflict was the instruction
+  why_both_can_be_true: >-
+    Stated as a hypothesis to be tested, NOT as a resolution. A closed-loop dry-cooled campus
+    can have a small OPERATIONAL consumption and a much larger CONTRACTUAL reservation — the
+    first is what it drinks, the second is what it is entitled to draw and what the district
+    must build pipe and tank for. If that is the shape here, the two figures are answers to
+    different questions and neither is wrong. Nothing in the captured record establishes this.
+    Until an instrument is in hand, both figures stand side by side.
+  the_cooling_claim:
+    tag: '[reference]'
+    claim: Closed-loop with dry coolers — "no operational water."
+    discipline_note: >-
+      This is the company's own characterization. It is carried at [reference] and it is
+      load-bearing in the wrong direction for a water-stress thesis: a closed-loop dry-cooled
+      design UNDERCUTS an abstraction-stress story. The Urbana lesson (1330) applies directly —
+      model what the instruments support. On the evidence captured here the Bowling Green water
+      story is SUPPLY EXPANSION UNDER DROUGHT and a wastewater plant already failing its
+      nutrient limit, not a campus drinking a river dry. Do not import Lima's framing.
+  the_real_tension:
+    tag: '[verified]/[reference]'
+    detail: >-
+      The instruments support a narrower and better-documented tension than "data center takes
+      water." The city sells water wholesale to NWWSD, which serves the campus. The city is
+      simultaneously expanding treatment capacity ([verified] via the 2025 CCR's microfiltration
+      trains) and buying reservoir land ([reference]). And in November 2025 a flash drought left
+      the Maumee roughly 50% dry at Waterville and the city began studying an emergency Toledo
+      interconnection through the same district it sells to ([reference]). An independent seller
+      contemplating becoming a buyer is the documented story. The 50k-vs-600k question matters
+      because it sizes that tension, not because it settles a water-stress claim.
+
+# ══════════════════════════════════════════════════════════════════════════════
+# STANDING WATCH — one item closes, one opens in its place
+# ══════════════════════════════════════════════════════════════════════════════
+
+ohd000001_data_center_general_permit:
+  tag: '[verified]'
+  status: CLOSED — the watch is over, and not because the permit issued
+  disposition: Ohio EPA will NOT finalize the proposed data center general permit.
+  notice_date: '2026-07-21'
+  captured_source: data/documents/oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html
+  quoted: >-
+    "Ohio EPA Will NOT Finalize Proposed Data Center General Permit — Community Notice (July 21,
+    2026) ... After carefully reviewing the significant volume of public comments received on the
+    draft National Pollutant Discharge Elimination System (NPDES) general permit for data
+    centers, Ohio EPA has decided not to move forward with finalizing the general permit. The
+    individual NPDES permit issuance process is the most appropriate path forward at this time.
+    Individual NPDES permits will continue to uphold the same rigorous environmental standards
+    and protections required under state and federal law."
+  what_the_issue_expected: >-
+    The issue body, written 2026-07-10, set a standing watch: "on issuance, check the coverage
+    list for the Meta campus and Apollo." There will be no coverage list. The notice landed
+    eleven days after the issue was written.
+  what_replaces_the_watch:
+    tag: '[open]'
+    detail: >-
+      The watch does not disappear; it changes shape. If either the Meta campus or the Apollo
+      plant has a process-water or cooling discharge, it now requires an INDIVIDUAL NPDES permit
+      — a public-noticed, fact-sheeted, individually-limited instrument, which is a
+      substantially better evidentiary object than a general-permit coverage row would have
+      been. Neither facility appears in ICIS with an individual NPDES permit as of the
+      2026-07-24 extract. The new watch is: does an individual NPDES application or draft permit
+      appear for either? Shared with Sandusky (1384), which was on the same watch.
+  do_not_confuse: >-
+    OHD000001 is the DATA CENTER general permit and it is dead. OHC000000, the CONSTRUCTION
+    general permit under which all the earthwork above is covered, is a different instrument
+    entirely and is very much alive.
+
+# ══════════════════════════════════════════════════════════════════════════════
+
+open_leads:
+- id: BG-WARNING-LETTER-OH-I00107014
+  question: What violations did the 2025-02-19 warning letter actually cite?
+  why: >-
+    It is the only enforcement action on the CWA side in five years and it predates both
+    Category-I quarters, so it cannot be about MBAS. ECHO gives the action type and date but not
+    the cited violations.
+  route: Records request to Ohio EPA Northwest District Office for enforcement action OH-I00107014.
+- id: BG-COMPLIANCE-SCHEDULE-SUBMITTALS
+  question: >-
+    Were the two compliance-schedule progress reports (event code 07099, due ~2023-05-01 and
+    ~2024-05-01) and the compliance notification (event code 05699) submitted?
+  why: >-
+    Highest-value item on the discharge side. The plant had three years' notice of the MBAS
+    limit and exceeded it in month one. What it told Ohio EPA during those three years about its
+    ability to meet it is the difference between a plant that was surprised and a plant that
+    was not.
+  route: Records request to Ohio EPA NWDO for the 2PD00009 compliance-schedule file.
+- id: BG-CGP-NOIS
+  question: Disturbed acreage, receiving water and SWP3 for OHGC15219, OHGC17963 and OHGC19094.
+  why: >-
+    Construction coverage is established; the earthwork's SIZE is not. The issue's ~280-acre
+    Meta and 147-acre Apollo figures have no permit-document support in the captured record.
+  route: Ohio EPA eBusiness Center NOI lookup, or a records request for the NOIs.
+- id: BG-NWWSD-SERVICE-AGREEMENT
+  question: The NWWSD-Meta service agreement and the August 2024 BG-NWWSD wholesale contract.
+  why: The only instruments that can settle the 50,000-vs-600,000 gpd conflict.
+  route: R.C. 149.43 request to NWWSD and to the City of Bowling Green.
+  note: Deliberately not drafted in this pass — the instruction was to record the conflict, not to request.
+- id: BG-RESERVOIR-CYANOBACTERIA-RECORD
+  question: >-
+    Primary documentation for the reservoir cyanobacteria history — the ~68% algal composition
+    figure (2016), the RADOR aeration installation (2017), the January 2025 resolution, and the
+    PhycoSens pilot.
+  why: >-
+    All four are currently [reference] only. The HAB backdrop is the part of this site's water
+    story with the weakest evidentiary footing, and it is the part most likely to be repeated
+    into [verified] by a later summary.
+  route: City of Bowling Green Board of Public Utilities minutes and Water Treatment Plant records.
+- id: BG-OEPA-ADVISORY-TABLE
+  question: Ohio EPA public-water-system advisory table for OH8700311, 2016-2026.
+  why: >-
+    Explicitly asked for by the acceptance criteria and not performed in this pass. Needed to
+    close out the no-2017-advisory correction against the state's own table rather than against
+    secondary reporting.
+  route: Ohio EPA Division of Drinking and Ground Waters HAB/advisory records.
+- id: BG-PORTAGE-RESURVEY
+  question: Has Ohio EPA resurveyed the North Branch Portage River since the 2022 renewal?
+  why: >-
+    The 0.7 mg/L phosphorus limit is explicitly an adaptive-management placeholder pending a
+    resurvey. If the resurvey has happened, the next renewal's limit is in play — and the next
+    renewal application is due on or about 2026-11-01.
+  route: Ohio EPA Division of Surface Water biological and water quality survey reports.
+- id: BG-UCMR5-PFAS
+  question: Bowling Green's UCMR 5 PFAS results (2023-2024).
+  why: The CCR confirms participation but prints no results, directing readers to phone the superintendent.
+  route: Federal UCMR 5 public dataset — no records request needed.
+- id: BG-INDIVIDUAL-NPDES-DATA-CENTER
+  question: >-
+    Does an individual NPDES application or draft permit appear for the Meta campus or the
+    Apollo plant, now that the general-permit route is closed?
+  why: The replacement for the dead OHD000001 watch. Shared with Sandusky (1384).
+  route: Standing check of Ohio EPA public notices and the ICIS-NPDES facility index for Wood County.
