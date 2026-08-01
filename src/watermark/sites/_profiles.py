@@ -3946,8 +3946,27 @@ _BOWLING_GREEN = SiteProfile(
     grid_relpath="reference/eia/bowling-green/grid-profile.yaml",
     # toxics (no identified industrial corridor yet)
     toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor
-    # balance (Portage-basin per-WWTP receiving waters pending the water/permit chain #1439)
-    plant_receiving={},  # [open] BG WPC 2PD00009/OH0024139 → Poe Ditch → North Branch Portage; 7Q10 pending (#1439)
+    # balance — the Portage-side receiving chain, resolved from the permit's own fact sheet (#1439).
+    # The city's only municipal POTW. NB the receiving water is NOT the Maumee: BG drinks the Maumee
+    # (see `abstraction_gage` below) and discharges to the Portage. Effluent screens key on the North
+    # Branch Portage (active gage 04195061), never on the intake reach.
+    plant_receiving={
+        "bowling-green-wpc": (
+            "Poe Ditch RM 2.5 (→ North Branch Portage River RM 8.56 → Portage River → Lake Erie)",
+            "Ohio EPA NPDES permit 2PD00009*TD / application OH0024139 (Bowling Green Water "
+            "Pollution Control, 901 N. Dunbridge Rd, Wood County); average design flow 10 MGD, "
+            "peak hydraulic 30 MGD. Immediate receptor Poe Ditch at River Mile 2.5 (Ohio EPA "
+            "river code 16-108, HUC 04100010-03-01, Limited Resource Water), entering the North "
+            "Branch Portage River at River Mile 8.56 (river code 16-007, Warmwater Habitat / "
+            "Primary Contact Recreation) — and the North Branch Portage's criteria are the ones "
+            "applied to this discharge, 'to be protective of this higher quality stream'. "
+            "Regulatory low flows (Table 12, drainage-area-adjusted from USGS 04195500 over "
+            "1951-97): annual 7Q10 0.364 cfs, 1Q10 0.285 cfs, harmonic mean 3.233 cfs, against a "
+            "stated discharger flow of 15.47 cfs — the plant is ~42x the 7Q10 of the water it "
+            "enters. Fact Sheet 2PD00009 pp. 1, 6, 30; permit p. 1 — "
+            "data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml [verified]",
+        ),
+    },
     abstraction_gage="04193500",  # [inference] the Maumee-at-Waterville intake reach (the city drinks the Maumee)
     # refill (the water-balance supply model is not yet designed for Bowling Green)
     supply_gage_primary="TODO",  # [open] refill supply gage — pending the site's water-balance model

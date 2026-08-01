@@ -1,0 +1,386 @@
+doc_id: 2PD00009.fs-4a17b0e0
+source_path: data/documents/oepa/bowling-green/2PD00009.fs.pdf
+kind: npdes
+pages_read: []
+image_pages_read: []
+dpi: 0
+source_text_excerpt: >-
+  "National Pollutant Discharge Elimination System (NPDES) Permit Program / FACT SHEET /
+  Regarding an NPDES Permit to Discharge to Waters of the State of Ohio for Bowling Green Water
+  Pollution Control (WPC) / Public Notice No.: 22-02-025 / Ohio EPA Permit No.: 2PD00009*TD /
+  Public Notice Date: February 22, 2022 / Application No.: OH0024139 / Comment Period Ends:
+  March 25, 2022 / Name and Address of Applicant: City of Bowling Green, 304 North Church
+  Street, Bowling Green, OH 43402 / Name and Address of Facility Where Discharge Occurs:
+  Bowling Green WPC, 901 North Dunbridge Road, Bowling Green, OH 43402, Wood County /
+  Receiving Water: Poe Ditch / Subsequent Stream Network: North Branch Portage River to
+  Portage River to Lake Erie"
+
+# Method note (important, and different from the OCR-scan rule in CLAUDE.md): this is a
+# DIGITALLY GENERATED Ohio EPA PDF, not a scan. Its text layer is the document's own embedded
+# text, not an OCR guess, so every figure below is read from it verbatim rather than re-keyed
+# from a render. This is a REVIEWED TRANSCRIPTION, not a `watermark extract --kind npdes` run:
+# no vision pass was made, `pages_read` is therefore empty, and each block cites the 1-based
+# printed sheet ("Page N of 35") it was transcribed from.
+#
+# CONFLATION TRAP, stated once and load-bearing throughout: the subject of this document is the
+# WATER POLLUTION CONTROL plant (wastewater, 10 MGD average design, to Poe Ditch, Portage
+# basin). The City of Bowling Green also runs a WATER TREATMENT PLANT (drinking, ~10 MGD,
+# from the Maumee at Waterville, PWS OH8700311). Two plants, two rivers, near-identical
+# capacity numbers. Nothing in this file describes the drinking-water side.
+
+permit:
+  confidence: high
+  warnings:
+  - >-
+    Table 12's low flows are NOT measured on Poe Ditch, and not measured anywhere near Bowling
+    Green. They are drainage-area-adjusted from USGS gauge 04195500 (Portage River at
+    Woodville) over 1951-97 — a record that closed before the network's own derived 7Q10 window
+    (1980-2024) opens. The footnote is explicit: "Flow data from Low-Flow Characteristics of
+    Stream in Ohio through Water Year 1997 and adjusted for drainage area." Treat the 0.364 cfs
+    as the REGULATORY denominator that this permit's limits were actually computed against, not
+    as a measurement of the ditch, and do not reconcile it against a derived value by preferring
+    one — they are different arithmetic over different records. Same posture as Ottawa
+    (data/extracted/oepa/ottawa/2PD00028.fs.npdes.yaml).
+  - >-
+    The plant is far larger than the water it discharges into. Table 12 states the discharger
+    flow as 15.47 cfs (10 MGD) against an annual 7Q10 of 0.364 cfs in the same table — a ratio
+    of about 42 to 1. Under design-flow low-flow conditions Poe Ditch below this outfall is
+    effluent, not diluted effluent. This is a [verified] reading of two numbers printed in one
+    table; the ratio itself is arithmetic and is tagged [inference] where it is asserted
+    downstream.
+  - >-
+    The water quality criteria applied to this discharge are NOT Poe Ditch's own. Poe Ditch is
+    designated Limited Resource Water; the fact sheet states on p. 6 that the criteria
+    associated with the North Branch Portage River's higher uses (Warmwater Habitat, Primary
+    Contact Recreation) "are applied to Bowling Green WPC to be protective of this higher
+    quality stream." A screen that reads Poe Ditch's LRW designation and stops there will apply
+    the wrong criteria.
+  - >-
+    The total phosphorus limit was NOT tightened by this permit. The reduction from 1.0 to 0.7
+    mg/L happened in the PRIOR action, permit 2PD00009*SD (p. 9: "the monthly average limit for
+    total phosphorus was reduced from 1.0 to 0.7 mg/L in permit 2PD00009*SD"). This *TD renewal
+    CONTINUES it — "this permit proposes that the same phosphorus limits be continued under the
+    adaptive management approach." Any claim that the 2022 renewal cut the phosphorus limit is
+    wrong; the 2022 renewal declined to cut it further while Ohio EPA waited to resurvey.
+  - >-
+    The TMDL's own target for this plant is 0.5 mg/L total phosphorus and it was never adopted
+    as a limit. Page 9: the TMDL "assessed multiple scenarios for assigning phosphorus
+    reductions but none resulted in reaching the in-stream target," and it "recommended an
+    implementation strategy ... with a target effluent concentration of 0.5 mg/L for Bowling
+    Green WPC but no formal wasteload allocation was approved." The operative 0.7 mg/L limit
+    rests on best technical judgement, not on an approved WLA.
+
+  facility_name: Bowling Green Water Pollution Control (WPC)
+  permit_no: 2PD00009*TD
+  permit_action: renewal
+  applicant: City of Bowling Green, 304 North Church Street, Bowling Green, OH 43402
+  application_no: OH0024139
+  public_notice_no: 22-02-025
+  public_notice_date: '2022-02-22'
+  comment_period_end: '2022-03-25'
+  facility_address: Bowling Green WPC, 901 North Dunbridge Road, Bowling Green, OH 43402, Wood County
+  receiving_water: Poe Ditch
+  subsequent_stream_network: North Branch Portage River to Portage River to Lake Erie
+  page_count: 35
+
+  # ── Receiving water — the chain the site profile was carrying as [open] (p. 6) ──
+  receiving_water_chain:
+    citation: 'Fact Sheet 2PD00009, Page 6 of 35, "LOCATION OF DISCHARGE/RECEIVING WATER USE CLASSIFICATION"'
+    tag: '[verified]'
+    outfall_receptor: Poe Ditch
+    outfall_river_mile: 2.5
+    poe_ditch_river_code: 16-108
+    hydrologic_unit_code: 04100010-03-01
+    county: Wood
+    ecoregion: Huron-Erie Lake Plain
+    poe_ditch_use_designations:
+    - Limited Resource Water
+    - Agricultural Water Supply
+    - Industrial Water Supply
+    - Secondary Contact Recreation
+    confluence: >-
+      "A short distance downstream of Bowling Green WPC, Poe Ditch discharges to the North
+      Branch of the Portage River at River Mile 8.56 (Ohio EPA River Code: 16-007)."
+    north_branch_portage_river_mile: 8.56
+    north_branch_portage_river_code: 16-007
+    north_branch_portage_use_designations:
+    - Warmwater Habitat
+    - Agricultural Water Supply
+    - Industrial Water Supply
+    - Primary Contact Recreation
+    criteria_applied_from: >-
+      North Branch Portage River. Quoted: "Water quality criteria associated with these uses are
+      applied to Bowling Green WPC to be protective of this higher quality stream."
+
+  # ── Facility description (pp. 6-7) ──
+  facility:
+    citation: 'Fact Sheet 2PD00009, Pages 6-7 of 35, "FACILITY DESCRIPTION"'
+    tag: '[verified]'
+    constructed: 1982
+    most_recent_upgrade: >-
+      2021 — "improvements to the aeration system were installed to improve control for
+      biological nutrient removal"
+    average_design_flow_mgd: 10
+    peak_hydraulic_capacity_mgd: 30
+    service_area: City of Bowling Green and the Villages of Portage and Rudolph
+    population_served: ~32000
+    equalization_basin_mg: 4.0
+    collection_system: 60% separate sewers, 40% combined sewers
+    infiltration_inflow_mgd: 0.5
+    treatment_processes:
+    - Bar, mechanical screen
+    - Grit, scum removal
+    - Primary sedimentation
+    - Secondary treatment - activated sludge
+    - Secondary clarification
+    - Tertiary filtration - cloth media
+    - Ultraviolet disinfection
+    bypasses: none
+    sludge_processes:
+    - Aerobic digestion
+    - Centrifuge dewatering
+    pretreatment_program:
+      approved: true
+      industrial_users: 6
+      categorical_users: 2
+      categorical_flow_mgd: 0.021
+      significant_non_categorical_users: 4
+      significant_non_categorical_flow_mgd: 0.093
+    cso:
+      outfalls: 1
+      outfall_id: '002'
+      ltcp_approved: '2008-03'
+      ltcp_level_of_control: four or fewer untreated CSO events per typical year
+      ltcp_status: >-
+        "The City has completed implementation of its LTCP and submitted an LTCP Evaluation
+        Report, which concluded that the City had attained compliance with LTCP level of control"
+    sso:
+      station: '300'
+      reported_last_five_years: 0
+
+  # ── Receiving-water impairment (pp. 8-9) — carried in full, exculpatory passages included ──
+  receiving_water_assessment:
+    citation: 'Fact Sheet 2PD00009, Pages 8-9 of 35, "ASSESSMENT OF IMPACT ON RECEIVING WATERS"'
+    tag: '[verified]'
+    section_303d_listing: >-
+      "The North Branch Portage River watershed assessment unit, which includes Poe Ditch in the
+      vicinity of Bowling Green WPC, is listed as impaired for aquatic life, recreation, and
+      human health (fish tissue) use on Ohio's 303(d) list."
+    tmdl:
+      approved: '2011-09'
+      basin: Portage River
+      underlying_data: >-
+        2008, reported in the TSD "Biological and Water Quality Survey of the Portage River
+        Basin, Select Maumee River Tributaries, and Select Lake Erie Tributaries, 2006 - 2008"
+    aquatic_life_impairment: >-
+      "The North Branch Portage River is impaired for aquatic life use due to nutrient
+      enrichment downstream of Bowling Green WPC. The TSD identified Bowling Green WPC as a
+      source, showing significant spikes in nutrient concentrations downstream of the facility
+      (Figure 4)."
+    aquatic_life_second_cause: >-
+      "The aquatic life use in North Branch Portage River is also impaired due to siltation
+      caused by channelization." — a cause this discharger is not named for.
+    recreation_impairment: >-
+      "Impairments of the primary contact recreation use due to high E. coli levels were
+      identified in Poe Ditch and on the North Branch Portage River up-and downstream of Poe
+      Ditch. Home sewage treatment systems (HSTS), agriculture, and Bowling Green WPC were
+      identified as sources of the impairment."
+    recreation_exculpatory: >-
+      Carried at equal weight, per the discipline: "To reduce bacteria loads to the receiving
+      stream, the City has implemented its Long Term Control Plan to reduce untreated CSO
+      discharges and has had only two violations of the E. coli effluent limits at the treatment
+      facility in the last five years." The E. coli impairment is identified both UPSTREAM and
+      downstream of Poe Ditch, which is not a pattern this outfall alone can produce.
+    human_health_impairment: >-
+      "The human health use in North Branch Portage River is impaired due to high
+      polychlorinated biphenyl (PCB) levels found in the tissue of sport fish." No PCB limit or
+      PCB source attribution to this plant appears anywhere in the fact sheet.
+    phosphorus_management: >-
+      "The TMDL report assessed multiple scenarios for assigning phosphorus reductions but none
+      resulted in reaching the in-stream target. As a result, the TMDL recommended an
+      implementation strategy to address the identified nutrient impairment with a target
+      effluent concentration of 0.5 mg/L for Bowling Green WPC but no formal wasteload
+      allocation was approved. Based on best technical judgement and using the TMDL as guidance,
+      the monthly average limit for total phosphorus was reduced from 1.0 to 0.7 mg/L in permit
+      2PD00009*SD." The *TD renewal continues those limits pending an Ohio EPA resurvey that,
+      as of this fact sheet, had not happened.
+
+  # ── Table 12 — the regulatory low-flow set (p. 30) ──
+  instream_conditions:
+    citation: 'Fact Sheet 2PD00009, Page 30 of 35, "Table 12. Instream Conditions and Discharger Flow"'
+    tag: '[verified]'
+    basis: USGS Gage #04195500, 1951-97, adjusted for drainage area
+    basis_footnote: >-
+      "*Flow data from Low-Flow Characteristics of Stream in Ohio through Water Year 1997 and
+      adjusted for drainage area"
+    stream_flows_cfs:
+      1Q10_annual: 0.285
+      7Q10_annual: 0.364
+      30Q10_summer: 0.626
+      30Q10_winter: 1.48
+      90Q10_annual: 0.865
+      harmonic_mean_annual: 3.233
+    mixing_assumption_pct:
+      average: 25
+      maximum: 100
+    discharger_flow:
+      cfs: 15.47
+      mgd: 10
+      basis: NPDES Application Form 2A
+    ambient:
+      hardness_mg_l: 331          # Station 901, 2016-21, n=63, median
+      ph_summer: 7.8              # Station 901, 2016-21, n=20, 75th percentile
+      ph_winter: 7.93             # Station 901, 2016-21, n=14, 75th percentile
+      temperature_c_summer: 22.72
+      temperature_c_winter: 3.77
+      nitrate_nitrite_mg_l: 4.41  # eDMR Station 801, 2016-21, n=56, 8<MDL, median
+      total_filterable_residue_mg_l: 734.5
+    background_no_data:
+      note: >-
+        Recorded because an absence of data is not an absence of the pollutant. Table 12 gives
+        a background of ZERO for antimony, dissolved hexavalent chromium, free cyanide, MBAS and
+        molybdenum on the stated basis "No representative data available." For MBAS in
+        particular — the parameter that later drove this plant into Category-I noncompliance —
+        the wasteload allocation was computed against an assumed background of zero that Ohio
+        EPA had no ambient datum to support.
+      parameters:
+      - Antimony
+      - Dissolved Hexavalent Chromium
+      - Free Cyanide
+      - MBAS (foaming agents)
+      - Molybdenum
+
+  # ── Reported performance (pp. 21-22) ──
+  reported_performance:
+    citation: 'Fact Sheet 2PD00009, Pages 21-22 of 35, Tables 1-5'
+    tag: '[verified]'
+    window_note: >-
+      2016 columns are September-December only; 2021 columns are January-August only. Neither is
+      a full year and neither should be compared to a full-year column without saying so.
+    effluent_violations_outfall_001:            # Table 2
+      2016a: 0
+      2017: 2
+      2018: 4
+      2019: 7
+      2020: 15
+      2021b: 7
+      total: 35
+      by_parameter:
+        CBOD_5_day: 9
+        Ammonia: 11
+        Total_Suspended_Solids: 7
+        Mercury: 3
+        E_coli: 2
+        Phosphorus: 2
+        Fecal_Coliform_in_Sludge: 1
+      permittee_explanation: >-
+        Carried from p. 7: "Many of these violations are associated with the recent facility
+        improvements (2020-21), during which the aeration treatment systems were operating at
+        half capacity."
+    annual_flow_mgd:                            # Table 3
+      2016a: {p50: 4.25, p95: 9.05, max: 20.04}
+      2017: {p50: 5.21, p95: 15.49, max: 29.35}
+      2018: {p50: 5.46, p95: 13.60, max: 26.27}
+      2019: {p50: 5.71, p95: 14.88, max: 27.08}
+      2020: {p50: 4.62, p95: 12.12, max: 25.33}
+      2021b: {p50: 4.54, p95: 11.84, max: 18.03}
+      note: >-
+        Median flow runs 4.25-5.71 MGD against a 10 MGD average design — the plant has
+        substantial headroom at the median. The 95th percentiles (up to 15.49 MGD) and maxima
+        (up to 29.35 MGD, against a 30 MGD peak hydraulic capacity) are the wet-weather story,
+        not the dry-weather one.
+    cso_discharges:                             # Table 4
+      2016a: {occurrences: 2, volume_mg: 26.98}
+      2017: {occurrences: 6, volume_mg: 126.43}
+      2018: {occurrences: 8, volume_mg: 52.95}
+      2019: {occurrences: 4, volume_mg: 35.66}
+      2020: {occurrences: 3, volume_mg: 42.58}
+      2021b: {occurrences: 4, volume_mg: 44.94}
+      note: >-
+        2017 (6) and 2018 (8) exceed the LTCP level of control of four per typical year. The
+        fact sheet does not treat those years as a level-of-control failure — the standard is
+        four per TYPICAL year, and a typical-year determination is a modelling exercise, not a
+        raw count. Recorded as printed; no violation is asserted from this table.
+    total_phosphorus_loading:                   # Table 5
+      2016a: {n: 8, median_mg_l: 0.65, median_flow_mgd: 4.25, median_load_kg_day: 10.45}
+      2017: {n: 25, median_mg_l: 0.5, median_flow_mgd: 5.21, median_load_kg_day: 9.85}
+      2018: {n: 24, median_mg_l: 0.4, median_flow_mgd: 5.46, median_load_kg_day: 8.26}
+      2019: {n: 27, median_mg_l: 0.2, median_flow_mgd: 5.71, median_load_kg_day: 4.32}
+      2020: {n: 43, median_mg_l: 0.3, median_flow_mgd: 4.62, median_load_kg_day: 5.24}
+      2021b: {n: 24, median_mg_l: 0.4, median_flow_mgd: 4.54, median_load_kg_day: 6.87}
+
+  # ── Table 14 / Table 15 — what got limits, and what they are (pp. 32-33) ──
+  parameter_assessment:
+    citation: 'Fact Sheet 2PD00009, Page 32 of 35, "Table 14. Parameter Assessment"'
+    tag: '[verified]'
+    group_5_limits_recommended:
+      ammonia_summer_avg_mg_l: 1.7
+      ammonia_winter_avg_mg_l: 4.2
+      b2ehp_avg_ug_l: 8.4
+      b2ehp_max_ug_l: 1120
+      mbas_max_mg_l: 0.51
+      mercury_avg_ng_l: 1.3
+      mercury_max_ng_l: 1700
+    mercury_note: >-
+      "Mercury becomes a Group 5 parameter based upon the loading test [OAC 3745-2-06(B)]" —
+      i.e. by load, not by concentration.
+    group_2_no_limit: [Antimony, Arsenic, Cadmium, Chromium, Dissolved Hexavalent Chromium, Copper, Molybdenum, Nickel, Nitrate + Nitrite]
+    group_3_no_limit: [Free Cyanide, Lead, Selenium, Zinc]
+    group_4_monitoring: [Total Filterable Residue]
+
+  final_effluent_limits_outfall_001:
+    citation: 'Fact Sheet 2PD00009, Page 33 of 35, "Table 15. Final Effluent Limits for Outfall 001"'
+    tag: '[verified]'
+    loading_basis: >-
+      "Effluent loadings based on average design discharge flow of 10 MGD." Every kg/day figure
+      below is therefore a DESIGN-FLOW loading, not an actual-flow loading; the plant's median
+      flow is roughly half its design flow.
+    limits:
+    - {parameter: Dissolved Oxygen, units: mg/L, daily_minimum: 5.0, basis: PD}
+    - {parameter: Total Suspended Solids, units: mg/L, seven_day_avg: 18, thirty_day_avg: 12, load_daily_kg: 682, load_30day_kg: 455, basis: PD}
+    - {parameter: Oil & Grease, units: mg/L, daily_maximum: 10, basis: WQS}
+    - {parameter: Ammonia (summer), units: mg/L, seven_day_avg: 2.5, thirty_day_avg: 1.7, load_daily_kg: 94.7, load_30day_kg: 64.4, basis: WLA}
+    - {parameter: Ammonia (winter), units: mg/L, seven_day_avg: 6.3, thirty_day_avg: 4.2, load_daily_kg: 239, load_30day_kg: 159, basis: WLA}
+    - {parameter: Phosphorus, units: mg/L, seven_day_avg: 1.1, thirty_day_avg: 0.7, load_daily_kg: 41.7, load_30day_kg: 26.5, basis: PTS/BPJ}
+    - {parameter: E. coli, units: '#/100 mL', seven_day_avg: 284, thirty_day_avg: 126, basis: WQS}
+    - {parameter: Methyl Blue Active Substances (MBAS), units: mg/L, daily_maximum: 0.51, load_daily_kg: 19.4, basis: WLA}
+    - {parameter: Bis(2-ethylhexyl) phthalate, units: ug/L, daily_maximum: 1120, thirty_day_avg: 8.4, load_daily_kg: 42.4, load_30day_kg: 0.318, basis: WLA}
+    - {parameter: Mercury, units: ng/L, daily_maximum: 1700, thirty_day_avg: 1.3, load_daily_kg: 0.0644, load_30day_kg: 0.00005, basis: WLA}
+    - {parameter: CBOD5, units: mg/L, seven_day_avg: 12, thirty_day_avg: 10, load_daily_kg: 455, load_30day_kg: 379, basis: PD}
+    - {parameter: pH, units: SU, daily_maximum: 9.0, daily_minimum: 6.5, basis: WQS}
+    monitor_only: [Water Temperature, Precipitation, Total Kjeldahl Nitrogen, Nitrate plus Nitrite, Orthophosphate, Nickel, Zinc, Cadmium, Lead, Chromium, Copper, Dissolved Hexavalent Chromium, Flow Rate, Free Cyanide, Total Filterable Residue, 'Acute/Chronic Toxicity (C. dubia, P. promelas)']
+    basis_legend:
+      BTJ: Best Technical Judgment
+      M: DSW NPDES Permit Guidance 1 (monitoring frequency, sanitary discharges)
+      PD: Plant Design (OAC 3745-33-05(E))
+      PMR: Phosphorus monitoring requirements (ORC 6111.03)
+      PTS: Phosphorus Treatment Standards (OAC 3745-33-06(C))
+      WET: Minimum WET testing requirements (OAC 3745-33-07(B)(11))
+      WLA: Wasteload Allocation procedures (OAC 3745-2)
+      WQS: Ohio Water Quality Standards (OAC 3745-1)
+
+  summary_of_permit_conditions:
+    citation: 'Fact Sheet 2PD00009, Page 2 of 35, "SUMMARY OF PERMIT CONDITIONS"'
+    tag: '[verified]'
+    quoted_changes:
+    - >-
+      "New limits for bis(2-ethylhexyl) phthalate (B2EHP) and methyl blue activated substances
+      (MBAS) are proposed due to reasonable potential to exceed the wasteload allocation. A
+      36-month compliance schedule is proposed for the permittee to attain compliance with the
+      new limits."
+    - >-
+      "Lower final effluent limits are proposed for ammonia (summer and winter), due to plant
+      design limits not being protective of water quality standards. A 36-month compliance
+      schedule is proposed..."
+    - >-
+      "Monitoring for E. coli at upstream station 801 and downstream station 901 is proposed to
+      change from summer to June-August and from monthly to once per two weeks."
+    - >-
+      "New monitoring for total phosphorus as station 901 is proposed to provide data for future
+      water quality studies."
+    - >-
+      "Monitoring for CBOD5 and TSS at CSO station 002 is proposed to be removed."
+    - >-
+      "A new condition is proposed in Part II of the permit that requires continued compliance
+      with the Long Term Control Plan level of control for combined sewer overflows."
+    antidegradation: '"No antidegradation review was necessary." (p. 1)'
