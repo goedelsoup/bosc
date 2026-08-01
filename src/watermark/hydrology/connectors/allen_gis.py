@@ -182,6 +182,22 @@ def _parse_parcel_date(value: Any) -> str | None:
     return f"{year:04d}-{month:02d}-{day:02d}"
 
 
+def _iso_if_real_date(year: int, month: int, day: int) -> str | None:
+    """ISO ``yyyy-mm-dd`` if ``(year, month, day)`` is a real calendar date, else ``None``.
+
+    Range-checking the parts independently (``1 <= day <= 31``) accepts dates that do not exist —
+    ``2/30/2025``, or ``2/29`` in a non-leap year — and a parser that emits one has invented a
+    conveyance date the county never recorded. ``datetime.date`` is the calendar, leap years
+    included; the surrounding 1800-2100 bound stays a plausibility guard on a mis-scanned year.
+    """
+    if not (1800 <= year <= 2100):
+        return None
+    try:
+        return datetime.date(year, month, day).isoformat()
+    except ValueError:
+        return None
+
+
 def _parse_mdyyyy_slash(value: Any) -> str | None:
     """Decode an ``M/D/YYYY`` sale string, with an optional trailing clock, to ISO ``yyyy-mm-dd``.
 
@@ -189,7 +205,7 @@ def _parse_mdyyyy_slash(value: Any) -> str | None:
     County serves its CAMA ``Date_Conveyed`` pre-formatted as **text**, not as an
     ``esriFieldTypeDate``, so the year is already four digits and no century pivot applies (unlike
     ``mmddyy``). The time component is always midnight and is discarded rather than parsed.
-    Returns ``None`` for missing/unparseable values.
+    Returns ``None`` for missing/unparseable values, including calendar-impossible ones.
     """
     text = _s(value)
     if text is None:
@@ -197,10 +213,7 @@ def _parse_mdyyyy_slash(value: Any) -> str | None:
     m = re.match(r"(\d{1,2})/(\d{1,2})/(\d{4})\b", text)
     if not m:
         return None
-    month, day, year = int(m.group(1)), int(m.group(2)), int(m.group(3))
-    if not (1 <= month <= 12 and 1 <= day <= 31 and 1800 <= year <= 2100):
-        return None
-    return f"{year:04d}-{month:02d}-{day:02d}"
+    return _iso_if_real_date(int(m.group(3)), int(m.group(1)), int(m.group(2)))
 
 
 def _parse_epoch_millis(value: Any) -> str | None:
@@ -223,7 +236,9 @@ def _parse_mmddyy(value: Any) -> str | None:
     e.g. ``"08-05-94"`` -> ``1994-08-05``; ``"06-22-23"`` -> ``2023-06-22``. The century is
     resolved by the standard C/``strptime`` ``%y`` pivot -- ``69``-``99`` -> ``1900``s, ``00``-
     ``68`` -> ``2000``s -- a documented convention, not a per-row guess; verify the century
-    against the deed for sales near the pivot. Returns ``None`` for missing/unparseable values.
+    against the deed for sales near the pivot. Returns ``None`` for missing/unparseable values,
+    including calendar-impossible ones. Note the century pivot runs BEFORE the calendar check, so
+    ``02-29-00`` resolves to 2000 (a leap year) and survives while ``02-29-01`` does not.
     """
     text = _s(value)
     if text is None:
@@ -232,10 +247,8 @@ def _parse_mmddyy(value: Any) -> str | None:
     if not m:
         return None
     month, day, yy = int(m.group(1)), int(m.group(2)), int(m.group(3))
-    if not (1 <= month <= 12 and 1 <= day <= 31):
-        return None
     year = 1900 + yy if yy >= 69 else 2000 + yy
-    return f"{year:04d}-{month:02d}-{day:02d}"
+    return _iso_if_real_date(year, month, day)
 
 
 def normalize_parcel_id(raw: str, *, rule: str = "dashless") -> str:

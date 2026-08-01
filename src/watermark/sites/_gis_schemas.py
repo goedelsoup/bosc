@@ -1296,12 +1296,19 @@ WILMINGTON_ZONING_SCHEMA = GisZoningSchema(
             "carry their district on the county layers instead (CountyWideZoning, or the "
             "ZoningDist column of the parcel CAMA join).",
             "CURRENCY IS THE POINT OF THIS LAYER FOR #1470: dataLastEditDate is 2026-02-10. It "
-            "therefore DOES carry the Cosler Farm map rezoning (a discrete 471.27-ac LI polygon "
-            "covering 99.7% of parcel 285-13-02-01-0000-00) and CANNOT carry the four Ardent/TAC "
-            "rezonings, which City Council passed 5-2 on 2026-02-19/20 — nine days later. Those "
-            "four parcels' interior points fall in NO city polygon and still read the COUNTY's "
-            "'S-R' Suburban Residential; that is a publication lag, not a finding about their "
-            "zoning.",
+            "therefore DOES carry the Cosler Farm map rezoning (a discrete 471.272-ac LI polygon "
+            "over parcel 285-13-02-01-0000-00) and CANNOT carry the four Ardent/TAC rezonings, "
+            "which City Council passed 5-2 on 2026-02-19/20 — nine days later. Those four "
+            "parcels' interior points fall in NO city polygon and still read the COUNTY's 'S-R' "
+            "Suburban Residential; that is a publication lag, not a finding about their zoning.",
+            "How well that polygon fits the parcel, stated as a measurement rather than a ratio "
+            "of two totals: intersecting the two geometries in UTM 17N (EPSG:32617) gives 470.931 "
+            "ac of overlap, which is 99.73% OF THE PARCEL (470.931 / 472.221 ac planar) and "
+            "99.93% OF THE LI POLYGON (470.931 / 471.272 ac). Quote the first — 'the zoning "
+            "covers the land' is the claim being made. Do NOT derive either figure by dividing "
+            "the polygon's area by the parcel's DEEDED 471.609 ac: that arithmetic never "
+            "intersects the shapes, so it would report a fit even for a polygon lying somewhere "
+            "else entirely, and it happens to land on 99.93% here by coincidence.",
             "The Cosler Farm LI polygon is one of the three ordinances a federal court ordered the "
             "City to redo for defective 30-day notice (Sharp v. City of Wilmington, S.D. Ohio "
             "1:26-cv-00448, ~2026-07-09/10) — a published district here is a MAPPED entitlement, "
