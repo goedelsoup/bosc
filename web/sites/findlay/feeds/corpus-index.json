@@ -39,7 +39,7 @@
     "label": "Findlay",
     "scope": "site",
     "links_out": 3,
-    "links_in": 28,
+    "links_in": 38,
     "lines": 13,
     "updated": null
   },
@@ -924,6 +924,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-atzc-hearings-august-2026",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Capture the three Allen Township zoning hearings on 2026-08-19 and the rezoning hearing on 2026-08-05",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
     "id": "question/lead-award-2026-07-14",
     "node_class": "question",
     "kind": "lead",
@@ -932,6 +943,17 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 23,
+    "updated": null
+  },
+  {
+    "id": "question/lead-ballot-language-case-2025",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Resolve the 2025 ballot-language case that revoked Allen Township's zoning status",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
     "updated": null
   },
   {
@@ -968,6 +990,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-cooling-clause-contradiction",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Flag the dry-cooling versus closed-loop contradiction in proposed Section 1521 before the hearing",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
     "id": "question/lead-cso-ltcp-2026-11-01",
     "node_class": "question",
     "kind": "lead",
@@ -976,6 +1009,17 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 21,
+    "updated": null
+  },
+  {
+    "id": "question/lead-data-center-definition-reach",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Resolve whether proposed Section 1521 reaches a bitcoin-mining load at all",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 20,
     "updated": null
   },
   {
@@ -1034,6 +1078,28 @@
     "updated": null
   },
   {
+    "id": "question/lead-hub-parcel-district-and-nonconforming-use",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Determine which adopted district covers the Megawatt Hub parcels, and what Section 1502 preserves",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
+    "id": "question/lead-interstate-capital-ownership",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Identify Interstate Capital LLC and who holds title to the two SR 613 parcels",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 20,
+    "updated": null
+  },
+  {
     "id": "question/lead-mercury-variance-renewal",
     "node_class": "question",
     "kind": "lead",
@@ -1056,6 +1122,28 @@
     "updated": "2026-07-31"
   },
   {
+    "id": "question/lead-onsite-partners-at-the-drafting-table",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Establish who \"Dan Smies, On-Site Partners\" and \"Jon Cross, Cross Capital Consultant\" appeared for",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
+    "id": "question/lead-ord-2026-42-certified-text",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Obtain Ordinance 2026-42 as certified, with the council journal and the recorded roll call",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
     "id": "question/lead-phase1-contractor",
     "node_class": "question",
     "kind": "lead",
@@ -1064,6 +1152,17 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 19,
+    "updated": null
+  },
+  {
+    "id": "question/lead-pre-annexation-agreements",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "File and log the pre-annexation-agreement request for Allen Township parcels",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 20,
     "updated": null
   },
   {
@@ -1098,6 +1197,17 @@
     "links_in": 0,
     "lines": 19,
     "updated": "2026-07-31"
+  },
+  {
+    "id": "question/lead-sb52-adopted-resolution",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Pull the adopted 2022-04-19 SB 52 restricted-area resolution, its number, roll call and final map",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
   },
   {
     "id": "question/lead-tp-season-reports",

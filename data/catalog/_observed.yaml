@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-31T18:47:04.926005+00:00'
+reconciled_at: '2026-08-01T00:56:42.869350+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -436,6 +436,16 @@ entries:
     size_bytes: 1447
     lfs_materialized: true
     file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:findlay
+  findlay-governance:
+    exists: true
+    sha256: 3522fa9ed286c035055003e7c21683f9a176f61f10e3dfeed5e3f470a9bf0ed0
+    size_bytes: 106524
+    lfs_materialized: true
+    file_count: 9
     missing: []
     asof: null
     stale: false

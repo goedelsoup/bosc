@@ -1,0 +1,316 @@
+# Findlay / Hancock County governance timeline — the data-center siting regime
+#
+# Acceptance criterion 5 of issue 1463. One chronology across four jurisdictions (the county,
+# Allen Township, the City of Findlay, and the courts), each entry carrying its own tag and its
+# own source, so a reader can see at a glance which parts of this story rest on instruments and
+# which rest on reporting.
+#
+# Every `source` is either a corpus path (an instrument this repo holds) or the string
+# `[not in corpus]` followed by what it rests on instead. There is no third option.
+#
+# Corpus, not a RecordItem.
+
+as_of: '2026-07-31'
+site: findlay
+issue: 'watermark-directory/the-watermark-directory#1463'
+epic: 'watermark-directory/the-watermark-directory#1265'
+
+legend:
+  verified: read off an instrument this repo holds
+  reference: from a secondary source, or a recital in an instrument about some other proceeding
+  inference: this repo's reading, not any source's statement
+  open: asserted by no source held here
+
+timeline:
+
+  # ── The county sets a generation-only regime ──────────────────────────────
+  - date: '2021-10-11'
+    jurisdiction: State of Ohio
+    event: SB 52 takes effect, codified at R.C. 303.57 et seq., letting county commissioners designate restricted areas barring large wind and solar.
+    tag: verified
+    source: data/documents/findlay/governance/notice_from_the_hancock_county_commissioners.pdf
+
+  - date: '2022-03-15'
+    jurisdiction: Hancock County
+    event: >
+      Resolution 167-22 sets a public meeting for 2022-04-19 to consider a restricted area.
+      Bateson moved, Pepple seconded; roll call Pepple yes, Bateson yes, Bechtol no (2-1). A
+      proposed exclusion map covering the unincorporated county except Biglick Township is
+      attached.
+    tag: verified
+    source: data/documents/findlay/governance/notice_from_the_hancock_county_commissioners.pdf
+
+  - date: '2022-03-18'
+    jurisdiction: Hancock County
+    event: The meeting notice is published.
+    tag: verified
+    source: data/documents/findlay/governance/notice_from_the_hancock_county_commissioners.pdf
+
+  - date: '2022-04-19'
+    jurisdiction: Hancock County
+    event: >
+      The commissioners consider and, per secondary reporting, adopt the restricted-area
+      resolution. The adopted resolution, its number, its roll call and its map are NOT in
+      corpus — the county's online agenda archive begins in 2024.
+    tag: open
+    source: '[not in corpus] — the meeting-setting resolution and proposed map only; adoption reported by Ohio Capital Journal / WFIN (Aug 2022), [reference]'
+
+  # ── The township fight begins, over wind ──────────────────────────────────
+  - date: '2023-12-05'
+    jurisdiction: Allen Township
+    event: >
+      One Energy plans additional wind turbines to serve, among others, the Whirlpool
+      manufacturing facility. The trustees oppose renaming TR 215 "Electric Avenue" without an
+      open meeting, and after their evening meeting adjourns some members stay to discuss zoning
+      commission criteria. Both become Open Meetings Act violations.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  - date: '2023-12-20'
+    jurisdiction: Allen Township
+    event: At a special meeting the trustees resolve to proceed with zoning and establish a zoning commission, without discussion and without public comment.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  - date: '2024-01-26'
+    jurisdiction: Hancock County Common Pleas
+    event: One Energy files 2024 CV 00038 alleging Open Meetings Act violations.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  - date: '2024-02-06'
+    jurisdiction: Allen Township
+    event: The trustees rescind both December 2023 zoning resolutions and adopt a revised notice policy.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  - date: '2024-02-26'
+    jurisdiction: Hancock County BOE
+    event: Resident petitions for township zoning are certified.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  - date: '2024-03-05'
+    jurisdiction: Allen Township
+    event: Nine petitions with 141 signatures are presented to the trustees.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  - date: '2024-04-02'
+    jurisdiction: Allen Township
+    event: >
+      After an executive session on the litigation, the trustees proceed with zoning by THEIR
+      OWN resolution rather than on the petitions, and seat a new zoning commission. These are
+      the actions that survive the litigation.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  - date: '2024-04-18'
+    jurisdiction: Hancock County Common Pleas
+    event: One Energy files the second case, 2024 CV 00161.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  - date: '2024-07-05'
+    jurisdiction: Allen Township
+    event: The zoning commission holds its public hearing on the proposed zoning resolution.
+    tag: verified
+    source: data/documents/findlay/governance/Zoning-Book-Effective-05-11-26.pdf
+
+  - date: '2024-09-09'
+    jurisdiction: Allen Township
+    event: The trustees hold their public hearing and ADOPT the zoning resolution. It will not take effect for another twenty months.
+    tag: verified
+    source: data/documents/findlay/governance/Zoning-Book-Effective-05-11-26.pdf
+
+  - date: '2024-12-30'
+    jurisdiction: Hancock County Common Pleas
+    event: >
+      Final judgments in both cases: two Open Meetings Act violations found, a prospective
+      injunction issued, and the April 2024 zoning actions left standing.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  # ── The first referendum, and its undoing ─────────────────────────────────
+  - date: '2025-05'
+    jurisdiction: Allen Township / Hancock County BOE
+    event: >
+      The first referendum on the zoning resolution passes, then is invalidated over
+      abbreviated ballot language. The township's own later minutes say its "zoning status was
+      revoked by Judge Jonathon Starn." The case number, the ballot text and the certified
+      canvass are all [open]; the BOE's published results begin at the November 2025 general.
+    tag: reference
+    source: data/documents/findlay/governance/Minutes-7-7-26-ATZC.pdf
+
+  # ── The appellate decision ────────────────────────────────────────────────
+  - date: '2026-02-09'
+    jurisdiction: Ohio 3d District Court of Appeals
+    event: >
+      2026-Ohio-405 (Case Nos. 5-25-02, 5-25-03) affirms both judgments. Every assignment of
+      error on both sides is overruled. The violations stand; so does the zoning commission.
+    tag: verified
+    source: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  # ── The city's moratorium ─────────────────────────────────────────────────
+  - date: '2026-03-17'
+    jurisdiction: City of Findlay
+    event: Council refers the data-center question.
+    tag: reference
+    source: '[not in corpus] — issue 1463 research refresh; not corroborated by either captured article'
+
+  - date: '2026-04-07'
+    jurisdiction: City of Findlay
+    event: >
+      The Phillips/DeLong moratorium motion fails over vague wording; council votes
+      unanimously to send it to the Zoning and Planning Commission.
+    tag: reference
+    source: data/documents/findlay/governance/pulse-moratorium.html
+
+  - date: '2026-04-07'
+    jurisdiction: Allen Township
+    event: >
+      Asked in open session whether the pending zoning resolution would permit a data center,
+      Assistant County Prosecutor Lucinda Land answers that "a data center would not be
+      permitted." Four weeks before the vote.
+    tag: verified
+    source: data/documents/findlay/governance/Minutes-4-7-26-ATZC.pdf
+
+  - date: '2026-04-09'
+    jurisdiction: City of Findlay
+    event: >
+      The Planning and Zoning Commission declines to pass a moratorium and instead recommends
+      drafting two candidate data-center zoning codes — an edited version of an earlier draft
+      and a new restrictive one.
+    tag: reference
+    source: data/documents/findlay/governance/pulse-moratorium.html
+
+  - date: '2026-04-22'
+    jurisdiction: City of Findlay
+    event: >
+      Ordinance 2026-42 passes 9-1 after a rules suspension, imposing a 12-month moratorium on
+      establishing or converting buildings into a data center. Preston is the sole nay. A
+      public-comment speaker is cut off while raising an invite-only officials' meeting on the
+      subject. The certified text and journal are NOT in corpus — findlayohio.gov and American
+      Legal both refuse automated access.
+    tag: reference
+    source: data/documents/findlay/governance/ohioregister-moratorium.html
+
+  # ── The second referendum ─────────────────────────────────────────────────
+  - date: '2026-05-05'
+    jurisdiction: Allen Township
+    event: The second referendum on the zoning resolution is held.
+    tag: verified
+    source: data/documents/findlay/governance/2026-PRI-SUM.pdf
+
+  - date: '2026-05-11'
+    jurisdiction: Hancock County BOE / Allen Township
+    event: >
+      The canvass is certified: FOR 503 (69.48%), AGAINST 221 (30.52%), on 724 votes of 732
+      ballots cast from 1,761 registered. The zoning resolution takes effect the same day. The
+      widely reported unofficial figure was 502-221.
+    tag: verified
+    source: data/documents/findlay/governance/2026-PRI-SUM.pdf
+
+  # ── Writing the rules the electorate did not vote on ──────────────────────
+  - date: '2026-06-02'
+    jurisdiction: Allen Township
+    event: >
+      Three weeks after the resolution takes effect, counsel recommends drafting language for
+      data centers and battery energy storage, and flags the duplicated Section 1201.
+    tag: verified
+    source: data/documents/findlay/governance/Minutes-6-2-26-ATZC.pdf
+
+  - date: '2026-07-01'
+    jurisdiction: Allen Township
+    event: >
+      Interstate Capital, LLC files to rezone ~135.3 acres at SR 613 and TR 142 from
+      Agriculture to I-1 Light Industrial, stating a proposed use of "Warehousing /
+      Manufacturing" and an exhibit claim of a $140 million investment.
+    tag: verified
+    source: data/documents/findlay/governance/Application-Zoning-Amendment-Interstate-Capital.pdf
+
+  - date: '2026-07-07'
+    jurisdiction: Allen Township
+    event: >
+      The zoning commission receives the Washington Township data-center template and
+      Timmerman's parallel draft, schedules a drafting session, and sets the Interstate Capital
+      hearing for 2026-08-05. It also records that the 2025 process must be redone because the
+      township's zoning status was revoked by Judge Starn.
+    tag: verified
+    source: data/documents/findlay/governance/Minutes-7-7-26-ATZC.pdf
+
+  - date: '2026-07-22'
+    jurisdiction: Allen Township
+    event: >
+      Special drafting session on data centers and energy storage. Guests recorded: Jacob Mercer
+      (Hancock County Regional Planning), Justin Kahl (Assistant County Prosecutor), Dan Smies
+      (On-Site Partners), Jon Cross (Cross Capital Consultant). The ESS draft is unfinished but
+      both topics are carried to the August hearing anyway.
+    tag: verified
+    source: data/documents/findlay/governance/Minutes-7-22-26-special-ATZC.pdf
+
+  - date: '2026-07-28'
+    jurisdiction: Allen Township
+    event: >
+      ATZC adopts Resolution 24-04-124M (new Section 1521, Data Centers) 5-0 and Resolution
+      24-04-125M (replacing Section 1520 with technology-neutral Energy Storage Systems), plus
+      a third clerical amendment moving conditional-use duties to the Board of Zoning Appeals.
+      Section 1521 would conditionally permit data centers in I-1 and I-2 subject to a 10 MW
+      Total Facility Load cap, a 100,000 GPD water ceiling, dry cooling only, no groundwater,
+      and an anti-circumvention rule aggregating phases that share electrical infrastructure.
+    tag: verified
+    source: data/documents/findlay/governance/Res.DataCenters.pdf
+
+  # ── What is scheduled ─────────────────────────────────────────────────────
+  - date: '2026-08-05'
+    jurisdiction: Allen Township
+    event: ATZC public hearing on the Interstate Capital rezoning. SCHEDULED — outcome unknown as of this ingest.
+    tag: open
+    source: data/documents/findlay/governance/Application-Zoning-Amendment-Interstate-Capital.pdf
+
+  - date: '2026-08-19'
+    jurisdiction: Allen Township
+    event: >
+      Three ATZC public hearings in one evening: 7:00 p.m. clerical amendments and the transfer
+      of conditional-use duties to the BZA; 7:30 p.m. Section 1521 Data Centers; 8:00 p.m.
+      Section 1520 Energy Storage Systems. SCHEDULED. Each must then go to the trustees for a
+      second hearing, and anything adopted is referendum-eligible.
+    tag: open
+    source: data/documents/findlay/governance/Res.DataCenters.pdf
+
+  - date: '2027-04-22'
+    jurisdiction: City of Findlay
+    event: >
+      Twelve months from passage of Ordinance 2026-42 — the moratorium's nominal expiry, if it
+      runs from passage rather than a separately stated effective date. Which it is cannot be
+      determined without the certified text.
+    tag: open
+    source: '[not in corpus] — computed from a reported passage date; see findlay-ordinance-2026-42.gap.yaml'
+
+# ------------------------------------------------------------------------------------------
+what_this_timeline_shows:
+  - id: TWO-REGIMES-ONE-COUNTY
+    tag: inference
+    detail: >
+      Hancock County has a restricted area that bars large wind and solar and says nothing about
+      load. The City of Findlay has a moratorium that reaches data centers and stops at the
+      corporation line. Allen Township — where the disclosed 150 MW facility actually is — had
+      no zoning at all until 2026-05-11 and still has no adopted data-center provision. Every
+      instrument in this county points at a different thing from the one that is there.
+  - id: THE-ORDER-OF-EVENTS
+    tag: inference
+    detail: >
+      The township's zoning was adopted in September 2024 against a WIND dispute, voted on in
+      May 2026, and only then turned toward data centers — in June, drafted in July, heard in
+      August. The rules for the largest disclosed load in the county are being written after
+      the load was contracted, after it was partly energized, and after the electorate voted on
+      a text that did not mention it.
+  - id: THE-EVIDENTIARY-ASYMMETRY
+    tag: inference
+    detail: >
+      The township half of this record is almost entirely [verified] — a .gov site publishing
+      its own minutes, resolutions, zoning book and map. The city half is almost entirely
+      [reference] — a WAF-blocked site, no legislative portal, and two secondary articles, one
+      of which hedges its own roll call mid-sentence. That asymmetry is not a judgment about
+      either government; it is a fact about what a researcher can currently obtain, and it is
+      the reason acceptance criterion 1 stays open and a records request is drafted.

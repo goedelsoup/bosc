@@ -1,0 +1,181 @@
+# City of Findlay Ordinance 2026-42 — the data-center moratorium, and why it is not [verified]
+#
+# Issue 1463 acceptance criterion 1 asks for the certified text and the council journal. Neither
+# could be retrieved. This artifact records what IS known, from what, and exactly what would
+# close the gap — it is deliberately NOT a transcription of the ordinance, because no byte of
+# the ordinance is in corpus.
+#
+# Sources held (both secondary, both [reference]):
+#   data/documents/findlay/governance/ohioregister-moratorium.html
+#   data/documents/findlay/governance/pulse-moratorium.html
+# Issue 1463 · sub-issue of 1265. Corpus, not a RecordItem.
+#
+# ⚠️ EVERY FACT BELOW IS [reference] UNLESS MARKED OTHERWISE. Nothing here may be published as
+# a quotation from an ordinance. The banned-use language is a newspaper's rendering of the
+# ordinance, not the ordinance.
+
+as_of: '2026-07-31'
+site: findlay
+issue: 'watermark-directory/the-watermark-directory#1463'
+epic: 'watermark-directory/the-watermark-directory#1265'
+status: not-in-corpus
+
+instrument:
+  identifier: Ordinance 2026-42
+  jurisdiction: City of Findlay, Hancock County, Ohio
+  subject: 12-month moratorium on data centers
+  passed: '2026-04-22'
+  vote_reported: 9-1
+  sole_nay_reported: B.J. Preston
+  effect_reported: immediate, running 12 months from the effective date
+  tag: reference
+  banned_use_language:
+    as_quoted_by_secondary_source: >
+      the establishment, conversion of other structures or buildings into a data center
+    plus: any development or change of use that would allow one
+    caveat: >
+      ⚠️ This is The Ohio Register's rendering. Whether the fragment is a verbatim quotation
+      from the enacted text, and what the ordinance's own definition of "data center" is, are
+      BOTH unresolved. Acceptance criterion 1 asks for the definition recorded verbatim; it
+      cannot be, from what is held.
+
+council_track:
+  - date: '2026-03-17'
+    event: Council referred the data-center question. [reference] — from issue 1463's research refresh; not corroborated by either captured article.
+    tag: reference
+  - date: '2026-04-07'
+    event: >
+      The first moratorium motion, by Rodney Phillips and Dan DeLong, FAILED. The Pulse
+      reports it "died in the meeting due to the vague wording in the moratorium," and that a
+      motion to send it to the Zoning and Planning Commission passed unanimously. DeLong had
+      asked that it pass as an emergency.
+    tag: reference
+    source: pulse-moratorium.html
+  - date: '2026-04-09'
+    event: >
+      The Planning and Zoning Commission did not pass the moratorium but "voted to recommend
+      drafting two possible zoning codes about data centers: an edited version of a previously
+      proposed code and a new code that is restrictive against data centers." Chairperson
+      Heather Kensinger is quoted on process discipline.
+    tag: reference
+    source: pulse-moratorium.html
+  - date: '2026-04-22'
+    event: >
+      Ordinance 2026-42 reached its second reading and was fast-tracked to a third after
+      Kevin Cullen moved to suspend the rules; the suspension passed with the required eight
+      votes. The ordinance then passed 9-1. Mayor Christina Muryn presided.
+    tag: reference
+    source: ohioregister-moratorium.html
+
+roll_call:
+  status: UNRELIABLE — DO NOT PUBLISH
+  reason: >
+    The Ohio Register lists the ayes as "Nichole Coleman, Cullen, DeArment (or DeLong per some
+    records), Delong, Kenzinger, Needles, Phillips, Smith and Wagner" — a list that hedges one
+    of its own names mid-sentence and spells another two ways. That is the signature of an
+    aggregated or machine-summarized account, not a reading of the journal. Issue 1463's body
+    already warns that the 2025 annexation ordinances are "known only from AI-summarized
+    council coverage"; the same caution applies here and is why the journal matters.
+  what_is_safe: The 9-1 tally and Preston as the sole nay are consistent across both captured sources.
+
+positions_reported:
+  - who: B.J. Preston (nay)
+    position: >
+      The issue was "largely a Hancock County matter because developable land lies mostly
+      outside city limits." Also reported as having been involved in data-center construction
+      and as saying modern facilities are increasingly self-sustaining and use less utility
+      infrastructure than in the past.
+    tag: reference
+  - who: Rodney Phillips (co-sponsor)
+    position: >
+      "I am the one who requested it, and it's not because I'm trying to say no to data
+      centers. I'm just trying to say yes to more study, analysis, and include the public in
+      the conversation a little more." Also: "There's a lot to learn."
+    tag: reference
+  - who: Dan DeLong (co-sponsor)
+    position: >
+      Data centers "are not listed in the City of Findlay's zoning code, which means they are
+      banned in Findlay."
+    tag: reference
+    note: >
+      [inference] This is the same enumerated-use theory Allen Township's counsel applied to
+      the township resolution on 2026-04-07 — two jurisdictions in one county, three weeks
+      apart, reaching the same conclusion by the same route. Issue 1463's body attributes the
+      identical proposition to RPC Director Matt Cordonnier in March 2026.
+
+transparency_friction:
+  event: >
+    During public comment on 2026-04-22 a speaker's remarks were cut short. The Ohio Register
+    identifies her as Renee Leguire, a Ward 4 resident and Republican central committeeperson,
+    and reports that she first asked council to suspend the rules and pass the moratorium that
+    night, then turned to criticism of Councilman Dan DeArment's conduct at an "invite-only"
+    meeting on data centers, at which point she was cut off.
+  tag: reference
+  why_recorded:
+    tag: inference
+    detail: >
+      Recorded for the governance fact, not the personal dispute: a member of the public was
+      stopped while raising the existence of an invite-only meeting among officials on the
+      subject then before council. In this county that is not an abstract concern — 2026-Ohio-405
+      (held in corpus) affirms that a Hancock County public body violated R.C. 121.22 by
+      deliberating on public business outside an open meeting. Whether any such meeting
+      occurred here, who attended, and whether it was a "meeting" under R.C. 121.22(B)(2) are
+      all [open]. This repo asserts none of it.
+
+# ------------------------------------------------------------------------------------------
+scope_limit:
+  tag: verified
+  finding: >
+    The moratorium binds only the City of Findlay. The Findlay Megawatt Hub and the land
+    assembly around it are in unincorporated Allen Township, outside the corporation line.
+  consequence: >
+    Findlay's ordinance and Allen Township's proposed Section 1521 do not overlap. They are two
+    jurisdictions' answers to the same question, and only one of them reaches the disclosed
+    facility.
+
+annexation_lever:
+  status: open
+  detail: >
+    Issue 1463 records reporting of pending public-records requests on PRE-ANNEXATION
+    AGREEMENTS for Allen Township parcels, and 2025 annexation ordinances (2025-62, 2025-63,
+    2025-65, and 2025-113 — Keller-Keller-Siferd Enterprises LLC, 37.906 ac, Allen Twp, "Amber
+    Waves" to I-1) known only from AI-summarized coverage. None is corroborated here.
+  why_it_matters:
+    tag: inference
+    detail: >
+      Annexation is the hinge between the two regimes. Land annexed into Findlay leaves township
+      zoning and enters the city's — and the city's is where the moratorium runs. It also cuts
+      the other way: proposed Section 1521 would let a data center take water ONLY from "a
+      municipal water and sewer system" or "an approved public utility provider," so a
+      township site may need a city relationship to be servable at all. Pre-annexation
+      agreements are where both threads are written down.
+  action_taken: >
+    An R.C. 149.43 request is DRAFTED but NOT SENT — see
+    data/extracted/findlay/governance/records-requests/2026-07-31-findlay-clerk-of-council.md.
+    Sending is an outward-facing act on the requester's own behalf and is not automated.
+
+# ------------------------------------------------------------------------------------------
+access_failure:
+  targets:
+    - Ordinance 2026-42 as certified by the Clerk of Council
+    - Council journal / minutes for 2026-03-17, 2026-04-07 and 2026-04-22
+    - Planning & Zoning Commission minutes for 2026-04-09 and the two draft codes
+  observed: >
+    findlayohio.gov and findlayohio.com return HTTP 403 to automated fetches on every path
+    tried, with and without a browser user-agent. American Legal's Findlay code library returns
+    403 to both curl and the fetch tool. There is a findlay.legistar.com hostname but no
+    provisioned tenant behind it — it answers "Invalid parameters!" and the Legistar Web API
+    returns "LegistarConnectionString setting is not set up in InSite for client: findlay".
+  interpretation: >
+    ⚠️ An ACCESS FAILURE, not a negative. None of this is evidence that the records do not
+    exist or are being withheld; a WAF blocking a scripted client is an ordinary configuration.
+    The standing rule from issue 1464's PUCO DIS block applies: record the failure, do not
+    convert it into a finding.
+
+open_targets:
+  - Ordinance 2026-42 certified text with the clerk's certification and the recorded roll call.
+  - The ordinance's own definition of "data center" — the single most load-bearing missing string.
+  - Whether the 12 months runs from passage (2026-04-22) or from a separately stated effective date.
+  - The two candidate zoning codes the Planning & Zoning Commission directed on 2026-04-09, and their status.
+  - The 2025 annexation ordinances 2025-62 / -63 / -65 / -113 as certified.
+  - Any pre-annexation agreement covering Allen Township parcels.

@@ -369,3 +369,196 @@ leads:
   issue: 1464
 # (TAXONOMY-GRANTS retired 2026-07-24: fulfilled by the contract-1.34.0 RecordGroup extension —
 # `enforcement` + `finance` groups, #1746 — and the FMA obligation refiled under `finance`.)
+- id: ORD-2026-42-CERTIFIED-TEXT
+  kind: question
+  status: unanswered
+  tag: open
+  title: Obtain Ordinance 2026-42 as certified, with the council journal and the recorded roll call
+  detail: >
+    The instrument issue 1463 is named for is not in corpus and could not be retrieved. Every
+    findlayohio.gov and findlayohio.com path returns HTTP 403 to an automated fetch with or without
+    a browser user-agent, American Legal's Findlay code library returns 403 to both curl and the
+    fetch tool, and findlay.legistar.com resolves to an unprovisioned tenant whose API answers
+    "LegistarConnectionString setting is not set up in InSite for client - findlay". So the city has
+    no machine-readable legislative record at all. What is held is two secondary articles, and the
+    more detailed of them hedges its own roll call mid-sentence ("DeArment (or DeLong per some
+    records)") while listing both names, which is the signature of an aggregated account rather than
+    a reading of the journal. OPEN. This is an ACCESS FAILURE, not a denial and not a negative —
+    nobody has refused anything because nobody has asked. An R.C. 149.43 request is DRAFTED and NOT
+    SENT at data/extracted/findlay/governance/records-requests/2026-07-31-findlay-clerk-of-council.md
+    (items 1-3). The single most load-bearing missing string is the ordinance's own definition of
+    "data center" — acceptance criterion 1 asks for it verbatim and it cannot be supplied from
+    reporting.
+  source: 'data/extracted/findlay/governance/findlay-ordinance-2026-42.gap.yaml'
+  issue: 1463
+- id: PRE-ANNEXATION-AGREEMENTS
+  kind: question
+  status: unanswered
+  tag: open
+  title: File and log the pre-annexation-agreement request for Allen Township parcels
+  detail: >
+    Annexation is the hinge between the two regimes in this county. Land annexed into Findlay leaves
+    township zoning and enters the city's, where the moratorium runs — and it cuts the other way,
+    because Allen Township's proposed Section 1521 would let a data center take water only from "a
+    municipal water and sewer system" or "an approved public utility provider", so a township site
+    may need a city relationship to be servable at all. Pre-annexation agreements are where both
+    threads are written down. Issue 1463 reports pending records requests on them, and names 2025
+    annexation ordinances 2025-62, 2025-63, 2025-65 and 2025-113 (Keller-Keller-Siferd Enterprises
+    LLC, 37.906 ac, Allen Twp, "Amber Waves" to I-1) known only from AI-summarized council coverage.
+    None is corroborated. OPEN — items 5 and 6 of the drafted request cover this; filing it is
+    acceptance criterion 3 and the response log is the follow-on.
+  source: 'data/extracted/findlay/governance/records-requests/2026-07-31-findlay-clerk-of-council.md'
+  issue: 1463
+- id: ATZC-HEARINGS-AUGUST-2026
+  kind: signal
+  status: unanswered
+  tag: open
+  title: Capture the three Allen Township zoning hearings on 2026-08-19 and the rezoning hearing on 2026-08-05
+  detail: >
+    TIME-SENSITIVE, and the most consequential scheduled event in this site's record. On 2026-08-05
+    at 7:00 p.m. the zoning commission hears Interstate Capital LLC's application to rezone about
+    135.3 acres at SR 613 and TR 142 from Agriculture to I-1 Light Industrial. On 2026-08-19 it
+    holds three hearings in one evening — 7:00 p.m. clerical amendments that also move conditional-use
+    duties from the Zoning Commission to the Board of Zoning Appeals, 7:30 p.m. proposed Section 1521
+    Data Centers, 8:00 p.m. the Section 1520 replacement for Energy Storage Systems. Watch for text
+    revised at hearing, then for the trustee-stage hearing that R.C. 519.12 requires next, then for
+    any referendum petition within 30 days of adoption. Note the interlock — Section 1521 assigns
+    approval to the BZA, a body that does not hold that power until the 7:00 p.m. amendment passes,
+    so the "clerical" hearing is load-bearing.
+  source: 'data/extracted/findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml'
+  issue: 1463
+- id: DATA-CENTER-DEFINITION-REACH
+  kind: question
+  status: unanswered
+  tag: open
+  title: Resolve whether proposed Section 1521 reaches a bitcoin-mining load at all
+  detail: >
+    Allen Township's proposed definition captures facilities housing servers "for the purpose of
+    storing, processing, or distributing electronic data". The disclosed operation at the Findlay
+    Megawatt Hub is MARA Holdings, a bitcoin miner. Whether proof-of-work hashing is "processing
+    electronic data" within that definition is not answered by the text, and the answer decides
+    whether the 10 MW Total Facility Load cap reaches the site's only disclosed load. The contrast is
+    instructive rather than academic — AEP Ohio's Schedule DCT does not leave it to inference, it
+    defines a "Mobile Data Center" that names cryptocurrency mining outright and attaches a sworn
+    foreign-adversary attestation to it (see the grid record from issue 1464). Allen Township drafted
+    from a neighbouring township's template and did not inherit that precision. OPEN — do not resolve
+    it from the text as it stands; watch the 2026-08-19 hearing and the trustee stage for a
+    crypto or blockchain clause.
+  source: 'data/extracted/findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml'
+  issue: 1463
+- id: HUB-PARCEL-DISTRICT-AND-NONCONFORMING-USE
+  kind: question
+  status: unanswered
+  tag: open
+  title: Determine which adopted district covers the Megawatt Hub parcels, and what Section 1502 preserves
+  detail: >
+    Two linked unknowns that together decide whether the proposed 10 MW cap could ever bind the
+    disclosed facility. First, which district the 2026-05-11 map assigns to the Hub parcels — the
+    map is a PDF with no parcel labels, so answering it needs the Hancock County Auditor's parcel
+    layer joined to the district geometry, which belongs to the places sub-issue 1462. Second, what
+    Article XV Section 1502 (Nonconforming Lots, Uses of Land, Structures and Premises) preserves for
+    a use established during the twenty months between adoption on 2024-09-09 and effect on
+    2026-05-11, when the township was still unzoned as a matter of land use. That window covers the
+    period in which the Hub was contracted and partly energized. OPEN — until both are answered,
+    never write that the amendment would close or shrink the Hub.
+  source: 'data/extracted/findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml'
+  issue: 1463
+- id: BALLOT-LANGUAGE-CASE-2025
+  kind: question
+  status: unanswered
+  tag: open
+  title: Resolve the 2025 ballot-language case that revoked Allen Township's zoning status
+  detail: >
+    The first referendum passed in May 2025 and was then invalidated over abbreviated ballot
+    language. All the corpus holds is the township's own recital, in its 2026-07-07 zoning
+    commission minutes, that a 2025 hearing must be redone "because Allen Township's zoning status
+    was revoked by Judge Jonathon Starn" — note the minutes spell him Jonathon where the county and
+    the appellate record spell him Jonathan. The case number, the docket, the final entry, the
+    challenged ballot text and the certified May-2025 canvass are all unheld. Contemporary reporting
+    describes the challenged language as stating the plan would establish the township as an
+    agricultural district, and describes Starn denying One Power's interim motions to stop the count
+    — which means the company lost early and won late, a sequence worth confirming rather than
+    assuming. OPEN, with two access failures behind it — the Clerk of Courts eServices portal at
+    ea.co.hancock.oh.us times out entirely, and the BOE publishes results only from the November
+    2025 general forward. DO NOT conflate this case with 2026-Ohio-405, which is Open Meetings Act
+    only and says nothing about the ballot.
+  source: 'data/extracted/findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml'
+  issue: 1463
+- id: SB52-ADOPTED-RESOLUTION
+  kind: question
+  status: unanswered
+  tag: open
+  title: Pull the adopted 2022-04-19 SB 52 restricted-area resolution, its number, roll call and final map
+  detail: >
+    What the corpus holds is the MEETING-SETTING Resolution 167-22 of 2022-03-15 (Bateson moved,
+    Pepple seconded, roll call 2-1 with Bechtol dissenting), the published notice, and the PROPOSED
+    exclusion map whose legend reads "Does not Include areas inside Incorporated Municipalities and
+    Biglick Township". The resolution actually adopted on 2022-04-19 is not held, and neither is its
+    number, its roll call, or its map — so whether the adopted map matches the proposed one is
+    unestablished. Reading 167-22 as the adoption is the trap here. The county's AgendaCenter is
+    reachable but holds nothing before 2024-02-13 and a date-ranged search over spring 2022 returns
+    zero items. OPEN — needs a separate records request to the Hancock County Commissioners' clerk,
+    a different agency from the city request, so do not append it to that one. Scope reminder for
+    whoever picks this up - R.C. 303.57 restricted areas reach large wind and solar only and do not
+    reach data centers, so this resolution is a generation control and must never be described as a
+    data-center siting control.
+  source: 'data/extracted/findlay/governance/hancock-sb52-restricted-area.gap.yaml'
+  issue: 1463
+- id: ONSITE-PARTNERS-AT-THE-DRAFTING-TABLE
+  kind: question
+  status: unanswered
+  tag: open
+  title: Establish who "Dan Smies, On-Site Partners" and "Jon Cross, Cross Capital Consultant" appeared for
+  detail: >
+    The Allen Township Zoning Commission's 2026-07-22 special-meeting minutes — the session that
+    drafted the data-center language — record four guests: Jacob Mercer of Hancock County Regional
+    Planning (author of the Washington Township template the text was merged from), Justin Kahl the
+    Assistant County Prosecutor, "Dan Smies, On-Site Partners", and "Jon Cross, Cross Capital
+    Consultant". That these four attended and are so described is verified. Everything past the
+    strings is not. The name similarity between "On-Site Partners" and the OnSite entity in One
+    Power's corporate chain (OnSite, funds advised by Basalt, announced its acquisition of One Power
+    in February 2026) is suggestive and is ONLY a name match until an instrument confirms it. OPEN —
+    resolve both entities through the Ohio Secretary of State, and establish whether either
+    appeared on behalf of a party with an interest in the Megawatt Hub. Attending a public meeting
+    is not itself improper and nothing here suggests otherwise; the point of resolving it is that a
+    reader of the eventual Section 1521 is entitled to know who was in the room.
+  source: 'data/documents/findlay/governance/Minutes-7-22-26-special-ATZC.pdf'
+  issue: 1466
+- id: INTERSTATE-CAPITAL-OWNERSHIP
+  kind: question
+  status: unanswered
+  tag: open
+  title: Identify Interstate Capital LLC and who holds title to the two SR 613 parcels
+  detail: >
+    A Birmingham, Michigan LLC filed on 2026-07-01 to rezone about 135.3 acres at the NW corner of
+    SR 613 and TR 142 from Agriculture to I-1 Light Industrial, stating a proposed use of
+    "Warehousing / Manufacturing" and claiming a 140 million dollar investment on an exhibit branded
+    "Allen Commerce Park". Nothing connects this applicant to a data center and this lead does not
+    suggest one. What is missing is ordinary due diligence — the Ohio Secretary of State registration
+    and statutory agent for Interstate Capital LLC and any related entity, and who owns parcels
+    020001015303 and 02000100123 of record and on what instrument (title, option or contract). Note
+    the parcel-number discrepancy to resolve while you are in the auditor's data - the application
+    and exhibit write the second parcel with 11 digits, the township's own hearing notice writes it
+    with 12. Also worth retrieving is a legible copy of the site-plan inset, whose two building
+    square-footage labels are illegible even at a 500 dpi render. The recorder and auditor pulls
+    belong with the places sub-issue 1462.
+  source: 'data/extracted/findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml'
+  issue: 1462
+- id: COOLING-CLAUSE-CONTRADICTION
+  kind: signal
+  status: unanswered
+  tag: inference
+  title: Flag the dry-cooling versus closed-loop contradiction in proposed Section 1521 before the hearing
+  detail: >
+    Subsection D.1 of the proposed Section 1521 permits only "air cooled (dry cooling)" and then
+    expressly prohibits "Closed-loop liquid cooling systems, where water or coolant is continuously
+    recirculated within a sealed system and is not consumed through evaporation". Dry cooling at
+    data-center scale is normally implemented AS a sealed recirculating liquid loop rejecting heat to
+    air through a dry cooler, so as drafted the permitted method and the third prohibited method
+    describe overlapping equipment — a rule aimed at water consumption that also catches the
+    lowest-water option. This is a drafting observation, not a legal opinion, and the prohibition may
+    be intended to reach liquid immersion or district heat rejection; the text does not say. It bears
+    directly on the platform's own third cooling axis (the CLOSED_LOOP_DRY archetype, epic 1676).
+    Worth a public comment before 2026-08-19 rather than an analysis after.
+  source: 'data/extracted/findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml'
+  issue: 1463

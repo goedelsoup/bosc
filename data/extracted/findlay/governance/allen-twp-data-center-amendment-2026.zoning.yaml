@@ -1,0 +1,293 @@
+# Allen Township proposed Section 1521 — DATA CENTERS (and the Section 1520 replacement)
+#
+# The two zoning-text amendments the Allen Township Zoning Commission moved on 2026-07-28 and
+# set for public hearing on 2026-08-19. Read from the as-served scans:
+#   data/documents/findlay/governance/Res.DataCenters.pdf  (7 pp, image-only, rendered @170dpi)
+#   data/documents/findlay/governance/Res.ESS_.pdf         (5 pp, image-only, rendered @170dpi)
+# Issue 1463 · sub-issue of 1265.
+#
+# This is CORPUS, not a RecordItem: there is no zoning RecordGroup, and inventing one would
+# mean a contract bump plus a 26-bundle regeneration to publish a proposal that is not yet
+# law. Same call as the four grid artifacts in issue 1464 (the Lima Lyka precedent, 1476).
+#
+# TAG VOCABULARY:
+#   [verified]  — the text of the proposal as it reads on the filed pages, its resolution
+#                 numbers, its vote, its hearing dates. These are facts about the document.
+#   [inference] — this repo's reading of how the proposal interacts with the adopted book,
+#                 with the disclosed facility, or with itself.
+#   [open]      — not established.
+#
+# ⚠️ STANDING. NOTHING HERE IS LAW. Under R.C. 519.12 an amendment initiated by zoning-
+# commission resolution must be heard by the commission, then transmitted to the trustees,
+# then heard again by the trustees, and once adopted it is itself subject to referendum. As of
+# 2026-07-31 this proposal has cleared none of those steps. Write it as a PROPOSAL every time.
+
+as_of: '2026-07-31'
+site: findlay
+issue: 'watermark-directory/the-watermark-directory#1463'
+epic: 'watermark-directory/the-watermark-directory#1265'
+status: proposed
+
+zoning_amendment:
+  jurisdiction: Allen Township, Hancock County, Ohio (unincorporated)
+  authority: R.C. 519.12 — amendment initiated by resolution of the zoning commission
+  initiated_by: Allen Township Zoning Commission (ATZC)
+
+  resolutions:
+    - number: 24-04-124M
+      subject: adds a new Section 1521 — DATA CENTERS, plus definitions into Section 201
+      adopted: '2026-07-28'
+      source_file: data/documents/findlay/governance/Res.DataCenters.pdf
+      sha256: a9cff4ae5cae71ab68150d599be883c853e89b0c0b676101730357c6d9dfdfe2
+      moved_by: John Timmerman
+      seconded_by: Dan Kissell
+      roll_call: {Timmerman: 'yes', Stacy: 'yes', Powell: 'yes', Kissell: 'yes', McGrain: 'yes'}
+      vote: 5-0
+      attested_by: Deb Stacy, Secretary
+      hearing: '2026-08-19 at 7:30 p.m., Allen Township Center, 12829 St. Rt. 613, Van Buren'
+      note: >
+        Attachment A's own "Resolution No. ____" line is left BLANK; the number appears only
+        on the two resolution pages. Handwritten throughout.
+    - number: 24-04-125M
+      subject: REPLACES Section 1520 (Energy Storage Related to Wind and Solar Facilities) with a technology-neutral Section 1520 — Energy Storage Systems
+      adopted: '2026-07-28'
+      source_file: data/documents/findlay/governance/Res.ESS_.pdf
+      sha256: f4e4ac399eb47f4a8d097f20b906c5334e61df1295e875b671d4c1f6b850abd1
+      hearing: '2026-08-19 at 8:00 p.m., same location'
+      note: >
+        [inference] The replacement matters independently of its limits: the ADOPTED Sec. 1520
+        only reaches storage "related to wind and solar facilities," so storage sited to firm a
+        large computing load arguably fell outside it altogether. The amendment closes that by
+        dropping the wind/solar tether.
+    - number: '[open]'
+      subject: clerical corrections — moves Zoning Commission duties to the Board of Zoning Appeals, renumbers the duplicated Section 1201, adds pools in A-1
+      adopted: '2026-07-28'
+      hearing: '2026-08-19 at 7:00 p.m., same location'
+      note: >
+        Its resolution PDF was not captured (only the notice page). ⚠️ It is not cosmetic and
+        it is not severable from the data-center amendment — see `interlock` below.
+
+  # ────────────────────────────────────────────────────────────────────────────────────────
+  # THE PROPOSED SECTION 1521 — [verified] as the text reads.
+  # ────────────────────────────────────────────────────────────────────────────────────────
+  proposed_section_1521:
+    permitted_in: [I-1, I-2]
+    mechanism: >
+      Conditional use only. "No person shall cause, allow or maintain the use of a Data Center
+      or Data Center Campus without first having obtained a conditional zoning permit from
+      Zoning Inspector after approval by the Board of Zoning Appeals in accordance with
+      section 1802."
+
+    lot_and_yard:
+      data_center_to_data_center_separation_ft: 5280   # "one (1) mile, nearest lot line to nearest lot line"
+      residential_separation_ft: 1250
+      max_lot_coverage_pct: 60
+      max_building_height: per the schedule of regulations
+      landscape_buffer_ft: 50   # along any property line adjoining a residential use or district
+
+    cooling:
+      permitted_verbatim: All data centers shall be air cooled (dry cooling).
+      prohibited_verbatim:
+        - >
+          Evaporative cooling systems, including cooling towers, evaporative condensers, and
+          adiabatic cooling systems that consume water through evaporation;
+        - Once-through cooling systems that withdraw water and discharge it without recirculation.
+        - >
+          Closed-loop liquid cooling systems, where water or coolant is continuously
+          recirculated within a sealed system and is not consumed through evaporation.
+
+    water:
+      groundwater_verbatim: >
+        No regulated use shall utilize groundwater wells, private wells, or other subsurface
+        water sources for operational or cooling purposes.
+      permitted_sources: [a municipal water and sewer system, an approved public utility provider]
+      verification_required: >
+        written verification from the water utility provider demonstrating adequate system
+        capacity to serve the proposed use without negatively impacting existing users
+      max_daily_gpd: 100000
+
+    electrical:
+      max_total_facility_load_mw: 10
+      measurement_basis:
+        - utility interconnection agreements
+        - electrical engineering plans
+        - nameplate capacity of installed equipment
+      phased_development_verbatim: >
+        Developments constructed in phases shall be considered a single site if: Located on
+        contiguous parcels; or Sharing electrical infrastructure, substations, or utility
+        interconnections. The combined load of all phases shall not exceed the 10 MW limit.
+
+    nuisance_standards:
+      noise_dba_at_property_line: 40
+      lighting_footcandles_at_property_line: 0.5
+      vibration_odor_heat: No vibration, odor, or heat perceptible beyond the property line.
+      emergency_generators: >
+        May operate for testing and maintenance between 8 a.m. - 6 p.m. weekdays only, except
+        during power outages.
+
+    anti_circumvention_verbatim: >
+      The Zoning Administrator requires submission of ownership, lease, and utility agreements
+      to determine common control. No data center development shall be artificially divided
+      into multiple parcels, entities, or applications for the purpose of avoiding the
+      requirements of this section.
+    common_control_factors: [shared ownership or management, shared infrastructure, coordinated development plans, utility service arrangements]
+
+    definitions_verbatim:
+      data_center: >
+        A facility designed and used primarily for housing computer servers, data storage,
+        networking, or related equipment for the purpose of storing, processing, or
+        distributing electronic data. Data centers shall not be considered warehouses, storage
+        facilities, or distribution centers for zoning purposes. Such facilities may include
+        ancillary offices for employees, network operations, and limited support functions,
+        but shall not include general office space, call centers, or telecommunications towers
+        as the principal use.
+      data_center_campus: >
+        A group of data center buildings and associated infrastructure located on one or more
+        adjacent parcels under common ownership or control and functioning as an integrated
+        development.
+      warehousing: The business operation, or institution of the storing of goods, or merchandise.
+
+  # ────────────────────────────────────────────────────────────────────────────────────────
+  # PROVENANCE OF THE TEXT — [verified] from the ATZC's own minutes.
+  # ────────────────────────────────────────────────────────────────────────────────────────
+  drafting_record:
+    - date: '2026-04-07'
+      source: data/documents/findlay/governance/Minutes-4-7-26-ATZC.pdf
+      event: >
+        Four weeks before the referendum, Timmerman asked counsel whether the proposed
+        resolution would permit a data center. "Cindy stated that a data center would not be
+        permitted." (Lucinda Land, Assistant Hancock County Prosecutor.)
+    - date: '2026-06-02'
+      source: data/documents/findlay/governance/Minutes-6-2-26-ATZC.pdf
+      event: >
+        Three weeks after the resolution took effect, Land "recommended that language be
+        drafted for the zoning resolution to state the location, requirements and conditions
+        regarding data centers and battery energy storage systems, BESS."
+    - date: '2026-07-07'
+      source: data/documents/findlay/governance/Minutes-7-7-26-ATZC.pdf
+      event: >
+        Stacy circulated data-center language "written by Hancock County Regional Planning on
+        behalf of Washington Township"; Timmerman circulated his own draft "that followed a
+        pattern similar to the wind and solar sections in our adopted zoning resolution book."
+        A special drafting meeting was set.
+    - date: '2026-07-22'
+      source: data/documents/findlay/governance/Minutes-7-22-26-special-ATZC.pdf
+      event: >
+        The drafting session. Timmerman "merged information from Washington Township's language
+        ... and the information that John compiled and wrote on behalf of Allen Township";
+        "Definitions included in Washington Township's language will become a part of Allen
+        Township's language." The ESS draft was NOT finished — "more time was needed to gather
+        information" — yet both topics were carried into the August 19 hearing.
+      guests_present:
+        - Jacob Mercer, Hancock County Regional Planning Commission (author of the Washington Township language)
+        - Justin Kahl, Hancock County Assistant Prosecutor
+        - Dan Smies, On-Site Partners
+        - Jon Cross, Cross Capital Consultant
+      note: >
+        [verified] that these four attended and are so described in the minutes. ⚠️ The minutes
+        give no affiliation detail beyond these strings, and this repo does NOT here assert who
+        any guest was there for. See the OnSite lead in data/site/findlay/leads.yaml — the
+        similarity between "On-Site Partners" and the OnSite entity in the One Power corporate
+        chain is a name match only until an instrument confirms it.
+
+# ------------------------------------------------------------------------------------------
+# ANALYSIS — clearly separated from the text above. Every item is [inference] or [open].
+# ------------------------------------------------------------------------------------------
+analysis:
+  - id: LOAD-CAP-VS-DISCLOSED-FACILITY
+    tag: inference
+    finding: >
+      The proposed cap is 10 MW Total Facility Load at any single site. The disclosed facility
+      at this site is MARA Holdings' 15-year take-or-pay for the FULL 150 MW of One Power's
+      Findlay Megawatt Hub, of which 30 MW is energized (see the facility record from issue
+      1459). The proposal is therefore an order of magnitude below the contracted load and 3x
+      below what is already energized.
+    why_it_matters: >
+      The aggregation rule is written to reach exactly this architecture: phases count as one
+      site when "Sharing electrical infrastructure, substations, or utility interconnections,"
+      which is the definition of a shared megawatt hub. A hub model cannot be sized under this
+      cap by splitting tenants.
+    limits: >
+      This is NOT a finding that the proposal would shut the Hub. Three things are unresolved
+      and none can be assumed: (a) whether the existing operation is a "Data Center" as
+      defined — see DEFINITION-REACH below; (b) what Section 1502 (Nonconforming Lots, Uses of
+      Land, Structures and Premises) of the ADOPTED book preserves for a use established before
+      the amendment; and (c) whether the amendment is adopted at all. The proposal binds
+      construction and expansion ("No data center shall be constructed or expanded to exceed"),
+      which is a prospective verb.
+  - id: DEFINITION-REACH
+    tag: open
+    finding: >
+      The proposed definition captures facilities housing servers "for the purpose of storing,
+      processing, or distributing electronic data." MARA Holdings is a bitcoin miner. Whether a
+      proof-of-work hashing operation is "processing ... electronic data" within this definition
+      is not answered by the text.
+    contrast: >
+      AEP Ohio's Schedule DCT does not leave this to inference — it defines a "Mobile Data
+      Center" that names cryptocurrency mining outright (recorded in
+      data/extracted/grid/findlay/aep-dct-tariff-posture.yaml, issue 1464). A township drafting
+      from a neighboring township's template did not inherit that precision.
+    retrieval: >
+      Watch the 2026-08-19 hearing record and any trustee-stage revision for a crypto/blockchain
+      clause. Do not resolve this from the text as it stands.
+  - id: COOLING-INTERNAL-TENSION
+    tag: inference
+    finding: >
+      Subsection D.1 permits only "air cooled (dry cooling)" and then expressly prohibits
+      "Closed-loop liquid cooling systems, where water or coolant is continuously recirculated
+      within a sealed system and is not consumed through evaporation." Dry cooling at
+      data-center scale is normally implemented AS a sealed recirculating liquid loop rejecting
+      heat to air through a dry cooler. As drafted, the permitted method and the third
+      prohibited method describe overlapping equipment.
+    why_it_matters: >
+      This is the third cooling axis the platform already models (epic 1676 / the
+      CLOSED_LOOP_DRY archetype). A rule that bans the low-water option along with the
+      high-water ones is the kind of drafting artifact that surfaces at a hearing, and it is
+      worth flagging BEFORE 2026-08-19 rather than after.
+    limits: >
+      An inference about drafting, not a legal opinion on how a zoning inspector would read it.
+      The prohibition may be intended to reach liquid immersion or district-heat rejection; the
+      text does not say.
+  - id: INTERLOCK-WITH-THE-CLERICAL-AMENDMENT
+    tag: inference
+    finding: >
+      Section 1521 routes approval through "the Board of Zoning Appeals in accordance with
+      section 1802." But in the ADOPTED book every conditional use — I-1 (Sec. 1102),
+      non-accessory solar (Sec. 1519), non-accessory storage (Sec. 1520) — is decided by the
+      ZONING COMMISSION, and Article XIII opens "The Zoning Commission shall have the duty to
+      hear and decide applications for conditional use permits." The 7:00 p.m. hearing on the
+      same evening is what moves those duties to the BZA.
+    why_it_matters: >
+      The 7:30 p.m. data-center amendment presupposes the 7:00 p.m. clerical amendment. If the
+      duties transfer fails or is amended and the data-center text is adopted as written, the
+      section names a body that does not hold the power it assigns. The "clerical" hearing is
+      load-bearing.
+  - id: TERMINOLOGY-DRIFT
+    tag: inference
+    finding: >
+      Section 1521 assigns duties to a "Zoning Administrator" (subsection I). The adopted book
+      has no such officer — it uses "Zoning Inspector" throughout (Sec. 1701 Duties of Zoning
+      Inspector), and Section 1521's own opening sentence says "Zoning Inspector." The
+      anti-circumvention subsection, the operative anti-splitting rule, is the one that names
+      the nonexistent office.
+  - id: WATER-CAP-BINDS-A-DRY-FACILITY
+    tag: inference
+    finding: >
+      The 100,000 GPD ceiling and the municipal-source-only rule are, together, a siting
+      constraint independent of the load cap: Allen Township is unincorporated and the parcels
+      at issue are not obviously inside a municipal water and sewer service area. A use that
+      may not drill and may only take municipal water must first be reachable by a municipal
+      system — which is the annexation lever the issue body flags, seen from the other side.
+    retrieval: >
+      Whether the Megawatt Hub parcels or the SR 613 rezoning parcels have municipal water and
+      sewer availability is [open]; it is a question for the City of Findlay utilities
+      department and the pre-annexation agreements sought in the records request.
+
+# ------------------------------------------------------------------------------------------
+open_targets:
+  - The 2026-08-19 hearing record for all three hearings, and whether the ATZC revised the text at hearing.
+  - The trustee-stage hearing and vote (R.C. 519.12 requires a second hearing before the Board of Trustees).
+  - Whether a referendum petition is filed against any adopted amendment within 30 days.
+  - The resolution PDF for the third (clerical/duties/pools) amendment — only its notice page was captured.
+  - Washington Township's own adopted data-center language, the template this was merged from — not in corpus.
+  - The remaining pages of Res.ESS_.pdf (only the resolution page and the first Attachment-A page were read).

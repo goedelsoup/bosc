@@ -1,0 +1,215 @@
+# Allen Township Zoning Resolution — the adoption chain and the certified referendum
+#
+# The instrument that made a historically unzoned township zoned, and the canvass that put it
+# in force. Read from:
+#   data/documents/findlay/governance/Zoning-Book-Effective-05-11-26.pdf  (77 pp, text layer)
+#   data/documents/findlay/governance/Zoning-Map-05-11-2026.pdf           (1 p)
+#   data/documents/findlay/governance/2026-PRI-SUM.pdf                    (13 pp, text layer)
+#   data/documents/findlay/governance/2026-PRI-SOVC.pdf                   (150 pp, text layer)
+# Issue 1463 · sub-issue of 1265. Corpus, not a RecordItem (no zoning RecordGroup — see the
+# note in allen-twp-data-center-amendment-2026.zoning.yaml).
+#
+# TAG VOCABULARY: [verified] = read off the instrument or the certified canvass;
+# [inference] = this repo's reading; [open] = not established.
+
+as_of: '2026-07-31'
+site: findlay
+issue: 'watermark-directory/the-watermark-directory#1463'
+epic: 'watermark-directory/the-watermark-directory#1265'
+
+instrument:
+  name: Allen Township Zoning Resolution
+  jurisdiction: Allen Township, Hancock County, Ohio (unincorporated area)
+  effective: '2026-05-11'
+  source_file: data/documents/findlay/governance/Zoning-Book-Effective-05-11-26.pdf
+  sha256: 855c35c9ad8b1d51532a58140ec56e5867135338f2df655cf575e7297ffa6b87
+  pages: 77
+  signed_by: [Milford Smith - Trustee, Kevin Flanagan - Trustee, Roger Clark - Trustee]
+
+  # ARTICLE XXIV prints the whole chain on one page — [verified], quoted verbatim.
+  adoption_chain:
+    zoning_commission_public_hearing: '2024-07-05'
+    township_trustees_public_hearing: '2024-09-09'
+    date_of_adoption_by_township: '2024-09-09'
+    date_certified_by_hancock_county_board_of_elections: '2026-05-11'
+    effective_date: '2026-05-11'
+    verbatim: >
+      Public Hearing having been held hereon, the provisions of this Resolution are hereby
+      given effect. Effective Date: May 11, 2026. 1. Date of Public Hearing by Zoning
+      Commission: July 5, 2024  2. Date of Public Hearing by Township Trustees: September 9.
+      2024  3. Date of Adoption by Township: September 9, 2024  4. Date Certified by Hancock
+      County Board of Elections: May 11, 2026
+    note: >
+      [verified] A twenty-month gap between adoption and effect. The trustees adopted in
+      September 2024; the resolution did not take effect until the SECOND referendum was
+      certified in May 2026. The "September 9. 2024" period-for-comma is the instrument's own
+      typography, preserved.
+
+  districts:                                # Section 300 — [verified]
+    - {code: A-1, name: Agricultural District}
+    - {code: R-1, name: One-Family Residential District}
+    - {code: RM-1, name: Multiple-Family Residential District}
+    - {code: B-1, name: Local Business District}
+    - {code: B-2, name: Community Business District}
+    - {code: B-3, name: General Business District}
+    - {code: ES, name: Expressway Service District}
+    - {code: I-1, name: Light Industrial District}
+    - {code: I-2, name: General Industrial District}
+  districts_note: >
+    ⚠️ ES is EXPRESSWAY SERVICE, not an energy district. The zoning map's legend lists it
+    among the district fills and it is easy to misread as "Energy Storage" in a township whose
+    live amendments concern energy storage. It is the I-75 frontage district.
+
+  use_scheme:
+    kind: enumerated / permissive
+    verbatim: >
+      no building or land shall be used and no building shall be erected except for one or
+      more of the following specified uses unless otherwise provided in this Resolution
+    consequence: >
+      [verified] A use not listed is not permitted. This is the mechanism behind counsel's
+      2026-04-07 statement that "a data center would not be permitted" — not a prohibition
+      naming data centers, but the absence of one from every district's list.
+
+  data_center_treatment:
+    occurrences_of_the_phrase: 0
+    scope_of_search: all 77 pages, text layer, case-insensitive
+    prohibited_in_all_districts:            # Section 1518 — the actual prohibition list
+      - Adult Entertainment Establishments
+      - Commercial Marijuana (cultivation, processing, retail dispensing — medical and adult use)
+      - Private Landfills
+    nearest_hooks:
+      - >
+        I-1 Sec. 1101(7) "All public utilities, including buildings, necessary structures,
+        storage yards and other related uses" and 1101(12) "Other uses of a similar character
+        to the above uses."
+      - >
+        I-2 Sec. 1201 "Any principal use first permitted in an I-1 District" plus (1) "Heating
+        and electric power generating plants" and (3) "Any other use which shall be determined
+        by the Zoning Commission, to be of the same general character as the above permitted
+        uses."
+    note: >
+      [inference] The only route a data center could take into the adopted book is a
+      similar-character determination by the Zoning Commission under 1101(12) or 1201(3) — a
+      discretionary reading, not an entitlement. That discretion is what the proposed Section
+      1521 would replace with an express conditional-use standard.
+
+  energy_provisions:
+    solar:
+      accessory: >
+        Conditionally permitted in all districts, but capped: not more than 25 kW output, not
+        more than 1500 sq ft, owned and operated by the owner of the principal use, on the same
+        parcel, and not for the sale of energy to other users (excess to the local utility is
+        allowed).
+      non_accessory: >
+        "Non-Accessory Solar Energy Facilities, otherwise known as Principal Solar Energy
+        Production Facilities shall only be permitted as a conditional use in I-2 districts."
+    storage_as_adopted:
+      section: Sec. 1520 — Energy Storage Related to Wind and Solar Facilities
+      non_accessory: conditional use in I-2 only, minimum setback 1000 feet from all property lines
+      accessory: conditional zoning permit; "Shall be used exclusively for on-site use."
+      note: >
+        [inference] As adopted, the storage rule is TETHERED to wind and solar. Storage sited
+        to firm a large computing load is not obviously "related to wind and solar facilities."
+        Proposed Resolution 24-04-125M replaces this section outright, which removes the tether.
+    known_defect:
+      description: >
+        Article XII numbers two consecutive sections "Section 1201" — PERMITTED USES and AREA
+        AND BULK REQUIREMENTS. [verified] in the text layer, and independently flagged by the
+        township's own 2026-06-02 minutes as "a renumbering of section 1201 to section 1202
+        correcting a clerical error." The bytes and the minutes agree.
+
+# ------------------------------------------------------------------------------------------
+# THE CERTIFIED REFERENDUM — [verified] from the official canvass.
+# ------------------------------------------------------------------------------------------
+referendum:
+  contest: Allen Township Zoning (Unincorporated Area)
+  election: 2026 Primary, Hancock County, Ohio
+  certified_report_timestamp: '2026-05-11T16:17:22'   # printed on every page of the summary
+  source_files:
+    - data/documents/findlay/governance/2026-PRI-SUM.pdf
+    - data/documents/findlay/governance/2026-PRI-SOVC.pdf
+  result:
+    for_the_zoning_resolution: {votes: 503, pct: 69.48}
+    against_the_zoning_resolution: {votes: 221, pct: 30.52}
+    total_votes: 724
+    ballots_cast: 732
+    registered_voters: 1761
+    turnout_pct: 41.57
+    precincts_reported: 2 of 2
+  by_precinct:
+    - {precinct: ALLEN E, for: 305, for_pct: 73.67, against: 109, against_pct: 26.33, total_votes: 414, ballots_cast: 418, registered: 962}
+    - {precinct: ALLEN W, for: 198, for_pct: 63.87, against: 112, against_pct: 36.13, total_votes: 310, ballots_cast: 314, registered: 799}
+  corrections:
+    - >
+      ⚠️ The reported unofficial result was 502-221. The CERTIFIED canvass is 503-221. Issue
+      1463's body carries the unofficial figure; this artifact supersedes it. Both round to
+      ~69%, so no downstream conclusion changes — but the certified number is the one to quote.
+    - >
+      ⚠️ Registration reconciliation, not an error. The zoning contest shows ALLEN W with 799
+      registered voters; the same canvass's countywide turnout table shows ALLEN W with 1,077.
+      The 278-voter difference is the Village of Van Buren, inside the precinct but outside the
+      unincorporated area the question was put to. The two figures measure different
+      electorates and must not be reconciled against each other.
+    - >
+      ⚠️ 732 ballots cast against 724 votes recorded — 8 ballots on which the question was left
+      blank or spoiled. Use 724 as the denominator for the percentages, as the canvass does.
+  significance:
+    tag: verified
+    detail: >
+      The canvass timestamp (2026-05-11) is the same date Article XXIV of the zoning resolution
+      gives as its BOE certification and its effective date. The instrument and the election
+      record agree with each other, which is what makes the effective date safe to assert.
+
+  prior_attempt:
+    election: May 2025
+    outcome: >
+      [reference] The first referendum passed and was then invalidated over abbreviated ballot
+      language. The township's own record of the disposition is in its 2026-07-07 zoning
+      commission minutes: a 2025 hearing must be redone "because Allen Township's zoning status
+      was revoked by Judge Jonathon Starn."
+    ballot_language_objection: >
+      [reference] Contemporary reporting describes the challenged language as stating that the
+      zoning plan would establish Allen Township as an agricultural district. Not verified
+      against a certified ballot; the ballot text itself is [open].
+    case_number: '[open]'
+    certified_canvass: >
+      [open] — the Hancock County BOE's published results begin at the November 2025 general;
+      no May-2025 canvass is retrievable from the open web. See `access_failures` in
+      data/documents/findlay/governance/filename-map.yaml.
+    judge_name_spelling: >
+      The ATZC minutes write "Jonathon Starn"; the county directory and the appellate record
+      write "Jonathan Starn". Preserved as written in each source, not normalized.
+
+# ------------------------------------------------------------------------------------------
+analysis:
+  - id: THE-TWENTY-MONTH-WINDOW
+    tag: inference
+    finding: >
+      Between adoption (2024-09-09) and effect (2026-05-11) Allen Township was, as a matter of
+      land use, still unzoned. That window covers the entire period in which the Megawatt Hub
+      was contracted and energized and in which the +300 MW standalone interconnection was
+      announced.
+    why_it_matters: >
+      Any vested-rights or nonconforming-use question about the Hub parcels turns on that
+      window, because a use established while the township was unzoned is in a different
+      posture from one established after 2026-05-11. This repo does NOT resolve that question —
+      it records that the window exists and that Section 1502 of the adopted book is where the
+      answer would be argued.
+  - id: WHAT-THE-ELECTORATE-VOTED-ON
+    tag: inference
+    finding: >
+      The 503 voters who approved the resolution on 2026-05-05 approved a text with no
+      data-center provision in it, at a moment when the township's own counsel had said on the
+      record (2026-04-07) that a data center "would not be permitted" under it. Eleven weeks
+      later the zoning commission moved language that would conditionally permit data centers in
+      I-1 and I-2, capped at 10 MW.
+    limits: >
+      This is a sequencing observation, not an allegation about anyone's intent. The 2026-06-02
+      minutes show the drafting was recommended by counsel as a gap-filling measure. Nothing in
+      the corpus shows the electorate was told either way.
+
+open_targets:
+  - The certified May-2025 canvass and the ballot text as printed.
+  - The 2025 ballot-language case number, docket and final entry.
+  - Section 1502's application to any use established during the 2024-09-09 to 2026-05-11 window.
+  - Which district the map assigns to the Megawatt Hub parcels — the map is a PDF without parcel labels; this needs the auditor's parcel layer joined to the district geometry (hand off to the places sub-issue, 1462).

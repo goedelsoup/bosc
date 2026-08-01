@@ -1,0 +1,132 @@
+# Hancock County's SB 52 restricted area — what is held, and the gap at its centre
+#
+# Read from the one retrievable artifact:
+#   data/documents/findlay/governance/notice_from_the_hancock_county_commissioners.pdf
+#   (4 pp, image-only scan, rendered @200dpi and read visually)
+# Issue 1463 · sub-issue of 1265. Corpus, not a RecordItem.
+#
+# Named `.gap.yaml` on the issue-1464 precedent: the artifact's primary content is a
+# documented ABSENCE. The county's restricted-area regime is real and consequential, but the
+# ADOPTED resolution is not in corpus and could not be retrieved — only the resolution that
+# scheduled the meeting at which it would be considered.
+#
+# ⚠️ THE HEADLINE, STATED ONCE AND PLAINLY: R.C. 303.57 et seq. restricted areas reach
+# economically significant wind farms, large wind farms and large solar facilities. They do
+# NOT reach data centers. Hancock County's exclusion zone is not a data-center control and
+# must never be described as one.
+
+as_of: '2026-07-31'
+site: findlay
+issue: 'watermark-directory/the-watermark-directory#1463'
+epic: 'watermark-directory/the-watermark-directory#1265'
+
+held:
+  source_file: data/documents/findlay/governance/notice_from_the_hancock_county_commissioners.pdf
+  sha256: 6a5f282ab08daada4c29466dde91a03897b885e1337ee0be893d3e5cd5afe158
+  pages: 4
+  evidence: rendered_scan
+  contents:
+    - page: 0
+      what: The published notice
+      verbatim: >
+        Notice is hereby given that the Board of Hancock County Commissioners will consider the
+        following resolution at its regular meeting scheduled for April 19, 2022 at 2:30 pm at
+        the Hancock County Commissioners 1st Floor Conference Room 514 S. Main St., Findlay,
+        Hancock County, OH: A RESOLUTION DECLARING PORTIONS OF THE UNINCORPORATED AREAS OF
+        HANCOCK COUNTY, OHIO TO BE RESTRICTED, PROHIBITING CONSTRUCTION OF ECONOMICALLY
+        SIGNIFICANT WIND FARMS, LARGE WIND FARMS, AND LARGE SOLAR FACILITIES PURSUANT TO
+        O.R.C. 303.57, et. seq
+      publish_date: '2022-03-18'
+    - page: 1-2
+      what: Resolution No. 167-22 — the MEETING-SETTING resolution, not the adoption
+      adopted: '2022-03-15'
+      commissioners_present: [Michael W. Pepple, William L. Bateson, Timothy K. Bechtol]
+      moved_by: Bateson
+      seconded_by: Pepple
+      roll_call: {Pepple: 'yes', Bateson: 'yes', Bechtol: 'no'}
+      vote: 2-1
+      attested_by: Christine Carrigan, Asst. Clerk (the printed "Lynn Taylor, Clerk" is struck through)
+      operative: >
+        Sets the R.C. 303.58 public meeting for 2022-04-19 at 2:30 PM; requires the map be
+        posted at all public libraries at least 30 days prior, notice published once in a
+        newspaper of general circulation, and written notice mailed 30 days prior to all school
+        districts, municipal corporations and township trustee boards within the proposed
+        restricted areas.
+      recitals_of_note:
+        - '"SB 52 went into effect October 11, 2021 and is now designated as R.C. 303.57, et. seq."'
+        - >
+          The subject matter is defined by reference to R.C. 4906.13 (economically significant
+          wind farms) and R.C. 4906.01 (solar facilities) — generation siting law, nothing else.
+      internal_filing_reference: 'G:LML/SolarEnergy/ExclusionZoneMeetingRes  ·  Auditor / L. Land / Solar Farm File'
+    - page: 3
+      what: The PROPOSED exclusion map
+      legend_verbatim: >
+        Hancock County, Ohio / Wind and Solar Exclusion Zones (Hatched Area) / Does not Include
+        areas inside Incorporated Municipalities and Biglick Township
+      note: >
+        The "all unincorporated townships except Biglick" shape the issue body describes — but
+        as PROPOSED on 2022-03-15. Whether the map adopted on 2022-04-19 is byte-identical to
+        this one is NOT established by this file.
+
+# ------------------------------------------------------------------------------------------
+gap:
+  what_is_missing:
+    - The resolution actually ADOPTED on 2022-04-19, and its own resolution number.
+    - Its roll call.
+    - The map as adopted (this file carries only the proposed map).
+    - The commissioners' journal/minutes for 2022-04-19.
+  why: >
+    The county's AgendaCenter is reachable but its County Commissioners category holds nothing
+    before 2024-02-13; a date-ranged search over March-June 2022 returns zero items, and the
+    ArchiveCenter carries no journal. Recorded as an ACCESS FAILURE, not as a negative — see
+    data/documents/findlay/governance/filename-map.yaml.
+  correction_to_issue_body: >
+    ⚠️ Issue 1463 reads "adopted an SB 52 restricted area on 2022-04-19 (2-1; Bechtol dissenting
+    on the meeting-setting Resolution 167-22)". The parenthetical is right and the sentence is
+    easy to misread: the 2-1 with Bechtol dissenting belongs to Resolution 167-22 of
+    2022-03-15, which only set a meeting date. The vote on the ADOPTION is [open]. Secondary
+    reporting from August 2022 describes a 2-1 adoption, but that is [reference] and this
+    artifact does not adopt it as the roll call.
+
+# ------------------------------------------------------------------------------------------
+analysis:
+  - id: SCOPE-DOES-NOT-REACH-COMPUTE
+    tag: verified
+    finding: >
+      The restricted area prohibits construction of economically significant wind farms, large
+      wind farms and large solar facilities. It is silent on data centers, on load of any kind,
+      and on storage. A data center in unincorporated Hancock County is unaffected by it.
+    why_it_matters: >
+      The county-level instrument that looks like a siting control is a GENERATION control. The
+      only land-use control that reaches computing load in unincorporated Hancock County is
+      township zoning — which is precisely why the Allen Township fight matters and why the
+      City of Findlay's moratorium binds only inside the corporation line.
+  - id: THE-GENERATION-SQUEEZE
+    tag: inference
+    finding: >
+      Allen Township sits inside the hatched exclusion area on the proposed map. So a large new
+      wind or solar facility cannot be built there, while a data center is unreached by the
+      county regime and — until 2026-05-11 — was unreached by any township regime either.
+    why_it_matters: >
+      The county's 2022 instrument restricts the supply side and leaves the demand side open.
+      That asymmetry is the shape of the whole Findlay grid story recorded in issue 1464: a
+      fresh 138 kV substation built for a GENERATION interconnection (Border Basin solar, Cass
+      Township, grandfathered by its 2021 filing date), and no load instrument anywhere.
+    limits: >
+      Rests on the PROPOSED map. If the adopted map differs, this reading must be re-checked.
+  - id: GRANDFATHERED-PROJECTS
+    tag: reference
+    finding: >
+      Two 2021-vintage solar projects predate the restricted area and were unaffected by it:
+      South Branch Solar (129.6 MW, OPSB 21-0669-EL-BGN) and Border Basin I (120 MW,
+      21-0277-EL-BGN). Border Basin is the IPP behind the Rocky Ford 138 kV station recorded in
+      data/extracted/grid/findlay/rocky-ford-138kv-2024.project.yaml (issue 1464).
+    note: >
+      Case numbers carried from issue 1463's body and corroborated for Border Basin by the OPSB
+      filings already in corpus. The South Branch Ohio Supreme Court affirmance
+      (2025-Ohio-5679) is [reference] — the opinion is not in corpus.
+
+open_targets:
+  - The adopted 2022-04-19 resolution, its number, roll call and map — by records request to the Hancock County Commissioners' clerk if the web archive stays empty.
+  - Whether the restricted area has been amended, expanded or repealed since 2022.
+  - Any post-2022 Hancock County -BGN case that would test it (an OPSB by-county docket check would convert the issue body's "no new case surfaced" into a verified negative; not run here).

@@ -1188,6 +1188,106 @@
     }
   },
   {
+    "id": "findlay-governance",
+    "title": "Findlay — Governance Watch (Allen Township zoning + the proposed 10 MW data-center cap, the certified referendum, 2026-Ohio-405, the SB 52 restricted area)",
+    "scope": "extracted",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Allen Township's adopted Zoning Resolution effective 2026-05-11 and its district map; Allen Township Zoning Commission Resolutions 24-04-124M (proposed Section 1521, Data Centers) and 24-04-125M (replacing Section 1520, Energy Storage Systems), both adopted 2026-07-28; ATZC minutes for 2026-04-07, 2026-06-02, 2026-07-07 and the 2026-07-22 special drafting session; Interstate Capital LLC's zoning-amendment application and exhibits, received 2026-07-01; the Hancock County Board of Elections certified 2026 primary canvass (summary + statement of votes cast); and the Board of Hancock County Commissioners' published SB 52 notice carrying Resolution 167-22 and the proposed exclusion map. All captured under data/documents/findlay/governance/. The published appellate opinion in One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees, 2026-Ohio-405 (3d Dist., 2026-02-09) is captured separately under data/documents/legal/one-energy-v-allen-twp/, filed by case rather than by site on the legal/thor-v-urbana precedent. Two secondary articles on the City of Findlay moratorium (The Ohio Register, The Pulse) are carried as [reference] web captures because the certified ordinance could not be obtained.",
+    "external_url": null,
+    "license": "Public record (a township zoning resolution and its amendments, a pending land-use application, a certified election canvass, a county resolution, a published court opinion)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "governance",
+      "zoning",
+      "township-zoning",
+      "data-center-siting",
+      "moratorium",
+      "referendum",
+      "open-meetings-act",
+      "litigation",
+      "sb52",
+      "restricted-area",
+      "public-records",
+      "annexation",
+      "findlay",
+      "allen-township",
+      "hancock-county"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/findlay/governance/governance-timeline.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/litigation-one-energy-v-allen-twp.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/hancock-sb52-restricted-area.gap.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/findlay-ordinance-2026-42.gap.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance-watch.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/records-requests/2026-07-31-findlay-clerk-of-council.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "3522fa9ed286c035055003e7c21683f9a176f61f10e3dfeed5e3f470a9bf0ed0",
+      "size_bytes": 106524,
+      "lfs_materialized": true,
+      "file_count": 9,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Allen Township's adopted Zoning Resolution effective 2026-05-11 and its district map; Allen Township Zoning Commission Resolutions 24-04-124M (proposed Section 1521, Data Centers) and 24-04-125M (replacing Section 1520, Energy Storage Systems), both adopted 2026-07-28; ATZC minutes for 2026-04-07, 2026-06-02, 2026-07-07 and the 2026-07-22 special drafting session; Interstate Capital LLC's zoning-amendment application and exhibits, received 2026-07-01; the Hancock County Board of Elections certified 2026 primary canvass (summary + statement of votes cast); and the Board of Hancock County Commissioners' published SB 52 notice carrying Resolution 167-22 and the proposed exclusion map. All captured under data/documents/findlay/governance/. The published appellate opinion in One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees, 2026-Ohio-405 (3d Dist., 2026-02-09) is captured separately under data/documents/legal/one-energy-v-allen-twp/, filed by case rather than by site on the legal/thor-v-urbana precedent. Two secondary articles on the City of Findlay moratorium (The Ohio Register, The Pulse) are carried as [reference] web captures because the certified ordinance could not be obtained.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "findlay-grid",
     "title": "Findlay — Grid Posture (OPSB siting pair, Schedule DCT, behind-the-meter fleet, the +300 MW gap)",
     "scope": "extracted",
@@ -1863,8 +1963,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8b739414d60dbd3f2927c95f846cd9afdf2f736c8180a4eb3eba36a6976b67e5",
-      "size_bytes": 539136,
+      "sha256": "96702421c7873a468b0ff78e01ad27ee22e8293d9d3d1a42f3393768db88305f",
+      "size_bytes": 540186,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -1949,7 +2049,7 @@
     "site_scope": "lima-legacy",
     "cadence": "static",
     "ttl_days": null,
-    "last_refreshed": "2026-07-24",
+    "last_refreshed": "2026-07-31",
     "tags": [
       "public-records",
       "wastewater",
@@ -2012,14 +2112,19 @@
         "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-reports-2019.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-07-24/american-bath-cole-street-condition-survey-2009.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "49484a61af01e6d91d3c35dd3be9c4e4380176094511f25570ab32d9e54964f3",
-      "size_bytes": 45884,
+      "sha256": "d02cf7d430a446127f2c0963d161686306aa6b1f36d4ea4c43610de8ae393a11",
+      "size_bytes": 65881,
       "lfs_materialized": true,
-      "file_count": 11,
+      "file_count": 12,
       "stale": false,
       "asof": null
     },

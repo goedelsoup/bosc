@@ -526,15 +526,25 @@ _FINDLAY = SiteProfile(
     lmp_pnode_name="AEP",
     # OEPA permit registry — what `watermark oepa discover` annotates as "known" (#844).
     npdes_permits=["2PD00008"],  # City of Findlay WPCC / application OH0025135
-    # Corpus scope (#762/#780/#1505). Findlay's worked record spans three collections: its own
-    # `findlay/` tree (flood, WARN, brownfield, narratives), the site-scoped OEPA sub-collection
-    # `oepa/findlay/` holding the 2PD00008 instrument set, and `grid/findlay/` — the grid-posture
-    # set (#1464: the Rocky Ford OPSB pair, Schedule DCT read against the Megawatt Hub, the
-    # behind-the-meter fleet, the +300 MW gap). The `grid/` collection is otherwise basin-shared
-    # and reads into Lima's reference build; the site-scoped subdirectory is what keeps a Hancock
-    # County siting docket out of Lima's Allen-County record. Naming all three here is also what
+    # Corpus scope (#762/#780/#1505). Findlay's worked record spans four collections: its own
+    # `findlay/` tree (flood, WARN, brownfield, governance, narratives), the site-scoped OEPA
+    # sub-collection `oepa/findlay/` holding the 2PD00008 instrument set, `grid/findlay/` — the
+    # grid-posture set (#1464: the Rocky Ford OPSB pair, Schedule DCT read against the Megawatt
+    # Hub, the behind-the-meter fleet, the +300 MW gap) — and `legal/one-energy-v-allen-twp/`,
+    # the published Third District opinion in the Open Meetings Act litigation that shadowed
+    # Allen Township's move from unzoned to zoned (#1463). That last one follows the
+    # `legal/thor-v-urbana` precedent exactly: a filed court instrument is filed by CASE under
+    # `legal/`, not under the site, and the site reaches it by naming the prefix here.
+    # `grid/` and `legal/` are otherwise basin-/network-shared and read into Lima's reference
+    # build; the site-scoped subdirectories are what keep a Hancock County siting docket and a
+    # Hancock County appeal out of Lima's Allen-County record. Naming all four here is also what
     # SUBTRACTS them from Lima's scope — the same treatment troy-piqua and urbana get.
-    corpus_relpaths=("findlay", "oepa/findlay", "grid/findlay"),
+    corpus_relpaths=(
+        "findlay",
+        "oepa/findlay",
+        "grid/findlay",
+        "legal/one-energy-v-allen-twp",
+    ),
     # rsei
     county_name="Hancock County, OH",  # [verified]
 )

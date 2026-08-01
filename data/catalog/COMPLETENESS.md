@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-31T18:47:04.926005+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-01T00:56:42.869350+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **139** catalogued datasets — **138** reviewed.
-- **139** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **140** catalogued datasets — **139** reviewed.
+- **140** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -22,7 +22,7 @@ Snapshot reconciled: **2026-07-31T18:47:04.926005+00:00**. Regenerate with `wate
 | extracted | american-township | 1 | 1 | 0 | 0 |
 | extracted | commissioners | 3 | 3 | 0 | 0 |
 | extracted | extracted | 2 | 2 | 0 | 0 |
-| extracted | findlay | 2 | 2 | 0 | 0 |
+| extracted | findlay | 3 | 3 | 0 | 0 |
 | extracted | grid | 2 | 2 | 0 | 0 |
 | extracted | hamilton-middletown | 1 | 1 | 0 | 0 |
 | extracted | history | 1 | 1 | 0 | 0 |
@@ -93,7 +93,7 @@ Snapshot reconciled: **2026-07-31T18:47:04.926005+00:00**. Regenerate with `wate
 | columbus | 51 | 40 | 11 |
 | coshocton | 51 | 34 | 17 |
 | defiance | 54 | 42 | 12 |
-| findlay | 59 | 49 | 10 |
+| findlay | 60 | 50 | 10 |
 | fort-wayne | 45 | 33 | 12 |
 | greenville | 52 | 40 | 12 |
 | hamilton-middletown | 53 | 42 | 11 |

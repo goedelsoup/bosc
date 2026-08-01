@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "db70b202011070a74e7fe733b1de72fba68557b79617738d15588d648f665967",
+  "catalog_version": "508d7d577fe9617caabde8502e7080d911a5e1fa703bcca210a8e3625224b3c6",
   "contract_version": "1.48.0",
   "atoms": [
     {
@@ -993,6 +993,14 @@
       "site": "lima",
       "local_id": "findlay-gis",
       "title": "City of Findlay, Ohio Zoning Districts",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:findlay-governance",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "findlay-governance",
+      "title": "Findlay — Governance Watch (Allen Township zoning + the proposed 10 MW data-center cap, the certified referendum, 2026-Ohio-405, the SB 52 restricted area)",
       "feed": "catalog"
     },
     {
