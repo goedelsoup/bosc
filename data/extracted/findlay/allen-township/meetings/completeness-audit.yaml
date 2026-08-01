@@ -2,8 +2,12 @@ meta:
   subject: allen-township meeting-completeness audit
   slug: allen-township
   schedule: First Tuesday of the Month, 7:00 pm February-December
-  method: expected meeting dates from the standing cadence vs. ingested meeting-index
-    dates, bounded to the ingested span.
+  method: 'expected meeting dates from the standing cadence vs. ingested meeting-index
+    dates, bounded to the ingested span. The cadence model reads weekday(s) + ordinal(s)
+    only: ordinals are applied to EVERY month in the span and a schedule with no ordinal
+    is read as weekly. A month-range qualifier in the schedule text (e.g. ''February-December'')
+    is NOT honoured, so a body that recesses is expected to have met in its recess
+    month and `expected` overcounts there.'
   caveat: A missing date is a CANDIDATE to verify/request, not proof of withholding
     — cadences change and meetings get cancelled.
   span:

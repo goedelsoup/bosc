@@ -154,3 +154,26 @@ def test_kind_heuristic_still_reads_the_whole_href() -> None:
         f'<a href="{up}/M060226.pdf">June 2, 2026</a>', base_url=f"{up}/", slug="commissioners"
     )
     assert [(d.kind, d.date) for d in docs] == [("minutes", "2026-06-02")]
+
+
+def test_tax_abatement_does_not_match_an_asbestos_abatement_bid() -> None:
+    """`tax_abatement` needs the tax sense (#1839).
+
+    Hancock County's commissioners let 7 asbestos-abatement demolition bids through the old bare
+    `abatement` pattern, tagging two 2026-04-16 records as tax-abatement business they never
+    transacted. The named instruments (CRA/TIF/enterprise zone) still match on their own.
+    """
+    from watermark.civic.keywords import scan_text
+
+    assert scan_text("PY24 Asbestos Abatement Hancock County Demolition Program") == []
+    assert "tax_abatement" in scan_text("the tax abatement agreement was approved")
+    assert "tax_abatement" in scan_text("Community Reinvestment Area (CRA) application")
+
+
+def test_one_power_needs_the_facility_s_own_name_not_a_bare_unit() -> None:
+    """`megawatt hub` alone is a unit plus a noun; the disclosed name carries its town (#1839)."""
+    from watermark.civic.keywords import scan_text
+
+    assert scan_text("a 150 megawatt hub is proposed") == []
+    assert "one_power" in scan_text("the Findlay Megawatt Hub (MWHub 01)")
+    assert "one_power" in scan_text("One Power Company filed a complaint")

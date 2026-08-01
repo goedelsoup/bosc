@@ -19,15 +19,31 @@ from watermark.logging import get_logger
 from watermark.pipeline.corpus import iter_meeting_artifacts, relpath_in_scope
 from watermark.pipeline.entities._graph import Entity, EntityGraph, Relationship
 from watermark.pipeline.entities._names import RELATION_CLASS_ORDER, normalize_name
-from watermark.sites import active_profile, effective_corpus_scope, site_scoped_path
+from watermark.sites import (
+    active_profile,
+    effective_corpus_scope,
+    is_reference_site,
+    site_scoped_path,
+)
 
 log = get_logger(__name__)
 
 
-# Curated corridor actors. A meeting party is folded in ONLY if it already resolves
-# to a corpus entity or names one of these — a generic org suffix is deliberately
-# not enough, because corridor-flagged meetings also transact routine township
+# Curated corridor actors — **Lima's**, and only Lima's (#1839). A meeting party is folded in
+# ONLY if it already resolves to a corpus entity or names one of these; a generic org suffix is
+# deliberately not enough, because corridor-flagged meetings also transact routine township
 # business (road-sealing, marketing, excavating vendors) that isn't the project.
+#
+# These needles are substring matches on Allen County's project actors, so a peer site must NOT
+# be measured against them: Hancock County's "Economic Development Advisory Board" contains
+# "ECONOMIC DEVELOPMENT" and was duly folded into Lima's ALLEN ECONOMIC DEVELOPMENT GROUP,
+# putting a Lima entity in Findlay's feed with two `discussed_at` edges neither minute supports.
+# `_actors_for_site` gates them on the reference build, the same rule the registry and the
+# meeting layout follow (`watermark.sites.is_reference_site`, never a hardcoded slug). A peer
+# folds in only parties that already resolve to ITS OWN corpus entities — the honest default,
+# and the same shape as the per-site `corridor_subjects` vocabulary (#1523). Giving a peer its
+# own curated actors is a follow-on: it needs a per-site canonical-spelling map too, and no
+# committed peer record has yet needed one.
 _CORRIDOR_ACTORS = (
     "GOOGLE",
     "AMAZON",
@@ -47,6 +63,17 @@ _CANONICAL_ACTORS: tuple[tuple[str, str], ...] = (
 _FORCE_GOV = {sub_key for _, sub_key in _CANONICAL_ACTORS}
 
 
+def _actors_for_site(settings: Settings) -> tuple[tuple[str, ...], tuple[tuple[str, str], ...]]:
+    """``(corridor actor needles, canonical spellings)`` for the active site (#1839).
+
+    Lima — the reference build, whose project these were curated for — gets both. Every peer gets
+    neither, so its meeting parties are kept only when they already resolve to its own corpus.
+    """
+    if is_reference_site(settings.site):
+        return _CORRIDOR_ACTORS, _CANONICAL_ACTORS
+    return (), ()
+
+
 def _clean_party(raw: str) -> str:
     """Strip a parenthetical and any trailing role/affiliation after a dash.
 
@@ -58,34 +85,44 @@ def _clean_party(raw: str) -> str:
     return re.sub(r"\s+", " ", head).strip()
 
 
-def _corridor_key(name: str, graph: EntityGraph) -> str | None:
+def _corridor_key(
+    name: str,
+    graph: EntityGraph,
+    actors: tuple[str, ...] = _CORRIDOR_ACTORS,
+    canonical: tuple[tuple[str, str], ...] = _CANONICAL_ACTORS,
+) -> str | None:
     """Graph key to fold a meeting party under, or ``None`` to skip it.
 
     Matches on the normalized key (so an incidental affiliation in a person's name
     doesn't misfire). Canonicalizes the econ-dev shield's spellings; otherwise keeps
     the party only if it already resolves to a corpus entity or names a curated
-    corridor actor.
+    corridor actor. ``actors``/``canonical`` are the ACTIVE SITE's — empty for a peer,
+    which then keeps only parties that already resolve to its own corpus (#1839).
     """
     key = normalize_name(name)
     if not key:
         return None
-    for needle, canon in _CANONICAL_ACTORS:
+    for needle, canon in canonical:
         if needle in key:
             return canon
-    if key in graph.entities or any(a in key for a in _CORRIDOR_ACTORS):
+    if key in graph.entities or any(a in key for a in actors):
         return key
     return None
 
 
-def _actor_identity(needle: str) -> tuple[str, str]:
+def _actor_identity(
+    needle: str, canonical: tuple[tuple[str, str], ...] = _CANONICAL_ACTORS
+) -> tuple[str, str]:
     """``(display_name, graph_key)`` for a curated corridor-actor needle."""
-    for n, canon in _CANONICAL_ACTORS:
+    for n, canon in canonical:
         if n == needle:
             return canon, normalize_name(canon)
     return needle.title(), normalize_name(needle)
 
 
-def _narrative_actors(meeting: dict[str, Any]) -> list[str]:
+def _narrative_actors(
+    meeting: dict[str, Any], actors: tuple[str, ...] = _CORRIDOR_ACTORS
+) -> list[str]:
     """Curated corridor-actor needles named in a meeting's grounded narrative.
 
     The structured ``parties`` list is the committee roster; a project *principal*
@@ -102,7 +139,7 @@ def _narrative_actors(meeting: dict[str, Any]) -> list[str]:
     if isinstance(decisions, list):
         parts.extend(str(d) for d in decisions)
     blob = " ".join(parts).upper()
-    return [n for n in _CORRIDOR_ACTORS if re.search(rf"\b{re.escape(n)}\b", blob)]
+    return [n for n in actors if re.search(rf"\b{re.escape(n)}\b", blob)]
 
 
 def _subdivision_meeting_entities(graph: EntityGraph, *, settings: Settings | None = None) -> None:
@@ -118,6 +155,7 @@ def _subdivision_meeting_entities(graph: EntityGraph, *, settings: Settings | No
     """
     settings = settings or get_settings()
     scope = effective_corpus_scope(active_profile(settings))
+    actors, canonical = _actors_for_site(settings)
     seen_edges: set[tuple[str, str]] = set()
     for path in iter_meeting_artifacts(settings.extracted_dir, "meeting-summaries.yaml"):
         # Per-site (#762): a sibling site only folds in its own meetings; Lima's whole-tree-minus-
@@ -144,11 +182,11 @@ def _subdivision_meeting_entities(graph: EntityGraph, *, settings: Settings | No
             candidates: list[tuple[str, str]] = []
             for raw in meeting.get("parties", []):
                 name = _clean_party(str(raw))
-                key = _corridor_key(name, graph)
+                key = _corridor_key(name, graph, actors, canonical)
                 if key:
                     candidates.append((name, key))
-            for needle in _narrative_actors(meeting):
-                candidates.append(_actor_identity(needle))
+            for needle in _narrative_actors(meeting, actors):
+                candidates.append(_actor_identity(needle, canonical))
             for name, key in candidates:
                 if key == sub_key:  # a body naming itself as a party is not a relationship
                     continue

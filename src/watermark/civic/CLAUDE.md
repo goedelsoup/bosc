@@ -6,9 +6,9 @@ Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
 **Two sites are ingested today**: Lima (Allen County, the reference build, six bodies flat)
 and **Findlay** (Hancock County — the epic-#1520 pilot, #1839: a 32-body registry and two
 nested meeting trees, `allen-township` on WordPress and `hancock-county-commissioners` on
-CivicPlus). Meeting the peer's real data cost three Lima-locks their fixtures had hidden —
-the generic fetcher's date parser, the summarizer's prompt, and the read path's unstated
-depth contract. Each is called out below.
+CivicPlus). Meeting the peer's real data cost four Lima-locks their fixtures had hidden — the
+generic fetcher's date parser, the summarizer's prompt, the cadence parser, and the curated
+corridor-actor list — plus the read path's unstated depth contract. Each is called out below.
 
 - **Registry is the spine, and it resolves per active site.** `registry.py`'s
   `registry_path(settings)` selects the authoritative
@@ -62,6 +62,11 @@ depth contract. Each is called out below.
     chronology. The upload month is when the clerk uploaded the file, never when the body met.
     `_classify_kind` still reads the whole href (Allen County's `/m######-` convention is
     anchored on the path separator); only the date signal is narrowed.
+- **The download manifest records a data-root-relative `dest_dir`** (`documents/<…>/meetings`),
+  never the absolute run path. It is committed evidence: an absolute path bakes in the operator's
+  home directory and working copy, which is unreproducible and puts a name in the corpus that has
+  no business there (#1839). Lima's older manifests carry a `data/documents/…` form from before
+  this; they are not rewritten (that would mean re-downloading 991 files to change one string).
 - **Meeting trees nest per site (`layout.py`, #1520/#1522).** A body slug keys the meeting
   namespace, and where that namespace lives is `meetings_dir(root, body_slug, settings)`: Lima —
   the reference build — keeps the flat legacy `<body>/meetings/` (chain of custody, never
@@ -121,7 +126,11 @@ depth contract. Each is called out below.
   vocabulary) and are then *selected* by that site's `corridor_subjects` — write the pattern
   narrowly enough to survive its own town: Findlay's `mara_holdings` requires the full name
   because a bare `\bmara\b` is a coin-flip against a surname, and MARA Holdings is not
-  Marathon Petroleum, which is headquartered there.
+  Marathon Petroleum, which is headquartered there. The same discipline applies to the generic
+  topics, which the peer also stress-tested: `tax_abatement` was a bare `abatement` and matched
+  seven **asbestos**-abatement demolition bids before anyone read them, so it now needs the tax
+  sense or a named instrument (CRA/TIF/enterprise zone); `one_power`'s facility alternative
+  carries its town (`findlay megawatt hub`), because "megawatt hub" alone is a unit and a noun.
 - **A hit is not a finding.** `summarize.py` runs the analyze stage over the selected meetings,
   and its prompt is built per site (`build_instructions(county, hits)`, #1839) — the active
   profile's county and *this document's own* hits. It used to be hardcoded to Lima ("an Allen
@@ -132,7 +141,16 @@ depth contract. Each is called out below.
   mention as a bare mention. That guard earns its keep immediately: four of the six
   data-center hits in Hancock County's commissioners record are the county's OWN General Fund
   budget line of that name (an HVAC change order, two intra-fund transfers), and the summaries
-  say so.
+  say so. **Only the corridor subjects reach the prompt** — the entry records every hit as
+  provenance, but a generic topic named to the model as "this site's corridor subject" is a false
+  premise it will reason from, and did.
+- **The completeness audit's cadence model is weekday(s) + ordinal(s), and it says what it
+  can't do.** Ordinals apply to every month in the span, so a month-range qualifier in the
+  schedule text ("First Tuesday of the Month, 7:00 pm February-December") is NOT honoured and
+  `expected` overcounts for a body that recesses — the audit's own `meta.method` states this.
+  A schedule naming weekday(s) with **no** ordinal is read as weekly (#1839): Hancock County's
+  board meets "9:30 am Tuesday & Thursday", a shape Lima's six monthly bodies never had, and it
+  used to parse to `None` and report no coverage at all.
 - **Pipeline complete:** `discover → fetch → download → index → timeline`. The OCR
   pass for image-only scans is now wired (`index --ocr` / `summarize --ocr`,
   tesseract-backed); the commissioners corpus was fully OCR'd this way (991/991,

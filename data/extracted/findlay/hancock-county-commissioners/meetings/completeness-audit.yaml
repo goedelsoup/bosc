@@ -2,72 +2,26 @@ meta:
   subject: hancock-county-commissioners meeting-completeness audit
   slug: hancock-county-commissioners
   schedule: 'Regular Meeting: 9:30 am Tuesday & Thursday'
-  method: expected meeting dates from the standing cadence vs. ingested meeting-index
-    dates, bounded to the ingested span.
+  method: 'expected meeting dates from the standing cadence vs. ingested meeting-index
+    dates, bounded to the ingested span. The cadence model reads weekday(s) + ordinal(s)
+    only: ordinals are applied to EVERY month in the span and a schedule with no ordinal
+    is read as weekly. A month-range qualifier in the schedule text (e.g. ''February-December'')
+    is NOT honoured, so a body that recesses is expected to have met in its recess
+    month and `expected` overcounts there.'
   caveat: A missing date is a CANDIDATE to verify/request, not proof of withholding
     — cadences change and meetings get cancelled.
   span:
   - '2026-01-06'
   - '2026-07-30'
-  expected: 0
-  present: 0
-  coverage: 0.0
-  missing_count: 0
-  special_count: 55
-missing: []
-special_meetings:
-- '2026-01-06'
-- '2026-01-08'
-- '2026-01-13'
-- '2026-01-15'
-- '2026-01-20'
-- '2026-01-22'
-- '2026-01-27'
-- '2026-01-29'
-- '2026-02-03'
-- '2026-02-05'
-- '2026-02-10'
-- '2026-02-12'
-- '2026-02-17'
-- '2026-02-19'
-- '2026-02-24'
-- '2026-02-26'
-- '2026-03-03'
-- '2026-03-05'
-- '2026-03-10'
-- '2026-03-12'
-- '2026-03-17'
-- '2026-03-19'
-- '2026-03-24'
-- '2026-03-26'
-- '2026-03-31'
-- '2026-04-02'
-- '2026-04-07'
-- '2026-04-09'
-- '2026-04-14'
-- '2026-04-16'
-- '2026-04-21'
-- '2026-04-23'
-- '2026-04-28'
-- '2026-04-30'
-- '2026-05-05'
-- '2026-05-07'
-- '2026-05-12'
-- '2026-05-14'
-- '2026-05-19'
-- '2026-05-21'
-- '2026-05-26'
-- '2026-05-28'
-- '2026-06-02'
-- '2026-06-04'
-- '2026-06-09'
-- '2026-06-11'
-- '2026-06-18'
-- '2026-06-23'
-- '2026-06-25'
-- '2026-07-02'
-- '2026-07-09'
-- '2026-07-16'
-- '2026-07-23'
-- '2026-07-28'
-- '2026-07-30'
+  expected: 60
+  present: 55
+  coverage: 0.917
+  missing_count: 5
+  special_count: 0
+missing:
+- '2026-06-16'
+- '2026-06-30'
+- '2026-07-07'
+- '2026-07-14'
+- '2026-07-21'
+special_meetings: []

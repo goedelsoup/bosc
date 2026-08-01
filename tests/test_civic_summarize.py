@@ -36,9 +36,11 @@ class _FakeMessages:
     def __init__(self, payload: dict[str, Any]) -> None:
         self._payload = payload
         self.calls = 0
+        self.calls_kwargs: list[dict[str, Any]] = []
 
-    def create(self, **_: Any) -> Any:
+    def create(self, **kwargs: Any) -> Any:
         self.calls += 1
+        self.calls_kwargs.append(kwargs)
         block = type(
             "B", (), {"type": "tool_use", "name": "record_extraction", "input": self._payload}
         )
@@ -206,3 +208,28 @@ def test_write_summaries_flattens_summary(tmp_path: Path) -> None:
     assert m["date"] == "2026-02-09"
     assert m["decisions"] == ["Motion to recommend rezoning passed 3-0"]
     assert m["parcels"] == ["36-0100-03-002.000"]
+
+
+def test_prompt_hits_are_filtered_to_the_active_site_s_subjects(tmp_path: Path) -> None:
+    """Only corridor subjects reach the prompt; generic index topics do not (#1839).
+
+    The prompt asserts "this site's corridor subjects: …". A generic topic listed there is a
+    false statement the model then reasons from — told `tax_abatement` was a corridor subject,
+    it wrote a sentence about a keyword that had actually matched "asbestos abatement" in a
+    demolition bid. The ENTRY still records every hit; only the prompt is filtered.
+    """
+    settings = _seed(
+        tmp_path,
+        [{"filename": "m.html", "kind": "minutes", "hits": ["datacenter", "easement"]}],
+        {"m.html": "data center and an easement"},
+    )
+    extractor = _extractor()
+    report = summarize_corridor_meetings(_body(), settings=settings, extractor=extractor, ocr=False)
+
+    assert report.entries[0].hits == ["datacenter", "easement"]  # provenance keeps both
+    sent = extractor._client.messages.calls_kwargs[-1]  # type: ignore[attr-defined]
+    # The instructions precede the document text; assert on the instructions alone, since
+    # "easement" legitimately appears in the minutes being read.
+    prompt = str(sent["messages"][0]["content"][0]["text"]).split("--- Document text ---")[0]
+    assert "corridor subjects: datacenter" in prompt
+    assert "easement" not in prompt

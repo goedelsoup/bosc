@@ -106,6 +106,10 @@ Two bodies have been run end-to-end (`download → index → summarize`) into
 | `allen-township` | wordpress | 39 minutes | 2024-01-02 → 2026-07-07 |
 | `hancock-county-commissioners` | civicplus | 108 agendas + minutes | 2026-01-06 → 2026-07-30 |
 
+The completeness audit reads Allen Township's monthly cadence (94% coverage, 2 dates to
+request) and the commissioners' weekly "Tuesday & Thursday" one (92%, 5 dates). A missing date
+is a candidate to verify, never proof of withholding.
+
 Everything else in the registry is enumerated and swept but not ingested.
 
 ## Regenerate / extend

@@ -249,6 +249,19 @@ def _download_one(
     )
 
 
+def _relative_dest(dest_dir: str) -> str:
+    """A download destination as a data-root-relative path (``documents/<...>/meetings``).
+
+    Trims everything up to and including the ``documents`` segment's parent, so the recorded
+    value is identical whatever absolute prefix the run happened to have. A path with no
+    ``documents`` segment is returned unchanged rather than mangled.
+    """
+    parts = Path(dest_dir).as_posix().split("/")
+    if "documents" not in parts:
+        return dest_dir
+    return "/".join(parts[parts.index("documents") :])
+
+
 def write_manifest(report: DownloadReport, out_path: Path) -> Path:
     """Write the non-destructive download manifest (mirrors filename-map.yaml).
 
@@ -286,7 +299,11 @@ def write_manifest(report: DownloadReport, out_path: Path) -> Path:
             "subject": f"{report.slug} meeting-document download manifest",
             "slug": report.slug,
             "source_pages": source_pages,
-            "dest_dir": report.dest_dir,
+            # Data-root-relative, NOT the absolute run path: this is a committed evidence
+            # manifest, and an absolute path bakes in the operator's home directory and
+            # working copy — unreproducible, and a name that has no business in the corpus
+            # (#1839). `report.dest_dir` stays absolute for the console.
+            "dest_dir": _relative_dest(report.dest_dir),
             "generated_at": datetime.now(UTC).date().isoformat(),
             "policy": "non-destructive — originals keep as-received names; this is an "
             "alias/provenance layer only.",

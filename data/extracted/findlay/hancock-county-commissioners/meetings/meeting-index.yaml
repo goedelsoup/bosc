@@ -3,9 +3,9 @@ meta:
     hits)
   slug: hancock-county-commissioners
   generated_at: '2026-08-01'
-  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML — NO OCR. An image-only scanned
-    PDF has text_method: none (date unverified, text unscanned); those need an OCR
-    pass not wired here.'
+  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML, plus OCR (tesseract) on
+    52 image-only scan(s). 1 file(s) yielded no text (text_method: none — date unverified,
+    text unscanned); an image-only scan needs `index --ocr`.'
   date_evidence: date_verified is the listing date CONFIRMED in the file's own text;
     null means unconfirmed (date_listing still stands).
   counts:
@@ -63,7 +63,6 @@ documents:
   char_count: 3774
   hits:
   - annexation
-  - tax_abatement
   title: Commissioners Regular Meeting
   source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_07232026-374
   sha256: 3b450c702f78d25017f8f9fade5c705e547633504a6840f0be00a44517cebbe9
@@ -77,7 +76,7 @@ documents:
   char_count: 11789
   hits:
   - annexation
-  - tax_abatement
+  - one_power
   title: null
   source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_07232026-374
   sha256: 52b35ceaf8cf236fbbb61f8572c29892bcf308ab4d43574215e7dea32249425d
@@ -622,7 +621,6 @@ documents:
   char_count: 1626
   hits:
   - datacenter
-  - tax_abatement
   title: Commissioners Regular meeting
   source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04162026-351
   sha256: 234bb250edf262c2917711649ce0c273bc54659e6f5d96d8d3062b150b978878
@@ -636,7 +634,6 @@ documents:
   char_count: 10972
   hits:
   - datacenter
-  - tax_abatement
   title: null
   source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04162026-351
   sha256: ea515c2f939437fa7d4088795aa7619d9abdf6b6acac93c777cf4c44405afbe3

@@ -1,6 +1,6 @@
 {
   "site": "findlay",
-  "catalog_version": "fcbba703abdf045ded6df4167b5c196cc0a725816aa9d4630dad3ab1976c084d",
+  "catalog_version": "2715503b13d46f1adf8ba0f40794870ac28b9b97c61c51ca8953700f41039c23",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -1116,14 +1116,6 @@
       "feed": "catalog"
     },
     {
-      "handle": "entity:findlay:ALLEN ECONOMIC DEVELOPMENT GROUP",
-      "kind": "entity",
-      "site": "findlay",
-      "local_id": "ALLEN ECONOMIC DEVELOPMENT GROUP",
-      "title": "ALLEN ECONOMIC DEVELOPMENT GROUP",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:findlay:ALLEN TOWNSHIP",
       "kind": "entity",
       "site": "findlay",
@@ -1161,14 +1153,6 @@
       "site": "findlay",
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:findlay:HANCOCK COUNTY COMMISSIONERS",
-      "kind": "entity",
-      "site": "findlay",
-      "local_id": "HANCOCK COUNTY COMMISSIONERS",
-      "title": "Hancock County Commissioners",
       "feed": "entities"
     },
     {
@@ -1492,6 +1476,14 @@
       "feed": "meetings"
     },
     {
+      "handle": "meeting:findlay:hancock-county-commissioners/2026-07-23",
+      "kind": "meeting",
+      "site": "findlay",
+      "local_id": "hancock-county-commissioners/2026-07-23",
+      "title": "hancock-county-commissioners meeting (2026-07-23)",
+      "feed": "meetings"
+    },
+    {
       "handle": "record:findlay:findlay/brownfield/round-11-hancock-2026.award.yaml",
       "kind": "record",
       "site": "findlay",
@@ -1649,6 +1641,14 @@
       "site": "findlay",
       "local_id": "mtg-hancock-county-commissioners-2026-06-18-Commissioners Regular Meeting",
       "title": "Commissioners Regular Meeting — minutes (corridor: datacenter)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:mtg-hancock-county-commissioners-2026-07-23-Commissioners Regular Meeting",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "mtg-hancock-county-commissioners-2026-07-23-Commissioners Regular Meeting",
+      "title": "Commissioners Regular Meeting — minutes (corridor: one_power)",
       "feed": "timeline"
     }
   ]

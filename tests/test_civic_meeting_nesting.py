@@ -284,3 +284,12 @@ def test_meetings_dir_is_the_only_thing_that_decides_depth(tmp_path: Path) -> No
         out = meetings_dir(settings.extracted_dir, body, settings)
         rel = out.relative_to(settings.extracted_dir) / "meeting-index.yaml"
         assert_meeting_layout_depth(str(rel))  # would raise if meetings_dir had not
+
+
+def test_layout_depth_tripwire_rejects_a_subdirectory_under_meetings() -> None:
+    """Both globs end ``meetings/<filename>`` — a nested sub-directory is just as invisible
+    as a too-deep prefix, so it fails the same way (#1839)."""
+    with pytest.raises(ValueError, match="direct child"):
+        assert_meeting_layout_depth(f"{LIMA_BODY}/meetings/archive/meeting-index.yaml")
+    with pytest.raises(ValueError, match="direct child"):
+        assert_meeting_layout_depth(f"{PEER}/{PEER_BODY}/meetings/2024/meeting-index.yaml")
