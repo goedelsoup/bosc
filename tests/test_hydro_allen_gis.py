@@ -116,6 +116,13 @@ def test_parse_mmddyy() -> None:
     assert allen_gis._parse_mmddyy("") is None
     assert allen_gis._parse_mmddyy("2024-01-01") is None  # not MM-DD-YY
     assert allen_gis._parse_mmddyy("13-40-99") is None  # invalid month/day
+    # Calendar-impossible dates are refused, not emitted: range-checking day <= 31 alone would
+    # invent a conveyance date the county never recorded.
+    assert allen_gis._parse_mmddyy("02-30-25") is None
+    assert allen_gis._parse_mmddyy("02-29-25") is None  # 2025 is not a leap year
+    assert allen_gis._parse_mmddyy("02-29-24") == "2024-02-29"  # 2024 is
+    # The %y pivot runs BEFORE the calendar check, so 00 -> 2000, a leap year.
+    assert allen_gis._parse_mmddyy("02-29-00") == "2000-02-29"
 
 
 def test_parse_mdyyyy_slash() -> None:
@@ -130,6 +137,15 @@ def test_parse_mdyyyy_slash() -> None:
     assert allen_gis._parse_mdyyyy_slash("2025-12-10") is None  # already ISO -> not this encoding
     assert allen_gis._parse_mdyyyy_slash("13/40/2025") is None  # invalid month/day
     assert allen_gis._parse_mdyyyy_slash("12/10/25") is None  # two-digit year is NOT assumed
+    # Calendar-impossible dates are refused, not emitted. A conveyance date is evidence: a parser
+    # that range-checks day <= 31 happily returns "2025-02-30", a date that does not exist.
+    assert allen_gis._parse_mdyyyy_slash("2/30/2025") is None
+    assert allen_gis._parse_mdyyyy_slash("2/29/2025") is None  # 2025 is not a leap year
+    assert allen_gis._parse_mdyyyy_slash("2/29/2024") == "2024-02-29"  # 2024 is
+    assert allen_gis._parse_mdyyyy_slash("2/29/1900") is None  # 1900 is NOT (century rule)
+    assert allen_gis._parse_mdyyyy_slash("2/29/2000") == "2000-02-29"  # 2000 IS (400-year rule)
+    assert allen_gis._parse_mdyyyy_slash("4/31/2025") is None  # April has 30 days
+    assert allen_gis._parse_mdyyyy_slash("12/10/1799") is None  # outside the plausibility bound
     # And it is reachable through the schema-driven decoder, not just directly.
     assert allen_gis._decode_sale_date("12/10/2025 12:00:00 AM", "mdyyyy_slash") == "2025-12-10"
     # The "iso" mode would have carried the whole string through — the bug this mode exists for.

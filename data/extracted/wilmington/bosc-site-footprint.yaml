@@ -152,8 +152,12 @@ zoning_district:
     [verified] "LI" (Light Industrial), City of Wilmington. TWO INDEPENDENT SOURCES AGREE and
     neither is a press map. (a) The City's published zoning layer (WILMINGTON_ZONING_SCHEMA — the
     Zoning layer of the City's own "Wilmington Zoning Map 2024" application, CCRPC
-    ProposedZoning9 layer 0, dataLastEditDate 2026-02-10) carries a DISCRETE 471.27-ac LI polygon
-    covering 99.73% of the campus tract; the City's LI total across 8 polygons is 4,859.88 ac, of
+    ProposedZoning9 layer 0, dataLastEditDate 2026-02-10) carries a DISCRETE 471.272-ac LI
+    polygon over the campus tract. The fit is measured by INTERSECTING the two geometries in
+    UTM 17N (EPSG:32617), not by dividing one total by another: the overlap is 470.931 ac, which
+    is 99.73% of the parcel (470.931 / 472.221 ac planar) and 99.93% of the LI polygon
+    (470.931 / 471.272 ac). The first is the figure to quote — the claim is that the zoning
+    covers the land. The City's LI total across 8 polygons is 4,859.88 ac, of
     which the 3,768.78-ac Air Park block is the pre-existing industrial area. (b) The City
     Planning Commission agendas of 2026-01-06 and 2026-03-25 both print the application's zoning
     as "Light Industrial" (Property Owner: Amazon Data Services, Inc; Address: 1488 S US 68;
