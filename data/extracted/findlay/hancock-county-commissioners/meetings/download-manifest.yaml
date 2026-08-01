@@ -1,0 +1,1422 @@
+meta:
+  subject: hancock-county-commissioners meeting-document download manifest
+  slug: hancock-county-commissioners
+  source_pages:
+  - https://co.hancock.oh.us/AgendaCenter/County-Commissioners-2
+  dest_dir: /Users/cparent/Code/watermark-directory/1839-pilot-the-cross-site-civic-loader-on-a-real-peer--/data/documents/findlay/hancock-county-commissioners/meetings
+  generated_at: '2026-08-01'
+  policy: non-destructive — originals keep as-received names; this is an alias/provenance
+    layer only.
+  date_evidence: listing — dates are parsed from the records-page link text/filename,
+    NOT content-verified. OCR of each file is the verification step.
+  counts:
+    total: 108
+    downloaded: 89
+    skipped_existing: 0
+    conflicts: 19
+    errors: 0
+documents:
+- filename: Hancock County Agenda Template.pdf
+  canonical: 2026-07-30-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_07302026-376
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-07-30'
+  title: Commissioners Regular Meeting
+  sha256: aa4b48c1acf08a8c8bf2627d9bbf58035e1fac88cdbdbf0fab54e372339b745c
+  bytes: 56320
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:46.049254+00:00'
+  status: downloaded
+  note: null
+- filename: 7.28.26.pdf
+  canonical: 2026-07-28-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_07282026-375
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-07-28'
+  title: Commissioners Regular Meeting
+  sha256: d20094c2b935a23fdc40afb33d47b7f5bcc8a2c7e0b93c211b0efe6ea98ed670
+  bytes: 57085
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:46.436835+00:00'
+  status: downloaded
+  note: null
+- filename: _07282026-375.pdf
+  canonical: 2026-07-28-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_07282026-375
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-07-28'
+  title: null
+  sha256: d3f9cc13f9d40fee0b5010396ce39df30cc753a8a26e826ba748381f73701d18
+  bytes: 43590
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:46.790699+00:00'
+  status: downloaded
+  note: null
+- filename: 7.23.26.pdf
+  canonical: 2026-07-23-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_07232026-374
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-07-23'
+  title: Commissioners Regular Meeting
+  sha256: 3b450c702f78d25017f8f9fade5c705e547633504a6840f0be00a44517cebbe9
+  bytes: 58500
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:47.173286+00:00'
+  status: downloaded
+  note: null
+- filename: _07232026-374.pdf
+  canonical: 2026-07-23-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_07232026-374
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-07-23'
+  title: null
+  sha256: 52b35ceaf8cf236fbbb61f8572c29892bcf308ab4d43574215e7dea32249425d
+  bytes: 306825
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:48.821833+00:00'
+  status: downloaded
+  note: null
+- filename: 7.16.26.pdf
+  canonical: 2026-07-16-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_07162026-373
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-07-16'
+  title: Commissioners regular meeting
+  sha256: affb3d4c27c4f82e8122698f7903cf188f9d3e62370feed427d285ec459eccf8
+  bytes: 59940
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:49.191499+00:00'
+  status: downloaded
+  note: null
+- filename: _07162026-373.pdf
+  canonical: 2026-07-16-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_07162026-373
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-07-16'
+  title: null
+  sha256: 37cefa311381ae2376f227142fc15f47c732d4883e5a148c6d001e4d726038cc
+  bytes: 645318
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:49.749228+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.84aba72f.pdf
+  canonical: 2026-07-09-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_07092026-372
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-07-09'
+  title: Commissioners Regular Meeting
+  sha256: 84aba72fc5e1e89be9fade8c1a4b5373633bf368edb9de29b5cb047d670b85e8
+  bytes: 68709
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:50.148568+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _07092026-372.pdf
+  canonical: 2026-07-09-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_07092026-372
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-07-09'
+  title: null
+  sha256: 3b937bc195e59342194b1f73c86bdde438ec9fbe02b29d8d59b499b775137ff8
+  bytes: 255667
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:50.654293+00:00'
+  status: downloaded
+  note: null
+- filename: 7.2.26.pdf
+  canonical: 2026-07-02-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_07022026-371
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-07-02'
+  title: Commissioners Regular Meeting
+  sha256: cd5430edb041db18600a61e8b44be6b06dd1c09a82914973a491f44983b58c4f
+  bytes: 65963
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:51.595236+00:00'
+  status: downloaded
+  note: null
+- filename: _07022026-371.pdf
+  canonical: 2026-07-02-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_07022026-371
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-07-02'
+  title: null
+  sha256: c587effdacda7a425589ee0bb4f358d5c76fa6dddcf7dd30f343047634267c1b
+  bytes: 367799
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:52.168601+00:00'
+  status: downloaded
+  note: null
+- filename: 6.25.26.pdf
+  canonical: 2026-06-25-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_06252026-370
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-06-25'
+  title: Commissioners Regular Meeting
+  sha256: ec3dd80dd449b8360afb1e32d9359f325a76a331992ac3557590774de7d52fc5
+  bytes: 60824
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:52.529217+00:00'
+  status: downloaded
+  note: null
+- filename: _06252026-370.pdf
+  canonical: 2026-06-25-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_06252026-370
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-06-25'
+  title: null
+  sha256: 63b4703c5a0da59375aafd329a2417b800dcc6041e0229fe1860fc38a50bcef5
+  bytes: 389179
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:53.039632+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.4722258a.pdf
+  canonical: 2026-06-23-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_06232026-369
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-06-23'
+  title: Commissioners Regular Meeting
+  sha256: 4722258aa54d7cbfc043618289af6461724203250ef7dfa375d4262073dfcccf
+  bytes: 48765
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:53.324442+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _06232026-369.pdf
+  canonical: 2026-06-23-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_06232026-369
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-06-23'
+  title: null
+  sha256: 7f76cdf9144ce6f4954cba59592a50faf8a7944b9d2036292fa21fbada5fb37a
+  bytes: 165160
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:53.745512+00:00'
+  status: downloaded
+  note: null
+- filename: 6.18.26.pdf
+  canonical: 2026-06-18-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_06182026-368
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-06-18'
+  title: Commissioners Regular Meeting
+  sha256: 9898f3b1d895549ee7f6a3a79538f227d5db9e3ca30cd18e11e5143a75bf95c3
+  bytes: 69170
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:54.101506+00:00'
+  status: downloaded
+  note: null
+- filename: _06182026-368.pdf
+  canonical: 2026-06-18-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_06182026-368
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-06-18'
+  title: null
+  sha256: 60ca7b955067dce70b66d3092038009386fb3049e3a43c4285bffe96543bcc53
+  bytes: 1356766
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:56.393775+00:00'
+  status: downloaded
+  note: null
+- filename: 6.11.26.pdf
+  canonical: 2026-06-11-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_06112026-367
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-06-11'
+  title: Commissioners Regular Meeting
+  sha256: f49c799ffe8fdaf236cd01dba5b28e1f9f2b05bccf0db8dec695f6c22885eea6
+  bytes: 57759
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:56.838544+00:00'
+  status: downloaded
+  note: null
+- filename: _06112026-367.pdf
+  canonical: 2026-06-11-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_06112026-367
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-06-11'
+  title: null
+  sha256: 5e24428992561f03395d94cca174a59ec2ab876be3dfa8d55fd5f9634beaf74e
+  bytes: 439694
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:57.363919+00:00'
+  status: downloaded
+  note: null
+- filename: 06092026.pdf
+  canonical: 2026-06-09-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_06092026-366
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-06-09'
+  title: PDF
+  sha256: c9ad6892f72267f1fb5ff68e82e2ed205322804f77c43d5bd8190005c3c958a2
+  bytes: 1761
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:57.692943+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.d55dc608.pdf
+  canonical: 2026-06-04-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_06042026-365
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-06-04'
+  title: Commissioners Regular Meeting
+  sha256: d55dc6089d882ef708f8f68c2010231b3e194a5200957e84e5a7b73c6a7c816a
+  bytes: 56495
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:58.151754+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _06042026-365.pdf
+  canonical: 2026-06-04-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_06042026-365
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-06-04'
+  title: null
+  sha256: 97f24e0f44542baab7799a1c6dba71b39d6c3c6441f949b36b3ac3c44de4cd84
+  bytes: 156480
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:58.630967+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.7f393327.pdf
+  canonical: 2026-06-02-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_06022026-364
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-06-02'
+  title: Commissioners Regular Meeting
+  sha256: 7f393327cd5ab46ba90597e3a7896f890e566333d155220e35e23dda2e2bbc9e
+  bytes: 56159
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:58.975181+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _06022026-364.pdf
+  canonical: 2026-06-02-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_06022026-364
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-06-02'
+  title: null
+  sha256: 895c6c0f60aebdfbe731e5db86615cb47ccc87f8d8e3f3414d9a6e5cf8fa02d8
+  bytes: 510420
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:59.609828+00:00'
+  status: downloaded
+  note: null
+- filename: 5.28.26.pdf
+  canonical: 2026-05-28-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_05282026-363
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-05-28'
+  title: Commissioners regular meeting
+  sha256: 1278cf294114368d91e2d8d85193105f60cc86b917ec4af737f30c83163db0d8
+  bytes: 53516
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:37:59.976023+00:00'
+  status: downloaded
+  note: null
+- filename: _05282026-363.pdf
+  canonical: 2026-05-28-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_05282026-363
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-05-28'
+  title: null
+  sha256: 80d3926e44b0f0a855bbaa1086955c3e838e91b051cdda9996e077ab09d6e150
+  bytes: 173209
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:00.391788+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.6ed58d22.pdf
+  canonical: 2026-05-26-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_05262026-362
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-05-26'
+  title: Commissioners Regular Meeting
+  sha256: 6ed58d22acb40d3514e0afb12f7cb58451b51b39215d306894bd00a22be58f7c
+  bytes: 56917
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:00.799536+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _05262026-362.pdf
+  canonical: 2026-05-26-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_05262026-362
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-05-26'
+  title: null
+  sha256: 530f364aa062d32cb012673317dff99e9c9dc6927b7e37f4bd3354b42926ac46
+  bytes: 198320
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:01.296643+00:00'
+  status: downloaded
+  note: null
+- filename: 5.21.26.pdf
+  canonical: 2026-05-21-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_05212026-361
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-05-21'
+  title: Commissioners Regular Meeting
+  sha256: cddc9e802b58dc6fef2d02da29cd7b758d853260026f959b6884d1e29ad5d81b
+  bytes: 56749
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:01.686278+00:00'
+  status: downloaded
+  note: null
+- filename: _05212026-361.pdf
+  canonical: 2026-05-21-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_05212026-361
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-05-21'
+  title: null
+  sha256: 2d445a0b3a2fae8652f17386f83ff294acb57ed54f650971dfc1c35924badd63
+  bytes: 264877
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:02.160568+00:00'
+  status: downloaded
+  note: null
+- filename: 5.19.26.pdf
+  canonical: 2026-05-19-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_05192026-360
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-05-19'
+  title: Commissioners Regular Meeting
+  sha256: 9939230841ec1482f8a9bebaaf2c2407c44f60b5e1207e4128c8db3f0443f02c
+  bytes: 53518
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:02.535682+00:00'
+  status: downloaded
+  note: null
+- filename: _05192026-360.pdf
+  canonical: 2026-05-19-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_05192026-360
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-05-19'
+  title: null
+  sha256: d9d12cbd7a932dd7fd0251ed7901c48710f9d100f395e5d934a00f3b03428da8
+  bytes: 523139
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:03.125515+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.6bc40592.pdf
+  canonical: 2026-05-14-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_05142026-359
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-05-14'
+  title: Commissioners Regular Meeting
+  sha256: 6bc40592008f8c4ce99166d0e17437c7a804cb5408cb34985aa336b4899bc0dc
+  bytes: 56883
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:03.507592+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _05142026-359.pdf
+  canonical: 2026-05-14-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_05142026-359
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-05-14'
+  title: null
+  sha256: 2e339f90d7db00b9a101a80f79e75c2d55bec0e8d773f508ea4f705876f05410
+  bytes: 130935
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:03.985176+00:00'
+  status: downloaded
+  note: null
+- filename: 5.12.26.pdf
+  canonical: 2026-05-12-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_05122026-358
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-05-12'
+  title: Commissioners Regular Meeting
+  sha256: 46728666a65c8cae75ab27c38244968c103499e028d45adeb63c3c55ffae1ae5
+  bytes: 58948
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:04.328693+00:00'
+  status: downloaded
+  note: null
+- filename: _05122026-358.pdf
+  canonical: 2026-05-12-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_05122026-358
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-05-12'
+  title: null
+  sha256: 5a6a29de71eab88c2461792a7ca1a66099987a7bb0b0e4960642ab50979ebb77
+  bytes: 147326
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:04.765782+00:00'
+  status: downloaded
+  note: null
+- filename: 5.7.26.pdf
+  canonical: 2026-05-07-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_05072026-357
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-05-07'
+  title: Commissioners Regular Meeting
+  sha256: 488c2048898f8261506e613f17b137440ec0e4404283ca5684a8db852a31429f
+  bytes: 61318
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:05.139902+00:00'
+  status: downloaded
+  note: null
+- filename: _05072026-357.pdf
+  canonical: 2026-05-07-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_05072026-357
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-05-07'
+  title: null
+  sha256: 94477af310806c591665f19dee9e1c4650be57e65f0954f86b5bd3a35eddf1c4
+  bytes: 462062
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:05.724576+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.a007cef7.pdf
+  canonical: 2026-05-05-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_05052026-356
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-05-05'
+  title: Commissioners Regular Meeting
+  sha256: a007cef7673620635934bc97a21f03da2ac9356f1ac6464ce4eaa86759d2e452
+  bytes: 51247
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:06.097401+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _05052026-356.pdf
+  canonical: 2026-05-05-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_05052026-356
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-05-05'
+  title: null
+  sha256: 92fd71e02a3210096384c993f5fff0dcef050549a9e1971982d1324947860e62
+  bytes: 318673
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:06.588119+00:00'
+  status: downloaded
+  note: null
+- filename: 4.30.26.pdf
+  canonical: 2026-04-30-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04302026-355
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-04-30'
+  title: Commissioner Regular Meeting
+  sha256: 933057892c9dcb612f9cd243ca1e0035e9c024995293f416d0a54009cf40e512
+  bytes: 62547
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:07.040732+00:00'
+  status: downloaded
+  note: null
+- filename: _04302026-355.pdf
+  canonical: 2026-04-30-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04302026-355
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-04-30'
+  title: null
+  sha256: 26a3a02b7371354bc8ee41ba767e2f838f1607ab4dc5614df0c0b5295ff0ec90
+  bytes: 269678
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:07.673662+00:00'
+  status: downloaded
+  note: null
+- filename: 4.28.26.pdf
+  canonical: 2026-04-28-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04282026-354
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-04-28'
+  title: Commissioners Regular Meeting
+  sha256: d744699c182e89308e22263d01ec2edeb42cb43e821f15aac0e71646f2243171
+  bytes: 57199
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:08.111312+00:00'
+  status: downloaded
+  note: null
+- filename: _04282026-354.pdf
+  canonical: 2026-04-28-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04282026-354
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-04-28'
+  title: null
+  sha256: 9b25b9d440994c5d6ae52663d6eac33873bff59819d670fd158f72669d52e5f2
+  bytes: 255843
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:08.647977+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.8277811a.pdf
+  canonical: 2026-04-23-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04232026-353
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-04-23'
+  title: Commissioners Regular Meeting
+  sha256: 8277811ac0fd867640204ec56133079f5ebc900fdcaef453e5357c67ce2df54a
+  bytes: 48473
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:08.993915+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _04232026-353.pdf
+  canonical: 2026-04-23-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04232026-353
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-04-23'
+  title: null
+  sha256: 1fc2f12ed62a4090a4674399ef9559ca41d509976d8a0a6cf1f0bc0d1b83e0f0
+  bytes: 126029
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:09.412546+00:00'
+  status: downloaded
+  note: null
+- filename: 4.21.26.pdf
+  canonical: 2026-04-21-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04212026-352
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-04-21'
+  title: Commissioners Regular Meeting
+  sha256: 74404885e828c6af5fd869120bab58808b97a2fe35a6faab6d84c7f6146e2bae
+  bytes: 56027
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:09.788647+00:00'
+  status: downloaded
+  note: null
+- filename: _04212026-352.pdf
+  canonical: 2026-04-21-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04212026-352
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-04-21'
+  title: null
+  sha256: ad63a9d2f62cb29952b802ab03ca87ce4254d9502b13cb115b4d90af779c0546
+  bytes: 580711
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:10.402206+00:00'
+  status: downloaded
+  note: null
+- filename: 4.16.26.pdf
+  canonical: 2026-04-16-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04162026-351
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-04-16'
+  title: Commissioners Regular meeting
+  sha256: 234bb250edf262c2917711649ce0c273bc54659e6f5d96d8d3062b150b978878
+  bytes: 49252
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:10.865635+00:00'
+  status: downloaded
+  note: null
+- filename: _04162026-351.pdf
+  canonical: 2026-04-16-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04162026-351
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-04-16'
+  title: null
+  sha256: ea515c2f939437fa7d4088795aa7619d9abdf6b6acac93c777cf4c44405afbe3
+  bytes: 369487
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:11.455544+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.a6b20ad5.pdf
+  canonical: 2026-04-14-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04142026-350
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-04-14'
+  title: Commissioners Regular Meeting
+  sha256: a6b20ad50dd1191f7025c6915b827f113f4266490bb116d90d16f62ce3d702db
+  bytes: 53913
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:12.005833+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _04142026-350.pdf
+  canonical: 2026-04-14-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04142026-350
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-04-14'
+  title: null
+  sha256: f3ac5fa76b0ef963e787afcbc2bcaf5c0656e75ee6008e01b886ed53964dfb84
+  bytes: 126374
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:12.468699+00:00'
+  status: downloaded
+  note: null
+- filename: 4.9.26.pdf
+  canonical: 2026-04-09-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04092026-348
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-04-09'
+  title: Commissioners regular meeting
+  sha256: 0c6dc94b4335d8885c5582b07995154f16897050fcee8a362900a6d20ff8ba86
+  bytes: 56346
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:12.876785+00:00'
+  status: downloaded
+  note: null
+- filename: _04092026-348.pdf
+  canonical: 2026-04-09-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04092026-348
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-04-09'
+  title: null
+  sha256: 6dda4a4803c7e6c99572431a0b0fe6658f84ba3eeff4f35e44a1cd669e2fdebd
+  bytes: 799582
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:13.583049+00:00'
+  status: downloaded
+  note: null
+- filename: 4.7.26.pdf
+  canonical: 2026-04-07-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04072026-347
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-04-07'
+  title: Commissioners Regular Meeting
+  sha256: c0d2356a8f14866dc8b079190113562f8cf792eaef564e75746f1a022267fc42
+  bytes: 56317
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:14.061666+00:00'
+  status: downloaded
+  note: null
+- filename: _04072026-347.pdf
+  canonical: 2026-04-07-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04072026-347
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-04-07'
+  title: null
+  sha256: a4e60729f4fa9739864607307f9f3f7e7dce70a78c395bb5d20693d0dc94df0b
+  bytes: 355336
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:14.604045+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.3c857a83.pdf
+  canonical: 2026-04-02-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_04022026-346
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-04-02'
+  title: Commissioners Regular Meeting
+  sha256: 3c857a8331e1e7e7ba84efb3485c3798e6e102edf94baf73d1dfcf1e253fb761
+  bytes: 60449
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:14.959761+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _04022026-346.pdf
+  canonical: 2026-04-02-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_04022026-346
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-04-02'
+  title: null
+  sha256: e1eaf5a48e8c0e3d68472676482edc531f0426c181d20233933da645380e3e43
+  bytes: 176288
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:15.345517+00:00'
+  status: downloaded
+  note: null
+- filename: 3.31.26.pdf
+  canonical: 2026-03-31-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_03312026-345
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-03-31'
+  title: Commissioner regular meeting
+  sha256: 7d2340490e48f4453933bcce2fdfa409e0a70008476089ec3273e375c5888ee8
+  bytes: 56374
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:16.274421+00:00'
+  status: downloaded
+  note: null
+- filename: _03312026-345.pdf
+  canonical: 2026-03-31-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_03312026-345
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-03-31'
+  title: null
+  sha256: d477743f2cbbdabf0f026e2139c1fd7ea345e16893c429e9f17f4a9852f86d69
+  bytes: 220014
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:16.728523+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.82dac01f.pdf
+  canonical: 2026-03-26-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_03262026-344
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-03-26'
+  title: Commissioners Regular Meeting
+  sha256: 82dac01fb6917e9323d0f03d2912441dd735981481ef4b72049957cc1cabd1e2
+  bytes: 48342
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:17.098840+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _03262026-344.pdf
+  canonical: 2026-03-26-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_03262026-344
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-03-26'
+  title: null
+  sha256: 1b80ea67a823bd7c4f5b979bf673a7743913da19c04170ecad1cf71eb43a5c98
+  bytes: 115304
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:17.502538+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.c9662501.pdf
+  canonical: 2026-03-24-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_03242026-343
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-03-24'
+  title: Commissioners Regular Meeting
+  sha256: c96625015bc997afd761633d5fa3e2abecc1f5e7901b6977051bcf5fb1912fe4
+  bytes: 59126
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:17.913573+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _03242026-343.pdf
+  canonical: 2026-03-24-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_03242026-343
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-03-24'
+  title: null
+  sha256: f7cc547895df8d33c6168e43fc6500ccbb6e2f300c4cec9f79f687dd6d47baf4
+  bytes: 180724
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:18.358299+00:00'
+  status: downloaded
+  note: null
+- filename: 3.19.26.pdf
+  canonical: 2026-03-19-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_03192026-342
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-03-19'
+  title: Commissioners Regular Meeting
+  sha256: 3ee31386cba1d897d475c499336ba8f1f7b6c99d6dc8fb64fe7296d7940d32eb
+  bytes: 57626
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:18.772445+00:00'
+  status: downloaded
+  note: null
+- filename: _03192026-342.pdf
+  canonical: 2026-03-19-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_03192026-342
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-03-19'
+  title: null
+  sha256: bfb32dabdc3b67ec312b26b8047b385f46fb9a3b507becfebef317aa0d4de3df
+  bytes: 306038
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:19.345910+00:00'
+  status: downloaded
+  note: null
+- filename: 3.17.26.pdf
+  canonical: 2026-03-17-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_03172026-341
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-03-17'
+  title: Commissioners Regular Meeting
+  sha256: 3c9cdc40b4e463e0dafc87b30f437c7422efc39a2de1bdd110bdbd30ba9080fb
+  bytes: 56617
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:19.706458+00:00'
+  status: downloaded
+  note: null
+- filename: _03172026-341.pdf
+  canonical: 2026-03-17-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_03172026-341
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-03-17'
+  title: null
+  sha256: c7cf5bb3a8343a4ffd2974546b9eda29f6eeae94168da4ddff6f96124d0407f7
+  bytes: 648515
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:20.416952+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.fefa501b.pdf
+  canonical: 2026-03-12-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_03122026-340
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-03-12'
+  title: Commissioners Regular Meeting
+  sha256: fefa501bd86de989897887b889ef20f75277515f4d25eddecbb7f043c455042a
+  bytes: 53149
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:20.793711+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _03122026-340.pdf
+  canonical: 2026-03-12-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_03122026-340
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-03-12'
+  title: null
+  sha256: c6d26dbf59322364a99ad729d76d1c6682efd4f10e930f46b7daabe4b0d3fcc6
+  bytes: 328276
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:21.396067+00:00'
+  status: downloaded
+  note: null
+- filename: 3.10.26.pdf
+  canonical: 2026-03-10-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_03102026-339
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-03-10'
+  title: Commissioners regular meeting
+  sha256: 0a65ea2124fbf547b372242fe3421c2197abedd41118ff10f13199174127f88e
+  bytes: 56772
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:21.829047+00:00'
+  status: downloaded
+  note: null
+- filename: _03102026-339.pdf
+  canonical: 2026-03-10-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_03102026-339
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-03-10'
+  title: null
+  sha256: ea7604d959d6510375a51ed66e39302f8e4c7d8e8acd4bde2e70df2eee3c3c60
+  bytes: 199385
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:22.348692+00:00'
+  status: downloaded
+  note: null
+- filename: 3.05.26.pdf
+  canonical: 2026-03-05-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_03052026-338
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-03-05'
+  title: Commissioners Regular Meeting
+  sha256: 650717ef02e8735e0684c857f95709ca3acc99c40cb183490d8275a596c012bc
+  bytes: 56064
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:22.758995+00:00'
+  status: downloaded
+  note: null
+- filename: _03052026-338.pdf
+  canonical: 2026-03-05-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_03052026-338
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-03-05'
+  title: null
+  sha256: 25e6a3bc893d3f0fb160b26c4a44279c8cbfb910bd9471f6d3e20bb2208846a9
+  bytes: 256084
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:23.294556+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.5118bd04.pdf
+  canonical: 2026-03-03-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_03032026-337
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-03-03'
+  title: Commissioners Regular Meeting
+  sha256: 5118bd04c22a080c53c41972e4d50562fec355a7109bd973ec9595e3f8e8dd1a
+  bytes: 57386
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:23.685990+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _03032026-337.pdf
+  canonical: 2026-03-03-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_03032026-337
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-03-03'
+  title: null
+  sha256: 68371cb0f65b396373b92aefb34e27a873d64d190fb68eb6a92bfbed057750d1
+  bytes: 257952
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:24.320304+00:00'
+  status: downloaded
+  note: null
+- filename: 2.26.26.pdf
+  canonical: 2026-02-26-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_02262026-336
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-02-26'
+  title: Commissioners Regular Meeting
+  sha256: f14bb14976aa510f4dee8e31c8d8fd38948693b596902f51e42248a3f6d65594
+  bytes: 60771
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:24.754156+00:00'
+  status: downloaded
+  note: null
+- filename: _02262026-336.pdf
+  canonical: 2026-02-26-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_02262026-336
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-02-26'
+  title: null
+  sha256: fa4009cdf7185e618f7ef958dba2367eaa40f2177d948e0138b08421ef5dd81c
+  bytes: 244984
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:25.216235+00:00'
+  status: downloaded
+  note: null
+- filename: 2.24.26.pdf
+  canonical: 2026-02-24-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_02242026-335
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-02-24'
+  title: Commissioners Regular Meeting
+  sha256: bfeb2acf82b52c6ecbba415dd4d4935fa736cee3c15e8b86cd435b2856773db1
+  bytes: 55804
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:25.615168+00:00'
+  status: downloaded
+  note: null
+- filename: _02242026-335.pdf
+  canonical: 2026-02-24-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_02242026-335
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-02-24'
+  title: null
+  sha256: 40eb0ce580ba759bacf06308a4f7bae60351a0797f96f4625e2f1a100608a731
+  bytes: 252971
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:26.117260+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.2207bfa2.pdf
+  canonical: 2026-02-19-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_02192026-334
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-02-19'
+  title: Commissioners Regular Meeting
+  sha256: 2207bfa2032949b761a8ef3126969387b6ff8e2f28fa660a329cddded129b94f
+  bytes: 56176
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:26.528223+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _02192026-334.pdf
+  canonical: 2026-02-19-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_02192026-334
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-02-19'
+  title: null
+  sha256: 1eda9d74455c968cf91e4d773953da6383c32dbec0dd3b2d1b8cc798013a7e30
+  bytes: 401145
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:27.086294+00:00'
+  status: downloaded
+  note: null
+- filename: 2.17.26.pdf
+  canonical: 2026-02-17-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_02172026-333
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-02-17'
+  title: Commissioners Regular Meeting
+  sha256: 5c6b0c6d14667432638afc23daad06697747690bab466e6fd86beb21ac0c7228
+  bytes: 53382
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:27.431638+00:00'
+  status: downloaded
+  note: null
+- filename: _02172026-333.pdf
+  canonical: 2026-02-17-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_02172026-333
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-02-17'
+  title: null
+  sha256: 50c93e91d13f9d607a949b882ad3cd2fec5f1d4bfd4ceb51d25a37ef5b2390af
+  bytes: 613992
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:28.037784+00:00'
+  status: downloaded
+  note: null
+- filename: 2.12.26.pdf
+  canonical: 2026-02-12-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_02122026-332
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-02-12'
+  title: Commissioners Regular Meeting
+  sha256: 65d3b1ed4527f8f11b0c690d023dd6757a288fbb57b7ec5283b700f5767aa9ff
+  bytes: 56614
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:28.428427+00:00'
+  status: downloaded
+  note: null
+- filename: _02122026-332.pdf
+  canonical: 2026-02-12-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_02122026-332
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-02-12'
+  title: null
+  sha256: 353023a3d70107071b4817d1147a4fb27e1bce3c7a86b73f2b25c11f026c51d3
+  bytes: 898195
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:29.238739+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.8d90739c.pdf
+  canonical: 2026-02-10-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_02102026-330
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-02-10'
+  title: Commissioners Regular Meeting
+  sha256: 8d90739c15cd58a9a03be6328a663e107d61bbd3baf0635f10615d367ba4bb2b
+  bytes: 53382
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:29.662323+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _02102026-330.pdf
+  canonical: 2026-02-10-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_02102026-330
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-02-10'
+  title: null
+  sha256: a9d0b534fe39daab933dbf231e43034fdcb7652a42c1d28cb080ccf21e6ffa99
+  bytes: 477381
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:30.267242+00:00'
+  status: downloaded
+  note: null
+- filename: 2.5.26.pdf
+  canonical: 2026-02-05-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_02052026-329
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-02-05'
+  title: Commissioner Regular Meeting
+  sha256: 98393d78b6887f04c39791425e9349014438ac3ab94e0557214fe89267d06d64
+  bytes: 53342
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:30.650039+00:00'
+  status: downloaded
+  note: null
+- filename: _02052026-329.pdf
+  canonical: 2026-02-05-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_02052026-329
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-02-05'
+  title: null
+  sha256: 5f2097ec29b66d8255e0f8d24d182d0f955aac70ab957023d17d745654269ee4
+  bytes: 189583
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:31.121198+00:00'
+  status: downloaded
+  note: null
+- filename: 2.3.26.pdf
+  canonical: 2026-02-03-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_02032026-328
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-02-03'
+  title: Commissioners Regular Meeting
+  sha256: c47fc664e06f732ec98349db5b0df0e7742ddacb52bb0b8f470778a5da342a98
+  bytes: 53334
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:31.478011+00:00'
+  status: downloaded
+  note: null
+- filename: _02032026-328.pdf
+  canonical: 2026-02-03-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_02032026-328
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-02-03'
+  title: null
+  sha256: 0e3039f64ee1bb4254b6c70068eca601c5a889c95d6c765e63cc838a7da59dae
+  bytes: 143167
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:31.918346+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.055a16b7.pdf
+  canonical: 2026-01-29-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_01292026-326
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-01-29'
+  title: Commissioners Regular Meeting
+  sha256: 055a16b7e41b9f8b4e837bf06088f468774333e12f82698e3c32f5440fccef2f
+  bytes: 53340
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:32.354933+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _01292026-326.pdf
+  canonical: 2026-01-29-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_01292026-326
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-01-29'
+  title: null
+  sha256: 21e4cd7fc11cdc60537cea99da32151b34dbf465d5194e396ec23b8c82dbe019
+  bytes: 148725
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:32.800444+00:00'
+  status: downloaded
+  note: null
+- filename: 1.27.26.pdf
+  canonical: 2026-01-27-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_01272026-325
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-01-27'
+  title: Commissioners Regular Meeting
+  sha256: 0b0ed60b73039220bf9f732cca5823986eb115816b3de5f926fd5eaf26f130e1
+  bytes: 56158
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:33.175633+00:00'
+  status: downloaded
+  note: null
+- filename: _01272026-325.pdf
+  canonical: 2026-01-27-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_01272026-325
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-01-27'
+  title: null
+  sha256: 10d5a6a3540a3b2acb5f54ac62ea2ad5b43a7905b1cb514da0a494e92a3b9583
+  bytes: 140103
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:33.606264+00:00'
+  status: downloaded
+  note: null
+- filename: 1.22.26.pdf
+  canonical: 2026-01-22-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_01222026-324
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-01-22'
+  title: Commissioners Regular Meeting
+  sha256: 617cad33d4569a2e074ee18e4511f96bba96c8d7b84dfd9cdd4dfe81dbfb1b04
+  bytes: 60838
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:33.990036+00:00'
+  status: downloaded
+  note: null
+- filename: _01222026-324.pdf
+  canonical: 2026-01-22-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_01222026-324
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-01-22'
+  title: null
+  sha256: c516dae4eaff8f792057658d612bb7e6f34db4bf333ce129984a18995d0943f6
+  bytes: 270222
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:34.496357+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.ce65f67d.pdf
+  canonical: 2026-01-20-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_01202026-323
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-01-20'
+  title: Commissioners Regular Meeting
+  sha256: ce65f67dec26ca2d30efab11658e348d49baac37afb98cbfe8581d9e01341a5c
+  bytes: 56905
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:34.853782+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _01202026-323.pdf
+  canonical: 2026-01-20-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_01202026-323
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-01-20'
+  title: null
+  sha256: 21f9de92858fba4a78a2cb8164d2f370d9042f3bd062936ae872e2fa6ec80dcd
+  bytes: 597971
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:35.506749+00:00'
+  status: downloaded
+  note: null
+- filename: 1.15.26.pdf
+  canonical: 2026-01-15-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_01152026-322
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-01-15'
+  title: Commissioners Regular Meeting
+  sha256: e41ddcfe40f4a55f905bcc26ea685e271ce11e718fb8fb13644e2ec3fd360668
+  bytes: 57481
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:35.900287+00:00'
+  status: downloaded
+  note: null
+- filename: _01152026-322.pdf
+  canonical: 2026-01-15-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_01152026-322
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-01-15'
+  title: null
+  sha256: 52f4ff02d8f553402d97dec5864c2a35ca188b122663d76d6f4da787895aa2f4
+  bytes: 838745
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:36.546566+00:00'
+  status: downloaded
+  note: null
+- filename: 1.13.26.pdf
+  canonical: 2026-01-13-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_01132026-321
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-01-13'
+  title: Commissioners Regular Meeting
+  sha256: 0e67a4f17ad434573985fa372a5fc4312ff826aa1441194452b1b370035f4f43
+  bytes: 56660
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:36.972129+00:00'
+  status: downloaded
+  note: null
+- filename: _01132026-321.pdf
+  canonical: 2026-01-13-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_01132026-321
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-01-13'
+  title: null
+  sha256: 69f9a3fa9dc9286e88963e4e34a42c18270f245e959629b80313f6d62008c120
+  bytes: 250190
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:37.433605+00:00'
+  status: downloaded
+  note: null
+- filename: 1.8.26.pdf
+  canonical: 2026-01-08-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_01082026-320
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-01-08'
+  title: Commissioners' Regular Meeting
+  sha256: beb60206bc0b0e11d34d08587faa9adaf7efde24a5f5b4e1619fb3cc8873bcf4
+  bytes: 56525
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:37.807457+00:00'
+  status: downloaded
+  note: null
+- filename: _01082026-320.pdf
+  canonical: 2026-01-08-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_01082026-320
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-01-08'
+  title: null
+  sha256: 5a6d8b4f7f71bc9327145dcaab323825da38a8bf35f52dff9ced1ff6e0ee95a7
+  bytes: 929068
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:38.497485+00:00'
+  status: downloaded
+  note: null
+- filename: Hancock County Agenda Template.a62c7a60.pdf
+  canonical: 2026-01-06-agenda.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Agenda/_01062026-319
+  body: Commissioners Regular Meeting
+  kind: agenda
+  date: '2026-01-06'
+  title: Commissioners Regular Meeting
+  sha256: a62c7a6017dba4e3bc597a65f06bf4228d2054829abf5e7130092f24e1d2417e
+  bytes: 48649
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:38.819260+00:00'
+  status: conflict
+  note: same name, different bytes — kept alongside original
+- filename: _01062026-319.pdf
+  canonical: 2026-01-06-minutes.pdf
+  source_url: https://co.hancock.oh.us/AgendaCenter/ViewFile/Minutes/_01062026-319
+  body: Commissioners Regular Meeting
+  kind: minutes
+  date: '2026-01-06'
+  title: null
+  sha256: 38b5226c7e3a58918c3da5fe69e2f19f061399dfef3309102834728c51c3633f
+  bytes: 77337
+  content_type: application/pdf
+  fetched_at: '2026-08-01T12:38:39.264275+00:00'
+  status: downloaded
+  note: null

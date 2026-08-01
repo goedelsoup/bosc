@@ -1,0 +1,800 @@
+# Findlay (findlay) — political-subdivision public-meeting records registry.
+#
+# Enumerated BY HAND from the committed Hancock County Directory of Officials 2026
+# (see meta.grounded_sources) for the epic-1520 cross-site pilot, issue 1839.
+# Grounded facts (name/type/governing_body/meeting_schedule/office) are transcribed
+# VERBATIM from that roster — including its own phrasing of a cadence ("Third Monday
+# of the Month, 7:00 pm"), which is deliberately NOT normalized to Lima's
+# "3rd Monday, 7:00 PM" house style: the roster's words are the source.
+#
+# `publishing:` is a live-web finding folded in by hand from
+# `watermark --site findlay subdivisions discover` (read-only; it never rewrites
+# this file). See src/watermark/civic/CLAUDE.md.
+meta:
+  site: findlay
+  subject: Hancock County, Ohio political subdivisions — public-meeting records registry
+  description: >-
+    Meeting-holding bodies for the Findlay watershed point (Hancock County, Blanchard
+    River), each with the verbatim governing-body meeting cadence and office carried in
+    the committed county roster, plus a `publishing:` block recording where (and on what
+    platform) the body posts its minutes/agendas online. The grounded roster facts are
+    immutable source; the `publishing:` block is filled by the read-only discovery pass
+    (`watermark --site findlay subdivisions discover`) and carries its own `discovered:`
+    provenance.
+  grounded_sources:
+    # Hancock County publishes ONE consolidated roster where Allen County publishes
+    # three separate sheets, so a single document grounds the townships, the villages,
+    # the two cities, the board of commissioners and the county's own departments.
+    - id: hancock-directory-of-officials-2026
+      file: data/documents/findlay/reference/2026 Directory of Officials_202604131412522342.pdf
+      title: Hancock County, Ohio — Directory of Officials, 2026
+      asof: "2026"
+      pages:
+        county_elected: 1
+        county_departments: 2
+        city_of_findlay: 3
+        fostoria_and_villages: 4
+        township_trustees: 5-9
+        zoning_officials: 10
+  caveats:
+    - "Meeting cadence is transcribed verbatim from the roster; it is the standing
+      schedule, not a guarantee any given date met (cancellations/special meetings
+      are resolved against the actual posted records). Several boards recess in
+      January — Allen Township's roster line says so outright ('February-December')."
+    - "`publishing.platform: unknown` WITH a `discovered:` block = the body was looked
+      at but its CMS wasn't fingerprinted (or its site blocked the fetch). `unknown`
+      WITHOUT a `discovered:` block = not yet looked. Neither ever means the body
+      withholds records, and a null `records_url` is never evidence of withholding."
+    - "`platform: request_only` = no online posting was found (records-request route);
+      `platform: facebook` = the only web presence is a Facebook page. Beware the
+      same-named-township trap: Ohio has an Allen, an Amanda, a Jackson, a Liberty, a
+      Madison, a Marion, an Orange, a Pleasant, a Portage, a Union, a Van Buren and a
+      Washington Township in several other counties (Hancock's Jackson Township is not
+      Stark County's; its Liberty Township is not Delaware County's). Each entry's
+      discovery note records what tied the site to Hancock County."
+    - "Three Hancock townships share a name with an ALLEN County township in Lima's own
+      registry (Amanda, Jackson, Marion). The two registries are separate files read per
+      active site, and their meeting trees nest separately (Lima flat, Findlay under
+      `findlay/`), so a shared body slug can never collide — that isolation is exactly
+      what the cross-site layout buys (#1520/#1522)."
+    - "The City of Findlay's and the City of Fostoria's council cadence is NOT in this
+      roster — it prints cadence for the villages, the townships and the county
+      commissioners only. Both are left null rather than sourced from outside
+      knowledge."
+    - "County-line straddles. Bluffton is Allen/Hancock and appears in BOTH this
+      registry and Lima's (as an Allen County seat of record) — the same body, grounded
+      twice from two different counties' rosters. Fostoria is Seneca/Hancock/Wood and
+      is seated in Seneca County; it is listed here because the county roster lists it,
+      not because Hancock is its seat. The Village of Van Buren and Van Buren Township
+      are distinct bodies with distinct slugs (`van-buren` / `van-buren-township`), as
+      are the Village of Arlington and (Allen County's) Arlington-addressed townships."
+    - "This registry INCLUDES the Board of County Commissioners, where Lima's excludes
+      Allen County's. Lima's commissioners' record is a separately ingested corpus
+      under `data/extracted/commissioners/`; Hancock's has no such corpus, so the county
+      board is enumerated here as what it is — a meeting-holding political subdivision."
+    - "Not enumerated: the county's other appointed boards (Board of Elections, Park
+      District, Soil & Water Conservation District, Solid Waste Management District,
+      Public Health, Library), the school districts, and the fire/EMS districts. The
+      roster names them (pp. 2, 12-14) but grounds no governing body or cadence for
+      them. Add one when it holds a record this project needs, with its own grounding."
+
+# platform vocabulary (publishing.platform):
+#   civicplus      CivicPlus / CivicEngage "Agenda Center" (structured agendas+minutes)
+#   granicus       Granicus / Legistar / GovAccess meeting portal
+#   boarddocs      Diligent BoardDocs (go.boarddocs.com)
+#   civicclerk     CivicClerk meeting portal (now CivicPlus)
+#   revize         Revize municipal CMS
+#   wordpress      WordPress site (typically PDF links on a "minutes" page)
+#   wix            Wix site builder
+#   squarespace    Squarespace site builder
+#   govoffice      GovOffice / govoffice.com
+#   facebook       Posts to a Facebook page only (no records page found)
+#   request_only   No online posting found; obtain via public-records request
+#   unknown        Not yet discovered, or CMS not fingerprinted / site blocked the fetch
+
+subdivisions:
+  # --- County (1) — grounded in hancock-directory-of-officials-2026 p.1 ---------
+  - slug: hancock-county-commissioners
+    name: Hancock County Board of County Commissioners
+    type: county_department
+    governing_body: Board of County Commissioners
+    meeting_schedule: "Regular Meeting: 9:30 am Tuesday & Thursday"
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      The roster prints the board's standing cadence and office hours but no address.
+      Unlike Lima's registry, the county board IS enumerated here — Hancock's
+      commissioners' record is not a separately ingested corpus.
+    publishing:
+      website: https://co.hancock.oh.us/
+      records_url: https://co.hancock.oh.us/AgendaCenter/County-Commissioners-2
+      platform: civicplus
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          CivicPlus/CivicEngage Agenda Center on the county's own site. Two categories
+          are published: "Commissioners Regular Meeting" (agendas AND minutes, keyed
+          _MMDDYYYY-<id>) and "Common Pleas Court - Community Corrections Planning
+          Board" (agendas only). Same Agenda Center shape as Lima's and LACRPC's, so
+          the existing civicplus fetcher reads it unchanged.
+
+  # --- Cities (2) — grounded in hancock-directory-of-officials-2026 pp.3-4 ------
+  - slug: findlay
+    name: City of Findlay
+    type: city
+    governing_body: City Council
+    meeting_schedule: null
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      The county seat and the site's namesake. The roster lists the city's elected
+      officials and departments (Clerk of Council Denise DeVore; Zoning Office Erik
+      Adkins) but no council cadence and no address — both left null.
+    publishing:
+      website: https://www.findlayohio.gov/
+      records_url: null
+      platform: unknown
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          The city site WAF-blocks the connector (HTTP 403) even with a browser
+          User-Agent, so its CMS is unfingerprinted and no records page could be read.
+          403 is a blocked fetch, NOT a finding that the city publishes nothing — the
+          same wall the Findlay governance watch hit on the city's ordinance pages
+          (#1463). A headless route or a records request is the way in.
+
+  - slug: fostoria
+    name: City of Fostoria
+    type: city
+    governing_body: City Council
+    meeting_schedule: null
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      Straddles Seneca/Hancock/Wood counties and is seated in Seneca. Listed because
+      the Hancock roster lists it (p.4, "City of Fostoria Offices" — Mayor and Safety
+      Service Director only); no cadence or address grounded.
+    publishing:
+      website: https://www.fostoriaohio.gov/
+      records_url: https://www.fostoriaohio.gov/agendacenter
+      platform: civicplus
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          CivicPlus/CivicEngage Agenda Center. Reachable and fingerprinted, but the
+          body is seated in Seneca County — it is carried here because the Hancock
+          roster carries it, and its record is not part of this site's thread.
+
+  # --- Townships (17) — grounded in hancock-directory-of-officials-2026 pp.5-9 --
+  - slug: allen-township
+    name: Allen Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "First Tuesday of the Month, 7:00 pm February-December"
+    office: "Allen Township Center - 12829 St. Rt. 613, Van Buren, OH 45889"
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      The township at the center of the site's data-center siting record: its zoning
+      resolution took effect 2026-05-11 after a referendum, and its zoning commission
+      is hearing the amendments that would write "data center" into it for the first
+      time (data/documents/findlay/governance/). The roster prints
+      "Website: allentownship.com".
+    publishing:
+      website: https://allentwphancockoh.gov/
+      records_url: https://allentwphancockoh.gov/trustees/
+      platform: wordpress
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          WordPress on the township's own .gov (the roster's allentownship.com
+          301-redirects here). The township keeps THREE separate per-board archives of
+          dated PDFs rather than one records page — /trustees/ (the Board of Trustees,
+          recorded here as the governing body's own record), /zoning-commission/ (the
+          ATZC minutes, including the data-center amendment hearings), and
+          /board-of-zoning-appeals/ (which carried no documents on the sweep date).
+          Discovery's own first pick was an /mc-events/ calendar entry, not an archive;
+          the records_url above is the reviewed choice.
+
+  - slug: amanda-township
+    name: Amanda Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Third Monday of the Month, 8:00 pm"
+    office: "Amanda Township House - 309 Main Cross St, Vanlue, OH 45890"
+    grounded_from: hancock-directory-of-officials-2026
+    publishing:
+      website: https://www.facebook.com/people/Amanda-Township-Hancock-County/61557264710117/
+      records_url: null
+      platform: facebook
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found; the only web presence located is the 'Amanda
+          Township - Hancock County' Facebook page. Decoy ruled out: Amanda Township in
+          ALLEN County (which is in Lima's registry, with its own WordPress site).
+
+  - slug: biglick-township
+    name: Biglick Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Third Monday of the Month, 7:00 pm"
+    office: "Biglick Township House - 8273 Township Road 258, Alvada, OH 44802"
+    grounded_from: hancock-directory-of-officials-2026
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. State Auditor agreed-upon-procedures reports are
+          published for the township, but those are the auditor's records, not the
+          board's. Records-request route.
+
+  - slug: blanchard-township
+    name: Blanchard Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Tuesday of the Month, 8:00 pm"
+    office: "Benton Ridge Townhall - 102 Coleman Road, Benton Ridge, OH 45816"
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      The township meets in the Village of Benton Ridge's town hall; the two are
+      distinct bodies. Shares its name with the river the site sits on.
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoy ruled out: Blanchard Township in PUTNAM
+          County. The Hancock County Firefighters site carries a page for the township's
+          fire department, which is not the board's record.
+
+  - slug: cass-township
+    name: Cass Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Third Monday of the Month, 7:00 pm"
+    office: "Cass Township Hall - 2249 County Road 18, Arcadia, OH 44804"
+    grounded_from: hancock-directory-of-officials-2026
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoy ruled out: casstwp.org / casstownship.org are
+          not this body (Cass Township exists in Muskingum County OH and Cass County IN).
+          BGSU's Center for Archival Collections holds the board's 1906-1966 minutes on
+          microfilm — an archival, not a current, route.
+
+  - slug: delaware-township
+    name: Delaware Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Fourth Wednesday of the Month Nov-Mar 7:00 pm, Apr-Oct 8:00 pm"
+    office: "Delaware Township House - 601 South Main Street, Mt. Blanchard, OH 45867"
+    grounded_from: hancock-directory-of-officials-2026
+    note: "Roster also prints a correspondence address: P.O. Box 367, Mt. Blanchard, OH 45867."
+    publishing:
+      website: https://delawaretownshiphancockcountyohio.wordpress.com/
+      records_url: https://delawaretownshiphancockcountyohio.wordpress.com/meeting-minutes/
+      platform: wordpress
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          WordPress.com-hosted township site with a dedicated 'Meeting Minutes' page —
+          not printed in the county roster, and not reachable by any of the .gov/.org
+          domain patterns the rest of the county uses. The Village of Mt. Blanchard's
+          site also carries a Delaware Township Trustees page; the township's own site
+          is the record.
+
+  - slug: eagle-township
+    name: Eagle Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Third Tuesday of the Month, 7:30 pm"
+    office: "Eagle Township House - 9054 County Road 37, Findlay, OH 45840"
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      Named for Eagle Creek, the Blanchard tributary carrying the site's second USGS
+      gage (04188496) and the Eagle Creek flood-mitigation basin.
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoy ruled out: eagletownship.org redirects to
+          eagletownshipmi.gov — a MICHIGAN township, not this one.
+
+  - slug: jackson-township
+    name: Jackson Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Third Monday of the Month, 7:00 pm"
+    office: "Jackson Township House - 16006 County Road 8, Arlington, OH 45814"
+    grounded_from: hancock-directory-of-officials-2026
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found — and this is the worst decoy field in the county.
+          Ruled out: jacksontwp.com (STARK), jacksontwp.org (FRANKLIN),
+          jacksontwpclermontoh.gov (CLERMONT), jacksontownshiptrustee.com, plus Auglaize,
+          Montgomery and Wood County namesakes. Lima's registry carries an Allen County
+          Jackson Township under the same slug; they are different bodies in different
+          registries.
+
+  - slug: liberty-township
+    name: Liberty Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Wednesday of the Month, 7:00 pm"
+    office: "Liberty Township House - 7692 County Road 140, Findlay, OH 45840"
+    grounded_from: hancock-directory-of-officials-2026
+    note: 'Roster prints "Phone: 419-422-1330 Website: libertytwphan.org".'
+    publishing:
+      website: https://libertytwphan.org/
+      records_url: https://libertytwphan.org/minutes/
+      platform: wordpress
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          WordPress. Several parallel minutes pages are published at once
+          (/minutes/, /2024minutes/, /2025-2/, plus '-copy' duplicates) — the archive
+          is split by year with no single index, so an ingest must walk them all.
+
+  - slug: madison-township
+    name: Madison Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Monday of the Month, 7:30 pm"
+    office: "Madison Township House - 12003 Township Road 150, Arlington, OH 45814"
+    grounded_from: hancock-directory-of-officials-2026
+    note: "Roster also prints a correspondence address: P.O. Box 708, Arlington, OH 45814."
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoys ruled out: madisontownship.org and
+          madisontwp.us and madisontwpbutleroh.gov and madisontownship.net (Franklin,
+          Butler, Lake counties OH) — and a Madison Township in Hancock County IOWA,
+          which shares both names with this one.
+
+  - slug: marion-township
+    name: Marion Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Wednesday of the Month, 7:00 pm"
+    office: "Marion Township House - 16003 State Route 568, Findlay, OH 45840"
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      Roster prints "Website: mariontwphancock.com" and a correspondence address
+      mariontownshiphancock@gmail.com.
+    publishing:
+      website: https://mariontwphancockoh.gov/
+      records_url: https://mariontwphancockoh.gov/notice-public-meetings-schedule/
+      platform: wordpress
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          WordPress on the township's own .gov (the roster's mariontwphancock.com
+          301-redirects here). The single meetings link found is a public-meetings
+          SCHEDULE notice, not a minutes archive — recorded as the records page on
+          offer, not as evidence that minutes are posted.
+
+  - slug: orange-township
+    name: Orange Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Thursday of the Month, 7:30 pm"
+    office: "Orange Township House - 2973 Township Road 28, Bluffton, OH 45817"
+    grounded_from: hancock-directory-of-officials-2026
+    note: "Roster also prints a correspondence address: orangetwpfo@gmail.com."
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoy ruled out: orangetwp.org / orangetownship.org
+          (DELAWARE County OH). The Bluffton Icon, a local news outlet, republishes the
+          board's monthly minutes — a third party's publication of the record, not the
+          township's, and not a records URL for this registry.
+
+  - slug: pleasant-township
+    name: Pleasant Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Wednesday of the Month, 7:30 pm"
+    office: "McComb Public Library Meeting Room - 113 S. Todd St, McComb, OH 45858"
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      Meets in the McComb Public Library, not a township hall — the roster's own
+      address for the board, transcribed as printed.
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoys ruled out: pleasant-township.org (HARDIN),
+          pleasanttownship.org (FAIRFIELD), pleasanttownshipsenecacounty.com (SENECA),
+          plus Marion, Franklin and Perry County namesakes. The board meets in the McComb
+          Public Library and shares joint ventures with the Village of McComb, whose own
+          site WAF-blocks the connector.
+
+  - slug: portage-township
+    name: Portage Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Tuesday of the Month, 7:00 pm"
+    office: "Portage Township House - 8037 State Route 613, McComb, OH 45858"
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      Roster p.10 lists Hancock Regional Planning as the township's zoning official
+      (419-424-7094) — its zoning record is held by the county planning commission.
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoys ruled out: Portage Township in WOOD, OTTAWA
+          and SUMMIT counties (portagetwp.org is Wood County's). Its zoning record sits
+          with Hancock Regional Planning (roster p.10), which is enumerated separately.
+
+  - slug: union-township
+    name: Union Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Tuesday of the Month, 7:30 pm"
+    office: "Village Hall/Fire House - County Road 37, Rawson, Ohio"
+    grounded_from: hancock-directory-of-officials-2026
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoys ruled out: uniontwp.org / uniontownship.org
+          and utclermont.gov (Madison, Clermont, Warren, Tuscarawas counties OH).
+
+  - slug: van-buren-township
+    name: Van Buren Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Monday of the Month, 7:30 pm"
+    office: "Van Buren Township House - 21009 State Route 698, Jenera, OH 45841"
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      Distinct from the Village of Van Buren (slug `van-buren`), whose mailing address
+      is the one Allen Township's own township center carries.
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoy ruled out: Van Buren Township in PUTNAM
+          County OH. Distinct from the Village of Van Buren (slug `van-buren`), which
+          does have a site.
+
+  - slug: washington-township
+    name: Washington Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "Second Thursday of the Month, 7:30 pm"
+    office: "Washington Township Building - 106 Gibson Street, Arcadia, OH 44804"
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      Roster p.10 lists Hancock Regional Planning as the township's zoning official
+      (419-424-7094).
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No township website found. Decoys ruled out: washingtontwp.org (MONTGOMERY
+          County), washington-township.org (WARREN County),
+          washingtontownshiptrustees.com (MIAMI County), plus Clermont and Hardin
+          County namesakes. Its zoning record sits with Hancock Regional Planning
+          (roster p.10).
+
+  # --- Villages (11) — grounded in hancock-directory-of-officials-2026 p.4 ------
+  - slug: arcadia
+    name: Village of Arcadia
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 2nd Monday at 7:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: 'Roster prints "Website: villageofarcadia.com"; Mayor Brian Fink.'
+    publishing:
+      website: https://villageofarcadia.com/
+      records_url: https://villageofarcadia.com/current-minutes/
+      platform: wordpress
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          WordPress; a 'Current Minutes' page plus a separate '/minutes-archives/'
+          back-catalog.
+
+  - slug: arlington
+    name: Village of Arlington
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 3rd Monday at 7:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: 'Roster prints "Website: villageofarlington.com"; Mayor Mike Palmer.'
+    publishing:
+      website: https://villageofarlington.com/
+      records_url: null
+      platform: wordpress
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          WordPress, fingerprinted. Its 'COUNCIL RECORDS' and 'MEETING MINUTES' nav
+          items are JS dropdown toggles (href="#"), so no records page resolves from
+          the served HTML. A records page very likely exists behind the dropdown —
+          null here means unresolved, not absent.
+
+  - slug: benton-ridge
+    name: Village of Benton Ridge
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 3rd Monday at 7:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: "Roster prints no website; Mayor Joe Kennedy."
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No village website found; the county's own Township & Village page links no
+          external site for it, and the roster prints none. State Auditor reports are
+          published for the village, but those are the auditor's records, not the
+          council's. Records-request route.
+
+  - slug: bluffton
+    name: Village of Bluffton
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 2nd and 4th Monday at 7:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      Straddles Allen/Hancock counties. The same body is also enumerated in Lima's
+      registry as an Allen County seat of record, grounded there from Allen County's
+      mayors roster — two counties' rosters, one village.
+    publishing:
+      website: https://www.bluffton-ohio.com/
+      records_url: https://www.bluffton-ohio.com/council
+      platform: unknown
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          Reachable; no platform signature matched (a Duda-built site serving its
+          documents from irp.cdn-website.com — the same CDN that left this body
+          `unknown` in Lima's Allen County sweep). The '/council' page carries dated
+          council packets (.pdf) and minutes (.doc), so the generic scraper has a real
+          page to read even though the CMS is unfingerprinted.
+
+  - slug: jenera
+    name: Village of Jenera
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 2nd Tuesday at 6:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: "Roster prints no website; Mayor Marcie Moon."
+    publishing:
+      website: https://www.facebook.com/jeneravillage/
+      records_url: null
+      platform: facebook
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No village website found; the only web presence located is the 'Village of
+          Jenera Ohio' Facebook page. Facebook is not a records page — this is a
+          records-request body with a social feed, never a finding that it posts
+          minutes.
+
+  - slug: mccomb
+    name: Village of McComb
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 2nd Monday at 6:30 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: 'Roster prints "Website: villageofmccomb.com"; Mayor Cathy Schroll.'
+    publishing:
+      website: https://www.villageofmccomb.com/
+      records_url: null
+      platform: unknown
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          The roster's villageofmccomb.com resolves but WAF-blocks the connector
+          (HTTP 403) even with a browser User-Agent, so the CMS is unfingerprinted and
+          no records page could be read. Blocked, not empty.
+
+  - slug: mt-blanchard
+    name: Village of Mt. Blanchard
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 4th Wednesday at 7:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: 'Roster prints "Website: mtblanchardoh.com/villagesite/"; Mayor Cynthia Morrison.'
+    publishing:
+      website: https://mtblanchardoh.com/
+      records_url: https://mtblanchardoh.com/council-minutes/
+      platform: wordpress
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          WordPress with a 'Council Minutes' page. NOTE the roster's printed URL
+          (mtblanchardoh.com/villagesite/) is stale — it 404s; the site root serves.
+          The roster is grounded source for the body, not for its URL.
+
+  - slug: mt-cory
+    name: Village of Mt. Cory
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 2nd Wednesday at 6:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: "Roster prints no website; Mayor Logan Welch."
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          No village website and no village Facebook page found. Council-meeting
+          notices surface in a community Facebook GROUP, which is a third party's
+          feed, not the village's publication. Records-request route.
+
+  - slug: rawson
+    name: Village of Rawson
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 2nd Monday at 6:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: 'Roster prints "Website: rawsonvillage.org"; Mayor Brad Woodruff.'
+    publishing:
+      website: https://rawsonvillage.org/
+      records_url: https://rawsonvillage.org/meeting-agendas-and-minutes
+      platform: unknown
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          Reachable; no platform signature matched. A dedicated
+          'Meeting Agendas and Minutes' page is published, so the generic scraper has a
+          page to read.
+
+  - slug: van-buren
+    name: Village of Van Buren
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 3rd Wednesday at 7:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      Roster prints no website; Mayor Edward D. May. Distinct from Van Buren Township
+      (slug `van-buren-township`), which meets at Jenera.
+    publishing:
+      website: https://eheitkamp8.wixsite.com/villageofvb
+      records_url: null
+      platform: unknown
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          The village publishes on a free Wix subdomain (eheitkamp8.wixsite.com), which
+          returned HTTP 503 to the connector on the sweep date — so the CMS is
+          unfingerprinted from the served bytes and no records page could be read. The
+          Wix host is `unknown` here rather than `wix` because nothing was fetched to
+          fingerprint; the URL itself is not the evidence. A 'Village of Van Buren'
+          Facebook page also exists. Decoy ruled out: Van Buren County, MICHIGAN's
+          agendas-and-minutes page.
+
+  - slug: vanlue
+    name: Village of Vanlue
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "Council Meeting: 4th Monday at 7:00 pm."
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: 'Roster prints "Website: villageofvanlue.com"; Mayor Robert Wells.'
+    publishing:
+      website: https://villageofvanlue.com/
+      records_url: https://villageofvanlue.com/meeting-schedule-agendas-and-minutes
+      platform: unknown
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          Reachable; no platform signature matched. The richest set of meeting links in
+          the county sweep (13 candidates) — a combined schedule/agendas/minutes page
+          plus separate '/agendas' and '/minutes' pages and per-item news entries.
+
+  # --- Special districts (1) — grounded in hancock-directory-of-officials-2026 p.2
+  - slug: hancock-rpc
+    name: Hancock Regional Planning Commission
+    type: special_district
+    governing_body: null
+    meeting_schedule: null
+    office: null
+    grounded_from: hancock-directory-of-officials-2026
+    note: >-
+      The county planning commission (Director Matt Cordonnier, 419-424-7094) — the
+      Hancock peer of Lima's LACRPC, and the zoning authority of record for Portage
+      and Washington Townships (roster p.10). It mapped Allen Township's adopted
+      zoning map. The roster lists it under County Departments with a director and
+      phone only: no governing body and no cadence are grounded.
+    publishing:
+      website: https://www.hancockrpc.org/
+      records_url: https://www.hancockrpc.org/minutes
+      platform: squarespace
+      discovered:
+        asof: "2026-08-01"
+        method: web
+        note: >-
+          Squarespace, with a '/minutes' page. First squarespace body in the network —
+          the platform was already in the generic scraper's dispatch set but had never
+          been matched by a real body until this sweep.

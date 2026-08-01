@@ -15,6 +15,7 @@ from watermark.agent.extractor import StructuredExtractor
 from watermark.civic.models import Subdivision
 from watermark.civic.summarize import (
     MeetingSummary,
+    build_instructions,
     summarize_corridor_meetings,
     summarize_meeting,
     write_summaries,
@@ -58,10 +59,40 @@ def _body(slug: str = "american-township") -> Subdivision:
 
 
 def test_summarize_meeting_returns_validated_summary() -> None:
-    summary = summarize_meeting("Minutes: ... data center ...", extractor=_extractor())
+    summary = summarize_meeting(
+        "Minutes: ... data center ...", extractor=_extractor(), county="Allen County, OH"
+    )
     assert isinstance(summary, MeetingSummary)
     assert summary.decisions == ["Motion to recommend rezoning passed 3-0"]
     assert "data-center" in summary.summary
+
+
+# --- the prompt is per site, not Lima's (#1839) ---------------------------------------------
+
+
+def test_build_instructions_names_the_active_county_and_this_document_s_hits() -> None:
+    """The prompt used to hardcode Lima ("an Allen County, Ohio township or village", "codename
+    Project BOSC / Bistrozzi LLC / a hyperscale data center, possibly Google") — the last
+    Lima-locked seam in the loader. Reading Hancock County minutes under that framing, the model
+    explained a pair of Cooperative Economic Development Agreements as being for "a hyperscale
+    data center", a link the minutes never draw. County + hits now come from the caller."""
+    text = build_instructions("Hancock County, OH", ["one_power", "datacenter"])
+    assert "Hancock County, OH" in text
+    assert "datacenter, one_power" in text  # sorted, and named as what they are
+    for lima_only in ("Allen County", "BOSC", "Bistrozzi", "Google", "hyperscale"):
+        assert lima_only not in text
+
+
+def test_build_instructions_forbids_backfilling_an_unstated_connection() -> None:
+    """The guard against the exact failure above: a bare mention must be reported as a bare
+    mention, never given a purpose the minutes do not state."""
+    text = build_instructions("Hancock County, OH", ["one_power"])
+    assert "say that plainly" in text
+    assert "never supply a purpose, a project, or a party the minutes do not name" in text
+
+
+def test_build_instructions_handles_a_body_with_no_recorded_hits() -> None:
+    assert "(none recorded)" in build_instructions("Allen County, OH", [])
 
 
 def _seed(tmp: Path, docs: list[dict[str, Any]], files: dict[str, str]) -> Settings:

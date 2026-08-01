@@ -20,6 +20,36 @@
     "relation_basis": null
   },
   {
+    "src": "CITY OF FINDLAY",
+    "rel": "discussed_at",
+    "dst": "ALLEN TOWNSHIP",
+    "date": "2025-12-02",
+    "ref": "2025-12-02",
+    "source": "findlay/allen-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "ALLEN ECONOMIC DEVELOPMENT GROUP",
+    "rel": "discussed_at",
+    "dst": "ALLEN TOWNSHIP",
+    "date": "2025-12-02",
+    "ref": "2025-12-02",
+    "source": "findlay/allen-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "ALLEN ECONOMIC DEVELOPMENT GROUP",
+    "rel": "discussed_at",
+    "dst": "HANCOCK COUNTY COMMISSIONERS",
+    "date": "2026-03-26",
+    "ref": "2026-03-26",
+    "source": "findlay/hancock-county-commissioners/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

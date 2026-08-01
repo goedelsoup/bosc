@@ -20,6 +20,13 @@ _TERMS: dict[str, str] = {
     "google": r"\bgoogle\b",
     "amazon": r"\bamazon\b",
     "general_dynamics": r"general\s+dynamics",
+    # Findlay's own disclosed parties (#1839). Both patterns are deliberately narrower than the
+    # bare company name, because Findlay is the town where the ambiguity bites:
+    # ``\bmara\b`` alone would be a coin-flip against a surname, and MARA Holdings is NOT
+    # Marathon Petroleum (headquartered in Findlay) — see data/extracted/findlay/data-centers.md,
+    # which makes that guard explicit. So each requires the full name or the facility's own name.
+    "one_power": r"one\s+power\s+(?:co\b|company)|megawatt\s+hub|\bmwhub\b",
+    "mara_holdings": r"mara\s+holdings|marathon\s+digital",
     # topics
     "datacenter": r"data\s*\-?\s*cent(?:er|re)|hyperscale",
     "pump_station": r"pump\s*station",

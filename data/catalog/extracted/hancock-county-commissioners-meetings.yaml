@@ -1,0 +1,61 @@
+id: hancock-county-commissioners-meetings
+title: Hancock County Board of County Commissioners — Meeting Records
+scope: extracted
+status: reviewed
+producer:
+  kind: connector
+  command: --site findlay subdivisions download hancock-county-commissioners --since 2026-01-01
+  connector_ref: watermark.civic
+  source: >-
+    Board of Hancock County Commissioners, OH — agendas and minutes published in the county's
+    CivicPlus/CivicEngage Agenda Center. The body and its standing "9:30 am Tuesday & Thursday"
+    cadence are grounded in the committed Hancock County Directory of Officials 2026
+    (data/documents/findlay/reference/, p.1); the publishing block was discovered 2026-08-01.
+  external_url: https://co.hancock.oh.us/AgendaCenter/County-Commissioners-2
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+# Site-owned, not `slug-scoped`: this is one county's board, filed at extracted/findlay/ (#1839).
+# Note the divergence from Lima, whose registry deliberately EXCLUDES its county board because
+# that record is a separately ingested corpus (commissioners-meetings / commissioners-minutes).
+# Hancock's has no such corpus, so the board is ingested through the civic loader like any other
+# meeting-holding subdivision.
+site_scope: site:findlay
+storage:
+- relpath: extracted/findlay/hancock-county-commissioners/meetings/completeness-audit.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/hancock-county-commissioners/meetings/download-manifest.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/hancock-county-commissioners/meetings/meeting-index.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/hancock-county-commissioners/meetings/meeting-summaries.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-08-01'
+provenance: connector
+tags:
+- civic
+- county
+- meetings
+- hancock-county
+- findlay
+notes: >-
+  The first peer body read by the CivicPlus fetcher, which handles the county's Agenda Center
+  unchanged (same /AgendaCenter/ViewFile/{Agenda,Minutes}/_MMDDYYYY-<id> shape as Lima's and
+  LACRPC's). 108 documents (55 agendas, 53 minutes), bounded to the 2026 calendar year by
+  `--since 2026-01-01` — the Agenda Center INDEX view, not the full archive. 107 of 108
+  text-extracted (53 needed OCR), 85 dates content-verified, 37 with corridor-topic hits, 6
+  summarized. TWO CAVEATS on those hits. (1) The county's clerk serves 20 distinct agendas under
+  one Content-Disposition filename, "Hancock County Agenda Template.pdf"; the downloader's
+  chain-of-custody path kept every one and suffixed the collisions with a content hash rather
+  than overwriting — the download manifest maps each back to its meeting date and URL.
+  (2) Four of the six "data center" hits are the county's OWN General Fund #1001 budget line of
+  that name (a $2,000 and a $1,000 intra-fund transfer, and an HVAC change order) — the county's
+  internal IT room, not the corridor project. The summaries say so; do not read the hit count as
+  six meetings about the hyperscale thread. The two that are: the 2026-03-26 discussion of
+  whether the commissioners can enact a county-wide moratorium, and the 2026-04-07 public request
+  for one.

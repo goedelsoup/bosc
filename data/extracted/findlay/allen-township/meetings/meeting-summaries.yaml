@@ -1,0 +1,222 @@
+meta:
+  subject: allen-township corridor meeting summaries
+  slug: allen-township
+  method: structured extraction (forced tool use) over the meeting text; model records
+    only what the minutes state — no inference.
+  summarized: 3
+  skipped_no_text: []
+meetings:
+- date: '2025-03-04'
+  kind: minutes
+  filename: 03-04-2025.pdf
+  hits:
+  - one_power
+  summary: At the March 4, 2025 regular meeting of the Allen Township Trustees, an
+    update was provided on One Energy/One Power Company digging in the township right-of-way
+    on TR215. The county engineer has not yet issued a permit to tap into the township
+    catch basin, and a letter from One Power Company on this issue was received shortly
+    before the meeting but had not yet been read by the Trustees. The Trustees voted
+    to authorize the Allen Township Trustee chairman to approve/authorize the Hancock
+    County Engineer to issue drainage-related permits related to this matter.
+  corridor_relevance: The meeting text references One Energy/One Power Company digging
+    in the township ROW on TR215 and a pending permit request to tap into a township
+    catch basin; the text does not name a specific project or purpose beyond this
+    activity and the related drainage permit authorization.
+  decisions:
+  - Minutes of February 6, 2025 approved.
+  - Approved payment of warrants and electronic payments totaling $33,269.33.
+  - Approved request from Stephanie Foster on behalf of a Girl Scout Troop to use
+    the Township Center for monthly meetings in 2025 and waive rental fees.
+  - 'Approved quote from Hartman & Sons LLC to replace ceiling tiles in station #1
+    for $14,750.00.'
+  - Approved conversion from Frontier to Spectrum for phone and internet services
+    at fire stations and Township Center.
+  - Approved motion to give the Allen Township Trustee chairman the authority to approve/authorize
+    the Hancock County Engineer to issue drainage related permits.
+  - Trustees do not desire to have a hearing on Sheetz's application for a liquor
+    license at CR220 and CR99.
+  - Meeting adjourned at 9:17 p.m.
+  parties:
+  - Allen Township Trustees
+  - Cindy Land (Allen Township legal counsel)
+  - Stephanie Foster
+  - Girl Scout Troop
+  - Fire Chief Hickman
+  - Hartman & Sons LLC
+  - John Weber (volunteer fireman)
+  - Frontier
+  - Spectrum
+  - Tony Humphrey
+  - Flanagan
+  - Clark
+  - Smith
+  - One Energy/One Power Company
+  - Hancock County Engineer
+  - Dave Evans
+  - Darrin Rehus
+  - Mark Schimmoeller
+  - Department of Commerce
+  - Sheetz
+  - Milford Smith, Jr. (Chairman)
+  - Mark J. Schimmoeller (Fiscal Officer)
+  parcels:
+  - TR215
+  - CR220 and CR99
+  - TR114 and CR140
+  - SR613
+  dollar_figures:
+  - $33,269.33
+  - $14,750.00
+  - $55.00 (monthly service savings)
+  - $2,500 - $3,000 (initial equipment and installation costs)
+  - 3.2 mills of inside millage
+- date: '2025-12-02'
+  kind: minutes
+  filename: 12-02-2025.pdf
+  hits:
+  - one_power
+  summary: At the December 2, 2025 Allen Township Trustees regular session, attorney
+    Cindy Land briefed the Trustees on a legal action filed by One Power Company against
+    the Hancock County Board of Elections concerning the Allen Township Zoning Resolution
+    ballot language. Judge Jonathan P. Starn issued a Decision and Order (Case No.
+    2025 CV 00168) finding the Board of Elections failed to meet obligations under
+    R.C. 3505.06(E), rendering the May 6, 2025 Primary Election results on the Proposed
+    Allen Township Zoning Plan invalid and void, thereby returning Allen Township
+    to unzoned status. The Board of Elections has filed an appeal and a stay, and
+    the matter is ordered to be placed on the May 5, 2026 Primary Election Ballot
+    with compliant summary language. All zoning certificates issued July through October
+    2025 were declared unwarranted and associated fees are being returned.
+  corridor_relevance: The meeting connects to the subject "one_power" because One
+    Power Company is named as the plaintiff in a complaint (Case No. 2025 CV 00168)
+    filed on May 1, 2025 against the Hancock County Board of Elections challenging
+    the ballot language for the Allen Township Zoning Resolution; the minutes do not
+    describe One Power Company's nature, purpose, or any project beyond its role as
+    the filing party in that legal action.
+  decisions:
+  - Minutes of November 4, 2025 were read and approved.
+  - Flanagan moved to pay bills totaling $157,977.59 with Smith seconding; Roll call
+    - all yes.
+  - Flanagan moved to adopt the Amended 2025 Township Annual Permanent Appropriation
+    Resolution (to include OPWC funds of $58,368.08) with Smith seconding; Roll call
+    - all yes.
+  - Flanagan moved to have Cindy update the draft Cooperative Economic Development
+    Agreement (CEDA) with the City of Findlay to run for 99 years at 3.0 mills, with
+    Smith seconding; Roll call - all yes.
+  - Flanagan moved to adopt A Resolution Declaring Two Proposed Amendments to the
+    Allen Township Zoning Resolution Moot with Smith seconding; Roll call - all yes.
+  - Flanagan moved that Danny's November contract payment be prorated through 11/5/25
+    in conjunction with the zoning ruling of Judge Starn and the date of his accident,
+    with Smith seconding; Roll call - all yes.
+  - Flanagan moved that for 2026 the Trustees prepare a Payroll Certification Form
+    to allocate salaries between the Gas Tax Fund and the General Fund per Auditor
+    of State Bulletin 2011-007, with Smith seconding; Roll call - all yes.
+  - Flanagan moved that TR215, TR218 and the cemetery (east of TR229) roads be paved
+    in 2026 utilizing the Hancock County Engineer's coop bidding process, with Smith
+    seconding; Roll call - all yes.
+  - Flanagan moved to restripe TR215, TR218, TR14, TR114, TR101, TR107, utilizing
+    the Hancock County Engineer's coop bidding process, with Smith seconding; Roll
+    call - all yes.
+  - Flanagan moved to wedge specific spots on TR142, TR114, TR228, with Smith seconding;
+    Roll call - all yes.
+  - Trustees set January 6, 2026 at 7:00 p.m. for the Allen Township Trustee's 2026
+    Organizational Meeting.
+  - Flanagan moved to adjourn at 9:16 p.m. with Smith seconding; Roll call - all yes.
+  - Judge Jonathan P. Starn issued a Decision and Order (Case No. 2025 CV 00168) rendering
+    the ballot and results of the May 6, 2025 Primary Election regarding the Proposed
+    Zoning Plan for Allen Township invalid and void on November 4, 2025.
+  - Hancock County Board of Elections ordered to place the Proposed Allen Township
+    Zoning Plan on the May 5, 2026 Primary Election Ballot with summary language consistent
+    with R.C. 3505.06(E).
+  - All Allen Township zoning certificates issued during July through October 2025
+    declared unwarranted; fees collected are being returned.
+  - Hancock County Board of Elections filed an appeal and a stay on the ruling.
+  parties:
+  - Milford Smith, Chairman (Trustee)
+  - Flanagan (Trustee)
+  - Mark J. Schimmoeller, Fiscal Officer
+  - Cindy Land, Hancock County Prosecutor's Office
+  - Justin Kahle, Hancock County Prosecutor's Office
+  - Fire Chief Hickman
+  - Tony Humphrey
+  - One Power Company
+  - Hancock County Board of Elections
+  - Judge Jonathan P. Starn
+  - City of Findlay
+  - Danny Fagan, Allen Township zoning consultant
+  - Hancock County Engineer
+  - Allen Township Volunteer Fire Department
+  parcels: []
+  dollar_figures:
+  - $157,977.59 (outstanding bills — warrants and electronic payments)
+  - $58,368.08 (OPWC funds granted to resurface TR 114 and TR 281)
+  - $17 per firemen response
+  - $38,318.00 ('Fire-Run' payments)
+  - 3.0 mills (CEDA with City of Findlay)
+- date: '2026-03-03'
+  kind: minutes
+  filename: 03-03-2026.pdf
+  hits:
+  - datacenter
+  - easement
+  summary: At the March 3, 2026 regular meeting of the Allen Township Trustees, the
+    board discussed the possible construction of data centers in the township and
+    the prospect of placing a moratorium on such construction. The Trustees voted
+    to have Cindy Land draft a letter to the Hancock County Commissioners requesting
+    a moratorium on data centers in Allen Township. Separately, Trustee Smith reported
+    that easements related to the TR114 & CR140 intersection project had been discussed
+    with Denny Bishop and John Griffith, who were found to be agreeable.
+  corridor_relevance: The meeting text mentions data centers solely in the context
+    of a discussion about possible construction in the township and a resulting motion
+    to request a moratorium; no specific project, developer, or parcel is named. The
+    easement mention is limited to the TR114 & CR140 intersection project, with no
+    further detail provided in the text.
+  decisions:
+  - Clark moved to pay bills totaling $142,123.32; seconded by Flanagan; roll call
+    — all yes.
+  - Smith moved to authorize the FO to pursue a new website with Shumaker Technology
+    Group; seconded by Clark; roll call — all yes.
+  - Flanagan moved to accept the quote from Truland Equipment of Napoleon to trade-in
+    the 2022 JD Z930M for a 2026 JD Z930M lawn mower (boot price $4,821.11); seconded
+    by Clark; roll call — all yes.
+  - Flanagan moved to approve job descriptions for Snow Plow Driver, Maintenance Worker,
+    and Janitor; seconded by Smith; roll call — all yes.
+  - Flanagan moved to approve the Frequent Traveler Policy; seconded by Clark; roll
+    call — all yes.
+  - Flanagan moved to approve the Tax-Exempt Certificate Use and Sales Tax Policy;
+    seconded by Smith; roll call — all yes.
+  - Smith moved to adopt a Resolution Adopting a Cybersecurity Policy; seconded by
+    Flanagan; roll call — all yes.
+  - Smith moved to have Cindy Land draft a letter to the Hancock County Commissioners
+    requesting them to place a moratorium on data centers in Allen Township; seconded
+    by Clark; roll call — all yes.
+  - Flanagan moved to adjourn at 9:00 p.m.; seconded by Smith; roll call — all yes.
+  parties:
+  - Allen Township Trustees
+  - Mark J. Schimmoeller (Fiscal Officer)
+  - Roger Clark (Chairman / Trustee)
+  - Flanagan (Trustee)
+  - Smith (Trustee)
+  - Keith Breneman
+  - Shumaker Technology Group
+  - Fire Chief Hickman
+  - Tony Humphrey
+  - Truland Equipment of Napoleon
+  - Rachel Rader
+  - Gina Campbell
+  - Denny Bishop
+  - John Griffith
+  - Randy Boes
+  - 'OnSite Partners (pka: OneEnergy/OnePower)'
+  - Interstate Capital
+  - The District (NW Water & Sewer)
+  - City of Findlay
+  - Findlay Mayor
+  - Cindy Land
+  - ATZC (Allen Township Zoning Commission — implied)
+  - Hancock County Commissioners
+  - Hancock Regional Planning
+  - Hancock Public Health Department
+  parcels: []
+  dollar_figures:
+  - $142,123.32 (warrants and electronic payments for outstanding bills)
+  - $4,821.11 (boot price to trade-in 2022 JD Z930M for 2026 JD Z930M lawn mower)

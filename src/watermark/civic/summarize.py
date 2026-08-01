@@ -1,19 +1,23 @@
 """Summarize the corridor-relevant subdivision meetings: what was actually decided.
 
-The index tells us a meeting *mentions* the data-center project; this runs the
-analyze stage over those meetings' text to extract **what happened** — the motions,
-votes, parties, parcels, and dollar figures, plus a grounded note on how the meeting
-connects to the corridor. Output: ``meeting-summaries.yaml`` per body, the reviewed
-artifact that turns the index from an inventory into evidence.
+The index tells us a meeting *mentions* one of the active site's corridor subjects; this
+runs the analyze stage over those meetings' text to extract **what happened** — the
+motions, votes, parties, parcels, and dollar figures, plus a grounded note on how the
+meeting connects to those subjects. Output: ``meeting-summaries.yaml`` per body, the
+reviewed artifact that turns the index from an inventory into evidence.
 
 Grounded by construction: the model is forced to populate a Pydantic schema and
 instructed to record only what the minutes text states — no inference, no outside
-knowledge. The extractor client is injectable, so the orchestration is unit-tested
+knowledge. Both halves of that framing are **per site**: which meetings are selected
+(``SiteProfile.corridor_subjects``, #1523) and what the model is told it is reading
+(:func:`build_instructions`, #1839 — the county and the document's own hits, not Lima's
+codenames). The extractor client is injectable, so the orchestration is unit-tested
 without network/keys.
 """
 
 from __future__ import annotations
 
+from collections.abc import Collection
 from pathlib import Path
 from typing import Any
 
@@ -34,21 +38,40 @@ log = get_logger(__name__)
 
 _MAX_CHARS = 24_000  # bound the text sent per meeting (minutes are short, but cap cost)
 
-_INSTRUCTIONS = (
-    "You are reading the minutes/agenda of an Allen County, Ohio township or village "
-    "meeting. It was flagged because its text references the data-center corridor "
-    "project (codename Project BOSC / Bistrozzi LLC / a hyperscale data center, "
-    "possibly Google). Extract ONLY what the document text actually states — do not "
-    "infer, speculate, or add outside knowledge; if a field has nothing, return an "
-    "empty list. Quote names and dollar figures as written.\n"
-    "- summary: 2-4 neutral sentences on the corridor-relevant business only.\n"
-    "- corridor_relevance: one sentence on how this meeting connects to the project, "
-    "grounded strictly in the text.\n"
-    "- decisions: motions, votes, resolutions, approvals/denials as stated.\n"
-    "- parties: named people, firms, applicants, agencies.\n"
-    "- parcels: parcel numbers or addresses mentioned.\n"
-    "- dollar_figures: dollar amounts as written."
-)
+
+def build_instructions(county: str, hits: Collection[str]) -> str:
+    """The extraction prompt for one meeting — per site, and naming that meeting's own hits.
+
+    This prompt used to be hardcoded to Lima ("an Allen County, Ohio township or village",
+    "codename Project BOSC / Bistrozzi LLC / a hyperscale data center, possibly Google") — the
+    last Lima-locked seam in the loader, and a live one: told that Allen TOWNSHIP, HANCOCK
+    County's minutes were Allen COUNTY BOSC minutes, the model dutifully explained that two
+    Cooperative Economic Development Agreements were "a standard mechanism … in connection with
+    large economic development projects such as a hyperscale data center" — a link those minutes
+    never draw (#1839). So the county comes from the active profile and the flag is stated as
+    what it literally is: this document's own index ``hits``.
+
+    The closing rule on ``corridor_relevance`` is the guard against exactly that failure — a
+    mention with no stated connection must be reported as a mention, not backfilled with a reason
+    the minutes do not give.
+    """
+    named = ", ".join(sorted(hits)) or "(none recorded)"
+    return (
+        f"You are reading the minutes/agenda of a public meeting held by a political "
+        f"subdivision of {county}. It was flagged because a keyword scan of its text matched "
+        f"this site's corridor subjects: {named}. Extract ONLY what the document text actually "
+        "states — do not infer, speculate, or add outside knowledge; if a field has nothing, "
+        "return an empty list. Quote names and dollar figures as written.\n"
+        "- summary: 2-4 neutral sentences on the corridor-relevant business only.\n"
+        "- corridor_relevance: one sentence on how this meeting connects to those subjects, "
+        "grounded strictly in the text. If the text does not connect them to anything beyond "
+        "the mention itself, say that plainly — never supply a purpose, a project, or a party "
+        "the minutes do not name.\n"
+        "- decisions: motions, votes, resolutions, approvals/denials as stated.\n"
+        "- parties: named people, firms, applicants, agencies.\n"
+        "- parcels: parcel numbers or addresses mentioned.\n"
+        "- dollar_figures: dollar amounts as written."
+    )
 
 
 class MeetingSummary(BaseModel):
@@ -84,10 +107,22 @@ class SummaryReport(BaseModel):
     skipped: list[str]  # filenames skipped (no extractable text)
 
 
-def summarize_meeting(text: str, *, extractor: StructuredExtractor) -> MeetingSummary:
-    """Extract the structured summary of one meeting's text."""
+def summarize_meeting(
+    text: str,
+    *,
+    extractor: StructuredExtractor,
+    county: str,
+    hits: Collection[str] = (),
+) -> MeetingSummary:
+    """Extract the structured summary of one meeting's text.
+
+    ``county`` and ``hits`` build the per-site prompt (:func:`build_instructions`) — the
+    subdivision's own county, and the corridor subjects this document actually matched.
+    """
     return extractor.extract_from_text(
-        MeetingSummary, instructions=_INSTRUCTIONS, text=text[:_MAX_CHARS]
+        MeetingSummary,
+        instructions=build_instructions(county, hits),
+        text=text[:_MAX_CHARS],
     )
 
 
@@ -111,7 +146,8 @@ def summarize_corridor_meetings(
     """
     settings = settings or get_settings()
     extractor = extractor or StructuredExtractor(settings=settings)
-    subjects = active_profile(settings).corridor_subjects
+    profile = active_profile(settings)
+    subjects = profile.corridor_subjects
     base = meetings_dir(settings.extracted_dir, subdivision.slug, settings)
     index_path = index_path or (base / "meeting-index.yaml")
     docs_dir = docs_dir or meetings_dir(settings.documents_dir, subdivision.slug, settings)
@@ -139,7 +175,12 @@ def summarize_corridor_meetings(
                 kind=str(d.get("kind", "other")),
                 filename=filename,
                 hits=[str(h) for h in d.get("hits", [])],
-                summary=summarize_meeting(text, extractor=extractor),
+                summary=summarize_meeting(
+                    text,
+                    extractor=extractor,
+                    county=profile.county_name,
+                    hits=[str(h) for h in d.get("hits", [])],
+                ),
             )
         )
     log.info(

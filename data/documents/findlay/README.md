@@ -33,6 +33,32 @@ Avenue abandoned gas-station assessment ($238,000, City of Findlay), and the Blu
 America assessment ($98,000, **Hancock County Commissioners Office**). Structured read:
 [`brownfield/round-11-hancock-2026.award.yaml`](../../extracted/findlay/brownfield/round-11-hancock-2026.award.yaml).
 
+### `reference/` — Hancock County rosters
+
+`2026 Directory of Officials_202604131412522342.pdf` (17 pp.) — the county's own published
+directory of officials, and the grounded source for every body in
+[`data/reference/subdivisions/findlay/subdivisions.yaml`](../../reference/subdivisions/findlay/):
+the 17 township boards with their standing cadence and township-house address (pp. 5-9), the 11
+villages with council cadence (p. 4), the two cities (pp. 3-4), the Board of County
+Commissioners' 9:30 am Tuesday & Thursday meeting (p. 1), and each jurisdiction's zoning
+official (p. 10). Hancock publishes one consolidated roster where Allen County publishes three
+separate sheets.
+
+The file keeps the name the county's CivicPlus DocumentCenter served it under, URL-decoded, CMS
+upload token and all. Its cover prints an edition YEAR, not a date, so `content_verified` is
+`'2026'` — the token in the filename decodes to a date but a filename is never a content date.
+DocumentCenter item 841 is a stable slot the county re-points at each new edition (the
+2024-Directory URL 301s to the 2026 one), so both the requested and served URLs are recorded.
+
+### `<body>/meetings/` — civic-pipeline meeting records
+
+Not a hand-curated collection: `allen-township/meetings/` and
+`hancock-county-commissioners/meetings/` are written by the civic loader
+(`watermark --site findlay subdivisions download <body>`), which nests every peer site's meeting
+trees one level under the site slug. Raw, LFS-tracked, as-received filenames; the parallel
+`data/extracted/findlay/<body>/meetings/` carries the download manifest, index, summaries and
+completeness audit. See [`data/reference/subdivisions/findlay/README.md`](../../reference/subdivisions/findlay/README.md).
+
 ## Source & provenance
 
 Retrieved 2026-07-31 (issue 1460). Per-file source URL, sha256, byte count and fetch time are in

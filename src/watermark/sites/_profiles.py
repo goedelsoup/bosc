@@ -541,6 +541,26 @@ _FINDLAY = SiteProfile(
     # `grid/findlay/` subtrees need no entry (#1405): they are eponymous, so
     # `_eponymous_prefixes` grants them and subtracts them from Lima's scope automatically.
     corpus_relpaths=("legal/one-energy-v-allen-twp",),
+    # Civic subject vocabulary (#1523/#1839) — the meeting keywords that put a Hancock County
+    # subdivision meeting on this site's chronology. NOT Lima's: `bosc`/`bistrozzi`/`google` are
+    # Allen County parties and appear nowhere in this record. Each term below is cited:
+    #   datacenter    — Allen Township's July-2026 amendments, which would write "data center"
+    #                   into a zoning resolution where the phrase appears ZERO times
+    #                   (data/documents/findlay/governance/Res.DataCenters.pdf; the adopted book
+    #                   at Zoning-Book-Effective-05-11-26.pdf), plus the county's own SB 52
+    #                   restricted-area notice.
+    #   one_power     — One Power Co and its "Findlay Megawatt Hub" (MWHub 01), the site's
+    #                   disclosed facility. [verified] One Power Form S-1, EDGAR CIK 2039139 —
+    #                   data/extracted/findlay/data-centers.md entry 1.
+    #   mara_holdings — MARA Holdings, Inc., the hub's 150 MW take-or-pay customer. [verified]
+    #                   same S-1 + MARA 2024-11-11 release.
+    # Deliberately EXCLUDED: `interstate_capital` (the live SR-613 rezoning applicant). Nothing
+    # in the corpus connects it to a data center — allen-twp-rezoning-interstate-capital-2026.yaml
+    # says so outright — and a corridor subject is an assertion of relevance, so naming it here
+    # would manufacture the very link that artifact refuses to draw. Generic township topics
+    # (annexation/rezoning/solar/easement, the actual bulk of these minutes' hits) stay
+    # searchable in the index but off the chronology, exactly as at Lima.
+    corridor_subjects=("datacenter", "one_power", "mara_holdings"),
     # rsei
     county_name="Hancock County, OH",  # [verified]
 )

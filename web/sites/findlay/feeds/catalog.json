@@ -83,6 +83,72 @@
     }
   },
   {
+    "id": "allen-township-meetings",
+    "title": "Allen Township (Hancock County) Trustee Meeting Records",
+    "scope": "extracted",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "--site findlay subdivisions download allen-township",
+    "connector_ref": "watermark.civic",
+    "source": "Allen Township, Hancock County, OH Board of Trustees — minutes published on the township's own .gov (WordPress) at allentwphancockoh.gov/trustees/. The body is grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/); its publishing block was discovered 2026-08-01.",
+    "external_url": "https://allentwphancockoh.gov/trustees/",
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-01",
+    "tags": [
+      "civic",
+      "township",
+      "meetings",
+      "allen-township",
+      "hancock-county",
+      "findlay"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/findlay/allen-township/meetings/completeness-audit.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/allen-township/meetings/download-manifest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/allen-township/meetings/meeting-index.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/allen-township/meetings/meeting-summaries.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "46dc74b49e609883106db52e5dd083e52a3b685f1043ee7c0ac09559adca8388",
+      "size_bytes": 44292,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Allen Township, Hancock County, OH Board of Trustees — minutes published on the township's own .gov (WordPress) at allentwphancockoh.gov/trustees/. The body is grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/); its publishing block was discovered 2026-08-01.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark --site findlay subdivisions download allen-township",
+      "verified": true
+    }
+  },
+  {
     "id": "data-centers",
     "title": "Per-Site Data-Center Activity Register",
     "scope": "extracted",
@@ -114,8 +180,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4710cd51cdd93dab4f855e44902485ef648e3e1889886be222d0cb4895a08a88",
-      "size_bytes": 198670,
+      "sha256": "7d7e945f998e761cd11567c074a49ee34c7afaf4099febd0cb56c44ba9deb76c",
+      "size_bytes": 204137,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -578,6 +644,71 @@
       "pages": null,
       "confidence": "medium",
       "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "hancock-county-commissioners-meetings",
+    "title": "Hancock County Board of County Commissioners — Meeting Records",
+    "scope": "extracted",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "--site findlay subdivisions download hancock-county-commissioners --since 2026-01-01",
+    "connector_ref": "watermark.civic",
+    "source": "Board of Hancock County Commissioners, OH — agendas and minutes published in the county's CivicPlus/CivicEngage Agenda Center. The body and its standing \"9:30 am Tuesday & Thursday\" cadence are grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/, p.1); the publishing block was discovered 2026-08-01.",
+    "external_url": "https://co.hancock.oh.us/AgendaCenter/County-Commissioners-2",
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-01",
+    "tags": [
+      "civic",
+      "county",
+      "meetings",
+      "hancock-county",
+      "findlay"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/findlay/hancock-county-commissioners/meetings/completeness-audit.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/hancock-county-commissioners/meetings/download-manifest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/hancock-county-commissioners/meetings/meeting-summaries.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "a308bec8c503da64a9e62ceb474f0f311be19a9fe9b5aec81c59fa6e9eeb570f",
+      "size_bytes": 121242,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Board of Hancock County Commissioners, OH — agendas and minutes published in the county's CivicPlus/CivicEngage Agenda Center. The body and its standing \"9:30 am Tuesday & Thursday\" cadence are grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/, p.1); the publishing block was discovered 2026-08-01.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark --site findlay subdivisions download hancock-county-commissioners --since 2026-01-01",
       "verified": true
     }
   },
@@ -3050,10 +3181,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "74c2184904b607c34aae6b3401e5968264dd30d71786b0a19b52262f550d704f",
-      "size_bytes": 405678,
+      "sha256": "d551ea721313db26174fcb76f932c158a733d61b144f06d5b74bc66f340b8535",
+      "size_bytes": 440076,
       "lfs_materialized": true,
-      "file_count": 7,
+      "file_count": 8,
       "stale": false,
       "asof": null
     },
@@ -3288,6 +3419,56 @@
       "pages": null,
       "confidence": "medium",
       "note": "watermark rsei",
+      "verified": true
+    }
+  },
+  {
+    "id": "subdivisions-findlay",
+    "title": "Hancock County Political-Subdivision Meeting-Records Registry (Findlay)",
+    "scope": "reference",
+    "collection": "subdivisions",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "--site findlay subdivisions discover",
+    "connector_ref": "watermark.civic.registry",
+    "source": "Hancock County, Ohio Directory of Officials 2026 (data/documents/findlay/reference/) for every grounded fact, plus a live-web discovery sweep of all 32 bodies (2026-08-01) for the publishing blocks.",
+    "external_url": "https://co.hancock.oh.us/DocumentCenter/View/841/2026-Directory-of-Officials",
+    "license": "Public records (local government open data)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-01",
+    "tags": [
+      "subdivisions",
+      "civic",
+      "hancock-county",
+      "findlay",
+      "meeting-records"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/subdivisions/findlay/subdivisions.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4cb78d5c7aeba90d5be8452feb66740218ccde578493c0dd50655c967d580fee",
+      "size_bytes": 35521,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Hancock County, Ohio Directory of Officials 2026 (data/documents/findlay/reference/) for every grounded fact, plus a live-web discovery sweep of all 32 bodies (2026-08-01) for the publishing blocks.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark --site findlay subdivisions discover",
       "verified": true
     }
   },

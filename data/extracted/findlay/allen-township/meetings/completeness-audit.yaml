@@ -1,0 +1,30 @@
+meta:
+  subject: allen-township meeting-completeness audit
+  slug: allen-township
+  schedule: First Tuesday of the Month, 7:00 pm February-December
+  method: expected meeting dates from the standing cadence vs. ingested meeting-index
+    dates, bounded to the ingested span.
+  caveat: A missing date is a CANDIDATE to verify/request, not proof of withholding
+    — cadences change and meetings get cancelled.
+  span:
+  - '2024-01-02'
+  - '2026-07-07'
+  expected: 31
+  present: 29
+  coverage: 0.935
+  missing_count: 2
+  special_count: 10
+missing:
+- '2025-02-04'
+- '2026-02-03'
+special_meetings:
+- '2024-06-13'
+- '2024-08-05'
+- '2024-08-07'
+- '2024-08-13'
+- '2024-09-09'
+- '2024-11-06'
+- '2025-02-06'
+- '2025-05-27'
+- '2025-10-28'
+- '2026-01-28'

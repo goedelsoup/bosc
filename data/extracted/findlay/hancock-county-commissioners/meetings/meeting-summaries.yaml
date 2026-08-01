@@ -1,0 +1,492 @@
+meta:
+  subject: hancock-county-commissioners corridor meeting summaries
+  slug: hancock-county-commissioners
+  method: structured extraction (forced tool use) over the meeting text; model records
+    only what the minutes state — no inference.
+  summarized: 6
+  skipped_no_text: []
+meetings:
+- date: '2026-03-26'
+  kind: minutes
+  filename: _03262026-344.pdf
+  hits:
+  - datacenter
+  summary: At the March 26, 2026 Hancock County Commissioners meeting, Deb Stacy raised
+    concerns about the county commissioners' and township trustees' limited role in
+    economic development, which led to a broader discussion about annexations, utilities,
+    and data centers. Commissioner Bechtol clarified that there is no state statute
+    permitting county commissioners to enact a county-wide moratorium on data centers,
+    noting this is a zoning function. Discussion also touched on the ability of townships,
+    villages, and the City of Findlay to implement their own moratoriums on data centers,
+    as well as an Economic Development study on the subject.
+  corridor_relevance: The meeting text mentions data centers in the context of a discussion
+    about whether county commissioners can enact a county-wide moratorium on them,
+    with Commissioner Bechtol stating no such state statute exists; no specific data
+    center project, site, or party is named in the minutes beyond this general discussion.
+  decisions:
+  - 'Motion to approve minutes from March 24, 2026: William Bateson made motion, Timothy
+    Bechtol seconded, passed 2-0 (Jeffrey Hunker abstained).'
+  - 'Motion to approve two Warrant Journals: William Bateson made motion, Timothy
+    Bechtol seconded, passed 3-0.'
+  - 'Resolution #203-26 — Additional appropriation within the Auditor''s certification
+    - Commissioners to appropriate to Severance Fund #2136: William Bateson made motion,
+    Timothy Bechtol seconded, passed 3-0.'
+  - Commissioners told Adam Miller to wait until May regarding new plants for the
+    Judicial Center.
+  - Commissioners approved the Chatelain quote for the sign at the Olive Street building.
+  - Commissioner Bechtol told Adam Miller to talk to Wood County Building Inspector
+    regarding window treatments at the cottages.
+  parties:
+  - Jeffrey Hunker
+  - Timothy Bechtol
+  - William Bateson
+  - Christine Carrigan
+  - Deb Stacy
+  - Danny Delong
+  - Peggy Grandbois
+  - Adam Miller
+  - Nick Ferrando
+  - Oswald Co.
+  - Bodie Mechanical
+  - Chatelain
+  - Regional Planning
+  - Economic Development Advisory Board
+  - OneOhio Region 17 Board
+  - Wood County Building Inspector
+  - Prosecutor's office
+  parcels: []
+  dollar_figures:
+  - $1,495.00 — new plants for the Judicial Center
+  - $3,000.00 — quote to determine where the JFS roof is leaking
+  - $1,293.84 — maintenance truck repairs (vehicle 1)
+  - $4,527.37 — maintenance truck repairs (vehicle 2)
+  - $754.16 — parts for dump truck spreader repairs
+  - $2,012.04 — additional HVAC repairs at the Justice Center (change order from Bodie
+    Mechanical)
+- date: '2026-04-07'
+  kind: agenda
+  filename: 4.7.26.pdf
+  hits:
+  - datacenter
+  summary: 'The Hancock County Commissioners'' meeting agenda for April 7, 2026 includes
+    Resolution #223-26, which authorizes a transfer of funds within the General Fund
+    #1001 designated as "Data Center" in the amount of $2,000.00. The agenda also
+    covers a variety of other county business including roofing repairs, a boiler
+    replacement change order, road salt contracts, and flood mitigation topics. No
+    further details about the Data Center are provided beyond the fund transfer line
+    item.'
+  corridor_relevance: 'The meeting connects to the "datacenter" corridor subject solely
+    through Resolution #223-26, which authorizes a $2,000.00 transfer of funds within
+    General Fund #1001 labeled "Data Center"; the text provides no further description
+    of a project, purpose, or named party associated with it.'
+  decisions:
+  - 'Resolution #222-26 – Authorizing payment of the listed and/or attached Purchase
+    Orders'
+  - 'Resolution #223-26 – Transfer of funds within the appropriation – General Fund
+    #1001 (Data Center) $2000.00'
+  - 'Resolution #224-26 – Additional appropriation within the Auditor''s certification
+    Commissioners to appropriate to Capital Projects Fund #4150 $2,012.04'
+  - Resolution authorizing the 2026 annual payment to the Financial Assurance Trust
+    Fund for the Hancock County Sanitary Landfill
+  - Resolution authorizing an agreement with CCAO Service Corporation for group workers
+    compensation rating
+  - Hancock County authorization to participate in the ODOT 2026 Road Salt Contract
+  - Authorizing entry into a contract with Tooman Roofing & Painting, LLC for performance
+    of repair work to sections of the roof at the Hancock County Courthouse
+  - 'Authorizing entry into a change order #4 to a contract with Bodie Mechanical
+    Services, Inc., for services in the nature of execution of the boiler replacement
+    project for county structures'
+  - Authorizing the entry into an agreement with Garland/DBS, Inc., for the inspection
+    and testing of the roof at the Job & Family Services Building
+  parties:
+  - Christine Carrigan
+  - Tooman Roofing & Painting, LLC
+  - Bodie Mechanical Services, Inc.
+  - Garland/DBS, Inc.
+  - CCAO Service Corporation
+  - Courtney O'Flaherty
+  parcels:
+  - 514 S. Main St., Findlay, Ohio 45840 (Hancock County Courthouse)
+  - 300 South Main Street (Hancock County Courthouse)
+  - 8210 County Road 140 (BMV Building)
+  - 7868 County Road 140 (Agricultural Services Building)
+  - 7746 County Road 140 (Educational Services Building FKA the old Hancock County
+    Home)
+  dollar_figures:
+  - '$2000.00 (Transfer of funds within the appropriation – General Fund #1001, Data
+    Center)'
+  - '$2,012.04 (Additional appropriation to Capital Projects Fund #4150)'
+- date: '2026-04-07'
+  kind: minutes
+  filename: _04072026-347.pdf
+  hits:
+  - annexation
+  - datacenter
+  summary: 'At the April 7, 2026 Hancock County Commissioners meeting, Resolution
+    #223-26 authorized a transfer of funds within General Fund #1001 designated for
+    the Data Center, which passed 3-0. Separately, Holly Frische raised corridor-related
+    concerns, asking questions about the Shady Grove expedited annexation and requesting
+    that the Commissioners prepare a resolution or letter to city council members
+    supporting a data center moratorium.'
+  corridor_relevance: 'The meeting connects to both corridor subjects through Resolution
+    #223-26 (a fund transfer within the Data Center account) and through Holly Frische''s
+    verbal requests regarding the Shady Grove expedited annexation and a data center
+    moratorium; the minutes do not name a project, applicant, or purpose beyond these
+    bare references.'
+  decisions:
+  - 'Resolution #222-26 — Authorizing payment of listed and/or attached Purchase Orders.
+    Motion passed 3-0.'
+  - 'Resolution #223-26 — Transfer of funds within the appropriation — General Fund
+    #1001 (Data Center). Motion passed 3-0.'
+  - 'Resolution #224-26 — Additional appropriation within the Auditor''s certification
+    Commissioners to appropriate to Capital Projects Fund #4150. Motion passed 3-0.'
+  - 'Resolution #225-26 — Resolution authorizing the 2026 annual payment to the Financial
+    Assurance Trust Fund for the Hancock County Sanitary Landfill. Motion passed 3-0.'
+  - 'Resolution #226-26 — Resolution authorizing the Hancock County Commissioners
+    to enter into an agreement with CCAO Service Corporation, for Workers Compensation
+    Group Retrospective Rating program. Motion passed 3-0.'
+  - 'Resolution #227-26 — Hancock County authorization to participate in the ODOT
+    2026 Road Salt contract. Motion passed 3-0.'
+  - 'Resolution #228-26 — Authorizing entry into a contract with Tooman Roofing &
+    Painting, LLC for performance of repair work to sections of the roof at the Hancock
+    County Courthouse. Motion passed 3-0.'
+  - 'Resolution #229-26 — Authorizing entry into a change order #4 to a contract with
+    Bodie Mechanical Services, Inc., for services in the nature of execution of the
+    boiler replacement project for county structures. Motion passed 3-0.'
+  - 'Resolution #230-26 — Authorizing the entry into an agreement with Garland/DBS,
+    Inc., for the inspection and testing of the roof at the Job & Family Services
+    Building. Motion passed 3-0.'
+  - Minutes from April 2, 2026 meetings approved 3-0.
+  - Travel request for the Sheriff, a JFS Positions Description Authorization Form,
+    the Hancock County Auditor Fund Report dated March 31, 2026, and the Maumee Watershed
+    Conservancy District March expenses approved.
+  - April 2026 proclaimed as National County Government Month.
+  parties:
+  - Jeffrey Hunker
+  - Timothy Bechtol
+  - William Bateson
+  - Christine Carrigan
+  - Cindy Land
+  - Phil Johnson
+  - Auditor Charity Rauschenberg
+  - Adam Witteman
+  - Steve Wilson
+  - Holly Frische
+  - Courtney O'Flaherty
+  - Tooman Roofing & Painting, LLC
+  - Bodie Mechanical Services, Inc.
+  - Garland/DBS, Inc.
+  - CCAO Service Corporation
+  - Norfolk Southern
+  - Dan Klinger
+  - Jeff Hoff
+  - Jon Opperman
+  parcels:
+  - 300 South Main Street (Hancock County Courthouse)
+  - 8210 County Road 140 (BMV Building)
+  - 7868 County Road 140 (Agricultural Services Building)
+  - 7746 County Road 140 (Educational Services Building FKA the old Hancock County
+    Home)
+  dollar_figures:
+  - $1,753.51 — Maumee Watershed Conservancy District March expenses
+  - $842,486.00 — 2026 annual payment to the Financial Assurance Trust Fund for the
+    Hancock County Sanitary Landfill
+  - $2,500.00 — contract with Tooman Roofing & Painting, LLC (not to exceed)
+  - '$2,012.04 — change order #4 with Bodie Mechanical Services, Inc.'
+  - $3,000.00 — agreement with Garland/DBS, Inc. (not to exceed)
+  - $15 million — balance in the Financial Assurance Trust Fund
+  - $26 million — estimated cost to close the landfill
+- date: '2026-04-16'
+  kind: agenda
+  filename: 4.16.26.pdf
+  hits:
+  - datacenter
+  - tax_abatement
+  summary: 'The Hancock County Commissioners'' meeting agenda for April 16, 2026 includes
+    Resolution #247-26, a transfer of funds within the General Fund #1001 specifically
+    designated for "Data Center" in the amount of $1,000.00. The agenda also covers
+    several other fund transfers, advances, and repayments, as well as bid openings
+    for demolition properties and asbestos abatement. No tax abatement items appear
+    explicitly in the agenda text.'
+  corridor_relevance: 'The meeting is flagged for "datacenter" solely due to Resolution
+    #247-26, which is a $1,000.00 intra-appropriation fund transfer within General
+    Fund #1001 labeled "Data Center"; the text provides no further details about the
+    purpose, project, or parties involved beyond this label.'
+  decisions:
+  - 'Resolution #244-26 – Transfer of funds from the Housing Trust Fund to the General
+    Fund (1st Quarter Fees 2026) - $748.72'
+  - 'Resolution #245-26 – Repayment of advances from the Ditch Maintenance Fund #2004
+    to the General Fund #1001 - $84,214.19'
+  - 'Resolution #246-26 – Advance of funds from the General Fund #1001 to Ditch Maintenance
+    Fund #2004 - $11,016.67'
+  - 'Resolution #247-26 – Transfer of funds within the appropriation – General Fund
+    #1001 (Data Center) - $1,000.00'
+  - 'Resolution #248-26 – Transfer of funds within the appropriation - Sanitary Landfill
+    Fund #5042 - $20,000.00'
+  - 'Resolution #249-26 – Repayment of advances from the Special Improvement Fund
+    #4005 to the General Fund #1001 - $108,204.99'
+  - 'Resolution #250-26 – Advance of funds from the General Fund #1001 to the Special
+    Improvement Ditch Fund #4005 - $151,004.40'
+  parties:
+  - Christine Carrigan (Assistant Clerk)
+  - Hancock County Commissioners
+  - HRPC
+  parcels: []
+  dollar_figures:
+  - $748.72
+  - $84,214.19
+  - $11,016.67
+  - $1,000.00
+  - $20,000.00
+  - $108,204.99
+  - $151,004.40
+- date: '2026-04-16'
+  kind: minutes
+  filename: _04162026-351.pdf
+  hits:
+  - datacenter
+  - tax_abatement
+  summary: 'The Hancock County Commissioners meeting of April 16, 2026 approved several
+    fund transfer resolutions, including Resolution #247-26, a $1,000.00 transfer
+    of funds within General Fund #1001 designated for "Data Center." No tax abatement
+    measures were discussed or voted upon in this meeting. The remaining business
+    included bid openings for demolition and asbestos abatement projects under the
+    PY24 Building Demolition and Site Revitalization Program, and an executive session
+    regarding potential real estate acquisition with no action taken.'
+  corridor_relevance: 'The meeting matches the "datacenter" keyword solely through
+    Resolution #247-26, a $1,000.00 intra-fund transfer within General Fund #1001
+    labeled "Data Center"; the minutes provide no further detail about what project,
+    purpose, or party the transfer relates to. The "tax_abatement" keyword produced
+    no match in the document text.'
+  decisions:
+  - 'Resolution #244-26 approved — Transfer of funds from the Housing Trust Fund to
+    the General Fund (1st Quarter Fees 2026) - $748.72. Motion passed 3-0.'
+  - 'Resolution #245-26 approved — Repayment of advances from the Ditch Maintenance
+    Fund #2004 to the General Fund #1001 $84,214.19. Motion passed 3-0.'
+  - 'Resolution #246-26 approved — Advance of funds from the General Fund #1001 to
+    Ditch Maintenance Fund #2004 $11,016.67. Motion passed 3-0.'
+  - 'Resolution #247-26 approved — Transfer of funds within the appropriation — General
+    Fund #1001 (Data Center) $1,000.00. Motion passed 3-0.'
+  - 'Resolution #248-26 approved — Transfer of funds within the appropriation - Sanitary
+    Landfill Fund #5042 $20,000.00. Motion passed 3-0.'
+  - 'Resolution #249-26 approved — Repayment of advances from the Special Improvement
+    Fund #4005 to the General Fund #1001 $108,204.99. Motion passed 3-0.'
+  - 'Resolution #250-26 approved — Advance of funds from the General Fund #1001 to
+    the Special Improvement Ditch Fund #4005 $151,004.40. Motion passed 3-0.'
+  - Motion to approve two Warrant Journals passed 3-0.
+  - Minutes from April 14, 2026 approved 3-0.
+  - Payroll for Commissioners' staff and JFS approved.
+  - 'Motion to enter executive session regarding potential real estate acquisition
+    passed 3-0 (roll call: Jeffrey Hunker yes, Timothy Bechtol yes, William Bateson
+    yes).'
+  - Motion to exit executive session with no action taken passed 3-0.
+  - Three bids received for PY24 Demolition; bids to be taken into consideration and
+    a contract awarded later.
+  - Three bids received for PY24 Asbestos Abatement Hancock County Demolition Program;
+    bids to be taken into consideration and a contract awarded later.
+  parties:
+  - Jeffrey Hunker
+  - Timothy Bechtol
+  - William Bateson
+  - Christine Carrigan
+  - Adam Witteman
+  - Steve Wilson
+  - Mary Ann LaRoche
+  - Kaysie Penzinski
+  - Elizabeth Cogley
+  - Norfolk Southern
+  - All Excavating & Demolition
+  - Advanced Excavating & Demolition
+  - Big Iron Construction, LLC.
+  - H&H Environmental
+  - Total Environmental Services, LLC.
+  - Midwest Environmental Control, Inc.
+  - Ohio Department of Development
+  - Hancock County, OH Regional Planning Commission
+  parcels:
+  - 8373 CR 37, Findlay, OH 45840
+  - 11617 Twp Rd 31, Arlington, OH 45814
+  - 203 West Clay St, Mt Blanchard, OH 45869
+  - 198 Twp Rd 141, Van Buren, OH 45889
+  - 215 West Washington St, Mt Cory, OH 45868
+  - 203 N Main St, Rawson, OH 45881
+  - 3966 Twp Rd 123, McComb, OH 45858
+  - 0 N Main St, Arcadia, OH 44804
+  - 12138 CR 2, Forest, OH 45843
+  - 12509 CR 26, Findlay, OH 45840
+  - 11427 Twp Rd 108, Findlay, OH 45840
+  - 20073 Twp Rd 51, Bluffton, OH 45817
+  - 10867 SR 37, Findlay, OH 45840
+  - 2844 Twp Rd 97, McComb, OH 45858
+  - 0 E Main St, McComb, OH 45858
+  - 339 Prentiss Ave, Findlay, OH 45840
+  dollar_figures:
+  - '$748.72 (Resolution #244-26, Housing Trust Fund to General Fund)'
+  - '$84,214.19 (Resolution #245-26, Ditch Maintenance Fund #2004 to General Fund
+    #1001)'
+  - '$11,016.67 (Resolution #246-26, General Fund #1001 to Ditch Maintenance Fund
+    #2004)'
+  - '$1,000.00 (Resolution #247-26, General Fund #1001, Data Center)'
+  - '$20,000.00 (Resolution #248-26, Sanitary Landfill Fund #5042)'
+  - '$108,204.99 (Resolution #249-26, Special Improvement Fund #4005 to General Fund
+    #1001)'
+  - '$151,004.40 (Resolution #250-26, General Fund #1001 to Special Improvement Ditch
+    Fund #4005)'
+  - $129,000.00 (All Excavating & Demolition, PY24 Demolition bid)
+  - $125,760.00 (Advanced Excavating & Demolition, PY24 Demolition bid)
+  - $59,665.00 (Big Iron Construction, LLC., PY24 Demolition bid)
+  - $133,000.00 (PY24 Demolition, Estimate of Cost)
+  - $27,650.00 (H&H Environmental, PY24 Asbestos Abatement bid)
+  - $29,205.00 (Total Environmental Services, LLC., PY24 Asbestos Abatement bid)
+  - $29,400.00 (Midwest Environmental Control, Inc., PY24 Asbestos Abatement bid)
+  - $65,000.00 (PY24 Asbestos Abatement, Estimate of Cost)
+- date: '2026-06-18'
+  kind: minutes
+  filename: _06182026-368.pdf
+  hits:
+  - datacenter
+  summary: During the June 18, 2026 Hancock County Commissioners meeting, Adam Miller
+    reported that ATR will have a change order for the Data Center HVAC installation,
+    noting that the units are not yet in. This was mentioned briefly as part of a
+    broader facilities update alongside other building maintenance items. No additional
+    details about the data center project, its location, cost, or contracting parties
+    were provided in the minutes.
+  corridor_relevance: The meeting text mentions "ATR will have a change order for
+    the Data Center HVAC installation" and that "the units are not in yet," but the
+    minutes do not identify the data center's location, purpose, or any other parties
+    beyond "ATR" in connection with this item.
+  decisions:
+  - 'Resolution #371-26 — Authorizing the payment of the listed and/or attached Purchase
+    Orders. Motion passed 3-0.'
+  - 'Resolution #372-26 — Additional appropriation to General Fund #1001 Prosecutor
+    $12,357.85. Motion passed 3-0.'
+  - 'Resolution #373-26 — Additional appropriation to Real Estate Fund #2037 $600,000.
+    Motion passed 3-0.'
+  - 'Resolution #374-26 — Transfer of funds within Law Library Fund #2032 $100.00.
+    Motion passed 3-0.'
+  - 'Resolution #375-26 — Transfer of funds within Job & Family Services Fund #2015
+    $36,658.00. Motion passed 3-0.'
+  - 'Resolution #376-26 — Transfer of funds within General Fund #1001 (Prosecutor)
+    $2,919.90. Motion passed 3-0.'
+  - 'Resolution #377-26 — Additional appropriation to Severance Fund #2136 $3,805.91.
+    Motion passed 3-0.'
+  - 'Resolution #378-26 — Transfer of funds within Guardianship Services Board Fund
+    #8250 $5,000.00. Motion passed 3-0.'
+  - 'Resolution #379-26 — Transfer of funds from Indigent Defense Fund #8180 to General
+    Fund #1001 (May 2026 $1,305.85). Motion passed 3-0.'
+  - 'Resolution #380-26 — Repayment of advance from Recycling Program Grant Fund #5254
+    to General Fund #1001 ($28,500.00). Motion passed 3-0.'
+  - 'Resolution #381-26 — Advance of funds from General Fund #1001 to Recycling Program
+    Grant Fund #5254 ($28,500.00). Motion passed 3-0.'
+  - 'Resolution #382-26 — Appointment of Shelby Rose to fill the vacancy of Christine
+    Lomelo on the Hancock County Children''s Services Trust Fund Board. Motion passed
+    3-0.'
+  - 'Resolution #383-26 — Resolution-order fixing time of final hearing on Soil &
+    Water Conservancy District reports. Motion passed 3-0.'
+  - 'Resolution #384-26 — Authorizing payment of invoice from Montgomery Jonson LLP,
+    Invoice No. 93990, $175.00. Motion passed 3-0.'
+  - 'Resolution #385-26 — Authorizing award of contract with Allen County Earthworks,
+    Inc. for concrete foundations, sidewalks, curbs, ramps, and other features in
+    Mt. Blanchard, Ohio, total cost $38,207.35. Motion passed 3-0.'
+  - 'Resolution #386-26 — Authorizing disposal of a 2018 Nissan Altima. Motion passed
+    3-0.'
+  - 'Resolution #387-26 — Authorizing contract with A & E Sowers Tree Service and
+    Landscape, Ltd. for tree removal and trimming at 1600 Westview Drive, Findlay,
+    Ohio, total cost $3,850.00. Motion passed 3-0.'
+  - 'Resolution #388-26 — Authorizing contract with Wentling Electrical Service LLC
+    for equipment removal and relocation, cost $14,125.28. Motion passed 3-0.'
+  - 'Resolution #389-26 — Authorizing contract with Johnson Controls Security Solutions,
+    LLC for deprogramming of electrical panel, cost $3,790.52. Motion passed 3-0.'
+  - 'Resolution #390-26 — Authorizing contract with Johnson Controls Security Solutions,
+    LLC for incorporation of electrical panel at old county home property, cost $8,690.00.
+    Motion passed 3-0.'
+  - 'Resolution #391-26 — Authorizing rejection of all bids for gas collection and
+    control second lift and authorizing second request for bids. Motion passed 3-0.'
+  - 'Resolution #392-26 — Authorizing change order #2 with State Highway Clearing,
+    LLC, d/b/a Weber Contracting, Inc., reducing contract by $13,567.00, final contract
+    amount $264,573.00. Motion passed 3-0.'
+  - 'Resolution #393-26 — Authorizing change order #1 with Great Lakes Demolition,
+    Inc., adding $2,375.00, final contract amount $1,269,685.00. Motion passed 3-0.'
+  - 'Resolution #394-26 — Authorizing second amendment to subgrant agreement between
+    Hancock County Job & Family Services and Area Agency on Aging 3, contract amount
+    $188,650.79, extended through June 30, 2027. Motion passed 3-0.'
+  - 'Resolution #395-26 — Authorizing second amendment to agreement between Hancock
+    County Job & Family Services and Capabilities, LLC, extended through June 30,
+    2027. Motion passed 3-0.'
+  - 'Resolution #396-26 — Authorizing second amendment to agreement between Hancock
+    County Job & Family Services and Harbor, Inc., extended through June 30, 2027,
+    contract amount increasing by $20,000.00. Motion passed 3-0.'
+  - Minutes from June 11, 2026 approved 3-0.
+  - Warrant Journal approved 3-0.
+  - Two travel requests for the Sheriff's office and one for the Engineer approved.
+  - JFS Positions Description Authorization Form approved.
+  - Commissioners agreed to allow a maintenance employee to drive a county vehicle
+    to and from work.
+  - Phil Johnson will extend the cleaning contracts out for three months.
+  parties:
+  - Jeffrey Hunker
+  - Timothy Bechtol
+  - William Bateson
+  - Christine Carrigan
+  - Phil Johnson
+  - Auditor Charity Rauschenberg
+  - Adam Witteman
+  - Steve Wilson
+  - Bennett Wilson
+  - Saige Thomley
+  - Cindy Land
+  - Montgomery Jonson LLP
+  - Jonathan Starn
+  - Allen County Earthworks, Inc.
+  - A & E Sowers Tree Service and Landscape, Ltd.
+  - Wentling Electrical Service LLC
+  - Johnson Controls Security Solutions, LLC
+  - State Highway Clearing, LLC, d/b/a Weber Contracting, Inc.
+  - Great Lakes Demolition, Inc.
+  - Area Agency on Aging 3
+  - Capabilities, LLC
+  - Harbor, Inc.
+  - Alissa Preston
+  - Danielle Wilkin
+  - Hancock County Convention and Visitors Bureau
+  - Dionne Neubauer
+  - Adam Miller
+  - ATR
+  - Randy Gailbrath
+  - Randall L. Galbraith, Esq.
+  - Shelby Rose
+  - Christine Lomelo
+  - Boy Scout Troop 319
+  - Tony Iriti
+  parcels:
+  - 1600 Westview Drive, Findlay, Ohio
+  - 514 S Main St.
+  - 7814 County Road 99, Findlay, OH 45840
+  - Han-CR 180-3.67 Bridge Replacement Project; PID 117992
+  dollar_figures:
+  - $12,357.85
+  - $600,000
+  - $100.00
+  - $36,658.00
+  - $2,919.90
+  - $3,805.91
+  - $5,000.00
+  - $1,305.85
+  - $28,500.00
+  - $28,500.00
+  - $175.00
+  - $38,207.35
+  - $31,000
+  - $7,207.35
+  - $3,850.00
+  - $14,125.28
+  - $3,790.52
+  - $8,690.00
+  - $13,567.00
+  - $264,573.00
+  - $2,375.00
+  - $1,269,685.00
+  - $188,650.79
+  - $20,000.00
+  - two-million-dollar notes
+  - $120,000

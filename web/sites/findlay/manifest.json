@@ -2,9 +2,9 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "1.49.0",
-  "generated_at": "2026-08-01T12:07:11+00:00",
+  "generated_at": "2026-08-01T13:26:14+00:00",
   "feed_count": 32,
-  "row_total": 577,
+  "row_total": 602,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -37,7 +37,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 6
+      "count": 13
     },
     {
       "name": "entities",
@@ -45,7 +45,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 5
+      "count": 8
     },
     {
       "name": "relationships",
@@ -53,7 +53,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 3
+      "count": 6
     },
     {
       "name": "people",
@@ -93,7 +93,7 @@
       "media_type": "application/json",
       "schema": "schemas/meetings.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 9
     },
     {
       "name": "documents",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 61
+      "count": 64
     },
     {
       "name": "facts",

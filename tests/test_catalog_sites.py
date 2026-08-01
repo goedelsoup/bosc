@@ -220,3 +220,35 @@ def test_real_catalog_readiness_runs() -> None:
     r = readiness("lima")
     assert r.total > 0
     assert 0 <= r.present <= r.total
+
+
+def test_peer_civic_datasets_are_owned_by_findlay_not_lima() -> None:
+    """The per-site ``site_scope:<slug>`` path, against the real catalog (#1839).
+
+    Epic #1520 shipped the cross-site civic loader but no peer dataset ever exercised this
+    mechanism, so nothing pinned it. Findlay's registry and its two ingested meeting trees are
+    now real committed datasets, and the ownership has to cut both ways: they belong to Findlay,
+    and — crucially — they must NOT be relevant to Lima, whose own civic datasets are
+    ``lima-legacy``. A leak here is the catalog half of the #1504/#1505 isolation guarantee.
+    """
+    from watermark.catalog import load_entries
+
+    entries = {e.id: e for e in load_entries()}
+    peer = (
+        "subdivisions-findlay",
+        "allen-township-meetings",
+        "hancock-county-commissioners-meetings",
+    )
+    for eid in peer:
+        assert entries[eid].site_scope == "site:findlay", eid
+        assert is_relevant(entries[eid], "findlay"), eid
+        assert not is_relevant(entries[eid], "lima"), eid
+        # Literal paths under the peer's own slug — not a {site} template, and never Lima's flat tree.
+        for item in entries[eid].storage:
+            assert "{site}" not in item.relpath, eid
+            assert "/findlay/" in item.relpath, eid
+
+    # And the reverse: Lima's registry + its township trees stay Lima's.
+    for eid in ("subdivisions", "american-township-meetings", "lacrpc-meetings"):
+        assert entries[eid].site_scope == "lima-legacy", eid
+        assert not is_relevant(entries[eid], "findlay"), eid
