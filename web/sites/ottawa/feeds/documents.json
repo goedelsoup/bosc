@@ -70,6 +70,21 @@
         "canonical_document_id": null,
         "version": null,
         "supersedes": []
+      },
+      {
+        "rel": "ottawa/warn/RKIndustries.pdf",
+        "name": "RKIndustries.pdf",
+        "size_bytes": 86956,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       }
     ]
   }

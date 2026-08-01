@@ -6,7 +6,7 @@ Living record for the Ottawa watershed point (basin: maumee), scaffolded by `wat
 
 - [x] **Hydrology** — onboard reach connectors (low-flows, corridor DDF, SSURGO HSG, climatology)
 - [x] **Economics** — county baseline, RSEI toxics, consumer energy, grid profile (AEP Ohio IOU; standard path)
-- [~] **Data-center activity** — self-research first pass run (#247); **affirmatively nothing documented** (no Putnam/Ottawa permit, deed, SOS filing, or meeting record in the corpus). See self-research summary below.
+- [x] **Data-center activity** — **swept and affirmatively negative** (#1423, 2026-07-31). The register is [`data-centers.md`](data-centers.md): six record systems queried record-by-record (PJM queue · ODJFS WARN 2024-26 · ICIS-Air · ECHO CWA · RSEI · QCEW), five clean and the sixth returning a *closure* rather than an arrival. `facilities=()` stands; the `facility` readiness domain stays locked on purpose. This supersedes the 2026-06-21 corpus-only pass below.
 - [x] **Per-jurisdiction GIS** — parcels **wired** (`PUTNAM_PARCEL_SCHEMA`, #420 — Putnam County's self-hosted valid-cert ArcGIS, owner + auditor CAMA values on one layer) and flood = shared national NFHL (wired). Zoning stays `[open]` — a **searched negative** as of 2026-07-31 (#1420): the Village publishes no zoning GIS at all, and its zoning code is under an active modernization RFP. See GIS discovery below.
 
 ## Record domain — live (#1422)
@@ -108,7 +108,10 @@ denominator (4 derived mainstems + 3 cited Lima tributaries), and the Ottawa WWT
 data-center permit, deed, SOS filing, or meeting record in the corpus — the entity graph + timeline are
 entirely Lima/Allen. An affirmative "no disclosed Ottawa facility yet," not an empty cell. (This pass
 *is* the self-research run the gate calls for; the distilled "run --research" proposal is therefore
-resolved here, not filed.)
+resolved here, not filed.) **Superseded and strengthened by #1423** (2026-07-31): this pass could
+only say the *corpus* was empty; [`data-centers.md`](data-centers.md) now rests the same negative on
+PJM's queue, the ODJFS WARN lists, ICIS-Air, ECHO CWA, RSEI and QCEW — record systems that would
+carry a project whether or not BOSC had heard of it.
 
 **Disambiguation (load-bearing).** This is the **Village of Ottawa, Putnam County** on the
 **Blanchard** (gage 04189260) — NOT the Ottawa River of Lima/Allen (whose cited 0.2 cfs 7Q10 must

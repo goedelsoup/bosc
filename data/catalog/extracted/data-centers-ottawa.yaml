@@ -1,0 +1,50 @@
+id: data-centers-ottawa
+title: Ottawa / Putnam County OH — Data-Center Activity Register
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    PJM public planning queue (PlanningQueues.xml, 9,263 projects); ODJFS public WARN notices
+    2024/2025/2026 (241 notices, served off the Ohio DAM) and the RK Industries notice PDF;
+    EPA ECHO ICIS-Air and CWA for FIPS 39137; EPA RSEI v234 Putnam inventory; BLS QCEW 2023
+    (area 39137); Putnam County GIS Parcels layer + county auditor; Village of Ottawa Highland
+    Industrial Park page; Putnam County CIC project register; stopohiodatacenters.org Putnam
+    County profile. All queried 2026-07-31.
+license: public record / public domain
+access_tier: public
+site_scope: site:ottawa
+storage:
+- relpath: extracted/ottawa/data-centers.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- affirmative-negative
+- facility-posture
+- pjm-queue
+- warn
+- odjfs
+- sb52
+- highland-industrial-park
+- putnam-county
+- ottawa
+- maumee
+- sweep
+notes: >-
+  Ottawa facility-posture sweep (#1423, 2026-07-31). The finding is a NEGATIVE and the register
+  exists to hold it: no data-center, AI-campus, hyperscale or large-load project is announced,
+  rezoned, optioned, permitted or queued in Putnam County or the Village of Ottawa, 2024-2026.
+  Six record systems queried record-by-record; the profile keeps facilities=() and the facility
+  readiness domain stays locked. Three checks the issue left open are closed here — the PJM queue
+  (9 Putnam entries, all generation, all wind/solar, nothing above 138 kV; note the queue carries
+  NO load-interconnection type, and its SubmittedDate frontier is 2025-06-03), the ODJFS WARN
+  lists (241 notices; ONE Putnam hit — RK Industries, 725 N Locust St, Ottawa, 80 jobs, closure
+  2024-07-14, notice 007-24-042 — so the closure negative does NOT close clean), and the tracker
+  (a dedicated Putnam page reading "No active data center in Putnam County — yet", [reference]
+  only). The Toledo Blade 2025-12-13 check STAYS OPEN — paywalled, and the Wayback snapshot is
+  the paywall shell. Disambiguation trap that must survive every re-read: Putnam County, WEST
+  VIRGINIA has a live multibillion-dollar Google project and owns the obvious search terms.

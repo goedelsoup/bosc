@@ -69,6 +69,48 @@ Ottawa's `SiteProfile` carries `facilities=()`. Three findings the record carrie
   PROPERTIES LLC. No instrument in the corpus connects the two, and the grantor chain is `[open]`
   (#1421).
 
+## The facility posture (#1423) — a documented negative
+
+[`data-centers.md`](data-centers.md) — the site's data-center activity register, and the one
+register in the network whose **finding is that there is nothing to find**. No data-center,
+AI-campus, hyperscale or large-load project is announced, rumored, rezoned, land-optioned,
+permitted or queued in Putnam County or the Village of Ottawa, 2024–2026. The `SiteProfile` carries
+`facilities=()` and the `facility` readiness domain stays **locked** — because the sweep ran and
+came back empty, not because it was never run.
+
+The 2026-06-21 self-research pass could only say the *corpus* was empty. This register queries six
+record systems that would carry a project whether or not BOSC had heard of it:
+
+| Check | Result at 2026-07-31 |
+|---|---|
+| PJM interconnection queue (9,263 projects) | 9 Putnam entries, all **generation**, all wind/solar, nothing above 138 kV — and the queue carries **no load-interconnection type at all** |
+| ODJFS WARN, 2024 + 2025 + 2026 (241 notices) | **One** Putnam hit — and it is a **closure**, not an arrival (below) |
+| EPA ECHO ICIS-Air (33 facilities) | 3 majors — POET and PRO-TEC at Leipsic, plus the **closed** Philips CRT works; **zero NAICS 518210** |
+| EPA ECHO CWA (48 permits, 14 active construction NOIs) | Every NOI is a road, utility, municipal or small-commercial job; no campus grading |
+| EPA RSEI v234 (14 TRI reporters) | No 518210; the county's top scorer is the closed CRT works |
+| BLS QCEW 2023 | Information (NAICS 51) **LQ 0.21** on 50 jobs; Manufacturing **LQ 3.72** |
+
+Three findings the register exists to carry:
+
+- **The closure negative does not close clean.** ODJFS WARN notice **007-24-042**: *RK Industries,
+  Inc.*, 725 N Locust St, Ottawa — automotive stamping and robotic welding — noticed **2024-05-16**,
+  operations expected to cease **2024-07-14**, **~80 employees**, none union. The village noticed
+  the loss of an 80-job plant twenty-two years after it lost the CRT works. **Now committed**:
+  [`warn/rk-industries-ottawa-2024.warn.yaml`](warn/rk-industries-ottawa-2024.warn.yaml). The
+  closure is *expected*, not confirmed — the letter conditions the cease date on no intervening
+  sale or merger, and what actually happened is `[open]`.
+- **The county exports to the build-out it does not host.** Putnam's SB 52 blanket restriction
+  (Sept 2023) capped its renewables pipeline at two grandfathered projects, and PJM's own queue
+  confirms both reached service — Powell Creek (150 MW, 2025-04-30) and **Blue Harvest** (49.9 MW,
+  2023-11-22), whose output is contracted to **Amazon/AWS**. The land use lands here; the load, the
+  abatement, the jobs and the water draw land somewhere else.
+- **The disambiguation trap is load-bearing.** **Putnam County, *West Virginia*** has a live
+  multibillion-dollar Google campus (~1,700 ac at Buffalo, announced March 2026) and owns the
+  obvious search terms. It has nothing to do with FIPS 39137.
+
+One check stays **`[open]`**: the paywalled Toledo Blade article of 2025-12-13, "Where will the next
+northwest Ohio data centers be built?" — the Internet Archive holds only the paywall shell.
+
 ## Primary instruments
 
 - [`drinking-water/oh6900711-2025-ccr.epa.yaml`](drinking-water/oh6900711-2025-ccr.epa.yaml) — the
@@ -80,6 +122,10 @@ Ottawa's `SiteProfile` carries `facilities=()`. Three findings the record carrie
 - [`../oepa/ottawa/2PD00028.npdes.yaml`](../oepa/ottawa/2PD00028.npdes.yaml) — the permit as
   issued, including Part II Item X.3, the clause that excuses the annual mercury ceiling where the
   mercury came from "the permittee's intake water."
+- [`warn/rk-industries-ottawa-2024.warn.yaml`](warn/rk-industries-ottawa-2024.warn.yaml) — the
+  RK Industries WARN notice (#1423), the only one filed from Putnam County in 2024–2026. Publishes
+  under the `labor` record group. ⚠️ A **scan**: the read is a 300 DPI vision transcription, and
+  all three of its headcounts are handwritten.
 
 ## Onboarding seeds
 

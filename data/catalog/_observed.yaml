@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-31T22:54:19.336771+00:00'
+reconciled_at: '2026-08-01T01:33:56.838673+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -162,10 +162,10 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: 670b17edcb48bf4d697c5fc4c2d06d3d090462f243b5fc37979c9bb55f684b2b
-    size_bytes: 168826
+    sha256: 4710cd51cdd93dab4f855e44902485ef648e3e1889886be222d0cb4895a08a88
+    size_bytes: 198670
     lfs_materialized: true
-    file_count: 12
+    file_count: 13
     missing: []
     asof: null
     stale: false
@@ -180,6 +180,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:hamilton-middletown
+  data-centers-ottawa:
+    exists: true
+    sha256: 60d1600fd2b2c994f59005fdec86a5ebc7cbe4dd229288b9569481ae3401d076
+    size_bytes: 29844
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:ottawa
   data-centers-sidney:
     exists: true
     sha256: 214d1dd7543dacb3375982ba954c9bfc043a951af519760f67a5c2ef8aed191d
@@ -1090,6 +1100,16 @@ entries:
     asof: null
     stale: false
     site_scope: state:OH
+  ottawa-warn:
+    exists: true
+    sha256: ce97ca56aad03ecff6b7900d66370f6a8eae99b17165571dea8a2c2bdb84b6e1
+    size_bytes: 7848
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:ottawa
   ottawa-water-watch:
     exists: true
     sha256: 65de52d690feb909021694483b5b19fb24a235f41a8346f3ec7cb472b68cfe3e
