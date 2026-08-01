@@ -1,7 +1,7 @@
 {
   "site": "portsmouth",
-  "catalog_version": "d35e240d3d0d1f225a858547740ad1138b816d3e970d9457b5d8fff2af123be7",
-  "contract_version": "1.49.0",
+  "catalog_version": "f88361f9800ea4331a330f8c3aff8da17316f21c25437d11990ad61e633504fb",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:portsmouth:7q10",
@@ -817,6 +817,14 @@
       "site": "portsmouth",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:portsmouth:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "portsmouth",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

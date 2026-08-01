@@ -33,6 +33,7 @@ tags:
   - air-permit
   - tier-ii
   - corroborators
+  - water-route
 notes: >-
   Per-facility reconciliation of each closed-loop-claiming data-center facility's cooling
   archetype CLAIM against its DOCUMENTED water account — the A3 harness of the closed-loop
@@ -62,7 +63,26 @@ notes: >-
   independently-negotiated reservation, a dry loop sits far below it) — so, like `disclosed_makeup`, it
   never feeds the classifier and never upgrades the source; the outcome stays a `gap` with the
   `[reference]` pin KEPT, and its lead names the actual-vs-ceiling denominator (pull the metered
-  municipal withdrawal, #1415). Every other
+  municipal withdrawal, #1415). **New Albany / Intel** (B6 #1686) is the positive control the
+  epic designated, reconciled as a live row and landing on a fifth outcome, `route_blind`. Intel
+  discloses 125 permitted cooling towers — the honest evaporative case — and still cannot be
+  reconciled: Ohio One is a semiconductor fab (NAICS 334413), it does not operate until 2030-31,
+  and its makeup will be PURCHASED City of Columbus water while its process wastewater goes to the
+  Columbus sanitary sewer. Both sides therefore sit outside the instruments this harness reads (the
+  WWFRP meters withdrawals FROM waters of the state, not purchases; a sewer discharge files no DMR
+  — Intel's whole CWA record is three non-major construction general-permit coverages with zero DMR
+  loads), so both return ~0 BY CONSTRUCTION and the classifier was reading that ~0 as "documented
+  ≈ 0 → corroborated dry". The two operating Amazon Data Services registrations in the same county
+  demonstrate the blind spot independently (0.02 MG and 0.00 MG reported for 2024). Hence the cited
+  `WaterRoute` (supply/discharge) and `route_blind`, which invalidates a NEGATIVE read only — a
+  documented flow, a reservation ceiling, or a wet claim matched by real water all still adjudicate.
+  Two slots serve it: `nonprocess_makeup` (a documented, metered withdrawal that IS on record but is
+  NOT the cooling account — Intel's 0.0435 MGD of construction-phase groundwater, ~89% returned,
+  peaking in May while July-August are the year's lowest, the inverse of an evaporative signature)
+  and `prediction_refused`, which leaves `it_load` + all three `predicted_*` null because every
+  archetype is IT-load-parameterized and a fab has no IT load. `meta.reference_band` records the
+  per-IT-MW evaporative screening band, derived from the archetype spec and explicitly NOT from the
+  fab that was supposed to ground it. Every other
   live cohort facility resolves to `gap` today (no documented makeup/blowdown while OHD000001 is
   draft and no facility-own DMR is on record). Each record
   also carries the A4 (#1680) `corroborators` block — two independent tells reconciled against

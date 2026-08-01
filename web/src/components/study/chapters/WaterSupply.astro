@@ -144,8 +144,8 @@ const facilityName = facility?.name ?? "the proposed facility";
           <p class="wsrec-kicker">Claim vs record · the cooling-cycling reconciliation</p>
           {recon.candidates.map((r) => {
             const meta = RECONCILE_OUTCOME_META[r.outcome];
-            // The four provenance slots render ONLY when their record exists, each under its
-            // own register label — a renderer must keep them apart (the carried discipline).
+            // The provenance slots render ONLY when their record exists, each under its own
+            // register label — a renderer must keep them apart (the carried discipline).
             const slots = [
               { label: "Documented makeup · metered/record", v: r.account.documented_makeup },
               { label: "Documented blowdown · metered/record", v: r.account.documented_blowdown },
@@ -153,8 +153,16 @@ const facilityName = facility?.name ?? "the proposed facility";
               { label: "Reservation ceiling · blowdown — not an instrument", v: r.account.reserved_blowdown },
               { label: "Operator self-report · ongoing draw", v: r.account.disclosed_makeup },
               { label: "Self-disclosed permit ceiling", v: r.account.disclosed_ceiling },
+              { label: "On record but NOT the cooling account", v: r.account.nonprocess_makeup },
               { label: "Self-disclosed cycles of concentration", v: r.account.disclosed_cycles },
               { label: "Back-solved cycles of concentration · bracket", v: r.account.backsolved_cycles },
+            ].filter((s) => s.v != null);
+            // The predicted account is refusable (#1686): the three figures move together, so
+            // either all three render or the refusal reason does. Never a substituted zero.
+            const predicted = [
+              { label: "Predicted makeup", v: r.account.predicted_makeup },
+              { label: "Predicted consumptive", v: r.account.predicted_consumptive },
+              { label: "Predicted blowdown", v: r.account.predicted_blowdown },
             ].filter((s) => s.v != null);
             return (
               <article class="wsrec-row">
@@ -172,10 +180,22 @@ const facilityName = facility?.name ?? "the proposed facility";
                   )}
                 </p>
                 <p class="wsrec-finding">{r.finding}</p>
+                {r.account.route && (
+                  <p class="wsrec-route">
+                    <span class="wsrec-route-label">Instrument reach</span>
+                    <span class="wsrec-route-body">{r.account.route.citation}</span>
+                  </p>
+                )}
+                {r.account.prediction_refused && (
+                  <p class="wsrec-refused">
+                    <span class="wsrec-refused-label">Prediction refused <EvidenceTag kind="open" /></span>
+                    <span class="wsrec-refused-body">{r.account.prediction_refused}</span>
+                  </p>
+                )}
                 <div class="wsrec-stats">
-                  <FigureStat stat={toStat("Predicted makeup", r.account.predicted_makeup)} size="sm" />
-                  <FigureStat stat={toStat("Predicted consumptive", r.account.predicted_consumptive)} size="sm" />
-                  <FigureStat stat={toStat("Predicted blowdown", r.account.predicted_blowdown)} size="sm" />
+                  {predicted.map((s) => (
+                    <FigureStat stat={toStat(s.label, s.v!)} size="sm" />
+                  ))}
                   {slots.map((s) => (
                     <FigureStat stat={toStat(s.label, s.v!)} size="sm" />
                   ))}
@@ -384,6 +404,14 @@ const facilityName = facility?.name ?? "the proposed facility";
     color: #9a6a14;
     border-color: #9a6a14;
   }
+  /* route_blind is not a finding about the facility, it is a finding about the instruments —
+     so it stays in the neutral register rather than borrowing the amber "something is wrong
+     here" one. It reads as a stated limit, which is what it is. */
+  .wsrec-outcome.is-route_blind {
+    color: var(--bosc-muted);
+    border-color: var(--bosc-muted);
+    border-style: dashed;
+  }
   .wsrec-kept {
     font-size: 0.8rem;
     color: var(--bosc-muted);
@@ -393,6 +421,29 @@ const facilityName = facility?.name ?? "the proposed facility";
     line-height: 1.55;
     max-width: 660px;
     margin: 0.5rem 0 0;
+  }
+  /* The reach statement and the refusal must be visible next to the account, never dropped —
+     they are the reason the numbers beside them are shaped the way they are. */
+  .wsrec-route,
+  .wsrec-refused {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    max-width: 660px;
+    margin: 0.6rem 0 0;
+    padding-left: 0.7rem;
+    border-left: 2px solid var(--bosc-rule);
+    color: var(--bosc-muted);
+  }
+  .wsrec-route-label,
+  .wsrec-refused-label {
+    display: block;
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
   }
   .wsrec-stats {
     display: grid;

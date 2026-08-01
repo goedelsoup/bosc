@@ -135,10 +135,31 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   explicitly so its disclosed ~660k gal figure + the #1409 initial-fill sharpen its gap), **plus
   Springfield** (`reconcile_springfield`, #1683 — a cohort member reconciled explicitly so its
   self-disclosed 300k gal/day permitted ceiling — not a `reservation_conflict` — + the #1415
-  actual-vs-ceiling denominator sharpen its "not evaporative" gap), **plus the
+  actual-vs-ceiling denominator sharpen its "not evaporative" gap), **plus New Albany / Intel**
+  (`reconcile_intel_new_albany`, #1686 — see below), **plus the
   Intel evaporative positive control** (`INTEL_CONTROL_FACILITY`,
   a constructed calibration vector — NOT a registered site, NOT documented Intel data) the harness
-  must classify `corroborated`, the no-false-positive gate. (4) `cooling_corroborators.py` (A4,
+  must classify `corroborated`, the no-false-positive gate.
+- **An instrument that cannot REACH a facility returns absence, not zero** (B6 #1686, the New
+  Albany / Intel positive control). A1 (the Ohio DNR WWFRP) meters withdrawals **from waters of the
+  state**, and A2 (ECHO/NPDES) covers **discharges to them**. A campus that BUYS its water from a
+  municipal system and sends its wastewater to a POTW sanitary sewer is outside both, so both return
+  **~0 by construction** — and `_classify` was reading that ~0 as "documented ≈ 0 → `corroborated`
+  dry", which would have silently upgraded the whole (municipally-supplied) closed-loop cohort to
+  document-grade. So a record can carry a **cited** `WaterRoute` (`supply`: self_supplied/municipal/
+  unknown; `discharge`: surface_npdes/sanitary_sewer/unknown — set only where the record establishes
+  it, never assumed) and the classifier gains a fifth outcome **`route_blind`**. The guard
+  invalidates a **negative** read only: a documented flow is still a `discrepancy`, a reservation
+  ceiling still a `reservation_conflict`, a wet claim matched by real water still `corroborated`.
+  Two slots serve it — `nonprocess_makeup` (a documented, metered withdrawal that IS on record but
+  is NOT the cooling account: Intel's 0.0435 MGD construction-phase groundwater, ~89% returned,
+  peaking in May while Jul–Aug are the year's lowest — the inverse of an evaporative signature) and
+  `prediction_refused`, which leaves `it_load` + all three `predicted_*` **null** because every
+  archetype is IT-load-parameterized and **a semiconductor fab has no IT load** (running a
+  data-center WUE against a fab's electrical load would fabricate). A `WaterAccount` validator makes
+  the refusal total and cited — a half-refused account would read downstream as a real zero.
+  `meta.reference_band` records the per-IT-MW evaporative screening band, derived from the
+  **archetype spec**, explicitly NOT from the fab that was supposed to ground it. (4) `cooling_corroborators.py` (A4,
   #1680) adds two **independent corroborators** to each A3 record — the facility's own **air
   permit** listing cooling towers as PM (drift) sources (read from `SiteFacility.air_permit_relpath`;
   a listing CONTRADICTS a `closed_loop_dry` claim, CORROBORATES an evaporative/hybrid one — Lima's

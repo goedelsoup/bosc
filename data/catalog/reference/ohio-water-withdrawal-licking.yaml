@@ -1,0 +1,46 @@
+id: ohio-water-withdrawal-licking
+title: Licking County, OH water-withdrawal registry (Ohio DNR WWFRP)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: water-withdrawal --county Licking
+  connector_ref: watermark.hydrology.connectors.ohio_water_withdrawal
+  source: >-
+    Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration
+    Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)
+  external_url: https://ohiodnr.gov/wwfacilitylocator
+license: Ohio public record
+access_tier: public
+# The Licking-County registry is New Albany's (the Beech Road / Jersey Township data-center
+# cluster sits in Licking 39089, not the Franklin-County city core); a peer site adds its own
+# county sibling rather than sharing this one.
+site_scope: site:new-albany
+storage:
+- relpath: reference/ohio-water-withdrawal/licking.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: annual
+  ttl_days: 365
+provenance: connector
+schema_ref: watermark.hydrology.connectors.ohio_water_withdrawal.WithdrawalRegistry
+tags:
+- water-withdrawal
+- wwfrp
+- ohio-dnr
+- cooling
+- makeup
+notes: >-
+  Every WWFRP-registered facility in Licking County, OH — the makeup-side record for the B6
+  (#1686) positive-control review of epic #1676. It carries the county's three data-center-era
+  registrations: Intel Corporation - New Albany (03498, 7 wells / 1.43 MGD registered) and two
+  Amazon Data Services sites (03401 CMHO50 New Albany, 03575 Newton Court). Their reported
+  amounts are the finding: all three sit at or near zero reported withdrawal because their
+  operating water is PURCHASED MUNICIPAL supply, which the WWFRP — a registry of withdrawals
+  from waters of the state — does not see. So a WWFRP ~0 for a municipally-supplied facility is
+  not evidence of a dry cooling loop; it is the registry's blind spot, and the A3 harness
+  classifies such a facility route_blind rather than corroborated. Intel's non-zero series
+  (15.91 MG in 2024, ~89% returned, peaking May-June and troughing July-August) is
+  construction-phase groundwater, not cooling makeup. The facility registry is kept in full;
+  annual series are floored at 2015. See data/reference/ohio-water-withdrawal/README.md.

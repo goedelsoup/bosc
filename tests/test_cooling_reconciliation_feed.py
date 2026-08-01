@@ -27,7 +27,7 @@ from watermark.site.cooling_reconciliation import (
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.49.0"
+_CV = "1.50.0"
 
 
 def _settings(site: str, data_dir: Path | None = None) -> Settings:
@@ -61,13 +61,19 @@ def test_a_site_outside_the_cohort_self_skips() -> None:
 
 
 def test_the_intel_control_never_ships_even_on_its_own_site() -> None:
-    # The control row is sited `new-albany`, and new-albany IS a registered bundle — the
-    # site filter alone would ship the calibration vector as site data. The explicit
-    # `is_control` exclusion is what the acceptance pins.
-    assert load_cooling_reconciliation(_settings("new-albany")) is None
+    # The control row is sited `new-albany`, and new-albany IS a registered bundle — the site
+    # filter alone would ship the calibration vector as site data. The explicit `is_control`
+    # exclusion is what the acceptance pins. Since B6 (#1686) new-albany also carries a LIVE
+    # row (Intel's real, route_blind record), so this is now the sharper test it always meant
+    # to be: the site ships a feed, and the constructed vector is not in it.
+    feed = load_cooling_reconciliation(_settings("new-albany"))
+    assert feed is not None
+    assert all(not r.is_control for r in feed.candidates)
+    assert [r.outcome.value for r in feed.candidates] == ["route_blind"]
     control_rows = [r for r in _artifact()["candidates"] if r["is_control"]]
     assert len(control_rows) == 1  # the exclusion is exercised, not vacuous
     assert control_rows[0]["site"] == "new-albany"
+    assert control_rows[0]["facility"] not in {r.facility for r in feed.candidates}
 
 
 def test_missing_artifact_is_a_clean_skip(tmp_path: Path) -> None:
@@ -94,6 +100,8 @@ def test_caveats_are_carried_and_pinned_to_the_meta_discipline() -> None:
         "never read as 'confirmed dry'",
         "is not a discharge/withdrawal instrument",
         "cannot upgrade the",
+        "absence of jurisdiction",
+        "not the cooling account",
         "never the sole basis for a re-archetype",
     ]
     for caveat, phrase in zip(DISCIPLINE_CAVEATS, pins, strict=True):

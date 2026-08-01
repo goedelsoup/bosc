@@ -2,10 +2,12 @@
 
 Hermetic: the harness reads the site registry, the cited OHD000001 permit-lifecycle constant,
 and the archetype math — no network, no fixture. The properties under test are the classifier's
-four outcomes (discrepancy / corroborated / reservation_conflict / gap), the Troy-Piqua B1
-reservation conflict (#1681), the Intel positive control's no-false-positive guarantee, the
-back-solved CoC being an [inference] bracket (never a scalar), and that the committed artifact
-validates + matches the resolver.
+five outcomes (discrepancy / corroborated / reservation_conflict / route_blind / gap), the
+Troy-Piqua B1 reservation conflict (#1681), the Intel positive control's no-false-positive
+guarantee, its B6 (#1686) counterpart — that a ~0 from an instrument which cannot REACH a
+facility never corroborates a claim, while a positive signal still adjudicates — the back-solved
+CoC being an [inference] bracket (never a scalar), and that the committed artifact validates +
+matches the resolver.
 """
 
 from __future__ import annotations
@@ -215,13 +217,16 @@ def test_cohort_is_registry_derived_gaps_plus_troy_piqua_and_intel_control() -> 
     assert len(control) == 1
     assert records[-1].is_control
     assert control[0].outcome is cr.ReconcileOutcome.CORROBORATED
-    # Every live finding tests a closed_loop / hybrid claim (A2's cohort claims + the Troy-Piqua
-    # FAQ's closed_loop_dry claim under test).
+    # Every live finding EXCEPT New Albany tests a closed_loop / hybrid claim (A2's cohort claims
+    # + the Troy-Piqua FAQ's closed_loop_dry claim under test). New Albany (B6, #1686) is the one
+    # live row whose claim is openly WET — Intel's 125 permitted cooling towers — and it is in the
+    # cohort precisely because an honest evaporative disclosure still could not be reconciled.
     assert live
-    assert all(r.claimed_archetype in {"closed_loop_dry", "hybrid_adiabatic"} for r in live)
+    claim_cohort = [r for r in live if r.site != "new-albany"]
+    assert all(r.claimed_archetype in {"closed_loop_dry", "hybrid_adiabatic"} for r in claim_cohort)
     # A2's registry-derived cohort facilities resolve to a gap today (no documented water while
     # OHD000001 is draft and no facility-own DMR is on record).
-    cohort = [r for r in live if r.site != "troy-piqua"]
+    cohort = [r for r in live if r.site not in {"troy-piqua", "new-albany"}]
     assert cohort
     assert all(r.outcome is cr.ReconcileOutcome.GAP for r in cohort)
     assert "urbana" in {r.site for r in cohort}
@@ -231,6 +236,13 @@ def test_cohort_is_registry_derived_gaps_plus_troy_piqua_and_intel_control() -> 
     assert len(troy) == 1
     assert troy[0].outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
     assert not troy[0].is_control  # a real site, not a constructed control
+    # New Albany (B6, #1686) pins no SiteFacility at all, so it is in no cohort either; Intel's
+    # real record is reconciled explicitly and lands route_blind. It is a LIVE row — the
+    # constructed control is the separate is_control row above.
+    new_albany = [r for r in live if r.site == "new-albany"]
+    assert len(new_albany) == 1
+    assert new_albany[0].outcome is cr.ReconcileOutcome.ROUTE_BLIND
+    assert not new_albany[0].is_control
 
 
 def test_open_load_facility_cannot_be_predicted() -> None:
@@ -677,6 +689,256 @@ def test_cohort_includes_springfield_b3_disclosed_ceiling_gap_exactly_once() -> 
     assert sp[0].is_control is False
 
 
+# ------------------------------------- B6 route-blind — New Albany / Intel (#1686)
+
+
+def _municipal_route() -> cr.WaterRoute:
+    """Both sides outside the instruments: purchased supply, sewer discharge."""
+    return cr.WaterRoute(
+        supply=cr.SupplyRoute.MUNICIPAL,
+        discharge=cr.DischargeRoute.SANITARY_SEWER,
+        citation="test: purchased municipal makeup + POTW sanitary sewer",
+        tag="[verified]",
+        confidence="high",
+    )
+
+
+def test_a_blind_instruments_zero_never_corroborates_a_dry_claim() -> None:
+    # THE B6 calibration gate, inverted from what the issue expected. Without a route, a dry
+    # claim with documented ~0 corroborates and recommends the reference → document upgrade.
+    # That is the false NEGATIVE the New Albany positive control found: for a municipally
+    # supplied, sewer-discharging campus, A1 and A2 return ~0 by construction.
+    zero = ProvenancedValue.from_reference(0.0, "MGD", citation="test: registry reports ~0")
+    without_route = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop claim",
+        settings=Settings(),
+        documented_makeup=zero,
+    )
+    assert without_route.outcome is cr.ReconcileOutcome.CORROBORATED
+    assert without_route.recommended_source == "document"  # the upgrade the guard must prevent
+
+    with_route = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop claim",
+        settings=Settings(),
+        documented_makeup=zero,
+        route=_municipal_route(),
+    )
+    assert with_route.outcome is cr.ReconcileOutcome.ROUTE_BLIND
+    assert with_route.recommended_archetype is None
+    assert with_route.recommended_source is None  # never upgraded on an absence of jurisdiction
+    assert with_route.kept_archetype == "closed_loop_dry"
+
+
+def test_a_blind_route_turns_a_bare_gap_into_route_blind() -> None:
+    # A gap says "pull the water records"; for a blind route that instruction is wrong — the
+    # records were pulled and answer ~0 for a reason unrelated to cooling. The lead must be
+    # re-aimed at the City-held meter rather than at more of A1/A2.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop claim",
+        settings=Settings(),
+        route=_municipal_route(),
+    )
+    assert rec.outcome is cr.ReconcileOutcome.ROUTE_BLIND
+    assert rec.lead is not None
+    sought = " ".join(rec.lead.records_sought).lower()
+    assert "metered municipal water-service consumption" in sought
+    assert "pretreatment" in sought
+    assert rec.lead.tag == "[open]"
+
+
+def test_blindness_never_suppresses_a_positive_signal() -> None:
+    # The guard invalidates a NEGATIVE read only. A documented flow contradicting a dry claim is
+    # still a discrepancy, and a reservation ceiling is still a reservation_conflict — a positive
+    # signal from any instrument says something true regardless of what the blind side would have.
+    discrepancy = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop claim",
+        settings=Settings(),
+        documented_blowdown=ProvenancedValue.from_reference(
+            0.4, "MGD", citation="test: metered blowdown DMR"
+        ),
+        route=_municipal_route(),
+    )
+    assert discrepancy.outcome is cr.ReconcileOutcome.DISCREPANCY
+
+    conflict = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop claim",
+        settings=Settings(),
+        reserved_makeup=ProvenancedValue.from_reference(
+            2.0, "MGD", citation="test: negotiated reservation ceiling"
+        ),
+        route=_municipal_route(),
+    )
+    assert conflict.outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
+
+
+def test_a_wet_claim_corroborated_by_real_water_survives_the_guard() -> None:
+    # The Intel control's property, under a blind route: documented water that MATCHES a wet
+    # claim is a positive read and must stay corroborated — the guard must not sweep it up.
+    rec = cr.reconcile_facility(
+        _evap_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] disclosed evaporative towers",
+        settings=Settings(),
+        documented_makeup=ProvenancedValue.from_reference(
+            2.2, "MGD", citation="test: metered withdrawal"
+        ),
+        route=_municipal_route(),
+    )
+    assert rec.outcome is cr.ReconcileOutcome.CORROBORATED
+
+
+def test_a_blind_zero_cannot_corroborate_a_wet_claim_either() -> None:
+    # The subtler half of the guard. A wet claim predicts ~0.43 MGD blowdown, so a documented
+    # blowdown of ~0 lands BELOW the corroboration band — and "below the band" is deliberately
+    # read as corroborating (the record does not refute a lower-water reality). Under a blind
+    # route that reasoning fails: the ~0 came from an instrument with no view of the facility.
+    zero_blowdown = ProvenancedValue.from_reference(
+        0.0, "MGD", citation="test: no DMR flow on record"
+    )
+    without_route = cr.reconcile_facility(
+        _evap_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] disclosed evaporative towers",
+        settings=Settings(),
+        documented_blowdown=zero_blowdown,
+    )
+    assert without_route.outcome is cr.ReconcileOutcome.CORROBORATED  # the unguarded read
+
+    with_route = cr.reconcile_facility(
+        _evap_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] disclosed evaporative towers",
+        settings=Settings(),
+        documented_blowdown=zero_blowdown,
+        route=_municipal_route(),
+    )
+    assert with_route.outcome is cr.ReconcileOutcome.ROUTE_BLIND
+
+
+def test_a_refused_prediction_leaves_the_whole_predicted_side_unset() -> None:
+    # Every archetype is IT-load-parameterized, so a facility with no IT load has no derivable
+    # account. The refusal is total and cited — a partially-refused account would read as a zero.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop claim",
+        settings=Settings(),
+        prediction_refused="test: no IT load — a fab is not IT-load-parameterized",
+        route=_municipal_route(),
+    )
+    a = rec.account
+    assert a.predicted_makeup is None
+    assert a.predicted_consumptive is None
+    assert a.predicted_blowdown is None
+    assert a.it_load is None
+    assert a.prediction_refused
+    assert rec.outcome is cr.ReconcileOutcome.ROUTE_BLIND
+
+
+def test_a_half_refused_account_is_rejected() -> None:
+    # The validator that stops a renderer reading a missing archetype figure as a real zero.
+    value = ProvenancedValue.from_reference(1.0, "MGD", citation="test")
+    with pytest.raises(ValueError, match="move together"):
+        cr.WaterAccount(
+            archetype=CoolingModelType.EVAPORATIVE_TOWER,
+            predicted_makeup=value,
+            predicted_consumptive=None,
+            predicted_blowdown=None,
+            prediction_refused="test",
+        )
+    with pytest.raises(ValueError, match="never a silent omission"):
+        cr.WaterAccount(archetype=CoolingModelType.EVAPORATIVE_TOWER)
+
+
+def test_intel_new_albany_is_route_blind_and_not_a_control() -> None:
+    rec = cr.reconcile_intel_new_albany(settings=Settings())
+    assert rec.site == "new-albany"
+    assert not rec.is_control  # a real site's real record — the constructed vector is separate
+    assert rec.outcome is cr.ReconcileOutcome.ROUTE_BLIND
+    # The claim under test is openly WET — 125 permitted cooling towers — and it still cannot be
+    # reconciled. That is the finding.
+    assert rec.claimed_archetype == "evaporative_tower"
+    assert rec.kept_archetype == "evaporative_tower"
+    assert rec.recommended_source is None
+    route = rec.account.route
+    assert route is not None
+    assert route.supply is cr.SupplyRoute.MUNICIPAL
+    assert route.discharge is cr.DischargeRoute.SANITARY_SEWER
+    assert route.instruments_blind
+    assert len(route.blind_sides) == 2  # both sides, not one
+
+
+def test_intels_construction_water_never_lands_on_documented_makeup() -> None:
+    # The registry DOES report a non-zero withdrawal for Intel; recording it as documented makeup
+    # would make a construction-dewatering figure the campus's cooling account.
+    rec = cr.reconcile_intel_new_albany(settings=Settings())
+    a = rec.account
+    assert a.documented_makeup is None
+    assert a.documented_blowdown is None
+    assert a.nonprocess_makeup is not None
+    assert a.nonprocess_makeup.value == 0.0435
+    # The disclosed ~5 MGD operating projection is a self-report on its own slot, as in B2/B3.
+    assert a.disclosed_makeup is not None
+    assert a.disclosed_makeup.value == 5.0
+    assert a.backsolved_cycles is None  # no metered pair to back-solve from
+
+
+def test_intel_prediction_is_refused_because_a_fab_has_no_it_load() -> None:
+    rec = cr.reconcile_intel_new_albany(settings=Settings())
+    refused = rec.account.prediction_refused
+    assert refused is not None
+    assert "not a data center" in refused
+    assert "IT load" in refused
+    assert rec.account.predicted_makeup is None
+
+
+# --------------------------------------------------------------------- the reference band (#1686)
+
+
+def test_reference_band_is_archetype_derived_and_internally_consistent() -> None:
+    band = cr.reference_band(settings=Settings())
+    assert band.tag == "[inference]"
+    # makeup = consumptive + blowdown, and CoC = makeup / blowdown — the archetype's own identity.
+    assert band.makeup_mgd_per_mw == pytest.approx(
+        band.consumptive_mgd_per_mw + band.blowdown_mgd_per_mw, rel=1e-3
+    )
+    assert band.makeup_mgd_per_mw / band.blowdown_mgd_per_mw == pytest.approx(
+        band.cycles_of_concentration, rel=1e-2
+    )
+
+
+def test_reference_band_says_out_loud_it_is_not_intel_derived() -> None:
+    # The issue asked for a band read off the disclosed positive control. Intel is a fab, so a
+    # makeup-per-MW figure taken from it and applied to a hyperscale campus is a category error —
+    # the artifact has to carry that refusal, not just omit the number quietly.
+    band = cr.reference_band(settings=Settings())
+    assert "NOT derived from the Intel positive control" in band.not_derived_from
+    assert "semiconductor fab" in band.not_derived_from
+    intel = cr.reconcile_intel_new_albany(settings=Settings())
+    disclosed = intel.account.disclosed_makeup
+    assert disclosed is not None
+    assert band.makeup_mgd_per_mw != disclosed.value  # nothing quietly divided Intel's 5 MGD
+
+
 # --------------------------------------------------------------------- A4 corroborators (#1680)
 
 
@@ -753,9 +1015,16 @@ def test_intel_control_corroborators_are_both_positive() -> None:
 def test_cohort_every_record_carries_resolved_corroborators() -> None:
     records = cr.reconcile_cohort(settings=Settings())
     assert all(r.corroborators is not None for r in records)
-    # The live cohort has no air permit / Tier II on file today → silent corroborators (honest).
-    live = [r for r in records if not r.is_control]
+    # The live closed-loop cohort has no air permit / Tier II on file today → silent corroborators
+    # (honest). New Albany is the exception and the demonstration: Intel's own air PTI lists 125
+    # cooling towers, so its corroborator CORROBORATES the evaporative claim — and the outcome is
+    # still route_blind, because a corroborator never changes it (the A4 discipline, #1680).
+    live = [r for r in records if not r.is_control and r.site != "new-albany"]
     assert all(r.corroborators.net_stance is cr.CorroboratorStance.SILENT for r in live)
+    intel = next(r for r in records if r.site == "new-albany" and not r.is_control)
+    assert intel.corroborators is not None
+    assert intel.corroborators.net_stance is cr.CorroboratorStance.CORROBORATES
+    assert intel.outcome is cr.ReconcileOutcome.ROUTE_BLIND
 
 
 # --------------------------------------------------------------------- artifact
@@ -788,6 +1057,18 @@ def test_committed_artifact_matches_the_resolver() -> None:
     control = [c for c in doc["candidates"] if c["is_control"]]
     assert len(control) == 1
     assert control[0]["outcome"] == "corroborated"
+    # B6 (#1686): the documented New Albany row rides alongside the constructed control, and the
+    # meta carries the archetype-derived reference band with its not-Intel-derived refusal.
+    live_new_albany = [
+        c for c in doc["candidates"] if c["site"] == "new-albany" and not c["is_control"]
+    ]
+    assert len(live_new_albany) == 1
+    assert live_new_albany[0]["outcome"] == "route_blind"
+    assert live_new_albany[0]["account"]["predicted_makeup"] is None
+    assert live_new_albany[0]["account"]["nonprocess_makeup"]["value"] == 0.0435
+    band = doc["meta"]["reference_band"]
+    assert band["tag"] == "[inference]"
+    assert "NOT derived from the Intel positive control" in band["not_derived_from"]
     # Every committed row carries the A4 corroborators block (#1680); the control's are positive.
     assert all(c.get("corroborators") is not None for c in doc["candidates"])
     assert control[0]["corroborators"]["net_stance"] == "corroborates"

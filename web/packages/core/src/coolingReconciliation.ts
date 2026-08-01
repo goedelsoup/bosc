@@ -8,8 +8,9 @@
  * site's account**. A site outside the cohort ships no feed and this returns `null` — the
  * water chapter simply renders without the reconciliation block. The feed's `caveats` are the
  * harness's discipline rules (a ceiling is not an instrument; a self-report never upgrades
- * the source; corroborators never change the outcome; a back-solved CoC is a bracket) —
- * callers MUST render them, never drop them (the `gridBackdrop.ts` rule).
+ * the source; corroborators never change the outcome; a back-solved CoC is a bracket; an
+ * instrument that cannot reach a facility returns absence, not zero) — callers MUST render
+ * them, never drop them (the `gridBackdrop.ts` rule).
  *
  * NOT client-safe (imports the node bundle loader) — pages render these plain objects.
  */
@@ -38,6 +39,11 @@ export const RECONCILE_OUTCOME_META: Record<ReconcileOutcome, { label: string; g
     label: "Gap",
     gloss:
       "no documented makeup or blowdown exists to test the claim — an open records request, never read as confirmed",
+  },
+  route_blind: {
+    label: "Out of instrument reach",
+    gloss:
+      "the facility buys its water from a municipal system and/or discharges to a sanitary sewer, so the withdrawal registry and the NPDES record cannot see its cooling account — their ~0 is jurisdiction, not measurement, and never corroborates a claim",
   },
 };
 

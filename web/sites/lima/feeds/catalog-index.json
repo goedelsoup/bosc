@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "5c42807e651a878b6d2aafd0cd28eccfe9f02cf9b9c84c94a55aac62bb0e4e97",
-  "contract_version": "1.49.0",
+  "catalog_version": "60026a79b5fd5d5b82df30ee33ec2b77aeac5c538d59bfe2b544a047c41f69b7",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -724,6 +724,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:allen-township-meetings",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "allen-township-meetings",
+      "title": "Allen Township (Hancock County) Trustee Meeting Records",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:american-township-meetings",
       "kind": "dataset",
       "site": "lima",
@@ -1073,6 +1081,14 @@
       "site": "lima",
       "local_id": "grid",
       "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:hancock-county-commissioners-meetings",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "hancock-county-commissioners-meetings",
+      "title": "Hancock County Board of County Commissioners — Meeting Records",
       "feed": "catalog"
     },
     {
@@ -1500,6 +1516,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:ohio-water-withdrawal-licking",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "ohio-water-withdrawal-licking",
+      "title": "Licking County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:ohio-waterwells-allen",
       "kind": "dataset",
       "site": "lima",
@@ -1657,6 +1681,14 @@
       "site": "lima",
       "local_id": "subdivisions",
       "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:subdivisions-findlay",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "subdivisions-findlay",
+      "title": "Hancock County Political-Subdivision Meeting-Records Registry (Findlay)",
       "feed": "catalog"
     },
     {

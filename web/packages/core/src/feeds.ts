@@ -363,30 +363,66 @@ export interface ScenarioResult {
 
 // --- cooling-reconciliation: the claim-vs-record cooling account (#1805, epic #1803 P2) ---
 
-/** The harness's four-outcome vocabulary (`bosc.hydrology.cooling_reconcile.ReconcileOutcome`). */
-export type ReconcileOutcome = "discrepancy" | "corroborated" | "reservation_conflict" | "gap";
+/** The harness's five-outcome vocabulary (`bosc.hydrology.cooling_reconcile.ReconcileOutcome`). */
+export type ReconcileOutcome =
+  | "discrepancy"
+  | "corroborated"
+  | "reservation_conflict"
+  | "gap"
+  | "route_blind";
+
+/** Where a facility's makeup comes from — i.e. whether the withdrawal registry can see it. */
+export type SupplyRoute = "self_supplied" | "municipal" | "unknown";
+
+/** Where its blowdown goes — i.e. whether the NPDES discharge record can see it. */
+export type DischargeRoute = "surface_npdes" | "sanitary_sewer" | "unknown";
+
+/** Whether the harness's instruments can reach this facility's water at all (#1686).
+ *  A `municipal` supply and/or a `sanitary_sewer` discharge puts a side of the account outside
+ *  them, and the ~0 they return there is an absence of jurisdiction, not a measurement — the
+ *  `route_blind` outcome. A renderer must carry this next to the account, never drop it. */
+export interface CoolingWaterRoute {
+  supply: SupplyRoute;
+  discharge: DischargeRoute;
+  citation: string;
+  tag: string;
+  confidence: Confidence;
+}
 
 /** A corroborator's read against the claim — never the primary outcome. */
 export type CorroboratorStance = "corroborates" | "contradicts" | "silent";
 
 /** One facility's water account (`bosc.hydrology.cooling_reconcile.WaterAccount`): the
- *  archetype-predicted side plus the FOUR structurally-distinct provenance slots — documented
+ *  archetype-predicted side plus the FIVE structurally-distinct provenance slots — documented
  *  (a metered/record instrument), reserved (a will-serve CEILING, not an instrument),
- *  disclosed (an operator self-report, never an upgrade), and the self-disclosed permit
- *  ceiling. A renderer must keep those registers apart — collapsing them is the exact
- *  failure the harness exists to prevent. */
+ *  disclosed (an operator self-report, never an upgrade), the self-disclosed permit ceiling,
+ *  and nonprocess (metered, on record, but not the cooling account). A renderer must keep
+ *  those registers apart — collapsing them is the exact failure the harness exists to
+ *  prevent. Both the predicted side and the instruments' reach can be absent; see below. */
 export interface CoolingWaterAccount {
   archetype: CoolingModel;
-  it_load: ProvenancedValue;
-  predicted_makeup: ProvenancedValue;
-  predicted_consumptive: ProvenancedValue;
-  predicted_blowdown: ProvenancedValue;
+  /** Null together with the three `predicted_*` when the prediction was refused (#1686). */
+  it_load?: ProvenancedValue | null;
+  /** The predicted side is REFUSABLE (#1686): every archetype is IT-load-parameterized, so a
+   *  facility with no IT load (a semiconductor fab, cooled by process heat rather than servers)
+   *  has no derivable account. The three move together and `prediction_refused` carries the
+   *  reason — render the refusal, NEVER substitute a zero. */
+  predicted_makeup?: ProvenancedValue | null;
+  predicted_consumptive?: ProvenancedValue | null;
+  predicted_blowdown?: ProvenancedValue | null;
+  prediction_refused?: string | null;
   documented_makeup?: ProvenancedValue | null;
   documented_blowdown?: ProvenancedValue | null;
   reserved_makeup?: ProvenancedValue | null;
   reserved_blowdown?: ProvenancedValue | null;
   disclosed_makeup?: ProvenancedValue | null;
   disclosed_ceiling?: ProvenancedValue | null;
+  /** A documented, metered withdrawal that is on record but is NOT the cooling account under
+   *  test (#1686 — Intel's construction-phase groundwater). A fifth register: never render it
+   *  as makeup, and never fold it into the documented slots. */
+  nonprocess_makeup?: ProvenancedValue | null;
+  /** Whether the instruments can reach this facility's water at all (#1686). */
+  route?: CoolingWaterRoute | null;
   disclosed_cycles?: ProvenancedValue | null;
   /** Always an `[inference]` bracket, never a headline scalar (the carried discipline). */
   backsolved_cycles?: ProvenancedValue | null;

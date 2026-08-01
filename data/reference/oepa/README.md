@@ -29,10 +29,11 @@ that reads it.
   (from `watermark.hydrology.cooling_models`) vs the DOCUMENTED makeup (A1 withdrawal) /
   blowdown (A2 discharge), a back-solved cycles-of-concentration (an `[inference]`
   bracket) where both are on record, and an `outcome` per facility — `discrepancy` /
-  `corroborated` / `gap` — with a recommendation and, for a gap, a C2 records-request
-  `lead` payload. Each record also carries the A4 `corroborators` block (air-permit
-  cooling-tower PM + Tier II chemistry — `watermark.hydrology.cooling_corroborators`).
-  Regenerate with `watermark cooling-reconcile --write`
+  `corroborated` / `reservation_conflict` / `route_blind` / `gap` — with a recommendation
+  and, for every outcome whose move is a records request, a C2 `lead` payload. Each record
+  also carries the A4 `corroborators` block (air-permit cooling-tower PM + Tier II chemistry
+  — `watermark.hydrology.cooling_corroborators`), and its `meta` carries the per-IT-MW
+  `reference_band`. Regenerate with `watermark cooling-reconcile --write`
   (`watermark.hydrology.cooling_reconcile`).
 
 ## Method & the gating fact
@@ -63,9 +64,12 @@ Deliberately **out** of the current cohort, and why:
 - **Facilities whose cooling archetype is still `unknown`** (e.g. Troy-Piqua's Project
   Klondike, pending #1486; Sidney's Project Galaxy) — there is no archetype claim to
   test yet; they are handled in per-site B-review.
-- **Sites with no pinned `SiteFacility`** (e.g. New Albany / Intel, the epic's
-  openly-evaporative positive control) — they enter automatically once B-review pins a
-  facility + cooling archetype on the profile.
+- **Sites with no pinned `SiteFacility`** — they enter automatically once B-review pins a
+  facility + cooling archetype on the profile. **New Albany / Intel** is the deliberate
+  exception (B6, #1686): it still pins no facility — `SiteFacility.kind` admits `data_center`
+  and `federal_installation`, and a semiconductor fab is neither, so pinning Intel would size a
+  chip fab as a campus — but its record is reconciled explicitly as a live row anyway, because
+  what it establishes is about the harness rather than about Intel (below).
 
 ## The reconciliation (A3)
 
@@ -74,6 +78,9 @@ For each cohort facility, `cooling-reconciliation.yaml` runs the pinned
 get the **predicted** makeup/blowdown for the claim, reads the **documented** makeup (A1
 withdrawal registry) and blowdown (A2 discharge coverage) where records exist, and
 classifies the reconciliation:
+
+Where a facility's water is outside the instruments' reach entirely, the classification is
+`route_blind` and the predicted side may be refused outright — see the B6 section below.
 
 - **discrepancy** — a low-water claim (`closed_loop_dry`) contradicted by documented
   flow ≫ its ~0 prediction (or over-cycling even vs a wet claim). Recommends
@@ -110,12 +117,57 @@ permitted ceiling, not metered use (B3 #1683). The seams auto-activate when the 
 is a reviewed B1–B6 edit landed with the instrument cited — the reconciliation record is
 the evidence packet for that edit.
 
-**The Intel row is a constructed positive control** (`is_control: true`; exemplar New
-Albany / Intel, openly evaporative, ~125 cooling towers): an evaporative facility whose
-documented water equals its evaporative-tower prediction, which the harness must classify
-`corroborated` — **not** a false `discrepancy` for using a lot of water. It is a
-calibration vector built into the harness, **not** documented Intel data, and **not** a
-registered site (New Albany carries no pinned `SiteFacility` — that is B6 #1686's work).
+**The Intel control row is constructed** (`is_control: true`; exemplar New Albany / Intel,
+openly evaporative, ~125 cooling towers): an evaporative facility whose documented water
+equals its evaporative-tower prediction, which the harness must classify `corroborated` —
+**not** a false `discrepancy` for using a lot of water. It is a calibration vector built into
+the harness, **not** documented Intel data.
+
+### `route_blind` — when the instruments cannot reach the facility (B6, #1686)
+
+B6 went looking for the real Intel record to replace that constructed vector and established
+that it cannot: Ohio One is a **semiconductor fab** (so every IT-load-parameterized archetype
+refuses to predict for it), it does **not operate until 2030–31**, and — the part that
+generalizes — its makeup will be **purchased City of Columbus water** while its process
+wastewater goes to the **Columbus sanitary sewer**.
+
+That puts both sides of its account outside the instruments this harness reads. The withdrawal
+registry meters withdrawals **from waters of the state**, so a purchased supply is the seller's
+withdrawal and never appears; a discharge to a POTW has no NPDES outfall, so no DMR exists.
+**Both return ~0 by construction** — and the classifier was reading that ~0 as "documented ≈ 0 →
+*corroborated dry*". The same county proves it independently: the **operating** Amazon Data
+Services campus at 2570 Beech Rd (WWFRP 03401) reports **0.02 MG for all of 2024**. Essentially
+the entire closed-loop cohort is municipally supplied, so this would have silently upgraded
+every one of their claims to document-grade.
+
+So each record can carry a cited **`route`** (`supply`: self_supplied / municipal / unknown;
+`discharge`: surface_npdes / sanitary_sewer / unknown) and a fifth outcome:
+
+- **route_blind** — a ~0 from an instrument that cannot reach the facility is an *absence of
+  jurisdiction*, not a measurement. The guard invalidates a **negative** read only: a documented
+  flow is still a `discrepancy`, a reservation ceiling is still a `reservation_conflict`, and a
+  wet claim corroborated by real documented water is still `corroborated`. The pin is **kept**,
+  and the records request is re-aimed at the holder that actually meters the campus (the City's
+  water-service consumption record + the industrial pretreatment / IU permit).
+
+Two slots serve it. **`nonprocess_makeup`** carries a documented, metered withdrawal that *is*
+on record but is **not** the cooling account — Intel's **0.0435 MGD** of construction-phase
+groundwater (WWFRP 03498; ~89% returned, hydrostatic-test coverage held by Bechtel, peaking in
+**May** while July–August are the year's lowest, the inverse of an evaporative signature).
+**`prediction_refused`** carries the reason the archetype account could not be derived at all,
+with `it_load` and the three `predicted_*` left null — a consumer must render the refusal and
+**never substitute a zero**.
+
+### The reference band (B6, #1686)
+
+`meta.reference_band` records the per-IT-MW evaporative screening band (makeup / consumptive /
+blowdown / CoC / WUE) the cohort's claims can be measured against. It is derived from the
+**`evaporative_tower` archetype spec's own defaults**, tagged `[inference]`, and it says out
+loud that it is **not** read off the disclosed positive control: Intel's ~5 MGD is *fab process
+water* at a pre-operational campus whose ~100+ MW is an electrical, not an IT, load, so a
+makeup-per-MW figure taken from it and applied to a hyperscale campus would be a category error.
+**No documented evaporative-hyperscale band exists in the network yet** — that gap is itself the
+finding, and the archetype figures stand in until an operating, metered evaporative campus lands.
 
 ## The independent corroborators (A4, #1680)
 

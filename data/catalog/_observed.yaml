@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-01T15:04:12.553417+00:00'
+reconciled_at: '2026-08-01T16:48:29.832893+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -172,8 +172,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: 7d7e945f998e761cd11567c074a49ee34c7afaf4099febd0cb56c44ba9deb76c
-    size_bytes: 204137
+    sha256: 9619bd306d379ff70c9a224c584f3d88e85d4602e08b744e6a10afd2493282ae
+    size_bytes: 209440
     lfs_materialized: true
     file_count: 13
     missing: []
@@ -1012,8 +1012,8 @@ entries:
     site_scope: lima-legacy
   oepa-cooling-reconciliation:
     exists: true
-    sha256: 474a02be6dd511e3b15476184256513386b93632fedf7c82e1c982eb4b8ae8ea
-    size_bytes: 58227
+    sha256: dfeb17fe61d6b131c989d98a292a3c934f313ee04fda7c7765deb50d5c62e700
+    size_bytes: 75608
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -1090,6 +1090,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:lima
+  ohio-water-withdrawal-licking:
+    exists: true
+    sha256: 8cf34a86b64849217841531050a6f1b92c83a3be72a44859fbaf5c7b73c144af
+    size_bytes: 163804
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:new-albany
   ohio-waterwells-allen:
     exists: true
     sha256: d4466bed897c8f0b96b0ab0bead9367ef6c905ff37bfc08be14e29e1b3c717ec
