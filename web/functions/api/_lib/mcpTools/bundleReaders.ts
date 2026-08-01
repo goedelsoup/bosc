@@ -25,6 +25,12 @@ import {
   parseGroupBy,
   resolveMetric,
 } from "@watermark/core/factAggregate";
+import {
+  FACT_FEEDS,
+  isFactFeed,
+  listFactCategories,
+  resolveFactCategory,
+} from "@watermark/core/factCategories";
 import type {
   Citation,
   DocumentCollectionItem,
@@ -555,6 +561,8 @@ interface GetFactsParams {
   predicate?: unknown;
   status?: unknown;
   include_evidence?: unknown;
+  fact_category?: unknown;
+  feed?: unknown;
 }
 
 /** The compact result: the tuple minus the evidence block (attached only when requested). A
@@ -590,11 +598,91 @@ function factMatchesSubject(f: FactItem, needle: string): boolean {
   );
 }
 
-/** Normalize the `predicate` param to a lowercased set (a single string or a string[]). */
-function parsePredicates(raw: unknown): Set<string> | null {
+/** Normalize a name-list param (`predicate`, `feed`) to a lowercased set — a single string or a
+ * string[]; null when nothing usable was passed. `foldUnderscores` is for the hyphenated
+ * vocabularies (feed/category names); it is NOT applied to `predicate`, whose snake_case
+ * underscores are part of the field name. */
+function parseNameSet(raw: unknown, foldUnderscores = false): Set<string> | null {
   const list = Array.isArray(raw) ? raw : typeof raw === "string" ? [raw] : [];
-  const cleaned = list.filter((x): x is string => typeof x === "string" && x.trim() !== "");
-  return cleaned.length ? new Set(cleaned.map((s) => s.trim().toLowerCase())) : null;
+  const cleaned = list
+    .filter((x): x is string => typeof x === "string" && x.trim() !== "")
+    .map((s) => {
+      const name = s.trim().toLowerCase();
+      return foldUnderscores ? name.replace(/_/g, "-") : name;
+    });
+  return cleaned.length ? new Set(cleaned) : null;
+}
+
+// --- the fact-category / feed gate (#1827) -----------------------------------------
+// `FactItem.feed` is the category axis, and the `fact_category` vocabulary
+// (@watermark/core/factCategories) is the written-down grouping over it. Both `get_facts` and
+// `aggregate_facts` gate on it through this one resolver so the two can't diverge.
+//
+// The discipline the issue exists to enforce: a constraint that names nothing real must FAIL
+// LOUDLY. An unknown category, an unknown feed, or a category/feed pair that can't both hold
+// would each otherwise return an empty result set — indistinguishable from "the corpus has no
+// such facts", for a question the corpus can answer. So each returns an error envelope carrying
+// the vocabulary instead.
+
+interface FeedGate {
+  /** The `FactItem.feed` values a fact must be projected from; null ⇒ unconstrained. */
+  feeds: Set<string> | null;
+  /** A ready-to-return envelope when the caller named a vocabulary that doesn't exist. */
+  error: McpContent[] | null;
+}
+
+const UNCONSTRAINED: FeedGate = { feeds: null, error: null };
+
+/** An error envelope shaped like `unknownMetric`: name the miss, hand back the vocabulary. */
+function vocabularyError(row: Record<string, unknown>): FeedGate {
+  return {
+    feeds: null,
+    error: governedContent({ results: [row], token_estimate: 0, truncated: false, next_cursor: null }),
+  };
+}
+
+function resolveFeedGate(p: { fact_category?: unknown; feed?: unknown }): FeedGate {
+  const categoryRaw = typeof p.fact_category === "string" ? p.fact_category.trim() : "";
+  const feedNames = parseNameSet(p.feed, true);
+  if (!categoryRaw && !feedNames) return UNCONSTRAINED;
+
+  let allowed: Set<string> | null = null;
+
+  if (categoryRaw) {
+    const category = resolveFactCategory(categoryRaw);
+    if (!category) {
+      return vocabularyError({
+        error: `unknown fact_category "${categoryRaw}"`,
+        available_categories: listFactCategories(),
+        hint: isFactFeed(categoryRaw)
+          ? `"${categoryRaw}" is a source feed, not a category — pass it as \`feed\` instead.`
+          : "Or filter on the exact source feed with `feed`.",
+      });
+    }
+    allowed = new Set(category.feeds);
+  }
+
+  if (feedNames) {
+    const unknown = [...feedNames].filter((f) => !isFactFeed(f));
+    if (unknown.length) {
+      return vocabularyError({
+        error: `unknown fact feed${unknown.length > 1 ? "s" : ""} ${unknown.map((f) => `"${f}"`).join(", ")}`,
+        available_feeds: FACT_FEEDS,
+        hint: "Or filter on the grouped vocabulary with `fact_category`.",
+      });
+    }
+    // Both given ⇒ AND, like every other filter here. An impossible pair is a contradiction,
+    // not an empty corpus, so say so rather than returning zero rows.
+    allowed = allowed ? new Set([...allowed].filter((f) => feedNames.has(f))) : feedNames;
+    if (!allowed.size) {
+      return vocabularyError({
+        error: `fact_category "${categoryRaw}" and feed ${[...feedNames].map((f) => `"${f}"`).join(", ")} cannot both hold`,
+        available_categories: listFactCategories(),
+      });
+    }
+  }
+
+  return { feeds: allowed, error: null };
 }
 
 /** A fact's evidence block as the uniform citation object (#1584). `evidence.citation` is the
@@ -637,13 +725,20 @@ export async function handleGetFacts(params: unknown, requestUrl: string): Promi
   // `subject` matches flexibly (case-insensitive substring over the key + label + kind) so a
   // caller can pass a human subject ("Allen County", "facility") without knowing the key grammar.
   const subject = typeof p.subject === "string" && p.subject.trim() ? p.subject.trim().toLowerCase() : null;
-  const predicates = parsePredicates(p.predicate);
+  const predicates = parseNameSet(p.predicate);
   const status = typeof p.status === "string" && p.status.trim() ? p.status.trim().toLowerCase() : null;
   const includeEvidence = p.include_evidence === true;
   const { knobs, offset } = governanceOf(p as Record<string, unknown>);
 
+  // Resolved BEFORE the fetch: a constraint that names nothing real is answered with the
+  // vocabulary, never with an empty page of real facts (#1827).
+  const gate = resolveFeedGate(p);
+  if (gate.error) return gate.error;
+  const gateFeeds = gate.feeds;
+
   let facts = await fetchFeed<FactItem[]>("facts", requestUrl);
 
+  if (gateFeeds) facts = facts.filter((f) => gateFeeds.has(f.feed.toLowerCase()));
   if (subject) facts = facts.filter((f) => factMatchesSubject(f, subject));
   if (predicates) facts = facts.filter((f) => predicates.has(f.predicate.toLowerCase()));
   if (status) facts = facts.filter((f) => f.status.toLowerCase() === status);
@@ -676,6 +771,8 @@ interface AggregateFactsParams {
   group_by?: unknown;
   subject?: unknown;
   status?: unknown;
+  fact_category?: unknown;
+  feed?: unknown;
 }
 
 /** The unknown-metric envelope: name the miss and hand back the vocabulary the caller can use. */
@@ -709,7 +806,14 @@ export async function handleAggregateFacts(params: unknown, requestUrl: string):
   const subject = typeof p.subject === "string" && p.subject.trim() ? p.subject.trim().toLowerCase() : null;
   const status = typeof p.status === "string" && p.status.trim() ? p.status.trim().toLowerCase() : null;
 
+  // The same category/feed gate get_facts uses — the two share the whole pre-filter pair
+  // (#1827), so a total and the tuples behind it are always taken over the same rows.
+  const gate = resolveFeedGate(p);
+  if (gate.error) return gate.error;
+  const gateFeeds = gate.feeds;
+
   let facts = await fetchFeed<FactItem[]>("facts", requestUrl);
+  if (gateFeeds) facts = facts.filter((f) => gateFeeds.has(f.feed.toLowerCase()));
   if (subject) facts = facts.filter((f) => factMatchesSubject(f, subject));
   if (status) facts = facts.filter((f) => f.status.toLowerCase() === status);
 

@@ -3,6 +3,8 @@
 // /network/connect page so the tool reference table is generated from the real schemas,
 // not duplicated by hand.
 
+import { FACT_CATEGORIES, FACT_FEEDS, factCategorySummary } from "./factCategories";
+
 /** A JSON-Schema property node. `items` is set on `type: "array"` params (e.g. the
  * get_document `fields`/`sections` projections); `properties` on a nested `type: "object"`
  * param (e.g. the search_corpus `filters` facet bag, #1582). */
@@ -133,18 +135,38 @@ const PASSAGE_DEDUP_PROPS = {
   },
 } as const;
 
-// Structured facet filters for search_corpus (#1582) — a bag of AND-combined constraints over
-// fields the ask-index ALREADY carries, so the ranked pool is narrowed before scoring. The
-// canonical feed key is `feed`; `collection` here (and the legacy top-level param) is accepted as
-// an alias but names a BUNDLE FEED, not a document-collection slug — reconciling the historical
-// collision with get_documents' `collection`. Un-indexed facets (county, agency, permit_number,
-// document_type, entity, project/campus, fact_category) are deliberately absent — they need
-// upstream ask-index enrichment (packages/core/src/askIndex.ts) and are tracked separately.
+// The fact-category axis (#1827). `fact_category` is the written-down grouping over
+// `FactItem.feed`; `feed` is the exact underlying axis for a caller who wants one source. Both
+// live on get_facts AND aggregate_facts (they share the same pre-filter pair), and both are
+// validated against the vocabulary in `factCategories.ts` — an unrecognized value returns that
+// vocabulary rather than an empty result set, so a mistyped constraint can never read as "the
+// corpus has no such facts". The enum + the per-category feed list are generated from that one
+// registry, so schema and filter cannot drift.
+const FACT_CATEGORY_PROP: ToolProperty = {
+  type: "string",
+  enum: FACT_CATEGORIES.map((c) => c.key),
+  description: `Restrict to one fact category — a named grouping over the source feeds each fact was projected from: ${factCategorySummary()}. Note \`economics-demand-pressure\` is grouped under \`energy\`, not \`economics\`: its predicates are grid quantities (demand_share_pct, load_factor, state_retail_sales_gwh, price pressure), not labor-market ones. \`facility-power\` (what the facility draws) is kept separate from \`energy\` (what power costs the public). An unrecognized value returns the vocabulary, not an empty set. For one exact source feed instead of a grouping, use \`feed\`.`,
+};
+
+const FACT_FEED_PROP: ToolProperty = {
+  type: "array",
+  items: { type: "string", enum: FACT_FEEDS },
+  description: `Restrict to these exact source feeds — the \`feed\` each fact carries (${FACT_FEEDS.join(", ")}). A single string is also accepted. The precise axis under \`fact_category\`; combined with it they AND, and an impossible pair is reported as a contradiction rather than returning nothing.`,
+};
+
+// Structured facet filters for search_corpus (#1582, extended by #1691) — a bag of AND-combined
+// constraints over fields the ask-index ALREADY carries, so the ranked pool is narrowed before
+// scoring. The canonical feed key is `feed`; `collection` here (and the legacy top-level param) is
+// accepted as an alias but names a BUNDLE FEED, not a document-collection slug — reconciling the
+// historical collision with get_documents' `collection`. `fact_category` is deliberately NOT a
+// facet here (#1827): the `facts` feed is not in the ask index, so the constraint would filter on
+// a field no unit carries and silently return nothing. It lives on get_facts / aggregate_facts,
+// where the field is real, and the description below points there.
 const SEARCH_FILTERS_PROP = {
   filters: {
     type: "object",
     description:
-      "Structured facet constraints over indexed corpus fields — all optional and AND-combined, applied before ranking so unrelated feeds/records don't crowd the results. Facets: site, feed (alias collection), source_kind, verified, date_from, date_to, confidence, county, agency, permit_number, document_type, entity, project (alias campus). Every one is a real indexed field: a unit whose feed carries no value for a facet is EXCLUDED when you set it, so combining a narrow facet with a broad one can legitimately return nothing. NOTE: `feed`/`collection` here is a BUNDLE FEED, not a document-collection slug — for oepa/recorder/aedg collections use get_documents. For fact categories (economics / energy / water / air) use get_facts — normalized facts are not part of this index.",
+      "Structured facet constraints over indexed corpus fields — all optional and AND-combined, applied before ranking so unrelated feeds/records don't crowd the results. Facets: site, feed (alias collection), source_kind, verified, date_from, date_to, confidence, county, agency, permit_number, document_type, entity, project (alias campus). Every one is a real indexed field: a unit whose feed carries no value for a facet is EXCLUDED when you set it, so combining a narrow facet with a broad one can legitimately return nothing. NOTE: `feed`/`collection` here is a BUNDLE FEED, not a document-collection slug — for oepa/recorder/aedg collections use get_documents. For fact categories (economics / energy / facility-power / water / air / platform) use the `fact_category` filter on get_facts / aggregate_facts — normalized facts are not part of this index.",
     properties: {
       site: {
         type: "string",
@@ -719,7 +741,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "get_facts",
     description:
-      'Retrieve normalized (subject, predicate, value, unit, status) FACTS — the numbers a site\'s provenanced feeds already carry (economics, energy, water/cooling, air, facility power), flattened into one queryable table so a fact question is a tiny retrieval + arithmetic instead of a whole-record pull. Use it to look up or compute over specific quantities (e.g. genset_count × genset_rating → backup MW; county employment; demand_share_pct); filter by subject and/or predicate. `subject` matches flexibly (case-insensitive, over the `<kind>:<id>` key + human label + kind — e.g. "Allen County", "facility", "air-scenario"); `predicate` takes one name or a list of the exact snake_case field names. Returns compact tuples by default (subject, predicate, value, unit, status, low/high band); status is the evidence tag (verified|inference|reference|open). NOT a document fetch and NOT search — for the record behind a fact, take its subject into search_corpus/get_document. Pass include_evidence=true to attach each fact\'s provenance — both the raw `evidence` block (source, source_kind, page, citation, verified) and the same structured `citation` object the other tools return; note page is null/absent where the source carries none — never invented, and for most facts the ONLY provenance is a free-text string, which rides in `citation.note` and becomes its label. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds evidence then the band), cursor, intent.',
+      'Retrieve normalized (subject, predicate, value, unit, status) FACTS — the numbers a site\'s provenanced feeds already carry (economics, energy, water/cooling, air, facility power), flattened into one queryable table so a fact question is a tiny retrieval + arithmetic instead of a whole-record pull. Use it to look up or compute over specific quantities (e.g. genset_count × genset_rating → backup MW; county employment; demand_share_pct); filter by subject, predicate, and/or `fact_category` (economics | energy | facility-power | water | air | platform — the grouping over the source feeds; `feed` takes one exact source instead). `subject` matches flexibly (case-insensitive, over the `<kind>:<id>` key + human label + kind — e.g. "Allen County", "facility", "air-scenario"); `predicate` takes one name or a list of the exact snake_case field names. Returns compact tuples by default (subject, predicate, value, unit, status, low/high band); status is the evidence tag (verified|inference|reference|open). NOT a document fetch and NOT search — for the record behind a fact, take its subject into search_corpus/get_document. Pass include_evidence=true to attach each fact\'s provenance — both the raw `evidence` block (source, source_kind, page, citation, verified) and the same structured `citation` object the other tools return; note page is null/absent where the source carries none — never invented, and for most facts the ONLY provenance is a free-text string, which rides in `citation.note` and becomes its label. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds evidence then the band), cursor, intent.',
     inputSchema: {
       type: "object",
       properties: {
@@ -740,6 +762,8 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
           description:
             "Filter by evidence status: verified (document/live), inference (assumption/derived), reference (published spec), open (asserted but unquantified).",
         },
+        fact_category: FACT_CATEGORY_PROP,
+        feed: FACT_FEED_PROP,
         include_evidence: {
           type: "boolean",
           description:
@@ -755,7 +779,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "aggregate_facts",
     description:
-      'Compute a deterministic GROUPED TOTAL over the facts feed server-side — sum / count / mean / product — so you never pull every row just to total something. Returns one row per group with the value, unit, a human-readable `derivation` (e.g. "114 × 2.75 MW"), a `confidence`, a `caveat`, and the `evidence_ids` (the <subject>/<predicate> handles) that fed it. `metric` is either a registered recipe (backup_generation_capacity_mw = genset_count × genset_rating; facility_draw_mw = it_load × PUE) or the generic grammar sum:<predicate> | mean:<predicate> | count:<predicate> | product:<a>,<b> (e.g. "sum:annual_avg_employment"). Call it with NO metric to list the registered metrics (discovery). `group_by` partitions the total: project/subject (per facility/county/scenario — the default), kind (subject_kind), feed, or all/site (one whole-site total). A product is computed per subject then summed up to a coarser group. Optionally pre-filter inputs by `subject` (flexible match, like get_facts) and `status`. Status/confidence take the weakest input; a product is never reported stronger than inference (a derivation is not a document). For the raw tuples behind a total, use get_facts with the same subject/predicate.',
+      'Compute a deterministic GROUPED TOTAL over the facts feed server-side — sum / count / mean / product — so you never pull every row just to total something. Returns one row per group with the value, unit, a human-readable `derivation` (e.g. "114 × 2.75 MW"), a `confidence`, a `caveat`, and the `evidence_ids` (the <subject>/<predicate> handles) that fed it. `metric` is either a registered recipe (backup_generation_capacity_mw = genset_count × genset_rating; facility_draw_mw = it_load × PUE) or the generic grammar sum:<predicate> | mean:<predicate> | count:<predicate> | product:<a>,<b> (e.g. "sum:annual_avg_employment"). Call it with NO metric to list the registered metrics (discovery). `group_by` partitions the total: project/subject (per facility/county/scenario — the default), kind (subject_kind), feed, or all/site (one whole-site total). A product is computed per subject then summed up to a coarser group. Optionally pre-filter inputs by `subject` (flexible match, like get_facts), `status`, and `fact_category`/`feed` — the same category gate get_facts uses, so a total and the tuples behind it are always taken over the same rows. Status/confidence take the weakest input; a product is never reported stronger than inference (a derivation is not a document). For the raw tuples behind a total, use get_facts with the same subject/predicate.',
     inputSchema: {
       type: "object",
       properties: {
@@ -779,6 +803,8 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
           enum: ["verified", "inference", "reference", "open"],
           description: "Restrict the inputs to this evidence status before aggregating.",
         },
+        fact_category: FACT_CATEGORY_PROP,
+        feed: FACT_FEED_PROP,
         site: { type: "string", description: "Site slug (default: active site)" },
         ...GOVERNANCE_PROPS,
       },
