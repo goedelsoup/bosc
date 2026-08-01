@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { hasFeed, loadFeed, manifestOrNull } from "./bundle";
 import {
   FACT_CATEGORIES,
+  FACT_CATEGORY_INPUTS,
   FACT_FEEDS,
   factCategoryOf,
   factCategorySummary,
@@ -83,7 +84,17 @@ describe("factCategories — the written-down grouping over FactItem.feed (#1827
     expect(resolveFactCategory("facility_power")?.key).toBe("facility-power");
     expect(resolveFactCategory("  water  ")?.key).toBe("water");
     expect(resolveFactCategory("water-cooling")?.key).toBe("water"); // the name #1691 published
-    expect(resolveFactCategory("greenops")?.key).toBe("platform");
+    expect(resolveFactCategory("power")?.key).toBe("facility-power");
+  });
+
+  it("advertises in the schema enum only inputs it will actually resolve", () => {
+    // The tool-schema `fact_category` enum is FACT_CATEGORY_INPUTS; every value it offers must
+    // resolve, or a schema-guided caller could pick a value the handler then rejects (#1827 review).
+    for (const input of FACT_CATEGORY_INPUTS) {
+      expect(resolveFactCategory(input), `enum value "${input}" resolves`).not.toBeNull();
+    }
+    expect(FACT_CATEGORY_INPUTS).toContain("water-cooling"); // the #1691-published alias is offered
+    expect(FACT_CATEGORY_INPUTS).not.toContain("greenops"); // a feed name is never advertised as a category
   });
 
   it("returns null for anything it doesn't know — never a silent nearest match", () => {
@@ -94,6 +105,10 @@ describe("factCategories — the written-down grouping over FactItem.feed (#1827
     expect(resolveFactCategory("economics-baseline")).toBeNull();
     expect(isFactFeed("economics-baseline")).toBe(true);
     expect(isFactFeed("no-such-feed")).toBe(false);
+    // `greenops` is `platform`'s only feed today — but it is a feed name, so it must fail like any
+    // other, not resolve to the grouping (which would silently broaden if platform grows) (#1827 review).
+    expect(resolveFactCategory("greenops")).toBeNull();
+    expect(isFactFeed("greenops")).toBe(true);
   });
 
   it("publishes the vocabulary a caller gets back on a miss", () => {
