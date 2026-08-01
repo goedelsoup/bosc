@@ -2,9 +2,9 @@
   "site": "ottawa",
   "bundle_version": "1.0.0",
   "contract_version": "1.49.0",
-  "generated_at": "2026-07-31T20:49:48+00:00",
+  "generated_at": "2026-08-01T01:38:08+00:00",
   "feed_count": 29,
-  "row_total": 416,
+  "row_total": 420,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -23,7 +23,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 3
+      "count": 4
     },
     {
       "name": "timeline",
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 55
+      "count": 58
     },
     {
       "name": "geo/campus",

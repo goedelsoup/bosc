@@ -1,0 +1,135 @@
+doc_id: warn-rk-industries-ottawa-2024-05-16
+source_path: data/documents/ottawa/warn/RKIndustries.pdf
+kind: warn
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+- 1
+dpi: 300
+method: >-
+  VISION transcription from a 300 DPI render (pypdfium2), not a text-layer copy. Unlike the
+  Findlay WARN pair (#1460), which are digitally generated letters, this notice is a SCAN: the
+  PDF's text layer holds exactly one string — "Received: 5/16/2024 @ 1:18pm" on page 1, a digital
+  receipt stamp overlaid on the scanned page — and nothing at all on page 2. Every other figure
+  and quotation below was read from the image. Both pages were re-read at 300 DPI against the
+  original 200 DPI pass before committing; the statute cite, the situs, the cease date and all
+  three handwritten headcounts were confirmed on that second read.
+source_text_excerpt: >-
+  "Received: 5/16/2024 @ 1:18pm" — the complete extractable text layer of the document.
+
+layoff_notice:
+  confidence: high
+  warnings:
+  - >-
+    ALL THREE HEADCOUNT FIGURES IN THIS INSTRUMENT ARE HANDWRITTEN, and the printed document
+    left each of them blank: the "approximately __ employees" figure in the letter body (80),
+    the General Labor row of the position schedule (68), and the schedule's TOTAL (80). The
+    typed positions on the schedule sum to 12, and 68 + 12 = 80, so the three agree with each
+    other and with the ODJFS index row — but they are a hand annotation on a scan, read by
+    vision, not printed text. Treat 80 as the employer's stated approximation, which is what the
+    letter itself calls it, and never as a precise payroll count.
+  - >-
+    The letter is a notice of an EXPECTED closure that the employer expressly qualifies: "Despite
+    the anticipated closure, the Company is also considering a number of options, including a
+    potential sale, merger, or other strategic transaction, although no definite plans in that
+    regard have emerged," and the cease date is conditioned — "Absent a transaction or
+    implementation of another viable strategic alternative." Nothing in the corpus confirms the
+    closure actually occurred on 2024-07-14, or that a sale did not intervene. The DISPOSITION IS
+    [open]; do not state the plant closed as a completed fact on this document alone.
+  - >-
+    The county attribution ("Ottawa/Putnam") and the notice ID come from the ODJFS 2024 public
+    notice list, not from the letter — the letter names the city and ZIP but never the county.
+  - >-
+    Ohio's mini-WARN statute (R.C. 4113.31) took effect 2025-09-30, AFTER this filing. This
+    notice cites the older R.C. 4141.28(C) notice provision alongside the federal Act, which is
+    what a 2024 Ohio filing would cite. Do not read the absence of a 4113.31 citation as a defect.
+  statute:
+  - Worker Adjustment and Retraining Notification Act ("WARN"), 29 U.S.C. § 2101 et seq.
+  - Ohio Rev. Code Ann. § 4141.28(C)
+  filed_with: Ohio Department of Job and Family Services (ODJFS)
+  addressee: >-
+    Breeyn Handberg, Ohio Department of Job & Family Services Dislocated Worker Unit (Rapid
+    Response Unit), 30 E Broad St, Columbus, OH 43215
+  delivery: VIA FEDEX and EMAIL (rapdresp@jfs.ohio.gov)
+  filed_by: RK Industries, Inc., P.O. Box 306 — 725 North Locust Street, Ottawa, Ohio 45875
+  signatory: Anne Woodyard, President
+  notice_date: '2024-05-16'
+  received_stamp: 'Received: 5/16/2024 @ 1:18pm'
+  odjfs_notice_id: 007-24-042
+  subject_line: Expected Closure of Operations
+  facility_name: RK Industries, Inc. — Ottawa plant
+  employer: RK Industries, Inc.
+  site_address: 725 N Locust St, Ottawa, OH 45875
+  city: Ottawa
+  county: Putnam
+  contact_phone: (419) 523-5001
+  action: facility closing (plant)
+  scope: >-
+    "its automotive production stamping, robotic mig welding and spot welding business located at
+    725 N Locust St, Ottawa, OH 45875"
+  permanent: true
+  employees_affected: ~80
+  final_day_of_operations: '2024-07-14'
+  union: null
+  represented_employees: 0
+  stated_rationale:
+  - '"ongoing economic difficulties"'
+  employer_qualification: >-
+    "Despite the anticipated closure, the Company is also considering a number of options,
+    including a potential sale, merger, or other strategic transaction, although no definite
+    plans in that regard have emerged."
+  employee_notification: >-
+    "All affected employees have been notified of their separation dates and that their
+    separation from employment will be permanent. The affected employees will receive
+    compensation and benefits for any period of time covered by federal or state WARN."
+  note: >-
+    [verified] The only WARN notice filed from Putnam County, Ohio in the 2024-2026 window — one
+    hit across the 241 notices on the ODJFS 2024, 2025 and 2026 public lists (#1423). An 80-job
+    automotive stamping and robotic-welding plant inside the Village of Ottawa, noticed for
+    closure 2024-05-16 and expected to cease 2024-07-14. It is the second industrial closure this
+    site's record carries, twenty-two years after the Sylvania/GTE/Philips CRT works went dark on
+    2002-12-31, and its significance here is directional: Ottawa's industrial story is a
+    SUBTRACTION story. This is emphatically NOT a data-center datum — no arrival, no siting, no
+    assembly — and it is committed because the sweep that looked for an arrival found a departure.
+    RK Industries does not appear in the county's ICIS-Air universe, so the closure leaves no
+    trace in that dataset either. The building stands on Putnam County parcel 320841200000
+    (2.31 ac, use class 330 industrial, owner of record PATRICK HOLDINGS INC of Leipsic); at that
+    size it is not a data-center site under any siting model.
+
+# --- "TOTAL NUMBER OF EMPLOYEES AFFECTED BY CLOSURE", p. 2, verbatim -----------------------------
+# "All Employee Positions - Expected Separation Date of 7-14-24". The General Labor count and the
+# TOTAL are handwritten; every other count is printed.
+impacted_positions:
+- {title: General Labor, count: 68, transcription: handwritten}
+- {title: 'Supervisor, Production', count: 1, transcription: printed}
+- {title: Production Scheduler, count: 1, transcription: printed}
+- {title: Quality Inspector, count: 1, transcription: printed}
+- {title: Customer Service Representative, count: 2, transcription: printed}
+- {title: 'Supervisor, Shipping', count: 1, transcription: printed}
+- {title: Accounts Payable Clerk, count: 1, transcription: printed}
+- {title: Inventory Clerk, count: 1, transcription: printed}
+- {title: Shipping & Receiving Clerk, count: 1, transcription: printed}
+- {title: Payroll Clerk, count: 1, transcription: printed}
+- {title: Plant Manager, count: 1, transcription: printed}
+- {title: 'Supervisor, Maintenance', count: 1, transcription: printed}
+grand_total: 80
+grand_total_check: >-
+  Printed positions sum to 12; 68 (handwritten General Labor) + 12 = 80, matching the handwritten
+  TOTAL on the schedule, the handwritten figure in the letter body, and the ODJFS index row's
+  "Potential Number Affected: 80". Four independent readings agree.
+
+relevance:
+  tags: [verified, warn, odjfs, ottawa, putnam-county, rk-industries, plant-closure, labor,
+         automotive, stamping, dislocation]
+  note: >-
+    Found by the #1423 facility-posture sweep while closing the ODJFS WARN check, which the issue
+    framed as a negative to close. It did not close: the record system that would have shown a
+    data center arriving showed a manufacturer leaving. That is the finding, and it belongs to
+    this site's record and story domains, not to a SiteFacility — Ottawa's profile keeps
+    facilities=() and its facility readiness domain stays locked.
+  cross_refs:
+  - data/extracted/ottawa/data-centers.md
+  - data/extracted/ottawa/bosc-site-footprint.yaml
+  - data/documents/ottawa/warn/filename-map.yaml

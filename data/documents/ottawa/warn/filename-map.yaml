@@ -1,0 +1,39 @@
+meta:
+  subject: >-
+    ODJFS WARN Act notices — Village of Ottawa, Putnam County (download manifest, issue 1423)
+  generated_at: '2026-07-31'
+  policy: >-
+    non-destructive — the file keeps the basename the Ohio DAM serves it under. The canonical
+    name and the content-verified date below are read from the document itself (the received
+    stamp from its thin text layer, the letter body from a 200-DPI render), never from the
+    filename, the URL slug, or the ODJFS index row.
+
+documents:
+- filename: RKIndustries.pdf
+  canonical_name: >-
+    RK Industries, Inc. — WARN Act notice of expected closure of operations, 725 N Locust St,
+    Ottawa OH 45875; letter dated May 16, 2024 from Anne Woodyard, President, to Breeyn
+    Handberg, Ohio Department of Job & Family Services Dislocated Worker Unit (Rapid Response
+    Unit); ODJFS notice ID 007-24-042. 2 pp. (letter + "Total Number of Employees Affected by
+    Closure" position schedule).
+  content_verified_date: '2024-05-16'   # letter date + the "Received: 5/16/2024 @ 1:18pm" stamp; the two agree
+  odjfs_notice_id: 007-24-042
+  permit_id: null
+  source_url: https://dam.assets.ohio.gov/image/upload/jfs.ohio.gov/warn/WARN%202024/RKIndustries.pdf
+  sha256: b9030764e9c3e5808e1c4041e57106cdf2a14cd4c1c6b8dac5c21f27a5234e51
+  bytes: 86956
+  content_type: application/pdf
+  fetched_at: '2026-07-31'
+  status: downloaded
+  note: >-
+    As-received ODJFS/DAM name kept. **This one is a SCAN, unlike the Findlay pair** — the two
+    pages carry no body text layer at all; `pypdf` returns only the string "Received: 5/16/2024
+    @ 1:18pm" from page 1 (a digital receipt stamp overlaid on the scanned page) and nothing
+    from page 2. Everything else was read from a 200-DPI render, so the structured read is a
+    VISION transcription, not a text-layer copy, and its `dpi`/`image_pages_read` fields say so.
+    Reached from the ODJFS 2024 public notice list (the `2024_warn_notice.csv` the
+    jfs.ohio.gov archive page renders from), which is also the source of the notice ID and the
+    "Ottawa/Putnam" county attribution — the letter itself names the city but not the county.
+    The URL is the unversioned DAM path the state's own index links; the versioned form
+    resolves to the same bytes. Structured read:
+    data/extracted/ottawa/warn/rk-industries-ottawa-2024.warn.yaml (issue 1423).

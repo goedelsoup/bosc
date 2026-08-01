@@ -114,15 +114,72 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "670b17edcb48bf4d697c5fc4c2d06d3d090462f243b5fc37979c9bb55f684b2b",
-      "size_bytes": 168826,
+      "sha256": "4710cd51cdd93dab4f855e44902485ef648e3e1889886be222d0cb4895a08a88",
+      "size_bytes": 198670,
       "lfs_materialized": true,
-      "file_count": 12,
+      "file_count": 13,
       "stale": false,
       "asof": null
     },
     "citation": {
       "source": "BOSC site-onboarding discovery — verified public-record register of per-site data-center activity (Columbus/New Albany/Springfield)",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "data-centers-ottawa",
+    "title": "Ottawa / Putnam County OH — Data-Center Activity Register",
+    "scope": "extracted",
+    "collection": "ottawa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "PJM public planning queue (PlanningQueues.xml, 9,263 projects); ODJFS public WARN notices 2024/2025/2026 (241 notices, served off the Ohio DAM) and the RK Industries notice PDF; EPA ECHO ICIS-Air and CWA for FIPS 39137; EPA RSEI v234 Putnam inventory; BLS QCEW 2023 (area 39137); Putnam County GIS Parcels layer + county auditor; Village of Ottawa Highland Industrial Park page; Putnam County CIC project register; stopohiodatacenters.org Putnam County profile. All queried 2026-07-31.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:ottawa",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "data-center",
+      "affirmative-negative",
+      "facility-posture",
+      "pjm-queue",
+      "warn",
+      "odjfs",
+      "sb52",
+      "highland-industrial-park",
+      "putnam-county",
+      "ottawa",
+      "maumee",
+      "sweep"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/ottawa/data-centers.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "60d1600fd2b2c994f59005fdec86a5ebc7cbe4dd229288b9569481ae3401d076",
+      "size_bytes": 29844,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "PJM public planning queue (PlanningQueues.xml, 9,263 projects); ODJFS public WARN notices 2024/2025/2026 (241 notices, served off the Ohio DAM) and the RK Industries notice PDF; EPA ECHO ICIS-Air and CWA for FIPS 39137; EPA RSEI v234 Putnam inventory; BLS QCEW 2023 (area 39137); Putnam County GIS Parcels layer + county auditor; Village of Ottawa Highland Industrial Park page; Putnam County CIC project register; stopohiodatacenters.org Putnam County profile. All queried 2026-07-31.",
       "source_kind": "reference",
       "page": null,
       "pages": null,
@@ -182,6 +239,61 @@
     },
     "citation": {
       "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "legal-datacenter-legislation-hb983-3744",
+    "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
+    "external_url": null,
+    "license": "Public record (Ohio legislative document)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-31",
+    "tags": [
+      "data-centers",
+      "legislation",
+      "r.c.-3744",
+      "r.c.-9.66",
+      "public-records"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.analysis.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.digest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "872eddc22e6d6c2f2fe9e77c90098205194ecfdb54e4c31371c913a691813516",
+      "size_bytes": 33606,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -295,6 +407,61 @@
       "confidence": "medium",
       "note": "watermark subdivisions download",
       "verified": true
+    }
+  },
+  {
+    "id": "ottawa-warn",
+    "title": "Ottawa — ODJFS WARN Notice, RK Industries (Extraction)",
+    "scope": "extracted",
+    "collection": "ottawa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "One Ohio Department of Job and Family Services WARN Act notice served from the Ohio DAM's jfs.ohio.gov/warn tree — RK Industries, Inc.'s expected closure of its automotive stamping and robotic-welding operation at 725 N Locust St, Ottawa (received 2024-05-16, ODJFS notice 007-24-042). Located by reading the ODJFS 2024/2025/2026 public notice lists record-by-record (241 notices, one Putnam County hit) while closing the #1423 facility-posture sweep. Fetched 2026-07-31; per-file provenance in data/documents/ottawa/warn/filename-map.yaml. The document is a SCAN with no body text layer — the read is a 300 DPI vision transcription, not a text-layer copy.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:ottawa",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "warn",
+      "odjfs",
+      "labor",
+      "plant-closure",
+      "rk-industries",
+      "automotive",
+      "stamping",
+      "dislocation",
+      "putnam-county",
+      "ottawa"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/ottawa/warn/rk-industries-ottawa-2024.warn.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "ce97ca56aad03ecff6b7900d66370f6a8eae99b17165571dea8a2c2bdb84b6e1",
+      "size_bytes": 7848,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "One Ohio Department of Job and Family Services WARN Act notice served from the Ohio DAM's jfs.ohio.gov/warn tree — RK Industries, Inc.'s expected closure of its automotive stamping and robotic-welding operation at 725 N Locust St, Ottawa (received 2024-05-16, ODJFS notice 007-24-042). Located by reading the ODJFS 2024/2025/2026 public notice lists record-by-record (241 notices, one Putnam County hit) while closing the #1423 facility-posture sweep. Fetched 2026-07-31; per-file provenance in data/documents/ottawa/warn/filename-map.yaml. The document is a SCAN with no body text layer — the read is a 300 DPI vision transcription, not a text-layer copy.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

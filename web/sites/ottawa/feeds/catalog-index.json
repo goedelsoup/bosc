@@ -1,6 +1,6 @@
 {
   "site": "ottawa",
-  "catalog_version": "973a75e2729fe0d139c337ea1679ea9030be7cc6000cbd311025baf9926f32c9",
+  "catalog_version": "0815b28aef82a3866384c8bab337d50ec3b0dd3a736d32723375e2a222eb7cc4",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -652,6 +652,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:ottawa:data-centers-ottawa",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "data-centers-ottawa",
+      "title": "Ottawa / Putnam County OH — Data-Center Activity Register",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:ottawa:datacenter-industry",
       "kind": "dataset",
       "site": "ottawa",
@@ -844,6 +852,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:ottawa:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:ottawa:legal-records-legislation",
       "kind": "dataset",
       "site": "ottawa",
@@ -953,6 +969,14 @@
       "site": "ottawa",
       "local_id": "orc-orc",
       "title": "Ohio Revised Code — Full Text (Cited Sections + Titles)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:ottawa-warn",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "ottawa-warn",
+      "title": "Ottawa — ODJFS WARN Notice, RK Industries (Extraction)",
       "feed": "catalog"
     },
     {
@@ -1105,6 +1129,14 @@
       "site": "ottawa",
       "local_id": "ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml",
       "title": "Village of Ottawa 2025 Calendar Year Drinking Water Consumer Confidence Report",
+      "feed": "records"
+    },
+    {
+      "handle": "record:ottawa:ottawa/warn/rk-industries-ottawa-2024.warn.yaml",
+      "kind": "record",
+      "site": "ottawa",
+      "local_id": "ottawa/warn/rk-industries-ottawa-2024.warn.yaml",
+      "title": "RK Industries, Inc. — Ottawa plant",
       "feed": "records"
     },
     {
