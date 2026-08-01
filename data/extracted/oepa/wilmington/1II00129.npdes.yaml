@@ -22,8 +22,10 @@ source_text_excerpt: "50 West Town Street • Suite 700 • P.O. Box 1049 • Co
 permit:
   confidence: high
   warnings:
-  - No public notice number found in document
-  - No comment period end date found in document
+  - No public notice number, public notice date, or comment period end date found in
+    the document — it carries no public notice block at all. public_notice_date previously
+    held 2025-03-11, which is the date of the modification LETTER (retained in note),
+    not a noticed date; corrected to null (#1405 review).
   - Permit number updated from 1II00129*GD to 1II00129*HD upon modification effective
     date; recorded as the updated number per the permit text
   facility_name: Wilmington Sanitary Landfill
@@ -32,7 +34,7 @@ permit:
   applicant: City of Wilmington
   application_no: OH0131946
   public_notice_no: null
-  public_notice_date: '2025-03-11'
+  public_notice_date: null
   comment_period_end: null
   facility_address: 397 South Nelson Avenue, Wilmington, OH 45177
   discharge_address: null

@@ -22,8 +22,10 @@ source_text_excerpt: "Page 1 \n1PT00125*BD \nOhio EPA Permit No.: 1PT00125*BD \n
 permit:
   confidence: high
   warnings:
-  - No public notice number found in document
-  - No comment period end date found in document
+  - No public notice number, public notice date, or comment period end date found in
+    the document — it carries no public notice block at all. public_notice_date previously
+    held 2022-10-31, which is the ACTION date printed on the permit (retained in note),
+    not a noticed date; corrected to null (#1405 review).
   - Permit action (renewal) inferred from context, not explicitly stated
   - Station 1PT00125888 appears in Part II text but as '588' in Part I sludge table
     — possible OCR/numbering discrepancy
@@ -34,7 +36,7 @@ permit:
   applicant: Clinton County Board of Developmental Disabilities
   application_no: OH0147907
   public_notice_no: null
-  public_notice_date: '2022-10-31'
+  public_notice_date: null
   comment_period_end: null
   facility_address: 4425 State Route 730, Wilmington, Ohio, Clinton County
   discharge_address: null

@@ -45,11 +45,9 @@
     "title": "Hidden Valley Mobile Home Park",
     "confidence": "high",
     "warnings": [
-      "No public notice number found in document",
-      "No comment period end date found in document",
+      "No public notice number, public notice date, or comment period end date found in the document — it carries no public notice block at all. public_notice_date previously held 2025-07-21, which is the ACTION date printed on the permit (retained in note), recorded as a proxy by the extractor; a proxy is not a noticed date, so it is corrected to null (#1405 review).",
       "Discharge address appears same as facility address; no distinct discharge address stated",
-      "Stream network downstream of Tawawa Creek not stated in document",
-      "Action date used as public_notice_date proxy; actual public notice date not explicitly stated"
+      "Stream network downstream of Tawawa Creek not stated in document"
     ],
     "fields": {
       "facility_name": "Hidden Valley Mobile Home Park",
@@ -58,7 +56,7 @@
       "applicant": "Alexander R. Reck dba Hidden Valley MHP",
       "application_no": "OH0040657",
       "public_notice_no": null,
-      "public_notice_date": "2025-07-21",
+      "public_notice_date": null,
       "comment_period_end": null,
       "facility_address": "5880 State Route 29 East, Sidney, Ohio, Shelby County",
       "discharge_address": null,

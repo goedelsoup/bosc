@@ -22,8 +22,11 @@ source_text_excerpt: "Mike DeWine, Governor \nJon Husted, Lt. Governor \nAnne M.
 permit:
   confidence: high
   warnings:
-  - No public notice number found in document.
-  - No comment period end date found in document.
+  - No public notice number, public notice date, or comment period end date found in
+    the document — it carries no public notice block at all. public_notice_date previously
+    held 2023-05-12, which is the date of the modification LETTER (retained in note),
+    not a noticed date; corrected to null (#1405 review). The permit's real public notice
+    (No. 183881, dated 2023-05-19) is carried by its fact sheet, 1PD00013.fs.npdes.yaml.
   - Permit number on cover letter is 1PD00013*PD (prior) being changed to 1PD00013*QD
     (new/modified); recorded the new number per document body.
   facility_name: City of Wilmington WWTP
@@ -32,7 +35,7 @@ permit:
   applicant: City of Wilmington, Steven Honeycutt
   application_no: OH0028134
   public_notice_no: null
-  public_notice_date: '2023-05-12'
+  public_notice_date: null
   comment_period_end: null
   facility_address: 475 South Nelson Avenue, Wilmington, Ohio 45177, Clinton County
   discharge_address: null

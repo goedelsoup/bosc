@@ -2,9 +2,9 @@
   "site": "wilmington",
   "bundle_version": "1.0.0",
   "contract_version": "1.49.0",
-  "generated_at": "2026-08-01T09:48:49+00:00",
+  "generated_at": "2026-08-01T10:49:13+00:00",
   "feed_count": 31,
-  "row_total": 522,
+  "row_total": 519,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -37,7 +37,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 5
+      "count": 2
     },
     {
       "name": "entities",

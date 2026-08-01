@@ -30,8 +30,10 @@ from watermark.sites import SITES, active_profile, effective_corpus_scope
 
 # A registered peer with the plain default corpus scope (unset `corpus_relpaths`, so purely its
 # eponymous prefixes) — the epic's happy path: `<site>/<body>/meetings/` under the bare slug. This
-# was findlay until #1460 gave that site an explicit scope for records filed by CASE name rather
-# than by site; the case under test here is the UNSET one, so it moved to another Maumee peer.
+# was findlay until #1460 gave that site a second prefix; what keeps it explicit today is #1463's
+# `legal/one-energy-v-allen-twp`, filed by CASE name rather than by site (#1460's own `oepa/findlay`
+# is eponymous and derived since #1405). The case under test here is the UNSET one, so it moved to
+# another Maumee peer.
 PEER = "defiance"
 PEER_BODY = "allen-cty-comm"
 LIMA_BODY = "commissioners"  # one of Lima's six flat bodies
