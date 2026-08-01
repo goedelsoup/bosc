@@ -28,7 +28,7 @@
     "cooling_model": "closed_loop_dry",
     "cooling_model_source": "reference",
     "cooling_model_citation": "[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, liquid-cooled with dry coolers — 'no operational water', with domestic/cleaning/fire use only. In tension with the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 MGD, Aug 2024; conflicting ~50k vs ~600k GPD figures; a Meta-funded 2 MG tank + 16-in main) — that reconciliation is tracked at the water sub-issue #1439, not decided here. Replace with a documented cooling design when an NPDES/water instrument lands.",
-    "parcels_relpath": null,
-    "footprint_relpath": null
+    "parcels_relpath": "reference/bowling-green/parcel-assemblage.geojson",
+    "footprint_relpath": "extracted/bowling-green/bosc-site-footprint.yaml"
   }
 ]

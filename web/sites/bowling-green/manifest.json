@@ -2,15 +2,15 @@
   "site": "bowling-green",
   "bundle_version": "1.0.0",
   "contract_version": "1.50.0",
-  "generated_at": "2026-08-01T19:57:44+00:00",
-  "feed_count": 32,
-  "row_total": 503,
+  "generated_at": "2026-08-01T22:01:35+00:00",
+  "feed_count": 33,
+  "row_total": 518,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
-      "places": "absent",
+      "places": "live",
       "record": "live",
       "story": "absent"
     }
@@ -230,6 +230,14 @@
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
       "count": 54
+    },
+    {
+      "name": "geo/campus",
+      "path": "feeds/geo/campus.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 15
     },
     {
       "name": "facts",

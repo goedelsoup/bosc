@@ -1323,3 +1323,219 @@ WILMINGTON_ZONING_SCHEMA = GisZoningSchema(
         ),
     ),
 )
+
+
+# Wood County, OH parcels (Bowling Green / Middleton Twp watershed point; #1436). The county
+# publishes its own ArcGIS Server; the owner-bearing auditor CAMA join is the `Vision_Parcels`
+# MapServer layer 0 (Vision Government Solutions is the county's CAMA vendor — hence the name),
+# 73,839 features countywide. The sibling `Services_for_Web_Apps/Parcels` layer is the ArcGIS
+# *parcel fabric* (survey geometry: PLSS, misclose, legal acreage) and carries NO owner — a
+# fabric layer is not a CAMA layer, and querying it for a grantee returns a silent nothing.
+#
+# TWO CURRENCY FACTS ABOUT THIS LAYER, BOTH LOAD-BEARING (there is no `editingInfo` on this
+# server, so the vintage has to be probed from the data itself):
+#   * the newest conveyance ANYWHERE in the layer is 2025-07-25 (max(Sale_Date) over all 73,839
+#     rows; zero rows with Sale_Date > 2026-05-01). It is a ~2025-07 snapshot, so it cannot show
+#     a 2026 acquisition and a "not owned by X" read against it is a statement about July 2025.
+#   * the parcel FABRIC is current-to-2025 as well, which is why it carries the two consolidated
+#     Liames tracts (611190000003500 / 611190000029510, both quitclaimed to themselves 2025-04-09
+#     at $0) and the township zoning twin below still carries their eleven predecessors.
+# Field names + samples + the vintage probes confirmed from the live layer-0 `?f=json` +
+# queries (2026-08-01). WKID 102100/3857 as served; outSR=4326 for the committed geometry.
+WOOD_PARCEL_SCHEMA = GisParcelSchema(
+    connector="wood_gis",
+    reference_dir="bowling-green-gis",
+    page_size=2000,  # the layer's maxRecordCount
+    out_fields=(
+        "Name",
+        "Owner_Name",
+        "Deeded_Name",
+        "Street_Number",
+        "Street_Name",
+        "Suffix",
+        "Primary_Use",
+        "Land_Acres",
+        "Total_Land",
+        "Total_Improved",
+        "Prc_Ttl_Apprais_Lnd_Alt",
+        "District",
+        "School_District",
+        "Sale_Date",
+        "Transfer_Price",
+        "Qualified",
+        "Mail_Address_Line_1",
+        "Mail_Address_Line_2",
+        "Mail_City",
+        "Mail_State",
+        "Mail_Zip",
+    ),
+    id_field="Name",  # the bare 15-digit stored id, e.g. "611190000003500"
+    owner_field="Owner_Name",  # the CAMA owner of record
+    owner_2_field="",  # no second-owner field (Owner_Name carries the whole string)
+    deeded_owner_field="Deeded_Name",  # NB: the column literally named Deeded_Owner is EMPTY
+    situs_fields=("Street_Number", "Street_Name", "Suffix"),  # no city/ZIP token — see caveats
+    owner_addr_fields=(
+        "Mail_Address_Line_1",
+        "Mail_Address_Line_2",
+        "Mail_City",
+        "Mail_State",
+        "Mail_Zip",
+    ),
+    land_use_field="Primary_Use",  # the Ohio CAMA use code, served as a STRING ("101", "511")
+    acres_field="Land_Acres",  # the auditor's DEEDED acreage, not a GIS planar measure
+    market_land_field="Total_Land",
+    market_improvement_field="Total_Improved",
+    market_total_field="",  # the layer publishes NO total column — see caveats
+    cauv_field="Prc_Ttl_Apprais_Lnd_Alt",  # the CAUV land value (0 = not enrolled) — see caveats
+    tax_district_field="District",  # the letter-prefixed district, e.g. "J34"/"J36" (Middleton)
+    school_field="School_District",
+    neighborhood_field="",  # no neighborhood column
+    sale_date_field="Sale_Date",  # an esriFieldTypeDate (epoch millis)
+    sale_amount_field="Transfer_Price",
+    valid_sale_field="Qualified",  # the auditor's arms-length flag: "Q" qualified / "U" not
+    id_normalize="dashless",  # "611-190000003500" -> "611190000003500" (see the deed-id caveat)
+    date_decode="epoch_millis",
+    land_use_decode="int",  # a bare numeric code served as text; _i() coerces it
+    deed_id_regex=r"\b\d{3}-\d{12}\b",  # the auditor id MINUS its district prefix — see caveats
+    meta=GisMeta(
+        subject="Wood County, Ohio parcels (auditor CAMA + geometry)",
+        source="Wood County, Ohio ArcGIS Server — Services_for_Web_Apps/Vision_Parcels "
+        "MapServer layer 0 (Vision Government Solutions CAMA joined to parcel geometry)",
+        source_url=(
+            "https://wcohiogis.woodcountyohio.gov/server/rest/services/"
+            "Services_for_Web_Apps/Vision_Parcels/MapServer/0"
+        ),
+        caveats=(
+            "Values are verbatim from the county CAMA join; null means the service had no value.",
+            "VINTAGE, PROBED NOT PUBLISHED: this server exposes no editingInfo, so the layer's "
+            "currency has to be read out of the data. max(Sale_Date) over all 73,839 rows is "
+            "2025-07-25 and there are ZERO rows with Sale_Date > 2026-05-01 — it is a ~2025-07 "
+            "snapshot. A negative result ('X owns no land here') is therefore a statement about "
+            "July 2025, not about today; re-probe max(Sale_Date) before believing one.",
+            "ONE ROW PER POLYGON PART, NOT PER PARCEL — AND THE TWO OBVIOUS FIXES ARE BOTH "
+            "WRONG. A `Name` is not unique: 12 of the 774 distinct parcels in the Middleton Twp "
+            "neighbourhood come back on 2-6 rows carrying IDENTICAL attributes. They are not "
+            "duplicates. Every one of those repeat sets is pairwise DISJOINT (0.000 ac of "
+            "overlap across all 12) and the parts sum to the deeded acreage: 611190000006000, "
+            "the A. Schaller tract, is 39.621 ac + 25.294 ac = 64.915 ac planar against 64.55 ac "
+            "deeded. So deduping on Name SILENTLY DROPS LAND (25 of that parcel's 64 acres), "
+            "while summing Land_Acres over the raw rows DOUBLE-COUNTS, because Land_Acres is the "
+            "whole parcel's figure repeated on each part. Union the geometry per Name and take "
+            "Land_Acres once.",
+            "Land_Acres is the auditor's DEEDED acreage and is 0.0 on platted city lots — a 0 "
+            "there means 'lot, not acreage', not 'no land'. A planar acreage must be measured "
+            "from the geometry and reported as a separate figure.",
+            "THERE IS NO TOTAL-VALUE COLUMN. The layer publishes Total_Land and Total_Improved "
+            "and nothing that sums them, so market_total_value is always null here; a reader "
+            "who needs the total adds the two. Do NOT read Prc_Ttl_Apprais_Lnd_Alt as the total.",
+            "Prc_Ttl_Apprais_Lnd_Alt IS THE CAUV LAND VALUE, and its name says nothing of the "
+            "kind. Across the 774-parcel Middleton neighbourhood it is 0 on 493 parcels and "
+            "strictly BELOW Total_Land on 270 of the remaining 281 — on enrolled farmland it "
+            "runs ~35-40% of market (49.23 ac: $459,800 market land vs $172,690, i.e. $9,340/ac "
+            "vs $3,508/ac). 0 means NOT ENROLLED, not 'unvalued'.",
+            "Suffix, Post_Direc, City and Zip are unpopulated on this layer (0/774, 0/774, 4/774 "
+            "and 6/774 in the Middleton neighbourhood), so the situs is a house number plus a "
+            "street NAME with no street type and no municipality token — '21443 MERCER', not "
+            "'21443 Mercer Rd'. Deeded_Owner is likewise empty on every row; the deeded name "
+            "lives in Deeded_Name, which is what deeded_owner_field points at.",
+            "THE DEED-ID REGEX DELIBERATELY OMITS THE DISTRICT PREFIX. The auditor prints a "
+            "parcel as 'J34-611-190000003500' (the layer's own Identification__ column: tax "
+            "district, then the stored id split 3/12). The stored id is the 15-digit remainder, "
+            "so the corpus pattern matches from the '611-' on (\\b still fires after the prefix's "
+            "hyphen) and id_normalize='dashless' maps it onto Name. Passing the FULL printed form "
+            "to fetch_parcel does NOT work — dashless keeps the 34 of J34 and yields a 17-digit "
+            "string. Strip the district prefix, or query Identification__ directly.",
+            "The sibling Services_for_Web_Apps/Parcels layer is the ArcGIS PARCEL FABRIC (PLSS, "
+            "misclose, Legal_Acreage) and has no owner column at all. It is not a stale twin of "
+            "this layer, it is a different kind of layer; an owner query against it fails silent.",
+            "Right-county guard: Wood County OHIO (FIPS 39173), tax districts 'J34'/'J36' "
+            "(Middleton Twp) and 'B07'/'B08' (City of Bowling Green). Bowling Green KENTUCKY "
+            "(Warren County) is the standing search trap for this site — it is also where the "
+            "other municipal utility numbered 2056 lives.",
+        ),
+    ),
+)
+
+
+# Middleton Township, OH zoning (Bowling Green watershed point; #1436). The Meta campus is in
+# MIDDLETON TOWNSHIP, ~6 mi north of the city, so the City of Bowling Green's own zoning layer
+# (gis.bgohio.org PublicData/UtilitiesWithZoning/MapServer/2, "Current Zoning", 14 districts) is
+# the WRONG instrument for it — that one covers the corporation limits and the Oppidan colo, not
+# the campus. The township's districts are published by the county in two places and they are
+# NOT the same layer:
+#   * Services_for_Web_Apps/Zoning_Districts/MapServer/1 — countywide, polygon-only, and a 2013
+#     SNAPSHOT: LASTUPDATE is 2013-07-18..2013-08-08 on 1,338 of its 1,339 polygons (one 2016
+#     edit). It predates every rezoning this site is about.
+#   * Hosted/Middleton_Twp_Zoning_Viewer26/FeatureServer/1 — the one wired here: the township's
+#     own parcel-JOINED zoning, built 2025-11-13, so it carries the 2023 ag -> M-1 rezonings of
+#     the campus core that the countywide layer cannot.
+# Two twins of the hosted service exist (Hosted/MiddletonTwpZoningWFL1, identical lastEditDate
+# 2026-07-14; Hosted/Middleton_twp_zoning_WFL1, STALE at 2025-11-03). Read lastEditDate before
+# picking one. Field names + the edit-date probes confirmed live 2026-08-01.
+MIDDLETON_ZONING_SCHEMA = GisZoningSchema(
+    connector="middleton_gis",
+    reference_dir="bowling-green-gis",  # shared with the Wood parcel + NFHL flood schemas
+    page_size=1000,  # the layer's maxRecordCount (half the parcel layer's)
+    object_id_field="objectid",
+    parcel_field="name",  # the same 15-digit id as WOOD_PARCEL_SCHEMA.id_field — but see caveats
+    zoning_field="zone",  # "M-1: Light Industrial" — code AND label in one string
+    http_method="GET",
+    id_normalize="dashless",  # matches the parcel schema, so one id form serves both layers
+    meta=GisMeta(
+        subject="Middleton Township, Wood County, Ohio zoning districts (parcel-joined)",
+        source="Wood County, Ohio ArcGIS Server — Hosted/Middleton_Twp_Zoning_Viewer26 "
+        "FeatureServer layer 1 (Middleton_TWP_Zoning_Parcels: the township's zoning joined to "
+        "a Vision CAMA parcel extract)",
+        source_url=(
+            "https://wcohiogis.woodcountyohio.gov/server/rest/services/"
+            "Hosted/Middleton_Twp_Zoning_Viewer26/FeatureServer/1"
+        ),
+        caveats=(
+            "Values are verbatim from the township zoning layer.",
+            "THE ZONE STRING IS CODE AND LABEL TOGETHER — 'M-1: Light Industrial', not 'M-1'. "
+            "Ten districts appear: R-3 Residence, A-1 Agricultural, V Village, R-1 Estate "
+            "Residence, R-2 Suburban Residence, M-1 Light Industrial, B-1 Neighborhood Business, "
+            "B-3 Highway Business, U Unzoned, R-4 Multiple Dwelling. The zonelong column is null "
+            "on every row and the resolution column — which would carry the trustees' resolution "
+            "number for each district — is EMPTY on every row. The instrument is not published "
+            "here; it is the resolution itself.",
+            "ROWS REPEAT PER NAME, BUT NOT UNIFORMLY — do not assume a factor of two. The "
+            "full layer is 6,816 rows over 3,409 distinct `name` values, all created 2025-11-13 "
+            "11:52 by the same editor; 6,816/3,409 is 1.9994, not 2, because the multiplicity "
+            "varies. In the committed campus-envelope fixture it is 296 rows over 145 names — "
+            "142 names on two rows and THREE on four. Aggregate per name; never divide a row "
+            "count by two to get a parcel count.",
+            "THIS LAYER RIDES AN OLDER PARCEL FABRIC THAN Vision_Parcels, so a parcel-id join "
+            "between the two SILENTLY MISSES the campus. Liames' 322.5-ac and 196.5-ac tracts "
+            "(611190000003500 / 611190000029510 in the CAMA layer, consolidated 2025-04-09) "
+            "appear here as their eleven predecessors — 611190000002500/2501/3000/4000/5000/"
+            "7000/20000/29500/32000/32002 and 611190000037000 — summing to 195.86 ac and 319.99 "
+            "ac against the successors' 196.5 ac and 322.5 ac. Match on geometry, not on id.",
+            "CURRENCY IS THE POINT OF THIS LAYER FOR #1436, and its two sources are not the "
+            "same evidence. What the COMMITTED fixture shows, and what replays offline, is the "
+            "campus envelope: 296 rows all created 2025-11-13, a handful re-touched 2025-11-21, "
+            "and one 2026-05-12 (parcel 611190000002501) as the newest stamp in it. The wider "
+            "claim — that the layer's only other 2026 edits countywide are three unrelated Hull "
+            "Prairie parcels on 2026-07-14 — comes from a full-layer paged probe of all 6,816 "
+            "rows run 2026-08-01 that is NOT committed as a fixture, and the service's own "
+            "lastEditDate of 2026-07-14 is layer metadata rather than a row. Re-run that probe "
+            "before restating it. Either way the zoning content DOES "
+            "carry the 2023 agricultural -> M-1 rezonings of the campus core, and it CANNOT "
+            "carry the 2026-07-07 rezoning of the thirteen 31.82-ac parcels, which still read "
+            "A-1 and R-4 here. That is a publication lag, not a finding about their zoning — and "
+            "the trustees' 2-1 vote that granted it is itself subject to a referendum petition. "
+            "NO published Wood County layer carried that rezoning as of 2026-08-01.",
+            "B-4, the State Route 25 and 582 Overlay Zone, is an OVERLAY and is served as a "
+            "SEPARATE LAYER (FeatureServer/0 of the same service; the countywide 2013 layer "
+            "instead mixes it in with the base districts, where a parcel reads 100% A-1 AND 100% "
+            "B-4 and looks self-contradictory). An overlay does not replace the base district.",
+            "Coverage is MIDDLETON TOWNSHIP ONLY. The City of Bowling Green publishes its own "
+            "districts at gis.bgohio.org/arcgis/rest/services/PublicData/UtilitiesWithZoning/"
+            "MapServer/2 ('Current Zoning', district in F2023_Desc, with Year_2015..Year_2027 "
+            "columns carrying a per-parcel zoning history) — that is the layer for the Oppidan "
+            "colo in the Woodbridge Business Park, not for the campus.",
+            "Right-township guard: MIDDLETON Township, WOOD County OHIO. Ohio has a second "
+            "Middleton Township in Columbiana County.",
+        ),
+    ),
+)

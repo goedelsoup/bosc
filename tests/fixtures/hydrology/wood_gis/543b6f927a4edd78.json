@@ -1,0 +1,143 @@
+{
+  "params": {
+    "f": "geojson",
+    "returnGeometry": "true",
+    "where": "Name='611190000006000'",
+    "outFields": "Name,Owner_Name,Deeded_Name,Street_Number,Street_Name,Suffix,Primary_Use,Land_Acres,Total_Land,Total_Improved,Prc_Ttl_Apprais_Lnd_Alt,District,School_District,Sale_Date,Transfer_Price,Qualified,Mail_Address_Line_1,Mail_Address_Line_2,Mail_City,Mail_State,Mail_Zip",
+    "outSR": "4326",
+    "resultOffset": 0,
+    "resultRecordCount": 2000
+  },
+  "fetched_at": "2026-08-01T20:28:15.861112+00:00",
+  "payload": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -83.64338723028567,
+                41.46983916182917
+              ],
+              [
+                -83.64336521796794,
+                41.47292406935758
+              ],
+              [
+                -83.64773817095696,
+                41.4730264480471
+              ],
+              [
+                -83.64847403849835,
+                41.469386736354686
+              ],
+              [
+                -83.64823813731147,
+                41.46938133123048
+              ],
+              [
+                -83.645408684915,
+                41.46931646162717
+              ],
+              [
+                -83.64341735349207,
+                41.469270765041244
+              ],
+              [
+                -83.64338723028567,
+                41.46983916182917
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "Name": "611190000006000",
+          "Owner_Name": "A SCHALLER LIMITED PARTNERSHIP",
+          "Deeded_Name": "A SCHALLER LIMITED PARTNERSHIP",
+          "Street_Number": "0",
+          "Street_Name": "DIXIE",
+          "Suffix": "",
+          "Primary_Use": "101",
+          "Land_Acres": 64.55,
+          "Total_Land": 504200,
+          "Total_Improved": 0,
+          "Prc_Ttl_Apprais_Lnd_Alt": 207860,
+          "District": "J34",
+          "School_District": "8707",
+          "Sale_Date": 945950400000,
+          "Transfer_Price": 0,
+          "Qualified": "Q",
+          "Mail_Address_Line_1": "850 STRAWBERRY HILL RD",
+          "Mail_Address_Line_2": "",
+          "Mail_City": "COLUMBUS",
+          "Mail_State": "OH",
+          "Mail_Zip": "43213"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -83.6487292992779,
+                41.46939935257255
+              ],
+              [
+                -83.64847403849835,
+                41.469386736354686
+              ],
+              [
+                -83.64773817095696,
+                41.4730264480471
+              ],
+              [
+                -83.6490878052297,
+                41.473058012729865
+              ],
+              [
+                -83.65111510070501,
+                41.47310539674438
+              ],
+              [
+                -83.65113401922491,
+                41.46944931729443
+              ],
+              [
+                -83.6487292992779,
+                41.46939935257255
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "Name": "611190000006000",
+          "Owner_Name": "A SCHALLER LIMITED PARTNERSHIP",
+          "Deeded_Name": "A SCHALLER LIMITED PARTNERSHIP",
+          "Street_Number": "0",
+          "Street_Name": "DIXIE",
+          "Suffix": "",
+          "Primary_Use": "101",
+          "Land_Acres": 64.55,
+          "Total_Land": 504200,
+          "Total_Improved": 0,
+          "Prc_Ttl_Apprais_Lnd_Alt": 207860,
+          "District": "J34",
+          "School_District": "8707",
+          "Sale_Date": 945950400000,
+          "Transfer_Price": 0,
+          "Qualified": "Q",
+          "Mail_Address_Line_1": "850 STRAWBERRY HILL RD",
+          "Mail_Address_Line_2": "",
+          "Mail_City": "COLUMBUS",
+          "Mail_State": "OH",
+          "Mail_Zip": "43213"
+        }
+      }
+    ]
+  }
+}

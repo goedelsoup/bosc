@@ -115,6 +115,32 @@ notes: >-
   And the county publishes two STALE twins of this layer — `cntyparcels` on the CCRPC org is tax
   year 2022 (last edited 2023-08-28) and returns zero rows for "AMAZON" — so check
   editingInfo.dataLastEditDate before believing a negative.
+  Bowling Green (#1436): the TWELVE contiguous parcels deeded to LIAMES, LLC — the Meta "Bowling
+  Green Data Center" / "Project Accordion" campus in Middleton Township, 775.020 ac deeded /
+  774.878 ac planar, from the Wood County auditor Vision CAMA via the new wood_gis field-map (the
+  county's own Services_for_Web_Apps/Vision_Parcels layer 0). Its union is a SINGLE polygon whose
+  area equals the sum of the parts to within 0.005 ac, which upgrades the register's "~750-ac
+  assembly" from a [reference] press figure to a measurement. FOUR ROLES IN ONE FILE, kept apart
+  by a `parcel_role` property that must be read before any acreage is quoted: liames_assembly (the 12
+  campus parcels), rezoning_pending (the 64.55-ac A. Schaller tract, 39.265 ac of it recommended
+  A-1->M-1 6-2 on 2026-07-07 for construction parking, ownership unchanged), apollo_permit_situs
+  (11902 Middleton Pike, the address on the Apollo BTM power plant's air permit, still deeded to
+  JJJ Family Properties LLC — Will-Power OH LLC owns no land in the county, and the staff report's
+  ~146.84-ac project area reconciles to no parcel group), and oppidan_colo (the separate 11.80-ac
+  Oppidan site 4.83 mi away in the city). Four owners, so `parcels --owner` cannot pull it in one
+  call; the recipe is a Name-list query documented in reference/bowling-green/README.md. Four
+  notes for a re-pull. THE LAYER SERVES ONE ROW PER POLYGON PART, not per parcel, and the parts
+  are disjoint and sum to the deeded acreage — deduping on the id DROPS LAND (25 of the Schaller
+  tract's 64 ac) while summing Land_Acres over raw rows double-counts. The server publishes no
+  editingInfo, so the vintage has to be probed: max(Sale_Date) over all 73,839 rows is 2025-07-25,
+  which is why the record shows 8 of the 13 parcels the trustees rezoned on 2026-07-07.
+  Prc_Ttl_Apprais_Lnd_Alt is the CAUV land value despite its name, and there is no total-value
+  column at all. And the zoning join is GEOMETRIC, never by id: the township zoning layer rides a
+  pre-2025-04-09 parcel fabric in which the two large campus tracts appear as eleven predecessors.
+  The rezoning of the eight small parcels was still inside its R.C. 519.12 referendum window at
+  pull time (flagged rezoning_contestable_2026_07_07); the abutting FirstEnergy/ATSI and NWWSD
+  tracts are measured adjacencies recorded in the footprint yaml and deliberately NOT committed
+  here, since this file feeds the geo/campus layer.
   Distinct from the Periplus frozen import
   (reference/periplus/bosc-parcels.geojson, catalogued under the periplus entry), which covers the
   Lima corridor parcels only.

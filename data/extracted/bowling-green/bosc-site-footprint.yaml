@@ -1,0 +1,222 @@
+# The Meta "Bowling Green Data Center" / "Project Accordion" campus — footprint record for the
+# Bowling Green, OH (Poe Ditch → North Branch Portage) watershed point. LIKE Sidney's /
+# Wilmington's / Urbana's (and UNLIKE Lima's document-transcribed stormwater-permit footprint),
+# the boundary here is drawn from the auditor's parcels, committed as
+# data/reference/bowling-green/parcel-assemblage.geojson. UNLIKE Wilmington's, the campus itself
+# is a single recorded OWNERSHIP holding — twelve contiguous parcels all deeded to one entity —
+# and the other claims in the file are kept out of it by the `parcel_role` property rather than mixed in.
+# parcel_acres is the GIS-measured planar area; building/impervious/developed stay [open] pending
+# the site plan. Source tags: reference = committed GIS reference dataset; connector = a live
+# public-data read; document = transcribed from a corpus instrument; assumption = a stated
+# modeling input.
+site: >-
+  Middleton Township, Wood County, OH — the Meta Platforms "Bowling Green Data Center"
+  (codename "Project Accordion"), north of SR-582 (Middleton Pike) between SR-25 (Dixie Highway)
+  and Mercer Road, about 6 mi north of the City of Bowling Green and immediately south-east of
+  the FirstEnergy/ATSI Mercer Road transmission tract. Land of record: twelve contiguous Wood
+  County parcels deeded to LIAMES, LLC. #1436 (places) / #1435 (facility), sub-issues of #1433.
+operator: >-
+  Meta Platforms (operator and announced developer, "Hello, Bowling Green", 2025-04-09
+  [verified]); LIAMES, LLC is the owner of record of every parcel in the assembly and the
+  customer of record on the Apollo OPSB case 25-0973-EL-BLN. The county tax roll is an
+  INDEPENDENT corroboration of the Meta attribution rather than a second-hand one: eight of the
+  twelve parcels carry the owner mailing address "1 META WAY, MENLO PARK, CA 94025" (served
+  "MENLOW PARK" on four of them), and the other four go to a Columbus address the county spells
+  two ways: "52 E GAY ST, COLUMBUS, OH 43215" on three and "52 EAST GAY ST, COLUMBUS, OH 43215"
+  on 611190000036001. All four spellings are carried verbatim in the committed geometry rather
+  than normalized — a CAMA string is transcription, not a value to tidy.
+  That is a billing address, not a certificate of ownership of the LLC — the Ohio Secretary of
+  State registration for Liames, LLC stays [open] (#1437 probed it; the SOS business search is
+  automation-blocked). See data/extracted/bowling-green/data-centers.md.
+boundary_basis: >-
+  ONE RECORDED OWNERSHIP HOLDING, plus three rows that are NOT part of it and are held apart by
+  the geojson's `parcel_role` property — never sum them into a single "campus".
+  (1) parcel_role=liames_assembly — TWELVE Wood County parcels deeded to LIAMES, LLC, 775.020 ac deeded
+  / 774.878 ac planar, whose union is a SINGLE polygon across a 1,821 m x 2,489 m extent. Four
+  tracts over 50 ac carry 753.65 ac of it and are themselves contiguous: 611190000003500
+  (322.5 ac, 0 Mercer Rd), 611190000029510 (196.5 ac, 0 Dixie Hwy), 611300000001000 (160 ac,
+  12279 Middleton Pike) and 611300000002000 (74.65 ac, 12499 Middleton Pike). The remaining
+  21.37 ac are eight small parcels along SR-25, Mercer Rd and Middleton Pike whose houses and a
+  strip of motel rooms have been razed.
+  (2) parcel_role=rezoning_pending — 611190000006000, 64.55 ac still deeded to A. SCHALLER LIMITED
+  PARTNERSHIP, abutting the campus, 39.265 ac of which the Wood County Planning Commission
+  recommended rezoning A-1 to M-1 by 6-2 on 2026-07-07 for Liames construction parking, township
+  action pending. Ownership unchanged; Liames is in contract to purchase.
+  (3) parcel_role=apollo_permit_situs — 611200000011000, 79.07 ac at 11902 Middleton Pike, the address
+  on the Apollo Power Generation Facility's Ohio EPA air permit, still deeded to JJJ FAMILY
+  PROPERTIES LLC since 2008. Not the plant's project boundary (see notes).
+  (4) parcel_role=oppidan_colo — 511210000002003, the separate 11.80-ac Oppidan colo site 4.83 mi away
+  in the City of Bowling Green.
+  NOT a surveyed earth-disturbance boundary: no site plan and no Ohio EPA construction stormwater
+  (NPDES OHC000005 / Rule-5) footprint is in the corpus. ZONING STATUS RIDES WITH THE GEOMETRY:
+  the eight small parcels' M-1 designation was granted by a 2-1 trustees vote on 2026-07-07 over
+  the township zoning commission's rejection, and a referendum petition against it was
+  circulating when this geometry was pulled.
+
+parcel_acres:
+  value: 774.878
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — the UTM-17N (EPSG:32617) planar area of the UNION of the twelve
+    parcel_role=liames_assembly parcels, which is a SINGLE polygon. The union is 0.004764 ac —
+    about 19 m2 — SMALLER than the 774.883-ac sum of the parts, and that difference is the total
+    pairwise intersection: the parcels abut along shared boundaries that overlap by slivers at
+    that scale, not exactly. Say "one contiguous block", not "they do not overlap".
+    The county CAMA DEEDED total is 775.020 ac; the two are NOT reconciled — cite
+    the deeded figure for the record and the planar one for area/runoff modeling. THIS UPGRADES
+    the register's "~750-acre Liames assembly" from [reference — press] to [verified], and the
+    upgrade is a measurement of contiguity, not an arithmetic sum of press acreages. The
+    ~280-ac initial building site reported inside it is a SITE-PLAN figure and is not derivable
+    from the parcels [open].
+  confidence: high
+
+campus_core_acres:
+  value: 753.65
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — the deeded acreage of the four parcel_role=liames_assembly tracts over
+    50 ac (752.966 ac planar summed; 752.961 ac as one contiguous union polygon). Kept separate
+    from the 775.020-ac total because the other 21.37 ac are the eight small fringe parcels
+    whose zoning was still contestable at pull time.
+  confidence: high
+
+rezoning_contestable_acres:
+  value: 21.37
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — the deeded acreage of the eight small parcel_role=liames_assembly
+    parcels flagged rezoning_contestable_2026_07_07 (21.916 ac planar): 611190000037000 (7.52 ac,
+    21443 Mercer), 611190000033000 (3.89 ac, 12090 Middleton), 611190000036001 (3.33 ac, 21123
+    Mercer), 611190000034000 (2.0 ac, 12018 Middleton), 611190000008000 (1.59 ac, 21698 Dixie),
+    611190000035000 (1.53 ac, 21067 Mercer), 611190000009000 (1.01 ac, 21630 Dixie) and
+    611190000025000 (0.5 ac, 21186 Dixie). NOT the whole rezoning: the trustees rezoned THIRTEEN
+    parcels totalling 31.82 ac. The missing 5 parcels / 10.45 ac are invisible in this layer
+    because its newest conveyance anywhere in Wood County is 2025-07-25 — see notes. [open]
+  confidence: high
+
+building_footprint_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No site plan is in the corpus. What IS disclosed is a floor area, not a footprint:
+    715,000 sq ft for the initial phase (Meta, 2025-04-09 [verified]), which is 16.41 ac of
+    building IF the initial building is single-storey — an assumption nothing on the record
+    supports, so it is not entered here. A second, harder figure appeared on 2026-07-07: the
+    Schaller rezoning application before the county planning commission describes relocating
+    construction parking "from the southwest corner to the northwest corner of the campus once
+    construction of building five starts" [verified — Sentinel-Tribune 2026-07-07], which puts
+    the campus at FIVE OR MORE buildings against a 715,000 sq ft "initial phase" — a Phase-2
+    signal independent of Meta's 2026-01-07 trustees letter. The instrument is the Middleton
+    Township zoning permit file / the Rule-5 construction stormwater NOI.
+  confidence: null
+
+impervious_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No impervious tabulation is on record. Requires the site plan or the Ohio EPA
+    construction stormwater (NPDES OHC000005 / Rule-5) permit. The disclosed ~1,700 parking
+    spaces (Meta, 2025-04-09) are a count, not an area, and are not converted here.
+  confidence: null
+
+developed_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] Total disturbed/developed area is unknown pending the SWPPP / construction stormwater
+    permit; it will be >= impervious_acres once that lands. The 774.878-ac assembly is the OUTER
+    BOUND, not a measurement of the developed area, and the reported ~280-ac initial building
+    site sits inside it.
+  confidence: null
+
+dominant_hsg:
+  value: C/D
+  source: connector
+  citation: >-
+    [verified] USDA NRCS SSURGO via Soil Data Access (SDA), grid-sampled over the twelve
+    parcel_role=liames_assembly parcels (watermark.hydrology.connectors.ssurgo.dominant_hsg,
+    2026-08-01). The answer is C/D at every resolution tested — 6x6 (26 interior points), 8x8
+    (45), 10x10 (70), 12x12 (102) and 16x16 (185) — with 428 of 428 points returning C/D and NO
+    other group appearing at any density. That is a uniformity none of the peer sites showed,
+    and it means the letter is not a grid artefact. It REPLACES the profile's prior [inference]
+    of a plain "D" argued from the Great Black Swamp lakebed clays (Hoytville / Nappanee /
+    Latty). The inference was reading the soils correctly; what it missed is that the survey
+    rates them DUAL. C is the group where field tile is installed and maintained and D the
+    natural undrained condition, and this is tiled farm ground — so collapsing it to D
+    pre-selects the high-runoff condition for every scenario including the PRE-development one,
+    where the ground is drained. The per-scenario switch (pre_drainage_condition drained /
+    post_drainage_condition undrained, watermark.hsg / WS-20) is what resolves it, and it is
+    live here in a way it is inert for a single-group site. This is the same class of correction
+    as Sidney (B->D), Urbana (B->C) and Troy-Piqua (B->C/D) — a profile letter argued from
+    regional geology, checked against the survey — but it is the first where the correction is
+    about the RATING'S FORM rather than its letter.
+  confidence: high
+
+zoning_district:
+  value: M-1
+  source: connector
+  citation: >-
+    [verified] "M-1: Light Industrial", Middleton Township, over the campus CORE. Read from the
+    township's own parcel-joined zoning layer (MIDDLETON_ZONING_SCHEMA — Wood County ArcGIS
+    Hosted/Middleton_Twp_Zoning_Viewer26 layer 1, zoning content built 2025-11-13), by GEOMETRIC
+    OVERLAP rather than by parcel id, because that layer rides an older parcel fabric (see
+    notes). The four core tracts read 99.82-100% M-1: 611190000003500 99.82% across seven
+    old-fabric parcels, 611190000029510 99.88% across three, 611300000001000 and
+    611300000002000 100% each. The Apollo permit-situs parcel also reads 100% M-1. THE EIGHT
+    SMALL PARCELS DO NOT: seven read "A-1: Agricultural" and 611190000025000 (21186 Dixie) reads
+    "R-4: Multiple Dwelling" — their pre-rezoning districts, because no published Wood County
+    layer carries the 2026-07-07 change. B-4, the SR-25/582 Overlay, is an OVERLAY served as a
+    separate layer and does not replace the base district.
+  confidence: high
+
+small_parcel_zoning_district:
+  value: null
+  source: connector
+  citation: >-
+    [open] — and the reason is a sequence of contested votes plus a publication lag, both
+    documented rather than absent. Middleton Township trustees rezoned THIRTEEN parcels totalling
+    31.82 ac from R-4 Residential and A-1 Agricultural to M-1 Industrial by a 2-1 vote on
+    2026-07-07 (Mike Moulton and Fred Vetter in favor, Melissa Petrea against), after the Wood
+    County Planning Commission recommended it 6-2 on 2026-06-02 and the township's OWN zoning
+    commission REJECTED it on 2026-06-10 [verified — Sentinel-Tribune 2026-06-12 / 2026-07-07,
+    BG Independent News 2026-06-03 / 2026-07-08]. Under R.C. 519.12 that starts a 30-day
+    referendum-petition window closing about 2026-08-06, and a petition drive needing 971 valid
+    signatures to reach the November 2026 ballot was circulating as of 2026-07-18 (organizers
+    targeting ~1,300 to absorb rejections; Leslie Harper coordinating) [reference — The Blade via
+    thecooldown.com]. THE WINDOW WAS STILL OPEN WHEN THIS GEOMETRY WAS PULLED (2026-08-01), so
+    the outcome is not captured and must not be back-filled from an assumption that it lapsed.
+    Separately, no published GIS layer carries the grant either way: the countywide township
+    zoning layer is a 2013 snapshot and the hosted Middleton layer's zoning content is from
+    2025-11-13. The instruments are the trustees' resolution and, if it is filed, the referendum
+    petition at the Wood County Board of Elections.
+  confidence: null
+
+receiving_water: >-
+  [inference] The campus sits on the Middleton Township till/lakebed upland; the specific
+  stormwater receptor for the built campus is [open] pending the construction stormwater permit.
+  DISTINCT from the SANITARY pathway, which the record closes for the city's own POTW: Bowling
+  Green WPC → Poe Ditch RM 2.5 → North Branch Portage River RM 8.56 → Portage River → Lake Erie
+  (Ohio EPA NPDES 2PD00009 / OH0024139 [verified — fact sheet, #1439]). And DISTINCT again from
+  the WITHDRAWAL side, which is the MAUMEE at the Waterville intake, a different HUC-8 entirely
+  (04100009 vs the discharge side's 04100010) — the campus's own water is wholesaled through the
+  Northwestern Water & Sewer District, whose 20-ac tract at 12560 Dixie Hwy ABUTS the assembly
+  (0.0 m). Whether campus wastewater reaches the city WPC at all is [open]; the closed-loop-dry
+  cooling claim is [reference] (#1439).
+
+notes:
+  - 'ASSEMBLY = 12 parcels / 775.020 ac deeded / 774.878 ac planar / ONE contiguous polygon over a 1,821 m x 2,489 m extent. Core (4 tracts, 753.65 ac deeded): 611190000003500 (322.5 ac, 0 Mercer, use 101, district J36, acquired 2025-04-09 QC $0), 611190000029510 (196.5 ac, 0 Dixie, use 101, J34, 2025-04-09 QC $0), 611300000001000 (160 ac, 12279 Middleton, J36, 2023-11-14 QC $0) and 611300000002000 (74.65 ac, 12499 Middleton, J36, 2023-11-14 LW $2,923,960). Fringe (8 parcels, 21.37 ac, all use 511, acquired 2024-09-04 through 2025-07-21 for $315,000-$650,000 each). All [verified] from the Wood County Auditor Vision CAMA (Vision_Parcels layer 0, read 2026-08-01).'
+  - 'PRICE — do NOT sum the transfer prices and call it what the land cost. The CAMA carries only the LAST conveyance per parcel, and on 2025-04-09 eleven predecessor tracts were consolidated into the two large campus parcels by quitclaim to Liames itself at $0 (deed numbers 0519 and 0520, consecutive), which erased their purchase prices from this layer. What survives across the twelve rows sums to $6,921,460 — a floor on a fraction of the assembly. The ~$9M reported for the 2023-09-05 warranty deeds (Toledo Legal News transfer listings, [reference]) is not visible here at all. Every conveyance number in the file is distinct, so the Clinton County "consideration is per deed, repeated on every parcel" trap does NOT apply — but the Wood County Recorder deed chain is still the instrument, and it stays [open].'
+  - 'THE PARCEL FABRIC MOVED — an id join across the county''s own layers silently misses this campus. 611190000003500 and 611190000029510 are 2025-04-09 consolidations; their eleven predecessors (611190000002500, 002501, 003000, 004000, 005000, 007000, 020000, 029500, 032000, 032002) still populate the township zoning layer, summing to 319.99 ac and 195.86 ac against the successors'' 322.5 ac and 196.5 ac. Every zoning read in the committed geojson is therefore geometric, and names the old-fabric parcels it read through in zoning_fabric_parcels.'
+  - 'THE LAYER SERVES ONE ROW PER POLYGON PART, and both obvious fixes are wrong. Twelve of the 774 parcels in the Middleton neighbourhood come back on 2-6 rows with identical attributes; all twelve repeat sets are pairwise disjoint (0.000 ac of overlap) and the parts sum to the deeded acreage. Deduping on the parcel id DROPS LAND — 25.294 of the Schaller tract''s 64.55 acres — while summing Land_Acres over the raw rows double-counts. Union the geometry per id and take the acreage once.'
+  - 'THE SCHALLER REZONING IS FOR PART OF A PARCEL. 611190000006000 is served as two disjoint parts of 39.621 ac and 25.294 ac (64.915 ac planar, 64.55 ac deeded). The township''s mapped A-1 polygon covers 61.03% of the parcel, which is exactly the 39.621-ac EASTERN part, and the press places the application "north of Ohio 582 on the east side of Ohio 25" against a stated 39.265 ac. That the application is that eastern part is [inference] — the rezoning''s own legal description is the instrument and is not in the corpus.'
+  - 'THE APOLLO PLANT SITS ON LAND ITS OWNER DOES NOT OWN, and its project boundary is not a parcel. A countywide CAMA owner scan on "%WILL-POWER%" returns ZERO rows: Will-Power OH, LLC holds no land in Wood County at this snapshot. The parcel of record for its air permit, 611200000011000 (79.07 ac, 11902 Middleton Pike), is still deeded to JJJ Family Properties LLC of 20022 Mercer Rd since 2008-12-22 and abuts the campus at 0.0 m. The OPSB staff report''s ~146.84-acre project area reconciles to NO parcel or contiguous parcel group here — no combination of JJJ''s four parcels (79.07 + 38.66 + 10.70 + 53.48 ac) or of the abutting Dauer tracts lands within 3 ac of it — and the report itself gives 146.84 / 163 / 165.11 ac for three different boundaries. The plant''s footprint stays [open]; the lease or option that puts it there is [open] too. (#1437)'
+  - 'THE RECORD SHOWS 8 OF THE 13 REZONED PARCELS, and the gap is the layer''s vintage, not a research gap. This server publishes no editingInfo, so currency has to be probed from the data: max(Sale_Date) over all 73,839 rows is 2025-07-25 and there are ZERO rows with Sale_Date after 2026-05-01. It is a ~2025-07 snapshot and cannot show a later conveyance. The press reports all thirteen parcels as already owned by Meta with the structures razed [reference]; the record shows eight, 21.37 ac. The rezoning application''s parcel schedule at the county planning commission is what would close the other 10.45 ac. [open]'
+  - 'CAUV READS ZERO ON THE CONSOLIDATED TRACTS AND THAT HAS TWO READINGS. The 160-ac and 74.65-ac parcels acquired 2023-11-14 still carry CAUV land values ($585,960 and $255,360); the 322.5-ac and 196.5-ac tracts consolidated 2025-04-09 read 0. SEVEN of the eight fringe parcels also read 0 — but 611190000009000 (1.01 ac, 21630 Dixie) reads $46,750, so "the fringe is off CAUV" is not a rule and the one exception is on the record. Either the campus core came off current agricultural use valuation, or the new parcel numbers have not been re-valued at this extract. The auditor''s CAUV recoupment record settles it and is not in the corpus — do not report the zeros as a documented removal. [open] Note that CAUV (R.C. 5713.30) is NOT the Agricultural District program (R.C. 929) whose 75.143 ac the Apollo staff report says will not be retained.'
+  - 'THE CAMPUS ABUTS ITS OWN INFRASTRUCTURE, and that is measured, not asserted. Sharing a boundary with the assembly at 0.0 m: the FirstEnergy/ATSI transmission tract 611180000001000 (72.43 ac, 22105 Mercer Rd, AMERICAN TRANSMISSION SYSTEMS) plus its 9.45-ac Dowling Rd parcel, with a third ATSI tract 126 m away; the Northwestern Water & Sewer District''s 20-ac tract at 12560 Dixie Hwy, the wholesaler in the 50k-vs-600k GPD conflict; the Apollo permit-situs parcel; and the Board of Trustees of Middleton Township''s own 11.81-ac parcel at 21745 Dixie. These grounded the profile''s "adjacent the FirstEnergy Mercer Rd substation" claim, which had been uncited geometry. Their polygons are deliberately NOT committed to parcel-assemblage.geojson: that file feeds the geo/campus layer, and rendering a substation or a water-district yard as "campus" would be a map that lies. THE SAME OBJECTION PARTLY APPLIES TO WHAT IS IN THE FILE, and is accepted knowingly: campus_from_parcels emits EVERY feature of parcels_relpath onto the campus layer, so the Oppidan colo 4.83 mi away renders there too. It is kept because #1436 asks the pull to cover it and because parcel_role rides through to the popup, so a reader can tell the four claims apart; nothing computes a map extent from this feed (CorridorMap carries a hardcoded initial view), so there is no silent distortion of the campus bounds. If a per-site campus layer ever starts auto-fitting, filter on parcel_role=liames_assembly at that point rather than dropping the parcel from the record.'
+  - 'THE OPPIDAN COLO IS A DIFFERENT PLACE, 4.83 mi away. 511210000002003, 11.80 ac deeded to CLOP BOWLING GREEN OH LLC on 2025-02-03 for $1,105,000, in the Woodbridge Business Park inside the CITY of Bowling Green — 7,771 m from the nearest campus boundary, measured in UTM 17N. The owner''s mailing address, 400 Water St Suite 200, Excelsior MN 55331, is Oppidan Investment Company''s own headquarters, which is what identifies the SPE; the register had the site as "~12 ac" [reference] and it is now 11.80 ac deeded [verified]. Its situs reads 2371 Woodstream in this snapshot while the building''s address is 2501 Woodstream Dr. City zoning, not township: the City of Bowling Green publishes its own districts (gis.bgohio.org PublicData/UtilitiesWithZoning layer 2, "Current Zoning", with Year_2015..Year_2027 columns carrying a per-parcel zoning history) and that layer, not the Middleton one, is the instrument for this parcel. Never fold its acreage or its 6-8 MW into the Meta campus.'
+  - 'THE NEIGHBOURS INCLUDE A "LIMES" FAMILY. Dale Limes LLC, Limes Real Estate Holdings LLC and Limes Galen E hold several hundred acres along Devils Hole Rd and Dixie Hwy — one letter from LIAMES. The issue register''s "Devils Hole Rd ~112 ac, ag to light-industrial, township zoning commission voted against recommending" is [reference] and was NOT resolved here: no such request appears in the 2026-06 / 2026-07 press coverage, and the parcel it refers to is not identified. Check the spelling before reading a Devils Hole parcel as part of the assembly. [open]'
+  - 'This record commits the boundary + measured acreage + the SSURGO-validated HSG so the onboard SSURGO/HSG step no longer skips (it had been skipped for want of a committed footprint), and it sets the pre_cover / post_cover / developed_pervious_cover scenario knobs and the toxic_corridor_bbox the profile had carried as TODO / (0,0,0,0) "pending an identified site".'
+  - 'Building / impervious / developed stay [open]: no site plan, no zoning permit file and no Rule-5 construction stormwater permit is in the corpus, and the disclosed 715,000 sq ft is the basis of the facility profile''s SCREENING IT-load bracket (#1435), not a surveyed footprint.'
