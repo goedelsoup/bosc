@@ -350,6 +350,7 @@ permit:
     - {parameter: pH, units: SU, daily_maximum: 9.0, daily_minimum: 6.5, basis: WQS}
     monitor_only: [Water Temperature, Precipitation, Total Kjeldahl Nitrogen, Nitrate plus Nitrite, Orthophosphate, Nickel, Zinc, Cadmium, Lead, Chromium, Copper, Dissolved Hexavalent Chromium, Flow Rate, Free Cyanide, Total Filterable Residue, 'Acute/Chronic Toxicity (C. dubia, P. promelas)']
     basis_legend:
+      BPJ: Best professional judgment
       BTJ: Best Technical Judgment
       M: DSW NPDES Permit Guidance 1 (monitoring frequency, sanitary discharges)
       PD: Plant Design (OAC 3745-33-05(E))

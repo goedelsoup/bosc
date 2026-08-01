@@ -68,9 +68,10 @@ delta_since_previous_check:
     codename — PROJECT ACCORDION (OHGC15219), APOLLO POWER GENERATION FACILITY (OHGC17963),
     APOLLO LAYDOWN YARD (OHGC18721), APOLLO NORTH PIPELINE (OHGC19094), ACCORDION-DOWLING 138KV
     INTERCONNECT (OHGC15929), plus NORTHWESTERN WATER AND SEWER DISTRICT (OHGC11188), OPPIDAN
-    BOWLING GREEN DATA CENTER (OHGC15293) and Abbott (OHGC08916, filed as NUTRITIONAL PRODUCT
-    MANUFACTURING FACILITY). See `construction_stormwater` below. All eight are Effective with
-    zero quarters in noncompliance.
+    BOWLING GREEN DATA CENTER (OHGC15293), Abbott (OHGC08916, filed as NUTRITIONAL PRODUCT
+    MANUFACTURING FACILITY) and BOWLING GREEN (45126) (OHGC17556, at the WPC's own address —
+    the wastewater plant is itself a construction site). See `construction_stormwater` below.
+    All nine are Effective with zero quarters in noncompliance.
 - item: The campus does not drain to the plant's receiving water.
   tag: '[verified]'
   detail: >-
@@ -164,20 +165,30 @@ discharge_side:
     source: EPA ECHO detailed facility report, FRS 110002321005 / OH0024139
     read_on: '2026-08-01'
     icis_extract_date: '2026-07-24'
-    window: 2023-04-01 .. 2026-03-31
+    window: 2023-04-01 .. 2026-03-31          # ECHO's 3-year CWA compliance window (the 12 quarters below)
+    enforcement_window: 2021-07-25 .. 2026-03-31   # ECHO's 5-year enforcement window (StartDate5Yr)
+    window_note: >-
+      TWO DIFFERENT WINDOWS, and the counts below do not all use the same one. The quarter
+      counts (`quarters_in_noncompliance`, `quarters_in_snc`, `quarterly_status`) are computed
+      over the THREE-year `window`. The enforcement counts (`formal_actions`,
+      `total_penalties`, `informal_actions`, `inspections`) are reported by ECHO over the
+      FIVE-year `enforcement_window`. Both are ECHO's own program date ranges
+      (EnforcementComplianceSummaries.ProgramDates: StartDate3Yr 04/01/2023, StartDate5Yr
+      07/25/2021, EndDate 03/31/2026), not derived here.
     current_snc: 'No'
-    quarters_in_noncompliance: 9      # of 12 — ECHO's own count, not derived here
-    quarters_in_snc: 2
-    inspections: 6
+    quarters_in_noncompliance: 9      # of 12 — ECHO's own count over `window`, not derived here
+    quarters_in_snc: 2               # over `window`
+    inspections: 6                   # over `enforcement_window`
     last_inspection: '2025-10-15'
-    informal_actions: 1
-    formal_actions: 0
-    total_penalties: 0
+    informal_actions: 1              # over `enforcement_window`
+    formal_actions: 0                # over `enforcement_window`
+    total_penalties: 0               # over `enforcement_window`
     verified_negative: >-
-      Zero formal actions and $0 in penalties over the five-year enforcement window, against
-      nine noncompliant quarters and two Category-I quarters. That is a VERIFIED NEGATIVE and is
-      recorded as a finding in its own right: Ohio EPA has responded to this plant's record with
-      one warning letter and nothing else.
+      Zero formal actions and $0 in penalties across the full five-year enforcement window
+      (2021-07-25 to 2026-03-31), against nine noncompliant quarters and two Category-I
+      quarters in the three-year compliance window inside it. That is a VERIFIED NEGATIVE and
+      is recorded as a finding in its own right: Ohio EPA has responded to this plant's record
+      with one warning letter and nothing else.
     quarterly_status:
       Q1_2023Q2: Violation Identified
       Q2_2023Q3: Violation Identified
@@ -361,7 +372,33 @@ intake_side:
   pws_name: BOWLING GREEN CITY
   frs_registry_id: '110006258815'
   source: Maumee River intake near Waterville, into a 170 million gallon off-stream reservoir
-  reservoir_storage_days: ~30
+  reservoir_capacity_mg: 170          # [verified] 2025 CCR p. 1, "our 170 million gallon above ground reservoir"
+  reservoir_storage_days:
+    value: ~30
+    tag: '[reference]'
+    attribution: >-
+      The City's own Water Treatment Plant page (https://www.bgohio.gov/349/Water-Treatment-Plant),
+      read 2026-08-01: "The Reservoir provides approximately 30 days of raw water supply."
+      Self-published by the utility; the page is NOT captured as a committed document, so this
+      is the weakest-provenance figure in this block.
+    not_in_the_ccr: >-
+      IMPORTANT — the captured 2025 CCR does NOT state a storage duration. It gives the
+      capacity (170 MG) and nothing else. Do not cite the CCR for the 30-day figure.
+    implied_denominator:
+      tag: '[inference]'
+      arithmetic: 170 MG / ~30 days = ~5.7 MGD implied average daily demand
+      status: >-
+        NO CAPTURED SOURCE STATES THE WTP'S AVERAGE DAILY DEMAND. ~5.7 MGD is what the city's
+        own 30-day claim implies, not an independently sourced figure, and it is recorded only
+        so the claim can be checked when a demand figure lands. It is consistent in magnitude
+        with the ~5 MGD average carried in the epic's discovery research (also [reference]).
+        The number that would settle it — pumpage or finished-water production — is [open].
+      caution: >-
+        A 30-day figure is a DESIGN characterization at some assumed demand, not a drought
+        reserve. As demand rises toward the plant's ~10 MGD capacity the same 170 MG buys
+        proportionally fewer days, so this number falls exactly when it would matter most —
+        which is the whole reason the November 2025 flash drought and the Toledo interconnection
+        study belong in the same file as the Abbott and Meta load growth.
   basin: Maumee, HUC 04100009 — a DIFFERENT basin from the discharge side
 
   sdwa_compliance:
@@ -434,10 +471,18 @@ intake_side:
         will improve the plants ability to utilize the Reverse Osmosis Membranes." (p. 1)
       corroborates: >-
         This is the ~$4M membrane/RO expansion the issue body tracked as approved 2024-03 and
-        still in "planning stages" as of Sept 2025. The 2025 CCR describes the microfiltration
-        trains as COMPLETED ("were recently completed"). That is a self-published [reference]
-        statement by the utility, not a construction record, but it is the first captured source
-        indicating the expansion moved from planning to done.
+        still in "planning stages" as of Sept 2025. The CCR opens the passage "Two significant
+        improvements were recently completed at the Bowling Green Water Treatment Plant" (p. 1)
+        and names the added microfiltration trains as one of the two. So the utility places the
+        work in the past tense. That is a self-published [reference] statement, not a
+        construction record, but it is the first captured source indicating the expansion moved
+        from planning to done.
+      scope_caution: >-
+        The CCR's "recently completed" covers the two improvements it enumerates — the rebuilt
+        rapid sand filters and the added microfiltration trains. It does NOT say the whole ~$4M
+        membrane/RO program is finished, and the trains are described as improving "the plants
+        ability to utilize the Reverse Osmosis Membranes," which is an enabling step rather than
+        the RO expansion itself. Do not read this as the program's completion.
     source_water_assessment: >-
       Revised by Ohio EPA in 2025 (p. 1). The revision itself is not captured. [open]
     pfas: >-
