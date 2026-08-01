@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-31T22:54:19.336771+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-01T01:33:56.838673+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **140** catalogued datasets — **139** reviewed.
-- **140** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **142** catalogued datasets — **141** reviewed.
+- **142** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -34,6 +34,7 @@ Snapshot reconciled: **2026-07-31T22:54:19.336771+00:00**. Regenerate with `wate
 | extracted | mansfield | 1 | 1 | 0 | 0 |
 | extracted | meetings | 1 | 1 | 0 | 0 |
 | extracted | oepa | 8 | 8 | 0 | 0 |
+| extracted | ottawa | 2 | 2 | 0 | 0 |
 | extracted | permits | 2 | 2 | 0 | 0 |
 | extracted | perry-township | 1 | 1 | 0 | 0 |
 | extracted | plans | 1 | 1 | 0 | 0 |
@@ -100,7 +101,7 @@ Snapshot reconciled: **2026-07-31T22:54:19.336771+00:00**. Regenerate with `wate
 | lima | 106 | 100 | 6 |
 | mansfield | 53 | 42 | 11 |
 | new-albany | 52 | 41 | 11 |
-| ottawa | 56 | 45 | 11 |
+| ottawa | 58 | 48 | 10 |
 | piketon | 52 | 35 | 17 |
 | portsmouth | 53 | 36 | 17 |
 | sandusky | 52 | 35 | 17 |

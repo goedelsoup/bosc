@@ -1,0 +1,48 @@
+id: ottawa-warn
+title: Ottawa — ODJFS WARN Notice, RK Industries (Extraction)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    One Ohio Department of Job and Family Services WARN Act notice served from the Ohio DAM's
+    jfs.ohio.gov/warn tree — RK Industries, Inc.'s expected closure of its automotive stamping
+    and robotic-welding operation at 725 N Locust St, Ottawa (received 2024-05-16, ODJFS notice
+    007-24-042). Located by reading the ODJFS 2024/2025/2026 public notice lists record-by-record
+    (241 notices, one Putnam County hit) while closing the #1423 facility-posture sweep. Fetched
+    2026-07-31; per-file provenance in data/documents/ottawa/warn/filename-map.yaml. The document
+    is a SCAN with no body text layer — the read is a 300 DPI vision transcription, not a
+    text-layer copy.
+license: public record / public domain
+access_tier: public
+site_scope: site:ottawa
+storage:
+- relpath: extracted/ottawa/warn/rk-industries-ottawa-2024.warn.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- warn
+- odjfs
+- labor
+- plant-closure
+- rk-industries
+- automotive
+- stamping
+- dislocation
+- putnam-county
+- ottawa
+notes: >-
+  #1423. The ONLY WARN notice filed from Putnam County, Ohio in the 2024-2026 window. Publishes
+  under the `labor` RecordGroup via the `layoff_notice` block (the classifier key added in
+  #1460). ⚠️ All three headcount figures in the instrument are HANDWRITTEN into blanks the
+  printed document left empty (letter body 80, General Labor 68, TOTAL 80); the printed positions
+  sum to 12 and 68 + 12 = 80, and the ODJFS index row agrees, so four readings corroborate — but
+  the employer calls it "approximately" and the extraction carries it as ~80, never as a precise
+  payroll count. ⚠️ The closure is EXPECTED, not confirmed: the letter conditions the 2024-07-14
+  cease date on no intervening "sale, merger, or other strategic transaction", and nothing in the
+  corpus establishes what actually happened — the disposition is [open]. This is NOT a
+  data-center record; it is the departure the sweep found where it looked for an arrival, and
+  Ottawa's profile keeps facilities=(). See data/extracted/ottawa/data-centers.md.

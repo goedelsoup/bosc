@@ -36,6 +36,30 @@ required by NOV of **2025-11-13** to the preceding CCR.
 Structured read:
 [`drinking-water/oh6900711-2025-ccr.epa.yaml`](../../extracted/ottawa/drinking-water/oh6900711-2025-ccr.epa.yaml).
 
+### `warn/` — the dislocation side
+
+`RKIndustries.pdf` — the **only ODJFS WARN Act notice filed from Putnam County, Ohio** in the
+2024–2026 window, served from the Ohio DAM's `jfs.ohio.gov/warn` tree. RK Industries, Inc. noticed
+the expected closure of its automotive production stamping, robotic mig welding and spot welding
+operation at **725 N Locust St** on **2024-05-16**, ceasing **2024-07-14**, **~80 employees**, none
+represented by a union. ODJFS notice **007-24-042**.
+
+Two handling notes:
+
+- **It is a scan.** Unlike the Findlay WARN pair, this PDF carries no body text layer — `pypdf`
+  returns only the receipt stamp `"Received: 5/16/2024 @ 1:18pm"` and nothing from page 2. The
+  structured read is a **300 DPI vision transcription**, and says so in its `method`/`dpi` fields.
+- **Every headcount in it is handwritten** into a blank the printed document left empty (body 80,
+  General Labor 68, TOTAL 80). They agree with each other, with the typed positions (12, so
+  68 + 12 = 80) and with the ODJFS index row — but the letter says "approximately," and the
+  extraction carries `~80`.
+
+It was found by the #1423 facility-posture sweep, which queried the ODJFS lists record-by-record
+looking for a *data-center arrival* and found a *manufacturer's departure*. Structured read:
+[`warn/rk-industries-ottawa-2024.warn.yaml`](../../extracted/ottawa/warn/rk-industries-ottawa-2024.warn.yaml);
+the register that found it is
+[`data-centers.md`](../../extracted/ottawa/data-centers.md).
+
 ## Why this collection sits beside `oepa/ottawa/`
 
 The Village of Ottawa draws its drinking water from the Blanchard River and discharges its

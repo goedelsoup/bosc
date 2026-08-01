@@ -1451,7 +1451,25 @@ _OTTAWA = SiteProfile(
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
     # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
-    facilities=(),  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
+    # [verified] SWEPT AND NEGATIVE, not unfilled (#1423, 2026-07-31). This empty tuple is a
+    # FINDING with a register behind it — data/extracted/ottawa/data-centers.md — not a knob nobody
+    # got to. Six record systems were queried record-by-record: PJM's public planning queue (9,263
+    # projects; 9 in Putnam, ALL generation, all wind/solar, nothing above 138 kV — and note the
+    # queue carries no load-interconnection project type at all, so it corroborates without being
+    # dispositive, and its SubmittedDate frontier is 2025-06-03); the ODJFS WARN lists for 2024,
+    # 2025 and 2026 (241 notices, ONE Putnam hit and it is a CLOSURE — RK Industries, 725 N Locust
+    # St, 80 jobs, ceasing 2024-07-14, notice 007-24-042); EPA ECHO ICIS-Air (33 county facilities,
+    # 3 majors, ZERO NAICS 518210, no genset bank); ECHO CWA (48 permits, 14 active construction
+    # NOIs, every one a road/utility/municipal job); RSEI v234 (14 TRI reporters, no 518210); and
+    # BLS QCEW 2023 (Information LQ 0.21 on 50 jobs vs Manufacturing LQ 3.72). The county's own
+    # SB 52 blanket restriction (Sept 2023) capped its pipeline at two grandfathered solar projects,
+    # and the sharper fact is that one of them — Blue Harvest, 49.9 MW, in service 2023-11-22 —
+    # sells its output to AMAZON/AWS: Putnam exports to the build-out it does not host. Do NOT
+    # scaffold a facility here to light up the readiness domain; the lock is the answer. ⚠️
+    # Disambiguation: Putnam County, WEST VIRGINIA has a live multibillion-dollar Google campus
+    # (~1,700 ac at Buffalo, announced March 2026) and owns the obvious search terms — it is not
+    # this county. One check stays [open]: the paywalled Toledo Blade article of 2025-12-13.
+    facilities=(),  # [verified] no disclosed facility — see data/extracted/ottawa/data-centers.md
     serving_utility_citation=(  # [reference] not corpus
         "EIA-861 service-territory file (Ohio Power Co #14006) + PUCO certified-territory: AEP Ohio "
         "serves the incorporated Village of Ottawa; rural Putnam County is served by cooperatives "
