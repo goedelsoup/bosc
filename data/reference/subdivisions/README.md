@@ -20,6 +20,15 @@ its owner in `meta.site`; `load_registry` refuses to read a registry whose `meta
 disagrees with the active site, so a peer's bodies can never leak into a Lima run (or
 vice versa).
 
+One peer registry exists today: [`findlay/`](findlay/) — Hancock County's 32 bodies,
+grounded in that county's own Directory of Officials and swept 2026-08-01 (#1839, the
+epic-#1520 pilot). Read it with `watermark --site findlay subdivisions list`. Note that
+**Bluffton is in both registries**: it straddles the Allen/Hancock line and each county's
+roster grounds it independently. Three township names (Amanda, Jackson, Marion) are also
+slugs in both — different bodies in different counties, kept apart because the registries
+are separate files and their meeting trees nest separately (Lima flat, peers under
+`<slug>/`).
+
 ## What is grounded vs. discovered
 
 Two kinds of fact live here, held to different standards:
@@ -86,5 +95,15 @@ Regenerate: `watermark subdivisions discover`
 | file | type | lfs |
 | --- | --- | --- |
 | `reference/subdivisions/subdivisions.yaml` | application/x-yaml | no |
+
+### `subdivisions-findlay` — Hancock County Political-Subdivision Meeting-Records Registry (Findlay)
+
+Source: Hancock County, Ohio Directory of Officials 2026 (data/documents/findlay/reference/) for every grounded fact, plus a live-web discovery sweep of all 32 bodies (2026-08-01) for the publishing blocks. · License: Public records (local government open data) · Access: public · Site scope: site:findlay · Refresh: on-demand, last 2026-08-01
+
+Regenerate: `watermark --site findlay subdivisions discover`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/subdivisions/findlay/subdivisions.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

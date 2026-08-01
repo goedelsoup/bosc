@@ -1,0 +1,74 @@
+# Capture / alias manifest — Hancock County reference rosters, issue 1839.
+#
+# The grounded source for the Findlay site's political-subdivision meeting-records
+# registry (data/reference/subdivisions/findlay/subdivisions.yaml). Hancock County
+# publishes one consolidated roster rather than Allen County's three separate
+# sheets, so a single document grounds the townships, the villages, the two cities,
+# the board of commissioners and the county's own departments.
+#
+# The file keeps the name the server served it under. The county's CivicPlus
+# DocumentCenter returns `content-disposition: inline;filename=2026%20Directory%20
+# of%20Officials_202604131412522342.pdf`; it is stored URL-DECODED ("%20" -> space)
+# because that decode is the served name, not a correction of it. The trailing
+# `_202604131412522342` is the CMS's own upload token and is NOT edited out — and
+# it is NOT read as a date here (see below).
+#
+# `content_verified` is read from the file's OWN text layer. This roster prints a
+# YEAR on its cover, not a date, so the verified value is the year — recorded as
+# such. The CMS token in the filename decodes to 2026-04-13, but a filename is not
+# a content date and is recorded only as `filename_token`, never promoted.
+#
+# evidence: native_text = PDF text layer (pypdf) confirms the identity + edition
+meta:
+  subject: >-
+    Hancock County, Ohio Directory of Officials (2026) — the county-published roster
+    of meeting-holding bodies that grounds the Findlay subdivisions registry
+    (issue 1839, epic 1520 pilot)
+  collection: findlay/reference/
+  captured_by: issue 1839 (epic 1520, cross-site civic loader — Findlay pilot)
+  generated_at: '2026-08-01'
+  policy: non-destructive — as-served bytes, as-served (URL-decoded) filenames.
+
+documents:
+  - filename: 2026 Directory of Officials_202604131412522342.pdf
+    url_encoded_name: 2026%20Directory%20of%20Officials_202604131412522342.pdf
+    canonical: hancock-county-directory-of-officials-2026.pdf
+    title: Hancock County, Ohio — Directory of Officials, 2026
+    issuer: Hancock County Emergency Management Agency (Lee Swisher, Director)
+    source_url: https://co.hancock.oh.us/DocumentCenter/View/841/2026-Directory-of-Officials
+    landing_page: https://co.hancock.oh.us/home
+    requested_url: https://co.hancock.oh.us/DocumentCenter/View/841/2024-Directory-of-Officials
+    sha256: e62cbb7e40252463769c0ef61b2515a504228e4bf5a29e1b699a5b77c203b74f
+    bytes: 469078
+    content_type: application/pdf
+    pages: 17
+    fetched_at: '2026-08-01T12:19:00Z'
+    content_verified: '2026'
+    content_verified_note: >-
+      Cover (p. 1) prints "Hancock County, Ohio / Directory of Officials / 2026".
+      The document carries no issue date of its own; the verified value is the
+      edition year, not a day. Page 16 ("County Facts") dates its population figure
+      to 2024, which bounds the edition below — it does not date it.
+    filename_token: '202604131412522342'
+    evidence: native_text
+    status: downloaded
+    note: >-
+      DocumentCenter item 841 is a stable slot the county re-points at each new
+      edition: the 2024-Directory-of-Officials URL 301-redirects to
+      2026-Directory-of-Officials. The requested URL is recorded above alongside the
+      URL actually served, so a later edition landing at the same item number is
+      visible as a substitution rather than a silent update.
+
+      What it grounds: pp. 5-9 the seventeen township boards of trustees with each
+      board's standing meeting cadence and township-house address; p. 4 the eleven
+      incorporated villages with council cadence and (for seven) a website; p. 2 the
+      Board of County Commissioners' standing 9:30 am Tuesday & Thursday meeting;
+      pp. 3-4 the City of Findlay and City of Fostoria offices; p. 2 the county
+      departments including the Regional Planning Commission; p. 10 the zoning
+      official for each jurisdiction.
+
+      What it does NOT ground: the City of Findlay's and City of Fostoria's council
+      meeting cadence (the roster prints cadence for the villages, the townships and
+      the commissioners only — those two councils are left null in the registry
+      rather than sourced from outside knowledge), and any body's records-publishing
+      URL, which is a live-web discovery finding with its own provenance.

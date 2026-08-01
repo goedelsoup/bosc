@@ -1,0 +1,55 @@
+id: allen-township-meetings
+title: Allen Township (Hancock County) Trustee Meeting Records
+scope: extracted
+status: reviewed
+producer:
+  kind: connector
+  command: --site findlay subdivisions download allen-township
+  connector_ref: watermark.civic
+  source: >-
+    Allen Township, Hancock County, OH Board of Trustees — minutes published on the
+    township's own .gov (WordPress) at allentwphancockoh.gov/trustees/. The body is
+    grounded in the committed Hancock County Directory of Officials 2026
+    (data/documents/findlay/reference/); its publishing block was discovered 2026-08-01.
+  external_url: https://allentwphancockoh.gov/trustees/
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+# The first NON-Lima civic meeting tree in the network (#1839, epic #1520's pilot). Not
+# `slug-scoped`: Allen Township of Hancock County is one specific body, and no other site has a
+# copy — the tree lives at extracted/findlay/, never at extracted/{site}/. Lima's registry carries
+# an Allen COUNTY township list; the two never meet, which is the point of the nested layout.
+site_scope: site:findlay
+storage:
+- relpath: extracted/findlay/allen-township/meetings/completeness-audit.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/allen-township/meetings/download-manifest.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/allen-township/meetings/meeting-index.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/allen-township/meetings/meeting-summaries.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-08-01'
+provenance: connector
+tags:
+- civic
+- township
+- meetings
+- allen-township
+- hancock-county
+- findlay
+notes: >-
+  Civic-pipeline pull of the trustees' published record — 39 minutes spanning 2024-01-02 to
+  2026-07-07, all text-extracted and date-verified against the files' own text, 18 with
+  corridor-topic hits, 3 corridor-relevant enough to summarize. The completeness audit reports 94%
+  coverage against the roster's standing "First Tuesday of the Month" cadence, with 2 dates to
+  request. The three summarized meetings are the substantive ones: One Power Company digging in
+  the township ROW (2025-03-04), the Starn decision voiding the May-2025 zoning ballot in One
+  Power Co. v. Hancock County Bd. of Elections, No. 2025 CV 00168 (2025-12-02), and the trustees'
+  vote to ask the county commissioners for a data-center moratorium (2026-03-03). The township's
+  zoning commission and BZA keep separate archives that this entry does NOT cover.

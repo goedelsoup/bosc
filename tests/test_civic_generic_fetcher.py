@@ -103,3 +103,54 @@ def test_dispatch_facebook_body_still_raises(civic_settings: Settings) -> None:
     assert richland is not None
     with pytest.raises(FetcherNotImplementedError):
         fetch_meetings(richland, settings=civic_settings)
+
+
+def test_wordpress_upload_path_is_not_read_as_the_meeting_date() -> None:
+    """A CMS's ``/uploads/<YYYY>/<MM>/`` prefix must never supply a meeting date (#1839).
+
+    Allen Township (Hancock County) is the first body in the network whose filenames are bare
+    US dates sitting under WordPress's upload path. Scanning the whole href, ``05/01-06`` in
+    ``/uploads/2026/05/01-06-2026.pdf`` matched first and dated a January-2026 meeting to
+    **2006-05-01** — a decade of invented chronology for a page holding only 2024-2026. The date
+    is read from the link text + the file's own basename; the upload path is when the clerk
+    uploaded the file, never when the body met.
+    """
+    up = "https://allentwphancockoh.gov/wp-content/uploads"
+    html = (
+        f'<a href="{up}/2026/05/01-06-2026.pdf">Minutes</a>'  # was 2006-05-01
+        f'<a href="{up}/2026/05/01-28-2026.pdf">Minutes</a>'  # was 2028-05-01
+        f'<a href="{up}/2026/06/10-28-2025-Zoning-Amendment-Hearings.pdf">Minutes</a>'
+        f'<a href="{up}/2026/05/04-01-2025-1.pdf">Minutes</a>'  # was 2001-05-04
+    )
+    docs = generic.extract_documents(html, base_url=f"{up}/", slug="allen-township")
+    assert [d.date for d in docs] == ["2026-01-06", "2026-01-28", "2025-10-28", "2025-04-01"]
+    assert all(d.kind == "minutes" for d in docs)
+
+
+def test_date_from_upload_path_alone_is_omitted_not_invented() -> None:
+    """A file whose only date is in the CMS upload path now yields ``date: None`` (#1839).
+
+    Prefer omission over invention: the upload month is not the meeting date, and reporting it
+    as one is worse than reporting nothing. The link text still wins when it carries a date.
+    """
+    up = "https://x.gov/wp-content/uploads/2026/05"
+    docs = generic.extract_documents(
+        f'<a href="{up}/board-packet.pdf">Packet</a>'
+        f'<a href="{up}/board-packet-2.pdf">Packet for May 6, 2026</a>',
+        base_url=f"{up}/",
+        slug="x",
+    )
+    assert [d.date for d in docs] == [None, "2026-05-06"]
+
+
+def test_kind_heuristic_still_reads_the_whole_href() -> None:
+    """Narrowing the DATE signal must not narrow the KIND one (#1839).
+
+    Allen County's ``A######``/``M######`` convention is anchored on the path separator, so
+    ``_classify_kind`` keeps the full href even though ``parse_date`` no longer sees it.
+    """
+    up = "https://commissioners.allencountyohio.com/wp-content/uploads/2026/06"
+    docs = generic.extract_documents(
+        f'<a href="{up}/M060226.pdf">June 2, 2026</a>', base_url=f"{up}/", slug="commissioners"
+    )
+    assert [(d.kind, d.date) for d in docs] == [("minutes", "2026-06-02")]

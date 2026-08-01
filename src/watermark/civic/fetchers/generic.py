@@ -101,6 +101,26 @@ def _classify_kind(haystack: str) -> str:
     return "other"
 
 
+def _date_signal(title: str, href: str) -> str:
+    """The text a meeting date may honestly be read from: the link text + the file's own name.
+
+    Deliberately NOT the whole href. A CMS puts its own bookkeeping in the path — WordPress
+    files everything under ``/wp-content/uploads/<YYYY>/<MM>/`` — and that prefix reads as a
+    date to :func:`parse_date`. On a body whose filenames are bare US dates the two collide
+    and the *upload* month wins: Allen Township's ``/uploads/2026/05/01-06-2026.pdf`` matched
+    ``05/01-06`` and dated a January-2026 meeting to **2006-05-01**, inventing a decade of
+    chronology for a page that only holds 2024-2026 (#1839, the first peer to hit it — Lima's
+    WordPress bodies all carry ISO or named dates and were never miscounted).
+
+    The upload path is when the clerk uploaded the file, never when the body met, so it is not
+    a date source at all. Only the last path segment (with its query, which is where Wix hangs
+    the friendly ``?dn=`` download name) is kept. A body that encodes the meeting date *only*
+    in its upload path now yields ``date: null`` — an honest omission over an invented date.
+    """
+    basename = unquote(_html.unescape(href)).rsplit("/", 1)[-1]
+    return f"{title} {basename}"
+
+
 def extract_documents(html: str, *, base_url: str, slug: str) -> list[MeetingDoc]:
     """Every document-file link on a records page, as ``MeetingDoc``s (deduped by URL)."""
     docs: list[MeetingDoc] = []
@@ -122,7 +142,9 @@ def extract_documents(html: str, *, base_url: str, slug: str) -> list[MeetingDoc
                 body=None,  # single-body records page; the subdivision is the body
                 kind=_classify_kind(signal),
                 title=title or None,
-                date=parse_date(signal),
+                # Kind reads the whole href (its `/m######-` convention is anchored on the
+                # path separator); the DATE must not — see _date_signal.
+                date=parse_date(_date_signal(title, href)),
                 url=url,
             )
         )

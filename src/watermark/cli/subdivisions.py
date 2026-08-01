@@ -356,8 +356,10 @@ def subdivisions_summarize(
 ) -> None:
     """Summarize a body's corridor meetings: extract what was decided (LLM analyze stage).
 
-    For each indexed meeting that names the project (datacenter/bosc/bistrozzi/google),
-    reads the file's text and extracts a grounded structured summary (motions, parties,
+    For each indexed meeting whose hits name one of the ACTIVE SITE's corridor subjects
+    (SiteProfile.corridor_subjects — Lima's datacenter/bosc/bistrozzi/google, Findlay's
+    datacenter/one_power/mara_holdings, empty for a site that has declared none), reads
+    the file's text and extracts a grounded structured summary (motions, parties,
     parcels, dollar figures), writing meeting-summaries.yaml. Requires ANTHROPIC_API_KEY.
     """
     from watermark.civic import load_registry

@@ -1,7 +1,14 @@
 # CLAUDE.md — `watermark.civic`
 
-Civic-records subsystem: Allen County political-subdivision meeting minutes/agendas.
+Civic-records subsystem: political-subdivision meeting minutes/agendas, per network site.
 Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
+
+**Two sites are ingested today**: Lima (Allen County, the reference build, six bodies flat)
+and **Findlay** (Hancock County — the epic-#1520 pilot, #1839: a 32-body registry and two
+nested meeting trees, `allen-township` on WordPress and `hancock-county-commissioners` on
+CivicPlus). Meeting the peer's real data cost three Lima-locks their fixtures had hidden —
+the generic fetcher's date parser, the summarizer's prompt, and the read path's unstated
+depth contract. Each is called out below.
 
 - **Registry is the spine, and it resolves per active site.** `registry.py`'s
   `registry_path(settings)` selects the authoritative
@@ -37,15 +44,24 @@ Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
   `_http.get_page` cache (each fetcher has its own connector namespace:
   `civicplus`, `subdivision_records`). Unsupported platforms raise
   `FetcherNotImplementedError` (caught by the CLI), never a silent empty.
-  - `civicplus` — Agenda Center (Lima, LACRPC). Reads the *index* (recent meetings
+  - `civicplus` — Agenda Center (Lima, LACRPC, and Hancock County's own board + Fostoria).
+    Reads the *index* (recent meetings
     per body across several years); the full archive via `POST UpdateCategoryList`
     per (category, year) is a follow-on. `fetch` logs the doc count so the index
     view is never mistaken for the complete record.
-  - `generic` — records-page link scraper for WordPress/Wix/Revize/static bodies
+  - `generic` — records-page link scraper for WordPress/Wix/Revize/Squarespace/static bodies
     (and any `unknown` body that still has a `records_url`). Matches document-file
     links, percent-decodes the href, parses dates from the link text/filename, and
     classifies minutes/agenda. A JS-rendered or embedded list yields an honest
     empty result — never a fabricated entry.
+    **The date is read from the link text + the file's own BASENAME, never the whole href**
+    (`_date_signal`, #1839). A CMS puts bookkeeping in the path: WordPress files everything
+    under `/wp-content/uploads/<YYYY>/<MM>/`, and against a body whose filenames are bare US
+    dates that prefix wins — Allen Township's `/uploads/2026/05/01-06-2026.pdf` matched
+    `05/01-06` and dated a January-2026 meeting to **2006-05-01**, inventing a decade of
+    chronology. The upload month is when the clerk uploaded the file, never when the body met.
+    `_classify_kind` still reads the whole href (Allen County's `/m######-` convention is
+    anchored on the path separator); only the date signal is narrowed.
 - **Meeting trees nest per site (`layout.py`, #1520/#1522).** A body slug keys the meeting
   namespace, and where that namespace lives is `meetings_dir(root, body_slug, settings)`: Lima —
   the reference build — keeps the flat legacy `<body>/meetings/` (chain of custody, never
@@ -59,6 +75,13 @@ Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
   over the one- and two-segment depths, then `relpath_in_scope`) — timeline, `load_committed_summaries`,
   and the entity fold-in — so a tree lands in **exactly one** site. `retrieval.iter_extracted_chunks`
   and `load_corpus` already `rglob` + scope-gate, so they pick up the nested tree without change.
+  **Those two globs are a contract, and it is stated** (#1839): they cover a prefix of exactly
+  one or two segments, which is all `meetings_dir` can produce. A tree filed deeper — a peer
+  filing under a jurisdiction-prefixed collection, `idem/fort-wayne/<body>/meetings/`, three
+  segments — would be **silently invisible**: no error, just a body that never reaches the
+  timeline or the bundle. `meetings_dir` now asserts its own output against
+  `pipeline.corpus.assert_meeting_layout_depth`, so widening the write layout without widening
+  the read globs fails loudly.
 - **Fetchers return a `MeetingDoc` inventory, not files.** `downloader.py` is the
   step that pulls the binaries into the body's meeting subtree (raw, LFS, immutable — flat for
   Lima, `<site>/`-nested for a peer, above) and writes a non-destructive **download manifest**
@@ -86,14 +109,30 @@ Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
   whose text names one of the **active site's** corridor subjects as `category:
   subdivision_meeting` (agenda+minutes collapse via a shared `ref`). That vocabulary
   is per-site (#1523): the single source of truth is `SiteProfile.corridor_subjects`
-  (Lima's `datacenter`/`bosc`/`bistrozzi`/`google`; **empty for a peer** until it
+  (Lima's `datacenter`/`bosc`/`bistrozzi`/`google`, Findlay's own
+  `datacenter`/`one_power`/`mara_holdings`; **empty for a peer** until it
   declares its own — no `subdivision_meeting` flooding meanwhile), read via
   `active_profile(settings)` and threaded into both the timeline and `summarize`
   (`keywords.is_corridor_relevant(hits, subjects)` takes the vocabulary as an argument, so
   `keywords` stays pure — no module constant, no `pipeline`→`civic` import). Generic township
   topics (rezoning/easement/annexation/solar/...) and ambiguous names (`hume`, `amazon`) stay
   in the index `hits` as searchable corpus but don't flood the chronology. Site picks the
-  category up automatically.
+  category up automatically. A new site's terms go in `keywords._TERMS` (the shared scan
+  vocabulary) and are then *selected* by that site's `corridor_subjects` — write the pattern
+  narrowly enough to survive its own town: Findlay's `mara_holdings` requires the full name
+  because a bare `\bmara\b` is a coin-flip against a surname, and MARA Holdings is not
+  Marathon Petroleum, which is headquartered there.
+- **A hit is not a finding.** `summarize.py` runs the analyze stage over the selected meetings,
+  and its prompt is built per site (`build_instructions(county, hits)`, #1839) — the active
+  profile's county and *this document's own* hits. It used to be hardcoded to Lima ("an Allen
+  County, Ohio township or village … codename Project BOSC / Bistrozzi LLC / a hyperscale data
+  center, possibly Google"), and told that, the model read Hancock County minutes and explained
+  a pair of Cooperative Economic Development Agreements as being for "a hyperscale data center"
+  — a link those minutes never draw. The prompt now also *requires* the model to report a bare
+  mention as a bare mention. That guard earns its keep immediately: four of the six
+  data-center hits in Hancock County's commissioners record are the county's OWN General Fund
+  budget line of that name (an HVAC change order, two intra-fund transfers), and the summaries
+  say so.
 - **Pipeline complete:** `discover → fetch → download → index → timeline`. The OCR
   pass for image-only scans is now wired (`index --ocr` / `summarize --ocr`,
   tesseract-backed); the commissioners corpus was fully OCR'd this way (991/991,

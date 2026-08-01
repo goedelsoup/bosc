@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-01T12:35:36.393027+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-01T13:25:03.591206+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **143** catalogued datasets — **142** reviewed.
-- **143** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **146** catalogued datasets — **145** reviewed.
+- **146** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -22,7 +22,7 @@ Snapshot reconciled: **2026-08-01T12:35:36.393027+00:00**. Regenerate with `wate
 | extracted | american-township | 1 | 1 | 0 | 0 |
 | extracted | commissioners | 3 | 3 | 0 | 0 |
 | extracted | extracted | 2 | 2 | 0 | 0 |
-| extracted | findlay | 3 | 3 | 0 | 0 |
+| extracted | findlay | 5 | 5 | 0 | 0 |
 | extracted | grid | 2 | 2 | 0 | 0 |
 | extracted | hamilton-middletown | 1 | 1 | 0 | 0 |
 | extracted | history | 1 | 1 | 0 | 0 |
@@ -77,7 +77,7 @@ Snapshot reconciled: **2026-08-01T12:35:36.393027+00:00**. Regenerate with `wate
 | reference | pjm | 1 | 1 | 0 | 0 |
 | reference | reference | 3 | 3 | 0 | 0 |
 | reference | rsei | 2 | 2 | 0 | 0 |
-| reference | subdivisions | 1 | 1 | 0 | 0 |
+| reference | subdivisions | 2 | 2 | 0 | 0 |
 | reference | thermal | 2 | 2 | 0 | 0 |
 | reference | troy-piqua | 1 | 1 | 0 | 0 |
 | reference | troy-piqua-gis | 1 | 1 | 0 | 0 |
@@ -94,7 +94,7 @@ Snapshot reconciled: **2026-08-01T12:35:36.393027+00:00**. Regenerate with `wate
 | columbus | 52 | 41 | 11 |
 | coshocton | 52 | 35 | 17 |
 | defiance | 55 | 43 | 12 |
-| findlay | 61 | 51 | 10 |
+| findlay | 64 | 54 | 10 |
 | fort-wayne | 45 | 33 | 12 |
 | greenville | 53 | 41 | 12 |
 | hamilton-middletown | 54 | 43 | 11 |

@@ -64,8 +64,14 @@ async def test_reference_tools_do_not_serve_lima_data_off_home(
     timeline_text = (await tools.timeline.handler({}))["content"][0]["text"]
     assert timeline_text.startswith("[scope]") and "findlay" in timeline_text
     assert "[epa_permit_action]" in timeline_text
-    # Lima commissioners minutes must not bleed into a Findlay run.
-    assert "commissioners" not in timeline_text.lower()
+    # Lima's commissioners minutes must not bleed into a Findlay run — but "commissioners" is no
+    # longer a usable proxy for that. Since #1839 Findlay has ingested a body of its own by that
+    # name (Hancock County's board, which Lima's registry deliberately excludes for Allen County),
+    # so the word appears legitimately. Test the thing the proxy stood for: every meeting event
+    # cited here comes from Findlay's OWN nested tree, never Lima's flat `commissioners/`.
+    assert "findlay/hancock-county-commissioners/meetings/" in timeline_text
+    assert "<commissioners/" not in timeline_text
+    assert "commissioners/minutes/" not in timeline_text
 
     # list_documents filters data/documents/ by the site's own corpus scope rather than
     # returning a _reference_only notice. Since #1460 Findlay owns real source bytes in TWO

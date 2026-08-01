@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-01T12:35:36.393027+00:00'
+reconciled_at: '2026-08-01T13:25:03.591206+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -100,6 +100,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  allen-township-meetings:
+    exists: true
+    sha256: 46dc74b49e609883106db52e5dd083e52a3b685f1043ee7c0ac09559adca8388
+    size_bytes: 44292
+    lfs_materialized: true
+    file_count: 4
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:findlay
   american-township-meetings:
     exists: true
     sha256: 28aec4100f031f3a8756360fc4997522814f461eb34f682524824f2033c4c057
@@ -540,6 +550,16 @@ entries:
     asof: null
     stale: false
     site_scope: basin-shared
+  hancock-county-commissioners-meetings:
+    exists: true
+    sha256: a308bec8c503da64a9e62ceb474f0f311be19a9fe9b5aec81c59fa6e9eeb570f
+    size_bytes: 121242
+    lfs_materialized: true
+    file_count: 4
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:findlay
   history-allen-oh-leeson-1885-corpus-intersect:
     exists: true
     sha256: acb749c7ccde71f525795525617a1c4a51bfc680b6aa3f2a638285d9b1706607
@@ -1270,6 +1290,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  subdivisions-findlay:
+    exists: true
+    sha256: 4cb78d5c7aeba90d5be8452feb66740218ccde578493c0dd50655c967d580fee
+    size_bytes: 35521
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:findlay
   thermal:
     exists: true
     sha256: 914f2576686459704ce56c416e57f6ebe1f1770fc24f4660fcdc4508da790c88

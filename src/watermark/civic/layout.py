@@ -15,6 +15,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from watermark.config import Settings, get_settings
+from watermark.pipeline.corpus import assert_meeting_layout_depth
 from watermark.sites import is_reference_site
 
 
@@ -26,6 +27,13 @@ def meetings_dir(root: Path, body_slug: str, settings: Settings | None = None) -
     manifest/index/summaries (``settings.extracted_dir``) so the two trees stay parallel.
     """
     settings = settings or get_settings()
-    if is_reference_site(settings.site):
-        return root / body_slug / "meetings"
-    return root / settings.site / body_slug / "meetings"
+    out = (
+        root / body_slug / "meetings"
+        if is_reference_site(settings.site)
+        else root / settings.site / body_slug / "meetings"
+    )
+    # The read path (pipeline.corpus.iter_meeting_artifacts) globs exactly one- and two-segment
+    # prefixes. Nothing but this function decides the depth, so assert it here rather than
+    # letting a future layout write a tree the reader silently can't see (#1839).
+    assert_meeting_layout_depth(str(out.relative_to(root) / "download-manifest.yaml"))
+    return out

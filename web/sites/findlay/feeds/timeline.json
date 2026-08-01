@@ -84,6 +84,27 @@
     }
   },
   {
+    "date": "2025-03-04",
+    "category": "subdivision_meeting",
+    "title": "Allen Township — minutes (corridor: one_power)",
+    "ref": "mtg-allen-township-2025-03-04-Allen Township",
+    "parties": [
+      "Allen Township"
+    ],
+    "detail": "The meeting text references One Energy/One Power Company digging in the township ROW on TR215 and a pending permit request to tap into a township catch basin; the text does not name a specific project or purpose beyond this activity and the related drainage permit authorization. · figures: $33,269.33; $14,750.00; $55.00 (monthly service savings); $2,500 - $3,000 (initial equipment and installation costs); 3.2 mills of inside millage",
+    "source": "findlay/allen-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "findlay/allen-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2025-11-14",
     "category": "npdes_public_notice",
     "title": "NPDES 2PD00008*VD (City of Findlay Water Pollution Control Center) — public notice",
@@ -108,6 +129,27 @@
     }
   },
   {
+    "date": "2025-12-02",
+    "category": "subdivision_meeting",
+    "title": "Allen Township — minutes (corridor: one_power)",
+    "ref": "mtg-allen-township-2025-12-02-Allen Township",
+    "parties": [
+      "Allen Township"
+    ],
+    "detail": "The meeting connects to the subject \"one_power\" because One Power Company is named as the plaintiff in a complaint (Case No. 2025 CV 00168) filed on May 1, 2025 against the Hancock County Board of Elections challenging the ballot language for the Allen Township Zoning Resolution; the minutes do not describe One Power Company's nature, purpose, or any project beyond its role as the filing party in that legal action. · figures: $157,977.59 (outstanding bills — warrants and electronic payments); $58,368.08 (OPWC funds granted to resurface TR 114 and TR 281); $17 per firemen response; $38,318.00 ('Fire-Run' payments); 3.0 mills (CEDA with City of Findlay)",
+    "source": "findlay/allen-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "findlay/allen-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2025-12-14",
     "category": "npdes_comment_deadline",
     "title": "NPDES 2PD00008*VD (City of Findlay Water Pollution Control Center) — comment period ends",
@@ -123,6 +165,115 @@
     ],
     "citation": {
       "source": "oepa/findlay/2PD00008.1abaf306.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-03",
+    "category": "subdivision_meeting",
+    "title": "Allen Township — minutes (corridor: datacenter)",
+    "ref": "mtg-allen-township-2026-03-03-Allen Township",
+    "parties": [
+      "Allen Township"
+    ],
+    "detail": "The meeting text mentions data centers solely in the context of a discussion about possible construction in the township and a resulting motion to request a moratorium; no specific project, developer, or parcel is named. The easement mention is limited to the TR114 & CR140 intersection project, with no further detail provided in the text. · figures: $142,123.32 (warrants and electronic payments for outstanding bills); $4,821.11 (boot price to trade-in 2022 JD Z930M for 2026 JD Z930M lawn mower)",
+    "source": "findlay/allen-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "findlay/allen-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-26",
+    "category": "subdivision_meeting",
+    "title": "Commissioners Regular Meeting — minutes (corridor: datacenter)",
+    "ref": "mtg-hancock-county-commissioners-2026-03-26-Commissioners Regular Meeting",
+    "parties": [
+      "Commissioners Regular Meeting"
+    ],
+    "detail": "The meeting text mentions data centers in the context of a discussion about whether county commissioners can enact a county-wide moratorium on them, with Commissioner Bechtol stating no such state statute exists; no specific data center project, site, or party is named in the minutes beyond this general discussion. · figures: $1,495.00 — new plants for the Judicial Center; $3,000.00 — quote to determine where the JFS roof is leaking; $1,293.84 — maintenance truck repairs (vehicle 1); $4,527.37 — maintenance truck repairs (vehicle 2); $754.16 — parts for dump truck spreader repairs; $2,012.04 — additional HVAC repairs at the Justice Center (change order from Bodie Mechanical)",
+    "source": "findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-07",
+    "category": "subdivision_meeting",
+    "title": "Commissioners Regular Meeting — agenda (corridor: datacenter)",
+    "ref": "mtg-hancock-county-commissioners-2026-04-07-Commissioners Regular Meeting",
+    "parties": [
+      "Commissioners Regular Meeting"
+    ],
+    "detail": "The meeting connects to the \"datacenter\" corridor subject solely through Resolution #223-26, which authorizes a $2,000.00 transfer of funds within General Fund #1001 labeled \"Data Center\"; the text provides no further description of a project, purpose, or named party associated with it. · figures: $2000.00 (Transfer of funds within the appropriation – General Fund #1001, Data Center); $2,012.04 (Additional appropriation to Capital Projects Fund #4150)",
+    "source": "findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "findlay/hancock-county-commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-16",
+    "category": "subdivision_meeting",
+    "title": "Commissioners Regular Meeting — agenda (corridor: datacenter)",
+    "ref": "mtg-hancock-county-commissioners-2026-04-16-Commissioners Regular Meeting",
+    "parties": [
+      "Commissioners Regular Meeting"
+    ],
+    "detail": "The meeting is flagged for \"datacenter\" solely due to Resolution #247-26, which is a $1,000.00 intra-appropriation fund transfer within General Fund #1001 labeled \"Data Center\"; the text provides no further details about the purpose, project, or parties involved beyond this label. · figures: $748.72; $84,214.19; $11,016.67; $1,000.00; $20,000.00; $108,204.99; $151,004.40",
+    "source": "findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "findlay/hancock-county-commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-06-18",
+    "category": "subdivision_meeting",
+    "title": "Commissioners Regular Meeting — minutes (corridor: datacenter)",
+    "ref": "mtg-hancock-county-commissioners-2026-06-18-Commissioners Regular Meeting",
+    "parties": [
+      "Commissioners Regular Meeting"
+    ],
+    "detail": "The meeting text mentions \"ATR will have a change order for the Data Center HVAC installation\" and that \"the units are not in yet,\" but the minutes do not identify the data center's location, purpose, or any other parties beyond \"ATR\" in connection with this item. · figures: $12,357.85; $600,000; $100.00; $36,658.00; $2,919.90; $3,805.91; $5,000.00; $1,305.85; $28,500.00; $28,500.00; $175.00; $38,207.35; $31,000; $7,207.35; $3,850.00; $14,125.28; $3,790.52; $8,690.00; $13,567.00; $264,573.00; $2,375.00; $1,269,685.00; $188,650.79; $20,000.00; two-million-dollar notes; $120,000",
+    "source": "findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,

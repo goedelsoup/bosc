@@ -20,7 +20,16 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   optional disclosed `SiteFacility` (gensets/IT load/cooling model); grid/market identity;
   the `corpus_relpaths` scope; and the per-site civic **`corridor_subjects`** vocabulary
   (#1523 — the meeting subjects that reach the project timeline, empty for a peer until it
-  declares its own). `*_relpath`s are relative to `settings.data_dir`.
+  declares its own; Findlay declared the first peer set in #1839). `*_relpath`s are relative
+  to `settings.data_dir`.
+- **A `corridor_subjects` term is an assertion of relevance — cite each one, and leave out
+  what the record does not connect** (#1839). Findlay carries
+  `("datacenter", "one_power", "mara_holdings")`, each grounded in a committed artifact, and
+  deliberately **omits** `interstate_capital` — the applicant on a live rezoning next to the
+  site — because `allen-twp-rezoning-interstate-capital-2026.yaml` states outright that nothing
+  in the corpus connects it to a data center. Naming it here would manufacture the link that
+  artifact refuses to draw. The vocabulary is where a site's editorial thesis can leak into
+  what reads as mechanical selection, so hold it to the same standard as prose.
 - **"Corridor" names four unrelated things — check which sense before reusing one** (#1634;
   the full glossary is the `SiteProfile` docstring). (1) **design-storm** — `corridor_name` +
   `corridor_ddf_relpath`, a NOAA Atlas-14 *rainfall* subject anchored to `design_lat/lon`, not

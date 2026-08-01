@@ -16,6 +16,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 import yaml
 
 from watermark.civic.downloader import download_meetings
@@ -23,7 +24,11 @@ from watermark.civic.layout import meetings_dir
 from watermark.civic.models import MeetingDoc, Platform, Publishing, Subdivision
 from watermark.civic.summarize import load_committed_summaries
 from watermark.config import Settings
-from watermark.pipeline.corpus import iter_meeting_artifacts, relpath_in_scope
+from watermark.pipeline.corpus import (
+    assert_meeting_layout_depth,
+    iter_meeting_artifacts,
+    relpath_in_scope,
+)
 from watermark.pipeline.timeline import _subdivision_meeting_events
 from watermark.retrieval.ingestion import iter_extracted_chunks
 from watermark.sites import SITES, active_profile, effective_corpus_scope
@@ -247,3 +252,35 @@ def test_retrieval_iterator_isolates_meeting_trees_by_site(tmp_path: Path) -> No
     assert not any(s.startswith(f"{PEER}/") for s in lima_sources)  # peer nested excluded from Lima
     assert all(s.startswith(f"{PEER}/{PEER_BODY}/meetings/") for s in peer_sources)
     assert peer_sources  # the peer does index its own nested meetings
+
+
+# --- the depth contract, made explicit (#1839) ----------------------------------------------
+
+
+def test_layout_depth_tripwire_accepts_both_real_layouts() -> None:
+    """Every path :func:`meetings_dir` can produce passes the assert the read path relies on."""
+    assert_meeting_layout_depth(f"{LIMA_BODY}/meetings/meeting-index.yaml")
+    assert_meeting_layout_depth(f"{PEER}/{PEER_BODY}/meetings/meeting-index.yaml")
+
+
+def test_layout_depth_tripwire_rejects_a_jurisdiction_prefixed_tree() -> None:
+    """The silent-invisibility case the audit called out (#1839).
+
+    ``iter_meeting_artifacts`` globs one- and two-segment prefixes only. A peer that ever filed
+    meetings under a jurisdiction-prefixed collection — ``idem/fort-wayne/<body>/meetings/``, three
+    segments, the shape Fort Wayne's IDEM permits already use — would read as an empty tree with
+    no error at all. Make that a failure instead.
+    """
+    with pytest.raises(ValueError, match="segment"):
+        assert_meeting_layout_depth("idem/fort-wayne/council/meetings/meeting-index.yaml")
+    with pytest.raises(ValueError, match="not a meeting artifact"):
+        assert_meeting_layout_depth("commissioners/minutes/2026-01-06.yaml")
+
+
+def test_meetings_dir_is_the_only_thing_that_decides_depth(tmp_path: Path) -> None:
+    """The write path asserts its own output, so the two globs can't silently drift apart."""
+    for slug, body in ((PEER, PEER_BODY), ("lima", LIMA_BODY)):
+        settings = Settings(data_dir=tmp_path, site=slug)
+        out = meetings_dir(settings.extracted_dir, body, settings)
+        rel = out.relative_to(settings.extracted_dir) / "meeting-index.yaml"
+        assert_meeting_layout_depth(str(rel))  # would raise if meetings_dir had not

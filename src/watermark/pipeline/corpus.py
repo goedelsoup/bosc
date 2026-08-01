@@ -72,12 +72,47 @@ def iter_meeting_artifacts(extracted_dir: Path, filename: str) -> list[Path]:
     extracted tree, and independent of body count: the meeting read surfaces (timeline, committed
     summaries, entity fold-in) run this once, then gate each path through :func:`relpath_in_scope`,
     so a nested tree lands in **exactly one** site's scope. Returns a sorted, de-duplicated list.
+
+    **The bounded globs are an assumption, and it is load-bearing** (#1839). They cover a prefix
+    of exactly ONE or TWO segments before ``meetings/`` — which is precisely what
+    :func:`watermark.civic.layout.meetings_dir` writes, for every site, today. A tree filed any
+    deeper would be **silently invisible** here: no error, no warning, just a body that never
+    reaches the timeline or the bundle. The concrete way that happens is a peer whose meetings are
+    filed under a jurisdiction-prefixed collection rather than its site slug —
+    ``idem/fort-wayne/<body>/meetings/`` is three segments — so if a future layout ever nests
+    that way, widening the write path is not enough: this read path must widen with it, and
+    :func:`assert_meeting_layout_depth` is the tripwire that says so.
     """
     hits = {
         *extracted_dir.glob(f"*/meetings/{filename}"),
         *extracted_dir.glob(f"*/*/meetings/{filename}"),
     }
     return sorted(hits)
+
+
+# The prefix depths (segments before ``meetings/``) :func:`iter_meeting_artifacts` can see.
+MEETING_LAYOUT_DEPTHS = (1, 2)
+
+
+def assert_meeting_layout_depth(rel: str) -> None:
+    """Raise unless ``rel`` (a ``…/meetings/<file>`` path relative to ``data/extracted``) sits at
+    a depth :func:`iter_meeting_artifacts` actually globs (#1839).
+
+    The two bounded globs there are an unstated contract with
+    :func:`watermark.civic.layout.meetings_dir`; this makes it stated, and failing, rather than
+    letting a mis-filed tree read as an empty one.
+    """
+    parts = rel.replace("\\", "/").strip("/").split("/")
+    if "meetings" not in parts:
+        raise ValueError(f"{rel!r} is not a meeting artifact path (no 'meetings' segment)")
+    depth = parts.index("meetings")
+    if depth not in MEETING_LAYOUT_DEPTHS:
+        raise ValueError(
+            f"meeting artifact {rel!r} has {depth} segment(s) before 'meetings/', but "
+            f"iter_meeting_artifacts only globs {MEETING_LAYOUT_DEPTHS} — it would be silently "
+            "invisible to the timeline, committed summaries and the bundle. Widen the globs in "
+            "iter_meeting_artifacts together with watermark.civic.layout.meetings_dir."
+        )
 
 
 @dataclass(frozen=True)

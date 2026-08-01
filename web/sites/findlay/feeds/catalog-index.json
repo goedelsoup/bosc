@@ -1,6 +1,6 @@
 {
   "site": "findlay",
-  "catalog_version": "fd0c05d89e7339dd3d13df6716ebe7ea53e1aab1ef00bda52f0b62ae2fac81e4",
+  "catalog_version": "fcbba703abdf045ded6df4167b5c196cc0a725816aa9d4630dad3ab1976c084d",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:allen-township-meetings",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "allen-township-meetings",
+      "title": "Allen Township (Hancock County) Trustee Meeting Records",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:bundle-records",
       "kind": "dataset",
       "site": "findlay",
@@ -852,6 +860,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:hancock-county-commissioners-meetings",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "hancock-county-commissioners-meetings",
+      "title": "Hancock County Board of County Commissioners — Meeting Records",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:hydrology",
       "kind": "dataset",
       "site": "findlay",
@@ -1052,6 +1068,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:subdivisions-findlay",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "subdivisions-findlay",
+      "title": "Hancock County Political-Subdivision Meeting-Records Registry (Findlay)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:thermal",
       "kind": "dataset",
       "site": "findlay",
@@ -1092,6 +1116,22 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:findlay:ALLEN ECONOMIC DEVELOPMENT GROUP",
+      "kind": "entity",
+      "site": "findlay",
+      "local_id": "ALLEN ECONOMIC DEVELOPMENT GROUP",
+      "title": "ALLEN ECONOMIC DEVELOPMENT GROUP",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:findlay:ALLEN TOWNSHIP",
+      "kind": "entity",
+      "site": "findlay",
+      "local_id": "ALLEN TOWNSHIP",
+      "title": "Allen Township",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:findlay:BLANCHARD RIVER",
       "kind": "entity",
       "site": "findlay",
@@ -1121,6 +1161,14 @@
       "site": "findlay",
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:findlay:HANCOCK COUNTY COMMISSIONERS",
+      "kind": "entity",
+      "site": "findlay",
+      "local_id": "HANCOCK COUNTY COMMISSIONERS",
+      "title": "Hancock County Commissioners",
       "feed": "entities"
     },
     {
@@ -1388,6 +1436,62 @@
       "feed": "leads"
     },
     {
+      "handle": "meeting:findlay:allen-township/2025-03-04",
+      "kind": "meeting",
+      "site": "findlay",
+      "local_id": "allen-township/2025-03-04",
+      "title": "allen-township meeting (2025-03-04)",
+      "feed": "meetings"
+    },
+    {
+      "handle": "meeting:findlay:allen-township/2025-12-02",
+      "kind": "meeting",
+      "site": "findlay",
+      "local_id": "allen-township/2025-12-02",
+      "title": "allen-township meeting (2025-12-02)",
+      "feed": "meetings"
+    },
+    {
+      "handle": "meeting:findlay:allen-township/2026-03-03",
+      "kind": "meeting",
+      "site": "findlay",
+      "local_id": "allen-township/2026-03-03",
+      "title": "allen-township meeting (2026-03-03)",
+      "feed": "meetings"
+    },
+    {
+      "handle": "meeting:findlay:hancock-county-commissioners/2026-03-26",
+      "kind": "meeting",
+      "site": "findlay",
+      "local_id": "hancock-county-commissioners/2026-03-26",
+      "title": "hancock-county-commissioners meeting (2026-03-26)",
+      "feed": "meetings"
+    },
+    {
+      "handle": "meeting:findlay:hancock-county-commissioners/2026-04-07",
+      "kind": "meeting",
+      "site": "findlay",
+      "local_id": "hancock-county-commissioners/2026-04-07",
+      "title": "hancock-county-commissioners meeting (2026-04-07)",
+      "feed": "meetings"
+    },
+    {
+      "handle": "meeting:findlay:hancock-county-commissioners/2026-04-16",
+      "kind": "meeting",
+      "site": "findlay",
+      "local_id": "hancock-county-commissioners/2026-04-16",
+      "title": "hancock-county-commissioners meeting (2026-04-16)",
+      "feed": "meetings"
+    },
+    {
+      "handle": "meeting:findlay:hancock-county-commissioners/2026-06-18",
+      "kind": "meeting",
+      "site": "findlay",
+      "local_id": "hancock-county-commissioners/2026-06-18",
+      "title": "hancock-county-commissioners meeting (2026-06-18)",
+      "feed": "meetings"
+    },
+    {
       "handle": "record:findlay:findlay/brownfield/round-11-hancock-2026.award.yaml",
       "kind": "record",
       "site": "findlay",
@@ -1489,6 +1593,62 @@
       "site": "findlay",
       "local_id": "OHP000001 (general) / 2PD00008 (individual) / OH0025135 (application)",
       "title": "TMDL wasteload allocation + NPDES watershed general permit (total phosphorus) OHP000001 (general) / 2PD00008 (individual) / OH0025135 (application) — allocation assigned and made enforceable through a watershed general permit (Maumee Watershed Nutrient TMDL — Findlay WPCF total-phosphorus wasteload allocation)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:mtg-allen-township-2025-03-04-Allen Township",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "mtg-allen-township-2025-03-04-Allen Township",
+      "title": "Allen Township — minutes (corridor: one_power)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:mtg-allen-township-2025-12-02-Allen Township",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "mtg-allen-township-2025-12-02-Allen Township",
+      "title": "Allen Township — minutes (corridor: one_power)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:mtg-allen-township-2026-03-03-Allen Township",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "mtg-allen-township-2026-03-03-Allen Township",
+      "title": "Allen Township — minutes (corridor: datacenter)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:mtg-hancock-county-commissioners-2026-03-26-Commissioners Regular Meeting",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "mtg-hancock-county-commissioners-2026-03-26-Commissioners Regular Meeting",
+      "title": "Commissioners Regular Meeting — minutes (corridor: datacenter)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:mtg-hancock-county-commissioners-2026-04-07-Commissioners Regular Meeting",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "mtg-hancock-county-commissioners-2026-04-07-Commissioners Regular Meeting",
+      "title": "Commissioners Regular Meeting — agenda (corridor: datacenter)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:mtg-hancock-county-commissioners-2026-04-16-Commissioners Regular Meeting",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "mtg-hancock-county-commissioners-2026-04-16-Commissioners Regular Meeting",
+      "title": "Commissioners Regular Meeting — agenda (corridor: datacenter)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:findlay:mtg-hancock-county-commissioners-2026-06-18-Commissioners Regular Meeting",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "mtg-hancock-county-commissioners-2026-06-18-Commissioners Regular Meeting",
+      "title": "Commissioners Regular Meeting — minutes (corridor: datacenter)",
       "feed": "timeline"
     }
   ]

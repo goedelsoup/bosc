@@ -1,0 +1,46 @@
+id: subdivisions-findlay
+title: Hancock County Political-Subdivision Meeting-Records Registry (Findlay)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: --site findlay subdivisions discover
+  connector_ref: watermark.civic.registry
+  source: >-
+    Hancock County, Ohio Directory of Officials 2026 (data/documents/findlay/reference/) for
+    every grounded fact, plus a live-web discovery sweep of all 32 bodies (2026-08-01) for the
+    publishing blocks.
+  external_url: https://co.hancock.oh.us/DocumentCenter/View/841/2026-Directory-of-Officials
+license: Public records (local government open data)
+access_tier: public
+# The peer half of the `subdivisions` pair (#1839, epic #1520's pilot). Lima's registry is the
+# flat legacy `reference/subdivisions/subdivisions.yaml` at `site_scope: lima-legacy`; every peer
+# slug-scopes under `subdivisions/<slug>/`. This is deliberately NOT one `{site}`-templated
+# entry: a registry is grounded in a specific county's own published roster and reviewed body by
+# body, so each site's is its own reviewed dataset with its own source and its own caveats.
+site_scope: site:findlay
+storage:
+- relpath: reference/subdivisions/findlay/subdivisions.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-08-01'
+provenance: connector
+schema_ref: watermark.civic.models.Registry
+tags:
+- subdivisions
+- civic
+- hancock-county
+- findlay
+- meeting-records
+notes: >-
+  Hancock County's 32 meeting-holding bodies — 17 townships, 11 villages, 2 cities, the Board of
+  County Commissioners and the Regional Planning Commission — each with the verbatim cadence and
+  office from the county roster, plus a discovered publishing block. Every body was swept
+  (2026-08-01): 12 have a records URL, 7 are WordPress, 2 CivicPlus, 1 Squarespace, 6 unknown
+  (2 WAF-blocked, 1 503), 2 Facebook-only and 14 records-request-only. Hancock publishes ONE
+  consolidated roster where Allen County publishes three, so a single document grounds every
+  entry. Unlike Lima's, this registry includes the county board (Hancock has no separately
+  ingested commissioners corpus). Bluffton appears in BOTH registries — the same Allen/Hancock
+  straddling village, grounded twice from two counties' rosters.
