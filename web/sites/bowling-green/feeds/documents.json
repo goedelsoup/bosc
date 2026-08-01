@@ -103,9 +103,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa-air:P0139272",
+        "canonical_document_id": "oepa/bowling-green/air/edoc-4139063.pdf",
+        "version": "public_notice",
         "supersedes": []
       },
       {
@@ -118,9 +118,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa-air:P0139272",
+        "canonical_document_id": "oepa/bowling-green/air/edoc-4139063.pdf",
+        "version": "draft",
         "supersedes": []
       },
       {
@@ -133,10 +133,13 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa-air:P0139272",
+        "canonical_document_id": "oepa/bowling-green/air/edoc-4139063.pdf",
+        "version": "final",
+        "supersedes": [
+          "oepa/bowling-green/air/edoc-4032135.pdf",
+          "oepa/bowling-green/air/edoc-3938595.pdf"
+        ]
       }
     ]
   }

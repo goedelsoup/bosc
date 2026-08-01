@@ -250,6 +250,21 @@ controls_and_limits:
       pollutant per year. The highest NOx emissions rate is 14.68 tpy from all line
       heaters combined" (OAC 3745-15-05). Note the de minimis heaters' emissions ARE
       carried into the facility-wide PTE table and into the dispersion modeling.
+    nox_total_conflict:
+      tag: '[open]'
+      statement: >-
+        THE TWO OHIO EPA DOCUMENTS GIVE DIFFERENT LINE-HEATER NOx TOTALS. Response 18
+        of the final permit says "The highest NOx emissions rate is 14.68 tpy from all
+        line heaters combined." Table 1 of the Permit Strategy Write-Up bound into the
+        draft gives the "22 De Minimis Heaters" row a NOx figure of 15.37 tpy, and it
+        is that 15.37 which is summed into the facility-wide 192.09 tpy NOx total
+        recorded under controlled_pte_tpy. The gap is 0.69 tpy. Nothing captured
+        reconciles them, and it is not established whether the final response reflects
+        a revision the table was not re-run against, or a different basis. Both are
+        recorded at their own citations; neither is corrected against the other, and
+        no third figure is derived. Note that the conflict does not move any threshold
+        — either way the heaters stay under the 10 lb/day and 25 tpy de minimis limits
+        that Response 18 applies. Lead APOLLO-LINE-HEATER-NOX.
 
 air_toxics_modeling:
   tag: '[verified]'

@@ -650,8 +650,7 @@
           "coordinate_note": "Decimal degrees are a conversion of the permit's own DMS, shown for use, not a second source. ICIS-NPDES carries 41.38309 / -83.61074 for the same facility and FRS carries 41.385022 / -83.611078. All three are recorded; none is corrected against the others."
         },
         "2PD00009002": {
-          "description": "Combined sewer overflow - see Part II",
-          "Item D": null
+          "description": "Combined sewer overflow - see Part II, Item D"
         },
         "2PD00009300": {
           "description": "System-wide sanitary sewer overflows"
