@@ -1,7 +1,7 @@
 {
   "site": "ottawa",
-  "catalog_version": "0815b28aef82a3866384c8bab337d50ec3b0dd3a736d32723375e2a222eb7cc4",
-  "contract_version": "1.49.0",
+  "catalog_version": "c579d2c6ad61116101da6a9da366ec1650e1c8f14d80f944465f0b1b0c91e4e0",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:ottawa:7q10",
@@ -849,6 +849,14 @@
       "site": "ottawa",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

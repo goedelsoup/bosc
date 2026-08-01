@@ -236,6 +236,22 @@ def greenops_settings(tmp_path: Path) -> Settings:
 
 
 @pytest.fixture
+def priors_settings(tmp_path: Path) -> Settings:
+    """Offline discovery-priors settings: PeeringDB/Overpass fixtures, no network.
+
+    ``tmp_path``-backed ``data_dir`` for the same reason as ``greenops_settings``: an offline
+    ``cached_get`` consults a fresh on-disk cache *before* the committed fixture, so a developer
+    who has run `watermark candidates` live would otherwise test against their own cache rather
+    than the reviewed fixture — and the two differ (the fixture is deliberately trimmed).
+    """
+    return Settings(
+        data_dir=tmp_path,
+        priors_offline=True,
+        priors_fixtures_dir=FIXTURES / "priors",
+    )
+
+
+@pytest.fixture
 def gis_settings() -> Settings:
     """Offline GIS/imagery settings: real repo data dir, STAC fixtures, no network."""
     return Settings(

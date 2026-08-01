@@ -1,7 +1,7 @@
 {
   "site": "new-albany",
-  "catalog_version": "0403a7d5b2048a8c7e5492cf9b707db770a8d1281efd7f4e3cbcbd48d68eea08",
-  "contract_version": "1.49.0",
+  "catalog_version": "20d003ca49b6e893f3dc8d072f6e9befe5521dfb138ca39a7ffaf8eaacd04e0b",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:new-albany:7q10",
@@ -817,6 +817,14 @@
       "site": "new-albany",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

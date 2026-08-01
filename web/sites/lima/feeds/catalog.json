@@ -207,6 +207,72 @@
     }
   },
   {
+    "id": "allen-township-meetings",
+    "title": "Allen Township (Hancock County) Trustee Meeting Records",
+    "scope": "extracted",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "--site findlay subdivisions download allen-township",
+    "connector_ref": "watermark.civic",
+    "source": "Allen Township, Hancock County, OH Board of Trustees — minutes published on the township's own .gov (WordPress) at allentwphancockoh.gov/trustees/. The body is grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/); its publishing block was discovered 2026-08-01.",
+    "external_url": "https://allentwphancockoh.gov/trustees/",
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-01",
+    "tags": [
+      "civic",
+      "township",
+      "meetings",
+      "allen-township",
+      "hancock-county",
+      "findlay"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/findlay/allen-township/meetings/completeness-audit.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/allen-township/meetings/download-manifest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/allen-township/meetings/meeting-index.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/allen-township/meetings/meeting-summaries.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "a4861b7dc0e199a9082f9203ca120a3f3d51b4ed3c19156ec134cf80a167b4ce",
+      "size_bytes": 43525,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Allen Township, Hancock County, OH Board of Trustees — minutes published on the township's own .gov (WordPress) at allentwphancockoh.gov/trustees/. The body is grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/); its publishing block was discovered 2026-08-01.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark --site findlay subdivisions download allen-township",
+      "verified": true
+    }
+  },
+  {
     "id": "american-township-meetings",
     "title": "American Township Trustee Meeting Records",
     "scope": "extracted",
@@ -505,8 +571,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4710cd51cdd93dab4f855e44902485ef648e3e1889886be222d0cb4895a08a88",
-      "size_bytes": 198670,
+      "sha256": "7d7e945f998e761cd11567c074a49ee34c7afaf4099febd0cb56c44ba9deb76c",
+      "size_bytes": 204137,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -837,8 +903,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "45008f73dcdfc96c3972be110fe3363c191b98d21b49c8290fd1d754f39ca646",
-      "size_bytes": 18094,
+      "sha256": "384657721d5c2601b1b1665efcd7e0eb86d6aacc096b183d6d4615ae45114e65",
+      "size_bytes": 23561,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1010,10 +1076,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6ceb92fe85809e29bb0a04ed45bbbad284916731e9227a0b610adc8fd2f0276a",
-      "size_bytes": 96622,
+      "sha256": "15ff4b8c5792d50e7e799de1e9316816aaff39631540ad70bffe92da5acd1bfa",
+      "size_bytes": 115592,
       "lfs_materialized": true,
-      "file_count": 10,
+      "file_count": 11,
       "stale": false,
       "asof": null
     },
@@ -1478,6 +1544,71 @@
     }
   },
   {
+    "id": "hancock-county-commissioners-meetings",
+    "title": "Hancock County Board of County Commissioners — Meeting Records",
+    "scope": "extracted",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "--site findlay subdivisions download hancock-county-commissioners --since 2026-01-01",
+    "connector_ref": "watermark.civic",
+    "source": "Board of Hancock County Commissioners, OH — agendas and minutes published in the county's CivicPlus/CivicEngage Agenda Center. The body and its standing \"9:30 am Tuesday & Thursday\" cadence are grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/, p.1); the publishing block was discovered 2026-08-01.",
+    "external_url": "https://co.hancock.oh.us/AgendaCenter/County-Commissioners-2",
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-01",
+    "tags": [
+      "civic",
+      "county",
+      "meetings",
+      "hancock-county",
+      "findlay"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/findlay/hancock-county-commissioners/meetings/completeness-audit.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/hancock-county-commissioners/meetings/download-manifest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/hancock-county-commissioners/meetings/meeting-index.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/hancock-county-commissioners/meetings/meeting-summaries.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "404511be9b844b50abed4bab47f3924af4e7c5653ab4abbbdcad35229f1d9572",
+      "size_bytes": 126074,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Board of Hancock County Commissioners, OH — agendas and minutes published in the county's CivicPlus/CivicEngage Agenda Center. The body and its standing \"9:30 am Tuesday & Thursday\" cadence are grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/, p.1); the publishing block was discovered 2026-08-01.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark --site findlay subdivisions download hancock-county-commissioners --since 2026-01-01",
+      "verified": true
+    }
+  },
+  {
     "id": "history-allen-oh-leeson-1885-corpus-intersect",
     "title": "History Allen Oh Leeson 1885 Corpus Intersect",
     "scope": "extracted",
@@ -1581,6 +1712,64 @@
       "pages": null,
       "confidence": "medium",
       "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "international-data-center-candidates",
+    "title": "International Data-Center Candidates — Seeded Register",
+    "scope": "extracted",
+    "collection": "international",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "candidates",
+    "connector_ref": "watermark.connectors.priors",
+    "source": "Two independent, keyless open registers swept over four stated areas of interest: PeeringDB's carrier-neutral facility register (per-country /api/fac) and OpenStreetMap's telecom=data_center / building=data_center features via the Overpass API. Assembled by watermark.international.register; the AOIs and their stated selection basis live in watermark.international.aois.",
+    "external_url": "https://www.peeringdb.com/",
+    "license": "PeeringDB data under CC BY 4.0 (attribution required); OpenStreetMap data © OpenStreetMap contributors under ODbL 1.0 (attribution + share-alike). Both licences are also carried on every observation row inside the artifact, so a consumer of a single entry still has the terms.",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-01",
+    "tags": [
+      "international",
+      "data-centers",
+      "candidates",
+      "peeringdb",
+      "openstreetmap",
+      "priors",
+      "detection-funnel",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/international/data-center-candidates.seeded.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/international/data-center-candidates.seeded.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "2ce0ef414093227bc2b15477f867a4b92348463c4d814cb26d2a2f26348d6913",
+      "size_bytes": 215683,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Two independent, keyless open registers swept over four stated areas of interest: PeeringDB's carrier-neutral facility register (per-country /api/fac) and OpenStreetMap's telecom=data_center / building=data_center features via the Overpass API. Assembled by watermark.international.register; the AOIs and their stated selection basis live in watermark.international.aois.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark candidates",
       "verified": true
     }
   },
@@ -7897,10 +8086,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "74c2184904b607c34aae6b3401e5968264dd30d71786b0a19b52262f550d704f",
-      "size_bytes": 405678,
+      "sha256": "d551ea721313db26174fcb76f932c158a733d61b144f06d5b74bc66f340b8535",
+      "size_bytes": 440076,
       "lfs_materialized": true,
-      "file_count": 7,
+      "file_count": 8,
       "stale": false,
       "asof": null
     },
@@ -8184,6 +8373,56 @@
       "pages": null,
       "confidence": "medium",
       "note": "watermark subdivisions discover",
+      "verified": true
+    }
+  },
+  {
+    "id": "subdivisions-findlay",
+    "title": "Hancock County Political-Subdivision Meeting-Records Registry (Findlay)",
+    "scope": "reference",
+    "collection": "subdivisions",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "--site findlay subdivisions discover",
+    "connector_ref": "watermark.civic.registry",
+    "source": "Hancock County, Ohio Directory of Officials 2026 (data/documents/findlay/reference/) for every grounded fact, plus a live-web discovery sweep of all 32 bodies (2026-08-01) for the publishing blocks.",
+    "external_url": "https://co.hancock.oh.us/DocumentCenter/View/841/2026-Directory-of-Officials",
+    "license": "Public records (local government open data)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-01",
+    "tags": [
+      "subdivisions",
+      "civic",
+      "hancock-county",
+      "findlay",
+      "meeting-records"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/subdivisions/findlay/subdivisions.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4cb78d5c7aeba90d5be8452feb66740218ccde578493c0dd50655c967d580fee",
+      "size_bytes": 35521,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Hancock County, Ohio Directory of Officials 2026 (data/documents/findlay/reference/) for every grounded fact, plus a live-web discovery sweep of all 32 bodies (2026-08-01) for the publishing blocks.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark --site findlay subdivisions discover",
       "verified": true
     }
   },

@@ -341,6 +341,13 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
     // Basin views (design "Chrome": Research ▾ → Basin views) — Maumee is the one built today;
     // the other eight basins join here as their /basin pages land.
     { label: "The Maumee basin", href: "/basin", blurb: "Basin view — every site against the drainage" },
+    // The international candidates register (#1394) — network-global like the basin view, and a
+    // network-tier route (`/network/candidates`, beside `/network/connect`), not a site page.
+    {
+      label: "International candidates",
+      href: "/network/candidates",
+      blurb: "Where open registers say data centers are, outside the US records channel",
+    },
     { divider: true as const },
     { label: "Methodology", href: "/methodology", blurb: "How the record is built & labeled" },
     { label: CONNECT_LINK.label, href: CONNECT_LINK.href },

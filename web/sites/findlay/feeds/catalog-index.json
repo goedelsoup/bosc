@@ -1,7 +1,7 @@
 {
   "site": "findlay",
-  "catalog_version": "2715503b13d46f1adf8ba0f40794870ac28b9b97c61c51ca8953700f41039c23",
-  "contract_version": "1.49.0",
+  "catalog_version": "2cdd6f4adae9b0ad570b6742b79acf19b24e971a7c7d83d81f048e7e556e8e7e",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:findlay:7q10",
@@ -905,6 +905,14 @@
       "site": "findlay",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

@@ -1,7 +1,7 @@
 {
   "site": "fort-wayne",
-  "catalog_version": "f41b5daaf537ea82d828a62a1bbfbafb3df1f2d670befeec0a54322635c66e72",
-  "contract_version": "1.49.0",
+  "catalog_version": "53b503513a6cbef2cd1c2d06eedc664acf0457cded9b982be4930771f26759da",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:fort-wayne:7q10",
@@ -857,6 +857,14 @@
       "site": "fort-wayne",
       "local_id": "idem",
       "title": "IDEM (Indiana) Permit Extractions — Air (Title V) & Water (§401 WQC)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:fort-wayne:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

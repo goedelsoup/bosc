@@ -513,7 +513,28 @@ from watermark.sites import (
 #   are optional/defaulted, so a pre-1.49 greenops.json stays valid; a pre-1.49
 #   greenops.schema.json rejects the new keys — MINOR, back-compatible for data, schema refresh
 #   required.
-CONTRACT_VERSION = "1.49.0"
+# 1.50.0: a new network-global-host feed, `data-center-candidates` — the international
+#   data-center candidates register (#1394, epic #1387). The platform's identification funnel
+#   pointed outside the US, where the records channel the domestic sweep runs on does not exist:
+#   entries come from two independent open registers (PeeringDB facilities, OSM
+#   `telecom=data_center` via Overpass) swept over four stated AOIs, and a candidate is
+#   *corroborated* when both place a facility within a stated 250 m of each other.
+#   The feed IS `watermark.international.model.CandidatesRegister`, so the evidentiary rules the
+#   model enforces travel with the contract rather than being re-implemented on the frontend:
+#   * every entry is `[reference]` and **nothing can be `[verified]`** — the tag is a computed
+#     field derived from `DetectionBasis`, and no basis maps to verified. `[inference]` is
+#     reserved for the screening / vision stages (#1391/#1392), which have not run;
+#   * operator attribution is **cited or `[open]`**, and where the two registers name *different*
+#     operators the attribution is `contested` and publishes both claims rather than resolving to
+#     whichever source ranks higher;
+#   * swept AOIs carry their raw per-source counts even at zero, so a negative result reads as a
+#     result and not as an unexamined place;
+#   * the licence audit (`sources`) rides inside the feed, since a consumer of the JSON alone is
+#     still bound by ODbL attribution/share-alike on the OSM half.
+#   Reference-host gated and self-skipping (absent register → no feed → the section locks), so
+#   every peer bundle is unchanged and a pre-1.50 consumer sees exactly what it saw before —
+#   MINOR, back-compatible, new schema only.
+CONTRACT_VERSION = "1.50.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

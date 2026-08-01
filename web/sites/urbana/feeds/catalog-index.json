@@ -1,7 +1,7 @@
 {
   "site": "urbana",
-  "catalog_version": "b5fc8c2c0c984a7a7e4eef2ac3cfedaed4187a736629836289896f2f59f7fc15",
-  "contract_version": "1.49.0",
+  "catalog_version": "ae424e7956573f8b67525cc032ac898269b4ad96ba8bc92c9cf5b69dfb15cb88",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:urbana:7q10",
@@ -825,6 +825,14 @@
       "site": "urbana",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

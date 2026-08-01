@@ -1,7 +1,7 @@
 {
   "site": "mansfield",
-  "catalog_version": "94b4acc9110d786d177e9358488a32f6e21c6a48690083c71c757df3bb8b9052",
-  "contract_version": "1.49.0",
+  "catalog_version": "ef735ba8cc79bc2785f0c7a59069794af7dc4d01640dd1532d6480202be280e7",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:mansfield:7q10",
@@ -817,6 +817,22 @@
       "site": "mansfield",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

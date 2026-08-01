@@ -1,0 +1,66 @@
+id: international-data-center-candidates
+title: International Data-Center Candidates — Seeded Register
+scope: extracted
+status: reviewed
+producer:
+  kind: connector
+  command: candidates
+  connector_ref: watermark.connectors.priors
+  source: >-
+    Two independent, keyless open registers swept over four stated areas of interest:
+    PeeringDB's carrier-neutral facility register (per-country /api/fac) and OpenStreetMap's
+    telecom=data_center / building=data_center features via the Overpass API. Assembled by
+    watermark.international.register; the AOIs and their stated selection basis live in
+    watermark.international.aois.
+  external_url: https://www.peeringdb.com/
+license: >-
+  PeeringDB data under CC BY 4.0 (attribution required); OpenStreetMap data © OpenStreetMap
+  contributors under ODbL 1.0 (attribution + share-alike). Both licences are also carried on
+  every observation row inside the artifact, so a consumer of a single entry still has the terms.
+access_tier: public
+# Network-global, not owned by any watershed point. There is no `network-global` site_scope, and
+# `basin-shared` is the fixed value that means "belongs to everyone" (see catalog.sites.
+# owner_matches) — which is right here: the register is about places abroad and is hosted by the
+# reference build the way the hypothesis matrix and the catalog are. NB `extracted/international/`
+# is subtracted from Lima's corpus scope (watermark.sites.NETWORK_GLOBAL_PREFIXES) so these
+# entries never render inside Lima's Allen-County record.
+site_scope: basin-shared
+storage:
+- relpath: extracted/international/data-center-candidates.seeded.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/international/data-center-candidates.seeded.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-08-01'
+provenance: reference
+schema_ref: watermark.international.model.CandidatesRegister
+tags:
+- international
+- data-centers
+- candidates
+- peeringdb
+- openstreetmap
+- priors
+- detection-funnel
+- reference
+notes: >-
+  Track A of epic #1387 — the seeded, priors-driven half of the imagery-led identification funnel,
+  and a DISTINCT ARTIFACT CLASS from the domestic discover-and-pin registers
+  (watermark.facility.candidate): it is never merged with them and mints no SiteProfile. Every
+  entry is [reference] — it relays what published third-party registers say — and NOTHING here can
+  be [verified]: the tag is a computed field derived from DetectionBasis and no basis maps to
+  verified. [inference] is reserved for the screening (#1391) and vision-adjudication (#1392)
+  stages, which have not run, so no entry carries a cooling type or a satellite scene id. A cluster
+  is corroborated when two INDEPENDENT sources place a facility within a stated 250 m; at most one
+  row per register joins a cluster, because each register deduplicates itself and distance alone
+  merged a Dublin business park into a single "candidate" with five different operators. Operator
+  attribution is cited or [open], and where the registers name different operators the entry is
+  `contested` and publishes both claims rather than resolving to whichever source ranks higher.
+  Negative and thin AOIs are recorded as results with their raw per-source counts — Johor's 75
+  mapped buildings against 6 interconnection rows is the PeeringDB blind spot (single-tenant
+  campuses with no carrier presence) made visible, not a data error. Regenerate with
+  `watermark candidates`; never hand-edit either file, and note that a derived field hand-edited
+  into the YAML is dropped and recomputed on load.

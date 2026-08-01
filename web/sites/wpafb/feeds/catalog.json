@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4710cd51cdd93dab4f855e44902485ef648e3e1889886be222d0cb4895a08a88",
-      "size_bytes": 198670,
+      "sha256": "7d7e945f998e761cd11567c074a49ee34c7afaf4099febd0cb56c44ba9deb76c",
+      "size_bytes": 204137,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -242,6 +242,64 @@
       "pages": null,
       "confidence": "medium",
       "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "international-data-center-candidates",
+    "title": "International Data-Center Candidates — Seeded Register",
+    "scope": "extracted",
+    "collection": "international",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "candidates",
+    "connector_ref": "watermark.connectors.priors",
+    "source": "Two independent, keyless open registers swept over four stated areas of interest: PeeringDB's carrier-neutral facility register (per-country /api/fac) and OpenStreetMap's telecom=data_center / building=data_center features via the Overpass API. Assembled by watermark.international.register; the AOIs and their stated selection basis live in watermark.international.aois.",
+    "external_url": "https://www.peeringdb.com/",
+    "license": "PeeringDB data under CC BY 4.0 (attribution required); OpenStreetMap data © OpenStreetMap contributors under ODbL 1.0 (attribution + share-alike). Both licences are also carried on every observation row inside the artifact, so a consumer of a single entry still has the terms.",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-01",
+    "tags": [
+      "international",
+      "data-centers",
+      "candidates",
+      "peeringdb",
+      "openstreetmap",
+      "priors",
+      "detection-funnel",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/international/data-center-candidates.seeded.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/international/data-center-candidates.seeded.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "2ce0ef414093227bc2b15477f867a4b92348463c4d814cb26d2a2f26348d6913",
+      "size_bytes": 215683,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Two independent, keyless open registers swept over four stated areas of interest: PeeringDB's carrier-neutral facility register (per-country /api/fac) and OpenStreetMap's telecom=data_center / building=data_center features via the Overpass API. Assembled by watermark.international.register; the AOIs and their stated selection basis live in watermark.international.aois.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark candidates",
       "verified": true
     }
   },
@@ -2539,10 +2597,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "74c2184904b607c34aae6b3401e5968264dd30d71786b0a19b52262f550d704f",
-      "size_bytes": 405678,
+      "sha256": "d551ea721313db26174fcb76f932c158a733d61b144f06d5b74bc66f340b8535",
+      "size_bytes": 440076,
       "lfs_materialized": true,
-      "file_count": 7,
+      "file_count": 8,
       "stale": false,
       "asof": null
     },

@@ -1590,6 +1590,48 @@ a.card:hover { border-color: var(--bosc-forest); background: var(--bosc-surface)
 }
 /* Air dispersion field (#1234): the empty state when a site has no modeled surface. */
 .deck-surface--empty { background: var(--bone-band); }
+
+/* International data-center candidates map (#1394) — the legend carries the whole evidence
+   encoding, so it sits on the surface rather than in the controls panel a reader may collapse.
+   The swatches mirror the island's deck colours exactly: solid = corroborated, hollow =
+   single-source lead, oxblood ring = the sources name different operators. */
+.dcc-legend {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid var(--td-card-line);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: 12px;
+  font-size: var(--fs-micro);
+  max-width: 17rem;
+}
+.dcc-legend span { display: flex; align-items: center; gap: 6px; }
+.dcc-swatch {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(26, 26, 26, 0.47);
+}
+.dcc-swatch--solid { background: var(--ev-verified-fg, #1f6f4a); }
+.dcc-swatch--hollow { background: rgba(31, 111, 74, 0.16); }
+.dcc-swatch--contested {
+  background: rgba(31, 111, 74, 0.82);
+  border: 2px solid var(--ev-gap-fg, #7a2230);
+}
+.dcc-popup dl { display: grid; grid-template-columns: auto 1fr; gap: 2px var(--sp-3); margin: 0; }
+.dcc-popup dt { font-size: var(--fs-micro); letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
+.dcc-popup dd { margin: 0; }
+.dcc-popup h3 { margin: 0 0 2px; font-size: var(--fs-sm); }
+.dcc-popup-tag { margin: 0 0 var(--sp-2); font-family: var(--bosc-mono, ui-monospace, monospace); font-size: var(--fs-micro); opacity: 0.75; }
+@media (max-width: 40rem) {
+  .dcc-legend { position: static; max-width: none; border-radius: 0; border-left: 0; border-right: 0; }
+}
 .deck-surface--empty .deck-loading { padding: var(--sp-4); text-align: center; max-width: 30rem; margin: 0 auto; }
 /* Hover readout — modeled µg/m³ at a receptor (mono figures, evidence-inference framed). */
 .deck-probe {

@@ -1,7 +1,7 @@
 {
   "site": "greenville",
-  "catalog_version": "635467bb2b9eaae234abe3283eaef0022094b78e32954edd3762d43cbd586c5d",
-  "contract_version": "1.49.0",
+  "catalog_version": "990c46fed96679da8519a0c1620d5d9c414ef8726d185bc6298e32dc5f975d58",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:greenville:7q10",
@@ -825,6 +825,14 @@
       "site": "greenville",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

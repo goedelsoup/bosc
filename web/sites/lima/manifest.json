@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.49.0",
-  "generated_at": "2026-08-01T12:11:37+00:00",
-  "feed_count": 54,
-  "row_total": 1504,
+  "contract_version": "1.50.0",
+  "generated_at": "2026-08-01T15:43:21+00:00",
+  "feed_count": 55,
+  "row_total": 1509,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -320,12 +320,20 @@
       "count": 1
     },
     {
+      "name": "data-center-candidates",
+      "path": "feeds/data-center-candidates.json",
+      "media_type": "application/json",
+      "schema": "schemas/data-center-candidates.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
       "name": "catalog",
       "path": "feeds/catalog.json",
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 143
+      "count": 147
     },
     {
       "name": "geo/campus",

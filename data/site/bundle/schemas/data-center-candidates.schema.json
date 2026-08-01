@@ -1,0 +1,541 @@
+{
+  "$defs": {
+    "AoiResult": {
+      "additionalProperties": false,
+      "description": "One swept AOI's outcome — **including a null one**.\n\nA sweep that found nothing is a finding about that AOI, and the sweep skill requires it be\nrecorded as such. Dropping empty AOIs would make the register read as though only the\nproductive places had ever been looked at.",
+      "properties": {
+        "slug": {
+          "title": "Slug",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "country": {
+          "title": "Country",
+          "type": "string"
+        },
+        "bbox": {
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Bbox",
+          "type": "array"
+        },
+        "selection_basis": {
+          "title": "Selection Basis",
+          "type": "string"
+        },
+        "observations_by_source": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "default": {},
+          "title": "Observations By Source",
+          "type": "object"
+        },
+        "candidate_count": {
+          "default": 0,
+          "title": "Candidate Count",
+          "type": "integer"
+        },
+        "corroborated_count": {
+          "default": 0,
+          "title": "Corroborated Count",
+          "type": "integer"
+        },
+        "is_negative": {
+          "description": "True when the AOI was swept and produced no corroborated candidate.",
+          "readOnly": true,
+          "title": "Is Negative",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "slug",
+        "label",
+        "country",
+        "bbox",
+        "selection_basis",
+        "is_negative"
+      ],
+      "title": "AoiResult",
+      "type": "object"
+    },
+    "Candidate": {
+      "additionalProperties": false,
+      "description": "One international data-center candidate — a location, what grounds it, and who (if anyone\ncitable) is said to run it.\n\nDeliberately *not* a :class:`~watermark.facility.candidate.DataCenterCandidate`: that model\ndescribes a project the domestic record already proved and carries the disclosed figures a\npromotion to a ``SiteFacility`` needs. This one describes a place open data points at. It\nholds no MW, no investment, no acreage — not because those are uninteresting but because\nnothing in this funnel can source them, and a field that exists invites a value that doesn't.",
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "aoi": {
+          "title": "Aoi",
+          "type": "string"
+        },
+        "country": {
+          "title": "Country",
+          "type": "string"
+        },
+        "latitude": {
+          "title": "Latitude",
+          "type": "number"
+        },
+        "longitude": {
+          "title": "Longitude",
+          "type": "number"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "attribution": {
+          "$ref": "#/$defs/OperatorAttribution",
+          "default": {
+            "operator": null,
+            "citation": null,
+            "source": null,
+            "contested": [],
+            "is_contested": false,
+            "tag": "open"
+          }
+        },
+        "basis": {
+          "$ref": "#/$defs/DetectionBasis",
+          "default": "priors_only"
+        },
+        "cooling": {
+          "$ref": "#/$defs/CoolingType",
+          "default": "unknown"
+        },
+        "observations": {
+          "items": {
+            "$ref": "#/$defs/PriorObservation"
+          },
+          "minItems": 1,
+          "title": "Observations",
+          "type": "array"
+        },
+        "scene_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Scene Ids",
+          "type": "array"
+        },
+        "sources": {
+          "description": "The distinct sources placing a facility here, in a stable order.",
+          "items": {
+            "$ref": "#/$defs/PriorSource"
+          },
+          "readOnly": true,
+          "title": "Sources",
+          "type": "array"
+        },
+        "corroboration": {
+          "$ref": "#/$defs/Corroboration",
+          "description": "Whether ≥2 *independent* sources agree — the seeded register's whole quality signal.",
+          "readOnly": true
+        },
+        "tag": {
+          "description": "The evidence-discipline tag this candidate renders as. Never ``verified``.",
+          "enum": [
+            "verified",
+            "inference",
+            "reference"
+          ],
+          "readOnly": true,
+          "title": "Tag",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "aoi",
+        "country",
+        "latitude",
+        "longitude",
+        "observations",
+        "sources",
+        "corroboration",
+        "tag"
+      ],
+      "title": "Candidate",
+      "type": "object"
+    },
+    "CompetingClaim": {
+      "additionalProperties": false,
+      "description": "A *different* operator name, from a different source, for the same location.",
+      "properties": {
+        "operator": {
+          "title": "Operator",
+          "type": "string"
+        },
+        "citation": {
+          "title": "Citation",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/PriorSource"
+        }
+      },
+      "required": [
+        "operator",
+        "citation",
+        "source"
+      ],
+      "title": "CompetingClaim",
+      "type": "object"
+    },
+    "CoolingType": {
+      "description": "The cooling archetype a detection reads off the roof — the water thesis's foothold.\n\nKept first-class per the epic's locked decision: the water question survives *inside* the\ndetector as a field, not as the AOI selector. ``unknown`` is the honest default and the only\nvalue a ``priors_only`` entry can carry — no open register publishes cooling design.",
+      "enum": [
+        "evaporative",
+        "dry",
+        "closed_loop",
+        "hybrid",
+        "seawater",
+        "unknown"
+      ],
+      "title": "CoolingType",
+      "type": "string"
+    },
+    "Corroboration": {
+      "description": "How many *independent* sources place a facility here.",
+      "enum": [
+        "single_source",
+        "corroborated"
+      ],
+      "title": "Corroboration",
+      "type": "string"
+    },
+    "DetectionBasis": {
+      "description": "What actually grounds a candidate — and therefore which tag it renders as.\n\nThe ordering is the funnel's: ``priors_only`` is stage 1 (open registers), ``screened`` is\nstage 2 (footprint / substation-proximity / change detection, #1391), ``vision_adjudicated``\nis stage 3 (a ``FacilityDetection`` from adjudicated chips, #1392).\n\nThe tag split is the load-bearing part. A ``priors_only`` entry is ``[reference]``: we are\nrepeating what published registers say, and the honest citation is *to those registers*, not\nto a finding of ours. The moment we adjudicate anything ourselves — a screen or a vision\nread — the claim becomes **ours** and drops to ``[inference]``. It never rises: a detection\nis an inference about a place, and no amount of model confidence converts it into a record.",
+      "enum": [
+        "priors_only",
+        "screened",
+        "vision_adjudicated"
+      ],
+      "title": "DetectionBasis",
+      "type": "string"
+    },
+    "OperatorAttribution": {
+      "additionalProperties": false,
+      "description": "Who runs it — the field most likely to be wrong, so the one held hardest.\n\nA set ``operator`` MUST name the source that says so. There is no default that asserts a name,\nand no path that upgrades an attribution past ``[reference]``: an open register naming an\noperator is a published claim we are relaying, not a record we hold about the facility.\n\nWhen independent sources name **different** operators they land in :attr:`contested`, and the\nattribution reports itself as contested rather than quietly resolving to whichever source sits\nhigher on the ladder. That silent resolution is a real hazard, not a hypothetical one: in the\nseeded register PeeringDB and OSM disagree about a Querétaro facility (Equinix vs. Axtel /\nAlestra) in a way that is probably an acquisition the two registers updated at different\ntimes — and \"probably an acquisition\" is precisely the kind of inference this platform does\nnot get to make silently on a reader's behalf. Contested is **not** ``[open]``: the question\nwas answered, twice, differently, and that is a more informative state than unanswered.",
+      "properties": {
+        "operator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Operator"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PriorSource"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "contested": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/CompetingClaim"
+          },
+          "title": "Contested",
+          "type": "array"
+        },
+        "is_contested": {
+          "description": "True when another source names a different operator for the same location.",
+          "readOnly": true,
+          "title": "Is Contested",
+          "type": "boolean"
+        },
+        "tag": {
+          "description": "``[reference]`` when a source names the operator, ``[open]`` when none does.\n\nContested does not change the tag — each competing name is still a cited published claim.\nWhat contested changes is whether a consumer may render the name *unqualified*, which is\nwhy :attr:`is_contested` is separate rather than folded in here.",
+          "enum": [
+            "inference",
+            "reference",
+            "open"
+          ],
+          "readOnly": true,
+          "title": "Tag",
+          "type": "string"
+        }
+      },
+      "required": [
+        "is_contested",
+        "tag"
+      ],
+      "title": "OperatorAttribution",
+      "type": "object"
+    },
+    "PriorObservation": {
+      "additionalProperties": false,
+      "description": "One open register's row about one location — the citable, re-pullable unit of evidence.\n\nEverything here is carried **verbatim from the register that published it**. ``operator`` is\nwhatever that register states, un-normalized: collapsing \"Equinix (Singapore) Pte Ltd\" and\n\"Equinix, Inc.\" would be *our* inference wearing the register's authority, and the whole point\nof keeping the raw rows is that a reader can see the two sources agree in their own words.\n\n``license`` rides on every row rather than living only in the dataset README, so a downstream\nconsumer of a single entry still knows the terms it is bound by (the #1390 license audit).",
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/PriorSource"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "latitude": {
+          "title": "Latitude",
+          "type": "number"
+        },
+        "longitude": {
+          "title": "Longitude",
+          "type": "number"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "operator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Operator"
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Address"
+        },
+        "country": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country"
+        },
+        "license": {
+          "title": "License",
+          "type": "string"
+        },
+        "retrieved_at": {
+          "title": "Retrieved At",
+          "type": "string"
+        },
+        "network_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Network Count"
+        },
+        "exchange_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exchange Count"
+        }
+      },
+      "required": [
+        "source",
+        "source_id",
+        "url",
+        "latitude",
+        "longitude",
+        "license",
+        "retrieved_at"
+      ],
+      "title": "PriorObservation",
+      "type": "object"
+    },
+    "PriorSource": {
+      "description": "Where a prior observation came from — the internationalized source ladder (#1390).\n\nEach value is an *independent* channel: corroboration counts distinct sources, so two OSM\nnodes on the same campus are one source, while an OSM node plus a PeeringDB facility are two.",
+      "enum": [
+        "peeringdb",
+        "osm",
+        "operator_disclosure",
+        "national_registry",
+        "trade_press"
+      ],
+      "title": "PriorSource",
+      "type": "string"
+    },
+    "SourceTerms": {
+      "additionalProperties": false,
+      "description": "One prior source's licence + attribution terms — the #1390 license audit, as data.",
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/PriorSource"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "license": {
+          "title": "License",
+          "type": "string"
+        },
+        "attribution": {
+          "title": "Attribution",
+          "type": "string"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "source",
+        "label",
+        "url",
+        "license",
+        "attribution"
+      ],
+      "title": "SourceTerms",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The committed international candidates register.\n\n``scope`` names which slice of the funnel produced it (``seeded`` for the priors-driven track,\nan AOI slug for a pilot discovery sweep) so the two never silently merge into one file whose\nentries have different provenance.",
+  "properties": {
+    "scope": {
+      "title": "Scope",
+      "type": "string"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "corroboration_radius_m": {
+      "title": "Corroboration Radius M",
+      "type": "number"
+    },
+    "aois": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/AoiResult"
+      },
+      "title": "Aois",
+      "type": "array"
+    },
+    "sources": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/SourceTerms"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "candidates": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Candidate"
+      },
+      "title": "Candidates",
+      "type": "array"
+    }
+  },
+  "required": [
+    "scope",
+    "generated_at",
+    "corroboration_radius_m"
+  ],
+  "title": "CandidatesRegister",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

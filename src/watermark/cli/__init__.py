@@ -26,6 +26,7 @@ from watermark.cli import (  # noqa: F401
     hydrology,
     hypotheses,
     imagery,
+    international,
     leads,
     objectstore,
     oepa,

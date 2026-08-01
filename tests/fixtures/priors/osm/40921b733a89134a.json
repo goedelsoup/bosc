@@ -1,0 +1,295 @@
+{
+  "params": {
+    "register": "osm",
+    "bbox": "20.35,-100.65,20.95,-100.0",
+    "tags": [
+      "telecom=data_center",
+      "building=data_center"
+    ]
+  },
+  "fetched_at": "2026-08-01T15:19:39.630613+00:00",
+  "payload": {
+    "version": 0.6,
+    "generator": "Overpass API 0.7.62.11 87bfad18",
+    "osm3s": {
+      "timestamp_osm_base": "2026-08-01T15:18:21Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "elements": [
+      {
+        "type": "way",
+        "id": 188467640,
+        "center": {
+          "lat": 20.6115173,
+          "lon": -100.3942196
+        },
+        "nodes": [
+          1990948628,
+          3177981579,
+          1990948647,
+          1990948648,
+          1990948629,
+          1990948628
+        ],
+        "tags": {
+          "building": "data_center",
+          "name": "Centro de datos Triara Quer\u00e9taro",
+          "operator": "Triara",
+          "source": "https://triara.com/web/empresas/contactanos",
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 741133950,
+        "center": {
+          "lat": 20.5573576,
+          "lon": -100.2779689
+        },
+        "nodes": [
+          6938507339,
+          6938507338,
+          6938507345,
+          6938507344,
+          6938507343,
+          6938507342,
+          6938507341,
+          6938507340,
+          13286608044,
+          6938507346,
+          6938507339
+        ],
+        "tags": {
+          "name": "Centro de datos Alestra",
+          "operator": "Axtel",
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 741133962,
+        "center": {
+          "lat": 20.5663604,
+          "lon": -100.2567243
+        },
+        "nodes": [
+          6938507417,
+          6938507416,
+          6938507415,
+          13286034436,
+          13286034434,
+          13286034435,
+          6938507414,
+          6938507413,
+          13286608045,
+          6938507412,
+          6938507417
+        ],
+        "tags": {
+          "name": "Centro de datos KIO QRO1 y QRO2",
+          "operator": "KIO",
+          "source": "https://kiodatacenters.com/es-mx/centro_de_datos/queretaro-2",
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 1433631456,
+        "center": {
+          "lat": 20.5346227,
+          "lon": -100.2363227
+        },
+        "nodes": [
+          13175873304,
+          13175873303,
+          13175873302,
+          13175873301,
+          13175820000,
+          13175819999,
+          13175873308,
+          13175873307,
+          13175819998,
+          13175819997,
+          13175819996,
+          13175873304
+        ],
+        "tags": {
+          "name": "Centro de datos ODATA QR03",
+          "name:en": "Datacenter QR03",
+          "name:es": "Centro de datos ODATA QR03",
+          "operator": "ODATA",
+          "source": "https://odatacolocation.com/es/blog/data-center/dc-qr03/;https://noticiasdequeretaro.com.mx/2025/05/01/odata-inaugura-en-queretaro-el-mayor-centro-de-datos-de-mexico/",
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 1433637473,
+        "center": {
+          "lat": 20.5876966,
+          "lon": -100.1992485
+        },
+        "nodes": [
+          13175903112,
+          13175903111,
+          13175903110,
+          13175903109,
+          13175903108,
+          13175903112
+        ],
+        "tags": {
+          "name": "Centro de datos ODATA QR01",
+          "name:en": "Datacenter QR01",
+          "name:es": "Centro de datos ODATA QR01",
+          "operator": "ODATA",
+          "source": "https://odatacolocation.com/es/blog/data-center/dc-qr01/",
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 1443807295,
+        "center": {
+          "lat": 20.9068441,
+          "lon": -100.6210945
+        },
+        "nodes": [
+          13248764568,
+          13248764567,
+          13248764566,
+          13248764565,
+          13248764568
+        ],
+        "tags": {
+          "name": "Centro de datos ODATA QR04",
+          "name:en": "Datacenter QR04",
+          "operator": "ODATA",
+          "ref": "QR04",
+          "source": "https://odatacolocation.com/es/blog/data-center/dc-qr04-3/",
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 1448054816,
+        "center": {
+          "lat": 20.5923389,
+          "lon": -100.1627424
+        },
+        "nodes": [
+          13286022486,
+          13286022485,
+          13286022484,
+          13286022483,
+          13286022486
+        ],
+        "tags": {
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 1448054817,
+        "center": {
+          "lat": 20.5918555,
+          "lon": -100.1545757
+        },
+        "nodes": [
+          13286022493,
+          13286022492,
+          13286022491,
+          13286022490,
+          13286022489,
+          13286022488,
+          13286022487,
+          13286022493
+        ],
+        "tags": {
+          "name": "Centro de datos Ascenty Quer\u00e9taro 1",
+          "operator": "Ascenty",
+          "rating": "25 MW",
+          "source": "https://ascenty.com/es/data-centers-es/ubicacion/mexico/mexico-1/",
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 1448056077,
+        "center": {
+          "lat": 20.5860169,
+          "lon": -100.1991228
+        },
+        "nodes": [
+          13175903106,
+          13175903107,
+          13175903102,
+          13175903103,
+          13175903104,
+          13286056489,
+          13286056488,
+          13286056487,
+          13286056486,
+          13286056485,
+          13286056484,
+          13286056483,
+          13175903111,
+          13175903112,
+          13175903106
+        ],
+        "tags": {
+          "name": "Amazon AWS Quer\u00e9taro",
+          "operator": "Amazon",
+          "operator:wikidata": "Q3884",
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 1448123638,
+        "center": {
+          "lat": 20.5420632,
+          "lon": -100.5771761
+        },
+        "nodes": [
+          13286602048,
+          13248754299,
+          13248754298,
+          13286602047,
+          13286602048
+        ],
+        "tags": {
+          "name": "Centro de datos ODATA QR02",
+          "name:en": "Datacenter QR02",
+          "operator": "ODATA",
+          "source": "https://odatacolocation.com/es/blog/data-center/dc-qr03/;https://noticiasdequeretaro.com.mx/2025/05/01/odata-inaugura-en-queretaro-el-mayor-centro-de-datos-de-mexico/",
+          "telecom": "data_center"
+        }
+      },
+      {
+        "type": "way",
+        "id": 1448123986,
+        "center": {
+          "lat": 20.6595428,
+          "lon": -100.1058903
+        },
+        "nodes": [
+          13286639501,
+          13286636600,
+          13286636599,
+          13286636598,
+          13286636597,
+          13286636596,
+          13286636595,
+          13286636594,
+          13286639501
+        ],
+        "tags": {
+          "name": "Centro de datos Ascenty Quer\u00e9taro 2",
+          "operator": "Ascenty",
+          "source": "https://ascenty.com/es/data-centers-es/ubicacion/mexico/mexico-2/",
+          "telecom": "data_center"
+        }
+      }
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 {
   "site": "xenia",
-  "catalog_version": "04f191520db641da0ec97fdcc0b301fced8b755bf435b15bbb83275e00dc566d",
-  "contract_version": "1.49.0",
+  "catalog_version": "c4d697802fe606dd31a83291fd1d094b6821046f69e49cfc9cb369bab6c307bd",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:xenia:7q10",
@@ -833,6 +833,14 @@
       "site": "xenia",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

@@ -1,7 +1,7 @@
 {
   "site": "springfield",
-  "catalog_version": "425a8e6427bc40c5ee00ed366bc2f205e45aa891644ce285e662a6f7b13c6c3e",
-  "contract_version": "1.49.0",
+  "catalog_version": "39f3ad3fbe857c3e9a1c228d4d6803346cb57fc166b50a196cc90de4364cf31f",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:springfield:7q10",
@@ -825,6 +825,14 @@
       "site": "springfield",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:springfield:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "springfield",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

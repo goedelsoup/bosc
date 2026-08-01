@@ -1,7 +1,7 @@
 {
   "site": "toledo",
-  "catalog_version": "850af60ca1b41f0d549f5f1de63112646afe658ccf2e12016689bded1d6aa6f5",
-  "contract_version": "1.49.0",
+  "catalog_version": "e957a2cc216bd60d4376ced45739ad32d3f5941aaf1ccfef9d0a135e6429c7b7",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:toledo:7q10",
@@ -849,6 +849,14 @@
       "site": "toledo",
       "local_id": "hydrology-toledo-waterville-spill-monitor-read",
       "title": "Maumee-at-Waterville (04193500) Continuous-Monitor Read — Napoleon Spill",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

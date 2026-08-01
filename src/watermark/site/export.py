@@ -91,6 +91,7 @@ from watermark.site import gismap as gismap_mod
 from watermark.site import gleif as gleif_mod
 from watermark.site import graph as graph_mod
 from watermark.site import greenops as greenops_mod
+from watermark.site import intl_candidates as intl_candidates_mod
 from watermark.site import leads as leads_mod
 from watermark.site import meetings as meetings_mod
 from watermark.site import people as people_mod
@@ -988,6 +989,17 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # outside the cohort (#1364), and the Intel positive-control row is excluded explicitly —
         # a calibration vector never ships as site data.
         ("cooling-reconciliation", None, lambda: load_cooling_reconciliation(settings)),
+        # The international data-center candidates register (#1394, epic #1387) — the seeded,
+        # priors-driven half of the imagery-led identification funnel. Network-global-host gated
+        # like `hypotheses`/`catalog`: it belongs to no watershed point, so it rides the reference
+        # bundle rather than being copied into all 26. Self-skips (feed absent, section locks)
+        # when no register has been assembled. Every entry is [reference] and every attribution
+        # is cited or [open] — enforced on the model, not by this projection.
+        (
+            "data-center-candidates",
+            None,
+            lambda: intl_candidates_mod.export_data_center_candidates(settings),
+        ),
         # The published data catalog (epic #631 Phase 3 / #659) — the data tier /about/data reads.
         ("catalog", CatalogItem, lambda: catalog_mod.export_catalog(settings)),
     ]

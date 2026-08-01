@@ -459,6 +459,22 @@ class Settings(BaseSettings):
     federal_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS
     federal_fixtures_dir: Path | None = None  # committed connector fixtures (tests/CI)
 
+    # --- Discovery priors (the international detection funnel's stage 1) ---
+    # Two keyless, open registers that say where data centers already are, outside the US
+    # records channel (#1390, epic #1387): PeeringDB's carrier-neutral facility register and
+    # OpenStreetMap's `telecom=data_center` / `building=data_center` features via Overpass.
+    # Both are free and unauthenticated for read; both ride the standard cache/offline/fixture
+    # discipline (fixtures under tests/fixtures/priors/). Overpass is a shared public endpoint
+    # that rate-limits aggressively and runs a server-side query timeout, so it gets a much
+    # longer client timeout than the other connectors and a matching in-query `[timeout:]`.
+    peeringdb_url: str = "https://www.peeringdb.com/api"
+    overpass_url: str = "https://overpass-api.de/api/interpreter"
+    priors_offline: bool = False  # serve cached/fixture register responses only; never fetch
+    priors_request_timeout_s: float = 180.0
+    # An open register's facility list moves on a scale of months; the weekly default is ample.
+    priors_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS
+    priors_fixtures_dir: Path | None = None  # committed connector fixtures (tests/CI)
+
     # --- Civic (political-subdivision meeting records) ---------------------
     # The civic discovery + fetchers + downloader reach county CMS/WAF pages through
     # the same connector cache/offline/fixture machinery as every other subsystem,
@@ -566,6 +582,11 @@ class Settings(BaseSettings):
     def federal_cache_dir(self) -> Path:
         """Cached federal-register responses (DoD MIRTA, EPA SDWIS/ECHO). Not committed."""
         return self.cache_dir / "federal"
+
+    @property
+    def priors_cache_dir(self) -> Path:
+        """Cached discovery-priors responses (PeeringDB facilities, OSM Overpass). Not committed."""
+        return self.cache_dir / "priors"
 
     @property
     def research_cache_dir(self) -> Path:

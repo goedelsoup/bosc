@@ -184,15 +184,28 @@ def _eponymous_prefixes(slug: str) -> tuple[str, ...]:
     return (slug, f"{_NEST}{slug}")
 
 
+# Extracted subtrees that belong to the **network**, not to any watershed point — so the
+# reference build subtracts them exactly as it subtracts a peer's scope (#1505), even though no
+# site is named for them.
+#
+# `international/` is the data-center candidates register (epic #1387): entries in Johor, Dublin
+# and Querétaro, corroborated from open registers. Lima's scope is "the whole tree minus every
+# peer", and a directory no peer is named for falls straight through that subtraction — so
+# without this the register would render inside Lima's Allen-County record, timeline and entity
+# graph. That is the #1505 bug in a new shape: the catch-all swallows anything nobody claimed.
+NETWORK_GLOBAL_PREFIXES: tuple[str, ...] = ("international",)
+
+
 def _peer_scope_prefixes(slug: str) -> tuple[str, ...]:
-    """Every *other* registered site's own inclusion prefixes — the subtrees the reference build
-    subtracts so it stops swallowing a peer's slug-scoped records (#1505).
+    """Every *other* registered site's own inclusion prefixes, plus the network-global subtrees —
+    what the reference build subtracts so it stops swallowing records that are not its own (#1505).
 
     A peer's prefixes are its :func:`_eponymous_prefixes` plus any explicit ``corpus_relpaths``.
     Another whole-tree/reference site contributes nothing — you cannot subtract "everything" —
-    but only Lima is the reference build today.
+    but only Lima is the reference build today. :data:`NETWORK_GLOBAL_PREFIXES` is subtracted on
+    the same grounds: it is a subtree that is nobody's record.
     """
-    prefixes: set[str] = set()
+    prefixes: set[str] = set(NETWORK_GLOBAL_PREFIXES)
     for other, prof in SITES.items():
         if other == slug or is_reference_site(other):
             continue

@@ -1,7 +1,7 @@
 {
   "site": "van-wert",
-  "catalog_version": "8abc2b14b0a483e7cee6b12a9b44a0a3360d0f102918a4a0e5488f93f4e0b37c",
-  "contract_version": "1.49.0",
+  "catalog_version": "65a9c44300d8783369bdb179341755aa234862049c5a0dd4747d99099da25f96",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:van-wert:7q10",
@@ -849,6 +849,14 @@
       "site": "van-wert",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
       "feed": "catalog"
     },
     {

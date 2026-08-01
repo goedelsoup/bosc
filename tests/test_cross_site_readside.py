@@ -77,6 +77,12 @@ def test_effective_corpus_scope_defaults_to_own_slug_not_lima() -> None:
     assert not lima.contains("oepa/troy-piqua/1PD00008.npdes.yaml")
     assert lima.contains("recorder/deed.yaml")  # Lima's own collections stay in scope
     assert lima.contains("oepa/2PE00000.npdes.yaml")  # its un-slugged Allen-County permit survives
+    # A subtree that is NOBODY's record is subtracted on the same grounds (epic #1387): the
+    # international candidates register is network-global, and no site is named for it, so
+    # Lima's whole-tree catch-all would otherwise fold Johor and Dublin into an Allen County
+    # record. Same bug as #1505, different shape — the catch-all swallows the unclaimed.
+    assert "international" in set(lima.exclude)
+    assert not lima.contains("international/data-center-candidates.seeded.yaml")
 
     # Unset → exactly the two eponymous prefixes, nothing inherited.
     assert effective_corpus_scope(SITES["springfield"]).include == ("*/springfield", "springfield")

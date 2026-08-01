@@ -1,0 +1,320 @@
+---
+/**
+ * /network/candidates — the international data-center candidates register (#1394, epic #1387).
+ *
+ * A network-global route: it sits beside `/network/connect` at the network tier, not under a
+ * site, because the register belongs to no watershed point. It reads the reference build's
+ * `data-center-candidates` feed, which is where the network-global feeds live.
+ *
+ * The editorial job of this page is narrow and worth stating: it must make the *evidence* legible
+ * before the dots. A world map of green points reads as a finding; what this actually is, is two
+ * open registers agreeing with each other in four places we chose to look. So the tag discipline,
+ * the corroboration split, the contested attributions, and the AOIs that came back thin all sit
+ * above and around the map, not in a footnote under it.
+ */
+import Base from "~/layouts/Base.astro";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import CandidatesMap from "@watermark/viz/islands/CandidatesMap.tsx";
+import {
+  SOURCE_LABELS,
+  aoiSummaries,
+  attributionView,
+  contested,
+  corroborated,
+  singleSource,
+} from "@watermark/core/intlCandidates";
+// The filesystem read is deliberately a separate module — see intlCandidatesFeed.ts for why
+// importing it from the shared one breaks the client bundle.
+import { loadCandidatesRegister } from "@watermark/core/intlCandidatesFeed";
+
+const register = loadCandidatesRegister();
+
+// Precompute everything the template needs — Astro/esbuild handles complex expressions poorly
+// inside <table>, and the rows carry enough branching to be worth resolving up here.
+const aois = register ? aoiSummaries(register) : [];
+const confirmed = register ? corroborated(register) : [];
+const leads = register ? singleSource(register) : [];
+const disputed = register ? contested(register) : [];
+const negatives = aois.filter((a) => a.is_negative);
+
+const rows = confirmed.map((c) => ({
+  key: c.key,
+  name: c.name ?? c.key,
+  aoi: aois.find((a) => a.slug === c.aoi)?.label ?? c.aoi,
+  position: `${c.latitude.toFixed(5)}, ${c.longitude.toFixed(5)}`,
+  sources: c.sources.map((s) => SOURCE_LABELS[s]).join(" + "),
+  attribution: attributionView(c),
+  observations: c.observations,
+}));
+---
+
+<Base
+  title="International data-center candidates — Watermark"
+  section="research"
+  description="Where open registers say data centers are, outside the US records channel. Every entry is [reference]; operator attribution is cited or [open]; negative sweeps are recorded as results."
+>
+  <article class="prose dcc-page">
+    <div class="submit-eyebrow">Epic #1387 · the identification funnel, pointed outward</div>
+    <h1>What open data says is out there</h1>
+
+    <p class="section-lead">
+      Every domestic site in this network starts from an instrument — a rezoning resolution, a
+      deed, an NPDES permit. Abroad, that channel mostly does not exist. This register starts from
+      the other end: two independent open registers of data centers, swept over four stated areas,
+      reporting <strong>where they agree</strong>.
+    </p>
+
+    {
+      !register && (
+        <section class="dcc-locked" aria-label="The sweep has not run for this build">
+          <h2>The sweep has not run for this build</h2>
+          <p>
+            No candidates register is present in this bundle. That means the sweep has not been
+            assembled here — <strong>not</strong> that no data centers were found abroad. Run{" "}
+            <code>watermark candidates</code> and re-export to populate it.
+          </p>
+        </section>
+      )
+    }
+
+    {
+      register && (
+        <>
+          <section class="dcc-discipline" aria-label="What this register can and cannot say">
+            <h2 id="discipline">Read the tag before the dot</h2>
+            <ul class="dcc-rules">
+              <li>
+                <EvidenceTag kind="reference" /> Every entry relays what published third-party
+                registers say. Nothing here is <code>[verified]</code>, and nothing can be — no
+                instrument about any of these facilities is held. The tag is computed from the
+                detection basis, so there is no field a reviewer could set to claim otherwise.
+              </li>
+              <li>
+                <EvidenceTag kind="open" /> Operator attribution is <strong>cited or open</strong>.
+                Coordinates are unambiguous; attribution is the risk. Where the two registers name
+                different operators the entry is <strong>contested</strong> and publishes both
+                claims rather than resolving to whichever source ranks higher.
+              </li>
+              <li>
+                <EvidenceTag kind="gap" /> Two registers agreeing a building exists says nothing
+                about its size, its load, its cooling, its water draw, or its owner beyond the
+                words one of them wrote down. Those fields do not exist on these records, because
+                nothing in this funnel can source them.
+              </li>
+            </ul>
+            <p class="dcc-method">
+              A cluster is <strong>corroborated</strong> when two <em>independent</em> sources place
+              a facility within{" "}
+              <strong>{register.corroboration_radius_m.toFixed(0)} m</strong> of each other — a
+              stated screening parameter, not a measurement. At most one row per register joins a
+              cluster: each register deduplicates itself, so two of its rows are two facilities
+              however close together they sit. Assembled {register.generated_at}.
+            </p>
+          </section>
+
+          <section class="walk-interactive" aria-label="Map of international data-center candidates">
+            <h2 id="map">The register, mapped</h2>
+            <p>
+              Solid points are corroborated; hollow points are a single register's lead. An oxblood
+              ring means the sources disagree about who runs it. Nothing is sized by capacity —
+              this funnel knows nothing about capacity.
+            </p>
+            <CandidatesMap client:only="react" register={register} />
+            <noscript>
+              <div class="dil-noscript">
+                The map needs JavaScript — every corroborated candidate is listed as text below.
+              </div>
+            </noscript>
+          </section>
+
+          <section aria-label="Areas swept">
+            <h2 id="aois">Where we looked, and why</h2>
+            <p>
+              AOIs follow the operators — interconnection density and active buildout — not water
+              stress. Thin and negative results are listed here as results: an area that yielded
+              nothing was still swept, and this row is the evidence of that.
+            </p>
+            <table class="dtable">
+              <thead>
+                <tr>
+                  <th scope="col">Area</th>
+                  <th scope="col" class="num">PeeringDB</th>
+                  <th scope="col" class="num">OpenStreetMap</th>
+                  <th scope="col" class="num">Clusters</th>
+                  <th scope="col" class="num">Corroborated</th>
+                </tr>
+              </thead>
+              <tbody>
+                {aois.map((a) => (
+                  <tr>
+                    <th scope="row">
+                      {a.label}
+                      <span class="dcc-basis">{a.selection_basis}</span>
+                    </th>
+                    <td class="num">{a.observations_by_source.peeringdb ?? 0}</td>
+                    <td class="num">{a.observations_by_source.osm ?? 0}</td>
+                    <td class="num">{a.candidate_count}</td>
+                    <td class="num">
+                      {a.corroborated_count === 0 ? (
+                        <EvidenceTag kind="open" label="none" />
+                      ) : (
+                        a.corroborated_count
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {negatives.length > 0 && (
+              <p class="dcc-negative">
+                Swept with no corroborated candidate:{" "}
+                <strong>{negatives.map((a) => a.label).join(", ")}</strong>. The priors were
+                queried and the two registers did not agree anywhere inside the window.
+              </p>
+            )}
+          </section>
+
+          <section aria-label="Corroborated candidates">
+            <h2 id="corroborated">
+              Corroborated candidates ({confirmed.length} of {register.candidates.length})
+            </h2>
+            <table class="dtable dcc-table">
+              <caption>
+                Each row is placed by both registers. Every operator name links to the register row
+                that states it; a contested row shows both claims.
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Candidate</th>
+                  <th scope="col">Area</th>
+                  <th scope="col">Operator</th>
+                  <th scope="col">Position</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr>
+                    <th scope="row">{r.name}</th>
+                    <td>{r.aoi}</td>
+                    <td>
+                      {r.attribution.kind === "open" && <EvidenceTag kind="open" />}
+                      {r.attribution.kind === "cited" && (
+                        <a href={r.attribution.citation}>{r.attribution.operator}</a>
+                      )}
+                      {r.attribution.kind === "contested" && (
+                        <>
+                          <EvidenceTag kind="gap" label="contested" />{" "}
+                          <a href={r.attribution.citation}>{r.attribution.operator}</a> vs.{" "}
+                          {r.attribution.others.map((o, i) => (
+                            <>
+                              {i > 0 && ", "}
+                              <a href={o.citation}>{o.operator}</a>
+                            </>
+                          ))}
+                        </>
+                      )}
+                    </td>
+                    <td class="mono">{r.position}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+
+          {disputed.length > 0 && (
+            <section aria-label="Contested attribution">
+              <h2 id="contested">Contested attribution ({disputed.length})</h2>
+              <p>
+                Where the registers name different operators, the register keeps both. A
+                disagreement between two registers is usually an acquisition or a rebrand they
+                updated at different times — and <em>usually</em> is not a basis for asserting a
+                name. These stay contested until a disclosure closes them.
+              </p>
+            </section>
+          )}
+
+          <section aria-label="Single-source leads">
+            <h2 id="leads">Single-source leads ({leads.length})</h2>
+            <p>
+              Clusters exactly one register places. They are kept, never dropped, because the
+              coverage gap between the two registers is itself a finding: PeeringDB is
+              structurally blind to single-tenant campuses with no carrier presence — which is
+              precisely the class this work cares most about — and OpenStreetMap coverage varies
+              sharply by country. Johor shows this most starkly: many mapped buildings, few
+              interconnection rows.
+            </p>
+          </section>
+
+          <section aria-label="Sources and licences">
+            <h2 id="sources">Sources</h2>
+            <table class="dtable">
+              <thead>
+                <tr>
+                  <th scope="col">Source</th>
+                  <th scope="col">Licence</th>
+                  <th scope="col">Known blind spot</th>
+                </tr>
+              </thead>
+              <tbody>
+                {register.sources.map((s) => (
+                  <tr>
+                    <th scope="row"><a href={s.url}>{s.label}</a></th>
+                    <td>{s.license}</td>
+                    <td>{s.notes ?? "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+
+          <section aria-label="What would move an entry forward">
+            <h2 id="next">What would move an entry forward</h2>
+            <ul>
+              <li>
+                An operator disclosure or national-registry entry naming the site — closes an{" "}
+                <code>[open]</code> or contested attribution with a citation.
+              </li>
+              <li>
+                Geospatial screening and vision adjudication would attach a footprint, a substation
+                relationship, a construction phase and a <strong>cooling type</strong>, moving the
+                entry from <code>[reference]</code> to <code>[inference]</code> and carrying the
+                satellite scene ids it read.
+              </li>
+              <li>
+                Neither makes it <code>[verified]</code>. Only an instrument about the facility
+                does that, and this funnel is not a route to one.
+              </li>
+            </ul>
+          </section>
+        </>
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  .dcc-page .dcc-rules { list-style: none; padding: 0; display: grid; gap: 0.9rem; }
+  .dcc-page .dcc-rules li { border-left: 2px solid var(--bosc-rule, #d8d4cb); padding-left: 0.9rem; }
+  .dcc-method {
+    font-size: 0.9rem;
+    border-top: 1px solid var(--bosc-rule, #d8d4cb);
+    padding-top: 0.75rem;
+    margin-top: 1rem;
+  }
+  .dcc-basis {
+    display: block;
+    font-weight: 400;
+    font-size: 0.8rem;
+    opacity: 0.75;
+    margin-top: 0.25rem;
+    max-width: 44ch;
+  }
+  .dcc-negative { font-size: 0.9rem; }
+  .dcc-locked {
+    border: 1px solid var(--bosc-rule, #d8d4cb);
+    padding: 1.25rem;
+    background: var(--bosc-bone-2, #f4f1ea);
+  }
+  .dcc-table .mono { font-family: var(--bosc-mono, ui-monospace, monospace); font-size: 0.85rem; }
+  .dtable .num { text-align: right; font-variant-numeric: tabular-nums; }
+</style>

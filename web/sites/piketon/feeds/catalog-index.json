@@ -1,7 +1,7 @@
 {
   "site": "piketon",
-  "catalog_version": "ab1295b2db3bca2fa5e55f2e46324a84bcac547fb6698bafb59bad10eec409ce",
-  "contract_version": "1.49.0",
+  "catalog_version": "2d6d78304bfd90412aeee26b2080f5e347f1617a1619bc47214f4e070a6a8d7c",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:piketon:7q10",
@@ -817,6 +817,22 @@
       "site": "piketon",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:international-data-center-candidates",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "international-data-center-candidates",
+      "title": "International Data-Center Candidates — Seeded Register",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
