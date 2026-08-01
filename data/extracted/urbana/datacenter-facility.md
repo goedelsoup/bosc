@@ -25,7 +25,7 @@ Champaign Recorder / Ohio SoS). So the *end-use* is `[reference]` (public disclo
 | Cooling | **Closed-loop** — water use "comparable to a standard office building" (see §5) |
 | Serving utility | **AES Ohio (Dayton Power & Light)** — confirms the profile's `[verified]` serving utility (EIA-861 #4922 / DP&L, PJM **DAY** zone) |
 | Jobs | 30–80 permanent operations; 1,000+ construction |
-| Incentives | CRA agreement offered (noise limits 65 dB day / 55 dB night); ~$6M/yr combined city + school tax |
+| Incentives | CRA agreement offered (noise limits 65 dB day / 55 dB night); ~$5.8M/yr combined city + school tax |
 | Power (MW) | **NOT disclosed** — a floor-area screening bracket only; the interconnection/air-permit load stays `[open]` (see §4) |
 | Named tenant/operator | none yet `[open]` |
 
@@ -85,10 +85,10 @@ grantors are `[reference]` corroborated `[inference]` by the acreage/price math.
 
 ### The IT-load screening bracket `[inference]` — read this before quoting a MW figure
 
-Because the domain must activate to `live` (#1327) but the load is undisclosed, `SiteProfile.facility`
+Because the facility domain must activate (#1327) but the load is undisclosed, `SiteProfile.facility`
 carries an **IT-load SCREENING bracket — explicitly `[inference]`, never a disclosure**:
 
-- **35 MW low / ~70 MW central / 115 MW high**, from the disclosed **460,000 sq ft gross floor area
+- **~34.5 MW low / ~74.8 MW central / 115 MW high** (MW-midpoint), from the disclosed **460,000 sq ft gross floor area
   × a whole-building IT power-density band of 75–250 W/sq ft** (a *stated screening assumption*).
 - The single-story ~40 ft form factor and the disclosed **closed-loop dry cooling** ("water use
   comparable to a standard office building", §5) argue against the max-density liquid-AI archetype,
@@ -113,9 +113,13 @@ takes it to `[verified]`.
 air-permit-grounded): it records the disclosed non-power attributes (`facility_type`,
 `gross_floor_area_sqft`, `disclosed_investment_usd`, `disclosure_citation`, `cooling_model`) and an
 `[inference]` IT-load bracket (`it_load_citation`), with **`genset_count` / `genset_mw` /
-`air_permit_citation` left `None`** (no disclosed generation, no air permit). This flips the `facility`
-readiness domain from `absent` → **`live`** (the `economics-demand-pressure` feed is present), and
-`facilityStatus("urbana")` from `investigation` → `confirmed`.
+`air_permit_citation` left `None`** (no disclosed generation, no air permit). This activates the `facility`
+readiness domain from `absent` → **`seeded`** — a facility on the record only by site-plan SCREENING
+(`[inference]`) seeds the domain rather than lifting it to `live` under the #1630 documentary-depth
+rule (`watermark.site.readiness._facility_state`, keyed on `SiteFacility.is_instrument_grounded`); the
+committed `manifest.json` carries `readiness.domains.facility = "seeded"`. `facilityStatus("urbana")`
+goes from `investigation` → `confirmed`. (An ingested air permit / PJM interconnection filing, or a
+document-disclosed cooling mechanism, would take the domain to `live`.)
 
 ## 7. Open leads / extraction targets
 

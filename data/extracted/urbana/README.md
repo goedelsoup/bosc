@@ -8,7 +8,7 @@ Per-site onboarding tree for the Urbana watershed point (basin: great-miami), sc
 
 ## Known gaps & caveats
 
-- Onboarding seed — **review every value against a cited source before promotion** (`web/src/lib/sites.ts` `status`/`selectable`, parity-gated).
+- Onboarding seed — **review every value against a cited source before promotion** (`web/packages/core/src/sites.ts` `status`/`selectable`, parity-gated).
 - County/City parcel & zoning GIS is jurisdiction-specific and is **not** populated by the portable reach connectors — it needs a per-jurisdiction connector (see `docs/onboarding.md`).
 
 ## Regenerate
