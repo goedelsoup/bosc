@@ -145,11 +145,17 @@ referendum:
       1463's body carries the unofficial figure; this artifact supersedes it. Both round to
       ~69%, so no downstream conclusion changes — but the certified number is the one to quote.
     - >
-      ⚠️ Registration reconciliation, not an error. The zoning contest shows ALLEN W with 799
-      registered voters; the same canvass's countywide turnout table shows ALLEN W with 1,077.
-      The 278-voter difference is the Village of Van Buren, inside the precinct but outside the
-      unincorporated area the question was put to. The two figures measure different
-      electorates and must not be reconciled against each other.
+      ⚠️ Registration reconciliation, not an error. [verified] The zoning contest shows ALLEN W
+      with 799 registered voters; the same canvass's countywide turnout table shows ALLEN W with
+      1,077. The two figures measure different electorates — one contest is put only to the
+      unincorporated area, the other table counts the whole precinct — and must not be reconciled
+      against each other. The 278-voter arithmetic is read off the canvass; WHAT accounts for it
+      is not. [inference] The reduction is consistent with the Village of Van Buren, the only
+      incorporated place lying within Allen Township, being excluded from an unincorporated-area
+      question — but no boundary or precinct-split source in corpus establishes that Van Buren's
+      ALLEN W registration is 278, and the canvass itself never names the excluded area. [open]
+      Confirm against the Hancock County BOE's precinct-to-jurisdiction split before attributing
+      the difference to any named village.
     - >
       ⚠️ 732 ballots cast against 724 votes recorded — 8 ballots on which the question was left
       blank or spoiled. Use 724 as the denominator for the percentages, as the canvass does.

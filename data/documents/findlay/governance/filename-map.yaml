@@ -380,10 +380,15 @@ documents:
       against (26.33%) on 414 votes; ALLEN W 198 for (63.87%) / 112 against
       (36.13%) on 310 votes. Registration for the zoning contest is ALLEN E 962
       and ALLEN W 799 = 1,761, but the same report's countywide turnout table
-      gives ALLEN W 1,077 registered — the 278-voter difference is the Village
-      of Van Buren, which sits inside the ALLEN W precinct but outside the
-      unincorporated area the zoning question was put to. Do not reconcile those
-      two numbers as an error; they measure different electorates.
+      gives ALLEN W 1,077 registered. Do not reconcile those two numbers as an
+      error; they measure different electorates — one contest is put only to the
+      unincorporated area, the other table counts the whole precinct. The
+      278-voter arithmetic is read off this file; what accounts for it is NOT in
+      this file, which never names the excluded area. See the tagged treatment in
+      allen-twp-zoning-adoption-and-referendum.yaml — the reduction is consistent
+      with an incorporated village being carved out, but the identification is
+      [inference] and the split itself is [open] pending the BOE's
+      precinct-to-jurisdiction table.
 
   # ── The county's SB 52 restricted area ────────────────────────────────────
   - filename: notice_from_the_hancock_county_commissioners.pdf

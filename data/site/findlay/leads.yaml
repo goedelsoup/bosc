@@ -379,7 +379,7 @@ leads:
     findlayohio.gov and findlayohio.com path returns HTTP 403 to an automated fetch with or without
     a browser user-agent, American Legal's Findlay code library returns 403 to both curl and the
     fetch tool, and findlay.legistar.com resolves to an unprovisioned tenant whose API answers
-    "LegistarConnectionString setting is not set up in InSite for client - findlay". So the city has
+    "LegistarConnectionString setting is not set up in InSite for client: findlay". So the city has
     no machine-readable legislative record at all. What is held is two secondary articles, and the
     more detailed of them hedges its own roll call mid-sentence ("DeArment (or DeLong per some
     records)") while listing both names, which is the signature of an aggregated account rather than

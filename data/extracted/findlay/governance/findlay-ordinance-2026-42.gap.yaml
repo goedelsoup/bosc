@@ -24,15 +24,42 @@ instrument:
   identifier: Ordinance 2026-42
   jurisdiction: City of Findlay, Hancock County, Ohio
   subject: 12-month moratorium on data centers
-  passed: '2026-04-22'
-  vote_reported: 9-1
-  sole_nay_reported: B.J. Preston
-  effect_reported: immediate, running 12 months from the effective date
   tag: reference
+  # Every field below is [reference] and each names the capture it came from, rather than
+  # leaning on the block-level tag. Two of the four are corroborated by BOTH captures; two rest
+  # on The Ohio Register alone, and that difference is exactly what a reader needs in order to
+  # weigh them — the Register is the same file that hedges its own roll call mid-sentence.
+  passed:
+    value: '2026-04-22'
+    source: data/documents/findlay/governance/ohioregister-moratorium.html
+    note: >
+      Reported as "Tuesday night" in the Register's lede; the date is the article's framing, not
+      a certification. The Pulse capture covers only the earlier 2026-04-07 failure and does not
+      corroborate this date.
+  vote_reported:
+    value: 9-1
+    source: data/documents/findlay/governance/ohioregister-moratorium.html
+    note: >
+      "The 9-1 vote on Ordinance 2026-42 came after a public comment period". The tally is the
+      one element of the Register's vote reporting that is internally consistent — its NAMED
+      roll call is not, and is quarantined in the `roll_call` block below.
+  sole_nay_reported:
+    value: B.J. Preston
+    source: data/documents/findlay/governance/ohioregister-moratorium.html
+    note: 'Councilman B.J. Preston cast the sole "nay" vote.'
+  effect_reported:
+    value: immediate, running 12 months from the effective date
+    source: data/documents/findlay/governance/ohioregister-moratorium.html
+    note: >
+      "It takes effect immediately and runs for 12 months from the effective date to allow time
+      for review of applicable codes." ⚠️ Whether the 12 months runs from passage or from a
+      separately stated effective date is precisely what this sentence leaves ambiguous, and it
+      cannot be settled without the enacted text.
   banned_use_language:
     as_quoted_by_secondary_source: >
       the establishment, conversion of other structures or buildings into a data center
     plus: any development or change of use that would allow one
+    source: data/documents/findlay/governance/ohioregister-moratorium.html
     caveat: >
       ⚠️ This is The Ohio Register's rendering. Whether the fragment is a verbatim quotation
       from the enacted text, and what the ordinance's own definition of "data center" is, are
@@ -105,12 +132,19 @@ positions_reported:
 
 transparency_friction:
   event: >
-    During public comment on 2026-04-22 a speaker's remarks were cut short. The Ohio Register
-    identifies her as Renee Leguire, a Ward 4 resident and Republican central committeeperson,
-    and reports that she first asked council to suspend the rules and pass the moratorium that
-    night, then turned to criticism of Councilman Dan DeArment's conduct at an "invite-only"
-    meeting on data centers, at which point she was cut off.
+    During public comment on 2026-04-22 a member of the public was cut short while raising an
+    "invite-only" meeting on data centers.
   tag: reference
+  source: data/documents/findlay/governance/ohioregister-moratorium.html
+  deliberately_omitted: >
+    The captured article names the speaker, gives her ward and a party office, and reports a
+    personal criticism she directed at a named councilman. None of that is recorded here. The
+    governance fact — public comment cut short on this subject — survives intact without it,
+    while the criticism is one resident's contested characterization reported by the same file
+    whose roll call is unreliable enough to be quarantined. Re-publishing an unverified personal
+    allegation into a permanent corpus buys nothing the record needs. If the councilman's conduct
+    ever becomes a documented R.C. 121.22 question, it will be documented on an instrument, and
+    that instrument is what would go in the corpus.
   why_recorded:
     tag: inference
     detail: >
