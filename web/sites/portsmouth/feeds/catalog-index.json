@@ -1,7 +1,7 @@
 {
   "site": "portsmouth",
   "catalog_version": "d35e240d3d0d1f225a858547740ad1138b816d3e970d9457b5d8fff2af123be7",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:portsmouth:7q10",
@@ -760,7 +760,7 @@
       "kind": "dataset",
       "site": "portsmouth",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

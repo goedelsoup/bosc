@@ -34,25 +34,25 @@ from __future__ import annotations
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Literal, cast
+from typing import Any, Literal
 
 import httpx
 import yaml
 
 from watermark.config import Settings, get_settings
-from watermark.connectors import cached_get
 from watermark.greenops.model import (
     GithubRunnerMinutes,
     GithubStorageProduct,
     GithubUsageLine,
     GithubUsageReport,
     GreenopsPeriod,
+    SourceBasis,
     period_from_window,
 )
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
 
-from . import GreenopsOfflineError
+from ._fetch import greenops_cached_get
 from ._readme import write_reference_yaml
 
 log = get_logger(__name__)
@@ -88,7 +88,9 @@ def _months_in_window(starting_at: str, ending_at: str) -> list[tuple[int, int]]
     return months
 
 
-def _fetch_usage(starting_at: str, ending_at: str, settings: Settings) -> dict[str, Any]:
+def _fetch_usage(
+    starting_at: str, ending_at: str, settings: Settings
+) -> tuple[dict[str, Any], SourceBasis]:
     """Fetch the enhanced-billing usage report over the window, merged month-by-month.
 
     The token is deliberately absent from ``key_params`` (the cache key) and added only
@@ -138,19 +140,7 @@ def _fetch_usage(starting_at: str, ending_at: str, settings: Settings) -> dict[s
             items.extend(resp.json().get("usageItems") or [])
         return {"usageItems": items}
 
-    return cast(
-        "dict[str, Any]",
-        cached_get(
-            "github",
-            key_params,
-            fetch,
-            cache_dir=settings.greenops_cache_dir,
-            offline=settings.greenops_offline,
-            fixtures_dir=settings.greenops_fixtures_dir,
-            ttl_hours=settings.greenops_cache_ttl_hours,
-            offline_error=GreenopsOfflineError,
-        ),
-    )
+    return greenops_cached_get("github", key_params, fetch, settings)
 
 
 def _norm_unit(unit_type: str) -> str:
@@ -174,7 +164,9 @@ def _categorize(product: str, unit_type: str) -> Literal["ci_compute", "storage"
     return "other"
 
 
-def build_github_usage_report(payload: dict[str, Any], period: GreenopsPeriod) -> GithubUsageReport:
+def build_github_usage_report(
+    payload: dict[str, Any], period: GreenopsPeriod, *, basis: SourceBasis = "illustrative"
+) -> GithubUsageReport:
     """Reduce the raw ``usageItems`` payload into a :class:`GithubUsageReport`.
 
     Pure over the payload (no I/O) so the offline fixtures exercise the real aggregation,
@@ -260,6 +252,7 @@ def build_github_usage_report(payload: dict[str, Any], period: GreenopsPeriod) -
         by_runner=by_runner,
         storage=storage,
         lines=lines,
+        basis=basis,
         note=(
             "GitHub enhanced-billing usage (/organizations/{org}/settings/billing/usage) "
             "over the window, one calendar month per request, merged. Figures are "
@@ -285,8 +278,10 @@ def fetch_github_usage(
     exposes. An offline cache/fixture miss raises :class:`GreenopsOfflineError` naming the key.
     """
     settings = settings or get_settings()
-    payload = _fetch_usage(starting_at, ending_at, settings)
-    return build_github_usage_report(payload, period_from_window(starting_at, ending_at))
+    payload, basis = _fetch_usage(starting_at, ending_at, settings)
+    return build_github_usage_report(
+        payload, period_from_window(starting_at, ending_at), basis=basis
+    )
 
 
 # --- committed reference artifact (data/reference/greenops/github-usage.yaml) ---------------

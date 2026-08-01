@@ -1,7 +1,7 @@
 {
   "site": "xenia",
   "catalog_version": "f3cf91b159792ab4240426d1911d85b4dbdcbd73c10298039b1a639d0b64f358",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:xenia:7q10",
@@ -776,7 +776,7 @@
       "kind": "dataset",
       "site": "xenia",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

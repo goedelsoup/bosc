@@ -10,15 +10,24 @@ pass its own :class:`OfflineError` subclass (e.g. ``HydroOfflineError``,
 
 from __future__ import annotations
 
-from watermark.connectors._cache import DEFAULT_CACHE_TTL_HOURS, OfflineError, cache_key, cached_get
+from watermark.connectors._cache import (
+    DEFAULT_CACHE_TTL_HOURS,
+    CacheOrigin,
+    OfflineError,
+    cache_key,
+    cached_get,
+    cached_get_traced,
+)
 from watermark.connectors._util import to_float, to_int, to_str
 from watermark.connectors.serper import serper_search
 
 __all__ = [
     "DEFAULT_CACHE_TTL_HOURS",
+    "CacheOrigin",
     "OfflineError",
     "cache_key",
     "cached_get",
+    "cached_get_traced",
     "serper_search",
     "to_float",
     "to_int",

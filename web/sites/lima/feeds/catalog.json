@@ -1270,8 +1270,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "3522fa9ed286c035055003e7c21683f9a176f61f10e3dfeed5e3f470a9bf0ed0",
-      "size_bytes": 106524,
+      "sha256": "6809b9de934c77820b56ff5f0d980477f181529690bf2d607209fedbe07ebbbf",
+      "size_bytes": 109336,
       "lfs_materialized": true,
       "file_count": 9,
       "stale": false,
@@ -1686,6 +1686,61 @@
     },
     "citation": {
       "source": "Project BOSC — reviewed legal-analysis layer over the litigation/hearing corpus (standing completeness audit + cross-production referral map)",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "legal-datacenter-legislation-hb983-3744",
+    "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
+    "external_url": null,
+    "license": "Public record (Ohio legislative document)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-31",
+    "tags": [
+      "data-centers",
+      "legislation",
+      "r.c.-3744",
+      "r.c.-9.66",
+      "public-records"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.analysis.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.digest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "872eddc22e6d6c2f2fe9e77c90098205194ecfdb54e4c31371c913a691813516",
+      "size_bytes": 33606,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -6036,14 +6091,14 @@
   },
   {
     "id": "greenops-factors",
-    "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+    "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
     "scope": "reference",
     "collection": "greenops",
     "status": "reviewed",
     "producer_kind": "connector",
     "command": "greenops egrid",
     "connector_ref": "watermark.greenops.connectors.egrid",
-    "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)",
+    "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (AWS / EPRI / Uptime Institute / Macknick et al.) + hand-curated LLM inference-energy coefficients (Epoch AI / Jegham et al. / Google)",
     "external_url": "https://www.epa.gov/egrid/download-data",
     "license": null,
     "access_tier": "public",
@@ -6056,7 +6111,8 @@
       "egrid",
       "carbon",
       "water",
-      "wue"
+      "wue",
+      "inference"
     ],
     "storage": [
       {
@@ -6068,19 +6124,24 @@
         "relpath": "reference/greenops/factors/wue-benchmarks.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "reference/greenops/factors/inference-energy.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "1140d87f292f822ec9588ecd4b44a6cc7e6fa944dbc3edf48c33b22dd557a83d",
-      "size_bytes": 28705,
+      "sha256": "a9594a0d70a79af84d3609d7d75b0ea71ffdc3955c90f239053f4d30fc9e88b8",
+      "size_bytes": 36171,
       "lfs_materialized": true,
-      "file_count": 2,
+      "file_count": 3,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)",
+      "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (AWS / EPRI / Uptime Institute / Macknick et al.) + hand-curated LLM inference-energy coefficients (Epoch AI / Jegham et al. / Google)",
       "source_kind": "connector",
       "page": null,
       "pages": null,
@@ -6122,8 +6183,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "273d32241340ec91c85c2e4b59ae68c01571e904f07f6db228fd8ff0bf6e9418",
-      "size_bytes": 9565,
+      "sha256": "3b48b25d1f87cd1df8d4776a37ecc59726f5b3d4a39db7ff29b78c07c7abecbb",
+      "size_bytes": 16585,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,

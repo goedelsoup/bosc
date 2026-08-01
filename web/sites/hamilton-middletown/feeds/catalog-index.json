@@ -1,7 +1,7 @@
 {
   "site": "hamilton-middletown",
   "catalog_version": "4d08fa48042be74e4379939227e66991805ac90579a20f2da754d195308b7d36",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:hamilton-middletown:7q10",
@@ -776,7 +776,7 @@
       "kind": "dataset",
       "site": "hamilton-middletown",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

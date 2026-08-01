@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.48.0",
-  "generated_at": "2026-08-01T01:01:20+00:00",
+  "contract_version": "1.49.0",
+  "generated_at": "2026-08-01T02:00:06+00:00",
   "feed_count": 54,
-  "row_total": 1641,
+  "row_total": 1649,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -325,7 +325,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 140
+      "count": 141
     },
     {
       "name": "geo/campus",
@@ -405,7 +405,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 160
+      "count": 167
     },
     {
       "name": "open-questions",

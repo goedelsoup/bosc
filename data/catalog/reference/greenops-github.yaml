@@ -33,4 +33,7 @@ notes: The CI-compute slice of Watermark's own compute footprint (#1076/#1081) �
   (needs GITHUB_TOKEN with organization billing access — an org owner/billing manager, or a fine-grained
   token with "Administration" org permissions read; org login = WATERMARK_GITHUB_BILLING_ORG). The folder
   README is shared across the greenops connectors (composed by `greenops.connectors._readme`), so any
-  `--write` regenerates the whole document — see also `greenops` and `greenops-aws`.
+  `--write` regenerates the whole document — see also `greenops` and `greenops-aws`. Since issue 1643
+  the export carries a `basis` (`illustrative` | `measured`) stamped from the fetch path, and these
+  Actions minutes are priced on their OWN grid (WATERMARK_GREENOPS_CI_GRID_SUBREGION — hosted runners
+  are Azure VMs, not AWS), rather than being folded into the cloud subregion's emission rate.

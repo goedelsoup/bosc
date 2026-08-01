@@ -1,7 +1,7 @@
 {
   "site": "toledo",
   "catalog_version": "9a34e8b7faf3f2191fafd517548b74eb73bfcf65d387d499f0421a71ce045b78",
-  "contract_version": "1.48.0",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:toledo:7q10",
@@ -776,7 +776,7 @@
       "kind": "dataset",
       "site": "toledo",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {

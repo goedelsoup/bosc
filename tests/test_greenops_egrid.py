@@ -16,9 +16,11 @@ from watermark.greenops.connectors import (
     EgridFormatError,
     GreenopsOfflineError,
     build_egrid_factors,
+    build_inference_energy_table,
     build_wue_table,
     fetch_egrid_factors,
     load_egrid_factors,
+    load_inference_energy,
     load_wue_table,
     write_egrid_factors,
     write_wue_table,
@@ -45,7 +47,9 @@ def test_egrid_reduce_is_faithful(greenops_settings: Settings) -> None:
     assert [s.code for s in factors.subregions] == sorted(s.code for s in factors.subregions)
 
     by_code = factors.by_code()
-    # RFCW (RFC West — the AEP-Ohio / Lima grid region), read from the real workbook.
+    # RFCW (RFC West) is Lima's LOCAL grid — it is NOT where our own compute runs, and the
+    # footprint derivation never reads it (that is SRVC, us-east-1; #1643/F5). Asserted here
+    # only because it is a stable, high-emission row of the real workbook.
     rfcw = by_code["RFCW"]
     assert rfcw.name == "RFC West"
     assert rfcw.co2e_rate.value == pytest.approx(916.054)
@@ -168,8 +172,57 @@ def test_wue_table_is_all_reference() -> None:
     assert all(v.source == "reference" for v in values)
     assert not any(v.verified for v in values)
     assert all(v.unit == "L/kWh" for v in values)
-    # Both bases are represented and only these two exist (site vs source must not be conflated).
-    assert {b.basis for b in table.benchmarks} == {"site", "source"}
+    # Every row carries a band and a dated citation (#1643/F5) — a bare scalar hid a spread
+    # wide enough to change the answer.
+    assert all(v.low is not None and v.high is not None for v in values)
+    assert all(v.low_or_value <= v.value <= v.high_or_value for v in values)
+
+    # `site` and `upstream` are the two bases the derivation composes (#1643/F4). No row is
+    # typed `source`: an already-complete site+upstream figure added to a site row would
+    # double-count cooling, which is the sum the model's own docstring forbade.
+    assert {b.basis for b in table.benchmarks} == {"site", "upstream"}
+    upstream = [b for b in table.benchmarks if b.basis == "upstream"]
+    assert [b.facility_type for b in upstream] == ["grid_upstream"]
+
+    # The row the derivation actually selects is our PROVIDER's published figure, not an
+    # industry average standing in for a data center we do not operate.
+    aws = next(b for b in table.benchmarks if b.facility_type == "aws_published_site")
+    assert aws.basis == "site"
+    assert "accessed 2026-07-31" in (aws.wue.citation or "")
+
+
+def test_inference_energy_table_is_banded_reference_priced_on_output_tokens() -> None:
+    """#1643/F2: the coefficients that put inference in the energy chain.
+
+    No provider publishes a per-token energy figure for its hosted models, so every row is a
+    `reference` transcription of a third-party measurement — banded, because the published
+    estimates of the same quantity span roughly an order of magnitude, and priced on OUTPUT
+    tokens, because decode dominates and applying it to an input+output total would overstate a
+    cache-heavy agentic workload several-fold.
+    """
+    table = build_inference_energy_table()
+    values = table.all_values()
+    assert values
+    assert all(v.source == "reference" for v in values)
+    assert not any(v.verified for v in values)
+    assert all(v.unit == "Wh/1k output tokens" for v in values)
+    assert all(v.low is not None and v.high is not None for v in values)
+    assert all(b.basis == "output_tokens" for b in table.benchmarks)
+
+    # Model ids resolve by longest prefix, so a dated point release needs no new entry...
+    assert table.benchmark_for("claude-opus-4-8-20260115").model_class == "frontier"
+    assert table.benchmark_for("claude-sonnet-4-6").model_class == "mid_tier"
+    assert table.benchmark_for("claude-haiku-4-5").model_class == "small"
+    # ...and an unmapped id is priced at the conservative default rather than dropped.
+    assert table.benchmark_for("some-unknown-model").model_class == table.default_class
+    by_class = table.by_class()
+    assert by_class["frontier"].wh_per_1k_tokens.value > by_class["mid_tier"].wh_per_1k_tokens.value
+
+
+def test_committed_inference_energy_artifact_matches_canonical() -> None:
+    assert (
+        load_inference_energy(FACTORS / "inference-energy.yaml") == build_inference_energy_table()
+    )
 
 
 def test_wue_table_round_trips(tmp_path: Path) -> None:

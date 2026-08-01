@@ -1,7 +1,7 @@
 {
   "site": "findlay",
-  "catalog_version": "12910f6f01b39f60dfee9b2735c386263ac4662551af2c73bfebfab0692222b6",
-  "contract_version": "1.48.0",
+  "catalog_version": "fd0c05d89e7339dd3d13df6716ebe7ea53e1aab1ef00bda52f0b62ae2fac81e4",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:findlay:7q10",
@@ -824,7 +824,7 @@
       "kind": "dataset",
       "site": "findlay",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {
@@ -889,6 +889,14 @@
       "site": "findlay",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

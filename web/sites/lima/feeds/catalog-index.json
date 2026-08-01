@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "508d7d577fe9617caabde8502e7080d911a5e1fa703bcca210a8e3625224b3c6",
-  "contract_version": "1.48.0",
+  "catalog_version": "e82397890ca4159d38fcdd788d314f55400e42cc48b5eb45fe5baf3b7a23cd4e",
+  "contract_version": "1.49.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -1040,7 +1040,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "greenops-factors",
-      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "title": "GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors",
       "feed": "catalog"
     },
     {
@@ -1177,6 +1177,14 @@
       "site": "lima",
       "local_id": "legal",
       "title": "BOSC Legal Record — Corpus Completeness Audit & Cross-Production Referral Map",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

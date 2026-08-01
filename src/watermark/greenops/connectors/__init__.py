@@ -55,6 +55,7 @@ from watermark.greenops.connectors.egrid import (  # noqa: E402  (after the erro
     load_egrid_factors,
     load_wue_table,
     write_egrid_factors,
+    write_inference_energy,
     write_wue_table,
 )
 from watermark.greenops.connectors.github import (  # noqa: E402  (after the error class)
@@ -63,6 +64,11 @@ from watermark.greenops.connectors.github import (  # noqa: E402  (after the err
     fetch_github_usage,
     load_github_usage,
     write_github_usage,
+)
+from watermark.greenops.connectors.inference_energy import (  # noqa: E402
+    build_inference_energy_table,
+    inference_energy_path,
+    load_inference_energy,
 )
 
 __all__ = [
@@ -78,6 +84,7 @@ __all__ = [
     "build_cost_report",
     "build_egrid_factors",
     "build_github_usage_report",
+    "build_inference_energy_table",
     "build_usage_report",
     "build_wue_table",
     "fetch_anthropic_usage",
@@ -85,16 +92,19 @@ __all__ = [
     "fetch_aws_costs",
     "fetch_egrid_factors",
     "fetch_github_usage",
+    "inference_energy_path",
     "load_anthropic_usage",
     "load_aws_carbon",
     "load_aws_costs",
     "load_egrid_factors",
     "load_github_usage",
+    "load_inference_energy",
     "load_wue_table",
     "write_anthropic_usage",
     "write_aws_carbon",
     "write_aws_costs",
     "write_egrid_factors",
     "write_github_usage",
+    "write_inference_energy",
     "write_wue_table",
 ]

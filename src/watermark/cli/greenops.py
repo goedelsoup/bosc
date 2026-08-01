@@ -339,29 +339,34 @@ def egrid(
     write: bool = typer.Option(
         False,
         "--write",
-        help="Write data/reference/greenops/factors/egrid-*.yaml + wue-benchmarks.yaml + README.",
+        help="Write data/reference/greenops/factors/*.yaml + README.",
     ),
     offline: bool = typer.Option(
         False, "--offline", help="Replay committed fixtures only; never hit EPA."
     ),
 ) -> None:
-    """Pull EPA eGRID subregion carbon-intensity + generation-mix factors; emit the WUE table.
+    """Pull EPA eGRID factors; emit the WUE + inference-energy tables.
 
     eGRID is a public workbook (no API key); ``--offline`` replays the committed fixture (the
-    reduced subregion rows, not the ~20 MB xlsx). Both tables are ``reference`` — authoritative
-    published factors, never metered. The WUE benchmark table is a hand-curated in-code
-    canonical emitted alongside the eGRID factors so it stays regenerable.
+    reduced subregion rows, not the ~20 MB xlsx). Every table is ``reference`` — authoritative
+    published factors, never metered. The WUE benchmark and inference-energy tables are
+    hand-curated in-code canonicals emitted alongside the eGRID factors so they stay
+    regenerable and schema-checked (there is no per-token energy figure to pull: no provider
+    publishes one).
     """
     from watermark.greenops.connectors import (
+        build_inference_energy_table,
         build_wue_table,
         fetch_egrid_factors,
         write_egrid_factors,
+        write_inference_energy,
         write_wue_table,
     )
 
     settings = offline_settings("greenops", offline)
     factors = fetch_egrid_factors(settings=settings)
     wue = build_wue_table()
+    inference = build_inference_energy_table()
 
     console.print(
         f"[bold]EPA {factors.vintage} subregion factors[/] "
@@ -379,12 +384,34 @@ def egrid(
         f"\n[bold]WUE benchmarks[/] [dim]({wue.vintage})[/]  "
         f"[dim]reference — published water-use benchmarks, not metered[/]"
     )
-    wue_table = Table("facility type", "WUE (L/kWh)", "basis", "confidence")
+    wue_table = Table("facility type", "WUE (L/kWh)", "band", "basis", "confidence")
     for b in wue.benchmarks:
-        wue_table.add_row(b.label, f"{b.wue.value:g}", b.basis, b.wue.confidence)
+        wue_table.add_row(
+            b.label,
+            f"{b.wue.value:g}",
+            f"{b.wue.low_or_value:g}-{b.wue.high_or_value:g}",
+            b.basis,
+            b.wue.confidence,
+        )
     console.print(wue_table)
+
+    console.print(
+        f"\n[bold]Inference-energy coefficients[/] [dim]({inference.vintage})[/]  "
+        f"[dim]reference — published third-party estimates, not metered[/]"
+    )
+    inf_table = Table("model class", "Wh/1k output tokens", "band", "confidence")
+    for ib in inference.benchmarks:
+        v = ib.wh_per_1k_tokens
+        inf_table.add_row(
+            ib.label,
+            f"{v.value:g}",
+            f"{v.low_or_value:g}-{v.high_or_value:g}",
+            v.confidence,
+        )
+    console.print(inf_table)
 
     console.print(f"\n[dim]{factors.note}[/]")
     if write:
         wrote(write_egrid_factors(factors, settings=settings))
         wrote(write_wue_table(wue, settings=settings))
+        wrote(write_inference_energy(inference, settings=settings))

@@ -29,7 +29,21 @@ is regenerable via its `watermark greenops <source> --write` subcommand.
 
 Every figure in every artifact is `source: reference` — an authoritative provider export,
 **not** a metered fact about our own consumption. Nothing here is `connector`-`verified`;
-the modeled derivation (kWh, water) happens downstream in `footprint.py` (#1083).
+the modeled derivation (kWh, CO2e, water) happens downstream in `footprint.py` (#1083).
+
+## Illustrative vs measured (`basis`, #1643/F3)
+
+Each usage export carries a `basis` field stamped **from the fetch path**, never by hand: a
+live provider pull (or the cache entry it wrote) is `measured`; a committed-fixture replay is
+`illustrative` — shaped like a real footprint, but a sample. An artifact that omits the field
+reads as `illustrative`, because an export that cannot say where it came from must not read
+as a real pull.
+
+The derived footprint composes its own `basis` from these, and is `measured` only when every
+wired usage export is. **The exports committed today are `illustrative`**: the published
+`/about/sustainability` figures are sample-scale until the three `--write` pulls are run with
+real credentials, and the page says so rather than letting the magnitudes speak for
+themselves.
 
 ## Anthropic (`anthropic-usage.yaml`, #1078)
 
@@ -87,13 +101,26 @@ Regenerate both with `watermark greenops aws --write` (needs `AWS_ACCESS_KEY_ID`
 The assembled report the `/about/sustainability` feed lifts (#1084) — **not** a provider
 export but the modeled derivation over the exports above. Regenerate with
 `watermark greenops footprint --write`. It lifts the AWS / GitHub / Anthropic exports and
-the `factors/` tables (eGRID, WUE) and runs the chain: vCPU/GPU-hours x(W/vCPU*PUE) →
-electricity, x(eGRID lb/MWh) → CO2e / source mix (reconciled against the AWS CCFT total),
-x(WUE L/kWh) → water (direct on-site cooling + upstream generation). Every conversion is
-`derived`; the modeling levers (per-vCPU watts, PUE, which eGRID subregion the compute runs
-in via `WATERMARK_GREENOPS_GRID_SUBREGION`, average tokens per call, the water budget) are
-stated `assumption`s — never metered. A source not on disk degrades that dimension to a
-modeled assumption rather than fabricating a figure.
+the `factors/` tables (eGRID, WUE, inference energy) and runs the chain:
+
+- **electricity** — vCPU-hours x(W/vCPU * PUE) for the infrastructure we rent, **plus** model
+  output tokens x(Wh/1k-output-tokens * PUE) for inference (#1643/F2). Inference runs on the
+  provider's accelerators and appears on no bill of ours as energy, only as tokens; leaving it
+  out made the headlines structurally unable to describe a Claude-driven platform.
+- **CO2e** — x(eGRID lb/MWh), each fleet priced at *its own* subregion (AWS instance hours in
+  `WATERMARK_GREENOPS_GRID_SUBREGION`, CI in `WATERMARK_GREENOPS_CI_GRID_SUBREGION` — hosted
+  Actions runners are Azure VMs). Published as a first-class figure and reconciled against
+  AWS's own **location-based and market-based** totals (#1643/F1).
+- **water** — x(WUE L/kWh). We operate no data center: the cooling term is our provider's
+  published site WUE applied to **IT** kWh (electricity / PUE), plus the upstream generation
+  increment applied to the **facility** kWh. Site + upstream is a source-basis total; a
+  site-basis and a source-basis benchmark are never summed (#1643/F4).
+
+Every conversion is `derived`; the modeling levers (per-vCPU watts, PUE, the eGRID subregions,
+average tokens per call, the per-token inference coefficients, the water budget) are stated
+`assumption`s — never metered — and each carries a **dated citation and a band** that
+propagates into the published figures' `low`/`high` (#1643/F5). A source not on disk degrades
+that dimension to a modeled assumption rather than fabricating a figure.
 """
 
 

@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-01T00:56:42.869350+00:00'
+reconciled_at: '2026-08-01T01:58:00.490816+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -442,8 +442,8 @@ entries:
     site_scope: site:findlay
   findlay-governance:
     exists: true
-    sha256: 3522fa9ed286c035055003e7c21683f9a176f61f10e3dfeed5e3f470a9bf0ed0
-    size_bytes: 106524
+    sha256: 6809b9de934c77820b56ff5f0d980477f181529690bf2d607209fedbe07ebbbf
+    size_bytes: 109336
     lfs_materialized: true
     file_count: 9
     missing: []
@@ -492,18 +492,18 @@ entries:
     site_scope: basin-shared
   greenops-factors:
     exists: true
-    sha256: 1140d87f292f822ec9588ecd4b44a6cc7e6fa944dbc3edf48c33b22dd557a83d
-    size_bytes: 28705
+    sha256: a9594a0d70a79af84d3609d7d75b0ea71ffdc3955c90f239053f4d30fc9e88b8
+    size_bytes: 36171
     lfs_materialized: true
-    file_count: 2
+    file_count: 3
     missing: []
     asof: null
     stale: false
     site_scope: basin-shared
   greenops-footprint:
     exists: true
-    sha256: 273d32241340ec91c85c2e4b59ae68c01571e904f07f6db228fd8ff0bf6e9418
-    size_bytes: 9565
+    sha256: 3b48b25d1f87cd1df8d4776a37ecc59726f5b3d4a39db7ff29b78c07c7abecbb
+    size_bytes: 16585
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -670,6 +670,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  legal-datacenter-legislation-hb983-3744:
+    exists: true
+    sha256: 872eddc22e6d6c2f2fe9e77c90098205194ecfdb54e4c31371c913a691813516
+    size_bytes: 33606
+    lfs_materialized: true
+    file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: state:OH
   legal-prr-mandamus:
     exists: true
     sha256: 014e8c99525758d1800537f7b60989e89f9b807966079b9890240af97b6825f6

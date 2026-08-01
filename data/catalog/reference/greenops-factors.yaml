@@ -1,5 +1,5 @@
 id: greenops-factors
-title: GreenOps — eGRID carbon-intensity & WUE water factors
+title: GreenOps — eGRID carbon-intensity, WUE water & inference-energy factors
 scope: reference
 status: reviewed
 producer:
@@ -7,7 +7,8 @@ producer:
   command: greenops egrid
   connector_ref: watermark.greenops.connectors.egrid
   source: EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file
-    + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)
+    + hand-curated WUE benchmarks (AWS / EPRI / Uptime Institute / Macknick et al.) + hand-curated
+    LLM inference-energy coefficients (Epoch AI / Jegham et al. / Google)
   external_url: https://www.epa.gov/egrid/download-data
 access_tier: public
 site_scope: basin-shared
@@ -16,6 +17,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: reference/greenops/factors/wue-benchmarks.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/greenops/factors/inference-energy.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:
@@ -27,6 +31,7 @@ tags:
 - carbon
 - water
 - wue
+- inference
 notes: The `reference` factor tables the footprint derivation (#1076/#1082/#1083) multiplies
   our electricity figure by. egrid-<year>.yaml is EPA eGRID's per-subregion CO2-equivalent
   output rate (SRC2ERTA, lb/MWh) + generation resource mix (SR*PR), read by field code from

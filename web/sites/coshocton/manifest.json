@@ -1,10 +1,10 @@
 {
   "site": "coshocton",
   "bundle_version": "1.0.0",
-  "contract_version": "1.48.0",
-  "generated_at": "2026-07-31T17:04:27+00:00",
+  "contract_version": "1.49.0",
+  "generated_at": "2026-07-31T20:43:44+00:00",
   "feed_count": 24,
-  "row_total": 314,
+  "row_total": 321,
   "readiness": {
     "tier": "stub",
     "domains": {
@@ -167,7 +167,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 7
+      "count": 14
     },
     {
       "name": "impact-study",

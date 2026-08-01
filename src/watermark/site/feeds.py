@@ -482,7 +482,38 @@ from watermark.sites import (
 #   `extra="forbid"`, so this refreshes every schema that embeds it (records, timeline,
 #   meetings, places, people, catalog, exhibits, …) — MINOR, back-compatible for data, schema
 #   refresh required.
-CONTRACT_VERSION = "1.48.0"
+# 1.49.0: the `greenops` feed reports carbon, counts inference, and says which of its numbers
+#   are real (#1643, epic #1637 GP-F). Four additive shapes on `GreenopsReport`:
+#   * `carbon` (`CarbonAccount`) — a first-class CO2e figure plus a fifth `headline` entry.
+#     eGRID's whole purpose is this number and the page reported every dimension except it;
+#     the factor was used only to build a prose sentence. Dual-reported per the GHG Protocol:
+#     our derived **location-based** total (electricity x the subregion's output rate, each
+#     fleet priced at its OWN subregion) alongside AWS's own location-based *and* market-based
+#     estimates, which were read from the export and never surfaced. A market-based figure
+#     prices contracted procurement, not the physical grid — published beside, never instead.
+#   * `energy` (`EnergyBreakdown`) — electricity split infrastructure vs **model inference**.
+#     Inference was scoped out entirely: tokens converted only to a display call count, no
+#     Wh/token coefficient anywhere, so the electricity/carbon/water headlines structurally
+#     could not represent a Claude-driven platform. It is now priced per 1,000 OUTPUT tokens
+#     by model class against a new committed factor table (decode dominates; applying an
+#     output-basis coefficient to an input+output total would overstate a cache-heavy agentic
+#     workload several-fold) and folded into the same chain everything downstream reads.
+#   * `basis` (`illustrative | measured`), on the report and on each source export — stamped
+#     from the connector's fetch path, never by hand. The committed exports are fixture-derived
+#     samples and now say so, in the feed and on the page, instead of round placeholder
+#     magnitudes reading as a measured footprint.
+#   * `low`/`high` on the derived figures. Every coefficient (W/vCPU, PUE, the WUE rows, the
+#     new per-token ones) carries a dated citation and a band, propagated through the chain —
+#     the published spread runs to an order of magnitude and was previously invisible.
+#   `WueBenchmark.basis` also gains a third value, `upstream`: the generation increment is a
+#   term you ADD to a site WUE, not a WUE of its own, and typing it as `source` is what let the
+#   water headline sum two bases the model's own docstring forbade summing. Water is now
+#   tenant-attributed (we operate no data center — it is the provider's cooling, apportioned by
+#   billed IT-kWh, with PUE divided back out of a per-IT-kWh benchmark). All four report fields
+#   are optional/defaulted, so a pre-1.49 greenops.json stays valid; a pre-1.49
+#   greenops.schema.json rejects the new keys — MINOR, back-compatible for data, schema refresh
+#   required.
+CONTRACT_VERSION = "1.49.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

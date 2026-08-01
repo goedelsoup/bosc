@@ -1,10 +1,10 @@
 {
   "site": "findlay",
   "bundle_version": "1.0.0",
-  "contract_version": "1.48.0",
-  "generated_at": "2026-08-01T00:59:00+00:00",
-  "feed_count": 32,
-  "row_total": 569,
+  "contract_version": "1.49.0",
+  "generated_at": "2026-08-01T02:06:57+00:00",
+  "feed_count": 34,
+  "row_total": 577,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 60
+      "count": 61
     },
     {
       "name": "facts",
@@ -229,7 +229,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 87
+      "count": 94
     },
     {
       "name": "open-questions",
@@ -246,6 +246,14 @@
       "schema": "schemas/impact-study.schema.json",
       "kind": "collection",
       "count": 13
+    },
+    {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 0
     },
     {
       "name": "catalog-index",
@@ -276,6 +284,14 @@
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }

@@ -1,0 +1,56 @@
+meta:
+  subject: >
+    Canonical filename map for legal/datacenter-legislation/ — Ohio data-center
+    legislation of the 136th General Assembly. H.B. 983 enacts a new R.C. Chapter 3744
+    (air/water discharge standards, a local citizen-vote requirement, water-supply
+    liability, grid-independence, and a tax-incentive ban for data centers) and amends
+    R.C. 9.66 to strip the confidentiality of data-center development-and-supply
+    agreements — the sibling of the select-committee-2026 data-center hearing record and
+    of the R.C. 9.66(D) confidentiality lever the records-legislation (H.B. 314) digest
+    flags.
+  note: >
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their
+    as-received names. The Ohio Legislature / LSC serves each bill version under a coded
+    filename ("hb983_00_IN" = House Bill 983, document sequence 00, "IN" = As
+    Introduced), retained as-received; the canonical name is recorded here.
+    content_verified is read from the document's own native text layer (the bill body +
+    its running header — "As Introduced" and "H. B. No. 983 Page N"), NOT the filename.
+
+documents:
+  - filename: hb983_00_IN.pdf
+    canonical: ohio-hb983-136ga-as-introduced-datacenter-3744-2026.pdf
+    type: legislation
+    body: Ohio House of Representatives
+    general_assembly: "136th (2025-2026 Regular Session)"
+    bill: "H.B. No. 983"
+    short_title: Data Center Accountability and Citizen Protection Act
+    version: As Introduced
+    version_code: "00_IN"          # LSC document sequence 00; IN = Introduced
+    introduced: "2026-07-28"
+    emergency: true                # Section 4 declares an emergency measure (immediate effect on passage)
+    amends: "R.C. 9.66"
+    enacts: >-
+      R.C. 3744.01, 3744.02, 3744.03, 3744.04, 3744.041, 3744.042, 3744.05, 3744.06,
+      3744.061, 3744.062, 3744.07, 3744.08, 3744.09, 3744.10, 3744.11, 3744.12 (new
+      Chapter 3744)
+    pages: 21
+    bytes: 113123
+    sha256: "ff8b8fc736ba5fc7f0f9a80d63afa231e310df0d17f9537b76d0452f6286d8c7"
+    content_verified: text-layer   # native text layer present (verified 2026-07-31)
+    primary_sponsors:
+      - "Rep. Gross"
+      - "Rep. Teska"
+    cosponsors:                    # order as printed on the bill's cosponsor line
+      - "Rep. Barhorst"
+      - "Rep. Mullins"
+      - "Rep. Dean"
+      - "Rep. Swearingen"
+    source_url: "https://search-prod.lis.state.oh.us/api/v2/general_assembly_136/legislation/hb983/00_IN/pdf/"
+    notes: >
+      The as-introduced text (no "Sub." prefix). Introduced 2026-07-28; at capture it had
+      only the single "Introduced" action recorded (no committee referral). Any committee
+      substitute, Senate action, and the final enacted Act are separate [open] ingest
+      targets. R.C. 9.66 is handled in the standard Ohio amendatory form: Section 1
+      re-enacts the section with a new division (D)(2), and Section 2 repeals the existing
+      section — not a wholesale repeal of 9.66. Printed page N equals PDF page N for this
+      document (no cover-sheet offset); cite section + printed page against this PDF.
