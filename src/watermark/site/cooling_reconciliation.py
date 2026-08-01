@@ -22,7 +22,9 @@ Two hard rules:
   calibration row (``is_control: true``, sited ``new-albany`` — openly evaporative, built so
   the harness must classify it ``corroborated``). It is a calibration vector, not site
   data, and ``new-albany`` is itself a registered bundle — so the loader excludes control
-  rows explicitly rather than relying on the site filter alone.
+  rows explicitly rather than relying on the site filter alone. New Albany's **live** row
+  (B6, #1686 — Intel's real, ``route_blind`` record) is a different row and does ship: the
+  exclusion is of the constructed vector, not of the site.
 
 **The discipline travels as data.** The artifact's meta block carries the harness's rules
 in prose; the renderer-facing distillation rides the feed as ``caveats`` the consumer MUST
@@ -52,6 +54,12 @@ DISCIPLINE_CAVEATS: tuple[str, ...] = (
     "into a headline consumptive figure.",
     "An operator self-report lands on its own disclosed_* slot, never on documented_*, and "
     "cannot upgrade the claim's source.",
+    "An instrument that cannot reach a facility returns an absence of jurisdiction, not a "
+    "measurement — a municipally-supplied, sewer-discharging campus reads ~0 in the withdrawal "
+    "registry and the discharge record by construction, and that ~0 never corroborates a claim.",
+    "A documented withdrawal that is not the cooling account (construction-phase water) is kept "
+    "on its own slot, and a prediction the harness could not derive is shown as refused, never "
+    "as zero.",
     "The corroborators (air-permit PM, Tier II chemistry) are secondary — recorded and "
     "reconciled against the claim, never the sole basis for a re-archetype and never "
     "changing the outcome.",
@@ -80,9 +88,9 @@ class CoolingReconciliationFeed(BaseModel):
 def load_cooling_reconciliation(settings: Settings) -> CoolingReconciliationFeed | None:
     """The site's own reconciliation rows, or ``None`` when it has none to ship.
 
-    ``None`` for a site outside the cohort, for a control-only site (new-albany), and when
-    the committed artifact is absent — the feed self-skips rather than shipping an empty
-    shell or another site's account.
+    ``None`` for a site outside the cohort, for a site whose only row is the constructed
+    control, and when the committed artifact is absent — the feed self-skips rather than
+    shipping an empty shell or another site's account.
     """
     path = settings.data_dir / RECONCILIATION_RELPATH
     if not path.exists():

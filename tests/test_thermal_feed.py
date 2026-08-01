@@ -16,7 +16,7 @@ from typing import Any
 
 from watermark.site.feeds import CONTRACT_VERSION
 
-_CV = "1.49.0"
+_CV = "1.50.0"
 
 
 def _manifest(bundle: Path) -> dict[str, Any]:

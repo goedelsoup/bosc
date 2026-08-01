@@ -56,6 +56,11 @@ genuine empty cell (never an estimate).
 - [**`allen.yaml`**](allen.yaml) — Allen County, OH (the Lima reference build). 33
   registered facilities; the `meta:` block carries the facility / active / reporting
   counts and the per-use-type breakdown.
+- [**`licking.yaml`**](licking.yaml) — Licking County, OH (New Albany — the Beech Road /
+  Jersey Township data-center cluster, which sits in Licking 39089 rather than the
+  Franklin-County city core). 55 registered facilities, 35 active, 46 with a 2015+
+  report. Pulled for the B6 (#1686) positive-control review; see the blind-spot caveat
+  below.
 
 ## Headline (Allen County, last pull)
 
@@ -70,6 +75,21 @@ By declared primary use: 7 Public, 7 Golf Course, 6 Industry, 5 Mineral Extracti
 | 01769 | PCS Nitrogen Ohio | Industry | 3.08 | ground water; **return 1,236 MG > withdrawal** |
 | 01079 | National Lime & Stone-Lima Plant 1 | Mineral Extraction | 1.51 | ground water |
 | 00386 | Lima Refining Company | Industry | 0.86 | ground water; return 1.3 MG |
+
+## Headline (Licking County, last pull)
+
+**55** registered facilities — **35 active**, **46** with a 2015+ annual report. By
+declared primary use: 15 Golf Course, 13 Public, 10 Agriculture, 8 Misc, 7 Industry,
+1 Mineral Extraction, 1 Hydro Fracturing. The three data-center-era registrations —
+the reason this county was pulled (B6, #1686) — are the finding, not the volumes:
+
+| reg# | facility | registered | 2024 MG | note |
+|------|----------|-----------:|--------:|------|
+| 03498 | Intel Corporation - New Albany, Ohio | 1.43 MGD (7 wells) | 15.91 | **14.11 MG returned (~89%)**; peaks May–June, troughs July–August |
+| 03401 | AMAZON DATA SERVICES - CMHO50 NEW ALBANY | 0.15 MGD (1 well) | 0.02 | an *operating* hyperscale campus reporting ~nothing |
+| 03575 | Amazon Data Services - Newton Court Site | 0.18 MGD (1 well) | 0.00 | registered 2024-04-20 |
+
+Read caveat 6 before treating any of those as a cooling-water account.
 
 ## Known gaps & caveats (read before using)
 
@@ -100,6 +120,22 @@ By declared primary use: 7 Public, 7 Golf Course, 6 Industry, 5 Mineral Extracti
 5. **Annual window.** Series are floored at `since_year` (default 2015); older years
    remain live at the source (Lima City PWS surface-water records reach back to 1991).
    Raise the floor with `watermark water-withdrawal --since <year>`.
+
+6. **A municipally-supplied facility is invisible here — a ~0 is not a dry loop
+   (#1686).** The WWFRP registers withdrawals *from waters of the state*. A facility
+   that **buys** its water from a public system withdraws nothing itself, so it either
+   never appears or appears with a token registration and a ~0 annual report — while
+   the city meter behind it records the real consumption. Licking County proves the
+   point twice over: the *operating* Amazon Data Services campus at 2570 Beech Rd
+   (03401) reports **0.02 MG for all of 2024**, and Intel — whose disclosed operating
+   draw is ~5 MGD of **City of Columbus** water — reports 15.91 MG of construction-phase
+   groundwater instead. Neither figure is that facility's cooling account. Reading a
+   WWFRP ~0 as "documented ≈ 0 makeup" would silently corroborate every closed-loop
+   claim in the network; the A3 harness therefore carries a `WaterRoute` and classifies
+   such a facility **`route_blind`**, not `corroborated`
+   (`watermark.hydrology.cooling_reconcile`). The record that *would* answer it is
+   City-held (metered water-service consumption; the industrial pretreatment / IU
+   permit), which is the C2 (#1688) records request.
 
 ## Field reference
 
@@ -134,5 +170,15 @@ Regenerate: `watermark water-withdrawal --county Allen`
 | file | type | lfs |
 | --- | --- | --- |
 | `reference/ohio-water-withdrawal/allen.yaml` | application/x-yaml | no |
+
+### `ohio-water-withdrawal-licking` — Licking County, OH water-withdrawal registry (Ohio DNR WWFRP)
+
+Source: Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports) · License: Ohio public record · Access: public · Site scope: site:new-albany · Refresh: annual (ttl 365d)
+
+Regenerate: `watermark water-withdrawal --county Licking`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/ohio-water-withdrawal/licking.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

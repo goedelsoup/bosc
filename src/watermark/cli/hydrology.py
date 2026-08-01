@@ -287,10 +287,12 @@ def cooling_reconcile_cmd(
     DOCUMENTED makeup (A1 withdrawal) / blowdown (A2 discharge) — back-solves cycles-of-
     concentration where both are on record (an `[inference]` bracket, never a scalar), and
     classifies each into discrepancy / corroborated / reservation_conflict (a low-water claim
-    contradicted by a disclosed reservation ceiling — Troy-Piqua B1, #1681) / gap. It RECOMMENDS
-    re-archetyping; it never mutates `cooling_model`. Includes the Intel evaporative positive
-    control, which must classify corroborated (no false discrepancy). Read-only over the registry
-    + committed artifacts.
+    contradicted by a disclosed reservation ceiling — Troy-Piqua B1, #1681) / route_blind (the
+    facility's water is outside the instruments' reach — municipal supply and/or a POTW sanitary
+    sewer, so their ~0 is jurisdiction, not measurement — New Albany/Intel B6, #1686) / gap. It
+    RECOMMENDS re-archetyping; it never mutates `cooling_model`. Includes the Intel evaporative
+    positive control, which must classify corroborated (no false discrepancy). Read-only over the
+    registry + committed artifacts.
     """
     from pathlib import Path
 
@@ -306,13 +308,14 @@ def cooling_reconcile_cmd(
         f"[bold]Cooling-cycling reconciliation[/] — {len(records)} facilities "
         f"([red]{counts['discrepancy']} discrepancy[/], [green]{counts['corroborated']} "
         f"corroborated[/], [magenta]{counts['reservation_conflict']} reservation-conflict[/], "
-        f"[yellow]{counts['gap']} gap[/]); documented-blowdown currency "
-        f"{blowdown.OHD000001.asof} (OHD000001 lifecycle)."
+        f"[blue]{counts['route_blind']} route-blind[/], [yellow]{counts['gap']} gap[/]); "
+        f"documented-blowdown currency {blowdown.OHD000001.asof} (OHD000001 lifecycle)."
     )
     color = {
         "discrepancy": "red",
         "corroborated": "green",
         "reservation_conflict": "magenta",
+        "route_blind": "blue",
         "gap": "yellow",
     }
     # A4 (#1680) corroborator stance → glyph: contradicts (points to over-cycling) / corroborates /
@@ -342,6 +345,8 @@ def cooling_reconcile_cmd(
         # marked "(ceiling)" (Springfield B3, #1683 — checked first, it is the actual-vs-ceiling
         # denominator) or an ongoing draw marked "(disclosed)" (Van Wert B2, #1682) — so a self-report
         # is never read as a metered use either.
+        # A route_blind row shows what the registry DID record, marked "(non-cooling)", so the
+        # cell is never blank in a way that reads as "no records exist" (B6, #1686).
         reserved = a.reserved_makeup or a.reserved_blowdown
         if documented is not None:
             documented_cell = f"{documented.value:g} MGD"
@@ -349,6 +354,8 @@ def cooling_reconcile_cmd(
             documented_cell = f"{reserved.value:g} MGD (reserved)"
         elif a.disclosed_ceiling is not None:
             documented_cell = f"{a.disclosed_ceiling.value:g} MGD (ceiling)"
+        elif a.nonprocess_makeup is not None:
+            documented_cell = f"{a.nonprocess_makeup.value:g} MGD (non-cooling)"
         elif a.disclosed_makeup is not None:
             documented_cell = f"{a.disclosed_makeup.value:g} MGD (disclosed)"
         else:
@@ -359,9 +366,14 @@ def cooling_reconcile_cmd(
             if a.backsolved_cycles is not None
             else "—"
         )
-        if r.outcome is cooling_reconcile.ReconcileOutcome.RESERVATION_CONFLICT:
+        if r.outcome in {
+            cooling_reconcile.ReconcileOutcome.RESERVATION_CONFLICT,
+            cooling_reconcile.ReconcileOutcome.ROUTE_BLIND,
+        }:
             # Keep the site's real pin (carried on the record — "unknown" for Troy-Piqua), never
             # hardcoded, so a reservation_conflict site pinning a different archetype renders right.
+            # A route_blind row keeps its pin for a different reason: the instruments never reached
+            # it, so the harness has nothing to recommend either way.
             recommend = f"keep {r.kept_archetype} + records request (C2)"
         elif r.recommended_archetype is not None:
             recommend = f"→ {r.recommended_archetype}, source={r.recommended_source}"
@@ -374,7 +386,11 @@ def cooling_reconcile_cmd(
             escape(facility) if not r.is_control else facility,
             r.claimed_archetype,
             f"[{color[r.outcome.value]}]{r.outcome.value}[/]",
-            f"{a.predicted_makeup.value:g}",
+            # A refused prediction prints "refused", never a 0 — the harness declined to derive an
+            # IT-load-parameterized account for a facility with no IT load (B6, #1686).
+            f"{a.predicted_makeup.value:g}"
+            if a.predicted_makeup is not None
+            else "[blue]refused[/]",
             documented_cell,
             coc,
             corrob,
@@ -393,10 +409,19 @@ def cooling_reconcile_cmd(
         r"pin, never upgraded. A 'ceiling' documented cell (Springfield B3, #1683) is a permitted "
         r"withdrawal max the claim's OWN source self-disclosed — NOT a reservation conflict (a dry "
         r"loop sits far below it) and not metered use, so it too keeps the \[reference] pin and "
-        r"sharpens the gap onto the actual-vs-ceiling denominator (#1415). corrob† = the A4 "
+        r"sharpens the gap onto the actual-vs-ceiling denominator (#1415). A route-blind row (New "
+        r"Albany/Intel B6, #1686) is a facility whose water is outside BOTH instruments' reach — "
+        r"purchased municipal makeup (the withdrawal registry meters withdrawals from waters of the "
+        r"state, not purchases) and/or blowdown to a POTW sanitary sewer (no outfall, so no DMR): "
+        r"their ~0 is jurisdiction, not measurement, so it can never corroborate a dry claim. Its "
+        r"'non-cooling' documented cell is a real metered withdrawal that is NOT the cooling account "
+        r"(construction-phase water), and a 'refused' predicted-makeup cell means the archetype "
+        r"account was not derivable at all (every archetype is IT-load-parameterized; a semiconductor "
+        r"fab has no IT load) — read it as \[open], never as zero. corrob† = the A4 "
         r"independent corroborators (air-permit cooling-tower PM + Tier II chemistry) reconciled "
-        r"against the claim — SECONDARY, never the sole basis for a re-archetype. The Intel row is a "
-        r"constructed positive control.[/]"
+        r"against the claim — SECONDARY, never the sole basis for a re-archetype. The Intel "
+        r"(control) row is a constructed positive control; the live new-albany row above it is "
+        r"the real Intel record.[/]"
     )
 
     if write or out:

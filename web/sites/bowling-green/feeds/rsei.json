@@ -110,7 +110,20 @@
           "pounds": 21315.0
         }
       ],
-      "top_water_chemicals": []
+      "top_water_chemicals": [
+        {
+          "chemical": "Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda ash and kiln roasted at approximately 2,000 F.)",
+          "cas": "N090",
+          "water_pounds": 10.0,
+          "reporting_years": 1
+        },
+        {
+          "chemical": "Arsenic compounds",
+          "cas": "N020",
+          "water_pounds": 5.0,
+          "reporting_years": 1
+        }
+      ]
     },
     {
       "facility_id": "43551FRSTS2811C",
@@ -1250,7 +1263,20 @@
           "pounds": 387743.0
         }
       ],
-      "top_water_chemicals": []
+      "top_water_chemicals": [
+        {
+          "chemical": "Nickel compounds",
+          "cas": "N495",
+          "water_pounds": 45.0,
+          "reporting_years": 9
+        },
+        {
+          "chemical": "Zinc compounds",
+          "cas": "N982",
+          "water_pounds": 45.0,
+          "reporting_years": 9
+        }
+      ]
     },
     {
       "facility_id": "43465KTBWL34EBR",
@@ -1706,7 +1732,20 @@
           "pounds": 23814.0
         }
       ],
-      "top_water_chemicals": []
+      "top_water_chemicals": [
+        {
+          "chemical": "Copper",
+          "cas": "7440-50-8",
+          "water_pounds": 4.0,
+          "reporting_years": 4
+        },
+        {
+          "chemical": "Lead",
+          "cas": "7439-92-1",
+          "water_pounds": 3.0,
+          "reporting_years": 3
+        }
+      ]
     },
     {
       "facility_id": "43551DLFLH1775P",
@@ -2063,7 +2102,32 @@
           "pounds": 1004352.0
         }
       ],
-      "top_water_chemicals": []
+      "top_water_chemicals": [
+        {
+          "chemical": "Zinc compounds",
+          "cas": "N982",
+          "water_pounds": 13106.3,
+          "reporting_years": 17
+        },
+        {
+          "chemical": "Lead",
+          "cas": "7439-92-1",
+          "water_pounds": 1365.2,
+          "reporting_years": 17
+        },
+        {
+          "chemical": "Nickel",
+          "cas": "7440-02-0",
+          "water_pounds": 1091.7,
+          "reporting_years": 16
+        },
+        {
+          "chemical": "Chromium",
+          "cas": "7440-47-3",
+          "water_pounds": 1091.7,
+          "reporting_years": 16
+        }
+      ]
     },
     {
       "facility_id": "43402VHTKS2125W",
@@ -2258,7 +2322,20 @@
           "pounds": 919601.0
         }
       ],
-      "top_water_chemicals": []
+      "top_water_chemicals": [
+        {
+          "chemical": "Manganese",
+          "cas": "7439-96-5",
+          "water_pounds": 16.0,
+          "reporting_years": 2
+        },
+        {
+          "chemical": "Lead",
+          "cas": "7439-92-1",
+          "water_pounds": 0.2,
+          "reporting_years": 2
+        }
+      ]
     },
     {
       "facility_id": "43551CRWNC29200",
@@ -8751,7 +8828,26 @@
           "pounds": 10010.0
         }
       ],
-      "top_water_chemicals": []
+      "top_water_chemicals": [
+        {
+          "chemical": "Zinc compounds",
+          "cas": "N982",
+          "water_pounds": 532.0,
+          "reporting_years": 14
+        },
+        {
+          "chemical": "1,1,1-Trichloroethane",
+          "cas": "71-55-6",
+          "water_pounds": 500.0,
+          "reporting_years": 2
+        },
+        {
+          "chemical": "Methyl isobutyl ketone",
+          "cas": "108-10-1",
+          "water_pounds": 5.0,
+          "reporting_years": 1
+        }
+      ]
     },
     {
       "facility_id": "43402RMTCN11HAS",
@@ -9196,7 +9292,14 @@
           "pounds": 56.9
         }
       ],
-      "top_water_chemicals": []
+      "top_water_chemicals": [
+        {
+          "chemical": "Certain glycol ethers",
+          "cas": "N230",
+          "water_pounds": 21000.0,
+          "reporting_years": 1
+        }
+      ]
     },
     {
       "facility_id": "43402GRNMN1032S",

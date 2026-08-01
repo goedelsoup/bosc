@@ -513,7 +513,36 @@ from watermark.sites import (
 #   are optional/defaulted, so a pre-1.49 greenops.json stays valid; a pre-1.49
 #   greenops.schema.json rejects the new keys — MINOR, back-compatible for data, schema refresh
 #   required.
-CONTRACT_VERSION = "1.49.0"
+# 1.50.0: the `cooling-reconciliation` feed learns that an instrument can be BLIND, and that a
+#   prediction can be refused (#1686, epic #1676 B6 — the New Albany / Intel positive control).
+#   The harness's two record sources are jurisdictional, not universal: the withdrawal registry
+#   meters withdrawals from waters of the state, and the NPDES record covers discharges to them.
+#   A campus that BUYS its water from a municipal system and sends its wastewater to a POTW
+#   sanitary sewer is outside both — so both return ~0 for it by construction, and the
+#   classifier was reading that ~0 as "documented ≈ 0 → corroborated dry". Four additive shapes
+#   on `CoolingWaterAccount` + one new outcome:
+#   * `route` (`CoolingWaterRoute`) — the cited supply/discharge determination that says whether
+#     the instruments reach this facility at all. Set only where the record establishes it.
+#   * a fifth `ReconcileOutcome`, **`route_blind`** — the negative read is invalidated (a ~0 from
+#     a blind instrument never corroborates a claim) while a POSITIVE signal still adjudicates,
+#     so `discrepancy` / `reservation_conflict` / a genuinely-corroborated wet claim are
+#     unchanged. The pin is kept and the records request is re-aimed at the City-held meter.
+#   * `nonprocess_makeup` — a documented, metered withdrawal that IS on record but is NOT the
+#     cooling account (Intel's construction-phase groundwater: 0.0435 MGD, ~89% returned,
+#     peaking in May while July-August are the year's lowest). A fifth register, never folded
+#     into `documented_*`.
+#   * `prediction_refused`, and `it_load` / `predicted_makeup` / `predicted_consumptive` /
+#     `predicted_blowdown` become **nullable**. Every archetype in `cooling_models` is
+#     IT-load-parameterized, so a facility with no IT load — a semiconductor fab, cooled by
+#     process heat rather than servers — has no derivable account, and emitting one would
+#     fabricate. The four move together with the reason; a renderer shows the refusal and never
+#     substitutes a zero.
+#   The artifact's meta also gains a `reference_band` (per-IT-MW evaporative makeup / consumptive
+#   / blowdown / CoC), archetype-derived and explicitly NOT read off the fab that was supposed to
+#   ground it. Existing rows are unchanged and stay valid; a pre-1.50 schema rejects the new keys
+#   and a pre-1.50 CONSUMER must handle the nullable predicted side — MINOR, back-compatible for
+#   data, schema refresh required.
+CONTRACT_VERSION = "1.50.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

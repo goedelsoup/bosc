@@ -41,6 +41,19 @@ the Springfield register had to fend off. `[verified]`
 - **Air PTI (Ohio EPA, issued Sept 20–21, 2022):** 4 fab cleanrooms, **28 boilers, 46 emergency
   generators, 1 fire pump, 6 silos, 125 cooling towers**, 4 N₂ vaporizers. `[verified]`
 - **Stage:** under construction, **DELAYED — Mod 1 ops ~2030–31; Mod 2 ops ~2032.** `[verified]`
+- **Ohio DNR water-withdrawal registration (new, #1686):** **WWFRP 03498 "Intel Corporation - New
+  Albany, Ohio"**, registered **2022-09-15**, **7 ground-water wells / 1.43 MGD registered
+  capacity**, HUC12 **050400060301 (Headwaters Raccoon Creek)**. Reported withdrawal **15.91 MG in
+  2024** (11.43 MG 2023; 1.24 MG 2022) with **14.11 MG returned (~89%, 2 return points)**.
+  `[verified]` `data/reference/ohio-water-withdrawal/licking.yaml`
+- **NPDES record (new, #1686):** three ECHO/ICIS entries, **all non-major general-permit
+  coverages, all construction-phase** — `OHGC00904` "Intel Ohio Campus Project Cardinal" and
+  `OHGC18520` "Intel Site Tree Clearing" under the construction-stormwater general permit (master
+  `OHC000000`), and `OHGH00789` "Intel Ohio Site" under the **hydrostatic-test-water** general
+  permit (master `OHH000000`), which Ohio EPA's own coverage listing carries as **`4GH00052*AG`,
+  11511 Green Chapel Rd NW, applicant BECHTEL Manufacturing & Technology, Inc., effective
+  2024-08-01**. **Zero DMR pollutant loads, no effluent limits, no individual industrial NPDES
+  permit, no cooling-water outfall.** `[verified]`
 
 ## 2 — Meta "Prometheus" (largest single DC load)
 
@@ -115,6 +128,55 @@ Discover Financial, TJX. Pin individually only on entry to a scenario.
   cooling draw on the **Columbus** water system: New Albany contracted **~16 MGD** of Columbus capacity
   (2015–16); **total tenant peak ~8 MGD (Apr 2026)**, plus **Intel ~5 MGD**. Cooling-draw inputs to pin
   from the air permits: Intel 125 cooling towers; Meta 1 GW direct-to-chip; QTS 222 MW. `[verified]`
+- **The Intel/Licking drainage is now `[verified]`, and it is Raccoon Creek.** Two independent
+  instruments put the campus in **HUC12 050400060301, "Headwaters Raccoon Creek"** — the Ohio DNR
+  withdrawal registration (03498) and the ECHO watershed record on its own NPDES coverages. Raccoon
+  Creek → South Fork Licking → Licking → **Muskingum (HUC-8 05040006)**, confirming what the profile
+  carried as an `[inference]`. Source water stays Scioto/Columbus; **surface drainage is Muskingum.**
+
+### The cooling-cycling reconciliation — B6 (#1686), and why it inverted
+
+Epic #1676 designated Intel the **positive control**: openly evaporative (125 permitted cooling
+towers), so the A3 harness should classify it *corroborated-evaporative* and thereby prove its
+discrepancy findings on the closed-loop claimants. **The record does not support that**, for three
+cited reasons — and the reason it does not is a more useful calibration result than the one expected.
+
+1. **It is not a data center.** Ohio One is a semiconductor fab (NAICS 334413). Every cooling
+   archetype in the model is IT-load-parameterized (load × WUE, a data-center metric); a fab's
+   cooling is driven by process heat. So the harness **refuses to predict** its account rather than
+   fabricate one, and **no makeup-per-MW band may be read off Intel and carried to a campus.**
+2. **It is not operating.** Mod 1 operations are 2030–31. The 125 towers are permitted, not running.
+3. **Its operating water is outside both instruments the harness reads.** Makeup will be *purchased*
+   City of Columbus water — and the Ohio DNR WWFRP registers withdrawals **from waters of the state**,
+   so a purchase is the seller's withdrawal, never the buyer's. Process wastewater goes to the
+   Columbus **sanitary sewer**, so no NPDES outfall and no DMR exists. Intel's entire CWA record is
+   the three construction general permits above.
+
+**The transferable finding:** for a municipally-supplied, sewer-discharging facility, the withdrawal
+registry and the discharge record return **~0 by construction**, and the classifier was reading that
+~0 as "documented ≈ 0 → *corroborated dry*". The same county demonstrates it independently — the
+**operating** Amazon Data Services campus at 2570 Beech Rd (WWFRP 03401) reports **0.02 MG for all of
+2024**, and the Newton Court site (03575) reports 0.00. `[verified]` Essentially the whole closed-loop
+cohort is municipally supplied, so this would have silently corroborated every one of their claims.
+The harness therefore carries a cited `WaterRoute` and a fifth outcome, **`route_blind`**: a ~0 from
+an instrument that cannot reach a facility is an *absence of jurisdiction*, not a measurement. A
+positive signal still adjudicates — the guard invalidates a negative read only.
+
+What the registry *does* record for Intel — **0.0435 MGD** (15.91 MG ÷ 366 d) — is
+**construction-phase** water, not cooling makeup: ~89% is returned, the campus's hydrostatic-test
+coverage was taken out by **Bechtel**, and the monthly shape **peaks in May (3.02 MG) while July
+(0.94) and August (0.72) are the year's lowest** — the inverse of a temperature-driven evaporative
+signature. `[verified]` It is carried on the reconciliation's `nonprocess_makeup` slot so it can
+never be read as the cooling account. (A note on method: the A2 warm/cool ratio reads **1.35** here
+on the May–Oct window, mildly >1, because May–June carry it — a lone warm/cool ratio cannot
+distinguish a spring construction peak from a July–August heat peak, so read the peak month too.)
+
+The disclosed **~5 MGD** operating draw is a self-report about a facility that will not operate for
+four years; it sits on `disclosed_makeup`, never `documented_*`. The archetype pin is **kept**, and
+the ask is re-aimed at the holder that actually meters the campus: the **City of Columbus** metered
+water-service consumption and the **industrial pretreatment / IU permit** (→ C2 records request
+#1688), plus ingesting the Sept-2022 air PTI itself, which today reaches the corpus only through
+reporting. See `data/reference/oepa/cooling-reconciliation.yaml`.
 
 ## Pinnable instruments to ingest (priority — the "pin" half of #485)
 

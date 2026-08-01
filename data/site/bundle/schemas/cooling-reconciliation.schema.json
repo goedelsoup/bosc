@@ -139,6 +139,16 @@
       "title": "CorroboratorStance",
       "type": "string"
     },
+    "DischargeRoute": {
+      "description": "Where a facility's blowdown goes — i.e. whether A2 can see it at all (B6, #1686).\n\nThe A2 blowdown source is the facility's own NPDES discharge record (ECHO/ICIS DMRs) plus\nOHD000001 coverage. A facility that sends its process water to a **POTW's sanitary sewer**\ndischarges to no water of the state, so it files no DMR: its flow is recorded only on a City\nindustrial-pretreatment / IU permit and sewer-use agreement, which ECHO never carries.",
+      "enum": [
+        "surface_npdes",
+        "sanitary_sewer",
+        "unknown"
+      ],
+      "title": "DischargeRoute",
+      "type": "string"
+    },
     "ProvenancedValue": {
       "additionalProperties": false,
       "description": "A single numeric quantity tagged with its provenance.\n\nConstruct via the classmethods (:meth:`from_document`, :meth:`from_connector`,\n:meth:`assume`, :meth:`derived`) so the ``source`` tag is never forgotten.\n\nA **measured or derived estimate** may also carry a quantitative uncertainty range\n(#760): optional absolute ``low``/``high`` bounds around the central ``value``,\n*orthogonal* to the qualitative ``confidence`` enum. The convention: a document- or\nconnector-verbatim figure is a single value (no band); an estimate whose honest\nrepresentation is \"226 ± ~35 ac\" carries ``low``/``high`` so downstream consumers\n(the bundle, the frontend, the Monte-Carlo engine #271) see the spread as data, not\nprose buried in the citation. The estimate constructors (:meth:`derived`,\n:meth:`assume`, :meth:`from_reference`) take the range inline; :meth:`with_range`\nattaches one to any value (e.g. a document-anchored central with a derived band).",
@@ -235,7 +245,8 @@
         "discrepancy",
         "corroborated",
         "reservation_conflict",
-        "gap"
+        "gap",
+        "route_blind"
       ],
       "title": "ReconcileOutcome",
       "type": "string"
@@ -425,6 +436,16 @@
       "title": "RecordsRequestLead",
       "type": "object"
     },
+    "SupplyRoute": {
+      "description": "Where a facility's cooling makeup comes from — i.e. whether A1 can see it at all (B6, #1686).\n\nThe A1 makeup source is the Ohio DNR WWFRP, a registry of withdrawals **from waters of the\nstate** (R.C. 1521.16). A facility that *buys* its water from a public system withdraws\nnothing itself: it either never appears in the registry or appears with a token registration\nand a ~0 annual report, while the real consumption sits on a **City meter** the registry never\nsees. So the route decides whether an A1 ~0 is a measurement or an absence of jurisdiction.",
+      "enum": [
+        "self_supplied",
+        "municipal",
+        "unknown"
+      ],
+      "title": "SupplyRoute",
+      "type": "string"
+    },
     "TierIIChemistryCorroborator": {
       "additionalProperties": false,
       "description": "The Tier II / EPCRA-312 cooling-chemistry corroborator, reconciled against the claim.\n\n``chemicals`` lists the cooling-water treatment substances on file (biocide, scale / corrosion\ninhibitor) when a Tier II inventory is on record; empty otherwise. A forward seam for the live\ncohort (LEPC/SERC-held, not on ECHO) until a filing lands.",
@@ -494,16 +515,60 @@
           "$ref": "#/$defs/CoolingModelType"
         },
         "it_load": {
-          "$ref": "#/$defs/ProvenancedValue"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "predicted_makeup": {
-          "$ref": "#/$defs/ProvenancedValue"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "predicted_consumptive": {
-          "$ref": "#/$defs/ProvenancedValue"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "predicted_blowdown": {
-          "$ref": "#/$defs/ProvenancedValue"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "prediction_refused": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prediction Refused"
         },
         "documented_makeup": {
           "anyOf": [
@@ -571,6 +636,28 @@
           ],
           "default": null
         },
+        "nonprocess_makeup": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "route": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WaterRoute"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "disclosed_cycles": {
           "anyOf": [
             {
@@ -607,13 +694,47 @@
         }
       },
       "required": [
-        "archetype",
-        "it_load",
-        "predicted_makeup",
-        "predicted_consumptive",
-        "predicted_blowdown"
+        "archetype"
       ],
       "title": "WaterAccount",
+      "type": "object"
+    },
+    "WaterRoute": {
+      "additionalProperties": false,
+      "description": "How a facility's water physically reaches and leaves it — the reach test on A1/A2 (B6, #1686).\n\nThe harness's two instruments are jurisdictional, not universal: A1 sees withdrawals from\nwaters of the state, A2 sees discharges to them. A facility on municipal supply and municipal\nsewer is outside **both**, and the honest consequence is that its records read ~0 for reasons\nthat have nothing to do with how it cools. This is a **cited** determination about a specific\nfacility — never assumed — so it is set only where the record establishes it.",
+      "properties": {
+        "supply": {
+          "$ref": "#/$defs/SupplyRoute"
+        },
+        "discharge": {
+          "$ref": "#/$defs/DischargeRoute"
+        },
+        "citation": {
+          "title": "Citation",
+          "type": "string"
+        },
+        "tag": {
+          "title": "Tag",
+          "type": "string"
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "supply",
+        "discharge",
+        "citation",
+        "tag",
+        "confidence"
+      ],
+      "title": "WaterRoute",
       "type": "object"
     }
   },

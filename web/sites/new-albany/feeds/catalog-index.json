@@ -1,7 +1,7 @@
 {
   "site": "new-albany",
-  "catalog_version": "0403a7d5b2048a8c7e5492cf9b707db770a8d1281efd7f4e3cbcbd48d68eea08",
-  "contract_version": "1.49.0",
+  "catalog_version": "5fa2fa73dff6ab773acb49b0252947772a425162c7fc8ead8a5e02189df3c50e",
+  "contract_version": "1.50.0",
   "atoms": [
     {
       "handle": "concept:new-albany:7q10",
@@ -913,6 +913,14 @@
       "site": "new-albany",
       "local_id": "oepa-ohd000001-gp",
       "title": "Ohio EPA Draft General NPDES Permit for Data Center Facilities (OHD000001)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:ohio-water-withdrawal-licking",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "ohio-water-withdrawal-licking",
+      "title": "Licking County, OH water-withdrawal registry (Ohio DNR WWFRP)",
       "feed": "catalog"
     },
     {

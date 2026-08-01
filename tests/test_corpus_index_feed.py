@@ -22,7 +22,7 @@ from watermark.site.corpus_mirror import Mirror, MirrorLink, MirrorNode
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.49.0"
+_CV = "1.50.0"
 
 
 def _mirror() -> Mirror:

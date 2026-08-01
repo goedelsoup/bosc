@@ -8,6 +8,8 @@
     "A gap (no documented makeup or blowdown) is an [open] records-request lead — never read as 'confirmed dry'.",
     "A reservation ceiling (a will-serve / water-agreement figure) is not a discharge/withdrawal instrument — it keeps the archetype pin and is never collapsed into a headline consumptive figure.",
     "An operator self-report lands on its own disclosed_* slot, never on documented_*, and cannot upgrade the claim's source.",
+    "An instrument that cannot reach a facility returns an absence of jurisdiction, not a measurement — a municipally-supplied, sewer-discharging campus reads ~0 in the withdrawal registry and the discharge record by construction, and that ~0 never corroborates a claim.",
+    "A documented withdrawal that is not the cooling account (construction-phase water) is kept on its own slot, and a prediction the harness could not derive is shown as refused, never as zero.",
     "The corroborators (air-permit PM, Tier II chemistry) are secondary — recorded and reconciled against the claim, never the sole basis for a re-archetype and never changing the outcome."
   ],
   "candidates": [
@@ -60,12 +62,15 @@
           "low": null,
           "high": null
         },
+        "prediction_refused": null,
         "documented_makeup": null,
         "documented_blowdown": null,
         "reserved_makeup": null,
         "reserved_blowdown": null,
         "disclosed_makeup": null,
         "disclosed_ceiling": null,
+        "nonprocess_makeup": null,
+        "route": null,
         "disclosed_cycles": null,
         "backsolved_cycles": null,
         "seasonality_warm_ratio": null

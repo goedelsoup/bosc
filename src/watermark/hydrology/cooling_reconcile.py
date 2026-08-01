@@ -63,13 +63,32 @@ sharpen the finding and the gap's records-request but **never change the classif
 air permit is not a discharge/withdrawal instrument, so a corroborator is never the sole basis for a
 re-archetype.
 
-**The Intel positive control** (:data:`INTEL_CONTROL`) is the calibration baseline: an
+**The Intel positive control** (:func:`intel_control`) is the calibration baseline: an
 openly-evaporative facility (exemplar New Albany / Intel, ~125 cooling towers) whose
 documented water *equals its evaporative-tower prediction*. The harness must classify it
-``corroborated`` — **not** a false ``discrepancy** just because it uses a lot of water. It
-is a constructed calibration vector built into the harness, not a registered site (New
-Albany carries no pinned ``SiteFacility`` — that is B6 #1686's work); its figures are
-internally consistent with an evaporative tower at CoC ≈ 5, not documented Intel data.
+``corroborated`` — **not** a false ``discrepancy`` just because it uses a lot of water. It
+is a constructed calibration vector built into the harness, not a registered site; its figures
+are internally consistent with an evaporative tower at CoC ≈ 5, not documented Intel data.
+
+**B6 (#1686) tested whether the real Intel record could replace that constructed vector, and
+established that it cannot** — for three cited reasons (:func:`reconcile_intel_new_albany`):
+Ohio One is a semiconductor fab rather than a data center, it does not operate until 2030-31,
+and its operating water is purchased City of Columbus supply discharging to the Columbus
+sanitary sewer. The last of those generalizes, and is the calibration result the control was
+really for: **for a municipally-supplied, sewer-discharging facility, A1 and A2 return ~0 by
+construction**, and the classifier would have read that ~0 as "documented ≈ 0 → corroborated
+dry". So the harness carries a cited :class:`WaterRoute` per facility and a fifth outcome:
+
+* **route_blind** (B6, #1686) — the instruments cannot reach this facility's water at all
+  (purchased municipal makeup, and/or blowdown to a POTW sanitary sewer). Their ~0 is an
+  absence of jurisdiction, not a measurement, so it can never corroborate a low-water claim.
+  The guard invalidates a *negative* read only: a documented flow or a reservation ceiling
+  still adjudicates, so ``discrepancy``, ``reservation_conflict`` and a genuinely-corroborated
+  wet claim all survive it. The pin is kept and the records request is re-aimed at the City
+  meter + the industrial-pretreatment record. Two further slots serve it: ``nonprocess_makeup``
+  (a documented withdrawal on record that is NOT the cooling account — Intel's
+  construction-phase groundwater) and ``prediction_refused`` (the archetype account could not be
+  derived at all, because every archetype is IT-load-parameterized and a fab has no IT load).
 """
 
 from __future__ import annotations
@@ -79,7 +98,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology import blowdown, cooling_models
@@ -134,6 +153,85 @@ class ReconcileOutcome(StrEnum):
     # re-archetype. B1 (#1681): Troy-Piqua's closed-loop FAQ vs the 2.0 MGD water-agreement reservation.
     RESERVATION_CONFLICT = "reservation_conflict"
     GAP = "gap"  # no documented makeup/blowdown to test against → a C2 records request
+    # The instruments the harness reads cannot reach this facility's water at all — its makeup is
+    # PURCHASED municipal supply (invisible to A1's withdrawal registry) and/or its discharge goes
+    # to a POTW's sanitary sewer (invisible to A2's NPDES/DMR). A ~0 from a blind instrument is an
+    # artifact of the supply route, not a measurement, so it can never corroborate a dry claim.
+    # B6 (#1686), from the New Albany / Intel positive control.
+    ROUTE_BLIND = "route_blind"
+
+
+class SupplyRoute(StrEnum):
+    """Where a facility's cooling makeup comes from — i.e. whether A1 can see it at all (B6, #1686).
+
+    The A1 makeup source is the Ohio DNR WWFRP, a registry of withdrawals **from waters of the
+    state** (R.C. 1521.16). A facility that *buys* its water from a public system withdraws
+    nothing itself: it either never appears in the registry or appears with a token registration
+    and a ~0 annual report, while the real consumption sits on a **City meter** the registry never
+    sees. So the route decides whether an A1 ~0 is a measurement or an absence of jurisdiction.
+    """
+
+    SELF_SUPPLIED = "self_supplied"  # own wells / intake — the WWFRP registers it; A1 reaches it
+    MUNICIPAL = "municipal"  # purchased from a public system — A1 cannot see the use
+    UNKNOWN = "unknown"  # not established from the record
+
+
+class DischargeRoute(StrEnum):
+    """Where a facility's blowdown goes — i.e. whether A2 can see it at all (B6, #1686).
+
+    The A2 blowdown source is the facility's own NPDES discharge record (ECHO/ICIS DMRs) plus
+    OHD000001 coverage. A facility that sends its process water to a **POTW's sanitary sewer**
+    discharges to no water of the state, so it files no DMR: its flow is recorded only on a City
+    industrial-pretreatment / IU permit and sewer-use agreement, which ECHO never carries.
+    """
+
+    SURFACE_NPDES = "surface_npdes"  # a facility-own outfall — a DMR exists; A2 reaches it
+    SANITARY_SEWER = "sanitary_sewer"  # to a POTW under a sewer-use / IU permit — A2 cannot see it
+    UNKNOWN = "unknown"  # not established from the record
+
+
+class WaterRoute(BaseModel):
+    """How a facility's water physically reaches and leaves it — the reach test on A1/A2 (B6, #1686).
+
+    The harness's two instruments are jurisdictional, not universal: A1 sees withdrawals from
+    waters of the state, A2 sees discharges to them. A facility on municipal supply and municipal
+    sewer is outside **both**, and the honest consequence is that its records read ~0 for reasons
+    that have nothing to do with how it cools. This is a **cited** determination about a specific
+    facility — never assumed — so it is set only where the record establishes it.
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    supply: SupplyRoute
+    discharge: DischargeRoute
+    citation: str
+    tag: (
+        str  # evidentiary tag on the route determination ("[verified]" when instrument-established)
+    )
+    confidence: Confidence
+
+    @property
+    def instruments_blind(self) -> bool:
+        """True when at least one side of the account is outside the instruments A1/A2 read.
+
+        One blind side is enough to invalidate a *negative* read: the harness pairs the documented
+        blowdown against predicted blowdown, else documented makeup against predicted makeup, so a
+        blind side means the figure it would fall back to is not a measurement of the cooling
+        account.
+        """
+        return (
+            self.supply is SupplyRoute.MUNICIPAL or self.discharge is DischargeRoute.SANITARY_SEWER
+        )
+
+    @property
+    def blind_sides(self) -> tuple[str, ...]:
+        """The blind side(s), named — for the finding and the records-request lead."""
+        sides: list[str] = []
+        if self.supply is SupplyRoute.MUNICIPAL:
+            sides.append("makeup (purchased municipal supply — outside the A1 withdrawal registry)")
+        if self.discharge is DischargeRoute.SANITARY_SEWER:
+            sides.append("blowdown (to a POTW sanitary sewer — outside the A2 NPDES/DMR record)")
+        return tuple(sides)
 
 
 class WaterAccount(BaseModel):
@@ -149,10 +247,20 @@ class WaterAccount(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     archetype: CoolingModelType
-    it_load: ProvenancedValue  # MW
-    predicted_makeup: ProvenancedValue  # MGD, the claim's cooling intake
-    predicted_consumptive: ProvenancedValue  # MGD, the claim's evaporative loss
-    predicted_blowdown: ProvenancedValue  # MGD, the claim's blowdown (makeup - evaporation)
+    # The predicted side is REFUSABLE (B6, #1686). Every archetype in
+    # :mod:`watermark.hydrology.cooling_models` is IT-load-parameterized (load x WUE), so a
+    # facility with no IT load has no derivable prediction — a semiconductor fab's cooling is
+    # driven by process heat, not by servers, and running a data-center WUE against its
+    # electrical load would emit a number with no evidentiary basis. When the prediction is
+    # refused these are ``None`` and ``prediction_refused`` carries the cited reason; a renderer
+    # must show the refusal, never substitute a zero.
+    it_load: ProvenancedValue | None = None  # MW; None when the load is [open] / not an IT load
+    predicted_makeup: ProvenancedValue | None = None  # MGD, the claim's cooling intake
+    predicted_consumptive: ProvenancedValue | None = None  # MGD, the claim's evaporative loss
+    predicted_blowdown: ProvenancedValue | None = None  # MGD, the claim's blowdown (makeup - evap)
+    # Why the archetype's water account could not be predicted — set together with the three
+    # ``predicted_*`` being ``None`` (enforced below). ``None`` = the prediction ran normally.
+    prediction_refused: str | None = None
     documented_makeup: ProvenancedValue | None = None  # MGD, A1 withdrawal record (metered use)
     documented_blowdown: ProvenancedValue | None = None  # MGD, A2 discharge DMR (metered discharge)
     # A disclosed RESERVATION ceiling (a will-serve / water-service agreement figure) — kept DISTINCT
@@ -183,6 +291,19 @@ class WaterAccount(BaseModel):
     # only SHARPENS a gap (name the actual-vs-ceiling denominator). None unless a self-disclosed
     # permitted ceiling is on record. MGD.
     disclosed_ceiling: ProvenancedValue | None = None
+    # A documented, metered withdrawal that is on record but is NOT the cooling account under test
+    # (B6, #1686) — kept distinct from ``documented_makeup`` for the same reason the self-report
+    # slots are: reading it as cooling makeup would be a category error, not a conservative
+    # approximation. Intel's WWFRP series is the case: 15.91 MG in 2024 across 7 wells with ~89%
+    # returned, peaking May-June and troughing July-August — construction-phase groundwater at a
+    # site whose 125 permitted cooling towers will not run until 2030-31, and whose monthly shape
+    # is the INVERSE of a temperature-driven evaporative signature. It never feeds ``_classify``;
+    # it documents what the registry actually measured, so a reader can see that the ~0 cooling
+    # signal is not the registry being silent. MGD (annualized from the reported annual total).
+    nonprocess_makeup: ProvenancedValue | None = None
+    # Whether A1 / A2 can reach this facility's water at all (B6, #1686). ``None`` = not
+    # established (the honest default — a route is a cited determination, never assumed).
+    route: WaterRoute | None = None
     disclosed_cycles: ProvenancedValue | None = None  # the operator's disclosed CoC, if any
     # The back-solved cycles-of-concentration (makeup / blowdown) — an [inference] BRACKET, never
     # a headline scalar. Present when both makeup and blowdown are on record — as documented (metered)
@@ -192,6 +313,33 @@ class WaterAccount(BaseModel):
     # evaporative blowdown peaks in summer (ratio ≫ 1), a dry loop is flat (~1). A shape
     # indicator, never a magnitude; None when no DMR flow series is on record.
     seasonality_warm_ratio: float | None = None
+
+    @model_validator(mode="after")
+    def _prediction_refusal_is_total(self) -> WaterAccount:
+        """A refused prediction refuses ALL of it, and always says why (B6, #1686).
+
+        The failure this forbids is a half-refused account: two archetype figures present and one
+        ``None``, which a renderer would read as a real zero. Refusal is a stance about the whole
+        derivation, so the three ``predicted_*`` move together with ``prediction_refused``.
+        """
+        predicted = (self.predicted_makeup, self.predicted_consumptive, self.predicted_blowdown)
+        present = [p is not None for p in predicted]
+        if any(present) != all(present):
+            raise ValueError(
+                "predicted_makeup / predicted_consumptive / predicted_blowdown move together — "
+                "a partially-refused prediction reads as a real zero downstream"
+            )
+        if all(present) and self.prediction_refused is not None:
+            raise ValueError(
+                "prediction_refused is set but the predicted account is present — a refusal must "
+                "leave predicted_makeup / predicted_consumptive / predicted_blowdown unset"
+            )
+        if not any(present) and not self.prediction_refused:
+            raise ValueError(
+                "the predicted account is absent with no prediction_refused reason — refusing to "
+                "derive an archetype's water is a cited stance, never a silent omission"
+            )
+        return self
 
 
 class RecordsRequestLead(BaseModel):
@@ -366,6 +514,73 @@ def _backsolve_cycles(
 
 
 def _classify(
+    archetype: CoolingModelType,
+    predicted_makeup: float | None,
+    predicted_blowdown: float | None,
+    documented_makeup: float | None,
+    documented_blowdown: float | None,
+    reserved_makeup: float | None = None,
+    reserved_blowdown: float | None = None,
+    route: WaterRoute | None = None,
+) -> ReconcileOutcome:
+    """Classify the claim↔document reconciliation, applying the route guard (B6, #1686).
+
+    Two guards sit around the base classification below.
+
+    **The reach guard** (``route``): A1 and A2 are jurisdictional instruments — a withdrawal
+    registry of waters of the state, and an NPDES discharge record. A facility on purchased
+    municipal supply and/or a POTW sanitary sewer is outside them, so the ~0 they return is an
+    absence of jurisdiction, not a measurement. That invalidates a **negative** read only: an
+    otherwise-``gap`` or ``corroborated``-because-both-sides-are-~0 outcome becomes
+    ``route_blind``. A *positive* signal from any instrument still adjudicates — a documented
+    flow, or a reservation ceiling, says something true regardless of what the blind side would
+    have said — so ``discrepancy``, ``reservation_conflict``, and a wet claim corroborated by real
+    documented water all survive the guard untouched.
+
+    **The refusal guard** (``predicted_* is None``): a facility whose archetype water account
+    could not be derived at all (no IT load — a fab) has nothing to compare against, so it can
+    never be ``corroborated`` or a ``discrepancy``. It resolves to ``route_blind`` when the route
+    is blind, else ``gap``.
+    """
+    if predicted_makeup is None or predicted_blowdown is None:
+        # No predicted account to compare against: the record cannot corroborate or contradict a
+        # claim the harness declined to quantify. It is a records question either way.
+        if route is not None and route.instruments_blind:
+            return ReconcileOutcome.ROUTE_BLIND
+        return ReconcileOutcome.GAP
+    base = _classify_base(
+        archetype,
+        predicted_makeup,
+        predicted_blowdown,
+        documented_makeup,
+        documented_blowdown,
+        reserved_makeup,
+        reserved_blowdown,
+    )
+    if route is None or not route.instruments_blind:
+        return base
+    if base is ReconcileOutcome.RESERVATION_CONFLICT:
+        # A disclosed reservation ceiling is not one of the instruments the route can blind — it
+        # comes from a negotiated agreement, not from a withdrawal registry or a DMR. B1's finding
+        # survives a blind route untouched.
+        return base
+    # The adjudicating figure is the one ``_classify_base`` pairs against the prediction: the
+    # cooling-specific blowdown record where one exists, else the withdrawal record.
+    adjudicating = documented_blowdown if documented_blowdown is not None else documented_makeup
+    if adjudicating is None or adjudicating < _MEANINGFUL_FLOW_MGD:
+        # Nothing, or ~0, from an instrument that cannot reach this facility. Both are absences of
+        # jurisdiction rather than measurements, and the two failure modes they would otherwise
+        # produce are the ones B6 exists to catch: a `gap` that reads as a merely-unfinished lookup
+        # (pulling A1/A2 harder can never close it — the ask belongs to a different holder), and a
+        # `corroborated` read off a zero the blind instrument was always going to return, which
+        # would silently upgrade every municipally-supplied claim in the cohort to document-grade.
+        # This covers a WET claim too: a documented blowdown of ~0 against a predicted 0.43 MGD
+        # sits inside the corroboration band and would otherwise pass as confirmation.
+        return ReconcileOutcome.ROUTE_BLIND
+    return base
+
+
+def _classify_base(
     archetype: CoolingModelType,
     predicted_makeup: float,
     predicted_blowdown: float,
@@ -640,6 +855,75 @@ def _disclosed_ceiling_gap_lead(
     )
 
 
+def _route_blind_lead(
+    site: str,
+    fac: SiteFacility,
+    claim_source: str,
+    account: WaterAccount,
+    issue_ref: str,
+    corroborators: CoolingCorroborators | None = None,
+    water_holder: str | None = None,
+) -> RecordsRequestLead:
+    """The C2 (#1688) records-request lead for a facility outside A1/A2's reach (B6, #1686).
+
+    A plain ``gap`` lead says *pull the water records*. This one exists because that instruction
+    is wrong here: the water records the harness reads **have been pulled and they answer ~0 for
+    a reason that has nothing to do with cooling**. So the ask is re-aimed at the holder that
+    actually meters the facility — the City water utility's consumption record and its industrial
+    pretreatment / IU permit and sewer-use agreement — and it names the blind sides explicitly so
+    a later reader cannot mistake the harness's ~0 for a finding. The silent A4 corroborators add
+    their own not-on-record asks, as on a gap.
+
+    ``water_holder`` names that utility where the record identifies it. It is worth a parameter
+    because the blind route is usually blind precisely BECAUSE the supplier is someone other than
+    the site's own city (Intel buys from Columbus, two counties from the New Albany address), and a
+    records request addressed to the wrong municipality is a wasted statutory clock.
+    """
+    route = account.route
+    blind = "; ".join(route.blind_sides) if route is not None else "the instruments A1/A2 read"
+    records_sought = [
+        "metered municipal water-service consumption for the campus (the meter that records the "
+        "makeup the withdrawal registry cannot see)",
+        "industrial pretreatment / indirect-discharge (IU) permit + its reported flow",
+        "sewer-use agreement / capacity reservation for the campus",
+        "water-service agreement or will-serve letter (the contracted supply the campus draws on)",
+    ]
+    holders = [
+        water_holder or f"City / municipal water-sewer utility serving {site}",
+        "Ohio EPA (NPDES / OHD000001)",
+    ]
+    extra_records, extra_holders = _corroborator_asks(corroborators)
+    records_sought.extend(extra_records)
+    holders.extend(extra_holders)
+    nonprocess = account.nonprocess_makeup
+    nonprocess_clause = (
+        f" The registry's non-zero series for this facility ({nonprocess.value:g} MGD) is NOT the "
+        "cooling account — it is a separate, non-cooling withdrawal, recorded as such."
+        if nonprocess is not None
+        else ""
+    )
+    return RecordsRequestLead(
+        site=site,
+        facility=fac.name,
+        subject=(
+            "cooling-water account — the metered municipal record, because the withdrawal "
+            "registry and the NPDES discharge record cannot reach this facility"
+        ),
+        records_sought=records_sought,
+        holder="; ".join(holders),
+        rationale=(
+            f"The {fac.cooling_model.value} claim (source={claim_source}) cannot be tested against "
+            "A1/A2 at all: this facility is outside their reach on the side(s) that matter — "
+            f"{blind}. Their ~0 is an absence of jurisdiction, not a measurement, so it must never "
+            "be read as documented ~0 water (which would corroborate a dry claim on nothing)."
+            f"{nonprocess_clause} Pulling A1/A2 harder cannot resolve it; the record that can is "
+            f"City-held ({issue_ref})."
+        ),
+        epic_ref=f"#1688 (C2); {issue_ref}",
+        tag="[open]",
+    )
+
+
 def _reservation_conflict_lead(
     site: str,
     fac: SiteFacility,
@@ -712,6 +996,7 @@ def _fold_corroborators(
     records_request_outcome = outcome in {
         ReconcileOutcome.GAP,
         ReconcileOutcome.RESERVATION_CONFLICT,
+        ReconcileOutcome.ROUTE_BLIND,
     }
     if net is CorroboratorStance.SILENT and not records_request_outcome:
         return finding
@@ -726,6 +1011,41 @@ def _finding(
 ) -> str:
     """A one-line evidentiary read for the reconciliation record."""
     arche = account.archetype.value
+    if outcome is ReconcileOutcome.ROUTE_BLIND:
+        # B6 (#1686): the instruments cannot reach this facility's water. The read must say what
+        # the record DOES show (so the row is not mistaken for an unfinished lookup) and why that
+        # is not the cooling account — never that the account is ~0.
+        route = account.route
+        blind = "; ".join(route.blind_sides) if route is not None else "A1/A2"
+        refused = (
+            f" No archetype prediction is derivable here: {account.prediction_refused}"
+            if account.prediction_refused
+            else ""
+        )
+        nonprocess = account.nonprocess_makeup
+        nonprocess_clause = (
+            f" What the withdrawal registry does record — {nonprocess.value:g} MGD — is a "
+            "separate, non-cooling withdrawal, carried on nonprocess_makeup so it is never read "
+            "as cooling makeup."
+            if nonprocess is not None
+            else ""
+        )
+        disclosed = account.disclosed_makeup
+        disclosed_clause = (
+            f" The operator's own disclosed draw ({disclosed.value:g} MGD) is a self-report, "
+            "unverified and not an instrument."
+            if disclosed is not None
+            else ""
+        )
+        return (
+            f"The {arche} claim for {fac.name} (source={claim_source}) cannot be tested by this "
+            f"harness at all — the facility is outside the reach of the instruments it reads on "
+            f"{blind}. Their ~0 is an absence of jurisdiction, NOT a documented ~0, so it can "
+            "neither corroborate nor contradict the claim and must never upgrade the source."
+            f"{nonprocess_clause}{disclosed_clause}{refused} The record that would answer it is "
+            "City-held — metered water-service consumption + the industrial pretreatment / IU "
+            "permit (→ C2 records request #1688)."
+        )
     if outcome is ReconcileOutcome.GAP:
         if account.disclosed_ceiling is not None:
             # B3 (#1683, Springfield): a gap bounded by a self-disclosed permit CEILING. The claim's
@@ -747,7 +1067,8 @@ def _finding(
                 f"claim (source={claim_source}) — an [open] gap, not 'confirmed dry'. The claim's own "
                 f"source self-discloses a permitted municipal-withdrawal CEILING of {ceiling.value:g} "
                 f"MGD ({ceiling_gpd}, an >80degF extreme-heat max){draw_phrase}; the pinned "
-                f"archetype predicts ~{account.predicted_makeup.value:g} MGD — far below the ceiling. "
+                f"archetype predicts ~{_require(account.predicted_makeup, 'predicted makeup').value:g} MGD "
+                "— far below the ceiling. "
                 "A permitted PEAK ceiling self-disclosed by the claim's OWN source is NOT a reservation "
                 "conflict (a genuinely dry loop sits far below it) and is a self-report, not a metered "
                 "instrument — so it can neither corroborate 'not evaporative' (circular) nor "
@@ -776,11 +1097,17 @@ def _finding(
                 "one-time withdrawal of undisclosed volume) — the specific open quantity (→ C2 records "
                 "request #1688). Keep the pin [reference]."
             )
+        # The predicted side may itself have been refused (B6, #1686) — say so rather than
+        # printing a figure the harness declined to derive.
+        predicted_clause = (
+            f" Predicted makeup {account.predicted_makeup.value:g} MGD."
+            if account.predicted_makeup is not None
+            else f" No archetype prediction is derivable: {account.prediction_refused}"
+        )
         return (
             f"No documented makeup or blowdown for {fac.name}: the {arche} claim "
             f"(source={claim_source}) cannot yet be tested against records — an [open] gap, not "
-            "'confirmed dry' (→ C2 records request #1688). Predicted makeup "
-            f"{account.predicted_makeup.value:g} MGD."
+            f"'confirmed dry' (→ C2 records request #1688).{predicted_clause}"
         )
     if outcome is ReconcileOutcome.RESERVATION_CONFLICT:
         reserved = account.reserved_makeup or account.reserved_blowdown
@@ -796,7 +1123,8 @@ def _finding(
         )
         return (
             f"Reserved {reserved_phrase} makeup contradicts the {arche} FAQ claim's "
-            f"~{account.predicted_makeup.value:g} MGD prediction — but a reservation is a ceiling, not "
+            f"~{_require(account.predicted_makeup, 'predicted makeup').value:g} MGD prediction — but a "
+            "reservation is a ceiling, not "
             "a discharge/withdrawal instrument, so keep the archetype pin (no [verified] re-archetype) "
             f"and sharpen the water lead (→ C2 records request #1688).{coc} The reserved figure is an "
             "upper-bound ceiling, NOT a headline consumptive."
@@ -805,10 +1133,13 @@ def _finding(
     # predicted figure exactly as _classify does: the A2 blowdown record against predicted
     # blowdown, else the A1 makeup record against predicted makeup (never cross the two).
     if account.documented_blowdown is not None:
-        doc, predicted, kind = account.documented_blowdown, account.predicted_blowdown, "blowdown"
+        doc = account.documented_blowdown
+        predicted = _require(account.predicted_blowdown, "predicted blowdown")
+        kind = "blowdown"
     else:
         doc = _require(account.documented_makeup, "documented water")
-        predicted, kind = account.predicted_makeup, "makeup"
+        predicted = _require(account.predicted_makeup, "predicted makeup")
+        kind = "makeup"
     if outcome is ReconcileOutcome.DISCREPANCY:
         season = (
             f" Seasonality warm/cool ratio {account.seasonality_warm_ratio:g} (a summer-peak "
@@ -853,9 +1184,13 @@ def reconcile_facility(
     reserved_blowdown: ProvenancedValue | None = None,
     disclosed_makeup: ProvenancedValue | None = None,
     disclosed_ceiling: ProvenancedValue | None = None,
+    nonprocess_makeup: ProvenancedValue | None = None,
+    route: WaterRoute | None = None,
+    prediction_refused: str | None = None,
     seasonality_warm_ratio: float | None = None,
     corroborators: CoolingCorroborators | None = None,
     water_lead_ref: str = "#1688 (C2)",
+    water_holder: str | None = None,
     kept_archetype: CoolingModelType | None = None,
     is_control: bool = False,
 ) -> ReconciliationRecord:
@@ -888,15 +1223,44 @@ def reconcile_facility(
     ``cooling_model`` differs from the profile's (Troy-Piqua's real pin is ``unknown``); it defaults
     to ``fac.cooling_model`` when the facility passed IS the profile facility.
 
+    ``nonprocess_makeup`` (B6, #1686) is a documented, metered withdrawal that is on record but is
+    NOT the cooling account under test (Intel's construction-phase groundwater at New Albany) —
+    kept distinct from ``documented_*`` because reading it as cooling makeup is a category error,
+    not a conservative approximation. Like the self-report slots it never feeds the classifier.
+
+    ``route`` (B6, #1686) states whether A1 / A2 can reach this facility's water at all. A facility
+    on purchased municipal supply and/or a POTW sanitary sewer is outside them, so their ~0 is an
+    absence of jurisdiction rather than a measurement: an otherwise-``gap`` or
+    ``corroborated``-on-two-zeros outcome becomes ``route_blind``, and the lead is re-aimed at the
+    City-held record that can actually answer it. A *positive* documented or reserved signal still
+    adjudicates — blindness invalidates a negative read, not a positive one.
+
+    ``water_holder`` names the utility that actually meters a ``route_blind`` facility, for its
+    records-request lead. It matters because a blind route is usually blind precisely because the
+    supplier is not the site's own city, and a request filed with the wrong municipality is a
+    wasted statutory clock.
+
+    ``prediction_refused`` (B6, #1686) declines the archetype prediction outright, with the reason.
+    Every archetype in :mod:`watermark.hydrology.cooling_models` is IT-load-parameterized, so a
+    facility with no IT load (a semiconductor fab, whose cooling is driven by process heat) has no
+    derivable account; running a data-center WUE against its electrical load would emit a number
+    with no evidentiary basis. When set, the three ``predicted_*`` stay ``None``.
+
     ``corroborators`` (A4, #1680) are the two independent tells (air-permit cooling-tower PM +
     Tier II chemistry). Injected like the documented figures (the cohort resolver reads them via
     :func:`~watermark.hydrology.cooling_corroborators.resolve_corroborators`). They are SECONDARY:
     they sharpen the finding + the gap's records-request but NEVER change the classified ``outcome``.
     """
-    basis = _predicted_basis(fac, settings)
-    predicted_makeup = _require(basis.headline_makeup(), "predicted makeup")
-    predicted_consumptive = _require(basis.headline_consumptive(), "predicted consumptive")
-    predicted_blowdown = _predicted_blowdown(basis)
+    it_load: ProvenancedValue | None = None
+    predicted_makeup: ProvenancedValue | None = None
+    predicted_consumptive: ProvenancedValue | None = None
+    predicted_blowdown: ProvenancedValue | None = None
+    if prediction_refused is None:
+        basis = _predicted_basis(fac, settings)
+        it_load = basis.it_load
+        predicted_makeup = _require(basis.headline_makeup(), "predicted makeup")
+        predicted_consumptive = _require(basis.headline_consumptive(), "predicted consumptive")
+        predicted_blowdown = _predicted_blowdown(basis)
 
     # A disclosed/stated CoC is reference-grade, not a self-verified measurement — `cooling_models`
     # itself carries cycles as an assumption. `from_reference` keeps it honest (and the Intel
@@ -928,16 +1292,19 @@ def reconcile_facility(
 
     account = WaterAccount(
         archetype=fac.cooling_model,
-        it_load=basis.it_load,
+        it_load=it_load,
         predicted_makeup=predicted_makeup,
         predicted_consumptive=predicted_consumptive,
         predicted_blowdown=predicted_blowdown,
+        prediction_refused=prediction_refused,
         documented_makeup=documented_makeup,
         documented_blowdown=documented_blowdown,
         reserved_makeup=reserved_makeup,
         reserved_blowdown=reserved_blowdown,
         disclosed_makeup=disclosed_makeup,
         disclosed_ceiling=disclosed_ceiling,
+        nonprocess_makeup=nonprocess_makeup,
+        route=route,
         disclosed_cycles=disclosed_cycles,
         backsolved_cycles=backsolved_cycles,
         seasonality_warm_ratio=seasonality_warm_ratio,
@@ -945,12 +1312,13 @@ def reconcile_facility(
 
     outcome = _classify(
         fac.cooling_model,
-        predicted_makeup.value,
-        predicted_blowdown.value,
+        predicted_makeup.value if predicted_makeup is not None else None,
+        predicted_blowdown.value if predicted_blowdown is not None else None,
         documented_makeup.value if documented_makeup is not None else None,
         documented_blowdown.value if documented_blowdown is not None else None,
         reserved_makeup.value if reserved_makeup is not None else None,
         reserved_blowdown.value if reserved_blowdown is not None else None,
+        route,
     )
 
     recommended_archetype: str | None = None
@@ -986,6 +1354,21 @@ def reconcile_facility(
         confidence = (
             "medium"  # sharper than an empty gap (a quantified figure), short of instrument-grade
         )
+    elif outcome is ReconcileOutcome.ROUTE_BLIND:
+        # B6 (#1686): the harness's instruments cannot reach this facility's water, so it makes NO
+        # recommendation about the archetype — the pin is kept and the ask is re-aimed at the
+        # City-held record. The tag is [verified] because the blindness itself is an established
+        # fact about the record (a searched absence of jurisdiction — Intel's ECHO record carries
+        # only non-major construction general permits and no DMR), not an open question; what stays
+        # [open] is the cooling account, which is what the lead is for.
+        recommended_archetype = None
+        recommended_source = None
+        kept_archetype_value = (kept_archetype or fac.cooling_model).value
+        lead = _route_blind_lead(
+            site, fac, claim_source, account, water_lead_ref, corroborators, water_holder
+        )
+        tag = "[verified]"
+        confidence = "high"
     else:  # GAP
         # Sharpen the gap's records request by what the claim's own source has self-disclosed. B3
         # (#1683): a self-disclosed permit CEILING (Springfield's 300k gal/day permitted max) names the
@@ -1031,16 +1414,23 @@ def reconcile_facility(
 # --------------------------------------------------------------------- the Intel control
 
 # The openly-evaporative positive control (exemplar: Intel "Ohio One" / New Albany, ~125
-# cooling towers). NOT a registered site — New Albany carries no pinned SiteFacility (that is
-# B6 #1686's work); this is a constructed calibration vector built into the harness, internally
+# cooling towers). It is a CONSTRUCTED calibration vector built into the harness, internally
 # consistent with an evaporative tower at CoC ≈ 5. The harness must classify it CORROBORATED
-# (documented water matches the evaporative prediction), never a false DISCREPANCY. Its
-# documented figures are a calibration vector, NOT documented Intel data.
+# (documented water matches the evaporative prediction), never a false DISCREPANCY.
+#
+# B6 (#1686) went looking for the real Intel record to ground this control and established that
+# it CANNOT be grounded on Intel — see :func:`reconcile_intel_new_albany` for the three cited
+# reasons. So the control stays constructed, deliberately and with the reason recorded: it is the
+# harness's self-check, not a claim about Intel.
 _INTEL_CITE = (
     "constructed calibration control (exemplar: Intel 'Ohio One' / New Albany, openly "
     "evaporative, ~125 cooling towers) — figures internally consistent with an evaporative "
-    "tower at CoC≈5, NOT documented Intel data; New Albany carries no pinned SiteFacility "
-    "(B6 #1686). The harness must classify it corroborated-evaporative (no false discrepancy)."
+    "tower at CoC≈5, NOT documented Intel data. B6 (#1686) tested whether the real Intel record "
+    "could ground it and established it cannot (a pre-operational semiconductor fab, on purchased "
+    "Columbus municipal water and the Columbus sanitary sewer, with no IT load to parameterize an "
+    "archetype) — so this stays a constructed vector and the documented Intel row is reconciled "
+    "separately as route_blind. The harness must classify this row corroborated-evaporative (the "
+    "no-false-discrepancy gate)."
 )
 INTEL_CONTROL_FACILITY = SiteFacility(
     name="Intel evaporative control (New Albany)",
@@ -1438,6 +1828,218 @@ def reconcile_springfield(*, settings: Settings | None = None) -> Reconciliation
     )
 
 
+# -------------------------------------------- the New Albany / Intel B6 positive control (#1686)
+
+# B6 asked the harness to calibrate itself on the honest case: Intel discloses 125 cooling towers
+# in its Ohio EPA air PTI, so an openly-evaporative facility should reconcile cleanly and prove the
+# discrepancy findings on the closed-loop claimants are trustworthy. Pulling the record established
+# that Intel cannot play that part — for three independent, cited reasons — and that the reason it
+# cannot is a more useful calibration result than the one the issue expected.
+#
+# 1. It is NOT A DATA CENTER. Ohio One is a semiconductor fab (NAICS 334413). Every archetype in
+#    `cooling_models` is IT-load-parameterized (load x WUE), and a fab's cooling is driven by
+#    process heat, not by servers — so the harness has no derivable prediction for it, and a
+#    makeup-per-MW band read off a fab and applied to a hyperscale campus would be a category
+#    error. `SiteFacility.kind` admits `data_center` and `federal_installation` and neither fits,
+#    which is why New Albany still carries no pinned facility: pinning Intel as a data center would
+#    size a chip fab as a campus, the exact failure #1664 refuses at the type level.
+# 2. It is NOT OPERATING. Mod 1 construction completes 2030 with operations 2030-31 (Mod 2 in
+#    2032). The 125 towers are permitted, not running; there is no operating water account to
+#    reconcile yet.
+# 3. Its operating water is OUT OF REACH of both instruments the harness reads. Makeup will be
+#    purchased City of Columbus municipal water (the WWFRP registers withdrawals from waters of the
+#    state, so it never sees a purchased supply) and process wastewater goes to the Columbus
+#    sanitary sewer (so no NPDES DMR exists). This is the transferable result: for a municipally
+#    supplied, sewer-discharging facility, A1 and A2 return ~0 BY CONSTRUCTION, and the classifier
+#    would have read that ~0 as "documented ≈ 0 → corroborated dry". The two operating Amazon Data
+#    Services campuses registered in the same county demonstrate it — 0.02 MG and 0.00 MG reported
+#    for all of 2024. Hence `WaterRoute` and the `route_blind` outcome.
+_INTEL_NA_PTI_CITE = (
+    "[verified] Ohio EPA Air Permit-to-Install issued 2022-09-20/21 for the Intel Ohio One campus "
+    "lists 125 COOLING TOWERS among its emission units (with 4 fab cleanrooms, 28 boilers, 46 "
+    "emergency generators, 1 fire pump, 6 silos, 4 N2 vaporizers) — an openly-disclosed "
+    "evaporative heat-rejection architecture, the opposite of a closed-loop claim (WOSU/ideastream "
+    "reporting of the PTI's emission-unit list, 2022-09; data/extracted/new-albany/data-centers.md "
+    "§1). The permit itself is NOT ingested into the corpus, so the cooling pin is graded "
+    "`reference`, not `document` — ingesting the PTI is part of this row's records ask."
+)
+_INTEL_NA_WWFRP_CITE = (
+    "[verified] Ohio DNR WWFRP registration 03498 'Intel Corporation - New Albany, Ohio' "
+    "(registered 2022-09-15; 7 ground-water wells, 1.43 MGD registered capacity; HUC12 "
+    "050400060301 Headwaters Raccoon Creek — the Muskingum side, corroborated by the same HUC12 on "
+    "the campus's ECHO watershed record): reported ground-water withdrawal 15.91 MG in 2024 "
+    "(1.24 MG 2022, 11.43 MG 2023), annualized here as 15.91 MG / 366 d = 0.0435 MGD. "
+    "data/reference/ohio-water-withdrawal/licking.yaml"
+)
+# The 2024 monthly series, folded on A2's May-Oct warm window: warm mean 1.522 MG, cool mean 1.130
+# MG. The bare ratio reads mildly warm-peaked, but the shape underneath it does not: the peak month
+# is MAY (3.02 MG) and the two hottest months are the year's lowest (JUL 0.94, AUG 0.72). A
+# temperature-driven evaporative signature peaks in July-August. This is a spring/early-summer
+# construction signal — which is a real limitation of the warm/cool ratio as a lone statistic, and
+# the reason the shape is described here rather than carried on `seasonality_warm_ratio` (which is
+# documented as the A2 DMR blowdown shape, not a withdrawal's).
+_INTEL_NA_NONPROCESS = ProvenancedValue.from_reference(
+    0.0435,
+    "MGD",
+    citation=(
+        f"{_INTEL_NA_WWFRP_CITE} This is CONSTRUCTION-PHASE water, not cooling makeup: 14.11 MG of "
+        "the 15.91 MG was RETURNED in 2024 (~89%, across 2 return points), the campus holds Ohio "
+        "EPA hydrostatic-test-water general-permit coverage taken out by its construction "
+        "contractor, and the monthly shape peaks in MAY (3.02 MG) while July (0.94) and August "
+        "(0.72) are the year's lowest — the inverse of a temperature-driven evaporative signature "
+        "(warm/cool ratio 1.35 on the May-Oct window, elevated by spring, not by heat). Recorded "
+        "on nonprocess_makeup so it can never be read as the cooling account."
+    ),
+)
+_INTEL_NA_DISCLOSED_MAKEUP = ProvenancedValue.from_reference(
+    5.0,
+    "MGD",
+    citation=(
+        "[reference] Intel's disclosed OPERATING draw for Ohio One — ~5 MGD of drinking water "
+        "purchased from the CITY OF COLUMBUS (which would make Intel Columbus' largest single "
+        "user), with 80-90% returned and process wastewater routed to on-site treatment then the "
+        "Columbus SANITARY SEWER (Jackson Pike / Southerly), i.e. NO direct surface discharge "
+        "(10tv/WOSU reporting; data/extracted/new-albany/data-centers.md §1). It is a self-reported "
+        "PROJECTION for a facility that will not operate until 2030-31, not a metered figure — so "
+        "it lands on disclosed_makeup, never documented_*, and cannot corroborate, contradict, or "
+        "upgrade anything. It is also a FAB's total process+cooling water, not a data-center "
+        "cooling account: do not divide it by MW and carry the quotient to a campus."
+    ),
+)
+_INTEL_NA_ROUTE = WaterRoute(
+    supply=SupplyRoute.MUNICIPAL,
+    discharge=DischargeRoute.SANITARY_SEWER,
+    citation=(
+        "[verified] Both sides of Intel Ohio One's operating water account are outside the "
+        "instruments this harness reads. MAKEUP: the disclosed operating supply is purchased City "
+        "of Columbus municipal water, and the Ohio DNR WWFRP registers withdrawals FROM WATERS OF "
+        "THE STATE (R.C. 1521.16) — a purchased supply is the seller's withdrawal, not the buyer's, "
+        "so A1 can never meter it (registration 03498 records only the campus's own construction "
+        "wells). DISCHARGE: process wastewater goes to the Columbus sanitary sewer, so no NPDES "
+        "outfall and no DMR exists — a searched absence, not an unsearched one. Intel's entire CWA "
+        "record in ECHO is three NON-MAJOR GENERAL-PERMIT coverages, all construction-phase: "
+        "OHGC00904 'Intel Ohio Campus Project Cardinal' and OHGC18520 'Intel Site Tree Clearing' "
+        "under the construction-stormwater general permit (master OHC000000), and OHGH00789 'Intel "
+        "Ohio Site' under the hydrostatic-test-water general permit (master OHH000000) — which Ohio "
+        "EPA's own coverage listing shows as 4GH00052*AG, 11511 Green Chapel Rd NW, applicant "
+        "BECHTEL Manufacturing & Technology, Inc. (the general contractor), effective 2024-08-01. "
+        "All three carry zero DMR pollutant loads and no effluent limits; there is no individual "
+        "industrial NPDES permit and no cooling-water outfall."
+    ),
+    tag="[verified]",
+    confidence="high",
+)
+_INTEL_NA_PREDICTION_REFUSED = (
+    "Ohio One is a semiconductor fab (NAICS 334413), not a data center: its heat rejection is "
+    "driven by fab process load, and every archetype in watermark.hydrology.cooling_models is "
+    "parameterized on IT load x WUE (L/kWh), a data-center metric. The campus discloses a ~100+ MW "
+    "continuous ELECTRICAL load, which is not an IT load — running a data-center WUE against it "
+    "would emit a cooling-makeup figure with no evidentiary basis for a fab. The prediction is "
+    "refused rather than fabricated; the disclosed architecture (125 evaporative cooling towers) is "
+    "carried as the claim, and the water account stays [open]."
+)
+_INTEL_NA_CORROBORATORS = CoolingCorroborators(
+    air_permit=AirPermitCorroborator(
+        state=AirPermitState.PM_SOURCE_LISTED,
+        stance=CorroboratorStance.CORROBORATES,
+        tower_count=125,
+        citation=_INTEL_NA_PTI_CITE,
+        tag="[verified]",
+        # The emission-unit list is a cited public record, but it reaches us through reporting
+        # rather than the ingested permit, and no PM figures are transcribed — medium, not high.
+        confidence="medium",
+        finding=(
+            "The campus's own Ohio EPA air PTI lists 125 cooling towers as permitted emission "
+            "units — an openly evaporative architecture. It CORROBORATES the evaporative claim, "
+            "and it is the reason B6 expected a clean positive control. It cannot supply one: an "
+            "air permit is not a discharge/withdrawal instrument, and a permitted tower at a "
+            "pre-operational fab is not a water account."
+        ),
+    ),
+    tier2_chemistry=TierIIChemistryCorroborator(
+        state=TierIIState.NOT_ON_RECORD,
+        stance=CorroboratorStance.SILENT,
+        citation=(
+            "[open] No Tier II / EPCRA-312 inventory is on record for the campus — the filings are "
+            "SERC/LEPC-held and never appear on ECHO. For a facility not yet operating its towers, "
+            "an absence of cooling-water treatment chemistry is expected and carries no signal."
+        ),
+        tag="[open]",
+        confidence="low",
+        finding=(
+            "No Tier II / EPCRA-312 cooling-chemistry filing on record (SERC/LEPC-held) — silent, "
+            "as expected for a pre-operational campus."
+        ),
+    ),
+    net_stance=CorroboratorStance.CORROBORATES,
+    summary=(
+        "The air permit independently corroborates the evaporative architecture (125 permitted "
+        "cooling towers); Tier II is silent. Corroborators are SECONDARY and do not change the "
+        "outcome — an openly disclosed evaporative design still leaves the water account "
+        "unreachable, which is precisely the point the control was supposed to test."
+    ),
+)
+# The claim under test, as a constructed view — New Albany pins no SiteFacility (see the block
+# comment above for why a fab cannot be one today), so B6 reconciles Intel as an explicit cited
+# case, the pattern reconcile_troy_piqua established for a facility outside A2's registry cohort.
+INTEL_NEW_ALBANY_FACILITY = SiteFacility(
+    name='Intel "Ohio One" (Jersey Township)',
+    status="construction",  # [verified] under construction; Mod 1 ops 2030-31, Mod 2 2032
+    operator="Intel Corporation",
+    operator_citation=(
+        "[verified] Intel Corporation, ~1,000-acre Ohio One megasite in Jersey Township, Licking "
+        "County (Johnstown / New Albany mailing address 11511 Green Chapel Rd NW); $28B (raised "
+        "from $20B in March 2024), up to 8 fabs, Mod 1 + Mod 2 (Intel Newsroom; "
+        "data/extracted/new-albany/data-centers.md §1)"
+    ),
+    cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
+    cooling_model_source="reference",
+    cooling_model_citation=_INTEL_NA_PTI_CITE,
+)
+# New Albany's own onboarding/pin issue — where the campus's primary instruments (the air PTI, the
+# recorder deeds, the NPDES coverage) are tracked.
+_INTEL_NA_LEAD_REF = "#485"
+# The utility that actually meters the campus is two counties from its mailing address — which is
+# the whole reason A1/A2 are blind here, and the reason a request filed with New Albany would miss.
+_INTEL_NA_WATER_HOLDER = (
+    "City of Columbus, Department of Public Utilities (Division of Water + Division of Sewerage "
+    "and Drainage) — the campus's disclosed municipal supplier AND the POTW receiving its process "
+    "wastewater (Jackson Pike / Southerly)"
+)
+
+
+def reconcile_intel_new_albany(*, settings: Settings | None = None) -> ReconciliationRecord:
+    """The DOCUMENTED New Albany / Intel row — the B6 (#1686) positive control, as the record has it.
+
+    Peer of :func:`reconcile_troy_piqua` / :func:`reconcile_van_wert` / :func:`reconcile_springfield`
+    and NOT a control row (``is_control=False``): this is a real site's real record, reconciled.
+    The constructed calibration vector stays separately at :func:`intel_control`.
+
+    Outcome is ``route_blind``. The block comment above carries the three cited reasons; the short
+    form is that Intel discloses the wet architecture openly (125 permitted cooling towers) and
+    still cannot be reconciled, because the campus is pre-operational, is not a data center, and
+    buys its water from Columbus while discharging to Columbus' sewer — putting both sides of its
+    account outside A1 and A2. The row exists to make that visible: it records what the instruments
+    DO show (0.0435 MGD of construction-phase groundwater, ~89% returned, peaking in May), states
+    that this is not the cooling account, and re-aims the records request at the City meter.
+    """
+    settings = settings or Settings()
+    return reconcile_facility(
+        INTEL_NEW_ALBANY_FACILITY,
+        site="new-albany",
+        claim_source=INTEL_NEW_ALBANY_FACILITY.cooling_model_source,
+        claim_citation=INTEL_NEW_ALBANY_FACILITY.cooling_model_citation,
+        settings=_site_settings("new-albany", settings),
+        nonprocess_makeup=_INTEL_NA_NONPROCESS,
+        disclosed_makeup=_INTEL_NA_DISCLOSED_MAKEUP,
+        route=_INTEL_NA_ROUTE,
+        prediction_refused=_INTEL_NA_PREDICTION_REFUSED,
+        corroborators=_INTEL_NA_CORROBORATORS,
+        water_lead_ref=_INTEL_NA_LEAD_REF,
+        water_holder=_INTEL_NA_WATER_HOLDER,
+    )
+
+
 # --------------------------------------------------------------------- cohort
 
 
@@ -1455,9 +2057,12 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     :func:`reconcile_springfield`) ARE in A2's cohort but are reconciled explicitly (skipped in the
     generic loop) so their self-disclosed figures sharpen the gap — Van Wert's operator-disclosed ~660k
     gal draw + the #1409 initial-fill open quantity, Springfield's self-disclosed 300k gal/day permitted
-    ceiling + the #1415 actual-vs-ceiling denominator for its "not evaporative" claim. The Intel control
-    is appended and reconciled the same way. Ordered by (is_control, site, facility) so the control
-    sorts last after the live findings.
+    ceiling + the #1415 actual-vs-ceiling denominator for its "not evaporative" claim. **New Albany /
+    Intel** (#1686, :func:`reconcile_intel_new_albany`) is appended as a live (non-control) row: the
+    campus pins no ``SiteFacility`` at all, so it is in no cohort, and its record is what B6
+    established when it went looking for a documented positive control — ``route_blind``. The
+    constructed Intel control is appended last and reconciled the same way. Ordered by (is_control,
+    site, facility) so the control sorts after the live findings.
     """
     settings = settings or get_settings()
     records: list[ReconciliationRecord] = []
@@ -1496,6 +2101,9 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     records.append(
         reconcile_troy_piqua(settings=settings)
     )  # B1 (#1681) — pins UNKNOWN, not in A2's cohort
+    records.append(
+        reconcile_intel_new_albany(settings=settings)
+    )  # B6 (#1686) — the documented Intel record: route_blind, and why the control stays constructed
     records.append(intel_control(settings=settings))
     records.sort(key=lambda r: (r.is_control, r.site, r.facility))
     log.info(
@@ -1506,12 +2114,119 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     return records
 
 
+# ------------------------------------------------------- the cross-site reference band (B6, #1686)
+
+# The IT load the band is normalized on. Arbitrary and cancelled out by the division — it exists
+# only so the archetype's own derivation runs; the emitted figures are per-MW.
+_BAND_NORMALIZING_LOAD_MW = 100.0
+
+
+class ReferenceBand(BaseModel):
+    """The per-IT-MW evaporative water band the cohort's claims are measured against (B6, #1686).
+
+    B6 was asked to record "makeup, blowdown, CoC per MW for disclosed evaporative hyperscale" from
+    the Intel positive control, so a closed-loop claimant could be compared against a known-honest
+    evaporative site. **Intel cannot supply it.** Ohio One is a semiconductor fab whose ~5 MGD
+    disclosed draw is fab process water at a facility that will not operate until 2030-31; dividing
+    that by its electrical MW and carrying the quotient to a data-center campus would be a category
+    error that then propagates into every comparison the band exists to support.
+
+    So the band is emitted from the ``evaporative_tower`` **archetype spec's own defaults** —
+    a screening ``[inference]``, explicitly NOT a disclosure by any facility and not Intel-derived.
+    It is the same derivation the harness already runs against every pinned facility, normalized
+    per IT-MW so it can be quoted cross-site.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    basis: str  # what the band IS (the archetype spec), in one line
+    makeup_mgd_per_mw: float
+    consumptive_mgd_per_mw: float
+    blowdown_mgd_per_mw: float
+    cycles_of_concentration: float
+    wue_l_per_kwh: float
+    tag: str
+    confidence: Confidence
+    citation: str
+    # Why the band is archetype-derived rather than read off the disclosed positive control.
+    not_derived_from: str
+
+
+def reference_band(*, settings: Settings | None = None) -> ReferenceBand:
+    """The archetype-derived per-IT-MW evaporative band (B6, #1686) — never Intel-derived."""
+    settings = settings or Settings()
+    # The archetype's OWN defaults: a bare facility with no disclosed WUE / CoC override, so
+    # `cooling_models` supplies its cited generic values rather than any site's disclosure.
+    normalizing = SiteFacility(
+        name="evaporative-tower reference band (normalizing facility)",
+        status="confirmed",
+        it_load_mw=_BAND_NORMALIZING_LOAD_MW,
+        it_load_low_mw=_BAND_NORMALIZING_LOAD_MW,
+        it_load_high_mw=_BAND_NORMALIZING_LOAD_MW,
+        it_load_citation=(
+            "a normalizing IT load for the per-MW reference band — not a disclosed load for any "
+            "facility; it cancels out of the emitted per-MW figures"
+        ),
+        it_load_source="reference",
+        cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
+        cooling_model_source="reference",
+        cooling_model_citation=(
+            "the evaporative_tower archetype spec itself (watermark.hydrology.cooling_models) — "
+            "the band IS the archetype, not a facility's disclosure"
+        ),
+    )
+    basis_values = _predicted_basis(normalizing, settings)
+    makeup = _require(basis_values.headline_makeup(), "band makeup")
+    consumptive = _require(basis_values.headline_consumptive(), "band consumptive")
+    blowdown = _predicted_blowdown(basis_values)
+    return ReferenceBand(
+        basis=(
+            "the evaporative_tower archetype spec's own defaults, run through "
+            "watermark.hydrology.cooling_models and normalized per IT-MW"
+        ),
+        makeup_mgd_per_mw=round(makeup.value / _BAND_NORMALIZING_LOAD_MW, 5),
+        consumptive_mgd_per_mw=round(consumptive.value / _BAND_NORMALIZING_LOAD_MW, 5),
+        blowdown_mgd_per_mw=round(blowdown.value / _BAND_NORMALIZING_LOAD_MW, 5),
+        # An evaporative basis always carries both (only the archetypes with no recirculating
+        # loop leave them None), so _require states the invariant rather than defaulting one.
+        cycles_of_concentration=_require(
+            basis_values.cycles_of_concentration, "band cycles of concentration"
+        ).value,
+        wue_l_per_kwh=_require(basis_values.wue, "band WUE").value,
+        tag="[inference]",
+        confidence="medium",
+        citation=(
+            f"{makeup.citation} — normalized per IT-MW from a {_BAND_NORMALIZING_LOAD_MW:g} MW "
+            "run of the archetype's own cited defaults. A screening band: it is what an "
+            "evaporative tower of a given IT load WOULD draw under the archetype, not what any "
+            "facility has disclosed or any instrument has measured."
+        ),
+        not_derived_from=(
+            "NOT derived from the Intel positive control (B6, #1686). Intel Ohio One is a "
+            "semiconductor fab, not a data center: its disclosed ~5 MGD is fab process water at a "
+            "campus that will not operate until 2030-31, its ~100+ MW continuous is an electrical "
+            "load rather than an IT load, and its cooling towers are permitted but not running. A "
+            "makeup-per-MW figure read off it and applied to a hyperscale campus would be a "
+            "category error, so no documented evaporative-hyperscale band exists in the network "
+            "yet — that gap is itself the finding, and the archetype figures recorded here stand "
+            "in as a screening reference until an operating, metered evaporative campus lands."
+        ),
+    )
+
+
 # --------------------------------------------------------------------- artifact
 
 
-def reconciliation_document(records: list[ReconciliationRecord]) -> dict[str, Any]:
-    """A YAML-ready, deterministic document of the cohort's cooling reconciliation."""
+def reconciliation_document(
+    records: list[ReconciliationRecord], *, band: ReferenceBand | None = None
+) -> dict[str, Any]:
+    """A YAML-ready, deterministic document of the cohort's cooling reconciliation.
+
+    ``band`` is the cross-site per-IT-MW evaporative reference band (B6, #1686); it is derived
+    when not supplied.
+    """
     counts = {o.value: sum(1 for r in records if r.outcome is o) for o in ReconcileOutcome}
+    band = band if band is not None else reference_band()
     return {
         "meta": {
             "subject": (
@@ -1548,10 +2263,24 @@ def reconciliation_document(records: list[ReconciliationRecord]) -> dict[str, An
                 "cooling-tower "
                 "PM, Tier II / EPCRA-312 chemistry) are SECONDARY — recorded and reconciled against "
                 "the claim, but never the sole basis for a re-archetype and never changing the "
-                "outcome. The Intel row is a constructed positive control (openly evaporative) the "
-                "harness must classify corroborated, not a false discrepancy — it is a calibration "
-                "vector, not documented Intel data."
+                "outcome. The Intel control row (is_control) is a CONSTRUCTED positive control "
+                "(openly evaporative) the harness must classify corroborated, not a false "
+                "discrepancy — a calibration vector, not documented Intel data. A route_blind (B6 "
+                "New Albany / Intel, #1686) is a facility whose water is outside the reach of BOTH "
+                "instruments this harness reads — makeup purchased from a municipal system (the "
+                "withdrawal registry meters withdrawals from waters of the state, not purchases) "
+                "and/or blowdown to a POTW sanitary sewer (no NPDES outfall, so no DMR). Their ~0 "
+                "is an absence of jurisdiction, NOT a documented ~0, so it can never corroborate a "
+                "dry claim; the pin is kept and the records request is re-aimed at the City-held "
+                "meter + industrial-pretreatment record. A documented withdrawal that is on record "
+                "but is not the cooling account (Intel's construction-phase groundwater) rides on "
+                "`nonprocess_makeup`, never `documented_*`. Where an archetype's water account "
+                "cannot be derived at all — a semiconductor fab has no IT load, and every archetype "
+                "is IT-load-parameterized — the prediction is REFUSED with its reason on "
+                "`prediction_refused` and the three `predicted_*` are null; a reader must show the "
+                "refusal, never substitute a zero."
             ),
+            "reference_band": band.model_dump(mode="json"),
         },
         "candidates": [r.model_dump(mode="json") for r in records],
     }

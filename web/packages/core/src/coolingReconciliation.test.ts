@@ -23,7 +23,7 @@ describe("cooling-reconciliation — the site's own claim-vs-record account", ()
     expect(row.outcome).toBe("gap");
     expect(row.claim_source).toBe("reference"); // an operator claim, not an instrument
     expect(row.claimed_archetype).toBe("closed_loop_dry");
-    expect(row.account.predicted_makeup.value).toBe(0); // predicted ~0 MGD
+    expect(row.account.predicted_makeup?.value).toBe(0); // predicted ~0 MGD
     expect(row.lead?.records_sought.length).toBeGreaterThan(0);
     // The discipline travels as data — a renderer must have caveats to show.
     expect(feed!.caveats.length).toBeGreaterThan(0);
@@ -49,5 +49,38 @@ describe("cooling-reconciliation — the site's own claim-vs-record account", ()
       }
     }
     expect(shippedRows).toBeGreaterThan(0); // the sweep saw the cohort, not a vacuous pass
+  });
+
+  it("new-albany ships Intel's real record — route_blind, with the refusal legible", () => {
+    // The B6 (#1686) row. The site's bundle carries a LIVE row alongside the excluded control:
+    // an openly-evaporative claim that still cannot be reconciled, because the campus buys its
+    // water and discharges to a sewer. Everything a renderer needs to say so must be present.
+    const feed = buildCoolingReconciliation("new-albany");
+    expect(feed).not.toBeNull();
+    expect(feed?.candidates).toHaveLength(1);
+    const row = feed!.candidates[0];
+    expect(row.is_control).toBe(false);
+    expect(row.outcome).toBe("route_blind");
+    expect(row.claimed_archetype).toBe("evaporative_tower"); // the claim is WET, and openly so
+    expect(RECONCILE_OUTCOME_META.route_blind.label).toBeTruthy();
+
+    // The prediction is refused, totally and with a reason — never a substituted zero.
+    expect(row.account.predicted_makeup ?? null).toBeNull();
+    expect(row.account.predicted_consumptive ?? null).toBeNull();
+    expect(row.account.predicted_blowdown ?? null).toBeNull();
+    expect(row.account.prediction_refused).toBeTruthy();
+
+    // The route says which side(s) the instruments cannot reach, and carries its citation.
+    expect(row.account.route?.supply).toBe("municipal");
+    expect(row.account.route?.discharge).toBe("sanitary_sewer");
+    expect(row.account.route?.citation).toBeTruthy();
+
+    // The registry's real figure is on its own slot — never mistaken for the cooling account.
+    expect(row.account.nonprocess_makeup?.value).toBeGreaterThan(0);
+    expect(row.account.documented_makeup ?? null).toBeNull();
+    expect(row.account.documented_blowdown ?? null).toBeNull();
+
+    // The ask is re-aimed at the holder that actually meters the campus.
+    expect(row.lead?.holder).toMatch(/City/i);
   });
 });

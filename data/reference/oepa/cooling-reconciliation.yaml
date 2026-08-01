@@ -12,6 +12,7 @@ meta:
     corroborated: 1
     reservation_conflict: 1
     gap: 5
+    route_blind: 1
   discipline: 'The harness RECOMMENDS; it never mutates cooling_model — re-archetyping is a reviewed B1-B6
     edit with the instrument cited. A back-solved cycles-of-concentration is an [inference] bracket, never
     a headline scalar. A gap (no documented makeup/blowdown) is an [open] records-request lead for C2
@@ -25,9 +26,39 @@ meta:
     so it cannot upgrade the source), and its lead names the specific open quantity: the initial closed-loop
     fill, whose fill-vs-annual framing is the #1409 discrepancy. The A4 corroborators (air-permit cooling-tower
     PM, Tier II / EPCRA-312 chemistry) are SECONDARY — recorded and reconciled against the claim, but
-    never the sole basis for a re-archetype and never changing the outcome. The Intel row is a constructed
-    positive control (openly evaporative) the harness must classify corroborated, not a false discrepancy
-    — it is a calibration vector, not documented Intel data.'
+    never the sole basis for a re-archetype and never changing the outcome. The Intel control row (is_control)
+    is a CONSTRUCTED positive control (openly evaporative) the harness must classify corroborated, not
+    a false discrepancy — a calibration vector, not documented Intel data. A route_blind (B6 New Albany
+    / Intel, #1686) is a facility whose water is outside the reach of BOTH instruments this harness reads
+    — makeup purchased from a municipal system (the withdrawal registry meters withdrawals from waters
+    of the state, not purchases) and/or blowdown to a POTW sanitary sewer (no NPDES outfall, so no DMR).
+    Their ~0 is an absence of jurisdiction, NOT a documented ~0, so it can never corroborate a dry claim;
+    the pin is kept and the records request is re-aimed at the City-held meter + industrial-pretreatment
+    record. A documented withdrawal that is on record but is not the cooling account (Intel''s construction-phase
+    groundwater) rides on `nonprocess_makeup`, never `documented_*`. Where an archetype''s water account
+    cannot be derived at all — a semiconductor fab has no IT load, and every archetype is IT-load-parameterized
+    — the prediction is REFUSED with its reason on `prediction_refused` and the three `predicted_*` are
+    null; a reader must show the refusal, never substitute a zero.'
+  reference_band:
+    basis: the evaporative_tower archetype spec's own defaults, run through watermark.hydrology.cooling_models
+      and normalized per IT-MW
+    makeup_mgd_per_mw: 0.0143
+    consumptive_mgd_per_mw: 0.01144
+    blowdown_mgd_per_mw: 0.00286
+    cycles_of_concentration: 5.0
+    wue_l_per_kwh: 1.8
+    tag: '[inference]'
+    confidence: medium
+    citation: '100 MW x 1.8 L/kWh / evap fraction — normalized per IT-MW from a 100 MW run of the archetype''s
+      own cited defaults. A screening band: it is what an evaporative tower of a given IT load WOULD draw
+      under the archetype, not what any facility has disclosed or any instrument has measured.'
+    not_derived_from: 'NOT derived from the Intel positive control (B6, #1686). Intel Ohio One is a semiconductor
+      fab, not a data center: its disclosed ~5 MGD is fab process water at a campus that will not operate
+      until 2030-31, its ~100+ MW continuous is an electrical load rather than an IT load, and its cooling
+      towers are permitted but not running. A makeup-per-MW figure read off it and applied to a hyperscale
+      campus would be a category error, so no documented evaporative-hyperscale band exists in the network
+      yet — that gap is itself the finding, and the archetype figures recorded here stand in as a screening
+      reference until an operating, metered evaporative campus lands.'
 candidates:
 - site: bowling-green
   facility: Bowling Green Data Center (Project Accordion)
@@ -90,12 +121,15 @@ candidates:
       asof: null
       low: null
       high: null
+    prediction_refused: null
     documented_makeup: null
     documented_blowdown: null
     reserved_makeup: null
     reserved_blowdown: null
     disclosed_makeup: null
     disclosed_ceiling: null
+    nonprocess_makeup: null
+    route: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -158,6 +192,179 @@ candidates:
     (→ C2 records request #1688). Predicted makeup 0 MGD. Neither corroborator is on record for Bowling
     Green Data Center (Project Accordion) (air permit + Tier II) — both are C2 records-request items,
     not read as confirming the claim.'
+- site: new-albany
+  facility: Intel "Ohio One" (Jersey Township)
+  is_control: false
+  claimed_archetype: evaporative_tower
+  claim_source: reference
+  claim_citation: '[verified] Ohio EPA Air Permit-to-Install issued 2022-09-20/21 for the Intel Ohio One
+    campus lists 125 COOLING TOWERS among its emission units (with 4 fab cleanrooms, 28 boilers, 46 emergency
+    generators, 1 fire pump, 6 silos, 4 N2 vaporizers) — an openly-disclosed evaporative heat-rejection
+    architecture, the opposite of a closed-loop claim (WOSU/ideastream reporting of the PTI''s emission-unit
+    list, 2022-09; data/extracted/new-albany/data-centers.md §1). The permit itself is NOT ingested into
+    the corpus, so the cooling pin is graded `reference`, not `document` — ingesting the PTI is part of
+    this row''s records ask.'
+  account:
+    archetype: evaporative_tower
+    it_load: null
+    predicted_makeup: null
+    predicted_consumptive: null
+    predicted_blowdown: null
+    prediction_refused: 'Ohio One is a semiconductor fab (NAICS 334413), not a data center: its heat rejection
+      is driven by fab process load, and every archetype in watermark.hydrology.cooling_models is parameterized
+      on IT load x WUE (L/kWh), a data-center metric. The campus discloses a ~100+ MW continuous ELECTRICAL
+      load, which is not an IT load — running a data-center WUE against it would emit a cooling-makeup
+      figure with no evidentiary basis for a fab. The prediction is refused rather than fabricated; the
+      disclosed architecture (125 evaporative cooling towers) is carried as the claim, and the water account
+      stays [open].'
+    documented_makeup: null
+    documented_blowdown: null
+    reserved_makeup: null
+    reserved_blowdown: null
+    disclosed_makeup:
+      value: 5.0
+      unit: MGD
+      source: reference
+      citation: '[reference] Intel''s disclosed OPERATING draw for Ohio One — ~5 MGD of drinking water
+        purchased from the CITY OF COLUMBUS (which would make Intel Columbus'' largest single user), with
+        80-90% returned and process wastewater routed to on-site treatment then the Columbus SANITARY
+        SEWER (Jackson Pike / Southerly), i.e. NO direct surface discharge (10tv/WOSU reporting; data/extracted/new-albany/data-centers.md
+        §1). It is a self-reported PROJECTION for a facility that will not operate until 2030-31, not
+        a metered figure — so it lands on disclosed_makeup, never documented_*, and cannot corroborate,
+        contradict, or upgrade anything. It is also a FAB''s total process+cooling water, not a data-center
+        cooling account: do not divide it by MW and carry the quotient to a campus.'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    disclosed_ceiling: null
+    nonprocess_makeup:
+      value: 0.0435
+      unit: MGD
+      source: reference
+      citation: '[verified] Ohio DNR WWFRP registration 03498 ''Intel Corporation - New Albany, Ohio''
+        (registered 2022-09-15; 7 ground-water wells, 1.43 MGD registered capacity; HUC12 050400060301
+        Headwaters Raccoon Creek — the Muskingum side, corroborated by the same HUC12 on the campus''s
+        ECHO watershed record): reported ground-water withdrawal 15.91 MG in 2024 (1.24 MG 2022, 11.43
+        MG 2023), annualized here as 15.91 MG / 366 d = 0.0435 MGD. data/reference/ohio-water-withdrawal/licking.yaml
+        This is CONSTRUCTION-PHASE water, not cooling makeup: 14.11 MG of the 15.91 MG was RETURNED in
+        2024 (~89%, across 2 return points), the campus holds Ohio EPA hydrostatic-test-water general-permit
+        coverage taken out by its construction contractor, and the monthly shape peaks in MAY (3.02 MG)
+        while July (0.94) and August (0.72) are the year''s lowest — the inverse of a temperature-driven
+        evaporative signature (warm/cool ratio 1.35 on the May-Oct window, elevated by spring, not by
+        heat). Recorded on nonprocess_makeup so it can never be read as the cooling account.'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    route:
+      supply: municipal
+      discharge: sanitary_sewer
+      citation: '[verified] Both sides of Intel Ohio One''s operating water account are outside the instruments
+        this harness reads. MAKEUP: the disclosed operating supply is purchased City of Columbus municipal
+        water, and the Ohio DNR WWFRP registers withdrawals FROM WATERS OF THE STATE (R.C. 1521.16) —
+        a purchased supply is the seller''s withdrawal, not the buyer''s, so A1 can never meter it (registration
+        03498 records only the campus''s own construction wells). DISCHARGE: process wastewater goes to
+        the Columbus sanitary sewer, so no NPDES outfall and no DMR exists — a searched absence, not an
+        unsearched one. Intel''s entire CWA record in ECHO is three NON-MAJOR GENERAL-PERMIT coverages,
+        all construction-phase: OHGC00904 ''Intel Ohio Campus Project Cardinal'' and OHGC18520 ''Intel
+        Site Tree Clearing'' under the construction-stormwater general permit (master OHC000000), and
+        OHGH00789 ''Intel Ohio Site'' under the hydrostatic-test-water general permit (master OHH000000)
+        — which Ohio EPA''s own coverage listing shows as 4GH00052*AG, 11511 Green Chapel Rd NW, applicant
+        BECHTEL Manufacturing & Technology, Inc. (the general contractor), effective 2024-08-01. All three
+        carry zero DMR pollutant loads and no effluent limits; there is no individual industrial NPDES
+        permit and no cooling-water outfall.'
+      tag: '[verified]'
+      confidence: high
+    disclosed_cycles: null
+    backsolved_cycles: null
+    seasonality_warm_ratio: null
+  outcome: route_blind
+  recommended_archetype: null
+  recommended_source: null
+  kept_archetype: evaporative_tower
+  lead:
+    kind: records-request
+    site: new-albany
+    facility: Intel "Ohio One" (Jersey Township)
+    subject: cooling-water account — the metered municipal record, because the withdrawal registry and
+      the NPDES discharge record cannot reach this facility
+    records_sought:
+    - metered municipal water-service consumption for the campus (the meter that records the makeup the
+      withdrawal registry cannot see)
+    - industrial pretreatment / indirect-discharge (IU) permit + its reported flow
+    - sewer-use agreement / capacity reservation for the campus
+    - water-service agreement or will-serve letter (the contracted supply the campus draws on)
+    - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
+    holder: City of Columbus, Department of Public Utilities (Division of Water + Division of Sewerage
+      and Drainage) — the campus's disclosed municipal supplier AND the POTW receiving its process wastewater
+      (Jackson Pike / Southerly); Ohio EPA (NPDES / OHD000001); SERC / LEPC
+    rationale: 'The evaporative_tower claim (source=reference) cannot be tested against A1/A2 at all:
+      this facility is outside their reach on the side(s) that matter — makeup (purchased municipal supply
+      — outside the A1 withdrawal registry); blowdown (to a POTW sanitary sewer — outside the A2 NPDES/DMR
+      record). Their ~0 is an absence of jurisdiction, not a measurement, so it must never be read as
+      documented ~0 water (which would corroborate a dry claim on nothing). The registry''s non-zero series
+      for this facility (0.0435 MGD) is NOT the cooling account — it is a separate, non-cooling withdrawal,
+      recorded as such. Pulling A1/A2 harder cannot resolve it; the record that can is City-held (#485).'
+    epic_ref: '#1688 (C2); #485'
+    tag: '[open]'
+  corroborators:
+    air_permit:
+      state: pm_source_listed
+      stance: corroborates
+      tower_count: 125
+      pm10_tpy: null
+      pm25_tpy: null
+      citation: '[verified] Ohio EPA Air Permit-to-Install issued 2022-09-20/21 for the Intel Ohio One
+        campus lists 125 COOLING TOWERS among its emission units (with 4 fab cleanrooms, 28 boilers, 46
+        emergency generators, 1 fire pump, 6 silos, 4 N2 vaporizers) — an openly-disclosed evaporative
+        heat-rejection architecture, the opposite of a closed-loop claim (WOSU/ideastream reporting of
+        the PTI''s emission-unit list, 2022-09; data/extracted/new-albany/data-centers.md §1). The permit
+        itself is NOT ingested into the corpus, so the cooling pin is graded `reference`, not `document`
+        — ingesting the PTI is part of this row''s records ask.'
+      tag: '[verified]'
+      confidence: medium
+      finding: 'The campus''s own Ohio EPA air PTI lists 125 cooling towers as permitted emission units
+        — an openly evaporative architecture. It CORROBORATES the evaporative claim, and it is the reason
+        B6 expected a clean positive control. It cannot supply one: an air permit is not a discharge/withdrawal
+        instrument, and a permitted tower at a pre-operational fab is not a water account.'
+    tier2_chemistry:
+      state: not_on_record
+      stance: silent
+      chemicals: []
+      citation: '[open] No Tier II / EPCRA-312 inventory is on record for the campus — the filings are
+        SERC/LEPC-held and never appear on ECHO. For a facility not yet operating its towers, an absence
+        of cooling-water treatment chemistry is expected and carries no signal.'
+      tag: '[open]'
+      confidence: low
+      finding: No Tier II / EPCRA-312 cooling-chemistry filing on record (SERC/LEPC-held) — silent, as
+        expected for a pre-operational campus.
+    net_stance: corroborates
+    summary: The air permit independently corroborates the evaporative architecture (125 permitted cooling
+      towers); Tier II is silent. Corroborators are SECONDARY and do not change the outcome — an openly
+      disclosed evaporative design still leaves the water account unreachable, which is precisely the
+      point the control was supposed to test.
+  tag: '[verified]'
+  confidence: high
+  finding: 'The evaporative_tower claim for Intel "Ohio One" (Jersey Township) (source=reference) cannot
+    be tested by this harness at all — the facility is outside the reach of the instruments it reads on
+    makeup (purchased municipal supply — outside the A1 withdrawal registry); blowdown (to a POTW sanitary
+    sewer — outside the A2 NPDES/DMR record). Their ~0 is an absence of jurisdiction, NOT a documented
+    ~0, so it can neither corroborate nor contradict the claim and must never upgrade the source. What
+    the withdrawal registry does record — 0.0435 MGD — is a separate, non-cooling withdrawal, carried
+    on nonprocess_makeup so it is never read as cooling makeup. The operator''s own disclosed draw (5
+    MGD) is a self-report, unverified and not an instrument. No archetype prediction is derivable here:
+    Ohio One is a semiconductor fab (NAICS 334413), not a data center: its heat rejection is driven by
+    fab process load, and every archetype in watermark.hydrology.cooling_models is parameterized on IT
+    load x WUE (L/kWh), a data-center metric. The campus discloses a ~100+ MW continuous ELECTRICAL load,
+    which is not an IT load — running a data-center WUE against it would emit a cooling-makeup figure
+    with no evidentiary basis for a fab. The prediction is refused rather than fabricated; the disclosed
+    architecture (125 evaporative cooling towers) is carried as the claim, and the water account stays
+    [open]. The record that would answer it is City-held — metered water-service consumption + the industrial
+    pretreatment / IU permit (→ C2 records request #1688). The air permit independently corroborates the
+    evaporative architecture (125 permitted cooling towers); Tier II is silent. Corroborators are SECONDARY
+    and do not change the outcome — an openly disclosed evaporative design still leaves the water account
+    unreachable, which is precisely the point the control was supposed to test.'
 - site: springfield
   facility: 5C Data Centers "CMH01"
   is_control: false
@@ -229,6 +436,7 @@ candidates:
       asof: null
       low: null
       high: null
+    prediction_refused: null
     documented_makeup: null
     documented_blowdown: null
     reserved_makeup: null
@@ -263,6 +471,8 @@ candidates:
       asof: null
       low: null
       high: null
+    nonprocess_makeup: null
+    route: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -404,6 +614,7 @@ candidates:
       asof: null
       low: null
       high: null
+    prediction_refused: null
     documented_makeup: null
     documented_blowdown: null
     reserved_makeup:
@@ -433,6 +644,8 @@ candidates:
       high: null
     disclosed_makeup: null
     disclosed_ceiling: null
+    nonprocess_makeup: null
+    route: null
     disclosed_cycles: null
     backsolved_cycles:
       value: 2.0
@@ -569,12 +782,15 @@ candidates:
       asof: null
       low: null
       high: null
+    prediction_refused: null
     documented_makeup: null
     documented_blowdown: null
     reserved_makeup: null
     reserved_blowdown: null
     disclosed_makeup: null
     disclosed_ceiling: null
+    nonprocess_makeup: null
+    route: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -710,6 +926,7 @@ candidates:
       asof: null
       low: null
       high: null
+    prediction_refused: null
     documented_makeup: null
     documented_blowdown: null
     reserved_makeup: null
@@ -732,6 +949,8 @@ candidates:
       low: null
       high: null
     disclosed_ceiling: null
+    nonprocess_makeup: null
+    route: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -872,12 +1091,15 @@ candidates:
       asof: null
       low: null
       high: null
+    prediction_refused: null
     documented_makeup: null
     documented_blowdown: null
     reserved_makeup: null
     reserved_blowdown: null
     disclosed_makeup: null
     disclosed_ceiling: null
+    nonprocess_makeup: null
+    route: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -944,8 +1166,11 @@ candidates:
   claim_source: reference
   claim_citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly
     evaporative, ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5,
-    NOT documented Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must
-    classify it corroborated-evaporative (no false discrepancy).'
+    NOT documented Intel data. B6 (#1686) tested whether the real Intel record could ground it and established
+    it cannot (a pre-operational semiconductor fab, on purchased Columbus municipal water and the Columbus
+    sanitary sewer, with no IT load to parameterize an archetype) — so this stays a constructed vector
+    and the documented Intel row is reconciled separately as route_blind. The harness must classify this
+    row corroborated-evaporative (the no-false-discrepancy gate).'
   account:
     archetype: evaporative_tower
     it_load:
@@ -954,8 +1179,11 @@ candidates:
       source: derived
       citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
         ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
-        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
-        corroborated-evaporative (no false discrepancy).'
+        Intel data. B6 (#1686) tested whether the real Intel record could ground it and established it
+        cannot (a pre-operational semiconductor fab, on purchased Columbus municipal water and the Columbus
+        sanitary sewer, with no IT load to parameterize an archetype) — so this stays a constructed vector
+        and the documented Intel row is reconciled separately as route_blind. The harness must classify
+        this row corroborated-evaporative (the no-false-discrepancy gate).'
       confidence: medium
       asof: null
       low: null
@@ -987,14 +1215,18 @@ candidates:
       asof: null
       low: null
       high: null
+    prediction_refused: null
     documented_makeup:
       value: 2.2
       unit: MGD
       source: reference
       citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
         ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
-        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
-        corroborated-evaporative (no false discrepancy).'
+        Intel data. B6 (#1686) tested whether the real Intel record could ground it and established it
+        cannot (a pre-operational semiconductor fab, on purchased Columbus municipal water and the Columbus
+        sanitary sewer, with no IT load to parameterize an archetype) — so this stays a constructed vector
+        and the documented Intel row is reconciled separately as route_blind. The harness must classify
+        this row corroborated-evaporative (the no-false-discrepancy gate).'
       confidence: medium
       asof: null
       low: null
@@ -1005,8 +1237,11 @@ candidates:
       source: reference
       citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
         ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
-        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
-        corroborated-evaporative (no false discrepancy).'
+        Intel data. B6 (#1686) tested whether the real Intel record could ground it and established it
+        cannot (a pre-operational semiconductor fab, on purchased Columbus municipal water and the Columbus
+        sanitary sewer, with no IT load to parameterize an archetype) — so this stays a constructed vector
+        and the documented Intel row is reconciled separately as route_blind. The harness must classify
+        this row corroborated-evaporative (the no-false-discrepancy gate).'
       confidence: medium
       asof: null
       low: null
@@ -1015,14 +1250,19 @@ candidates:
     reserved_blowdown: null
     disclosed_makeup: null
     disclosed_ceiling: null
+    nonprocess_makeup: null
+    route: null
     disclosed_cycles:
       value: 5.0
       unit: ratio
       source: reference
       citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
         ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
-        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
-        corroborated-evaporative (no false discrepancy).'
+        Intel data. B6 (#1686) tested whether the real Intel record could ground it and established it
+        cannot (a pre-operational semiconductor fab, on purchased Columbus municipal water and the Columbus
+        sanitary sewer, with no IT load to parameterize an archetype) — so this stays a constructed vector
+        and the documented Intel row is reconciled separately as route_blind. The harness must classify
+        this row corroborated-evaporative (the no-false-discrepancy gate).'
       confidence: medium
       asof: null
       low: null
@@ -1052,8 +1292,11 @@ candidates:
       pm25_tpy: 4.5
       citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
         ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
-        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
-        corroborated-evaporative (no false discrepancy).'
+        Intel data. B6 (#1686) tested whether the real Intel record could ground it and established it
+        cannot (a pre-operational semiconductor fab, on purchased Columbus municipal water and the Columbus
+        sanitary sewer, with no IT load to parameterize an archetype) — so this stays a constructed vector
+        and the documented Intel row is reconciled separately as route_blind. The harness must classify
+        this row corroborated-evaporative (the no-false-discrepancy gate).'
       tag: '[verified]'
       confidence: high
       finding: Air permit lists ~125 cooling towers as permitted PM (drift) sources — corroborates the
@@ -1067,8 +1310,11 @@ candidates:
       - corrosion inhibitor
       citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
         ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
-        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
-        corroborated-evaporative (no false discrepancy).'
+        Intel data. B6 (#1686) tested whether the real Intel record could ground it and established it
+        cannot (a pre-operational semiconductor fab, on purchased Columbus municipal water and the Columbus
+        sanitary sewer, with no IT load to parameterize an archetype) — so this stays a constructed vector
+        and the documented Intel row is reconciled separately as route_blind. The harness must classify
+        this row corroborated-evaporative (the no-false-discrepancy gate).'
       tag: '[verified]'
       confidence: high
       finding: Tier II / EPCRA-312 inventory carries cooling-water treatment chemistry (biocide, scale
