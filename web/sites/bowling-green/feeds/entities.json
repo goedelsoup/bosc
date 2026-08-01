@@ -42,5 +42,132 @@
     "lei": "875500ULXB4CYQSJVA03",
     "uei": null,
     "federal_obligations": null
+  },
+  {
+    "key": "WILL POWER OH LLC APOLLO",
+    "display": "Will-Power OH LLC - Apollo",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Will-Power OH LLC - Apollo"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 3
+    },
+    "parcels": [],
+    "addresses": [
+      "2000 Commerce Dr, Pittsburgh, PA 15275",
+      "2000 Commerce Dr., Pittsburgh, Pennsylvania 15275"
+    ],
+    "sources": [
+      "oepa/bowling-green/P0139272.completeness.yaml",
+      "oepa/bowling-green/P0139272.draft-pti.yaml",
+      "oepa/bowling-green/P0139272.pti.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF BOWLING GREEN",
+    "display": "City of Bowling Green",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Bowling Green",
+      "City of Bowling Green, 304 North Church Street, Bowling Green, OH 43402"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+      "oepa/bowling-green/2PD00009.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "ANDY WOERNER",
+    "display": "Andy Woerner",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Andy Woerner"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/bowling-green/P0139272.completeness.yaml",
+      "oepa/bowling-green/P0139272.draft-pti.yaml",
+      "oepa/bowling-green/P0139272.pti.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:2PD00009",
+    "display": "Bowling Green Water Pollution Control",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Bowling Green Water Pollution Control",
+      "Bowling Green Water Pollution Control (WPC)"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+      "oepa/bowling-green/2PD00009.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "POE DITCH",
+    "display": "Poe Ditch",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Poe Ditch"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+      "oepa/bowling-green/2PD00009.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]

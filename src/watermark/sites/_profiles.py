@@ -3864,9 +3864,15 @@ _MANSFIELD = SiteProfile(
 # gap — #1434); the intake side is carried by `abstraction_gage` on the Maumee. The **facility**
 # domain is ACTIVE (#1435): Meta's "Bowling Green Data Center" ("Project Accordion") is
 # site-plan-grounded (#1327 Urbana precedent) — operator disclosed, campus under construction, and
-# a sibling OPSB instrument (25-0973-EL-BGN, the Apollo BTM plant) names Liames, LLC as customer of
+# a sibling OPSB instrument (25-0973-EL-BLN, the Apollo BTM plant) names Liames, LLC as customer of
 # record. See data/extracted/bowling-green/data-centers.md. Backdrop floor + facility only; places/
 # record/story stay locked pending their sub-issues (#1436/#1438/#1439/#1441).
+# CASE SUFFIX — it is 25-0973-EL-**BLN**, not -BGN, and every -BGN in this file was wrong until
+# #1437 read the filing. BLN is the Board Letter of Notification (the accelerated,
+# automatic-approval track); BGN is the adjudicated generation-certificate track. OPSB's own
+# 2026-02-03 news release says "25-973-EL-BGN" — wrong suffix AND a dropped zero — which is where
+# the error came from; the docket caption, every Staff Report page footer and the DIS filing stamp
+# all read 25-0973-EL-BLN, and OPSB's structured gas-fleet case table agrees. Do not "restore" BGN.
 # MIXED basis: central/high = the DISCLOSED ~180 MW design ceiling (#1435, carried as central);
 # only the LOW bound is a floor-area SCREENING floor off the disclosed 715k sq ft (#1641 D2).
 _BOWLING_GREEN_SCREEN = floor_area_screen(715_000)
@@ -3977,7 +3983,7 @@ _BOWLING_GREEN = SiteProfile(
     # operator/type/floor-area/investment are disclosed [verified]; the IT load is carried as the
     # disclosed ~180 MW peak [reference] (a design ceiling, NOT an air-permit disclosure of the DC's
     # own load — that stays [open]); the campus is designed self-powered BEHIND THE METER by the
-    # Apollo plant (350 MW gas + ~120 MW BESS, OPSB 25-0973-EL-BGN — the power sub-issue #1437), so
+    # Apollo plant (350 MW gas + ~120 MW BESS, OPSB 25-0973-EL-BLN — the power sub-issue #1437), so
     # the ~2x 350-vs-180 MW oversizing is a Phase-2 signal. No on-site emergency gensets are disclosed
     # for the DC itself (the Apollo gensets are a SEPARATE OPSB-permitted power facility), so
     # genset_count/genset_mw/air_permit_citation stay None. Because the load is served behind the
@@ -3991,7 +3997,7 @@ _BOWLING_GREEN = SiteProfile(
             operator="Meta Platforms; land/nominee entity Liames, LLC",
             operator_citation=(
                 "[verified] Meta, 'Hello, Bowling Green' (2025-04-09); land/nominee entity Liames, LLC "
-                "is the customer of record on OPSB 25-0973-EL-BGN."
+                "is the customer of record on OPSB 25-0973-EL-BLN."
             ),
             end_use=DcEndUse.HYPERSCALE,
             end_use_citation=(
@@ -4003,7 +4009,7 @@ _BOWLING_GREEN = SiteProfile(
             it_load_source=ItLoadGrounding.REFERENCE,
             it_load_citation=(
                 "[reference] the disclosed 'up to ~180 MW at peak' for the initial phase — reported via "
-                "the Apollo OPSB filings (25-0973-EL-BGN) in press (BG Independent, Data Center "
+                "the Apollo OPSB filings (25-0973-EL-BLN) in press (BG Independent, Data Center "
                 "Dynamics), NOT an air-permit or PJM-interconnection disclosure of the data center's own "
                 "load, so the official/interconnection MW stays [open]. Carried as the it_load central "
                 "per #1435; it is a design CEILING (peak), so downstream figures (peak x PUE x load "
@@ -4011,10 +4017,12 @@ _BOWLING_GREEN = SiteProfile(
                 "disclosed 715,000 sq ft initial building x 75 W/sq ft whole-building IT density (53.6 "
                 "MW); the same screen at 250 W/sq ft yields 178.75 MW, closely corroborating the "
                 "disclosed ~180 MW peak from just under it (a corroboration, not a second source). The campus is "
-                "designed SELF-POWERED behind the meter by the Apollo plant (350 MW gas + ~120 MW BESS, "
-                "Will-Power OH LLC, OPSB 25-0973-EL-BGN, approved 2026-02-03 — #1437); the ~2x 350-vs-180 "
-                "MW oversizing signals Phase 2 (Meta's 2026-01-07 trustees letter). Replace with the "
-                "disclosed load when an air permit or interconnection filing names it."
+                "designed SELF-POWERED behind the meter by the Apollo plant (350 MW NET gas — 491 MW gross, "
+                "derated — plus 119.5 MW / 239 MWh of BESS, Will-Power OH LLC, OPSB 25-0973-EL-BLN, approved "
+                "2026-02-03, Ohio EPA PTI P0139272 issued 2026-06-02 — #1437); the ~2x 350-vs-180 "
+                "MW oversizing signals Phase 2 (Meta's 2026-01-07 trustees letter). NOTE the Apollo air "
+                "permit does NOT close this [open]: it permits the PLANT's emissions and names no customer "
+                "load. Replace with the disclosed load when an air permit or interconnection filing names it."
             ),
             # No disclosed gensets or air permit for the DC itself (site-plan-grounded) → the N+1 backup
             # cross-check and the air-dispatch fleet model are absent; the Apollo gensets belong to a
@@ -4033,7 +4041,7 @@ _BOWLING_GREEN = SiteProfile(
                 "center'). Site: Middleton Twp, SR-582 between SR-25 and I-75, adjacent the FirstEnergy "
                 "Mercer Rd substation; ~280-ac initial site inside a ~750-ac Liames, LLC assembly "
                 "([reference] acreage; deeds from 2023-09-05). Liames is the customer of record on OPSB "
-                "25-0973-EL-BGN. Phase 2 signaled in Meta's 2026-01-07 trustees letter. See "
+                "25-0973-EL-BLN. Phase 2 signaled in Meta's 2026-01-07 trustees letter. See "
                 "data/extracted/bowling-green/data-centers.md."
             ),
             # No disclosed cooling/industrial blowdown → None (the cooling back-solve uses the power-
@@ -4061,7 +4069,7 @@ _BOWLING_GREEN = SiteProfile(
         "Power member) serving the city proper — EIA-861 2024 Service_Territory confirms it as "
         "utility #2054 (resolved, #1434). The Meta campus in Middleton Twp interconnects to Toledo "
         "Edison (FirstEnergy / PJM ATSI), NOT the muni, and is designed self-powered BEHIND THE "
-        "METER by the Apollo plant (OPSB 25-0973-EL-BGN) — so its real grid draw is ~0. The "
+        "METER by the Apollo plant (OPSB 25-0973-EL-BLN) — so its real grid draw is ~0. The "
         "per-utility load share below is therefore a MAGNITUDE comparison against the muni's retail "
         "(the campus dwarfs it at ~3.5x — the point being that the muni could never serve it), NOT "
         "the campus's actual interconnecting utility; a per-facility serving-utility denominator is "

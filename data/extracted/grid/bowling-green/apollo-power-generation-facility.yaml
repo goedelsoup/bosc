@@ -1,0 +1,757 @@
+# Structured record — the Apollo Power Generation Facility as the Ohio Power Siting
+# Board certified it: OPSB Case No. 25-0973-EL-BLN, Will-Power OH, LLC, Middleton
+# Township, Wood County. The behind-the-meter power instrument for the Meta
+# ("Liames, LLC") campus.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such
+#   [open]      = not established by any captured source — do NOT assert
+meta:
+  subject: >-
+    The Apollo Power Generation Facility siting case — 350 MW net behind-the-meter
+    gas generation plus ~119.5 MW / 239 MWh of battery storage, certified by
+    automatic approval on the accelerated letter-of-notification track with no
+    public hearings, and expressly barred from interconnecting to the grid
+  kind: opsb-siting-case
+  case_number: 25-0973-EL-BLN
+  captured_for: issue 1437 (epic 1433, readiness(bowling-green) — the power instrument)
+  extracted_at: '2026-08-01'
+  method: >-
+    Read verbatim from the captured Staff Report of Investigation's own text layer
+    (pdftotext -layout). Page citations are the Staff Report's own printed page
+    numbers, which restart at 1 after the cover letter and maps. Where the issue
+    body's research notes and the primary text disagree, the disagreement is stated
+    rather than silently applied.
+  sources:
+    primary:
+      - file: data/documents/grid/bowling-green/power-siting-board-ohio-020326.pdf
+        what: OPSB Staff Report of Investigation, 25-0973-EL-BLN, filed 2026-01-27
+    secondary:
+      - url: https://opsb.ohio.gov/news/opsb-authorizes-construction-of-wood-county-power-plant
+        what: OPSB news release, 2026-02-03 (carries the wrong case suffix — see case_number_correction)
+      - url: https://dam.assets.ohio.gov/image/upload/puco.ohio.gov/empliibrary/files/OPA/Mapping/OPSB/Solar%20Facilities%20Map/Natural_Gas_Map_and_Stats.pdf
+        what: OPSB "Gas Generation & CHP Case Status" table, produced 2026-07-22
+      - url: https://www.williams.com/expansion-project/apollo-power-generation-project/
+        what: the applicant's own project website, named in the Staff Report at p. 9
+
+# --- What the instrument actually is ------------------------------------------
+case_number_correction:
+  tag: '[verified]'
+  correct: 25-0973-EL-BLN
+  asserted_in_issue: 25-0973-EL-BGN
+  statement: >-
+    Issue 1437, the BOSC site profile, and OPSB's own press release all give the
+    case as 25-0973-EL-BGN; the docket is 25-0973-EL-BLN. The Staff Report's caption
+    reads "In the Matter of the Letter of Notification Application of Will-Power OH,
+    LLC ... Case No. 25-0973-EL-BLN" (p. 1 of the cover letter), the identifier block
+    repeats it ("Case Number: 25-0973-EL-BLN", Staff Report p. 1), it appears in the
+    footer of every one of the 22 Staff Report pages, and the DIS electronic-filing
+    stamp on the final page reads "Case No(s). 25-0973-EL-BLN". OPSB's news release
+    of 2026-02-03 directs readers to search "25-973-EL-BGN" — wrong suffix and a
+    dropped leading zero — but OPSB's structured gas-fleet case table lists it as
+    25-0973-EL-BLN in a column where sibling Licking County rows are genuinely -BGN,
+    so the table is discriminating between the two tracks rather than defaulting.
+  why_it_matters: >-
+    BLN is the Board Letter of Notification — the accelerated track under R.C.
+    4906.03 and O.A.C. 4906-6 that carries automatic approval unless suspended.
+    BGN is the ordinary generation-certificate track, which is adjudicated. The
+    suffix is the very fact the issue is about: it is the reason there were no
+    public hearings. Citing -BGN describes a proceeding that did not happen.
+
+applicant:
+  tag: '[verified]'
+  name: Will-Power OH, LLC
+  address: 2000 Commerce Dr, Pittsburgh, PA 15275
+  contact: Andy Woerner
+  address_source: >-
+    The address and contact are read from the Ohio EPA air permit chain
+    (data/documents/oepa/bowling-green/air/), which names the same entity; the Staff
+    Report names the applicant but not its address.
+  corporate_parent:
+    tag: '[reference]'
+    statement: >-
+      Will-Power OH, LLC is reported as an affiliate of The Williams Companies
+      (NYSE: WMB). The Staff Report does not say so. What it does say (p. 9) is that
+      "The Applicant maintains a public website for the project at
+      https://www.williams.com/expansion-project/apollo-power-generation-project/"
+      — i.e. the OPSB record places the applicant's official project communications
+      on Williams' corporate domain, which is strong corroboration but is not the
+      same thing as a filed statement of ownership. The ownership chain itself is
+      [open]; see registrations_gap below.
+
+customer:
+  tag: '[verified]'
+  name: Liames, LLC
+  statement: >-
+    "Liames, LLC ('Liames' or 'customer') would be the customer of the Applicant's
+    electric power generation. The customer intends a data center on its campus. The
+    customer's facility is currently under construction and is adjacent to the
+    proposed electric power generation facility." (Staff Report p. 1.) The OPSB news
+    release repeats it: "Liames, LLC will consume the power generated by the power
+    plant."
+  meta_identification:
+    tag: '[reference]'
+    statement: >-
+      Neither the Staff Report nor the news release names Meta. The Liames-to-Meta
+      identification is carried in this repo's Bowling Green record
+      (data/extracted/bowling-green/data-centers.md) on Meta's own 2025-04-09
+      announcement plus the deed/rezoning record. Do not upgrade it here — the
+      siting docket documents a customer named Liames, LLC and nothing more.
+
+# --- Capacity: three different numbers, and they are not interchangeable -------
+capacity:
+  net_output_mw:
+    tag: '[verified]'
+    value: 350
+    statement: >-
+      "a 350 megawatt (MW) net capacity electric generation plant" (Staff Report
+      p. 1). This is the certified figure and it is a hard cap: Condition 14 reads
+      "The facility shall be operated in such a way that the output of the facility
+      does not exceed 350 megawatts."
+  gross_capability_mw:
+    tag: '[verified]'
+    value: 491
+    statement: >-
+      "The generation units would be capable of producing up to 491 MW at design
+      atmospheric weather conditions. At those weather conditions, various generation
+      units may be derated to still account for onsite equipment load and unplanned
+      equipment downtime to still achieve a maximum 350 MW net output."
+      (Staff Report p. 2.) So the installed fleet is ~40% larger than the certified
+      output — the margin absorbs parasitic load, derate and outages. A 491 MW figure
+      is NOT a second capacity claim and must never be reported as the plant's size.
+  bess:
+    tag: '[verified]'
+    power_mw: 119.5
+    energy_mwh: 239
+    container_count: ~31
+    container_model: Tesla Megapack 2XL
+    statement: >-
+      "The Applicant has been refining its design and layout and would utilize
+      approximately 119.5 MW of BESS capacity (for delivery of 239 MW-h of energy).
+      This BESS equipment would consist of approximately 31 Tesla Megapack 2XL
+      battery energy storage containers with inverters." (Staff Report p. 2.) The
+      widely reported "~120 MW battery" rounds this. The 239 MWh — i.e. a 2-hour
+      duration — is the figure that says what the storage is FOR, and it is absent
+      from every secondary account: at 119.5 MW it carries the plant for roughly two
+      hours, which is a ride-through and demand-following asset, not a supply
+      resource.
+    purpose:
+      tag: '[verified]'
+      statement: >-
+        "to accommodate fluctuations in demand from the associated Liames facility
+        and to mitigate any unplanned outages" (Staff Report p. 2).
+  oversizing_note:
+    tag: '[inference]'
+    statement: >-
+      The 350 MW net certified here against the ~180 MW peak disclosed for the
+      campus's initial phase is the ~2x oversizing this repo already tracks as a
+      Phase-2 signal (see the it_load citation on the bowling-green SiteProfile and
+      Meta's 2026-01-07 trustees letter). Nothing in the Staff Report states a
+      customer load, a phase plan, or a reason for the margin, so the inference is
+      ours and stays ours. The record's own explanation for surplus capability is the
+      491-vs-350 derate margin, which is a different and smaller thing.
+
+# --- The equipment, unit by unit ----------------------------------------------
+generation_equipment:
+  tag: '[verified]'
+  primary_units:   # Staff Report p. 2
+    - {count: 2,  model: Siemens SGT-800}
+    - {count: 3,  model: Siemens A35}          # the air permit's EU group is "Siemens SGT-A35"
+    - {count: 10, model: Solar PGM 130}        # the air permit's EU group is "Solar Titan T-130"
+    - {count: 6,  model: Siemens SGT-400}
+    - {count: 6,  model: Caterpillar 3520}     # reciprocating engines; the air permit calls them CAT G3520
+  turbine_total: 21
+  reciprocating_engine_total: 6
+  reconciliation:
+    tag: '[verified]'
+    statement: >-
+      21 turbines (2 + 3 + 10 + 6) and 6 reciprocating engines. The Ohio EPA air
+      permit independently describes the facility as "(6) natural gas fired engines
+      and (21) natural gas fired turbines" and groups the emissions units in exactly
+      these five families, so the two agencies' records reconcile unit for unit. The
+      model names differ slightly between them (A35/SGT-A35, PGM 130/Titan T-130,
+      3520/G3520); these are the same machines under vendor and permit naming.
+  duty_split:
+    tag: '[verified]'
+    statement: >-
+      "gas combustion turbine generator sets to support baseload power demand and
+      quick start reciprocating engines and battery energy storage container units to
+      support the variable energy demands of the customer's data center facility"
+      (Staff Report p. 2).
+  fuel:
+    tag: '[verified]'
+    statement: >-
+      "The combustion turbines and reciprocating engines would use pipeline natural
+      gas as the exclusive fuel." (Staff Report p. 2.)
+  solar_is_not_solar:
+    tag: '[verified]'
+    statement: >-
+      READ THE FOOTNOTE BEFORE COUNTING ANY RENEWABLE CAPACITY HERE. Staff Report
+      footnote 1: "Solar Turbines, Inc. ('Solar') is a subsidiary of Caterpillar,
+      Inc. Solar is a brand name and not solar photovoltaic equipment." Ten of the
+      21 turbines are "Solar" units and every one of them burns natural gas. Wood
+      County already carries a live solar-capacity conflation trap in this repo
+      (Bowling Green's municipal solar field is 20 MW AC, not the ~125 MW that an
+      AMP Phase II conflation produces); a text search that treats "Solar PGM 130"
+      as photovoltaic would manufacture a third one. The same footnote records that
+      the applicant had initially specified Baker Hughes LT16 turbines and switched
+      to the PGM 130 "due to supply chain issues."
+  portable_generator:
+    tag: '[verified]'
+    statement: >-
+      Space is reserved for a megawatt-scale portable unit "such as the Solar Mobile
+      Turbomachinery (SMT) 130 mobile combustion turbine generator set ... brought in
+      and utilized during outage events," and Staff's recommendation "includes
+      authorization for the intermittent use" of it (Staff Report p. 3). Condition 34
+      requires any use of it to be reported in the annual compliance report — so
+      there is a certified, dispatchable unit here whose running hours are a filed
+      record rather than a modelled assumption.
+  emergency_generators:
+    tag: '[verified]'
+    count: 2
+    model: Caterpillar C32
+    rating_kw_each: 1000
+    fuel: ultra-low sulfur diesel
+    statement: >-
+      "The emergency and black start generation would come from two Caterpillar C32
+      diesel generators rated each at up to 1,000 kilowatts (kW) ... The diesel
+      generators are only for startup of the Apollo facility and would not directly
+      support the customer's electric load demand needs." (Staff Report p. 3.)
+      These are the PLANT's black-start set. They are not the data center's backup
+      fleet, and they must not be read into the campus's genset dimension — the
+      bowling-green SiteProfile deliberately carries no gensets for the data center
+      because none has been disclosed for it.
+  electrical_system:
+    tag: '[verified]'
+    statement: >-
+      "an internal BTM substation, switching substation, busses, circuit breakers,
+      switchgear, transformers, and gen-tie lines. The generator sets would be
+      connected to a series of approximately 18 transformers that would increase the
+      voltage to 34.5 kV. The electric power would then be delivered through a series
+      of 34.5 kV circuits to the customer." (Staff Report p. 3.) Note the delivery
+      voltage: 34.5 kV is a distribution class, well below the 100 kV threshold at
+      which OPSB jurisdiction over a transmission line attaches.
+
+# --- The thing that makes this a behind-the-meter instrument ------------------
+grid_posture:
+  tag: '[verified]'
+  statement: >-
+    "The facility would operate in behind the meter (BTM) mode where its electric
+    output is dedicated to a single customer's electric load and would not be
+    physically connected to the electric grid." (Staff Report p. 1.) And at p. 10:
+    "The proposed facility would not be connected to the regional grid and would
+    instead serve the load of the Applicant's customer. If the Applicant plans to
+    export power to the bulk power system in the future, a supplemental application
+    must be filed with the Board."
+  enforced_by:
+    - >-
+      Condition 15 — "The Applicant shall not have a physical or electrical
+      interconnection with the Transmission System pursuant to the PJM
+      Interconnection, LLC Open Access Transmission Tariff (OATT), Part IV or OATT
+      Part VI."
+    - >-
+      Condition 16 — export to the bulk power system requires both "(a) New service
+      request for generation interconnection with PJM Interconnection, LLC or the
+      current regional transmission organization operating in Ohio" and "(b) ...
+      supplemental approval from the Board."
+  why_it_matters:
+    tag: '[inference]'
+    statement: >-
+      This is the cleanest instrumented example in the network of the self-power
+      posture: 350 MW of dispatchable generation certified with an express
+      prohibition on touching the grid it sits beside. The consequences follow from
+      the prohibition, not from us — a plant with no OATT interconnection has no PJM
+      capacity obligation, no interconnection queue position, and no transmission
+      service to be curtailed, and the load it serves never appears in the serving
+      utility's retail sales. The BOSC bowling-green grid record already models the
+      campus's grid draw as ~0 for this reason. Nothing in the Staff Report discusses
+      market or tariff consequences; the reasoning is ours.
+
+# --- Process: the fact the issue is actually about ----------------------------
+process:
+  tag: '[verified]'
+  filing_type: Letter of Notification
+  application_filed: '2025-11-05'
+  inspection_date: '2026-01-07'
+  staff_report_date: '2026-01-27'
+  recommended_automatic_approval_date: '2026-02-03'
+  waiver_requests: None
+  staff_assigned: [A. Conway, M. Bellamy, M. Butler, T. Crawford, R. Gonzales, J. Patmon, J. Stottsberry, S. Richards]
+  statement: >-
+    "The accelerated certificate application in this case is subject to an automatic
+    approval process as required by Ohio Revised Code (R.C.) 4906.03 and Ohio
+    Administrative Code 4906-6. Staff recommends this application for automatic
+    approval February 3, 2026, unless suspended by the Board, an administrative law
+    judge, or the chairperson or executive director of the Board for good cause
+    shown. If suspended, the Board must render a decision on the application within
+    90 days from the date of suspension." (Executive Director Michael Williams,
+    cover letter to the Board.) Board members were asked to raise objections "at
+    least four business days prior to February 3, 2026."
+  what_the_record_shows_and_does_not:
+    tag: '[verified]'
+    statement: >-
+      The record establishes the mechanism — an accelerated track whose default
+      outcome is approval on a pre-announced date absent an affirmative suspension —
+      and it establishes that the mechanism ran to that default. It does not
+      characterize the process, and neither does this record. Local criticism of the
+      no-hearing track is attributed reporting and belongs in the story layer, not
+      here.
+  public_interaction:
+    tag: '[verified]'
+    statement: >-
+      "The Applicant notified neighboring property owners and tenants regarding the
+      proposed project, provided public notice in The Sentinel Tribune, and delivered
+      copies of the application to local officials and the local library ... Several
+      public comments have been filed in the docket for this case. The comments can
+      be viewed in the online case record." (Staff Report p. 9.)
+  comment_count:
+    tag: '[open]'
+    statement: >-
+      The Staff Report says "Several public comments" and gives no number. Issue 1437
+      cites 14 resident opposition comments from press coverage — that figure is
+      [reference] and is NOT corroborated here. It also must not be conflated with
+      the 42 numbered comments answered in the Ohio EPA air permit's Response to
+      Comments: those were filed in a different proceeding, before a different
+      agency, on a different instrument, months later. Two proceedings, two comment
+      files. Lead APOLLO-OPSB-COMMENT-COUNT.
+
+timeline:
+  tag: '[verified]'
+  construction_start: February 2026 (proposed, upon Board authorization)
+  material_delivery_start: March 2026
+  large_equipment_delivery_start: June 2026
+  partial_in_service: ~150 MW around July 2027
+  full_in_service: around August 2027
+  construction_complete: December 2027
+  statement: >-
+    Staff Report p. 3 and p. 5. Note the partial-service figure: "approximately
+    150MW" around July 2027, with the remainder around August 2027 — a phased
+    energization the secondary accounts flatten into a single 2027 date.
+  construction_deadline:
+    tag: '[verified]'
+    statement: >-
+      Condition 2 — "The certificate shall become invalid if the Applicant has not
+      commenced a continuous course of construction of the proposed facility within
+      three years of the accelerated application approval date, unless the Board
+      grants a waiver or extension of time." i.e. a 2029-02-03 outside date.
+  construction_status:
+    tag: '[open]'
+    statement: >-
+      OPSB's gas case-status table produced 2026-07-22 lists Apollo WITHOUT the
+      "Under Construction" footnote that marks three sibling Licking County projects
+      on the same table. Whether that is a status signal or a maintenance lag in the
+      table is not established, and Condition 3 requires the applicant to docket the
+      actual construction-start date — which is in the access-blocked docket. Do not
+      infer that construction has or has not begun. Lead APOLLO-CONSTRUCTION-START.
+
+# --- Land, siting and impacts -------------------------------------------------
+land:
+  project_area_acres:
+    tag: '[verified]'
+    value: 146.84
+    statement: >-
+      "The approximately 146.84-acre project area is situated within industrial
+      property" (Staff Report p. 3). This supersedes the "147 ac" carried as
+      [reference] in issue 1437 — same number, now read off the filing.
+  acreage_discrepancy:
+    tag: '[verified]'
+    statement: >-
+      THE STAFF REPORT GIVES THREE DIFFERENT ACREAGES AND THEY ARE NOT THE SAME
+      BOUNDARY. Land Use (p. 3) says the project area is ~146.84 acres.
+      Transportation (p. 5) says the project "would be located on approximately 163
+      acres." Surface Waters (p. 14) says the wetland and surface water delineation
+      covered an "approximately 165.11-acre study area, including the gen-tie
+      corridor." The 165.11 figure states its own scope; the 163 does not. Cite
+      146.84 for the project area and say so; do not average them and do not present
+      163 as a correction.
+  agricultural_impact:
+    tag: '[verified]'
+    affected_acres: 142.12
+    agricultural_district_acres: 75.143
+    statement: >-
+      "Approximately 142.12 acres of agricultural land would be affected by the
+      project, including approximately 75.143 acres classified as Agricultural
+      District Land. This designation would not be retained, as the parcel would be
+      incorporated into a permanent electric generation facility." (Staff Report
+      p. 3.) 96.8% of the project area is farmland being converted.
+  location:
+    tag: '[verified]'
+    statement: >-
+      Middleton Township, Wood County, near the intersection of Mercer Road and
+      Middleton Pike (SR 582), near I-75. The address on the air permit is 11902
+      Middleton Pike, Bowling Green, OH 43402. The western perimeter abuts a TC
+      Energy d/b/a Columbia Gas Transmission pipeline.
+  nearest_receptors:
+    tag: '[verified]'
+    statement: >-
+      "The closest residence is located approximately 587 feet from the edge of the
+      perimeter access road. Within 1,000 feet of the project fence line, there are
+      two residences; no parks, churches, cemeteries, wildlife management areas, or
+      nature preserves are located within this distance. Both residences are located
+      within 1,000 feet of the electrical generating equipment. Additional
+      residential properties within the industrial property have been acquired by the
+      Applicant's customer and have been, or would be, demolished." (Staff Report
+      p. 4.) The last sentence is the one worth holding onto: the customer — Liames,
+      the land assembly — has been removing the receptors that would otherwise sit
+      closest to the plant.
+  zoning_and_planning:
+    tag: '[verified]'
+    statement: >-
+      Industrially zoned, within a Targeted Economic Development Area in the Wood
+      County Plan Commission Land Use Plan, and within Middleton Township's SR 25 and
+      SR 582 Overlay Zone. Staff concludes the project is consistent with both.
+
+aesthetics:
+  tag: '[verified]'
+  statement: >-
+    A ~3-mile Visual Study Area with 33 identified visually sensitive resources — 19
+    high-density residential areas, four unincorporated communities, two cities or
+    villages, two transportation corridors (I-75 and SR 582), and six recreational or
+    trail resources. Greatest visual change within 0.5 miles at I-75, SR 582, the
+    unincorporated community of Dunbridge, and a nearby residential neighborhood.
+    Mitigation is "mounding, berming, and landscaping." Staff concludes minimal
+    aesthetic impact. (Staff Report p. 4.) Tallest permanent structures are the
+    ~60-foot exhaust stacks and ~79-foot gen-tie supports (p. 13).
+
+cultural_resources:
+  tag: '[verified]'
+  statement: >-
+    Phase I investigation identified three previously known archaeological sites and
+    two Ohio Genealogical Society cemeteries within the project area, all recommended
+    ineligible for the National Register, plus one newly discovered archaeological
+    site, also recommended ineligible. Within the area of potential effect: four
+    previously identified historic resources (including the two cemeteries) and
+    **104 newly identified historic resources**. The consultant recommended that two
+    historic resources and one cemetery are POTENTIALLY ELIGIBLE for NRHP listing.
+    (Staff Report p. 4.)
+  open_item:
+    tag: '[open]'
+    statement: >-
+      "The findings were submitted to the Ohio Historic Preservation Office (OHPO).
+      The OHPO has not responded to the consultant in concurrence yet. Subject to the
+      OHPO's confirmation, Staff agrees with the findings of the Applicant's
+      consultant." (Staff Report p. 4.) So the cultural-resources clearance rests on
+      a concurrence that had not been given when the certificate issued, and no
+      condition requires it to be docketed. Whether OHPO has since concurred is not
+      established. Lead APOLLO-OHPO-CONCURRENCE.
+
+water_use:
+  tag: '[verified]'
+  statement: >-
+    "The facility would not have any steam generation or large-scale water use for
+    cooling." (Staff Report p. 1.) Cooling is "a closed-loop water/glycol system
+    ... cooled using either a simple fin fan cooler design or a closed-circuit
+    cooling tower, which is anticipated to have a water volume of approximately
+    1,375 gallons. This water would not discharge, or blow down, to any sewers or
+    streams." (p. 12.)
+  annual_volumes:
+    equipment_cleaning_gal_per_year: 10000   # "disposed of offsite"
+    hydrant_testing_gal_per_year: 18000
+  supply:
+    tag: '[verified]'
+    statement: >-
+      Fire-protection and potable water from the Northwestern Water and Sewer
+      District (NWWSD); sanitary waste to an NWWSD sewer collection system; "No use
+      of on-site groundwater is proposed" and no groundwater wells. The applicant
+      intends to extend water and sewer lines, which "may require permits to install
+      from Ohio EPA" (Staff Report pp. 6-7, 12).
+  bearing_on_the_water_story:
+    tag: '[inference]'
+    statement: >-
+      A 350 MW thermal plant next door to the campus that consumes essentially no
+      water is a real and somewhat counterintuitive finding, and it matters to the
+      Bowling Green water plan (issue 1439): the NWWSD supply tension at this site is
+      driven by the DATA CENTER, not by its power plant. Apollo's whole documented
+      draw is a ~1,375-gallon closed loop, ~10,000 gal/yr of equipment cleaning and
+      ~18,000 gal/yr of hydrant tests. The inference — that Apollo is not a material
+      claimant on the NWWSD contract — is ours; the volumes are the record's.
+
+wells_and_groundwater:
+  tag: '[verified]'
+  statement: >-
+    "The ODNR review indicated there are records of 54 water wells drilled within one
+    mile of the project area. The wells range in depth from 32 feet to 210 feet with
+    an average depth of 79 feet. Sustainable yield data reported from 8 of these wells
+    indicates a 25 gallon per minute average." ODNR concluded "(1) the construction of
+    this project is not expected to have significant impacts on public or private well
+    yields and (2) the construction of the facility is not expected to pose a
+    significant groundwater contamination risk," and Staff agreed. (Staff Report
+    pp. 6-7.) Condition 23 requires "a minimum setback of 50 feet from any active
+    water well."
+  source_correction:
+    tag: '[verified]'
+    statement: >-
+      Issue 1437 describes this as an "Applicant well study." It is not. It is an
+      ODNR review, requested by the applicant, transmitted as an ODNR review letter
+      dated 2025-11-03 and reaching the docket through the applicant's response to
+      Staff's SECOND data request (Staff Report footnotes 2 and 8). The distinction
+      is the difference between a developer's consultant clearing its own project and
+      a state resource agency doing so, and it runs the right way for the applicant —
+      so it should be stated accurately rather than downgraded by accident.
+  swpa_discrepancy:
+    tag: '[verified]'
+    statement: >-
+      THE STAFF REPORT LOCATES THE NEAREST SOURCE WATER PROTECTION AREA TWICE, AND
+      THE TWO STATEMENTS DISAGREE ON BOTH DISTANCE AND DIRECTION. Page 6: "The
+      nearest SWPA (5-year time-of-travel) is approximately 1,500 feet south of the
+      proposed project." Page 12: "One Drinking Water Source Protection Area (SWPA)
+      is located approximately 0.85-mile southeast of the project area." 1,500 feet
+      is ~0.28 miles. Both passages conclude no SWPA impact, and Ohio EPA does not
+      restrict energy generation within an SWPA in any case, so the conflict does not
+      change the outcome — but neither figure may be cited as the distance without
+      noting the other. Lead APOLLO-SWPA-DISTANCE.
+
+geology:
+  tag: '[verified]'
+  statement: >-
+    Uppermost bedrock is Lockport Dolomite at ~35-43 feet per ODNR desktop review;
+    the applicant's borings hit bedrock at 31 feet in one location. The area is
+    designated karst, but "The nearest documented karst feature is approximately 18
+    miles to the east. Given the thickness of glacially deposited overburden material,
+    sinkhole formation is unlikely," and no documented geohazards exist in or adjacent
+    to the project area. ODNR identified 20 oil and gas well records within one mile
+    and none within a half mile; no mining within five miles. Field work: 20 borings
+    of 20-49 feet, 37 feet of bedrock coring, cone penetration testing at 14
+    locations; groundwater in eight borings at 18-31 feet. (Staff Report pp. 7-8.)
+  hydric_soils_and_corrosion:
+    tag: '[verified]'
+    statement: >-
+      "The ODNR review indicated that 94% of the project area contains hydric soils
+      which are frequently ponded from December to May." Both USDA data and the
+      applicant's own resistivity testing confirm highly corrosive soils for buried
+      steel and ferrous metals, and Condition 25 requires consultation with a soil
+      corrosivity expert in final design. The 94%-hydric, ponded-half-the-year
+      characterization is an independent corroboration of the Great Black Swamp
+      lakebed-clay basis for this site's HSG D assignment in the BOSC profile.
+
+noise:
+  tag: '[verified]'
+  baseline_daytime_leq_dba: [53.2, 60.0]
+  baseline_nighttime_leq_dba: [53.1, 56.0]
+  statement: >-
+    Baseline survey at three locations. "Operational noise level modeling showed
+    anticipated operational nighttime noise levels are within 1 dBA of area ambient
+    noise levels." Condition 11 binds the facility to the modeled operational impacts
+    "plus 3 dBA, which is the modeling's described testing margin," and requires
+    additional mitigation if exceeded. Condition 12 limits general construction to
+    07:00-19:00 and impact pile driving / hoe ram operations to 10:00-17:00 Monday
+    through Friday. (Staff Report pp. 9-10.)
+
+surface_water_and_species:
+  tag: '[verified]'
+  statement: >-
+    One intermittent stream, one pond and one stormwater basin were identified across
+    the ~165.11-acre delineation study area. The project proposes 0.061 acres of
+    permanent impact to the intermittent stream, requiring a Nationwide Permit 39
+    Preconstruction Notification to the USACE Buffalo District and an Ohio EPA §401
+    Water Quality Certification "if needed"; the existing pond becomes a stormwater
+    basin. The project area is not in a FEMA 100-year floodplain. Construction
+    stormwater runs under Ohio NPDES general permit OHC000006 with a SWPPP.
+    (Staff Report pp. 12, 14-15.)
+  listed_species:
+    tag: '[verified]'
+    statement: >-
+      In range of Indiana bat, northern long-eared bat, tricolored bat and little
+      brown bat — tree cutting of stems 3 inches DBH or greater restricted to
+      October 1 through March 31, with a maximum of 1.24 acres of clearing
+      (Condition 18). In range of the northern harrier — construction in preferred
+      nesting habitat avoided April 15 through July 31 (Condition 19). Pondhorn
+      mussel, western banded killifish, greater redhorse, Kirtland's snake and
+      spotted turtle are in range but not likely impacted, as no in-water work in a
+      perennial stream is proposed. (Staff Report pp. 15-16.)
+
+# --- Gas supply: the open half of the instrument ------------------------------
+gas_supply:
+  tag: '[verified]'
+  statement: >-
+    "Natural gas supply for the BTM facility would come from two 16-inch diameter gas
+    pipelines. The Applicant intends to secure firm delivery of natural gas service
+    from third parties to the power generation facility ... The two 16-inch diameter
+    gas pipelines would be the subject of separate future filings with the Board."
+    (Staff Report p. 3.) A gas yard within the footprint receives, processes and
+    filters the gas to turbine specification.
+  adjacent_pipeline:
+    tag: '[verified]'
+    statement: >-
+      "The western perimeter of the project is adjacent to a TC Energy d/b/a Columbia
+      Gas Transmission pipeline. The project's current design has an entrance from
+      Mercer Road that crosses over the pipeline." (Staff Report p. 5.) Conditions
+      28 and 29 govern the crossing — encroachment agreement, 60-inch minimum HDD
+      clearance, cathodic-protection non-interference, no blasting, construction
+      fencing along the easement, and written confirmation from the pipeline owner.
+  supplier_is_open:
+    tag: '[open]'
+    statement: >-
+      ADJACENCY IS NOT SUPPLY. The Staff Report names TC Energy / Columbia Gas
+      Transmission only as the owner of a pipeline the site's driveway crosses, and
+      names no supplier for the two 16-inch laterals — it says only "third parties."
+      Issue 1437 offers the NEXUS-owned Generation Pipeline / ANR / Panhandle web as
+      the plausible tap and marks it unconfirmed; that remains the right posture, and
+      the TC Energy mention must not be pressed into service as the answer. The
+      laterals' own filings will name the source. Lead APOLLO-GAS-SUPPLIER.
+  lateral_filings:
+    tag: '[open]'
+    statement: >-
+      The two 16-inch laterals are separate future OPSB filings that had not been
+      made as of the Staff Report. The Staff Report does not name them; the names
+      "Apollo North" and "Apollo South" come from outside it — and "APOLLO NORTH
+      PIPELINE" is independently corroborated as an Ohio construction-stormwater
+      coverage (OHGC19094) in the ECHO sweep recorded at
+      data/extracted/bowling-green/water-watch.yaml, which places a north lateral in
+      construction even though no siting case for it has surfaced. Registered as a
+      standing watch in data/extracted/bowling-green/power-watch.yaml.
+
+laydown_yard:
+  tag: '[verified]'
+  statement: >-
+    "the Applicant would construct a temporary construction laydown yard for parts,
+    material and equipment storage, construction trailers, and parking. The temporary
+    construction laydown yard would be the subject of a future separate filing to the
+    Board." (Staff Report p. 1.) A second unfiled sibling case at the report date;
+    "APOLLO LAYDOWN" likewise appears as its own construction-stormwater coverage
+    (OHGC18721) in the water-watch ECHO sweep.
+
+transportation:
+  tag: '[verified]'
+  statement: >-
+    Access via Dixie Highway or I-75 to Middleton Pike to Mercer Road, with Dowling
+    Road to Mercer Road as a feasible alternative. "the Applicant does anticipate
+    approximately 100 'superloads'." A Road Use and Maintenance Agreement (RUMA) may
+    be required by the Wood County Engineer, and a final Transportation Management
+    Plan must be filed on the public docket before construction (Condition 20).
+    (Staff Report pp. 5-6.)
+
+aviation:
+  tag: '[verified]'
+  statement: >-
+    Wood County Airport is ~4.47 miles from the project area. Permanent structures
+    (60-foot stacks, 79-foot gen-tie supports) are below the 200-foot FAA threshold
+    and required no FAA filing. Temporary mobile cranes reach ~265 feet at the
+    generation facility and ~120 feet along the gen-tie corridor, which DID require
+    FAA notices at least 45 days before crane erection; the applicant filed them.
+    ODOT Office of Aviation identified no adverse impact. (Staff Report pp. 13-14.)
+
+solid_waste:
+  tag: '[verified]'
+  statement: >-
+    Up to approximately 250 cubic yards of waste annually while operational; hazardous
+    waste is not anticipated. (Staff Report p. 13.)
+
+# --- The 34 conditions --------------------------------------------------------
+conditions:
+  tag: '[verified]'
+  count: 34
+  status: >-
+    These are Staff's recommended conditions as printed at Staff Report pp. 16-21.
+    They became binding by operation of the automatic approval on 2026-02-03; the
+    Board's own approval entry is a separate docket item that was not retrievable
+    (see the capture manifest's retrieval warning), so this record cites the Staff
+    Report's text and does not claim to quote an order.
+  the_ones_that_bite:   # the rest are standard OPSB siting boilerplate
+    - id: 2
+      subject: three-year construction deadline (certificate invalid otherwise)
+    - id: 3
+      subject: docket the construction-start, construction-complete and in-service dates
+    - id: 5
+      subject: >-
+        obtain and docket all federal/state permits BEFORE construction, and docket
+        any permit violation within seven days of receipt
+    - id: 11
+      subject: operational sound at nonparticipating receptors capped at modeled impacts + 3 dBA
+    - id: 13
+      subject: >-
+        quarterly complaint summary reports filed on the public docket during
+        construction and through the first five years of operation
+    - id: 14
+      subject: facility output shall not exceed 350 MW
+    - id: 15
+      subject: no physical or electrical interconnection with the PJM Transmission System (OATT Part IV / Part VI)
+    - id: 16
+      subject: exporting to the bulk power system requires a PJM new service request AND supplemental Board approval
+    - id: 23
+      subject: minimum 50-foot setback from any active water well
+    - id: 26
+      subject: notify Staff within 24 hours of notifying Ohio EPA of any permit violation
+    - id: 27
+      subject: obtain and file on the case docket the Ohio EPA air permit-to-install-and-operate AND the Title V permit upon receipt
+    - id: 30
+      subject: file the BESS fire-protection engineering review before placing the facility in service
+    - id: 31
+      subject: >-
+        BESS decommissioning — updated plan and cost estimate excluding salvage value
+        at least 30 days before commissioning, secured by a performance bond with the
+        OPSB as obligee, posted before the BESS goes into service, providing for
+        removal within 12 months and recalculated every five years by an engineer
+    - id: 32
+      subject: >-
+        annual BESS firefighting training and equipment for local emergency
+        responders, documented on the docket
+    - id: 34
+      subject: >-
+        annual operational compliance reports for at least three years after
+        construction, including equipment failures, outages, warranty claims, and any
+        use of the Mobile SMT 130 portable generator
+  condition_27_note:
+    tag: '[inference]'
+    statement: >-
+      Condition 27 is the join between this case and the air chain: it obliges the
+      applicant to file the Ohio EPA PTI and the Title V permit on the OPSB docket
+      when received. The PTI issued 2026-06-02
+      (data/extracted/oepa/bowling-green/P0139272.pti.yaml). Whether it was docketed
+      as required cannot be checked, because the docket is access-blocked — so this
+      is a compliance question the record cannot answer either way, not a compliance
+      finding. Registered as a watch.
+
+# --- What could not be obtained ------------------------------------------------
+docket_access_gap:
+  tag: '[verified]'
+  statement: >-
+    THE OPSB DOCKET IS ACCESS-BLOCKED TO AUTOMATED RETRIEVAL, NOT EMPTY. The
+    PUCO/OPSB Docketing Information System (dis.puc.state.oh.us) answers every
+    programmatic request — plain, browser-headed, http and https alike — with either
+    a 245-byte "Request Rejected" page or an F5/BIG-IP JavaScript bot-challenge
+    (TSPD cookies and a /TSPD/ script) that cannot be satisfied without executing the
+    challenge. This was confirmed against both the case-record URL and a specific
+    document-image URL on 2026-08-01. No conclusion may be drawn from the absence of
+    a document that could not be fetched. This is the same per-source negative
+    recorded for Findlay's PUCO route in
+    data/extracted/grid/findlay/megawatt-hub-interconnection.gap.yaml (issue 1464).
+  not_obtained:
+    - the Letter of Notification application itself (filed 2025-11-05), including Figure 5 (water wells) and Table 4 (potential pre-construction permits)
+    - the ODNR review letter of 2025-11-03 (the "well study"), read here only as quoted and summarized by Staff
+    - the applicant's four sets of data-request responses, including Attachment B (the modeled noise impacts Condition 11 binds to)
+    - the public comments filed in the docket, and their count
+    - the Board's own approval entry of 2026-02-03
+    - the geotechnical data report (Application Appendix D), the Visual Resource Assessment, the Phase I cultural report, and the Preliminary Traffic Management Plan
+  what_would_resolve_it:
+    - a browser-session capture of the DIS case record, or a records request to OPSB under R.C. 149.43
+    - the applicant's own project website, which posts some filings
+    - any later mirror by a news organization, as with the Staff Report itself
+
+registrations_gap:
+  tag: '[verified]'
+  statement: >-
+    THE OHIO SECRETARY OF STATE BUSINESS SEARCH IS ALSO ACCESS-BLOCKED, so the
+    registration records for Will-Power OH, LLC and Liames, LLC that issue 1437 asks
+    for were not obtained. businesssearch.ohiosos.com no longer resolves; the current
+    host businesssearch.ohiosos.gov and www.ohiosos.gov both return HTTP 403 with a
+    ~1.3 MB challenge page to automated retrieval. Confirmed 2026-08-01. This repo's
+    one existing SOS artifact
+    (data/extracted/permits/sos-magenta-capital-llc-2025-10-17.sos.yaml) was captured
+    from a filing PDF obtained by hand, and records no source URL — so there is no
+    scripted route on file to reuse. Agents, formation dates, officers and statutory
+    agents for both entities therefore remain [open]; nothing about either entity's
+    corporate structure is asserted from inference. Lead APOLLO-SOS-REGISTRATIONS.
+  what_the_primary_record_does_establish:
+    - Will-Power OH, LLC's business address and permit contact — 2000 Commerce Dr, Pittsburgh, PA 15275, Andy Woerner (Ohio EPA PTI and completeness letter, both captured)
+    - that the applicant's official project website sits on williams.com (OPSB Staff Report p. 9)
+    - that Liames, LLC is the customer of record and is building the adjacent campus (OPSB Staff Report p. 1; OPSB news release 2026-02-03)
+
+acceptance:   # per issue 1437
+  opsb_docket_ingested_and_extracted: partial   # staff report + 34 conditions captured; the rest DIS-blocked, recorded as a per-source negative
+  oepa_air_chain_pulled: true                   # see data/extracted/oepa/bowling-green/ — draft, hearing deck AND the final PTI
+  standing_watches_registered: true             # data/extracted/bowling-green/power-watch.yaml
+  sos_registrations_pulled: false               # access-blocked; recorded above with its lead
+  lon_process_documented_not_editorialized: true

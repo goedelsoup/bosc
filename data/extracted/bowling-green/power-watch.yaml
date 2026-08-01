@@ -1,0 +1,322 @@
+# Bowling Green (Wood County, OH) — standing power watch.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# The Apollo Power Generation Facility is certified, permitted and under construction, and the
+# parts of it that are still unwritten are all of the same kind: SEPARATE FILINGS THAT HAVE NOT
+# BEEN MADE. Two 16-inch gas laterals, a construction laydown yard, a Title V operating permit.
+# Each is named in a captured primary record as a thing that WILL be filed, which is what makes
+# them watchable rather than speculative — the record tells us the filing is coming and what it
+# will be about.
+#
+# The second half of this file is a different kind of entry: routes that were tried and blocked.
+# The OPSB docket and the Ohio Secretary of State business search both refuse automated
+# retrieval. Those are recorded as per-source negatives, never as absences, and nothing is
+# inferred from what they would not serve.
+
+meta:
+  subject: >-
+    Standing watch on the Apollo Power Generation Facility (OPSB 25-0973-EL-BLN / Ohio EPA PTI
+    P0139272) — the unfiled sibling cases its own record promises, the Title V operating permit
+    it must apply for after startup, and the two public-records routes that are blocked
+  kind: power-watch
+  site: bowling-green
+  captured_for: issue 1437 (epic 1433, readiness(bowling-green) — the power instrument)
+  extracted_at: '2026-08-01'
+  checked_on: '2026-08-01'
+  previous_check: '2026-07-10'      # the discovery-sweep research recorded in the issue body
+  method: >-
+    Three routes. (1) The OPSB Staff Report of Investigation for 25-0973-EL-BLN, captured from a
+    news organization's mirror because the issuing docket system blocks automated retrieval, and
+    transcribed at data/extracted/grid/bowling-green/apollo-power-generation-facility.yaml.
+    (2) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), searched by Entity Name
+    "WILL-POWER" on 2026-08-01, which returned the complete air chain — completeness letter,
+    draft permit, final permit — plus the applicant's sibling Licking County facilities; the four
+    Apollo documents are committed under data/documents/oepa/bowling-green/air/. (3) Direct
+    probes of dis.puc.state.oh.us and the Ohio Secretary of State business search, both of which
+    failed and are recorded below as blocked routes rather than as empty results.
+
+# ── What changed since the 2026-07-10 research ────────────────────────────────
+delta_since_previous_check:
+  - id: CASE-NUMBER-WRONG
+    tag: '[verified]'
+    was: The docket is OPSB 25-0973-EL-BGN.
+    now: >-
+      The docket is 25-0973-EL-**BLN**. The Staff Report's caption, its identifier block, all 22
+      of its page footers and its DIS filing stamp agree. OPSB's own 2026-02-03 news release is
+      the source of the error and compounds it by dropping the leading zero
+      ("25-973-EL-BGN"); OPSB's structured gas-fleet case table has it right. BLN is the Board
+      Letter of Notification track — the accelerated, automatic-approval route that is the
+      reason there were no hearings — so the wrong suffix names a proceeding that did not occur.
+      Corrected across the profile, the Bowling Green data-centers record and this watch.
+  - id: FINAL-AIR-PERMIT-ISSUED
+    tag: '[verified]'
+    was: >-
+      "Air — Major emission source → Title V required; OEPA held a draft air-permit hearing.
+      [open] — the PTI/Title V chain is the pull."
+    now: >-
+      The whole draft-to-final chain is captured. Application received 2025-12-05, found complete
+      2025-12-08, draft public-noticed 2026-03-05, hearing held 2026-04-08, comment period
+      extended from 2026-04-15 to 2026-05-01 (58 days), **final PTI P0139272 issued 2026-06-02**
+      with a 42-comment Response to Comments bound in. What remains open is Title V, and only
+      Title V — see APOLLO-TITLE-V below.
+  - id: BESS-IS-2-HOUR
+    tag: '[verified]'
+    was: ~120 MW battery storage.
+    now: >-
+      119.5 MW for 239 MWh from approximately 31 Tesla Megapack 2XL containers — a two-hour
+      duration, which is what says the storage is a demand-following and ride-through asset
+      rather than a supply resource. The duration appears in no secondary account.
+  - id: WELL-STUDY-IS-AN-ODNR-REVIEW
+    tag: '[verified]'
+    was: 'Applicant well study: "no significant impact" on 54 wells within 1 mi.'
+    now: >-
+      It is an ODNR review letter dated 2025-11-03, requested by the applicant and reaching the
+      docket through its response to Staff's second data request — a state resource agency's
+      finding, not a developer consultant's. The letter itself is in the blocked docket and was
+      read here only as Staff quotes and summarizes it.
+  - id: PLANT-USES-ALMOST-NO-WATER
+    tag: '[verified]'
+    was: not recorded
+    now: >-
+      "The facility would not have any steam generation or large-scale water use for cooling."
+      Cooling is a closed water/glycol loop of roughly 1,375 gallons that never blows down, plus
+      about 10,000 gal/yr of equipment cleaning trucked offsite and about 18,000 gal/yr of
+      hydrant testing, all on Northwestern Water and Sewer District service with no groundwater
+      wells. This matters to the water plan (issue 1439): the NWWSD supply tension at this site
+      is the data center's, not its power plant's.
+  - id: WILL-POWER-IS-A-FLEET
+    tag: '[verified]'
+    was: not recorded
+    now: >-
+      Will-Power OH LLC holds Ohio EPA air permits at four facilities — Apollo in Wood County
+      and Plato North, Plato South and STY in Licking County — and OPSB's gas case table carries
+      a Will-Power "STY Power Generation Facility" at 250 MW on the same accelerated LON track,
+      approved 2026-06-25. Apollo is one instance of a repeated pattern, not a one-off.
+
+# ── Watches: filings the record itself says are coming ────────────────────────
+promised_filings:
+  - id: APOLLO-GAS-LATERALS
+    tag: '[open]'
+    watch: The two 16-inch natural gas laterals serving Apollo
+    what_the_record_says: >-
+      "Natural gas supply for the BTM facility would come from two 16-inch diameter gas
+      pipelines ... The two 16-inch diameter gas pipelines would be the subject of separate
+      future filings with the Board." (OPSB Staff Report p. 3.) No such filing had been made as
+      of the Staff Report (2026-01-27), and none has surfaced since.
+    why_it_matters: >-
+      These filings will name the gas source, which is the single largest unknown in the
+      facility's supply chain. The Staff Report names TC Energy d/b/a Columbia Gas Transmission
+      ONLY as the owner of a pipeline the site driveway crosses — adjacency, not supply — and
+      names the suppliers only as "third parties". Issue 1437's NEXUS / Generation Pipeline /
+      ANR / Panhandle hypothesis remains unconfirmed and must not be resolved from the TC Energy
+      mention.
+    corroborating_signal: >-
+      "APOLLO NORTH PIPELINE" appears as an Ohio construction-stormwater coverage (OHGC19094) in
+      the ECHO Wood County sweep recorded in this site's water-watch.yaml — so a north lateral
+      appears to be in construction while no siting case for it has been found. That is a
+      tension worth resolving, not a contradiction to assert: the CGP threshold is one acre of
+      disturbance and OPSB jurisdiction over a gas pipeline attaches on different criteria.
+      The names "Apollo North" and "Apollo South" come from outside the OPSB record.
+    where_to_look:
+      - OPSB case search for new Will-Power OH, LLC filings (access-blocked — see blocked_routes)
+      - ECHO cwa_rest_services.get_facility_info for FIPS 39173, filtered to master permit OHC000000
+      - FERC dockets, if any lateral is jurisdictional rather than intrastate
+  - id: APOLLO-LAYDOWN-YARD
+    tag: '[open]'
+    watch: The temporary construction laydown yard
+    what_the_record_says: >-
+      "The temporary construction laydown yard would be the subject of a future separate filing
+      to the Board." (OPSB Staff Report p. 1.) "APOLLO LAYDOWN" already appears as a
+      construction-stormwater coverage (OHGC18721) in the water-watch ECHO sweep.
+  - id: APOLLO-TITLE-V
+    tag: '[open]'
+    watch: The Title V operating permit application
+    what_the_record_says: >-
+      Final PTI P0139272, Standard Term 12: the permittee "shall submit a complete Title V permit
+      application or a complete Title V permit modification application within twelve months
+      after commencing operation of the emissions units covered by this permit," pursuant to OAC
+      Chapter 3745-77. OPSB Condition 27 separately requires the Title V permit to be filed on
+      the siting docket upon receipt.
+    when: >-
+      On the applicant's own OPSB schedule — roughly 150 MW in service around July 2027, the
+      remainder around August 2027 — the twelve-month clock puts the application around mid-2028.
+      Nothing exists to capture before then. THIS IS A GENUINE FUTURE WATCH, not a gap: the
+      absence of a Title V permit today is the correct state of the record, and issue 1437's
+      instruction not to close the air box on the draft is satisfied by the final PTI, not by
+      Title V.
+    where_to_look: Ohio EPA eDocument search, Entity Name "WILL-POWER", facility ID 0387022027
+  - id: APOLLO-CONSTRUCTION-DATES
+    tag: '[open]'
+    watch: The docketed construction-start, construction-complete and in-service dates
+    what_the_record_says: >-
+      OPSB Condition 3 requires the applicant to file each of those dates on the public docket as
+      it becomes known, and Condition 2 voids the certificate if a continuous course of
+      construction has not commenced within three years of approval (i.e. by 2029-02-03).
+      OPSB's gas case-status table produced 2026-07-22 lists Apollo WITHOUT the "Under
+      Construction" footnote carried by three sibling Licking County projects — which may be a
+      status signal or a table-maintenance lag, and is not read as either.
+  - id: APOLLO-COMPLIANCE-REPORTS
+    tag: '[open]'
+    watch: Quarterly complaint summaries and annual operational compliance reports
+    what_the_record_says: >-
+      OPSB Condition 13 requires quarterly complaint summary reports on the public docket
+      through construction and the first five years of operation, filed by the last day of April,
+      July, October and January. Condition 34 requires annual operational compliance reports for
+      at least three years after construction, expressly including "Any use of the Mobile SMT 130
+      or megawatt scale portable generator." Both land in the access-blocked docket.
+  - id: APOLLO-BESS-DECOMMISSIONING-BOND
+    tag: '[open]'
+    watch: The BESS decommissioning plan and performance bond
+    what_the_record_says: >-
+      OPSB Condition 31 requires an updated decommissioning plan and a total cost estimate
+      excluding salvage value on the public docket at least 30 days before commissioning the
+      BESS, secured by a performance bond naming the OPSB as obligee, posted before the batteries
+      go into service, providing removal within 12 months, and recalculated every five years.
+      A dated, dollar-denominated filing on a docket — one of the more checkable obligations in
+      the certificate, if the docket can be read.
+  - id: META-LOAD-TRANSMISSION-CASE
+    tag: '[open]'
+    watch: Any transmission case for the Meta campus load
+    what_the_record_says: >-
+      None has surfaced, and the certificate makes one less likely rather than more: Condition 15
+      bars any physical or electrical interconnection with the PJM Transmission System under OATT
+      Part IV or Part VI, and Condition 16 requires both a PJM new service request and
+      supplemental Board approval before any export. So the campus's power comes from behind its
+      own fence by design. A transmission filing would therefore be a CHANGE OF POSTURE — grid
+      backup, a Phase 2 that outgrows 350 MW, or an export election — which is exactly why it is
+      worth watching. Nothing is inferred from its current absence.
+    note: >-
+      This watch was carried in issue 1437 as "any Meta-load transmission case (none surfaced as
+      of 2026-07-10)". Still none as of 2026-08-01.
+
+# ── Routes that are blocked, not empty ────────────────────────────────────────
+blocked_routes:
+  - id: OPSB-DIS
+    tag: '[verified]'
+    route: PUCO/OPSB Docketing Information System — https://dis.puc.state.oh.us/
+    status: access-blocked to automated retrieval
+    checked: '2026-08-01'
+    evidence: >-
+      A plain request returns a 245-byte page reading "The requested URL was rejected. Please
+      consult with your administrator," with a support ID. A request carrying a full browser
+      header set returns instead a 5,624-byte F5/BIG-IP JavaScript bot-challenge — TSPD session
+      cookies, a `bobcmn` blob and a /TSPD/ script — whose noscript branch reads "Please enable
+      JavaScript to view the page content." Confirmed against both the case-record URL for
+      25-0973-EL-BLN and a specific ViewImage document URL. Plain HTTP behaves as the plain HTTPS
+      request does.
+    consequence: >-
+      NO INFERENCE MAY BE DRAWN FROM THIS DOCKET'S SILENCE. Not obtained: the Letter of
+      Notification application itself, the ODNR review letter of 2025-11-03, the four sets of
+      data-request responses (including Attachment B, the modeled noise impacts Condition 11
+      binds to), the public comments and their count, the Board's own approval entry, and the
+      geotechnical, visual, cultural and traffic reports. Everything transcribed about this case
+      comes from the Staff Report, which quotes and summarizes those documents but is not them.
+    precedent: >-
+      Identical to the Findlay finding at
+      data/extracted/grid/findlay/megawatt-hub-interconnection.gap.yaml (issue 1464), where the
+      same host blocked the same way. This is a standing property of the route, not a transient.
+    what_would_resolve_it:
+      - a browser-session capture of the case record
+      - a public-records request to the OPSB under R.C. 149.43
+      - a later third-party mirror, which is how the Staff Report itself was obtained
+  - id: OHIO-SOS
+    tag: '[verified]'
+    route: Ohio Secretary of State business search
+    status: access-blocked to automated retrieval
+    checked: '2026-08-01'
+    evidence: >-
+      businesssearch.ohiosos.com no longer resolves in DNS. The current host
+      businesssearch.ohiosos.gov and www.ohiosos.gov both answer HTTP 403 with a ~1.3 MB
+      challenge page, to curl and to the fetch tool alike.
+    consequence: >-
+      The registration records for **Will-Power OH, LLC** and **Liames, LLC** that issue 1437
+      asks for were NOT obtained — agents, formation dates, officers, statutory agents and
+      jurisdiction of formation all remain [open] for both entities. This repo's one existing
+      SOS artifact (data/extracted/permits/sos-magenta-capital-llc-2025-10-17.sos.yaml) came
+      from a filing PDF obtained by hand and records no source URL, so there is no scripted
+      route on file to reuse. Nothing about either entity's corporate structure is asserted
+      from inference to fill the hole.
+    what_the_primary_record_does_establish:
+      - >-
+        Will-Power OH, LLC's business address and permit contact — 2000 Commerce Dr, Pittsburgh,
+        PA 15275, Andy Woerner — from the Ohio EPA completeness letter and both permits.
+      - >-
+        That the applicant's official project website is on Williams' corporate domain: the OPSB
+        Staff Report (p. 9) records "The Applicant maintains a public website for the project at
+        https://www.williams.com/expansion-project/apollo-power-generation-project/". Strong
+        corroboration of the Williams affiliation, but not a filed statement of ownership — the
+        parentage stays [reference] and the ownership chain [open].
+      - >-
+        That Liames, LLC is the customer of record and is building the adjacent campus (OPSB
+        Staff Report p. 1; OPSB news release 2026-02-03). Neither names Meta; the Liames-to-Meta
+        identification rests on this repo's separate Bowling Green record.
+    what_would_resolve_it:
+      - a browser-session capture, or the SOS bulk business-filing data download
+      - the filing PDFs themselves, which is how the Magenta Capital record was built
+
+open_leads:
+  - id: APOLLO-SOS-REGISTRATIONS
+    statement: Ohio SOS registrations for Will-Power OH, LLC and Liames, LLC — see blocked_routes/OHIO-SOS.
+  - id: APOLLO-GAS-SUPPLIER
+    statement: >-
+      Who actually supplies the two 16-inch laterals. The permit record says only "third
+      parties" and, negatively, that the pipelines serving Williams "are not owned by Williams"
+      (final PTI, Response 2).
+  - id: APOLLO-OPSB-COMMENT-COUNT
+    statement: >-
+      How many comments were filed in the siting docket. The Staff Report says only "Several".
+      Issue 1437's figure of 14 is [reference] press reporting and is uncorroborated. It must not
+      be conflated with the 42 numbered comments in the air permit's Response to Comments, which
+      were filed months later before a different agency on a different instrument.
+  - id: APOLLO-OHPO-CONCURRENCE
+    statement: >-
+      Whether the Ohio Historic Preservation Office ever concurred in the cultural-resources
+      findings. It had not when the certificate issued, two historic resources and one cemetery
+      were recommended as potentially NRHP-eligible, and no condition requires the concurrence to
+      be docketed.
+  - id: APOLLO-SWPA-DISTANCE
+    statement: >-
+      The Staff Report locates the nearest Source Water Protection Area twice and disagrees with
+      itself — "approximately 1,500 feet south" (p. 6) versus "approximately 0.85-mile southeast"
+      (p. 12). Neither may be cited without the other.
+  - id: APOLLO-PBR-ENGINE-COUNT
+    statement: >-
+      Two or three emergency engines. The OPSB Staff Report and Ohio EPA's hearing deck both say
+      two; the draft permit's PTE table has a row for "3 PBR Emergency Engines".
+  - id: APOLLO-CGP-NUMBER-RECONCILIATION
+    statement: >-
+      Whether Ohio construction-stormwater coverage 2GC08564*AG (named in the final PTI,
+      Responses 34 and 41, issued 2026-01-04) and ICIS coverage OHGC17963 (named APOLLO POWER GEN
+      in the ECHO sweep in water-watch.yaml) are the same coverage under two numbering systems.
+  - id: APOLLO-CO2E-BASIS
+    statement: >-
+      The ~2.5 million tons/year CO2e figure in press coverage of the April hearing is a
+      commenter's estimate reported secondhand. No captured primary source states a CO2 or CO2e
+      figure — the permit contains no CO2 limit at all (final PTI, Response 35). Do not cite the
+      figure as permitted or agency-derived.
+  - id: APOLLO-PSWU-FACILITY-ID
+    statement: >-
+      The Permit Strategy Write-Up bound into the draft permit carries Plato North's Ohio EPA
+      facility ID (0145000615) under Apollo's permit number and name, on both of its pages.
+      Visually confirmed. Whether the write-up's analysis was likewise adapted from the sibling
+      project is not established and is not claimed.
+  - id: WILL-POWER-PLATO-SOUTH-REVOCATION
+    statement: >-
+      Plato South's air-permit history shows an approval (P0137838, 2025-11-13), a
+      DENIAL OR REVOCATION OR NON-APPROVAL action on the same permit number (2026-06-08), and a
+      fresh approval under a new number (P0140567, 2026-07-14). Only the eDoc index labels were
+      read; the documents were not. If a Will-Power behind-the-meter permit was revoked in Ohio,
+      the reason is worth knowing here.
+  - id: APOLLO-ERAC-APPEAL
+    statement: >-
+      Whether anyone appealed the final PTI to the Environmental Review Appeals Commission within
+      the 30-day window under R.C. 3745.04 (i.e. by roughly 2026-07-02).
+  - id: APOLLO-CONSTRUCTION-START
+    statement: >-
+      The actual construction-start date, which Condition 3 requires to be docketed and which
+      the OPSB gas case table's missing "Under Construction" footnote neither confirms nor denies.

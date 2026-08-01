@@ -1,0 +1,84 @@
+# Reviewed transcription of Ohio EPA's application-completeness letter for the Apollo
+# Power Generation Facility air permit, read from the captured PDF's own text layer.
+#
+# A two-page administrative letter that turns out to date two things the public
+# record later argued about: when the application was filed, and when lawful site
+# preparation could begin.
+doc_id: P0139272-complete-751f34e3
+source_path: data/documents/oepa/bowling-green/air/edoc-3938595.pdf
+kind: epa
+pages_read: []
+image_pages_read: []
+dpi: 0
+source_text_excerpt: >-
+  "December 8, 2025 / Transmitted Electronically / Andy Woerner / Will-Power OH LLC -
+  Apollo / 2000 Commerce Dr. / Pittsburgh, Pennsylvania 15275 ... Re: Wood County /
+  Will-Power OH LLC - Apollo / Facility ID # 0387022027 / P0139272 received on
+  12/05/2025 ... the Northwest District Office (NWDO) received your application for a
+  Permit-to-Install or Permit-to-Install and Operate (PTI/PTIO) for air pollution
+  sources and has determined that the application is preliminarily and
+  administratively complete. This determination does not imply that the application
+  is approvable ... Clinton Reed, Ohio EPA - DAPC"
+
+action:
+  confidence: high
+  warnings:
+    - >-
+      COMPLETENESS IS NOT APPROVAL, AND THE LETTER SAYS SO: "This determination does
+      not imply that the application is approvable, only that all the necessary
+      material has been submitted to continue the review."
+  agency: Ohio EPA
+  program: Air Permit-to-Install (Division of Air Pollution Control), Northwest District Office
+  permit_no: P0139272
+  facility_id: '0387022027'
+  action: application preliminarily and administratively complete
+  action_date: '2025-12-08'
+  application_received_date: '2025-12-05'
+  effective_date: null
+  expiration_date: null
+  applicant: Will-Power OH LLC - Apollo
+  applicant_address: 2000 Commerce Dr., Pittsburgh, Pennsylvania 15275
+  contact_name: Andy Woerner
+  signed_by: Clinton Reed, Ohio EPA DAPC (419.373.3137, clinton.reed@epa.ohio.gov)
+  copied: [Andrea Moore DAPC, Jennifer Delbecq DAPC, Aniyah Woodley DAPC]
+  project_name: Apollo Power Generation Facility
+  site_address: Wood County, Ohio
+  affected_resource: air
+  parcel_ids: []
+  note: >-
+    Dates the front of the air chain. The application was filed 2025-12-05 — one month
+    after the OPSB siting application of 2025-11-05, and two months before the siting
+    certificate took effect by automatic approval on 2026-02-03. So the air review
+    began while the siting case was still open and outlasted it by four months.
+
+site_preparation_before_permit:
+  tag: '[verified]'
+  statement: >-
+    The letter's own heading is "The site preparation activities allowed before permit
+    issuance," and the text reads: "Some site preparation activities can be undertaken
+    prior to obtaining a final PTI or PTIO. The specific types of activities and
+    criteria are listed in Ohio Administrative Code rule 3745-31-33 ... Please note
+    there are risks that the owner/operator of this facility should be aware of prior
+    to proceeding, including additional costs associated with design changes that may
+    become necessary to comply with a final issued permit."
+  why_it_matters:
+    tag: '[inference]'
+    statement: >-
+      Four months later, commenters on the draft permit "referred to the project being
+      pushed forward in secret and that construction began before a permit was
+      issued," and Ohio EPA answered by citing this same rule (final PTI, Response 37).
+      This letter is the primary document behind that answer, and it establishes that
+      the allowance was communicated to the applicant on 2025-12-08 — the day the
+      application was found complete, and nearly six months before the permit issued.
+      The rule permits it; the letter conveys it; the comment shows it was noticed
+      locally. What was actually built, and when, is not established by anything
+      captured, and no such claim is made here.
+
+processing_time_estimate:
+  tag: '[verified]'
+  statement: >-
+    The letter's standard estimate: 60-120 days for applications "that do not involve
+    major new sources, major modifications, or other complex permitting scenarios,"
+    and 120-180 days for those that do. Apollo took 179 days from receipt (2025-12-05)
+    to final issuance (2026-06-02) — inside the complex-permit band, at its edge. The
+    day count is arithmetic on the record's own dates.

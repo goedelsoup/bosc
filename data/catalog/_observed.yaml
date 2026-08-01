@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-01T17:33:07.961313+00:00'
+reconciled_at: '2026-08-01T18:31:36.672925+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -120,9 +120,19 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  bowling-green-apollo-power:
+    exists: true
+    sha256: af70fc50b73336bf1ca3a3e8ab4a9ea0450d28f5ae7403870e3d81c943d13c78
+    size_bytes: 103608
+    lfs_materialized: true
+    file_count: 5
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:bowling-green
   bowling-green-water-watch:
     exists: true
-    sha256: 9e4a26095144f3c6e64eff0803de5d952cd5ee8e4e26205411729e301f50fb4e
+    sha256: 7e93a14b74eec15ea91872162e7a9e54606cffd788c0858a2ba7199aba9aec25
     size_bytes: 83442
     lfs_materialized: true
     file_count: 3
@@ -182,8 +192,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: 9619bd306d379ff70c9a224c584f3d88e85d4602e08b744e6a10afd2493282ae
-    size_bytes: 209440
+    sha256: b1a6b39e1f8b463bf45f5de493088a99eb118f5acf9137dd6b04c38a7c31229e
+    size_bytes: 211827
     lfs_materialized: true
     file_count: 13
     missing: []
@@ -382,7 +392,7 @@ entries:
     site_scope: slug-scoped
   eia-grid-profile:
     exists: true
-    sha256: 7f5e29511e137d0b882ac94655ac684e9dc37b22d2d8f0ccc3478f0c94adb5b7
+    sha256: 353e5c43e0918c40bab08d5b51fab50bc6119b7ee68b670f41e41269a20e74bb
     size_bytes: 104545
     lfs_materialized: true
     file_count: 22
@@ -1022,8 +1032,8 @@ entries:
     site_scope: lima-legacy
   oepa-cooling-reconciliation:
     exists: true
-    sha256: dfeb17fe61d6b131c989d98a292a3c934f313ee04fda7c7765deb50d5c62e700
-    size_bytes: 75608
+    sha256: 500b40fcb60a7dc8813fca5135634ef0fd5ac486ed10f8d8f87b67691a772bd7
+    size_bytes: 75833
     lfs_materialized: true
     file_count: 1
     missing: []

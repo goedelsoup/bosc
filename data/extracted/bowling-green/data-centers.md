@@ -25,7 +25,7 @@ Meta (Middleton Twp) and Oppidan (city proper) — are **distinct projects**; do
   Green" (2025-04-09); Middleton Township ("Meta introduced as company behind township data
   center").
 - **Land / nominee entity:** **Liames, LLC** — the entity on all deeds and rezoning applications,
-  and the **customer of record on OPSB 25-0973-EL-BGN**. `[verified]` (docket) · the corporate
+  and the **customer of record on OPSB 25-0973-EL-BLN**. `[verified]` (docket) · the corporate
   parentage tying Liames to Meta pre-reveal was `[reported]` press before the 2025-04-09
   confirmation.
 - **Codename:** **"Project Accordion"** — the NDA-era name (2023→2025). `[reference]` Source: BG
@@ -81,21 +81,45 @@ average); `cooling_model` records the company's **closed-loop dry** claim as `[r
 
 ## 3 — Apollo Power Generation Facility (the behind-the-meter power instrument, #1437)
 
-- **What:** **350 MW behind-the-meter natural-gas generation + ~120 MW BESS** (Will-Power OH, LLC)
-  to power the Meta campus. `[verified]` (docket).
-- **Instrument:** **OPSB 25-0973-EL-BGN**, filed **2025-11-05**, **approved 2026-02-03** under
-  **accelerated Letter-of-Notification review with no public hearings** (34 conditions; 14 resident
-  opposition comments). **Title V air permitting required.** `[verified]` (docket).
-- **Scope note:** the Apollo generation instrument — power posture, BTM/HB-15 self-generation vs the
-  FirstEnergy data-center tariff, and the Title V air file — is **sub-issue #1437 / #1440**, not
-  this facility-pin issue. The Apollo gensets are a **separate OPSB-permitted power facility**, not
-  the data center's own emergency gensets, so `SiteFacility.genset_count` / `genset_mw` stay `None`
-  on `_BOWLING_GREEN`.
+**Worked in #1437.** Both instruments are now captured and transcribed — the siting case at
+[`grid/bowling-green/apollo-power-generation-facility.yaml`](../grid/bowling-green/apollo-power-generation-facility.yaml)
+and the air chain at [`oepa/bowling-green/`](../oepa/bowling-green/). Standing watches and the
+blocked-route negatives live in [`power-watch.yaml`](power-watch.yaml). The summary below is a
+pointer; the transcriptions are canonical.
+
+- **What:** **350 MW net behind-the-meter natural-gas generation + 119.5 MW / 239 MWh BESS**
+  (Will-Power OH, LLC) to power the Meta campus. 21 turbines + 6 reciprocating engines, capable of
+  **491 MW gross** at design conditions and derated to a certified 350 MW net. `[verified]` (staff
+  report). Beware the ten **"Solar" PGM 130 turbines** — Solar Turbines is a Caterpillar brand and
+  they burn gas; the staff report's own footnote says so.
+- **Instrument:** **OPSB 25-0973-EL-BLN** — *not* `-EL-BGN`, which is what OPSB's own press release
+  says and what this file previously carried. Filed **2025-11-05**, **approved 2026-02-03** by
+  automatic approval under **accelerated Letter-of-Notification review with no public hearings**
+  (34 staff-recommended conditions). `BLN` *is* the letter-of-notification track — the wrong suffix
+  names a proceeding that did not happen. `[verified]` (staff report caption + DIS filing stamp).
+  The "14 resident opposition comments" figure is `[reference]` press reporting; the staff report
+  says only "Several public comments" and the docket that holds them is access-blocked.
+- **Air:** **final PTI P0139272 issued 2026-06-02** (facility ID 0387022027) — the chain issue
+  #1437 recorded as pending is closed, with a 42-comment Response to Comments bound in. The
+  facility is **major for Title V, not major for PSD** (234.62 tpy CO against a 250 tpy threshold)
+  and **not major for MACT** (24.40 tpy total HAP against 25). **Title V itself is still open** —
+  due within twelve months of commencing operation, so roughly mid-2028. `[verified]`.
+- **Grid posture:** Condition 15 **bars** any physical or electrical interconnection with the PJM
+  Transmission System (OATT Part IV / Part VI); Condition 16 requires a PJM new service request
+  *and* supplemental Board approval before any export. Condition 14 caps output at 350 MW.
+  `[verified]`.
+- **Scope note:** the Apollo gensets are a **separate OPSB-permitted power facility**, not the data
+  center's own emergency gensets, so `SiteFacility.genset_count` / `genset_mw` stay `None` on
+  `_BOWLING_GREEN`. Grid posture vs the FirstEnergy data-center tariff remains **#1440**.
 
 ## Instruments to pull (record / water sub-issues #1438 / #1439)
 
-- **OPSB 25-0973-EL-BGN** docket (Apollo) — application, staff report, the 34 conditions, opposition
-  comments. `[verified]` it exists; pull the primary filings.
+- ~~**OPSB 25-0973-EL-BLN** docket (Apollo) — application, staff report, the 34 conditions,
+  opposition comments.~~ **Partly done (#1437):** the staff report and its 34 conditions are
+  captured and transcribed. The application, the ODNR review letter, the data-request responses,
+  the comments and the Board's approval entry could **not** be pulled — `dis.puc.state.oh.us`
+  serves an F5 JavaScript bot-challenge to automated retrieval. **Access-blocked, not empty**; see
+  `power-watch.yaml` → `blocked_routes`.
 - **Meta → Middleton Township trustees letter, 2026-01-07** (PDF on the township site) — the Phase-2
   signal. `[verified]`.
 - **Liames, LLC** deed chain (Wood County Recorder/Auditor) from 2023-09-05 — the land assembly.
@@ -105,7 +129,10 @@ average); `cooling_model` records the company's **closed-loop dry** claim as `[r
   claim. `[open]` → **#1439**.
 - **BG WPC NPDES** (**2PD00009 / OH0024139** → Poe Ditch → North Branch Portage) — the effluent
   chain; ECHO shows 9 of 12 recent quarters non-compliant. `[reference]` → **#1439**.
-- **Title V air permit** for Apollo — pending. `[open]` → **#1437**.
+- **Title V air permit** for Apollo — genuinely still pending, but the **PTI is not**: final
+  P0139272 issued **2026-06-02** and is committed under `data/documents/oepa/bowling-green/air/`.
+  Title V is due within twelve months of commencing operation (~mid-2028). `[open]` → **#1437**
+  watch `APOLLO-TITLE-V`.
 
 ## Sources (live, 2026-07-10)
 

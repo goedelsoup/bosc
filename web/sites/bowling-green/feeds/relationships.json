@@ -1,5 +1,35 @@
 [
   {
+    "src": "CITY OF BOWLING GREEN",
+    "rel": "operates",
+    "dst": "npdes:2PD00009",
+    "date": "",
+    "ref": "2PD00009*TD",
+    "source": "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PD00009",
+    "rel": "discharges_to",
+    "dst": "POE DITCH",
+    "date": "",
+    "ref": "2PD00009*TD",
+    "source": "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "WILL POWER OH LLC APOLLO",
+    "rel": "represented_by",
+    "dst": "ANDY WOERNER",
+    "date": "",
+    "ref": "",
+    "source": "oepa/bowling-green/P0139272.completeness.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

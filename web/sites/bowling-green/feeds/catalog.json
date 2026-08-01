@@ -83,6 +83,172 @@
     }
   },
   {
+    "id": "bowling-green-apollo-power",
+    "title": "Bowling Green — Apollo Power Generation Facility, OPSB 25-0973-EL-BLN + Ohio EPA PTI P0139272 (Extractions)",
+    "scope": "extracted",
+    "collection": "grid",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Five primary documents across two agencies, plus two blocked routes recorded as per-source negatives. SITING: the OPSB Staff Report of Investigation in case 25-0973-EL-BLN (report date 2026-01-27, DIS-stamped 1/27/2026, 26 pp incl. cover letter and project maps), captured 2026-08-01 from WTOL-11's mirror because the issuing docket system dis.puc.state.oh.us serves an F5/BIG-IP JavaScript bot-challenge to automated retrieval — the custody chain runs through a news organization and that is stated in data/documents/grid/bowling-green/filename-map.yaml. AIR: the whole Ohio EPA DAPC permit-to-install chain for facility 0387022027 / permit P0139272 — the application completeness letter (2025-12-08), the draft permit noticed for comment (2026-03-05, with the Permit Strategy Write-Up bound in), Ohio EPA's own public information session and hearing deck (2026-04-08), and the FINAL permit (2026-06-02, with a 42-comment Response to Comments) — retrieved 2026-08-01 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov, searched by Entity Name \"WILL-POWER\") and the Ohio DAM (data/documents/oepa/bowling-green/air/filename-map.yaml). Every action: and digest block is a REVIEWED TRANSCRIPTION read from each PDF's own text layer; the one digit-level claim that could not rest on OCR (the draft write-up's mismatched facility ID) was confirmed by rendering the page image at 170 dpi. No vision extraction pass was run.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:bowling-green",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "opsb",
+      "siting",
+      "letter-of-notification",
+      "behind-the-meter",
+      "natural-gas",
+      "bess",
+      "battery-storage",
+      "air-permit",
+      "pti",
+      "title-v",
+      "psd",
+      "nsr",
+      "oepa",
+      "dapc",
+      "emissions",
+      "aermod",
+      "air-toxics",
+      "bowling-green",
+      "wood-county",
+      "data-center",
+      "meta",
+      "williams",
+      "hb15",
+      "self-generation",
+      "pjm",
+      "access-blocked"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/grid/bowling-green/apollo-power-generation-facility.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/bowling-green/P0139272.pti.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/bowling-green/P0139272.draft-pti.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/bowling-green/P0139272.completeness.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/power-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "af70fc50b73336bf1ca3a3e8ab4a9ea0450d28f5ae7403870e3d81c943d13c78",
+      "size_bytes": 103608,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Five primary documents across two agencies, plus two blocked routes recorded as per-source negatives. SITING: the OPSB Staff Report of Investigation in case 25-0973-EL-BLN (report date 2026-01-27, DIS-stamped 1/27/2026, 26 pp incl. cover letter and project maps), captured 2026-08-01 from WTOL-11's mirror because the issuing docket system dis.puc.state.oh.us serves an F5/BIG-IP JavaScript bot-challenge to automated retrieval — the custody chain runs through a news organization and that is stated in data/documents/grid/bowling-green/filename-map.yaml. AIR: the whole Ohio EPA DAPC permit-to-install chain for facility 0387022027 / permit P0139272 — the application completeness letter (2025-12-08), the draft permit noticed for comment (2026-03-05, with the Permit Strategy Write-Up bound in), Ohio EPA's own public information session and hearing deck (2026-04-08), and the FINAL permit (2026-06-02, with a 42-comment Response to Comments) — retrieved 2026-08-01 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov, searched by Entity Name \"WILL-POWER\") and the Ohio DAM (data/documents/oepa/bowling-green/air/filename-map.yaml). Every action: and digest block is a REVIEWED TRANSCRIPTION read from each PDF's own text layer; the one digit-level claim that could not rest on OCR (the draft write-up's mismatched facility ID) was confirmed by rendering the page image at 170 dpi. No vision extraction pass was run.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "bowling-green-water-watch",
+    "title": "Bowling Green — Standing Water Watch + NPDES 2PD00009 / PWS OH8700311 Instrument Set (Extractions)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Three primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00009*TD / application OH0024139 — the *TD renewal as issued (action date 2022-03-28, effective 2022-05-01, expires 2027-04-30) and its Fact Sheet Regarding an NPDES Permit to Discharge (Public Notice 22-02-025) — both fetched from the Ohio DAM 2026-08-01 (data/documents/oepa/bowling-green/filename-map.yaml). The City of Bowling Green's 2025 Drinking Water Consumer Confidence Report, PWS OH8700311, fetched from the City's own CivicPlus DocumentCenter 2026-08-01 (data/documents/bowling-green/drinking-water/filename-map.yaml). Both permit: blocks are REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text layer — these are digitally generated documents, not scans, and no vision pass was run. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0024139/FRS 110002321005 and for PWS OH8700311 and OH8752212; eff_rest_services.get_effluent_chart for the DMR series; cwa_rest_services.get_facility_info over Wood County FIPS 39173 for the construction general-permit sweep), read 2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:bowling-green",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "sdwa",
+      "oepa",
+      "bowling-green",
+      "wood-county",
+      "portage-river",
+      "poe-ditch",
+      "maumee",
+      "phosphorus",
+      "mbas",
+      "surfactants",
+      "snc",
+      "cso",
+      "tmdl",
+      "7q10",
+      "dilution",
+      "enforcement",
+      "construction-stormwater",
+      "cgp",
+      "two-basins"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/bowling-green/2PD00009.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/water-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "7e93a14b74eec15ea91872162e7a9e54606cffd788c0858a2ba7199aba9aec25",
+      "size_bytes": 83442,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Three primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00009*TD / application OH0024139 — the *TD renewal as issued (action date 2022-03-28, effective 2022-05-01, expires 2027-04-30) and its Fact Sheet Regarding an NPDES Permit to Discharge (Public Notice 22-02-025) — both fetched from the Ohio DAM 2026-08-01 (data/documents/oepa/bowling-green/filename-map.yaml). The City of Bowling Green's 2025 Drinking Water Consumer Confidence Report, PWS OH8700311, fetched from the City's own CivicPlus DocumentCenter 2026-08-01 (data/documents/bowling-green/drinking-water/filename-map.yaml). Both permit: blocks are REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text layer — these are digitally generated documents, not scans, and no vision pass was run. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0024139/FRS 110002321005 and for PWS OH8700311 and OH8752212; eff_rest_services.get_effluent_chart for the DMR series; cwa_rest_services.get_facility_info over Wood County FIPS 39173 for the construction general-permit sweep), read 2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "data-centers",
     "title": "Per-Site Data-Center Activity Register",
     "scope": "extracted",
@@ -114,8 +280,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9619bd306d379ff70c9a224c584f3d88e85d4602e08b744e6a10afd2493282ae",
-      "size_bytes": 209440,
+      "sha256": "b1a6b39e1f8b463bf45f5de493088a99eb118f5acf9137dd6b04c38a7c31229e",
+      "size_bytes": 211827,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,

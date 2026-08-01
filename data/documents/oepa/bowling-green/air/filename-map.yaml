@@ -1,0 +1,160 @@
+# Capture / alias manifest — the Apollo air-permit chain, Ohio EPA DAPC, issue #1437.
+#
+# Four documents covering the whole permit-to-install chain for Will-Power OH LLC -
+# Apollo, Facility ID 0387022027, permit P0139272: the completeness letter, the
+# draft PTI, Ohio EPA's own public-hearing deck, and the final PTI.
+#
+# Raw bytes are never edited. Three of the four come from Ohio EPA's eDocument
+# public portal, which serves documents by numeric document ID with no filename in
+# the response (no Content-Disposition header), so the docid IS the as-served
+# identity and the file is named for it; the canonical name is recorded beside it.
+#
+# The `content_verified` date is read from each file's OWN text layer (the issue
+# line on the cover letter, the slide header), never from the URL or the fetch time.
+#
+# evidence: native_text = PDF text layer (pdftotext -layout) confirms the identity
+#           + date quoted below.
+meta:
+  subject: >-
+    The Ohio EPA air permit-to-install chain for the Apollo Power Generation
+    Facility (Will-Power OH LLC), 11902 Middleton Pike, Bowling Green, Wood County
+    — application through final issuance (issue #1437, epic #1433)
+  collection: oepa/bowling-green/air/
+  captured_by: issue #1437 (epic #1433, readiness(bowling-green) — the power instrument)
+  generated_at: '2026-08-01'
+  policy: >-
+    non-destructive — as-served bytes. Ohio EPA's eDocument portal serves no
+    filename, so `edoc-<docid>.pdf` preserves the server's own document identity;
+    the DAM-served hearing deck keeps its real as-served name.
+
+  scope_warning: >-
+    THIS SUBDIRECTORY IS A DIFFERENT FACILITY FROM ITS PARENT. `oepa/bowling-green/`
+    holds the CITY's wastewater instrument (NPDES 2PD00009, Bowling Green Water
+    Pollution Control, 901 N. Dunbridge Rd — see the filename-map one level up, and
+    its own WPC-vs-WTP conflation warning). `oepa/bowling-green/air/` holds a
+    PRIVATE generator's air instrument (Will-Power OH LLC - Apollo, 11902 Middleton
+    Pike, Middleton Township) which shares nothing with the city plant but the
+    county and the agency. Do not let the shared parent directory imply a shared
+    facility, operator, or permit family.
+
+  premise_correction: >-
+    ISSUE #1437 CARRIES THE AIR CHAIN AS `[open]` — "Issuance of the final permit is
+    pending" — AND IT IS NOT. The final PTI issued 2026-06-02 and is captured here.
+    The OPSB Staff Report (2026-01-27) and Ohio EPA's hearing deck (2026-04-08) were
+    both accurate when written; the record moved after them. What remains genuinely
+    open is the TITLE V operating permit, which the permittee must apply for within
+    twelve months of commencing commercial operation (~2027 on the applicant's own
+    schedule) — that watch stays live and is registered in
+    data/extracted/bowling-green/power-watch.yaml.
+
+  identifiers:
+    facility_id: '0387022027'        # Ohio EPA premise/facility ID
+    permit_number: P0139272
+    application_numbers: [A0080762, A0081069]
+    district_office: Ohio EPA DAPC, Northwest District Office, 347 N. Dunbridge Rd., Bowling Green
+    portal: https://edocpub.epa.ohio.gov/publicportal/edochome.aspx  # search by Entity Name "WILL-POWER"
+
+documents:
+  - filename: edoc-3938595.pdf
+    canonical: P0139272-application-completeness-letter-2025-12-08.pdf
+    title: >-
+      Letter: PTI/PTIO application preliminarily and administratively complete —
+      Will-Power OH LLC - Apollo, Facility ID 0387022027, P0139272 received
+      12/05/2025
+    issuer: Ohio EPA, Division of Air Pollution Control, Northwest District Office (Clinton Reed)
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3938595
+    edoc_docid: 3938595
+    edoc_doc_type: CORRESPONDENCE
+    sha256: 751f34e3cdbe57890b25303da9d8e45ad9df6d605f8a56fb4ff811751264938c
+    bytes: 175815
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-08-01'
+    content_verified: '2025-12-08'   # letter date line, p. 1: "December 8, 2025"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Dates the application (received 12/05/2025) and the completeness finding
+      (12/08/2025), and is the document that explains the "construction started
+      before the permit" complaint later raised in the public comments: it tells the
+      applicant that "Some site preparation activities can be undertaken prior to
+      obtaining a final PTI or PTIO," citing O.A.C. 3745-31-33. Addressed to Andy
+      Woerner, Will-Power OH LLC, 2000 Commerce Dr., Pittsburgh, PA 15275.
+
+  - filename: edoc-4032135.pdf
+    canonical: P0139272-draft-permit-to-install-2026-03-05.pdf
+    title: >-
+      DRAFT Air Pollution Permit-to-Install — Will-Power OH LLC - Apollo, Facility
+      ID 0387022027, Permit P0139272, Initial Installation
+    issuer: Ohio EPA, Division of Air Pollution Control
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4032135
+    edoc_docid: 4032135
+    edoc_doc_type: DRAFT FOR PUBLIC COMMENT
+    sha256: 10f51f375c9af002cbf893e27729d55a54944ad933ee3e4347cbe259bcafa4d3
+    bytes: 20287707
+    content_type: application/pdf
+    pages: 88
+    fetched_at: '2026-08-01'
+    content_verified: '2026-03-05'   # cover letter date block, p. 1: "03/05/2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The draft noticed for public comment, with the Permit Strategy Write-Up (PSWU)
+      bound in. This is the document the 42 comment topics were filed against, and
+      it is the one that contains the line-heater count typo Ohio EPA conceded at
+      Response 23 of the final permit (the PSWU narrative said 21 sources, its Table
+      1 said 22; 22 is correct). Kept alongside the final so the delta is readable
+      rather than asserted. Page images are scanned rather than digitally generated,
+      which is why this file is an order of magnitude larger than the final.
+
+  - filename: 042026-Will-Power-OH-LLC-Apollo-PTIHearing.pdf
+    canonical: P0139272-public-information-session-and-hearing-deck-2026-04-08.pdf
+    title: >-
+      Public Information Session and Hearing, Draft Air Permit-to-Install —
+      Will-Power OH LLC - Apollo, April 8, 2026
+    issuer: Ohio EPA, Division of Air Pollution Control (Clint Reed, NWDO; Max Moore, Communications)
+    source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/47/citizen/042026-Will-Power-OH-LLC-Apollo-PTIHearing.pdf
+    sha256: 239f6d1acdbfe88291b6063d93522c52e52e4b043a3642104c97f95881904276
+    bytes: 1166926
+    content_type: application/pdf
+    pages: 17
+    fetched_at: '2026-08-01'
+    content_verified: '2026-04-08'   # title slide: "Will-Power OH LLC - Apollo / April 8, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Ohio EPA's own hearing deck — the agency's summary of the equipment count
+      (6 RICE engines / 21 turbines / 2 diesel emergency engines / 22 line heaters),
+      its permit-emissions table in tons per year, and the process schedule. NOTE the
+      comment-deadline slide says "through close of business April 15, 2026"; the
+      final permit's Response to Comments records that the period was EXTENDED to
+      May 1 (Response 36). The deck is correct as of the hearing date and stale
+      thereafter — do not cite April 15 as the close.
+
+  - filename: edoc-4139063.pdf
+    canonical: P0139272-final-permit-to-install-2026-06-02.pdf
+    title: >-
+      FINAL Air Pollution Permit-to-Install — Will-Power OH LLC - Apollo, Facility
+      ID 0387022027, Permit P0139272, Initial Installation, with Response to Comments
+    issuer: Ohio EPA (John Logue, Director; Robert Hodanbosi, DAPC)
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4139063
+    edoc_docid: 4139063
+    edoc_doc_type: APPROVAL OR ACKNOWLEDGEMENT
+    sha256: c675c5d93d394d2d5e05d07be564a9c3f2507f0c597a00514b662fd5a2ed24b3
+    bytes: 1320900
+    content_type: application/pdf
+    pages: 101
+    fetched_at: '2026-08-01'
+    content_verified: '2026-06-02'   # authorization block: "Issued: 06/02/2026 / Effective: 06/02/2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The operative air instrument. Entered into the Director's Journal 06/02/2026;
+      permit fee $6,672.00. Two distinct halves, and they are cited differently: the
+      RESPONSE TO COMMENTS (42 numbered comments across 10 topics, with Ohio EPA's
+      replies) is the agency's account of the public record and the closest thing
+      available to the opposition file, since the OPSB docket that holds the siting
+      comments is access-blocked; the PERMIT proper (standard terms, facility-wide
+      terms, then five emissions-unit groups) carries the enforceable limits. A
+      comment is a member of the public's assertion, not a finding — quote the
+      comment as a comment and the response as the agency's.

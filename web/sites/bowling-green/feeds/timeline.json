@@ -1,1 +1,112 @@
-[]
+[
+  {
+    "date": "2022-02-22",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PD00009*TD (Bowling Green Water Pollution Control (WPC)) — public notice",
+    "ref": "2PD00009*TD",
+    "parties": [
+      "City of Bowling Green, 304 North Church Street, Bowling Green, OH 43402",
+      "Bowling Green Water Pollution Control (WPC)"
+    ],
+    "detail": "action renewal; receiving Poe Ditch",
+    "source": "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2022-03-25",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PD00009*TD (Bowling Green Water Pollution Control (WPC)) — comment period ends",
+    "ref": "2PD00009*TD",
+    "parties": [
+      "City of Bowling Green, 304 North Church Street, Bowling Green, OH 43402",
+      "Bowling Green Water Pollution Control (WPC)"
+    ],
+    "detail": "",
+    "source": "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-08",
+    "category": "epa_permit_action",
+    "title": "Air Permit-to-Install (Division of Air Pollution Control), Northwest District Office P0139272 — application preliminarily and administratively complete (Apollo Power Generation Facility)",
+    "ref": "P0139272",
+    "parties": [
+      "Will-Power OH LLC - Apollo",
+      "Andy Woerner"
+    ],
+    "detail": "affected air",
+    "source": "oepa/bowling-green/P0139272.completeness.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/bowling-green/P0139272.completeness.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-05",
+    "category": "epa_permit_action",
+    "title": "Air Permit-to-Install (Division of Air Pollution Control), OAC Chapter 3745-31 P0139272 — draft permit issued for public comment (Apollo Power Generation Facility)",
+    "ref": "P0139272",
+    "parties": [
+      "Will-Power OH LLC - Apollo",
+      "Andy Woerner"
+    ],
+    "detail": "affected air",
+    "source": "oepa/bowling-green/P0139272.draft-pti.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/bowling-green/P0139272.draft-pti.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-06-02",
+    "category": "epa_permit_action",
+    "title": "Air Permit-to-Install (Division of Air Pollution Control), OAC Chapter 3745-31 P0139272 — final permit issued (Apollo Power Generation Facility)",
+    "ref": "P0139272",
+    "parties": [
+      "Will-Power OH LLC - Apollo",
+      "Andy Woerner"
+    ],
+    "detail": "affected air",
+    "source": "oepa/bowling-green/P0139272.pti.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/bowling-green/P0139272.pti.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  }
+]

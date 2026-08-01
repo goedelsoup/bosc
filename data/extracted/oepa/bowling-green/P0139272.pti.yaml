@@ -1,0 +1,500 @@
+# Reviewed transcription of the FINAL Ohio EPA air Permit-to-Install for the Apollo
+# Power Generation Facility, read from the captured PDF's own embedded text layer.
+# Page citations are the document's own printed identifiers where it carries them.
+#
+# This is the instrument issue 1437 recorded as `[open]` ("Issuance of the final
+# permit is pending"). It issued 2026-06-02.
+doc_id: P0139272-c675c5d9
+source_path: data/documents/oepa/bowling-green/air/edoc-4139063.pdf
+kind: epa
+pages_read: []
+image_pages_read: []
+dpi: 0
+source_text_excerpt: >-
+  "RE: FINAL AIR POLLUTION PERMIT-TO-INSTALL / Facility ID: 0387022027 / Permit
+  Number: P0139272 / Permit Type: Initial Installation / County: Wood ... Will-Power
+  OH LLC - Apollo, 2000 Commerce Dr, Pittsburgh, PA 15275 ... Permit Description:
+  Initial Installation PTI for (6) natural gas fired engines and (21) natural gas
+  fired turbines. ... Permit Fee $6,672.00 ... Issue Date: 06/02/2026 / Effective
+  Date: 06/02/2026 ... Entered into the Journal of the Director on: Date: 06/02/2026
+  ... John Logue, Director ... 101 pages"
+
+action:
+  confidence: high
+  warnings:
+    - >-
+      DO NOT CONFUSE THIS FACILITY WITH THE CITY PLANT FILED ONE DIRECTORY UP. This
+      is Will-Power OH LLC - Apollo, a private 350 MW behind-the-meter generating
+      station at 11902 Middleton Pike in Middleton Township. Ohio EPA facility ID
+      0387022027. The NPDES records at data/extracted/oepa/bowling-green/2PD00009*
+      are the CITY of Bowling Green's wastewater plant at 901 N. Dunbridge Road.
+      Different operator, different facility, different medium, different permit
+      program — they share only the county and the agency.
+    - >-
+      THE THREE "MAJOR SOURCE" TESTS SPLIT THREE WAYS HERE AND THE MARGINS ARE THIN.
+      See major_source_status below before describing this plant as major or minor
+      anything. It is a MAJOR source for Title V, NOT major for PSD, and NOT major
+      for MACT — all at once, all correctly.
+    - >-
+      A COMMENT IS NOT A FINDING. The Response to Comments block below reproduces
+      what members of the public asserted and what Ohio EPA answered. Neither side's
+      assertion is adopted here as fact. Where a response states an agency
+      determination (the single-source determination, the PSD threshold arithmetic),
+      that determination is the agency's and is tagged as such.
+
+  agency: Ohio EPA
+  program: Air Permit-to-Install (Division of Air Pollution Control), OAC Chapter 3745-31
+  permit_no: P0139272
+  facility_id: '0387022027'
+  application_nos: [A0080762, A0081069]
+  action: final permit issued
+  action_date: '2026-06-02'
+  effective_date: '2026-06-02'
+  expiration_date: null
+  permit_type: Initial Installation
+  permit_fee_usd: 6672.00
+  signed_by: John Logue, Director, Ohio EPA — entered into the Journal of the Director 06/02/2026
+  applicant: Will-Power OH LLC - Apollo
+  applicant_address: 2000 Commerce Dr, Pittsburgh, PA 15275
+  contact_name: Andy Woerner
+  project_name: Apollo Power Generation Facility
+  site_address: 11902 Middleton Pike, Bowling Green, OH 43402 (Middleton Township, Wood County)
+  district_office: Ohio EPA DAPC, Northwest District Office, 347 N. Dunbridge Rd., Bowling Green
+  affected_resource: air
+  parcel_ids: []
+  permit_description: >-
+    "Initial Installation PTI for (6) natural gas fired engines and (21) natural gas
+    fired turbines."
+  siting_case: 25-0973-EL-BLN — OPSB Condition 27 requires this permit to be filed on that docket upon receipt
+  note: >-
+    The operative air instrument for the Apollo plant, superseding the draft noticed
+    2026-03-05. Appealable to the Environmental Review Appeals Commission within 30
+    days of notice under R.C. 3745.04, on a $70 filing fee. Whether an appeal was
+    taken is not established here.
+
+# --- The permit cover's own regulatory checklist ------------------------------
+regulatory_applicability:
+  tag: '[verified]'
+  note: >-
+    Read verbatim off the yes/no checklist printed on the permit's cover letter. The
+    same checklist appears identically on the draft, so none of it changed between
+    draft and final.
+  toxic_review: true
+  psd: false
+  synthetic_minor_to_avoid_major_nsr: false
+  cems: true
+  mact_gact: true
+  nsps: true
+  neshaps: false
+  netting: false
+  major_non_attainment: false
+  modeling_submitted: true
+  major_ghg: false
+  synthetic_minor_to_avoid_major_ghg: false
+
+major_source_status:
+  tag: '[verified]'
+  title_v: >-
+    MAJOR. Standard Term 12 requires the permittee "to apply for a Title V permit
+    pursuant to OAC Chapter 3745-77" and to "submit a complete Title V permit
+    application ... within twelve months after commencing operation of the emissions
+    units covered by this permit." Emissions-unit Term (4) states plainly: "This
+    permit is for an emissions unit located at a Title V facility." The OPSB Staff
+    Report says the same: "The proposed project would be classified as a major
+    emission source under the Ohio EPA Title V Operating Permit program."
+  psd: >-
+    NOT MAJOR. Response 21: "For this facility to be subject to PSD, the potential to
+    emit must be over 250 tpy of a single criteria pollutant. The facility has the
+    potential to emit 234.62 tons of CO, the highest among all criteria pollutants."
+    Wood County is in attainment or unclassifiable for all regulated pollutants, so
+    NSR applies through PSD rather than nonattainment NSR.
+  mact: >-
+    NOT MAJOR. Response 15: "Apollo is a stationary source that does not meet the
+    definition of a major stationary source for PSD or Maximum Available Control
+    Technology (MACT)." The controlled PTE for total HAPs is 24.40 tpy, against the
+    25 tpy total-HAP major threshold recited in the OPSB Staff Report's footnote 17.
+  margins:
+    tag: '[inference]'
+    statement: >-
+      The arithmetic, which no source states: the facility's highest criteria-
+      pollutant PTE clears the 250 tpy PSD threshold by 15.38 tpy — 6.2% of the
+      threshold — and its total-HAP PTE clears the 25 tpy MACT-major threshold by
+      0.60 tpy, or 2.4%. Both margins are the applicant's own controlled-PTE
+      calculations, accepted by the agency. Being under a threshold is lawful and
+      ordinary; being under it by 2.4% is worth stating precisely rather than
+      rounding away, because the enforceable limits are what hold it there.
+  psd_avoidance_tension:
+    tag: '[verified]'
+    statement: >-
+      THE DRAFT'S PERMIT STRATEGY WRITE-UP AND THE FINAL'S RESPONSE TO COMMENTS
+      DESCRIBE THE SAME LIMITS DIFFERENTLY, AND BOTH ARE QUOTED HERE RATHER THAN
+      RECONCILED. The write-up bound into the draft says: "Will-Power requested
+      short-term and long-term BAT limits for NOX, CO and VOC to ensure their
+      controlled PTE is legally and practicably enforceable for PSD avoidance."
+      Response 21 to the comments says: "Will-Power is not taking synthetic minor
+      restrictions, nor is the draft PTI a synthetic minor permit." These are
+      reconcilable as a matter of art — a synthetic minor is a restriction that pulls
+      an otherwise-major PTE below a threshold, whereas here the controlled PTE is
+      said to be below 250 tpy already and the limits make that enforceable — and the
+      permit cover's own checklist marks "SYNTHETIC MINOR TO AVOID MAJOR NSR: No."
+      But the applicant's stated purpose for requesting the limits was, in the
+      agency's own write-up, PSD avoidance. Both sentences are the agency's. Report
+      both.
+
+# --- What it is permitted to emit ---------------------------------------------
+controlled_pte_tpy:
+  tag: '[verified]'
+  source: >-
+    Table 1 "Controlled PTE (TPY)" in the Permit Strategy Write-Up bound into the
+    DRAFT permit (data/documents/oepa/bowling-green/air/edoc-4032135.pdf, p. 3). The
+    final permit does not reprint the table, but Response 21 confirms the CO total
+    (234.62) unchanged, and Ohio EPA's own hearing deck of 2026-04-08 reprints the
+    NOx / CO / PM10-2.5 / VOC / SO2 / HAP row identically. The figures are stated as
+    "taking into account the SCR and oxidation catalyst systems on the 27 permitted
+    emissions units, 40 startups and 40 shutdowns per year per permitted emissions
+    unit, and 500 hours per year of operation of the emergency generators."
+  by_pollutant:
+    nox: 192.09
+    co: 234.62
+    voc: 140.57
+    pm10_pm25: 139.72
+    so2: 197.71
+    total_haps: 24.40
+    formaldehyde: 13.47
+    ammonia: 340.63
+  by_unit_group:   # tpy, in the write-up's column order NOx / CO / VOC / PM / SO2 / HAP / CH2O / NH3
+    6 Caterpillar G3520 engines:  [19.92, 19.86, 14.70,  5.76,  5.52, 11.46, 4.7400,   5.40]
+    10 Solar Titan 130 turbines:  [55.80, 81.00, 45.70, 49.70, 71.90,  3.10, 1.6000, 130.90]
+    3 Siemens SGT-A35 turbines:   [30.96, 44.07, 22.11, 24.78, 35.85,  1.53, 0.8100,  63.81]
+    6 Siemens SGT-400 turbines:   [28.26, 43.02, 24.54, 25.44, 36.84,  3.54, 2.7600,  64.98]
+    2 Siemens SGT-800 turbines:   [31.68, 33.28, 32.62, 32.80, 47.44,  4.48, 3.5400,  75.54]
+    22 de minimis line heaters:   [15.37, 12.91,  0.85,  1.17,  0.09,  0.28, 0.0200,   null]
+    3 PBR emergency engines:      [10.10,  0.48,  0.05,  0.07,  0.07, 0.009, 0.0007,   null]
+  ammonia_is_the_largest_number:
+    tag: '[inference]'
+    statement: >-
+      The single largest mass emission the facility is permitted for is 340.63 tpy of
+      AMMONIA — 45% more than the highest criteria pollutant, and it is the slip from
+      the selective catalytic reduction systems installed to control NOx. Ammonia is
+      not a criteria pollutant and does not count toward any of the three major-source
+      tests, so it appears in none of the "major source" arithmetic above. Ohio EPA
+      addressed it only as an air toxic (Response 12, Response 30): its predicted
+      one-hour maximum ground-level concentration is 30.43 µg/m3 against a maximum
+      acceptable ground-level concentration of 414.60 µg/m3, and the agency calls its
+      PTE "a very conservative estimate." The observation that the control technology
+      is the dominant mass emitter is ours; every figure is the record's.
+  emergency_engine_count_discrepancy:
+    tag: '[open]'
+    statement: >-
+      The write-up's PTE table has a row for "3 PBR Emergency Engines" (permit-by-
+      rule). The OPSB Staff Report describes TWO emergency units — "two Caterpillar
+      C32 diesel generators rated each at up to 1,000 kilowatts" — and Ohio EPA's own
+      hearing deck likewise lists "Diesel fired emergency engines (2)". Three sources,
+      two counts. The third PBR unit is not identified in anything captured (a fire
+      pump engine would be the ordinary candidate, but nothing says so). The
+      permit-by-rule units are outside this PTI's emissions-unit list — the permit
+      covers P003-P029, the 6 engines and 21 turbines — which is consistent with the
+      count differing, but does not explain it. Do not assert either count as the
+      facility's emergency-engine total. Lead APOLLO-PBR-ENGINE-COUNT.
+
+controls_and_limits:
+  tag: '[verified]'
+  controls: >-
+    Every generator engine and turbine carries selective catalytic reduction for NOx
+    and an oxidation catalyst for CO, VOC and formaldehyde. Response 26 confirms the
+    SCR obligation is a permit term: "the requirement to use an SCR on all generator
+    engines and turbines."
+  startup_shutdown:
+    statement: >-
+      "Startup and shutdown events shall each be limited to 40 events per rolling,
+      12-month period" per emissions-unit group, with separate rolling 12-month
+      tonnage caps on the startup/shutdown emissions themselves — e.g. NOx 3.32 t,
+      CO 3.31 t, VOC 2.45 t for the Caterpillar engine group; NOx 4.71 t, CO 7.17 t,
+      VOC 4.09 t for the SGT-400 group; NOx 15.84 t, CO 16.64 t, VOC 16.30 t plus an
+      SO2 cap for the larger group. The permittee must record the rolling 12-month
+      startup and shutdown counts and the rolling 12-month NOx, CO and VOC tonnages,
+      and report all exceedances.
+  cems:
+    statement: >-
+      Response 25: "NOx CEMs will be installed on multiple groups of turbines, as
+      required by 40 CFR Part 60, Subpart KKKKa. The facility is required to conduct
+      quarterly calibrations and an annual relative accuracy test audit (RATA). The
+      RATA is performed by a third-party contractor, and Ohio EPA will be onsite to
+      witness the test." CEMS is NOx-only; compliance for other pollutants is by
+      stack test. CEMS results "will be available via public records request" — not
+      published, and not real time (Response 9).
+  testing:
+    statement: >-
+      Response 27: the permit "requires emissions testing for NOx, CO, and volatile
+      organic compounds (VOCs) for all power-generating engines and turbines."
+      Response 14: each engine is tested "every 8,760 hours of operation or every
+      three years, whichever comes first," with per-unit runtime monitoring under
+      40 CFR 60.4243(b)(2)(iii).
+  federal_standards:
+    statement: >-
+      40 CFR Part 60 Subpart KKKKa (stationary combustion turbines) and Subpart JJJJ
+      (spark-ignition internal combustion engines) both apply. Response 13 notes
+      Subpart JJJJ Table 1 lets the facility elect between a 1.0 g NOx/HP-hr standard
+      and an 82 ppmvd at 15% O2 standard: "There is no direct conversion between the
+      two standards, so neither is more stringent than the other." Which one Apollo
+      elected is not stated in what was read. The write-up records that Ohio NOx RACT
+      under OAC 3745-110-03(E) and (F) does not apply, being "either less stringent
+      than or equivalent to" the federal subparts, and that the units are exempt from
+      the OAC 3745-18-06(G) SO2 limit under 3745-18-06(A) because they burn only
+      natural gas.
+  line_heaters:
+    statement: >-
+      Response 18: the 22 natural-gas line heaters "are considered de minimis because
+      each unit emits less than 10 pounds of each criteria pollutant per day, and the
+      combined emissions from all line heaters are less than 25 tons of each criteria
+      pollutant per year. The highest NOx emissions rate is 14.68 tpy from all line
+      heaters combined" (OAC 3745-15-05). Note the de minimis heaters' emissions ARE
+      carried into the facility-wide PTE table and into the dispersion modeling.
+
+air_toxics_modeling:
+  tag: '[verified]'
+  statement: >-
+    AERMOD, submitted by the applicant and independently screened by Ohio EPA.
+    Response 31: "While there were differences between Ohio EPA's and Will-Power's
+    modeling, both sets of results showed that the facility passed the dispersion
+    modeling." Response 29: historical meteorological data from the closest National
+    Weather Service station per Engineering Guide 69, with maximum potential
+    emissions including startup and shutdown, all line heaters, permit-by-rule units
+    and permitted EUs. Modeling files are available only by public records request.
+  results:   # Response 30 — the three air toxics with facility-wide PTE above 1 tpy
+    - contaminant: ammonia
+      tlv_mg_m3: 17.41
+      predicted_1hr_max_ug_m3: 30.43
+      maglc_ug_m3: 414.60
+    - contaminant: formaldehyde
+      tlv_mg_m3: 0.123
+      predicted_annual_ug_m3: 0.129
+      predicted_1hr_max_ug_m3: 12.22
+      alternative_acceptable_annual_ug_m3: 0.8
+      alternative_acceptable_1hr_ug_m3: 49
+    - contaminant: acetaldehyde
+      tlv_mg_m3: 33.20
+      predicted_1hr_max_ug_m3: 1.59
+      maglc_ug_m3: 790.36
+  formaldehyde_margin:
+    tag: '[inference]'
+    statement: >-
+      Formaldehyde is the tightest of the three by a wide margin: the predicted annual
+      concentration of 0.129 µg/m3 sits at 16% of its 0.8 µg/m3 alternative acceptable
+      concentration, and its predicted one-hour maximum of 12.22 µg/m3 at 25% of 49.
+      Ammonia is at 7% of its MAGLC and acetaldehyde at 0.2%. All three pass; the
+      ranking is arithmetic on the record's own numbers and is not stated by the
+      agency.
+
+# --- The public record the OPSB docket could not supply ------------------------
+response_to_comments:
+  tag: '[verified]'
+  what_it_is: >-
+    A 42-comment, 10-topic response block bound into the front of the final permit.
+    It is the fullest account available of public opposition to this facility,
+    because the siting docket that holds the OPSB comments is access-blocked (see
+    data/extracted/grid/bowling-green/apollo-power-generation-facility.yaml). It is
+    Ohio EPA's summary of the comments, not the comments themselves — "PDF copies of
+    the original comments in the format submitted are available upon request."
+  process:
+    public_notice_of_draft: '2026-03-05'   # published in the Ohio EPA Weekly Review
+    hearing_held: '2026-04-08'
+    comment_period_closed: '2026-05-01'
+    comment_period_days: 58
+    extension: >-
+      Response 36: "The comment period was extended from April 15 to May 1." Ohio
+      EPA's own hearing deck, printed for the 2026-04-08 session, still says comments
+      close April 15 — it predates the extension and is stale on this point. Response
+      38: the 58 days were "four additional weeks beyond what is typically required,"
+      and a second extension and further hearings were declined.
+    attendance:
+      tag: '[reference]'
+      statement: >-
+        Press accounts of the 2026-04-08 hearing give attendance as 58 people in one
+        report and approximately 100 in another. No captured primary source states an
+        attendance figure. Both numbers are secondary and they disagree.
+  the_determinations_that_matter:
+    - topic: single-source determination
+      tag: '[verified]'
+      statement: >-
+        Response 22, answering commenters who argued Apollo and the data center
+        should be permitted as one source: Ohio EPA applied the 2019 U.S. EPA
+        memorandum "Interpreting 'Adjacent' for New Source Review and Title V Source
+        Determinations in All Industries Other Than Oil and Gas," whose three
+        criteria are same industrial grouping (SIC code), common control or
+        ownership, and contiguous or adjacent properties. "Will-Power and the
+        adjacent facility do not meet all three criteria for a single-source
+        determination and, as such, cannot be considered a single source for
+        permitting and compliance purposes." The agency does not say WHICH criteria
+        fail. This is the determination that keeps a 350 MW plant built to serve one
+        customer, on land beside that customer, from being aggregated with it — and
+        it is the mechanism worth following across the network, since the same
+        posture is being replicated (see the sibling Will-Power cases below).
+    - topic: cumulative impact analysis
+      tag: '[verified]'
+      statement: >-
+        Response 33: "The projected emissions from this project did not exceed the
+        regulatory levels that would trigger PSD/NSR modeling, which includes a
+        cumulative impact analysis. Because the project remained below these
+        thresholds, the broader modeling analyses requested by commenters are not
+        required under Ohio's permitting framework." Read together with the 15.38 tpy
+        PSD margin, that is the practical consequence of the margin.
+    - topic: the data center's waste heat was not modeled
+      tag: '[verified]'
+      statement: >-
+        Response 32, answering whether the modeling accounted for a potential ambient
+        temperature increase from the neighboring data center: "The U.S. EPA-approved
+        models do not currently have the capability to incorporate forecasted
+        temperature changes into the modeling results. If needed, modeling can be
+        rerun at a future date." An acknowledged, unquantified gap — and a direct
+        cousin of the thermal-load questions this repo tracks on the water side.
+    - topic: construction before permit issuance
+      tag: '[verified]'
+      statement: >-
+        Response 37, answering commenters who "referred to the project being pushed
+        forward in secret and that construction began before a permit was issued":
+        "Ohio EPA does not sign NDAs ... The facility can begin pre-construction
+        activities once an application is received and deemed complete, as outlined
+        in Ohio Administrative Code (OAC) Rule 3745-31-33." The completeness letter
+        of 2025-12-08 captured alongside this permit says the same thing to the
+        applicant directly. So site preparation from December 2025 onward was
+        lawful under the cited rule. The comment is recorded as a comment; the rule
+        citation is the agency's answer, and neither is a finding about what was
+        actually built when.
+    - topic: air monitoring
+      tag: '[verified]'
+      statement: >-
+        Response 8: "While the Will-Power facility does not currently have a
+        dedicated SLAMS monitor, the surrounding regional monitors, including the
+        Bowling Green air monitoring site at 347 N. Dunbridge Road (AQS ID
+        39-173-0003), are part of a network designed to evaluate compliance with
+        NAAQS." Fenceline or real-time monitoring is "not required under current
+        federal or state regulations unless specific risk-based criteria are met."
+        Note the monitor's address is Ohio EPA's own Northwest District Office —
+        the nearest regulatory monitor to the plant sits at the agency's field
+        office in the city, not near the source.
+    - topic: pipelines are outside this permit
+      tag: '[verified]'
+      statement: >-
+        Response 2: "The natural gas pipelines that serve Williams are not owned by
+        Williams. The companies that own each pipeline have been appropriately
+        permitted by Ohio EPA, Division of Air Pollution Control. A leak detection
+        program for a natural gas-fired power plant is not required, since natural
+        gas is used only as a fuel source." This is the only captured statement
+        bearing on who owns the gas supply, and it is a negative — not Williams — not
+        an identification. The supplier remains open.
+    - topic: CO2
+      tag: '[verified]'
+      statement: >-
+        Response 35: "Ohio EPA has limited authority for regulating CO2 emissions
+        under the Clean Air Act. Projects subject to CO2 permitting regulations are
+        those considered major sources under PSD." The permit therefore contains no
+        CO2 limit, and no captured primary source states the facility's CO2 or CO2e
+        emissions. The 2.5 million tons per year CO2e figure that appears in press
+        coverage of the hearing is a commenter's estimate reported secondhand and is
+        NOT in the permit, the write-up's PTE table, or the hearing deck. Do not cite
+        it as a permitted or agency figure. Lead APOLLO-CO2E-BASIS.
+    - topic: construction stormwater
+      tag: '[verified]'
+      statement: >-
+        Responses 34 and 41: "Ohio EPA's Division of Surface Water issued a
+        Construction Stormwater Permit (2GC08564*AG) to the Will-Power site on
+        Jan. 4, 2026." This is an Ohio-format coverage number. The ECHO sweep already
+        recorded in data/extracted/bowling-green/water-watch.yaml carries an ICIS-
+        format construction-stormwater coverage OHGC17963 under the name APOLLO POWER
+        GEN. Whether 2GC08564*AG and OHGC17963 are the same coverage under two
+        agencies' numbering is NOT established by anything captured, and they are not
+        asserted to be the same. Lead APOLLO-CGP-NUMBER-RECONCILIATION.
+  what_the_agency_put_out_of_scope:
+    tag: '[verified]'
+    statement: >-
+      Response 42 lists the concerns Ohio EPA declined as outside its permitting
+      authority: "zoning issues, property values, data centers, tax abatements,
+      utility costs, water usage, noise pollution, light pollution, and a lack of
+      trust in officials and the permitting process," adding that "Overall, these
+      submissions reflect significant apprehension with the proposed facility." The
+      hearing deck put the same list on a slide before any testimony was taken.
+      Recording this is not a criticism of the agency — an air permit is an air
+      permit — but it is the record of where the objections went: OPSB's accelerated
+      track took no testimony at all, and Ohio EPA's process took testimony and
+      routed most of its subject matter elsewhere.
+
+# --- The fleet this facility belongs to ---------------------------------------
+sibling_facilities:
+  tag: '[verified]'
+  statement: >-
+    The same Ohio EPA eDocument search that produced this permit shows Will-Power OH
+    LLC is not a single-project entity in Ohio. Its air-permit record covers four
+    facilities, three of them in Licking County. Captured as a search result listing,
+    not as documents; the sibling permits themselves are not held in this corpus.
+  facilities:
+    - name: Will-Power OH LLC - Apollo
+      county: Wood
+      facility_id: '0387022027'
+      permits: [{no: P0139272, date: '2026-06-02', doc_type: APPROVAL OR ACKNOWLEDGEMENT}]
+    - name: Will-Power OH LLC - Plato North
+      county: Licking
+      facility_id: '0145000615'
+      permits:
+        - {no: P0137960, date: '2025-11-13', doc_type: APPROVAL OR ACKNOWLEDGEMENT}
+        - {no: P0140568, date: '2026-07-14', doc_type: APPROVAL OR ACKNOWLEDGEMENT}
+    - name: Will-Power OH LLC - Plato South
+      county: Licking
+      facility_id: '0145000614'
+      permits:
+        - {no: P0137838, date: '2025-11-13', doc_type: APPROVAL OR ACKNOWLEDGEMENT}
+        - {no: P0137838, date: '2026-06-08', doc_type: DENIAL OR REVOCATION OR NON-APPROVAL}
+        - {no: P0140567, date: '2026-07-14', doc_type: APPROVAL OR ACKNOWLEDGEMENT}
+    - name: Will-Power OH, LLC - STY
+      county: Licking
+      facility_id: '0145000624'
+      permits: [{no: null, date: '2026-02-27', doc_type: CORRESPONDENCE}]
+  corroborating_siting_cases:
+    tag: '[verified]'
+    statement: >-
+      OPSB's gas-fleet case table (produced 2026-07-22) independently lists an "STY
+      Power Generation Facility" at 250 MW in Licking County, case 26-0169-EL-BLN,
+      approved 2026-06-25 — the same accelerated letter-of-notification track as
+      Apollo. The same table carries three further Licking County behind-the-meter
+      projects by other developers (PowerConneX I 120 MW, Socrates North 200 MW,
+      PowerConneX II 216 MW) and Bluegrass at 800 MW in Fayette County.
+  why_it_is_recorded_here:
+    tag: '[inference]'
+    statement: >-
+      Apollo is not a one-off, and the single-source determination at Response 22 is
+      the reusable part. A developer standing up dedicated behind-the-meter
+      generation beside a hyperscale customer, permitted separately from that
+      customer, on an accelerated siting track, in more than one Ohio county at once,
+      is a pattern rather than a project — and the Plato South sequence (approved
+      2025-11-13, a DENIAL OR REVOCATION action on 2026-06-08, re-approved under a new
+      permit number 2026-07-14) is the one place the pattern visibly stumbled. What
+      happened at Plato South is NOT established; only the eDoc action labels and
+      dates were read, not the documents. Lead WILL-POWER-PLATO-SOUTH-REVOCATION.
+
+open_items:
+  - id: APOLLO-TITLE-V
+    tag: '[open]'
+    statement: >-
+      The Title V operating permit application is due within twelve months after
+      commencing operation. On the applicant's own OPSB schedule that puts partial
+      operation around July 2027 and the application due by roughly mid-2028. Nothing
+      exists to capture yet; this is the standing watch, registered in
+      data/extracted/bowling-green/power-watch.yaml.
+  - id: APOLLO-PTI-DOCKETED
+    tag: '[open]'
+    statement: >-
+      OPSB Condition 27 required this permit to be filed on the siting docket upon
+      receipt. Whether that happened cannot be checked because the docket is
+      access-blocked. Not a compliance finding in either direction.
+  - id: APOLLO-JJJJ-ELECTION
+    tag: '[open]'
+    statement: >-
+      Which of the two Subpart JJJJ NOx standards the reciprocating engines comply
+      with (1.0 g/HP-hr or 82 ppmvd at 15% O2) is not stated in what was read; it
+      would be in the emissions-unit terms for group P003-P008.
+  - id: APOLLO-ERAC-APPEAL
+    tag: '[open]'
+    statement: >-
+      Whether any party appealed the final PTI to the Environmental Review Appeals
+      Commission within the 30-day window (i.e. by roughly 2026-07-02) is not
+      established.

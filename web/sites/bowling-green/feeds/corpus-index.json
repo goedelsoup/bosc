@@ -1,13 +1,68 @@
 [
   {
+    "id": "artifact/andy-woerner",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Andy Woerner",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "artifact/city-of-bowling-green",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Bowling Green",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 13,
+    "updated": "2026-08-01"
+  },
+  {
+    "id": "artifact/npdes-2pd00009",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Bowling Green Water Pollution Control",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 13,
+    "updated": "2026-08-01"
+  },
+  {
+    "id": "artifact/poe-ditch",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Poe Ditch",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 13,
+    "updated": "2026-08-01"
+  },
+  {
     "id": "artifact/site-bowling-green",
     "node_class": "artifact",
     "kind": "site",
     "label": "Bowling Green · Middleton Twp",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 8,
     "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/will-power-oh-llc-apollo",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Will-Power OH LLC - Apollo",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 14,
     "updated": null
   },
   {
@@ -866,6 +921,39 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 10,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-bowling-green--operates--npdes-2pd00009",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF BOWLING GREEN operates npdes:2PD00009",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": "2026-08-01"
+  },
+  {
+    "id": "relation/npdes-2pd00009--discharges-to--poe-ditch",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:2PD00009 discharges_to POE DITCH",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": "2026-08-01"
+  },
+  {
+    "id": "relation/will-power-oh-llc-apollo--represented-by--andy-woerner",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "WILL POWER OH LLC APOLLO represented_by ANDY WOERNER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
     "updated": null
   }
 ]
