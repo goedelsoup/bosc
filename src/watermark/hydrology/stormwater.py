@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import math
 from pathlib import Path
-from typing import TypedDict
+from typing import Literal, TypedDict
 
 import numpy as np
 import yaml
@@ -41,6 +41,8 @@ from watermark.hydrology.connectors.ssurgo import SsurgoError, dominant_hsg
 from watermark.hydrology.lowflow import low_flow_context, low_flow_for
 from watermark.hydrology.model import (
     CampusDischargeScreen,
+    ChannelFlowState,
+    ChannelFormingDischarge,
     DesignStorm,
     DischargePeak,
     HsgDrainageBasis,
@@ -50,15 +52,25 @@ from watermark.hydrology.model import (
     OutfallCapacity,
     ProvenancedValue,
     Reach,
+    ReachConveyance,
     ReachTable,
     RoutedDischarge,
     SiteFootprint,
     StormRunoff,
 )
 from watermark.hydrology.solver.curve_number import cn_for, composite_cn
+from watermark.hydrology.solver.parameters import (
+    channel_forming_return_period,
+    default_manning_n,
+    round_sig,
+)
 from watermark.hydrology.solver.parameters import peak_factor as solver_peak_factor
-from watermark.hydrology.solver.parameters import round_sig
-from watermark.hydrology.solver.routing import route
+from watermark.hydrology.solver.routing import (
+    DEFAULT_BOTTOM_WIDTH_FT,
+    DEFAULT_SIDE_SLOPE_Z,
+    normal_flow,
+    route,
+)
 from watermark.hydrology.solver.runoff import simulate_runoff
 from watermark.logging import get_logger
 from watermark.sites import active_profile
@@ -380,7 +392,9 @@ def _storm_findings(runoff: StormRunoff) -> list[HydroFinding]:
 
 # --------------------------------------------------------------------------------------
 # ASWCD-calibrated campus discharge screen (#149): composite post CN, the 60" outfall
-# capacity, and the storm peak vs Dug Run's cited 7Q10.
+# capacity, the receiving channel's channel-forming (bankfull) discharge + normal-depth
+# conveyance — the erosion signal (WS-12 / #1612) — and the storm peak vs Dug Run's cited
+# 7Q10, which is the LOW-flow / dilution framing and not a channel-stability threshold.
 # --------------------------------------------------------------------------------------
 
 
@@ -464,8 +478,28 @@ def _tributary_reach_chain(
     return chain if reached_confluence else []
 
 
+def _receiving_chain(
+    receiving_water: str, *, settings: Settings
+) -> tuple[list[tuple[NetworkNode, Reach]], ReachTable | None]:
+    """The committed reach chain carrying ``receiving_water`` to its confluence, and its table.
+
+    Resolved once per screen: the routed-discharge block (#1298) and the channel-forming /
+    conveyance blocks (WS-12 / #1612) must read the *same* chain — the first reach is where the
+    outfall enters and the whole chain is what the hydrograph travels. ``([], None)`` when the
+    committed topology or reach table is absent.
+    """
+    from watermark.hydrology import hydrograph_routing  # lazy: hydrograph_routing imports us
+
+    nodes = network.load_topology(settings=settings)
+    table = hydrograph_routing.load_reaches(settings=settings)
+    if not nodes or table is None:
+        return [], table
+    return _tributary_reach_chain(nodes, table, receiving_water), table
+
+
 def _route_campus_outfall(
     post: Hydrograph,
+    chain: list[tuple[NetworkNode, Reach]],
     receiving_water: str,
     design_return_period_yr: int,
     *,
@@ -479,13 +513,6 @@ def _route_campus_outfall(
     peak. Returns ``None`` when the committed topology/reach chain is absent (the screen still
     reports at-outfall peaks). Tier-0 screening on stated reach assumptions.
     """
-    from watermark.hydrology import hydrograph_routing  # lazy: hydrograph_routing imports us
-
-    nodes = network.load_topology(settings=settings)
-    table = hydrograph_routing.load_reaches(settings=settings)
-    if not nodes or table is None:
-        return None
-    chain = _tributary_reach_chain(nodes, table, receiving_water)
     if not chain:
         return None
 
@@ -555,6 +582,160 @@ def _route_campus_outfall(
     )
 
 
+def _channel_forming_discharge(
+    chain: list[tuple[NetworkNode, Reach]],
+    table: ReachTable | None,
+    receiving_water: str,
+    *,
+    settings: Settings,
+    live: bool,
+) -> ChannelFormingDischarge | None:
+    """The receiving channel's bankfull / effective discharge (WS-12 / #1612).
+
+    Runs the **same** Tier-0 SCS chain the campus peaks run on over the receiving tributary's own
+    committed subcatchment (``reaches.yaml``) at the cited channel-forming-recurrence design
+    storm. Numerator and denominator therefore share the rainfall distribution, the peak factor
+    and the Atlas-14 point, so the method's systematic biases largely cancel in the ratio — which
+    they cannot do in a peak-to-7Q10 ratio.
+
+    ``None`` — never a substituted figure — when the tributary's headwater carries no committed
+    catchment, or no design storm resolves at that recurrence for this site.
+    """
+    if not chain or table is None:
+        return None
+    head = chain[0][0]
+    catchment = table.catchments.get(head.id)
+    if catchment is None:
+        return None
+    rp = channel_forming_return_period(settings=settings)
+    try:
+        storm = _resolve_storm(rp, settings=settings, live=live)
+    except HydroOfflineError as exc:
+        # A site whose Atlas-14 table has no depth at the channel-forming recurrence gets no
+        # erosion denominator rather than one borrowed from another recurrence (#1604 discipline).
+        log.info("hydro.storm.no_channel_forming_depth", return_period=rp, error=str(exc))
+        return None
+    depth = storm.depth.value
+    hydrograph = simulate_runoff(
+        area_acres=catchment.area_acres.value,
+        curve_number=catchment.curve_number.value,
+        tc_hr=catchment.tc_hr.value,
+        storm_depth_in=depth,
+        settings=settings,
+    )
+    return ChannelFormingDischarge(
+        receiving_water=receiving_water,
+        node_id=head.id,
+        return_period_yr=rp,
+        storm_depth_in=round(depth, 2),
+        discharge=ProvenancedValue.derived(
+            hydrograph.peak_cfs,
+            "cfs",
+            citation=(
+                f"Bankfull / effective-discharge surrogate for {receiving_water}: the {rp}-yr "
+                f"24-hr ({depth:.2f} in) SCS peak over the committed '{head.id}' subcatchment "
+                f"(reaches.yaml — {catchment.area_acres.value:,.0f} ac, CN "
+                f"{catchment.curve_number.value:g}, Tc {catchment.tc_hr.value:g} hr), computed by "
+                "the same Tier-0 chain as the campus peaks so the two are like-for-like. The "
+                "catchment is measured at the mainstem confluence — the largest channel-forming "
+                "discharge on this tributary — so a ratio against it is a LOWER bound on what the "
+                "channel sees where the outfall actually enters."
+            ),
+            confidence="low",
+        ),
+        catchment_area_acres=catchment.area_acres,
+        curve_number=catchment.curve_number,
+        tc_hr=catchment.tc_hr,
+        method=(
+            "Tier-0 SCS-CN unit-hydrograph peak at the cited channel-forming recurrence "
+            "(tier0-parameters.yaml: bankfull recurs at ~1-2 yr on the annual-maximum series; "
+            f"{rp} yr is the conservative — largest-denominator — end of that band) over the "
+            "receiving tributary's committed contributing subcatchment. NOT a regional bankfull "
+            "regression and NOT a surveyed bankfull cross-section: it inherits the catchment's own "
+            "provenance, which for an undelineated tributary is a stated assumption."
+        ),
+    )
+
+
+def _reach_conveyance(
+    chain: list[tuple[NetworkNode, Reach]],
+    channel_forming: ChannelFormingDischarge | None,
+    design_peak_cfs: float,
+    design_return_period_yr: int,
+    receiving_water: str,
+    *,
+    settings: Settings,
+) -> ReachConveyance | None:
+    """Normal-depth conveyance of the design peak in the receiving reach's cited section (#1612).
+
+    The check the outfall screen stops short of: past the 60-inch trunk, what depth, velocity and
+    boundary shear does the peak run at in the channel it discharges into, against the
+    channel-forming (bankfull) flow that channel is adjusted to? Bankfull stage is taken
+    self-consistently — the normal depth of the channel-forming discharge in this same section —
+    because these reaches carry no surveyed cross-section. ``None`` when no chain or no
+    channel-forming discharge resolves.
+    """
+    if not chain or channel_forming is None:
+        return None
+    node, reach = chain[0]  # the reach the outfall discharges into
+    geometry_source: Literal["reach", "tier0_default"] = (
+        "reach"
+        if reach.bottom_width_ft is not None or reach.side_slope_z is not None
+        else "tier0_default"
+    )
+    bottom = reach.bottom_width_ft.value if reach.bottom_width_ft else DEFAULT_BOTTOM_WIDTH_FT
+    side_z = reach.side_slope_z.value if reach.side_slope_z else DEFAULT_SIDE_SLOPE_Z
+    n = reach.manning_n.value if reach.manning_n else default_manning_n(settings=settings)
+    slope = reach.slope.value
+
+    def _state(label: str, q: float) -> ChannelFlowState:
+        flow = normal_flow(q, slope=slope, manning_n=n, bottom_width_ft=bottom, side_slope_z=side_z)
+        return ChannelFlowState(
+            label=label,
+            discharge_cfs=round_sig(q),
+            depth_ft=round(flow.depth_ft, 2),
+            top_width_ft=round(flow.top_width_ft, 1),
+            velocity_fps=round(flow.velocity_fps, 2),
+            shear_stress_psf=round(flow.shear_stress_psf, 3),
+        )
+
+    q_bankfull = channel_forming.discharge.value
+    bankfull = _state(
+        f"bankfull ({channel_forming.return_period_yr}-yr channel-forming)", q_bankfull
+    )
+    design = _state(f"{design_return_period_yr}-yr post-development peak", design_peak_cfs)
+    geometry_note = (
+        f"section from reaches.yaml ({bottom:g} ft bottom, {side_z:g}:1 sides, n={n:g})"
+        if geometry_source == "reach"
+        else (
+            f"NO committed cross-section for this reach — the Tier-0 routing default trapezoid "
+            f"({bottom:g} ft bottom, {side_z:g}:1 sides, n={n:g}) stands in, so the absolute "
+            "depths are a screening bracket and a surveyed section is the upgrade"
+        )
+    )
+    return ReachConveyance(
+        node_id=node.id,
+        receiving_water=receiving_water,
+        slope=slope,
+        manning_n=n,
+        bottom_width_ft=bottom,
+        side_slope_z=side_z,
+        geometry_source=geometry_source,
+        bankfull=bankfull,
+        design=design,
+        within_bank=design.depth_ft <= bankfull.depth_ft,
+        method=(
+            f"Manning normal depth in the '{node.id}' reach at slope {slope:g} ft/ft — "
+            f"{geometry_note}. Bankfull stage is taken self-consistently as the normal depth of "
+            "the channel-forming discharge in this same section (no surveyed bankfull elevation "
+            "exists), so the within-bank verdict reduces to the discharge ratio; what the "
+            "velocity and boundary shear (tau = 62.4*R*S) add is the geomorphic work the flow "
+            "does, which a discharge ratio cannot express. Uniform flow — no backwater, no bend "
+            "or section variation; Tier-0 screening, not a HEC-RAS water-surface profile."
+        ),
+    )
+
+
 def screen_campus_discharge(
     *,
     settings: Settings | None = None,
@@ -566,8 +747,11 @@ def screen_campus_discharge(
 
     Computes the as-permitted composite post CN (only ``impervious_acres`` paved) alongside
     the full-buildout blanket upper bound, the pre/post/full peaks per return period, the
-    60-inch outfall's Manning full-flow capacity across an assumed slope band, and the
-    design-storm peak relative to Dug Run's cited 7Q10. Requires the committed footprint.
+    60-inch outfall's Manning full-flow capacity across an assumed slope band, the receiving
+    channel's bankfull / channel-forming discharge with the design peak read against it and a
+    normal-depth conveyance check in the cited reach section (WS-12 / #1612), and — for the
+    dilution framing only — the design-storm peak relative to Dug Run's cited 7Q10. Requires the
+    committed footprint.
     """
     settings = settings or get_settings()
     footprint = load_site_footprint(settings)
@@ -594,10 +778,14 @@ def screen_campus_discharge(
     post_tc = _scenario_tc_hr(post_imperv_frac, settings=settings)
     full_tc = _scenario_tc_hr(1.0, settings=settings)
 
+    # The channel-forming recurrence joins the reported set: the pre-vs-post pair AT that
+    # frequency is what the channel-protection criterion is read on (WS-12 / #1612), and a screen
+    # that only reported 10/25/100-yr peaks could not state it.
+    channel_forming_rp = channel_forming_return_period(settings=settings)
     peaks: list[DischargePeak] = []
     design_post: Hydrograph | None = None
     design_post_flat: Hydrograph | None = None
-    for rp in sorted({*return_periods, design_return_period_yr}):
+    for rp in sorted({*return_periods, design_return_period_yr, channel_forming_rp}):
         depth = _resolve_storm(rp, settings=settings, live=live).depth.value
         pre = simulate_runoff(
             area_acres=acres,
@@ -682,19 +870,53 @@ def screen_campus_discharge(
         note += f"; {ctx['designated_use']}"
     note += (
         "; also receives the American II WWTP outfall (NPDES 2PH00006) at a cited dilution "
-        "violation. A storm peak many times the design low flow is a channel-stability / "
-        "erosion signal — corroborated by the 2026-06-05 'check the outlet ... not releasing "
-        "sediment' inspection note — distinct from continuous-effluent dilution."
+        "violation. The peak-to-7Q10 multiple is the LOW-FLOW framing — it says the storm "
+        "arrives on a stream that at design low flow is effluent, and it belongs with the "
+        "dilution finding, not with channel stability: a storm peak is hundreds of times any "
+        "small stream's 7Q10 almost by construction. The erosion signal is the channel-forming "
+        "(bankfull) comparison and the reach conveyance check (WS-12 / #1612) — corroborated by "
+        "the 2026-06-05 'check the outlet ... not releasing sediment' inspection note."
     )
+
+    # The committed reach chain, resolved ONCE: the routed-discharge block and the
+    # channel-forming / conveyance blocks must read the same chain (its first reach is where the
+    # outfall enters; the whole chain is what the hydrograph travels).
+    chain, reach_table = _receiving_chain(footprint.receiving_water, settings=settings)
 
     # Route the at-outfall design-storm hydrograph down the receiving tributary to its Ottawa
     # confluence (#1298): the receiving-water peak reflects reach travel — attenuated + lagged —
-    # not the at-outfall peak. Supplements (never softens) the at-outfall peak-to-7Q10 signal.
+    # not the at-outfall peak. Supplements (never softens) the at-outfall erosion signal.
     routed = (
         _route_campus_outfall(
-            design_post, footprint.receiving_water, design_return_period_yr, settings=settings
+            design_post,
+            chain,
+            footprint.receiving_water,
+            design_return_period_yr,
+            settings=settings,
         )
         if design_post is not None
+        else None
+    )
+
+    # WS-12 / #1612 — the erosion denominator. Channel stability is set by the channel-forming
+    # (bankfull / effective) discharge, not by the 7-day 10-year LOW flow, so the erosion signal
+    # is anchored here and the conveyance check carries it into the receiving channel's section.
+    channel_forming = _channel_forming_discharge(
+        chain, reach_table, footprint.receiving_water, settings=settings, live=live
+    )
+    cf_ratio: float | None = None
+    if channel_forming is not None and channel_forming.discharge.value > 0 and design_peak:
+        cf_ratio = round(design_peak.post_peak_cfs / channel_forming.discharge.value, 2)
+    conveyance = (
+        _reach_conveyance(
+            chain,
+            channel_forming,
+            design_peak.post_peak_cfs,
+            design_return_period_yr,
+            footprint.receiving_water,
+            settings=settings,
+        )
+        if design_peak is not None
         else None
     )
 
@@ -722,6 +944,9 @@ def screen_campus_discharge(
         receiving_7q10=seven_q10,
         receiving_note=note,
         peak_to_7q10_ratio=ratio,
+        channel_forming=channel_forming,
+        peak_to_channel_forming_ratio=cf_ratio,
+        reach_conveyance=conveyance,
         detention_design_shown=footprint.detention_design_shown,
         routed_discharge=routed,
         basin_chronology_note=(
@@ -749,10 +974,17 @@ def screen_campus_discharge(
             "Type-II 24-hr distribution built at its published 6-minute resolution (NEH-630 "
             "Ch. 4 630.0407) and the unit hydrograph runs at the SCS unit duration "
             f"D <= 0.133*Tc on the peak factor {resolved_peak_factor:g}; outfall capacity = Manning "
-            "full-flow (n=0.013) across an assumed slope band; receiving 7Q10 cited from the "
-            "OEPA NPDES fact sheet (2PH00006). The receiving-water peak is additionally routed "
-            "down the cited reach chain to the Ottawa confluence (Tier-0 Muskingum-Cunge; see "
-            "routed_discharge) so it reflects reach travel, not only the at-outfall peak."
+            "full-flow (n=0.013) across an assumed slope band. "
+            "The EROSION signal is anchored to the receiving channel's channel-forming (bankfull "
+            f"/ {channel_forming_rp}-yr) discharge, not to the 7Q10: `channel_forming` runs this "
+            "same SCS chain over the receiving tributary's committed contributing subcatchment "
+            "(reaches.yaml) so numerator and denominator share the method, and `reach_conveyance` "
+            "carries the design peak into that reach's cited section as Manning normal depth "
+            "(depth / velocity / boundary shear vs the bankfull flow). The cited 7Q10 (OEPA NPDES "
+            "fact sheet 2PH00006) is retained for the LOW-FLOW / dilution framing only. The "
+            "receiving-water peak is additionally routed down the cited reach chain to the Ottawa "
+            "confluence (Tier-0 Muskingum-Cunge; see routed_discharge) so it reflects reach "
+            "travel, not only the at-outfall peak."
         ),
         caveats=[
             "Screening-grade — the receiving-water peak is a Tier-0 Muskingum-Cunge reach route "
@@ -775,14 +1007,73 @@ def screen_campus_discharge(
             "The outfall's entry point on the receiving tributary is not in the record, so the "
             "routed channel length is an upper bound on travel — the routed attenuation/lag are "
             "upper bounds and the confluence peak a lower bound; reaches between the outfall and "
-            "the confluence see intermediate, larger peaks (the at-outfall peak-to-7Q10 ratio, "
-            "unattenuated, is the headline erosion signal this routing does not soften).",
+            "the confluence see intermediate, larger peaks (the unattenuated at-outfall peak is "
+            "what the channel-forming comparison is read on, and this routing does not soften it).",
+            "The peak-to-7Q10 multiple is the LOW-FLOW / dilution framing, NOT the erosion one "
+            "(WS-12 / #1612). Channel stability is governed by the channel-forming (bankfull, "
+            "effective) discharge — a moderate flow recurring at ~1-2 yr — while the 7Q10 is a "
+            "7-day 10-year LOW flow: their ratio runs to the hundreds for any flashy outfall on "
+            "any small stream and maps to no geomorphic threshold. The erosion claim now rests on "
+            "`channel_forming` / `peak_to_channel_forming_ratio` and on the pre-vs-post pair at "
+            "the channel-forming recurrence.",
+            *_channel_forming_caveats(channel_forming, conveyance),
             _peak_factor_caveat(
                 resolved_peak_factor, prof.uh_peak_factor, design_post, design_post_flat
             ),
             _drainage_condition_caveat(hsg, acres, footprint, settings=settings),
         ],
     )
+
+
+def _channel_forming_caveats(
+    channel_forming: ChannelFormingDischarge | None, conveyance: ReachConveyance | None
+) -> list[str]:
+    """What the re-anchored erosion signal rests on — and which way each assumption pushes it.
+
+    Two things a reviewer must be handed: the denominator is not a surveyed bankfull discharge
+    (it inherits the committed catchment's own provenance, which for an undelineated tributary is
+    a low-confidence assumption), and the reach section it is turned into hydraulics on may be
+    the Tier-0 default trapezoid rather than a survey. Both are stated with their **direction**
+    where the direction is knowable, rather than as generic hedges.
+    """
+    if channel_forming is None:
+        return [
+            "No channel-forming (bankfull) discharge resolves for the receiving water — its "
+            "tributary has no committed contributing subcatchment or reach chain, or no design "
+            "storm at the channel-forming recurrence. The erosion signal is therefore NOT "
+            "quantified here; the peak-to-7Q10 multiple is a low-flow statistic and does not "
+            "stand in for it. Committing a delineated catchment for the receiving tributary is "
+            "the unlock (WS-12 / #1612)."
+        ]
+    cf = channel_forming
+    area = cf.catchment_area_acres
+    out = [
+        f"The erosion denominator — {cf.receiving_water}'s channel-forming discharge, "
+        f"{cf.discharge.value:,.0f} cfs — is a SURROGATE, not a survey: the {cf.return_period_yr}-yr "
+        f"SCS peak over the committed '{cf.node_id}' subcatchment "
+        f"({area.value:,.0f} ac, source: {area.source}, confidence: {area.confidence}). It moves "
+        "with that catchment, so a committed delineation (or a regional bankfull regression / a "
+        "surveyed cross-section) would sharpen it. Two knowable directions: the recurrence is "
+        "pinned at the CONSERVATIVE end of the published 1-2 yr bankfull band, which maximizes "
+        "the denominator and so understates every ratio against it; and the catchment is taken "
+        "at the mainstem confluence — the largest channel-forming discharge on this tributary — "
+        "while the outfall enters somewhere above it, on a smaller local drainage area, so the "
+        "reported ratio is a LOWER bound on what the channel sees at the discharge point."
+    ]
+    if conveyance is not None and conveyance.geometry_source == "tier0_default":
+        out.append(
+            f"The '{conveyance.node_id}' reach carries NO committed cross-section, so the "
+            f"conveyance check runs on the Tier-0 routing default trapezoid "
+            f"({conveyance.bottom_width_ft:g} ft bottom, {conveyance.side_slope_z:g}:1 sides, "
+            f"n={conveyance.manning_n:g}) — the same section the Muskingum-Cunge routing uses. "
+            "Its absolute depths are a screening bracket, not a stage prediction (a "
+            f"{conveyance.bankfull.depth_ft:g}-ft bankfull depth on a small tributary is a sign of "
+            "the section being too small for the committed catchment, not a finding about the "
+            "channel). Because bankfull stage is taken self-consistently in that same section, "
+            "the within-bank verdict is geometry-free; the velocity and shear are not, and a "
+            "surveyed cross-section is the upgrade."
+        )
+    return out
 
 
 def _drainage_condition_caveat(
@@ -877,6 +1168,93 @@ def _peak_factor_caveat(
     )
 
 
+def _erosion_findings(screen: CampusDischargeScreen) -> list[HydroFinding]:
+    """The re-anchored channel-stability findings (WS-12 / #1612).
+
+    Three, in the order a reviewer needs them:
+
+    ``channel-protection`` — the standard threshold. Pre vs post peak **at the channel-forming
+    recurrence**, off the same footprint: a post-development peak above the pre-development one
+    at the frequency the channel is adjusted to is the mechanism by which urbanization enlarges
+    a receiving channel. Same method, same footprint, same storm on both sides — nothing to
+    argue with but the model.
+
+    ``channel-forming-peak`` — the magnitude. The design-storm peak as a fraction of the
+    receiving channel's own bankfull / effective discharge, the denominator the 7Q10 was standing
+    in for. A LOWER bound (see the caveat: the denominator is taken at the tributary's
+    confluence, downstream of where the outfall enters).
+
+    ``receiving-channel-conveyance`` — the hydraulics. Normal depth, velocity and boundary shear
+    at the cited reach section, against the bankfull flow — the conveyance question the 60-inch
+    pipe screen stops short of.
+    """
+    findings: list[HydroFinding] = []
+    cf = screen.channel_forming
+    cfp = screen.channel_forming_peak
+    if cf is not None and cfp is not None:
+        bump = (
+            100.0 * (cfp.post_peak_cfs - cfp.pre_peak_cfs) / cfp.pre_peak_cfs
+            if cfp.pre_peak_cfs
+            else 0.0
+        )
+        findings.append(
+            HydroFinding(
+                subject="campus stormwater discharge",
+                check="channel-protection",
+                ok=cfp.post_peak_cfs <= cfp.pre_peak_cfs,
+                detail=(
+                    f"{cf.return_period_yr}-yr 24-hr storm ({cfp.depth_in:.2f} in) — the "
+                    f"channel-forming frequency: peak {cfp.pre_peak_cfs:,.0f} -> "
+                    f"{cfp.post_peak_cfs:,.0f} cfs ({bump:+.0f}%) off the same footprint, "
+                    "undetained. The channel-protection criterion is post <= pre at this "
+                    "recurrence; it is the frequent flows, not the design storm, that do the "
+                    "channel-forming work"
+                ),
+            )
+        )
+    dp = screen.design_peak
+    if cf is not None and screen.peak_to_channel_forming_ratio is not None and dp is not None:
+        findings.append(
+            HydroFinding(
+                subject=f"{cf.receiving_water} channel-forming discharge",
+                check="channel-forming-peak",
+                ok=screen.peak_to_channel_forming_ratio <= 1.0,
+                detail=(
+                    f"{screen.design_return_period_yr}-yr post-dev peak {dp.post_peak_cfs:,.0f} "
+                    f"cfs is {screen.peak_to_channel_forming_ratio:.2f}x "
+                    f"{cf.receiving_water}'s channel-forming ({cf.return_period_yr}-yr bankfull) "
+                    f"discharge {cf.discharge.value:,.0f} cfs [derived, {cf.node_id} subcatchment]"
+                    " — a LOWER bound: the denominator is taken at the mainstem confluence, "
+                    "downstream of wherever the outfall enters"
+                ),
+            )
+        )
+    rc = screen.reach_conveyance
+    if rc is not None:
+        shear = rc.shear_ratio
+        findings.append(
+            HydroFinding(
+                subject=f"{rc.receiving_water} reach {rc.node_id} (conveyance)",
+                check="receiving-channel-conveyance",
+                ok=rc.within_bank,
+                detail=(
+                    f"{rc.design.label} {rc.design.discharge_cfs:,.0f} cfs runs "
+                    f"{rc.design.depth_ft:g} ft deep at {rc.design.velocity_fps:g} ft/s "
+                    f"(tau {rc.design.shear_stress_psf:g} lb/ft2) vs bankfull "
+                    f"{rc.bankfull.discharge_cfs:,.0f} cfs at {rc.bankfull.depth_ft:g} ft / "
+                    f"{rc.bankfull.velocity_fps:g} ft/s (tau {rc.bankfull.shear_stress_psf:g})"
+                    + (f" — {shear:.2f}x the bankfull boundary shear" if shear else "")
+                    + (
+                        "; Tier-0 default section, no committed cross-section"
+                        if rc.geometry_source == "tier0_default"
+                        else "; section from reaches.yaml"
+                    )
+                ),
+            )
+        )
+    return findings
+
+
 def discharge_findings(screen: CampusDischargeScreen) -> list[HydroFinding]:
     """Screening findings from a :class:`CampusDischargeScreen`."""
     findings: list[HydroFinding] = []
@@ -896,16 +1274,22 @@ def discharge_findings(screen: CampusDischargeScreen) -> list[HydroFinding]:
                 ),
             )
         )
+    findings.extend(_erosion_findings(screen))
     if dp is not None and screen.peak_to_7q10_ratio is not None and screen.receiving_7q10:
         findings.append(
             HydroFinding(
                 subject=screen.receiving_water,
                 check="receiving-water-peak",
+                # The stream this peak lands on has, at design low flow, essentially no water of
+                # its own — that is the finding, and it is about DILUTION. The ratio itself is not
+                # a channel-stability threshold (WS-12 / #1612): see `channel-forming-peak`.
                 ok=False,
                 detail=(
                     f"{rp}-yr post-dev peak {dp.post_peak_cfs:,.0f} cfs is "
                     f"~{screen.peak_to_7q10_ratio:,.0f}x {screen.receiving_water}'s cited 7Q10 "
-                    f"{screen.receiving_7q10.value:g} cfs — channel-stability / erosion signal"
+                    f"{screen.receiving_7q10.value:g} cfs — the LOW-FLOW framing (a storm surge "
+                    "onto a stream that at design low flow is effluent, not stream); the erosion "
+                    "signal is the channel-forming comparison, not this ratio"
                 ),
             )
         )

@@ -15,6 +15,30 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   decks for the real engine; don't blur the two.
 - The cited regulatory **7Q10** lives in `lowflow.py`; the NWIS observed minimum only
   sanity-checks it — don't substitute one for the other.
+- **The erosion denominator is bankfull, never the 7Q10** (WS-12 / #1612). Channel stability and
+  bank erosion are governed by the **channel-forming** (bankfull / effective) discharge — the
+  moderate, frequent flow that does most of the long-term geomorphic work (Wolman & Miller 1960),
+  recurring at ~1-2 yr. The 7Q10 is a 7-day 10-**year** *low* flow: a storm peak is hundreds of
+  times any small stream's 7Q10 almost by construction, so that ratio maps to no geomorphic
+  threshold. `stormwater.py` therefore reports **three** things where it used to report one
+  multiple: `channel_forming` (the receiving tributary's own 2-yr peak over its committed
+  `reaches.yaml` subcatchment — the **same** SCS chain the campus peaks run on, so the method's
+  biases largely cancel in the ratio, which they cannot do against a log-Pearson low-flow
+  statistic from a different record), `reach_conveyance` (Manning **normal depth** at the cited
+  reach section: depth / velocity / boundary shear `tau = gamma*R*S` at the design peak vs at
+  bankfull — the conveyance question the 60-inch pipe screen stops short of), and the
+  pre-vs-post pair **at the channel-forming recurrence**, which is why that return period joins
+  the reported peak set and carries the standard `channel-protection` criterion (post <= pre).
+  `peak_to_7q10_ratio` survives, re-labeled, for the **dilution** framing only. Two directions a
+  reviewer is owed and the caveats state: the recurrence is pinned at the **conservative** end of
+  the published 1-2 yr band (largest denominator ⇒ smallest ratio), and the catchment is taken at
+  the tributary's **mainstem confluence**, downstream of where the outfall enters, so the ratio is
+  a **lower bound** on what the channel actually sees. Bankfull *stage* is self-consistent (the
+  normal depth of the channel-forming discharge in that same section), so the within-bank verdict
+  is geometry-free while the velocity/shear are not — a reach on the Tier-0 default trapezoid
+  says so (`geometry_source: tier0_default`) and a surveyed cross-section is the upgrade.
+  No committed catchment for the receiving tributary ⇒ **no erosion signal**, stated as such;
+  the 7Q10 multiple never stands in for it.
 - **The design-storm peak has three coupled knobs — don't touch one alone** (WS-10 / #1610).
   (1) The **rainfall distribution** (`solver/rainfall.py`) is *built*, not tabulated: the NRCS
   WinTR-20 algorithm published in NEH-630 Ch. 4 §630.0407, driven by the duration ratios embedded

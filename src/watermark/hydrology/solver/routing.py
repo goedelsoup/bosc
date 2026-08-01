@@ -58,6 +58,12 @@ from watermark.config import Settings
 from watermark.hydrology.solver.parameters import default_manning_n
 
 _SECONDS_PER_HOUR = 3600.0
+# The Tier-0 trapezoid a reach that carries no committed cross-section is routed on — a narrow
+# tributary ditch. Exported (not buried in the signatures below) because the conveyance screen in
+# `watermark.hydrology.stormwater` must read the SAME section the routing ran on, and must be able
+# to say whether a reach supplied its own geometry or fell back to these (WS-12 / #1612).
+DEFAULT_BOTTOM_WIDTH_FT = 10.0
+DEFAULT_SIDE_SLOPE_Z = 2.0
 # Compute guard (WS-09 / #1609): a very slow / flat reach (tiny celerity from a low slope or a
 # data-entry error) makes dx_per_step -> 0, so the Courant≈1 count ⌈L/(c·Δt)⌉ would explode and
 # each sub-reach is an O(len(series)) routing pass. Cap it far above any real reach (the committed
@@ -95,6 +101,63 @@ def normal_depth(
             break
         y = max(1e-3, y - f / dfdy)
     return float(y)
+
+
+class NormalFlow(NamedTuple):
+    """Uniform-flow hydraulics of one discharge in a trapezoidal reach (WS-12 / #1612).
+
+    ``shear_stress_psf`` is the reach-average boundary shear ``tau = gamma*R*S``
+    (gamma = 62.4 lb/ft^3) — the quantity that actually detaches bank and bed material, which a discharge ratio alone
+    cannot express. Uniform (normal-depth) flow is the Tier-0 idealization: no backwater, no
+    bend or cross-section variation, a prismatic channel at its stated slope.
+    """
+
+    discharge_cfs: float
+    depth_ft: float
+    top_width_ft: float
+    area_sqft: float
+    hydraulic_radius_ft: float
+    velocity_fps: float
+    shear_stress_psf: float
+
+
+# Unit weight of water (lb/ft^3) for the boundary-shear term tau = gamma*R*S.
+_GAMMA_WATER_PCF = 62.4
+
+
+def normal_flow(
+    q: float,
+    *,
+    slope: float,
+    manning_n: float,
+    bottom_width_ft: float,
+    side_slope_z: float,
+) -> NormalFlow:
+    """Normal-depth hydraulics of ``q`` in a trapezoidal reach (depth, width, velocity, shear).
+
+    Shares :func:`normal_depth` with the routing parameters, so the conveyance screen reads the
+    same uniform-flow solution the Muskingum-Cunge celerity is formed at. A non-positive ``q``
+    returns an all-zero state rather than a degenerate depth.
+    """
+    y = normal_depth(
+        q,
+        bottom_width_ft=bottom_width_ft,
+        side_slope_z=side_slope_z,
+        slope=slope,
+        manning_n=manning_n,
+    )
+    area = bottom_width_ft * y + side_slope_z * y * y
+    perim = bottom_width_ft + 2.0 * y * math.hypot(1.0, side_slope_z)
+    radius = area / perim if perim > 0 else 0.0
+    return NormalFlow(
+        discharge_cfs=q,
+        depth_ft=y,
+        top_width_ft=bottom_width_ft + 2.0 * side_slope_z * y,
+        area_sqft=area,
+        hydraulic_radius_ft=radius,
+        velocity_fps=q / area if area > 0 else 0.0,
+        shear_stress_psf=_GAMMA_WATER_PCF * radius * slope,
+    )
 
 
 def reach_kinematics(
@@ -224,8 +287,8 @@ def route_reach(
     length_ft: float,
     slope: float,
     manning_n: float | None = None,
-    bottom_width_ft: float = 10.0,
-    side_slope_z: float = 2.0,
+    bottom_width_ft: float = DEFAULT_BOTTOM_WIDTH_FT,
+    side_slope_z: float = DEFAULT_SIDE_SLOPE_Z,
     dt_hr: float = 0.1,
     subreaches: int | None = None,
     settings: Settings | None = None,
@@ -293,8 +356,8 @@ def route(
     length_ft: float,
     slope: float,
     manning_n: float | None = None,
-    bottom_width_ft: float = 10.0,
-    side_slope_z: float = 2.0,
+    bottom_width_ft: float = DEFAULT_BOTTOM_WIDTH_FT,
+    side_slope_z: float = DEFAULT_SIDE_SLOPE_Z,
     dt_hr: float = 0.1,
     settings: Settings | None = None,
 ) -> NDArray[np.float64]:

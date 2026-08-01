@@ -152,6 +152,12 @@ from watermark.hydrology.models._stormwater import (
     CampusDischargeScreen as CampusDischargeScreen,
 )
 from watermark.hydrology.models._stormwater import (
+    ChannelFlowState as ChannelFlowState,
+)
+from watermark.hydrology.models._stormwater import (
+    ChannelFormingDischarge as ChannelFormingDischarge,
+)
+from watermark.hydrology.models._stormwater import (
     DesignStorm as DesignStorm,
 )
 from watermark.hydrology.models._stormwater import (
@@ -165,6 +171,9 @@ from watermark.hydrology.models._stormwater import (
 )
 from watermark.hydrology.models._stormwater import (
     OutfallCapacity as OutfallCapacity,
+)
+from watermark.hydrology.models._stormwater import (
+    ReachConveyance as ReachConveyance,
 )
 from watermark.hydrology.models._stormwater import (
     RoundaboutFlow as RoundaboutFlow,
@@ -213,6 +222,8 @@ __all__ = [
     "AssimilativeCheck",
     "CampusDischargeScreen",
     "Catchment",
+    "ChannelFlowState",
+    "ChannelFormingDischarge",
     "ContinuousMonitorRead",
     "CoolingBasis",
     "DesignStorm",
@@ -238,6 +249,7 @@ __all__ = [
     "ProvenancedValue",
     "PumpStation",
     "Reach",
+    "ReachConveyance",
     "ReachFlow",
     "ReachRouting",
     "ReachTable",

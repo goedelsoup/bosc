@@ -58,6 +58,33 @@ routing:
       Per-reach override lives in `reaches.yaml` (`ReachEdge.manning_n`); this is only the
       fallback used when a reach does not set one. Also overridable via `route(manning_n=...)`.
 
+channel:
+  # Recurrence interval (yr, annual-maximum series) whose peak stands in for the receiving
+  # channel's BANKFULL / effective — channel-forming — discharge. The denominator of the
+  # stormwater screen's erosion signal (WS-12 / #1612); the 7Q10 is a LOW-flow statistic and
+  # belongs only to the dilution framing.
+  channel_forming_return_period_yr:
+    value: 2
+    source: reference
+    citation: >-
+      Wolman & Miller (1960), "Magnitude and frequency of forces in geomorphic processes"
+      (J. Geology 68:54-74) — the effective discharge, which transports the most sediment over
+      time, is a moderate, frequent flow, not a rare flood. Leopold, Wolman & Miller (1964),
+      "Fluvial Processes in Geomorphology" and Dunne & Leopold (1978), "Water in Environmental
+      Planning": bankfull stage — the discharge that fills the channel to the top of its banks
+      and does most of the long-term channel-forming work — recurs on the annual-maximum series
+      at roughly 1 to 2 years, most commonly near 1.5. The 2-year peak is the standard
+      engineering surrogate for it (and the basis of the channel-protection criterion that a
+      post-development peak should not exceed the pre-development peak at this recurrence).
+    confidence: medium
+    note: >-
+      A surrogate for a channel property, not a measurement of one: the actual bankfull
+      recurrence at a given reach is read from a surveyed cross-section and a gage record.
+      2 yr is the CONSERVATIVE end of the published 1-2 yr band — it yields the LARGEST
+      channel-forming discharge, so every ratio computed against it is the SMALLEST (an
+      understatement of the erosion signal). Anchoring at ~1.5 yr would lower the denominator
+      and raise those ratios.
+
 dilution:
   # Coarse screening bands on the low-flow dilution ratio (receiving-water 7Q10 / discharge).
   # A hydraulic screen only, NOT a regulatory mixing-zone determination (that is the Ohio EPA

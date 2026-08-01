@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import math
+
 import numpy as np
 import pytest
 
@@ -478,3 +480,47 @@ def test_route_reach_passthrough_on_zero_inflow() -> None:
     rr = routing.route_reach(np.zeros(50), length_ft=1000.0, slope=0.001)
     assert rr.subreaches == 1 and rr.courant == 0.0
     assert np.array_equal(rr.outflow_cfs, np.zeros(50))
+
+
+def test_normal_flow_hydraulics_are_manning_consistent() -> None:
+    # WS-12 / #1612: the conveyance screen's uniform-flow primitive. Manning must reproduce the
+    # discharge it was solved for, and the reported velocity/shear must follow from that section.
+    geom = {"bottom_width_ft": 10.0, "side_slope_z": 2.0, "slope": 0.002, "manning_n": 0.04}
+    flow = routing.normal_flow(580.0, **geom)
+    q_back = (
+        (1.49 / geom["manning_n"])
+        * flow.area_sqft
+        * flow.hydraulic_radius_ft ** (2.0 / 3.0)
+        * math.sqrt(geom["slope"])
+    )
+    assert q_back == pytest.approx(580.0, rel=1e-3)
+    assert flow.velocity_fps == pytest.approx(580.0 / flow.area_sqft)
+    assert flow.shear_stress_psf == pytest.approx(62.4 * flow.hydraulic_radius_ft * geom["slope"])
+    # It shares normal_depth with the routing parameters, so the two never disagree on stage.
+    assert flow.depth_ft == pytest.approx(routing.normal_depth(580.0, **geom))
+    # Monotone in discharge — depth, velocity and boundary shear all rise with flow.
+    bigger = routing.normal_flow(1000.0, **geom)
+    assert bigger.depth_ft > flow.depth_ft
+    assert bigger.velocity_fps > flow.velocity_fps
+    assert bigger.shear_stress_psf > flow.shear_stress_psf
+    # A dry channel is an all-zero state, not a degenerate depth.
+    dry = routing.normal_flow(0.0, **geom)
+    assert (dry.depth_ft, dry.velocity_fps, dry.shear_stress_psf) == (0.0, 0.0, 0.0)
+
+
+def test_routing_default_section_constants_are_the_exported_ones() -> None:
+    # The conveyance screen must report the SAME trapezoid the routing ran on, so the defaults
+    # are named constants rather than repeated literals in each signature.
+    assert (routing.DEFAULT_BOTTOM_WIDTH_FT, routing.DEFAULT_SIDE_SLOPE_Z) == (10.0, 2.0)
+    inflow = np.array([0, 10, 50, 120, 200, 120, 50, 10, 0, 0, 0, 0], dtype=np.float64)
+    explicit = routing.route_reach(
+        inflow,
+        length_ft=8000.0,
+        slope=0.001,
+        bottom_width_ft=routing.DEFAULT_BOTTOM_WIDTH_FT,
+        side_slope_z=routing.DEFAULT_SIDE_SLOPE_Z,
+    )
+    assert np.array_equal(
+        routing.route_reach(inflow, length_ft=8000.0, slope=0.001).outflow_cfs,
+        explicit.outflow_cfs,
+    )

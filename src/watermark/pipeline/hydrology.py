@@ -164,9 +164,12 @@ def run_discharge_screen(
     """ASWCD-calibrated campus storm-discharge screen + its screening findings.
 
     Calibrates the post-development cover to the SWCD-declared footprint (only ~115 of
-    ~344 ac impervious), screens the single 60-inch outfall's capacity, and reads the
-    design-storm peak against Dug Run's cited 7Q10 — the receiving water the ESC
-    inspections call "the creek west of the site."
+    ~344 ac impervious), screens the single 60-inch outfall's capacity, then the receiving
+    CHANNEL — the design peak against Dug Run's channel-forming (bankfull) discharge plus a
+    normal-depth conveyance check at the cited reach section, which is where the erosion
+    signal lives (WS-12 / #1612). The design-storm peak against Dug Run's cited 7Q10 — the
+    receiving water the ESC inspections call "the creek west of the site" — is retained for
+    the low-flow / dilution framing.
     """
     settings = settings or get_settings()
     screen = screen_campus_discharge(

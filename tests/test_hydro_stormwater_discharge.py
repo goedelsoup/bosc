@@ -1,10 +1,13 @@
 """ASWCD-calibrated campus storm-discharge screen (#149) — offline, hermetic.
 
-Three things the Allen SWCD production lets the Tier-0 model do with primary data:
+Four things the Allen SWCD production lets the Tier-0 model do with primary data:
 calibrate the post-development cover to the declared 115-of-~340 ac impervious footprint
 (an area-weighted composite CN, not a blanket impervious parcel), screen the single
-60-inch outfall's Manning full-flow capacity, and read the design-storm peak against Dug
-Run's cited 7Q10. Also pins the committed artifact against drift.
+60-inch outfall's Manning full-flow capacity, read the design-storm peak against the
+receiving channel's channel-forming (bankfull) discharge with a normal-depth conveyance
+check at the cited reach section — the erosion signal (WS-12 / #1612) — and read it against
+Dug Run's cited 7Q10 for the low-flow / dilution framing. Also pins the committed artifact
+against drift.
 """
 
 from __future__ import annotations
@@ -14,6 +17,7 @@ from pathlib import Path
 import pytest
 
 from watermark.config import Settings
+from watermark.hydrology.model import NetworkNode, Reach, ReachTable
 from watermark.hydrology.solver.curve_number import cn_for
 from watermark.hydrology.stormwater import (
     discharge_findings,
@@ -216,17 +220,169 @@ def test_outfall_capacity_flags_when_peak_exceeds(hydro_settings: Settings) -> N
     assert cap.ok is False
 
 
-def test_receiving_water_peak_vs_dug_run_7q10(hydro_settings: Settings) -> None:
+def test_receiving_water_peak_vs_dug_run_7q10_is_the_low_flow_framing(
+    hydro_settings: Settings,
+) -> None:
+    # WS-12 / #1612: the peak-to-7Q10 multiple survives, but as the LOW-FLOW / dilution framing.
+    # A storm peak is hundreds of times any small stream's 7Q10 by construction, so neither the
+    # finding nor the receiving note may present it as a channel-stability / erosion signal.
     screen = screen_campus_discharge(settings=hydro_settings, live=True)
     assert screen.receiving_water == "Dug Run"
     assert screen.receiving_7q10 is not None
     assert screen.receiving_7q10.value == pytest.approx(0.78)
     assert screen.receiving_7q10.source == "document"  # cited OEPA fact sheet, not invented
-    # A design-storm peak hundreds of times the 7Q10 — a channel-stability signal.
     assert screen.peak_to_7q10_ratio is not None and screen.peak_to_7q10_ratio > 100
     peak_finding = next(f for f in discharge_findings(screen) if f.check == "receiving-water-peak")
     assert peak_finding.ok is False
     assert "Dug Run" in peak_finding.detail
+    assert "LOW-FLOW" in peak_finding.detail
+    for text in (peak_finding.detail, screen.receiving_note):
+        assert "erosion signal is the channel-forming" in text or "erosion signal is the" in text
+    assert "channel-stability" not in screen.receiving_note
+
+
+def test_erosion_signal_is_anchored_to_the_channel_forming_discharge(
+    hydro_settings: Settings,
+) -> None:
+    # WS-12 / #1612: the erosion denominator is the receiving channel's bankfull / effective
+    # discharge — the 2-yr peak over ITS OWN committed subcatchment — not the 7-day 10-year LOW
+    # flow. Same SCS chain on both sides of the ratio, so the method's biases largely cancel.
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    cf = screen.channel_forming
+    assert cf is not None, "the committed Dug Run catchment should yield a bankfull surrogate"
+    assert cf.receiving_water == "Dug Run"
+    assert cf.node_id == "dug-run-head"  # the reaches.yaml catchment, resolved from the chain
+    assert cf.return_period_yr == 2  # the cited channel-forming recurrence
+    assert cf.discharge.source == "derived"
+    assert cf.discharge.value == pytest.approx(1000.0, rel=0.02)
+    # The inputs are carried VERBATIM from reaches.yaml, provenance intact — Dug Run's area is a
+    # stated assumption (no committed WBD delineation), and the artifact must say so.
+    assert cf.catchment_area_acres.source == "assumption"
+    assert cf.catchment_area_acres.value == pytest.approx(4940.0)
+    assert cf.curve_number.value == pytest.approx(78.0)
+    # The headline ratio is the design peak over that bankfull discharge, NOT over the 7Q10.
+    dp = screen.design_peak
+    assert dp is not None and screen.peak_to_channel_forming_ratio is not None
+    assert screen.peak_to_channel_forming_ratio == pytest.approx(
+        round(dp.post_peak_cfs / cf.discharge.value, 2)
+    )
+    assert screen.peak_to_channel_forming_ratio == pytest.approx(0.58, abs=0.02)
+    finding = next(f for f in discharge_findings(screen) if f.check == "channel-forming-peak")
+    assert finding.ok is True  # 0.58x — within the channel-forming discharge at this scale
+    assert "LOWER bound" in finding.detail
+
+
+def test_channel_forming_recurrence_joins_the_reported_peaks(hydro_settings: Settings) -> None:
+    # The channel-protection criterion is read on the pre-vs-post pair AT the channel-forming
+    # frequency, so that return period is in the reported set even though it is not the design
+    # storm — a screen reporting only 10/25/100-yr peaks could not state it.
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    assert {p.return_period_yr for p in screen.peaks} == {2, 10, 25, 100}
+    assert screen.design_return_period_yr == 25  # the headline storm is unchanged
+    cfp = screen.channel_forming_peak
+    assert cfp is not None and cfp.return_period_yr == 2
+    # Undetained, paving roughly doubles the channel-forming-frequency peak: that is the erosion
+    # mechanism, and it fails the standard post <= pre channel-protection criterion.
+    assert cfp.post_peak_cfs > cfp.pre_peak_cfs
+    protection = next(f for f in discharge_findings(screen) if f.check == "channel-protection")
+    assert protection.ok is False
+    assert "channel-forming frequency" in protection.detail
+
+
+def test_receiving_channel_conveyance_check(hydro_settings: Settings) -> None:
+    # WS-12 / #1612: the screen no longer stops at the 60-inch pipe. The design peak is carried
+    # into the receiving reach's cited section as Manning normal depth, against a bankfull stage
+    # taken self-consistently as the normal depth of the channel-forming discharge there.
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    rc = screen.reach_conveyance
+    cf = screen.channel_forming
+    assert rc is not None and cf is not None
+    assert rc.node_id == "dug-run-head"  # the reach the outfall discharges into
+    assert rc.slope == pytest.approx(0.002)  # from reaches.yaml
+    # Dug Run's reaches carry no committed cross-section, so the Tier-0 routing default trapezoid
+    # stands in — and the screen SAYS so rather than presenting the depths as a survey.
+    assert rc.geometry_source == "tier0_default"
+    assert (rc.bottom_width_ft, rc.side_slope_z) == (10.0, 2.0)
+    assert rc.manning_n == pytest.approx(0.04)
+    assert rc.bankfull.discharge_cfs == pytest.approx(cf.discharge.value)
+    dp = screen.design_peak
+    assert dp is not None
+    assert rc.design.discharge_cfs == pytest.approx(dp.post_peak_cfs)
+    # Real hydraulics, not just a ratio: depth, velocity and boundary shear are all positive and
+    # both states are ordered by discharge.
+    for state in (rc.bankfull, rc.design):
+        assert state.depth_ft > 0 and state.velocity_fps > 0 and state.shear_stress_psf > 0
+    assert rc.design.depth_ft < rc.bankfull.depth_ft
+    assert rc.within_bank is True
+    # Because bankfull stage is self-consistent, the within-bank verdict tracks the discharge
+    # ratio; what the block adds is the geomorphic work ratio the discharge ratio cannot express.
+    assert rc.shear_ratio is not None and 0.0 < rc.shear_ratio < 1.0
+    assert rc.depth_ratio is not None and 0.0 < rc.depth_ratio < 1.0
+    finding = next(
+        f for f in discharge_findings(screen) if f.check == "receiving-channel-conveyance"
+    )
+    assert finding.ok is True
+    assert "bankfull" in finding.detail and "no committed cross-section" in finding.detail
+
+
+def test_conveyance_reads_a_committed_cross_section_when_the_reach_has_one(
+    hydro_settings: Settings,
+) -> None:
+    # The section is the reach's own when reaches.yaml supplies one — the Tier-0 trapezoid is a
+    # fallback, not a hardcode — and the screen flips its geometry_source to say which it used.
+    from watermark.hydrology.model import NetworkNode, ProvenancedValue, Reach
+    from watermark.hydrology.stormwater import _channel_forming_discharge, _reach_conveyance
+
+    chain, table = _receiving_chain_for("Dug Run", hydro_settings)
+    cf = _channel_forming_discharge(chain, table, "Dug Run", settings=hydro_settings, live=True)
+    assert cf is not None
+    node, reach = chain[0]
+    surveyed = reach.model_copy(
+        update={
+            "bottom_width_ft": ProvenancedValue.assume(30.0, "ft", why="test: surveyed section"),
+            "side_slope_z": ProvenancedValue.assume(3.0, "", why="test: surveyed section"),
+            "manning_n": ProvenancedValue.assume(0.05, "", why="test: surveyed roughness"),
+        }
+    )
+    assert isinstance(node, NetworkNode) and isinstance(surveyed, Reach)
+    rc = _reach_conveyance([(node, surveyed)], cf, 580.0, 25, "Dug Run", settings=hydro_settings)
+    assert rc is not None
+    assert rc.geometry_source == "reach"
+    assert (rc.bottom_width_ft, rc.side_slope_z, rc.manning_n) == (30.0, 3.0, 0.05)
+    # A wider section carries the same discharge at less depth than the narrow Tier-0 default.
+    default_rc = _reach_conveyance(chain, cf, 580.0, 25, "Dug Run", settings=hydro_settings)
+    assert default_rc is not None
+    assert rc.design.depth_ft < default_rc.design.depth_ft
+
+
+def _receiving_chain_for(
+    receiving_water: str, settings: Settings
+) -> tuple[list[tuple[NetworkNode, Reach]], ReachTable | None]:
+    """The committed reach chain for a receiving water — the screen's own resolution."""
+    from watermark.hydrology.stormwater import _receiving_chain
+
+    return _receiving_chain(receiving_water, settings=settings)
+
+
+def test_erosion_signal_degrades_when_the_tributary_has_no_committed_catchment(
+    hydro_settings: Settings,
+) -> None:
+    # "Omit, don't guess": a receiving tributary with no committed contributing subcatchment
+    # yields NO channel-forming discharge and NO conveyance check — and a caveat that says the
+    # erosion signal is unquantified, rather than the 7Q10 multiple quietly standing in for it.
+    from watermark.hydrology.stormwater import _channel_forming_caveats, _channel_forming_discharge
+
+    chain, table = _receiving_chain_for("Dug Run", hydro_settings)
+    assert table is not None
+    stripped = table.model_copy(update={"catchments": {}})
+    assert (
+        _channel_forming_discharge(chain, stripped, "Dug Run", settings=hydro_settings, live=True)
+        is None
+    )
+    caveats = _channel_forming_caveats(None, None)
+    assert len(caveats) == 1
+    assert "NOT quantified" in caveats[0]
+    assert "does not stand in for it" in caveats[0]
 
 
 def test_discharge_findings_surface_each_dimension(hydro_settings: Settings) -> None:
@@ -234,6 +390,9 @@ def test_discharge_findings_surface_each_dimension(hydro_settings: Settings) -> 
     checks = {f.check for f in discharge_findings(screen)}
     assert {
         "outfall-capacity",
+        "channel-protection",
+        "channel-forming-peak",
+        "receiving-channel-conveyance",
         "receiving-water-peak",
         "detention-design",
         "impervious-calibration",
@@ -280,17 +439,25 @@ def test_receiving_peak_is_routed_to_the_confluence(hydro_settings: Settings) ->
     assert "attenuated" in routed_finding.detail and "confluence" in routed_finding.detail
 
 
-def test_routing_does_not_soften_the_at_outfall_erosion_signal(hydro_settings: Settings) -> None:
-    # The at-outfall peak-to-7Q10 ratio (the erosion headline) is unchanged by routing — the
-    # routed confluence peak is supplementary, not a replacement that softens the signal.
+def test_routing_does_not_soften_the_at_outfall_signal(hydro_settings: Settings) -> None:
+    # Both receiving-water ratios stay on the UNATTENUATED at-outfall post peak — the routed
+    # confluence peak is supplementary, not a replacement that softens either signal.
     screen = screen_campus_discharge(settings=hydro_settings, live=True)
     dp = screen.design_peak
     assert dp is not None and screen.peak_to_7q10_ratio is not None
-    # peak_to_7q10_ratio is still computed on the at-outfall post peak, not the routed peak.
     assert screen.receiving_7q10 is not None
     assert screen.peak_to_7q10_ratio == pytest.approx(
         round(dp.post_peak_cfs / screen.receiving_7q10.value)
     )
+    cf = screen.channel_forming
+    assert cf is not None and screen.peak_to_channel_forming_ratio is not None
+    assert screen.peak_to_channel_forming_ratio == pytest.approx(
+        round(dp.post_peak_cfs / cf.discharge.value, 2)
+    )
+    rd = screen.routed_discharge
+    assert rd is not None and rd.routed_peak_cfs < dp.post_peak_cfs  # routing DID attenuate...
+    assert screen.reach_conveyance is not None
+    assert screen.reach_conveyance.design.discharge_cfs == pytest.approx(dp.post_peak_cfs)
     # The caveat discloses the reach-travel upper bound and that intermediate reaches see more.
     assert any("upper bound" in c and "intermediate" in c for c in screen.caveats)
 
@@ -337,7 +504,7 @@ def test_committed_discharge_screen_loads_and_matches(hydro_settings: Settings) 
         "data/reference/hydrology/bosc-stormwater-discharge.yaml committed"
     )
     assert committed.design_return_period_yr == 25
-    assert {p.return_period_yr for p in committed.peaks} == {10, 25, 100}
+    assert {p.return_period_yr for p in committed.peaks} == {2, 10, 25, 100}
     assert committed.receiving_water == "Dug Run"
     # The committed artifact must still match a fresh recompute (guards against drift).
     fresh = screen_campus_discharge(settings=hydro_settings, live=True)
@@ -357,3 +524,17 @@ def test_committed_discharge_screen_loads_and_matches(hydro_settings: Settings) 
     assert committed.routed_discharge.attenuation_pct == pytest.approx(
         fresh.routed_discharge.attenuation_pct, abs=0.5
     )
+    # The re-anchored erosion blocks (WS-12 / #1612) round-trip and match a fresh recompute.
+    assert committed.channel_forming is not None and fresh.channel_forming is not None
+    assert committed.channel_forming.node_id == fresh.channel_forming.node_id
+    assert committed.channel_forming.discharge.value == pytest.approx(
+        fresh.channel_forming.discharge.value, rel=0.01
+    )
+    assert committed.peak_to_channel_forming_ratio == pytest.approx(
+        fresh.peak_to_channel_forming_ratio
+    )
+    assert committed.reach_conveyance is not None and fresh.reach_conveyance is not None
+    assert committed.reach_conveyance.design.depth_ft == pytest.approx(
+        fresh.reach_conveyance.design.depth_ft, rel=0.01
+    )
+    assert committed.reach_conveyance.geometry_source == "tier0_default"
