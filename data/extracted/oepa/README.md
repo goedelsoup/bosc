@@ -1,8 +1,17 @@
-# Ohio EPA NPDES permit extractions
+# Ohio EPA permit extractions
 
-Reviewed structured reads (`*.npdes.yaml`) of the Ohio EPA NPDES permit documents
-under [`data/documents/oepa/`](../../documents/oepa/README.md). One file per source
-PDF, mirroring the source filename.
+Reviewed structured reads of the Ohio EPA permit documents under
+[`data/documents/oepa/`](../../documents/oepa/README.md). One file per source PDF,
+mirroring the source filename.
+
+The collection was NPDES-only until issue #1437 added the first **air** chain
+(`bowling-green/air/`), so read the suffix, not the directory: `*.npdes.yaml` is a
+Division of Surface Water instrument and classifies into the `permits-npdes` record
+group; the air permit-to-install reads carry an `action:` block and classify into
+`permits-epa`, the same group as the Division of Surface Water's §401 and isolated-
+wetland correspondence. **Do not file an air permit under `permit:`** — that block key
+is bound to `permits-npdes` and would present a Division of Air Pollution Control
+instrument as a discharge permit.
 
 ## Coverage
 
@@ -38,6 +47,24 @@ feed and subtracts it from Lima's reference-build scope (#1505). Note that
 `watermark extract --write` always lands a document-level extraction in the *first-level*
 collection (`_collection_dir` mirrors `rel.parts[0]` only), so moving a site's artifact
 into its sub-directory is a reviewed step after extraction, not something the pipeline does.
+
+### `bowling-green/` — two unrelated facilities, one directory (issues 1439, 1437)
+
+This sub-collection holds **two facilities that share nothing but a county and an
+agency**, and conflating them would be a silent error:
+
+| Files | Facility |
+|---|---|
+| `2PD00009.npdes.yaml`, `2PD00009.fs.npdes.yaml` | The **City of Bowling Green**'s Water Pollution Control plant, 901 N. Dunbridge Rd — NPDES `2PD00009*TD` / OH0024139, 10 MGD to Poe Ditch (issue 1439). |
+| `P0139272.completeness.yaml`, `P0139272.draft-pti.yaml`, `P0139272.pti.yaml` | **Will-Power OH LLC - Apollo**, 11902 Middleton Pike — a private 350 MW behind-the-meter generating station, Ohio EPA facility ID `0387022027`, air permit-to-install `P0139272` (issue 1437). |
+
+The three Apollo reads are the application-completeness letter (2025-12-08), the draft
+permit noticed for comment (2026-03-05) and the **final permit (2026-06-02)**. The final
+is the operative instrument and the only one to cite for a limit; the draft is kept
+because it alone carries the Permit Strategy Write-Up and the facility-wide
+controlled-PTE table, and because two defects in that write-up are visible only there.
+The siting half of the same project mirrors its own agency at
+[`../grid/bowling-green/`](../grid/bowling-green/).
 
 ### `findlay/` — City of Findlay WPCC, permit `2PD00008` (issue 1460)
 

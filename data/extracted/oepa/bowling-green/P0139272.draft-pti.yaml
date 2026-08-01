@@ -1,0 +1,119 @@
+# Reviewed transcription of the DRAFT Ohio EPA air Permit-to-Install for the Apollo
+# Power Generation Facility, and of the Permit Strategy Write-Up bound into it.
+#
+# Kept as its own record because the draft is where the facility's controlled
+# potential-to-emit is actually tabulated — the final permit does not reprint the
+# table — and because two defects in the write-up are only visible here.
+doc_id: P0139272-draft-10f51f37
+source_path: data/documents/oepa/bowling-green/air/edoc-4032135.pdf
+kind: epa
+pages_read: []
+image_pages_read:
+  - 2   # 0-based: the Permit Strategy Write-Up page carrying Table 1 and the mismatched facility ID
+dpi: 170
+source_text_excerpt: >-
+  "03/05/2026 ... RE: DRAFT AIR POLLUTION PERMIT-TO-INSTALL / Facility ID: 0387022027
+  / Permit Number: P0139272 / Permit Type: Initial Installation / County: Wood ...
+  A draft ... has been issued for the emissions unit(s) listed in the Authorization
+  ... this draft action is not an authorization to begin construction or modification
+  of your emissions unit(s). The purpose of this draft is to solicit public comments
+  on the permit. ... 88 pages"
+
+action:
+  confidence: high
+  warnings:
+    - >-
+      SUPERSEDED — this is the draft, not the instrument. The final PTI issued
+      2026-06-02 and is transcribed at
+      data/extracted/oepa/bowling-green/P0139272.pti.yaml. Cite the draft only for
+      what it uniquely carries: the Permit Strategy Write-Up and its controlled-PTE
+      table, and the two write-up defects recorded below.
+    - >-
+      THIS PDF IS SCANNED, NOT DIGITALLY GENERATED, AND ITS TEXT LAYER IS OCR. It
+      renders "Yes" as "Ycs", "CH2O" as "CHZO", "SO2" as "S02" and "PM2.5" as
+      "PM2 , 5". Figures quoted from it were checked against the same numbers as
+      reprinted in Ohio EPA's hearing deck and in the final permit's Response 21, and
+      the facility-ID defect below was confirmed by rendering the page image rather
+      than trusting the OCR. Do not lift a digit from this file's text layer without
+      a second source.
+  agency: Ohio EPA
+  program: Air Permit-to-Install (Division of Air Pollution Control), OAC Chapter 3745-31
+  permit_no: P0139272
+  facility_id: '0387022027'
+  action: draft permit issued for public comment
+  action_date: '2026-03-05'
+  effective_date: null
+  expiration_date: null
+  permit_type: Initial Installation
+  applicant: Will-Power OH LLC - Apollo
+  applicant_address: 2000 Commerce Dr, Pittsburgh, PA 15275
+  contact_name: Andy Woerner
+  project_name: Apollo Power Generation Facility
+  site_address: 11902 Middleton Pike, Bowling Green, OH 43402 (Middleton Township, Wood County)
+  affected_resource: air
+  parcel_ids: []
+  comments_to: Andrea Moore, Permitting Section, Ohio EPA DAPC
+  note: >-
+    Public-noticed in the Ohio EPA Weekly Review on 2026-03-05, opening the comment
+    period that closed 2026-05-01 after an extension from 2026-04-15. The cover
+    letter is explicit that "this draft action is not an authorization to begin
+    construction or modification of your emissions unit(s)" — which is worth holding
+    next to the separate, and lawful, pre-permit site-preparation allowance under
+    OAC 3745-31-33 that the completeness letter conveyed in December.
+
+write_up_defects:
+  tag: '[verified]'
+  note: >-
+    Two errors in the Permit Strategy Write-Up bound into the draft. One was raised
+    by a commenter and conceded by the agency; the other was not raised by anyone and
+    is recorded here for the first time. Neither appears to change a permitted limit,
+    and neither is presented as though it does.
+  line_heater_count:
+    raised_by: a commenter
+    statement: >-
+      Comment 23 asked: "The narrative paragraph in the Permit Strategy Write-Up
+      specifies 21 sources and Table 1 specifies 22 – which is it?" Response 23: "Ohio
+      EPA agrees that there was a typographical error in the Permit Strategy Write Up
+      (PSWU). This document was issued with the draft PTI and has been corrected
+      internally. There are 22 line heater sources." Note "corrected internally" — the
+      corrected write-up was not re-noticed, and the draft as published to the public
+      still carries the error.
+  facility_id_mismatch:
+    raised_by: nobody in the captured record
+    statement: >-
+      THE WRITE-UP'S PAGE HEADER CARRIES A DIFFERENT FACILITY'S ID. On both Permit
+      Strategy Write-Up pages (PDF pages 3 and 4) the header block reads "Permit
+      Number: P0139272 / Facility Name: Will-Power OH LLC - Apollo / Facility ID:
+      0145000615". Apollo's facility ID is 0387022027, which appears correctly on 81
+      other pages of this same draft and on every page of the final. 0145000615 is
+      the Ohio EPA facility ID of WILL-POWER OH LLC - PLATO NORTH in Licking County —
+      a sibling facility of the same applicant, independently identified from the
+      agency's own eDocument index. Two of the three identifiers in the header are
+      Apollo's; only the ID is wrong.
+    verification: >-
+      Confirmed by rendering PDF page 3 at 170 dpi and reading the header visually,
+      because this file's text layer is OCR and a digit-level claim cannot rest on it.
+      The rendered header reads exactly as quoted.
+    what_it_is_and_is_not:
+      tag: '[inference]'
+      statement: >-
+        This looks like a template header carried over from the Plato North write-up
+        — the same author, the same document type, an adjacent project. It is a
+        transcription defect on the analysis memorandum, not on the permit: the
+        authorization, the emissions-unit list and every enforceable term in both the
+        draft and the final carry Apollo's own ID. It does not follow that the
+        write-up's ANALYSIS came from Plato North, and that is not claimed. What it
+        does establish is that these behind-the-meter permits are being produced from
+        one another as a series, which is the same thing the sibling-facility record
+        in P0139272.pti.yaml shows from the other direction. Lead
+        APOLLO-PSWU-FACILITY-ID.
+
+carries:
+  tag: '[verified]'
+  statement: >-
+    The draft is the source for the facility-wide controlled potential-to-emit table
+    (Table 1 of the Permit Strategy Write-Up), transcribed under `controlled_pte_tpy`
+    in data/extracted/oepa/bowling-green/P0139272.pti.yaml rather than duplicated
+    here, and for the write-up's statements on BAT, PSD avoidance, NOx RACT
+    inapplicability and the OAC 3745-18-06(A) SO2 exemption, likewise recorded there
+    against the final.

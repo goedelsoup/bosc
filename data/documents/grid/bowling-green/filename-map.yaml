@@ -1,0 +1,85 @@
+# Capture / alias manifest — Bowling Green (Wood County) power instrument, issue #1437.
+#
+# One document: the OPSB Staff Report of Investigation in the Apollo Power
+# Generation Facility siting case. Raw bytes are never edited and the file keeps
+# the name the server served it under.
+#
+# The `content_verified` date is read from the file's OWN text layer (the docket
+# caption and the DIS electronic-filing stamp on its last page), never from the
+# URL, the fetch time, or outside knowledge.
+#
+# evidence: native_text = PDF text layer (pdftotext -layout) confirms the identity
+#           + date quoted below.
+meta:
+  subject: >-
+    The Apollo Power Generation Facility siting instrument — OPSB Case No.
+    25-0973-EL-BLN, Will-Power OH, LLC, Middleton Township, Wood County: the Staff
+    Report of Investigation carrying the project description and the 34 recommended
+    conditions (issue #1437, epic #1433)
+  collection: grid/bowling-green/
+  captured_by: issue #1437 (epic #1433, readiness(bowling-green) — the power instrument)
+  generated_at: '2026-08-01'
+  policy: non-destructive — as-served bytes, as-served filename.
+
+  case_number_warning: >-
+    THE CASE NUMBER IN ISSUE #1437 IS WRONG AND SO IS OPSB'S OWN PRESS RELEASE.
+    The docket is 25-0973-EL-**BLN** (Board Letter of Notification), not
+    25-0973-EL-BGN. The caption on page 1 of this document reads "In the Matter of
+    the Letter of Notification Application of Will-Power OH, LLC ... Case No.
+    25-0973-EL-BLN", every page footer of the Staff Report repeats "25-0973-EL-BLN",
+    and the DIS electronic-filing stamp on the last page reads "Case No(s).
+    25-0973-EL-BLN". OPSB's own news release of 2026-02-03 says to search
+    "25-973-EL-BGN" — wrong suffix AND a dropped leading zero — while OPSB's
+    structured gas-fleet case table (Natural_Gas_Map_and_Stats.pdf, produced
+    2026-07-22) lists it correctly as 25-0973-EL-BLN alongside sibling rows that
+    are genuinely -BGN. The suffix is not cosmetic: BLN is the accelerated
+    letter-of-notification track that produced the automatic approval with no
+    public hearings, which is the fact the issue is about. Cite BLN.
+
+  retrieval_warning: >-
+    THIS IS A NEWS ORGANIZATION'S MIRROR OF A STATE RECORD, NOT AN AGENCY-SERVED
+    COPY, AND THAT IS DELIBERATE. The issuing system — the PUCO/OPSB Docketing
+    Information System at dis.puc.state.oh.us — serves an F5/BIG-IP JavaScript
+    bot-challenge to automated retrieval; every request without a solved challenge
+    returns a 245-byte "Request Rejected" page carrying only a support ID. The
+    docket is therefore ACCESS-BLOCKED, NOT EMPTY, and no inference may be drawn
+    from what could not be fetched there (the same per-source negative recorded for
+    Findlay at data/extracted/grid/findlay/megawatt-hub-interconnection.gap.yaml,
+    issue #1464). WTOL-11 published the filing verbatim; the bytes below are that
+    copy, hashed on capture. It is a complete, internally consistent instrument
+    that carries its own DIS filing stamp, so it is treated as the record — but the
+    custody chain runs through a third party and that is stated, not hidden.
+
+documents:
+  - filename: power-siting-board-ohio-020326.pdf
+    canonical: apollo-opsb-staff-report-of-investigation-25-0973-EL-BLN.pdf
+    title: >-
+      Staff Report of Investigation — In the Matter of the Letter of Notification
+      Application of Will-Power OH, LLC for a Certificate of Environmental
+      Compatibility and Public Need for the Apollo Power Generation Facility, OPSB
+      Case No. 25-0973-EL-BLN
+    issuer: Staff of the Ohio Power Siting Board
+    case_number: 25-0973-EL-BLN
+    source_url: https://interactive.wtol.com/pdfs/power-siting-board-ohio-020326.pdf
+    served_by: WTOL-11 (Toledo) — mirror; see meta.retrieval_warning
+    issuing_system: https://dis.puc.state.oh.us/CaseRecord.aspx?CaseNo=25-0973-EL-BLN  # access-blocked
+    sha256: 93fee1e08ce049a4d423bd5d3ea76446b9e48fd2f00f1e2e55b0c7f829cc8d80
+    bytes: 2523708
+    content_type: application/pdf
+    pages: 26
+    fetched_at: '2026-08-01'
+    content_verified: '2026-01-27'   # DIS stamp, last page: "electronically filed ... on 1/27/2026 2:35:02 PM"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Three documents bound into one PDF: (1) the Executive Director's cover letter
+      to the Board, recommending automatic approval on 2026-02-03 unless suspended;
+      (2) two project maps (overview + detail, the latter naming the engine, BESS,
+      gas-yard, GSU-transformer and laydown areas); (3) the Staff Report of
+      Investigation itself, report date 2026-01-27, inspection date 2026-01-07,
+      which ends in the 34 numbered recommended conditions. The 34 conditions
+      reported in OPSB's press release ARE these staff recommendations — they became
+      binding by operation of the automatic approval on 2026-02-03. The Board's own
+      approval entry is a SEPARATE docket item and is NOT in this file; it was not
+      retrievable (see meta.retrieval_warning), so nothing here is cited as the
+      Board's order.

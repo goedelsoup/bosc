@@ -21,6 +21,17 @@ record; the subdirectory is named in that site's `SiteProfile.corpus_relpaths`.
 | [`pjm-202c-emergency-2026.event.yaml`](pjm-202c-emergency-2026.event.yaml) | PJM hot-weather FPA §202(c) emergency (June–July 2026): DOE Orders 202-26-33 (data-center backup-generation dispatch authority) and 202-26-32 (specified-resources dispatch). |
 | [`aep-lyka-transmission-2026.project.yaml`](aep-lyka-transmission-2026.project.yaml) | AEP Ohio "Lyka Transmission Project": 345kV substation + ~4mi line, Sugar Creek Township — no OPSB case filed yet (planned "Early 2027"); Google/Bistrozzi customer attribution `[inference]` only. |
 
+### `bowling-green/` — Wood County power instrument (issue #1437)
+
+| File | Subject |
+|---|---|
+| [`bowling-green/apollo-power-generation-facility.yaml`](bowling-green/apollo-power-generation-facility.yaml) | The **Apollo Power Generation Facility**, OPSB **25-0973-EL-BLN**: 350 MW net behind-the-meter gas generation (21 turbines + 6 reciprocating engines, 491 MW gross derated) plus 119.5 MW / 239 MWh of Tesla Megapack storage, certified by *automatic approval* on the accelerated letter-of-notification track with no public hearings, and barred by Condition 15 from any PJM interconnection. Carries the 34 conditions, the corrected case suffix, and the docket's access-blocked negative. |
+
+The air half of this instrument is **not** here — it mirrors its own source agency at
+[`../oepa/bowling-green/`](../oepa/bowling-green/) (permit-to-install P0139272, issued
+2026-06-02), and the standing watches at
+[`../bowling-green/power-watch.yaml`](../bowling-green/power-watch.yaml).
+
 ### `findlay/` — Hancock County grid posture (issue #1464)
 
 | File | Subject |
@@ -50,6 +61,16 @@ record; the subdirectory is named in that site's `SiteProfile.corpus_relpaths`.
   **access-blocked, not empty**: `dis.puc.state.oh.us` returns an
   application-firewall page to automated retrieval, so that docket is unsearched
   and no inference may be drawn from its silence.
+- The Bowling Green record likewise **records a blocked route rather than an
+  absence**, and for the same host: `dis.puc.state.oh.us` serves an F5/BIG-IP
+  JavaScript bot-challenge to automated retrieval, so the Apollo application, the
+  ODNR review letter, the data-request responses, the public comments and the
+  Board's own approval entry were not obtained and nothing is inferred from their
+  silence. The Staff Report itself was captured from a **news organization's
+  mirror**, and that custody chain is stated in the capture manifest rather than
+  hidden. It also **corrects the case number** that issue #1437, this repo's site
+  profile and OPSB's own press release all had wrong — the docket is `-EL-BLN`, the
+  letter-of-notification track, not `-EL-BGN`.
 - The Findlay set also **corrects issue #1464's own research notes** where the
   primary text does not support them — the `~$2.2M` is the line project alone
   (the station is $8.7M), the ten wind turbines sit behind Whirlpool's, Ball

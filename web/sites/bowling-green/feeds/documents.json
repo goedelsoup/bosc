@@ -1,1 +1,143 @@
-[]
+[
+  {
+    "slug": "bowling-green",
+    "title": "Bowling Green",
+    "description": "",
+    "entries": [
+      {
+        "rel": "bowling-green/drinking-water/2025-Drinking-Water-Consumer-Confidence-Report.pdf",
+        "name": "2025-Drinking-Water-Consumer-Confidence-Report.pdf",
+        "size_bytes": 148277,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  },
+  {
+    "slug": "grid",
+    "title": "Grid",
+    "description": "**Collection:** `grid/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "grid/bowling-green/power-siting-board-ohio-020326.pdf",
+        "name": "power-siting-board-ohio-020326.pdf",
+        "size_bytes": 2523708,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  },
+  {
+    "slug": "oepa",
+    "title": "Ohio EPA",
+    "description": "**Collection:** `oepa/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "oepa/bowling-green/2PD00009.fs.pdf",
+        "name": "2PD00009.fs.pdf",
+        "size_bytes": 1001682,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/bowling-green/2PD00009.pdf",
+        "name": "2PD00009.pdf",
+        "size_bytes": 287446,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/bowling-green/air/042026-Will-Power-OH-LLC-Apollo-PTIHearing.pdf",
+        "name": "042026-Will-Power-OH-LLC-Apollo-PTIHearing.pdf",
+        "size_bytes": 1166926,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/bowling-green/air/edoc-3938595.pdf",
+        "name": "edoc-3938595.pdf",
+        "size_bytes": 175815,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/bowling-green/air/edoc-4032135.pdf",
+        "name": "edoc-4032135.pdf",
+        "size_bytes": 20287707,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/bowling-green/air/edoc-4139063.pdf",
+        "name": "edoc-4139063.pdf",
+        "size_bytes": 1320900,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  }
+]

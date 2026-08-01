@@ -1,0 +1,135 @@
+id: bowling-green-apollo-power
+title: Bowling Green — Apollo Power Generation Facility, OPSB 25-0973-EL-BLN + Ohio EPA PTI P0139272 (Extractions)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Five primary documents across two agencies, plus two blocked routes recorded as per-source
+    negatives. SITING: the OPSB Staff Report of Investigation in case 25-0973-EL-BLN (report date
+    2026-01-27, DIS-stamped 1/27/2026, 26 pp incl. cover letter and project maps), captured
+    2026-08-01 from WTOL-11's mirror because the issuing docket system dis.puc.state.oh.us serves
+    an F5/BIG-IP JavaScript bot-challenge to automated retrieval — the custody chain runs through
+    a news organization and that is stated in
+    data/documents/grid/bowling-green/filename-map.yaml. AIR: the whole Ohio EPA DAPC
+    permit-to-install chain for facility 0387022027 / permit P0139272 — the application
+    completeness letter (2025-12-08), the draft permit noticed for comment (2026-03-05, with the
+    Permit Strategy Write-Up bound in), Ohio EPA's own public information session and hearing
+    deck (2026-04-08), and the FINAL permit (2026-06-02, with a 42-comment Response to Comments)
+    — retrieved 2026-08-01 from the Ohio EPA eDocument public portal
+    (edocpub.epa.ohio.gov, searched by Entity Name "WILL-POWER") and the Ohio DAM
+    (data/documents/oepa/bowling-green/air/filename-map.yaml). Every action: and digest block is
+    a REVIEWED TRANSCRIPTION read from each PDF's own text layer; the one digit-level claim that
+    could not rest on OCR (the draft write-up's mismatched facility ID) was confirmed by
+    rendering the page image at 170 dpi. No vision extraction pass was run.
+license: public record / public domain
+access_tier: public
+site_scope: site:bowling-green
+storage:
+- relpath: extracted/grid/bowling-green/apollo-power-generation-facility.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/bowling-green/P0139272.pti.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/bowling-green/P0139272.draft-pti.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/bowling-green/P0139272.completeness.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/bowling-green/power-watch.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+provenance: document
+tags:
+- opsb
+- siting
+- letter-of-notification
+- behind-the-meter
+- natural-gas
+- bess
+- battery-storage
+- air-permit
+- pti
+- title-v
+- psd
+- nsr
+- oepa
+- dapc
+- emissions
+- aermod
+- air-toxics
+- bowling-green
+- wood-county
+- data-center
+- meta
+- williams
+- hb15
+- self-generation
+- pjm
+- access-blocked
+notes: >-
+  Issue 1437 (under epic 1433). The site's defining power instrument, and the network's cleanest
+  documented example of the behind-the-meter self-power posture. THINGS TO CARRY. (1) THE CASE
+  NUMBER IN THE ISSUE, IN THE SITE PROFILE AND IN OPSB'S OWN PRESS RELEASE WAS WRONG. The docket
+  is 25-0973-EL-BLN, not -EL-BGN; OPSB's 2026-02-03 release compounds it by dropping the leading
+  zero ("25-973-EL-BGN"), while OPSB's structured gas-fleet case table has it right in a column
+  where sibling Licking County rows genuinely are -BGN. BLN is the Board Letter of Notification —
+  the accelerated track whose default outcome is automatic approval on a pre-announced date
+  absent affirmative suspension — so the wrong suffix names an adjudicated proceeding that did
+  not happen, which is the very fact the issue is about. Corrected across the profile, the
+  data-centers register and the water watch. (2) THE AIR CHAIN THE ISSUE CARRIED AS PENDING IS
+  CLOSED: final PTI P0139272 issued 2026-06-02. What is still genuinely open is TITLE V, due
+  within twelve months after commencing operation — roughly mid-2028 on the applicant's own
+  schedule. (3) THE THREE MAJOR-SOURCE TESTS SPLIT THREE WAYS AND THE MARGINS ARE THIN: MAJOR for
+  Title V; NOT major for PSD (234.62 tpy CO against a 250 tpy threshold — 15.38 tpy of headroom);
+  NOT major for MACT (24.40 tpy total HAP against 25 — 0.60 tpy, or 2.4%). Response 33 states the
+  consequence plainly: staying under the threshold is what removed the cumulative-impact analysis
+  commenters asked for. Note the tension recorded rather than resolved — the draft's Permit
+  Strategy Write-Up says the BAT limits were requested "for PSD avoidance," while Response 21
+  says the permit is not a synthetic minor and the cover checklist marks synthetic-minor "No".
+  Both sentences are the agency's; both are quoted. (4) CAPACITY HAS THREE NUMBERS AND THEY ARE
+  NOT INTERCHANGEABLE: 350 MW NET is certified and capped by Condition 14; 491 MW GROSS is the
+  fleet's capability at design conditions before derate; 119.5 MW / 239 MWh is the BESS — a
+  two-hour duration, which no secondary account reports and which is what says the storage is a
+  ride-through asset rather than a supply resource. (5) THE PLANT IS BARRED FROM THE GRID BY ITS
+  OWN CERTIFICATE. Condition 15 prohibits any physical or electrical interconnection with the PJM
+  Transmission System under OATT Part IV or Part VI; Condition 16 requires both a PJM new service
+  request and supplemental Board approval before any export. This is why the campus's modelled
+  grid draw is ~0, and why a future transmission filing would be a change of posture rather than
+  routine. (6) THE SINGLE-SOURCE DETERMINATION IS THE REUSABLE PART. Response 22: applying U.S.
+  EPA's 2019 "Interpreting 'Adjacent'" memorandum, Ohio EPA held that Apollo and the adjacent
+  data center "do not meet all three criteria for a single-source determination" — without saying
+  which criteria fail. That is the mechanism keeping a 350 MW plant built to serve one customer,
+  on land beside that customer, from being aggregated with it. (7) WILL-POWER IS RUNNING A FLEET,
+  NOT A PROJECT: the same eDoc search shows Apollo (Wood) plus Plato North, Plato South and STY
+  (all Licking), and OPSB's table carries a Will-Power STY at 250 MW approved 2026-06-25 on the
+  same LON track. Plato South shows an approval, then a DENIAL OR REVOCATION action on the same
+  permit number 2026-06-08, then a fresh approval under a new number 2026-07-14 — labels only
+  were read, not documents. (8) TWO DEFECTS IN THE DRAFT'S PERMIT STRATEGY WRITE-UP. Ohio EPA
+  conceded one at Response 23 (21 vs 22 line heaters, "corrected internally" and never
+  re-noticed). The other was raised by nobody: both write-up pages carry Plato North's facility
+  ID (0145000615) under Apollo's permit number and name. Visually confirmed at 170 dpi because
+  the draft's text layer is OCR. It is a header defect on an analysis memorandum, not on the
+  permit — every enforceable term carries Apollo's own 0387022027 — and no claim is made that the
+  ANALYSIS was adapted. (9) THE PLANT USES ALMOST NO WATER: no steam generation, no large-scale
+  cooling water, a closed water/glycol loop of ~1,375 gallons that never blows down, ~10,000
+  gal/yr of equipment cleaning trucked offsite and ~18,000 gal/yr of hydrant testing, on NWWSD
+  service with no wells. The NWWSD supply tension at this site is the data center's, not its
+  power plant's. (10) AMMONIA IS THE LARGEST PERMITTED MASS EMISSION at 340.63 tpy — 45% above
+  the highest criteria pollutant — and it is slip from the SCR systems installed to control NOx.
+  It counts toward none of the three major-source tests. (11) TWO ROUTES ARE BLOCKED, NOT EMPTY.
+  dis.puc.state.oh.us serves an F5 JavaScript bot-challenge, so the LON application, the ODNR
+  review letter of 2025-11-03 (which is what the issue calls the "applicant well study" — it is
+  an ODNR review, not the applicant's), the four sets of data-request responses, the public
+  comments and the Board's approval entry were not obtained; the Ohio Secretary of State business
+  search answers HTTP 403 to automated retrieval, so the Will-Power OH, LLC and Liames, LLC
+  registrations the issue asks for were not obtained either and both entities' agents, officers
+  and formation records stay [open]. Nothing is inferred from either silence. (12) DO NOT COUNT
+  THE "SOLAR" TURBINES AS RENEWABLES: ten of the 21 are Solar PGM 130 / Titan T-130 units and
+  Solar Turbines is a Caterpillar brand — the Staff Report's own footnote 1 says so — in a county
+  that already carries a live solar-capacity conflation trap. Fourteen open threads are recorded
+  in the power-watch digest's own `open_leads` block.

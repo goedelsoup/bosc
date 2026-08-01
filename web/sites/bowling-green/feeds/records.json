@@ -1,1 +1,814 @@
-[]
+[
+  {
+    "rel": "oepa/bowling-green/P0139272.completeness.yaml",
+    "group": "permits-epa",
+    "title": "Apollo Power Generation Facility",
+    "confidence": "high",
+    "warnings": [
+      "COMPLETENESS IS NOT APPROVAL, AND THE LETTER SAYS SO: \"This determination does not imply that the application is approvable, only that all the necessary material has been submitted to continue the review.\""
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Air Permit-to-Install (Division of Air Pollution Control), Northwest District Office",
+      "permit_no": "P0139272",
+      "facility_id": "0387022027",
+      "action": "application preliminarily and administratively complete",
+      "action_date": "2025-12-08",
+      "application_received_date": "2025-12-05",
+      "effective_date": null,
+      "expiration_date": null,
+      "applicant": "Will-Power OH LLC - Apollo",
+      "applicant_address": "2000 Commerce Dr., Pittsburgh, Pennsylvania 15275",
+      "contact_name": "Andy Woerner",
+      "signed_by": "Clinton Reed, Ohio EPA DAPC (419.373.3137, clinton.reed@epa.ohio.gov)",
+      "copied": [
+        "Andrea Moore DAPC",
+        "Jennifer Delbecq DAPC",
+        "Aniyah Woodley DAPC"
+      ],
+      "project_name": "Apollo Power Generation Facility",
+      "site_address": "Wood County, Ohio",
+      "affected_resource": "air",
+      "parcel_ids": [],
+      "note": "Dates the front of the air chain. The application was filed 2025-12-05 — one month after the OPSB siting application of 2025-11-05, and two months before the siting certificate took effect by automatic approval on 2026-02-03. So the air review began while the siting case was still open and outlasted it by four months."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/bowling-green/P0139272.completeness.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/bowling-green/air/edoc-3938595.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/bowling-green/P0139272.draft-pti.yaml",
+    "group": "permits-epa",
+    "title": "Apollo Power Generation Facility",
+    "confidence": "high",
+    "warnings": [
+      "SUPERSEDED — this is the draft, not the instrument. The final PTI issued 2026-06-02 and is transcribed at data/extracted/oepa/bowling-green/P0139272.pti.yaml. Cite the draft only for what it uniquely carries: the Permit Strategy Write-Up and its controlled-PTE table, and the two write-up defects recorded below.",
+      "THIS PDF IS SCANNED, NOT DIGITALLY GENERATED, AND ITS TEXT LAYER IS OCR. It renders \"Yes\" as \"Ycs\", \"CH2O\" as \"CHZO\", \"SO2\" as \"S02\" and \"PM2.5\" as \"PM2 , 5\". Figures quoted from it were checked against the same numbers as reprinted in Ohio EPA's hearing deck and in the final permit's Response 21, and the facility-ID defect below was confirmed by rendering the page image rather than trusting the OCR. Do not lift a digit from this file's text layer without a second source."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Air Permit-to-Install (Division of Air Pollution Control), OAC Chapter 3745-31",
+      "permit_no": "P0139272",
+      "facility_id": "0387022027",
+      "action": "draft permit issued for public comment",
+      "action_date": "2026-03-05",
+      "effective_date": null,
+      "expiration_date": null,
+      "permit_type": "Initial Installation",
+      "applicant": "Will-Power OH LLC - Apollo",
+      "applicant_address": "2000 Commerce Dr, Pittsburgh, PA 15275",
+      "contact_name": "Andy Woerner",
+      "project_name": "Apollo Power Generation Facility",
+      "site_address": "11902 Middleton Pike, Bowling Green, OH 43402 (Middleton Township, Wood County)",
+      "affected_resource": "air",
+      "parcel_ids": [],
+      "comments_to": "Andrea Moore, Permitting Section, Ohio EPA DAPC",
+      "note": "Public-noticed in the Ohio EPA Weekly Review on 2026-03-05, opening the comment period that closed 2026-05-01 after an extension from 2026-04-15. The cover letter is explicit that \"this draft action is not an authorization to begin construction or modification of your emissions unit(s)\" — which is worth holding next to the separate, and lawful, pre-permit site-preparation allowance under OAC 3745-31-33 that the completeness letter conveyed in December."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/bowling-green/P0139272.draft-pti.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/bowling-green/air/edoc-4032135.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/bowling-green/P0139272.pti.yaml",
+    "group": "permits-epa",
+    "title": "Apollo Power Generation Facility",
+    "confidence": "high",
+    "warnings": [
+      "DO NOT CONFUSE THIS FACILITY WITH THE CITY PLANT FILED ONE DIRECTORY UP. This is Will-Power OH LLC - Apollo, a private 350 MW behind-the-meter generating station at 11902 Middleton Pike in Middleton Township. Ohio EPA facility ID 0387022027. The NPDES records at data/extracted/oepa/bowling-green/2PD00009* are the CITY of Bowling Green's wastewater plant at 901 N. Dunbridge Road. Different operator, different facility, different medium, different permit program — they share only the county and the agency.",
+      "THE THREE \"MAJOR SOURCE\" TESTS SPLIT THREE WAYS HERE AND THE MARGINS ARE THIN. See major_source_status below before describing this plant as major or minor anything. It is a MAJOR source for Title V, NOT major for PSD, and NOT major for MACT — all at once, all correctly.",
+      "A COMMENT IS NOT A FINDING. The Response to Comments block below reproduces what members of the public asserted and what Ohio EPA answered. Neither side's assertion is adopted here as fact. Where a response states an agency determination (the single-source determination, the PSD threshold arithmetic), that determination is the agency's and is tagged as such."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Air Permit-to-Install (Division of Air Pollution Control), OAC Chapter 3745-31",
+      "permit_no": "P0139272",
+      "facility_id": "0387022027",
+      "application_nos": [
+        "A0080762",
+        "A0081069"
+      ],
+      "action": "final permit issued",
+      "action_date": "2026-06-02",
+      "effective_date": "2026-06-02",
+      "expiration_date": null,
+      "permit_type": "Initial Installation",
+      "permit_fee_usd": 6672.0,
+      "signed_by": "John Logue, Director, Ohio EPA — entered into the Journal of the Director 06/02/2026",
+      "applicant": "Will-Power OH LLC - Apollo",
+      "applicant_address": "2000 Commerce Dr, Pittsburgh, PA 15275",
+      "contact_name": "Andy Woerner",
+      "project_name": "Apollo Power Generation Facility",
+      "site_address": "11902 Middleton Pike, Bowling Green, OH 43402 (Middleton Township, Wood County)",
+      "district_office": "Ohio EPA DAPC, Northwest District Office, 347 N. Dunbridge Rd., Bowling Green",
+      "affected_resource": "air",
+      "parcel_ids": [],
+      "permit_description": "\"Initial Installation PTI for (6) natural gas fired engines and (21) natural gas fired turbines.\"",
+      "siting_case": "25-0973-EL-BLN — OPSB Condition 27 requires this permit to be filed on that docket upon receipt",
+      "note": "The operative air instrument for the Apollo plant, superseding the draft noticed 2026-03-05. Appealable to the Environmental Review Appeals Commission within 30 days of notice under R.C. 3745.04, on a $70 filing fee. Whether an appeal was taken is not established here."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/bowling-green/P0139272.pti.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/bowling-green/air/edoc-4139063.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Bowling Green Water Pollution Control (WPC)",
+    "confidence": "high",
+    "warnings": [
+      "Table 12's low flows are NOT measured on Poe Ditch, and not measured anywhere near Bowling Green. They are drainage-area-adjusted from USGS gauge 04195500 (Portage River at Woodville) over 1951-97 — a record that closed before the network's own derived 7Q10 window (1980-2024) opens. The footnote is explicit: \"Flow data from Low-Flow Characteristics of Stream in Ohio through Water Year 1997 and adjusted for drainage area.\" Treat the 0.364 cfs as the REGULATORY denominator that this permit's limits were actually computed against, not as a measurement of the ditch, and do not reconcile it against a derived value by preferring one — they are different arithmetic over different records. Same posture as Ottawa (data/extracted/oepa/ottawa/2PD00028.fs.npdes.yaml).",
+      "The plant is far larger than the water it discharges into. Table 12 states the discharger flow as 15.47 cfs (10 MGD) against an annual 7Q10 of 0.364 cfs in the same table — a ratio of about 42 to 1. Under design-flow low-flow conditions Poe Ditch below this outfall is effluent, not diluted effluent. This is a [verified] reading of two numbers printed in one table; the ratio itself is arithmetic and is tagged [inference] where it is asserted downstream.",
+      "The water quality criteria applied to this discharge are NOT Poe Ditch's own. Poe Ditch is designated Limited Resource Water; the fact sheet states on p. 6 that the criteria associated with the North Branch Portage River's higher uses (Warmwater Habitat, Primary Contact Recreation) \"are applied to Bowling Green WPC to be protective of this higher quality stream.\" A screen that reads Poe Ditch's LRW designation and stops there will apply the wrong criteria.",
+      "The total phosphorus limit was NOT tightened by this permit. The reduction from 1.0 to 0.7 mg/L happened in the PRIOR action, permit 2PD00009*SD (p. 9: \"the monthly average limit for total phosphorus was reduced from 1.0 to 0.7 mg/L in permit 2PD00009*SD\"). This *TD renewal CONTINUES it — \"this permit proposes that the same phosphorus limits be continued under the adaptive management approach.\" Any claim that the 2022 renewal cut the phosphorus limit is wrong; the 2022 renewal declined to cut it further while Ohio EPA waited to resurvey.",
+      "The TMDL's own target for this plant is 0.5 mg/L total phosphorus and it was never adopted as a limit. Page 9: the TMDL \"assessed multiple scenarios for assigning phosphorus reductions but none resulted in reaching the in-stream target,\" and it \"recommended an implementation strategy ... with a target effluent concentration of 0.5 mg/L for Bowling Green WPC but no formal wasteload allocation was approved.\" The operative 0.7 mg/L limit rests on best technical judgement, not on an approved WLA."
+    ],
+    "fields": {
+      "facility_name": "Bowling Green Water Pollution Control (WPC)",
+      "permit_no": "2PD00009*TD",
+      "permit_action": "renewal",
+      "applicant": "City of Bowling Green, 304 North Church Street, Bowling Green, OH 43402",
+      "application_no": "OH0024139",
+      "public_notice_no": "22-02-025",
+      "public_notice_date": "2022-02-22",
+      "comment_period_end": "2022-03-25",
+      "facility_address": "Bowling Green WPC, 901 North Dunbridge Road, Bowling Green, OH 43402, Wood County",
+      "receiving_water": "Poe Ditch",
+      "subsequent_stream_network": "North Branch Portage River to Portage River to Lake Erie",
+      "page_count": 35,
+      "receiving_water_chain": {
+        "citation": "Fact Sheet 2PD00009, Page 6 of 35, \"LOCATION OF DISCHARGE/RECEIVING WATER USE CLASSIFICATION\"",
+        "tag": "[verified]",
+        "outfall_receptor": "Poe Ditch",
+        "outfall_river_mile": 2.5,
+        "poe_ditch_river_code": "16-108",
+        "hydrologic_unit_code": "04100010-03-01",
+        "county": "Wood",
+        "ecoregion": "Huron-Erie Lake Plain",
+        "poe_ditch_use_designations": [
+          "Limited Resource Water",
+          "Agricultural Water Supply",
+          "Industrial Water Supply",
+          "Secondary Contact Recreation"
+        ],
+        "confluence": "\"A short distance downstream of Bowling Green WPC, Poe Ditch discharges to the North Branch of the Portage River at River Mile 8.56 (Ohio EPA River Code: 16-007).\"",
+        "north_branch_portage_river_mile": 8.56,
+        "north_branch_portage_river_code": "16-007",
+        "north_branch_portage_use_designations": [
+          "Warmwater Habitat",
+          "Agricultural Water Supply",
+          "Industrial Water Supply",
+          "Primary Contact Recreation"
+        ],
+        "criteria_applied_from": "North Branch Portage River. Quoted: \"Water quality criteria associated with these uses are applied to Bowling Green WPC to be protective of this higher quality stream.\""
+      },
+      "facility": {
+        "citation": "Fact Sheet 2PD00009, Pages 6-7 of 35, \"FACILITY DESCRIPTION\"",
+        "tag": "[verified]",
+        "constructed": 1982,
+        "most_recent_upgrade": "2021 — \"improvements to the aeration system were installed to improve control for biological nutrient removal\"",
+        "average_design_flow_mgd": 10,
+        "peak_hydraulic_capacity_mgd": 30,
+        "service_area": "City of Bowling Green and the Villages of Portage and Rudolph",
+        "population_served": "~32000",
+        "equalization_basin_mg": 4.0,
+        "collection_system": "60% separate sewers, 40% combined sewers",
+        "infiltration_inflow_mgd": 0.5,
+        "treatment_processes": [
+          "Bar, mechanical screen",
+          "Grit, scum removal",
+          "Primary sedimentation",
+          "Secondary treatment - activated sludge",
+          "Secondary clarification",
+          "Tertiary filtration - cloth media",
+          "Ultraviolet disinfection"
+        ],
+        "bypasses": "none",
+        "sludge_processes": [
+          "Aerobic digestion",
+          "Centrifuge dewatering"
+        ],
+        "pretreatment_program": {
+          "approved": true,
+          "industrial_users": 6,
+          "categorical_users": 2,
+          "categorical_flow_mgd": 0.021,
+          "significant_non_categorical_users": 4,
+          "significant_non_categorical_flow_mgd": 0.093
+        },
+        "cso": {
+          "outfalls": 1,
+          "outfall_id": "002",
+          "ltcp_approved": "2008-03",
+          "ltcp_level_of_control": "four or fewer untreated CSO events per typical year",
+          "ltcp_status": "\"The City has completed implementation of its LTCP and submitted an LTCP Evaluation Report, which concluded that the City had attained compliance with LTCP level of control\""
+        },
+        "sso": {
+          "station": "300",
+          "reported_last_five_years": 0
+        }
+      },
+      "receiving_water_assessment": {
+        "citation": "Fact Sheet 2PD00009, Pages 8-9 of 35, \"ASSESSMENT OF IMPACT ON RECEIVING WATERS\"",
+        "tag": "[verified]",
+        "section_303d_listing": "\"The North Branch Portage River watershed assessment unit, which includes Poe Ditch in the vicinity of Bowling Green WPC, is listed as impaired for aquatic life, recreation, and human health (fish tissue) use on Ohio's 303(d) list.\"",
+        "tmdl": {
+          "approved": "2011-09",
+          "basin": "Portage River",
+          "underlying_data": "2008, reported in the TSD \"Biological and Water Quality Survey of the Portage River Basin, Select Maumee River Tributaries, and Select Lake Erie Tributaries, 2006 - 2008\""
+        },
+        "aquatic_life_impairment": "\"The North Branch Portage River is impaired for aquatic life use due to nutrient enrichment downstream of Bowling Green WPC. The TSD identified Bowling Green WPC as a source, showing significant spikes in nutrient concentrations downstream of the facility (Figure 4).\"",
+        "aquatic_life_second_cause": "\"The aquatic life use in North Branch Portage River is also impaired due to siltation caused by channelization.\" — a cause this discharger is not named for.",
+        "recreation_impairment": "\"Impairments of the primary contact recreation use due to high E. coli levels were identified in Poe Ditch and on the North Branch Portage River up-and downstream of Poe Ditch. Home sewage treatment systems (HSTS), agriculture, and Bowling Green WPC were identified as sources of the impairment.\"",
+        "recreation_exculpatory": "Carried at equal weight, per the discipline: \"To reduce bacteria loads to the receiving stream, the City has implemented its Long Term Control Plan to reduce untreated CSO discharges and has had only two violations of the E. coli effluent limits at the treatment facility in the last five years.\" The E. coli impairment is identified both UPSTREAM and downstream of Poe Ditch, which is not a pattern this outfall alone can produce.",
+        "human_health_impairment": "\"The human health use in North Branch Portage River is impaired due to high polychlorinated biphenyl (PCB) levels found in the tissue of sport fish.\" No PCB limit or PCB source attribution to this plant appears anywhere in the fact sheet.",
+        "phosphorus_management": "\"The TMDL report assessed multiple scenarios for assigning phosphorus reductions but none resulted in reaching the in-stream target. As a result, the TMDL recommended an implementation strategy to address the identified nutrient impairment with a target effluent concentration of 0.5 mg/L for Bowling Green WPC but no formal wasteload allocation was approved. Based on best technical judgement and using the TMDL as guidance, the monthly average limit for total phosphorus was reduced from 1.0 to 0.7 mg/L in permit 2PD00009*SD.\" The *TD renewal continues those limits pending an Ohio EPA resurvey that, as of this fact sheet, had not happened."
+      },
+      "instream_conditions": {
+        "citation": "Fact Sheet 2PD00009, Page 30 of 35, \"Table 12. Instream Conditions and Discharger Flow\"",
+        "tag": "[verified]",
+        "basis": "USGS Gage",
+        "basis_footnote": "\"*Flow data from Low-Flow Characteristics of Stream in Ohio through Water Year 1997 and adjusted for drainage area\"",
+        "stream_flows_cfs": {
+          "1Q10_annual": 0.285,
+          "7Q10_annual": 0.364,
+          "30Q10_summer": 0.626,
+          "30Q10_winter": 1.48,
+          "90Q10_annual": 0.865,
+          "harmonic_mean_annual": 3.233
+        },
+        "mixing_assumption_pct": {
+          "average": 25,
+          "maximum": 100
+        },
+        "discharger_flow": {
+          "cfs": 15.47,
+          "mgd": 10,
+          "basis": "NPDES Application Form 2A"
+        },
+        "ambient": {
+          "hardness_mg_l": 331,
+          "ph_summer": 7.8,
+          "ph_winter": 7.93,
+          "temperature_c_summer": 22.72,
+          "temperature_c_winter": 3.77,
+          "nitrate_nitrite_mg_l": 4.41,
+          "total_filterable_residue_mg_l": 734.5
+        },
+        "background_no_data": {
+          "note": "Recorded because an absence of data is not an absence of the pollutant. Table 12 gives a background of ZERO for antimony, dissolved hexavalent chromium, free cyanide, MBAS and molybdenum on the stated basis \"No representative data available.\" For MBAS in particular — the parameter that later drove this plant into Category-I noncompliance — the wasteload allocation was computed against an assumed background of zero that Ohio EPA had no ambient datum to support.",
+          "parameters": [
+            "Antimony",
+            "Dissolved Hexavalent Chromium",
+            "Free Cyanide",
+            "MBAS (foaming agents)",
+            "Molybdenum"
+          ]
+        }
+      },
+      "reported_performance": {
+        "citation": "Fact Sheet 2PD00009, Pages 21-22 of 35, Tables 1-5",
+        "tag": "[verified]",
+        "window_note": "2016 columns are September-December only; 2021 columns are January-August only. Neither is a full year and neither should be compared to a full-year column without saying so.",
+        "effluent_violations_outfall_001": {
+          "2016a": 0,
+          "2017": 2,
+          "2018": 4,
+          "2019": 7,
+          "2020": 15,
+          "2021b": 7,
+          "total": 35,
+          "by_parameter": {
+            "CBOD_5_day": 9,
+            "Ammonia": 11,
+            "Total_Suspended_Solids": 7,
+            "Mercury": 3,
+            "E_coli": 2,
+            "Phosphorus": 2,
+            "Fecal_Coliform_in_Sludge": 1
+          },
+          "permittee_explanation": "Carried from p. 7: \"Many of these violations are associated with the recent facility improvements (2020-21), during which the aeration treatment systems were operating at half capacity.\""
+        },
+        "annual_flow_mgd": {
+          "2016a": {
+            "p50": 4.25,
+            "p95": 9.05,
+            "max": 20.04
+          },
+          "2017": {
+            "p50": 5.21,
+            "p95": 15.49,
+            "max": 29.35
+          },
+          "2018": {
+            "p50": 5.46,
+            "p95": 13.6,
+            "max": 26.27
+          },
+          "2019": {
+            "p50": 5.71,
+            "p95": 14.88,
+            "max": 27.08
+          },
+          "2020": {
+            "p50": 4.62,
+            "p95": 12.12,
+            "max": 25.33
+          },
+          "2021b": {
+            "p50": 4.54,
+            "p95": 11.84,
+            "max": 18.03
+          },
+          "note": "Median flow runs 4.25-5.71 MGD against a 10 MGD average design — the plant has substantial headroom at the median. The 95th percentiles (up to 15.49 MGD) and maxima (up to 29.35 MGD, against a 30 MGD peak hydraulic capacity) are the wet-weather story, not the dry-weather one."
+        },
+        "cso_discharges": {
+          "2016a": {
+            "occurrences": 2,
+            "volume_mg": 26.98
+          },
+          "2017": {
+            "occurrences": 6,
+            "volume_mg": 126.43
+          },
+          "2018": {
+            "occurrences": 8,
+            "volume_mg": 52.95
+          },
+          "2019": {
+            "occurrences": 4,
+            "volume_mg": 35.66
+          },
+          "2020": {
+            "occurrences": 3,
+            "volume_mg": 42.58
+          },
+          "2021b": {
+            "occurrences": 4,
+            "volume_mg": 44.94
+          },
+          "note": "2017 (6) and 2018 (8) exceed the LTCP level of control of four per typical year. The fact sheet does not treat those years as a level-of-control failure — the standard is four per TYPICAL year, and a typical-year determination is a modelling exercise, not a raw count. Recorded as printed; no violation is asserted from this table."
+        },
+        "total_phosphorus_loading": {
+          "2016a": {
+            "n": 8,
+            "median_mg_l": 0.65,
+            "median_flow_mgd": 4.25,
+            "median_load_kg_day": 10.45
+          },
+          "2017": {
+            "n": 25,
+            "median_mg_l": 0.5,
+            "median_flow_mgd": 5.21,
+            "median_load_kg_day": 9.85
+          },
+          "2018": {
+            "n": 24,
+            "median_mg_l": 0.4,
+            "median_flow_mgd": 5.46,
+            "median_load_kg_day": 8.26
+          },
+          "2019": {
+            "n": 27,
+            "median_mg_l": 0.2,
+            "median_flow_mgd": 5.71,
+            "median_load_kg_day": 4.32
+          },
+          "2020": {
+            "n": 43,
+            "median_mg_l": 0.3,
+            "median_flow_mgd": 4.62,
+            "median_load_kg_day": 5.24
+          },
+          "2021b": {
+            "n": 24,
+            "median_mg_l": 0.4,
+            "median_flow_mgd": 4.54,
+            "median_load_kg_day": 6.87
+          }
+        }
+      },
+      "parameter_assessment": {
+        "citation": "Fact Sheet 2PD00009, Page 32 of 35, \"Table 14. Parameter Assessment\"",
+        "tag": "[verified]",
+        "group_5_limits_recommended": {
+          "ammonia_summer_avg_mg_l": 1.7,
+          "ammonia_winter_avg_mg_l": 4.2,
+          "b2ehp_avg_ug_l": 8.4,
+          "b2ehp_max_ug_l": 1120,
+          "mbas_max_mg_l": 0.51,
+          "mercury_avg_ng_l": 1.3,
+          "mercury_max_ng_l": 1700
+        },
+        "mercury_note": "\"Mercury becomes a Group 5 parameter based upon the loading test [OAC 3745-2-06(B)]\" — i.e. by load, not by concentration.",
+        "group_2_no_limit": [
+          "Antimony",
+          "Arsenic",
+          "Cadmium",
+          "Chromium",
+          "Dissolved Hexavalent Chromium",
+          "Copper",
+          "Molybdenum",
+          "Nickel",
+          "Nitrate + Nitrite"
+        ],
+        "group_3_no_limit": [
+          "Free Cyanide",
+          "Lead",
+          "Selenium",
+          "Zinc"
+        ],
+        "group_4_monitoring": [
+          "Total Filterable Residue"
+        ]
+      },
+      "final_effluent_limits_outfall_001": {
+        "citation": "Fact Sheet 2PD00009, Page 33 of 35, \"Table 15. Final Effluent Limits for Outfall 001\"",
+        "tag": "[verified]",
+        "loading_basis": "\"Effluent loadings based on average design discharge flow of 10 MGD.\" Every kg/day figure below is therefore a DESIGN-FLOW loading, not an actual-flow loading; the plant's median flow is roughly half its design flow.",
+        "limits": [
+          {
+            "parameter": "Dissolved Oxygen",
+            "units": "mg/L",
+            "daily_minimum": 5.0,
+            "basis": "PD"
+          },
+          {
+            "parameter": "Total Suspended Solids",
+            "units": "mg/L",
+            "seven_day_avg": 18,
+            "thirty_day_avg": 12,
+            "load_daily_kg": 682,
+            "load_30day_kg": 455,
+            "basis": "PD"
+          },
+          {
+            "parameter": "Oil & Grease",
+            "units": "mg/L",
+            "daily_maximum": 10,
+            "basis": "WQS"
+          },
+          {
+            "parameter": "Ammonia (summer)",
+            "units": "mg/L",
+            "seven_day_avg": 2.5,
+            "thirty_day_avg": 1.7,
+            "load_daily_kg": 94.7,
+            "load_30day_kg": 64.4,
+            "basis": "WLA"
+          },
+          {
+            "parameter": "Ammonia (winter)",
+            "units": "mg/L",
+            "seven_day_avg": 6.3,
+            "thirty_day_avg": 4.2,
+            "load_daily_kg": 239,
+            "load_30day_kg": 159,
+            "basis": "WLA"
+          },
+          {
+            "parameter": "Phosphorus",
+            "units": "mg/L",
+            "seven_day_avg": 1.1,
+            "thirty_day_avg": 0.7,
+            "load_daily_kg": 41.7,
+            "load_30day_kg": 26.5,
+            "basis": "PTS/BPJ"
+          },
+          {
+            "parameter": "E. coli",
+            "units": "#/100 mL",
+            "seven_day_avg": 284,
+            "thirty_day_avg": 126,
+            "basis": "WQS"
+          },
+          {
+            "parameter": "Methyl Blue Active Substances (MBAS)",
+            "units": "mg/L",
+            "daily_maximum": 0.51,
+            "load_daily_kg": 19.4,
+            "basis": "WLA"
+          },
+          {
+            "parameter": "Bis(2-ethylhexyl) phthalate",
+            "units": "ug/L",
+            "daily_maximum": 1120,
+            "thirty_day_avg": 8.4,
+            "load_daily_kg": 42.4,
+            "load_30day_kg": 0.318,
+            "basis": "WLA"
+          },
+          {
+            "parameter": "Mercury",
+            "units": "ng/L",
+            "daily_maximum": 1700,
+            "thirty_day_avg": 1.3,
+            "load_daily_kg": 0.0644,
+            "load_30day_kg": 5e-05,
+            "basis": "WLA"
+          },
+          {
+            "parameter": "CBOD5",
+            "units": "mg/L",
+            "seven_day_avg": 12,
+            "thirty_day_avg": 10,
+            "load_daily_kg": 455,
+            "load_30day_kg": 379,
+            "basis": "PD"
+          },
+          {
+            "parameter": "pH",
+            "units": "SU",
+            "daily_maximum": 9.0,
+            "daily_minimum": 6.5,
+            "basis": "WQS"
+          }
+        ],
+        "monitor_only": [
+          "Water Temperature",
+          "Precipitation",
+          "Total Kjeldahl Nitrogen",
+          "Nitrate plus Nitrite",
+          "Orthophosphate",
+          "Nickel",
+          "Zinc",
+          "Cadmium",
+          "Lead",
+          "Chromium",
+          "Copper",
+          "Dissolved Hexavalent Chromium",
+          "Flow Rate",
+          "Free Cyanide",
+          "Total Filterable Residue",
+          "Acute/Chronic Toxicity (C. dubia, P. promelas)"
+        ],
+        "basis_legend": {
+          "BPJ": "Best professional judgment",
+          "BTJ": "Best Technical Judgment",
+          "M": "DSW NPDES Permit Guidance 1 (monitoring frequency, sanitary discharges)",
+          "PD": "Plant Design (OAC 3745-33-05(E))",
+          "PMR": "Phosphorus monitoring requirements (ORC 6111.03)",
+          "PTS": "Phosphorus Treatment Standards (OAC 3745-33-06(C))",
+          "WET": "Minimum WET testing requirements (OAC 3745-33-07(B)(11))",
+          "WLA": "Wasteload Allocation procedures (OAC 3745-2)",
+          "WQS": "Ohio Water Quality Standards (OAC 3745-1)"
+        }
+      },
+      "summary_of_permit_conditions": {
+        "citation": "Fact Sheet 2PD00009, Page 2 of 35, \"SUMMARY OF PERMIT CONDITIONS\"",
+        "tag": "[verified]",
+        "quoted_changes": [
+          "\"New limits for bis(2-ethylhexyl) phthalate (B2EHP) and methyl blue activated substances (MBAS) are proposed due to reasonable potential to exceed the wasteload allocation. A 36-month compliance schedule is proposed for the permittee to attain compliance with the new limits.\"",
+          "\"Lower final effluent limits are proposed for ammonia (summer and winter), due to plant design limits not being protective of water quality standards. A 36-month compliance schedule is proposed...\"",
+          "\"Monitoring for E. coli at upstream station 801 and downstream station 901 is proposed to change from summer to June-August and from monthly to once per two weeks.\"",
+          "\"New monitoring for total phosphorus as station 901 is proposed to provide data for future water quality studies.\"",
+          "\"Monitoring for CBOD5 and TSS at CSO station 002 is proposed to be removed.\"",
+          "\"A new condition is proposed in Part II of the permit that requires continued compliance with the Long Term Control Plan level of control for combined sewer overflows.\""
+        ],
+        "antidegradation": "\"No antidegradation review was necessary.\" (p. 1)"
+      }
+    },
+    "approximate_paths": [
+      "facility.population_served"
+    ],
+    "citation": {
+      "source": "oepa/bowling-green/2PD00009.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/bowling-green/2PD00009.fs.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/bowling-green/2PD00009.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Bowling Green Water Pollution Control",
+    "confidence": "high",
+    "warnings": [
+      "THE LIMIT TABLE YOU WANT DEPENDS ON THE DATE. Part I.A carries TWO complete limit tables for the same outfall. Item 1 governs \"the period beginning on the effective date of this permit and lasting through the 36th month\"; Item 2 governs \"the period beginning on 37th month after the effective date of this permit and lasting until the expiration date.\" The interim table has NO MBAS limit and NO B2EHP limit, and its ammonia limits are looser (winter 7.3/4.8 mg/L, summer 2.7/1.8 mg/L). Reading the final table against a 2023 DMR, or the interim table against a 2026 DMR, produces a wrong answer in both directions.",
+      "The permit itself never prints a calendar date for the interim/final changeover — it is expressed only as \"the 36th month\" and \"37th month after the effective date.\" With an effective date of 2022-05-01 that resolves to on or about 2025-05-01. ICIS-NPDES independently carries the interim limit set as ending 30-APR-25, which agrees. Both are recorded; the arithmetic is [inference] and the ICIS date is [verified] as what the federal system holds. See data/extracted/bowling-green/water-watch.yaml, which turns on this date.",
+      "Ambient stations 801 and 901 monitor the NORTH BRANCH PORTAGE RIVER, not Poe Ditch. The permit's own upstream/downstream biology and chemistry are therefore measured a stream removed from the outfall's immediate receptor. Poe Ditch itself is not monitored under this permit at all."
+    ],
+    "fields": {
+      "facility_name": "Bowling Green Water Pollution Control",
+      "permit_no": "2PD00009*TD",
+      "permit_action": "renewal",
+      "applicant": "City of Bowling Green",
+      "application_no": "OH0024139",
+      "facility_address": "901 North Dunbridge Road, Bowling Green, Ohio, Wood County",
+      "receiving_water": "Poe Ditch",
+      "action_date": "2022-03-28",
+      "effective_date": "2022-05-01",
+      "expiration_date": "2027-04-30",
+      "signed_by": "Laurie A. Stevenson, Director",
+      "page_count": 54,
+      "renewal_application_due": "\"no later than 180 days prior to the above date of expiration\" — i.e. on or about 2026-11-01 for the 2027-04-30 expiration. As of the 2026-07-24 ICIS extract the permit is still carried as Effective with expiration 04/30/2027; no successor action appears.",
+      "sampling_stations": {
+        "citation": "Permit 2PD00009*TD, Page 25, Part II Item B",
+        "tag": "[verified]",
+        "2PD00009001": {
+          "description": "Final effluent, prior to discharge to Poe Ditch",
+          "latitude_dms": "41 N 23 ' 06 \"",
+          "longitude_dms": "83 W 36 ' 38 \"",
+          "latitude_dd": 41.385,
+          "longitude_dd": -83.6106,
+          "coordinate_note": "Decimal degrees are a conversion of the permit's own DMS, shown for use, not a second source. ICIS-NPDES carries 41.38309 / -83.61074 for the same facility and FRS carries 41.385022 / -83.611078. All three are recorded; none is corrected against the others."
+        },
+        "2PD00009002": {
+          "description": "Combined sewer overflow - see Part II",
+          "Item D": null
+        },
+        "2PD00009300": {
+          "description": "System-wide sanitary sewer overflows"
+        },
+        "2PD00009581": {
+          "description": "Land application of Class B sewage sludge"
+        },
+        "2PD00009584": {
+          "description": "Land application of exceptional quality sewage sludge"
+        },
+        "2PD00009586": {
+          "description": "Sludge disposal via landfill"
+        },
+        "2PD00009588": {
+          "description": "Sludge disposal via transfer to another NPDES permit holder"
+        },
+        "2PD00009601": {
+          "description": "Influent monitoring"
+        },
+        "2PD00009801": {
+          "description": "Upstream monitoring on North Branch Portage River at Bowling Green Road East"
+        },
+        "2PD00009901": {
+          "description": "Downstream monitoring on North Branch Portage River at Chamberlain Road"
+        },
+        "transcription_note": "Station 588's description is printed \"Sludge disoposal via transfer to another NPDES permit holder\" in the source. The typo is the document's; it is normalized here and recorded in this note rather than silently fixed."
+      },
+      "combined_sewer_overflow": {
+        "citation": "Permit 2PD00009*TD, Pages 26-27, Part II Items D and E",
+        "tag": "[verified]",
+        "authorization": "\"The permittee is authorized to discharge from the following combined sewer overflows (CSOs) only during wet weather periods when the flow in the sewer system exceeds the capacity of the sewer system.\"",
+        "outfalls": [
+          {
+            "station": "2PD00009002",
+            "location": "Mercer Road Diversion Chamber",
+            "receiving_stream": "Poe Ditch"
+          }
+        ],
+        "level_of_control": "\"The permittee shall discharge no more than four untreated combined sewer overflow (CSO) events per typical year. This level of control is based on the City of Bowling Green's Combined Sewer Overflow Long Term Control Plan (LTCP), which was approved by Ohio EPA in March 2008. The City completed the LTCP and submitted the Wet Weather Characterization Report on January 1, 2015, which concluded that the City had met the goals of the LTCP. The City must maintain compliance with the LTCP level of control.\"",
+        "lake_erie_basin_public_notification": "Part II, Item G imposes signage, local-health-department notification, public notification and an annual report specifically because these CSOs discharge to the Lake Erie Basin."
+      },
+      "interim_effluent_limits": {
+        "citation": "Permit 2PD00009*TD, Pages 2-4, Part I.A.1",
+        "tag": "[verified]",
+        "period": "\"During the period beginning on the effective date of this permit and lasting through the 36th month\" — 2022-05-01 through on or about 2025-04-30",
+        "outfall": "2PD00009001",
+        "selected_limits": {
+          "total_suspended_solids": {
+            "units": "mg/l",
+            "weekly": 18,
+            "monthly": 12,
+            "load_weekly_kg": 682,
+            "load_monthly_kg": 455
+          },
+          "oil_and_grease": {
+            "units": "mg/l",
+            "maximum": 10
+          },
+          "ammonia_winter": {
+            "units": "mg/l",
+            "weekly": 7.3,
+            "monthly": 4.8,
+            "load_weekly_kg": 277,
+            "load_monthly_kg": 182
+          },
+          "ammonia_summer": {
+            "units": "mg/l",
+            "weekly": 2.7,
+            "monthly": 1.8,
+            "load_weekly_kg": 103,
+            "load_monthly_kg": 68.2
+          },
+          "phosphorus_total": {
+            "units": "mg/l",
+            "weekly": 1.1,
+            "monthly": 0.7,
+            "load_weekly_kg": 41.7,
+            "load_monthly_kg": 26.5
+          },
+          "dissolved_oxygen": {
+            "units": "mg/l",
+            "minimum": 5.0
+          },
+          "mbas": {
+            "limit": null,
+            "note": "MONITOR ONLY in the interim table — 1/Week, Grab. No numeric limit applies before the 37th month."
+          }
+        }
+      },
+      "final_effluent_limits": {
+        "citation": "Permit 2PD00009*TD, Pages 5-7, Part I.A.2",
+        "tag": "[verified]",
+        "period": "\"During the period beginning on 37th month after the effective date of this permit and lasting until the expiration date\" — on or about 2025-05-01 through 2027-04-30",
+        "outfall": "2PD00009001",
+        "new_or_tightened": {
+          "mbas": {
+            "units": "mg/l",
+            "maximum": 0.51,
+            "load_daily_kg": 19.4,
+            "monitoring": "1/Week, Grab",
+            "note": "NEW. No MBAS limit existed under the interim table. This is the limit the plant first exceeded in the monitoring period ending 2025-05-31 — the first full month it was in force."
+          },
+          "note_other": "B2EHP and the lower summer/winter ammonia limits also first apply here. The full final set matches Table 15 of the fact sheet; see data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml rather than duplicating it."
+        }
+      },
+      "schedule_of_compliance": {
+        "citation": "Permit 2PD00009*TD, Pages 20-21, Part I.C",
+        "tag": "[verified]",
+        "subject": "Final Effluent Limits for Ammonia, B2EHP, and MBAS",
+        "preamble": "\"New final effluent limits are proposed for bis(2-ethylhexyl) phthalate (B2EHP), and methyl blue activated substances (MBAS). Also, lower final effluent limits are proposed for ammonia (summer and winter). The permittee shall attain compliance with the effluent limits for ammonia, B2EHP, and MBAS as expeditiously as possible but no later than the dates in the following schedule.\"",
+        "milestones": [
+          {
+            "month": 12,
+            "due": "2023-05-01",
+            "event_code": "07099",
+            "requirement": "Progress report to Ohio EPA Northwest District Office (NWDO) including five years of influent/effluent/sludge data for ammonia, B2EHP and MBAS; a list of significant and non-significant industrial users; actions taken in the previous 12 months; actions planned for the next 12."
+          },
+          {
+            "month": 24,
+            "due": "2024-05-01",
+            "event_code": "07099",
+            "requirement": "Second progress report, same contents."
+          },
+          {
+            "month": 36,
+            "due": "2025-05-01",
+            "event_code": "05699",
+            "requirement": "\"As soon as possible but no later than 36 months after the effective date of this permit, the permittee shall attain compliance with the new effluent limits for ammonia, B2EHP, and MBAS. The permittee shall notify Ohio EPA NWDO within seven days of attaining compliance.\""
+          }
+        ],
+        "due_date_note": "The calendar dates in `due` are [inference] — computed from the 2022-05-01 effective date; the permit states only the month offsets. Whether the two progress reports and the compliance notification were actually submitted is NOT established by any captured source. [open] — a records request to Ohio EPA NWDO for the 07099 and 05699 submittals would settle it, and would speak directly to what the plant knew about its MBAS position before the limit took effect.",
+        "other_schedules": {
+          "phosphorus_optimization": "Part I.C.B — the permittee must complete and submit the \"Evaluation for Reducing Discharge of Phosphorus\" form with its next NPDES renewal application.",
+          "municipal_pretreatment": "Part I.C.C — evaluate the adequacy of local industrial user limitations, submit a revised local limit technical justification report, and implement revisions if needed. Relevant to any new significant industrial user in the service area."
+        }
+      },
+      "other_requirements_of_note": {
+        "citation": "Permit 2PD00009*TD, Part II",
+        "tag": "[verified]",
+        "percent_removal": "Item M — \"The treatment works must obtain at least 85 percent removal of carbonaceous [BOD5 and TSS].\"",
+        "reopener": "Item N — \"Water quality based permit limitations in this permit may be revised based on updated [information].\" A reopener exists; nothing in the captured record shows it used.",
+        "weekend_monitoring": "Item C — all parameters except flow \"need not be monitored on days when the plant is not normally staffed (Saturdays, Sundays, and Holidays).\" Report \"AN\" on those days. Worth carrying: a daily-maximum limit is only sampled on staffed days, so the reported daily maxima are not a seven-day-per-week record.",
+        "ssos": "Item H — SSO reporting, including a separate track for SSOs that imminently and substantially endanger human health."
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/bowling-green/2PD00009.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/bowling-green/2PD00009.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  }
+]
