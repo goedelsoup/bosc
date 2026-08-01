@@ -66,6 +66,26 @@ def test_accessors_return_the_cited_reference_values(hydro_settings: Settings) -
         pytest.approx(1.0),
         pytest.approx(10.0),
     )
+    assert params.channel_forming_return_period(settings=hydro_settings) == 2
+
+
+def test_channel_forming_recurrence_is_cited_and_defaults_when_the_block_is_absent(
+    hydro_settings: Settings, tmp_path: Path
+) -> None:
+    # WS-12 / #1612: the bankfull-recurrence surrogate is load-bearing (it is the erosion
+    # denominator), so it lives in the cited table with the 1-2 yr published band behind it...
+    table = _committed_table(hydro_settings)
+    entry = table["channel"]["channel_forming_return_period_yr"]
+    assert entry["value"] == params._DEFAULT_CHANNEL_FORMING_RP
+    assert entry["source"] == "reference"
+    assert "bankfull" in entry["citation"].lower()
+    # ...and, unlike the four constants that predate it, a table WITHOUT the `channel:` block is
+    # stale rather than invalid: it still loads, on the documented default.
+    legacy = _write_params(tmp_path / "legacy")  # writes no `channel:` block
+    assert params.channel_forming_return_period(settings=legacy) == (
+        params._DEFAULT_CHANNEL_FORMING_RP
+    )
+    assert params.peak_factor(settings=legacy) == pytest.approx(484.0)
 
 
 def test_committed_yaml_is_coupled_to_the_in_code_defaults(hydro_settings: Settings) -> None:
@@ -77,6 +97,10 @@ def test_committed_yaml_is_coupled_to_the_in_code_defaults(hydro_settings: Setti
     assert table["routing"]["manning_n"]["value"] == params._DEFAULT_MANNING_N
     assert table["dilution"]["violation_ratio"]["value"] == params._DEFAULT_DILUTION_VIOLATION
     assert table["dilution"]["tight_ratio"]["value"] == params._DEFAULT_DILUTION_TIGHT
+    assert (
+        table["channel"]["channel_forming_return_period_yr"]["value"]
+        == params._DEFAULT_CHANNEL_FORMING_RP
+    )
     # ...and the model-layer screening constants stay pinned to the same cited bands.
     assert table["dilution"]["violation_ratio"]["value"] == DILUTION_VIOLATION
     assert table["dilution"]["tight_ratio"]["value"] == DILUTION_TIGHT

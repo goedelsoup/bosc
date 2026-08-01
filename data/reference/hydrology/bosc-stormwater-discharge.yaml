@@ -71,6 +71,12 @@ cover_breakdown: 115 ac impervious + 80 ac developed-pervious + 145 ac undevelop
   (of 340 ac); developed ground on HSG D (undrained), the undeveloped remainder on
   HSG B (drained)
 peaks:
+- return_period_yr: 2
+  depth_in: 2.52
+  pre_peak_cfs: 140.0
+  post_peak_cfs: 270.0
+  full_buildout_peak_cfs: 670.0
+  post_peak_wet_cfs: 380.0
 - return_period_yr: 10
   depth_in: 3.58
   pre_peak_cfs: 290.0
@@ -116,10 +122,93 @@ receiving_7q10:
   confidence: high
 receiving_note: 'Dug Run: cited 7Q10 0.78 cfs; Warmwater Habitat; impaired (aquatic
   life, recreation); also receives the American II WWTP outfall (NPDES 2PH00006) at
-  a cited dilution violation. A storm peak many times the design low flow is a channel-stability
-  / erosion signal — corroborated by the 2026-06-05 ''check the outlet ... not releasing
-  sediment'' inspection note — distinct from continuous-effluent dilution.'
+  a cited dilution violation. The peak-to-7Q10 multiple is the LOW-FLOW framing —
+  it says the storm arrives on a stream that at design low flow is effluent, and it
+  belongs with the dilution finding, not with channel stability: a storm peak is hundreds
+  of times any small stream''s 7Q10 almost by construction. The erosion signal is
+  the channel-forming (bankfull) comparison and the reach conveyance check (WS-12
+  / #1612) — corroborated by the 2026-06-05 ''check the outlet ... not releasing sediment''
+  inspection note.'
 peak_to_7q10_ratio: 744.0
+channel_forming:
+  tier: tier0
+  receiving_water: Dug Run
+  node_id: dug-run-head
+  return_period_yr: 2
+  storm_depth_in: 2.52
+  discharge:
+    value: 1000.0
+    unit: cfs
+    source: derived
+    citation: 'Bankfull / effective-discharge surrogate for Dug Run: the 2-yr 24-hr
+      (2.52 in) SCS peak over the committed ''dug-run-head'' subcatchment (reaches.yaml
+      — 4,940 ac, CN 78, Tc 2.5 hr), computed by the same Tier-0 chain as the campus
+      peaks so the two are like-for-like. The catchment is measured at the mainstem
+      confluence — the largest channel-forming discharge on this tributary — so a
+      ratio against it is a LOWER bound on what the channel sees where the outfall
+      actually enters.'
+    confidence: low
+  catchment_area_acres:
+    value: 4940.0
+    unit: acre
+    source: assumption
+    citation: No committed WBD delineation for Dug Run; assumed ~20 km² (Pike Run
+      order) — a small Ottawa (Lima area) tributary
+    confidence: low
+  curve_number:
+    value: 78.0
+    unit: ''
+    source: assumption
+    citation: Suburban Shawnee/Lima fringe on HSG C (screening)
+    confidence: low
+  tc_hr:
+    value: 2.5
+    unit: hr
+    source: assumption
+    citation: Time of concentration for a small partly-developed tributary (screening
+      estimate)
+    confidence: low
+  method: 'Tier-0 SCS-CN unit-hydrograph peak at the cited channel-forming recurrence
+    (tier0-parameters.yaml: bankfull recurs at ~1-2 yr on the annual-maximum series;
+    2 yr is the conservative — largest-denominator — end of that band) over the receiving
+    tributary''s committed contributing subcatchment. NOT a regional bankfull regression
+    and NOT a surveyed bankfull cross-section: it inherits the catchment''s own provenance,
+    which for an undelineated tributary is a stated assumption.'
+peak_to_channel_forming_ratio: 0.58
+reach_conveyance:
+  tier: tier0
+  node_id: dug-run-head
+  receiving_water: Dug Run
+  slope: 0.002
+  manning_n: 0.04
+  bottom_width_ft: 10.0
+  side_slope_z: 2.0
+  geometry_source: tier0_default
+  bankfull:
+    label: bankfull (2-yr channel-forming)
+    discharge_cfs: 1000.0
+    depth_ft: 8.19
+    top_width_ft: 42.8
+    velocity_fps: 4.63
+    shear_stress_psf: 0.578
+  design:
+    label: 25-yr post-development peak
+    discharge_cfs: 580.0
+    depth_ft: 6.35
+    top_width_ft: 35.4
+    velocity_fps: 4.02
+    shear_stress_psf: 0.468
+  within_bank: true
+  method: Manning normal depth in the 'dug-run-head' reach at slope 0.002 ft/ft —
+    NO committed cross-section for this reach — the Tier-0 routing default trapezoid
+    (10 ft bottom, 2:1 sides, n=0.04) stands in, so the absolute depths are a screening
+    bracket and a surveyed section is the upgrade. Bankfull stage is taken self-consistently
+    as the normal depth of the channel-forming discharge in this same section (no
+    surveyed bankfull elevation exists), so the within-bank verdict reduces to the
+    discharge ratio; what the velocity and boundary shear (tau = 62.4*R*S) add is
+    the geomorphic work the flow does, which a discharge ratio cannot express. Uniform
+    flow — no backwater, no bend or section variation; Tier-0 screening, not a HEC-RAS
+    water-surface profile.
 detention_design_shown: false
 basin_chronology_note: The 95% SPS grading sheet shows NO detention/retention storage
   (lma1a.storm-inventory.yaml); the ESC inspections show basins under construction
@@ -150,24 +239,30 @@ routed_discharge:
     of the as-permitted post-development outfall hydrograph down the committed reaches.yaml
     Dug Run channel to the Ottawa confluence; reach length/slope/geometry are stated
     Tier-0 assumptions (reaches.yaml), not a calibrated HEC-RAS model.
-method: Tier-0 SCS-CN screening over the measured parcel footprint; the dominant hydrologic
-  soil group B/D is resolved per scenario to HSG B pre-development (drained) and HSG
-  D on developed post-development ground (undrained) — an explicit drainage-condition
+method: 'Tier-0 SCS-CN screening over the measured parcel footprint; the dominant
+  hydrologic soil group B/D is resolved per scenario to HSG B pre-development (drained)
+  and HSG D on developed post-development ground (undrained) — an explicit drainage-condition
   switch, see caveats; post-development runoff uses the TR-55 weighted-runoff method
-  (each ASWCD-declared cover's CN run separately over the impervious/developed-pervious/undeveloped
+  (each ASWCD-declared cover''s CN run separately over the impervious/developed-pervious/undeveloped
   split, runoff depths area-weighted; the reported post CN is the area-weighted composite
   summary) — compositing a single CN under-predicts runoff once the ~34% impervious
-  footprint passes TR-55's ~30% directly-connected threshold; time of concentration
+  footprint passes TR-55''s ~30% directly-connected threshold; time of concentration
   shortens with imperviousness (pre 1 hr -> as-permitted 0.779882 hr -> full-buildout
   0.35 hr); peaks are AMC-II (average antecedent moisture) with a wet-antecedent (AMC-III)
   conservative bound on the as-permitted post peak; the design rainfall is the NRCS
   Type-II 24-hr distribution built at its published 6-minute resolution (NEH-630 Ch.
   4 630.0407) and the unit hydrograph runs at the SCS unit duration D <= 0.133*Tc
   on the peak factor 484; outfall capacity = Manning full-flow (n=0.013) across an
-  assumed slope band; receiving 7Q10 cited from the OEPA NPDES fact sheet (2PH00006).
-  The receiving-water peak is additionally routed down the cited reach chain to the
-  Ottawa confluence (Tier-0 Muskingum-Cunge; see routed_discharge) so it reflects
-  reach travel, not only the at-outfall peak.
+  assumed slope band. The EROSION signal is anchored to the receiving channel''s channel-forming
+  (bankfull / 2-yr) discharge, not to the 7Q10: `channel_forming` runs this same SCS
+  chain over the receiving tributary''s committed contributing subcatchment (reaches.yaml)
+  so numerator and denominator share the method, and `reach_conveyance` carries the
+  design peak into that reach''s cited section as Manning normal depth (depth / velocity
+  / boundary shear vs the bankfull flow). The cited 7Q10 (OEPA NPDES fact sheet 2PH00006)
+  is retained for the LOW-FLOW / dilution framing only. The receiving-water peak is
+  additionally routed down the cited reach chain to the Ottawa confluence (Tier-0
+  Muskingum-Cunge; see routed_discharge) so it reflects reach travel, not only the
+  at-outfall peak.'
 caveats:
 - Screening-grade — the receiving-water peak is a Tier-0 Muskingum-Cunge reach route
   on stated reach assumptions (reaches.yaml), not a calibrated HEC-RAS model or a
@@ -190,8 +285,35 @@ caveats:
 - The outfall's entry point on the receiving tributary is not in the record, so the
   routed channel length is an upper bound on travel — the routed attenuation/lag are
   upper bounds and the confluence peak a lower bound; reaches between the outfall
-  and the confluence see intermediate, larger peaks (the at-outfall peak-to-7Q10 ratio,
-  unattenuated, is the headline erosion signal this routing does not soften).
+  and the confluence see intermediate, larger peaks (the unattenuated at-outfall peak
+  is what the channel-forming comparison is read on, and this routing does not soften
+  it).
+- 'The peak-to-7Q10 multiple is the LOW-FLOW / dilution framing, NOT the erosion one
+  (WS-12 / #1612). Channel stability is governed by the channel-forming (bankfull,
+  effective) discharge — a moderate flow recurring at ~1-2 yr — while the 7Q10 is
+  a 7-day 10-year LOW flow: their ratio runs to the hundreds for any flashy outfall
+  on any small stream and maps to no geomorphic threshold. The erosion claim now rests
+  on `channel_forming` / `peak_to_channel_forming_ratio` and on the pre-vs-post pair
+  at the channel-forming recurrence.'
+- 'The erosion denominator — Dug Run''s channel-forming discharge, 1,000 cfs — is
+  a SURROGATE, not a survey: the 2-yr SCS peak over the committed ''dug-run-head''
+  subcatchment (4,940 ac, source: assumption, confidence: low). It moves with that
+  catchment, so a committed delineation (or a regional bankfull regression / a surveyed
+  cross-section) would sharpen it. Two knowable directions: the recurrence is pinned
+  at the CONSERVATIVE end of the published 1-2 yr bankfull band, which maximizes the
+  denominator and so understates every ratio against it; and the catchment is taken
+  at the mainstem confluence — the largest channel-forming discharge on this tributary
+  — while the outfall enters somewhere above it, on a smaller local drainage area,
+  so the reported ratio is a LOWER bound on what the channel sees at the discharge
+  point.'
+- The 'dug-run-head' reach carries NO committed cross-section, so the conveyance check
+  runs on the Tier-0 routing default trapezoid (10 ft bottom, 2:1 sides, n=0.04) —
+  the same section the Muskingum-Cunge routing uses. Its absolute depths are a screening
+  bracket, not a stage prediction (a 8.19-ft bankfull depth on a small tributary is
+  a sign of the section being too small for the committed catchment, not a finding
+  about the channel). Because bankfull stage is taken self-consistently in that same
+  section, the within-bank verdict is geometry-free; the velocity and shear are not,
+  and a surveyed cross-section is the upgrade.
 - 'Peaks run on the SCS unit-hydrograph peak factor 484 — the cited standard-hydrograph
   default; no per-site factor is declared on `SiteProfile.uh_peak_factor`. The factor
   is a TERRAIN property, not a universal constant: NEH-630 Ch. 16 spans ~100 (wetland

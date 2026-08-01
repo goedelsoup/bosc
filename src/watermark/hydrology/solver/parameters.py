@@ -37,6 +37,7 @@ _DEFAULT_IA_RATIO = 0.2
 _DEFAULT_MANNING_N = 0.04
 _DEFAULT_DILUTION_VIOLATION = 1.0
 _DEFAULT_DILUTION_TIGHT = 10.0
+_DEFAULT_CHANNEL_FORMING_RP = 2
 
 
 class _Tier0Params(BaseModel):
@@ -52,6 +53,11 @@ class _Tier0Params(BaseModel):
     manning_n: float = Field(gt=0)
     dilution_violation: float = Field(gt=0)
     dilution_tight: float = Field(gt=0)
+    # Bankfull / effective-discharge recurrence (WS-12 / #1612). Defaulted rather than required
+    # so a data_dir carrying a pre-#1612 table still loads on the documented value instead of
+    # raising — the `channel:` block postdates the other four, and a table that simply predates
+    # it is stale, not invalid (an out-of-band value in a table that HAS the block still fails).
+    channel_forming_return_period_yr: int = Field(default=_DEFAULT_CHANNEL_FORMING_RP, gt=0)
 
     @model_validator(mode="after")
     def _bands_ordered(self) -> _Tier0Params:
@@ -81,6 +87,15 @@ def _load_params(data_dir: str) -> _Tier0Params | None:
         manning_n=raw["routing"]["manning_n"]["value"],
         dilution_violation=raw["dilution"]["violation_ratio"]["value"],
         dilution_tight=raw["dilution"]["tight_ratio"]["value"],
+        **(
+            {
+                "channel_forming_return_period_yr": channel["channel_forming_return_period_yr"][
+                    "value"
+                ]
+            }
+            if (channel := raw.get("channel"))
+            else {}
+        ),
     )
 
 
@@ -122,6 +137,22 @@ def dilution_bands(*, settings: Settings | None = None) -> tuple[float, float]:
     if params is None:
         return _DEFAULT_DILUTION_VIOLATION, _DEFAULT_DILUTION_TIGHT
     return params.dilution_violation, params.dilution_tight
+
+
+def channel_forming_return_period(*, settings: Settings | None = None) -> int:
+    """Recurrence (yr) whose peak stands in for the receiving channel's bankfull discharge.
+
+    The denominator of the stormwater screen's erosion signal (WS-12 / #1612) — channel stability
+    is set by the frequent, channel-forming (bankfull / effective) discharge, not by the 7-day
+    10-year **low** flow, which belongs to the dilution framing. The cited 1-2 yr bankfull band and
+    why 2 is its conservative end are in ``tier0-parameters.yaml``.
+    """
+    params = _resolve(settings)
+    return (
+        params.channel_forming_return_period_yr
+        if params is not None
+        else _DEFAULT_CHANNEL_FORMING_RP
+    )
 
 
 def round_sig(x: float, sig: int = 2) -> float:

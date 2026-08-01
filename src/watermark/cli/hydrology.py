@@ -734,9 +734,10 @@ def storm_discharge(
 
     Calibrated to the SWCD-declared footprint (only ~115 of ~344 ac permanently impervious),
     so the post-development CN is an area-weighted composite, not a blanket impervious parcel.
-    Screens the single 60-inch outfall's Manning full-flow capacity and reads the design-storm
-    peak against Dug Run's cited 7Q10 — the receiving water the inspections call "the creek
-    west of the site."
+    Screens the single 60-inch outfall's Manning full-flow capacity, then the receiving CHANNEL:
+    the design peak against Dug Run's channel-forming (bankfull) discharge plus a normal-depth
+    conveyance check at the cited reach section — that is the erosion signal. The cited 7Q10
+    multiple is reported for the low-flow / dilution framing only (WS-12 / #1612).
     """
     from watermark.hydrology import stormwater
     from watermark.pipeline import hydrology as hydro_stage
@@ -791,6 +792,29 @@ def storm_discharge(
         cap.add_row(f"{c.slope_pct:g}%", f"{c.capacity_cfs:,.0f}")
     console.print(cap)
     console.print(f"[dim]{screen.receiving_note}[/]")
+    cf = screen.channel_forming
+    if cf is not None and screen.peak_to_channel_forming_ratio is not None:
+        console.print(
+            f"[dim]channel-forming[/] {cf.receiving_water} bankfull "
+            f"({cf.return_period_yr}-yr) [bold]{cf.discharge.value:,.0f} cfs[/] "
+            f"[dim]({cf.node_id} subcatchment)[/] — the {screen.design_return_period_yr}-yr post "
+            f"peak is [bold]{screen.peak_to_channel_forming_ratio:.2f}x[/] it "
+            "[dim](a lower bound; the erosion denominator, not the 7Q10)[/]"
+        )
+    rc = screen.reach_conveyance
+    if rc is not None:
+        shear = rc.shear_ratio
+        console.print(
+            f"[dim]conveyance[/] {rc.node_id}: design {rc.design.depth_ft:g} ft @ "
+            f"{rc.design.velocity_fps:g} ft/s vs bankfull {rc.bankfull.depth_ft:g} ft @ "
+            f"{rc.bankfull.velocity_fps:g} ft/s"
+            + (f" [dim]({shear:.2f}x bankfull shear)[/]" if shear else "")
+            + (
+                " [dim]— Tier-0 default section[/]"
+                if rc.geometry_source == "tier0_default"
+                else " [dim]— reaches.yaml section[/]"
+            )
+        )
     rd = screen.routed_discharge
     if rd is not None:
         console.print(
@@ -807,7 +831,9 @@ def storm_discharge(
     console.print(
         "\n[dim]Tier-0 SCS screening; post cover calibrated to the ASWCD footprint. The "
         "receiving-water peak is routed (Tier-0 Muskingum-Cunge on stated reach assumptions); "
-        "not a calibrated hydraulic model or a permit determination.[/]"
+        "the erosion signal is anchored to the receiving channel's channel-forming (bankfull) "
+        "discharge, the peak-to-7Q10 multiple to the low-flow/dilution framing. Not a calibrated "
+        "hydraulic model or a permit determination.[/]"
     )
 
 
