@@ -10,7 +10,7 @@ license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:sidney
 storage:
-- relpath: extracted/oepa/1PV00037.npdes.yaml
+- relpath: extracted/oepa/sidney/1PV00037.npdes.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:

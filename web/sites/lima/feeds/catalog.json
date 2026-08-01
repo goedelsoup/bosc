@@ -505,10 +505,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "670b17edcb48bf4d697c5fc4c2d06d3d090462f243b5fc37979c9bb55f684b2b",
-      "size_bytes": 168826,
+      "sha256": "4710cd51cdd93dab4f855e44902485ef648e3e1889886be222d0cb4895a08a88",
+      "size_bytes": 198670,
       "lfs_materialized": true,
-      "file_count": 12,
+      "file_count": 13,
       "stale": false,
       "asof": null
     },
@@ -571,6 +571,63 @@
     },
     "citation": {
       "source": "Data Center Dynamics; Journal-News (CRA/tax filing); WVXU; WCPO; Duke Energy Ohio Woodsdale 345-kV transmission project page; City of Trenton water/sewer pages; Butler County wastewater (LeSourdsville WRF); stopohiodatacenters.org (advocacy, leads only)",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "data-centers-ottawa",
+    "title": "Ottawa / Putnam County OH — Data-Center Activity Register",
+    "scope": "extracted",
+    "collection": "ottawa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "PJM public planning queue (PlanningQueues.xml, 9,263 projects); ODJFS public WARN notices 2024/2025/2026 (241 notices, served off the Ohio DAM) and the RK Industries notice PDF; EPA ECHO ICIS-Air and CWA for FIPS 39137; EPA RSEI v234 Putnam inventory; BLS QCEW 2023 (area 39137); Putnam County GIS Parcels layer + county auditor; Village of Ottawa Highland Industrial Park page; Putnam County CIC project register; stopohiodatacenters.org Putnam County profile. All queried 2026-07-31.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:ottawa",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "data-center",
+      "affirmative-negative",
+      "facility-posture",
+      "pjm-queue",
+      "warn",
+      "odjfs",
+      "sb52",
+      "highland-industrial-park",
+      "putnam-county",
+      "ottawa",
+      "maumee",
+      "sweep"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/ottawa/data-centers.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "60d1600fd2b2c994f59005fdec86a5ebc7cbe4dd229288b9569481ae3401d076",
+      "size_bytes": 29844,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "PJM public planning queue (PlanningQueues.xml, 9,263 projects); ODJFS public WARN notices 2024/2025/2026 (241 notices, served off the Ohio DAM) and the RK Industries notice PDF; EPA ECHO ICIS-Air and CWA for FIPS 39137; EPA RSEI v234 Putnam inventory; BLS QCEW 2023 (area 39137); Putnam County GIS Parcels layer + county auditor; Village of Ottawa Highland Industrial Park page; Putnam County CIC project register; stopohiodatacenters.org Putnam County profile. All queried 2026-07-31.",
       "source_kind": "reference",
       "page": null,
       "pages": null,
@@ -3068,7 +3125,7 @@
     ],
     "storage": [
       {
-        "relpath": "extracted/oepa/1PV00037.npdes.yaml",
+        "relpath": "extracted/oepa/sidney/1PV00037.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       }
@@ -3173,19 +3230,19 @@
     ],
     "storage": [
       {
-        "relpath": "extracted/oepa/2PD00006.npdes.yaml",
+        "relpath": "extracted/oepa/van-wert/2PD00006.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/2PD00006.fs.npdes.yaml",
+        "relpath": "extracted/oepa/van-wert/2PD00006.fs.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "f8d2bf7c8ac1f9ffdb768b39ae8f889ddc8bdef012da6231d650b76f0089f012",
+      "sha256": "2f29d2aabf14483b270a30737ae2b39484d20d081cbc2ea6f85571db32e48b8f",
       "size_bytes": 3688,
       "lfs_materialized": true,
       "file_count": 2,
@@ -3228,49 +3285,49 @@
     ],
     "storage": [
       {
-        "relpath": "extracted/oepa/1PD00013.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PD00013.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1PX00010.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PX00010.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1PV00089.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PV00089.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1IW00240.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1IW00240.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1II00129.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1II00129.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1PT00125.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PT00125.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1MP00060.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1MP00060.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1PD00013.fs.npdes.yaml",
+        "relpath": "extracted/oepa/wilmington/1PD00013.fs.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "b2cf8bdb55fb0a3866dc14f2aa28e61533921f62413c6b3f153171e4ca65dcc6",
+      "sha256": "a83c6da106423b9f6c096e307c11e8637f3496dbd9642a12ef65b613a0ef0415",
       "size_bytes": 16755,
       "lfs_materialized": true,
       "file_count": 8,
@@ -3285,6 +3342,61 @@
       "confidence": "medium",
       "note": null,
       "verified": true
+    }
+  },
+  {
+    "id": "ottawa-warn",
+    "title": "Ottawa — ODJFS WARN Notice, RK Industries (Extraction)",
+    "scope": "extracted",
+    "collection": "ottawa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "One Ohio Department of Job and Family Services WARN Act notice served from the Ohio DAM's jfs.ohio.gov/warn tree — RK Industries, Inc.'s expected closure of its automotive stamping and robotic-welding operation at 725 N Locust St, Ottawa (received 2024-05-16, ODJFS notice 007-24-042). Located by reading the ODJFS 2024/2025/2026 public notice lists record-by-record (241 notices, one Putnam County hit) while closing the #1423 facility-posture sweep. Fetched 2026-07-31; per-file provenance in data/documents/ottawa/warn/filename-map.yaml. The document is a SCAN with no body text layer — the read is a 300 DPI vision transcription, not a text-layer copy.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:ottawa",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "warn",
+      "odjfs",
+      "labor",
+      "plant-closure",
+      "rk-industries",
+      "automotive",
+      "stamping",
+      "dislocation",
+      "putnam-county",
+      "ottawa"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/ottawa/warn/rk-industries-ottawa-2024.warn.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "ce97ca56aad03ecff6b7900d66370f6a8eae99b17165571dea8a2c2bdb84b6e1",
+      "size_bytes": 7848,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "One Ohio Department of Job and Family Services WARN Act notice served from the Ohio DAM's jfs.ohio.gov/warn tree — RK Industries, Inc.'s expected closure of its automotive stamping and robotic-welding operation at 725 N Locust St, Ottawa (received 2024-05-16, ODJFS notice 007-24-042). Located by reading the ODJFS 2024/2025/2026 public notice lists record-by-record (241 notices, one Putnam County hit) while closing the #1423 facility-posture sweep. Fetched 2026-07-31; per-file provenance in data/documents/ottawa/warn/filename-map.yaml. The document is a SCAN with no body text layer — the read is a 300 DPI vision transcription, not a text-layer copy.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -4021,8 +4133,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "2df9e38c1f786955008666f62506ff1c168ae258d5371df1ee5e0d31ecd82113",
-      "size_bytes": 45206,
+      "sha256": "0a2d34b092871ecfe58f905a2eacad352483d81000b3d2c550ddc4d2beba69bd",
+      "size_bytes": 45913,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,

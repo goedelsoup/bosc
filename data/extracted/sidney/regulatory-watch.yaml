@@ -603,3 +603,13 @@ noted_not_fixed:
       subject, and moving a committed extracted artifact ripples into the catalog
       storage relpath and the Wilmington catalog's exclusion note. Left for its own
       change rather than smuggled into a regulatory watch.
+    resolved: >-
+      Fixed in #1405, which found the same defect at Van Wert (2PD00006) and Wilmington
+      (eight permits) and closed the class rather than the instance. The extraction now
+      mirrors its source at data/extracted/oepa/sidney/1PV00037.npdes.yaml, and the
+      corpus scope no longer depends on remembering to enumerate: a site owns its
+      <slug>/ collection and its */<slug> nesting inside any agency collection by
+      derivation (watermark.sites._eponymous_prefixes), which is also why the
+      enumeration this note cites is gone from the profile. This watch's diagnosis was
+      exact — including that the catalog already knew the site attribution the scope
+      didn't.

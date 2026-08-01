@@ -1,5 +1,25 @@
 [
   {
+    "src": "ALEXANDER RECK DBA HIDDEN VALLEY MHP",
+    "rel": "operates",
+    "dst": "npdes:1PV00037",
+    "date": "",
+    "ref": "1PV00037*ED",
+    "source": "oepa/sidney/1PV00037.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PV00037",
+    "rel": "discharges_to",
+    "dst": "TAWAWA CREEK",
+    "date": "",
+    "ref": "1PV00037*ED",
+    "source": "oepa/sidney/1PV00037.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

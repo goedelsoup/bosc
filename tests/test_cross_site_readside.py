@@ -46,11 +46,10 @@ def lima_settings() -> Settings:
 
 
 def test_effective_corpus_scope_defaults_to_own_slug_not_lima() -> None:
-    """#780/#1505 — the safe default. ``corpus_relpaths = None`` means "whole tree" ONLY for the
-    reference build (Lima); every other site defaults to its own ``<slug>/`` collection, so a
-    freshly-registered site (scope left unset) can't silently inherit Lima's Allen-County record.
-    An explicit scope (Fort Wayne's IDEM-included tuple) always wins. And Lima's whole tree now
-    *subtracts* every peer's scope (#1505), so it stops swallowing their slug-scoped records.
+    """#780/#1505/#1405 — the safe default. Only the reference build (Lima) reads the whole tree;
+    every other site reads its **eponymous** prefixes, so a freshly-registered site can't silently
+    inherit Lima's Allen-County record. ``corpus_relpaths`` *adds* the prefixes no rule can derive.
+    And Lima's whole tree *subtracts* every peer's scope (#1505), so it stops swallowing theirs.
     """
     from watermark.sites import SITES, effective_corpus_scope
 
@@ -58,33 +57,121 @@ def test_effective_corpus_scope_defaults_to_own_slug_not_lima() -> None:
     assert lima.include is None  # reference build = whole-tree catch-all
     # #1505: whole tree MINUS every registered peer's own prefixes — a Piqua NPDES permit under
     # oepa/troy-piqua/ or a Fort Wayne §401 under idem/fort-wayne/ is no longer in Lima's scope.
-    assert {"idem/fort-wayne", "oepa/troy-piqua", "springfield"} <= set(lima.exclude)
+    # Since #1405 those are subtracted by the derived `*/<slug>` term, not by an enumerated entry.
+    assert {"*/fort-wayne", "*/troy-piqua", "springfield"} <= set(lima.exclude)
     assert not lima.contains("idem/fort-wayne/wqc.yaml")
     assert not lima.contains("oepa/troy-piqua/1PD00008.npdes.yaml")
     assert lima.contains("recorder/deed.yaml")  # Lima's own collections stay in scope
-    assert lima.contains("oepa/1PD00013.npdes.yaml")  # its un-slugged Allen-County permit survives
+    assert lima.contains("oepa/2PE00000.npdes.yaml")  # its un-slugged Allen-County permit survives
 
-    assert effective_corpus_scope(SITES["springfield"]).include == ("springfield",)  # unset → own
-    assert effective_corpus_scope(SITES["new-albany"]).include == ("new-albany",)
+    # Unset → exactly the two eponymous prefixes, nothing inherited.
+    assert effective_corpus_scope(SITES["springfield"]).include == ("*/springfield", "springfield")
+    assert effective_corpus_scope(SITES["new-albany"]).include == ("*/new-albany", "new-albany")
     fort_wayne = effective_corpus_scope(SITES["fort-wayne"])
-    assert fort_wayne.include == ("fort-wayne", "idem/fort-wayne")
+    assert fort_wayne.include == ("*/fort-wayne", "fort-wayne")
     assert fort_wayne.exclude == ()  # a peer includes its own prefixes and excludes nothing
-    # An explicit non-slug scope wins — Urbana's Highland55 land-assembly corpus (#1328) plus the
-    # filed federal complaint that is its dispute's legal spine (#1724). The complaint sat under
-    # no peer prefix, so Lima's whole-tree-minus-peers scope swallowed it while Urbana's own
-    # catalog lacked the instrument its litigation record cites; naming it here moves it both ways
-    # at once, since Lima's exclusion set IS the union of the peers' scopes.
+    # The IDEM (Indiana) jurisdiction+site subtree reaches Fort Wayne by derivation — it used to
+    # need an explicit `idem/fort-wayne` entry, which is the enumeration #1405 removed.
+    assert fort_wayne.contains("idem/fort-wayne/wqc.yaml")
+    assert not fort_wayne.contains("idem/somewhere-else/wqc.yaml")
+
+    # `corpus_relpaths` survives for what no rule derives: a corpus filed by PROJECT or CASE name.
+    # Urbana's Highland55 land-assembly corpus (#1328) plus the filed federal complaint that is its
+    # dispute's legal spine (#1724) — the complaint sat under no peer prefix, so Lima's
+    # whole-tree-minus-peers scope swallowed it while Urbana's own catalog lacked the instrument
+    # its litigation record cites. Naming it moves it both ways at once, since Lima's exclusion set
+    # IS the union of the peers' scopes.
     urbana = effective_corpus_scope(SITES["urbana"])
     assert urbana.include == (
-        "urbana",
-        "permits/highland55",
-        "oepa/urbana",
+        "*/urbana",
         "legal/thor-v-urbana",
+        "permits/highland55",
+        "urbana",
     )
     assert urbana.contains("legal/thor-v-urbana/1.pdf")
+    assert urbana.contains("oepa/urbana/permit.npdes.yaml")  # derived, not enumerated
     assert not lima.contains("legal/thor-v-urbana/1.pdf")
     # Only the named subtree moves — Lima keeps the rest of `legal/` (its own PRR/mandamus record).
     assert lima.contains("legal/prr-mandamus/cra-agreement.cra.yaml")
+
+
+def test_site_attributed_subtrees_reach_their_own_site() -> None:
+    """#1405 — no ``<collection>/<slug>`` directory may fall outside its eponymous site's scope.
+
+    The corpus files a site's artifacts under a collection named for the issuing agency —
+    ``oepa/van-wert/``, ``idem/fort-wayne/``, ``grid/sidney/`` — and until #1405 each such subtree
+    had to be *enumerated* on the profile to be reachable. That is exactly what got forgotten:
+    Van Wert's NPDES permit (#1401) and Wilmington's eight (#884) sat outside the sites they
+    document and inside Lima's whole-tree reference scope, so the record domain could not rise
+    from permit ingest at all. This sweeps both committed trees and asserts the derivation holds
+    for every registered site — the guard against the enumeration silently coming back.
+    """
+    from watermark.sites import SITES, effective_corpus_scope
+
+    offenders: list[str] = []
+    for tree in ("documents", "extracted"):
+        root = REPO_ROOT / "data" / tree
+        for collection in sorted(p for p in root.iterdir() if p.is_dir()):
+            for sub in sorted(p for p in collection.iterdir() if p.is_dir()):
+                if sub.name not in SITES:
+                    continue
+                rel = f"{collection.name}/{sub.name}"
+                if not effective_corpus_scope(SITES[sub.name]).contains(rel):
+                    offenders.append(f"data/{tree}/{rel} is outside {sub.name}'s corpus scope")
+    assert not offenders, (
+        "site-attributed subtrees orphaned from their site (#1405):\n" + "\n".join(offenders)
+    )
+
+
+def test_extraction_reaches_the_site_its_source_is_filed_under() -> None:
+    """#1405 — if a source document is filed under ``<collection>/<slug>/``, its extraction must
+    land in that site's corpus scope.
+
+    Scope alone doesn't finish the job. Eleven OEPA extractions sat flat at
+    ``data/extracted/oepa/`` while their own ``source_path`` pointed into ``oepa/van-wert/``,
+    ``oepa/wilmington/`` and ``oepa/sidney/`` — so the source PDF reached the site while the
+    extracted record reached Lima, and the site owned a document catalog with nothing extracted
+    behind it. Every instance was detectable from the artifact itself, which is what makes this
+    checkable rather than a matter of judgment.
+
+    Deliberately narrow: it asserts only that the *site-attribution* segment survives extraction,
+    not that the whole sub-path mirrors. Non-site nesting under a collection is a curation choice
+    the corpus makes freely (``permits/bistrozzi-permits/`` → ``permits/``, ``wpafb/cercla/`` →
+    ``wpafb/``) and is none of this guard's business.
+    """
+    import yaml
+
+    from watermark.sites import SITES, effective_corpus_scope
+
+    extracted = REPO_ROOT / "data" / "extracted"
+    offenders: list[str] = []
+    for path in sorted(extracted.rglob("*.yaml")):
+        try:
+            doc = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except yaml.YAMLError:
+            continue  # schema validity is test_extracted_yaml_valid.py's job, not this one's
+        if not isinstance(doc, dict):
+            continue
+        source = doc.get("source_path")
+        if not isinstance(source, str) or "data/documents/" not in source:
+            continue
+        # Tolerate an absolute source_path (a pre-existing wart on one Lima extraction): what
+        # matters is the rel under data/documents, however the path happened to be recorded.
+        source_rel = source.split("data/documents/", 1)[1]
+        segments = source_rel.split("/")
+        if len(segments) < 3 or segments[1] not in SITES:
+            continue  # not a site-attributed source — nothing to preserve
+        slug = segments[1]
+        rel = str(path.relative_to(extracted))
+        if not effective_corpus_scope(SITES[slug]).contains(rel):
+            offenders.append(
+                f"{path.relative_to(REPO_ROOT)} extracts {source_rel} — filed under "
+                f"{segments[0]}/{slug}/ — but is outside {slug}'s corpus scope"
+            )
+    assert not offenders, (
+        "extractions orphaned from the site their source is filed under (#1405):\n"
+        + "\n".join(offenders)
+    )
 
 
 def test_unscoped_sibling_loads_its_own_corpus_not_lima() -> None:

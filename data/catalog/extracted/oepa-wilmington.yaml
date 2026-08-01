@@ -11,28 +11,28 @@ license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:wilmington
 storage:
-- relpath: extracted/oepa/1PD00013.npdes.yaml
+- relpath: extracted/oepa/wilmington/1PD00013.npdes.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/oepa/1PX00010.npdes.yaml
+- relpath: extracted/oepa/wilmington/1PX00010.npdes.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/oepa/1PV00089.npdes.yaml
+- relpath: extracted/oepa/wilmington/1PV00089.npdes.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/oepa/1IW00240.npdes.yaml
+- relpath: extracted/oepa/wilmington/1IW00240.npdes.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/oepa/1II00129.npdes.yaml
+- relpath: extracted/oepa/wilmington/1II00129.npdes.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/oepa/1PT00125.npdes.yaml
+- relpath: extracted/oepa/wilmington/1PT00125.npdes.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/oepa/1MP00060.npdes.yaml
+- relpath: extracted/oepa/wilmington/1MP00060.npdes.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/oepa/1PD00013.fs.npdes.yaml
+- relpath: extracted/oepa/wilmington/1PD00013.fs.npdes.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:

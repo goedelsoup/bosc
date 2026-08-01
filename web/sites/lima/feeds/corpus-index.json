@@ -1,16 +1,5 @@
 [
   {
-    "id": "artifact/alexander-reck-dba-hidden-valley-mhp",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Alexander R. Reck dba Hidden Valley MHP",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "artifact/allen-county-board-of-commissioners",
     "node_class": "artifact",
     "kind": "entity",
@@ -97,39 +86,6 @@
     "links_in": 1,
     "lines": 12,
     "updated": "2026-07-14"
-  },
-  {
-    "id": "artifact/city-of-van-wert",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/city-of-wilmington",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "City of Wilmington",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 14,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/clinton-county-board-of-developmental-disabiliti",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Clinton County Board of Developmental Disabilities",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
   },
   {
     "id": "artifact/corporation-service",
@@ -253,28 +209,6 @@
     "updated": "2026-07-04"
   },
   {
-    "id": "artifact/kyle-isler",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Kyle Isler, Wilmington Nursery",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/lytle-creek",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Lytle Creek",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 14,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "artifact/magenta-capital-ohio-llc-magenta-capital",
     "node_class": "artifact",
     "kind": "entity",
@@ -294,17 +228,6 @@
     "links_out": 1,
     "links_in": 2,
     "lines": 13,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/mhc-tt",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "MHC TT, L.P.",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
     "updated": "2026-07-04"
   },
   {
@@ -330,94 +253,6 @@
     "updated": "2026-07-04"
   },
   {
-    "id": "artifact/npdes-1ii00129",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Wilmington Sanitary Landfill",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/npdes-1iw00240",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Wilmington Water Plant",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/npdes-1mp00060",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Wilmington Nursery",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/npdes-1pd00013",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "City of Wilmington WWTP",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 13,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/npdes-1pt00125",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Clinton County Board of Developmental Disabilities",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/npdes-1pv00037",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Hidden Valley Mobile Home Park",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/npdes-1pv00089",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Pine Hills Mobile Home Park",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/npdes-1px00010",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Wilmington RV Resort",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "artifact/npdes-2dp00130",
     "node_class": "artifact",
     "kind": "entity",
@@ -427,17 +262,6 @@
     "links_in": 2,
     "lines": 12,
     "updated": "2026-07-09"
-  },
-  {
-    "id": "artifact/npdes-2pd00006",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Van Wert WWTP",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 3,
-    "lines": 13,
-    "updated": "2026-07-04"
   },
   {
     "id": "artifact/npdes-2pe00000",
@@ -583,17 +407,6 @@
     "updated": "2026-07-04"
   },
   {
-    "id": "artifact/rlr-investments",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "RLR Investments, LLC dba Pine Hills Mobile Home Park",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "artifact/robert-zizzo",
     "node_class": "artifact",
     "kind": "entity",
@@ -633,7 +446,7 @@
     "label": "Lima",
     "scope": "site",
     "links_out": 3,
-    "links_in": 100,
+    "links_in": 76,
     "lines": 13,
     "updated": null
   },
@@ -642,17 +455,6 @@
     "node_class": "artifact",
     "kind": "entity",
     "label": "Suzanne M. Neighbors",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/tawawa-creek",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Tawawa Creek",
     "scope": "site",
     "links_out": 1,
     "links_in": 1,
@@ -682,65 +484,10 @@
     "updated": "2026-07-04"
   },
   {
-    "id": "artifact/town-creek",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Town Creek",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 13,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "artifact/turner-construction",
     "node_class": "artifact",
     "kind": "entity",
     "label": "Turner Construction Company",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/unnamed-tributary-of-lytle-creek",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Unnamed Tributary of Lytle Creek",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 2,
-    "lines": 13,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/unnamed-tributary-of-todd-fork",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "unnamed tributary of Todd Fork",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/unnamed-tributary-of-wilson-creek",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "unnamed tributary of Wilson Creek",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/van-wert-wwtp",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Van Wert WWTP",
     "scope": "site",
     "links_out": 1,
     "links_in": 1,
@@ -756,17 +503,6 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 19,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "artifact/wilmington-water-plant",
-    "node_class": "artifact",
-    "kind": "entity",
-    "label": "Wilmington Water Plant",
-    "scope": "site",
-    "links_out": 1,
-    "links_in": 1,
-    "lines": 12,
     "updated": "2026-07-04"
   },
   {
@@ -1991,17 +1727,6 @@
     "updated": null
   },
   {
-    "id": "relation/alexander-reck-dba-hidden-valley-mhp--operates--npdes-1pv00037",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "ALEXANDER RECK DBA HIDDEN VALLEY MHP operates npdes:1PV00037",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "relation/allen-county-board-of-commissioners--operates--npdes-2ph00006",
     "node_class": "relation",
     "kind": "relation",
@@ -2145,50 +1870,6 @@
     "updated": "2026-07-14"
   },
   {
-    "id": "relation/city-of-van-wert--operates--npdes-2pd00006",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "CITY OF VAN WERT operates npdes:2PD00006",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/city-of-wilmington--operates--npdes-1ii00129",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "CITY OF WILMINGTON operates npdes:1II00129",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/city-of-wilmington--operates--npdes-1pd00013",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "CITY OF WILMINGTON operates npdes:1PD00013",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/clinton-county-board-of-developmental-disabiliti--operates--npdes-1pt00125",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "CLINTON COUNTY BOARD OF DEVELOPMENTAL DISABILITIES operates npdes:1PT00125",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "relation/james-neighbors--conveyed-to--bistrozzi",
     "node_class": "relation",
     "kind": "relation",
@@ -2277,17 +1958,6 @@
     "updated": "2026-07-04"
   },
   {
-    "id": "relation/kyle-isler--operates--npdes-1mp00060",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "KYLE ISLER operates npdes:1MP00060",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "relation/magenta-capital-ohio-llc-magenta-capital--organized-by--michael-montfort",
     "node_class": "relation",
     "kind": "relation",
@@ -2321,17 +1991,6 @@
     "updated": "2026-07-04"
   },
   {
-    "id": "relation/mhc-tt--operates--npdes-1px00010",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "MHC TT operates npdes:1PX00010",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "relation/michael-montfort--affiliated-with--wilson-sonsini-goodrich-rosati-wsgr",
     "node_class": "relation",
     "kind": "relation",
@@ -2354,83 +2013,6 @@
     "updated": "2026-07-04"
   },
   {
-    "id": "relation/npdes-1ii00129--discharges-to--lytle-creek",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "npdes:1II00129 discharges_to LYTLE CREEK",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/npdes-1iw00240--discharges-to--unnamed-tributary-of-lytle-creek",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "npdes:1IW00240 discharges_to UNNAMED TRIBUTARY OF LYTLE CREEK",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/npdes-1pd00013--discharges-to--lytle-creek",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "npdes:1PD00013 discharges_to LYTLE CREEK",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/npdes-1pt00125--discharges-to--unnamed-tributary-of-wilson-creek",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "npdes:1PT00125 discharges_to UNNAMED TRIBUTARY OF WILSON CREEK",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/npdes-1pv00037--discharges-to--tawawa-creek",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "npdes:1PV00037 discharges_to TAWAWA CREEK",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/npdes-1pv00089--discharges-to--unnamed-tributary-of-lytle-creek",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "npdes:1PV00089 discharges_to UNNAMED TRIBUTARY OF LYTLE CREEK",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/npdes-1px00010--discharges-to--unnamed-tributary-of-todd-fork",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "npdes:1PX00010 discharges_to UNNAMED TRIBUTARY OF TODD FORK",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
     "id": "relation/npdes-2dp00130--discharges-to--american-bath-wastewater-treatment-plant-potw",
     "node_class": "relation",
     "kind": "relation",
@@ -2440,17 +2022,6 @@
     "links_in": 0,
     "lines": 15,
     "updated": "2026-07-09"
-  },
-  {
-    "id": "relation/npdes-2pd00006--discharges-to--town-creek",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "npdes:2PD00006 discharges_to TOWN CREEK",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
   },
   {
     "id": "relation/npdes-2pe00000--discharges-to--ottawa-river",
@@ -2527,17 +2098,6 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 16,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/rlr-investments--operates--npdes-1pv00089",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "RLR INVESTMENTS operates npdes:1PV00089",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
     "updated": "2026-07-04"
   },
   {
@@ -2626,28 +2186,6 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 14,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/van-wert-wwtp--operates--npdes-2pd00006",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "VAN WERT WWTP operates npdes:2PD00006",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
-    "updated": "2026-07-04"
-  },
-  {
-    "id": "relation/wilmington-water-plant--operates--npdes-1iw00240",
-    "node_class": "relation",
-    "kind": "relation",
-    "label": "WILMINGTON WATER PLANT operates npdes:1IW00240",
-    "scope": "site",
-    "links_out": 2,
-    "links_in": 0,
-    "lines": 15,
     "updated": "2026-07-04"
   }
 ]

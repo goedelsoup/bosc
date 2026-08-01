@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "a3424b597045f6d70aead89f4cd6d8cafdf3cf48630505c520af4cc3790cccef",
+  "catalog_version": "8abc2b14b0a483e7cee6b12a9b44a0a3360d0f102918a4a0e5488f93f4e0b37c",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -852,6 +852,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:van-wert:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:van-wert:legal-records-legislation",
       "kind": "dataset",
       "site": "van-wert",
@@ -1052,6 +1060,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:van-wert:CITY OF VAN WERT",
+      "kind": "entity",
+      "site": "van-wert",
+      "local_id": "CITY OF VAN WERT",
+      "title": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:van-wert:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "van-wert",
@@ -1066,6 +1082,54 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:van-wert:TOWN CREEK",
+      "kind": "entity",
+      "site": "van-wert",
+      "local_id": "TOWN CREEK",
+      "title": "Town Creek",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:van-wert:VAN WERT WWTP",
+      "kind": "entity",
+      "site": "van-wert",
+      "local_id": "VAN WERT WWTP",
+      "title": "Van Wert WWTP",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:van-wert:npdes:2PD00006",
+      "kind": "entity",
+      "site": "van-wert",
+      "local_id": "npdes:2PD00006",
+      "title": "Van Wert WWTP",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:van-wert:oepa/van-wert/2PD00006.fs.npdes.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+      "title": "Van Wert Wastewater Treatment Plant (WWTP)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:van-wert:oepa/van-wert/2PD00006.npdes.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "oepa/van-wert/2PD00006.npdes.yaml",
+      "title": "Van Wert WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "timeline:van-wert:2PD00006*VD",
+      "kind": "timeline",
+      "site": "van-wert",
+      "local_id": "2PD00006*VD",
+      "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — public notice",
+      "feed": "timeline"
     }
   ]
 }

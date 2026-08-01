@@ -1,27 +1,5 @@
 [
   {
-    "date": "2022-10-31",
-    "category": "npdes_public_notice",
-    "title": "NPDES 1PT00125*BD (Clinton County Board of Developmental Disabilities) — public notice",
-    "ref": "1PT00125*BD",
-    "parties": [
-      "Clinton County Board of Developmental Disabilities",
-      "Clinton County Board of Developmental Disabilities"
-    ],
-    "detail": "action renewal; receiving unnamed tributary of Wilson Creek",
-    "source": "oepa/1PT00125.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/1PT00125.npdes.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
     "date": "2023-05-05",
     "category": "npdes_public_notice",
     "title": "NPDES 2PK00002*LD (Shawnee II WWTP) — public notice",
@@ -35,28 +13,6 @@
     "also_sources": [],
     "citation": {
       "source": "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2023-05-12",
-    "category": "npdes_public_notice",
-    "title": "NPDES 1PD00013*QD (City of Wilmington WWTP) — public notice",
-    "ref": "1PD00013*QD",
-    "parties": [
-      "City of Wilmington, Steven Honeycutt",
-      "City of Wilmington WWTP"
-    ],
-    "detail": "action modification; receiving Lytle Creek",
-    "source": "oepa/1PD00013.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/1PD00013.npdes.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -88,28 +44,6 @@
     }
   },
   {
-    "date": "2023-05-19",
-    "category": "npdes_public_notice",
-    "title": "NPDES 1PD00013*QD (Wilmington Wastewater Treatment Plant (WWTP)) — public notice",
-    "ref": "1PD00013*QD",
-    "parties": [
-      "City of Wilmington, 69 North South Street, Wilmington, OH 45177",
-      "Wilmington Wastewater Treatment Plant (WWTP)"
-    ],
-    "detail": "action modification; receiving Lytle Creek",
-    "source": "oepa/1PD00013.fs.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/1PD00013.fs.npdes.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
     "date": "2023-06-11",
     "category": "npdes_comment_deadline",
     "title": "NPDES 2PK00002*LD (Shawnee II Wastewater Treatment Works (Shawnee II WWTP)) — comment period ends",
@@ -123,28 +57,6 @@
     "also_sources": [],
     "citation": {
       "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2023-06-19",
-    "category": "npdes_comment_deadline",
-    "title": "NPDES 1PD00013*QD (Wilmington Wastewater Treatment Plant (WWTP)) — comment period ends",
-    "ref": "1PD00013*QD",
-    "parties": [
-      "City of Wilmington, 69 North South Street, Wilmington, OH 45177",
-      "Wilmington Wastewater Treatment Plant (WWTP)"
-    ],
-    "detail": "",
-    "source": "oepa/1PD00013.fs.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/1PD00013.fs.npdes.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -986,50 +898,6 @@
     }
   },
   {
-    "date": "2025-03-11",
-    "category": "npdes_public_notice",
-    "title": "NPDES 1II00129*HD (Wilmington Sanitary Landfill) — public notice",
-    "ref": "1II00129*HD",
-    "parties": [
-      "City of Wilmington",
-      "Wilmington Sanitary Landfill"
-    ],
-    "detail": "action modification; receiving Lytle Creek at River Mile 6.5",
-    "source": "oepa/1II00129.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/1II00129.npdes.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2025-03-17",
-    "category": "npdes_public_notice",
-    "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — public notice",
-    "ref": "2PD00006*VD",
-    "parties": [
-      "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
-      "Van Wert Wastewater Treatment Plant (WWTP)"
-    ],
-    "detail": "action renewal; receiving Town Creek",
-    "source": "oepa/2PD00006.fs.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/2PD00006.fs.npdes.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
     "date": "2025-03-18",
     "category": "subdivision_meeting",
     "title": "Perry Township — minutes (corridor: datacenter)",
@@ -1061,28 +929,6 @@
     "also_sources": [],
     "citation": {
       "source": "commissioners/bosc-resolution-ledger.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2025-04-16",
-    "category": "npdes_comment_deadline",
-    "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — comment period ends",
-    "ref": "2PD00006*VD",
-    "parties": [
-      "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
-      "Van Wert Wastewater Treatment Plant (WWTP)"
-    ],
-    "detail": "",
-    "source": "oepa/2PD00006.fs.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/2PD00006.fs.npdes.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -1678,28 +1524,6 @@
     "also_sources": [],
     "citation": {
       "source": "permits/3789048.epa.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2025-07-21",
-    "category": "npdes_public_notice",
-    "title": "NPDES 1PV00037*ED (Hidden Valley Mobile Home Park) — public notice",
-    "ref": "1PV00037*ED",
-    "parties": [
-      "Alexander R. Reck dba Hidden Valley MHP",
-      "Hidden Valley Mobile Home Park"
-    ],
-    "detail": "action renewal; receiving Tawawa Creek at River Mile 3.3",
-    "source": "oepa/1PV00037.npdes.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/1PV00037.npdes.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,

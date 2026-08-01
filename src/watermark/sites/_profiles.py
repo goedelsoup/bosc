@@ -534,17 +534,11 @@ _FINDLAY = SiteProfile(
     # the published Third District opinion in the Open Meetings Act litigation that shadowed
     # Allen Township's move from unzoned to zoned (#1463). That last one follows the
     # `legal/thor-v-urbana` precedent exactly: a filed court instrument is filed by CASE under
-    # `legal/`, not under the site, and the site reaches it by naming the prefix here.
-    # `grid/` and `legal/` are otherwise basin-/network-shared and read into Lima's reference
-    # build; the site-scoped subdirectories are what keep a Hancock County siting docket and a
-    # Hancock County appeal out of Lima's Allen-County record. Naming all four here is also what
-    # SUBTRACTS them from Lima's scope — the same treatment troy-piqua and urbana get.
-    corpus_relpaths=(
-        "findlay",
-        "oepa/findlay",
-        "grid/findlay",
-        "legal/one-energy-v-allen-twp",
-    ),
+    # `legal/`, not under the site, and the site reaches it by naming the prefix here — no rule
+    # derives a case name. The site's own `findlay/` collection and its `oepa/findlay/` +
+    # `grid/findlay/` subtrees need no entry (#1405): they are eponymous, so
+    # `_eponymous_prefixes` grants them and subtracts them from Lima's scope automatically.
+    corpus_relpaths=("legal/one-energy-v-allen-twp",),
     # rsei
     county_name="Hancock County, OH",  # [verified]
 )
@@ -730,9 +724,10 @@ _FORT_WAYNE = SiteProfile(
     ),
     lmp_pnode_id=8445784,
     lmp_pnode_name="AEP",
-    # corpus scope (#762): only Fort Wayne's own extracted records — the slug collection plus the
-    # IDEM (Indiana) jurisdiction+site subtree. Without this the bundle inherits Lima's whole corpus.
-    corpus_relpaths=("fort-wayne", "idem/fort-wayne"),
+    # corpus scope (#762): only Fort Wayne's own extracted records — the `fort-wayne/` collection
+    # plus the IDEM (Indiana) jurisdiction+site subtree `idem/fort-wayne/`. Both are eponymous, so
+    # since #1405 `_eponymous_prefixes` derives them and no `corpus_relpaths` entry is needed;
+    # Fort Wayne files nothing under a case/project name.
     # rsei
     county_name="Allen County, IN",  # [verified]
 )
@@ -1495,12 +1490,11 @@ _OTTAWA = SiteProfile(
     lmp_pnode_name="AEP",
     # OEPA permit registry — what `watermark oepa discover` annotates as "known" (#844).
     npdes_permits=["2PD00028"],  # Village of Ottawa WWTP / application OH0026921
-    # Corpus scope (#762/#780/#1505). Ottawa's worked record spans two collections: its own
+    # Corpus scope (#762/#780/#1505/#1405). Ottawa's worked record spans two collections: its own
     # `ottawa/` tree (the standing water watch and the drinking-water instruments — the SDWA half
     # of this site's story) and the site-scoped OEPA sub-collection `oepa/ottawa/` holding the
-    # 2PD00028 instrument set (the CWA half). Naming both here is also what SUBTRACTS them from
-    # Lima's reference-build scope, the same treatment findlay, troy-piqua, urbana and sidney get.
-    corpus_relpaths=("ottawa", "oepa/ottawa"),
+    # 2PD00028 instrument set (the CWA half). Both are eponymous, so `_eponymous_prefixes` grants
+    # them and subtracts them from Lima's reference-build scope with no entry here.
     # rsei
     county_name="Putnam County, OH",  # [verified]
 )
@@ -1573,7 +1567,9 @@ _URBANA = SiteProfile(
     # whole-tree-minus-peers scope swallowed it and Urbana's own document catalog didn't carry
     # the instrument its record cites. Naming it here moves it in both directions at once
     # (#1505), because Lima's exclusion set IS the union of the peers' scopes.
-    corpus_relpaths=("urbana", "permits/highland55", "oepa/urbana", "legal/thor-v-urbana"),
+    # `urbana` and `oepa/urbana` are eponymous and derived (#1405); only the two project-/case-named
+    # collections need naming here.
+    corpus_relpaths=("permits/highland55", "legal/thor-v-urbana"),
     parcels_relpath="reference/urbana/parcel-assemblage.geojson",  # [verified] 4 parcels / 3 Thor SPEs / ~230 ac (#1326)
     footprint_relpath="extracted/urbana/bosc-site-footprint.yaml",  # [verified] recorded ownership assemblage (#1326)
     climatology_relpath="reference/hydrology/urbana/nasa-power-climatology.yaml",
@@ -2505,11 +2501,10 @@ _TROY_PIQUA = SiteProfile(
     lmp_pnode_name="DAY",
     county_name="Miami County, OH",  # [verified]
     # Corpus scope (#1484): the OEPA document extractions mirror the source tree under
-    # oepa/troy-piqua/ (like the docs at data/documents/oepa/troy-piqua/), so the effective
-    # scope must name that collection prefix alongside the site's own slug — else the Piqua
-    # WWTP permit + fact sheet orphan out of this site's record/timeline/entities and leak into
-    # Lima's whole-tree corpus. Same shape as fort-wayne (idem/fort-wayne) and urbana (oepa/urbana).
-    corpus_relpaths=("troy-piqua", "oepa/troy-piqua"),
+    # oepa/troy-piqua/ (like the docs at data/documents/oepa/troy-piqua/), so that prefix must
+    # reach this site — else the Piqua WWTP permit + fact sheet orphan out of its
+    # record/timeline/entities and leak into Lima's whole-tree corpus. It was enumerated here
+    # until #1405 made the eponymous nesting derivable for every site at once.
 )
 
 
@@ -2784,10 +2779,9 @@ _SIDNEY = SiteProfile(
     county_name="Shelby County, OH",  # [verified]
     # Sidney owns two sub-collections outside its slug directory (#1383): the Ohio EPA
     # permits under oepa/sidney/ (the campus's stormwater / wetland / PTI instruments and
-    # the receiving POTW's NPDES permit) and the utility record under grid/sidney/. Name
-    # them here or Lima's whole-tree reference scope swallows them — the same #1505 leak
-    # that idem/fort-wayne and oepa/troy-piqua are declared against.
-    corpus_relpaths=("sidney", "oepa/sidney", "grid/sidney"),
+    # the receiving POTW's NPDES permit) and the utility record under grid/sidney/. Both are
+    # eponymous, so #1405 derives them; enumerating them here was never sufficient anyway —
+    # 1PV00037's extraction still sat flat at extracted/oepa/ and reached Lima, not Sidney.
 )
 
 
@@ -4050,9 +4044,10 @@ _PORTSMOUTH = SiteProfile(
     serving_utility_citation="[open] Scioto County serving-utility EIA-861 record pending — not yet confirmed",
     lmp_usd_mwh=0.0,
     lmp_citation="[open] PJM pricing zone pending the Scioto County serving-utility confirmation",
-    # Home the Dazzler filings here and off Lima: this site's own slug subtree plus the relocated
-    # `permits/dazzler-permits/` collection (subtracted from Lima by `_peer_scope_prefixes`, #1505).
-    corpus_relpaths=("portsmouth", "permits/dazzler-permits"),
+    # Home the Dazzler filings here and off Lima: the relocated `permits/dazzler-permits/`
+    # collection is filed by PROJECT, not by site, so no rule derives it (subtracted from Lima by
+    # `_peer_scope_prefixes`, #1505). This site's own `portsmouth/` subtree is eponymous (#1405).
+    corpus_relpaths=("permits/dazzler-permits",),
     county_name="Scioto County, OH",  # [verified] FIPS 39145
 )
 

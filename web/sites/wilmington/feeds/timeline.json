@@ -1,1 +1,112 @@
-[]
+[
+  {
+    "date": "2022-10-31",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PT00125*BD (Clinton County Board of Developmental Disabilities) — public notice",
+    "ref": "1PT00125*BD",
+    "parties": [
+      "Clinton County Board of Developmental Disabilities",
+      "Clinton County Board of Developmental Disabilities"
+    ],
+    "detail": "action renewal; receiving unnamed tributary of Wilson Creek",
+    "source": "oepa/wilmington/1PT00125.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/wilmington/1PT00125.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-05-12",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PD00013*QD (City of Wilmington WWTP) — public notice",
+    "ref": "1PD00013*QD",
+    "parties": [
+      "City of Wilmington, Steven Honeycutt",
+      "City of Wilmington WWTP"
+    ],
+    "detail": "action modification; receiving Lytle Creek",
+    "source": "oepa/wilmington/1PD00013.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/wilmington/1PD00013.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-05-19",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PD00013*QD (Wilmington Wastewater Treatment Plant (WWTP)) — public notice",
+    "ref": "1PD00013*QD",
+    "parties": [
+      "City of Wilmington, 69 North South Street, Wilmington, OH 45177",
+      "Wilmington Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "action modification; receiving Lytle Creek",
+    "source": "oepa/wilmington/1PD00013.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/wilmington/1PD00013.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-06-19",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 1PD00013*QD (Wilmington Wastewater Treatment Plant (WWTP)) — comment period ends",
+    "ref": "1PD00013*QD",
+    "parties": [
+      "City of Wilmington, 69 North South Street, Wilmington, OH 45177",
+      "Wilmington Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "",
+    "source": "oepa/wilmington/1PD00013.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/wilmington/1PD00013.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-03-11",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1II00129*HD (Wilmington Sanitary Landfill) — public notice",
+    "ref": "1II00129*HD",
+    "parties": [
+      "City of Wilmington",
+      "Wilmington Sanitary Landfill"
+    ],
+    "detail": "action modification; receiving Lytle Creek at River Mile 6.5",
+    "source": "oepa/wilmington/1II00129.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/wilmington/1II00129.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  }
+]

@@ -1,1 +1,97 @@
-[]
+[
+  {
+    "rel": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Van Wert Wastewater Treatment Plant (WWTP)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "facility_name": "Van Wert Wastewater Treatment Plant (WWTP)",
+      "permit_no": "2PD00006*VD",
+      "permit_action": "renewal",
+      "applicant": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+      "application_no": "OH0027910",
+      "public_notice_no": "210566",
+      "public_notice_date": "2025-03-17",
+      "comment_period_end": "2025-04-16",
+      "facility_address": "Van Wert WWTP, 7998 State Route 127 North, Van Wert, OH 45891, Van Wert County",
+      "discharge_address": null,
+      "receiving_water": "Town Creek",
+      "stream_network": "Middle Creek, Little Auglaize River, Auglaize River, Maumee River, Lake Erie",
+      "outfalls": [
+        "001"
+      ],
+      "note": "Discharge address (facility where discharge occurs) is the same as the facility address. Outfall 001 is referenced in multiple tables (e.g., Table 2, Table 8, Table 15) throughout the document. Applicant address is distinct from discharge/facility address."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/van-wert/2PD00006.fs.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/van-wert/2PD00006.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Van Wert WWTP",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number, public notice date, or comment period end date found in the document.",
+      "Permit action inferred as 'renewal' based on context (existing facility, expiration/effective dates, reissuance format); not explicitly stated.",
+      "Stream network downstream of Town Creek not stated in the document."
+    ],
+    "fields": {
+      "facility_name": "Van Wert WWTP",
+      "permit_no": "2PD00006*VD",
+      "permit_action": "renewal",
+      "applicant": "Van Wert WWTP",
+      "application_no": "OH0027910",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "7998 S.R. 127 N., Van Wert, Ohio, Van Wert County",
+      "discharge_address": null,
+      "receiving_water": "Town Creek at River Mile 13.87",
+      "stream_network": null,
+      "outfalls": [
+        "2PD00006001",
+        "2PD00006004"
+      ],
+      "note": "Action Date: 2025-04-18. Effective Date: 2025-06-01. Expiration Date: 2030-05-31. Outfall 001 has interim limits (first 36 months) and final limits (remaining period). Outfall 004 is a CSO monitoring station. No public notice number, date, or comment period end found in the document."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/van-wert/2PD00006.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/van-wert/2PD00006.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  }
+]

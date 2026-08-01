@@ -122,6 +122,7 @@ from watermark.sites._profiles import (
 from watermark.sites._profiles import (
     SITES as SITES,
 )
+from watermark.sites._scope import _NEST
 from watermark.sites._scope import (
     WHOLE_TREE as WHOLE_TREE,
 )
@@ -163,44 +164,62 @@ def is_reference_site(slug: str) -> bool:
     return slug == _REFERENCE_LAYOUT_SITE
 
 
+def _eponymous_prefixes(slug: str) -> tuple[str, ...]:
+    """The two prefixes a site owns purely by being named ``slug`` (#1405).
+
+    The corpus files a site's artifacts two ways, and both are derivable: a collection **named**
+    for the site (``van-wert/…``, ``findlay/…``) and a site subdirectory **inside** a collection
+    named for the issuing agency (``oepa/van-wert/…``, ``idem/fort-wayne/…``, ``grid/sidney/…``).
+    Deriving the second is the whole point: it used to be enumerated per profile, which meant it
+    had to be remembered at ingest time, one site at a time — and Van Wert (#1401) and Wilmington
+    (#884) were the two it wasn't, so their permits sat outside the very site they document while
+    rendering inside Lima's record.
+    """
+    return (slug, f"{_NEST}{slug}")
+
+
 def _peer_scope_prefixes(slug: str) -> tuple[str, ...]:
     """Every *other* registered site's own inclusion prefixes — the subtrees the reference build
     subtracts so it stops swallowing a peer's slug-scoped records (#1505).
 
-    A peer's prefixes are its explicit ``corpus_relpaths`` or, when unset, its own ``<slug>``.
-    Another whole-tree/reference site (``corpus_relpaths`` ``None``) contributes nothing — you
-    cannot subtract "everything" — but only Lima is the reference build today.
+    A peer's prefixes are its :func:`_eponymous_prefixes` plus any explicit ``corpus_relpaths``.
+    Another whole-tree/reference site contributes nothing — you cannot subtract "everything" —
+    but only Lima is the reference build today.
     """
     prefixes: set[str] = set()
     for other, prof in SITES.items():
-        if other == slug:
+        if other == slug or is_reference_site(other):
             continue
-        if prof.corpus_relpaths is not None:
-            prefixes.update(prof.corpus_relpaths)
-        elif not is_reference_site(other):
-            prefixes.add(other)
+        prefixes.update(_eponymous_prefixes(other))
+        prefixes.update(prof.corpus_relpaths or ())
     return tuple(sorted(prefixes))
 
 
 def effective_corpus_scope(profile: SiteProfile) -> CorpusScope:
-    """The corpus scope to actually read for a site (#762/#780/#1505) — the extracted-tree region
-    its bundle/derivations are bounded to.
+    """The corpus scope to actually read for a site (#762/#780/#1505/#1405) — the extracted-tree
+    region its bundle/derivations are bounded to.
 
-    An explicit ``corpus_relpaths`` always wins (inclusion-only). Otherwise the default is
-    **derived from the slug, not inherited from Lima**: the reference build (Lima) reads the whole
-    tree **minus every registered peer's own scope** (:func:`_peer_scope_prefixes`), so its
-    record/timeline/entities domain stops swallowing a sibling's slug-scoped records — a Piqua
-    NPDES permit under ``oepa/troy-piqua/`` or a Fort Wayne §401 under ``idem/fort-wayne/`` no
-    longer renders inside Lima's Allen-County record (#1505). Every other site defaults to its own
-    ``<slug>/`` collection (the #780 safe default — a freshly registered site reads *its own*
-    corpus or nothing, never silently inheriting Lima's record); a site whose corpus also lives
-    under a jurisdiction prefix (Fort Wayne's ``idem/fort-wayne``) sets the tuple explicitly.
+    The scope is **derived from the slug, not inherited from Lima**. The reference build (Lima)
+    reads the whole tree **minus every registered peer's own scope** (:func:`_peer_scope_prefixes`),
+    so its record/timeline/entities domain stops swallowing a sibling's slug-scoped records — a
+    Piqua NPDES permit under ``oepa/troy-piqua/`` or a Fort Wayne §401 under ``idem/fort-wayne/``
+    no longer renders inside Lima's Allen-County record (#1505). Every other site reads its
+    :func:`_eponymous_prefixes` — its own ``<slug>/`` collection *and* its ``*/<slug>``
+    site-attribution nesting inside any agency collection — and nothing else (the #780 safe
+    default: a freshly registered site reads *its own* corpus or nothing, never silently
+    inheriting Lima's record).
+
+    ``corpus_relpaths`` **adds** to that; it does not replace it. It exists for the prefixes no
+    rule can derive, where the corpus is filed by case or project name rather than by site —
+    ``permits/highland55``, ``legal/thor-v-urbana``, ``permits/dazzler-permits``. List the
+    exceptions, derive the rule (#1405): before that split, a site whose permits landed under
+    ``oepa/<slug>/`` had to enumerate the obvious, and a site that forgot silently owned no record
+    at all.
     """
-    if profile.corpus_relpaths is not None:
-        return CorpusScope(include=profile.corpus_relpaths)
     if is_reference_site(profile.slug):
         return CorpusScope(include=None, exclude=_peer_scope_prefixes(profile.slug))
-    return CorpusScope(include=(profile.slug,))
+    prefixes = {*_eponymous_prefixes(profile.slug), *(profile.corpus_relpaths or ())}
+    return CorpusScope(include=tuple(sorted(prefixes)))
 
 
 def site_reference_path(

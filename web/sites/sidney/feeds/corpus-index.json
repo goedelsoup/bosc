@@ -1,13 +1,46 @@
 [
   {
+    "id": "artifact/alexander-reck-dba-hidden-valley-mhp",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Alexander R. Reck dba Hidden Valley MHP",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-1pv00037",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Hidden Valley Mobile Home Park",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/site-sidney",
     "node_class": "artifact",
     "kind": "site",
     "label": "Sidney",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 6,
     "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/tawawa-creek",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Tawawa Creek",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
     "updated": null
   },
   {
@@ -866,6 +899,28 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 10,
+    "updated": null
+  },
+  {
+    "id": "relation/alexander-reck-dba-hidden-valley-mhp--operates--npdes-1pv00037",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "ALEXANDER RECK DBA HIDDEN VALLEY MHP operates npdes:1PV00037",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-1pv00037--discharges-to--tawawa-creek",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:1PV00037 discharges_to TAWAWA CREEK",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]

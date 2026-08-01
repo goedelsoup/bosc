@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "e82397890ca4159d38fcdd788d314f55400e42cc48b5eb45fe5baf3b7a23cd4e",
+  "catalog_version": "5c42807e651a878b6d2aafd0cd28eccfe9f02cf9b9c84c94a55aac62bb0e4e97",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -788,6 +788,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:data-centers-ottawa",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "data-centers-ottawa",
+      "title": "Ottawa / Putnam County OH — Data-Center Activity Register",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:data-centers-sidney",
       "kind": "dataset",
       "site": "lima",
@@ -1524,6 +1532,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:ottawa-warn",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "ottawa-warn",
+      "title": "Ottawa — ODJFS WARN Notice, RK Industries (Extraction)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:ottawa-water-watch",
       "kind": "dataset",
       "site": "lima",
@@ -1780,14 +1796,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:ALEXANDER RECK DBA HIDDEN VALLEY MHP",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "ALEXANDER RECK DBA HIDDEN VALLEY MHP",
-      "title": "Alexander R. Reck dba Hidden Valley MHP",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:ALLEN COUNTY BOARD OF COMMISSIONERS",
       "kind": "entity",
       "site": "lima",
@@ -1889,30 +1897,6 @@
       "site": "lima",
       "local_id": "CITY OF LIMA",
       "title": "City of Lima",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:CITY OF VAN WERT",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "CITY OF VAN WERT",
-      "title": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:CITY OF WILMINGTON",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "CITY OF WILMINGTON",
-      "title": "City of Wilmington",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:CLINTON COUNTY BOARD OF DEVELOPMENTAL DISABILITIES",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "CLINTON COUNTY BOARD OF DEVELOPMENTAL DISABILITIES",
-      "title": "Clinton County Board of Developmental Disabilities",
       "feed": "entities"
     },
     {
@@ -2092,14 +2076,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:KYLE ISLER",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "KYLE ISLER",
-      "title": "Kyle Isler, Wilmington Nursery",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:LACRPC",
       "kind": "entity",
       "site": "lima",
@@ -2124,14 +2100,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:LYTLE CREEK",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "LYTLE CREEK",
-      "title": "Lytle Creek",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:MAGENTA CAPITAL OHIO LLC MAGENTA CAPITAL",
       "kind": "entity",
       "site": "lima",
@@ -2153,14 +2121,6 @@
       "site": "lima",
       "local_id": "MELISSA QUEEN DARBY",
       "title": "Melissa Queen Darby",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:MHC TT",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "MHC TT",
-      "title": "MHC TT, L.P.",
       "feed": "entities"
     },
     {
@@ -2252,14 +2212,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:RLR INVESTMENTS",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "RLR INVESTMENTS",
-      "title": "RLR Investments, LLC dba Pine Hills Mobile Home Park",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:ROBERT ZIZZO",
       "kind": "entity",
       "site": "lima",
@@ -2308,14 +2260,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:TAWAWA CREEK",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "TAWAWA CREEK",
-      "title": "Tawawa Creek",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:TEXTRON",
       "kind": "entity",
       "site": "lima",
@@ -2340,14 +2284,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:TOWN CREEK",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "TOWN CREEK",
-      "title": "Town Creek",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:TURNER CONSTRUCTION",
       "kind": "entity",
       "site": "lima",
@@ -2364,51 +2300,11 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:UNNAMED TRIBUTARY OF LYTLE CREEK",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "UNNAMED TRIBUTARY OF LYTLE CREEK",
-      "title": "Unnamed Tributary of Lytle Creek",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:UNNAMED TRIBUTARY OF TODD FORK",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "UNNAMED TRIBUTARY OF TODD FORK",
-      "title": "unnamed tributary of Todd Fork",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:UNNAMED TRIBUTARY OF WILSON CREEK",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "UNNAMED TRIBUTARY OF WILSON CREEK",
-      "title": "unnamed tributary of Wilson Creek",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:VAN WERT WWTP",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "VAN WERT WWTP",
-      "title": "Van Wert WWTP",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:VORYS",
       "kind": "entity",
       "site": "lima",
       "local_id": "VORYS",
       "title": "Vorys",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:WILMINGTON WATER PLANT",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "WILMINGTON WATER PLANT",
-      "title": "Wilmington Water Plant",
       "feed": "entities"
     },
     {
@@ -2428,83 +2324,11 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:npdes:1II00129",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:1II00129",
-      "title": "Wilmington Sanitary Landfill",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:npdes:1IW00240",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:1IW00240",
-      "title": "Wilmington Water Plant",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:npdes:1MP00060",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:1MP00060",
-      "title": "Wilmington Nursery",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:npdes:1PD00013",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:1PD00013",
-      "title": "City of Wilmington WWTP",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:npdes:1PT00125",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:1PT00125",
-      "title": "Clinton County Board of Developmental Disabilities",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:npdes:1PV00037",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:1PV00037",
-      "title": "Hidden Valley Mobile Home Park",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:npdes:1PV00089",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:1PV00089",
-      "title": "Pine Hills Mobile Home Park",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:npdes:1PX00010",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:1PX00010",
-      "title": "Wilmington RV Resort",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:npdes:2DP00130",
       "kind": "entity",
       "site": "lima",
       "local_id": "npdes:2DP00130",
       "title": "Bosc",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:npdes:2PD00006",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:2PD00006",
-      "title": "Van Wert WWTP",
       "feed": "entities"
     },
     {
@@ -3308,99 +3132,11 @@
       "feed": "records"
     },
     {
-      "handle": "record:lima:oepa/1II00129.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1II00129.npdes.yaml",
-      "title": "Wilmington Sanitary Landfill",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/1IW00240.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1IW00240.npdes.yaml",
-      "title": "Wilmington Water Plant",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/1MP00060.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1MP00060.npdes.yaml",
-      "title": "Wilmington Nursery",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/1PD00013.fs.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1PD00013.fs.npdes.yaml",
-      "title": "Wilmington Wastewater Treatment Plant (WWTP)",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/1PD00013.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1PD00013.npdes.yaml",
-      "title": "City of Wilmington WWTP",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/1PT00125.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1PT00125.npdes.yaml",
-      "title": "Clinton County Board of Developmental Disabilities",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/1PV00037.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1PV00037.npdes.yaml",
-      "title": "Hidden Valley Mobile Home Park",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/1PV00089.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1PV00089.npdes.yaml",
-      "title": "Pine Hills Mobile Home Park",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/1PX00010.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1PX00010.npdes.yaml",
-      "title": "Wilmington RV Resort",
-      "feed": "records"
-    },
-    {
       "handle": "record:lima:oepa/2DP00130.npdes.yaml",
       "kind": "record",
       "site": "lima",
       "local_id": "oepa/2DP00130.npdes.yaml",
       "title": "Bosc",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/2PD00006.fs.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/2PD00006.fs.npdes.yaml",
-      "title": "Van Wert Wastewater Treatment Plant (WWTP)",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/2PD00006.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/2PD00006.npdes.yaml",
-      "title": "Van Wert WWTP",
       "feed": "records"
     },
     {
@@ -3772,38 +3508,6 @@
       "feed": "timeline"
     },
     {
-      "handle": "timeline:lima:1II00129*HD",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "1II00129*HD",
-      "title": "NPDES 1II00129*HD (Wilmington Sanitary Landfill) — public notice",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:1PD00013*QD",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "1PD00013*QD",
-      "title": "NPDES 1PD00013*QD (City of Wilmington WWTP) — public notice",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:1PT00125*BD",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "1PT00125*BD",
-      "title": "NPDES 1PT00125*BD (Clinton County Board of Developmental Disabilities) — public notice",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:1PV00037*ED",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "1PV00037*ED",
-      "title": "NPDES 1PV00037*ED (Hidden Valley Mobile Home Park) — public notice",
-      "feed": "timeline"
-    },
-    {
       "handle": "timeline:lima:202508130008300",
       "kind": "timeline",
       "site": "lima",
@@ -3865,14 +3569,6 @@
       "site": "lima",
       "local_id": "2GC08468*AG",
       "title": "NPDES Construction Site Stormwater General Permit (OHC000006) coverage 2GC08468*AG — approved (LMA 1A (BOSC / Bistrozzi data-center campus))",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:2PD00006*VD",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "2PD00006*VD",
-      "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — public notice",
       "feed": "timeline"
     },
     {
