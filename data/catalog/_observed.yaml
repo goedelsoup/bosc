@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-01T17:06:42.207166+00:00'
+reconciled_at: '2026-08-01T17:33:07.961313+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -120,6 +120,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  bowling-green-water-watch:
+    exists: true
+    sha256: 9e4a26095144f3c6e64eff0803de5d952cd5ee8e4e26205411729e301f50fb4e
+    size_bytes: 83442
+    lfs_materialized: true
+    file_count: 3
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:bowling-green
   bundle-records:
     exists: true
     sha256: null

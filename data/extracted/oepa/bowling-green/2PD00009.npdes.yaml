@@ -37,7 +37,7 @@ permit:
     recorded; the arithmetic is [inference] and the ICIS date is [verified] as what the federal
     system holds. See data/extracted/bowling-green/water-watch.yaml, which turns on this date.
   - >-
-    Ambient stations 801 and 902 monitor the NORTH BRANCH PORTAGE RIVER, not Poe Ditch. The
+    Ambient stations 801 and 901 monitor the NORTH BRANCH PORTAGE RIVER, not Poe Ditch. The
     permit's own upstream/downstream biology and chemistry are therefore measured a stream
     removed from the outfall's immediate receptor. Poe Ditch itself is not monitored under this
     permit at all.
