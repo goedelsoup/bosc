@@ -8,7 +8,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-01"
   },
   {
     "id": "artifact/npdes-2pd00006",
@@ -19,7 +19,7 @@
     "links_out": 1,
     "links_in": 3,
     "lines": 13,
-    "updated": null
+    "updated": "2026-08-01"
   },
   {
     "id": "artifact/site-van-wert",
@@ -41,7 +41,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 13,
-    "updated": null
+    "updated": "2026-08-01"
   },
   {
     "id": "artifact/van-wert-wwtp",
@@ -52,7 +52,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-01"
   },
   {
     "id": "concept/7q10",
@@ -921,7 +921,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-01"
   },
   {
     "id": "relation/npdes-2pd00006--discharges-to--town-creek",
@@ -932,7 +932,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-01"
   },
   {
     "id": "relation/van-wert-wwtp--operates--npdes-2pd00006",
@@ -943,6 +943,6 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-01"
   }
 ]

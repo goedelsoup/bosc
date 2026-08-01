@@ -65,14 +65,37 @@
     "federal_obligations": null
   },
   {
-    "key": "MARATHON PETROLEUM CO COLUMBUS OH TERMINAL WEST",
-    "display": "MARATHON PETROLEUM CO-COLUMBUS OH TERMINAL (WEST)",
+    "key": "MPLX TERMINALS LLC COLUMBUS OH EAST TERMINAL",
+    "display": "MPLX TERMINALS LLC - COLUMBUS OH EAST TERMINAL",
     "kind": "facility",
     "classification": "industrial_facility",
     "relation_class": null,
     "relation_basis": null,
     "variants": [
-      "MARATHON PETROLEUM CO-COLUMBUS OH TERMINAL (WEST)"
+      "MPLX TERMINALS LLC - COLUMBUS OH EAST TERMINAL"
+    ],
+    "signals": [],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MPLX TERMINALS LLC COLUMBUS OH WEST TERMINAL",
+    "display": "MPLX TERMINALS LLC - COLUMBUS OH WEST TERMINAL",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "MPLX TERMINALS LLC - COLUMBUS OH WEST TERMINAL"
     ],
     "signals": [],
     "roles": {

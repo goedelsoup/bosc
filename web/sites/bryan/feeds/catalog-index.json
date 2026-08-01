@@ -1,6 +1,6 @@
 {
   "site": "bryan",
-  "catalog_version": "a60262bafc7b3417ac19558d6925ef72f392734bb8d1e679fd30afd9fa30bc12",
+  "catalog_version": "aae65564f70fcc2b9b56df98bc671a212efdcbddb6b6be17add99fa936157023",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -841,6 +841,14 @@
       "site": "bryan",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

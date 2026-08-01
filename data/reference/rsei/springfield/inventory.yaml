@@ -1,10 +1,10 @@
 meta:
   subject: RSEI toxic-release inventory — Clark County, OH
-  source: EPA RSEI Public Data Set (AWS Open Data s3://epa-rsei-pds)
-  version: v234
+  source: EPA RSEI Public Data Set v2.3.12 (EPA gaftp Public Release Data)
+  version: v2312
   county_fips: '39023'
-  facility_count: 35
-  scored_facility_count: 28
+  facility_count: 37
+  scored_facility_count: 31
   join: elements -> release -> submission -> facility (+ chemical, media)
   caveats:
   - Pounds are summed from reported `release` rows; Score/Cancer/NonCancer/Hazard from EPA's modeled `elements`
@@ -17,133 +17,209 @@ meta:
 county_fips: '39023'
 county_name: Clark County, OH
 facilities:
-- facility_id: 45504NTRNT1805C
-  facility_number: '27824'
-  name: INTERNATIONAL STEEL WOOL CORP.
-  parent_name: F H BONN CO
+- facility_id: 45505KZCTN1550P
+  facility_number: '32057'
+  name: AKZO NOBEL COATINGS INC
+  parent_name: AKZO NOBEL NV
   federal_facility: false
-  latitude: 39.93564
-  longitude: -83.83899
-  street: 1805 COMMERCE RD.
+  latitude: 39.89759
+  longitude: -83.78754
+  street: 1550 PROGRESS DR
   city: SPRINGFIELD
   state: OH
   fips: '39023'
-  naics: '332999'
-  sic: '3499'
+  naics: '325510'
   water_releases: false
-  score: 2345353.8
-  cancer_score: 2345182.1
-  noncancer_score: 2080.6
-  hazard: 38490066000.0
-  pounds: 141098.0
+  score: 1307937.7
+  cancer_score: 1305450.0
+  noncancer_score: 3387.1
+  hazard: 22106843115.7
+  pounds: 684579.0
   pounds_by_media:
-    offsite: 137777.0
-    air: 3321.0
-  first_year: 1989
-  last_year: 2000
+    offsite: 595797.0
+    air: 88782.0
+  first_year: 1988
+  last_year: 2012
   years:
+  - year: 1988
+    score: 1.5
+    cancer_score: 0.0
+    noncancer_score: 1.5
+    hazard: 29850.0
+    pounds: 1500.0
   - year: 1989
-    score: 22.4
-    cancer_score: 0.0
-    noncancer_score: 22.4
-    hazard: 375000.0
-    pounds: 250.0
+    score: 656098.9
+    cancer_score: 655004.9
+    noncancer_score: 1626.6
+    hazard: 11021369356.0
+    pounds: 302030.0
   - year: 1990
-    score: 22.3
-    cancer_score: 0.0
-    noncancer_score: 22.3
-    hazard: 375000.0
-    pounds: 250.0
+    score: 651540.7
+    cancer_score: 650445.1
+    noncancer_score: 1638.1
+    hazard: 11025935566.2
+    pounds: 180752.0
   - year: 1991
-    score: 429852.2
-    cancer_score: 429830.0
-    noncancer_score: 372.1
-    hazard: 6987875000.0
-    pounds: 14100.0
+    score: 17.3
+    cancer_score: 0.0
+    noncancer_score: 17.3
+    hazard: 437380.0
+    pounds: 59300.0
   - year: 1992
-    score: 428254.1
-    cancer_score: 428232.0
-    noncancer_score: 370.7
-    hazard: 6987875000.0
-    pounds: 17218.0
+    score: 29.5
+    cancer_score: 0.0
+    noncancer_score: 29.5
+    hazard: 469628.9
+    pounds: 17343.0
   - year: 1993
-    score: 426657.0
-    cancer_score: 426635.0
-    noncancer_score: 369.3
-    hazard: 6987875000.0
-    pounds: 16100.0
+    score: 31.2
+    cancer_score: 0.0
+    noncancer_score: 31.2
+    hazard: 563121.5
+    pounds: 25918.0
   - year: 1994
-    score: 425059.0
-    cancer_score: 425037.0
-    noncancer_score: 367.9
-    hazard: 6987875000.0
-    pounds: 15000.0
+    score: 32.8
+    cancer_score: 0.0
+    noncancer_score: 32.8
+    hazard: 540484.2
+    pounds: 18549.0
   - year: 1995
-    score: 423461.9
-    cancer_score: 423440.0
-    noncancer_score: 366.5
-    hazard: 6987875000.0
-    pounds: 20657.0
+    score: 4.2
+    cancer_score: 0.0
+    noncancer_score: 4.2
+    hazard: 45030.0
+    pounds: 500.0
   - year: 1996
-    score: 42188.6
-    cancer_score: 42184.2
-    noncancer_score: 38.7
-    hazard: 698825000.0
-    pounds: 13755.0
-  - year: 1997
-    score: 3.6
+    score: 4.2
     cancer_score: 0.0
-    noncancer_score: 3.6
-    hazard: 63000.0
-    pounds: 6764.0
+    noncancer_score: 4.2
+    hazard: 45000.0
+    pounds: 250.0
   - year: 1998
-    score: 3.5
+    score: 0.4
     cancer_score: 0.0
-    noncancer_score: 3.5
-    hazard: 60000.0
-    pounds: 7040.0
+    noncancer_score: 0.0
+    hazard: 19929.2
+    pounds: 3361.0
   - year: 1999
-    score: 83412.5
-    cancer_score: 83409.9
-    noncancer_score: 70.5
-    hazard: 1397545000.0
-    pounds: 14680.0
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 55777.6
+    pounds: 33018.0
   - year: 2000
-    score: 86416.7
-    cancer_score: 86414.0
-    noncancer_score: 73.1
-    hazard: 1453448000.0
-    pounds: 15284.0
+    score: 0.8
+    cancer_score: 0.0
+    noncancer_score: 0.8
+    hazard: 350210.0
+    pounds: 10006.0
+  - year: 2001
+    score: 0.9
+    cancer_score: 0.0
+    noncancer_score: 0.9
+    hazard: 680799.1
+    pounds: 23731.0
+  - year: 2002
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 6983.0
+    pounds: 4300.0
+  - year: 2004
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 7434000.0
+    pounds: 531.0
+  - year: 2005
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 1008000.0
+    pounds: 72.0
+  - year: 2006
+    score: 172.6
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 4242000.0
+    pounds: 303.0
+  - year: 2010
+    score: 0.9
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 30702000.0
+    pounds: 2193.0
+  - year: 2011
+    score: 0.9
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 6062000.0
+    pounds: 433.0
+  - year: 2012
+    score: 0.9
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 6846000.0
+    pounds: 489.0
   top_chemicals:
-  - chemical: Chromium and chromium compounds
+  - chemical: Chromium
     cas: 7440-47-3
     toxicity_category: Carcinogen
-    score: 2345182.1
-    pounds: 64429.0
-  - chemical: Copper and copper compounds
-    cas: 7440-50-8
+    score: 1303368.9
+    pounds: 1500.0
+  - chemical: Lead
+    cas: 7439-92-1
     toxicity_category: Non-carcinogen
-    score: 171.6
-    pounds: 76669.0
+    score: 2137.8
+    pounds: 1500.0
+  - chemical: Formaldehyde
+    cas: 50-00-0
+    toxicity_category: Mixed
+    score: 1971.2
+    pounds: 750.0
+  - chemical: Vanadium compounds
+    cas: N770
+    toxicity_category: Non-carcinogen
+    score: 175.2
+    pounds: 4021.0
+  - chemical: Xylene (mixed isomers)
+    cas: 1330-20-7
+    toxicity_category: Non-carcinogen
+    score: 144.2
+    pounds: 230123.0
+  - chemical: Ethylbenzene
+    cas: 100-41-4
+    toxicity_category: Carcinogen
+    score: 109.8
+    pounds: 45000.0
+  - chemical: Certain glycol ethers
+    cas: N230
+    toxicity_category: Non-carcinogen
+    score: 26.5
+    pounds: 11500.0
+  - chemical: n-Butyl alcohol (1-Butanol)
+    cas: 71-36-3
+    toxicity_category: Non-carcinogen
+    score: 2.0
+    pounds: 76227.0
+  top_water_chemicals: []
 - facility_id: 45505JXSPR1401S
-  facility_number: '27831'
+  facility_number: '48930'
   name: AJAX SUPERIOR COOPER ENERGY SERVICES
   parent_name: COOPER CAMERON CORP
   federal_facility: false
-  latitude: 39.91683
-  longitude: -83.78919
+  latitude: 39.91697
+  longitude: -83.78913
   street: 1401 SHERIDAN AVE
   city: SPRINGFIELD
   state: OH
   fips: '39023'
-  npdes_permit: OHR000002
   naics: '333618'
-  sic: '3519'
   water_releases: true
-  score: 2220639.2
-  cancer_score: 2216686.1
-  noncancer_score: 21411.0
-  hazard: 9806240763.4
+  score: 1043403.0
+  cancer_score: 1039461.4
+  noncancer_score: 20433.0
+  hazard: 541865379263.4
   pounds: 527880.0
   pounds_by_media:
     offsite: 506953.0
@@ -166,922 +242,258 @@ facilities:
     hazard: 232500432.0
     pounds: 262.0
   - year: 1990
-    score: 83301.9
-    cancer_score: 82504.8
-    noncancer_score: 3151.6
-    hazard: 352050000.0
+    score: 91483.1
+    cancer_score: 90686.0
+    noncancer_score: 3147.7
+    hazard: 2706750000.0
     pounds: 3760.0
   - year: 1991
-    score: 8453.9
-    cancer_score: 8453.9
-    noncancer_score: 60.9
-    hazard: 36260600.0
+    score: 3666.8
+    cancer_score: 3666.8
+    noncancer_score: 57.0
+    hazard: 71501455600.0
     pounds: 59468.0
   - year: 1992
-    score: 415788.3
-    cancer_score: 415788.3
-    noncancer_score: 2557.7
-    hazard: 1791250000.0
+    score: 178734.3
+    cancer_score: 178734.3
+    noncancer_score: 2364.7
+    hazard: 63776150000.0
     pounds: 42235.0
   - year: 1993
-    score: 412530.3
-    cancer_score: 411756.0
-    noncancer_score: 3307.2
-    hazard: 1794625000.0
+    score: 177775.3
+    cancer_score: 177001.0
+    noncancer_score: 3116.1
+    hazard: 98848475000.0
     pounds: 81900.0
   - year: 1994
-    score: 408491.4
-    cancer_score: 407724.7
-    noncancer_score: 3274.8
-    hazard: 1794625000.0
+    score: 176034.4
+    cancer_score: 175267.7
+    noncancer_score: 3085.6
+    hazard: 131102825000.0
     pounds: 104050.0
   - year: 1995
-    score: 404451.5
-    cancer_score: 403692.3
-    noncancer_score: 3242.4
-    hazard: 1794625000.0
+    score: 174293.5
+    cancer_score: 173534.3
+    noncancer_score: 3055.1
+    hazard: 57836450000.0
     pounds: 65800.0
   - year: 1996
-    score: 400416.3
-    cancer_score: 399661.0
-    noncancer_score: 3212.9
-    hazard: 1794627980.0
+    score: 172555.4
+    cancer_score: 171801.0
+    noncancer_score: 3026.8
+    hazard: 27658754980.0
     pounds: 39546.0
   - year: 1997
-    score: 10692.0
-    cancer_score: 10658.1
-    noncancer_score: 89.0
-    hazard: 71794245.8
+    score: 4483.2
+    cancer_score: 4452.9
+    noncancer_score: 81.1
+    hazard: 37925448745.8
     pounds: 52748.0
   - year: 1999
-    score: 10498.6
-    cancer_score: 10465.2
-    noncancer_score: 87.3
-    hazard: 71794174.8
+    score: 4402.2
+    cancer_score: 4372.3
+    noncancer_score: 79.5
+    hazard: 24558557674.8
     pounds: 34159.0
   - year: 2000
-    score: 10401.9
-    cancer_score: 10368.7
-    noncancer_score: 86.6
-    hazard: 71794174.8
+    score: 4361.7
+    cancer_score: 4332.0
+    noncancer_score: 78.8
+    hazard: 25717717674.8
     pounds: 35781.0
   top_chemicals:
-  - chemical: Chromium and chromium compounds
+  - chemical: Chromium
     cas: 7440-47-3
     toxicity_category: Carcinogen
-    score: 1816101.8
+    score: 625977.7
     pounds: 169253.0
-  - chemical: Nickel and nickel compounds
+  - chemical: Nickel
     cas: 7440-02-0
     toxicity_category: Mixed
-    score: 380352.5
+    score: 380235.6
     pounds: 190070.0
-  - chemical: Cobalt and cobalt compounds
+  - chemical: Cobalt
     cas: 7440-48-4
     toxicity_category: Carcinogen
-    score: 20113.0
+    score: 33127.3
     pounds: 5.0
-  - chemical: Manganese and manganese compounds
+  - chemical: Manganese
     cas: 7439-96-5
     toxicity_category: Non-carcinogen
-    score: 3483.8
+    score: 3481.6
     pounds: 85354.0
-  - chemical: Copper and copper compounds
+  - chemical: Copper
     cas: 7440-50-8
     toxicity_category: Non-carcinogen
-    score: 459.6
+    score: 452.4
     pounds: 62915.0
-  - chemical: Dichloromethane
+  - chemical: Dichloromethane (Methylene chloride)
     cas: 75-09-2
-    toxicity_category: Mixed
-    score: 128.6
+    toxicity_category: Carcinogen
+    score: 128.5
     pounds: 20283.0
-- facility_id: 45502TKRCR4500G
-  facility_number: '27816'
-  name: TEIKURO CORP
-  federal_facility: false
-  latitude: 39.90727
-  longitude: -83.72656
-  street: 4500 GATEWAY BLVD
-  city: SPRINGFIELD
-  state: OH
-  fips: '39023'
-  naics: '332813'
-  sic: '3471'
-  water_releases: false
-  score: 1488731.6
-  cancer_score: 1488631.2
-  noncancer_score: 1347.1
-  hazard: 35955221016.7
-  pounds: 593197.5
-  pounds_by_media:
-    air: 342173.1
-    offsite: 250476.2
-    potw: 548.3
-  first_year: 1988
-  last_year: 2014
-  years:
-  - year: 1988
-    score: 0.1
-    cancer_score: 0.0
-    noncancer_score: 0.1
-    hazard: 475.0
-    pounds: 750.0
-  - year: 1989
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 214.2
-    pounds: 306.0
-  - year: 1990
-    score: 1.2
-    cancer_score: 0.0
-    noncancer_score: 1.2
-    hazard: 28947.1
-    pounds: 41353.0
-  - year: 1991
-    score: 1.7
-    cancer_score: 0.0
-    noncancer_score: 1.7
-    hazard: 41426.0
-    pounds: 60180.0
-  - year: 1992
-    score: 3.1
-    cancer_score: 0.0
-    noncancer_score: 3.1
-    hazard: 74899.8
-    pounds: 107000.0
-  - year: 1993
-    score: 1.7
-    cancer_score: 0.0
-    noncancer_score: 1.7
-    hazard: 42562.5
-    pounds: 60805.0
-  - year: 1994
-    score: 1.8
-    cancer_score: 0.0
-    noncancer_score: 1.8
-    hazard: 44327.2
-    pounds: 65492.0
-  - year: 1996
-    score: 494471.2
-    cancer_score: 494471.2
-    noncancer_score: 393.8
-    hazard: 10868200000.0
-    pounds: 23641.0
-  - year: 1999
-    score: 436903.9
-    cancer_score: 436903.9
-    noncancer_score: 355.4
-    hazard: 10748150000.0
-    pounds: 66902.0
-  - year: 2001
-    score: 433320.7
-    cancer_score: 433309.2
-    noncancer_score: 370.0
-    hazard: 10748283000.0
-    pounds: 39542.0
-  - year: 2002
-    score: 17.5
-    cancer_score: 6.1
-    noncancer_score: 17.5
-    hazard: 156000.0
-    pounds: 145.0
-  - year: 2003
-    score: 18.4
-    cancer_score: 6.1
-    noncancer_score: 18.4
-    hazard: 179000.0
-    pounds: 250.0
-  - year: 2004
-    score: 45687.6
-    cancer_score: 45675.4
-    noncancer_score: 55.3
-    hazard: 1266829000.0
-    pounds: 78935.0
-  - year: 2005
-    score: 33.5
-    cancer_score: 6.9
-    noncancer_score: 33.5
-    hazard: 503520.0
-    pounds: 1535.1
-  - year: 2006
-    score: 5.5
-    cancer_score: 2.2
-    noncancer_score: 5.5
-    hazard: 29368.4
-    pounds: 1523.4
-  - year: 2007
-    score: 78246.3
-    cancer_score: 78242.0
-    noncancer_score: 70.7
-    hazard: 2322632000.0
-    pounds: 39388.5
-  - year: 2008
-    score: 5.2
-    cancer_score: 2.4
-    noncancer_score: 5.2
-    hazard: 7499.0
-    pounds: 689.7
-  - year: 2009
-    score: 0.9
-    cancer_score: 0.4
-    noncancer_score: 0.9
-    hazard: 1577.0
-    pounds: 395.5
-  - year: 2010
-    score: 1.5
-    cancer_score: 0.7
-    noncancer_score: 1.5
-    hazard: 2351.0
-    pounds: 224.1
-  - year: 2011
-    score: 2.0
-    cancer_score: 1.0
-    noncancer_score: 2.0
-    hazard: 3116.5
-    pounds: 273.8
-  - year: 2012
-    score: 4.2
-    cancer_score: 2.0
-    noncancer_score: 4.2
-    hazard: 6149.0
-    pounds: 314.1
-  - year: 2013
-    score: 1.9
-    cancer_score: 0.9
-    noncancer_score: 1.9
-    hazard: 2963.0
-    pounds: 552.2
-  - year: 2014
-    score: 1.7
-    cancer_score: 0.8
-    noncancer_score: 1.7
-    hazard: 2621.0
-    pounds: 3000.1
-  top_chemicals:
-  - chemical: Chromium and chromium compounds
-    cas: 7440-47-3
-    toxicity_category: Carcinogen
-    score: 1488586.6
-    pounds: 233145.0
-  - chemical: Lead and lead compounds
-    cas: 7439-92-1
-    toxicity_category: Non-carcinogen
-    score: 135.3
-    pounds: 12615.6
-  - chemical: 1,1,1-Trichloroethane
-    cas: 71-55-6
-    toxicity_category: Non-carcinogen
-    score: 9.6
-    pounds: 335886.0
-  - chemical: 1,1-Dichloro-1-fluoroethane
-    cas: 1717-00-6
-    score: 0.0
-    pounds: 11551.0
-- facility_id: 45505KZCTN1550P
-  facility_number: '27832'
-  name: AKZO NOBEL COATINGS INC
-  parent_name: AKZO NOBEL NV
-  federal_facility: false
-  latitude: 39.8977
-  longitude: -83.78753
-  street: 1550 PROGRESS DR
-  city: SPRINGFIELD
-  state: OH
-  fips: '39023'
-  naics: '325510'
-  sic: '2851'
-  water_releases: false
-  score: 962837.4
-  cancer_score: 960521.6
-  noncancer_score: 3107.8
-  hazard: 16243635390.8
-  pounds: 655679.0
-  pounds_by_media:
-    offsite: 574447.0
-    air: 81232.0
-  first_year: 1988
-  last_year: 2012
-  years:
-  - year: 1988
-    score: 1.5
-    cancer_score: 0.0
-    noncancer_score: 1.5
-    hazard: 17850.0
-    pounds: 1500.0
-  - year: 1989
-    score: 482772.2
-    cancer_score: 481677.5
-    noncancer_score: 1486.2
-    hazard: 8118874356.0
-    pounds: 290280.0
-  - year: 1990
-    score: 479940.4
-    cancer_score: 478844.1
-    noncancer_score: 1499.2
-    hazard: 8123440566.2
-    pounds: 169002.0
-  - year: 1991
-    score: 17.3
-    cancer_score: 0.0
-    noncancer_score: 17.3
-    hazard: 177450.0
-    pounds: 53900.0
-  - year: 1992
-    score: 29.5
-    cancer_score: 0.0
-    noncancer_score: 29.5
-    hazard: 304413.9
-    pounds: 17343.0
-  - year: 1993
-    score: 31.2
-    cancer_score: 0.0
-    noncancer_score: 31.2
-    hazard: 326535.5
-    pounds: 25918.0
-  - year: 1994
-    score: 32.8
-    cancer_score: 0.0
-    noncancer_score: 32.8
-    hazard: 347509.2
-    pounds: 18549.0
-  - year: 1995
-    score: 4.5
-    cancer_score: 0.0
-    noncancer_score: 4.2
-    hazard: 47500.0
-    pounds: 500.0
-  - year: 1996
-    score: 4.2
-    cancer_score: 0.0
-    noncancer_score: 4.2
-    hazard: 45000.0
-    pounds: 250.0
-  - year: 1998
-    score: 0.4
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 5245.7
-    pounds: 3361.0
-  - year: 1999
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 247.1
-    pounds: 33018.0
-  - year: 2000
-    score: 0.8
-    cancer_score: 0.0
-    noncancer_score: 0.8
-    hazard: 8750.0
-    pounds: 10006.0
-  - year: 2001
-    score: 0.9
-    cancer_score: 0.0
-    noncancer_score: 0.9
-    hazard: 12718.3
-    pounds: 23731.0
-  - year: 2002
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 228.9
-    pounds: 4300.0
-  - year: 2004
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 0.0
-    pounds: 531.0
-  - year: 2005
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 0.0
-    pounds: 72.0
-  - year: 2006
-    score: 1.7
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 26600.0
-    pounds: 303.0
-  - year: 2010
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 140.0
-    pounds: 2193.0
-  - year: 2011
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 140.0
-    pounds: 433.0
-  - year: 2012
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 140.0
-    pounds: 489.0
-  top_chemicals:
-  - chemical: Chromium and chromium compounds
-    cas: 7440-47-3
-    toxicity_category: Carcinogen
-    score: 958433.6
-    pounds: 1500.0
-  - chemical: Lead and lead compounds
-    cas: 7439-92-1
-    toxicity_category: Non-carcinogen
-    score: 2139.2
-    pounds: 1500.0
-  - chemical: Formaldehyde
-    cas: 50-00-0
-    toxicity_category: Mixed
-    score: 1971.4
-    pounds: 750.0
-  - chemical: Xylene (mixed isomers)
-    cas: 1330-20-7
-    toxicity_category: Non-carcinogen
-    score: 144.3
-    pounds: 230123.0
-  - chemical: Ethylbenzene
-    cas: 100-41-4
-    toxicity_category: Carcinogen
-    score: 116.6
-    pounds: 45000.0
-  - chemical: Glycol ethers
-    cas: N230
-    toxicity_category: Non-carcinogen
-    score: 26.5
-    pounds: 11500.0
-  - chemical: n-Butyl alcohol
-    cas: 71-36-3
-    toxicity_category: Non-carcinogen
-    score: 2.0
-    pounds: 76227.0
-  - chemical: Vanadium and vanadium compounds
-    cas: 7440-62-2
-    toxicity_category: Non-carcinogen
-    score: 1.8
-    pounds: 4021.0
-- facility_id: 45506MYNPR1895W
-  facility_number: '27840'
-  name: NATIONAL OILWELL VARCO INC
-  parent_name: NATIONAL OILWELL VARCO INC
-  federal_facility: false
-  latitude: 39.92275
-  longitude: -83.84014
-  street: 1895 W JEFFERSON ST
-  city: SPRINGFIELD
-  state: OH
-  fips: '39023'
-  naics: '333911'
-  sic: '3561'
-  water_releases: false
-  score: 731198.5
-  cancer_score: 730696.5
-  noncancer_score: 17970.0
-  hazard: 9444818432.5
-  pounds: 1716567.2
-  pounds_by_media:
-    offsite: 1261549.2
-    air: 454673.0
-    potw: 345.0
-  first_year: 1988
-  last_year: 2014
-  years:
-  - year: 1988
-    score: 2.2
-    cancer_score: 0.0
-    noncancer_score: 2.2
-    hazard: 28203.0
-    pounds: 40290.0
-  - year: 1989
-    score: 129961.4
-    cancer_score: 129959.3
-    noncancer_score: 106.6
-    hazard: 1576902149.5
-    pounds: 99050.0
-  - year: 1990
-    score: 121068.9
-    cancer_score: 121066.8
-    noncancer_score: 100.7
-    hazard: 1559140178.0
-    pounds: 58948.0
-  - year: 1991
-    score: 124850.0
-    cancer_score: 124848.3
-    noncancer_score: 103.3
-    hazard: 1590309172.0
-    pounds: 77091.0
-  - year: 1992
-    score: 152963.3
-    cancer_score: 152962.5
-    noncancer_score: 3562.4
-    hazard: 1969572657.0
-    pounds: 68740.0
-  - year: 1993
-    score: 30484.9
-    cancer_score: 30484.2
-    noncancer_score: 3314.9
-    hazard: 399441775.7
-    pounds: 88608.0
-  - year: 1994
-    score: 30129.3
-    cancer_score: 30128.8
-    noncancer_score: 3274.1
-    hazard: 397099797.5
-    pounds: 102214.0
-  - year: 1995
-    score: 47472.8
-    cancer_score: 47472.5
-    noncancer_score: 5357.1
-    hazard: 631696495.6
-    pounds: 115369.0
-  - year: 1996
-    score: 16448.6
-    cancer_score: 16448.2
-    noncancer_score: 1358.0
-    hazard: 217372908.9
-    pounds: 83202.0
-  - year: 1997
-    score: 3747.1
-    cancer_score: 3746.9
-    noncancer_score: 3.3
-    hazard: 49956403.2
-    pounds: 80560.0
-  - year: 1998
-    score: 3725.2
-    cancer_score: 3724.7
-    noncancer_score: 3.5
-    hazard: 49959284.4
-    pounds: 62812.0
-  - year: 1999
-    score: 3702.9
-    cancer_score: 3702.5
-    noncancer_score: 3.4
-    hazard: 49957912.4
-    pounds: 62168.0
-  - year: 2000
-    score: 3680.6
-    cancer_score: 3680.3
-    noncancer_score: 3.3
-    hazard: 49956389.9
-    pounds: 56560.0
-  - year: 2001
-    score: 3654.0
-    cancer_score: 3653.5
-    noncancer_score: 3.4
-    hazard: 49958885.4
-    pounds: 68125.0
-  - year: 2002
-    score: 3634.8
-    cancer_score: 3626.7
-    noncancer_score: 11.0
-    hazard: 50062365.0
-    pounds: 51633.0
-  - year: 2003
-    score: 3615.8
-    cancer_score: 3599.9
-    noncancer_score: 18.8
-    hazard: 50178390.0
-    pounds: 40927.0
-  - year: 2004
-    score: 3594.5
-    cancer_score: 3573.1
-    noncancer_score: 24.2
-    hazard: 50260395.0
-    pounds: 48367.0
-  - year: 2005
-    score: 3566.2
-    cancer_score: 3546.3
-    noncancer_score: 22.7
-    hazard: 50240795.0
-    pounds: 58050.6
-  - year: 2006
-    score: 3536.7
-    cancer_score: 3519.5
-    noncancer_score: 20.0
-    hazard: 50202715.0
-    pounds: 49477.2
-  - year: 2007
-    score: 3508.6
-    cancer_score: 3492.8
-    noncancer_score: 18.7
-    hazard: 50184865.0
-    pounds: 58990.2
-  - year: 2008
-    score: 3471.9
-    cancer_score: 3466.0
-    noncancer_score: 8.8
-    hazard: 50035905.0
-    pounds: 63008.0
-  - year: 2009
-    score: 3449.7
-    cancer_score: 3439.2
-    noncancer_score: 13.3
-    hazard: 50107130.0
-    pounds: 41802.0
-  - year: 2010
-    score: 3419.7
-    cancer_score: 3412.4
-    noncancer_score: 10.1
-    hazard: 50059110.0
-    pounds: 46929.2
-  - year: 2011
-    score: 3415.4
-    cancer_score: 3387.8
-    noncancer_score: 30.3
-    hazard: 50376140.0
-    pounds: 55695.0
-  - year: 2012
-    score: 3378.7
-    cancer_score: 3364.0
-    noncancer_score: 17.4
-    hazard: 50176150.0
-    pounds: 38222.0
-  - year: 2013
-    score: 9979.5
-    cancer_score: 9957.5
-    noncancer_score: 30.0
-    hazard: 150010945.0
-    pounds: 51336.0
-  - year: 2014
-    score: 10735.8
-    cancer_score: 10432.8
-    noncancer_score: 548.5
-    hazard: 151571315.0
-    pounds: 48393.0
-  top_chemicals:
-  - chemical: Chromium and chromium compounds
-    cas: 7440-47-3
-    toxicity_category: Carcinogen
-    score: 590862.1
-    pounds: 791321.0
-  - chemical: Trichloroethylene
-    cas: 79-01-6
-    toxicity_category: Carcinogen
-    score: 139597.0
-    pounds: 131767.0
-  - chemical: Lead and lead compounds
-    cas: 7439-92-1
-    toxicity_category: Non-carcinogen
-    score: 502.4
-    pounds: 43866.2
-  - chemical: Xylene (mixed isomers)
-    cas: 1330-20-7
-    toxicity_category: Non-carcinogen
-    score: 223.0
-    pounds: 181737.0
-  - chemical: Toluene
-    cas: 108-88-3
-    toxicity_category: Non-carcinogen
-    score: 6.6
-    pounds: 213795.0
-  - chemical: 1,1,1-Trichloroethane
-    cas: 71-55-6
-    toxicity_category: Non-carcinogen
-    score: 6.2
-    pounds: 122982.0
-  - chemical: Nickel and nickel compounds
+  top_water_chemicals:
+  - chemical: Manganese
+    cas: 7439-96-5
+    water_pounds: 234.0
+    reporting_years: 4
+  - chemical: Nickel
     cas: 7440-02-0
-    toxicity_category: Mixed
-    score: 1.1
-    pounds: 231099.0
-- facility_id: 45502TRTCN4700G
-  facility_number: '27818'
-  name: PARKER TRUTEC
-  parent_name: NIHON PARKERIZING OF JAPAN INC
+    water_pounds: 54.0
+    reporting_years: 4
+  - chemical: Copper
+    cas: 7440-50-8
+    water_pounds: 9.0
+    reporting_years: 3
+- facility_id: 45504NTRNT1805C
+  facility_number: '6985'
+  name: INTERNATIONAL STEEL WOOL CORP
+  parent_name: F H BONN CO
   federal_facility: false
-  latitude: 39.90713
-  longitude: -83.72437
-  street: 4700 GATEWAY BLVD
+  latitude: 39.93576
+  longitude: -83.83895
+  street: 1805 COMMERCE RD
   city: SPRINGFIELD
   state: OH
   fips: '39023'
-  naics: '332811'
-  sic: '3398'
+  naics: '332999'
   water_releases: false
-  score: 638290.9
-  cancer_score: 631226.0
-  noncancer_score: 82811.7
-  hazard: 32981483911.7
-  pounds: 5476464.3
+  score: 885276.8
+  cancer_score: 885108.3
+  noncancer_score: 888.8
+  hazard: 692726753500.0
+  pounds: 141098.0
   pounds_by_media:
-    offsite: 3966522.6
-    air: 1508446.8
-    potw: 1495.0
-  first_year: 1990
-  last_year: 2014
+    offsite: 137777.0
+    air: 3321.0
+  first_year: 1989
+  last_year: 2000
   years:
+  - year: 1989
+    score: 22.0
+    cancer_score: 0.0
+    noncancer_score: 22.0
+    hazard: 375000.0
+    pounds: 250.0
   - year: 1990
-    score: 0.2
+    score: 21.9
     cancer_score: 0.0
-    noncancer_score: 0.2
-    hazard: 6230.0
-    pounds: 8900.0
+    noncancer_score: 21.9
+    hazard: 375000.0
+    pounds: 250.0
+  - year: 1991
+    score: 162228.8
+    cancer_score: 162207.0
+    noncancer_score: 153.8
+    hazard: 65049575000.0
+    pounds: 14100.0
   - year: 1992
-    score: 15.9
-    cancer_score: 0.0
-    noncancer_score: 15.9
-    hazard: 652280.0
-    pounds: 29245.0
+    score: 161632.7
+    cancer_score: 161611.0
+    noncancer_score: 153.2
+    hazard: 93000352000.0
+    pounds: 17218.0
   - year: 1993
-    score: 18265.3
-    cancer_score: 18243.2
-    noncancer_score: 2211.2
-    hazard: 558711621.7
-    pounds: 54737.0
+    score: 161036.6
+    cancer_score: 161015.0
+    noncancer_score: 152.7
+    hazard: 101597475000.0
+    pounds: 16100.0
   - year: 1994
-    score: 43485.3
-    cancer_score: 43356.1
-    noncancer_score: 5331.9
-    hazard: 1339278720.0
-    pounds: 144010.0
+    score: 160440.5
+    cancer_score: 160419.0
+    noncancer_score: 152.1
+    hazard: 54302425000.0
+    pounds: 15000.0
   - year: 1995
-    score: 27971.9
-    cancer_score: 27886.7
-    noncancer_score: 3431.6
-    hazard: 909620395.0
-    pounds: 88062.0
+    score: 159844.5
+    cancer_score: 159823.0
+    noncancer_score: 151.5
+    hazard: 102163232500.0
+    pounds: 20657.0
   - year: 1996
-    score: 20107.5
-    cancer_score: 20024.3
-    noncancer_score: 2486.1
-    hazard: 719284940.0
-    pounds: 88415.0
+    score: 15926.9
+    cancer_score: 15922.6
+    noncancer_score: 17.2
+    hazard: 52956995000.0
+    pounds: 13755.0
   - year: 1997
-    score: 25275.9
-    cancer_score: 25191.5
-    noncancer_score: 3107.3
-    hazard: 945902215.0
-    pounds: 86611.0
+    score: 3.6
+    cancer_score: 0.0
+    noncancer_score: 3.6
+    hazard: 10146000.0
+    pounds: 6764.0
   - year: 1998
-    score: 32653.8
-    cancer_score: 31906.8
-    noncancer_score: 4575.8
-    hazard: 1271633240.0
-    pounds: 131143.0
+    score: 3.4
+    cancer_score: 0.0
+    noncancer_score: 3.4
+    hazard: 10560000.0
+    pounds: 7040.0
   - year: 1999
-    score: 43173.8
-    cancer_score: 42451.9
-    noncancer_score: 5816.2
-    hazard: 3540995810.0
-    pounds: 589195.0
+    score: 31490.1
+    cancer_score: 31487.6
+    noncancer_score: 28.2
+    hazard: 109119295000.0
+    pounds: 14680.0
   - year: 2000
-    score: 55661.4
-    cancer_score: 54924.5
-    noncancer_score: 7327.8
-    hazard: 3471486510.0
-    pounds: 502703.0
-  - year: 2001
-    score: 83175.2
-    cancer_score: 82038.1
-    noncancer_score: 10981.7
-    hazard: 2828818975.0
-    pounds: 272228.0
-  - year: 2002
-    score: 78337.3
-    cancer_score: 77534.8
-    noncancer_score: 10106.6
-    hazard: 2326374010.0
-    pounds: 275000.0
-  - year: 2003
-    score: 76800.0
-    cancer_score: 75875.9
-    noncancer_score: 10029.2
-    hazard: 2812250819.0
-    pounds: 312348.4
-  - year: 2004
-    score: 38840.4
-    cancer_score: 38506.9
-    noncancer_score: 4954.3
-    hazard: 1312051951.0
-    pounds: 214359.1
-  - year: 2005
-    score: 23624.5
-    cancer_score: 23396.8
-    noncancer_score: 3035.3
-    hazard: 1039786140.0
-    pounds: 180345.9
-  - year: 2006
-    score: 15905.9
-    cancer_score: 15737.0
-    noncancer_score: 2057.3
-    hazard: 994710534.0
-    pounds: 239641.0
-  - year: 2007
-    score: 19990.9
-    cancer_score: 19858.1
-    noncancer_score: 2515.8
-    hazard: 1283422184.0
-    pounds: 526032.5
-  - year: 2008
-    score: 15947.1
-    cancer_score: 15867.2
-    noncancer_score: 1984.0
-    hazard: 674483839.0
-    pounds: 150929.6
-  - year: 2009
-    score: 15225.0
-    cancer_score: 15140.4
-    noncancer_score: 1901.5
-    hazard: 607270804.0
-    pounds: 102486.3
-  - year: 2010
-    score: 3406.1
-    cancer_score: 3285.8
-    noncancer_score: 514.5
-    hazard: 322417804.0
-    pounds: 78809.5
-  - year: 2011
-    score: 120.2
-    cancer_score: 0.0
-    noncancer_score: 120.2
-    hazard: 1521510734.0
-    pounds: 355085.9
-  - year: 2012
-    score: 115.1
-    cancer_score: 0.0
-    noncancer_score: 115.1
-    hazard: 1407387908.0
-    pounds: 327982.5
-  - year: 2013
-    score: 88.3
-    cancer_score: 0.0
-    noncancer_score: 88.3
-    hazard: 1624915074.0
-    pounds: 376898.2
-  - year: 2014
-    score: 103.9
-    cancer_score: 0.0
-    noncancer_score: 103.9
-    hazard: 1468511174.0
-    pounds: 341296.4
+    score: 32625.8
+    cancer_score: 32623.1
+    noncancer_score: 29.2
+    hazard: 114515948000.0
+    pounds: 15284.0
   top_chemicals:
-  - chemical: Trichloroethylene
-    cas: 79-01-6
+  - chemical: Chromium
+    cas: 7440-47-3
     toxicity_category: Carcinogen
-    score: 631226.3
-    pounds: 1691932.0
-  - chemical: Cyanide compounds
-    cas: N106
+    score: 885108.3
+    pounds: 64429.0
+  - chemical: Copper
+    cas: 7440-50-8
     toxicity_category: Non-carcinogen
-    score: 6877.3
-    pounds: 3565757.2
-  - chemical: Ammonia
-    cas: 7664-41-7
-    toxicity_category: Non-carcinogen
-    score: 186.2
-    pounds: 165540.1
-  - chemical: 1,1,1-Trichloroethane
-    cas: 71-55-6
-    toxicity_category: Non-carcinogen
-    score: 1.2
-    pounds: 53235.0
+    score: 168.4
+    pounds: 76669.0
+  top_water_chemicals: []
 - facility_id: 45502FNDLY5225P
-  facility_number: '27813'
+  facility_number: '2192'
   name: SUPERIOR TRIM - SPRINGFIELD DIV
   parent_name: SUPERIOR TRIM INC
   federal_facility: false
-  latitude: 40.00067
-  longitude: -83.8015
+  latitude: 40.00066
+  longitude: -83.80131
   street: 5225 PROSPERITY DR
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '336360'
-  sic: '3714'
   water_releases: false
-  score: 512671.8
+  score: 724889.0
   cancer_score: 0.0
-  noncancer_score: 512671.8
-  hazard: 11627597485.0
-  pounds: 87816.1
+  noncancer_score: 724889.0
+  hazard: 18364223751.0
+  pounds: 107063.2
   pounds_by_media:
-    air: 79918.0
+    air: 99165.2
     offsite: 7898.0
   first_year: 1995
-  last_year: 2014
+  last_year: 2022
   years:
   - year: 1995
     score: 4.1
     cancer_score: 0.0
     noncancer_score: 4.1
-    hazard: 101040.0
+    hazard: 192075.0
     pounds: 25563.0
   - year: 1996
-    score: 3.1
+    score: 3.0
     cancer_score: 0.0
-    noncancer_score: 3.1
-    hazard: 75575.0
+    noncancer_score: 3.0
+    hazard: 108079.0
     pounds: 17027.0
   - year: 1997
-    score: 2.3
+    score: 2.2
     cancer_score: 0.0
-    noncancer_score: 2.3
-    hazard: 56870.0
+    noncancer_score: 2.2
+    hazard: 67597.0
     pounds: 12005.0
   - year: 2003
     score: 6689.7
@@ -1120,709 +532,2186 @@ facilities:
     hazard: 1367800000.0
     pounds: 3908.0
   - year: 2009
-    score: 21486.7
+    score: 18734.1
     cancer_score: 0.0
-    noncancer_score: 21486.7
+    noncancer_score: 18734.1
     hazard: 496650000.0
     pounds: 1419.0
   - year: 2010
-    score: 30693.5
+    score: 25281.0
     cancer_score: 0.0
-    noncancer_score: 30693.5
+    noncancer_score: 25281.0
     hazard: 724500000.0
     pounds: 2070.0
   - year: 2011
-    score: 44968.7
+    score: 36929.7
     cancer_score: 0.0
-    noncancer_score: 44968.7
-    hazard: 1059299000.0
+    noncancer_score: 36929.7
+    hazard: 1059299500.0
     pounds: 3026.6
   - year: 2012
-    score: 55298.3
+    score: 45257.9
     cancer_score: 0.0
-    noncancer_score: 55298.3
+    noncancer_score: 45257.9
     hazard: 1299550000.0
     pounds: 3713.0
   - year: 2013
-    score: 48854.7
+    score: 39830.0
     cancer_score: 0.0
-    noncancer_score: 48854.7
-    hazard: 1144910000.0
+    noncancer_score: 39830.0
+    hazard: 1144909500.0
     pounds: 3271.2
   - year: 2014
-    score: 63808.8
+    score: 51799.4
     cancer_score: 0.0
-    noncancer_score: 63808.8
+    noncancer_score: 51799.4
     hazard: 1490650000.0
     pounds: 4259.0
+  - year: 2015
+    score: 46201.7
+    cancer_score: 0.0
+    noncancer_score: 46201.7
+    hazard: 1329300000.0
+    pounds: 3798.0
+  - year: 2016
+    score: 38876.1
+    cancer_score: 0.0
+    noncancer_score: 38876.1
+    hazard: 1119650000.0
+    pounds: 3199.0
+  - year: 2017
+    score: 48310.3
+    cancer_score: 0.0
+    noncancer_score: 48310.3
+    hazard: 1309990500.0
+    pounds: 3742.8
+  - year: 2018
+    score: 39352.1
+    cancer_score: 0.0
+    noncancer_score: 39352.1
+    hazard: 1078269500.0
+    pounds: 3080.8
+  - year: 2019
+    score: 42577.6
+    cancer_score: 0.0
+    noncancer_score: 42577.6
+    hazard: 931322000.0
+    pounds: 2660.9
+  - year: 2020
+    score: 18599.9
+    cancer_score: 0.0
+    noncancer_score: 18599.9
+    hazard: 407330000.0
+    pounds: 1163.8
+  - year: 2021
+    score: 12187.5
+    cancer_score: 0.0
+    noncancer_score: 12187.5
+    hazard: 267085000.0
+    pounds: 763.1
+  - year: 2022
+    score: 13390.8
+    cancer_score: 0.0
+    noncancer_score: 13390.8
+    hazard: 293545000.0
+    pounds: 838.7
   top_chemicals:
   - chemical: Diisocyanates
     cas: N120
     toxicity_category: Non-carcinogen
-    score: 512662.4
-    pounds: 33221.0
-  - chemical: n-Hexane
+    score: 724879.7
+    pounds: 52468.2
+  - chemical: n-Hexane (Hexane)
     cas: 110-54-3
     toxicity_category: Non-carcinogen
-    score: 9.5
+    score: 9.2
     pounds: 54595.0
-- facility_id: 45503SKLLY318EA
-  facility_number: '27821'
-  name: OS KELLY CO
-  parent_name: STEINWAY MUSICAL INSTRUMENTS
+  top_water_chemicals: []
+- facility_id: 45502TRTCN4700G
+  facility_number: '8569'
+  name: PARKER TRUTEC
+  parent_name: NIHON PARKERIZING OF JAPAN INC
   federal_facility: false
-  latitude: 39.927
-  longitude: -83.80571
+  latitude: 39.907
+  longitude: -83.72438
+  street: 4700 GATEWAY BLVD
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '332811'
+  water_releases: false
+  score: 641134.0
+  cancer_score: 631117.8
+  noncancer_score: 85750.3
+  hazard: 39278520345.6
+  pounds: 7382245.4
+  pounds_by_media:
+    offsite: 5797911.2
+    air: 1580971.3
+    potw: 3363.0
+  first_year: 1990
+  last_year: 2022
+  years:
+  - year: 1990
+    score: 0.2
+    cancer_score: 0.0
+    noncancer_score: 0.2
+    hazard: 6230.0
+    pounds: 8900.0
+  - year: 1992
+    score: 11.6
+    cancer_score: 0.0
+    noncancer_score: 11.6
+    hazard: 1076502.8
+    pounds: 29245.0
+  - year: 1993
+    score: 18257.2
+    cancer_score: 18241.8
+    noncancer_score: 2204.4
+    hazard: 563618659.7
+    pounds: 54737.0
+  - year: 1994
+    score: 43418.7
+    cancer_score: 43355.6
+    noncancer_score: 5265.7
+    hazard: 1362584534.0
+    pounds: 144010.0
+  - year: 1995
+    score: 27944.3
+    cancer_score: 27886.5
+    noncancer_score: 3404.2
+    hazard: 1001407189.0
+    pounds: 88062.0
+  - year: 1996
+    score: 20082.4
+    cancer_score: 20023.8
+    noncancer_score: 2461.5
+    hazard: 882139468.0
+    pounds: 88415.0
+  - year: 1997
+    score: 25249.6
+    cancer_score: 25190.6
+    noncancer_score: 3081.9
+    hazard: 945799483.0
+    pounds: 86611.0
+  - year: 1998
+    score: 32523.2
+    cancer_score: 31906.1
+    noncancer_score: 4445.8
+    hazard: 1245872168.0
+    pounds: 131143.0
+  - year: 1999
+    score: 42943.3
+    cancer_score: 42349.8
+    noncancer_score: 5675.5
+    hazard: 3540963702.0
+    pounds: 589195.0
+  - year: 2000
+    score: 55531.2
+    cancer_score: 54922.6
+    noncancer_score: 7199.3
+    hazard: 3471460602.0
+    pounds: 502703.0
+  - year: 2001
+    score: 82976.5
+    cancer_score: 82038.1
+    noncancer_score: 10783.0
+    hazard: 3058257195.0
+    pounds: 272228.0
+  - year: 2002
+    score: 78205.5
+    cancer_score: 77534.8
+    noncancer_score: 9974.9
+    hazard: 2839283602.0
+    pounds: 275000.0
+  - year: 2003
+    score: 76633.5
+    cancer_score: 75875.9
+    noncancer_score: 9862.7
+    hazard: 2943761243.8
+    pounds: 312348.4
+  - year: 2004
+    score: 38830.6
+    cancer_score: 38506.9
+    noncancer_score: 4944.5
+    hazard: 2392316726.2
+    pounds: 214359.1
+  - year: 2005
+    score: 23613.9
+    cancer_score: 23396.8
+    noncancer_score: 3024.8
+    hazard: 1601507128.0
+    pounds: 180345.9
+  - year: 2006
+    score: 15895.4
+    cancer_score: 15737.0
+    noncancer_score: 2046.8
+    hazard: 2015886130.8
+    pounds: 239641.0
+  - year: 2007
+    score: 19978.9
+    cancer_score: 19858.1
+    noncancer_score: 2503.8
+    hazard: 3707324788.8
+    pounds: 526032.5
+  - year: 2008
+    score: 15935.9
+    cancer_score: 15867.2
+    noncancer_score: 1972.8
+    hazard: 1610466575.8
+    pounds: 150929.6
+  - year: 2009
+    score: 15216.3
+    cancer_score: 15140.4
+    noncancer_score: 1892.7
+    hazard: 1057370396.8
+    pounds: 102486.3
+  - year: 2010
+    score: 3395.3
+    cancer_score: 3285.8
+    noncancer_score: 503.7
+    hazard: 487337798.8
+    pounds: 78809.5
+  - year: 2011
+    score: 107.4
+    cancer_score: 0.0
+    noncancer_score: 107.4
+    hazard: 632330310.8
+    pounds: 355085.9
+  - year: 2012
+    score: 103.7
+    cancer_score: 0.0
+    noncancer_score: 103.7
+    hazard: 589434785.6
+    pounds: 327982.5
+  - year: 2013
+    score: 77.3
+    cancer_score: 0.0
+    noncancer_score: 77.3
+    hazard: 543741896.8
+    pounds: 376898.2
+  - year: 2014
+    score: 92.7
+    cancer_score: 0.0
+    noncancer_score: 92.7
+    hazard: 464506964.8
+    pounds: 341296.4
+  - year: 2015
+    score: 513.9
+    cancer_score: 0.0
+    noncancer_score: 513.9
+    hazard: 631749429.3
+    pounds: 209100.2
+  - year: 2016
+    score: 540.5
+    cancer_score: 0.0
+    noncancer_score: 540.5
+    hazard: 685359683.3
+    pounds: 191253.1
+  - year: 2017
+    score: 559.3
+    cancer_score: 0.0
+    noncancer_score: 559.3
+    hazard: 708502449.3
+    pounds: 177782.6
+  - year: 2018
+    score: 709.1
+    cancer_score: 0.0
+    noncancer_score: 709.1
+    hazard: 230466111.3
+    pounds: 105948.2
+  - year: 2019
+    score: 466.4
+    cancer_score: 0.0
+    noncancer_score: 466.4
+    hazard: 15773289.9
+    pounds: 270622.0
+  - year: 2020
+    score: 613.3
+    cancer_score: 0.0
+    noncancer_score: 613.3
+    hazard: 21322383.0
+    pounds: 262837.0
+  - year: 2021
+    score: 353.4
+    cancer_score: 0.0
+    noncancer_score: 353.4
+    hazard: 13450529.0
+    pounds: 270352.0
+  - year: 2022
+    score: 353.5
+    cancer_score: 0.0
+    noncancer_score: 353.5
+    hazard: 13442388.0
+    pounds: 417886.0
+  top_chemicals:
+  - chemical: Trichloroethylene
+    cas: 79-01-6
+    toxicity_category: Carcinogen
+    score: 631117.9
+    pounds: 1691932.0
+  - chemical: Cyanide compounds
+    cas: N106
+    toxicity_category: Non-carcinogen
+    score: 9971.8
+    pounds: 5435218.9
+  - chemical: Ammonia (includes anhydrous ammonia and aqueous ammonia from water dissociable ammonium
+      salts and other sources; 10 percent of total aqueous ammonia is reportable under this listing)
+    cas: 7664-41-7
+    toxicity_category: Non-carcinogen
+    score: 43.1
+    pounds: 201859.6
+  - chemical: 1,1,1-Trichloroethane
+    cas: 71-55-6
+    toxicity_category: Non-carcinogen
+    score: 1.2
+    pounds: 53235.0
+  top_water_chemicals: []
+- facility_id: 45502TKRCR4500G
+  facility_number: '1092'
+  name: TEIKURO CORP
+  federal_facility: false
+  latitude: 39.90715
+  longitude: -83.72657
+  street: 4500 GATEWAY BLVD
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '332813'
+  water_releases: false
+  score: 609296.3
+  cancer_score: 609204.5
+  noncancer_score: 621.0
+  hazard: 5243748826450.4
+  pounds: 692000.9
+  pounds_by_media:
+    offsite: 349237.9
+    air: 342213.0
+    potw: 550.3
+  first_year: 1988
+  last_year: 2022
+  years:
+  - year: 1988
+    score: 0.1
+    cancer_score: 0.0
+    noncancer_score: 0.1
+    hazard: 475.0
+    pounds: 750.0
+  - year: 1989
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 214.2
+    pounds: 306.0
+  - year: 1990
+    score: 1.2
+    cancer_score: 0.0
+    noncancer_score: 1.2
+    hazard: 28947.1
+    pounds: 41353.0
+  - year: 1991
+    score: 1.7
+    cancer_score: 0.0
+    noncancer_score: 1.7
+    hazard: 42126.0
+    pounds: 60180.0
+  - year: 1992
+    score: 3.1
+    cancer_score: 0.0
+    noncancer_score: 3.1
+    hazard: 74899.8
+    pounds: 107000.0
+  - year: 1993
+    score: 1.7
+    cancer_score: 0.0
+    noncancer_score: 1.7
+    hazard: 42562.5
+    pounds: 60805.0
+  - year: 1994
+    score: 1.8
+    cancer_score: 0.0
+    noncancer_score: 1.8
+    hazard: 45843.4
+    pounds: 65492.0
+  - year: 1996
+    score: 191767.6
+    cancer_score: 191767.6
+    noncancer_score: 153.4
+    hazard: 392315820000.0
+    pounds: 23641.0
+  - year: 1999
+    score: 173769.9
+    cancer_score: 173769.9
+    noncancer_score: 141.4
+    hazard: 928153395000.0
+    pounds: 66902.0
+  - year: 2001
+    score: 172350.8
+    cancer_score: 172340.9
+    noncancer_score: 154.9
+    hazard: 646758376000.0
+    pounds: 39542.0
+  - year: 2002
+    score: 14.7
+    cancer_score: 4.8
+    noncancer_score: 14.7
+    hazard: 3330000.0
+    pounds: 145.0
+  - year: 2003
+    score: 15.6
+    cancer_score: 4.8
+    noncancer_score: 15.6
+    hazard: 5745000.0
+    pounds: 250.0
+  - year: 2004
+    score: 18089.9
+    cancer_score: 18079.1
+    noncancer_score: 30.2
+    hazard: 1293478976000.0
+    pounds: 78935.0
+  - year: 2005
+    score: 30.3
+    cancer_score: 5.4
+    noncancer_score: 30.3
+    hazard: 35302520.0
+    pounds: 1535.1
+  - year: 2006
+    score: 4.5
+    cancer_score: 1.7
+    noncancer_score: 4.5
+    hazard: 35035368.4
+    pounds: 1523.4
+  - year: 2007
+    score: 30941.0
+    cancer_score: 30937.4
+    noncancer_score: 31.0
+    hazard: 644662333000.0
+    pounds: 39388.5
+  - year: 2008
+    score: 4.0
+    cancer_score: 1.9
+    noncancer_score: 4.0
+    hazard: 15861399.0
+    pounds: 689.7
+  - year: 2009
+    score: 0.7
+    cancer_score: 0.3
+    noncancer_score: 0.7
+    hazard: 9097088.0
+    pounds: 395.5
+  - year: 2010
+    score: 1.2
+    cancer_score: 0.5
+    noncancer_score: 1.2
+    hazard: 5154351.0
+    pounds: 224.1
+  - year: 2011
+    score: 1.6
+    cancer_score: 0.7
+    noncancer_score: 1.6
+    hazard: 6295962.5
+    pounds: 273.8
+  - year: 2012
+    score: 3.3
+    cancer_score: 1.5
+    noncancer_score: 3.3
+    hazard: 7223779.0
+    pounds: 314.1
+  - year: 2013
+    score: 1.5
+    cancer_score: 0.7
+    noncancer_score: 1.5
+    hazard: 12698963.0
+    pounds: 552.2
+  - year: 2014
+    score: 1.3
+    cancer_score: 0.6
+    noncancer_score: 1.3
+    hazard: 69002621.0
+    pounds: 3000.1
+  - year: 2015
+    score: 0.9
+    cancer_score: 0.4
+    noncancer_score: 0.9
+    hazard: 46634259.8
+    pounds: 2027.6
+  - year: 2016
+    score: 0.6
+    cancer_score: 0.3
+    noncancer_score: 0.6
+    hazard: 7710.0
+    pounds: 0.3
+  - year: 2017
+    score: 0.9
+    cancer_score: 0.4
+    noncancer_score: 0.9
+    hazard: 104571984.0
+    pounds: 4546.6
+  - year: 2018
+    score: 0.1
+    cancer_score: 0.0
+    noncancer_score: 0.1
+    hazard: 108229472.0
+    pounds: 4705.6
+  - year: 2019
+    score: 19094.4
+    cancer_score: 19094.2
+    noncancer_score: 15.9
+    hazard: 372900145954.6
+    pounds: 22246.7
+  - year: 2020
+    score: 0.4
+    cancer_score: 0.2
+    noncancer_score: 0.4
+    hazard: 59809137.2
+    pounds: 2600.4
+  - year: 2021
+    score: 0.1
+    cancer_score: 0.0
+    noncancer_score: 0.1
+    hazard: 57517043.3
+    pounds: 2500.7
+  - year: 2022
+    score: 3191.4
+    cancer_score: 3191.2
+    noncancer_score: 2.9
+    hazard: 964898028769.6
+    pounds: 60175.5
+  top_chemicals:
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa
+      and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid
+      waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda
+      ash and kiln roasted at approximately 2,000 F.)
+    cas: N090
+    toxicity_category: Carcinogen
+    score: 609168.1
+    pounds: 312916.2
+  - chemical: Lead
+    cas: 7439-92-1
+    toxicity_category: Non-carcinogen
+    score: 118.5
+    pounds: 31647.9
+  - chemical: 1,1,1-Trichloroethane
+    cas: 71-55-6
+    toxicity_category: Non-carcinogen
+    score: 9.5
+    pounds: 335886.0
+  - chemical: 1,1-Dichloro-1-fluoroethane (HCFC-141b)
+    cas: 1717-00-6
+    score: 0.0
+    pounds: 11551.0
+  top_water_chemicals: []
+- facility_id: 45503SKLLY318EA
+  facility_number: '35485'
+  name: OS KELLY CO
+  parent_name: STEINWAY MUSICAL INSTRUMENTS INC
+  federal_facility: false
+  latitude: 39.92687
+  longitude: -83.80572
   street: 318 E N ST
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '331511'
-  sic: '3321'
   water_releases: false
-  score: 508445.9
-  cancer_score: 502819.8
-  noncancer_score: 6035.3
-  hazard: 3259883840.0
-  pounds: 182228.2
+  score: 431931.0
+  cancer_score: 426989.3
+  noncancer_score: 5346.4
+  hazard: 9229361428.2
+  pounds: 194387.8
   pounds_by_media:
-    air: 167023.4
-    offsite: 15204.8
+    air: 167807.8
+    offsite: 26580.1
   first_year: 1989
-  last_year: 2014
+  last_year: 2022
   years:
   - year: 1989
-    score: 102807.9
-    cancer_score: 101854.8
-    noncancer_score: 1036.0
-    hazard: 651032900.0
+    score: 87130.8
+    cancer_score: 86322.5
+    noncancer_score: 878.5
+    hazard: 2460032900.0
     pounds: 49650.0
   - year: 1990
-    score: 102038.3
-    cancer_score: 101093.5
-    noncancer_score: 1027.1
-    hazard: 651025900.0
+    score: 86511.6
+    cancer_score: 85710.1
+    noncancer_score: 871.2
+    hazard: 2460025900.0
     pounds: 39650.0
   - year: 1991
-    score: 202259.9
-    cancer_score: 200281.7
-    noncancer_score: 2141.2
-    hazard: 1300132400.0
+    score: 171552.0
+    cancer_score: 169873.5
+    noncancer_score: 1816.7
+    hazard: 2595248600.0
     pounds: 64291.0
   - year: 1992
-    score: 100518.3
-    cancer_score: 99589.8
-    noncancer_score: 1009.5
-    hazard: 651015750.0
+    score: 85291.5
+    cancer_score: 84504.0
+    noncancer_score: 856.3
+    hazard: 1622742750.0
     pounds: 27599.0
   - year: 1993
-    score: 376.4
+    score: 237.5
     cancer_score: 0.0
-    noncancer_score: 376.4
-    hazard: 3000000.0
+    noncancer_score: 237.5
+    hazard: 6000000.0
     pounds: 500.0
   - year: 1994
-    score: 373.7
+    score: 236.1
     cancer_score: 0.0
-    noncancer_score: 373.7
-    hazard: 3000000.0
+    noncancer_score: 236.1
+    hazard: 6000000.0
     pounds: 500.0
   - year: 2014
-    score: 71.4
+    score: 46.9
     cancer_score: 0.0
-    noncancer_score: 71.4
-    hazard: 676890.0
+    noncancer_score: 46.9
+    hazard: 878370.0
     pounds: 38.2
+  - year: 2015
+    score: 42.1
+    cancer_score: 0.0
+    noncancer_score: 42.1
+    hazard: 801090.0
+    pounds: 34.8
+  - year: 2016
+    score: 47.8
+    cancer_score: 0.0
+    noncancer_score: 47.8
+    hazard: 957260.0
+    pounds: 41.6
+  - year: 2017
+    score: 35.4
+    cancer_score: 0.0
+    noncancer_score: 35.4
+    hazard: 743130.0
+    pounds: 32.3
+  - year: 2018
+    score: 31.5
+    cancer_score: 0.0
+    noncancer_score: 31.5
+    hazard: 699200.0
+    pounds: 30.4
+  - year: 2019
+    score: 33.5
+    cancer_score: 0.0
+    noncancer_score: 33.5
+    hazard: 750260.0
+    pounds: 32.6
+  - year: 2020
+    score: 34.9
+    cancer_score: 0.0
+    noncancer_score: 34.9
+    hazard: 800400.0
+    pounds: 34.8
+  - year: 2021
+    score: 305.7
+    cancer_score: 269.1
+    noncancer_score: 63.4
+    hazard: 32035195.5
+    pounds: 5422.5
+  - year: 2022
+    score: 393.7
+    cancer_score: 310.1
+    noncancer_score: 114.6
+    hazard: 41646372.7
+    pounds: 6530.6
   top_chemicals:
-  - chemical: Chromium and chromium compounds
+  - chemical: Chromium
     cas: 7440-47-3
     toxicity_category: Carcinogen
-    score: 502819.8
+    score: 426410.1
     pounds: 7047.0
-  - chemical: Manganese and manganese compounds
+  - chemical: Manganese
     cas: 7439-96-5
     toxicity_category: Non-carcinogen
-    score: 5427.5
+    score: 4440.2
     pounds: 4846.0
+  - chemical: Naphthalene
+    cas: 91-20-3
+    toxicity_category: Mixed
+    score: 579.2
+    pounds: 5939.0
+  - chemical: Lead
+    cas: 7439-92-1
+    toxicity_category: Non-carcinogen
+    score: 391.9
+    pounds: 345.1
   - chemical: Aluminum (fume or dust)
     cas: 7429-90-5
     toxicity_category: Non-carcinogen
-    score: 108.7
+    score: 92.2
     pounds: 1497.0
-  - chemical: Lead and lead compounds
-    cas: 7439-92-1
-    toxicity_category: Non-carcinogen
-    score: 71.4
-    pounds: 38.2
   - chemical: Toluene
     cas: 108-88-3
     toxicity_category: Non-carcinogen
-    score: 18.5
+    score: 16.9
     pounds: 168800.0
+  - chemical: Phenol
+    cas: 108-95-2
+    toxicity_category: Non-carcinogen
+    score: 0.5
+    pounds: 5913.8
+  top_water_chemicals: []
+- facility_id: 45506MYNPR1895W
+  facility_number: '23995'
+  name: NATIONAL OILWELL VARCO INC
+  parent_name: NATIONAL OILWELL VARCO INC
+  federal_facility: false
+  latitude: 39.92293
+  longitude: -83.84093
+  street: 1895 W JEFFERSON ST
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '333911'
+  water_releases: true
+  score: 269698.0
+  cancer_score: 269215.5
+  noncancer_score: 12390.5
+  hazard: 1632229633747.0
+  pounds: 1870221.7
+  pounds_by_media:
+    offsite: 1409399.2
+    air: 460345.0
+    potw: 473.0
+    water: 4.0
+    land: 0.5
+  first_year: 1988
+  last_year: 2016
+  years:
+  - year: 1988
+    score: 1.3
+    cancer_score: 0.0
+    noncancer_score: 1.3
+    hazard: 28203.0
+    pounds: 93790.0
+  - year: 1989
+    score: 21966.5
+    cancer_score: 21965.2
+    noncancer_score: 18.9
+    hazard: 103218977149.5
+    pounds: 154050.0
+  - year: 1990
+    score: 20119.1
+    cancer_score: 20117.8
+    noncancer_score: 17.7
+    hazard: 33361437678.0
+    pounds: 58948.0
+  - year: 1991
+    score: 21262.7
+    cancer_score: 21261.6
+    noncancer_score: 18.3
+    hazard: 46999633805.8
+    pounds: 77091.0
+  - year: 1992
+    score: 38576.6
+    cancer_score: 38576.1
+    noncancer_score: 2107.4
+    hazard: 37405003744.0
+    pounds: 68740.0
+  - year: 1993
+    score: 17373.8
+    cancer_score: 17373.4
+    noncancer_score: 2027.7
+    hazard: 66134682942.7
+    pounds: 88608.0
+  - year: 1994
+    score: 17185.7
+    cancer_score: 17185.4
+    noncancer_score: 2005.3
+    hazard: 89171415278.5
+    pounds: 102214.0
+  - year: 1995
+    score: 27722.8
+    cancer_score: 27722.6
+    noncancer_score: 3269.9
+    hazard: 100378382089.6
+    pounds: 115369.0
+  - year: 1996
+    score: 7913.2
+    cancer_score: 7912.9
+    noncancer_score: 846.5
+    hazard: 80013181096.9
+    pounds: 83202.0
+  - year: 1997
+    score: 629.6
+    cancer_score: 629.4
+    noncancer_score: 0.7
+    hazard: 93482138438.2
+    pounds: 80560.0
+  - year: 1998
+    score: 626.8
+    cancer_score: 626.5
+    noncancer_score: 0.8
+    hazard: 68407950365.4
+    pounds: 62812.0
+  - year: 1999
+    score: 623.9
+    cancer_score: 623.6
+    noncancer_score: 0.8
+    hazard: 71103099773.4
+    pounds: 62168.0
+  - year: 2000
+    score: 620.9
+    cancer_score: 620.7
+    noncancer_score: 0.7
+    hazard: 61289118137.9
+    pounds: 56560.0
+  - year: 2001
+    score: 617.1
+    cancer_score: 616.8
+    noncancer_score: 0.8
+    hazard: 57883733593.4
+    pounds: 68125.0
+  - year: 2002
+    score: 618.2
+    cancer_score: 612.9
+    noncancer_score: 5.9
+    hazard: 65213454960.0
+    pounds: 51633.0
+  - year: 2003
+    score: 619.1
+    cancer_score: 609.0
+    noncancer_score: 10.7
+    hazard: 28362081485.0
+    pounds: 40927.0
+  - year: 2004
+    score: 618.5
+    cancer_score: 605.0
+    noncancer_score: 14.0
+    hazard: 42757090090.0
+    pounds: 48367.0
+  - year: 2005
+    score: 613.7
+    cancer_score: 601.1
+    noncancer_score: 13.1
+    hazard: 57007980625.0
+    pounds: 58050.6
+  - year: 2006
+    score: 608.2
+    cancer_score: 597.2
+    noncancer_score: 11.4
+    hazard: 53615302245.0
+    pounds: 49477.2
+  - year: 2007
+    score: 603.4
+    cancer_score: 593.3
+    noncancer_score: 10.6
+    hazard: 65479490795.0
+    pounds: 58990.2
+  - year: 2008
+    score: 593.4
+    cancer_score: 589.4
+    noncancer_score: 4.5
+    hazard: 74967998620.0
+    pounds: 63008.0
+  - year: 2009
+    score: 592.3
+    cancer_score: 585.5
+    noncancer_score: 7.4
+    hazard: 49587104205.0
+    pounds: 41802.0
+  - year: 2010
+    score: 586.5
+    cancer_score: 581.5
+    noncancer_score: 5.4
+    hazard: 52987035240.0
+    pounds: 46929.2
+  - year: 2011
+    score: 597.4
+    cancer_score: 579.9
+    noncancer_score: 18.0
+    hazard: 56066464635.0
+    pounds: 55695.0
+  - year: 2012
+    score: 587.7
+    cancer_score: 578.2
+    noncancer_score: 10.0
+    hazard: 33674832545.0
+    pounds: 38222.0
+  - year: 2013
+    score: 1731.7
+    cancer_score: 1715.3
+    noncancer_score: 17.7
+    hazard: 45662099945.0
+    pounds: 51336.0
+  - year: 2014
+    score: 2196.9
+    cancer_score: 1960.7
+    noncancer_score: 423.6
+    hazard: 44244896915.4
+    pounds: 48393.0
+  - year: 2015
+    score: 56201.8
+    cancer_score: 56085.3
+    noncancer_score: 1084.7
+    hazard: 35887749099.8
+    pounds: 31841.0
+  - year: 2016
+    score: 27689.2
+    cancer_score: 27689.2
+    noncancer_score: 436.7
+    hazard: 17867270045.5
+    pounds: 13313.5
+  top_chemicals:
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa
+      and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid
+      waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda
+      ash and kiln roasted at approximately 2,000 F.)
+    cas: N090
+    toxicity_category: Carcinogen
+    score: 153521.5
+    pounds: 812695.0
+  - chemical: Trichloroethylene
+    cas: 79-01-6
+    toxicity_category: Carcinogen
+    score: 85300.3
+    pounds: 131767.0
+  - chemical: Nickel compounds
+    cas: N495
+    toxicity_category: Mixed
+    score: 30110.0
+    pounds: 24114.5
+  - chemical: Lead
+    cas: 7439-92-1
+    toxicity_category: Non-carcinogen
+    score: 603.1
+    pounds: 370.0
+  - chemical: Xylene (mixed isomers)
+    cas: 1330-20-7
+    toxicity_category: Non-carcinogen
+    score: 155.5
+    pounds: 186797.0
+  - chemical: Toluene
+    cas: 108-88-3
+    toxicity_category: Non-carcinogen
+    score: 4.1
+    pounds: 213795.0
+  - chemical: 1,1,1-Trichloroethane
+    cas: 71-55-6
+    toxicity_category: Non-carcinogen
+    score: 3.8
+    pounds: 122982.0
+  - chemical: Nickel
+    cas: 7440-02-0
+    toxicity_category: Mixed
+    score: 0.0
+    pounds: 225456.0
+  top_water_chemicals:
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa
+      and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid
+      waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda
+      ash and kiln roasted at approximately 2,000 F.)
+    cas: N090
+    water_pounds: 3.0
+    reporting_years: 2
+  - chemical: Lead
+    cas: 7439-92-1
+    water_pounds: 1.0
+    reporting_years: 1
 - facility_id: 45505DHMNF1601S
-  facility_number: '27829'
+  facility_number: '38626'
   name: D & H MANUFACTURERS INC
   parent_name: CASSIUS SISLER TRUST FUND
   federal_facility: false
-  latitude: 39.91463
-  longitude: -83.78495
+  latitude: 39.91524
+  longitude: -83.78456
   street: 1601 SHERIDAN AVE
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '332618'
-  sic: '3496'
   water_releases: false
-  score: 244927.4
-  cancer_score: 244488.3
-  noncancer_score: 600.6
-  hazard: 539750801.5
-  pounds: 219399.0
+  score: 99643.8
+  cancer_score: 99300.2
+  noncancer_score: 409.1
+  hazard: 286480801.2
+  pounds: 242339.0
   pounds_by_media:
-    potw: 219399.0
+    potw: 242339.0
   first_year: 1988
   last_year: 1994
   years:
   - year: 1988
-    score: 117.7
+    score: 92.0
     cancer_score: 0.0
-    noncancer_score: 117.7
+    noncancer_score: 92.0
     hazard: 695480.3
-    pounds: 29904.0
+    pounds: 52844.0
   - year: 1989
-    score: 67694.1
-    cancer_score: 67629.2
-    noncancer_score: 109.5
-    hazard: 148248383.4
+    score: 27516.6
+    cancer_score: 27465.8
+    noncancer_score: 68.9
+    hazard: 78188383.3
     pounds: 32900.0
   - year: 1990
-    score: 67695.2
-    cancer_score: 67630.3
-    noncancer_score: 109.6
-    hazard: 148166623.4
+    score: 27518.6
+    cancer_score: 27467.8
+    noncancer_score: 68.9
+    hazard: 78106623.3
     pounds: 30448.0
   - year: 1991
-    score: 64700.8
-    cancer_score: 64638.9
-    noncancer_score: 104.6
-    hazard: 143436947.0
+    score: 26302.7
+    cancer_score: 26254.3
+    noncancer_score: 65.8
+    hazard: 76476947.0
     pounds: 38280.0
   - year: 1992
-    score: 30272.7
-    cancer_score: 30225.2
-    noncancer_score: 67.5
-    hazard: 67934413.4
+    score: 12314.4
+    cancer_score: 12277.2
+    noncancer_score: 45.3
+    hazard: 36624413.4
     pounds: 38174.0
   - year: 1993
-    score: 14415.0
-    cancer_score: 14364.7
-    noncancer_score: 59.8
-    hazard: 31242079.6
+    score: 5874.5
+    cancer_score: 5835.1
+    noncancer_score: 43.2
+    hazard: 16362079.5
     pounds: 25183.0
   - year: 1994
-    score: 31.9
+    score: 25.0
     cancer_score: 0.0
-    noncancer_score: 31.9
+    noncancer_score: 25.0
     hazard: 26874.4
     pounds: 24510.0
   top_chemicals:
-  - chemical: Chromium and chromium compounds
+  - chemical: Chromium
     cas: 7440-47-3
     toxicity_category: Carcinogen
-    score: 244488.2
+    score: 99300.2
     pounds: 1634.0
-  - chemical: Nickel and nickel compounds
+  - chemical: Nickel
     cas: 7440-02-0
     toxicity_category: Mixed
-    score: 439.2
+    score: 343.5
     pounds: 3992.0
-  - chemical: Sulfuric acid
+  - chemical: Sulfuric acid (acid aerosols including mists, vapors, gas, fog, and other airborne forms
+      of any particle size)
     cas: 7664-93-9
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 167472.0
-  - chemical: Hydrochloric acid
+  - chemical: Hydrochloric acid (acid aerosols including mists, vapors, gas, fog, and other airborne forms
+      of any particle size)
     cas: 7647-01-0
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 46301.0
+  - chemical: Sodium hydroxide (solution)
+    cas: 1310-73-2
+    score: 0.0
+    pounds: 22940.0
+  top_water_chemicals: []
 - facility_id: 45504RWCPL125NO
-  facility_number: '27827'
+  facility_number: '41458'
   name: RAWAC PLATING CO
   federal_facility: false
-  latitude: 39.92765
-  longitude: -83.82884
-  street: 125 N BELL AVE
+  latitude: 39.92764
+  longitude: -83.82867
+  street: 1107 W NORTH ST
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '332813'
-  sic: '3471'
   water_releases: false
-  score: 231796.6
-  cancer_score: 231131.5
-  noncancer_score: 1176.9
-  hazard: 994436703.1
-  pounds: 438148.5
+  score: 93260.8
+  cancer_score: 92593.4
+  noncancer_score: 1091.5
+  hazard: 41934071831.4
+  pounds: 463481.3
   pounds_by_media:
-    offsite: 420291.6
-    air: 14176.0
-    potw: 3680.9
+    offsite: 445232.8
+    air: 14371.0
+    potw: 3877.5
   first_year: 1988
-  last_year: 2014
+  last_year: 2020
   years:
   - year: 1988
-    score: 14.3
+    score: 13.3
     cancer_score: 0.0
-    noncancer_score: 14.3
+    noncancer_score: 13.3
     hazard: 162000.0
-    pounds: 900.0
+    pounds: 1250.0
   - year: 1989
-    score: 230907.6
-    cancer_score: 230852.5
-    noncancer_score: 287.9
-    hazard: 991533586.6
+    score: 92340.7
+    cancer_score: 92295.5
+    noncancer_score: 171.4
+    hazard: 41854973586.6
     pounds: 7085.0
   - year: 1990
-    score: 25.4
+    score: 24.5
     cancer_score: 0.0
-    noncancer_score: 25.4
-    hazard: 194242.1
+    noncancer_score: 24.5
+    hazard: 544242.1
     pounds: 1936.0
   - year: 1991
-    score: 63.1
+    score: 60.6
     cancer_score: 0.0
-    noncancer_score: 63.1
-    hazard: 530062.4
+    noncancer_score: 60.6
+    hazard: 4490062.4
     pounds: 25964.0
   - year: 1992
-    score: 29.9
+    score: 29.1
     cancer_score: 0.0
-    noncancer_score: 29.9
-    hazard: 208892.8
+    noncancer_score: 29.1
+    hazard: 4464892.8
     pounds: 36441.0
   - year: 1993
-    score: 30.0
+    score: 29.2
     cancer_score: 0.0
-    noncancer_score: 30.0
-    hazard: 210242.0
+    noncancer_score: 29.2
+    hazard: 11478242.0
     pounds: 45309.0
   - year: 1994
-    score: 31.1
+    score: 30.2
     cancer_score: 0.0
-    noncancer_score: 31.1
-    hazard: 214992.0
+    noncancer_score: 30.2
+    hazard: 10632992.0
     pounds: 36001.0
   - year: 1995
-    score: 31.2
+    score: 30.2
     cancer_score: 0.0
-    noncancer_score: 31.2
-    hazard: 215370.0
+    noncancer_score: 30.2
+    hazard: 12694370.0
     pounds: 30925.0
   - year: 1996
-    score: 11.9
+    score: 11.6
     cancer_score: 0.0
-    noncancer_score: 11.9
-    hazard: 50309.0
+    noncancer_score: 11.6
+    hazard: 2845309.0
     pounds: 23950.0
   - year: 1997
-    score: 11.4
+    score: 11.2
     cancer_score: 0.0
-    noncancer_score: 11.4
-    hazard: 49821.9
+    noncancer_score: 11.2
+    hazard: 2939821.9
     pounds: 24676.0
   - year: 1998
-    score: 14.9
+    score: 14.5
     cancer_score: 0.0
-    noncancer_score: 14.9
-    hazard: 64441.0
+    noncancer_score: 14.5
+    hazard: 2720441.0
     pounds: 22740.0
   - year: 1999
-    score: 7.2
+    score: 6.8
     cancer_score: 0.0
-    noncancer_score: 7.2
-    hazard: 38200.0
+    noncancer_score: 6.8
+    hazard: 2078200.0
     pounds: 18650.0
   - year: 2000
-    score: 7.0
+    score: 6.7
     cancer_score: 0.0
-    noncancer_score: 7.0
-    hazard: 38195.5
+    noncancer_score: 6.7
+    hazard: 1644195.5
     pounds: 14633.0
   - year: 2001
-    score: 200.0
-    cancer_score: 91.2
-    noncancer_score: 200.0
-    hazard: 303434.0
+    score: 157.9
+    cancer_score: 71.4
+    noncancer_score: 157.9
+    hazard: 1961434.0
     pounds: 13291.0
   - year: 2002
-    score: 182.1
-    cancer_score: 85.1
-    noncancer_score: 182.1
-    hazard: 261467.0
+    score: 142.8
+    cancer_score: 66.6
+    noncancer_score: 142.8
+    hazard: 2076467.4
     pounds: 14859.0
   - year: 2003
-    score: 170.1
-    cancer_score: 79.7
-    noncancer_score: 170.1
-    hazard: 243259.9
+    score: 133.3
+    cancer_score: 62.3
+    noncancer_score: 133.3
+    hazard: 1474460.0
     pounds: 10427.5
   - year: 2004
-    score: 24.5
-    cancer_score: 10.9
-    noncancer_score: 24.5
-    hazard: 38458.9
+    score: 19.4
+    cancer_score: 8.6
+    noncancer_score: 19.4
+    hazard: 1054658.9
     pounds: 8629.2
   - year: 2005
-    score: 12.9
-    cancer_score: 4.9
-    noncancer_score: 12.9
-    hazard: 25541.2
+    score: 10.5
+    cancer_score: 3.8
+    noncancer_score: 10.5
+    hazard: 3135141.2
     pounds: 25587.0
   - year: 2006
-    score: 5.5
-    cancer_score: 1.8
-    noncancer_score: 5.5
-    hazard: 13702.0
+    score: 4.6
+    cancer_score: 1.4
+    noncancer_score: 4.6
+    hazard: 3123502.0
     pounds: 24025.9
   - year: 2007
-    score: 3.7
-    cancer_score: 1.2
-    noncancer_score: 3.7
-    hazard: 8836.0
+    score: 3.0
+    cancer_score: 1.0
+    noncancer_score: 3.0
+    hazard: 2747836.0
     pounds: 20167.2
   - year: 2008
-    score: 2.3
-    cancer_score: 0.6
-    noncancer_score: 2.3
-    hazard: 6927.4
+    score: 2.0
+    cancer_score: 0.5
+    noncancer_score: 2.0
+    hazard: 1575027.4
     pounds: 12308.8
   - year: 2009
-    score: 1.3
-    cancer_score: 0.6
-    noncancer_score: 1.3
-    hazard: 1800.0
+    score: 1.0
+    cancer_score: 0.5
+    noncancer_score: 1.0
+    hazard: 75400.0
     pounds: 3.3
   - year: 2010
-    score: 2.0
-    cancer_score: 0.6
-    noncancer_score: 2.0
-    hazard: 5833.0
+    score: 1.7
+    cancer_score: 0.5
+    noncancer_score: 1.7
+    hazard: 480333.0
     pounds: 4451.6
   - year: 2011
-    score: 1.8
-    cancer_score: 0.6
-    noncancer_score: 1.8
-    hazard: 4366.0
+    score: 1.5
+    cancer_score: 0.5
+    noncancer_score: 1.5
+    hazard: 588066.0
     pounds: 5447.0
   - year: 2012
-    score: 1.8
-    cancer_score: 0.6
-    noncancer_score: 1.8
-    hazard: 4282.5
+    score: 1.5
+    cancer_score: 0.5
+    noncancer_score: 1.5
+    hazard: 307282.5
     pounds: 2850.1
   - year: 2013
-    score: 1.7
-    cancer_score: 0.6
-    noncancer_score: 1.7
-    hazard: 4026.4
+    score: 1.4
+    cancer_score: 0.5
+    noncancer_score: 1.4
+    hazard: 248826.4
     pounds: 2340.7
   - year: 2014
-    score: 1.9
-    cancer_score: 0.6
-    noncancer_score: 1.9
-    hazard: 4413.5
+    score: 1.6
+    cancer_score: 0.5
+    noncancer_score: 1.6
+    hazard: 495713.5
     pounds: 4550.2
+  - year: 2015
+    score: 2.6
+    cancer_score: 1.0
+    noncancer_score: 2.6
+    hazard: 393762.7
+    pounds: 3553.8
+  - year: 2016
+    score: 2.5
+    cancer_score: 1.0
+    noncancer_score: 2.5
+    hazard: 543659.4
+    pounds: 4845.7
+  - year: 2017
+    score: 2.5
+    cancer_score: 1.0
+    noncancer_score: 2.5
+    hazard: 515091.4
+    pounds: 4781.9
+  - year: 2018
+    score: 39.7
+    cancer_score: 18.6
+    noncancer_score: 39.7
+    hazard: 1003679.2
+    pounds: 8423.0
+  - year: 2019
+    score: 84.3
+    cancer_score: 39.6
+    noncancer_score: 84.3
+    hazard: 509435.2
+    pounds: 3373.5
+  - year: 2020
+    score: 38.4
+    cancer_score: 18.1
+    noncancer_score: 38.4
+    hazard: 93699.9
+    pounds: 4.9
   top_chemicals:
-  - chemical: Chromium and chromium compounds
+  - chemical: Chromium
     cas: 7440-47-3
     toxicity_category: Carcinogen
-    score: 229145.5
+    score: 90588.4
     pounds: 2353.0
-  - chemical: Nickel and nickel compounds
+  - chemical: Nickel
     cas: 7440-02-0
     toxicity_category: Mixed
-    score: 1724.6
+    score: 1720.8
     pounds: 3268.0
-  - chemical: Lead and lead compounds
+  - chemical: Lead
     cas: 7439-92-1
     toxicity_category: Non-carcinogen
-    score: 591.0
-    pounds: 92.5
-  - chemical: Zinc and zinc compounds
-    cas: 7440-66-6
+    score: 479.1
+    pounds: 100.3
+  - chemical: Lead compounds
+    cas: N420
     toxicity_category: Non-carcinogen
-    score: 140.1
-    pounds: 396882.0
-  - chemical: Hydrochloric acid
+    score: 151.1
+    pounds: 21.0
+  - chemical: Zinc compounds
+    cas: N982
+    toxicity_category: Non-carcinogen
+    score: 140.8
+    pounds: 421836.0
+  - chemical: Hydrochloric acid (acid aerosols including mists, vapors, gas, fog, and other airborne forms
+      of any particle size)
     cas: 7647-01-0
     toxicity_category: Non-carcinogen
-    score: 135.4
+    score: 129.4
     pounds: 30440.0
-  - chemical: Copper and copper compounds
+  - chemical: Copper
     cas: 7440-50-8
     toxicity_category: Non-carcinogen
-    score: 29.0
+    score: 23.6
     pounds: 1044.0
   - chemical: Nitric acid
     cas: 7697-37-2
     toxicity_category: Non-carcinogen
-    score: 18.5
+    score: 17.3
     pounds: 785.0
-  - chemical: Manganese and manganese compounds
-    cas: 7439-96-5
-    toxicity_category: Non-carcinogen
-    score: 7.0
-    pounds: 3267.0
+  top_water_chemicals: []
 - facility_id: 45502NVSTR6125U
-  facility_number: '27814'
+  facility_number: '58456'
   name: NAVISTAR INC
   parent_name: NAVISTAR INTERNATIONAL CORP
   federal_facility: false
-  latitude: 40.01485
-  longitude: -83.79418
+  latitude: 40.01522
+  longitude: -83.79033
   street: 6125 URBANA RD
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '336120'
-  sic: '3711'
   water_releases: true
-  score: 44691.8
-  cancer_score: 37649.7
-  noncancer_score: 6843.6
-  hazard: 19353270557.8
-  pounds: 17317739.6
+  score: 51390.8
+  cancer_score: 45354.9
+  noncancer_score: 5866.8
+  hazard: 512661649642.6
+  pounds: 18351086.6
   pounds_by_media:
-    offsite: 13624025.6
-    air: 3661563.1
+    offsite: 14492114.6
+    air: 3826637.1
     land: 16890.0
-    water: 15261.0
+    water: 15445.0
   first_year: 1988
-  last_year: 2014
+  last_year: 2022
   years:
   - year: 1988
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 1800000.0
     pounds: 1200.0
   - year: 1989
-    score: 9225.1
-    cancer_score: 8590.6
-    noncancer_score: 577.7
-    hazard: 368777011.5
-    pounds: 705894.0
+    score: 8853.5
+    cancer_score: 8299.1
+    noncancer_score: 513.8
+    hazard: 424469316564.5
+    pounds: 724565.0
   - year: 1990
-    score: 2326.5
-    cancer_score: 1650.5
-    noncancer_score: 685.4
-    hazard: 74059852.8
-    pounds: 510767.0
+    score: 2138.0
+    cancer_score: 1549.3
+    noncancer_score: 597.5
+    hazard: 10026225384.2
+    pounds: 518505.0
   - year: 1991
-    score: 2010.4
-    cancer_score: 1419.5
-    noncancer_score: 599.8
-    hazard: 71532769.2
-    pounds: 2300897.0
+    score: 1792.4
+    cancer_score: 1282.7
+    noncancer_score: 517.9
+    hazard: 34318384629.6
+    pounds: 2334914.0
   - year: 1992
-    score: 26478.6
-    cancer_score: 25989.1
-    noncancer_score: 514.8
-    hazard: 18646364116.0
-    pounds: 2452872.0
+    score: 34649.9
+    cancer_score: 34223.8
+    noncancer_score: 458.0
+    hazard: 43298417958.3
+    pounds: 2480690.0
   - year: 1993
-    score: 436.4
+    score: 338.9
     cancer_score: 0.0
-    noncancer_score: 403.1
-    hazard: 17273276.3
-    pounds: 1393975.0
+    noncancer_score: 315.7
+    hazard: 187432436.7
+    pounds: 1425026.0
   - year: 1994
-    score: 429.6
+    score: 324.3
     cancer_score: 0.0
-    noncancer_score: 398.4
-    hazard: 17489393.5
-    pounds: 1259847.0
+    noncancer_score: 304.8
+    hazard: 43092002.7
+    pounds: 1304855.0
   - year: 1995
-    score: 470.7
+    score: 356.8
     cancer_score: 0.0
-    noncancer_score: 459.5
-    hazard: 20004927.0
-    pounds: 1319643.0
+    noncancer_score: 353.4
+    hazard: 37540242.5
+    pounds: 1352655.0
   - year: 1996
-    score: 327.5
+    score: 249.0
     cancer_score: 0.0
-    noncancer_score: 321.4
-    hazard: 13973589.3
-    pounds: 916198.0
+    noncancer_score: 246.5
+    hazard: 31903039.8
+    pounds: 956209.0
   - year: 1997
-    score: 486.1
+    score: 371.8
     cancer_score: 0.0
-    noncancer_score: 482.2
-    hazard: 20801381.0
-    pounds: 981887.0
+    noncancer_score: 368.9
+    hazard: 40507273.0
+    pounds: 1025894.0
   - year: 1998
-    score: 484.7
+    score: 372.0
     cancer_score: 0.0
-    noncancer_score: 480.5
-    hazard: 20624336.6
-    pounds: 882701.0
+    noncancer_score: 368.8
+    hazard: 41096611.2
+    pounds: 929701.0
   - year: 1999
-    score: 480.8
+    score: 367.9
     cancer_score: 0.0
-    noncancer_score: 476.5
-    hazard: 20426332.2
+    noncancer_score: 364.6
+    hazard: 24185171.4
     pounds: 829955.0
   - year: 2000
-    score: 335.5
+    score: 257.0
     cancer_score: 0.0
-    noncancer_score: 333.1
-    hazard: 14216769.9
+    noncancer_score: 255.1
+    hazard: 17965456.1
     pounds: 815130.0
   - year: 2001
-    score: 189.0
+    score: 145.0
     cancer_score: 0.0
-    noncancer_score: 186.7
-    hazard: 7987538.6
+    noncancer_score: 143.2
+    hazard: 11483965.5
     pounds: 823006.6
   - year: 2002
-    score: 160.1
+    score: 122.9
     cancer_score: 0.0
-    noncancer_score: 158.5
-    hazard: 6788030.6
+    noncancer_score: 121.7
+    hazard: 23691080.1
     pounds: 744680.0
   - year: 2003
-    score: 94.1
+    score: 72.6
     cancer_score: 0.0
-    noncancer_score: 93.7
-    hazard: 3998638.9
+    noncancer_score: 72.3
+    hazard: 6479976.0
     pounds: 493079.6
   - year: 2004
-    score: 130.1
+    score: 100.7
     cancer_score: 0.0
-    noncancer_score: 128.6
-    hazard: 5484686.5
+    noncancer_score: 99.5
+    hazard: 7732769.5
     pounds: 155668.0
   - year: 2005
-    score: 96.2
+    score: 73.8
     cancer_score: 0.0
-    noncancer_score: 95.5
-    hazard: 4104258.1
+    noncancer_score: 73.2
+    hazard: 5245562.1
     pounds: 85262.0
   - year: 2006
-    score: 133.5
+    score: 102.2
     cancer_score: 0.0
-    noncancer_score: 132.3
-    hazard: 5695941.1
+    noncancer_score: 101.4
+    hazard: 7131661.1
     pounds: 130880.0
   - year: 2007
-    score: 52.2
+    score: 40.0
     cancer_score: 0.0
-    noncancer_score: 41.3
-    hazard: 1784361.9
+    noncancer_score: 31.6
+    hazard: 2365711.9
     pounds: 45835.0
   - year: 2008
-    score: 86.6
+    score: 66.4
     cancer_score: 0.0
-    noncancer_score: 76.0
-    hazard: 3282581.5
+    noncancer_score: 58.2
+    hazard: 4260440.5
     pounds: 95049.0
   - year: 2009
-    score: 57.3
+    score: 44.0
     cancer_score: 0.0
-    noncancer_score: 46.8
-    hazard: 2021403.4
+    noncancer_score: 35.9
+    hazard: 2288089.4
     pounds: 43539.1
   - year: 2010
-    score: 64.8
+    score: 49.6
     cancer_score: 0.0
-    noncancer_score: 50.8
-    hazard: 2203228.0
+    noncancer_score: 38.8
+    hazard: 3349374.0
     pounds: 78385.1
   - year: 2011
-    score: 42.7
+    score: 32.1
     cancer_score: 0.0
-    noncancer_score: 32.9
-    hazard: 1429121.4
+    noncancer_score: 24.5
+    hazard: 2454304.4
     pounds: 34422.2
   - year: 2012
-    score: 34.0
+    score: 26.1
     cancer_score: 0.0
-    noncancer_score: 25.2
-    hazard: 1096043.3
+    noncancer_score: 19.2
+    hazard: 2488457.3
     pounds: 63966.0
   - year: 2013
-    score: 29.7
+    score: 22.8
     cancer_score: 0.0
-    noncancer_score: 20.3
-    hazard: 877120.2
+    noncancer_score: 15.5
+    hazard: 2327281.2
     pounds: 72772.0
   - year: 2014
-    score: 29.6
+    score: 22.6
     cancer_score: 0.0
-    noncancer_score: 22.6
-    hazard: 973849.0
+    noncancer_score: 17.2
+    hazard: 2388645.0
     pounds: 80229.0
+  - year: 2015
+    score: 30.7
+    cancer_score: 0.0
+    noncancer_score: 23.8
+    hazard: 3120356.1
+    pounds: 85935.0
+  - year: 2016
+    score: 15.1
+    cancer_score: 0.0
+    noncancer_score: 10.7
+    hazard: 3001696.8
+    pounds: 78607.0
+  - year: 2017
+    score: 21.2
+    cancer_score: 0.0
+    noncancer_score: 15.4
+    hazard: 4060953.4
+    pounds: 92731.0
+  - year: 2018
+    score: 131.5
+    cancer_score: 0.0
+    noncancer_score: 123.3
+    hazard: 10594012.8
+    pounds: 133328.0
+  - year: 2019
+    score: 118.8
+    cancer_score: 0.0
+    noncancer_score: 110.5
+    hazard: 10091665.0
+    pounds: 141794.0
+  - year: 2020
+    score: 45.9
+    cancer_score: 0.0
+    noncancer_score: 44.2
+    hazard: 3957050.0
+    pounds: 67808.0
+  - year: 2021
+    score: 17.5
+    cancer_score: 0.0
+    noncancer_score: 8.8
+    hazard: 2295176.0
+    pounds: 45075.0
+  - year: 2022
+    score: 17.8
+    cancer_score: 0.0
+    noncancer_score: 12.9
+    hazard: 2974644.5
+    pounds: 59736.0
   top_chemicals:
-  - chemical: Chromium and chromium compounds
-    cas: 7440-47-3
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa
+      and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid
+      waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda
+      ash and kiln roasted at approximately 2,000 F.)
+    cas: N090
     toxicity_category: Carcinogen
-    score: 35155.5
+    score: 43418.3
     pounds: 34974.0
-  - chemical: Glycol ethers
+  - chemical: Certain glycol ethers
     cas: N230
     toxicity_category: Non-carcinogen
-    score: 5351.1
-    pounds: 1309577.0
+    score: 4541.6
+    pounds: 1424286.0
   - chemical: Ethylbenzene
     cas: 100-41-4
     toxicity_category: Carcinogen
-    score: 2309.4
+    score: 1760.0
     pounds: 115839.0
-  - chemical: Sulfuric acid
+  - chemical: Sulfuric acid (acid aerosols including mists, vapors, gas, fog, and other airborne forms
+      of any particle size)
     cas: 7664-93-9
     toxicity_category: Non-carcinogen
-    score: 839.3
+    score: 814.5
     pounds: 7520.0
   - chemical: Xylene (mixed isomers)
     cas: 1330-20-7
     toxicity_category: Non-carcinogen
-    score: 675.7
-    pounds: 1415192.0
-  - chemical: Dichloromethane
+    score: 525.3
+    pounds: 1419173.0
+  - chemical: Dichloromethane (Methylene chloride)
     cas: 75-09-2
-    toxicity_category: Mixed
-    score: 184.8
+    toxicity_category: Carcinogen
+    score: 176.6
     pounds: 402302.0
-  - chemical: Barium and barium compounds
-    cas: 7440-39-3
+  - chemical: Barium compounds (except for barium sulfate (CAS No. 7727-43-7))
+    cas: N040
     toxicity_category: Non-carcinogen
-    score: 91.5
+    score: 65.6
     pounds: 63617.0
-  - chemical: sec-Butyl alcohol
-    cas: 78-92-2
+  - chemical: Phosphoric acid
+    cas: 7664-38-2
     toxicity_category: Non-carcinogen
-    score: 19.6
-    pounds: 85226.0
+    score: 27.0
+    pounds: 243359.0
+  top_water_chemicals:
+  - chemical: Ethylene glycol
+    cas: 107-21-1
+    water_pounds: 13141.0
+    reporting_years: 9
+  - chemical: Zinc compounds
+    cas: N982
+    water_pounds: 1268.0
+    reporting_years: 8
+  - chemical: Certain glycol ethers
+    cas: N230
+    water_pounds: 844.0
+    reporting_years: 34
+  - chemical: Barium compounds (except for barium sulfate (CAS No. 7727-43-7))
+    cas: N040
+    water_pounds: 82.0
+    reporting_years: 4
+  - chemical: Sodium nitrite
+    cas: 7632-00-0
+    water_pounds: 36.0
+    reporting_years: 2
+  - chemical: Xylene (mixed isomers)
+    cas: 1330-20-7
+    water_pounds: 24.0
+    reporting_years: 8
+  - chemical: sec-Butyl alcohol (2-Butanol)
+    cas: 78-92-2
+    water_pounds: 19.0
+    reporting_years: 3
+  - chemical: Methyl ethyl ketone
+    cas: 78-93-3
+    water_pounds: 10.0
+    reporting_years: 6
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa
+      and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid
+      waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda
+      ash and kiln roasted at approximately 2,000 F.)
+    cas: N090
+    water_pounds: 5.0
+    reporting_years: 4
+  - chemical: Toluene
+    cas: 108-88-3
+    water_pounds: 4.0
+    reporting_years: 2
+  - chemical: Methanol
+    cas: 67-56-1
+    water_pounds: 4.0
+    reporting_years: 2
+  - chemical: 1,2,4-Trimethylbenzene
+    cas: 95-63-6
+    water_pounds: 4.0
+    reporting_years: 1
+  - chemical: n-Butyl alcohol (1-Butanol)
+    cas: 71-36-3
+    water_pounds: 3.0
+    reporting_years: 2
+  - chemical: Acetone
+    cas: 67-64-1
+    water_pounds: 1.0
+    reporting_years: 1
+- facility_id: 45505CSCDC2501S
+  facility_number: '46308'
+  name: CASCADE CORP
+  parent_name: INDUSTRIAL COMPONENTS & ATTACHMENTS INC
+  federal_facility: false
+  latitude: 39.9101
+  longitude: -83.77117
+  street: 2501 SHERIDAN AVE
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '333924'
+  water_releases: true
+  score: 9738.2
+  cancer_score: 0.0
+  noncancer_score: 9738.2
+  hazard: 2211009481.5
+  pounds: 364030.3
+  pounds_by_media:
+    offsite: 260468.1
+    air: 103262.3
+    water: 300.0
+  first_year: 1988
+  last_year: 2022
+  years:
+  - year: 1988
+    score: 1.6
+    cancer_score: 0.0
+    noncancer_score: 1.6
+    hazard: 33400.0
+    pounds: 47800.0
+  - year: 1989
+    score: 1.3
+    cancer_score: 0.0
+    noncancer_score: 1.3
+    hazard: 77561.5
+    pounds: 110802.0
+  - year: 1990
+    score: 0.7
+    cancer_score: 0.0
+    noncancer_score: 0.7
+    hazard: 14840.0
+    pounds: 21200.0
+  - year: 1996
+    score: 1159.3
+    cancer_score: 0.0
+    noncancer_score: 1159.3
+    hazard: 52560000.0
+    pounds: 4380.0
+  - year: 1997
+    score: 1819.6
+    cancer_score: 0.0
+    noncancer_score: 1819.6
+    hazard: 82920000.0
+    pounds: 6910.0
+  - year: 1998
+    score: 2135.1
+    cancer_score: 0.0
+    noncancer_score: 2135.1
+    hazard: 87780000.0
+    pounds: 7315.0
+  - year: 1999
+    score: 390.6
+    cancer_score: 0.0
+    noncancer_score: 390.6
+    hazard: 145764000.0
+    pounds: 12147.0
+  - year: 2000
+    score: 388.5
+    cancer_score: 0.0
+    noncancer_score: 388.5
+    hazard: 134100000.0
+    pounds: 11175.0
+  - year: 2001
+    score: 540.4
+    cancer_score: 0.0
+    noncancer_score: 540.4
+    hazard: 105660000.0
+    pounds: 8805.0
+  - year: 2002
+    score: 537.5
+    cancer_score: 0.0
+    noncancer_score: 537.5
+    hazard: 87612000.0
+    pounds: 7301.0
+  - year: 2003
+    score: 296.1
+    cancer_score: 0.0
+    noncancer_score: 296.1
+    hazard: 81816000.0
+    pounds: 6818.0
+  - year: 2004
+    score: 14.6
+    cancer_score: 0.0
+    noncancer_score: 14.6
+    hazard: 99227000.0
+    pounds: 8257.0
+  - year: 2005
+    score: 18.1
+    cancer_score: 0.0
+    noncancer_score: 18.1
+    hazard: 89916000.0
+    pounds: 7493.0
+  - year: 2006
+    score: 16.8
+    cancer_score: 0.0
+    noncancer_score: 16.8
+    hazard: 101568000.0
+    pounds: 8464.0
+  - year: 2007
+    score: 20.9
+    cancer_score: 0.0
+    noncancer_score: 20.9
+    hazard: 97308000.0
+    pounds: 8109.0
+  - year: 2008
+    score: 19.0
+    cancer_score: 0.0
+    noncancer_score: 19.0
+    hazard: 81312000.0
+    pounds: 6776.0
+  - year: 2009
+    score: 102.8
+    cancer_score: 0.0
+    noncancer_score: 102.8
+    hazard: 68916000.0
+    pounds: 5743.0
+  - year: 2010
+    score: 246.3
+    cancer_score: 0.0
+    noncancer_score: 246.3
+    hazard: 103140000.0
+    pounds: 8595.0
+  - year: 2011
+    score: 276.6
+    cancer_score: 0.0
+    noncancer_score: 276.6
+    hazard: 93228000.0
+    pounds: 7769.0
+  - year: 2012
+    score: 264.6
+    cancer_score: 0.0
+    noncancer_score: 264.6
+    hazard: 68760000.0
+    pounds: 5730.0
+  - year: 2013
+    score: 266.7
+    cancer_score: 0.0
+    noncancer_score: 266.7
+    hazard: 63696000.0
+    pounds: 5308.0
+  - year: 2014
+    score: 316.8
+    cancer_score: 0.0
+    noncancer_score: 316.8
+    hazard: 83016000.0
+    pounds: 6918.0
+  - year: 2015
+    score: 276.1
+    cancer_score: 0.0
+    noncancer_score: 276.1
+    hazard: 75348000.0
+    pounds: 6279.0
+  - year: 2016
+    score: 250.7
+    cancer_score: 0.0
+    noncancer_score: 250.7
+    hazard: 75060000.0
+    pounds: 6255.0
+  - year: 2017
+    score: 71.2
+    cancer_score: 0.0
+    noncancer_score: 71.2
+    hazard: 75264000.0
+    pounds: 6272.0
+  - year: 2018
+    score: 88.7
+    cancer_score: 0.0
+    noncancer_score: 88.7
+    hazard: 69936000.0
+    pounds: 5828.0
+  - year: 2019
+    score: 216.8
+    cancer_score: 0.0
+    noncancer_score: 216.8
+    hazard: 77556000.0
+    pounds: 6463.0
+  - year: 2020
+    score: 0.1
+    cancer_score: 0.0
+    noncancer_score: 0.1
+    hazard: 55933800.0
+    pounds: 4661.1
+  - year: 2021
+    score: 0.6
+    cancer_score: 0.0
+    noncancer_score: 0.6
+    hazard: 12000.0
+    pounds: 1.0
+  - year: 2022
+    score: 0.1
+    cancer_score: 0.0
+    noncancer_score: 0.1
+    hazard: 53474880.0
+    pounds: 4456.2
+  top_chemicals:
+  - chemical: Manganese
+    cas: 7439-96-5
+    toxicity_category: Non-carcinogen
+    score: 9734.8
+    pounds: 184215.4
+  - chemical: Toluene
+    cas: 108-88-3
+    toxicity_category: Non-carcinogen
+    score: 1.9
+    pounds: 62352.0
+  - chemical: 1,1,1-Trichloroethane
+    cas: 71-55-6
+    toxicity_category: Non-carcinogen
+    score: 1.6
+    pounds: 117450.0
+  - chemical: Lead
+    cas: 7439-92-1
+    toxicity_category: Non-carcinogen
+    score: 0.0
+    pounds: 13.0
+  top_water_chemicals:
+  - chemical: 1,1,1-Trichloroethane
+    cas: 71-55-6
+    water_pounds: 300.0
+    reporting_years: 1
+- facility_id: 45505THCHM400HA
+  facility_number: '1343'
+  name: THE CHAMPION CO
+  federal_facility: false
+  latitude: 39.91925
+  longitude: -83.80405
+  street: 400 HARRISON ST
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '325998'
+  water_releases: false
+  score: 9403.5
+  cancer_score: 9381.4
+  noncancer_score: 94.4
+  hazard: 178544477.1
+  pounds: 51156.0
+  pounds_by_media:
+    potw: 40599.0
+    offsite: 5576.0
+    air: 4981.0
+  first_year: 1989
+  last_year: 2022
+  years:
+  - year: 1989
+    score: 4599.2
+    cancer_score: 4593.2
+    noncancer_score: 42.0
+    hazard: 34567665.0
+    pounds: 6000.0
+  - year: 1990
+    score: 91.4
+    cancer_score: 90.3
+    noncancer_score: 1.7
+    hazard: 11969236.8
+    pounds: 2917.0
+  - year: 1991
+    score: 89.9
+    cancer_score: 88.7
+    noncancer_score: 1.8
+    hazard: 11970076.8
+    pounds: 3129.0
+  - year: 1992
+    score: 88.0
+    cancer_score: 87.2
+    noncancer_score: 1.5
+    hazard: 11966846.8
+    pounds: 2199.0
+  - year: 1993
+    score: 86.4
+    cancer_score: 85.6
+    noncancer_score: 1.4
+    hazard: 11966656.8
+    pounds: 2149.0
+  - year: 1994
+    score: 84.8
+    cancer_score: 84.1
+    noncancer_score: 1.3
+    hazard: 11965878.8
+    pounds: 2071.0
+  - year: 1995
+    score: 83.2
+    cancer_score: 82.5
+    noncancer_score: 1.3
+    hazard: 11965602.8
+    pounds: 1995.0
+  - year: 1996
+    score: 81.7
+    cancer_score: 81.0
+    noncancer_score: 1.3
+    hazard: 11965880.8
+    pounds: 2073.0
+  - year: 1997
+    score: 80.1
+    cancer_score: 79.4
+    noncancer_score: 1.3
+    hazard: 11965720.8
+    pounds: 2037.0
+  - year: 1998
+    score: 140.8
+    cancer_score: 140.1
+    noncancer_score: 1.7
+    hazard: 1385733.2
+    pounds: 1840.0
+  - year: 1999
+    score: 138.0
+    cancer_score: 137.3
+    noncancer_score: 1.7
+    hazard: 1385517.2
+    pounds: 1768.0
+  - year: 2000
+    score: 135.1
+    cancer_score: 134.5
+    noncancer_score: 1.6
+    hazard: 1384827.2
+    pounds: 1546.0
+  - year: 2001
+    score: 171.4
+    cancer_score: 170.8
+    noncancer_score: 1.9
+    hazard: 1798762.8
+    pounds: 1539.0
+  - year: 2002
+    score: 168.9
+    cancer_score: 168.4
+    noncancer_score: 1.8
+    hazard: 1798259.8
+    pounds: 1388.0
+  - year: 2003
+    score: 166.5
+    cancer_score: 166.1
+    noncancer_score: 1.7
+    hazard: 1797437.8
+    pounds: 1138.0
+  - year: 2004
+    score: 164.0
+    cancer_score: 163.7
+    noncancer_score: 1.6
+    hazard: 1796987.8
+    pounds: 1008.0
+  - year: 2005
+    score: 161.6
+    cancer_score: 161.3
+    noncancer_score: 1.5
+    hazard: 1796486.8
+    pounds: 859.0
+  - year: 2006
+    score: 159.3
+    cancer_score: 159.0
+    noncancer_score: 1.5
+    hazard: 1796555.8
+    pounds: 884.0
+  - year: 2007
+    score: 156.9
+    cancer_score: 156.6
+    noncancer_score: 1.5
+    hazard: 1796729.8
+    pounds: 930.0
+  - year: 2008
+    score: 154.5
+    cancer_score: 154.2
+    noncancer_score: 1.5
+    hazard: 1796571.8
+    pounds: 884.0
+  - year: 2009
+    score: 152.1
+    cancer_score: 151.8
+    noncancer_score: 1.5
+    hazard: 1796482.8
+    pounds: 855.0
+  - year: 2010
+    score: 149.7
+    cancer_score: 149.5
+    noncancer_score: 1.4
+    hazard: 1796343.8
+    pounds: 808.0
+  - year: 2011
+    score: 148.7
+    cancer_score: 148.4
+    noncancer_score: 1.4
+    hazard: 1796389.8
+    pounds: 826.0
+  - year: 2012
+    score: 147.7
+    cancer_score: 147.4
+    noncancer_score: 1.4
+    hazard: 1796381.8
+    pounds: 826.0
+  - year: 2013
+    score: 162.9
+    cancer_score: 162.6
+    noncancer_score: 1.5
+    hazard: 1980473.1
+    pounds: 847.0
+  - year: 2014
+    score: 145.6
+    cancer_score: 145.3
+    noncancer_score: 1.4
+    hazard: 1796191.5
+    pounds: 771.0
+  - year: 2015
+    score: 144.6
+    cancer_score: 144.3
+    noncancer_score: 1.4
+    hazard: 1796431.5
+    pounds: 839.0
+  - year: 2016
+    score: 163.3
+    cancer_score: 163.0
+    noncancer_score: 1.6
+    hazard: 2072608.3
+    pounds: 910.0
+  - year: 2017
+    score: 162.1
+    cancer_score: 161.8
+    noncancer_score: 1.5
+    hazard: 2072549.3
+    pounds: 891.0
+  - year: 2018
+    score: 160.9
+    cancer_score: 160.6
+    noncancer_score: 1.5
+    hazard: 2072531.3
+    pounds: 885.0
+  - year: 2019
+    score: 183.5
+    cancer_score: 183.2
+    noncancer_score: 1.7
+    hazard: 2302594.3
+    pounds: 901.0
+  - year: 2020
+    score: 197.7
+    cancer_score: 197.3
+    noncancer_score: 1.9
+    hazard: 2440808.0
+    pounds: 973.0
+  - year: 2021
+    score: 242.4
+    cancer_score: 242.0
+    noncancer_score: 2.3
+    hazard: 2993628.1
+    pounds: 1235.0
+  - year: 2022
+    score: 240.6
+    cancer_score: 240.2
+    noncancer_score: 2.3
+    hazard: 2993628.1
+    pounds: 1235.0
+  top_chemicals:
+  - chemical: Formaldehyde
+    cas: 50-00-0
+    toxicity_category: Mixed
+    score: 9395.9
+    pounds: 27667.0
+  - chemical: Xylene (mixed isomers)
+    cas: 1330-20-7
+    toxicity_category: Non-carcinogen
+    score: 3.7
+    pounds: 1500.0
+  - chemical: Methanol
+    cas: 67-56-1
+    toxicity_category: Non-carcinogen
+    score: 2.0
+    pounds: 19489.0
+  - chemical: Isopropyl alcohol (Isopropanol) (only persons who manufacture by the strong acid process
+      are subject, no supplier notification)
+    cas: 67-63-0
+    toxicity_category: Non-carcinogen
+    score: 1.8
+    pounds: 1000.0
+  - chemical: Toluene
+    cas: 108-88-3
+    toxicity_category: Non-carcinogen
+    score: 0.3
+    pounds: 1500.0
+  top_water_chemicals: []
 - facility_id: 45503NVSTR2069L
-  facility_number: '27820'
-  name: INTERNATIONAL TRUCK & ENGINE CORP. (SBP) - BODY PLAN
+  facility_number: '37495'
+  name: INTERNATIONAL TRUCK & ENGINE CORP (SBP) - BODY PLAN
   parent_name: NAVISTAR INTL CORP
   federal_facility: false
   latitude: 39.937433
   longitude: -83.777053
-  street: 2069 LAGONDA AVE.
+  street: 2069 LAGONDA AVE
   city: SPRINGFIELD
   state: OH
   fips: '39023'
-  npdes_permit: OH1IN0050
   naics: '336211'
-  sic: '3713'
   water_releases: false
-  score: 15778.6
-  cancer_score: 4487.2
-  noncancer_score: 11551.2
-  hazard: 143677185.7
+  score: 8123.3
+  cancer_score: 3555.4
+  noncancer_score: 4806.3
+  hazard: 12088690016.8
   pounds: 848675.0
   pounds_by_media:
     air: 552200.0
@@ -1832,478 +2721,93 @@ facilities:
   last_year: 1992
   years:
   - year: 1988
-    score: 10432.7
-    cancer_score: 4210.3
-    noncancer_score: 6515.8
-    hazard: 83087572.6
+    score: 5931.2
+    cancer_score: 3319.0
+    noncancer_score: 2867.8
+    hazard: 11835130073.8
     pounds: 451300.0
   - year: 1989
-    score: 2814.5
-    cancer_score: 276.9
-    noncancer_score: 2524.9
-    hazard: 31670863.1
+    score: 1181.4
+    cancer_score: 236.4
+    noncancer_score: 943.9
+    hazard: 156513193.2
     pounds: 257225.0
   - year: 1990
-    score: 1349.5
+    score: 498.3
     cancer_score: 0.0
-    noncancer_score: 1328.6
-    hazard: 16570750.0
+    noncancer_score: 482.2
+    hazard: 83420749.8
     pounds: 64450.0
   - year: 1991
-    score: 847.2
+    score: 364.4
     cancer_score: 0.0
-    noncancer_score: 847.2
-    hazard: 8856000.0
+    noncancer_score: 364.4
+    hazard: 9486000.0
     pounds: 52700.0
   - year: 1992
-    score: 334.7
+    score: 148.0
     cancer_score: 0.0
-    noncancer_score: 334.7
-    hazard: 3492000.0
+    noncancer_score: 148.0
+    hazard: 4140000.0
     pounds: 23000.0
   top_chemicals:
-  - chemical: Glycol ethers
+  - chemical: Dichloromethane (Methylene chloride)
+    cas: 75-09-2
+    toxicity_category: Carcinogen
+    score: 3555.4
+    pounds: 77300.0
+  - chemical: Certain glycol ethers
     cas: N230
     toxicity_category: Non-carcinogen
-    score: 6464.8
+    score: 2880.5
     pounds: 385350.0
-  - chemical: Barium and barium compounds
-    cas: 7440-39-3
+  - chemical: Barium compounds (except for barium sulfate (CAS No. 7727-43-7))
+    cas: N040
     toxicity_category: Non-carcinogen
-    score: 4607.2
+    score: 1545.3
     pounds: 128500.0
-  - chemical: Dichloromethane
-    cas: 75-09-2
+  - chemical: Nickel compounds
+    cas: N495
     toxicity_category: Mixed
-    score: 4487.1
-    pounds: 77300.0
-  - chemical: Nickel and nickel compounds
-    cas: 7440-02-0
-    toxicity_category: Mixed
-    score: 82.5
+    score: 64.5
     pounds: 12750.0
-  - chemical: n-Butyl alcohol
-    cas: 71-36-3
-    toxicity_category: Non-carcinogen
-    score: 62.9
-    pounds: 67000.0
   - chemical: Xylene (mixed isomers)
     cas: 1330-20-7
     toxicity_category: Non-carcinogen
-    score: 62.4
+    score: 43.4
     pounds: 16900.0
-  - chemical: Zinc and zinc compounds
-    cas: 7440-66-6
+  - chemical: n-Butyl alcohol (1-Butanol)
+    cas: 71-36-3
     toxicity_category: Non-carcinogen
-    score: 8.8
+    score: 24.5
+    pounds: 67000.0
+  - chemical: Zinc compounds
+    cas: N982
+    toxicity_category: Non-carcinogen
+    score: 6.8
     pounds: 29850.0
   - chemical: 1,1,1-Trichloroethane
     cas: 71-55-6
     toxicity_category: Non-carcinogen
-    score: 2.9
+    score: 2.8
     pounds: 79750.0
-- facility_id: 45505CSCDC2501S
-  facility_number: '27828'
-  name: CASCADE CORP
-  parent_name: TOYOTA INDUSTRIES CORP
-  federal_facility: false
-  latitude: 39.91003
-  longitude: -83.77211
-  street: 2501 SHERIDAN AVE
-  city: SPRINGFIELD
-  state: OH
-  fips: '39023'
-  naics: '333924'
-  sic: '3599'
-  water_releases: true
-  score: 9198.5
-  cancer_score: 0.0
-  noncancer_score: 9198.5
-  hazard: 93166871.4
-  pounds: 323815.0
-  pounds_by_media:
-    offsite: 221801.0
-    air: 101714.0
-    water: 300.0
-  first_year: 1988
-  last_year: 2014
-  years:
-  - year: 1988
-    score: 2.1
-    cancer_score: 0.0
-    noncancer_score: 2.1
-    hazard: 33400.0
-    pounds: 47800.0
-  - year: 1989
-    score: 1.5
-    cancer_score: 0.0
-    noncancer_score: 1.5
-    hazard: 70631.4
-    pounds: 110802.0
-  - year: 1990
-    score: 0.8
-    cancer_score: 0.0
-    noncancer_score: 0.8
-    hazard: 14840.0
-    pounds: 21200.0
-  - year: 1996
-    score: 1159.3
-    cancer_score: 0.0
-    noncancer_score: 1159.3
-    hazard: 8760000.0
-    pounds: 4380.0
-  - year: 1997
-    score: 1819.6
-    cancer_score: 0.0
-    noncancer_score: 1819.6
-    hazard: 13824000.0
-    pounds: 6910.0
-  - year: 1998
-    score: 2135.1
-    cancer_score: 0.0
-    noncancer_score: 2135.1
-    hazard: 16308000.0
-    pounds: 7315.0
-  - year: 1999
-    score: 390.6
-    cancer_score: 0.0
-    noncancer_score: 390.6
-    hazard: 3000000.0
-    pounds: 12147.0
-  - year: 2000
-    score: 388.5
-    cancer_score: 0.0
-    noncancer_score: 388.5
-    hazard: 3000000.0
-    pounds: 11175.0
-  - year: 2001
-    score: 569.1
-    cancer_score: 0.0
-    noncancer_score: 569.1
-    hazard: 6000000.0
-    pounds: 8805.0
-  - year: 2002
-    score: 566.1
-    cancer_score: 0.0
-    noncancer_score: 566.1
-    hazard: 6000000.0
-    pounds: 7301.0
-  - year: 2003
-    score: 326.2
-    cancer_score: 0.0
-    noncancer_score: 326.2
-    hazard: 4236000.0
-    pounds: 6818.0
-  - year: 2004
-    score: 17.3
-    cancer_score: 0.0
-    noncancer_score: 17.3
-    hazard: 288000.0
-    pounds: 8257.0
-  - year: 2005
-    score: 21.5
-    cancer_score: 0.0
-    noncancer_score: 21.5
-    hazard: 360000.0
-    pounds: 7493.0
-  - year: 2006
-    score: 19.9
-    cancer_score: 0.0
-    noncancer_score: 19.9
-    hazard: 336000.0
-    pounds: 8464.0
-  - year: 2007
-    score: 24.8
-    cancer_score: 0.0
-    noncancer_score: 24.8
-    hazard: 420000.0
-    pounds: 8109.0
-  - year: 2008
-    score: 22.5
-    cancer_score: 0.0
-    noncancer_score: 22.5
-    hazard: 384000.0
-    pounds: 6776.0
-  - year: 2009
-    score: 121.8
-    cancer_score: 0.0
-    noncancer_score: 121.8
-    hazard: 2088000.0
-    pounds: 5743.0
-  - year: 2010
-    score: 291.8
-    cancer_score: 0.0
-    noncancer_score: 291.8
-    hazard: 5028000.0
-    pounds: 8595.0
-  - year: 2011
-    score: 326.4
-    cancer_score: 0.0
-    noncancer_score: 326.4
-    hazard: 5652000.0
-    pounds: 7769.0
-  - year: 2012
-    score: 311.1
-    cancer_score: 0.0
-    noncancer_score: 311.1
-    hazard: 5412000.0
-    pounds: 5730.0
-  - year: 2013
-    score: 312.5
-    cancer_score: 0.0
-    noncancer_score: 312.5
-    hazard: 5460000.0
-    pounds: 5308.0
-  - year: 2014
-    score: 370.0
-    cancer_score: 0.0
-    noncancer_score: 370.0
-    hazard: 6492000.0
-    pounds: 6918.0
-  top_chemicals:
-  - chemical: Manganese and manganese compounds
-    cas: 7439-96-5
-    toxicity_category: Non-carcinogen
-    score: 9194.0
-    pounds: 144000.0
-  - chemical: Toluene
-    cas: 108-88-3
-    toxicity_category: Non-carcinogen
-    score: 2.3
-    pounds: 62352.0
-  - chemical: 1,1,1-Trichloroethane
-    cas: 71-55-6
-    toxicity_category: Non-carcinogen
-    score: 2.2
-    pounds: 117450.0
-  - chemical: Lead and lead compounds
-    cas: 7439-92-1
-    toxicity_category: Non-carcinogen
-    score: 0.0
-    pounds: 13.0
-- facility_id: 45505THCHM400HA
-  facility_number: '27836'
-  name: THE CHAMPION CO
-  federal_facility: false
-  latitude: 39.91937
-  longitude: -83.80404
-  street: 400 HARRISON ST
-  city: SPRINGFIELD
-  state: OH
-  fips: '39023'
-  naics: '325998'
-  sic: '2899'
-  water_releases: false
-  score: 7898.0
-  cancer_score: 7876.5
-  noncancer_score: 82.0
-  hazard: 46843096.2
-  pounds: 43287.0
-  pounds_by_media:
-    potw: 34039.0
-    offsite: 5182.0
-    air: 4066.0
-  first_year: 1989
-  last_year: 2014
-  years:
-  - year: 1989
-    score: 4597.5
-    cancer_score: 4593.2
-    noncancer_score: 40.3
-    hazard: 23041790.0
-    pounds: 6000.0
-  - year: 1990
-    score: 91.7
-    cancer_score: 90.3
-    noncancer_score: 2.0
-    hazard: 468986.8
-    pounds: 2917.0
-  - year: 1991
-    score: 90.3
-    cancer_score: 88.7
-    noncancer_score: 2.2
-    hazard: 470071.8
-    pounds: 3129.0
-  - year: 1992
-    score: 88.2
-    cancer_score: 87.2
-    noncancer_score: 1.7
-    hazard: 466841.8
-    pounds: 2199.0
-  - year: 1993
-    score: 86.7
-    cancer_score: 85.6
-    noncancer_score: 1.6
-    hazard: 466651.8
-    pounds: 2149.0
-  - year: 1994
-    score: 85.0
-    cancer_score: 84.1
-    noncancer_score: 1.5
-    hazard: 465873.8
-    pounds: 2071.0
-  - year: 1995
-    score: 83.4
-    cancer_score: 82.5
-    noncancer_score: 1.5
-    hazard: 465597.8
-    pounds: 1995.0
-  - year: 1996
-    score: 81.9
-    cancer_score: 81.0
-    noncancer_score: 1.5
-    hazard: 465875.8
-    pounds: 2073.0
-  - year: 1997
-    score: 80.3
-    cancer_score: 79.4
-    noncancer_score: 1.4
-    hazard: 465715.8
-    pounds: 2037.0
-  - year: 1998
-    score: 141.0
-    cancer_score: 140.1
-    noncancer_score: 1.9
-    hazard: 833713.2
-    pounds: 1840.0
-  - year: 1999
-    score: 138.2
-    cancer_score: 137.3
-    noncancer_score: 1.9
-    hazard: 833497.2
-    pounds: 1768.0
-  - year: 2000
-    score: 135.3
-    cancer_score: 134.5
-    noncancer_score: 1.7
-    hazard: 832807.2
-    pounds: 1546.0
-  - year: 2001
-    score: 171.5
-    cancer_score: 170.8
-    noncancer_score: 2.0
-    hazard: 1246735.8
-    pounds: 1539.0
-  - year: 2002
-    score: 169.1
-    cancer_score: 168.4
-    noncancer_score: 1.9
-    hazard: 1246232.8
-    pounds: 1388.0
-  - year: 2003
-    score: 166.6
-    cancer_score: 166.1
-    noncancer_score: 1.8
-    hazard: 1245410.8
-    pounds: 1138.0
-  - year: 2004
-    score: 164.1
-    cancer_score: 163.7
-    noncancer_score: 1.7
-    hazard: 1244960.8
-    pounds: 1008.0
-  - year: 2005
-    score: 161.7
-    cancer_score: 161.3
-    noncancer_score: 1.6
-    hazard: 1244459.8
-    pounds: 859.0
-  - year: 2006
-    score: 159.3
-    cancer_score: 159.0
-    noncancer_score: 1.6
-    hazard: 1244528.8
-    pounds: 884.0
-  - year: 2007
-    score: 157.0
-    cancer_score: 156.6
-    noncancer_score: 1.6
-    hazard: 1244702.8
-    pounds: 930.0
-  - year: 2008
-    score: 154.6
-    cancer_score: 154.2
-    noncancer_score: 1.6
-    hazard: 1244544.8
-    pounds: 884.0
-  - year: 2009
-    score: 152.2
-    cancer_score: 151.8
-    noncancer_score: 1.5
-    hazard: 1244455.8
-    pounds: 855.0
-  - year: 2010
-    score: 149.8
-    cancer_score: 149.5
-    noncancer_score: 1.5
-    hazard: 1244316.8
-    pounds: 808.0
-  - year: 2011
-    score: 147.6
-    cancer_score: 147.2
-    noncancer_score: 1.5
-    hazard: 1244362.8
-    pounds: 826.0
-  - year: 2012
-    score: 145.3
-    cancer_score: 144.9
-    noncancer_score: 1.5
-    hazard: 1244354.8
-    pounds: 826.0
-  - year: 2013
-    score: 158.9
-    cancer_score: 158.6
-    noncancer_score: 1.6
-    hazard: 1382443.1
-    pounds: 847.0
-  - year: 2014
-    score: 140.8
-    cancer_score: 140.5
-    noncancer_score: 1.4
-    hazard: 1244163.5
-    pounds: 771.0
-  top_chemicals:
-  - chemical: Formaldehyde
-    cas: 50-00-0
-    toxicity_category: Mixed
-    score: 7891.9
-    pounds: 23302.0
-  - chemical: Xylene (mixed isomers)
-    cas: 1330-20-7
-    toxicity_category: Non-carcinogen
-    score: 3.7
-    pounds: 1500.0
-  - chemical: Methanol
-    cas: 67-56-1
-    toxicity_category: Non-carcinogen
-    score: 2.1
-    pounds: 15985.0
-  - chemical: Toluene
-    cas: 108-88-3
-    toxicity_category: Non-carcinogen
-    score: 0.4
-    pounds: 1500.0
-  - chemical: Isopropyl alcohol
-    cas: 67-63-0
-    score: 0.0
-    pounds: 1000.0
+  top_water_chemicals: []
 - facility_id: 45504RTTLC3100U
-  facility_number: '27826'
-  name: RITTAL CORP.
+  facility_number: '61072'
+  name: RITTAL CORP
   federal_facility: false
-  latitude: 39.97121
-  longitude: -83.84404
+  latitude: 39.97237
+  longitude: -83.84381
   street: 3100 UPPER VALLEY PIKE
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '332116'
-  sic: '3499'
   water_releases: false
-  score: 5135.6
+  score: 4064.5
   cancer_score: 0.0
-  noncancer_score: 350.5
-  hazard: 40719500.0
+  noncancer_score: 363.1
+  hazard: 40728340.0
   pounds: 236400.0
   pounds_by_media:
     potw: 172000.0
@@ -2316,92 +2820,104 @@ facilities:
     score: 0.2
     cancer_score: 0.0
     noncancer_score: 0.2
-    hazard: 3500.0
+    hazard: 12340.0
     pounds: 10200.0
   - year: 1995
-    score: 921.2
+    score: 749.9
     cancer_score: 0.0
-    noncancer_score: 142.2
+    noncancer_score: 147.4
     hazard: 9000000.0
     pounds: 50000.0
   - year: 1996
-    score: 1590.3
+    score: 1245.9
     cancer_score: 0.0
-    noncancer_score: 60.2
+    noncancer_score: 62.3
     hazard: 11574000.0
     pounds: 64300.0
   - year: 1997
-    score: 1621.9
+    score: 1271.4
     cancer_score: 0.0
-    noncancer_score: 64.0
+    noncancer_score: 66.3
     hazard: 11862000.0
     pounds: 65900.0
   - year: 1998
-    score: 1002.0
+    score: 797.1
     cancer_score: 0.0
-    noncancer_score: 83.9
+    noncancer_score: 86.9
     hazard: 8280000.0
     pounds: 46000.0
   top_chemicals:
-  - chemical: Glycol ethers
+  - chemical: Certain glycol ethers
     cas: N230
     toxicity_category: Non-carcinogen
-    score: 5135.4
+    score: 4064.4
     pounds: 226200.0
   - chemical: Methyl ethyl ketone
     cas: 78-93-3
     toxicity_category: Non-carcinogen
     score: 0.2
     pounds: 10200.0
+  top_water_chemicals: []
 - facility_id: 45504RTRDR1961C
-  facility_number: '27825'
-  name: REITER DAIRY LLC
-  parent_name: DEAN FOODS CO
+  facility_number: '58363'
+  name: DFA DAIRY BRANDS FLUID LLC DBA REITER DAIRY
+  parent_name: DAIRY FARMERS OF AMERICA INC
   federal_facility: false
-  latitude: 39.93601
-  longitude: -83.8431
+  latitude: 39.9358
+  longitude: -83.84312
   street: 1961 COMMERCE CIR
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '311511'
-  sic: '2026'
   water_releases: false
-  score: 1968.7
+  score: 1503.7
   cancer_score: 0.0
-  noncancer_score: 1875.7
-  hazard: 21830127.2
-  pounds: 589001.0
+  noncancer_score: 1428.5
+  hazard: 21876679.5
+  pounds: 1502587.0
   pounds_by_media:
-    potw: 575940.0
+    potw: 1489526.0
     air: 13061.0
   first_year: 1988
-  last_year: 2014
+  last_year: 2022
   years:
   - year: 1988
-    score: 917.3
+    score: 710.1
     cancer_score: 0.0
-    noncancer_score: 917.3
-    hazard: 480400.0
-    pounds: 68000.0
+    noncancer_score: 710.1
+    hazard: 480820.0
+    pounds: 288000.0
   - year: 1989
-    score: 917.3
+    score: 710.1
     cancer_score: 0.0
-    noncancer_score: 917.3
-    hazard: 480000.0
-    pounds: 48000.0
+    noncancer_score: 710.1
+    hazard: 480420.0
+    pounds: 68000.0
   - year: 1990
-    score: 93.1
+    score: 75.3
     cancer_score: 0.0
     noncancer_score: 0.1
-    hazard: 4500000.0
-    pounds: 1000.0
-  - year: 1994
-    score: 41.0
+    hazard: 4500178.5
+    pounds: 9500.0
+  - year: 1993
+    score: 0.0
     cancer_score: 0.0
-    noncancer_score: 41.0
-    hazard: 457135.0
-    pounds: 13061.0
+    noncancer_score: 0.0
+    hazard: 222.4
+    pounds: 10591.0
+  - year: 1994
+    score: 8.2
+    cancer_score: 0.0
+    noncancer_score: 8.2
+    hazard: 91449.5
+    pounds: 14131.0
+  - year: 1995
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 22.8
+    pounds: 1085.0
   - year: 2008
     score: 0.0
     cancer_score: 0.0
@@ -2444,54 +2960,113 @@ facilities:
     noncancer_score: 0.0
     hazard: 56070.0
     pounds: 89000.0
+  - year: 2015
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 52920.0
+    pounds: 84000.0
+  - year: 2016
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 55557.2
+    pounds: 88186.0
+  - year: 2017
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 51874.8
+    pounds: 82341.0
+  - year: 2018
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 55631.5
+    pounds: 88304.0
+  - year: 2019
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 53957.6
+    pounds: 85647.0
+  - year: 2020
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 44312.3
+    pounds: 70337.0
+  - year: 2021
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 43113.4
+    pounds: 68434.0
+  - year: 2022
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 53607.3
+    pounds: 85091.0
   top_chemicals:
   - chemical: Chlorine
     cas: 7782-50-5
     toxicity_category: Non-carcinogen
-    score: 1834.5
+    score: 1420.1
     pounds: 96000.0
-  - chemical: Peroxyacetic acid
+  - chemical: Peracetic acid
     cas: 79-21-0
     toxicity_category: Non-carcinogen
-    score: 93.1
+    score: 75.3
     pounds: 1000.0
-  - chemical: Ammonia
+  - chemical: Ammonia (includes anhydrous ammonia and aqueous ammonia from water dissociable ammonium
+      salts and other sources; 10 percent of total aqueous ammonia is reportable under this listing)
     cas: 7664-41-7
     toxicity_category: Non-carcinogen
-    score: 41.0
+    score: 8.2
     pounds: 13061.0
-  - chemical: Nitrate compounds
+  - chemical: Nitrate compounds (water dissociable; reportable only when in aqueous solution)
     cas: N511
     toxicity_category: Non-carcinogen
     score: 0.0
-    pounds: 400940.0
+    pounds: 1053280.0
+  - chemical: Sodium hydroxide (solution)
+    cas: 1310-73-2
+    score: 0.0
+    pounds: 200000.0
+  - chemical: Phosphoric acid
+    cas: 7664-38-2
+    toxicity_category: Non-carcinogen
+    score: 0.0
+    pounds: 61246.0
   - chemical: Nitric acid
     cas: 7697-37-2
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 58000.0
-  - chemical: Sulfuric acid
+  - chemical: Sulfuric acid (acid aerosols including mists, vapors, gas, fog, and other airborne forms
+      of any particle size)
     cas: 7664-93-9
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 20000.0
+  top_water_chemicals: []
 - facility_id: 45505SNYDR1600E
-  facility_number: '27835'
-  name: SNYDER TANK CORP.
+  facility_number: '48660'
+  name: SNYDER TANK CORP
   parent_name: SWITZER US INC
   federal_facility: false
-  latitude: 39.91254
-  longitude: -83.78568
-  street: 1600 E. PLEASANT AVE.
+  latitude: 39.9124
+  longitude: -83.78572
+  street: 1600 E PLEASANT AVE
   city: SPRINGFIELD
   state: OH
   fips: '39023'
-  naics: '336000'
-  sic: '3714'
+  naics: '336322'
   water_releases: false
-  score: 514.8
+  score: 304.8
   cancer_score: 0.0
-  noncancer_score: 514.8
+  noncancer_score: 304.8
   hazard: 4244205.0
   pounds: 121263.0
   pounds_by_media:
@@ -2500,255 +3075,171 @@ facilities:
   last_year: 1997
   years:
   - year: 1988
-    score: 53.1
+    score: 31.2
     cancer_score: 0.0
-    noncancer_score: 53.1
+    noncancer_score: 31.2
     hazard: 420000.0
     pounds: 12000.0
   - year: 1990
-    score: 48.0
+    score: 28.3
     cancer_score: 0.0
-    noncancer_score: 48.0
+    noncancer_score: 28.3
     hazard: 385000.0
     pounds: 11000.0
   - year: 1993
-    score: 52.3
+    score: 30.9
     cancer_score: 0.0
-    noncancer_score: 52.3
+    noncancer_score: 30.9
     hazard: 427700.0
     pounds: 12220.0
   - year: 1994
-    score: 59.5
+    score: 35.2
     cancer_score: 0.0
-    noncancer_score: 59.5
+    noncancer_score: 35.2
     hazard: 490175.0
     pounds: 14005.0
   - year: 1995
-    score: 113.6
+    score: 67.3
     cancer_score: 0.0
-    noncancer_score: 113.6
+    noncancer_score: 67.3
     hazard: 942410.0
     pounds: 26926.0
   - year: 1996
-    score: 105.9
+    score: 62.9
     cancer_score: 0.0
-    noncancer_score: 105.9
+    noncancer_score: 62.9
     hazard: 885395.0
     pounds: 25297.0
   - year: 1997
-    score: 82.4
+    score: 49.0
     cancer_score: 0.0
-    noncancer_score: 82.4
+    noncancer_score: 49.0
     hazard: 693525.0
     pounds: 19815.0
   top_chemicals:
   - chemical: Xylene (mixed isomers)
     cas: 1330-20-7
     toxicity_category: Non-carcinogen
-    score: 514.8
+    score: 304.9
     pounds: 121263.0
+  top_water_chemicals: []
 - facility_id: 45501SPCCRPOBOX
-  facility_number: '27810'
-  name: SPECO CORP.
+  facility_number: '14272'
+  name: SPECO CORP
   parent_name: LBJ CO
   federal_facility: false
   latitude: 39.972244
   longitude: -83.850614
-  street: 2941 BAKER RD.
+  street: 2941 BAKER RD
   city: SPRINGFIELD
   state: OH
   fips: '39023'
-  npdes_permit: 1IC000017
   naics: '336413'
-  sic: '3728'
   water_releases: true
-  score: 265.0
+  score: 212.6
   cancer_score: 0.0
-  noncancer_score: 236.2
-  hazard: 5047439.5
-  pounds: 338385.0
+  noncancer_score: 190.2
+  hazard: 26039549.5
+  pounds: 378385.0
   pounds_by_media:
     air: 214225.0
-    offsite: 94170.0
+    offsite: 134170.0
     water: 29490.0
     potw: 500.0
   first_year: 1988
   last_year: 1995
   years:
   - year: 1988
-    score: 52.9
+    score: 41.0
     cancer_score: 0.0
-    noncancer_score: 26.5
-    hazard: 31680.0
-    pounds: 57000.0
+    noncancer_score: 20.6
+    hazard: 35680.0
+    pounds: 76000.0
   - year: 1989
-    score: 2.8
+    score: 2.2
     cancer_score: 0.0
-    noncancer_score: 1.5
-    hazard: 4144.0
-    pounds: 34300.0
+    noncancer_score: 1.1
+    hazard: 21754.0
+    pounds: 55300.0
   - year: 1990
-    score: 33.1
+    score: 22.2
     cancer_score: 0.0
-    noncancer_score: 32.9
-    hazard: 880515.0
+    noncancer_score: 22.0
+    hazard: 894115.0
     pounds: 43350.0
   - year: 1991
-    score: 16.4
+    score: 11.0
     cancer_score: 0.0
-    noncancer_score: 16.3
-    hazard: 438352.0
+    noncancer_score: 10.9
+    hazard: 21365852.0
     pounds: 107204.0
   - year: 1992
-    score: 84.3
+    score: 71.5
     cancer_score: 0.0
-    noncancer_score: 83.5
-    hazard: 1938457.4
+    noncancer_score: 70.9
+    hazard: 1954698.4
     pounds: 61310.0
   - year: 1993
-    score: 75.3
+    score: 64.5
     cancer_score: 0.0
-    noncancer_score: 75.3
+    noncancer_score: 64.5
     hazard: 1750000.0
     pounds: 500.0
   - year: 1994
     score: 0.1
     cancer_score: 0.0
     noncancer_score: 0.1
-    hazard: 1742.0
+    hazard: 9003.0
     pounds: 15800.0
   - year: 1995
     score: 0.1
     cancer_score: 0.0
     noncancer_score: 0.1
-    hazard: 2549.1
+    hazard: 8447.1
     pounds: 18921.0
   top_chemicals:
-  - chemical: Sulfuric acid
+  - chemical: Sulfuric acid (acid aerosols including mists, vapors, gas, fog, and other airborne forms
+      of any particle size)
     cas: 7664-93-9
     toxicity_category: Non-carcinogen
-    score: 198.5
+    score: 161.2
     pounds: 7230.0
   - chemical: Methanol
     cas: 67-56-1
     toxicity_category: Non-carcinogen
-    score: 59.0
+    score: 45.7
     pounds: 327931.0
-  - chemical: Hydrochloric acid
+  - chemical: Hydrochloric acid (acid aerosols including mists, vapors, gas, fog, and other airborne forms
+      of any particle size)
     cas: 7647-01-0
     toxicity_category: Non-carcinogen
-    score: 7.4
+    score: 5.7
     pounds: 3224.0
-- facility_id: 45344HGHTC12170
-  facility_number: '27594'
-  name: HIGH TECH CASTINGS INC
-  federal_facility: false
-  latitude: 39.938
-  longitude: -84.04174
-  street: 12170 MILTON-CARLISLE RD
-  city: NEW CARLISLE
-  state: OH
-  fips: '39023'
-  naics: '331521'
-  sic: '3363'
-  water_releases: false
-  score: 232.1
-  cancer_score: 0.0
-  noncancer_score: 232.1
-  hazard: 2972600.0
-  pounds: 5462.0
-  pounds_by_media:
-    air: 4552.0
-    offsite: 910.0
-  first_year: 1991
-  last_year: 2000
-  years:
-  - year: 1991
-    score: 22.2
-    cancer_score: 0.0
-    noncancer_score: 22.2
-    hazard: 228500.0
-    pounds: 755.0
-  - year: 1992
-    score: 86.4
-    cancer_score: 0.0
-    noncancer_score: 86.4
-    hazard: 1150000.0
-    pounds: 1500.0
-  - year: 1993
-    score: 9.4
-    cancer_score: 0.0
-    noncancer_score: 9.4
-    hazard: 118100.0
-    pounds: 281.0
-  - year: 1994
-    score: 77.2
-    cancer_score: 0.0
-    noncancer_score: 77.2
-    hazard: 978500.0
-    pounds: 1255.0
-  - year: 1995
-    score: 7.9
-    cancer_score: 0.0
-    noncancer_score: 7.9
-    hazard: 84000.0
-    pounds: 340.0
-  - year: 1996
-    score: 7.8
-    cancer_score: 0.0
-    noncancer_score: 7.8
-    hazard: 84000.0
-    pounds: 340.0
-  - year: 1998
-    score: 18.1
-    cancer_score: 0.0
-    noncancer_score: 18.1
-    hazard: 298000.0
-    pounds: 500.0
-  - year: 1999
-    score: 0.3
-    cancer_score: 0.0
-    noncancer_score: 0.3
-    hazard: 3000.0
-    pounds: 297.0
-  - year: 2000
-    score: 2.8
-    cancer_score: 0.0
-    noncancer_score: 2.8
-    hazard: 28500.0
-    pounds: 194.0
-  top_chemicals:
-  - chemical: Copper and copper compounds
-    cas: 7440-50-8
-    toxicity_category: Non-carcinogen
-    score: 124.7
-    pounds: 1588.0
-  - chemical: Aluminum (fume or dust)
-    cas: 7429-90-5
-    toxicity_category: Non-carcinogen
-    score: 93.0
-    pounds: 2027.0
-  - chemical: Zinc and zinc compounds
-    cas: 7440-66-6
-    toxicity_category: Non-carcinogen
-    score: 14.5
-    pounds: 1847.0
+  - chemical: Aluminum oxide (fibrous forms) (Alumina)
+    cas: 1344-28-1
+    score: 0.0
+    pounds: 40000.0
+  top_water_chemicals:
+  - chemical: Methanol
+    cas: 67-56-1
+    water_pounds: 29490.0
+    reporting_years: 5
 - facility_id: 4550WKNCRN455GA
-  facility_number: '27842'
+  facility_number: '17547'
   name: KONECRANES
   parent_name: KCI HOLDINGS INC
   federal_facility: false
-  latitude: 39.90595
-  longitude: -83.72565
-  street: 4505 GATEWAY BLVD
+  latitude: 39.90708
+  longitude: -83.72552
+  street: 4505 GATEWAY BLVD.
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '333923'
   water_releases: false
-  score: 167.2
+  score: 174.7
   cancer_score: 0.0
-  noncancer_score: 167.2
+  noncancer_score: 174.7
   hazard: 4620000.0
   pounds: 13.2
   pounds_by_media:
@@ -2757,43 +3248,339 @@ facilities:
   last_year: 2014
   years:
   - year: 2010
-    score: 63.7
+    score: 66.4
     cancer_score: 0.0
-    noncancer_score: 63.7
+    noncancer_score: 66.4
     hazard: 1750000.0
     pounds: 5.0
   - year: 2011
-    score: 25.4
+    score: 26.5
     cancer_score: 0.0
-    noncancer_score: 25.4
+    noncancer_score: 26.5
     hazard: 700000.0
     pounds: 2.0
   - year: 2012
-    score: 27.8
+    score: 29.1
     cancer_score: 0.0
-    noncancer_score: 27.8
+    noncancer_score: 29.1
     hazard: 770000.0
     pounds: 2.2
   - year: 2013
-    score: 25.2
+    score: 26.4
     cancer_score: 0.0
-    noncancer_score: 25.2
+    noncancer_score: 26.4
     hazard: 700000.0
     pounds: 2.0
   - year: 2014
-    score: 25.1
+    score: 26.3
     cancer_score: 0.0
-    noncancer_score: 25.1
+    noncancer_score: 26.3
     hazard: 700000.0
     pounds: 2.0
   top_chemicals:
   - chemical: Diisocyanates
     cas: N120
     toxicity_category: Non-carcinogen
-    score: 167.2
+    score: 174.7
     pounds: 13.2
+  top_water_chemicals: []
+- facility_id: 45344HGHTC12170
+  facility_number: '48093'
+  name: HIGH TECH CASTINGS INC
+  federal_facility: false
+  latitude: 39.93548
+  longitude: -84.04232
+  street: 12170 MILTON-CARLISLE RD
+  city: NEW CARLISLE
+  state: OH
+  fips: '39023'
+  naics: '331521'
+  water_releases: false
+  score: 147.3
+  cancer_score: 0.0
+  noncancer_score: 147.3
+  hazard: 3985600.0
+  pounds: 5462.0
+  pounds_by_media:
+    air: 4552.0
+    offsite: 910.0
+  first_year: 1991
+  last_year: 2000
+  years:
+  - year: 1991
+    score: 14.7
+    cancer_score: 0.0
+    noncancer_score: 14.7
+    hazard: 228500.0
+    pounds: 755.0
+  - year: 1992
+    score: 54.3
+    cancer_score: 0.0
+    noncancer_score: 54.3
+    hazard: 1150000.0
+    pounds: 1500.0
+  - year: 1993
+    score: 6.0
+    cancer_score: 0.0
+    noncancer_score: 6.0
+    hazard: 118100.0
+    pounds: 281.0
+  - year: 1994
+    score: 49.1
+    cancer_score: 0.0
+    noncancer_score: 49.1
+    hazard: 978500.0
+    pounds: 1255.0
+  - year: 1995
+    score: 5.2
+    cancer_score: 0.0
+    noncancer_score: 5.2
+    hazard: 238000.0
+    pounds: 340.0
+  - year: 1996
+    score: 5.2
+    cancer_score: 0.0
+    noncancer_score: 5.2
+    hazard: 238000.0
+    pounds: 340.0
+  - year: 1998
+    score: 10.8
+    cancer_score: 0.0
+    noncancer_score: 10.8
+    hazard: 298000.0
+    pounds: 500.0
+  - year: 1999
+    score: 0.2
+    cancer_score: 0.0
+    noncancer_score: 0.2
+    hazard: 445500.0
+    pounds: 297.0
+  - year: 2000
+    score: 1.8
+    cancer_score: 0.0
+    noncancer_score: 1.8
+    hazard: 291000.0
+    pounds: 194.0
+  top_chemicals:
+  - chemical: Copper
+    cas: 7440-50-8
+    toxicity_category: Non-carcinogen
+    score: 78.1
+    pounds: 1588.0
+  - chemical: Aluminum (fume or dust)
+    cas: 7429-90-5
+    toxicity_category: Non-carcinogen
+    score: 60.0
+    pounds: 2027.0
+  - chemical: Zinc (fume or dust)
+    cas: 7440-66-6
+    toxicity_category: Non-carcinogen
+    score: 9.2
+    pounds: 1847.0
+  top_water_chemicals: []
+- facility_id: 45503SPRNG829PA
+  facility_number: '32173'
+  name: SPRINGFIELD IMPREGNATORS INC (DBA BRITESTRIP)
+  parent_name: SPRINGFIELD IMPREGNATORS INC
+  federal_facility: false
+  latitude: 39.93261
+  longitude: -83.78829
+  street: 829 PAULINE ST
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '325612'
+  water_releases: false
+  score: 117.6
+  cancer_score: 0.0
+  noncancer_score: 117.6
+  hazard: 20538444.5
+  pounds: 121478.0
+  pounds_by_media:
+    offsite: 64678.0
+    potw: 54750.0
+    air: 2050.0
+  first_year: 1988
+  last_year: 1992
+  years:
+  - year: 1988
+    score: 37.2
+    cancer_score: 0.0
+    noncancer_score: 37.2
+    hazard: 175840.0
+    pounds: 48800.0
+  - year: 1989
+    score: 22.2
+    cancer_score: 0.0
+    noncancer_score: 22.2
+    hazard: 105304.5
+    pounds: 14800.0
+  - year: 1990
+    score: 14.7
+    cancer_score: 0.0
+    noncancer_score: 14.7
+    hazard: 70000.0
+    pounds: 200.0
+  - year: 1991
+    score: 21.8
+    cancer_score: 0.0
+    noncancer_score: 21.8
+    hazard: 15640800.0
+    pounds: 44688.0
+  - year: 1992
+    score: 21.7
+    cancer_score: 0.0
+    noncancer_score: 21.7
+    hazard: 4546500.0
+    pounds: 12990.0
+  top_chemicals:
+  - chemical: Phosphoric acid
+    cas: 7664-38-2
+    toxicity_category: Non-carcinogen
+    score: 117.6
+    pounds: 113178.0
+  - chemical: Sodium hydroxide (solution)
+    cas: 1310-73-2
+    score: 0.0
+    pounds: 8300.0
+  top_water_chemicals: []
+- facility_id: 45505GLSGP3240E
+  facility_number: '43807'
+  name: GLASGO PLASTICS INC
+  federal_facility: false
+  latitude: 39.92339
+  longitude: -83.75554
+  street: 3240 E NATIONAL RD
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '326199'
+  water_releases: false
+  score: 65.0
+  cancer_score: 0.0
+  noncancer_score: 65.0
+  hazard: 1023508.5
+  pounds: 305412.0
+  pounds_by_media:
+    air: 305412.0
+  first_year: 1989
+  last_year: 2006
+  years:
+  - year: 1989
+    score: 1.1
+    cancer_score: 0.0
+    noncancer_score: 1.1
+    hazard: 15512.0
+    pounds: 17413.0
+  - year: 1990
+    score: 2.0
+    cancer_score: 0.0
+    noncancer_score: 2.0
+    hazard: 32007.5
+    pounds: 9145.0
+  - year: 1991
+    score: 1.7
+    cancer_score: 0.0
+    noncancer_score: 1.7
+    hazard: 24500.0
+    pounds: 7000.0
+  - year: 1992
+    score: 2.3
+    cancer_score: 0.0
+    noncancer_score: 2.3
+    hazard: 35700.0
+    pounds: 10200.0
+  - year: 1993
+    score: 1.9
+    cancer_score: 0.0
+    noncancer_score: 1.9
+    hazard: 30100.0
+    pounds: 8600.0
+  - year: 1995
+    score: 3.2
+    cancer_score: 0.0
+    noncancer_score: 3.2
+    hazard: 51100.0
+    pounds: 14600.0
+  - year: 1996
+    score: 3.4
+    cancer_score: 0.0
+    noncancer_score: 3.4
+    hazard: 54950.0
+    pounds: 15700.0
+  - year: 1997
+    score: 3.3
+    cancer_score: 0.0
+    noncancer_score: 3.3
+    hazard: 52500.0
+    pounds: 15000.0
+  - year: 1998
+    score: 7.7
+    cancer_score: 0.0
+    noncancer_score: 7.7
+    hazard: 122500.0
+    pounds: 35000.0
+  - year: 1999
+    score: 4.9
+    cancer_score: 0.0
+    noncancer_score: 4.9
+    hazard: 73034.5
+    pounds: 20867.0
+  - year: 2000
+    score: 3.0
+    cancer_score: 0.0
+    noncancer_score: 3.0
+    hazard: 43641.5
+    pounds: 12469.0
+  - year: 2001
+    score: 3.2
+    cancer_score: 0.0
+    noncancer_score: 3.2
+    hazard: 47365.5
+    pounds: 13533.0
+  - year: 2002
+    score: 4.7
+    cancer_score: 0.0
+    noncancer_score: 4.7
+    hazard: 75057.5
+    pounds: 21445.0
+  - year: 2003
+    score: 7.5
+    cancer_score: 0.0
+    noncancer_score: 7.5
+    hazard: 120862.0
+    pounds: 34532.0
+  - year: 2004
+    score: 6.2
+    cancer_score: 0.0
+    noncancer_score: 6.2
+    hazard: 100331.0
+    pounds: 28666.0
+  - year: 2005
+    score: 4.6
+    cancer_score: 0.0
+    noncancer_score: 4.6
+    hazard: 74130.0
+    pounds: 21180.0
+  - year: 2006
+    score: 4.3
+    cancer_score: 0.0
+    noncancer_score: 4.3
+    hazard: 70217.0
+    pounds: 20062.0
+  top_chemicals:
+  - chemical: Styrene
+    cas: 100-42-5
+    toxicity_category: Non-carcinogen
+    score: 65.2
+    pounds: 292431.0
+  - chemical: Acetone
+    cas: 67-64-1
+    score: 0.0
+    pounds: 12981.0
+  top_water_chemicals: []
 - facility_id: 45504GLSGP34NIS
-  facility_number: '27823'
+  facility_number: '61896'
   name: GLASGO PLASTICS INC
   federal_facility: false
   latitude: 39.92632
@@ -2803,58 +3590,61 @@ facilities:
   state: OH
   fips: '39023'
   naics: '325211'
-  sic: '3079'
   water_releases: false
-  score: 110.6
-  cancer_score: 79.9
-  noncancer_score: 43.6
+  score: 58.8
+  cancer_score: 40.0
+  noncancer_score: 25.2
   hazard: 634961.5
-  pounds: 64139.0
+  pounds: 149702.0
   pounds_by_media:
-    air: 64139.0
+    air: 149702.0
   first_year: 1988
   last_year: 1989
   years:
   - year: 1988
-    score: 100.4
-    cancer_score: 79.9
-    noncancer_score: 33.4
+    score: 52.2
+    cancer_score: 40.0
+    noncancer_score: 18.6
     hazard: 575713.5
-    pounds: 47211.0
+    pounds: 122774.0
   - year: 1989
-    score: 10.2
+    score: 6.6
     cancer_score: 0.0
-    noncancer_score: 10.2
+    noncancer_score: 6.6
     hazard: 59248.0
-    pounds: 16928.0
+    pounds: 26928.0
   top_chemicals:
-  - chemical: Dichloromethane
+  - chemical: Dichloromethane (Methylene chloride)
     cas: 75-09-2
-    toxicity_category: Mixed
-    score: 79.9
+    toxicity_category: Carcinogen
+    score: 40.0
     pounds: 12630.0
   - chemical: Styrene
     cas: 100-42-5
     toxicity_category: Non-carcinogen
-    score: 30.8
+    score: 18.8
     pounds: 51509.0
+  - chemical: Acetone
+    cas: 67-64-1
+    score: 0.0
+    pounds: 85563.0
+  top_water_chemicals: []
 - facility_id: 45506HLPHN1068S
-  facility_number: '27838'
-  name: HOLOPHANE CO. SPRINGFIELD PLANT
+  facility_number: '34204'
+  name: HOLOPHANE CO SPRINGFIELD PLANT
   parent_name: HOLOPHANE CO INC
   federal_facility: false
-  latitude: 39.90799
-  longitude: -83.82708
-  street: 1608 S. YELLOW SPRINGS ST.
+  latitude: 39.90805
+  longitude: -83.82721
+  street: 1608 S YELLOW SPRINGS ST
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '331521'
-  sic: '3363'
   water_releases: false
-  score: 103.3
+  score: 46.5
   cancer_score: 0.0
-  noncancer_score: 103.3
+  noncancer_score: 46.5
   hazard: 1125000.0
   pounds: 750.0
   pounds_by_media:
@@ -2863,166 +3653,35 @@ facilities:
   last_year: 1989
   years:
   - year: 1989
-    score: 103.3
+    score: 46.5
     cancer_score: 0.0
-    noncancer_score: 103.3
+    noncancer_score: 46.5
     hazard: 1125000.0
     pounds: 750.0
   top_chemicals:
-  - chemical: Copper and copper compounds
+  - chemical: Copper
     cas: 7440-50-8
     toxicity_category: Non-carcinogen
-    score: 103.3
+    score: 46.5
     pounds: 750.0
-- facility_id: 45505GLSGP3240E
-  facility_number: '27830'
-  name: GLASGO PLASTICS INC
-  federal_facility: false
-  latitude: 39.9235
-  longitude: -83.75554
-  street: 3240 E NATIONAL RD
-  city: SPRINGFIELD
-  state: OH
-  fips: '39023'
-  naics: '326199'
-  sic: '3089'
-  water_releases: false
-  score: 99.8
-  cancer_score: 0.0
-  noncancer_score: 99.8
-  hazard: 1023508.5
-  pounds: 292431.0
-  pounds_by_media:
-    air: 292431.0
-  first_year: 1989
-  last_year: 2006
-  years:
-  - year: 1989
-    score: 1.6
-    cancer_score: 0.0
-    noncancer_score: 1.6
-    hazard: 15512.0
-    pounds: 4432.0
-  - year: 1990
-    score: 3.1
-    cancer_score: 0.0
-    noncancer_score: 3.1
-    hazard: 32007.5
-    pounds: 9145.0
-  - year: 1991
-    score: 2.5
-    cancer_score: 0.0
-    noncancer_score: 2.5
-    hazard: 24500.0
-    pounds: 7000.0
-  - year: 1992
-    score: 3.5
-    cancer_score: 0.0
-    noncancer_score: 3.5
-    hazard: 35700.0
-    pounds: 10200.0
-  - year: 1993
-    score: 2.9
-    cancer_score: 0.0
-    noncancer_score: 2.9
-    hazard: 30100.0
-    pounds: 8600.0
-  - year: 1995
-    score: 5.0
-    cancer_score: 0.0
-    noncancer_score: 5.0
-    hazard: 51100.0
-    pounds: 14600.0
-  - year: 1996
-    score: 5.3
-    cancer_score: 0.0
-    noncancer_score: 5.3
-    hazard: 54950.0
-    pounds: 15700.0
-  - year: 1997
-    score: 5.1
-    cancer_score: 0.0
-    noncancer_score: 5.1
-    hazard: 52500.0
-    pounds: 15000.0
-  - year: 1998
-    score: 11.9
-    cancer_score: 0.0
-    noncancer_score: 11.9
-    hazard: 122500.0
-    pounds: 35000.0
-  - year: 1999
-    score: 7.3
-    cancer_score: 0.0
-    noncancer_score: 7.3
-    hazard: 73034.5
-    pounds: 20867.0
-  - year: 2000
-    score: 4.4
-    cancer_score: 0.0
-    noncancer_score: 4.4
-    hazard: 43641.5
-    pounds: 12469.0
-  - year: 2001
-    score: 4.7
-    cancer_score: 0.0
-    noncancer_score: 4.7
-    hazard: 47365.5
-    pounds: 13533.0
-  - year: 2002
-    score: 7.3
-    cancer_score: 0.0
-    noncancer_score: 7.3
-    hazard: 75057.5
-    pounds: 21445.0
-  - year: 2003
-    score: 11.7
-    cancer_score: 0.0
-    noncancer_score: 11.7
-    hazard: 120862.0
-    pounds: 34532.0
-  - year: 2004
-    score: 9.7
-    cancer_score: 0.0
-    noncancer_score: 9.7
-    hazard: 100331.0
-    pounds: 28666.0
-  - year: 2005
-    score: 7.1
-    cancer_score: 0.0
-    noncancer_score: 7.1
-    hazard: 74130.0
-    pounds: 21180.0
-  - year: 2006
-    score: 6.7
-    cancer_score: 0.0
-    noncancer_score: 6.7
-    hazard: 70217.0
-    pounds: 20062.0
-  top_chemicals:
-  - chemical: Styrene
-    cas: 100-42-5
-    toxicity_category: Non-carcinogen
-    score: 99.8
-    pounds: 292431.0
+  top_water_chemicals: []
 - facility_id: 45506TTJBS501WE
-  facility_number: '27841'
+  facility_number: '41635'
   name: ITT JABSCO
   parent_name: ITT INDUSTRIES INC
   federal_facility: false
-  latitude: 39.91481
-  longitude: -83.82196
-  street: 501 W. LIBERTY ST.
+  latitude: 39.91495
+  longitude: -83.82195
+  street: 501 W LIBERTY ST
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '333996'
-  sic: '3594'
   water_releases: false
-  score: 37.9
+  score: 37.6
   cancer_score: 0.0
-  noncancer_score: 37.9
-  hazard: 10267781.0
+  noncancer_score: 37.6
+  hazard: 45940425079.0
   pounds: 77597.0
   pounds_by_media:
     offsite: 63627.0
@@ -3034,110 +3693,124 @@ facilities:
     score: 2.6
     cancer_score: 0.0
     noncancer_score: 2.6
-    hazard: 9779.0
+    hazard: 2199779.0
     pounds: 15430.0
   - year: 1989
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 159567000.0
     pounds: 1400.0
   - year: 1990
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 2281688800.0
     pounds: 1399.0
   - year: 1992
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 5052690000.0
     pounds: 5433.0
   - year: 1993
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 6069180000.0
     pounds: 6526.0
   - year: 1994
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 13810188000.0
     pounds: 24774.0
   - year: 1995
-    score: 35.3
+    score: 35.0
     cancer_score: 0.0
-    noncancer_score: 35.3
-    hazard: 10258002.0
+    noncancer_score: 35.0
+    hazard: 13255257000.0
     pounds: 14912.0
   - year: 1996
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 956400000.0
     pounds: 6220.0
   - year: 1997
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 4120499500.0
     pounds: 1083.0
   - year: 1998
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 232755000.0
     pounds: 420.0
   top_chemicals:
-  - chemical: Lead and lead compounds
-    cas: 7439-92-1
+  - chemical: Lead compounds
+    cas: N420
     toxicity_category: Non-carcinogen
-    score: 35.3
+    score: 35.0
     pounds: 13722.0
   - chemical: 1,1,1-Trichloroethane
     cas: 71-55-6
     toxicity_category: Non-carcinogen
     score: 2.6
     pounds: 13970.0
-  - chemical: Nickel and nickel compounds
+  - chemical: Nickel
     cas: 7440-02-0
     toxicity_category: Mixed
     score: 0.0
-    pounds: 28748.0
-  - chemical: Copper and copper compounds
+    pounds: 26727.0
+  - chemical: Copper compounds (this category does not include copper phthalocyanine compounds that are
+      substituted with only hydrogen, and/or chlorine, and/or bromine.)
+    cas: N100
+    toxicity_category: Non-carcinogen
+    score: 0.0
+    pounds: 17139.0
+  - chemical: Copper
     cas: 7440-50-8
     toxicity_category: Non-carcinogen
     score: 0.0
-    pounds: 19559.0
-  - chemical: Chromium and chromium compounds
-    cas: 7440-47-3
+    pounds: 2420.0
+  - chemical: Nickel compounds
+    cas: N495
+    toxicity_category: Mixed
+    score: 0.0
+    pounds: 2021.0
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa
+      and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid
+      waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda
+      ash and kiln roasted at approximately 2,000 F.)
+    cas: N090
     toxicity_category: Carcinogen
     score: 0.0
-    pounds: 1290.0
-  - chemical: Zinc and zinc compounds
+    pounds: 1150.0
+  - chemical: Zinc (fume or dust)
     cas: 7440-66-6
     toxicity_category: Non-carcinogen
     score: 0.0
-    pounds: 308.0
+    pounds: 270.0
+  top_water_chemicals: []
 - facility_id: 45502WDRWC4300R
-  facility_number: '27819'
-  name: WOODROW CORP.
+  facility_number: '46123'
+  name: WOODROW CORP
   federal_facility: false
-  latitude: 39.98994
-  longitude: -83.81685
-  street: 4300 RIVER RD.
+  latitude: 39.98982
+  longitude: -83.81691
+  street: 4300 RIVER RD
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '323113'
-  sic: '2759'
   water_releases: false
-  score: 36.8
+  score: 34.2
   cancer_score: 0.0
-  noncancer_score: 36.8
-  hazard: 1117550.0
+  noncancer_score: 34.2
+  hazard: 1281665.0
   pounds: 36619.0
   pounds_by_media:
     air: 31930.0
@@ -3146,53 +3819,177 @@ facilities:
   last_year: 1991
   years:
   - year: 1988
-    score: 10.0
+    score: 9.3
     cancer_score: 0.0
-    noncancer_score: 10.0
+    noncancer_score: 9.3
     hazard: 304815.0
     pounds: 8709.0
   - year: 1989
-    score: 10.8
+    score: 10.0
     cancer_score: 0.0
-    noncancer_score: 10.8
+    noncancer_score: 10.0
     hazard: 328230.0
     pounds: 9378.0
   - year: 1990
-    score: 9.0
+    score: 8.4
     cancer_score: 0.0
-    noncancer_score: 9.0
+    noncancer_score: 8.4
     hazard: 273490.0
     pounds: 7814.0
   - year: 1991
-    score: 7.0
+    score: 6.5
     cancer_score: 0.0
-    noncancer_score: 7.0
-    hazard: 211015.0
+    noncancer_score: 6.5
+    hazard: 375130.0
     pounds: 10718.0
   top_chemicals:
   - chemical: Xylene (mixed isomers)
     cas: 1330-20-7
     toxicity_category: Non-carcinogen
-    score: 36.8
+    score: 34.1
     pounds: 36619.0
+  top_water_chemicals: []
+- facility_id: 4550WSLFXN1TITU
+  facility_number: '21772'
+  name: SILFEX INC
+  parent_name: LAM RESEARCH CORP
+  federal_facility: false
+  latitude: 39.907128
+  longitude: -83.714121
+  street: 1000 TITUS RD
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '335999'
+  water_releases: false
+  score: 27.8
+  cancer_score: 0.0
+  noncancer_score: 27.8
+  hazard: 1380114.9
+  pounds: 420936.0
+  pounds_by_media:
+    potw: 416769.0
+    air: 3996.0
+    offsite: 171.0
+  first_year: 2020
+  last_year: 2022
+  years:
+  - year: 2020
+    score: 1.9
+    cancer_score: 0.0
+    noncancer_score: 1.9
+    hazard: 141955.2
+    pounds: 35484.0
+  - year: 2021
+    score: 3.3
+    cancer_score: 0.0
+    noncancer_score: 3.3
+    hazard: 255657.7
+    pounds: 207934.0
+  - year: 2022
+    score: 22.6
+    cancer_score: 0.0
+    noncancer_score: 22.6
+    hazard: 982502.0
+    pounds: 177518.0
+  top_chemicals:
+  - chemical: Nitric acid
+    cas: 7697-37-2
+    toxicity_category: Non-carcinogen
+    score: 25.3
+    pounds: 3790.0
+  - chemical: Hydrogen fluoride (Hydrofluoric acid)
+    cas: 7664-39-3
+    toxicity_category: Non-carcinogen
+    score: 2.5
+    pounds: 377.0
+  - chemical: Nitrate compounds (water dissociable; reportable only when in aqueous solution)
+    cas: N511
+    toxicity_category: Non-carcinogen
+    score: 0.0
+    pounds: 416769.0
+  top_water_chemicals: []
+- facility_id: 45505VNNGN625BU
+  facility_number: '20965'
+  name: VINING IND
+  federal_facility: false
+  latitude: 39.91477
+  longitude: -83.78593
+  street: 625 BURT ST
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '339994'
+  water_releases: false
+  score: 23.9
+  cancer_score: 0.0
+  noncancer_score: 23.9
+  hazard: 293440.0
+  pounds: 257550.0
+  pounds_by_media:
+    air: 237200.0
+    offsite: 20350.0
+  first_year: 1988
+  last_year: 1992
+  years:
+  - year: 1988
+    score: 5.7
+    cancer_score: 0.0
+    noncancer_score: 5.7
+    hazard: 37030.0
+    pounds: 64820.0
+  - year: 1989
+    score: 6.1
+    cancer_score: 0.0
+    noncancer_score: 6.1
+    hazard: 40250.0
+    pounds: 57500.0
+  - year: 1990
+    score: 4.8
+    cancer_score: 0.0
+    noncancer_score: 4.8
+    hazard: 32830.0
+    pounds: 57830.0
+  - year: 1991
+    score: 5.5
+    cancer_score: 0.0
+    noncancer_score: 5.5
+    hazard: 94800.0
+    pounds: 54600.0
+  - year: 1992
+    score: 1.8
+    cancer_score: 0.0
+    noncancer_score: 1.8
+    hazard: 88530.0
+    pounds: 22800.0
+  top_chemicals:
+  - chemical: Toluene
+    cas: 108-88-3
+    toxicity_category: Non-carcinogen
+    score: 24.0
+    pounds: 234700.0
+  - chemical: Acetone
+    cas: 67-64-1
+    score: 0.0
+    pounds: 22850.0
+  top_water_chemicals: []
 - facility_id: 45506HTTRT1807W
-  facility_number: '27839'
-  name: HEAT TREATING INC
+  facility_number: '44037'
+  name: HEAT TREATING INC.
   parent_name: HEAT TREATING INC
   federal_facility: false
-  latitude: 39.92061
-  longitude: -83.84029
+  latitude: 39.92074
+  longitude: -83.84033
   street: 1807 W PLEASANT ST
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '332811'
-  sic: '3398'
   water_releases: false
-  score: 36.0
+  score: 7.2
   cancer_score: 0.0
-  noncancer_score: 36.0
-  hazard: 342300.0
+  noncancer_score: 7.2
+  hazard: 68460.0
   pounds: 9780.0
   pounds_by_media:
     air: 9780.0
@@ -3200,179 +3997,120 @@ facilities:
   last_year: 2012
   years:
   - year: 1988
-    score: 1.3
+    score: 0.3
     cancer_score: 0.0
-    noncancer_score: 1.3
-    hazard: 8750.0
+    noncancer_score: 0.3
+    hazard: 1750.0
     pounds: 250.0
   - year: 1989
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 175.0
+    hazard: 35.0
     pounds: 5.0
   - year: 1990
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 175.0
+    hazard: 35.0
     pounds: 5.0
   - year: 1991
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 175.0
+    hazard: 35.0
     pounds: 5.0
   - year: 1992
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 175.0
+    hazard: 35.0
     pounds: 5.0
   - year: 1993
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 175.0
+    hazard: 35.0
     pounds: 5.0
   - year: 1994
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 175.0
+    hazard: 35.0
     pounds: 5.0
   - year: 2005
-    score: 5.2
+    score: 1.0
     cancer_score: 0.0
-    noncancer_score: 5.2
-    hazard: 52500.0
+    noncancer_score: 1.0
+    hazard: 10500.0
     pounds: 1500.0
   - year: 2006
-    score: 5.2
+    score: 1.0
     cancer_score: 0.0
-    noncancer_score: 5.2
-    hazard: 52500.0
+    noncancer_score: 1.0
+    hazard: 10500.0
     pounds: 1500.0
   - year: 2007
-    score: 5.1
+    score: 1.0
     cancer_score: 0.0
-    noncancer_score: 5.1
-    hazard: 52500.0
+    noncancer_score: 1.0
+    hazard: 10500.0
     pounds: 1500.0
   - year: 2008
-    score: 3.9
+    score: 0.8
     cancer_score: 0.0
-    noncancer_score: 3.9
-    hazard: 35000.0
+    noncancer_score: 0.8
+    hazard: 7000.0
     pounds: 1000.0
   - year: 2009
-    score: 3.9
+    score: 0.8
     cancer_score: 0.0
-    noncancer_score: 3.9
-    hazard: 35000.0
+    noncancer_score: 0.8
+    hazard: 7000.0
     pounds: 1000.0
   - year: 2010
-    score: 3.8
+    score: 0.8
     cancer_score: 0.0
-    noncancer_score: 3.8
-    hazard: 35000.0
+    noncancer_score: 0.8
+    hazard: 7000.0
     pounds: 1000.0
   - year: 2011
-    score: 3.8
+    score: 0.8
     cancer_score: 0.0
-    noncancer_score: 3.8
-    hazard: 35000.0
+    noncancer_score: 0.8
+    hazard: 7000.0
     pounds: 1000.0
   - year: 2012
-    score: 3.8
+    score: 0.7
     cancer_score: 0.0
-    noncancer_score: 3.8
-    hazard: 35000.0
+    noncancer_score: 0.7
+    hazard: 7000.0
     pounds: 1000.0
   top_chemicals:
-  - chemical: Ammonia
+  - chemical: Ammonia (includes anhydrous ammonia and aqueous ammonia from water dissociable ammonium
+      salts and other sources; 10 percent of total aqueous ammonia is reportable under this listing)
     cas: 7664-41-7
     toxicity_category: Non-carcinogen
-    score: 36.0
+    score: 7.1
     pounds: 9780.0
-- facility_id: 45505VNNGN625BU
-  facility_number: '27837'
-  name: VINING IND.
-  federal_facility: false
-  latitude: 39.91485
-  longitude: -83.78606
-  street: 625 BURT ST.
-  city: SPRINGFIELD
-  state: OH
-  fips: '39023'
-  naics: '339994'
-  sic: '3991'
-  water_releases: false
-  score: 23.5
-  cancer_score: 0.0
-  noncancer_score: 23.5
-  hazard: 156940.0
-  pounds: 234700.0
-  pounds_by_media:
-    air: 215900.0
-    offsite: 18800.0
-  first_year: 1988
-  last_year: 1992
-  years:
-  - year: 1988
-    score: 5.6
-    cancer_score: 0.0
-    noncancer_score: 5.6
-    hazard: 37030.0
-    pounds: 52900.0
-  - year: 1989
-    score: 6.0
-    cancer_score: 0.0
-    noncancer_score: 6.0
-    hazard: 40250.0
-    pounds: 57500.0
-  - year: 1990
-    score: 4.7
-    cancer_score: 0.0
-    noncancer_score: 4.7
-    hazard: 32830.0
-    pounds: 46900.0
-  - year: 1991
-    score: 5.4
-    cancer_score: 0.0
-    noncancer_score: 5.4
-    hazard: 35000.0
-    pounds: 54600.0
-  - year: 1992
-    score: 1.8
-    cancer_score: 0.0
-    noncancer_score: 1.8
-    hazard: 11830.0
-    pounds: 22800.0
-  top_chemicals:
-  - chemical: Toluene
-    cas: 108-88-3
-    toxicity_category: Non-carcinogen
-    score: 23.5
-    pounds: 234700.0
+  top_water_chemicals: []
 - facility_id: 45502TPCMP2145A
-  facility_number: '27817'
+  facility_number: '16733'
   name: TPI COMPOSITES LLC - SPRINGFIELD OPERATIONS
   parent_name: TPI COMPOSITES INC
   federal_facility: false
-  latitude: 39.84043
-  longitude: -83.85843
+  latitude: 39.84058
+  longitude: -83.85841
   street: 2145 AIRPARK DR
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '326130'
-  sic: '3083'
   water_releases: false
   score: 0.6
   cancer_score: 0.0
   noncancer_score: 0.6
-  hazard: 23121.0
+  hazard: 56280.0
   pounds: 13256.0
   pounds_by_media:
     offsite: 6676.0
@@ -3384,19 +4122,19 @@ facilities:
     score: 0.2
     cancer_score: 0.0
     noncancer_score: 0.2
-    hazard: 6737.5
+    hazard: 12470.0
     pounds: 3075.0
   - year: 2008
     score: 0.3
     cancer_score: 0.0
     noncancer_score: 0.3
-    hazard: 12323.5
+    hazard: 15250.0
     pounds: 4121.0
   - year: 2009
     score: 0.1
     cancer_score: 0.0
     noncancer_score: 0.1
-    hazard: 4060.0
+    hazard: 28560.0
     pounds: 6060.0
   top_chemicals:
   - chemical: Styrene
@@ -3404,10 +4142,10 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.6
     pounds: 13256.0
+  top_water_chemicals: []
 - facility_id: 45368YMDNN9CLUM
-  facility_number: '27639'
+  facility_number: '3555'
   name: YAMADA NA INC
-  parent_name: YAMADA MANUFACTURING CO LTD
   federal_facility: false
   latitude: 39.81955
   longitude: -83.64891
@@ -3417,70 +4155,208 @@ facilities:
   fips: '39023'
   naics: '336991'
   water_releases: false
-  score: 0.0
+  score: 0.2
   cancer_score: 0.0
-  noncancer_score: 0.0
-  hazard: 0.0
-  pounds: 291076.0
+  noncancer_score: 0.2
+  hazard: 65014000.0
+  pounds: 650140.0
   pounds_by_media:
-    offsite: 291076.0
+    offsite: 650030.0
+    air: 110.0
   first_year: 2010
-  last_year: 2014
+  last_year: 2022
   years:
   - year: 2010
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 7303300.0
     pounds: 73033.0
   - year: 2011
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 5061000.0
     pounds: 50610.0
   - year: 2012
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 4743300.0
     pounds: 47433.0
   - year: 2013
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 6000000.0
     pounds: 60000.0
   - year: 2014
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 6000000.0
     pounds: 60000.0
+  - year: 2015
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 6876500.0
+    pounds: 68765.0
+  - year: 2016
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 7965400.0
+    pounds: 79654.0
+  - year: 2017
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 8577100.0
+    pounds: 85771.0
+  - year: 2018
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 6700000.0
+    pounds: 67000.0
+  - year: 2019
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 5776400.0
+    pounds: 57764.0
+  - year: 2022
+    score: 0.2
+    cancer_score: 0.0
+    noncancer_score: 0.2
+    hazard: 11000.0
+    pounds: 110.0
   top_chemicals:
-  - chemical: Zinc and zinc compounds
+  - chemical: Zinc (fume or dust)
     cas: 7440-66-6
     toxicity_category: Non-carcinogen
-    score: 0.0
-    pounds: 291076.0
-- facility_id: 45501VCMFG2105S
-  facility_number: '27811'
-  name: VICO MANUFACTURING
-  parent_name: VINING INDUSTRIES
+    score: 0.2
+    pounds: 650140.0
+  top_water_chemicals: []
+- facility_id: 4534WPFPRC211ND
+  facility_number: '770'
+  name: PFI PRECISION NEW CARLISLE OHIO
   federal_facility: false
-  latitude: 39.91322
-  longitude: -83.77973
-  street: 2105 SHERIDAN AVE.
-  city: SPRINGFIELD
+  latitude: 39.956285
+  longitude: -84.020004
+  street: 2011 N.DAYTON-LAKEVIEW RD
+  city: NEW CARLISLE
   state: OH
   fips: '39023'
-  naics: '339994'
-  sic: '3991'
+  naics: '332721'
   water_releases: false
   score: 0.0
   cancer_score: 0.0
   noncancer_score: 0.0
-  hazard: 0.0
+  hazard: 489014960.0
+  pounds: 21261.5
+  pounds_by_media:
+    offsite: 21261.5
+  first_year: 2011
+  last_year: 2022
+  years:
+  - year: 2011
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 29118000.0
+    pounds: 1266.0
+  - year: 2012
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 25622000.0
+    pounds: 1114.0
+  - year: 2013
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 27094000.0
+    pounds: 1178.0
+  - year: 2014
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 28750000.0
+    pounds: 1250.0
+  - year: 2015
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 53291000.0
+    pounds: 2317.0
+  - year: 2016
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 59018000.0
+    pounds: 2566.0
+  - year: 2017
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 42619000.0
+    pounds: 1853.0
+  - year: 2018
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 45701000.0
+    pounds: 1987.0
+  - year: 2019
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 48967000.0
+    pounds: 2129.0
+  - year: 2020
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 41860000.0
+    pounds: 1820.0
+  - year: 2021
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 31901000.0
+    pounds: 1387.0
+  - year: 2022
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 55073960.0
+    pounds: 2394.5
+  top_chemicals:
+  - chemical: Lead
+    cas: 7439-92-1
+    toxicity_category: Non-carcinogen
+    score: 0.0
+    pounds: 21261.5
+  top_water_chemicals: []
+- facility_id: 45501VCMFG2105S
+  facility_number: '22485'
+  name: VICO MANUFACTURING
+  parent_name: VINING INDUSTRIES
+  federal_facility: false
+  latitude: 39.91337
+  longitude: -83.77967
+  street: 2105 SHERIDAN AVE
+  city: SPRINGFIELD
+  state: OH
+  fips: '39023'
+  naics: '339994'
+  water_releases: false
+  score: 0.0
+  cancer_score: 0.0
+  noncancer_score: 0.0
+  hazard: 7200.0
   pounds: 6000.0
   pounds_by_media:
     offsite: 6000.0
@@ -3491,146 +4367,100 @@ facilities:
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 7200.0
     pounds: 6000.0
   top_chemicals:
-  - chemical: Propylene (Propene)
+  - chemical: Propylene
     cas: 115-07-1
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 6000.0
-- facility_id: 4534WPFPRC211ND
-  facility_number: '27596'
-  name: PFI PRECISION NEW CARLISLE OHIO
-  federal_facility: false
-  latitude: 39.956285
-  longitude: -84.020004
-  street: 2011 N.DAYTON-LAKEVIEW RD
-  city: NEW CARLISLE
-  state: OH
-  fips: '39023'
-  naics: '332721'
-  sic: '3451'
-  water_releases: false
-  score: 0.0
-  cancer_score: 0.0
-  noncancer_score: 0.0
-  hazard: 0.0
-  pounds: 4808.0
-  pounds_by_media:
-    offsite: 4808.0
-  first_year: 2011
-  last_year: 2014
-  years:
-  - year: 2011
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 0.0
-    pounds: 1266.0
-  - year: 2012
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 0.0
-    pounds: 1114.0
-  - year: 2013
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 0.0
-    pounds: 1178.0
-  - year: 2014
-    score: 0.0
-    cancer_score: 0.0
-    noncancer_score: 0.0
-    hazard: 0.0
-    pounds: 1250.0
-  top_chemicals:
-  - chemical: Lead and lead compounds
-    cas: 7439-92-1
-    toxicity_category: Non-carcinogen
-    score: 0.0
-    pounds: 4808.0
+  top_water_chemicals: []
 - facility_id: 45505RMLYF195EL
-  facility_number: '27834'
-  name: ARMOLOY OF OHIO INC
+  facility_number: '55364'
+  name: ARMOLOY OF OHIO INC.
   federal_facility: false
-  latitude: 39.89332
+  latitude: 39.89321
   longitude: -83.78396
   street: 1950 E LEFFEL LN
   city: SPRINGFIELD
   state: OH
   fips: '39023'
   naics: '332813'
-  sic: '3471'
   water_releases: false
   score: 0.0
   cancer_score: 0.0
   noncancer_score: 0.0
-  hazard: 0.0
-  pounds: 0.9
+  hazard: 25070.0
+  pounds: 1.0
   pounds_by_media:
-    offsite: 1.0
+    offsite: 1.1
   first_year: 2005
-  last_year: 2014
+  last_year: 2021
   years:
   - year: 2005
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 2300.0
     pounds: 0.1
   - year: 2006
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 2990.0
     pounds: 0.1
   - year: 2009
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 2300.0
     pounds: 0.1
   - year: 2010
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 4600.0
     pounds: 0.2
   - year: 2011
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 2300.0
     pounds: 0.1
   - year: 2012
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 2760.0
     pounds: 0.1
   - year: 2013
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 2300.0
     pounds: 0.1
   - year: 2014
     score: 0.0
     cancer_score: 0.0
     noncancer_score: 0.0
-    hazard: 0.0
+    hazard: 2760.0
+    pounds: 0.1
+  - year: 2021
+    score: 0.0
+    cancer_score: 0.0
+    noncancer_score: 0.0
+    hazard: 2760.0
     pounds: 0.1
   top_chemicals:
-  - chemical: Lead and lead compounds
+  - chemical: Lead
     cas: 7439-92-1
     toxicity_category: Non-carcinogen
     score: 0.0
-    pounds: 1.0
+    pounds: 1.1
+  top_water_chemicals: []
 - facility_id: 45502DLFRS600BE
-  facility_number: '27812'
+  facility_number: '47383'
   name: DOLE FRESH VEGETABLES
   parent_name: DOLE FOOD CO INC
   federal_facility: false
@@ -3641,7 +4471,6 @@ facilities:
   state: OH
   fips: '39023'
   naics: '311991'
-  sic: '2099'
   water_releases: false
   score: 0.0
   cancer_score: 0.0
@@ -3651,19 +4480,19 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
-- facility_id: 45503SPRNG829PA
-  facility_number: '27822'
-  name: SPRINGFIELD IMPREGNATORS INC. (DBA BRITESTRIP)
-  parent_name: SPRINGFIELD IMPREGNATORS INC
+  top_water_chemicals: []
+- facility_id: 4550WLDCST3815S
+  facility_number: '40136'
+  name: OLDCASTLE LAWN & GARDEN
+  parent_name: CRH AMERICAS INC
   federal_facility: false
-  latitude: 39.93262
-  longitude: -83.78851
-  street: 829 PAULINE ST.
+  latitude: 39.869946
+  longitude: -83.848717
+  street: 3815 SPRINGFIELD XENIA RD
   city: SPRINGFIELD
   state: OH
   fips: '39023'
-  naics: '325612'
-  sic: '3479'
+  naics: '321999'
   water_releases: false
   score: 0.0
   cancer_score: 0.0
@@ -3673,14 +4502,15 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []
 - facility_id: 45502SRFRC701RE
-  facility_number: '27815'
-  name: U.S. AIR FORCE 178TH FIGHTER WING OH ANG
+  facility_number: '4270'
+  name: US AIR FORCE 178TH FIGHTER WING OH ANG
   parent_name: STATE OF OHIO ADJUTANT GENERAL'S DEPT
   federal_facility: true
   latitude: 39.847778
   longitude: -83.833333
-  street: 701 REGULA AVE.
+  street: 701 REGULA AVE
   city: SPRINGFIELD
   state: OH
   fips: '39023'
@@ -3693,3 +4523,4 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []

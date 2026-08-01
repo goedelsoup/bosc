@@ -17,15 +17,16 @@ nodes:
   screen:
     npdes: OH0025135
     discharger: CITY OF FINDLAY WATER POLLUTION CONTROL CENTER
-    receiving_water: null
+    receiving_water: Blanchard River
     design_flow_mgd: 15.0
-    dilution_ratio: null
-    flag: null
-    status: no_receiving_water
-    detail: unscreened (no_receiving_water)
+    dilution_ratio: 0.374
+    flag: violation
+    status: screened
+    detail: Blanchard River 7Q10 8.67 cfs (derived) vs discharge 23.21 cfs -> 0.37:1
+      dilution (violation)
   grid:
     utility: AEP Ohio (Ohio Power Company)
-    ownership: null
+    ownership: Investor Owned
     holding_company: American Electric Power (AEP)
     balancing_authority: PJM Interconnection
     retail_regulator: Public Utilities Commission of Ohio (PUCO)
@@ -39,8 +40,8 @@ nodes:
     information_lq: 0.28
   toxics:
     facility_count: 29
-    top_emitter: CASCADE CORP
-    vintage_last_year: 2014
+    top_emitter: THE GOODYEAR TIRE & RUBBER CO
+    vintage_last_year: 2022
   activity:
     has_disclosed_facility: true
     facility_count: 1
@@ -73,7 +74,7 @@ nodes:
       dilution (violation)
   grid:
     utility: AEP Ohio (Ohio Power Company)
-    ownership: null
+    ownership: Investor Owned
     holding_company: American Electric Power (AEP)
     balancing_authority: PJM Interconnection
     retail_regulator: Public Utilities Commission of Ohio (PUCO)
@@ -133,9 +134,9 @@ nodes:
     manufacturing_lq: 3.72
     information_lq: 0.21
   toxics:
-    facility_count: 14
-    top_emitter: LG.PHILIPS DISPLAYS USA INC.
-    vintage_last_year: 2014
+    facility_count: 15
+    top_emitter: LGPHILIPS DISPLAYS USA INC
+    vintage_last_year: 2022
   activity:
     has_disclosed_facility: false
     facility_count: 0
@@ -182,9 +183,9 @@ nodes:
     manufacturing_lq: 3.14
     information_lq: 0.09
   toxics:
-    facility_count: 14
-    top_emitter: SONOCO FIBRE DRUM INC.
-    vintage_last_year: 2014
+    facility_count: 15
+    top_emitter: SONOCO FIBRE DRUM INC
+    vintage_last_year: 2022
   activity:
     has_disclosed_facility: true
     facility_count: 1
@@ -230,9 +231,9 @@ nodes:
     manufacturing_lq: 4.54
     information_lq: 0.19
   toxics:
-    facility_count: 35
+    facility_count: 40
     top_emitter: NEW ERA OHIO   LLC
-    vintage_last_year: 2014
+    vintage_last_year: 2022
   activity:
     has_disclosed_facility: false
     facility_count: 0
@@ -275,9 +276,9 @@ nodes:
     manufacturing_lq: 1.78
     information_lq: 0.44
   toxics:
-    facility_count: 128
+    facility_count: 140
     top_emitter: VALBRUNA SLATER STAINLESS INC
-    vintage_last_year: 2014
+    vintage_last_year: 2022
   activity:
     has_disclosed_facility: true
     facility_count: 1
@@ -308,7 +309,7 @@ nodes:
       dilution (tight)
   grid:
     utility: The Toledo Edison Co
-    ownership: null
+    ownership: Investor Owned
     holding_company: FirstEnergy Corp
     balancing_authority: PJM Interconnection
     retail_regulator: Public Utilities Commission of Ohio (PUCO)
@@ -322,8 +323,8 @@ nodes:
     information_lq: 0.55
   toxics:
     facility_count: 19
-    top_emitter: GM DEFIANCE CASTING OPERATIONS
-    vintage_last_year: 2014
+    top_emitter: GENERAL MOTORS LLC GLOBAL PROPULSION SYSTEMS -DEFIANCE
+    vintage_last_year: 2022
   activity:
     has_disclosed_facility: false
     facility_count: 0
@@ -353,7 +354,7 @@ nodes:
     detail: unscreened (no_receiving_water)
   grid:
     utility: The Toledo Edison Co
-    ownership: null
+    ownership: Investor Owned
     holding_company: FirstEnergy Corp
     balancing_authority: PJM Interconnection
     retail_regulator: Public Utilities Commission of Ohio (PUCO)
@@ -366,9 +367,9 @@ nodes:
     manufacturing_lq: 1.5
     information_lq: 0.49
   toxics:
-    facility_count: 117
-    top_emitter: BP-HUSKY REFINING LLC
-    vintage_last_year: 2014
+    facility_count: 124
+    top_emitter: OHIO REFINING CO
+    vintage_last_year: 2022
   activity:
     has_disclosed_facility: false
     facility_count: 0

@@ -92,6 +92,18 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 1288.6
     pounds: 21315.0
+  top_water_chemicals:
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa
+      and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid
+      waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda
+      ash and kiln roasted at approximately 2,000 F.)
+    cas: N090
+    water_pounds: 10.0
+    reporting_years: 1
+  - chemical: Arsenic compounds
+    cas: N020
+    water_pounds: 5.0
+    reporting_years: 1
 - facility_id: 43551FRSTS2811C
   facility_number: '57882'
   name: FIRST SOLAR INC
@@ -252,6 +264,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 1883633.4
+  top_water_chemicals: []
 - facility_id: 43460LBBYW140DI
   facility_number: '13177'
   name: PILKINGTON N.A. INC
@@ -518,6 +531,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 985.6
+  top_water_chemicals: []
 - facility_id: 4346WFRSTS2838T
   facility_number: '57883'
   name: FIRST SOLAR INC
@@ -599,6 +613,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 563444.8
+  top_water_chemicals: []
 - facility_id: 43402CSTMS1145F
   facility_number: '11491'
   name: CAST MASTERS
@@ -668,6 +683,7 @@ facilities:
     toxicity_category: Mixed
     score: 86420.7
     pounds: 1206.0
+  top_water_chemicals: []
 - facility_id: 43465WLBRD30610
   facility_number: '41493'
   name: MSC WALBRIDGE COATINGS INC
@@ -946,6 +962,15 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.1
     pounds: 387743.0
+  top_water_chemicals:
+  - chemical: Nickel compounds
+    cas: N495
+    water_pounds: 45.0
+    reporting_years: 9
+  - chemical: Zinc compounds
+    cas: N982
+    water_pounds: 45.0
+    reporting_years: 9
 - facility_id: 43465KTBWL34EBR
   facility_number: '11754'
   name: CLEVELAND-CLIFFS TUBULAR COMPONENTS LLC WALBRIDGE
@@ -1097,6 +1122,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 0.9
+  top_water_chemicals: []
 - facility_id: 43450MDNMN615BI
   facility_number: '56498'
   name: MODINE MANUFACTURING CO
@@ -1285,6 +1311,15 @@ facilities:
     cas: 128-04-1
     score: 0.0
     pounds: 23814.0
+  top_water_chemicals:
+  - chemical: Copper
+    cas: 7440-50-8
+    water_pounds: 4.0
+    reporting_years: 4
+  - chemical: Lead
+    cas: 7439-92-1
+    water_pounds: 3.0
+    reporting_years: 3
 - facility_id: 43551DLFLH1775P
   facility_number: '38165'
   name: DELAFOIL INC
@@ -1357,6 +1392,7 @@ facilities:
     toxicity_category: Carcinogen
     score: 71518.8
     pounds: 290612.5
+  top_water_chemicals: []
 - facility_id: 43457CHRTR6255U
   facility_number: '51401'
   name: CHARTER STEEL RISINGSUN
@@ -1552,6 +1588,23 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 1004352.0
+  top_water_chemicals:
+  - chemical: Zinc compounds
+    cas: N982
+    water_pounds: 13106.3
+    reporting_years: 17
+  - chemical: Lead
+    cas: 7439-92-1
+    water_pounds: 1365.2
+    reporting_years: 17
+  - chemical: Nickel
+    cas: 7440-02-0
+    water_pounds: 1091.7
+    reporting_years: 16
+  - chemical: Chromium
+    cas: 7440-47-3
+    water_pounds: 1091.7
+    reporting_years: 16
 - facility_id: 43402VHTKS2125W
   facility_number: '62134'
   name: VEHTEK SYSTEMS INC
@@ -1697,6 +1750,15 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 919601.0
+  top_water_chemicals:
+  - chemical: Manganese
+    cas: 7439-96-5
+    water_pounds: 16.0
+    reporting_years: 2
+  - chemical: Lead
+    cas: 7439-92-1
+    water_pounds: 0.2
+    reporting_years: 2
 - facility_id: 43551CRWNC29200
   facility_number: '21760'
   name: AMERICAN STEEL TREATING
@@ -1833,6 +1895,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 749.0
+  top_water_chemicals: []
 - facility_id: 43551CSTRT8000C
   facility_number: '7237'
   name: FCA US TOLEDO MACHINING PLANT
@@ -2111,6 +2174,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 3.3
     pounds: 163.0
+  top_water_chemicals: []
 - facility_id: 43460LCTRP63DIX
   facility_number: '32691'
   name: THE ELECTRO PRIME GROUP LLC
@@ -2278,6 +2342,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 9940.4
     pounds: 680502.0
+  top_water_chemicals: []
 - facility_id: 43551BTRCH29180
   facility_number: '62891'
   name: CONAGRA FOODS
@@ -2403,6 +2468,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 10.0
+  top_water_chemicals: []
 - facility_id: 43402THNDR14357
   facility_number: '13317'
   name: ANDERSONS INC BG LAWN PRODUCTS
@@ -2525,6 +2591,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 7.6
     pounds: 920.0
+  top_water_chemicals: []
 - facility_id: 43402CPRND1175N
   facility_number: '3537'
   name: COOPER STANDARD AUTOMOTIVE
@@ -2802,6 +2869,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 3.1
     pounds: 126467.0
+  top_water_chemicals: []
 - facility_id: 43551HSDRC26202
   facility_number: '59107'
   name: HAAS DOOR CO
@@ -2889,6 +2957,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 392.0
+  top_water_chemicals: []
 - facility_id: 43619NRPLS7825C
   facility_number: '44196'
   name: NORPLAS INDUSTRIES INC
@@ -3105,6 +3174,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 1.4
     pounds: 920658.2
+  top_water_chemicals: []
 - facility_id: 43414BLKND10850
   facility_number: '12943'
   name: BLAKO INDUSTRIES INC.
@@ -3200,6 +3270,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 5575.2
     pounds: 44255.3
+  top_water_chemicals: []
 - facility_id: 43551CMMRC3RDDS
   facility_number: '54103'
   name: SUNBEAM PRODUCTS - CALPHALON MANUFACTURING
@@ -3433,6 +3504,7 @@ facilities:
     cas: 872-50-4
     score: 0.0
     pounds: 50148.0
+  top_water_chemicals: []
 - facility_id: 43443MTRWH21200
   facility_number: '19426'
   name: URETECH INTL INC
@@ -3587,6 +3659,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 1.6
     pounds: 118609.0
+  top_water_chemicals: []
 - facility_id: 43551MRCNC12600
   facility_number: '30707'
   name: BULK MOLDING COMPOUNDS INC
@@ -3862,6 +3935,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 3.1
     pounds: 22200.9
+  top_water_chemicals: []
 - facility_id: 43551NGTVP25875
   facility_number: '61499'
   name: TECHNEGLAS, INC.
@@ -4026,6 +4100,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.1
     pounds: 53622.0
+  top_water_chemicals: []
 - facility_id: 43465JNSHM30354
   facility_number: '14270'
   name: JONES-HAMILTON CO
@@ -4266,6 +4341,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 1596.8
     pounds: 122352.3
+  top_water_chemicals: []
 - facility_id: 43619LCTMT8001M
   facility_number: '56251'
   name: ALCOA AUTOMOTIVE STRUCTURES
@@ -4320,6 +4396,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 459.9
     pounds: 16980.0
+  top_water_chemicals: []
 - facility_id: 45872THBDD100SO
   facility_number: '14219'
   name: TEIJIN AUTOMOTIVE TECHNOLOGIES - NORTH BALTIMORE
@@ -4596,6 +4673,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 24827.0
+  top_water_chemicals: []
 - facility_id: 45872PLSTM733EW
   facility_number: '43622'
   name: AVIENT CORP NORTH BALTIMORE
@@ -4829,6 +4907,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 4297.8
+  top_water_chemicals: []
 - facility_id: 43465VNWTR30450
   facility_number: '15200'
   name: UNIVAR SOLUTIONS USA INC. - TOLEDO BRANCH
@@ -5040,6 +5119,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.5
     pounds: 7685.3
+  top_water_chemicals: []
 - facility_id: 45872THDSB331EC
   facility_number: '60004'
   name: THE D S BROWN CO
@@ -5267,6 +5347,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.6
     pounds: 31036.0
+  top_water_chemicals: []
 - facility_id: 43402CPRTR400VA
   facility_number: '58899'
   name: COOPER STANDARD AUTOMOTIVE
@@ -5422,6 +5503,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 17.0
     pounds: 949755.0
+  top_water_chemicals: []
 - facility_id: 43402CHMRN1142N
   facility_number: '25441'
   name: LUBRIZOL ADVANCED MATERIALS INC BOWLING GREEN
@@ -5643,6 +5725,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.3
     pounds: 10.4
+  top_water_chemicals: []
 - facility_id: 43402LMSNS501EP
   facility_number: '5770'
   name: LAMSON & SESSIONS CO
@@ -5690,6 +5773,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 5.1
     pounds: 1535.0
+  top_water_chemicals: []
 - facility_id: 4344WNSGGL2175P
   facility_number: '41462'
   name: NSG GLASS N.A. INC
@@ -5749,6 +5833,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 140.0
+  top_water_chemicals: []
 - facility_id: 43402DWTTM213SW
   facility_number: '35745'
   name: DOWA THT AMERICA INC
@@ -5929,6 +6014,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 27.4
     pounds: 106978.0
+  top_water_chemicals: []
 - facility_id: 43551RCTVR3275T
   facility_number: '62892'
   name: REACTIVE RESIN PRODUCTS CO
@@ -5976,6 +6062,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 19.5
     pounds: 2353.0
+  top_water_chemicals: []
 - facility_id: 43413RMTCN436NE
   facility_number: '15265'
   name: REMTEC INTERNATIONAL
@@ -6106,6 +6193,7 @@ facilities:
     cas: 76-14-2
     score: 0.0
     pounds: 1320.0
+  top_water_chemicals: []
 - facility_id: 43450MDNMN400CO
   facility_number: '24184'
   name: MODINE MANUFACTURING CO
@@ -6177,6 +6265,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 2.2
     pounds: 142713.0
+  top_water_chemicals: []
 - facility_id: 43402MRTHN13300
   facility_number: '29613'
   name: REGAL BELOIT AMERICA
@@ -6386,6 +6475,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 1.6
     pounds: 2898759.0
+  top_water_chemicals: []
 - facility_id: 45872NRBLT587WB
   facility_number: '12455'
   name: JOHNSON RUBBER CO - NORTH BALTIMORE
@@ -6546,6 +6636,19 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.3
     pounds: 10010.0
+  top_water_chemicals:
+  - chemical: Zinc compounds
+    cas: N982
+    water_pounds: 532.0
+    reporting_years: 14
+  - chemical: 1,1,1-Trichloroethane
+    cas: 71-55-6
+    water_pounds: 500.0
+    reporting_years: 2
+  - chemical: Methyl isobutyl ketone
+    cas: 108-10-1
+    water_pounds: 5.0
+    reporting_years: 1
 - facility_id: 43402RMTCN11HAS
   facility_number: '1651'
   name: A-GAS US INC
@@ -6702,6 +6805,7 @@ facilities:
     cas: 124-73-2
     score: 0.0
     pounds: 105.0
+  top_water_chemicals: []
 - facility_id: 43402SHKWG828VA
   facility_number: '39857'
   name: ISHIKAWA GASKET AMERICA INC.
@@ -6779,6 +6883,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 4.7
     pounds: 142101.0
+  top_water_chemicals: []
 - facility_id: 4340WBTCCR4VANC
   facility_number: '41767'
   name: BETCO CORP - BG
@@ -6871,6 +6976,11 @@ facilities:
     cas: 65530-63-4
     score: 0.0
     pounds: 56.9
+  top_water_chemicals:
+  - chemical: Certain glycol ethers
+    cas: N230
+    water_pounds: 21000.0
+    reporting_years: 1
 - facility_id: 43402GRNMN1032S
   facility_number: '41264'
   name: ROSENBOOM MACHINE & TOOL INC. OHIO DIV
@@ -7049,6 +7159,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 17912.8
+  top_water_chemicals: []
 - facility_id: 43406TTWRBCHERR
   facility_number: '59884'
   name: OTTAWA RUBBER CO
@@ -7095,6 +7206,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 1.6
     pounds: 415.0
+  top_water_chemicals: []
 - facility_id: 43551TCMSH2054T
   facility_number: '12922'
   name: TECUMSEH CORRUGATED BOX CO TOLEDO PARK
@@ -7136,6 +7248,7 @@ facilities:
     cas: 1310-73-2
     score: 0.0
     pounds: 500.0
+  top_water_chemicals: []
 - facility_id: 43619WHTKR2707T
   facility_number: '13347'
   name: WHITAKER PLATING
@@ -7188,6 +7301,7 @@ facilities:
     cas: 1310-73-2
     score: 0.0
     pounds: 250.0
+  top_water_chemicals: []
 - facility_id: 43447LCTRP4400M
   facility_number: '17531'
   name: ELECTRO PLASMA INC
@@ -7246,6 +7360,7 @@ facilities:
     cas: 67-64-1
     score: 0.0
     pounds: 67020.0
+  top_water_chemicals: []
 - facility_id: 43465NTNLM30692
   facility_number: '53055'
   name: CARROLL CO
@@ -7377,6 +7492,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.1
     pounds: 54997.0
+  top_water_chemicals: []
 - facility_id: 43618TLNDS2541T
   facility_number: '1057'
   name: TL INDUSTRIES INC
@@ -7500,6 +7616,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 93.0
+  top_water_chemicals: []
 - facility_id: 43551MSTRC501WE
   facility_number: '2110'
   name: MASTER CHEMICAL CORP
@@ -7585,6 +7702,7 @@ facilities:
     cas: N535
     score: 0.0
     pounds: 5.0
+  top_water_chemicals: []
 - facility_id: 43465TLNDS6898C
   facility_number: '48622'
   name: TL INDUSTRIES INC
@@ -7637,6 +7755,7 @@ facilities:
     toxicity_category: Non-carcinogen
     score: 0.0
     pounds: 2287.0
+  top_water_chemicals: []
 - facility_id: 43551MRCNS525W6
   facility_number: '31664'
   name: AMERICAN STEEL TREATING 6TH STREET
@@ -7657,6 +7776,7 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []
 - facility_id: 4355WTLNDS28271
   facility_number: '19808'
   name: TL INDUSTRIES INC.
@@ -7677,3 +7797,4 @@ facilities:
   pounds_by_media: {}
   years: []
   top_chemicals: []
+  top_water_chemicals: []

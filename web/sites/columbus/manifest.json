@@ -2,9 +2,9 @@
   "site": "columbus",
   "bundle_version": "1.0.0",
   "contract_version": "1.49.0",
-  "generated_at": "2026-07-31T20:43:04+00:00",
+  "generated_at": "2026-08-01T12:10:48+00:00",
   "feed_count": 29,
-  "row_total": 398,
+  "row_total": 401,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -39,7 +39,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 4
+      "count": 5
     },
     {
       "name": "relationships",
@@ -47,7 +47,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 3
     },
     {
       "name": "people",
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 51
+      "count": 52
     },
     {
       "name": "facts",

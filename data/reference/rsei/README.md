@@ -33,6 +33,15 @@ The prior `v234` release was distributed through the AWS Open Data bucket
 v2.3.12, so the connector was re-pointed to EPA's `gaftp` Public Release Data (#1148).
 The legacy per-table-gzip layout is still reachable via `rsei_distribution="s3_gz"`.
 
+**One vintage network-wide (#436).** Every registered site's committed inventory —
+this one and each `reference/rsei/<slug>/inventory.yaml` — is pulled from **this same
+v2.3.12 archive**. The prior `v234` ceiling capped all of them at `last_year: 2014`,
+which is a *modeling vintage*, not a per-county truncation; mixing vintages across
+sites would silently corrupt the cross-site comparison the network is for. So the
+inventories are re-pulled as a set, never one site at a time. A site whose
+`last_year` is still below 2022 after this pull is reporting its county's real record
+(e.g. Adams County stops at **2018**, when Killen Station closed) — not a gap.
+
 ## How the inventory is built
 
 RSEI is a relational dump. `watermark rsei` joins five tables and keeps only the rows that

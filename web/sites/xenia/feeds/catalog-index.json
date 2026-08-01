@@ -1,6 +1,6 @@
 {
   "site": "xenia",
-  "catalog_version": "f3cf91b159792ab4240426d1911d85b4dbdcbd73c10298039b1a639d0b64f358",
+  "catalog_version": "04f191520db641da0ec97fdcc0b301fced8b755bf435b15bbb83275e00dc566d",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -833,6 +833,14 @@
       "site": "xenia",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
