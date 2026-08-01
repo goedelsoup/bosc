@@ -1,6 +1,6 @@
 {
   "site": "findlay",
-  "catalog_version": "ecb3eb26e0b1f5e2d81c03d3313b188a75dc7090bbac879ac3e67e2e1da0b1f8",
+  "catalog_version": "fd0c05d89e7339dd3d13df6716ebe7ea53e1aab1ef00bda52f0b62ae2fac81e4",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -780,6 +780,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:findlay-governance",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "findlay-governance",
+      "title": "Findlay — Governance Watch (Allen Township zoning + the proposed 10 MW data-center cap, the certified referendum, 2026-Ohio-405, the SB 52 restricted area)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:findlay-grid",
       "kind": "dataset",
       "site": "findlay",
@@ -881,6 +889,14 @@
       "site": "findlay",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {
@@ -1132,11 +1148,27 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:ATZC-HEARINGS-AUGUST-2026",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "ATZC-HEARINGS-AUGUST-2026",
+      "title": "Capture the three Allen Township zoning hearings on 2026-08-19 and the rezoning hearing on 2026-08-05",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:AWARD-2026-07-14",
       "kind": "lead",
       "site": "findlay",
       "local_id": "AWARD-2026-07-14",
       "title": "MWCD board award votes + Norfolk Southern bid opening fall on 2026-07-14 — capture the outcomes",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:BALLOT-LANGUAGE-CASE-2025",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "BALLOT-LANGUAGE-CASE-2025",
+      "title": "Resolve the 2025 ballot-language case that revoked Allen Township's zoning status",
       "feed": "leads"
     },
     {
@@ -1164,11 +1196,27 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:COOLING-CLAUSE-CONTRADICTION",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "COOLING-CLAUSE-CONTRADICTION",
+      "title": "Flag the dry-cooling versus closed-loop contradiction in proposed Section 1521 before the hearing",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:CSO-LTCP-2026-11-01",
       "kind": "lead",
       "site": "findlay",
       "local_id": "CSO-LTCP-2026-11-01",
       "title": "The CSO Long-Term Control Plan addendum is due 2026-11-01 — a dated deadline on an issued permit",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:DATA-CENTER-DEFINITION-REACH",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "DATA-CENTER-DEFINITION-REACH",
+      "title": "Resolve whether proposed Section 1521 reaches a bitcoin-mining load at all",
       "feed": "leads"
     },
     {
@@ -1212,6 +1260,22 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:HUB-PARCEL-DISTRICT-AND-NONCONFORMING-USE",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "HUB-PARCEL-DISTRICT-AND-NONCONFORMING-USE",
+      "title": "Determine which adopted district covers the Megawatt Hub parcels, and what Section 1502 preserves",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:INTERSTATE-CAPITAL-OWNERSHIP",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "INTERSTATE-CAPITAL-OWNERSHIP",
+      "title": "Identify Interstate Capital LLC and who holds title to the two SR 613 parcels",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:MERCURY-VARIANCE-RENEWAL",
       "kind": "lead",
       "site": "findlay",
@@ -1228,11 +1292,35 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:ONSITE-PARTNERS-AT-THE-DRAFTING-TABLE",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "ONSITE-PARTNERS-AT-THE-DRAFTING-TABLE",
+      "title": "Establish who \"Dan Smies, On-Site Partners\" and \"Jon Cross, Cross Capital Consultant\" appeared for",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:ORD-2026-42-CERTIFIED-TEXT",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "ORD-2026-42-CERTIFIED-TEXT",
+      "title": "Obtain Ordinance 2026-42 as certified, with the council journal and the recorded roll call",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:PHASE1-CONTRACTOR",
       "kind": "lead",
       "site": "findlay",
       "local_id": "PHASE1-CONTRACTOR",
       "title": "Identify the Phase 1 benching contractor and contract price",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:PRE-ANNEXATION-AGREEMENTS",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "PRE-ANNEXATION-AGREEMENTS",
+      "title": "File and log the pre-annexation-agreement request for Allen Township parcels",
       "feed": "leads"
     },
     {
@@ -1257,6 +1345,14 @@
       "site": "findlay",
       "local_id": "ROCKY-FORD-INSERVICE",
       "title": "Did Rocky Ford Station energize on its December 2025 schedule?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:SB52-ADOPTED-RESOLUTION",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "SB52-ADOPTED-RESOLUTION",
+      "title": "Pull the adopted 2022-04-19 SB 52 restricted-area resolution, its number, roll call and final map",
       "feed": "leads"
     },
     {
@@ -1313,6 +1409,14 @@
       "site": "findlay",
       "local_id": "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
       "title": "Blanchard River Watershed, Ohio — Feasibility Report",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:findlay/governance/litigation-one-energy-v-allen-twp.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/governance/litigation-one-energy-v-allen-twp.yaml",
+      "title": "One Energy Enterprises Inc. et al. v. Board of Allen Township Trustees of Hancock County",
       "feed": "records"
     },
     {

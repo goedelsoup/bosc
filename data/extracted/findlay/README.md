@@ -43,6 +43,37 @@ for its Greenwood Street warehouse (4 jobs, 2025-12-11, naming a **severed rail 
 holds the three Hancock County Round 11 awards totalling $999,998, two of them petroleum UST
 assessments. Narrative: `dislocation-and-brownfields.md`.
 
+## Governance watch — the data-center siting regime (`governance/` + `governance-watch.md`)
+
+Hand-curated primary-source evidence (issue 1463), **not** connector output. Three governments
+in this county have something to say about where a data center may be built, and none of them
+has an adopted rule that reaches the 150 MW already contracted inside their borders: the county's
+SB 52 restricted area bars large wind and solar and is silent on load; the City of Findlay's
+Ordinance 2026-42 moratorium stops at the corporation line; and Allen Township — where the
+Megawatt Hub actually sits — had no zoning at all until **2026-05-11** and its adopted resolution
+does not contain the phrase "data center" once in 77 pages. On **2026-07-28** its zoning
+commission moved a Section 1521 that would conditionally permit data centers in I-1 and I-2
+capped at **10 MW Total Facility Load**, heard **2026-08-19**.
+
+`governance/governance-timeline.yaml` is the four-jurisdiction chronology, every entry carrying
+its own tag and a corpus path or an explicit `[not in corpus]`.
+`governance/litigation-one-energy-v-allen-twp.yaml` is the structured read of **2026-Ohio-405**
+and the one `RecordItem` in this set (a `case:` block → the `litigation` group); its instrument
+lives at [`data/documents/legal/one-energy-v-allen-twp/`](../../documents/legal/one-energy-v-allen-twp/),
+filed by case rather than by site on the `legal/thor-v-urbana` precedent. Everything else here is
+**corpus, not records** — there is no zoning `RecordGroup` and inventing one to publish a
+proposal that is not yet law would cost a contract bump and a 26-bundle regeneration (the same
+call issue 1464 made for the grid artifacts).
+
+**Evidentiary asymmetry, stated once:** the township, court and election material is nearly all
+`[verified]` from a `.gov` site, a slip opinion and a certified canvass. The city material is
+almost entirely `[reference]` — `findlayohio.gov` and American Legal both return HTTP 403 to
+automated fetches and there is no Legistar tenant, so **Ordinance 2026-42 is held only as
+newspapers describe it**. That is an *access failure, not a denial*; the response is a drafted,
+**unsent** R.C. 149.43 request at `governance/records-requests/`. Narrative:
+[`governance-watch.md`](governance-watch.md); open threads in
+[`data/site/findlay/leads.yaml`](../../site/findlay/leads.yaml); catalogued as `findlay-governance`.
+
 ## Known gaps & caveats
 
 - Onboarding seed — **review every value against a cited source before promotion** (`web/src/lib/sites.ts` `status`/`selectable`, parity-gated).

@@ -716,14 +716,15 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
     # pinned by exact source path so a stray artifact can't quietly float the domain. It began
     # (#1465) as the two flood records; #1460 added the City of Findlay WPCC's own NPDES
     # instrument set, the TMDL phosphorus-allocation chain, the WARN pair and the Brownfield
-    # Round 11 awards. Note the two collections: ``oepa/findlay/**`` reaches this site only
-    # because ``_FINDLAY.corpus_relpaths`` names it (which also subtracts it from Lima's
-    # reference-build scope, #1505).
+    # Round 11 awards; #1463 added the filed appellate opinion. Note the two record-bearing
+    # collections: ``oepa/findlay/**`` reaches this site only because ``_FINDLAY.corpus_relpaths``
+    # names it (which also subtracts it from Lima's reference-build scope, #1505).
     records = _rows(out, _feeds_by_name(out)["records"])
     assert {r["rel"] for r in records} == {
         "findlay/brownfield/round-11-hancock-2026.award.yaml",
         "findlay/flood/fema-fma-obligation-2026.epa.yaml",
         "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
+        "findlay/governance/litigation-one-energy-v-allen-twp.yaml",
         "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
         "findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
         "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
@@ -731,7 +732,7 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
         "oepa/findlay/2PD00008.fs.npdes.yaml",
         "oepa/findlay/2PD00008.npdes.yaml",
     }, f"unexpected findlay records feed, got {sorted(r['rel'] for r in records)}"
-    assert len(records) == 9
+    assert len(records) == 10
     # The WARN pair publishes under ``labor`` — the group added for #1460 (contract 1.47.0),
     # because a state-filed plant-closing notice is not a permit, an order, an award, a deed or
     # a pleading, and filing it under the nearest of those would misrepresent the instrument.
@@ -739,14 +740,30 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
         "findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
         "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
     }
+    # #1463's governance ingest contributes exactly ONE record, and it needed no new group: the
+    # structured read of *One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees*, 2026-Ohio-405
+    # carries a ``case:`` block, so it publishes into the ``litigation`` group added for #1724.
+    # Every other governance artifact — the adopted township zoning resolution, the proposed
+    # data-center amendment, the SB 52 gap, the city moratorium gap, the timeline — is corpus,
+    # NOT a record: there is no zoning ``RecordGroup`` and minting one to publish a proposal
+    # that is not yet law would cost a contract bump plus a fleet-wide bundle regeneration.
+    assert {r["rel"] for r in records if r["group"] == "litigation"} == {
+        "findlay/governance/litigation-one-energy-v-allen-twp.yaml",
+    }
+    assert not [
+        r
+        for r in records
+        if r["rel"].startswith("findlay/governance/") and r["group"] != "litigation"
+    ], "only the filed court instrument may publish as a record from the governance set"
 
-    # The site's source-document catalog spans all three in-scope collections: the permit set
-    # under ``oepa/``, the WARN + brownfield instruments under ``findlay/``, and the grid-posture
-    # captures under ``grid/`` (#1464 — the Rocky Ford OPSB pair, AEP's PJM large-load deck, and
-    # Schedule DCT as filed). Before #1460 all of them were empty, so a site with a live
-    # ``record`` domain published no documents at all.
+    # The site's source-document catalog spans all four in-scope collections: the permit set
+    # under ``oepa/``, the WARN + brownfield + governance instruments under ``findlay/``, the
+    # grid-posture captures under ``grid/`` (#1464 — the Rocky Ford OPSB pair, AEP's PJM
+    # large-load deck, and Schedule DCT as filed), and the Third District's slip opinion under
+    # ``legal/`` (#1463). Before #1460 all of them were empty, so a site with a live ``record``
+    # domain published no documents at all.
     doc_collections = _rows(out, _feeds_by_name(out)["documents"])
-    assert {c["slug"] for c in doc_collections} == {"findlay", "grid", "oepa"}
+    assert {c["slug"] for c in doc_collections} == {"findlay", "grid", "legal", "oepa"}
     docs = {e["rel"] for c in doc_collections for e in c["entries"]}
     assert "oepa/findlay/2PD00008.fs.pdf" in docs
     assert "findlay/warn/GoodyearTireRubberCompany.pdf" in docs
@@ -756,8 +773,13 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
     assert "grid/findlay/Rocky Ford 138 kV Station Project Letter of Notification.pdf" in docs
     # ...and the grid-posture extractions are deliberately NOT records: a siting docket and a
     # tariff posture get no ``RecordGroup``, exactly as the Lima "Lyka" project record chose
-    # (#1476), so the four new YAML files above leave the ``records`` feed at 9 rows.
+    # (#1476), so those four YAML files add nothing to the ``records`` feed.
     assert not [r for r in records if r["rel"].startswith("grid/")]
+    # ``legal/one-energy-v-allen-twp/**`` reaches this site the same way — by being named in
+    # ``_FINDLAY.corpus_relpaths`` — and it is filed by CASE rather than by site, following the
+    # ``legal/thor-v-urbana`` precedent that Urbana's scope established (#1724).
+    assert "legal/one-energy-v-allen-twp/2026-Ohio-405.pdf" in docs
+    assert "findlay/governance/Zoning-Book-Effective-05-11-26.pdf" in docs
 
 
 def test_urbana_record_domain_publishes_its_worked_corpus(urbana_bundle: Path) -> None:

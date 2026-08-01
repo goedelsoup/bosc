@@ -1,0 +1,65 @@
+# Capture / alias manifest — One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees,
+# 2026-Ohio-405 (3d Dist., Feb. 9, 2026). Issue 1463, epic 1265 (readiness(findlay)).
+#
+# The published appellate opinion in the Open Meetings Act litigation that ran
+# alongside Allen Township's move from unzoned to zoned — the legal spine of the
+# township half of the Findlay data-center siting story. Sibling of
+# `legal/thor-v-urbana/` (the Urbana precedent), and like it the collection is
+# named for the case, not the site.
+#
+# The `content_verified` date is read from the file's OWN text layer.
+meta:
+  subject: >-
+    One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees, 2026-Ohio-405 — Third
+    District Court of Appeals, Hancock County, affirming both Common Pleas
+    judgments on Ohio's Open Meetings Act
+  collection: legal/one-energy-v-allen-twp/
+  captured_by: issue 1463 (epic 1265, readiness(findlay) — governance watch)
+  generated_at: '2026-07-31'
+  policy: non-destructive — as-served bytes, as-served filenames.
+
+documents:
+  - filename: 2026-Ohio-405.pdf
+    canonical: one-energy-v-allen-twp-bd-of-trustees-2026-ohio-405.pdf
+    title: >-
+      One Energy Enterprises Inc. et al. v. Board of Allen Township Trustees of
+      Hancock County, 2026-Ohio-405, Case Nos. 5-25-02 and 5-25-03 (Ohio Ct.
+      App., 3d Dist., Feb. 9, 2026)
+    issuer: Court of Appeals of Ohio, Third Appellate District, Hancock County
+    source_url: https://www.supremecourt.ohio.gov/rod/docs/pdf/3/2026/2026-Ohio-405.pdf
+    landing_page: https://www.supremecourt.ohio.gov/rod/docs/
+    sha256: 28d7b656ba5d3701da6b9581a69c3e04b5531199d93f0ad8278c2d0e163788d6
+    bytes: 310012
+    content_type: application/pdf
+    pages: 20
+    fetched_at: '2026-07-31T21:45:00Z'
+    content_verified: '2026-02-09'   # p.2 "Date of Decision: February 9, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      A published opinion with a clean text layer, so every figure and date in
+      the structured read is quoted, not transcribed from an image. It supplies
+      four things nothing else in the corpus holds: the APPELLATE case numbers
+      (5-25-02 and 5-25-03, which the issue body did not carry), confirmation of
+      the trial-court numbers (2024 CV 00038 and 2024 CV 00161, printed on the
+      caption page), the panel (Waldick, J., writing; Zimmerman, P.J., and
+      Willamowski, JJ., concurring), and the actual holdings — both sides lost
+      every assignment of error and BOTH judgments were affirmed.
+      ⚠️ TWO INTERNAL ERRORS IN THE OPINION ITSELF, preserved, not corrected:
+      at ¶15 the second case is called "2024-CR-161" (criminal designator) where
+      the caption page and every other reference say 2024 CV 00161; and the
+      Board's first and third assignments of error as block-quoted say
+      "December 5, 2024" where the entire factual narrative says December 5,
+      2023. Both are the court's own text.
+      ⚠️ SCOPE TRAP: this opinion is about the OPEN MEETINGS ACT only. It has
+      nothing to do with the ballot-language challenge that later undid the
+      May-2025 referendum — that is a separate, still-[open] Common Pleas
+      matter before Judge Starn. Do not let "2026-Ohio-405" stand in for the
+      ballot case.
+      ⚠️ SUBJECT-MATTER NOTE for the facility axis: the dispute began because
+      One Energy "was making plans to construct additional wind turbines in
+      Allen Township to, inter alia, provide power to the Whirlpool
+      manufacturing facility" (¶2) — WIND, behind an industrial customer's
+      meter. It corroborates, from a court's findings, the correction recorded
+      in issue 1464 that the Wind-for-Industry turbines serve Whirlpool and are
+      not generation at the Megawatt Hub.

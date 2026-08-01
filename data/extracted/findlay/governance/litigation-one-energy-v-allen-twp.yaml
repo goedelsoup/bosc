@@ -1,0 +1,237 @@
+# One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees — structured litigation record
+#
+# The published appellate decision in the Open Meetings Act litigation that shadowed Allen
+# Township's move from historically unzoned to zoned (site: findlay). Ingested from the
+# slip opinion:
+#   data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf  (3d Dist., 2026-02-09)
+# Issue 1463 · sub-issue of 1265 · strengthens `record` + `story`.
+#
+# TAG VOCABULARY (per CLAUDE.md / evidentiary-discipline). Unlike the Thor v. Urbana
+# complaint — a PARTY'S PLEADING, whose averments are only [reference] — this is a COURT'S
+# OWN OPINION, so its findings of fact are adjudicated, not alleged:
+#   [verified]  — what the instrument IS and what the court FOUND or HELD: the case numbers,
+#                 the panel, the dates, the procedural history the court recites as
+#                 established, the holdings, the remedy affirmed. Read from the text layer.
+#   [reference] — a party's characterization that the court reports without adopting.
+#   [inference] — a connection this repo draws between the opinion and other corpus.
+#   [open]      — not in corpus (the trial-court entries themselves, the separate
+#                 ballot-language case, the unnamed co-plaintiff landowning entities).
+#
+# ⚠️ SCOPE. This case is about R.C. 121.22 ONLY. It is NOT the case that invalidated the
+# May-2025 zoning referendum over abbreviated ballot language — that is a separate Common
+# Pleas matter before Judge Starn whose number is still [open]. Conflating the two would
+# misstate both.
+
+as_of: '2026-07-31'
+site: findlay
+strengthens: [record, story]
+issue: 'watermark-directory/the-watermark-directory#1463'
+epic: 'watermark-directory/the-watermark-directory#1265'
+
+source:
+  instrument: appellate-opinion
+  file: data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+  sha256: 28d7b656ba5d3701da6b9581a69c3e04b5531199d93f0ad8278c2d0e163788d6
+  content_verified: text-layer
+pages_read: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+
+# ------------------------------------------------------------------------------------------
+# THE CASE (what the instrument IS) — [verified] from the slip opinion.
+# ------------------------------------------------------------------------------------------
+case:
+  caption: One Energy Enterprises Inc. et al. v. Board of Allen Township Trustees of Hancock County
+  citation: 2026-Ohio-405
+  court: Court of Appeals of Ohio, Third Appellate District, Hancock County
+  case_nos: ['5-25-02', '5-25-03']          # [verified] caption page; TWO consolidated appeals
+  trial_court: Hancock County Court of Common Pleas
+  trial_court_nos: ['2024 CV 00038', '2024 CV 00161']   # [verified] p.2
+  decided: '2026-02-09'                     # [verified] p.2 "Date of Decision: February 9, 2026"
+  disposition: Judgments Affirmed           # [verified] p.2 and the Judgment Entry, p.20
+  author: Waldick, J.
+  panel:                                    # [verified] p.19 concurrence line + p.20 signatures
+    - Juergen A. Waldick, Judge (author)
+    - William R. Zimmerman, Presiding Judge (concurring)
+    - John R. Willamowski, Judge (concurring)
+  counsel:                                  # [verified] p.2 APPEARANCES
+    appellants: Marion H. Little, Jr. (for One Energy, appellants/cross-appellees)
+    appellee: Teresa L. Grigsby (for the Board, appellee/cross-appellant)
+  costs: assessed to Appellant; causes remanded to the trial court for execution of the judgment for costs
+
+parties:
+  plaintiffs_appellants:
+    - name: One Energy Enterprises, Inc.
+      detail: >
+        [verified] fn.3 — "a Delaware corporation with its principal place of business in
+        Hancock County, Ohio."
+    - name: unnamed additional plaintiffs
+      detail: >
+        [open] fn.1 describes them only as "entities that have land interests in Allen
+        Township" and names none. Identifying them is a retrieval target — they are the
+        landowning side of the One Energy position in the township.
+  defendant_appellee:
+    - name: Board of Allen Township Trustees of Hancock County
+      detail: '[verified] fn.2 — "comprised of three trustees and a fiscal officer."'
+
+# ------------------------------------------------------------------------------------------
+# THE COURT'S NARRATIVE — [verified] as the court's recited findings.
+# ------------------------------------------------------------------------------------------
+chronology:
+  - date: '2023-12-05'
+    para: '3-6'
+    event: >
+      One Energy petitioned the Hancock County Commissioners to rename Township Road 215
+      "Electric Avenue." Without convening a public meeting, the Board decided to attend the
+      Commissioners' daytime meeting and oppose the renaming. At its own regular meeting that
+      evening, residents raised zoning as a way to regulate wind-turbine expansion; counsel
+      explained the R.C. 519.04 steps. After the meeting adjourned, some members stayed to
+      discuss who might serve on a zoning commission and what traits were desirable.
+  - date: '2023-12-18'
+    para: '7'
+    event: Notice published in the Findlay Courier of a December 20 special meeting listing "two resolutions (zoning and marijuana)."
+  - date: '2023-12-20'
+    para: '8'
+    event: >
+      At the special meeting the Board moved to proceed with zoning and to establish a zoning
+      commission under R.C. 519.04. Both resolutions passed without discussion; public comment
+      was not solicited.
+  - date: '2024-01-26'
+    para: '9'
+    event: One Energy filed case 2024 CV 00038 seeking declaratory relief for Open Meetings Act violations.
+  - date: '2024-02-06'
+    para: '10'
+    event: >
+      The Board adopted a revised notice policy (fearing the original rule was lost or
+      destroyed) and RESCINDED both December 20 zoning resolutions. Minutes reflect the
+      township attorney recommending that residents be required to petition for zoning.
+  - date: '2024-02-26'
+    para: '11'
+    event: Hancock County Board of Elections certified the resident petitions.
+  - date: '2024-03-05'
+    para: '11'
+    event: >
+      Nine petitions bearing 141 signatures were presented, asking the Board to move to place
+      zoning for the unincorporated areas on the ballot. The Board instructed the attorney to
+      prepare a resolution.
+  - date: '2024-04-01'
+    para: '12'
+    event: A protest was filed against the Board of Elections' certification placing zoning on the November ballot.
+  - date: '2024-04-02'
+    para: '13-14'
+    event: >
+      After an eight-minute executive session on pending litigation, the Board proceeded with
+      zoning BY ITS OWN RESOLUTION rather than on the petitions, and passed a second resolution
+      establishing a new zoning commission. The new commission's members gathered afterward;
+      One Energy's president/CEO claimed his filming was thwarted.
+  - date: '2024-04-18'
+    para: '15'
+    event: >
+      One Energy filed a second complaint (the opinion writes "2024-CR-161" here; the caption
+      page says 2024 CV 00161) alleging the Board failed to deliberate in public over who would
+      sit on the zoning commission and by what criteria.
+  - date: '2024-08-14/15 and 2024-11-07'
+    para: '16'
+    event: >
+      Trial. One Energy expressly disclaimed statutory damages, attorney's fees and costs,
+      seeking only compliance, declarations, and invalidation of the April 2024 zoning
+      commission.
+  - date: '2024-12-30'
+    para: '17-19'
+    event: Final judgment entries in both cases.
+
+holdings:
+  violations_found:                         # [verified] — affirmed
+    - >
+      Taking an official position opposing the renaming of Township Road 215 without
+      discussing it in an open meeting violated R.C. 121.22. The chairman testified he
+      discussed the position by phone with the other members and then stated "the Board's
+      position" at the Commissioners' meeting (¶29). Pleading objection rejected: Ohio is a
+      notice-pleading state and the issue was fully litigated (¶27).
+    - >
+      Remaining after the December 5, 2023 meeting to discuss criteria for selecting zoning
+      commission members was a deliberation, not fact-finding, and violated the Act (¶¶33-34).
+  claims_rejected:                          # [verified] — the trial court's rejections, affirmed
+    - Notice of the December 20, 2023 special meeting was sufficient.
+    - The December 5, 2023 minutes were prepared in a timely manner.
+    - The April 2, 2024 executive session was properly invoked to discuss the One Energy litigation.
+    - >
+      The evidence did not establish that the decision to proceed with zoning resulted from
+      nonpublic deliberations.
+  remedy:
+    granted: >
+      A prospective injunction: the trustees "are prospectively enjoined from engaging in
+      private discussions of public matters in derogation of R.C. §121.22." Mandatory under
+      R.C. 121.22(I)(1) once a violation is proven, though the trial court retains discretion
+      over its terms (¶¶35, 40).
+    refused: >
+      The court declined to strike the selection criteria or invalidate the April 2024 zoning
+      commission, on the trial court's three stated grounds: the informal discussion produced
+      no official action subject to invalidation; the rescission of the December 2023
+      resolutions "constitutes an intervening circumstances that breaks any causal link"; and
+      the criteria "were not unique" — "This Court declines to enjoin the use of common sense"
+      (¶40).
+  bottom_line: >
+    [verified] Both sides lost every assignment of error. The zoning-commission actions of
+    April 2, 2024 STAND. The Open Meetings Act violations are real and declared, but they did
+    not undo the zoning track — which is why the instrument that eventually reached the
+    electorate traces to the April 2024 resolution and not to the rescinded December 2023 one.
+
+key_authority:                              # [verified] as cited by the court
+  - 'Look Ahead Am. v. Stark Cnty. Bd. of Elections, 2024-Ohio-2691, ¶15 — OMA interpretation is de novo'
+  - 'State ex rel. Pelmear v. Henry Cnty. Land Reutilization Corp., 2025-Ohio-4998, ¶24, ¶30'
+  - 'Ames v. Rootstown Twp. Bd. of Trustees, 2022-Ohio-4605, ¶¶20-21 — injunction mandatory, terms discretionary'
+  - 'State ex rel. Bratenahl v. Village of Bratenahl, 2019-Ohio-3233, ¶23 — rescission does not moot a proven violation'
+  - 'Springfield Local Sch. Dist. Bd. of Educ. v. Ohio Assn. of Pub. Sch. Emps., Local 530, 106 Ohio App.3d 855 (9th Dist.) — causation required beyond the act of deliberation'
+  - 'Blakemore v. Blakemore, 5 Ohio St.3d 217, 219 (1983) — abuse-of-discretion standard'
+
+# ------------------------------------------------------------------------------------------
+# WHAT THIS SETTLES FOR THE SITE — corroboration and correction against existing corpus.
+# ------------------------------------------------------------------------------------------
+corroboration:
+  - claim: The Wind-for-Industry turbines serve industrial hosts, not the Megawatt Hub.
+    tag: verified
+    detail: >
+      ¶2 of the opinion states as the court's own background that One Energy "was making plans
+      to construct additional wind turbines in Allen Township to, inter alia, provide power to
+      the Whirlpool manufacturing facility." Independently corroborates the correction recorded
+      in issue 1464 (see data/extracted/grid/findlay/) that nothing places generation at the
+      Megawatt Hub, from a source that is neither a company filing nor press.
+  - claim: The zoning fight was triggered by WIND, and data centers were nowhere in it.
+    tag: inference
+    detail: >
+      The opinion's entire factual account — turbines, a road renaming, a zoning commission —
+      runs from late 2023 through December 2024 without a single reference to data centers or
+      computing load. The data-center question arrives in Allen Township only in 2026, after
+      the resolution is already adopted and awaiting a referendum. That sequencing is why the
+      adopted resolution has no data-center provision to be found: it was not drafted against
+      that use.
+
+corrections_to_issue_body:
+  - >
+    The issue body compresses "resident petitions (141 signatures, BOE-certified 2024-02-26)"
+    into the causal chain, but ¶13 is explicit that the Board did NOT proceed on the petitions:
+    "Despite the petitions that had been submitted, the Board elected to proceed with zoning
+    through their own resolution." The petitions were certified and presented; the trustees
+    then used their own R.C. 519 track instead.
+  - >
+    The issue body gives no appellate case numbers. They are 5-25-02 and 5-25-03 — two
+    consolidated appeals, one per trial-court case.
+  - >
+    The issue body says the trial court found "limited violations ... but the zoning-commission
+    actions stand." Accurate, and now sourced: ¶19 quotes the entry directly, and ¶¶40-46 give
+    the three reasons the commission survived.
+
+open_targets:
+  - >
+    The two Common Pleas judgment entries themselves (2024 CV 00038 Doc. No. 79; 2024 CV 00161
+    Doc. No. 66) — quoted in the opinion but not held. The Clerk of Courts eServices portal
+    timed out on capture; see the access_failures block in the governance filename-map.
+  - >
+    The SEPARATE ballot-language case that invalidated the May-2025 referendum. Case number
+    [open]. All the corpus holds is the township's own recital (ATZC minutes 2026-07-07) that
+    "Allen Township's zoning status was revoked by Judge Jonathon Starn."
+  - >
+    The identities of the co-plaintiff "entities that have land interests in Allen Township"
+    (fn.1). Relevant to any vested-rights claim over the Megawatt Hub parcels.
+  - >
+    Any post-decision history — a jurisdictional appeal to the Supreme Court of Ohio was not
+    checked for and is not asserted either way.

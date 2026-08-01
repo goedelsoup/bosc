@@ -1,0 +1,545 @@
+# Capture / alias manifest — Findlay + Hancock County governance watch, issue 1463.
+#
+# Web-captured primary evidence for the data-center siting regime around the
+# Findlay watershed point: the Allen Township zoning instruments (the resolution
+# that took effect six days after the May-2026 referendum was certified, its
+# map, and the two July-2026 amendments that would write "data center" into it
+# for the first time), a live Agricultural-to-Light-Industrial rezoning
+# application on the same state route, the zoning commission's own minutes, the
+# Hancock County Board of Elections certified canvass of the referendum, and the
+# county's SB 52 restricted-area notice.
+#
+# Raw bytes are never edited and files keep the name the server served them
+# under — including `Res.ESS_.pdf`, whose trailing underscore is a WordPress
+# upload artifact, and `Minutes-7-22-26-special-ATZC.pdf`, whose date is written
+# two-digit-year while its siblings are four. Neither is corrected.
+#
+# The `content_verified` date is read from each file's OWN layer (a signature
+# block, a caption, a report timestamp) — never from the URL, the fetch time, or
+# outside knowledge. Four of these are image-only scans with no text layer; for
+# those the date comes from a 200 dpi render read visually, recorded as
+# evidence: rendered_scan.
+#
+# evidence: native_text   = PDF text layer (pypdf) confirms the identity + date
+#           rendered_scan = no text layer; page rendered and read as an image
+#           html_capture  = as-served response bytes of a web page
+meta:
+  subject: >-
+    Findlay / Hancock County governance watch — Allen Township's adopted zoning
+    resolution and its July-2026 data-center and energy-storage amendments, the
+    certified referendum canvass, a live I-1 rezoning on SR 613, and the county
+    SB 52 restricted-area notice (issue 1463)
+  collection: findlay/governance/
+  captured_by: issue 1463 (epic 1265, readiness(findlay) — governance watch)
+  generated_at: '2026-07-31'
+  policy: non-destructive — as-served bytes, as-served filenames.
+
+documents:
+  # ── The adopted instrument ────────────────────────────────────────────────
+  - filename: Zoning-Book-Effective-05-11-26.pdf
+    canonical: allen-township-zoning-resolution-effective-2026-05-11.pdf
+    title: >-
+      Allen Township, Hancock County, Ohio — Zoning Resolution, effective
+      May 11, 2026
+    issuer: Board of Allen Township Trustees (Milford Smith, Kevin Flanagan, Roger Clark)
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/07/Zoning-Book-Effective-05-11-26.pdf
+    landing_page: https://allentwphancockoh.gov/zoning/
+    sha256: 855c35c9ad8b1d51532a58140ec56e5867135338f2df655cf575e7297ffa6b87
+    bytes: 936889
+    content_type: application/pdf
+    pages: 77
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2026-05-11'   # cover p.1 "EFFECTIVE MAY 11, 2026"; Art. XXIV "Effective Date: May 11, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The instrument the whole township fight was about, and it answers the
+      issue's "which adopted district covers them" question from its own text.
+      ARTICLE XXIV prints the entire procedural chain: "Date of Public Hearing
+      by Zoning Commission: July 5, 2024 / Date of Public Hearing by Township
+      Trustees: September 9. 2024 / Date of Adoption by Township: September 9,
+      2024 / Date Certified by Hancock County Board of Elections: May 11, 2026"
+      — a twenty-month gap between adoption and effect, because the trustees'
+      resolution had to survive a referendum twice. Section 300 establishes nine
+      districts (A-1, R-1, RM-1, B-1, B-2, B-3, ES Expressway Service, I-1 Light
+      Industrial, I-2 General Industrial) — note ES is EXPRESSWAY SERVICE, not
+      an energy district, and the resolution is enumerated-use ("no building or
+      land shall be used ... except for one or more of the following specified
+      uses"). The phrase "data center" appears ZERO times in all 77 pages;
+      Section 1518's prohibited-in-all-districts list is adult entertainment,
+      commercial marijuana and private landfills only. Non-accessory solar
+      (Sec. 1519) and non-accessory energy storage (Sec. 1520) are conditional
+      uses in I-2 ONLY. The Sec. 1201 numbering appears twice in Article XII
+      (PERMITTED USES and AREA AND BULK REQUIREMENTS) — the clerical error the
+      zoning commission's own 2026-06-02 minutes flag for renumbering,
+      corroborated here in the bytes.
+  - filename: Zoning-Map-05-11-2026.pdf
+    canonical: allen-township-zoning-map-2026-05-11.pdf
+    title: Allen Township Zoning Map (districts as of the May 11, 2026 effective date)
+    issuer: Allen Township / mapping by Hancock County Regional Planning Commission
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/07/Zoning-Map-05-11-2026.pdf
+    landing_page: https://allentwphancockoh.gov/zoning/
+    sha256: 13f27c5bf0766bce7d4a0a4cf02dc0ac3e3a600cbb8b5deb7fe36b3b2392b1db
+    bytes: 412005
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: null   # [open] the sheet carries no date in its own layer; the FILENAME says 05-11-2026 and a filename is not evidence
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The district map that Section 301 makes "as much a part of this Resolution
+      as if it were verbally described." Its legend still reads "Allen Twp
+      PROPOSED Zoning" even though the filename dates it to the effective date —
+      a stale label carried over from the pre-referendum draft, preserved, not
+      corrected. Legend districts: Agriculture, R1, RM, B1, B2, B3, I1, I2, ES.
+      Road labels place the township across I-75 at SR 613, and include TR 215 —
+      the Township Road that One Energy petitioned to rename "Electric Avenue,"
+      the petition whose non-public discussion became the Open Meetings Act
+      violation affirmed in 2026-Ohio-405. `content_verified` stays null: the
+      sheet does not date itself, and per chain of custody the filename is not
+      a content date.
+
+  # ── The two July-2026 amendments (the live watch) ─────────────────────────
+  - filename: Res.DataCenters.pdf
+    canonical: atzc-resolution-24-04-124M-data-centers-2026-07-28.pdf
+    title: >-
+      Allen Township Zoning Commission Resolution No. 24-04-124M — intention to
+      initiate amendment of the Zoning Resolution under R.C. 519.12, adding
+      Section 1521 (Data Centers), adopted July 28, 2026
+    issuer: Allen Township Zoning Commission (Hancock County, Ohio)
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/07/Res.DataCenters.pdf
+    landing_page: https://allentwphancockoh.gov/atzc-public-hearing-8-19-2026-data-centers/
+    sha256: a9cff4ae5cae71ab68150d599be883c853e89b0c0b676101730357c6d9dfdfe2
+    bytes: 1166323
+    content_type: application/pdf
+    pages: 7
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2026-07-28'   # p.1 header "July 28, 2026"; p.2 attest "DATE: July 28, 2026" (rendered)
+    evidence: rendered_scan
+    status: downloaded
+    note: >-
+      The central new instrument, adopted three days before capture. Image-only
+      scan (0 text chars across 7 pages); read from a 170 dpi render. The
+      resolution proper (pp.1-2) carries the handwritten resolution number
+      24-04-124M, the five members present (Kissell, McGrain, Powell, Stacy,
+      Timmerman), Timmerman moving and Kissell seconding, and a 5-0 roll call
+      attested by Deb Stacy, Secretary. Attachment A (pp.3-7) is the proposed
+      Section 1521 text plus definitions to be added to Section 201. Substance
+      is in
+      data/extracted/findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml
+      — the load cap, the water and cooling restrictions, and the
+      anti-circumvention aggregation rule all live there. Attachment A's own
+      "Resolution No. ____" line is BLANK; the number is only on the resolution
+      pages.
+  - filename: Res.ESS_.pdf
+    canonical: atzc-resolution-24-04-125M-energy-storage-systems-2026-07-28.pdf
+    title: >-
+      Allen Township Zoning Commission Resolution No. 24-04-125M — intention to
+      initiate amendment of the Zoning Resolution under R.C. 519.12, replacing
+      Section 1520 with Energy Storage Systems, adopted July 28, 2026
+    issuer: Allen Township Zoning Commission (Hancock County, Ohio)
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/07/Res.ESS_.pdf
+    landing_page: https://allentwphancockoh.gov/atzc-public-hearing-8-19-2026-energy-storage-systems/
+    sha256: f4e4ac399eb47f4a8d097f20b906c5334e61df1295e875b671d4c1f6b850abd1
+    bytes: 963365
+    content_type: application/pdf
+    pages: 5
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2026-07-28'   # Attachment A carries Resolution No. 24-04-125M; sibling resolution dated July 28, 2026 (rendered)
+    evidence: rendered_scan
+    status: downloaded
+    note: >-
+      ⚠️ FILENAME ARTIFACT, preserved. The served name is `Res.ESS_.pdf` — the
+      trailing underscore is a WordPress upload-sanitizer artifact, not part of
+      any title. Kept verbatim per chain of custody. The data-center amendment's
+      sibling and its numeric successor (24-04-125M), moved at the same
+      2026-07-28 meeting and heard the same evening at 8:00 p.m. Attachment A is
+      captioned "<replacing Section 1520 — ENERGY STORAGE RELATED TO WIND AND
+      SOLAR FACILITIES.>" — i.e. it does not add a section, it REPLACES the
+      adopted book's wind/solar-tethered storage rule with a technology-neutral
+      "Section 1520 - ENERGY STORAGE SYSTEMS," which matters because the adopted
+      Sec. 1520 only reached storage "related to wind and solar facilities" and
+      so arguably never reached storage sited to firm a large computing load.
+      Accessory ESS is capped at 100 kWh, on-site use only, 15 ft height, 20 ft
+      setback, 40 dBA at the property line. Image-only scan; read from render.
+
+  # ── The live rezoning application ─────────────────────────────────────────
+  - filename: Application-Zoning-Amendment-Interstate-Capital.pdf
+    canonical: allen-twp-rezoning-application-interstate-capital-2026-07-01.pdf
+    title: >-
+      Application for Zoning Amendment, Allen Township — Interstate Capital, LLC,
+      parcels 020001015303 and 02000100123, Agriculture to I-1 Light Industrial
+    issuer: Interstate Capital, LLC (260 E. Brown St., Suite 200, Birmingham, MI 48009)
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/07/Application-Zoning-Amendment-Interstate-Capital.pdf
+    landing_page: https://allentwphancockoh.gov/atzc-public-hearing-8-5-26/
+    sha256: e5580e3295e47e36c4b73f2628b8da70ad90fd2b90949c513e4a84dc1c2fa1c4
+    bytes: 329794
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: null   # [open] the form itself is UNDATED and its Application No. line is blank; the 2026-07-01 receipt date comes from the ATZC's 2026-07-07 minutes, a different document
+    evidence: rendered_scan
+    status: downloaded
+    note: >-
+      Image-only scan; read from render. The form states the applicant, the two
+      parcels, "Address: Vacant Land SR 613", "Existing Use: Agriculture",
+      "Present Zoning District: Agriculture", "Proposed Zoning District: Light
+      Industrial", and "Proposed Use: Warehousing / Manufacturing". ⚠️ PARCEL
+      NUMBER DISCREPANCY, preserved: the application writes the second parcel
+      `02000100123` (11 digits) while the township's own public-hearing notice
+      writes `020001001123` (12 digits). Neither is corrected here; which is the
+      auditor's key is an open retrieval target. ⚠️ The form is UNDATED and its
+      Application No. is blank, so `content_verified` is null — the 2026-07-01
+      receipt date is a recital in the separate 2026-07-07 ATZC minutes, not a
+      fact this file carries.
+  - filename: Application-Attachments.pdf
+    canonical: allen-twp-rezoning-attachments-interstate-capital-allen-commerce-park.pdf
+    title: >-
+      Attachments to the Interstate Capital, LLC zoning-amendment application —
+      "Allen Commerce Park" rezone exhibit, legal descriptions and contiguous
+      owners
+    issuer: Interstate Capital, LLC
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/07/Application-Attachments.pdf
+    landing_page: https://allentwphancockoh.gov/atzc-public-hearing-8-5-26/
+    sha256: 681aa03ca2ba94bb0fa2c3dd9debe7759675ac94eb33b864a907f1e8840ac4f3
+    bytes: 1908203
+    content_type: application/pdf
+    pages: 8
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: null   # [open] no date in the exhibit's own layer
+    evidence: rendered_scan
+    status: downloaded
+    note: >-
+      Image-only scan; read from a 500 dpi render for the parcel labels. The
+      applicant's marketing-style rezone exhibit names the project "ALLEN
+      COMMERCE PARK", claims a "$140 MILLION INVESTMENT", and asserts the
+      rezoning is "CONSISTENT WITH HANCOCK COUNTY COMPREHENSIVE PLAN". The
+      parcel callouts give 020001015303 = 72.230 acres and 02000100123 = 63.068
+      acres, both "CURRENT ZONING: AG AGRICULTURE DISTRICT / REZONE TO: I-1
+      LIGHT INDUSTRIAL DISTRICT" (≈135.3 ac total). The site sits west of I-75
+      on OH-613 at TR-142, with the county sanitary landfill (zoned I-2 Heavy
+      Industrial) to the southwest at TR-109. A site-plan inset shows two
+      proposed buildings; their square-footage labels are NOT legible even at
+      500 dpi, so no figure is recorded for them — [open], pending a legible
+      copy. ⚠️ The applicant's own title block reads "SITE ADDRESS: VACANT LAND
+      OH-613, ALLEN TOWNSHIP, **MI**" — Michigan, the applicant's home state.
+      An error in the exhibit, preserved verbatim, not corrected.
+
+  # ── The zoning commission's own minutes ───────────────────────────────────
+  - filename: Minutes-4-7-26-ATZC.pdf
+    canonical: atzc-minutes-2026-04-07.pdf
+    title: Allen Township Zoning Commission minutes, April 7, 2026
+    issuer: Allen Township Zoning Commission
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/06/Minutes-4-7-26-ATZC.pdf
+    landing_page: https://allentwphancockoh.gov/zoning-commission/
+    sha256: 872d5f2ad6372e8e9e73c53275c93d8be14f7c1101e6fa0c0ad4377985e3f29e
+    bytes: 57137
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2026-04-07'   # caption "Allen Township Zoning Commission / April 7, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Captured for one exchange, four weeks before the referendum: "John
+      Timmerman asked Cindy if the proposed zoning resolution would permit a
+      data center in the township. Cindy stated that a data center would not be
+      permitted." Cindy is Lucinda Land, Assistant Hancock County Prosecutor,
+      the township's own counsel, on the record in open session. That is the
+      cleanest available statement of what the instrument the electorate was
+      about to vote on was understood to do.
+  - filename: Minutes-6-2-26-ATZC.pdf
+    canonical: atzc-minutes-2026-06-02.pdf
+    title: Allen Township Zoning Commission minutes, June 2, 2026
+    issuer: Allen Township Zoning Commission
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/06/Minutes-6-2-26-ATZC.pdf
+    landing_page: https://allentwphancockoh.gov/zoning-commission/
+    sha256: ff0d55bd26b332bd1d002db61ef196d48f391a1383697ec258ec9d1b60c917c1
+    bytes: 59664
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2026-06-02'   # caption "Allen Township Zoning Commission / June 2, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Three weeks after the resolution took effect, counsel reverses course:
+      "Cindy recommended that language be drafted for the zoning resolution to
+      state the location, requirements and conditions regarding data centers and
+      battery energy storage systems, BESS." Also records that Hancock Regional
+      Planning supplied the current district map and that better map detail was
+      wanted from GIS.
+  - filename: Minutes-7-7-26-ATZC.pdf
+    canonical: atzc-minutes-2026-07-07.pdf
+    title: Allen Township Zoning Commission minutes, July 7, 2026
+    issuer: Allen Township Zoning Commission
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/07/Minutes-7-7-26-ATZC.pdf
+    landing_page: https://allentwphancockoh.gov/zoning-commission/
+    sha256: ccd03549b0761c3900575e11553b4668d402c660e28863c4a3aecd5981ae60ef
+    bytes: 65885
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2026-07-07'   # caption "Allen Township Zoning Commission / July 7, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Carries two facts nothing else in the corpus holds. First, the disposition
+      of the 2025 ballot litigation, in the commission's own words: a 2025
+      hearing has to be redone "because Allen Township's zoning status was
+      revoked by Judge Jonathon Starn" — the township's own record that the
+      first referendum was undone by the Common Pleas bench (the case number is
+      still [open]; note the minutes spell the judge "Jonathon" where the county
+      spells him "Jonathan"). Second, the Interstate Capital application: "Dave
+      Smith, Zoning Inspector for Allen Township, received an application for a
+      zoning amendment from Interstate Capital on July 1, 2026 ... properties
+      located at the NW corner of State Route 613 and Township Road 142 ...
+      changing the current designation of Agriculture over to Industrial, I1."
+      Also notes Lucinda Land's retirement and Justin Kahl taking over as
+      township counsel.
+  - filename: Minutes-7-22-26-special-ATZC.pdf
+    canonical: atzc-minutes-special-meeting-2026-07-22.pdf
+    title: Allen Township Zoning Commission special-meeting minutes, July 22, 2026
+    issuer: Allen Township Zoning Commission
+    source_url: https://allentwphancockoh.gov/wp-content/uploads/2026/07/Minutes-7-22-26-special-ATZC.pdf
+    landing_page: https://allentwphancockoh.gov/zoning-commission/
+    sha256: 2d96c7b234cc00edc1f6c4fab4891b86501976ef0fd55a5cb92c1ca6f13c1685
+    bytes: 58505
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2026-07-22'   # caption "Allen Township Zoning Commission / Special Meeting / July 22, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The drafting session for Section 1521, and it names who was in the room:
+      "Guests attending this meeting were: Jacob Mercer, Hancock County Regional
+      Planning Commission; Justin Kahl, Hancock County Assistant Prosecutor,
+      Dan Smies, On-Site Partners; and Jon Cross, Cross Capital Consultant."
+      It also records the provenance of the text — Timmerman "merged information
+      from Washington Township's language on data center regulations" (written
+      by Mercer for Washington Township) with his own draft "that followed a
+      pattern similar to the wind and solar sections in our adopted zoning
+      resolution book", and "Definitions included in Washington Township's
+      language will become a part of Allen Township's language." The ESS draft
+      was NOT finished at this meeting ("more time was needed to gather
+      information") yet both topics were carried into the August 19 hearing
+      anyway. Filename writes the year two-digit where its siblings write four;
+      preserved.
+
+  # ── The certified referendum canvass ──────────────────────────────────────
+  - filename: 2026-PRI-SUM.pdf
+    canonical: hancock-boe-2026-primary-official-canvass-summary.pdf
+    title: >-
+      Hancock County Board of Elections — 2026 Primary official canvass, summary
+      report (generated May 11, 2026)
+    issuer: Hancock County Board of Elections
+    source_url: https://hancockcountyohioelections.gov/wp-content/uploads/2026/05/2026-PRI-SUM.pdf
+    landing_page: https://hancockcountyohioelections.gov/2026-may-primary-summary/
+    sha256: 7db8f22d1657e6da76d1d09aa1f7a8d12539732bdef2312ef3608fd0e411a288
+    bytes: 233315
+    content_type: application/pdf
+    pages: 13
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2026-05-11'   # every page header "5/11/2026 4:17:22 PM"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The certified figure the issue asked for, and it corrects the reported
+      one. "Allen Township Zoning (Unincorporated Area)" — FOR THE ZONING
+      RESOLUTION 503 (69.48%), AGAINST THE ZONING RESOLUTION 221 (30.52%), total
+      votes 724, times cast 732 of 1,761 (41.57%), 2 of 2 precincts. The widely
+      reported unofficial count was 502-221; the canvass is 503-221. The report
+      timestamp (5/11/2026) is also the date Article XXIV of the zoning
+      resolution gives as its BOE certification and effective date — the
+      canvass and the instrument agree. ⚠️ READING TRAP: in this report's
+      layout the contest TITLE is printed BELOW its own result block, so a
+      naive top-down read attaches each contest's numbers to the preceding
+      title; the zoning numbers sit above the "Allen Township Zoning" heading,
+      and the "FOR THE TAX LEVY 132 / 74.16%" block immediately below that
+      heading belongs to Amanda Township, not to Allen.
+  - filename: 2026-PRI-SOVC.pdf
+    canonical: hancock-boe-2026-primary-official-canvass-sovc.pdf
+    title: >-
+      Hancock County Board of Elections — 2026 Primary official canvass,
+      statement of votes cast by precinct
+    issuer: Hancock County Board of Elections
+    source_url: https://hancockcountyohioelections.gov/wp-content/uploads/2026/05/2026-PRI-SOVC.pdf
+    landing_page: https://hancockcountyohioelections.gov/2026-may-primary-precinct-by-precinct/
+    sha256: 5406be74e05ddec40765f387e632feb9915fd32df7d099ac8acdc50e8160c2bd
+    bytes: 1239345
+    content_type: application/pdf
+    pages: 150
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2026-05-11'   # page headers "5/11/2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The precinct split behind the 503-221: ALLEN E 305 for (73.67%) / 109
+      against (26.33%) on 414 votes; ALLEN W 198 for (63.87%) / 112 against
+      (36.13%) on 310 votes. Registration for the zoning contest is ALLEN E 962
+      and ALLEN W 799 = 1,761, but the same report's countywide turnout table
+      gives ALLEN W 1,077 registered. Do not reconcile those two numbers as an
+      error; they measure different electorates — one contest is put only to the
+      unincorporated area, the other table counts the whole precinct. The
+      278-voter arithmetic is read off this file; what accounts for it is NOT in
+      this file, which never names the excluded area. See the tagged treatment in
+      allen-twp-zoning-adoption-and-referendum.yaml — the reduction is consistent
+      with an incorporated village being carved out, but the identification is
+      [inference] and the split itself is [open] pending the BOE's
+      precinct-to-jurisdiction table.
+
+  # ── The county's SB 52 restricted area ────────────────────────────────────
+  - filename: notice_from_the_hancock_county_commissioners.pdf
+    canonical: hancock-county-sb52-restricted-area-notice-resolution-167-22.pdf
+    title: >-
+      Notice of the Board of Hancock County Commissioners + Resolution No.
+      167-22 (setting the R.C. 303.58 public meeting) + the proposed wind and
+      solar exclusion-zone map
+    issuer: Board of Hancock County Commissioners
+    source_url: https://www.villageofmccomb.com/sites/default/files/news/notice_from_the_hancock_county_commissioners.pdf
+    landing_page: https://www.villageofmccomb.com/
+    sha256: 6a5f282ab08daada4c29466dde91a03897b885e1337ee0be893d3e5cd5afe158
+    bytes: 1709054
+    content_type: application/pdf
+    pages: 4
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: '2022-03-15'   # Resolution No. 167-22 header + attest "DATE: March 15, 2022" (rendered)
+    evidence: rendered_scan
+    status: downloaded
+    note: >-
+      ⚠️ THIS IS NOT THE ADOPTED RESTRICTED-AREA RESOLUTION, and reading it as
+      one is the trap the issue body half-warns about. Image-only scan (0 text
+      chars, 4 pages); read from a 200 dpi render. What it actually contains is
+      (p.1) the published notice, "Publish: March 18, 2022", of a meeting set
+      for April 19, 2022 at 2:30 pm; (pp.2-3) Resolution No. 167-22 of
+      March 15, 2022, which only SETS the date, time and place of that meeting
+      under R.C. 303.58; and (p.4) the PROPOSED exclusion map. The 2-1 roll call
+      — Pepple yes, Bateson yes, Bechtol no, Bateson moving and Pepple seconding
+      — belongs to this meeting-setting resolution, not to the adoption. The
+      resolution adopted on 2022-04-19 and its number remain [open]. The map
+      legend reads "Hancock County, Ohio / Wind and Solar Exclusion Zones
+      (Hatched Area) / Does not Include areas inside Incorporated Municipalities
+      and Biglick Township" — the "all townships except Biglick" shape, but as
+      PROPOSED on 2022-03-15; whether the adopted map is identical is not
+      established by this file. Note the subject matter: R.C. 303.57 et seq.
+      reaches economically significant wind farms, large wind farms and large
+      solar facilities. It does not reach data centers at all.
+
+  # ── Secondary coverage (the city side, [reference] only) ──────────────────
+  - filename: ohioregister-moratorium.html
+    canonical: theohioregister-findlay-council-passes-data-center-moratorium.html
+    title: >-
+      "Findlay City Council Passes Data Center Moratorium" — The Ohio Register,
+      by Jeff Skinner
+    issuer: The Ohio Register (secondary reporting — NOT a certified record)
+    source_url: https://www.theohioregister.com/findlay-city-council-passes-data-center-moratorium/
+    landing_page: https://www.theohioregister.com/
+    sha256: 0da1a30be8e39dece3298fdb0b85ffe2fff94e493bf6eed84b10cb24394ddb4c
+    bytes: 40954
+    content_type: text/html
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: null   # [open] the captured bytes carry no publication date we can read off the article body
+    evidence: html_capture
+    status: downloaded
+    note: >-
+      Captured ONLY because the certified instrument could not be: see
+      `access-failures` below. Supplies the quoted banned-use language ("the
+      establishment, conversion of other structures or buildings into a data
+      center"), the 9-1 tally, Preston as the sole nay and his stated reason,
+      the rules suspension moved by Cullen, and the public-comment incident. ⚠️
+      Its roll call is NOT usable as a roll call: the article itself hedges
+      "DeArment (or DeLong per some records)" while listing both names, which is
+      a tell that the list is aggregated rather than read off the journal.
+      Everything from this file is [reference]; the roll call specifically is
+      recorded as unreliable.
+  - filename: pulse-moratorium.html
+    canonical: pulse-findlay-edu-data-center-moratorium-dies-in-council.html
+    title: >-
+      "Findlay data center moratorium dies in council" — The Pulse (University of
+      Findlay), by Victoria Hansen
+    issuer: The Pulse, University of Findlay student newspaper (secondary reporting)
+    source_url: https://pulse.findlay.edu/2026/news-2/data-center-moratorium/
+    landing_page: https://pulse.findlay.edu/
+    sha256: c8d65bbae800f25b531f62f6396fa04bc4b768bf351ced41fee17b5fee442c27
+    bytes: 97568
+    content_type: text/html
+    fetched_at: '2026-07-31T22:00:00Z'
+    content_verified: null   # [open] no in-body publication date in the captured bytes
+    evidence: html_capture
+    status: downloaded
+    note: >-
+      Covers the FIRST attempt, which the Ohio Register piece does not: the
+      Phillips/DeLong motion that died in council on 2026-04-07 "due to the
+      vague wording in the moratorium", the unanimous referral to the Zoning and
+      Planning Commission, and that body's 2026-04-09 decision not to pass a
+      moratorium but to "recommend drafting two possible zoning codes about data
+      centers: an edited version of a previously proposed code and a new code
+      that is restrictive against data centers." Also records DeLong's statement
+      of the enumerated-use theory — data centers "are not listed in the City of
+      Findlay's zoning code, which means they are banned in Findlay" — the same
+      logic Allen Township's counsel applied to the township resolution.
+      [reference].
+
+# ── What could NOT be retrieved, and why ────────────────────────────────────
+# Recorded as ACCESS FAILURES, not as negatives. An unreachable host is not
+# evidence that a record does not exist (the standing rule from the PUCO DIS
+# block in issue 1464).
+access_failures:
+  - target: Findlay Ordinance 2026-42 certified text + the council journal for 2026-03-17 / 04-07 / 04-22
+    urls:
+      - https://www.findlayohio.gov/
+      - https://findlayohio.gov/
+      - https://www.findlayohio.com/
+      - https://www.findlayohio.gov/i-want-to/reserve-request/public-records
+      - https://codelibrary.amlegal.com/codes/findlay/latest/findlay_oh/0-0-0-15963
+    observed: >-
+      Every findlayohio.gov and findlayohio.com path returns HTTP 403 to an
+      automated fetch, with and without a browser user-agent; American Legal's
+      code library returns 403 to both curl and the fetch tool. There is a
+      `findlay.legistar.com` hostname but it is not a provisioned tenant — it
+      answers "Invalid parameters!" and the Legistar Web API returns
+      "LegistarConnectionString setting is not set up in InSite for client:
+      findlay". So the city has no machine-readable legislative record.
+    consequence: >-
+      The banned-use definition is held ONLY as quoted by secondary reporting
+      and is therefore [reference], not [verified]. Acceptance criterion 1 of
+      issue 1463 cannot be closed from the open web; it needs an R.C. 149.43
+      request to the Clerk of Council. Drafted at
+      data/extracted/findlay/governance/records-requests/2026-07-31-findlay-clerk-of-council.md
+      — NOT SENT.
+  - target: Hancock County Commissioners' journal + minutes for 2022-04-19 (the adopted SB 52 restricted-area resolution)
+    urls:
+      - https://www.co.hancock.oh.us/AgendaCenter
+      - https://www.co.hancock.oh.us/AgendaCenter/Search/?term=&CIDs=2&startDate=03%2F01%2F2022&endDate=06%2F30%2F2022
+    observed: >-
+      The county's AgendaCenter is reachable (HTTP 200) but its County
+      Commissioners category holds agendas and minutes only from 2024-02-13
+      forward; a date-ranged search across March-June 2022 returns zero items.
+      The ArchiveCenter carries no commissioners' journal.
+    consequence: >-
+      The adopted resolution's own number and its roll call stay [open]. Only
+      the meeting-setting Resolution 167-22 and the PROPOSED map are held.
+  - target: Hancock County Common Pleas dockets — 2024 CV 00038, 2024 CV 00161, and the 2025 ballot-language case
+    urls:
+      - https://ea.co.hancock.oh.us/eservices/home.page.2
+    observed: >-
+      The Clerk of Courts eServices portal times out (no response in 30s) from
+      this network. No alternative public docket endpoint was found; the
+      commonly cited hancockcountyclerk.com and courtrecords.co.hancock.oh.us
+      hostnames do not resolve.
+    consequence: >-
+      The two trial-court numbers are nonetheless [verified] — they are printed
+      on the caption page of 2026-Ohio-405 (held under
+      data/documents/legal/one-energy-v-allen-twp/). The 2025 ballot-language
+      case number remains [open]; all that is held is the township's own recital
+      that Judge Starn revoked its zoning status.
+  - target: Hancock County BOE certified canvass for the May 2025 election (the invalidated referendum)
+    urls:
+      - https://hancockcountyohioelections.gov/past-election-results/
+    observed: >-
+      The BOE site is reachable but its published results begin at the November
+      2025 general; every guessed 2025 primary path and upload name returns 404.
+    consequence: >-
+      The May-2025 certified figures stay [open]. Only the 2026 canvass is held.

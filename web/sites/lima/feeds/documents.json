@@ -17024,6 +17024,21 @@
     "description": "",
     "entries": [
       {
+        "rel": "legal/datacenter-legislation/hb983_00_IN.pdf",
+        "name": "hb983_00_IN.pdf",
+        "size_bytes": 113123,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
         "rel": "legal/prr-mandamus/allen-co-bosc-mandamus-draft-2026-05.pdf",
         "name": "allen-co-bosc-mandamus-draft-2026-05.pdf",
         "size_bytes": 12329415,

@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "db70b202011070a74e7fe733b1de72fba68557b79617738d15588d648f665967",
+  "catalog_version": "e82397890ca4159d38fcdd788d314f55400e42cc48b5eb45fe5baf3b7a23cd4e",
   "contract_version": "1.49.0",
   "atoms": [
     {
@@ -996,6 +996,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:findlay-governance",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "findlay-governance",
+      "title": "Findlay — Governance Watch (Allen Township zoning + the proposed 10 MW data-center cap, the certified referendum, 2026-Ohio-405, the SB 52 restricted area)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:findlay-grid",
       "kind": "dataset",
       "site": "lima",
@@ -1169,6 +1177,14 @@
       "site": "lima",
       "local_id": "legal",
       "title": "BOSC Legal Record — Corpus Completeness Audit & Cross-Production Referral Map",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:legal-datacenter-legislation-hb983-3744",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "legal-datacenter-legislation-hb983-3744",
+      "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
       "feed": "catalog"
     },
     {

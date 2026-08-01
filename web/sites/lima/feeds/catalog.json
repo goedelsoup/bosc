@@ -1188,6 +1188,106 @@
     }
   },
   {
+    "id": "findlay-governance",
+    "title": "Findlay — Governance Watch (Allen Township zoning + the proposed 10 MW data-center cap, the certified referendum, 2026-Ohio-405, the SB 52 restricted area)",
+    "scope": "extracted",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Allen Township's adopted Zoning Resolution effective 2026-05-11 and its district map; Allen Township Zoning Commission Resolutions 24-04-124M (proposed Section 1521, Data Centers) and 24-04-125M (replacing Section 1520, Energy Storage Systems), both adopted 2026-07-28; ATZC minutes for 2026-04-07, 2026-06-02, 2026-07-07 and the 2026-07-22 special drafting session; Interstate Capital LLC's zoning-amendment application and exhibits, received 2026-07-01; the Hancock County Board of Elections certified 2026 primary canvass (summary + statement of votes cast); and the Board of Hancock County Commissioners' published SB 52 notice carrying Resolution 167-22 and the proposed exclusion map. All captured under data/documents/findlay/governance/. The published appellate opinion in One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees, 2026-Ohio-405 (3d Dist., 2026-02-09) is captured separately under data/documents/legal/one-energy-v-allen-twp/, filed by case rather than by site on the legal/thor-v-urbana precedent. Two secondary articles on the City of Findlay moratorium (The Ohio Register, The Pulse) are carried as [reference] web captures because the certified ordinance could not be obtained.",
+    "external_url": null,
+    "license": "Public record (a township zoning resolution and its amendments, a pending land-use application, a certified election canvass, a county resolution, a published court opinion)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "governance",
+      "zoning",
+      "township-zoning",
+      "data-center-siting",
+      "moratorium",
+      "referendum",
+      "open-meetings-act",
+      "litigation",
+      "sb52",
+      "restricted-area",
+      "public-records",
+      "annexation",
+      "findlay",
+      "allen-township",
+      "hancock-county"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/findlay/governance/governance-timeline.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/litigation-one-energy-v-allen-twp.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/hancock-sb52-restricted-area.gap.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/findlay-ordinance-2026-42.gap.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance-watch.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/governance/records-requests/2026-07-31-findlay-clerk-of-council.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "6809b9de934c77820b56ff5f0d980477f181529690bf2d607209fedbe07ebbbf",
+      "size_bytes": 109336,
+      "lfs_materialized": true,
+      "file_count": 9,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Allen Township's adopted Zoning Resolution effective 2026-05-11 and its district map; Allen Township Zoning Commission Resolutions 24-04-124M (proposed Section 1521, Data Centers) and 24-04-125M (replacing Section 1520, Energy Storage Systems), both adopted 2026-07-28; ATZC minutes for 2026-04-07, 2026-06-02, 2026-07-07 and the 2026-07-22 special drafting session; Interstate Capital LLC's zoning-amendment application and exhibits, received 2026-07-01; the Hancock County Board of Elections certified 2026 primary canvass (summary + statement of votes cast); and the Board of Hancock County Commissioners' published SB 52 notice carrying Resolution 167-22 and the proposed exclusion map. All captured under data/documents/findlay/governance/. The published appellate opinion in One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees, 2026-Ohio-405 (3d Dist., 2026-02-09) is captured separately under data/documents/legal/one-energy-v-allen-twp/, filed by case rather than by site on the legal/thor-v-urbana precedent. Two secondary articles on the City of Findlay moratorium (The Ohio Register, The Pulse) are carried as [reference] web captures because the certified ordinance could not be obtained.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "findlay-grid",
     "title": "Findlay — Grid Posture (OPSB siting pair, Schedule DCT, behind-the-meter fleet, the +300 MW gap)",
     "scope": "extracted",
@@ -1586,6 +1686,61 @@
     },
     "citation": {
       "source": "Project BOSC — reviewed legal-analysis layer over the litigation/hearing corpus (standing completeness audit + cross-production referral map)",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "legal-datacenter-legislation-hb983-3744",
+    "title": "Data-Center Legislation — H.B. 983 (136th G.A.) Digest & Analysis",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
+    "external_url": null,
+    "license": "Public record (Ohio legislative document)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-31",
+    "tags": [
+      "data-centers",
+      "legislation",
+      "r.c.-3744",
+      "r.c.-9.66",
+      "public-records"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.analysis.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/datacenter-legislation/hb983-3744.digest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "872eddc22e6d6c2f2fe9e77c90098205194ecfdb54e4c31371c913a691813516",
+      "size_bytes": 33606,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
       "source_kind": "document",
       "page": null,
       "pages": null,
