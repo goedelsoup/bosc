@@ -100,28 +100,41 @@ mainstems:
     gage: "03245500"
     aliases: [little miami river, little miami]
     note: >-
-      The mainstem proxy is the long-record Milford gage (03245500, DA 1664 mi²). Todd Fork
-      (Wilmington's receiving water) has no active USGS gage — the historical Todd Fork near
-      Roachester OH gage (03244000) was discontinued; Todd Fork dischargers stay unscreened
-      (no_7q10) rather than being proxied to a larger downstream river (that would overstate
-      dilution).
+      The mainstem proxy is the long-record Milford gage (03245500, DA 1203 mi² — NWIS published
+      drain_area_va, 2026-08-01; an earlier uncited "1664 mi²" here was wrong by +38% and is
+      corrected, #1472). Todd Fork (Wilmington's receiving water) has no CURRENTLY REPORTING gage,
+      so Todd Fork dischargers stay unscreened (no_7q10) rather than being proxied to a river 15x
+      their drainage area (that would badly overstate dilution). Todd Fork is not unmeasured,
+      though: the discontinued 03244000 (near Roachester, DA 219 mi²) holds 21 complete climatic
+      years of daily discharge 1952-1974, giving an LP3 7Q10 of 0.1654 cfs — DAR-transferred to
+      0.0597 cfs just below the Lytle Creek confluence, i.e. the Wilmington WWTP's reach is ~99%
+      effluent at design low flow. That statistic is a MANUAL receiving-water characterization in
+      data/extracted/wilmington/low-flow-screen.md and is deliberately NOT wired in here: a
+      1952-1974 record as a present-day screen denominator collides with the asof vintage
+      discipline (#1644).
   Little Miami River near Oldtown:
     gage: "03240000"
     aliases: [little miami river near oldtown, little miami r near oldtown]
     note: >-
-      Milford (downstream integrator, incl. Todd Fork) and the upstream Xenia reach at Oldtown
-      (03240000) BRACKET the ungaged Todd Fork above and below; a drainage-area-ratio interpolation
-      off these two brackets is the documented at-site 7Q10 basis for the Wilmington Air Park / WWTP
-      screen (#516; derivation + cited drainage areas in data/extracted/wilmington/low-flow-screen.md),
-      NOT an auto-applied ECHO proxy. Oldtown uses a non-colliding alias so it does not capture ECHO's
-      bare "little miami river" (aliased to Milford above).
+      Upstream Xenia reach (DA 129 mi², NWIS published). This gage NO LONGER anchors the Wilmington
+      at-site 7Q10: the Milford/Oldtown mainstem bracket was retired as the anchor in #1472 once
+      Todd Fork's own historical gage (03244000) was found to carry 21 climatic years of daily
+      discharge — a 219 -> 79 mi² transfer down the same stream beats a 1203 -> 79 mi² transfer off
+      a different one. Oldtown remains a screening gage in its own right and keeps its non-colliding
+      alias so it does not capture ECHO's bare "little miami river" (aliased to Milford above).
   Caesar Creek:
     gage: "03242350"
     aliases: [caesar creek]
     note: >-
-      Caesar Creek (03242350, below Caesar Creek Lake) reflects a regulated low-flow regime. NWIS
-      currently returns no daily discharge values for this gage (possibly a stage-only installation);
-      it is skipped gracefully by the per-gage error guard and Caesar Creek dischargers remain no_7q10.
+      Caesar Creek (03242350, near Wellman, DA 239 mi², below Caesar Creek Lake) reflects a regulated
+      low-flow regime. The "possibly stage-only" guess is now confirmed (#1472, NWIS series catalog
+      2026-08-01): daily DISCHARGE (00060) exists only for 1965-07-01..1974-06-30, and everything
+      current is stage (00065, 2017- ) plus water temperature (00010, 2022- ). The old discharge
+      record is moreover PRE-IMPOUNDMENT and does not describe the regulated regime. So it is skipped
+      gracefully by the per-gage error guard and Caesar Creek dischargers remain no_7q10 — correctly.
+      Note this gage is a WITHDRAWAL-side reference for Wilmington (Caesar Creek Lake has been the
+      City's principal raw supply since 1994), never an effluent-side screen: the binding constraint
+      there is a contracted storage allocation, not a low-flow statistic.
 
   # --- Ohio Brush Creek basin -------------------------------------------------
   Ohio Brush Creek:

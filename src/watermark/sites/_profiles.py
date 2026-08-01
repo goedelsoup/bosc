@@ -2960,19 +2960,33 @@ _GREENVILLE = SiteProfile(
 # Airborne Express super-hub (the 2008 DHL pullout is a landmark company-town economic collapse),
 # now an Amazon Air cargo hub + ATSG base. The "place shaped by one tenant" comparator and an
 # Amazon footprint to set against the Lima Amazon data-center tenant. Receiving water is Todd Fork
-# -> Little Miami (a National & State Scenic River, the same anti-degradation overlay as Xenia) — but
-# Todd Fork is UNGAGED (the old 03244000 is discontinued; Clinton County has no active gage), so the
-# nearest mainstem integrators bracket it. Tracking -> onboarding (#492 / epic #440).
+# -> Little Miami (a National & State Scenic River, the same anti-degradation overlay as Xenia).
+# Todd Fork has NO CURRENTLY REPORTING discharge gage — but it is not unstudied: the discontinued
+# 03244000 (Todd Fork near Roachester, DA 219 mi²) holds 21 complete climatic years of daily
+# discharge, 1952-09-01..1974-10-29, which is now the at-site 7Q10 anchor (#1472). That record is
+# invisible to these knobs by construction — they resolve through the NWIS INSTANTANEOUS-values
+# service, and 03244000 has produced no IV since 1974 — so the gages below stay the nearest ACTIVE
+# mainstem integrators and the low-flow statistic lives in the screen doc, not in a knob. Two water
+# threads, kept separate: the City WITHDRAWS from Caesar Creek Lake (USACE storage contract) and
+# DISCHARGES to Lytle Creek -> Todd Fork; neither screens the other. Full derivation, drainage areas
+# and instruments: data/extracted/wilmington/low-flow-screen.md.
+# Tracking -> onboarding (#492 / epic #440).
 # IT load undisclosed → floor-area SCREENING off the disclosed 1,920,299 sq ft site plan
 # (watermark.facility.screening — #1641 D2; reconciles the old off-midpoint 300 MW central).
 _WILMINGTON_LOAD = floor_area_screen(1_920_299)
 _WILMINGTON = SiteProfile(
     slug="wilmington",
     basin="little-miami",  # [verified] Todd Fork → Little Miami River → Ohio River (HUC-8 05090202)
+    # Live-reading gages only (NWIS instantaneous values). Deliberately EXCLUDES the two Todd Fork
+    # stations, for reasons that differ (#1472): 03244000 (Roachester) carries the 21-year daily
+    # record that anchors the at-site 7Q10 but has been dark since 1974, and 03243150 (Clarksville,
+    # DA 56.6 mi²) is a water-quality/partial-record site whose entire "record" is ONE sample visit
+    # on 1981-08-21 — no daily or unit values in any form. Neither can serve a latest-reading knob.
     nwis_sites=[
         "03245500",  # [verified] Little Miami River at Milford OH (downstream mainstem integrator, incl. Todd Fork)
         "03240000",  # [verified] Little Miami River near Oldtown OH (upstream Xenia reach — brackets Todd Fork above)
-        "03242350",  # [verified] Caesar Creek near Wellman OH (a nearer Little Miami tributary; reservoir-regulated)
+        "03242350",  # [verified] Caesar Creek near Wellman OH — the WITHDRAWAL-side gage (Caesar Creek Lake is the
+        # City's principal raw supply since 1994); reports stage + temperature only, no discharge since 1974-06-30
     ],
     nasa_power_lat=39.4453,  # [verified] Wilmington, OH city centroid (39deg26'43"N 83deg49'43"W)
     nasa_power_lon=-83.8285,
@@ -3072,11 +3086,22 @@ _WILMINGTON = SiteProfile(
             "Ohio EPA NPDES fact sheet 1PD00013.fs, 2023-05-19]",
         ),
     },
-    abstraction_gage="03245500",  # [open] Lytle Creek / Todd Fork ungaged — Little Miami at Milford is the nearest downstream integrator (overstates at-site dilution)
+    # [open] Nearest ACTIVE discharge gage, not the right one: Milford's DA is 1203 mi² (NWIS
+    # published — NOT the 1664 this repo previously carried) against an at-site 79.0 mi² just below
+    # the Lytle Creek confluence, a 15x overstatement of contributing area and so of dilution. There
+    # is no live discharge gage on Todd Fork, Lytle Creek, or Caesar Creek below the dam (#1472).
+    abstraction_gage="03245500",
     supply_gage_primary="03245500",  # [verified] Little Miami River at Milford (downstream integrator)
     supply_gage_secondary="03240000",  # [verified] Little Miami River near Oldtown (upstream reach; brackets Todd Fork)
-    passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum (scenic-river protection likely raises it)
-    passby_secondary_cfs=0.0,  # [open]
+    # [open] and STRUCTURALLY MISMATCHED, which is the honest finding rather than a gap to fill: the
+    # refill model passes these against the two Little Miami mainstem gages, but the City does not
+    # abstract from the Little Miami mainstem at all — it draws a CONTRACTED STORAGE ALLOCATION
+    # (~12 billion gal) from Caesar Creek Lake under the 1970 USACE/ODNR contract, which the refill
+    # model has no slot for. A plausible-looking passby here would make an inapplicable model emit a
+    # confident number, so it stays 0.0/[open] until either an Ohio EPA anti-degradation in-stream
+    # minimum lands or the supply is remodeled as a reservoir allocation (#1472 §3.2).
+    passby_primary_cfs=0.0,
+    passby_secondary_cfs=0.0,
     # grid / facility — the disclosed AWS "Cosler Farm" campus (#1468). Site-plan-grounded (the
     # Urbana #1327 seam): a floor-area/investment [inference] IT-load bracket, NOT a fabricated MW.
     # The disclosed interconnection/air-permit MW stays [open] (#1469). Ardent/TAC (§2 of the
