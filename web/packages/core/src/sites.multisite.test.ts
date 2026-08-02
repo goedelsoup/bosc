@@ -11,11 +11,11 @@ import {
 } from "./sites";
 import { storyFor } from "./walk";
 
-// Multi-site chrome parity (#746, closing #740's Done-when). As of #741, the live registry
-// has three selectable sites: Lima, Urbana, and Fort Wayne. These tests lock the per-site routing
-// logic by exercising the `*From(sites)` seam with both the real registry and a fixture that
-// promotes an additional non-selectable site (Defiance), so the "promotion flips the tier"
-// invariant stays tested even after each real promotion.
+// Multi-site chrome parity (#746, closing #740's Done-when). As of #1872, the live registry
+// has four selectable sites: Lima, Urbana, Fort Wayne, and Troy-Piqua. These tests lock the
+// per-site routing logic by exercising the `*From(sites)` seam with both the real registry and a
+// fixture that promotes an additional non-selectable site (Defiance), so the "promotion flips the
+// tier" invariant stays tested even after each real promotion.
 
 /** A fixture with Defiance promoted to selectable — used to exercise the promotion flip. */
 const WITH_DEFIANCE: NetworkSite[] = SITES.map((s) =>
@@ -23,15 +23,21 @@ const WITH_DEFIANCE: NetworkSite[] = SITES.map((s) =>
 );
 
 describe("multi-site chrome parity (#746)", () => {
-  const real = selectablePathsFrom(SITES); // Lima + Urbana + Fort Wayne
-  const withDef = selectablePathsFrom(WITH_DEFIANCE); // Lima + Urbana + Fort Wayne + Defiance
+  const real = selectablePathsFrom(SITES); // Lima + Urbana + Fort Wayne + Troy-Piqua
+  const withDef = selectablePathsFrom(WITH_DEFIANCE); // ...+ Defiance
 
-  it("today's build has exactly three selectable sites (Lima + Urbana + Fort Wayne)", () => {
-    expect(real.map((p) => p.props.slug).sort()).toEqual(["fort-wayne", "lima", "urbana"]);
+  it("today's build has exactly four selectable sites (Lima + Urbana + Fort Wayne + Troy-Piqua)", () => {
+    expect(real.map((p) => p.props.slug).sort()).toEqual(["fort-wayne", "lima", "troy-piqua", "urbana"]);
   });
 
-  it("a fourth selectable site (Defiance) adds its own route, keyed by its own siteBase", () => {
-    expect(withDef.map((p) => p.props.slug).sort()).toEqual(["defiance", "fort-wayne", "lima", "urbana"]);
+  it("one more selectable site (Defiance) adds its own route, keyed by its own siteBase", () => {
+    expect(withDef.map((p) => p.props.slug).sort()).toEqual([
+      "defiance",
+      "fort-wayne",
+      "lima",
+      "troy-piqua",
+      "urbana",
+    ]);
     const def = withDef.find((p) => p.props.slug === "defiance");
     expect(def?.params.site).toBe(siteBase("defiance").replace("/network/", ""));
   });

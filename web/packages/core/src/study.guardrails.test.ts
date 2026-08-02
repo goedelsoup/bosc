@@ -12,7 +12,7 @@ import {
 /**
  * Study guardrails over EVERY committed bundle (the `stories.guardrails` pattern) — the
  * study must derive a coherent model for any site whose bundle is committed, not just the
- * three selectable fixtures the unit tests pin. A bundle regen that breaks a feed shape,
+ * three fixtures the unit tests pin. A bundle regen that breaks a feed shape,
  * a def whose gap copy drifts off the panel grammar, or a model that stops being plain
  * JSON (the future `impact-study` feed contract) fails HERE, before it ships.
  */

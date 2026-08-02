@@ -58,6 +58,27 @@ describe("sites registry — the Watermark network (#304)", () => {
     expect(ftw?.codename).toBe("GCP");
   });
 
+  it("promotes Troy-Piqua to selectable on Urbana parity, not on Lima-shape-matching (#1872)", () => {
+    const trp = SITES.find((s) => s.slug === "troy-piqua");
+    expect(trp?.selectable).toBe(true);
+    expect(trp?.status).toBe("live");
+    // The promotion rests on domain activation, not on a full taxonomy: troy-piqua carries the
+    // SAME readiness shape as Urbana, which was promoted on it. `facility` and `story` are
+    // deliberate resting states (no PTI exists; STORY_SLUGS registration is a later editorial
+    // call) — if a regen ever drops one of the three `live` domains, the parity claim is gone
+    // and this fails rather than leaving a hollow site in the switcher.
+    const trpReadiness = loadManifest("troy-piqua").readiness;
+    expect(trpReadiness).toEqual(loadManifest("urbana").readiness);
+    expect(trpReadiness?.tier).toBe("case");
+    expect(trpReadiness?.domains).toEqual({
+      backdrop: "live",
+      facility: "seeded",
+      places: "live",
+      record: "live",
+      story: "seeded",
+    });
+  });
+
   it("routes every site under /network/<slug>; Lima uses its canonical watershed name", () => {
     for (const s of SITES) {
       if (s.slug === ACTIVE_SITE_SLUG) expect(s.href).toBe("/network/american-sugar-creek-allen-co");
@@ -65,10 +86,11 @@ describe("sites registry — the Watermark network (#304)", () => {
     }
   });
 
-  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, or Fort Wayne), each carrying a tracking issue", () => {
+  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, Fort Wayne, or Troy-Piqua), each carrying a tracking issue", () => {
     const soon = comingSoonSites();
     expect(soon.some((s) => s.slug === ACTIVE_SITE_SLUG)).toBe(false);
     expect(soon.some((s) => s.slug === "fort-wayne")).toBe(false); // Fort Wayne is now selectable (#741)
+    expect(soon.some((s) => s.slug === "troy-piqua")).toBe(false); // Troy-Piqua is now selectable (#1872)
     expect(soon.map((s) => s.slug)).toEqual([
       "defiance",
       "findlay",
@@ -81,7 +103,6 @@ describe("sites registry — the Watermark network (#304)", () => {
       "xenia",
       "wpafb",
       "hamilton-middletown",
-      "troy-piqua",
       "sidney",
       "greenville",
       "wilmington",

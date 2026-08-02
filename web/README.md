@@ -175,8 +175,11 @@ TOC rail, and the search index).
   root will host network content once a second site lands). The topbar **project switcher**
   (a no-JS `<details>` on the brand mark) hops between sites, rendering each site's real
   `status`/`selectable` from the registry and the *current* site from the route
-  (`siteForPath`). Only Lima is selectable today; the rest route to a coming-soon page
-  (`/network/<slug>`).
+  (`siteForPath`). Four sites are selectable today — Lima, Urbana, Fort Wayne and
+  Troy-Piqua ([#1872](https://github.com/watermark-directory/the-watermark-directory/issues/1872));
+  the rest route to a coming-soon page (`/network/<slug>`). Only Lima is a *built* site at its
+  own root, though — a selectable peer renders under `/network/<slug>`, with its locked domains
+  gated by its manifest's readiness block, not by a hand-kept list.
 - **Cross-cutting pages are network-global** at the root, shared across every site:
   `/about`, `/about-me`, `/wiki/*`, `/ask`, `/search`, `/network/*`, and the `/api/*` functions.
 

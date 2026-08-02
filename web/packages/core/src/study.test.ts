@@ -20,7 +20,7 @@ import {
 } from "./study";
 
 // The study reads the committed per-site bundles (`web/sites/<slug>/`), so these verdicts run
-// against real reference data — the three selectable fixtures already exercise data / partial /
+// against real reference data — the three pinned fixtures already exercise data / partial /
 // gap (fort-wayne's zero-row hydrology-scenarios and unknown cooling; urbana's screening-only
 // facility), and defiance is the facility-less backdrop case. No synthetic fixtures needed.
 
