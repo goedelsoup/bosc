@@ -275,8 +275,8 @@ sites:
     county: "Miami County, OH"
     codename: null
     mono: "TRP"
-    status: "queued"
-    selectable: false
+    status: "live"
+    selectable: true
     issue: "1274"
     map_lat: 40.092
     map_lon: -84.215
