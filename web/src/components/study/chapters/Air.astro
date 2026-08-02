@@ -43,6 +43,12 @@ const rows = fields.flatMap((f) =>
 );
 const fmt = (v: number | null): string => (v == null ? "—" : v.toFixed(2));
 const stackAssumed = fields.some((f) => f.stack_is_assumption);
+// Hoisted, NOT inlined in the template: Astro preserves a template expression's surrounding
+// newline + indent verbatim (unlike JSX), so an expression on its own line renders a stray
+// space before the punctuation that follows it.
+const stackClause = stackAssumed
+  ? ", built on stated stack assumptions because the permit withholds the stack geometry as confidential business information"
+  : "";
 ---
 
 {
@@ -51,11 +57,11 @@ const stackAssumed = fields.some((f) => f.stack_is_assumption);
   ) : (
     <>
       <p class="air-lead">
-        A real impact study models where the campus's permitted generator fleet puts its
-        exhaust — the AERMOD screening field, peak receptor concentrations against the
-        national ambient standards. Every figure here is <code>[inference]</code>: a labelled
-        screening estimate{stackAssumed ? " resting on stated stack assumptions where the permit withholds the geometry as confidential business information" : ""} —
-        never a monitor reading, never a violation finding.
+        A real impact study models where the exhaust from the permitted generators goes. This
+        chapter runs that model. It reports the AERMOD screening field and the peak
+        concentration at each receptor, against the national ambient air quality standards.
+        Every figure here is <code>[inference]</code>: a labeled screening estimate{stackClause}. No
+        figure here is a monitor reading, and none is a finding of violation.
       </p>
 
       <table class="air-table">

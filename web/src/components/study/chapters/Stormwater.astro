@@ -36,13 +36,13 @@ const routed = hasFeed("routed-hydrograph", slug);
   ) : (
     <>
       <p class="sw-lead">
-        A campus-scale impervious surface changes what a design storm does downstream, and a
-        real impact study routes that change down the reach. This site has a committed reach
-        table — <strong>{network.reaches.length}</strong> navigated{" "}
-        {network.reaches.length === 1 ? "reach" : "reaches"} —{" "}
+        A campus-scale impervious surface changes what a design storm does downstream. A real
+        impact study routes that change down the reach. This site has a committed reach table
+        of <strong>{network.reaches.length}</strong> navigated{" "}
+        {network.reaches.length === 1 ? "reach" : "reaches"}.{" "}
         {routed
-          ? "and the design-storm hydrograph is computed here: the routed peaks, the channel attenuation, and the animated flow field live in the annex."
-          : "the real river geometry this chapter's screen would route down. The routed design-storm itself is not yet computed: no cited runoff parameters (contributing areas, curve numbers, times of concentration) are on the record for this basin, and the study does not fabricate them — committing that cited set is what lights the routed model."}
+          ? "The design-storm hydrograph is computed here. The routed peaks, the channel attenuation, and the animated flow field all live in the annex."
+          : "That table is the real river geometry this chapter's screen would route down. The routed design storm is not computed yet, because no cited runoff parameters are on the record for this basin. Those parameters are the contributing areas, the curve numbers, and the times of concentration. The study does not fabricate them. Committing that cited set is what lights the routed model."}
       </p>
       {network.note && <p class="sw-note">{network.note}</p>}
       {(model.caveats.length > 0 || network.caveats.length > 0) && (
