@@ -1,12 +1,13 @@
 {
   "site": "bowling-green",
-  "asof": "2026-07-11",
+  "asof": "2026-07-21",
   "source": "data/reference/oepa/cooling-reconciliation.yaml — regenerate: watermark cooling-reconcile --write",
   "caveats": [
     "The harness recommends; it never mutates the pinned cooling model — re-archetyping is a reviewed edit with the instrument cited.",
     "A back-solved cycles-of-concentration is an [inference] bracket, never a headline scalar.",
     "A gap (no documented makeup or blowdown) is an [open] records-request lead — never read as 'confirmed dry'.",
     "A reservation ceiling (a will-serve / water-agreement figure) is not a discharge/withdrawal instrument — it keeps the archetype pin and is never collapsed into a headline consumptive figure.",
+    "A reservation conflict survives a blind route: a negotiated ceiling is not something the withdrawal or discharge instruments could ever have metered, so blinding them cannot erase it — and where the operator's own figure conflicts with that reservation, the two are separated by provenance and not by size, with the conflict reported rather than resolved.",
     "An operator self-report lands on its own disclosed_* slot, never on documented_*, and cannot upgrade the claim's source.",
     "An instrument that cannot reach a facility returns an absence of jurisdiction, not a measurement — a municipally-supplied, sewer-discharging campus reads ~0 in the withdrawal registry and the discharge record by construction, and that ~0 never corroborates a claim.",
     "A documented withdrawal that is not the cooling account (construction-phase water) is kept on its own slot, and a prediction the harness could not derive is shown as refused, never as zero.",
@@ -19,7 +20,7 @@
       "is_control": false,
       "claimed_archetype": "closed_loop_dry",
       "claim_source": "reference",
-      "claim_citation": "[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, liquid-cooled with dry coolers — 'no operational water', with domestic/cleaning/fire use only. In tension with the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 MGD, Aug 2024; conflicting ~50k vs ~600k GPD figures; a Meta-funded 2 MG tank + 16-in main) — that reconciliation is tracked at the water sub-issue #1439, not decided here. Replace with a documented cooling design when an NPDES/water instrument lands.",
+      "claim_citation": "[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, liquid-cooled with dry coolers — 'no operational water', with domestic/cleaning/fire use only. In tension with the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 MGD, Aug 2024; conflicting ~50k vs ~600k GPD figures; a Meta-funded 2 MG tank + 16-in main) — that reconciliation is tracked at the water sub-issue #1439, not decided here. B5 (#1685) RAN that tension through the A3 cooling harness and the pin SURVIVES, but as a reservation_conflict rather than an untested claim: the district-linked ~600,000 gpd design commitment is a demand signal independent of Meta's own account of its cooling, and is disproportionate to 'no operational water'. It cannot re-archetype the pin — a negotiated ceiling is not a withdrawal or discharge instrument — and the harness confirmed there is no instrument to be had: the campus buys finished water (so the Ohio DNR withdrawal registry, which records withdrawals from waters of the state, carries no Meta/Liames/Accordion/NWWSD registration in Wood County at all), and a full ECHO sweep of the county finds every campus-linked record under the CONSTRUCTION stormwater general permit with no process outfall and no DMR. With OHD000001 withdrawn 2026-07-21, an INDIVIDUAL NPDES permit is now the only instrument that would ever disclose this campus's cooling discharge. See data/reference/oepa/cooling-reconciliation.yaml. Replace with a documented cooling design when an NPDES/water instrument lands.",
       "account": {
         "archetype": "closed_loop_dry",
         "it_load": {
@@ -65,36 +66,60 @@
         "prediction_refused": null,
         "documented_makeup": null,
         "documented_blowdown": null,
-        "reserved_makeup": null,
+        "reserved_makeup": {
+          "value": 0.6,
+          "unit": "MGD",
+          "source": "reference",
+          "citation": "[reference] RESERVATION CEILING, not metered use: local reporting and Northwestern Water & Sewer District-linked coverage describe a design commitment of 'up to' roughly 600,000 gpd (0.6 MGD) for the Meta campus, with a Meta-funded 2 MG storage tank and 16-inch main built to serve it. Independent of the cooling claim's own source (it is the DISTRICT's service obligation, not Meta's characterization of its own architecture), which is why it lands on reserved_makeup and not on the disclosed_* self-report slots. It CONFLICTS 12-fold with Meta's own announced ~50,000 gpd (carried on disclosed_makeup) — a conflict data/extracted/bowling-green/water-watch.yaml recorded and deliberately left unresolved (#1439), and which B5 does not resolve either. Neither the NWWSD-Meta service agreement nor the August 2024 City-NWWSD wholesale contract (ceiling raised to 1.5 MGD against ~860,000 gpd then actually purchased) is in-corpus; both are R.C. 149.43 targets (C2, #1688). A reserved capacity ceiling, NOT a withdrawal record.",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
         "reserved_blowdown": null,
-        "disclosed_makeup": null,
+        "disclosed_makeup": {
+          "value": 0.05,
+          "unit": "MGD",
+          "source": "reference",
+          "citation": "[reference] operator-DISCLOSED figure — NOT a metered use: Meta's own public announcement of the Bowling Green Data Center puts the campus's water demand at ~50,000 gpd (0.05 MGD), which the company presents as consistent with its dry-cooler claim (domestic, cleaning and fire-protection use rather than cooling). A self-report from the same source as the claim under test, so it cannot corroborate that claim without circularity and cannot upgrade the [reference] pin. Recorded because it is the denominator the ~600,000 gpd NWWSD-linked reservation is 12x of — the unresolved conflict at data/extracted/bowling-green/water-watch.yaml (#1439). NB neither figure can be settled by the physical works: a 2 MG tank and a 16-inch main are also exactly what FIRE-PROTECTION storage and flow look like at a campus of this size, and Meta's claim expressly reserves fire use, so the infrastructure is consistent with BOTH figures and discriminates neither.",
+          "confidence": "low",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
         "disclosed_ceiling": null,
         "nonprocess_makeup": null,
-        "route": null,
+        "route": {
+          "supply": "municipal",
+          "discharge": "unknown",
+          "citation": "[verified] The MAKEUP side is outside A1 by construction and the record shows it: the campus buys finished water from the Northwestern Water & Sewer District, which buys it wholesale from the City of Bowling Green, and the Ohio DNR WWFRP registers withdrawals FROM WATERS OF THE STATE (R.C. 1521.16, >100,000 gpd) — a purchased supply is the seller's withdrawal, not the buyer's. The Wood County registry (data/reference/ohio-water-withdrawal/wood.yaml, 36 facilities) accordingly carries NO registration under Meta, Liames LLC, 'Project Accordion', NWWSD, or any data-center name, while within the county the whole supply chain reduces to one registered withdrawal three transfers upstream: BOWLING GREEN CITY PWS (00251, 2,103.37 MG in 2024 ≈ 5.75 MGD, two Maumee intakes). That absence is READABLE rather than merely empty because the register is demonstrably live at this site: 'Apollo Power Generation Facility - TEMP' (03717) registered a 0.27 MGD surface intake on 2026-03-26 in the campus's own HUC-12 041000100703, with no annual report due yet. The DISCHARGE side is UNKNOWN rather than established-to-sewer: an ECHO CWA sweep of Wood County (FIPS 39173, 2026-08-01) returns 241 records including 50 effective individual NPDES permits, none of them the campus — every campus-linked record (PROJECT ACCORDION OHGC15219, APOLLO POWER GENERATION FACILITY OHGC17963, APOLLO LAYDOWN YARD OHGC18721, APOLLO NORTH PIPELINE OHGC19094, ACCORDION-DOWLING 138KV INTERCONNECT OHGC15929) sits under the CONSTRUCTION stormwater general permit, master OHC000000. So there is verifiably no facility-own outfall and no DMR, but the corpus does not establish where process/sanitary flow actually GOES — no sewer-use or pretreatment instrument is in hand — and the honest value for a route the record has not established is unknown, not sanitary_sewer. The municipal supply alone is enough to blind the account. NB every identifier above is an OHIO key (Wood County FIPS 39173; Ohio DNR registrations; Ohio EPA NPDES), and both instruments are Ohio-statutory, so neither can return a Bowling Green, KENTUCKY record; the KY collision reaches only the press-sourced ~50k/~600k figures, which is precisely where it must be watched.",
+          "tag": "[verified]",
+          "confidence": "high"
+        },
         "disclosed_cycles": null,
         "backsolved_cycles": null,
         "seasonality_warm_ratio": null
       },
-      "outcome": "gap",
+      "outcome": "reservation_conflict",
       "recommended_archetype": null,
       "recommended_source": null,
-      "kept_archetype": null,
+      "kept_archetype": "closed_loop_dry",
       "lead": {
         "kind": "records-request",
         "site": "bowling-green",
         "facility": "Bowling Green Data Center (Project Accordion)",
-        "subject": "cooling-water account — makeup + blowdown records",
+        "subject": "cooling-water account — reconcile the reserved 0.6 MGD makeup vs the closed-loop claim",
         "records_sought": [
-          "industrial pretreatment / indirect-discharge (IU) permit",
-          "sewer-use agreement + any cooling-tower blowdown authorization",
-          "metered water-service use (makeup withdrawal)",
-          "cooling-tower blowdown / low-volume-wastewater DMR",
+          "executed water & wastewater service agreement (the instrument text, not a summary)",
+          "metered water-service use (actual makeup withdrawal vs the reserved ceiling)",
+          "cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)",
+          "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
           "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits",
           "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)"
         ],
-        "holder": "City / municipal water-sewer authority serving bowling-green; Ohio EPA / regional air agency (DAPC); SERC / LEPC",
-        "rationale": "closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES, or the loop is genuinely dry.",
-        "epic_ref": "#1688 (C2)",
+        "holder": "Northwestern Water & Sewer District (the campus's water/sewer provider — the service agreement and the campus meter) AND the City of Bowling Green (the wholesale supplier — the August 2024 wholesale contract whose ceiling was raised to 1.5 MGD, and the WWFRP registrant of record). Neither alone holds both instruments: a request filed only with the City reaches the wholesale contract but not the campus's metered use, and one filed only with the District reaches the reverse; Ohio EPA (NPDES / OHD000001); Ohio EPA / regional air agency (DAPC); SERC / LEPC",
+        "rationale": "A disclosed reservation ceiling (0.6 MGD) is disproportionate to the closed_loop_dry (source=reference) low-water claim and contradicts it — but a reservation is a ceiling, not a metered use, and not a discharge/withdrawal instrument, so it sharpens the standing water lead (#1439) without licensing a re-archetype. Pull the executed instrument + metered use to resolve which framing governs the consumptive screen.",
+        "epic_ref": "#1688 (C2); #1439",
         "tag": "[open]"
       },
       "corroborators": {
@@ -122,8 +147,8 @@
         "summary": "Neither corroborator is on record for Bowling Green Data Center (Project Accordion) (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
       },
       "tag": "[open]",
-      "confidence": "low",
-      "finding": "No documented makeup or blowdown for Bowling Green Data Center (Project Accordion): the closed_loop_dry claim (source=reference) cannot yet be tested against records — an [open] gap, not 'confirmed dry' (→ C2 records request #1688). Predicted makeup 0 MGD. Neither corroborator is on record for Bowling Green Data Center (Project Accordion) (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
+      "confidence": "medium",
+      "finding": "Reserved 0.6 MGD makeup contradicts the closed_loop_dry claim's ~0 MGD prediction — but a reservation is a ceiling, not a discharge/withdrawal instrument, so keep the archetype pin (no [verified] re-archetype) and sharpen the water lead (→ C2 records request #1688). It is also 12x the operator's OWN disclosed 0.05 MGD — a conflict between the two [reference] figures that stays unresolved here; the reservation classifies because it is independent of the claim's source, the self-report does not because it is not. The reservation survives as the finding precisely because the withdrawal/discharge instruments cannot reach this facility at all (makeup (purchased municipal supply — outside the A1 withdrawal registry)), so it is the only quantified figure on record that does not originate with the operator. The reserved figure is an upper-bound ceiling, NOT a headline consumptive. Neither corroborator is on record for Bowling Green Data Center (Project Accordion) (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim."
     }
   ]
 }

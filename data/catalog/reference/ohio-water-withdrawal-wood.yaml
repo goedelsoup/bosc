@@ -1,0 +1,53 @@
+id: ohio-water-withdrawal-wood
+title: Wood County, OH water-withdrawal registry (Ohio DNR WWFRP)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: water-withdrawal --county Wood
+  connector_ref: watermark.hydrology.connectors.ohio_water_withdrawal
+  source: >-
+    Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration
+    Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)
+  external_url: https://ohiodnr.gov/wwfacilitylocator
+license: Ohio public record
+access_tier: public
+# The Wood-County registry is Bowling Green's (the Meta "Project Accordion" campus and the
+# Apollo generating plant both sit in Middleton Township, Wood 39173); a peer site adds its
+# own county sibling rather than sharing this one.
+site_scope: site:bowling-green
+storage:
+- relpath: reference/ohio-water-withdrawal/wood.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: annual
+  ttl_days: 365
+provenance: connector
+schema_ref: watermark.hydrology.connectors.ohio_water_withdrawal.WithdrawalRegistry
+tags:
+- water-withdrawal
+- wwfrp
+- ohio-dnr
+- cooling
+- makeup
+notes: >-
+  Every WWFRP-registered facility in Wood County, OH — the makeup-side record for the B5
+  (#1685) review of epic #1676, which tests Meta's "closed-loop, liquid-cooled with dry
+  coolers" claim for the Bowling Green Data Center against the withdrawal record. The finding
+  is an absence and a presence read together. THE ABSENCE: no registration exists in this
+  county under Meta, Liames LLC, "Project Accordion", the Northwestern Water & Sewer District,
+  or any data-center name — the campus buys finished water from NWWSD, which buys it wholesale
+  from the City of Bowling Green, and the WWFRP registers withdrawals from waters of the state,
+  never a purchase. THE PRESENCE that makes that absence readable: "Apollo Power Generation
+  Facility - TEMP" (03717) registered 2026-03-26 for a 0.27 MGD surface intake in the campus's
+  own HUC-12 (041000100703), with no annual report yet — so the register is demonstrably live
+  at this site and Meta's non-appearance is a route, not a gap in the registry's coverage.
+  Within this county the whole supply chain reduces to ONE registered withdrawal, three transfers
+  upstream:
+  BOWLING GREEN CITY PWS (00251, 32.0 MGD registered over two Maumee intakes, 2,103.37 MG
+  withdrawn in 2024 ≈ 5.75 MGD). Its 2024 RETURN of 220.84 MG ≈ 0.605 MGD is a water-treatment
+  backwash/residuals series present every year since 2015 (206-235 MG) and has nothing to do
+  with the campus — do not read it as the disputed ~600,000 gpd figure it numerically
+  resembles. The facility registry is kept in full; annual series are floored at 2015.
+  See data/reference/ohio-water-withdrawal/README.md.

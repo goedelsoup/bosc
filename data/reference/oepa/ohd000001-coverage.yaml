@@ -4,27 +4,34 @@ meta:
   source: watermark.hydrology.blowdown — the site registry's closed-loop cohort x the OHD000001 permit
     lifecycle
   regenerate: watermark oepa coverage --write
-  asof: '2026-07-11'
+  asof: '2026-07-21'
   discipline: 'OHD000001 coverage is gated on the permit lifecycle: while the general permit is draft
-    (not effective) no facility can be authorized, so the per-candidate status is not_available — a [verified]
-    cited absence. Facility-own discharge presence is unknown until a search establishes it (the C2 records
-    request); an absence under a closed-loop-dry claim is a finding, never read as ''confirmed dry''.
-    No per-site over-cycling conclusion is asserted here (that is the B-review).'
+    (not effective), or once it has been withdrawn, no facility can be authorized, so the per-candidate
+    status is not_available — a [verified] cited absence. Ohio EPA WITHDREW OHD000001 on 2026-07-21, so
+    that absence is now permanent rather than pending, and an individual NPDES permit is the only instrument
+    that would disclose a data center''s cooling discharge. Facility-own discharge presence is unknown
+    until a search establishes it (the C2 records request); an absence under a closed-loop-dry claim is
+    a finding, never read as ''confirmed dry''. No per-site over-cycling conclusion is asserted here (that
+    is the B-review).'
 general_permit:
   permit_id: OHD000001
   title: Ohio EPA Draft General NPDES Permit for Data Center Facilities
-  state: draft
+  state: withdrawn
   effective: false
   issued: '2025-10-31'
   effective_date: null
   comment_closed: '2026-01-16'
-  citation: Ohio EPA Division of Surface Water — draft General NPDES permit OHD000001 (public notice No.
-    215991; public hearing 2025-12-17); covers cooling water, low-volume wastewaters (cooling-tower/boiler
+  citation: 'Ohio EPA Division of Surface Water — draft General NPDES permit OHD000001 (public notice
+    No. 215991; public hearing 2025-12-17); covered cooling water, low-volume wastewaters (cooling-tower/boiler
     blowdown, air-compressor condensate) and stormwater (data/catalog/reference/oepa-ohd000001-gp.yaml).
-    Director's final action still pending as of the 2026-07-11 refresh (data/site/troy-piqua/leads.yaml,
-    lead OHD000001).
+    WITHDRAWN: Ohio EPA Community Notice of 2026-07-21 states that after reviewing the comments it ''has
+    decided not to move forward with finalizing the general permit'' and that ''the individual NPDES permit
+    issuance process is the most appropriate path forward at this time'' (data/documents/oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html).
+    The Director acted -- by declining -- so the coverage gate is now permanent rather than pending, and
+    the replacement watch is whether an INDIVIDUAL NPDES application or draft permit appears for a given
+    campus.'
   confidence: high
-  asof: '2026-07-11'
+  asof: '2026-07-21'
 candidates:
 - site: bowling-green
   facility: Bowling Green Data Center (Project Accordion)
@@ -36,15 +43,26 @@ candidates:
   blowdown_dmr_relpath: null
   tag: '[verified]'
   confidence: high
-  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
-    under it, so Bowling Green Data Center (Project Accordion) cannot yet hold blowdown coverage under
-    it. No facility-own discharge permit is wired — either genuinely dry, or blowdown goes to sewer under
-    a City sewer-use agreement not in ECHO (→ C2 records request).
+  finding: 'OHD000001 was WITHDRAWN (Ohio EPA declined to finalize it, 2026-07-21); it will never issue,
+    so Bowling Green Data Center (Project Accordion) can never hold blowdown coverage under it. This absence
+    is permanent, not pending: an INDIVIDUAL NPDES permit is now the only instrument that would disclose
+    this facility''s cooling discharge. No facility-own discharge permit is wired — either genuinely dry,
+    or blowdown goes to sewer under a City sewer-use agreement not in ECHO (→ C2 records request).'
   citation: '[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, liquid-cooled
     with dry coolers — ''no operational water'', with domestic/cleaning/fire use only. In tension with
     the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 MGD, Aug 2024; conflicting ~50k vs ~600k
     GPD figures; a Meta-funded 2 MG tank + 16-in main) — that reconciliation is tracked at the water sub-issue
-    #1439, not decided here. Replace with a documented cooling design when an NPDES/water instrument lands.'
+    #1439, not decided here. B5 (#1685) RAN that tension through the A3 cooling harness and the pin SURVIVES,
+    but as a reservation_conflict rather than an untested claim: the district-linked ~600,000 gpd design
+    commitment is a demand signal independent of Meta''s own account of its cooling, and is disproportionate
+    to ''no operational water''. It cannot re-archetype the pin — a negotiated ceiling is not a withdrawal
+    or discharge instrument — and the harness confirmed there is no instrument to be had: the campus buys
+    finished water (so the Ohio DNR withdrawal registry, which records withdrawals from waters of the
+    state, carries no Meta/Liames/Accordion/NWWSD registration in Wood County at all), and a full ECHO
+    sweep of the county finds every campus-linked record under the CONSTRUCTION stormwater general permit
+    with no process outfall and no DMR. With OHD000001 withdrawn 2026-07-21, an INDIVIDUAL NPDES permit
+    is now the only instrument that would ever disclose this campus''s cooling discharge. See data/reference/oepa/cooling-reconciliation.yaml.
+    Replace with a documented cooling design when an NPDES/water instrument lands.'
 - site: springfield
   facility: 5C Data Centers "CMH01"
   cooling_claim: closed_loop_dry
@@ -55,17 +73,27 @@ candidates:
   blowdown_dmr_relpath: null
   tag: '[verified]'
   confidence: high
-  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
-    under it, so 5C Data Centers "CMH01" cannot yet hold blowdown coverage under it. No facility-own discharge
-    permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
-    not in ECHO (→ C2 records request).
+  finding: 'OHD000001 was WITHDRAWN (Ohio EPA declined to finalize it, 2026-07-21); it will never issue,
+    so 5C Data Centers "CMH01" can never hold blowdown coverage under it. This absence is permanent, not
+    pending: an INDIVIDUAL NPDES permit is now the only instrument that would disclose this facility''s
+    cooling discharge. No facility-own discharge permit is wired — either genuinely dry, or blowdown goes
+    to sewer under a City sewer-use agreement not in ECHO (→ C2 records request).'
   citation: '[reference] Closed-loop / direct-liquid recirculating cooling, disclosed ''not evaporative''
     by the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs); up to 300,000 gal/day
     permitted from the municipal system at an >80degF extreme-heat max (''near zero'' most of the year,
     ~30k gal/day realistic), with an on-site reservoir under study to avoid the municipal tap. A largely
-    dry recirculating design undercuts the Mad River buried-valley abstraction thesis. Not a document
-    extraction; refine to [verified] on an ingested mechanical/plumbing permit. The receiving-water /
-    source-water screen is the water sub-issue (#1415).'
+    dry recirculating design undercuts the Mad River buried-valley abstraction thesis. B3 (#1683) ran
+    the A3 cooling-cycling reconciliation harness (`watermark cooling-reconcile`) on this claim: with
+    no matching makeup record on file (the Ohio DNR WWFRP water-withdrawal registry has no Clark County
+    withdrawal pull built) and no matching facility-own discharge record on file (OHD000001 still draft,
+    unlinked to the facility by name; no facility-specific NPDES/DMR located) — an absence of records,
+    not evidence of zero use — the outcome is a `gap` that KEEPS this [reference] pin. The 300,000 gal/day
+    is a permitted-withdrawal CEILING self-disclosed by this same FAQ — NOT an independently-negotiated
+    reservation, so (unlike Troy-Piqua B1) it is not a reservation_conflict: a dry loop sits far below
+    it, and a self-report cannot corroborate its own claim. The actual metered withdrawal vs the ceiling
+    is sharpened into a C2 records request (#1688/#1415). Not a document extraction; refine to [verified]
+    on an ingested mechanical/plumbing permit. The receiving-water / source-water screen is the water
+    sub-issue (#1415).'
 - site: urbana
   facility: Urbana Technology Hub
   cooling_claim: closed_loop_dry
@@ -76,10 +104,11 @@ candidates:
   blowdown_dmr_relpath: null
   tag: '[verified]'
   confidence: high
-  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
-    under it, so Urbana Technology Hub cannot yet hold blowdown coverage under it. No facility-own discharge
-    permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
-    not in ECHO (→ C2 records request).
+  finding: 'OHD000001 was WITHDRAWN (Ohio EPA declined to finalize it, 2026-07-21); it will never issue,
+    so Urbana Technology Hub can never hold blowdown coverage under it. This absence is permanent, not
+    pending: an INDIVIDUAL NPDES permit is now the only instrument that would disclose this facility''s
+    cooling discharge. No facility-own discharge permit is wired — either genuinely dry, or blowdown goes
+    to sewer under a City sewer-use agreement not in ECHO (→ C2 records request).'
   citation: '[reference] Closed-loop cooling disclosed at the Feb-2026 City of Urbana meeting — developer
     stated water use ''comparable to a standard office building'' (Urbana Daily Citizen 2026-02-18). Undercuts
     the buried-valley water-abstraction thesis. Not a document extraction; refine to [verified] on an
@@ -94,10 +123,11 @@ candidates:
   blowdown_dmr_relpath: null
   tag: '[verified]'
   confidence: high
-  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
-    under it, so Van Wert Mega Site cannot yet hold blowdown coverage under it. No facility-own discharge
-    permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
-    not in ECHO (→ C2 records request).
+  finding: 'OHD000001 was WITHDRAWN (Ohio EPA declined to finalize it, 2026-07-21); it will never issue,
+    so Van Wert Mega Site can never hold blowdown coverage under it. This absence is permanent, not pending:
+    an INDIVIDUAL NPDES permit is now the only instrument that would disclose this facility''s cooling
+    discharge. No facility-own discharge permit is wired — either genuinely dry, or blowdown goes to sewer
+    under a City sewer-use agreement not in ECHO (→ C2 records request).'
   citation: '[reference] operator/developer claim (NOT instrument-confirmed): closed-loop cooling (Danfoss-patented
     equipment); QTS states the campus ''does not consume water for cooling once operational'', characterizing
     ongoing use as ''about what 4 households use per month'' (q.com/data-centers/van-wert; vanwert.org/water-treatment).
@@ -105,8 +135,13 @@ candidates:
     on the initial closed-loop fill (~660,000 gal from the City of Van Wert — local press frames it ''annually''
     while the 2026-06-11 event framed it as a one-time fill); reconciling the fill volume + the still-negotiated
     water/sewer service agreement is the water-service instrument (#1407) / water-contradiction lead (#1409),
-    not this pin. Replace with a documented cooling design when an NPDES/mechanical instrument lands (the
-    OHD000001 draft data-center general permit is not yet linked to the facility by name, #1408).'
+    not this pin. B2 (#1682) ran the A3 cooling-cycling reconciliation harness (`watermark cooling-reconcile`)
+    on this claim: with no metered makeup (A1 built no Van Wert County withdrawal) and no facility-own
+    blowdown (A2 OHD000001 draft), the outcome is a `gap` that KEEPS this [reference] pin — the ~660k
+    gal figure is a single-source self-report, not an instrument, so it can neither upgrade the source
+    nor re-archetype; the initial-fill open quantity is sharpened into a C2 records request (#1688/#1409).
+    Replace with a documented cooling design when an NPDES/mechanical instrument lands (the OHD000001
+    draft data-center general permit is not yet linked to the facility by name, #1408).'
 - site: wilmington
   facility: Cosler Farm campus
   cooling_claim: hybrid_adiabatic
@@ -117,10 +152,11 @@ candidates:
   blowdown_dmr_relpath: null
   tag: '[verified]'
   confidence: high
-  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
-    under it, so Cosler Farm campus cannot yet hold blowdown coverage under it. No facility-own discharge
-    permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
-    not in ECHO (→ C2 records request).
+  finding: 'OHD000001 was WITHDRAWN (Ohio EPA declined to finalize it, 2026-07-21); it will never issue,
+    so Cosler Farm campus can never hold blowdown coverage under it. This absence is permanent, not pending:
+    an INDIVIDUAL NPDES permit is now the only instrument that would disclose this facility''s cooling
+    discharge. No facility-own discharge permit is wired — either genuinely dry, or blowdown goes to sewer
+    under a City sewer-use agreement not in ECHO (→ C2 records request).'
   citation: '[reference] DIRECT EVAPORATIVE cooling disclosed in the joint Port Authority / City Data
     Center FAQs, with a projected ~6M gal/yr cooling-water CONSUMPTION and water-cooled operation only
     ~11 days/yr (dry/free-cooling otherwise) — mapped to the HYBRID_ADIABATIC archetype (dry with seasonal

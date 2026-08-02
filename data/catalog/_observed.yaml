@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-02T01:41:26.316009+00:00'
+reconciled_at: '2026-08-02T02:41:29.339370+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -192,8 +192,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: 79db95280cc80967923422d1ea5715d03698c39b265c3b97bd898c954291b1b0
-    size_bytes: 246563
+    sha256: 85ae7f25292c810f5da7dfa71d2345a97c4e0ad6441c7fd9ebe4bb455bc7a73a
+    size_bytes: 249226
     lfs_materialized: true
     file_count: 13
     missing: []
@@ -1032,22 +1032,22 @@ entries:
     site_scope: lima-legacy
   oepa-cooling-reconciliation:
     exists: true
-    sha256: 500b40fcb60a7dc8813fca5135634ef0fd5ac486ed10f8d8f87b67691a772bd7
-    size_bytes: 75833
+    sha256: e9f14b462b71379c9912580fe34a481cd86944e4e564869b326c3d67b0aca827
+    size_bytes: 84107
     lfs_materialized: true
     file_count: 1
     missing: []
-    asof: '2026-07-11'
+    asof: '2026-07-21'
     stale: false
     site_scope: state:OH
   oepa-ohd000001-coverage:
     exists: true
-    sha256: 561ef21ac83fe62d11b188ad9afee6bdc6fcf991b1bd80cb114396ec84d94a33
-    size_bytes: 8215
+    sha256: 61814f4fe1f299bb2c50e7b8f542710c543f09ff3afb95552c0cb6e1b2c84545
+    size_bytes: 12160
     lfs_materialized: true
     file_count: 1
     missing: []
-    asof: '2026-07-11'
+    asof: '2026-07-21'
     stale: false
     site_scope: state:OH
   oepa-ohd000001-gp:
@@ -1120,6 +1120,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:new-albany
+  ohio-water-withdrawal-wood:
+    exists: true
+    sha256: 14e6f196d33f3dab09010c4e945f152fb7c92135f3b4863b3da73e3eac504e2d
+    size_bytes: 112871
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:bowling-green
   ohio-waterwells-allen:
     exists: true
     sha256: d4466bed897c8f0b96b0ab0bead9367ef6c905ff37bfc08be14e29e1b3c717ec

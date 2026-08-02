@@ -52,6 +52,10 @@ DISCIPLINE_CAVEATS: tuple[str, ...] = (
     "A reservation ceiling (a will-serve / water-agreement figure) is not a "
     "discharge/withdrawal instrument — it keeps the archetype pin and is never collapsed "
     "into a headline consumptive figure.",
+    "A reservation conflict survives a blind route: a negotiated ceiling is not something the "
+    "withdrawal or discharge instruments could ever have metered, so blinding them cannot erase "
+    "it — and where the operator's own figure conflicts with that reservation, the two are "
+    "separated by provenance and not by size, with the conflict reported rather than resolved.",
     "An operator self-report lands on its own disclosed_* slot, never on documented_*, and "
     "cannot upgrade the claim's source.",
     "An instrument that cannot reach a facility returns an absence of jurisdiction, not a "

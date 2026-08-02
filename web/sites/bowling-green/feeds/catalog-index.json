@@ -1,6 +1,6 @@
 {
   "site": "bowling-green",
-  "catalog_version": "cdd952ab9f8f15145f5f0881853e7edc7d78474d3a94f4f6df66c8251cab3359",
+  "catalog_version": "42ed7e8b92bb47b0a343e3ecb24d3e611851eb7461aade2aeb7a3419f7660525",
   "contract_version": "1.50.0",
   "atoms": [
     {
@@ -929,6 +929,14 @@
       "site": "bowling-green",
       "local_id": "oepa-ohd000001-gp",
       "title": "Ohio EPA Draft General NPDES Permit for Data Center Facilities (OHD000001)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bowling-green:ohio-water-withdrawal-wood",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "ohio-water-withdrawal-wood",
+      "title": "Wood County, OH water-withdrawal registry (Ohio DNR WWFRP)",
       "feed": "catalog"
     },
     {

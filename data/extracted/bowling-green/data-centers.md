@@ -74,6 +74,31 @@ Meta (Middleton Twp) and Oppidan (city proper) — are **distinct projects**; do
   2024; conflicting ~50k vs ~600k GPD figures; a Meta-funded 2 MG tank + 16-in main) — **that
   reconciliation is the water sub-issue's job (#1439), not this register's.** Do not assert the
   cooling design as verified.
+- **Cooling reconciliation (B5, #1685):** the dry-cooler claim was run through the A3 harness
+  (`data/reference/oepa/cooling-reconciliation.yaml`) and comes back **`reservation_conflict`** —
+  the pin is **kept** at `closed_loop_dry` `[reference]`, but the district-linked **~600,000 gpd**
+  design commitment is a demand signal *independent of Meta's own account of its cooling* and is
+  disproportionate to "no operational water" (it is also **12x** Meta's own announced ~50,000 gpd —
+  a conflict #1439 recorded and B5 does not settle). A negotiated ceiling is **not** a withdrawal
+  or discharge instrument, so it cannot license a re-archetype. **And there is no instrument to be
+  had:** the campus *buys* finished water, so the Ohio DNR withdrawal registry — which records
+  withdrawals *from waters of the state* — carries **no Meta / Liames / Project Accordion / NWWSD
+  registration in Wood County at all** (`data/reference/ohio-water-withdrawal/wood.yaml`), while
+  **Apollo Power Generation Facility - TEMP** registered a 0.27 MGD surface intake in the campus's
+  own HUC-12 on **2026-03-26** — so the register is live here and Meta's absence is a *route*, not
+  a coverage gap. A full ECHO CWA sweep of Wood County (FIPS 39173, 2026-08-01; 241 records, 50
+  effective individual NPDES permits) finds **every** campus-linked record — PROJECT ACCORDION
+  `OHGC15219`, APOLLO POWER GENERATION FACILITY `OHGC17963`, APOLLO LAYDOWN YARD `OHGC18721`,
+  APOLLO NORTH PIPELINE `OHGC19094`, ACCORDION-DOWLING 138KV `OHGC15929` — under the **construction
+  stormwater** general permit (master `OHC000000`), with no process outfall and no DMR. With
+  **OHD000001 withdrawn 2026-07-21**, an **individual NPDES permit** is now the only instrument
+  that would ever disclose this campus's cooling discharge. `[verified]` on the records; the
+  cooling architecture stays `[reference]`.
+  **KY/OH:** every identifier in that reconciliation is an Ohio key (Wood County FIPS **39173**,
+  Ohio DNR registrations, Ohio EPA NPDES, EIA-861 utility **#2054** — the Bowling Green, KY muni is
+  #2056), and both instruments are Ohio-statutory, so **neither can return a Kentucky record**. The
+  KY collision reaches only the press-sourced ~50k / ~600k figures — which is exactly where it has
+  to be watched.
 - **Timeline:** deeds **2023-09-05** → reveal **2025-04-09** → **ground 2025** → **target ops
   2027**; **Phase 2 signaled** in Meta's **2026-01-07** letter (PDF on the township site).
   `[verified]` (letter PDF).
@@ -196,7 +221,10 @@ meetings; the resolutions themselves are `[open]`.
   `[open]` primary records.
 - **NWWSD water agreement / BG–Meta wholesale water** (contract ceiling 1.5 MGD, Aug 2024; the
   conflicting ~50k vs ~600k GPD figures) — reconcile against the "no operational water" cooling
-  claim. `[open]` → **#1439**.
+  claim. `[open]` → **#1439**, sharpened by **#1685**: the reconciliation established that no
+  withdrawal or discharge instrument can reach this campus, so these two documents *are* the
+  measurement, and the request has to go to **both** holders — the **service agreement + campus
+  meter** are NWWSD's, the **wholesale contract** is the City's, and neither body holds both.
 - **BG WPC NPDES** (**2PD00009 / OH0024139** → Poe Ditch → North Branch Portage) — the effluent
   chain; ECHO shows 9 of 12 recent quarters non-compliant. `[reference]` → **#1439**.
 - **Title V air permit** for Apollo — genuinely still pending, but the **PTI is not**: final

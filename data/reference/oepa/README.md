@@ -38,18 +38,25 @@ that reads it.
 
 ## Method & the gating fact
 
-Coverage is gated on the general permit's **lifecycle**. OHD000001 was issued as a
-**draft** on 2025-10-31 (public notice No. 215991; hearing 2025-12-17; comment period
-closed 2026-01-16), and the Director's final action was still **pending** as of the
-2026-07-11 refresh. Until it issues, **no facility can be authorized under it** — so
-every candidate resolves to `not_available`. That is a `[verified]` cited absence, and
-it is itself the finding the epic predicts (the coverage vehicle the thesis expects
-does not yet exist).
+Coverage is gated on the general permit's **lifecycle**, and that lifecycle has ended.
+OHD000001 was issued as a **draft** on 2025-10-31 (public notice No. 215991; hearing
+2025-12-17; comment period closed 2026-01-16) — and on **2026-07-21** Ohio EPA published a
+Community Notice saying that after reviewing the comments it "has decided not to move
+forward with finalizing the general permit," and that "the individual NPDES permit issuance
+process is the most appropriate path forward at this time." The permit is **WITHDRAWN**.
 
-When the Director issues final action, update the `OHD000001` lifecycle constant in
-`watermark.hydrology.blowdown` (one place, with a citation) and rerun the regenerate
-command; `covered` / `not_sought` then become resolvable per facility via an
-authorization lookup (the forward-compatible seam in `resolve_coverage`).
+Every candidate still resolves to `not_available`, but read it correctly: the absence is
+now **permanent, not pending**. No coverage list will ever exist, so this is no longer a
+watch that closes by waiting — the only instrument that would ever disclose a data
+center's cooling discharge is an **individual NPDES permit**, which is a substantially
+better evidentiary object than a general-permit coverage row (public-noticed,
+fact-sheeted, individually limited). The replacement watch is whether such an application
+or draft permit appears for any cohort campus.
+
+The lifecycle lives in one cited place — the `OHD000001` constant in
+`watermark.hydrology.blowdown`; update it there and rerun the regenerate command. The
+`covered` / `not_sought` authorization seam in `resolve_coverage` is now unreachable for
+*this* permit and is kept for the next data-center general permit that does issue.
 
 ## The cohort (registry-derived)
 
@@ -107,11 +114,19 @@ Where **both** documented makeup and blowdown are on record, cycles-of-concentra
 back-solved (makeup / blowdown) and emitted as an **`[inference]` bracket, never a
 headline scalar** — the ratio of two self-reported figures is not a measurement.
 
-**Every live cohort facility is a `gap` today**: while OHD000001 is a draft permit and
-no facility-own DMR is on record, there is no documented makeup or blowdown to test
-against — including Van Wert, whose operator-disclosed ~660k gal figure is a self-report,
-not an instrument (B2 #1682), and Springfield, whose self-disclosed 300k gal/day is a
-permitted ceiling, not metered use (B3 #1683). The seams auto-activate when the records land.
+**No live cohort facility has a documented cooling account**: with OHD000001 withdrawn and
+no facility-own DMR on record, there is no metered makeup or blowdown to test against —
+including Van Wert, whose operator-disclosed ~660k gal figure is a self-report, not an
+instrument (B2 #1682), and Springfield, whose self-disclosed 300k gal/day is a permitted
+ceiling, not metered use (B3 #1683). Most therefore read `gap`. Two do not, and the reason
+is the same in both: they carry a figure that came from **somewhere other than the operator**.
+Troy-Piqua's negotiated 2.0 MGD reservation (B1 #1681) and Bowling Green's district-linked
+~600,000 gpd design commitment (B5 #1685) are `reservation_conflict` — disproportionate to a
+low-water claim, but ceilings rather than instruments, so both keep their pin. Bowling Green
+also shows why the reach guard is ordered the way it is: its makeup route is **blind**
+(the campus buys finished water from a regional district), yet the reservation stands,
+because a negotiated ceiling was never something the withdrawal registry could have metered.
+The seams auto-activate when the records land.
 
 **The harness recommends; it never mutates `cooling_model`.** Re-archetyping a facility
 is a reviewed B1–B6 edit landed with the instrument cited — the reconciliation record is
@@ -203,8 +218,9 @@ treatment chemistry — a constructed calibration vector, not documented Intel d
 
 ## Evidentiary stance
 
-- OHD000001 non-coverage while the permit is draft is `[verified]` (the permit's own
-  lifecycle).
+- OHD000001 non-coverage is `[verified]` (the permit's own lifecycle) — and since the
+  2026-07-21 withdrawal it is a permanent absence, not a pending one. Do not restate it as
+  "the Director's action is still pending"; the Director acted, by declining.
 - `facility_own_discharge: unknown` is an **`[open]` gap**, not "confirmed dry": a
   facility with no facility-own NPDES discharge permit is either genuinely dry, or
   blowing down to sewer under a City sewer-use agreement ECHO never sees → a C2

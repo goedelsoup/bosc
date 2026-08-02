@@ -11,13 +11,18 @@ resolves two questions:
    all, or does the record show none (→ genuinely dry, or blowing down to sewer under a City
    sewer-use agreement ECHO never sees → a C2 records request)?
 
-Both answers are, today, dominated by one ``[verified]`` gating fact: **OHD000001 is still a
-draft general permit — not yet effective** (issued 2025-10-31; comment period closed 2026-01-16;
-the Director's final action was still pending as of the 2026-07-11 refresh). Until it issues, no
-facility can be authorized under it, so every candidate resolves to ``not_available`` — a cited
-absence, which is itself the finding. When the Director acts, update :data:`OHD000001` (one place,
-with a citation) and regenerate the coverage artifact; the per-facility authorization check is the
-forward-compatible seam left in :func:`resolve_coverage`.
+Both answers are dominated by one ``[verified]`` gating fact, and as of **2026-07-21** that fact
+changed shape: **OHD000001 was withdrawn** — Ohio EPA publicly declined to finalize it, saying the
+individual NPDES process "is the most appropriate path forward" (it had been public-noticed
+2025-10-31 with comment closing 2026-01-16). Every candidate still resolves to ``not_available``,
+but the absence is now **permanent rather than pending**: no amount of waiting produces a coverage
+list, and the only instrument that would ever disclose a data center's cooling discharge is an
+individual NPDES permit. That is a materially stronger finding than the draft-gated one it
+replaces — a general permit would have carried generic limits, whereas an individual permit is
+public-noticed, fact-sheeted and individually limited. The lifecycle lives in one cited place
+(:data:`OHD000001`); update it there and regenerate the coverage artifact. The per-facility
+authorization check remains the forward-compatible seam in :func:`resolve_coverage`, now
+unreachable for this permit and kept for the next general permit that does issue.
 
 This module **produces the per-candidate record the A3 reconciliation reads**. It asserts no
 per-site over-cycling conclusion — that is the per-site B-review (B1-B6). The absence of a
@@ -59,6 +64,7 @@ class GeneralPermitState(StrEnum):
 
     DRAFT = "draft"  # public-noticed / in comment, but the Director has not issued it
     EFFECTIVE = "effective"  # issued and in force; facilities may obtain coverage
+    WITHDRAWN = "withdrawn"  # the agency publicly declined to finalize it — it will never issue
 
 
 class GeneralPermit(BaseModel):
@@ -95,19 +101,25 @@ class GeneralPermit(BaseModel):
 OHD000001 = GeneralPermit(
     permit_id=OHD000001_ID,
     title="Ohio EPA Draft General NPDES Permit for Data Center Facilities",
-    state=GeneralPermitState.DRAFT,
+    state=GeneralPermitState.WITHDRAWN,
     issued="2025-10-31",
     effective_date=None,
     comment_closed="2026-01-16",
     citation=(
         "Ohio EPA Division of Surface Water — draft General NPDES permit OHD000001 (public "
-        "notice No. 215991; public hearing 2025-12-17); covers cooling water, low-volume "
+        "notice No. 215991; public hearing 2025-12-17); covered cooling water, low-volume "
         "wastewaters (cooling-tower/boiler blowdown, air-compressor condensate) and stormwater "
-        "(data/catalog/reference/oepa-ohd000001-gp.yaml). Director's final action still pending "
-        "as of the 2026-07-11 refresh (data/site/troy-piqua/leads.yaml, lead OHD000001)."
+        "(data/catalog/reference/oepa-ohd000001-gp.yaml). WITHDRAWN: Ohio EPA Community Notice "
+        "of 2026-07-21 states that after reviewing the comments it 'has decided not to move "
+        "forward with finalizing the general permit' and that 'the individual NPDES permit "
+        "issuance process is the most appropriate path forward at this time' "
+        "(data/documents/oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit"
+        ".npdes-general-permits.html). The Director acted -- by declining -- so the coverage "
+        "gate is now permanent rather than pending, and the replacement watch is whether an "
+        "INDIVIDUAL NPDES application or draft permit appears for a given campus."
     ),
-    confidence="high",  # the lifecycle facts are [verified] from the permit's own public notice
-    asof="2026-07-11",
+    confidence="high",  # the lifecycle facts are [verified] from the agency's own notices
+    asof="2026-07-21",
 )
 
 
@@ -197,18 +209,34 @@ def closed_loop_candidates(*, settings: Settings | None = None) -> list[Candidat
 def resolve_coverage(candidate: Candidate, *, gp: GeneralPermit = OHD000001) -> BlowdownCoverage:
     """Resolve one candidate's OHD000001 coverage + facility-own discharge status.
 
-    The OHD000001 status is gated on the general permit's lifecycle: while it is draft (not
-    effective), no facility can be authorized, so the status is ``not_available`` — a ``[verified]``
-    cited absence. Once the permit issues, distinguishing ``covered`` from ``not_sought`` needs a
-    per-facility authorization lookup that only exists then; that is the forward-compatible seam
-    (the ``no_record``/``[open]`` branch), never faked here.
+    The OHD000001 status is gated on the general permit's lifecycle. While it is draft (not
+    effective), or once it has been **withdrawn**, no facility can be authorized, so the status is
+    ``not_available`` — a ``[verified]`` cited absence. The two share a status but not a finding:
+    a draft absence is *pending* and closes when the Director acts, a withdrawn one is *permanent*
+    and can only be displaced by an individual NPDES permit. Had the permit instead issued,
+    distinguishing ``covered`` from ``not_sought`` would need a per-facility authorization lookup
+    that only exists then; that is the forward-compatible seam (the ``no_record``/``[open]``
+    branch), never faked here.
 
     Facility-own discharge presence is ``present`` when a permit id is on record, else ``unknown``
     (the gap the C2 records request fills) — never ``absent`` unless a search has actually
     established the absence.
     """
     confidence: Confidence
-    if not gp.effective:
+    if gp.state is GeneralPermitState.WITHDRAWN:
+        # The agency publicly declined to finalize it. Same gate as `draft` — no facility can be
+        # authorized — but a categorically different finding: "never" rather than "not yet", so
+        # the absence can no longer be closed by waiting, only by an individual NPDES appearing.
+        status = CoverageStatus.NOT_AVAILABLE
+        tag = "[verified]"
+        confidence = "high"  # the withdrawal is a verified fact from the agency's own notice
+        coverage_read = (
+            f"{gp.permit_id} was WITHDRAWN (Ohio EPA declined to finalize it, {gp.asof}); it will "
+            f"never issue, so {candidate.facility} can never hold blowdown coverage under it. "
+            f"This absence is permanent, not pending: an INDIVIDUAL NPDES permit is now the only "
+            f"instrument that would disclose this facility's cooling discharge."
+        )
+    elif not gp.effective:
         status = CoverageStatus.NOT_AVAILABLE
         tag = "[verified]"
         confidence = "high"  # the draft-gated absence is a verified fact about the permit
@@ -289,8 +317,12 @@ def coverage_document(gp: GeneralPermit, coverages: list[BlowdownCoverage]) -> d
             "asof": gp.asof,  # the coverage read is only as current as the permit-lifecycle refresh
             "discipline": (
                 "OHD000001 coverage is gated on the permit lifecycle: while the general permit is "
-                "draft (not effective) no facility can be authorized, so the per-candidate status "
-                "is not_available — a [verified] cited absence. Facility-own discharge presence is "
+                "draft (not effective), or once it has been withdrawn, no facility can be "
+                "authorized, so the per-candidate status is not_available — a [verified] cited "
+                "absence. Ohio EPA WITHDREW OHD000001 on 2026-07-21, so that absence is now "
+                "permanent rather than pending, and an individual NPDES permit is the only "
+                "instrument that would disclose a data center's cooling discharge. "
+                "Facility-own discharge presence is "
                 "unknown until a search establishes it (the C2 records request); an absence under a "
                 "closed-loop-dry claim is a finding, never read as 'confirmed dry'. No per-site "
                 "over-cycling conclusion is asserted here (that is the B-review)."
