@@ -280,8 +280,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e1dcd9e3c4a432e317180002728f38e8a6dfcae76b13f073d3c3e3f95b0c94b0",
-      "size_bytes": 217444,
+      "sha256": "85ae7f25292c810f5da7dfa71d2345a97c4e0ad6441c7fd9ebe4bb455bc7a73a",
+      "size_bytes": 249226,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -2192,12 +2192,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "500b40fcb60a7dc8813fca5135634ef0fd5ac486ed10f8d8f87b67691a772bd7",
-      "size_bytes": 75833,
+      "sha256": "33e78eb6dbbc3042c4e247333d4c46adf254b0f6423eb31dd29810589bfd9e08",
+      "size_bytes": 84089,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
@@ -2245,12 +2245,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "561ef21ac83fe62d11b188ad9afee6bdc6fcf991b1bd80cb114396ec84d94a33",
-      "size_bytes": 8215,
+      "sha256": "61814f4fe1f299bb2c50e7b8f542710c543f09ff3afb95552c0cb6e1b2c84545",
+      "size_bytes": 12160,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
@@ -2323,6 +2323,56 @@
       "confidence": "medium",
       "note": null,
       "verified": false
+    }
+  },
+  {
+    "id": "ohio-water-withdrawal-wood",
+    "title": "Wood County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+    "scope": "reference",
+    "collection": "ohio-water-withdrawal",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "water-withdrawal --county Wood",
+    "connector_ref": "watermark.hydrology.connectors.ohio_water_withdrawal",
+    "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+    "external_url": "https://ohiodnr.gov/wwfacilitylocator",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "site:bowling-green",
+    "cadence": "annual",
+    "ttl_days": 365,
+    "last_refreshed": null,
+    "tags": [
+      "water-withdrawal",
+      "wwfrp",
+      "ohio-dnr",
+      "cooling",
+      "makeup"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/ohio-water-withdrawal/wood.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "14e6f196d33f3dab09010c4e945f152fb7c92135f3b4863b3da73e3eac504e2d",
+      "size_bytes": 112871,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark water-withdrawal --county Wood",
+      "verified": true
     }
   },
   {
@@ -2517,8 +2567,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "768985bc1f4641951df76713f5278c67fb74ace98ec8a1eeac48b0d315800252",
-      "size_bytes": 491506,
+      "sha256": "41921e30b33b8494e8367d64753a0704ce48fdb0e979ca8aa5f3b337a4ede48d",
+      "size_bytes": 492562,
       "lfs_materialized": true,
       "file_count": 9,
       "stale": false,

@@ -94,7 +94,9 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   evaporative blowdown peaks in summer (ratio ≫ 1), a genuinely dry loop is flat (ratio ~ 1);
   the ratio is an `[inference]` shape indicator, never a discharge magnitude, and rides on
   `DischargeSummary.seasonality` / the `dmr_document()` `seasonality:` block. (2) `blowdown.py`
-  resolves **OHD000001** (Ohio's draft data-center NPDES general permit) coverage per closed-loop
+  resolves **OHD000001** (Ohio's data-center NPDES general permit — **withdrawn 2026-07-21**, Ohio
+  EPA declined to finalize it, so its non-coverage is now a permanent absence rather than a pending
+  one and an individual NPDES permit is the only instrument left) coverage per closed-loop
   candidate: while the permit is draft it is gated to `not_available` (a `[verified]` cited
   absence), written to `data/reference/oepa/ohd000001-coverage.yaml` by `watermark oepa coverage
   --write`. The cohort is registry-derived (`SiteFacility.cooling_model` in
@@ -135,7 +137,10 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   explicitly so its disclosed ~660k gal figure + the #1409 initial-fill sharpen its gap), **plus
   Springfield** (`reconcile_springfield`, #1683 — a cohort member reconciled explicitly so its
   self-disclosed 300k gal/day permitted ceiling — not a `reservation_conflict` — + the #1415
-  actual-vs-ceiling denominator sharpen its "not evaporative" gap), **plus New Albany / Intel**
+  actual-vs-ceiling denominator sharpen its "not evaporative" gap), **plus Bowling Green**
+  (`reconcile_bowling_green`, #1685 — a cohort member reconciled explicitly because its two
+  quantified figures split across two provenance families: see the reservation-vs-blind-route note
+  below), **plus New Albany / Intel**
   (`reconcile_intel_new_albany`, #1686 — see below), **plus the
   Intel evaporative positive control** (`INTEL_CONTROL_FACILITY`,
   a constructed calibration vector — NOT a registered site, NOT documented Intel data) the harness
@@ -159,7 +164,26 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   data-center WUE against a fab's electrical load would fabricate). A `WaterAccount` validator makes
   the refusal total and cited — a half-refused account would read downstream as a real zero.
   `meta.reference_band` records the per-IT-MW evaporative screening band, derived from the
-  **archetype spec**, explicitly NOT from the fab that was supposed to ground it. (4) `cooling_corroborators.py` (A4,
+  **archetype spec**, explicitly NOT from the fab that was supposed to ground it.
+- **A blind route does not erase a reservation, and two conflicting figures are split by
+  PROVENANCE rather than by size** (B5 #1685, Bowling Green). This is the guard above exercised on a
+  real second site, and it matters because it is what stops `route_blind` from swallowing every
+  municipally-supplied campus into "we cannot see". Meta's campus buys finished water from a
+  regional district, so the makeup side IS blind — yet the row reads `reservation_conflict`, not
+  `route_blind`, because a **negotiated ceiling is not something A1 or A2 could ever have metered**,
+  so blinding them cannot invalidate it. Keying the guard on a blind route alone would have
+  destroyed the finding. The second rule is the harder one: Bowling Green carries **two** quantified
+  figures that conflict 12-fold — a district-linked "up to ~600,000 gpd" design commitment and
+  Meta's own announced ~50,000 gpd — and they are separated by **where they come from, not by which
+  is bigger or more convenient**. The district's figure is a demand signal independent of the claim's
+  source, so it lands on `reserved_makeup` and classifies; Meta's is a self-report of the very claim
+  under test, so it lands on `disclosed_makeup` and never classifies. The conflict itself is
+  **reported, not resolved** (it is #1439's, and no instrument in the corpus settles it). Note also
+  what makes the A1 negative *readable*: the Wood County registry carries no Meta/Liames/NWWSD
+  registration at all, but the Apollo plant registered a 0.27 MGD intake in the campus's own HUC-12
+  on 2026-03-26 — the register is demonstrably live at that site, so the absence is a route rather
+  than a coverage hole. **A dated negative needs a positive next to it before it can be read.**
+  (4) `cooling_corroborators.py` (A4,
   #1680) adds two **independent corroborators** to each A3 record — the facility's own **air
   permit** listing cooling towers as PM (drift) sources (read from `SiteFacility.air_permit_relpath`;
   a listing CONTRADICTS a `closed_loop_dry` claim, CORROBORATES an evaporative/hybrid one — Lima's

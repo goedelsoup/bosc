@@ -931,6 +931,7 @@ def _reservation_conflict_lead(
     account: WaterAccount,
     issue_ref: str,
     corroborators: CoolingCorroborators | None = None,
+    water_holder: str | None = None,
 ) -> RecordsRequestLead:
     """The sharpened C2 (#1688) records-request lead for a reservation_conflict (B1, #1681).
 
@@ -941,6 +942,13 @@ def _reservation_conflict_lead(
     (evaporative) or far below it (nearer dry). ``issue_ref`` is the site's own standing water lead
     (Troy-Piqua's ``#1486``) the conflict sharpens. The silent A4 corroborators (#1680) add their own
     not-on-record asks, as on a gap.
+
+    ``water_holder`` overrides the default holder, and on a reservation conflict it is load-bearing
+    for the same reason B6 (#1686) added it to the route-blind lead: the body that signed the
+    reservation and the body that reads the meter need not be the site's own city. Bowling Green is
+    the case — the campus is metered by a regional district that buys the water wholesale from the
+    City, so a request addressed only to the City reaches the wholesale contract and not the
+    service agreement, and a request addressed only to the district reaches the reverse.
     """
     reserved = account.reserved_makeup or account.reserved_blowdown
     reserved_phrase = f"{reserved.value:g} MGD" if reserved is not None else "the reserved figure"
@@ -951,7 +959,7 @@ def _reservation_conflict_lead(
         "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
     ]
     holders = [
-        f"City / municipal water-sewer authority serving {site}",
+        water_holder or f"City / municipal water-sewer authority serving {site}",
         "Ohio EPA (NPDES / OHD000001)",
     ]
     extra_records, extra_holders = _corroborator_asks(corroborators)
@@ -1121,13 +1129,35 @@ def _finding(
             if account.backsolved_cycles is not None
             else ""
         )
+        # A competing SELF-REPORTED figure from the claim's own source (B5, #1685: Meta's ~50,000
+        # gpd against the district-linked ~600,000 gpd). Naming the spread matters because it is
+        # the operator's own number the reservation contradicts, not only the archetype's ~0 — and
+        # because the spread is a live, unresolved conflict that this row does not settle.
+        selfrep = ""
+        disclosed = account.disclosed_makeup
+        if reserved is not None and disclosed is not None and disclosed.value:
+            selfrep = (
+                f" It is also {reserved.value / disclosed.value:.0f}x the operator's OWN disclosed "
+                f"{disclosed.value:g} MGD — a conflict between the two [reference] figures that "
+                "stays unresolved here; the reservation classifies because it is independent of the "
+                "claim's source, the self-report does not because it is not."
+            )
+        # A blind route does not overturn a reservation conflict (a negotiated ceiling is not
+        # something A1/A2 could have metered), but it does change what the ask can ever reach.
+        blind = ""
+        if account.route is not None and account.route.instruments_blind:
+            blind = (
+                " The reservation survives as the finding precisely because the withdrawal/discharge "
+                f"instruments cannot reach this facility at all ({'; '.join(account.route.blind_sides)}), "
+                "so it is the only quantified figure on record that does not originate with the operator."
+            )
         return (
-            f"Reserved {reserved_phrase} makeup contradicts the {arche} FAQ claim's "
+            f"Reserved {reserved_phrase} makeup contradicts the {arche} claim's "
             f"~{_require(account.predicted_makeup, 'predicted makeup').value:g} MGD prediction — but a "
             "reservation is a ceiling, not "
             "a discharge/withdrawal instrument, so keep the archetype pin (no [verified] re-archetype) "
-            f"and sharpen the water lead (→ C2 records request #1688).{coc} The reserved figure is an "
-            "upper-bound ceiling, NOT a headline consumptive."
+            f"and sharpen the water lead (→ C2 records request #1688).{coc}{selfrep}{blind} The reserved "
+            "figure is an upper-bound ceiling, NOT a headline consumptive."
         )
     # A documented signal exists (DISCREPANCY / CORROBORATED) — pair it with the MATCHING
     # predicted figure exactly as _classify does: the A2 blowdown record against predicted
@@ -1348,7 +1378,7 @@ def reconcile_facility(
         recommended_source = None
         kept_archetype_value = (kept_archetype or fac.cooling_model).value
         lead = _reservation_conflict_lead(
-            site, fac, claim_source, account, water_lead_ref, corroborators
+            site, fac, claim_source, account, water_lead_ref, corroborators, water_holder
         )
         tag = "[open]"  # the conflict stays open; a ceiling is not [verified] proof of use
         confidence = (
@@ -1828,6 +1858,184 @@ def reconcile_springfield(*, settings: Settings | None = None) -> Reconciliation
     )
 
 
+# ------------------------------------- the Bowling Green B5 dry-cooler reservation conflict (#1685)
+
+# Bowling Green pins ``closed_loop_dry`` on a claim more specific than any other in the cohort: Meta
+# describes the campus as "closed-loop, liquid-cooled with DRY COOLERS", with "no operational water"
+# and domestic/cleaning/fire use only. That is an architecture claim, not a vague "closed loop" —
+# dry coolers reject heat to air through a sealed coil and evaporate nothing, so the claim predicts
+# a genuinely ~0 cooling account and is squarely falsifiable by a withdrawal record. B5 (#1685) went
+# looking for that record. What it found:
+#
+# 1. THE MAKEUP SIDE IS OUT OF A1's REACH, and this time the negative is corroborated by a positive
+#    next door. No registration exists in Wood County under Meta, Liames LLC, "Project Accordion",
+#    the Northwestern Water & Sewer District, or any data-center name — because the campus BUYS
+#    finished water from NWWSD, which buys it wholesale from the City of Bowling Green, and the
+#    WWFRP registers withdrawals from waters of the state, never a purchase. But "Apollo Power
+#    Generation Facility - TEMP" (03717) registered a 0.27 MGD surface intake on 2026-03-26 in the
+#    campus's OWN HUC-12 (041000100703). The register is demonstrably live at this site in 2026, so
+#    Meta's non-appearance is a route, not a gap in coverage. The entire supply chain reduces to one
+#    registered withdrawal in the county three transfers upstream: BOWLING GREEN CITY PWS (00251, 2,103.37 MG in
+#    2024 ≈ 5.75 MGD from two Maumee intakes).
+# 2. THE DISCHARGE SIDE IS A SEARCHED ABSENCE. A full ECHO CWA sweep of Wood County (FIPS 39173,
+#    2026-08-01) returns 241 records and 50 EFFECTIVE individual NPDES permits, and not one of them
+#    is the campus. Every campus-linked record — PROJECT ACCORDION (OHGC15219), APOLLO POWER
+#    GENERATION FACILITY (OHGC17963), APOLLO LAYDOWN YARD (OHGC18721), APOLLO NORTH PIPELINE
+#    (OHGC19094), ACCORDION-DOWLING 138KV INTERCONNECT (OHGC15929) — sits under the CONSTRUCTION
+#    stormwater general permit (master OHC000000). There is no process-water outfall and no DMR.
+#    With OHD000001 now WITHDRAWN (2026-07-21), no general permit will ever supply one either.
+# 3. SO THE ONLY QUANTIFIED FIGURES ARE THE TWO THAT CONFLICT, and they conflict 12-fold. Meta's own
+#    announcement says ~50,000 gpd; NWWSD-linked local coverage describes a design commitment of "up
+#    to" ~600,000 gpd. #1439 recorded both and preferred neither, which was right, and B5 does not
+#    resolve it either. What B5 establishes is that the architecture question does not WAIT on that
+#    resolution: at the ~600,000 gpd end the figure is a demand signal disproportionate to "no
+#    operational water" — a reservation_conflict — and the harness reaches that verdict without ever
+#    having to decide which figure governs, because the conflict is with the CLAIM, not between the
+#    figures.
+#
+# The discipline (B1's rule, #1681): a reservation ceiling is not a withdrawal or discharge
+# instrument, so it CANNOT license a re-archetype however disproportionate it is. The pin stays
+# closed_loop_dry at [reference]; the ask gets sharper.
+_BOWLING_GREEN_LEAD_REF = "#1439"
+# The NWWSD-linked ~600,000 gpd design commitment. A demand signal INDEPENDENT of the claim's own
+# source (it is the district's service obligation, not Meta's characterization of its own cooling),
+# which is what separates it from Springfield's self-disclosed ceiling (B3) and puts it in B1's
+# reservation family, where it DOES feed the classifier. Confidence is medium, not high as at
+# Troy-Piqua: this figure has a competing figure from the operator itself, and the executed
+# instrument is in nobody's hands yet.
+_BOWLING_GREEN_RESERVED_MAKEUP = ProvenancedValue.from_reference(
+    0.6,
+    "MGD",
+    citation=(
+        "[reference] RESERVATION CEILING, not metered use: local reporting and Northwestern Water & "
+        "Sewer District-linked coverage describe a design commitment of 'up to' roughly 600,000 gpd "
+        "(0.6 MGD) for the Meta campus, with a Meta-funded 2 MG storage tank and 16-inch main built "
+        "to serve it. Independent of the cooling claim's own source (it is the DISTRICT's service "
+        "obligation, not Meta's characterization of its own architecture), which is why it lands on "
+        "reserved_makeup and not on the disclosed_* self-report slots. It CONFLICTS 12-fold with "
+        "Meta's own announced ~50,000 gpd (carried on disclosed_makeup) — a conflict "
+        "data/extracted/bowling-green/water-watch.yaml recorded and deliberately left unresolved "
+        "(#1439), and which B5 does not resolve either. Neither the NWWSD-Meta service agreement nor "
+        "the August 2024 City-NWWSD wholesale contract (ceiling raised to 1.5 MGD against ~860,000 "
+        "gpd then actually purchased) is in-corpus; both are R.C. 149.43 targets (C2, #1688). A "
+        "reserved capacity ceiling, NOT a withdrawal record."
+    ),
+    confidence="medium",  # a real demand signal, but with a competing operator figure and no instrument
+)
+# Meta's own announced figure. A self-report from the very source that makes the dry-cooler claim,
+# so by B2's rule (#1682) it never feeds the classifier and never upgrades the pin — it is here to
+# be the denominator the reservation is 12x of, and to be honest about what the operator has said.
+_BOWLING_GREEN_DISCLOSED_MAKEUP = ProvenancedValue.from_reference(
+    0.05,
+    "MGD",
+    citation=(
+        "[reference] operator-DISCLOSED figure — NOT a metered use: Meta's own public announcement of "
+        "the Bowling Green Data Center puts the campus's water demand at ~50,000 gpd (0.05 MGD), "
+        "which the company presents as consistent with its dry-cooler claim (domestic, cleaning and "
+        "fire-protection use rather than cooling). A self-report from the same source as the claim "
+        "under test, so it cannot corroborate that claim without circularity and cannot upgrade the "
+        "[reference] pin. Recorded because it is the denominator the ~600,000 gpd NWWSD-linked "
+        "reservation is 12x of — the unresolved conflict at data/extracted/bowling-green/"
+        "water-watch.yaml (#1439). NB neither figure can be settled by the physical works: a 2 MG "
+        "tank and a 16-inch main are also exactly what FIRE-PROTECTION storage and flow look like at "
+        "a campus of this size, and Meta's claim expressly reserves fire use, so the infrastructure "
+        "is consistent with BOTH figures and discriminates neither."
+    ),
+    confidence="low",  # a single-source self-report of the very claim under test
+)
+_BOWLING_GREEN_ROUTE = WaterRoute(
+    supply=SupplyRoute.MUNICIPAL,
+    discharge=DischargeRoute.UNKNOWN,
+    citation=(
+        "[verified] The MAKEUP side is outside A1 by construction and the record shows it: the campus "
+        "buys finished water from the Northwestern Water & Sewer District, which buys it wholesale "
+        "from the City of Bowling Green, and the Ohio DNR WWFRP registers withdrawals FROM WATERS OF "
+        "THE STATE (R.C. 1521.16, >100,000 gpd) — a purchased supply is the seller's withdrawal, not "
+        "the buyer's. The Wood County registry (data/reference/ohio-water-withdrawal/wood.yaml, 36 "
+        "facilities) accordingly carries NO registration under Meta, Liames LLC, 'Project Accordion', "
+        "NWWSD, or any data-center name, while within the county the whole supply chain reduces to one registered "
+        "withdrawal three transfers upstream: BOWLING GREEN CITY PWS (00251, 2,103.37 MG in 2024 "
+        "≈ 5.75 MGD, two Maumee intakes). That absence is READABLE rather than merely empty because "
+        "the register is demonstrably live at this site: 'Apollo Power Generation Facility - TEMP' "
+        "(03717) registered a 0.27 MGD surface intake on 2026-03-26 in the campus's own HUC-12 "
+        "041000100703, with no annual report due yet. The DISCHARGE side is UNKNOWN rather than "
+        "established-to-sewer: an ECHO CWA sweep of Wood County (FIPS 39173, 2026-08-01) returns 241 "
+        "records including 50 effective individual NPDES permits, none of them the campus — every "
+        "campus-linked record (PROJECT ACCORDION OHGC15219, APOLLO POWER GENERATION FACILITY "
+        "OHGC17963, APOLLO LAYDOWN YARD OHGC18721, APOLLO NORTH PIPELINE OHGC19094, "
+        "ACCORDION-DOWLING 138KV INTERCONNECT OHGC15929) sits under the CONSTRUCTION stormwater "
+        "general permit, master OHC000000. So there is verifiably no facility-own outfall and no DMR, "
+        "but the corpus does not establish where process/sanitary flow actually GOES — no sewer-use "
+        "or pretreatment instrument is in hand — and the honest value for a route the record has not "
+        "established is unknown, not sanitary_sewer. The municipal supply alone is enough to blind "
+        "the account. NB every identifier above is an OHIO key (Wood County FIPS 39173; Ohio DNR "
+        "registrations; Ohio EPA NPDES), and both instruments are Ohio-statutory, so neither can "
+        "return a Bowling Green, KENTUCKY record; the KY collision reaches only the press-sourced "
+        "~50k/~600k figures, which is precisely where it must be watched."
+    ),
+    tag="[verified]",
+    confidence="high",
+)
+# B6's lesson (#1686), and Bowling Green is the case that generalizes it past a single meter: the
+# request has to go to TWO bodies, because the service agreement and the wholesale contract are held
+# by different ones and either alone answers half the question.
+_BOWLING_GREEN_WATER_HOLDER = (
+    "Northwestern Water & Sewer District (the campus's water/sewer provider — the service agreement "
+    "and the campus meter) AND the City of Bowling Green (the wholesale supplier — the August 2024 "
+    "wholesale contract whose ceiling was raised to 1.5 MGD, and the WWFRP registrant of record). "
+    "Neither alone holds both instruments: a request filed only with the City reaches the wholesale "
+    "contract but not the campus's metered use, and one filed only with the District reaches the "
+    "reverse"
+)
+
+
+def reconcile_bowling_green(*, settings: Settings | None = None) -> ReconciliationRecord:
+    """The Bowling Green B5 dry-cooler reservation conflict (#1685).
+
+    A real registered site (not a control) that IS in A2's registry-derived cohort (it pins
+    ``closed_loop_dry``), reconciled explicitly rather than through the generic cohort loop so the
+    two conflicting figures land on the slots their provenance earns: the NWWSD-linked ~600,000 gpd
+    design commitment on ``reserved_makeup`` (independent of the claim's source, so it feeds
+    ``_classify``) and Meta's own announced ~50,000 gpd on ``disclosed_makeup`` (a self-report, so it
+    never does). Outcome is ``reservation_conflict``.
+
+    Two things make this row different from its B-series peers. First, the CLAIM is unusually
+    specific — "dry coolers" is an architecture that evaporates nothing, so the ~0 prediction is a
+    real falsifiable statement rather than a vague low-water gesture. Second, the route is blind on
+    the makeup side (purchased municipal supply) yet the outcome is NOT ``route_blind``: a
+    reservation is a negotiated ceiling, not something A1 or A2 could have metered, so B1's finding
+    survives the reach guard untouched. That ordering is deliberate and is what lets a blind-route
+    site still produce a positive finding instead of collapsing into "we cannot see".
+
+    The pin is KEPT at ``closed_loop_dry``/[reference]: a ceiling cannot license a re-archetype.
+    """
+    base = settings or get_settings()
+    site_settings = _site_settings("bowling-green", base)
+    profile = SITES["bowling-green"]
+    name = "Bowling Green Data Center (Project Accordion)"
+    fac = next((f for f in profile.facilities if f.name == name), None)
+    if fac is None:  # pragma: no cover - the registered profile always carries this facility
+        raise ValueError(
+            f"bowling-green profile has no {name!r} facility — the B5 dry-cooler reconciliation "
+            "reconciles that facility's closed-loop claim; the profile must register it "
+            "(watermark.sites)"
+        )
+    return reconcile_facility(
+        fac,
+        site="bowling-green",
+        claim_source=fac.cooling_model_source or "reference",
+        claim_citation=fac.cooling_model_citation or "[reference] operator closed-loop claim",
+        settings=site_settings,
+        reserved_makeup=_BOWLING_GREEN_RESERVED_MAKEUP,
+        disclosed_makeup=_BOWLING_GREEN_DISCLOSED_MAKEUP,
+        route=_BOWLING_GREEN_ROUTE,
+        corroborators=resolve_corroborators(fac, settings=site_settings),
+        water_lead_ref=_BOWLING_GREEN_LEAD_REF,
+        water_holder=_BOWLING_GREEN_WATER_HOLDER,
+        is_control=False,
+    )
+
+
 # -------------------------------------------- the New Albany / Intel B6 positive control (#1686)
 
 # B6 asked the harness to calibrate itself on the honest case: Intel discloses 125 cooling towers
@@ -2057,7 +2265,11 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     :func:`reconcile_springfield`) ARE in A2's cohort but are reconciled explicitly (skipped in the
     generic loop) so their self-disclosed figures sharpen the gap — Van Wert's operator-disclosed ~660k
     gal draw + the #1409 initial-fill open quantity, Springfield's self-disclosed 300k gal/day permitted
-    ceiling + the #1415 actual-vs-ceiling denominator for its "not evaporative" claim. **New Albany /
+    ceiling + the #1415 actual-vs-ceiling denominator for its "not evaporative" claim. **Bowling Green**
+    (#1685, :func:`reconcile_bowling_green`) is likewise a cohort member reconciled explicitly, but its
+    figures split across two families: the NWWSD-linked ~600,000 gpd design commitment is an
+    independent reservation (so it classifies) while Meta's own announced ~50,000 gpd is a self-report
+    (so it does not), and the 12-fold conflict between them is #1439's, left unresolved. **New Albany /
     Intel** (#1686, :func:`reconcile_intel_new_albany`) is appended as a live (non-control) row: the
     campus pins no ``SiteFacility`` at all, so it is in no cohort, and its record is what B6
     established when it went looking for a documented positive control — ``route_blind``. The
@@ -2067,11 +2279,12 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     settings = settings or get_settings()
     records: list[ReconciliationRecord] = []
     for candidate in blowdown.closed_loop_candidates(settings=settings):
-        # Van Wert (B2, #1682) + Springfield (B3, #1683) are cohort members but are reconciled
-        # explicitly below so their self-disclosed figures are carried — Van Wert's ~660k gal draw +
-        # #1409 initial-fill, Springfield's 300k gal/day permitted ceiling + #1415 — skip the generic
-        # gap here to avoid a double row.
-        if candidate.site in {"van-wert", "springfield"}:
+        # Van Wert (B2, #1682), Springfield (B3, #1683) and Bowling Green (B5, #1685) are cohort
+        # members but are reconciled explicitly below so their disclosed/reserved figures are
+        # carried — Van Wert's ~660k gal draw + #1409 initial-fill, Springfield's 300k gal/day
+        # permitted ceiling + #1415, Bowling Green's NWWSD-linked ~600k gpd reservation against
+        # Meta's own ~50k gpd + #1439 — skip the generic gap here to avoid a double row.
+        if candidate.site in {"van-wert", "springfield", "bowling-green"}:
             continue
         profile = SITES[candidate.site]
         fac = next((f for f in profile.facilities if f.name == candidate.facility), None)
@@ -2098,6 +2311,9 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     records.append(
         reconcile_springfield(settings=settings)
     )  # B3 (#1683) — disclosed 300k gal/day permitted ceiling + #1415 "not evaporative" gap
+    records.append(
+        reconcile_bowling_green(settings=settings)
+    )  # B5 (#1685) — NWWSD-linked ~600k gpd reservation vs the "dry coolers" claim
     records.append(
         reconcile_troy_piqua(settings=settings)
     )  # B1 (#1681) — pins UNKNOWN, not in A2's cohort
@@ -2252,9 +2468,18 @@ def reconciliation_document(
                 "never read as 'confirmed dry'. A reservation_conflict (B1 Troy-Piqua, #1681) is a "
                 "low-water claim contradicted by a disclosed RESERVATION CEILING (a will-serve / "
                 "water-agreement figure), not a metered use — a ceiling is not a discharge/withdrawal "
-                "instrument, so it keeps the archetype pin (Troy-Piqua stays UNKNOWN) and sharpens "
-                "the site's water lead (#1486) + the C2 request; the reserved figure is never "
-                "collapsed into a headline consumptive. A gap the operator has DISCLOSED into (B2 Van "
+                "instrument, so it keeps the archetype pin (Troy-Piqua stays UNKNOWN, Bowling Green "
+                "stays closed_loop_dry) and sharpens "
+                "the site's water lead (#1486, #1439) + the C2 request; the reserved figure is never "
+                "collapsed into a headline consumptive. A reservation conflict SURVIVES A BLIND "
+                "ROUTE (B5 Bowling Green, #1685): the reach guard below invalidates a negative read, "
+                "and a negotiated ceiling is not something the withdrawal or discharge instruments "
+                "could ever have metered, so blinding them cannot erase it — which is why a "
+                "municipally-supplied campus with an independently-sourced reservation reads "
+                "reservation_conflict and not route_blind. Where the operator's OWN figure conflicts "
+                "with that reservation, the two are separated by PROVENANCE and not by size: the "
+                "independently-sourced figure classifies, the self-report does not, and the conflict "
+                "between them is reported rather than resolved. A gap the operator has DISCLOSED into (B2 Van "
                 "Wert, #1682) records the self-reported ongoing draw on `disclosed_makeup` (never "
                 "`documented_*`) — it stays a gap with the [reference] pin KEPT (a single-source "
                 "self-report is not a metered instrument, so it cannot upgrade the source), and its "

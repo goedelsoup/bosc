@@ -224,9 +224,12 @@ def test_cohort_is_registry_derived_gaps_plus_troy_piqua_and_intel_control() -> 
     assert live
     claim_cohort = [r for r in live if r.site != "new-albany"]
     assert all(r.claimed_archetype in {"closed_loop_dry", "hybrid_adiabatic"} for r in claim_cohort)
-    # A2's registry-derived cohort facilities resolve to a gap today (no documented water while
-    # OHD000001 is draft and no facility-own DMR is on record).
-    cohort = [r for r in live if r.site not in {"troy-piqua", "new-albany"}]
+    # A2's registry-derived cohort facilities resolve to a gap today: no facility-own DMR is on
+    # record, and OHD000001 — which would have been the other route to one — was withdrawn rather
+    # than finalized (2026-07-21), so no general-permit coverage will ever appear either. The
+    # exceptions are the sites whose own records carry a quantified figure: Bowling Green (B5,
+    # #1685) has an independently-sourced reservation ceiling, so it is a reservation_conflict.
+    cohort = [r for r in live if r.site not in {"troy-piqua", "new-albany", "bowling-green"}]
     assert cohort
     assert all(r.outcome is cr.ReconcileOutcome.GAP for r in cohort)
     assert "urbana" in {r.site for r in cohort}
@@ -1072,3 +1075,130 @@ def test_committed_artifact_matches_the_resolver() -> None:
     # Every committed row carries the A4 corroborators block (#1680); the control's are positive.
     assert all(c.get("corroborators") is not None for c in doc["candidates"])
     assert control[0]["corroborators"]["net_stance"] == "corroborates"
+
+
+# ------------------------- B5 dry-cooler reservation conflict — Bowling Green (#1685)
+
+
+def test_reconcile_bowling_green_b5_dry_cooler_reservation_conflict() -> None:
+    # The B5 case: Meta's "closed-loop, liquid-cooled with dry coolers / no operational water" claim
+    # against the record. Bowling Green IS in A2's cohort (pins closed_loop_dry) but is reconciled
+    # explicitly so its two conflicting figures land on the slots their PROVENANCE earns.
+    rec = cr.reconcile_bowling_green(settings=Settings())
+    assert rec.site == "bowling-green"
+    assert rec.facility == "Bowling Green Data Center (Project Accordion)"
+    assert rec.is_control is False  # a real registered site, not a constructed control
+    assert rec.claimed_archetype == "closed_loop_dry"
+    assert rec.claim_source == "reference"
+    # The district-linked ~600k gpd reservation is disproportionate to a ~0 dry prediction.
+    assert rec.outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
+    # A ceiling cannot license a re-archetype — the pin is KEPT, nothing recommended.
+    assert rec.recommended_archetype is None
+    assert rec.recommended_source is None
+    assert rec.kept_archetype == "closed_loop_dry"
+    assert rec.tag == "[open]"
+
+
+def test_bowling_greens_two_figures_split_by_provenance_not_by_size() -> None:
+    # The pivotal B5 evidentiary call. The ~600k gpd is INDEPENDENT of the claim's source (it is the
+    # water district's service obligation), so it is a reservation and DOES classify. Meta's own ~50k
+    # gpd is a self-report from the very source under test, so it lands on disclosed_makeup and never
+    # classifies — exactly B2's rule. Neither is metered, so documented_* stays empty.
+    a = cr.reconcile_bowling_green(settings=Settings()).account
+    assert a.reserved_makeup is not None and a.reserved_makeup.value == 0.6
+    assert a.disclosed_makeup is not None and a.disclosed_makeup.value == 0.05
+    assert a.documented_makeup is None and a.documented_blowdown is None
+    assert a.reserved_blowdown is None
+    # Not Springfield's slot: this is not a ceiling the claim's own source self-disclosed.
+    assert a.disclosed_ceiling is None
+    # And no metered non-cooling withdrawal is attributed to the campus (B6's slot stays empty) —
+    # the city's own PWS withdrawal is the SELLER's, three transfers upstream, never the buyer's.
+    assert a.nonprocess_makeup is None
+
+
+def test_bowling_green_is_reservation_conflict_not_route_blind() -> None:
+    # The ordering B6 built, exercised on a real second site: the makeup route IS blind (purchased
+    # municipal supply), but a negotiated ceiling is not something A1/A2 could ever have metered, so
+    # blinding them cannot erase it. A blind route must not collapse a positive finding into "we
+    # cannot see" — that is the whole point of the reservation_conflict pass-through.
+    rec = cr.reconcile_bowling_green(settings=Settings())
+    route = rec.account.route
+    assert route is not None
+    assert route.supply is cr.SupplyRoute.MUNICIPAL
+    assert route.instruments_blind is True
+    assert rec.outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
+    assert rec.outcome is not cr.ReconcileOutcome.ROUTE_BLIND
+
+
+def test_bowling_green_discharge_route_is_unknown_not_assumed_to_sewer() -> None:
+    # Discipline: the ECHO sweep establishes there is no facility-own OUTFALL, which is not the same
+    # as establishing that the flow goes to a POTW sewer. No sewer-use or pretreatment instrument is
+    # in hand, so the route stays UNKNOWN. A WaterRoute is a cited determination, never an assumption.
+    route = cr.reconcile_bowling_green(settings=Settings()).account.route
+    assert route is not None
+    assert route.discharge is cr.DischargeRoute.UNKNOWN
+    assert route.discharge is not cr.DischargeRoute.SANITARY_SEWER
+    # Municipal supply alone is enough to blind the account.
+    assert route.instruments_blind is True
+
+
+def test_bowling_green_route_cites_the_readable_negative_and_the_ky_disambiguation() -> None:
+    # The A1 negative is only meaningful because the register is demonstrably live at this site: the
+    # Apollo TEMP registration in the campus's own HUC-12 is what makes Meta's absence a ROUTE rather
+    # than a hole in coverage. And the issue's explicit ask — record the KY/OH disambiguation.
+    route = cr.reconcile_bowling_green(settings=Settings()).account.route
+    assert route is not None
+    cite = route.citation
+    assert "Apollo Power Generation Facility - TEMP" in cite and "2026-03-26" in cite
+    assert "041000100703" in cite  # the campus's own HUC-12, shared with the Apollo registration
+    assert "39173" in cite  # Wood County, OH — an Ohio numeric key, not a place name
+    assert "KENTUCKY" in cite
+    assert route.tag == "[verified]" and route.confidence == "high"
+
+
+def test_bowling_green_finding_names_the_12x_conflict_without_resolving_it() -> None:
+    # B5 does not settle #1439's 50k-vs-600k conflict, and must not read as if it had. What it does
+    # establish is that the architecture question does not wait on that resolution.
+    rec = cr.reconcile_bowling_green(settings=Settings())
+    assert "12x the operator's OWN disclosed 0.05 MGD" in rec.finding
+    assert "stays unresolved here" in rec.finding
+    assert "upper-bound ceiling, NOT a headline consumptive" in rec.finding
+    # The generic reservation branch must not call every claim an "FAQ" claim — Troy-Piqua's came
+    # from a City FAQ, Bowling Green's from a company announcement.
+    assert "FAQ" not in rec.finding
+
+
+def test_bowling_green_lead_names_both_holders() -> None:
+    # B6's lesson generalized: the service agreement + campus meter are the DISTRICT's, the wholesale
+    # contract is the CITY's, and a request to either alone answers half the question.
+    rec = cr.reconcile_bowling_green(settings=Settings())
+    assert rec.lead is not None
+    assert "Northwestern Water & Sewer District" in rec.lead.holder
+    assert "City of Bowling Green" in rec.lead.holder
+    assert "#1439" in rec.lead.epic_ref  # the site's standing water lead, sharpened
+    assert rec.lead.tag == "[open]"
+
+
+def test_cohort_includes_bowling_green_b5_conflict_exactly_once() -> None:
+    # Bowling Green IS in A2's cohort but is reconciled explicitly (skipped in the generic loop) — so
+    # it appears exactly once, as the reservation conflict, not twice and not as a bare gap.
+    records = cr.reconcile_cohort(settings=Settings())
+    bg = [r for r in records if r.site == "bowling-green"]
+    assert len(bg) == 1
+    assert bg[0].outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
+    assert bg[0].is_control is False
+    # Two reservation conflicts now ride in the cohort (Troy-Piqua B1 + Bowling Green B5).
+    conflicts = {r.site for r in records if r.outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT}
+    assert conflicts == {"troy-piqua", "bowling-green"}
+
+
+def test_bowling_green_profile_pin_is_untouched_by_the_harness() -> None:
+    # The harness recommends; it never mutates cooling_model. Re-archetyping is a reviewed edit with
+    # the instrument cited, and no instrument exists here.
+    fac = next(
+        f
+        for f in cr.SITES["bowling-green"].facilities
+        if f.name == "Bowling Green Data Center (Project Accordion)"
+    )
+    assert fac.cooling_model is CoolingModelType.CLOSED_LOOP_DRY
+    assert fac.cooling_model_source == "reference"

@@ -61,6 +61,10 @@ genuine empty cell (never an estimate).
   Franklin-County city core). 55 registered facilities, 35 active, 46 with a 2015+
   report. Pulled for the B6 (#1686) positive-control review; see the blind-spot caveat
   below.
+- [**`wood.yaml`**](wood.yaml) — Wood County, OH (Bowling Green — the Meta "Project
+  Accordion" campus and the Apollo generating plant, both in Middleton Township). 36
+  registered facilities, 26 active, 31 with a 2015+ report. Pulled for the B5 (#1685)
+  dry-cooler review; see the blind-spot caveat below and caveat 7.
 
 ## Headline (Allen County, last pull)
 
@@ -90,6 +94,24 @@ the reason this county was pulled (B6, #1686) — are the finding, not the volum
 | 03575 | Amazon Data Services - Newton Court Site | 0.18 MGD (1 well) | 0.00 | registered 2024-04-20 |
 
 Read caveat 6 before treating any of those as a cooling-water account.
+
+## Headline (Wood County, last pull)
+
+**36** registered facilities — **26 active**, **31** with a 2015+ annual report. By
+declared primary use: 9 Agriculture, 7 Mineral Extraction, 7 Misc, 7 Public, 5 Golf
+Course, 1 Industry. Here the *absence* is the finding — no registration exists in this
+county under Meta, Liames LLC, "Project Accordion", the Northwestern Water & Sewer
+District, or any data-center name:
+
+| reg# | facility | registered | 2024 MG | note |
+|------|----------|-----------:|--------:|------|
+| 00251 | BOWLING GREEN CITY PWS | 32.0 MGD (2 surface intakes) | 2,103.37 | ≈5.75 MGD; **the only registration in this county anywhere upstream of the campus** |
+| 03717 | Apollo Power Generation Facility - TEMP | 0.27 MGD (1 surface intake) | — | registered **2026-03-26**, no annual report yet; HUC-12 `041000100703` — the campus's own |
+| 02259 | CARDINAL AGGREGATE INC | 8.64 MGD | 365.10 | quarry dewatering; returns the same 365.10 MG |
+| — | *Meta / Liames / Project Accordion* | **not registered** | — | buys finished water from NWWSD → the WWFRP never sees it (caveat 6) |
+
+The Apollo row is what makes the Meta row readable: the register is demonstrably live at
+this site in 2026, so the campus's non-appearance is a **route**, not a hole in coverage.
 
 ## Known gaps & caveats (read before using)
 
@@ -137,6 +159,19 @@ Read caveat 6 before treating any of those as a cooling-water account.
    City-held (metered water-service consumption; the industrial pretreatment / IU
    permit), which is the C2 (#1688) records request.
 
+   Wood County adds the *control* for that caveat. Bowling Green's campus is likewise
+   absent — but "Apollo Power Generation Facility - TEMP" (03717) registered a 0.27 MGD
+   surface intake in the campus's own HUC-12 on **2026-03-26**. The register is live at
+   this site; the campus is simply not in its reach.
+
+7. **A public system's `returns` series is plant backwash, not a customer's discharge.**
+   Bowling Green City PWS (00251) reports a 2024 return of **220.84 MG ≈ 0.605 MGD**,
+   which numerically resembles the disputed ~600,000 gpd Meta demand figure that the B5
+   review (#1685) turns on. It is not that figure and cannot settle it: the same series
+   runs 206–235 MG every year back to 2015, a decade before the campus existed, and is
+   the water-treatment plant's own filter-backwash and residuals return. Read a `returns`
+   row against the facility that reports it, never against one of its customers.
+
 ## Field reference
 
 Each entry under `facilities:` (`null` = the service returned nothing):
@@ -180,5 +215,15 @@ Regenerate: `watermark water-withdrawal --county Licking`
 | file | type | lfs |
 | --- | --- | --- |
 | `reference/ohio-water-withdrawal/licking.yaml` | application/x-yaml | no |
+
+### `ohio-water-withdrawal-wood` — Wood County, OH water-withdrawal registry (Ohio DNR WWFRP)
+
+Source: Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports) · License: Ohio public record · Access: public · Site scope: site:bowling-green · Refresh: annual (ttl 365d)
+
+Regenerate: `watermark water-withdrawal --county Wood`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/ohio-water-withdrawal/wood.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

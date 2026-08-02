@@ -36,9 +36,15 @@ notes: >-
   the disclosure vehicle the closed-loop cooling cycling epic (#1676, sub-issue A2 #1678) predicts.
   Derived: the candidate list is the site registry's closed-loop cohort (every `SiteFacility` whose
   cooling_model is closed_loop_dry or hybrid_adiabatic), resolved against the OHD000001 permit
-  lifecycle constant in `watermark.hydrology.blowdown`. The gating fact is `[verified]`: OHD000001
-  is still a DRAFT general permit (issued 2025-10-31; comment closed 2026-01-16; Director's final
-  action pending as of the 2026-07-11 refresh), so no facility can be authorized under it and every
-  candidate resolves to `not_available`. `facility_own_discharge: unknown` is an `[open]` gap (→ a
+  lifecycle constant in `watermark.hydrology.blowdown`. The gating fact is `[verified]` and it is
+  now terminal: OHD000001 was public-noticed as a DRAFT on 2025-10-31 (comment closed 2026-01-16)
+  and then **WITHDRAWN** — Ohio EPA's Community Notice of 2026-07-21 states it "has decided not to
+  move forward with finalizing the general permit" and that "the individual NPDES permit issuance
+  process is the most appropriate path forward at this time". So no facility can ever be authorized
+  under it, and every candidate resolves to `not_available` **permanently rather than pending**:
+  this absence cannot be closed by waiting, only displaced by an individual NPDES permit appearing
+  for a given campus — which is the replacement watch (shared with Sandusky #1384). Corrected in B5
+  (#1685), which found the constant still asserting a pending Director's action two weeks after the
+  notice. `facility_own_discharge: unknown` is an `[open]` gap (→ a
   C2 records request, #1688), never read as "confirmed dry". Depends on `oepa-ohd000001-gp` (the
   permit documents). See data/reference/oepa/README.md.

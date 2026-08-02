@@ -99,6 +99,7 @@ def test_caveats_are_carried_and_pinned_to_the_meta_discipline() -> None:
         "[inference] bracket, never a headline scalar",
         "never read as 'confirmed dry'",
         "is not a discharge/withdrawal instrument",
+        "separated by provenance and not by size",
         "cannot upgrade the",
         "absence of jurisdiction",
         "not the cooling account",

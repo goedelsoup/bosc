@@ -1,9 +1,11 @@
 """OHD000001 general-permit coverage + facility-own blowdown status (#1678).
 
 Hermetic: the resolver reads the site registry and a cited permit-lifecycle constant — no
-network, no fixture. The gating fact under test is that OHD000001 is still a *draft* general
-permit, so every candidate resolves to ``not_available`` (a [verified] cited absence), and the
-committed cohort artifact validates against the models.
+network, no fixture. The gating fact under test is that OHD000001 will never issue — Ohio EPA
+*withdrew* it on 2026-07-21 rather than finalizing it — so every candidate resolves to
+``not_available`` (a [verified] cited absence) permanently rather than pending, and the committed
+cohort artifact validates against the models. The draft branch is still exercised explicitly: it
+governs the next data-center general permit that gets public-noticed.
 """
 
 from __future__ import annotations
@@ -31,9 +33,13 @@ def _candidate(**kw: object) -> blowdown.Candidate:
 
 
 def test_general_permit_effective_property() -> None:
-    # The committed OHD000001 constant is draft -> not effective (the coverage gate).
-    assert blowdown.OHD000001.state is blowdown.GeneralPermitState.DRAFT
+    # The committed OHD000001 constant is WITHDRAWN -> not effective (the coverage gate). Ohio EPA's
+    # Community Notice of 2026-07-21 declined to finalize the draft data-center general permit, so
+    # the Director acted -- by declining -- and the gate is permanent rather than pending.
+    assert blowdown.OHD000001.state is blowdown.GeneralPermitState.WITHDRAWN
     assert blowdown.OHD000001.effective is False
+    assert blowdown.OHD000001.effective_date is None
+    assert blowdown.OHD000001.asof == "2026-07-21"
     assert (
         blowdown.OHD000001.confidence == "high"
     )  # lifecycle facts from the permit's public notice
@@ -52,13 +58,34 @@ def test_general_permit_effective_property() -> None:
 
 
 def test_draft_permit_resolves_every_candidate_not_available() -> None:
-    cov = blowdown.resolve_coverage(_candidate())
+    # The draft branch, exercised on an explicitly-draft permit: OHD000001 itself has since been
+    # withdrawn, but the branch stays live for the next general permit that is public-noticed.
+    draft = blowdown.OHD000001.model_copy(
+        update={"state": blowdown.GeneralPermitState.DRAFT, "asof": "2026-07-11"}
+    )
+    cov = blowdown.resolve_coverage(_candidate(), gp=draft)
     assert cov.ohd000001_status is blowdown.CoverageStatus.NOT_AVAILABLE
     assert cov.tag == "[verified]"  # the draft-gated absence is a verified fact about the permit
     assert cov.confidence == "high"  # tracks the tag strength (for A3 structural filtering)
     assert cov.facility_own_discharge is blowdown.FacilityOwnDischarge.UNKNOWN
     assert "draft general permit" in cov.finding
     assert "C2 records request" in cov.finding  # the absent-permit gap becomes a records lead
+
+
+def test_withdrawn_permit_gates_the_same_but_says_never_not_not_yet() -> None:
+    # OHD000001 as it now stands. Same status as the draft gate -- no facility can be authorized --
+    # but a categorically different finding: a draft absence closes when the Director acts, whereas a
+    # withdrawn one can only be displaced by an individual NPDES permit. A summary that keeps calling
+    # this "pending" would misstate the record in the direction of "nobody has looked yet".
+    cov = blowdown.resolve_coverage(_candidate())
+    assert cov.ohd000001_status is blowdown.CoverageStatus.NOT_AVAILABLE
+    assert cov.tag == "[verified]"
+    assert cov.confidence == "high"
+    assert "WITHDRAWN" in cov.finding
+    assert "2026-07-21" in cov.finding
+    assert "never issue" in cov.finding
+    assert "INDIVIDUAL NPDES" in cov.finding
+    assert "draft general permit" not in cov.finding  # the stale "not yet" framing is gone
 
 
 def test_facility_own_permit_present_when_id_on_record() -> None:
@@ -116,7 +143,7 @@ def test_write_coverage_round_trips(tmp_path: Path) -> None:
     out = tmp_path / "coverage.yaml"
     blowdown.write_coverage(blowdown.coverage_document(gp, coverages), out=out)
     reloaded = yaml.safe_load(out.read_text(encoding="utf-8"))
-    assert reloaded["general_permit"]["state"] == "draft"
+    assert reloaded["general_permit"]["state"] == "withdrawn"
     assert [blowdown.BlowdownCoverage.model_validate(r) for r in reloaded["candidates"]]
 
 
