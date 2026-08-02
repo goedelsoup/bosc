@@ -1,7 +1,9 @@
 /**
  * The directory's three-lens model (#308 "Directory" dictate) — one network, read three ways.
  *
- * The /research/hypotheses index reorganizes the SAME 32 sites around one of three hypotheses:
+ * The /research/hypotheses index reorganizes the SAME registry (`SITES`, every site) around one
+ * of three hypotheses — never a subset, and never a count written out in prose, which goes stale
+ * the moment a site is registered:
  *   H1 water — where compute meets the watershed (the live reference thesis; Lima is worked).
  *   H2 defense — where the build-out meets federal land and the defense base (emerging).
  *   H3 surveillance — who owns it, who's watching, where the money moves (emerging).
@@ -72,6 +74,45 @@ export const TIER_PILL: Record<SiteTier, Swatch> = {
   backdrop: { label: "Backdrop", color: "#566159", bg: "#e8e4d8", dot: "#8c9389" },
   stub: { label: "Stub", color: "#8c9389", bg: "#faf8f1", dot: "#cdc8b8" },
 };
+
+/** The readiness tiers deepest-first — the one place that order is written down, so the home
+ *  ledger's tier bar and {@link featuredSites}'s ranking can't drift apart (or from the tier
+ *  vocabulary) the way two hand-kept literals would. */
+export const TIER_DEPTH_ORDER: readonly SiteTier[] = ["reference", "case", "backdrop", "stub"];
+
+/**
+ * The home page's "Across the network" slice: the `limit` sites whose OWN export has assembled
+ * the most record, deepest first (#1864). It replaces `SITES.slice(0, limit)`, which ranked by
+ * nothing — an empty `stub` that happened to sit in the first eight was "featured" while a
+ * worked `case` at position 9 fell below the fold, and the selection reshuffled silently
+ * whenever registry order changed.
+ *
+ * Ranked on the readiness tier first (the standing property `watermark export` recomputes every
+ * run), then the site's own records, then its documents, then registry order as a stable final
+ * tiebreak. So this moves on its own with the record: a site rises into the slice when a source
+ * lands and falls out when one dries up — the same two-clock discipline the ledger reads by.
+ *
+ * A registered site with no committed bundle (`tier: null`) sorts LAST rather than being scored
+ * as a `stub`: nothing has been measured there, and an unmeasured site must never outrank a
+ * measured one on a figure we'd have had to invent for it.
+ *
+ * Pure, like the rest of this module — the page threads `siteRollup` in as the resolver.
+ */
+export function featuredSites(rollupOf: (slug: string) => SiteRollup, limit: number): NetworkSite[] {
+  // Deepest tier = highest rank; no bundle = -1, below every measured tier including `stub`.
+  const rank = (tier: SiteTier | null): number =>
+    tier === null ? -1 : TIER_DEPTH_ORDER.length - 1 - TIER_DEPTH_ORDER.indexOf(tier);
+  return SITES.map((site, order) => ({ site, order, roll: rollupOf(site.slug) }))
+    .sort(
+      (a, b) =>
+        rank(b.roll.tier) - rank(a.roll.tier) ||
+        (b.roll.records ?? 0) - (a.roll.records ?? 0) ||
+        (b.roll.documents ?? 0) - (a.roll.documents ?? 0) ||
+        a.order - b.order,
+    )
+    .slice(0, limit)
+    .map((e) => e.site);
+}
 
 // --- The defense (H2) and surveillance (H3) reading of each site --------------------------------
 // A site appears in a thesis group ONLY with a real, public, on-the-record fact; `group: "watch"`

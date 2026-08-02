@@ -10,11 +10,23 @@
  */
 import Base from "../layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import type { SiteTier } from "@watermark/core/bundle";
-import { LENS_ORDER, lensConfig, TIER_PILL } from "@watermark/core/directory";
+import {
+  featuredSites,
+  LENS_ORDER,
+  lensConfig,
+  TIER_DEPTH_ORDER,
+  TIER_PILL,
+} from "@watermark/core/directory";
 import type { HypothesisItem } from "@watermark/core/feeds";
 import { withBase, withSite, siteUrl } from "@watermark/core/site";
-import { groupSites, networkRollup, SITE_STATUS_META, SITES, type SiteStatus } from "@watermark/core/sites";
+import {
+  groupSites,
+  networkRollup,
+  SITE_STATUS_META,
+  SITES,
+  siteRollup,
+  type SiteStatus,
+} from "@watermark/core/sites";
 
 const totalSites = SITES.length;
 const basins = groupSites("basin").length;
@@ -46,8 +58,7 @@ const num = (n: number): string => n.toLocaleString("en-US");
 // the directory's TIER_PILL dots so the home ledger and the scorecard read as one encoding.
 // Unbuilt sites are held out of the bar entirely rather than shown as `stub`, which would
 // assert a computed tier no export has produced.
-const TIER_ORDER: SiteTier[] = ["reference", "case", "backdrop", "stub"];
-const tierCounts = TIER_ORDER.map((k) => ({
+const tierCounts = TIER_DEPTH_ORDER.map((k) => ({
   key: k,
   label: TIER_PILL[k].label,
   count: net.byTier[k],
@@ -96,10 +107,12 @@ const doors = [
   },
 ];
 
-// A featured slice across the network for the home table (the scorecard holds all 32). Each
-// row goes to the site it names (#1862) — the registry href, the same destination the switcher
-// and the scorecard use; it used to send all eight to the one scorecard page.
-const featured = SITES.slice(0, 8).map((s, i) => ({
+// A featured slice across the network for the home table (the scorecard holds every site). Ranked
+// by the record each site's own export has assembled — deepest tier, then its records/documents
+// (#1864); it used to be `SITES.slice(0, 8)`, the first eight in registry order, ranked by nothing.
+// The heading says so, so the reader knows what the eight are. Each row goes to the site it names
+// (#1862) — the registry href, the same destination the switcher and the scorecard use.
+const featured = featuredSites(siteRollup, 8).map((s, i) => ({
   idx: String(i + 1).padStart(2, "0"),
   code: s.codename ?? s.mono,
   place: s.place,
@@ -239,6 +252,7 @@ const featured = SITES.slice(0, 8).map((s, i) => ({
     <section class="dirh-sec">
       <div class="dirh-sec-head">
         <div class="dirh-kicker">Across the network</div>
+        <span class="dirh-sec-sub">— the {featured.length} deepest-assembled sites, by readiness tier.</span>
         <a class="dirh-sec-link" href={withBase("/research/hypotheses")}>See all {totalSites} →</a>
       </div>
       <div class="dirh-table">

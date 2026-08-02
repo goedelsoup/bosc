@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   buildLens,
+  featuredSites,
   indexAssessments,
   LENS_ORDER,
   lensConfig,
   lensCount,
   lensDatum,
+  TIER_DEPTH_ORDER,
   TIER_PILL,
 } from "./directory";
 import type { FacilityStatus, HypothesisAssessmentItem, HypothesisItem } from "./feeds";
@@ -331,5 +333,58 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     expect(cfg.accent).toBe("#16201a");
     // Falls back to the built-in config when the feed lacks the hypothesis.
     expect(lensConfig("defense").name).toBe("Defense & Federal Enclave");
+  });
+});
+
+describe("featured slice — ranked by assembled record, not registry order (#1864)", () => {
+  it("ranks on the readiness tier first, deepest tier leading", () => {
+    const slugs = featuredSites(ROLLUP, 8).map((s) => s.slug);
+    // The three measured sites lead, in tier depth order — reference, case, stub.
+    expect(slugs.slice(0, 3)).toEqual(["lima", "bowling-green", "sandusky"]);
+    // The bug this fixes: `SITES.slice(0, 8)` ranked by nothing, so five registered-but-unbuilt
+    // sites outranked the worked `case` at registry position 6 and the built site at 23 never
+    // surfaced at all.
+    expect(SITES.slice(0, 8).map((s) => s.slug)).not.toContain("sandusky");
+    for (const unbuilt of ["fort-wayne", "urbana", "defiance"]) {
+      expect(slugs.indexOf(unbuilt)).toBeGreaterThan(slugs.indexOf("bowling-green"));
+    }
+  });
+
+  it("sorts an unmeasured site BELOW a measured one, never scoring it as a stub", () => {
+    // `tier: null` (no committed bundle) is not the shallowest tier — it is no measurement at all,
+    // and it must not outrank a site whose export genuinely produced zeros.
+    const slugs = featuredSites(ROLLUP, SITES.length).map((s) => s.slug);
+    const measured = ["lima", "bowling-green", "sandusky"];
+    const lastMeasured = Math.max(...measured.map((s) => slugs.indexOf(s)));
+    expect(lastMeasured).toBe(measured.length - 1);
+    // …and the unbuilt tail keeps registry order, so the slice is stable between builds.
+    expect(slugs.slice(measured.length)).toEqual(
+      SITES.filter((s) => !measured.includes(s.slug)).map((s) => s.slug),
+    );
+  });
+
+  it("breaks a tier tie on the site's own records, then documents", () => {
+    // Three registry slugs stood up as same-tier peers; every other site stays unbuilt.
+    const PEERS: Record<string, SiteRollup> = {
+      toledo: { documents: 900, records: 2, tier: "case" },
+      "van-wert": { documents: 4, records: 40, tier: "case" },
+      bryan: { documents: 90, records: 2, tier: "case" },
+    };
+    const slugs = featuredSites((slug) => PEERS[slug] ?? NO_BUNDLE, 3).map((s) => s.slug);
+    // Records lead (40 > 2), then documents break the remaining tie (900 > 90) — a big pile of
+    // unreviewed source files never outranks a reviewed record.
+    expect(slugs).toEqual(["van-wert", "toledo", "bryan"]);
+  });
+
+  it("returns at most `limit` sites, and the whole registry when asked for more", () => {
+    expect(featuredSites(ROLLUP, 8)).toHaveLength(8);
+    expect(featuredSites(ROLLUP, SITES.length + 10)).toHaveLength(SITES.length);
+    expect(featuredSites(ROLLUP, 0)).toEqual([]);
+  });
+
+  it("orders the tiers deepest-first, the one place that order is written down", () => {
+    expect(TIER_DEPTH_ORDER).toEqual(["reference", "case", "backdrop", "stub"]);
+    // Every tier the pill map knows is ranked — a new tier can't silently sort as unmeasured.
+    expect([...TIER_DEPTH_ORDER].sort()).toEqual(Object.keys(TIER_PILL).sort());
   });
 });
