@@ -38,7 +38,7 @@ meta:
     regulator); discharge-point location + plant size VARIED (upstream Findlay 15 MGD vs downstream
     Ottawa 3 MGD, 34.32 river-miles apart). What is NOT held constant, and was wrongly assumed to
     be, is the DENOMINATOR: Ohio EPA computed each plant's design low flow at its own outfall, from
-    different gages, over records that do not overlap.
+    different gages, and only one of the two fact sheets states the period it used.
   discipline: >-
     Each node is screened against the 7Q10 its own Ohio EPA fact sheet states AT ITS OWN OUTFALL.
     Design flows are the fact sheets' own average design flows (not ECHO's rounded design_flow_mgd,
@@ -140,12 +140,16 @@ comparison_discipline:
     measurement.
   and_do_not_treat_two_at_outfall_values_as_a_profile: >-
     The weaker trap, and the one this pair still contains. Findlay's 0.21 cfs and Ottawa's 7.78
-    cfs are BOTH at-outfall and both binding — but they were computed from different gages
-    (04188300+04189000 vs 04189500) over records that do not overlap (1970-77 / 1923-97 vs
-    1921-51). Their 37x ratio is therefore NOT a measurement of how much low flow the Blanchard
-    gains over 34.32 river-miles. The direction is physically sensible; the magnitude is not
-    attributable, and the published modern gages (above) do not support a clean
-    drainage-area progression on this river at all.
+    cfs are BOTH at-outfall and both binding — but they rest on different gages, and the two fact
+    sheets are not symmetric about saying so. Ottawa's names its period (04189500 at Glandorf,
+    1921-1951); Findlay's names only its gages (04188300 + 04189000, the 30Q10 rows 04188300
+    alone) and states NO period for its own computation. The GAGES' published records are
+    1970-77 for 04188300 and 1923-97 for 04189000 (Straub 2001) — note the second of those
+    overlaps the Ottawa basis substantially, so this is NOT a claim that the two computations used
+    disjoint records; it is that one of them is unstated and cannot be checked. Their 37x ratio is
+    therefore NOT a measurement of how much low flow the Blanchard gains over 34.32 river-miles.
+    The direction is physically sensible; the magnitude is not attributable, and the published
+    modern gages (above) do not support a clean drainage-area progression on this river at all.
   what_to_do_instead: >-
     Compare each plant to ITS OWN cited denominator, report the two screens side by side, and say
     plainly that the reach-to-reach difference is not decomposable into position vs method with
@@ -196,8 +200,8 @@ comparison:
       Tight but diluted — below the 10:1 ok band, above the 1:1 violation band. Ottawa screened
       TIGHT on the retired derived denominator too (1.87:1), so no finding about this node turns
       on the reconciliation. Recording that is the point of having done it: it shows where the
-      choice of denominator mattered (Findlay, by four orders of magnitude in the ratio) and where
-      it did not.
+      choice of denominator mattered (Findlay, ~41x in the ratio — 0.37:1 to 0.009:1) and where it
+      did not.
 
 screen_status_note: >-
     Only Findlay is screened in the computed basin-network.yaml. Ottawa is reported

@@ -103,7 +103,8 @@ def test_screen_is_one_dimension_honestly_sparse(net: BasinNetwork) -> None:
     # longer runs on the DERIVED 8.67 cfs at USGS 04189000 (a regulated gage sitting DOWNSTREAM of
     # this plant's own outfall — its own effluent was in its own denominator) but on the 0.21 cfs
     # Ohio EPA states AT the outfall, reached through the permit-scoped `permits:` index. Same
-    # band, four orders of magnitude apart in the ratio; pin the source, not just the number.
+    # violation band, ~41x tighter in the ratio (the denominators are 8.67 / 0.21 = 41x apart —
+    # about 1.6 orders of magnitude); pin the source, not just the number.
     findlay = _node(net, "findlay").screen
     assert findlay.status == "screened" and findlay.flag == "violation"
     assert (findlay.dilution_ratio or 0) == pytest.approx(0.009, abs=0.001)  # 0.21 / 23.208

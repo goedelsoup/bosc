@@ -25,7 +25,7 @@
         "dilution_ratio": 0.009,
         "flag": "violation",
         "status": "screened",
-        "detail": "Blanchard River 7Q10 0.21 cfs (cited AT THIS OUTFALL) vs discharge 23.21 cfs -> 0.01:1 dilution (violation)"
+        "detail": "Blanchard River 7Q10 0.21 cfs (cited AT THIS OUTFALL) vs discharge 23.21 cfs -> 0.009:1 dilution (violation)"
       },
       "grid": {
         "utility": "AEP Ohio (Ohio Power Company)",
@@ -80,7 +80,7 @@
         "dilution_ratio": 0.007,
         "flag": "violation",
         "status": "screened",
-        "detail": "Ottawa River 7Q10 0.20 cfs (document) vs discharge 28.62 cfs -> 0.01:1 dilution (violation)"
+        "detail": "Ottawa River 7Q10 0.20 cfs (document) vs discharge 28.62 cfs -> 0.007:1 dilution (violation)"
       },
       "grid": {
         "utility": "AEP Ohio (Ohio Power Company)",
@@ -191,7 +191,7 @@
         "dilution_ratio": 0.026,
         "flag": "violation",
         "status": "screened",
-        "detail": "Town Creek 7Q10 0.16 cfs (document) vs discharge 6.19 cfs -> 0.03:1 dilution (violation)"
+        "detail": "Town Creek 7Q10 0.16 cfs (document) vs discharge 6.19 cfs -> 0.026:1 dilution (violation)"
       },
       "grid": {
         "utility": "AEP Ohio (Ohio Power Company)",

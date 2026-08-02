@@ -144,4 +144,4 @@ streams:
       mixing_pct_max: 100
       design_flow_cfs: 4.6417
       acute_dilution_ratio: 2.2
-      note: "The downstream half of the network's only along-one-river control. 37x the Findlay reach's cited 7Q10 — but computed from a DIFFERENT gage over a record (1921-1951) that ended before the Findlay basis gages' begins, so the pair does not measure downstream gain and must not be read as a longitudinal profile. Ottawa screens TIGHT (1.68:1) on this value and TIGHT on the derived one too, so no finding about this node turns on the choice; see data/reference/network/findlay-ottawa-comparison.yaml."
+      note: "The downstream half of the network's only along-one-river control. 37x the Findlay reach's cited 7Q10 — but computed from a DIFFERENT gage over a stated record (04189500 at Glandorf, 1921-1951) where the Findlay fact sheet states its gages but NO period at all, so the pair does not measure downstream gain and must not be read as a longitudinal profile. Ottawa screens TIGHT (1.68:1) on this value and TIGHT on the derived one too, so no finding about this node turns on the choice; see data/reference/network/findlay-ottawa-comparison.yaml."

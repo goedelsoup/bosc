@@ -158,8 +158,9 @@ instream_conditions:   # Table 12, "Instream Conditions and Discharger Flow"
     The 7Q10 of 7.78 cfs is the REGULATORY denominator at this outfall, and it is 37x the 0.21 cfs
     the Findlay fact sheet states 34.3 river miles upstream. Issue 1458 reconciled that gap and did
     NOT resolve it into a downstream-gain measurement: the two values come from different gages
-    (04189500 here, 04188300+04189000 at Findlay) over records that do not overlap, so their ratio
-    is not attributable to position. The derived 8.67 cfs at USGS 04189000 was retired as a
+    (04189500 here, 04188300+04189000 at Findlay), and only this fact sheet states the period it
+    used — Findlay's Table 12 names its gages but no period — so their ratio is not attributable
+    to position. The derived 8.67 cfs at USGS 04189000 was retired as a
     Blanchard denominator — that gage is regulated and sits below the Findlay outfall — and both
     plants are now carried on their own fact sheets. USGS's own published statistic at the
     at-Ottawa gage 04189260 is 10.8 cfs over WY2010-2020 (SIR 2024-5075), published as REGULATED

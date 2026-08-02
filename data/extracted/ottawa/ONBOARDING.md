@@ -20,8 +20,8 @@ thirteen open leads.
 This closes the Ottawa WWTP fact-sheet pull that had been open since **#415**. Its Table 12 supplies
 the **regulatory** low-flow set (annual 7Q10 **7.78 cfs**, 1Q10 5.42, 90Q10 21.66, harmonic mean
 55.13, drainage-adjusted from USGS 04189500 at Glandorf over 1921-1951), which now populates
-`_OTTAWA.plant_receiving` and the `regulatory_denominators` block of
-`data/reference/network/findlay-ottawa-comparison.yaml`.
+`_OTTAWA.plant_receiving` and, since #1458 renamed that block, `denominators.ottawa_at_outfall`
+in `data/reference/network/findlay-ottawa-comparison.yaml`.
 Ottawa screens in the TIGHT band on either basis (1.87:1 derived, 1.68:1 regulatory), so no finding
 here turns on the choice — unlike at Findlay, where they are ~41x apart. **Superseded in part by
 issue 1458** (2026-08-02): that comparison no longer carries a shared derived denominator, because

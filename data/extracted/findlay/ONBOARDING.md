@@ -123,7 +123,8 @@ time; two of its claims are now **superseded**, and the sections above are delib
    augmentation) and sits *downstream of the WPCC's own outfall*, so it was measuring managed water
    plus the discharge under test. The screen now runs on Ohio EPA's own at-outfall design low flow —
    **0.21 cfs at RM 56.42** (fact sheet 2PD00008\*UD Table 12) — giving **0.009:1**, still a
-   violation but four orders of magnitude worse than the 0.37:1 recorded above.
+   violation but ~41x tighter than the 0.37:1 recorded above (the denominators differ 8.67 / 0.21
+   = 41x, so the dilution ratios do too — about 1.6 orders of magnitude, not four).
 3. The **"low flow barely grows over the 34-mile reach"** cross-check quoted in the #417 work was
    two *regulated* gages agreeing with each other. Unregulated Blanchard gages publish 0–0.03 cfs
    (USGS 04188337, 04188496). See `data/reference/network/findlay-ottawa-comparison.yaml` and
@@ -137,7 +138,7 @@ national NFHL.
 
 - [ ] Every written reference value is reviewed against a cited source (no fabricated values).
 - [ ] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation.
-- [x] basin-screen coverage is sane for this site's receiving waters. Reconciled under #416 (see section above): the Findlay WPCC is correctly **unscreened** — excluded as `no_receiving_water` (null receiver in `maumee-wwtp.potw.yaml`), not silently mis-screened. Filling it is gated on the OH0025135 NPDES fact sheet (#352).
+- [x] basin-screen coverage is sane for this site's receiving waters. **Current state (#1460 + #1458):** the Findlay WPCC **is screened** — the ECHO curation overlay supplied its cited receiving water (closing #352) and it runs against Ohio EPA's own at-outfall design 7Q10 of **0.21 cfs**, giving **0.009:1** (violation). The #416 reconciliation recorded above, which found it correctly held out as `no_receiving_water`, describes the superseded state. Ottawa (OH0026921) is still held out on that null.
 - [x] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md). Schema-driven (#237); Findlay zoning field-map registered + catalog committed; parcels wired via the OGRIP statewide layer (PR #406).
-- [x] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/) — see self-research summary above; the shared Blanchard 7Q10 gap is resolved (8.67 cfs, #414 closed via #417) and the basin-screen reconciliation is complete (#416 section above); parcels closed by #406.
+- [x] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/) — see self-research summary above; the shared Blanchard 7Q10 gap is resolved — first by the derived 8.67 cfs (#414 closed via #417), then re-based by #1458 onto the cited at-outfall 0.21 cfs, the derived value having been retired for this reach — and the basin-screen reconciliation is complete (#416 section above, superseded by the #1458 section); parcels closed by #406.
 - [ ] PROMOTION IS A SEPARATE MANUAL EDIT: flip status->live + selectable->true for 'findlay' in web/src/lib/sites.ts, parity-gated. onboard never auto-promotes; only one live build (/bosc) exists today.

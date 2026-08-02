@@ -579,6 +579,16 @@ def _match_permit_low_flow(
     return None
 
 
+def _ratio_text(ratio: float) -> str:
+    """Render a dilution ratio at the same precision the check STORES it (``round(…, 3)``).
+
+    Two decimals silently flattens the whole violation band — Findlay's 0.009 and Lima's 0.007
+    both printed as "0.01:1", so the prose figure and the artifact's own `dilution_ratio` field
+    disagreed. Below 1.0 the significant digits are all to the right of the point, so keep three.
+    """
+    return f"{ratio:.2f}" if ratio >= 1.0 else f"{ratio:.3f}"
+
+
 def screen_facility(
     fac: dict[str, Any], lookup: ScreenLowFlows
 ) -> tuple[AssimilativeCheck | None, str]:
@@ -622,7 +632,7 @@ def screen_facility(
         detail=(
             f"{name} 7Q10 {q7.value:.2f} cfs "
             f"({'cited AT THIS OUTFALL' if at_outfall is not None else q7.source}) vs discharge "
-            f"{discharge_cfs:.2f} cfs -> {ratio:.2f}:1 dilution ({flag})"
+            f"{discharge_cfs:.2f} cfs -> {_ratio_text(ratio)}:1 dilution ({flag})"
         ),
     )
     return check, "screened"
