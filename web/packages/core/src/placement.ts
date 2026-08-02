@@ -103,7 +103,7 @@ export const BASINS: readonly MajorBasin[] = [
 const BY_SLUG: ReadonlyMap<string, MajorBasin> = new Map(BASINS.map((b) => [b.slug, b]));
 
 /** The full state names the network places sites in, keyed by the registry's two-letter code. */
-export const STATE_NAMES: Record<string, string> = { OH: "Ohio", IN: "Indiana" };
+export const STATE_NAMES: Readonly<Record<string, string>> = { OH: "Ohio", IN: "Indiana" };
 
 /** The basin a `basin_major` slug names, or `undefined` if this module doesn't know it. */
 export function basinForSlug(slug: string): MajorBasin | undefined {

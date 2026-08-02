@@ -135,5 +135,5 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   and fill each TODO **from a cited source** → add GIS schema instances if the site publishes
   layers → `profile_readiness(slug)` / `watermark onboard <slug>` lints unfilled placeholders and
   values still copied from Lima → run `watermark onboard <slug>` → **manual, parity-gated**
-  promotion to `live`/`selectable` in `data/sites.yaml` + `web/packages/core/src/sites.ts`. Registered ≠
+  promotion to `live`/`selectable` in `data/sites.yaml`, then `watermark sites sync`. Registered ≠
   selectable; a thin peer still degrades gracefully via the readiness layer.

@@ -198,7 +198,9 @@ site cannot slip live without the deliberate two-field change.
 ### 5. Promote (manual, parity-gated)
 
 Once the site reaches parity, flip `status: "live"` + `selectable: true` for it in
-`web/packages/core/src/sites.ts`. **Note the single-live-build constraint:** today only Lima is a
+[`data/sites.yaml`](../data/sites.yaml) — the identity SSOT — then run `watermark sites sync` so
+the generated frontend registry carries it. Both fields are YAML-authoritative; nothing in
+`web/` is hand-edited to promote a site. **Note the single-live-build constraint:** today only Lima is a
 built site (re-rooted under `/bosc`); standing up a *second* live build at its own root is a
 deeper, separate cutover, not part of routine onboarding.
 
