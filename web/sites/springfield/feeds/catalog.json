@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9619bd306d379ff70c9a224c584f3d88e85d4602e08b744e6a10afd2493282ae",
-      "size_bytes": 209440,
+      "sha256": "85ae7f25292c810f5da7dfa71d2345a97c4e0ad6441c7fd9ebe4bb455bc7a73a",
+      "size_bytes": 249226,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -931,8 +931,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "7f5e29511e137d0b882ac94655ac684e9dc37b22d2d8f0ccc3478f0c94adb5b7",
-      "size_bytes": 104545,
+      "sha256": "89e2ed7ea954374b81b85875277c7ee6cfff717e117b907bb6397ecaed63782a",
+      "size_bytes": 104549,
       "lfs_materialized": true,
       "file_count": 22,
       "stale": false,
@@ -2085,12 +2085,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "dfeb17fe61d6b131c989d98a292a3c934f313ee04fda7c7765deb50d5c62e700",
-      "size_bytes": 75608,
+      "sha256": "e9f14b462b71379c9912580fe34a481cd86944e4e564869b326c3d67b0aca827",
+      "size_bytes": 84107,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
@@ -2138,12 +2138,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "561ef21ac83fe62d11b188ad9afee6bdc6fcf991b1bd80cb114396ec84d94a33",
-      "size_bytes": 8215,
+      "sha256": "61814f4fe1f299bb2c50e7b8f542710c543f09ff3afb95552c0cb6e1b2c84545",
+      "size_bytes": 12160,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
@@ -2410,10 +2410,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d551ea721313db26174fcb76f932c158a733d61b144f06d5b74bc66f340b8535",
-      "size_bytes": 440076,
+      "sha256": "41921e30b33b8494e8367d64753a0704ce48fdb0e979ca8aa5f3b337a4ede48d",
+      "size_bytes": 492562,
       "lfs_materialized": true,
-      "file_count": 8,
+      "file_count": 9,
       "stale": false,
       "asof": null
     },

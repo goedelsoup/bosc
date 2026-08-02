@@ -84,8 +84,14 @@ def test_withdrawn_permit_gates_the_same_but_says_never_not_not_yet() -> None:
     assert "WITHDRAWN" in cov.finding
     assert "2026-07-21" in cov.finding
     assert "never issue" in cov.finding
-    assert "INDIVIDUAL NPDES" in cov.finding
     assert "draft general permit" not in cov.finding  # the stale "not yet" framing is gone
+    # The "only instrument left" claim is scoped to the NPDES path and must stay scoped. A facility
+    # blowing down to a POTW sewer holds no NPDES permit at all and is disclosed by the City's
+    # IU/pretreatment record — which is what the C2 ask actually seeks, so an unqualified "only
+    # instrument" would contradict this module's own lead.
+    assert "on the NPDES path an INDIVIDUAL permit" in cov.finding
+    assert "sanitary sewer holds no NPDES permit at all" in cov.finding
+    assert "industrial-pretreatment / IU permit and sewer-use agreement" in cov.finding
 
 
 def test_facility_own_permit_present_when_id_on_record() -> None:

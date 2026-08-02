@@ -91,8 +91,11 @@ Meta (Middleton Twp) and Oppidan (city proper) — are **distinct projects**; do
   `OHGC15219`, APOLLO POWER GENERATION FACILITY `OHGC17963`, APOLLO LAYDOWN YARD `OHGC18721`,
   APOLLO NORTH PIPELINE `OHGC19094`, ACCORDION-DOWLING 138KV `OHGC15929` — under the **construction
   stormwater** general permit (master `OHC000000`), with no process outfall and no DMR. With
-  **OHD000001 withdrawn 2026-07-21**, an **individual NPDES permit** is now the only instrument
-  that would ever disclose this campus's cooling discharge. `[verified]` on the records; the
+  **OHD000001 withdrawn 2026-07-21**, an **individual NPDES permit** is the only remaining
+  instrument on the *direct-discharge* path — but that path may not be this campus's: the
+  discharge route is **not established**, and a facility blowing down to a sanitary sewer files no
+  DMR at all and is disclosed instead by the **industrial-pretreatment (IU) permit and sewer-use
+  agreement**, which is what the records ask actually seeks. `[verified]` on the records; the
   cooling architecture stays `[reference]`.
   **KY/OH:** every identifier in that reconciliation is an Ohio key (Wood County FIPS **39173**,
   Ohio DNR registrations, Ohio EPA NPDES, EIA-861 utility **#2054** — the Bowling Green, KY muni is

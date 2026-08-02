@@ -46,8 +46,11 @@ notes: >-
   Within this county the whole supply chain reduces to ONE registered withdrawal, three transfers
   upstream:
   BOWLING GREEN CITY PWS (00251, 32.0 MGD registered over two Maumee intakes, 2,103.37 MG
-  withdrawn in 2024 ≈ 5.75 MGD). Its 2024 RETURN of 220.84 MG ≈ 0.605 MGD is a water-treatment
-  backwash/residuals series present every year since 2015 (206-235 MG) and has nothing to do
-  with the campus — do not read it as the disputed ~600,000 gpd figure it numerically
+  withdrawn in 2024 ≈ 5.75 MGD). Its 2024 RETURN of 220.84 MG ≈ 0.605 MGD is water-treatment
+  backwash/residuals, discharged under the plant's own NPDES permit (OH0030848, McDowell WTP);
+  every reported year in this file sits in a narrow 206-235 MG band, the earliest of them 2016
+  (reported for 2016 and 2018-2024 — 2015 and 2017 carry no return row, so it is a stable
+  reported band rather than continuous annual coverage). It has nothing to do with the campus —
+  do not read it as the disputed ~600,000 gpd figure it numerically
   resembles. The facility registry is kept in full; annual series are floored at 2015.
   See data/reference/ohio-water-withdrawal/README.md.
