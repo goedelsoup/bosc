@@ -36,6 +36,15 @@ tags:
 - prr
 - roundabouts
 - opc
-notes: Reviewed structured reads of the PAAC public-records bundle — Tetra Tech roundabout OPC estimates
-  (the extract-stage reference target), the Roadwork Development Agreement, board minutes (the BOSC=Bistrozzi=Google
-  decoder), and the seller land-assembly packets.
+notes: >-
+  Reviewed structured reads of the PAAC public-records bundle — Tetra Tech roundabout OPC
+  estimates (the extract-stage reference target), the Roadwork Development Agreement, board
+  minutes (the BOSC=Bistrozzi=Google decoder), and the seller land-assembly packets.
+  PRODUCER CHANGED 2026-08-01, OUTPUT UNAFFECTED (issue 1406). Two writer-side fixes landed in
+  `watermark.pipeline.extract`: an extraction now lands under `<collection>/<site>/` when the
+  source's second path segment names a registered site, and it records a repo-relative rather
+  than an absolute `source_path`. Neither moves this dataset, and that was checked rather than
+  assumed — these sources sit directly under `data/documents/aedg/` with no site subdirectory,
+  so the first is a no-op here, and every committed `source_path` in this collection is already
+  repo-relative, so the second is byte-stable. Recorded because the producer is shared: the
+  same module writes every site's permit extractions, where both fixes do change the result.
