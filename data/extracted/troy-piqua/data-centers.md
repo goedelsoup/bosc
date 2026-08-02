@@ -145,11 +145,20 @@ Two further disambiguation guards apply to the governance record (§ *Opposition
   the Great Miami River at RM 114.3 under Ohio EPA NPDES permit 1PD00008 (2022 renewal fact sheet);
   data-center wastewater routes to the Piqua Municipal Wastewater System (new gravity sewers
   Washington→Farrington Rd). `[verified]` Source: Ohio EPA 1PD00008 fact sheet; DMR.
-- **Data-center stormwater NPDES:** `[open]` — not found; Ohio EPA draft general permit **OHD000001**
-  (statewide data-center wastewater discharge) is the likely vehicle. Its comment period closed
-  2026-01-16 (hearing 2025-12-17); as of the 2026-07-11 refresh the Director's **final action was
-  still pending** — not finalized, and no Piqua/J5-specific coverage found under it. `[reported]`/
-  `[open]`. Once issued, confirm whether it covers this facility. Lead `OHD000001` (#1486).
+- **Data-center wastewater NPDES:** the vehicle this site was tracking **no longer exists.** Ohio
+  EPA **abandoned** the draft statewide data-center general permit **OHD000001** — its Community
+  Notice of **2026-07-21** states the agency "has decided not to move forward with finalizing the
+  general permit. The individual NPDES permit issuance process is the most appropriate path
+  forward." `[verified]` The comment period had closed 2026-01-16 (hearing 2025-12-17) and the
+  Director's final action was still pending at the 2026-07-11 refresh; it never came, so no
+  Piqua/J5 coverage can ever exist under it.
+  With the general permit gone, an **individual NPDES permit** is the only remaining instrument on
+  a *direct-discharge* path — but that path is **not established** for this campus: the facility
+  may instead blow down to the Piqua sanitary sewer, which files no DMR at all and is disclosed by
+  an **industrial-pretreatment (IU) permit and sewer-use agreement**. No individual NPDES or IU
+  record naming J5 LLC / Shaytura LLC has been located, and this has **not** been run as a dated,
+  direct DAM/eSuite search — unsearched, not a searched negative. `[open]`. Lead `OHD000001`
+  (#1486, #1871); the pretreatment/sewer-use records ask is #1688.
 
 ### Hydrology screen
 
@@ -257,7 +266,7 @@ asserted above its tag. Next-check triggers:
 | Lead | Thread | Next check |
 | --- | --- | --- |
 | `WATER-AGREEMENT` | 2.0 MGD reserve vs. closed-loop FAQ — unreconciled | pull the executed 2026-01-23 agreement text |
-| `OHD000001` | statewide data-center NPDES general permit | Director's final action + Piqua/J5 coverage |
+| `OHD000001` | general permit **withdrawn 2026-07-21** — individual NPDES is the only direct-discharge path | search DAM/eSuite for an individual NPDES or IU/pretreatment record naming J5 LLC / Shaytura LLC |
 | `WWTP-WLA` | reserved 1.0 MGD wastewater vs. 1PD00008 headroom | extract the fact-sheet WLA table |
 | `CONSTRUCTION-SWPPP` | construction-stormwater NOI | re-sweep OEPA eSuite before earthwork |
 | `AIR-PTI` | backup-generator air PTI (confirmed-negative 2026-07-11) | re-run the eSuite/DAPC search |
@@ -294,8 +303,9 @@ asserted above its tag. Next-check triggers:
    2.0 MGD reservation vs. the closed-loop/domestic-only public messaging (#1486).
 5. **OEPA air PTI** — re-check periodically for a backup generator PTI filing (SWDO, Miami County,
    entity "J5 LLC"); confirmed-negative as of 2026-07-11.
-6. **Ohio EPA / EPA ECHO** — the Piqua WWTP NPDES 1PD00008 fact sheet (committed reference) and any
-   data-center stormwater coverage under OHD000001.
+6. **Ohio EPA / EPA ECHO** — the Piqua WWTP NPDES 1PD00008 fact sheet (committed reference), and —
+   now that OHD000001 is withdrawn — any **individual** NPDES permit or **industrial-pretreatment /
+   sewer-use** record naming J5 LLC / Shaytura LLC.
 7. **OTCA** — confirm whether any data-center sales-tax exemption was granted.
 
 ## Sources
@@ -304,7 +314,7 @@ asserted above its tag. Next-check triggers:
 - City of Piqua Power System: [piquaoh.gov/228/Power-System](https://www.piquaoh.gov/228/Power-System)
 - City of Piqua Source Water Assessment (PWSID OH5501211): [2025 report PDF](https://www.piquaoh.gov/DocumentCenter/View/3012/2025-Source-Water-Assessment-Report-PDF)
 - Ohio EPA (Piqua WWTP NPDES 1PD00008, Great Miami RM 114.3): [1PD00008 fact sheet PDF](https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00008.fs.pdf)
-- Ohio EPA (data-center general permit OHD000001): [wastewater-discharges-from-data-centers--general-permit](https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/wastewater-discharges-from-data-centers--general-permit)
+- Ohio EPA (data-center general permit OHD000001 — **abandoned**, Community Notice 2026-07-21): [wastewater-discharges-from-data-centers--general-permit](https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/wastewater-discharges-from-data-centers--general-permit)
 - Data Center Dynamics: [data-center-project-coming-to-piqua-ohio](https://www.datacenterdynamics.com/en/news/data-center-project-coming-to-piqua-ohio/)
 - Miami Valley Today (commission plans): [piqua-commission-hears-plans-for-new-data-center](https://miamivalleytoday.com/piqua-commission-hears-plans-for-new-data-center/)
 - CivicCapacity (water/wastewater agreement): [water-world-what-was-negotiated](https://www.civiccapacity.com/p/water-world-what-was-negoitated-between)
