@@ -15,7 +15,7 @@ The standing watch and its dated negatives live in
 [`data/documents/oepa/sidney/`](../../documents/oepa/sidney/) and
 [`data/documents/grid/sidney/`](../../documents/grid/sidney/).
 
-> **What the 2026-08-01 instrument pull changed.** Five of this register's `[verified]` financial
+> **What the 2026-08-01 instrument pull changed.** A run of this register's `[verified]` financial
 > and chronological facts came from the City's FAQ, the trade press or an advocacy site, and the
 > executed instruments contradict them. The PILOT is **$46M over 14 years**, not $50M over 15; the
 > **$50M** figure is the PILOT cap **plus a separate $4M initial payment**, and the schools' half

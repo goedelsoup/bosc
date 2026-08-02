@@ -24,6 +24,11 @@ action:
   - 'Ohio EPA staff on this permit (Brandon Oyer, transmitting; Tony Nosko P.E., PTI Unit) are recorded
     in `note`, NOT in contact_name: the contact fields feed applicant-representation edges in the entity
     graph, and a regulator is not the applicant''s representative.'
+  - 'Applicant address variance, recorded as printed on each document: this PTI prints ''1812 Boren Ave,
+    Seattle, WA 98101'' for Amazon Data Services, Inc., while the stormwater NOI, the coverage approval
+    and the 401 application all print ''410 Terry Ave N, Seattle, WA 98109'' for the same company, and
+    the CRA Agreement routes notices to P.O. Box 81226 / P.O. Box 80416. All are the same applicant —
+    do not resolve them as separate entities on the strength of the address.'
   agency: Ohio EPA, Division of Surface Water
   program: Surface Water Permit to Install (long term)
   permit_no: DSWPTI-260517
