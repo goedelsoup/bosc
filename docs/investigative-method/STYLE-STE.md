@@ -56,8 +56,9 @@ Two carve-outs, so the rules stay checkable rather than merely strict:
 ## Vocabulary — reconcile, never compete
 
 The wiki glossary is the **one** owner of term definitions. It ships as the `concepts` feed
-(77 terms today) and renders at `/wiki/`. A study note does not redefine a term the glossary
-already holds; it links to it.
+and renders at `/wiki/`. A study note does not redefine a term the glossary already holds; it
+links to it. (No count is quoted here on purpose — the feed grows, and a number in this
+sentence would be wrong within a release and guarded by nothing.)
 
 Terms the study leans on that the glossary **already carries**: `7Q10`, `Assimilative
 capacity`, `Consumptive cooling`, `Curve number`, `Dilution`, `DMR`, `Effluent`, `HSG`,
@@ -81,19 +82,32 @@ exists, a note defines the term inline, in one sentence, and does not link it:
 - `§316(a)` — the Clean Water Act provision for an alternative thermal limit
 - `CBI` — confidential business information; a trade-secret withholding
 
-## Localizing
+## Localizing — a SITE-NOTE rule only
 
-An impact study is read in one place. A quantity that has no local referent does not inform
-anyone. So:
+An impact study is read in one place. A quantity with no local referent does not inform
+anyone. But the register covers two surfaces with opposite obligations, and conflating them
+is how one site's facts leak onto twenty-five others:
 
-- **Anchor every abstract quantity to a Lima referent that is itself on the record.** The
-  densest shelf is [`docs/HYDROLOGY.md`](../HYDROLOGY.md): the 5 upground reservoirs, the
-  ~14.4 billion gallons of storage, the 3.92 MGD makeup as 20.7 % of plant production, the
-  960.9 → 761.8-day drought reserve.
-- **Name local entities only from the record.** American Township, the Ottawa River, the
-  Auglaize River, the Lima WWTP (NPDES 2PE00000), AEP Ohio, the JSMC.
+| Surface | Obligation |
+|---|---|
+| a site note (`web/src/content/study/<site>/*.mdx`) | **Localize.** Every abstract quantity gets a referent from *that site's* own record. |
+| a chapter lead (`web/src/components/study/chapters/*.astro`) | **Stay site-neutral.** One site's geography, agency, statute, or instrument must never appear — the paragraph renders on every site in the network. |
+
+So a lead names "a permit writer", never "Ohio EPA"; "the state's numeric temperature
+criterion", never "Ohio's". A lead may interpolate a resolved value (`{riverName}`,
+`{eb.area_name}`), because that is the site's own data reaching the template — but it may not
+hard-code the value.
+
+For a site note, the rules are:
+
+- **Anchor every abstract quantity to a referent on that site's own record.** Lima's densest
+  shelf is [`docs/HYDROLOGY.md`](../HYDROLOGY.md): the 5 upground reservoirs, the ~14.4
+  billion gallons of storage, the 3.92 MGD makeup as 20.7 % of plant production, the
+  960.9 → 761.8-day drought reserve. A peer site has its own shelf and none of these figures.
+- **Name local entities only from the record.** For Lima: American and Sugar Creek Townships,
+  the Ottawa River, the Auglaize River, the Lima WWTP (NPDES 2PE00000), AEP Ohio, the JSMC.
 - **Place history is `[reference]`, never `[verified]`.** Physical geography, drainage, and
-  historic waterworks may draw on Leeson 1885
+  historic waterworks may draw on a committed county history — for Lima, Leeson 1885
   (`data/documents/history/allen-oh/historyallencou00leesgoog_text.pdf`; page index at
   `data/extracted/history/allen-oh/leeson-1885-corpus-intersect.yaml`). Cite the page.
 

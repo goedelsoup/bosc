@@ -70,13 +70,21 @@ export const STUDY_NOTE_SCHEMA = z.object({
    *  cover's abstract, read by `study/index.astro` — safe because `[chapter].astro` emits
    *  only `STUDY_CHAPTERS` ids, so `_cover` can never route as a chapter).
    *
-   *  ⚠️ DECLARATIVE ONLY — nothing reads this field. Both shells resolve a note by its
-   *  file-path id (`getEntry("study", "<slug>/<chapter>")`), so a mismatched or misspelled
-   *  value renders no error and a typo'd FILENAME becomes silently dead content. Zod can't
-   *  close that gap either: this config can't import `@watermark/core/study` without
-   *  dragging the bundle reader into the content-config graph. The guard is
-   *  `study.notes.test.ts`, which asserts every note's id and `chapter` against the
-   *  registry. */
+   *  ⚠️ The RUNTIME shells never read this field. Both resolve a note by its file-path id,
+   *  facility-scoped first and site-level second:
+   *
+   *    1. `study/<slug>/<facility-key>/<chapter>`   ← wins when that facility is being read
+   *    2. `study/<slug>/<chapter>`                  ← the site-level fallback
+   *
+   *  (`[chapter].astro` for a chapter, `study/index.astro` for `_cover`.) So a `chapter:`
+   *  value that disagrees with the filename renders no error, and a typo'd FILENAME becomes
+   *  silently dead content. Zod can't close that gap either: this config can't import
+   *  `@watermark/core/study` without dragging the bundle reader into the content-config
+   *  graph.
+   *
+   *  The ONE consumer of this field is therefore a test — `src/content/study.notes.test.ts`,
+   *  which walks the collection and asserts each note's id AND its `chapter` against the
+   *  registry. Keep the field accurate: it is how that guard catches the misnamed file. */
   chapter: z.string().min(1),
   /** Facility key this note is scoped to; absent = the site's primary-facility study. */
   facility: z.string().optional(),

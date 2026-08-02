@@ -24,7 +24,14 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { loadFeed, loadManifest } from "@watermark/core/bundle";
-import type { EconomicBaseline, FacilityItem, GridProfile, ScenarioResult } from "@watermark/core/feeds";
+import type {
+  EconomicBaseline,
+  EconomicScenarios,
+  EnergyBurden,
+  FacilityItem,
+  GridProfile,
+  ScenarioResult,
+} from "@watermark/core/feeds";
 import { STUDY_CHAPTERS, studyStatusSummary } from "@watermark/core/study";
 
 const ROOT = join(process.cwd(), "src/content/study");
@@ -54,15 +61,28 @@ const notes: Note[] = walk(ROOT).map((rel) => {
   const id = rel.replace(/\.mdx?$/, "");
   const parts = id.split("/");
   const raw = readFileSync(join(ROOT, rel), "utf-8");
-  const fm = raw.split("---")[1] ?? "";
+  const [, fm = "", ...rest] = raw.split("---");
   return {
     id,
     site: parts[0],
     chapter: parts[parts.length - 1],
     frontmatterChapter: (fm.match(/^chapter:\s*(.+)$/m)?.[1] ?? "").trim(),
-    body: raw,
+    // Frontmatter STRIPPED, and whitespace collapsed: a containment assertion must be able
+    // to match a claim that the source happens to line-wrap, and must never be satisfied by
+    // a date or a slug in the frontmatter block.
+    body: rest.join("---").replace(/\s+/g, " ").trim(),
   };
 });
+
+/** Every note Lima's study is expected to carry — its 13 chapters plus the cover abstract.
+ *  Asserted as a SET, not a count: deleting a chapter note must fail here, and a count of
+ *  ">= 13" would happily pass with a peer site's notes making up the difference. */
+const LIMA_NOTES = [
+  "_cover",
+  ...["method", "project"],
+  ...["water-supply", "discharge", "heat", "groundwater", "stormwater", "air"],
+  ...["labor", "power", "fiscal", "balance", "missing"],
+].map((c) => `lima/${c}`);
 
 const note = (id: string): Note => {
   const found = notes.find((n) => n.id === id);
@@ -71,9 +91,10 @@ const note = (id: string): Note => {
 };
 
 describe(`study notes — wiring (${notes.length} notes)`, () => {
-  it("finds the authored cohort", () => {
-    expect(notes.length).toBeGreaterThanOrEqual(13);
-    expect(notes.map((n) => n.id)).toContain("lima/_cover");
+  it("carries Lima's complete authored set — 13 chapters plus the cover", () => {
+    const ids = new Set(notes.map((n) => n.id));
+    expect(LIMA_NOTES.filter((id) => !ids.has(id))).toEqual([]);
+    expect(LIMA_NOTES).toHaveLength(14);
   });
 
   it.each(notes.map((n) => n.id))("%s — id resolves to a chapter, frontmatter agrees", (id) => {
@@ -108,6 +129,18 @@ const pv = (v: { value: number | null } | null | undefined, what: string): numbe
   if (v?.value == null) throw new Error(`Pinned figure "${what}" is no longer on the feed`);
   return v.value;
 };
+
+/**
+ * The same guard for a row the prose depends on. Every feed read below indexes something —
+ * `facility[0]`, `screens[0]`, the nearest well after a sort, the minimum over a set of
+ * dilution checks. An emptied feed must fail this pin BY NAME; it must not throw a
+ * TypeError, and it must never quietly produce `undefined` or `Infinity` that then compares
+ * unequal for the wrong reason.
+ */
+const one = <T>(xs: readonly T[] | null | undefined, what: string): T => {
+  if (!xs || xs.length === 0) throw new Error(`Pinned figure "${what}" has no rows on the feed`);
+  return xs[0];
+};
 const num = (n: number): string => n.toLocaleString("en-US");
 
 const PINS: Pin[] = [
@@ -137,14 +170,16 @@ const PINS: Pin[] = [
   // --- project / cover: the facility's own disclosed + inferred fields ---
   {
     note: "lima/project",
-    claim: "114",
-    expected: () => String(lima<FacilityItem[]>("facility")[0].genset_count),
+    // The full phrase, NOT the bare "114" — a two-or-three digit substring matches a date,
+    // a parcel fragment, or another figure, so a bare number can pass for the wrong reason.
+    claim: "114 backup generators",
+    expected: () => `${one(lima<FacilityItem[]>("facility"), "facility").genset_count} backup generators`,
   },
   {
     note: "lima/_cover",
     claim: "250 to 300 megawatts",
     expected: () => {
-      const f = lima<FacilityItem[]>("facility")[0];
+      const f = one(lima<FacilityItem[]>("facility"), "facility");
       return `${f.it_load_low_mw} to ${f.it_load_high_mw} megawatts`;
     },
   },
@@ -153,9 +188,20 @@ const PINS: Pin[] = [
     claim: "asserted from the tower count, not disclosed by the operator",
     // The archetype must stay an ASSUMPTION; a disclosure would make this sentence false.
     expected: () =>
-      lima<FacilityItem[]>("facility")[0].cooling_model_source === "assumption"
+      one(lima<FacilityItem[]>("facility"), "facility").cooling_model_source === "assumption"
         ? "asserted from the tower count, not disclosed by the operator"
         : null,
+  },
+  {
+    // The abatement terms the method note states, from the site's own CRA instrument.
+    note: "lima/method",
+    claim: "abated 75 % of the real property tax for 15 years",
+    expected: () => {
+      const c = lima<EconomicScenarios>("economics-scenarios").constants ?? [];
+      const pct = pv(c.find((x) => x.key === "abatement_percent")?.value, "abatement_percent");
+      const yrs = pv(c.find((x) => x.key === "term_years")?.value, "term_years");
+      return `abated ${pct * 100} % of the real property tax for ${yrs} years`;
+    },
   },
 
   // --- labor: a QCEW annual pull moves all of these at once ---
@@ -215,6 +261,40 @@ const PINS: Pin[] = [
     expected: () =>
       `${pv(lima<GridProfile>("grid").load_share?.share_of_ba_pct, "share_of_ba_pct").toFixed(2)} %`,
   },
+  {
+    // The consumer-side reference price. The note is explicit that the campus does NOT buy at
+    // it, so the figure has to stay the one the energy-burden read is actually built on.
+    note: "lima/power",
+    claim: "16.96 cents per kilowatt-hour",
+    expected: () =>
+      `${pv(lima<EnergyBurden>("energy-burden").residential_electricity_price, "residential_electricity_price")} cents per kilowatt-hour`,
+  },
+  {
+    note: "lima/power",
+    claim: "about $1,781 a year on electricity",
+    expected: () =>
+      `about $${num(Math.round(pv(lima<EnergyBurden>("energy-burden").electricity_annual_cost, "electricity_annual_cost")))} a year on electricity`,
+  },
+  {
+    note: "lima/power",
+    claim: "$970 on natural gas",
+    expected: () =>
+      `$${num(Math.round(pv(lima<EnergyBurden>("energy-burden").gas_annual_cost, "gas_annual_cost")))} on natural gas`,
+  },
+  {
+    // Derived from the two costs above over the same income the labor note pins — so all four
+    // must move together or this fails, which is the point of pinning the derived figure too.
+    note: "lima/power",
+    claim: "4.44 % of that income",
+    expected: () =>
+      `${pv(lima<EnergyBurden>("energy-burden").combined_burden_pct, "combined_burden_pct")} % of that income`,
+  },
+  {
+    note: "lima/power",
+    claim: "median household income of $62,001",
+    expected: () =>
+      `median household income of $${num(pv(lima<EnergyBurden>("energy-burden").median_household_income, "median_household_income"))}`,
+  },
 
   // --- discharge: the note quotes the table's own 2-decimal formatting (Discharge.astro) ---
   {
@@ -231,8 +311,10 @@ const PINS: Pin[] = [
     claim: "0.01:1",
     expected: () => {
       const checks = lima<ScenarioResult[]>("hydrology-scenarios").flatMap((s) => s.assimilative ?? []);
-      const min = Math.min(...checks.map((c) => c.dilution_ratio));
-      return `${min.toFixed(2)}:1`;
+      // Guarded: Math.min() over an emptied feed is Infinity, which would render "Infinity:1"
+      // and fail for a reason that hides the real one.
+      const min = Math.min(...checks.map((c) => one([c.dilution_ratio], "dilution_ratio")));
+      return checks.length > 0 ? `${min.toFixed(2)}:1` : null;
     },
   },
 
@@ -240,10 +322,14 @@ const PINS: Pin[] = [
   {
     note: "lima/air",
     claim: "The peak-concentration column above reads as dashes",
-    expected: () =>
-      lima<{ available: boolean }[]>("air-dispersion").every((r) => !r.available)
+    expected: () => {
+      // `.every()` on an emptied feed is vacuously true — the claim would keep passing after
+      // the rows it describes had gone. Require rows first.
+      const disp = lima<{ available: boolean }[]>("air-dispersion");
+      return disp.length > 0 && disp.every((r) => !r.available)
         ? "The peak-concentration column above reads as dashes"
-        : null,
+        : null;
+    },
   },
 
   // --- groundwater: the note reads the ten impacted wells by consumed column, not by feet ---
@@ -254,8 +340,11 @@ const PINS: Pin[] = [
       const dw = lima<{ impacted_wells: { distance_ft: number; column_consumed_frac: number }[] }>(
         "dewatering",
       );
-      const nearest = [...dw.impacted_wells].sort((a, b) => a.distance_ft - b.distance_ft)[0];
-      return `${nearest.distance_ft.toLocaleString("en-US")} feet away`;
+      const nearest = one(
+        [...dw.impacted_wells].sort((a, b) => a.distance_ft - b.distance_ft),
+        "impacted_wells",
+      );
+      return `${num(nearest.distance_ft)} feet away`;
     },
   },
   {
@@ -265,7 +354,10 @@ const PINS: Pin[] = [
       const dw = lima<{ impacted_wells: { distance_ft: number; column_consumed_frac: number }[] }>(
         "dewatering",
       );
-      const nearest = [...dw.impacted_wells].sort((a, b) => a.distance_ft - b.distance_ft)[0];
+      const nearest = one(
+        [...dw.impacted_wells].sort((a, b) => a.distance_ft - b.distance_ft),
+        "impacted_wells",
+      );
       return `takes ${Math.round(nearest.column_consumed_frac * 100)} % of it`;
     },
   },
@@ -302,6 +394,16 @@ const PINS: Pin[] = [
     claim: "4.25 inches",
     expected: () => `${lima<{ storm_depth_in: number }>("routed-hydrograph").storm_depth_in} inches`,
   },
+  {
+    // The attenuation the note describes is the DELAY as well as the shaved peak; both come
+    // off the same re-run, so pinning one without the other lets half the sentence go stale.
+    note: "lima/stormwater",
+    claim: "20.2 hours instead of 17.4",
+    expected: () => {
+      const r = lima<{ routed_time_to_peak_hr: number; summed_time_to_peak_hr: number }>("routed-hydrograph");
+      return `${r.routed_time_to_peak_hr} hours instead of ${r.summed_time_to_peak_hr}`;
+    },
+  },
 
   // --- heat: the criterion, the ambient, and the headroom between them ---
   {
@@ -313,7 +415,7 @@ const PINS: Pin[] = [
     note: "lima/heat",
     claim: "5.4 °C of headroom",
     expected: () =>
-      `${lima<{ screens: { headroom_c: number }[] }>("thermal").screens[0].headroom_c} °C of headroom`,
+      `${one(lima<{ screens: { headroom_c: number }[] }>("thermal").screens, "thermal screens").headroom_c} °C of headroom`,
   },
 
   // --- the annex counts its own asks ---
@@ -323,6 +425,37 @@ const PINS: Pin[] = [
     expected: () => (rows("leads") > 0 ? "the submit link on each row" : null),
   },
 ];
+
+/**
+ * Figures the notes quote that this file deliberately does NOT pin, and why. Recorded so the
+ * absence reads as a decision rather than an oversight — both are legitimately un-pinnable
+ * from `web/`, not merely unwritten:
+ *
+ *  - **The reservoir + drought-reserve set** (water-supply: 14.4 BG, 3.92 MGD, 20.7 %,
+ *    960.9 → 761.8 days). Not in the content bundle at all. Its regenerable source is
+ *    `docs/HYDROLOGY.md`, at the repo root — reaching it would make this test depend on a
+ *    tree outside `web/`, breaking the standalone/offline contract the frontend keeps.
+ *  - **The declared acreages** (project + stormwater: 335 / 195 / 115 acres). Same reason:
+ *    they live in the committed extraction `data/extracted/plans/bosc-site-footprint.yaml`,
+ *    which the export does not project into a feed.
+ *
+ * The cross-note check below is what those two get instead: it cannot catch the SOURCE
+ * moving, but it does catch the two notes drifting apart from each other.
+ */
+const CROSS_NOTE_CLAIMS: { claim: string; notes: string[] }[] = [
+  { claim: "115 acres", notes: ["lima/project", "lima/stormwater"] },
+  { claim: "335 acres", notes: ["lima/_cover", "lima/project", "lima/stormwater"] },
+  { claim: "960.9", notes: ["lima/water-supply", "lima/balance"] },
+  { claim: "761.8", notes: ["lima/water-supply", "lima/balance"] },
+];
+
+describe(`study notes — cross-note agreement (${CROSS_NOTE_CLAIMS.length} figures)`, () => {
+  it.each(
+    CROSS_NOTE_CLAIMS.map((c) => [c.claim, c] as const),
+  )("%s — every note that states it states the same value", (_claim, c) => {
+    expect(c.notes.filter((id) => !note(id).body.includes(c.claim))).toEqual([]);
+  });
+});
 
 describe(`study notes — pinned figures (${PINS.length} claims)`, () => {
   it.each(PINS.map((p, i) => [`${p.note} · ${p.claim}`, i] as const))("%s", (_label, i) => {

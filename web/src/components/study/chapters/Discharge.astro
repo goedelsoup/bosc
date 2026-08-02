@@ -8,7 +8,8 @@
  *    aquatic-life at the 7Q10, acute at the sharper 1Q10 (WS-08) — plus the
  *    effluent-credited ratio where the plant shares its reach (WS-15). Screening bands,
  *    never a permit determination. Rendered from the binding (worst-diluted) scenario.
- *  - **The existing burden** (`rsei`): what the receiving water already carries — real,
+ *  - **The existing release inventory** (`rsei`): what the county's TRI reporters already
+ *    release, across all media — real,
  *    baseline-renderable content even when no project discharge is characterized, which is
  *    exactly the `partial` (baseline-register) state on a thin site.
  *
@@ -49,8 +50,10 @@ const grounded = (v: { source?: string | null }): boolean =>
 const ratio = (n: number | null | undefined): string => (n == null ? "—" : `${n.toFixed(2)}:1`);
 const flagWord = (f: DilutionFlag | null | undefined): string => f ?? "—";
 
-// The existing burden: EPA's comparative Risk-Screening Scores for the county's TRI
-// facilities — what the receiving water already carries before any new discharge.
+// The existing release inventory: EPA's comparative Risk-Screening Scores for the county's
+// TRI facilities. NOT a receiving-water loading — RSEI joins across ALL media (air, water,
+// land) and its Score is a modeled, population-weighted, unitless comparative index. So this
+// half sizes the county's existing toxics activity; it never claims what the stream carries.
 const burden = [...(rsei?.facilities ?? [])]
   .sort((a, b) => (Number(b.score) || 0) - (Number(a.score) || 0))
   .slice(0, 5);
@@ -63,10 +66,12 @@ const burden = [...(rsei?.facilities ?? [])]
     <>
       <p class="dis-lead">
         A real impact study screens the project's discharge against the assimilative capacity of
-        the receiving stream, at that stream's cited design low flows. It also reads the
-        discharge on top of the burden the water already carries. The design flow matches the
+        the receiving stream — how much pollutant that stream can take before it breaches a
+        criterion — at the stream's cited design low flows. The design flow matches the
         criterion type: chronic aquatic-life dilution at the 7Q10, and acute dilution at the
-        sharper 1Q10. These are screening bands. They are not a permit determination.
+        1Q10, which is the sharper single-day design low flow. It also sets that discharge
+        beside what the county's TRI reporters already release. These are screening bands. They
+        are not a permit determination.
       </p>
 
       {checks.length > 0 && binding ? (
@@ -137,7 +142,7 @@ const burden = [...(rsei?.facilities ?? [])]
 
       {burden.length > 0 && rsei && (
         <>
-          <h2 class="dis-h2">The burden the receiving water already carries</h2>
+          <h2 class="dis-h2">What the county's TRI reporters already release</h2>
           <p class="dis-burden-meta">
             {rsei.meta.source ?? "EPA RSEI"}
             {rsei.meta.version ? ` (${rsei.meta.version})` : ""} ·{" "}
