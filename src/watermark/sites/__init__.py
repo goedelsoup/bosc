@@ -316,7 +316,7 @@ def _type_placeholder(annotation: object) -> str:
     return "None"
 
 
-def scaffold_profile_src(slug: str, *, basin: str = "maumee") -> str:
+def scaffold_profile_src(slug: str, *, basin: str | None = None) -> str:
     """A paste-ready ``SiteProfile(...)`` stub for a new site (the #326 authoring aid).
 
     Identity + the per-site output relpaths are filled (the relpaths pre-slug-scoped, so the
@@ -327,9 +327,15 @@ def scaffold_profile_src(slug: str, *, basin: str = "maumee") -> str:
     Note: YAML-backed fields (``place``, ``receiving_water_name``, ``map_view_*``) are omitted
     from the stub — add the site to ``data/sites.yaml`` first and run ``watermark sites sync`` so
     those fields are filled automatically at construction time (#1027).
-    """
-    from watermark.sites._model import YAML_BACKED_PROFILE_FIELDS
 
+    ``basin`` is not YAML-backed (the profile keeps its own cited literal, #1863) but it must
+    *agree* with the YAML's ``basin_major`` or ``watermark sites check`` fails — so when the site
+    is already registered there, the stub is seeded from it rather than from a guess. An explicit
+    ``basin=`` still wins, and an unregistered slug falls back to ``maumee`` with a TODO.
+    """
+    from watermark.sites._model import YAML_BACKED_PROFILE_FIELDS, _get_identity
+
+    entry = _get_identity().get(slug)
     lima = SITES["lima"]
     lines: list[str] = [f'    "{slug}": SiteProfile(']
     for name, field in SiteProfile.model_fields.items():
@@ -339,8 +345,12 @@ def scaffold_profile_src(slug: str, *, basin: str = "maumee") -> str:
         elif name in YAML_BACKED_PROFILE_FIELDS:
             continue  # filled from data/sites.yaml — register the site there first
         elif name == "basin":
-            value = repr(basin)
-            comment = "  # TODO: confirm the basin"
+            if basin is None and entry is not None:
+                value = repr(entry.basin_major)
+                comment = "  # from data/sites.yaml basin_major — cite the HUC-8 here"
+            else:
+                value = repr(basin or "maumee")
+                comment = "  # TODO: confirm the basin (must match data/sites.yaml basin_major)"
         elif name in PER_SITE_OUTPUT_FIELDS and getattr(lima, name) is not None:
             value = repr(_slug_scope(getattr(lima, name), slug))  # pre-slug-scoped, collision-safe
         elif name in _GEOMETRY_RELPATH_FIELDS:

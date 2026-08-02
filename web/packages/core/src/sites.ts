@@ -19,6 +19,7 @@
 import { loadFeed, manifestOrNull, runWithSite } from "./bundle";
 import type { SiteTier } from "./bundle";
 import type { DocumentCollectionItem, FacilityStatus } from "./feeds";
+import { basinForSlug, basinsOfRegion, type MajorBasin, REGIONS, STATE_NAMES } from "./placement";
 import { DEFAULT_STORY_CODENAME, SITE_BASE, siteBase } from "./routes";
 import sitesRegistry from "./sites-registry.json";
 
@@ -73,6 +74,21 @@ export interface NetworkSite {
   place: string;
   /** Receiving water / basin subline shown under the place. */
   basin: string;
+  /**
+   * The MAJOR river basin this site groups under, as its `basin_major` registry slug (#1863) —
+   * the coarser peer of {@link basin} above, and the axis `groupSites("basin")` and the water-lens
+   * scorecard pivot on. Its display label, code, region, and divide live in `./placement`; only
+   * the slug is per-site. Authoritative in `data/sites.yaml`, where it also back-stops the Python
+   * `SiteProfile.basin` literal — so the grouping can't drift from the basin the site's receiving
+   * water is actually screened against.
+   */
+  basinMajor: string;
+  /**
+   * The two-letter code of the state whose law this site's records live under (`"OH"`, `"IN"`) —
+   * the state lens's grouping axis, and what {@link siteState} resolves to a full name for the
+   * per-site dateline. From the registry, not a parallel table (#1863).
+   */
+  state: string;
   /**
    * The economic/administrative county this site's records are filed in, as it reads in a
    * citation ("Allen County, OH"). Identity, not a bundle value — it names the *place*, so it
@@ -146,6 +162,8 @@ export const SITES: readonly NetworkSite[] = sitesRegistry.sites.map(
     mono: entry.mono,
     place: entry.place,
     basin: entry.basin,
+    basinMajor: entry.basin_major,
+    state: entry.state,
     county: entry.county,
     status: entry.status as SiteStatus,
     selectable: entry.selectable,
@@ -453,59 +471,33 @@ export function facilityStageIndex(status: FacilityStatus): number {
 }
 
 // --- Grouped switcher (#307/#308 dictate C) --------------------------------------------------
-// Canonical (state, basin) placement for every site. The selector pivots the SAME sites by
-// either axis — `state` is the legal jurisdiction a record lives under; `basin` is the major
-// river basin (one of nine) it documents. Both matter to a researcher, so either can be the
-// outer grouping. The per-row `basin` subline carries the finer sub-watershed detail.
-const PLACEMENT: Record<string, { state: string; basin: string }> = {
-  lima: { state: "Ohio", basin: "Maumee" },
-  "fort-wayne": { state: "Indiana", basin: "Maumee" },
-  defiance: { state: "Ohio", basin: "Maumee" },
-  findlay: { state: "Ohio", basin: "Maumee" },
-  toledo: { state: "Ohio", basin: "Maumee" },
-  // Bowling Green sits on the Maumee-Portage divide: it drinks the Maumee but discharges to the
-  // Portage (a distinct Lake Erie basin), so it groups under its OWN basin, not the Maumee's.
-  "bowling-green": { state: "Ohio", basin: "Portage" },
-  "van-wert": { state: "Ohio", basin: "Maumee" },
-  bryan: { state: "Ohio", basin: "Maumee" },
-  ottawa: { state: "Ohio", basin: "Maumee" },
-  // The Miami branches (Ohio River sink, not Lake Erie).
-  urbana: { state: "Ohio", basin: "Great Miami" },
-  springfield: { state: "Ohio", basin: "Great Miami" },
-  xenia: { state: "Ohio", basin: "Little Miami" },
-  wpafb: { state: "Ohio", basin: "Great Miami" },
-  "hamilton-middletown": { state: "Ohio", basin: "Great Miami" },
-  "troy-piqua": { state: "Ohio", basin: "Great Miami" },
-  sidney: { state: "Ohio", basin: "Great Miami" },
-  greenville: { state: "Ohio", basin: "Great Miami" },
-  wilmington: { state: "Ohio", basin: "Little Miami" },
-  // The Scioto branch (the data-center epicenter) and the remaining major basins.
-  "new-albany": { state: "Ohio", basin: "Scioto" },
-  columbus: { state: "Ohio", basin: "Scioto" },
-  piketon: { state: "Ohio", basin: "Scioto" },
-  // Lower Scioto / Ohio-River confluence — Project Dazzler in Green Township, Scioto County; the
-  // footprint discharges to the Ohio mainstem below the confluence but groups with the Scioto basin.
-  portsmouth: { state: "Ohio", basin: "Scioto" },
-  // The Ohio River (direct) branch — Ohio Brush Creek drains straight to the Ohio, no Scioto/Miami
-  // loop. Far-southern unglaciated Appalachian Adams County OH (#1117); grouped with the southern
-  // Appalachian basins, adjacent to the Scioto.
-  "west-union": { state: "Ohio", basin: "Ohio Brush Creek" },
-  newark: { state: "Ohio", basin: "Muskingum" },
-  zanesville: { state: "Ohio", basin: "Muskingum" },
-  coshocton: { state: "Ohio", basin: "Muskingum" },
-  mansfield: { state: "Ohio", basin: "Muskingum" },
-  sandusky: { state: "Ohio", basin: "Sandusky" },
-  fremont: { state: "Ohio", basin: "Sandusky" },
-  tiffin: { state: "Ohio", basin: "Sandusky" },
-  bucyrus: { state: "Ohio", basin: "Sandusky" },
-  cleveland: { state: "Ohio", basin: "Cuyahoga" },
-  akron: { state: "Ohio", basin: "Cuyahoga" },
-  lordstown: { state: "Ohio", basin: "Mahoning" },
-  youngstown: { state: "Ohio", basin: "Mahoning" },
-  lancaster: { state: "Ohio", basin: "Hocking" },
-  athens: { state: "Ohio", basin: "Hocking" },
-  logan: { state: "Ohio", basin: "Hocking" },
-};
+// The selector pivots the SAME sites by either placement axis — `state` is the legal jurisdiction
+// a record lives under; `basinMajor` is the major river basin it documents. Both matter to a
+// researcher, so either can be the outer grouping, and the per-row `basin` subline carries the
+// finer sub-watershed detail underneath.
+//
+// Both axes are now read off the registry entry (#1863). What used to be here was a hand-
+// maintained `PLACEMENT` table parallel to `data/sites.yaml`: the only home for a site's state,
+// a second copy of its major basin, and — because the grouping loops skipped a slug it didn't
+// hold — a silent-drop path for any site registered in the YAML but not added here. The basin's
+// display vocabulary (label, code, region, divide) lives in `./placement`, which is *about the
+// basin*, not about a site.
+
+/** A site's resolved placement, or a named throw. Unlike a thin peer's missing feed, an unplaced
+ *  slug is a `data/sites.yaml` authoring error — it must fail loudly rather than drop the site
+ *  out of the lens. `placementViolations(SITES)` enumerates every such gap at once (#1863). */
+function placementOf(site: NetworkSite): { stateName: string; basin: MajorBasin } {
+  const stateName = STATE_NAMES[site.state];
+  const basin = basinForSlug(site.basinMajor);
+  if (!stateName || !basin) {
+    throw new Error(
+      `site "${site.slug}" is unplaced: state "${site.state}" ` +
+        `${stateName ? "known" : "UNKNOWN"}, basin "${site.basinMajor}" ` +
+        `${basin ? "known" : "UNKNOWN"} — see placementViolations() in ./placement`,
+    );
+  }
+  return { stateName, basin };
+}
 
 /** The registry entry for a slug (the canonical {@link NetworkSite}), or `undefined`. */
 export function siteForSlug(slug: string): NetworkSite | undefined {
@@ -545,12 +537,17 @@ export function storyComingSoon(slug: string, codename: string): boolean {
 }
 
 /**
- * The legal jurisdiction (US state) a site's records live under — e.g. `"Ohio"`, `"Indiana"`.
- * The source for per-site datelines/kickers, so the site pages read it instead of hardcoding
- * "Lima, Ohio" (#741). Empty string for an unplaced slug.
+ * The legal jurisdiction (US state) a site's records live under, spelled out — e.g. `"Ohio"`,
+ * `"Indiana"`. The source for per-site datelines/kickers, so the site pages read it instead of
+ * hardcoding "Lima, Ohio" (#741). Resolved from the registry's two-letter `state` (#1863).
+ *
+ * Empty string for an unknown slug or an unrecognized code — a dateline is prose, so a gap here
+ * reads as "Lima" rather than breaking the page. The lens builders, which would silently *drop*
+ * the site instead, throw on the same gap; `placementViolations` is the guard for both.
  */
 export function siteState(slug: string): string {
-  return PLACEMENT[slug]?.state ?? "";
+  const code = siteForSlug(slug)?.state;
+  return (code && STATE_NAMES[code]) ?? "";
 }
 
 /**
@@ -562,64 +559,6 @@ export function mapView(slug: string): { lat: number; lon: number; zoom: number 
   if (!entry || entry.map_lat == null || entry.map_lon == null || entry.map_zoom == null) return null;
   return { lat: entry.map_lat, lon: entry.map_lon, zoom: entry.map_zoom as number };
 }
-
-const STATE_ABBR: Record<string, string> = { Ohio: "OH", Indiana: "IN" };
-const BASIN_ABBR: Record<string, string> = {
-  Maumee: "MAU",
-  Portage: "POR",
-  "Great Miami": "GMI",
-  "Little Miami": "LMI",
-  Scioto: "SCI",
-  Muskingum: "MUS",
-  Sandusky: "SAN",
-  Cuyahoga: "CUY",
-  Mahoning: "MAH",
-  Hocking: "HOC",
-  "Ohio Brush Creek": "OBC",
-};
-
-// Region super-groups (design "Site Selector") — the basin lens nests its eleven basins under
-// four regions so the panel reads geographically. Keyed by the display basin name.
-const BASIN_REGION: Record<string, string> = {
-  Maumee: "maumee",
-  Portage: "maumee", // NW-Ohio Lake Erie basin adjacent to the Maumee (Bowling Green borders Toledo)
-  "Great Miami": "miamis",
-  "Little Miami": "miamis",
-  Scioto: "southeast",
-  Muskingum: "southeast",
-  Hocking: "southeast",
-  "Ohio Brush Creek": "southeast",
-  Cuyahoga: "northeast",
-  Mahoning: "northeast",
-  Sandusky: "northeast",
-};
-const REGION_ORDER = ["maumee", "miamis", "southeast", "northeast"] as const;
-const REGION_LABEL: Record<string, string> = {
-  maumee: "Maumee Basin",
-  miamis: "The Two Miamis",
-  southeast: "Southeastern Basins",
-  northeast: "Northeast Basins",
-};
-const REGION_ABBR: Record<string, string> = {
-  maumee: "MAU",
-  miamis: "2MI",
-  southeast: "SE",
-  northeast: "NE",
-};
-// Basin order within a region (the panel's row order); the basin lens walks REGION_ORDER then this.
-const BASIN_ORDER = [
-  "Maumee",
-  "Portage",
-  "Great Miami",
-  "Little Miami",
-  "Scioto",
-  "Muskingum",
-  "Hocking",
-  "Ohio Brush Creek",
-  "Sandusky",
-  "Cuyahoga",
-  "Mahoning",
-];
 
 export type GroupBy = "state" | "basin";
 
@@ -639,23 +578,33 @@ export interface SiteGroup {
 }
 
 /**
- * Group the registry by the State (jurisdiction) or Basin (the nine major river basins) axis —
- * the grouped selector's two lenses (#307/#308). The state lens groups by first appearance; the
- * basin lens nests basins under four regions (design "Site Selector"), walking REGION_ORDER then
- * the basin order within each region. Rows keep their registry order, so the same sites pivot
- * without reshuffling.
+ * Group the registry by the State (jurisdiction) or Basin (the major river basins) axis — the
+ * grouped selector's two lenses (#307/#308). The state lens groups by first appearance; the basin
+ * lens nests basins under the four regions (design "Site Selector"), walking `REGIONS` order then
+ * the basins of each. Rows keep their registry order, so the same sites pivot without reshuffling.
+ *
+ * Both lenses place **every** registered site or throw naming the one they couldn't (#1863). An
+ * empty basin (one no site is registered in) is omitted rather than rendered as a bare heading.
  */
 export function groupSites(by: GroupBy): SiteGroup[] {
+  return groupSitesIn(SITES, by);
+}
+
+/**
+ * The seam of {@link groupSites} over an explicit `sites` list (the house idiom — cf.
+ * {@link comingSoonFrom}, {@link selectablePathsFrom}). The testable core: it is what lets a
+ * fixture prove the unplaced-site throw without a malformed committed registry.
+ */
+export function groupSitesIn(sites: readonly NetworkSite[], by: GroupBy): SiteGroup[] {
   if (by === "state") {
     const groups: SiteGroup[] = [];
     const index = new Map<string, SiteGroup>();
-    for (const s of SITES) {
-      const p = PLACEMENT[s.slug];
-      if (!p) continue;
-      let g = index.get(p.state);
+    for (const s of sites) {
+      const { stateName } = placementOf(s);
+      let g = index.get(stateName);
       if (!g) {
-        g = { label: p.state, tag: STATE_ABBR[p.state] ?? "", sites: [] };
-        index.set(p.state, g);
+        g = { label: stateName, tag: s.state, sites: [] };
+        index.set(stateName, g);
         groups.push(g);
       }
       g.sites.push(s);
@@ -665,25 +614,24 @@ export function groupSites(by: GroupBy): SiteGroup[] {
 
   // Basin lens — region super-groups, then basins within each region.
   const byBasin = new Map<string, NetworkSite[]>();
-  for (const s of SITES) {
-    const p = PLACEMENT[s.slug];
-    if (!p) continue;
-    const arr = byBasin.get(p.basin);
+  for (const s of sites) {
+    const { basin } = placementOf(s);
+    const arr = byBasin.get(basin.slug);
     if (arr) arr.push(s);
-    else byBasin.set(p.basin, [s]);
+    else byBasin.set(basin.slug, [s]);
   }
   const groups: SiteGroup[] = [];
-  for (const region of REGION_ORDER) {
-    const basins = BASIN_ORDER.filter((b) => BASIN_REGION[b] === region && byBasin.has(b));
-    const regionCount = basins.reduce((n, b) => n + (byBasin.get(b)?.length ?? 0), 0);
+  for (const region of REGIONS) {
+    const basins = basinsOfRegion(region.key).filter((b) => byBasin.has(b.slug));
+    const regionCount = basins.reduce((n, b) => n + (byBasin.get(b.slug)?.length ?? 0), 0);
     basins.forEach((b, i) => {
       groups.push({
-        label: b,
-        tag: BASIN_ABBR[b] ?? "",
-        sites: byBasin.get(b) ?? [],
-        region,
-        regionLabel: REGION_LABEL[region],
-        regionTag: REGION_ABBR[region],
+        label: b.label,
+        tag: b.abbr,
+        sites: byBasin.get(b.slug) ?? [],
+        region: region.key,
+        regionLabel: region.label,
+        regionTag: region.abbr,
         regionCount,
         showRegion: i === 0,
       });

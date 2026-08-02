@@ -59,10 +59,15 @@ watermark onboard <slug> --check   # flags fields still unfilled (placeholder) o
   to the site (and a CI test enforces it), but scope them correctly from the start.
 - The `SITES` key must equal the profile's `slug` (CI enforces this too).
 
-Also register the site in the frontend [`web/packages/core/src/sites.ts`](../web/packages/core/src/sites.ts)
-`SITES` with `status: "open"` (or `"onboarding"` once the build is queued) and
-`selectable: false` — that alone auto-builds its `/network/<slug>` coming-soon page. (A CI
-test asserts every Python-registered site also exists in the frontend registry.)
+The frontend needs no hand-edit: register the site's identity in
+[`data/sites.yaml`](../data/sites.yaml) with `status: "tracking"` (or `"queued"` once the build
+is queued) and `selectable: false`, then run `watermark sites sync` — that regenerates
+[`web/packages/core/src/sites-registry.json`](../web/packages/core/src/sites-registry.json),
+which auto-builds the site's `/network/<slug>` page and places it in both selector lenses.
+Fill in `state` and `basin_major` while you're there: they are the two grouping axes, and
+`groupSites` throws naming the site rather than dropping it if either is missing or unknown
+(#1863). `watermark sites check` — a CI job — gates that the YAML, the Python profiles, and the
+JSON registry all agree.
 
 #### SiteProfile fields, by category
 
@@ -70,7 +75,7 @@ test asserts every Python-registered site also exists in the frontend registry.)
 
 | Field(s) | What |
 |---|---|
-| `slug`, `place`, `basin` | identity (`basin` is the shared axis, e.g. `maumee`) |
+| `slug`, `place`, `basin` | identity (`basin` is the major-basin axis, e.g. `maumee`). Set `basin_major:` in [`data/sites.yaml`](../data/sites.yaml) to the same slug — the YAML carries it for every entry (that is what the frontend groups by) while the profile carries the cited HUC-8 provenance, and `watermark sites check` fails if the two disagree (#1863). |
 | `nwis_sites`, `abstraction_gage`, `supply_gage_primary`, `supply_gage_secondary` | the site's USGS gages (supply + abstraction reach) |
 | `design_lat/lon`, `nasa_power_lat/lon`, `map_view_lat/lon/zoom` | the design point, met point, and map centroid |
 | `rsei_fips`, `econ_fips`, `county_name` | the county (**Fort Wayne = Allen County, *Indiana*, FIPS `18003`** — not Ohio's `39003`). Set `county:` in [`data/sites.yaml`](../data/sites.yaml) rather than `county_name` here: the YAML is the SSOT, back-fills the profile, and carries the county to the frontend registry for the ask-index's `county` search facet (#1691). `watermark sites check` fails if a profile literal disagrees with it. |
