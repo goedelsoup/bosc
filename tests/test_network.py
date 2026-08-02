@@ -98,13 +98,16 @@ def test_screen_is_one_dimension_honestly_sparse(net: BasinNetwork) -> None:
     van_wert = _node(net, "van-wert").screen
     assert van_wert.status == "screened" and van_wert.flag == "violation"
     assert (van_wert.dilution_ratio or 0) < 0.05  # 0.026:1 — 39x effluent dominance
-    # Findlay became screenable when the curated overlay gave OH0025135 the receiving water
-    # its own NPDES fact sheet names (#1460, closing #352). This uses the DERIVED Blanchard
-    # 7Q10 (8.67 cfs at USGS 04189000); the permit's own cited 7Q10 at the outfall is 0.21 cfs,
-    # ~41x smaller, so the cited screen is far worse than this one. Reconciling the two is #1458.
+    # Findlay became screenable when the curated overlay gave OH0025135 the receiving water its
+    # own NPDES fact sheet names (#1460, closing #352), and #1458 then re-based it: the screen no
+    # longer runs on the DERIVED 8.67 cfs at USGS 04189000 (a regulated gage sitting DOWNSTREAM of
+    # this plant's own outfall — its own effluent was in its own denominator) but on the 0.21 cfs
+    # Ohio EPA states AT the outfall, reached through the permit-scoped `permits:` index. Same
+    # band, four orders of magnitude apart in the ratio; pin the source, not just the number.
     findlay = _node(net, "findlay").screen
     assert findlay.status == "screened" and findlay.flag == "violation"
-    assert 0.3 < (findlay.dilution_ratio or 0) < 0.45  # 0.37:1 against the derived low flow
+    assert (findlay.dilution_ratio or 0) == pytest.approx(0.009, abs=0.001)  # 0.21 / 23.208
+    assert "cited AT THIS OUTFALL" in findlay.detail and "0.21 cfs" in findlay.detail
     # The rest are reported unscreened, with the reason (omit, don't guess) — the data gap.
     screened = [n for n in net.nodes if n.screen.status == "screened"]
     assert len(screened) == 4

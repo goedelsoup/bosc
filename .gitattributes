@@ -60,6 +60,11 @@ data/reference/imagery/**/*.tiff filter=lfs diff=lfs merge=lfs -text
 # Reference PDFs (authoritative outside maps/datasets) are large binaries — LFS-track them too.
 data/reference/**/*.pdf filter=lfs diff=lfs merge=lfs -text
 
+# The published USGS low-flow appendix CSVs are the publisher's own files, committed as served
+# (CRLF line endings and all) — never a re-export. Preserve the exact response bytes, same rule
+# as the captured web evidence above; they are small, so not LFS.
+data/reference/usgs/low-flow/*.csv -text
+
 # ── GitHub Linguist ─────────────────────────────────────────────────────────────
 # Keep the repo's language stats about the actual CODE (the Python backend + the Astro
 # frontend), not the corpus, the vendored design mirror, or generated artifacts — and

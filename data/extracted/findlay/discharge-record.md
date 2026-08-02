@@ -57,12 +57,27 @@ A ratio of 1.0 is the floor of the calculation. It means that at design flow, be
 56.42, the Blanchard River *is* the effluent. The acute wasteload allocation that follows is
 expressed as 30 percent mortality in 100 percent effluent.
 
-**This is not the low flow the network currently carries for Findlay.** The committed derived
-artifact (`low-flow-7q10.derived.yaml`, issue 414) puts the Blanchard 7Q10 at 8.67 cfs at gage
-04189000, and `findlay-ottawa-comparison.yaml` screens this plant at 2.68× against it. The permit's
-own cited value is ~41× smaller, so the cited screen is ~110×, not 2.68×. Reconciling the two — and
-re-basing the comparison — is **issue 1458**. Nothing here re-bases it; the derived artifact is
-deliberately left alone so the discrepancy stays visible.
+**This is now the low flow the network carries for Findlay** (issue 1458, reconciled 2026-08-02).
+It used to screen at 2.68× against a *derived* 8.67 cfs — an LP3 fit at gage 04189000 — and the
+reconciliation retired that denominator for this plant on two grounds neither number could be
+argued out of:
+
+- **The gage sits below this outfall.** USGS 04189000 is at 41.05589 / −83.68799, ~1.1 mi WNW of
+  outfall 2PD00008001 at 41.049722 / −83.667778, on a reach the Blanchard runs westward; Straub
+  (2001) places it "2.0 mi west of Findlay, 3.0 mi downstream from Eagle Creek." So the flow that
+  denominator measured already contained the discharge it was being used to screen.
+- **The gage is regulated.** Straub's REMARKS for the station, verbatim: "Water is diverted
+  upstream from station into Findlay Reservoir. Storage in Findlay Reservoir used for water supply
+  of city of Findlay, and is available for low-flow augmentation. All water returns to stream
+  upstream from station."
+
+Where the Blanchard is *unregulated*, USGS publishes a 7Q10 of **0.03 cfs** (04188337, below Mt.
+Blanchard, WY2008–2020) and **0 cfs** for its Eagle Creek tributary (04188496). The 0.21 cfs Ohio
+EPA computed at RM 56.42 is consistent with that; the 8.67 was never the river's own low flow.
+The screen now reads **0.009:1** and the comparison artifact
+(`data/reference/network/findlay-ottawa-comparison.yaml`) is re-based on each plant's own fact
+sheet. Sources: `data/reference/usgs/low-flow/` (bytes + traps),
+`data/reference/hydrology/mainstem-gages.yaml` (the reviewed reads).
 
 Populating `_FINDLAY.plant_receiving` with the cited receiving water, the outfall river mile and the
 Table 12 low flows is what closes **issue 352**, together with the ECHO correction below.

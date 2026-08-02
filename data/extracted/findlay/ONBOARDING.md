@@ -109,6 +109,26 @@ Net: even with the Blanchard 7Q10 in place, **zero** Blanchard-mainstem POTWs ar
 screened by `basin-screen` — the two material ones (Findlay 15 MGD, Ottawa 3 MGD) are blocked on a
 `null` receiving-water name, not on the low flow.
 
+## Denominator reconciliation (#1458) — recorded 2026-08-02
+
+Everything above about the Blanchard 7Q10 is preserved as the record of what was believed at the
+time; two of its claims are now **superseded**, and the sections above are deliberately not edited.
+
+1. **The Findlay WPCC is now screened**, not held out. The ECHO curation overlay gave OH0025135 its
+   cited receiving water (#1460, closing #352), which cleared the `no_receiving_water` short-circuit
+   this document reports. Ottawa (OH0026921) is still held out on the same null — its overlay entry
+   is the open half.
+2. **It is not screened against 8.67 cfs.** That derived denominator was retired for this reach.
+   USGS 04189000 is *regulated* (Straub 2001 REMARKS: Findlay Reservoir diversion + low-flow
+   augmentation) and sits *downstream of the WPCC's own outfall*, so it was measuring managed water
+   plus the discharge under test. The screen now runs on Ohio EPA's own at-outfall design low flow —
+   **0.21 cfs at RM 56.42** (fact sheet 2PD00008\*UD Table 12) — giving **0.009:1**, still a
+   violation but four orders of magnitude worse than the 0.37:1 recorded above.
+3. The **"low flow barely grows over the 34-mile reach"** cross-check quoted in the #417 work was
+   two *regulated* gages agreeing with each other. Unregulated Blanchard gages publish 0–0.03 cfs
+   (USGS 04188337, 04188496). See `data/reference/network/findlay-ottawa-comparison.yaml` and
+   `data/reference/usgs/low-flow/`.
+
 **GIS — parcels now wired.** The zoning catalog is committed and the Hancock parcel `[open]` was
 resolved by the OGRIP statewide-parcel wiring (#406, partial/owner-redacted). Floodzone = shared
 national NFHL.

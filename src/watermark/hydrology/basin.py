@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import math
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
@@ -29,7 +29,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from watermark.config import Settings, get_settings
 from watermark.hydrology.assimilative import dilution_flag
 from watermark.hydrology.connectors import HydroOfflineError
-from watermark.hydrology.lowflow import load_low_flows
+from watermark.hydrology.lowflow import load_low_flows, load_permit_low_flows, normalize_permit
 from watermark.hydrology.lowflow_frequency import compute_low_flow_frequency
 from watermark.hydrology.model import AssimilativeCheck, ProvenancedValue
 from watermark.hydrology.units import mgd_to_cfs
@@ -57,6 +57,70 @@ _MIN_YEARS = 20  # climatic years of record needed for a defensible LP3 7Q10
 _MAINSTEM_GAGES_FILE = "mainstem-gages.yaml"
 
 
+class PublishedLowFlow(BaseModel):
+    """A **published** (third-party) low-flow statistic at this gage.
+
+    The counterweight to our own LP3 fit at the same gage: a USGS-published 7Q10 computed by
+    someone else, over their record, which the derived value can be read against (#1458). It is
+    NOT a replacement — the periods differ, often by decades — so it is carried beside the derived
+    number rather than substituted for it, and the derivation copies it into the committed derived
+    entry so a screening denominator never appears without it.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    seven_q10_cfs: float
+    one_q10_cfs: float | None = None
+    thirty_q10_cfs: float | None = None
+    ninety_q10_cfs: float | None = None
+    harmonic_mean_cfs: float | None = None
+    drainage_area_sq_mi: float | None = None
+    period: str
+    citation: str
+
+
+class GageRegulation(BaseModel):
+    """Whether a gage's low flow is anthropogenically altered, per a **cited** third party.
+
+    ``regulated`` means the low flow at this gage is not natural streamflow — upstream storage
+    releases, diversions, or wastewater discharges hold it up. That is fatal to the gage's use as
+    an assimilative *denominator*, because the "river" being credited with dilution is partly the
+    managed water (and, where the gage sits below the outfall, partly the discharge under test).
+    A regulated gage's derived 7Q10 is demoted to ``confidence: low`` by the derivation.
+
+    Never author this from reasoning — ``citation`` must name the instrument that classifies the
+    gage (USGS SIR 2024-5075 table 1 publishes a `Regulated`/`Unregulated` column; Straub 2001
+    states each station's regulation in its REMARKS), and ``remark`` carries that source's own
+    words verbatim where it has them.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    status: Literal["regulated", "unregulated", "unclassified"]
+    citation: str
+    remark: str | None = None  # the source's verbatim words, where it states them
+
+
+class CrossCheckGage(BaseModel):
+    """A neighbouring published gage carried beside a screening gage, for context only.
+
+    Never a denominator (it is not this mainstem's curated screening gage and no discharger is
+    screened against it) — it exists so a reader can see what the SAME river reads at other
+    positions, records and regulation statuses before trusting one number.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    gage: str
+    gage_name: str
+    seven_q10_cfs: float | None = None  # 0.0 is a real published value, not a missing one
+    drainage_area_sq_mi: float | None = None
+    period: str | None = None
+    regulation: Literal["regulated", "unregulated", "unclassified"] | None = None
+    citation: str
+    note: str | None = None
+
+
 class MainstemGage(BaseModel):
     """One curated mainstem screening gage: USGS id + the ECHO receiving-water aliases."""
 
@@ -65,6 +129,11 @@ class MainstemGage(BaseModel):
     gage: str
     aliases: list[str] = Field(min_length=1)  # a gage with no alias could never be matched
     note: str | None = None
+    # Cited annotations (#1458). Optional per gage: absent means "not yet read against the
+    # published record", which is honest, not a default of "unregulated".
+    published: PublishedLowFlow | None = None
+    regulation: GageRegulation | None = None
+    cross_check_gages: list[CrossCheckGage] = Field(default_factory=list)
 
 
 class ConfluenceComponent(BaseModel):
@@ -143,6 +212,33 @@ def _norm(name: str) -> str:
 # --------------------------------------------------------------------- derivation
 
 
+def _cited_annotations(spec: MainstemGage) -> dict[str, Any]:
+    """The cited `published` / `regulation` / `cross_check_gages` overlay for one derived entry.
+
+    Copied verbatim out of the curated ``mainstem-gages.yaml`` into the emitted derived entry, so
+    the committed derived file carries the published counterweight beside every screening number
+    it publishes and a regen reproduces those blocks byte-for-byte (#1458). The one *computed*
+    thing here is the confidence demotion: a gage a cited third party calls **regulated** is not
+    measuring natural low flow, so its LP3 fit drops from ``medium`` to ``low`` and says why in
+    its own citation. This is the seam where a reference-table edit — not a code edit — changes
+    how much weight a screening denominator carries.
+    """
+    out: dict[str, Any] = {}
+    if spec.regulation is not None and spec.regulation.status == "regulated":
+        out["confidence"] = "low"  # replaces the base entry's `medium`, in place
+        out["confidence_reason"] = (
+            "the gage's low flow is REGULATED (see `regulation` below), so this LP3 fit "
+            "describes managed flow, not the stream's own assimilative capacity"
+        )
+    if spec.published is not None:
+        out["published"] = spec.published.model_dump(exclude_none=True)
+    if spec.regulation is not None:
+        out["regulation"] = spec.regulation.model_dump(exclude_none=True)
+    if spec.cross_check_gages:
+        out["cross_check_gages"] = [g.model_dump(exclude_none=True) for g in spec.cross_check_gages]
+    return out
+
+
 def derive_basin_low_flows(
     *, settings: Settings | None = None, min_years: int = _MIN_YEARS
 ) -> dict[str, dict[str, Any]]:
@@ -185,7 +281,7 @@ def derive_basin_low_flows(
                 q7=q7,
             )
             continue
-        streams[river.lower()] = {
+        entry: dict[str, Any] = {
             "seven_q10_cfs": round(q7, 2),
             "source": "derived",
             "gage": spec.gage,
@@ -200,6 +296,7 @@ def derive_basin_low_flows(
             ),
             "confidence": "medium",
         }
+        streams[river.lower()] = {**entry, **_cited_annotations(spec)}
     streams.update(_derive_confluences(settings=settings, min_years=min_years))
     log.info("basin.lowflow.derived", rivers=sorted(streams))
     return streams
@@ -320,6 +417,17 @@ def write_derived_low_flows(
                 "on a tributary is screened only against that tributary's own cited/derived "
                 "7Q10, never this one. Regenerate with `watermark derive-low-flows`."
             ),
+            "cited_annotations": (
+                "An entry's `published` / `regulation` / `cross_check_gages` blocks (and the "
+                "`confidence_reason` a regulated gage carries) are NOT derived — they are copied "
+                "verbatim from the curated data/reference/hydrology/mainstem-gages.yaml so a "
+                "screening denominator is never read without the published statistic beside it "
+                "(#1458). Edit them THERE, not here; this file is regenerated. `regulation.status: "
+                "regulated` is what demotes an entry's confidence to `low` — the gage is measuring "
+                "managed flow (storage releases, diversions, upstream effluent), not the stream's "
+                "own assimilative capacity, and where the gage sits BELOW the outfall being "
+                "screened it is partly measuring that discharge itself."
+            ),
         },
         "streams": merged,
     }
@@ -423,24 +531,73 @@ def load_dischargers(*, settings: Settings | None = None) -> list[dict[str, Any]
 
 
 def build_low_flow_lookup(*, settings: Settings | None = None) -> dict[str, ProvenancedValue]:
-    """Merged ``{normalized receiver -> 7Q10}``: cited (document) overrides derived on overlap."""
+    """Merged ``{normalized receiver -> 7Q10}``: cited (document) overrides derived on overlap.
+
+    Name-keyed only. The permit-scoped cited values (#1458) are deliberately NOT folded in here:
+    this lookup answers "what is the design low flow of this *stream*", which is the right
+    question for the routed-network solver and the wrong one for a specific outfall.
+    """
     settings = settings or get_settings()
     return {**load_derived_low_flows(settings=settings), **load_low_flows(settings=settings)}
 
 
+class ScreenLowFlows(BaseModel):
+    """The two indexes the discharger screen resolves a denominator through, in priority order.
+
+    ``by_permit`` first: a fact-sheet low flow computed **at that permit's outfall** beats any
+    value keyed to the river as a whole, because the river as a whole is not what the discharge
+    enters. ``by_name`` is the fallback — a cited stream value where one exists, else the derived
+    at-gage screening proxy. Carrying both in one object is what stops a new call site from
+    silently getting the weaker one (#1458).
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    by_name: dict[str, ProvenancedValue] = Field(default_factory=dict)
+    by_permit: dict[str, ProvenancedValue] = Field(default_factory=dict)
+
+
+def build_screen_lookup(*, settings: Settings | None = None) -> ScreenLowFlows:
+    """The screen's full denominator lookup: permit-scoped cited values over name-keyed ones."""
+    settings = settings or get_settings()
+    return ScreenLowFlows(
+        by_name=build_low_flow_lookup(settings=settings),
+        by_permit=load_permit_low_flows(settings=settings),
+    )
+
+
+def _match_permit_low_flow(
+    fac: dict[str, Any], by_permit: dict[str, ProvenancedValue]
+) -> ProvenancedValue | None:
+    """This facility's OWN fact-sheet 7Q10, if the committed table binds one to its permit."""
+    if not by_permit:
+        return None
+    for key in ("npdes_id", "permit_no", "permit_id", "source_id"):
+        raw = fac.get(key)
+        if raw and (hit := by_permit.get(normalize_permit(str(raw)))) is not None:
+            return hit
+    return None
+
+
 def screen_facility(
-    fac: dict[str, Any], lookup: dict[str, ProvenancedValue]
+    fac: dict[str, Any], lookup: ScreenLowFlows
 ) -> tuple[AssimilativeCheck | None, str]:
-    """Screen one POTW record against its primary receiver's 7Q10 (omit, don't guess).
+    """Screen one POTW record against its own outfall's — else its receiver's — 7Q10.
 
     Returns ``(check, "screened")`` with a populated :class:`AssimilativeCheck`, or
     ``(None, reason)`` where ``reason`` is one of ``no_receiving_water`` / ``no_7q10`` /
     ``no_design_flow``. Shared by the basin-wide screen and the cross-site network synthesis.
+
+    A permit-scoped cited denominator wins where one exists (#1458). The receiving-water check
+    still runs first and still gates: a facility whose receiver ECHO cannot name stays
+    ``no_receiving_water`` even if its permit is in the table, because the screen's own discipline
+    is that an unnamed receiver is an unscreenable one.
     """
     water = fac.get("receiving_water")
     if not water or not str(water).strip():
         return None, "no_receiving_water"
-    q7 = _match_low_flow(str(water), lookup)
+    at_outfall = _match_permit_low_flow(fac, lookup.by_permit)
+    q7 = at_outfall or _match_low_flow(str(water), lookup.by_name)
     if q7 is None:
         return None, "no_7q10"
     mgd = fac.get("design_flow_mgd")
@@ -463,7 +620,8 @@ def screen_facility(
         dilution_ratio=round(ratio, 3),
         flag=flag,
         detail=(
-            f"{name} 7Q10 {q7.value:.2f} cfs ({q7.source}) vs discharge "
+            f"{name} 7Q10 {q7.value:.2f} cfs "
+            f"({'cited AT THIS OUTFALL' if at_outfall is not None else q7.source}) vs discharge "
             f"{discharge_cfs:.2f} cfs -> {ratio:.2f}:1 dilution ({flag})"
         ),
     )
@@ -471,14 +629,14 @@ def screen_facility(
 
 
 def check_basin_assimilative(*, settings: Settings | None = None) -> BasinScreen:
-    """Screen every basin POTW against its receiving water's cited or derived 7Q10.
+    """Screen every basin POTW against its own outfall's — else its receiver's — 7Q10.
 
-    Cited 7Q10s (Lima-loop, ``source=document``) take precedence over derived mainstem
-    7Q10s. Dischargers with no receiving water, no matchable 7Q10, or no design flow are
-    counted in the coverage but not screened (omit, don't guess).
+    Precedence: a permit-scoped cited fact-sheet value (#1458) beats a name-keyed cited one,
+    which beats the derived mainstem proxy. Dischargers with no receiving water, no matchable
+    7Q10, or no design flow are counted in the coverage but not screened (omit, don't guess).
     """
     settings = settings or get_settings()
-    lookup = build_low_flow_lookup(settings=settings)
+    lookup = build_screen_lookup(settings=settings)
 
     checks: list[AssimilativeCheck] = []
     total = screened = no_rw = no_q7 = no_flow = 0

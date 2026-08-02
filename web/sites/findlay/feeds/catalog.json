@@ -180,8 +180,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "79db95280cc80967923422d1ea5715d03698c39b265c3b97bd898c954291b1b0",
-      "size_bytes": 246563,
+      "sha256": "8d5cbfaca5982ea614b93a8cb188d9c8419205a17de6946fb8d7e9dad62d8703",
+      "size_bytes": 250854,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -257,8 +257,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "b12dd12fbe53d2f38d0e38cbfb100563b83b3e3b7318b5f9762158d1914b0439",
-      "size_bytes": 54658,
+      "sha256": "5c4f0c3a7706c7199a3076e3a5f88f530d2f132c16edc6e57c25f10e5a9dbc06",
+      "size_bytes": 56123,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -2576,8 +2576,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "292c011fddcac9c50a1ca6d4696825c68cd5f1ccf68cee47d4f2efa69d968f9b",
-      "size_bytes": 28607,
+      "sha256": "c0bce369b8cb3d2aef5ba5f05655642c38261522c18a245745aa02cdc7946499",
+      "size_bytes": 32154,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -2857,12 +2857,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "67c1d11b8ae92bad4a36e238e6e32e0a2c6175514904ae6102ba95118a9c001e",
-      "size_bytes": 84612,
+      "sha256": "f2002062d0084eec4afb2d7667d6d33f54a20d258788571b17a0a5fd6608733e",
+      "size_bytes": 94002,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
@@ -2910,12 +2910,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "561ef21ac83fe62d11b188ad9afee6bdc6fcf991b1bd80cb114396ec84d94a33",
-      "size_bytes": 8215,
+      "sha256": "b7cb1fadd57009ca92c4cbb371182d7141ea7ea3e72482c77742e9e90ffb167d",
+      "size_bytes": 14340,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
@@ -3632,6 +3632,77 @@
       "confidence": "medium",
       "note": "watermark usaspending",
       "verified": true
+    }
+  },
+  {
+    "id": "usgs-published-low-flow",
+    "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
+    "scope": "reference",
+    "collection": "usgs",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "U.S. Geological Survey published reports — WRI 01-4140 (Straub, 2001) and SIR 2024-5075 (VonIns and Koltun, 2024, ver. 1.1), downloaded verbatim from pubs.usgs.gov",
+    "external_url": "https://pubs.usgs.gov/publication/sir20245075",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-02",
+    "tags": [
+      "7q10",
+      "low-flow",
+      "usgs",
+      "published",
+      "blanchard-river",
+      "primary-source"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/usgs/low-flow/wri20014140.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "reference/usgs/low-flow/sir20245075.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "reference/usgs/low-flow/sir20245075_app1_table1.1.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/usgs/low-flow/sir20245075_app2_table2.1.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/usgs/low-flow/README.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4ab6faa612496d56a7bc63a84e2721baee3f228123b83c925d2581b4168b5963",
+      "size_bytes": 16614877,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "U.S. Geological Survey published reports — WRI 01-4140 (Straub, 2001) and SIR 2024-5075 (VonIns and Koltun, 2024, ver. 1.1), downloaded verbatim from pubs.usgs.gov",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

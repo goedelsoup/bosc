@@ -197,9 +197,13 @@ instream_conditions:   # Table 12, "Instream Conditions and Discharger Flow"
   discharger_flow_cfs: 23.208
   note: >-
     The 7Q10 of 0.21 cfs is the low flow AT THE OUTFALL (RM 56.42), and it is roughly two orders
-    of magnitude below the 8.67 cfs figure the network's derived Blanchard low-flow artifact
-    carries at gage 04189000. Reconciling the two is the hydrology sub-issue (1458); this record
-    only states what the permit says.
+    of magnitude below the 8.67 cfs the network's derived Blanchard artifact carried at gage
+    04189000. Issue 1458 reconciled the two and this value won: that gage is regulated (Straub
+    2001 records the Findlay Reservoir diversion + low-flow augmentation in its REMARKS) and sits
+    downstream of this outfall, so it was measuring managed water plus this plant's own effluent.
+    The committed screen now reads this row through the permit-scoped `permits:` index in
+    data/reference/hydrology/low-flow-7q10.yaml. This record still only states what the permit
+    says; the reconciliation lives in data/reference/network/findlay-ottawa-comparison.yaml.
 
 acute_dilution:
   page: 13

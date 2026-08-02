@@ -21,10 +21,14 @@ This closes the Ottawa WWTP fact-sheet pull that had been open since **#415**. I
 the **regulatory** low-flow set (annual 7Q10 **7.78 cfs**, 1Q10 5.42, 90Q10 21.66, harmonic mean
 55.13, drainage-adjusted from USGS 04189500 at Glandorf over 1921-1951), which now populates
 `_OTTAWA.plant_receiving` and the `regulatory_denominators` block of
-`data/reference/network/findlay-ottawa-comparison.yaml` alongside the network's **derived** 8.67 cfs.
-Neither is preferred. Ottawa screens in the TIGHT band on either (1.87:1 derived, 1.68:1 regulatory),
-so no finding here turns on the choice — unlike at Findlay, where the two bases are ~41x apart and
-the reconciliation is #1458.
+`data/reference/network/findlay-ottawa-comparison.yaml`.
+Ottawa screens in the TIGHT band on either basis (1.87:1 derived, 1.68:1 regulatory), so no finding
+here turns on the choice — unlike at Findlay, where they are ~41x apart. **Superseded in part by
+issue 1458** (2026-08-02): that comparison no longer carries a shared derived denominator, because
+the derived 8.67 cfs was retired for the Blanchard — USGS 04189000 is a regulated gage sitting below
+the Findlay outfall. Each plant now screens on its own at-outfall fact-sheet value. Ottawa is still
+held out of the computed basin screen as `no_receiving_water` (ECHO carries none for OH0026921); an
+ECHO curation-overlay entry, like the one Findlay got under #1460, is the open fix.
 
 Still `[open]` on the water side: the site has no committed `watch-items.geojson`, so the routed
 balance does not yet read `plant_receiving` (#829); leads are recorded in the watch artifact rather

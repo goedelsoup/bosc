@@ -16,6 +16,26 @@
 # 7Q10s for the major USGS-gaged Maumee mainstems, used by `bosc basin-screen` to extend
 # this screen beyond Lima. Those are screening proxies (gage value, not the discharge
 # reach), never a substitute for a cited fact-sheet 7Q10 here.
+#
+# ── `permits:` — a fact-sheet low flow is PERMIT-scoped, not river-scoped (#1458) ────────────
+# Ohio EPA computes the design low flow AT THE OUTFALL. So one river can carry several cited
+# 7Q10s that are all correct and none interchangeable: on the Blanchard, the regulator states
+# 0.21 cfs at Findlay's outfall (RM 56.42) and 7.78 cfs at Ottawa's (RM 22.1) — 37x apart, 34
+# river-miles apart, from different gages over different record periods. A lookup keyed only by
+# receiving-water NAME cannot hold that (and worse, `_normalize` deliberately strips "at …", so
+# "Blanchard River at River Mile 56.42" and the bare river collapse to the same key). An entry may
+# therefore declare `permits:` — the permit and application ids the value is binding for — and the
+# basin screen prefers a permit match over any name match for that facility.
+#
+# Rules, because this is the seam where a permit figure could silently become a river figure:
+#   * A `permits:` entry is keyed by REACH, not by river, and its key is chosen so it can never
+#     collide with the bare river name the derived screening proxy owns.
+#   * The value binds ONLY to the listed permits. It is never applied to another discharger on the
+#     same river, and never to a routed-network reach (`watermark.hydrology.network` resolves base
+#     flows by stream name and does not read the permit index — a reach is not a permit).
+#   * Never compare two at-outfall statistics as if they measured the same thing unless they were
+#     computed the same way. Findlay's and Ottawa's are not: see
+#     `data/reference/network/findlay-ottawa-comparison.yaml`.
 
 streams:
   dug run:
@@ -86,3 +106,42 @@ streams:
       design_flow_cfs: 6.1889
       acute_dilution_ratio: 1.02
       note: "summer and winter 7Q10 = 0 cfs (intermittent at design low flow); Van Wert WWTP design flow 4.0 MGD (6.1889 cfs) overwhelms the 7Q10 by 39x — most extreme effluent-dominance case in the Maumee network"
+
+  # ── The Blanchard's two cited reaches (#1458) ──────────────────────────────────────────────
+  # Keyed by REACH and bound by `permits:` (see the header). Neither key normalizes to "blanchard
+  # river", which stays the derived screening proxy's name in low-flow-7q10.derived.yaml.
+  blanchard river (findlay wpcc outfall, rm 56.42):
+    seven_q10_cfs: 0.21
+    source: document
+    permits: ["OH0025135", "2PD00008"]
+    citation: "Ohio EPA NPDES fact sheet 2PD00008*UD (Findlay WPCC, PN 205259, 2024-08-09), Table 12 'Instream Conditions and Discharger Flow', printed p. 28 — basis 'USGS Gages 04188300 and 04189000' (the 30Q10 rows cite 04188300 alone). Discharge location Blanchard River RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7). Source: data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml."
+    confidence: high
+    context:
+      one_q10_cfs: 0.17
+      thirty_q10_summer_cfs: 0.31
+      thirty_q10_winter_cfs: 1.24
+      ninety_q10_cfs: 0.32
+      harmonic_mean_cfs: 1.84
+      mixing_pct_avg: 25
+      mixing_pct_max: 100
+      design_flow_cfs: 23.208
+      acute_dilution_ratio: 1.0
+      designated_use: "Warmwater Habitat; Agricultural + Industrial Water Supply; Primary Contact Recreation (OAC 3745-1-11)"
+      note: "The network's most effluent-dominated reach by a wide margin: 15 MGD (23.208 cfs) against a 0.21 cfs 7Q10 is ~110x, and Ohio EPA computes the acute dilution ratio as 1.0 outright (printed p. 13, '(0.17 cfs + 23.2 cfs) / 23.2 cfs') — at design flow the Blanchard below RM 56.42 IS the effluent. Do NOT screen this plant against the derived at-gage Blanchard 7Q10 (8.67 cfs): gage 04189000 sits BELOW this outfall and below the Findlay Reservoir low-flow augmentation return, so that denominator contains this discharge. See low-flow-7q10.derived.yaml `regulation` / `cross_check_gages`."
+  blanchard river (ottawa wwtp outfall, rm 22.1):
+    seven_q10_cfs: 7.78
+    source: document
+    permits: ["OH0026921", "2PD00028"]
+    citation: "Ohio EPA, Fact Sheet for NPDES Permit Renewal, Ottawa WWTP, 2024 (2PD00028*PD), Table 12, printed p. 28 — basis 'USGS gauge 04189500 (Blanchard River at Glandorf), 1921-1951', drainage-adjusted. Discharge location Blanchard River RM 22.1, HUC 04100008-06-02. Source: data/documents/oepa/ottawa/2PD00028.fs.pdf; structured read data/extracted/oepa/ottawa/2PD00028.fs.npdes.yaml."
+    confidence: high
+    context:
+      one_q10_cfs: 5.42
+      thirty_q10_summer_cfs: 9.75
+      thirty_q10_winter_cfs: 58.08
+      ninety_q10_cfs: 21.66
+      harmonic_mean_cfs: 55.13
+      mixing_pct_avg: 25
+      mixing_pct_max: 100
+      design_flow_cfs: 4.6417
+      acute_dilution_ratio: 2.2
+      note: "The downstream half of the network's only along-one-river control. 37x the Findlay reach's cited 7Q10 — but computed from a DIFFERENT gage over a record (1921-1951) that ended before the Findlay basis gages' begins, so the pair does not measure downstream gain and must not be read as a longitudinal profile. Ottawa screens TIGHT (1.68:1) on this value and TIGHT on the derived one too, so no finding about this node turns on the choice; see data/reference/network/findlay-ottawa-comparison.yaml."

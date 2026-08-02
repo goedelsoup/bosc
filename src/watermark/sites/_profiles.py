@@ -392,14 +392,18 @@ _FINDLAY = SiteProfile(
     # Receiving water and the cited low flow are now on the record from the plant's own issued
     # NPDES fact sheet (#1460, closing #352): outfall 2PD00008001 to the Blanchard River at
     # RIVER MILE 56.42, average design flow 15 MGD (23.208 cfs), peak hydraulic 40 MGD.
-    # ⚠️ TWO DIFFERENT LOW FLOWS, and the difference is the whole point. Findlay↔Ottawa
-    # intra-tributary comparison (#417) screens this plant at 2.68x against the shared DERIVED
-    # Blanchard 7Q10 (8.67 cfs at USGS 04189000; low-flow-7q10.derived.yaml, #414). The permit's
-    # own Table 12 gives 0.21 cfs AT THE OUTFALL — ~41x smaller — so the cited screen is ~110x,
-    # not 2.68x, and the fact sheet computes an acute dilution ratio of 1.0 outright: at design
-    # flow the Blanchard below RM 56.42 IS the effluent. Reconciling the derived and cited
-    # denominators (and re-basing findlay-ottawa-comparison.yaml) is the hydrology sub-issue
-    # #1458; nothing here re-bases it, and the derived artifact is left alone on purpose.
+    # ⚠️ The cited 0.21 cfs below IS the denominator now — #1458 reconciled it and RETIRED the
+    # derived 8.67 cfs (LP3 at USGS 04189000) for this reach. Two disqualifying defects, either
+    # sufficient: that gage is REGULATED (Straub 2001 REMARKS — Findlay Reservoir diversion + a
+    # low-flow augmentation release returning upstream of the station) and it sits DOWNSTREAM of
+    # this very outfall (gage 41.05589/-83.68799 vs outfall 41.049722/-83.667778 on a westward
+    # reach), so screening the WPCC against it put the plant's own effluent in its own denominator.
+    # Where the Blanchard is unregulated USGS publishes 0-0.03 cfs (04188337, 04188496). The basin
+    # screen reaches the cited value through the permit-scoped `permits:` index in
+    # low-flow-7q10.yaml, so it binds to THIS permit only and never to the river as a whole:
+    # 15 MGD / 23.208 cfs against 0.21 cfs is ~110x, dilution 0.009:1, and the fact sheet computes
+    # an acute dilution ratio of 1.0 outright — at design flow the Blanchard below RM 56.42 IS the
+    # effluent. See data/reference/network/findlay-ottawa-comparison.yaml.
     plant_receiving={
         "findlay-wpcc": (
             "Blanchard River at River Mile 56.42",

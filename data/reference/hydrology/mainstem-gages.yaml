@@ -15,6 +15,26 @@ meta:
     names don't collide between the Maumee and Great Miami, so one merged lookup is safe.
     A gage with <20 climatic years or a non-positive/NaN 7Q10 is omitted at derivation
     (never a committed unreliable denominator).
+  cited_annotations: >-
+    A gage entry may carry three OPTIONAL cited blocks (#1458), copied verbatim into the emitted
+    low-flow-7q10.derived.yaml entry by `watermark derive-low-flows` so a screening denominator is
+    never published without them: `published` (a third party's own low-flow statistic AT THIS GAGE,
+    the counterweight to our LP3 fit — carried beside it, never substituted for it, because the
+    record periods differ), `regulation` (a CITED third-party judgment that the gage's low flow is
+    anthropogenically altered; `status: regulated` demotes the derived entry to confidence `low`,
+    which is the one thing a reference-table edit here changes about the screen), and
+    `cross_check_gages` (neighbouring published gages, context only — never a denominator, never
+    matched by any alias). Author none of them from reasoning: each carries the instrument that
+    says it, and `regulation.remark` quotes that instrument verbatim where it has words.
+  cited_annotations_gap: >-
+    [open] Only the Blanchard entry is annotated so far — that is the gage #1458 was opened about.
+    USGS SIR 2024-5075 table 1 publishes a Regulated/Unregulated classification for most of the
+    other gages in this table (e.g. it calls Mad River near Urbana 03267000, Greenville Creek
+    03264000, Stillwater 03265000, Maumee near Defiance 04192500 and Ottawa River at Lima 04187100
+    all "Regulated"), so the network-wide sweep is a mechanical read of one committed CSV — it is
+    deliberately NOT done here because demoting those denominators' confidence moves other sites'
+    committed artifacts and belongs in its own reviewed change. An UNANNOTATED gage means "not yet
+    read against the published record", never "unregulated".
 
 # Curated major network mainstems with a long-record USGS gage, grouped by basin.
 mainstems:
@@ -31,12 +51,132 @@ mainstems:
     note: >-
       Blanchard River (Auglaize subtree, HUC-8 04100008) — the network's only along-one-river
       pair, Findlay (upstream) + Ottawa (downstream), both discharge here (#414/#417). The only
-      long-record daily-discharge gage on the Blanchard is near Findlay (04189000, DA ~346 mi²,
+      long-record daily-discharge gage on the Blanchard is near Findlay (04189000, DA 346 mi²,
       44 climatic yr). The at-Ottawa gage (04189260) has ~14 yr — below the 20-yr floor, so it is
-      omitted here (documented as a cross-check in the Findlay↔Ottawa comparison artifact); the
-      at-Glandorf gage (04189500) has no daily-discharge record in the modern window. So this one
-      gage is the shared Blanchard denominator for both plants — the 14-yr Ottawa gage confirms the
-      low flow barely grows over the 40-mi reach (8.98 vs 8.67 cfs), so it is basin-representative.
+      omitted here (carried as a cross-check below); the at-Glandorf gage (04189500) has no
+      daily-discharge record in the modern window. So this one gage is the only derivable Blanchard
+      denominator. ⚠️ READ `regulation` AND `cross_check_gages` BEFORE USING IT (#1458). This gage
+      is regulated AND sits BELOW the Findlay WPCC's own outfall, so its low flow is neither natural
+      nor independent of the discharge it was being used to screen; the unregulated Blanchard and
+      Eagle Creek gages publish 7Q10s of 0-0.03 cfs, and Ohio EPA's own design low flow at the
+      Findlay outfall is 0.21 cfs. The old reading of the 14-yr Ottawa gage — "the low flow barely
+      grows over the reach, so one shared denominator is basin-representative" — was an artifact of
+      comparing two REGULATED gages to each other and does not survive; both plants are now screened
+      on their own fact-sheet denominators (low-flow-7q10.yaml, `permits:`).
+    published:
+      # USGS's own published statistic AT THIS GAGE — the counterweight to the LP3 fit. Note the
+      # period: it ends 27 years before the derived window's end, so the 3.2x gap between 2.7 and
+      # 8.67 is at least as much RECORD PERIOD as method. Never present one as correcting the other.
+      seven_q10_cfs: 2.7
+      one_q10_cfs: 2.1
+      thirty_q10_cfs: 3.9
+      ninety_q10_cfs: 6.1
+      harmonic_mean_cfs: 23.1
+      drainage_area_sq_mi: 346
+      period: October 1923 to December 1935, October 1940 to September 1997
+      citation: >-
+        Straub, D.E., 2001, Low-Flow Characteristics of Streams in Ohio through Water Year 1997:
+        USGS Water-Resources Investigations Report 01-4140, printed p. 358, station "04189000
+        Blanchard River near Findlay, Ohio" — annual (Apr.-Mar.) magnitude-and-frequency table,
+        10-yr recurrence column (1-day 2.1, 7-day 2.7, 30-day 3.9, 90-day 6.1) and SELECTED
+        STREAMFLOW CHARACTERISTICS (harmonic mean 23.1 ft3/s; average 258 ft3/s over 69 years;
+        minimum daily 0.4 ft3/s). Bytes: data/reference/usgs/low-flow/wri20014140.pdf.
+    regulation:
+      status: regulated
+      remark: >-
+        Water is diverted upstream from station into Findlay Reservoir. Storage in Findlay
+        Reservoir used for water supply of city of Findlay, and is available for low-flow
+        augmentation. All water returns to stream upstream from station.
+      citation: >-
+        Straub 2001 (above), station 04189000, REMARKS — quoted verbatim in `remark`. Corroborated
+        for the reach as a whole by USGS SIR 2024-5075 table 1, which classifies both downstream
+        Blanchard gages (04189131 Gilboa, 04189260 Ottawa) as "Regulated" — its listed causes of
+        that classification include "known diversions" and "wastewater treatment plant discharges".
+        ⚠️ SIR 2024-5075 does NOT classify 04189000: that gage is absent from its table 1, its
+        table 1.1 and its table 2.1 despite a continuous NWIS daily record since 1923, and the
+        report states no reason ([open]). The absence is NOT itself evidence of regulation —
+        regulated gages ARE listed there with full statistics — so this classification rests on
+        Straub's REMARKS, which state it outright.
+    cross_check_gages:
+      # Context only — never a denominator. Read top to bottom this is the finding: where the
+      # Blanchard is UNREGULATED its published 7Q10 is 0 to 0.03 cfs, and every value at or below
+      # Findlay (8.67 derived, 11.5, 10.8) is REGULATED flow — augmentation release plus effluent.
+      - gage: "04188300"
+        gage_name: Blanchard River at Mt. Blanchard, Ohio
+        seven_q10_cfs: 0.0
+        drainage_area_sq_mi: 109
+        period: low-flow measurements, water years 1970-1977 (partial-record station)
+        citation: >-
+          Straub 2001, printed p. 356 — annual (Apr.-Mar.) 7-day: 2-yr 0.2, 10-yr 0, 20-yr 0;
+          minimum observed streamflow 0 ft3/s September 1970.
+        note: >-
+          One of the TWO gages Ohio EPA's Findlay fact sheet names as the basis for its design low
+          flows (Table 12: "USGS Gages 04188300 and 04189000"; the 30Q10 rows cite 04188300 alone).
+          It is upstream of Findlay, upstream of the reservoir return, and its own published 7Q10 is
+          ZERO — which is why the regulator's at-outfall number is 0.21 cfs and not 8.67.
+      - gage: "04188337"
+        gage_name: Blanchard River below Mt. Blanchard OH
+        seven_q10_cfs: 0.03
+        drainage_area_sq_mi: 141
+        period: water years 2008-2020
+        regulation: unregulated
+        citation: >-
+          USGS SIR 2024-5075 appendix 1 table 1.1 (sir20245075_app1_table1.1.csv), station
+          04188337, April-March 7-day 10-year — 1-day 0.02, 7-day 0.03, 30-day 0.35, 90-day 1.3;
+          harmonic mean 2.99 ft3/s. Regulation status from that report's table 1.
+        note: >-
+          The load-bearing cross-check: a MODERN (WY2008-2020), continuous, published, and
+          third-party-classified UNREGULATED Blanchard gage reads 0.03 cfs. So the 8.67 cfs derived
+          40 mi downstream over an overlapping window is not the same river measured better — it is
+          a different, managed quantity.
+      - gage: "04188496"
+        gage_name: Eagle Creek above Findlay OH
+        seven_q10_cfs: 0.0
+        drainage_area_sq_mi: 51.0
+        period: water years 2008-2020
+        regulation: unregulated
+        citation: >-
+          USGS SIR 2024-5075 appendix 1 table 1.1, station 04188496, April-March 7-day 10-year = 0
+          (2-yr 0.19); harmonic mean 0.44 ft3/s. Regulation status from that report's table 1.
+        note: >-
+          Eagle Creek joins the Blanchard between the Findlay outfall and gage 04189000 (Straub
+          places the gage "3.0 mi downstream from Eagle Creek"). Its 7Q10 is ZERO, so the tributary
+          explains none of the 41x gap between the at-outfall and at-gage denominators.
+      - gage: "04188500"
+        gage_name: Eagle Creek near Findlay, Ohio
+        seven_q10_cfs: 0.0
+        drainage_area_sq_mi: 55.0
+        period: January 1947 to July 1957
+        citation: >-
+          Straub 2001, printed p. 357 — every annual and seasonal 7-day recurrence 0 ft3/s;
+          minimum daily 0 ft3/s (occurred in 8 years); 4.3 mi upstream from mouth.
+        note: >-
+          The historical record agrees with the modern one — this tributary stops at low flow.
+      - gage: "04189131"
+        gage_name: Blanchard River at Gilboa OH
+        seven_q10_cfs: 11.5
+        drainage_area_sq_mi: 503
+        period: water years 2010-2020
+        regulation: regulated
+        citation: >-
+          USGS SIR 2024-5075 appendix 1 table 1.1, station 04189131, April-March 7-day 10-year
+          (1-day 9.96, 30-day 16.1, 90-day 23.9; harmonic mean 73.0 ft3/s). Regulation status
+          "Regulated" from that report's table 1.
+      - gage: "04189260"
+        gage_name: Blanchard River at Ottawa OH
+        seven_q10_cfs: 10.8
+        drainage_area_sq_mi: 628
+        period: water years 2010-2020
+        regulation: regulated
+        citation: >-
+          USGS SIR 2024-5075 appendix 1 table 1.1, station 04189260, April-March 7-day 10-year
+          (1-day 5.27, 30-day 16.6, 90-day 27.8; harmonic mean 84.6 ft3/s). Regulation status
+          "Regulated" from that report's table 1.
+        note: >-
+          Supersedes the 8.98 cfs LP3 cross-check the Findlay↔Ottawa comparison used to carry for
+          this gage: 10.8 cfs is the PUBLISHED value, and it is published as regulated flow.
+          Downstream of Gilboa yet slightly LOWER than it — another sign these are managed
+          releases, not a drainage-area progression.
   Maumee River near Defiance:
     gage: "04192500"
     aliases: [maumee river near defiance, maumee r near defiance]

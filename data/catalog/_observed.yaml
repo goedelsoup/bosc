@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-02T13:32:01.940901+00:00'
+reconciled_at: '2026-08-02T17:37:57.438738+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -192,8 +192,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: 2ed10c4e4c4e397fa6b6ed9bdfda84a49708ffd0e6993b986dc87ad4e4122193
-    size_bytes: 250546
+    sha256: 8d5cbfaca5982ea614b93a8cb188d9c8419205a17de6946fb8d7e9dad62d8703
+    size_bytes: 250854
     lfs_materialized: true
     file_count: 13
     missing: []
@@ -442,8 +442,8 @@ entries:
     site_scope: basin-shared
   findlay-discharge-record:
     exists: true
-    sha256: b12dd12fbe53d2f38d0e38cbfb100563b83b3e3b7318b5f9762158d1914b0439
-    size_bytes: 54658
+    sha256: 5c4f0c3a7706c7199a3076e3a5f88f530d2f132c16edc6e57c25f10e5a9dbc06
+    size_bytes: 56123
     lfs_materialized: true
     file_count: 5
     missing: []
@@ -612,8 +612,8 @@ entries:
     site_scope: slug-scoped
   hydrology-low-flow-7q10:
     exists: true
-    sha256: a80c90d0fc55374bf75bbb34060f0fc26020a15d9c53725de0a85dee1b76eefe
-    size_bytes: 31973
+    sha256: 565133f33c3c991929108a569db0045052f37bdd1bf933f710c17d178a9b4dbb
+    size_bytes: 52873
     lfs_materialized: true
     file_count: 3
     missing: []
@@ -972,8 +972,8 @@ entries:
     site_scope: slug-scoped
   network:
     exists: true
-    sha256: 292c011fddcac9c50a1ca6d4696825c68cd5f1ccf68cee47d4f2efa69d968f9b
-    size_bytes: 28607
+    sha256: c0bce369b8cb3d2aef5ba5f05655642c38261522c18a245745aa02cdc7946499
+    size_bytes: 32154
     lfs_materialized: true
     file_count: 3
     missing: []
@@ -1192,8 +1192,8 @@ entries:
     site_scope: site:ottawa
   ottawa-water-watch:
     exists: true
-    sha256: 65de52d690feb909021694483b5b19fb24a235f41a8346f3ec7cb472b68cfe3e
-    size_bytes: 110392
+    sha256: 4acd7ee1e1ee0a70a82243e33e0a15e20ccb3651acf70c19247f6bdca3664005
+    size_bytes: 110766
     lfs_materialized: true
     file_count: 4
     missing: []
@@ -1430,6 +1430,16 @@ entries:
     asof: null
     stale: false
     site_scope: slug-scoped
+  usgs-published-low-flow:
+    exists: true
+    sha256: 4ab6faa612496d56a7bc63a84e2721baee3f228123b83c925d2581b4168b5963
+    size_bytes: 16614877
+    lfs_materialized: true
+    file_count: 5
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
   van-wert-water-watch:
     exists: true
     sha256: 3ea003988f360ad2196e73c933c850144652664fb8650e8dd9485095689beec0

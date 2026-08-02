@@ -22,10 +22,10 @@
         "discharger": "CITY OF FINDLAY WATER POLLUTION CONTROL CENTER",
         "receiving_water": "Blanchard River",
         "design_flow_mgd": 15.0,
-        "dilution_ratio": 0.374,
+        "dilution_ratio": 0.009,
         "flag": "violation",
         "status": "screened",
-        "detail": "Blanchard River 7Q10 8.67 cfs (derived) vs discharge 23.21 cfs -> 0.37:1 dilution (violation)"
+        "detail": "Blanchard River 7Q10 0.21 cfs (cited AT THIS OUTFALL) vs discharge 23.21 cfs -> 0.01:1 dilution (violation)"
       },
       "grid": {
         "utility": "AEP Ohio (Ohio Power Company)",

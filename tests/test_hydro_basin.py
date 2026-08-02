@@ -139,7 +139,7 @@ def test_fort_wayne_wwtp_unscreened_by_discipline(data_settings: Settings) -> No
     # The Fort Wayne WWTP discharges to "Baldwin Ditch, Maumee R …"; its PRIMARY receiver is an
     # ungaged ditch, so it is correctly left unscreened (omit, don't guess) — the headwaters 7Q10
     # is a documented at-mainstem proxy, never auto-credited to a Baldwin Ditch discharger.
-    lookup = basin.load_derived_low_flows(settings=data_settings)
+    lookup = basin.ScreenLowFlows(by_name=basin.load_derived_low_flows(settings=data_settings))
     fac = {
         "name": "FORT WAYNE WWTP",
         "npdes_id": "IN0032191",
@@ -204,3 +204,113 @@ def test_gage_table_rejects_empty_sections() -> None:
         basin._GageTable.model_validate({"mainstems": good_main, "headwaters_confluences": {}})
     with pytest.raises(ValidationError):  # both empty
         basin._GageTable.model_validate({"mainstems": {}, "headwaters_confluences": {}})
+
+
+# --- the cited denominator layer (#1458) -----------------------------------------------------
+def test_fact_sheet_low_flow_is_permit_scoped_not_river_scoped(data_settings: Settings) -> None:
+    """One river, two binding denominators — bound by permit, never by name.
+
+    Ohio EPA computes the design low flow AT THE OUTFALL, so the Blanchard carries 0.21 cfs at
+    Findlay's RM 56.42 and 7.78 cfs at Ottawa's RM 22.1. Name-keying cannot hold both (``_normalize``
+    strips ``at …`` on purpose), and whichever won would silently become the other plant's
+    denominator.
+    """
+    by_permit = basin.load_permit_low_flows(settings=data_settings)
+    assert by_permit["oh0025135"].value == pytest.approx(0.21)
+    assert by_permit["oh0026921"].value == pytest.approx(7.78)
+    # The Ohio EPA permit number reaches the same entry, with its issuance suffix stripped: the
+    # design low flow is a property of the outfall, not of which renewal is current.
+    assert by_permit["2pd00008"].value == pytest.approx(0.21)
+    assert basin.normalize_permit("2PD00008*VD") == "2pd00008"
+    # Neither reach entry leaks into the name-keyed lookup as "blanchard river" — that key still
+    # belongs to the derived at-gage proxy, which is what any OTHER Blanchard discharger gets.
+    by_name = basin.build_low_flow_lookup(settings=data_settings)
+    assert by_name[basin._norm("blanchard river")].source == "derived"
+
+
+def test_findlay_screens_on_its_own_outfall_not_the_gage_below_it(data_settings: Settings) -> None:
+    """The reconciliation itself (#1458), pinned end to end.
+
+    USGS 04189000 sits DOWNSTREAM of outfall 2PD00008001, so screening the Findlay WPCC against
+    its LP3 7Q10 put the plant's own effluent into its own denominator. The permit-scoped cited
+    value must win, and the check must say so.
+    """
+    lookup = basin.build_screen_lookup(settings=data_settings)
+    fac = {
+        "name": "CITY OF FINDLAY WATER POLLUTION CONTROL CENTER",
+        "npdes_id": "OH0025135",
+        "receiving_water": "Blanchard River",
+        "design_flow_mgd": 15.0,
+    }
+    check, status = basin.screen_facility(fac, lookup)
+    assert status == "screened" and check is not None
+    assert check.design_low_flow.value == pytest.approx(0.21)  # NOT the derived 8.67
+    assert check.dilution_ratio == pytest.approx(0.009, abs=0.001)
+    assert check.flag == "violation"
+    assert "cited AT THIS OUTFALL" in check.detail
+    # A different Blanchard discharger with no fact sheet of its own still falls back to the
+    # derived proxy — the permit-scoped value is not a river-wide override.
+    other = dict(fac, name="MILLER CITY HS WWTP", npdes_id="OH0126535")
+    other_check, other_status = basin.screen_facility(other, lookup)
+    assert other_status == "screened" and other_check is not None
+    assert other_check.design_low_flow.value == pytest.approx(8.67, abs=0.01)
+
+
+def test_regulated_gage_carries_its_caveat_into_the_committed_derived_entry(
+    data_settings: Settings,
+) -> None:
+    """A demoted denominator has to SAY it is demoted, and survive the next regen saying it.
+
+    The `published` / `regulation` / `cross_check_gages` blocks are authored in the curated
+    ``mainstem-gages.yaml`` and copied forward by the derivation, so a hand-edit of the generated
+    file would be reverted. This asserts the committed file already matches what the emitter would
+    produce — the property that makes those blocks trustworthy.
+    """
+    import yaml
+
+    spec = basin.load_mainstem_gages(settings=data_settings)["Blanchard River"]
+    assert spec.regulation is not None and spec.regulation.status == "regulated"
+    assert "Findlay Reservoir" in (spec.regulation.remark or "")
+    assert spec.published is not None and spec.published.seven_q10_cfs == pytest.approx(2.7)
+
+    emitted = basin._cited_annotations(spec)
+    assert emitted["confidence"] == "low"  # regulated ⇒ demoted from the default `medium`
+
+    path = data_settings.reference_dir / "hydrology" / "low-flow-7q10.derived.yaml"
+    committed = (yaml.safe_load(path.read_text(encoding="utf-8")) or {})["streams"][
+        "blanchard river"
+    ]
+    for key, value in emitted.items():
+        assert committed[key] == value, (
+            f"committed derived entry drifted from mainstem-gages.yaml: {key}"
+        )
+
+    # The published counterweight and the unregulated cross-checks are what make the demotion
+    # legible rather than an assertion: 0-0.03 cfs where the Blanchard is not regulated.
+    unregulated = {
+        g["gage"]: g["seven_q10_cfs"]
+        for g in emitted["cross_check_gages"]
+        if g.get("regulation") == "unregulated"
+    }
+    assert unregulated == {"04188337": 0.03, "04188496": 0.0}
+
+
+def test_a_permit_cannot_have_two_design_low_flows(tmp_path: Path) -> None:
+    # Two entries claiming one permit would make the screened denominator depend on YAML order.
+    import yaml
+
+    ref = tmp_path / "reference" / "hydrology"
+    ref.mkdir(parents=True)
+    (ref / "low-flow-7q10.yaml").write_text(
+        yaml.safe_dump(
+            {
+                "streams": {
+                    "a reach": {"seven_q10_cfs": 1.0, "permits": ["OH0000001"]},
+                    "b reach": {"seven_q10_cfs": 2.0, "permits": ["OH0000001*UD"]},
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="claimed by two entries"):
+        basin.load_permit_low_flows(settings=Settings(data_dir=tmp_path))

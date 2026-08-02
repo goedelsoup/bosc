@@ -28,7 +28,12 @@ from pydantic import BaseModel, ConfigDict
 from watermark.config import Settings, get_settings
 from watermark.economics.model import EconomicBaseline
 from watermark.grid.model import GridProfile
-from watermark.hydrology.basin import build_low_flow_lookup, load_dischargers, screen_facility
+from watermark.hydrology.basin import (
+    ScreenLowFlows,
+    build_screen_lookup,
+    load_dischargers,
+    screen_facility,
+)
 from watermark.logging import get_logger
 from watermark.rsei import RseiInventory
 from watermark.sites import SITES, DcEndUse, FacilityLifecycle, SiteFacility, get_profile
@@ -234,7 +239,7 @@ def _node_rank(node: WatershedNode, spine: list[str]) -> tuple[int, int, str]:
 def _screen_node(
     npdes_list: list[str],
     disch: dict[str, dict[str, Any]],
-    lookup: dict[str, Any],
+    lookup: ScreenLowFlows,
 ) -> NodeScreen:
     """Screen a node's representative POTW(s); return the binding (worst screened) result.
 
@@ -360,7 +365,7 @@ def build_basin_network(
     spine = list(meta.get("collector_spine", []))
     constraint = str((meta.get("shared_constraint") or {}).get("name", ""))
 
-    lookup = build_low_flow_lookup(settings=settings)
+    lookup = build_screen_lookup(settings=settings)
     disch = {
         str(f.get("npdes_id")): f for f in load_dischargers(settings=settings) if f.get("npdes_id")
     }

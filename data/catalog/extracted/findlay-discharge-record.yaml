@@ -59,9 +59,11 @@ notes: >-
   OHP000001 and the January 2026 variance list as corroborators, drive the committed ECHO
   receiving-water correction for OH0025135
   (data/reference/echo/curation/maumee-wwtp.receiving-water.yaml). TWO CAVEATS TO CARRY. (1) The
-  cited 0.21 cfs is ~41x smaller than the network's derived Blanchard 7Q10 of 8.67 cfs at gage
-  04189000, so the findlay-ottawa-comparison screen of 2.68x is really ~110x; reconciling the two is
-  issue 1458 and is deliberately NOT done here. (2) The Ohio DAM's permits/doc slot serves the
+  cited 0.21 cfs is ~41x smaller than the derived Blanchard 7Q10 of 8.67 cfs at gage 04189000 that
+  the screen used to run on. Issue 1458 reconciled them and this value won, because that gage is
+  regulated (Findlay Reservoir low-flow augmentation) and sits DOWNSTREAM of this outfall, so it
+  measured managed water plus the plant's own effluent; the committed screen now reads 0.009:1
+  (~110x), reached through the permit-scoped `permits:` index in low-flow-7q10.yaml. (2) The Ohio DAM's permits/doc slot serves the
   MODIFIED package, not the 2024 *UD renewal it modified, so the *UD permit as issued is not among
   the committed bytes and its term (effective 2024-11-01, expires 2029-10-31) is recorded from the
   variance list instead — lead UD-ISSUANCE-BYTES. The allocation record carries the finding that a

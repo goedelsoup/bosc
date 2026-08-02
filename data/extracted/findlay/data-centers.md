@@ -89,9 +89,12 @@ host's SEC filing and the customer's own release.
   range, never the evaporative default).
 - **Max withdrawal / consumption:** `[open]` — no disclosed water-service agreement or withdrawal
   figure for the hub (contrast Sidney's Res 26-26 1.0 MGD ceiling). No figure invented.
-- **Receiving water (context):** the Blanchard River near Findlay — 7Q10 derived 8.67 cfs (USGS
-  04189000; `low-flow-7q10.derived.yaml`, #414). `[verified]` The reconciliation of that
-  denominator is the epic #1265 hydrology sub-issue's target, not this facility issue's.
+- **Receiving water (context):** the Blanchard River at Findlay — design 7Q10 **0.21 cfs** at the
+  city WPCC's outfall (RM 56.42), cited to Ohio EPA fact sheet 2PD00008\*UD Table 12. `[verified]`
+  The derived 8.67 cfs at gage 04189000 this bullet used to carry was retired for this reach by
+  #1458: that gage is regulated (Findlay Reservoir low-flow augmentation) and sits below the WPCC
+  outfall. Unregulated Blanchard gages publish 0–0.03 cfs. Note this is the *municipal plant's*
+  denominator, not the hub's — MARA discloses no water draw, so no facility screen is run.
 
 ### Hydrology screen
 
