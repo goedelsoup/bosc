@@ -197,8 +197,9 @@ const statusSwatch = (kind: "live" | "new") =>
                       </div>
                       {g.kind === "rows" ? (
                         g.rows.map((r) => (
-                          <div
+                          <a
                             class:list={["dir-trow", "dir-drow", { "is-live": r.live }]}
+                            href={withBase(r.href)}
                             style={`grid-template-columns:${l.view.gridCols}`}
                           >
                             {r.cells.map((c) =>
@@ -222,15 +223,15 @@ const statusSwatch = (kind: "live" | "new") =>
                                 <span class:list={["dir-cell-text", { "is-muted": c.muted }]}>{c.text}</span>
                               ),
                             )}
-                          </div>
+                          </a>
                         ))
                       ) : (
                         <div class="dir-chips">
                           {g.chips.map((ch) => (
-                            <span class="dir-chip">
+                            <a class="dir-chip" href={withBase(ch.href)}>
                               <span class="dot" style={`background:${ch.dot}`} />
                               {ch.place}
-                            </span>
+                            </a>
                           ))}
                         </div>
                       )}
@@ -594,13 +595,25 @@ const statusSwatch = (kind: "live" | "new") =>
     color: #8c9389;
     font-family: var(--bosc-mono);
   }
+  /* Each row is a link to the site it names (#1862) — the row IS the click target, so the
+     anchor carries no underline and inherits the ink; hover is the only affordance. */
   .dir-drow {
     padding: 0.65rem 1.1rem;
     border-bottom: 1px solid #ece8dc;
     background: #f5f2ea;
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.12s ease;
   }
   .dir-drow.is-live {
     background: #eef1e8;
+  }
+  .dir-drow:hover,
+  .dir-drow:focus-visible {
+    background: #e4ece4;
+  }
+  .dir-drow:hover .dir-place {
+    text-decoration: underline;
   }
   .dir-cell-site {
     display: flex;
@@ -675,6 +688,13 @@ const statusSwatch = (kind: "live" | "new") =>
     border: 1px solid var(--bosc-rule);
     border-radius: 999px;
     padding: 4px 11px;
+    text-decoration: none;
+    transition: border-color 0.12s ease;
+  }
+  .dir-chip:hover,
+  .dir-chip:focus-visible {
+    border-color: #8c9389;
+    text-decoration: underline;
   }
   .dir-chip .dot {
     width: 6px;

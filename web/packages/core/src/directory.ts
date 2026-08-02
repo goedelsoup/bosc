@@ -338,6 +338,14 @@ export interface Cell {
 }
 export interface Row {
   slug: string;
+  /**
+   * Where the row goes: the site's OWN page (#1862). The registry href — Lima → `SITE_BASE`,
+   * every other site → `/network/<slug>` — carried through **without** the deploy base, which
+   * the page applies at render with `withBase`, exactly as the switcher does. Every registered
+   * site has a real destination (`[site].astro` renders the non-selectable ones), so a `queued`
+   * or `tracking` row lands on its watch page rather than a dead end.
+   */
+  href: string;
   live: boolean;
   cells: Cell[];
 }
@@ -349,7 +357,9 @@ export interface Group {
   /** Set on the first basin group of a divide (water lens) — the divide banner above it. */
   divide?: { label: string; note: string };
   rows: Row[];
-  chips: { place: string; dot: string }[];
+  /** A not-yet-assessed site under H2/H3. It routes like a row (#1862) — "not assessed under
+   *  this thesis" is a statement about the thesis, not a reason to strand the site. */
+  chips: { place: string; dot: string; href: string }[];
 }
 export interface LensView {
   key: DirLens;
@@ -415,6 +425,7 @@ export function buildLens(
           const roll = rollupOf(s.slug);
           return {
             slug: s.slug,
+            href: s.href,
             live: s.status === "live",
             cells: [
               siteCell(s),
@@ -483,7 +494,7 @@ export function buildLens(
           pillCell(SIGNAL_META[dat.surv.signal]),
           facPill(facilityStatusOf(s.slug)),
         ];
-    return { slug: s.slug, live: s.status === "live", cells };
+    return { slug: s.slug, href: s.href, live: s.status === "live", cells };
   };
 
   // [key, abbr, full label, short axis label] — the short label is explicit, not derived
@@ -513,7 +524,7 @@ export function buildLens(
       label: "Not yet assessed under this thesis",
       count: watch.length,
       rows: [],
-      chips: watch.map((s) => ({ place: s.place, dot: PHASE_PILL[s.status].dot })),
+      chips: watch.map((s) => ({ place: s.place, dot: PHASE_PILL[s.status].dot, href: s.href })),
     });
   }
   axisGroups.push({
