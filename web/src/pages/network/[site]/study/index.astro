@@ -14,9 +14,14 @@ export const getStaticPaths = selectableSitePaths;
  * Every verdict on this page comes from `studyToc` (the data spine) — the cover reads no
  * raw feeds, so a future `impact-study` bundle feed replaces the derivation wholesale.
  */
+import { getEntry, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
 import EvidenceLegend from "~/components/EvidenceLegend.astro";
+import StudyNoteFrame from "~/components/study/StudyNoteFrame.astro";
 import StudyStatusChip from "~/components/study/StudyStatusChip.astro";
+// Directly, NOT via the `~/components/study` barrel: that barrel owns CHAPTER_SECTIONS and
+// would ship all 11 chapter components' CSS to a cover that renders none of it.
+import { STUDY_COMPONENTS } from "~/components/study/components";
 import { FACILITY_STATUS_META, facilityStatus } from "@watermark/core/sites";
 import { resolveStudyFacility, STUDY_STATUS_META, studyStatusSummary, studyToc } from "@watermark/core/study";
 import { withBase, withSite } from "@watermark/core/site";
@@ -43,6 +48,18 @@ const dek =
   facility === null
     ? "No project is disclosed at this site yet. This is the baseline a real impact study would start from — assembled and standing ready for the day one is."
     : "The environmental and economic study that should precede any abatement or rezoning — assembled from the public record. Where the record is silent, the silence is the finding.";
+
+// The cover's OPTIONAL abstract (the whitepaper's front matter): a per-site note at
+// `study/<site>/_cover.mdx`, slotted above the evidence legend. `_cover` can never collide
+// with a chapter id — `[chapter].astro`'s getStaticPaths emits only `STUDY_CHAPTERS` ids —
+// so the study's chapter namespace stays closed. Absent or `live: false` ⇒ no slot, exactly
+// like a chapter note. The two-level lookup mirrors `[chapter].astro` exactly, so a
+// facility-scoped cover (`<site>/<facility-key>/_cover.mdx`) wins on a multi-project site —
+// the cover already resolves that facility above for its own title.
+const abstract =
+  (facility?.key ? await getEntry("study", `${slug}/${facility.key}/_cover`) : undefined) ??
+  (await getEntry("study", `${slug}/_cover`));
+const AbstractContent = abstract?.data.live === true ? (await render(abstract)).Content : null;
 ---
 
 <Base title={title} section="study" description={dek}>
@@ -69,6 +86,14 @@ const dek =
         }
       </p>
     </header>
+
+    {
+      AbstractContent && (
+        <StudyNoteFrame label="Abstract" updated={abstract?.data.updated}>
+          <AbstractContent components={STUDY_COMPONENTS} />
+        </StudyNoteFrame>
+      )
+    }
 
     <section class="studycover-legend">
       <EvidenceLegend />
@@ -169,6 +194,8 @@ const dek =
     color: var(--bosc-muted);
     margin: 0.8rem 0 0;
   }
+  /* The abstract's frame lives in `StudyNoteFrame.astro` — one owner, shared with the
+     chapter note. */
   .studycover-legend {
     border-top: 1px solid var(--bosc-rule);
     margin-top: 1.8rem;

@@ -8,8 +8,6 @@
  * and compose the shared palette (charts, FigureStat, EvidenceTag, islands) exactly the way
  * the existing environment/economy pages do.
  */
-import { STORY_COMPONENTS } from "../story";
-import StudyGap from "./StudyGap.astro";
 import Air from "./chapters/Air.astro";
 import Balance from "./chapters/Balance.astro";
 import DefaultChapterSection from "./chapters/DefaultChapterSection.astro";
@@ -44,9 +42,7 @@ export function chapterSection(id: string): typeof DefaultChapterSection {
   return CHAPTER_SECTIONS[id] ?? DefaultChapterSection;
 }
 
-/**
- * The MDX `components` map for a per-site study note (`<Content components={STUDY_COMPONENTS} />`)
- * — the walk's curated vocabulary plus the study's own gap panel, so a note can name an ask
- * in the same grammar the chapter does. Islands stay direct imports, as in walk chapters.
- */
-export const STUDY_COMPONENTS = { ...STORY_COMPONENTS, StudyGap };
+/** Re-exported for callers that already pull the chapter registry from this barrel. A page
+ *  that needs ONLY the MDX map (the cover) must import `./components` directly — importing it
+ *  from here drags every chapter component's CSS onto that page. */
+export { STUDY_COMPONENTS } from "./components";

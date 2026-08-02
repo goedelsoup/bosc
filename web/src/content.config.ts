@@ -66,9 +66,17 @@ const stories = defineCollection({
 // multi-project seam, baked into the lookup from day one). Bodies compose STUDY_COMPONENTS
 // with no imports, exactly like walk chapters.
 export const STUDY_NOTE_SCHEMA = z.object({
-  /** Must equal a `STUDY_CHAPTERS` id — validated at lookup by the shell, not by zod
-   *  (this config can't import `@watermark/core/study` without dragging the bundle reader
-   *  into the content-config graph). */
+  /** The chapter this note belongs to: a `STUDY_CHAPTERS` id, or the reserved `_cover` (the
+   *  cover's abstract, read by `study/index.astro` — safe because `[chapter].astro` emits
+   *  only `STUDY_CHAPTERS` ids, so `_cover` can never route as a chapter).
+   *
+   *  ⚠️ DECLARATIVE ONLY — nothing reads this field. Both shells resolve a note by its
+   *  file-path id (`getEntry("study", "<slug>/<chapter>")`), so a mismatched or misspelled
+   *  value renders no error and a typo'd FILENAME becomes silently dead content. Zod can't
+   *  close that gap either: this config can't import `@watermark/core/study` without
+   *  dragging the bundle reader into the content-config graph. The guard is
+   *  `study.notes.test.ts`, which asserts every note's id and `chapter` against the
+   *  registry. */
   chapter: z.string().min(1),
   /** Facility key this note is scoped to; absent = the site's primary-facility study. */
   facility: z.string().optional(),

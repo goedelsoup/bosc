@@ -1,0 +1,52 @@
+---
+/**
+ * The frame around a per-site study note — the ONE owner of that treatment (a rule, a mono
+ * eyebrow, an optional dateline, then the prose on the same paper). Both note surfaces wear
+ * it: the chapter shell's "Reading this chapter · <place>" slot and the cover's "Abstract".
+ *
+ * It exists because the two were byte-identical copies in two scoped `<style>` blocks, which
+ * meant restyling the treatment took two edits and the pair would drift. Callers pass the
+ * eyebrow label and render the MDX `<Content>` into the default slot.
+ */
+interface Props {
+  /** The eyebrow's lead text ("Abstract", "Reading this chapter · Lima"). */
+  label: string;
+  /** ISO date shown after the label as "· updated <date>"; omitted when absent. */
+  updated?: string;
+}
+const { label, updated } = Astro.props as Props;
+---
+
+<section class="studynote">
+  <div class="studynote-eyebrow">
+    {label}
+    {updated && <span class="studynote-date"> · updated {updated}</span>}
+  </div>
+  <slot />
+</section>
+
+<style>
+  /* The site's own reading, visibly distinct from the templated screen above it — a rule and
+     an eyebrow on the same paper. Narrative, not more chrome. */
+  .studynote {
+    border-top: 1px solid var(--bosc-rule);
+    margin-top: 1.8rem;
+    padding-top: 1rem;
+    max-width: 680px;
+  }
+  .studynote-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    margin-bottom: 0.7rem;
+  }
+  .studynote-date {
+    font-weight: 400;
+    color: var(--bosc-faint);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+</style>
