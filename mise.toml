@@ -231,12 +231,22 @@ kind="${usage_kind:-npdes}"
 uv run watermark --site "${site}" oepa fetch --permit-id "${permit_id}"
 uv run watermark ingest
 
+# Resolve the file the fetch actually wrote, then hash it. Do NOT assume `<permit_id>.pdf`:
+# Ohio EPA re-serves a permit's DAM slot IN PLACE on modification, so a second fetch of the same
+# URL collides and lands as `<permit_id>.<sha8>.pdf` (#1406). Assuming the bare name would
+# re-extract the SUPERSEDED document and silently report it as the current one. The filename-map
+# is the record of what landed; take the newest row for this permit's `permits/doc/` slot.
 # _doc_id mirrors watermark.pipeline.ingest._doc_id: sha256(str(absolute_path))[:8]
 doc_id=$(uv run python -c "
-import hashlib
+import hashlib, yaml
 from watermark.config import get_settings
-p = get_settings().documents_dir / 'oepa' / '${site}' / '${permit_id}.pdf'
-print('${permit_id}-' + hashlib.sha256(str(p).encode()).hexdigest()[:8])
+d = get_settings().documents_dir / 'oepa' / '${site}'
+slot = 'permits/doc/${permit_id}.pdf'
+rows = (yaml.safe_load((d / 'filename-map.yaml').read_text()) or {}).get('documents', [])
+rows = [r for r in rows if str(r.get('source_url', '')).endswith(slot)]
+name = max(rows, key=lambda r: r.get('fetched_at') or '')['filename'] if rows else '${permit_id}.pdf'
+p = d / name
+print(p.stem + '-' + hashlib.sha256(str(p).encode()).hexdigest()[:8])
 ")
 
 uv run watermark --site "${site}" extract "${doc_id}" --kind "${kind}" --write

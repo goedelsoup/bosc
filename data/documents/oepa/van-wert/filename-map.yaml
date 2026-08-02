@@ -1,9 +1,24 @@
 meta:
-  subject: OEPA/DAM permit download manifest
-  generated_at: '2026-06-29'
-  policy: non-destructive — originals keep as-received names
+  subject: >-
+    OEPA/DAM permit download manifest — City of Van Wert WWTP, NPDES 2PD00006 / application
+    OH0027910 (issues 1401, 1406)
+  policy: >-
+    non-destructive — originals keep as-received names. Ohio EPA RE-SERVES the DAM slot
+    `permits/doc/2PD00006.pdf` IN PLACE when the permit is modified: the same URL delivered the
+    2025 *VD renewal on 2026-06-28 and the 2026 *WD modification package on 2026-08-01. Both sets
+    of bytes are held; the second landed with its own content-hash infix (`2PD00006.f8aaad0a.pdf`)
+    under the fetcher's collision rule. Nothing is renamed to "fix" a collision and no entry is
+    replaced when a slot's contents change — the manifest is keyed on URL *and* sha256, so each
+    capture keeps its own provenance row. The canonical name of each document and its
+    content-verified date are recorded below beside its source URL; the dates come from each
+    document's own text layer, never from a filename or from outside knowledge.
+  generated_at: '2026-08-02'
 documents:
 - filename: 2PD00006.pdf
+  canonical_name: >-
+    NPDES permit 2PD00006*VD as issued on renewal — Van Wert WWTP, action date 2025-04-18,
+    effective 2025-06-01, expires 2030-05-31. The permit the *WD modification below amends.
+  content_verified_date: '2025-04-18'   # "Action Date: April 18, 2025", printed on p. 1 of the text layer
   permit_id: 2PD00006
   source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00006.pdf
   sha256: 7e9cbd445986e4a76b4d85b0004d2fc1d6fa0f76e9b887ec2113562bb3ee1055
@@ -11,8 +26,18 @@ documents:
   content_type: application/pdf
   fetched_at: '2026-06-28T23:31:20.930184+00:00'
   status: skipped_existing
-  note: null
+  note: >-
+    SUPERSEDED IN THE SLOT, NOT IN THE RECORD. This is the byte the DAM served for
+    `permits/doc/2PD00006.pdf` in June 2026; the same URL now serves the *WD modification. The
+    *VD text remains the source for every term the modification did not touch — the modification
+    letter states that "all terms and conditions of the existing permit not recommended for
+    modification by this document will remain in effect." See
+    data/extracted/oepa/van-wert/2PD00006.npdes.yaml.
 - filename: 2PD00006.fs.pdf
+  canonical_name: >-
+    Fact Sheet for NPDES Permit Renewal, Van Wert WWTP, 2025 — permit 2PD00006*VD, Public Notice
+    210566. 35 pp.
+  content_verified_date: '2025-03-17'   # "Public Notice Date: 3/17/2025", printed on p. 1 of the text layer
   permit_id: 2PD00006
   source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00006.fs.pdf
   sha256: ac17a931e3f25885fdfee3257aafeba42a7888c39ea07c7c5365fa0ff2380771
@@ -20,4 +45,48 @@ documents:
   content_type: application/pdf
   fetched_at: '2026-06-29T01:21:45.882397+00:00'
   status: downloaded
-  note: null
+  note: >-
+    The RENEWAL-cycle fact sheet. It was NOT reissued for the modification — the DAM's `.fs`
+    slot still holds the 2025 *VD bytes (Last-Modified 2025-10-30, unchanged on the 2026-08-01
+    re-probe). The modification's own 8-page fact sheet is bound inside the *WD package below,
+    not served here. See data/extracted/oepa/van-wert/2PD00006.fs.npdes.yaml.
+- filename: 2PD00006.f8aaad0a.pdf
+  canonical_name: >-
+    2PD00006*WD modification package — Director's transmittal letter (2026-05-18), the modified
+    NPDES permit as issued (47 pp., entered the Director's Journal 2026-06-30, effective
+    2026-07-01), and the modification's own 8-page Fact Sheet (Public Notice 221593). 56 pp.
+  content_verified_date: '2026-05-18'   # transmittal letter date, printed on p. 1 of the text layer
+  as_received_name: 2PD00006.pdf
+  permit_id: 2PD00006
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00006.pdf
+  sha256: f8aaad0a8b47bcc8a02d0c7bb7549d3ca14f52cd36f3e2630fe90ca9bde41885
+  bytes: 1454356
+  content_type: application/pdf
+  fetched_at: '2026-08-01T23:45:39.052801+00:00'
+  status: conflict
+  note: >-
+    THE INSTRUMENT IN FORCE. Same DAM URL as the *VD row above, different bytes — the `.f8aaad0a`
+    infix is this file's own sha256 prefix, added by the fetcher's non-destructive collision rule,
+    not a rename of the source. The as-received DAM basename is `2PD00006.pdf`. The package is a
+    COMPOSITE: cite the sub-document (letter / permit / attached fact sheet), not just the file.
+    See data/extracted/oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml.
+- filename: 2PD00006.36a58063.pdf
+  canonical_name: >-
+    Public Notice of NPDES Permit Modification, 2PD00006*WD — Public Notice 221593, noticed
+    2026-05-25, comment period closed 2026-06-24, effective date "PROPOSED". 59 pp.
+  content_verified_date: '2026-05-25'   # "Date of Public Notice: 5/25/2026", printed on p. 1 of the text layer
+  as_received_name: 2PD00006.pdf
+  permit_id: 2PD00006
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/DraftPN/2PD00006.pdf
+  sha256: 36a580633565e31c322d39a4b2d6fe9b1f953e24435d30397c8d020c5596dcf7
+  bytes: 1210329
+  content_type: application/pdf
+  fetched_at: '2026-08-01T23:46:05.990889+00:00'
+  status: conflict
+  note: >-
+    The DRAFT of the package above — the same 47-page permit and 8-page fact sheet behind three
+    extra public-notice pages, with the effective date still printed "PROPOSED". Held because the
+    notice pages carry what the final package does not: the public notice number as the agency
+    itself prints it (221593), the comment window, and the outfall 001 coordinate
+    (40.8882410 N, -84.58437518 W, 4,000,000 GPD). See
+    data/extracted/oepa/van-wert/2PD00006.36a58063.npdes.yaml.

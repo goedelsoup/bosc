@@ -1,0 +1,565 @@
+# City of Van Wert (Van Wert County, OH) — standing water watch.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page) or read from a named
+#                 federal system on a named extract date
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# THE ONE FACT THIS FILE EXISTS TO HOLD: Van Wert drinks Town Creek and discharges to Town Creek.
+# Bowling Green's two water sides share a city and nothing else — different rivers, different
+# basins, different dockets (data/extracted/bowling-green/water-watch.yaml). Van Wert is the
+# opposite case and the network's tightest one. The City's raw-water pump stations, its five
+# combined sewer overflows and its wastewater outfall are all on ONE flowline of ONE creek, in
+# that order, inside about 4.6 km. There is no second source. There is no other river.
+#
+# THE ORDER MATTERS AND IS NOT THE OBVIOUS ONE. The intake is UPSTREAM of the CSOs and the WWTP
+# outfall, not below them. Nobody is drinking this plant's effluent. What the geometry does mean
+# is that every claim on Town Creek's flow — the reservoir refill, the CSO dilution, the effluent
+# assimilation — is a claim on the same water, in sequence, and the creek is small enough that in
+# a dry year the City's own record says it yields 180 million gallons for the whole year.
+#
+# Violations below are data with citations, not a gotcha. The quarter that came back clean is
+# recorded as such, and the fact that no formal enforcement action has ever issued is recorded at
+# the same weight as the 30 months of unmet reporting milestones.
+
+meta:
+  subject: >-
+    Standing watch on the single reach of Town Creek that carries Van Wert's drinking-water
+    intake, its five combined sewer overflows and its wastewater outfall — anchored on NPDES
+    permit 2PD00006*WD, the CSO Long Term Control Plan construction schedule it put in force on
+    2026-07-01, and the Maumee TMDL phosphorus allocation it defers to a general permit
+  kind: water-watch
+  site: van-wert
+  captured_for: issue 1406 (epic 1267, readiness(van-wert))
+  extracted_at: '2026-08-01'
+  checked_on: '2026-08-01'
+  previous_check: '2026-07-10'      # the discovery-sweep research recorded in the issue body
+  federal_extract_dates:
+    ICIS-NPDES: '2026-07-24'
+    SDWIS: '2026-07-09'
+  method: >-
+    Four routes, run independently and recorded separately. (1) The controlling Ohio EPA
+    instruments — the 2PD00006*WD modification package and its draft public notice — pulled from
+    the Ohio EPA DAM on 2026-08-01 and transcribed page-by-page from their embedded text layers
+    (data/documents/oepa/van-wert/filename-map.yaml; extractions under
+    data/extracted/oepa/van-wert/). (2) EPA ECHO: dfr_rest_services.get_dfr for the CWA side
+    (OH0027910, and the two water-plant permits OHG8P0006 / OH0135569) and for the SDWA side
+    (OH8100611), plus sdw_rest_services.get_systems for the Van Wert County public water system
+    index — all read 2026-08-01 against the ICIS-NPDES and SDWIS extract dates above. (3) USGS
+    NLDI / NHDPlus v2, snapped 2026-08-01, to establish that the intake, the overflows and the
+    outfall are on one flowline and in what order. (4) The City's own Utilities publications for
+    the source-water description. Each federal figure is stamped with the system extract date it
+    was read against, because a quarter that reads clean today may only be a quarter whose DMRs
+    have not landed.
+
+# ── What changed since the 2026-07-10 research ────────────────────────────────
+# Recorded first because a standing watch is worth having only if it says what moved. Three of
+# these correct the issue body's own premises against the primary instruments.
+delta_since_previous_check:
+- item: The *WD modification is in the corpus, and the DAM slot that served the *VD now serves it.
+  tag: '[verified]'
+  detail: >-
+    Ohio EPA re-serves `permits/doc/2PD00006.pdf` IN PLACE. The same URL that delivered the 2025
+    *VD renewal on 2026-06-28 delivered the *WD modification package on 2026-08-01 (Last-Modified
+    2026-07-02). Both sets of bytes are held under the fetcher's collision rule; the *VD is not
+    superseded as a source, because the modification letter states that "all terms and conditions
+    of the existing permit not recommended for modification by this document will remain in
+    effect." Anything the modification did not touch is still read from the *VD.
+- item: The compliance run is 12 of THIRTEEN quarters, not 12 of 12 — and one quarter is clean.
+  tag: '[verified]'
+  detail: >-
+    The issue carried "12 of 12 quarters with violations (2023-Q2 → 2026-Q1)". ECHO's three-year
+    grid displays THIRTEEN quarters (2023-04-01 through the partial quarter ending 2026-07-24) and
+    2023-Q4 reads "No Violation Identified". See `noncompliance` below; the count of 12 is right,
+    the denominator is not.
+- item: The largest driver is not effluent. It is three CSO reporting milestones unmet since 2024.
+  tag: '[verified]'
+  detail: >-
+    The effluent exceedances are real but intermittent — eight parameter-quarters across three
+    years. What runs unbroken from 2024-Q1 to the current quarter is a set of PERMIT SCHEDULE
+    violations: a CSO Event Report, an Operation and Maintenance Report and a Combined Sewer
+    Report, each recorded "Schedule Event unachieved and not reported", each still open. Zero
+    formal enforcement actions, $0 in penalties, over the same window.
+- item: The permit does not name OHP000001. It names the general permit only by title.
+  tag: '[verified]'
+  detail: >-
+    Part II.AE regulates the 1,000 kg TP allocation "through the Maumee Watershed Total Phosphorus
+    NPDES General Permit" — no permit number is printed anywhere in the instrument. OHP000001 is
+    the general permit held in this corpus and is almost certainly the one meant, but that binding
+    is ours, not the permit's. See `total_phosphorus` below.
+- item: The instrument names the wrong facility as the covered one.
+  tag: '[verified]'
+  detail: >-
+    Part II.AE reads "under which **Defiance** Van Wert WWTP has been granted coverage". There is
+    no such facility; Defiance is a different city with its own WWTP, ~40 river miles downstream.
+    Boilerplate carried over unedited into an issued permit. Transcribed as found.
+
+# ── The reach ─────────────────────────────────────────────────────────────────
+reach:
+  name: Town Creek
+  ohio_epa_river_code: '04-143'
+  huc12: '041000070804'
+  huc12_name: Lower Town Creek
+  ecoregion: Huron-Erie Lake Plains
+  stream_network: Town Creek → Middle Creek → Little Auglaize River → Auglaize River → Maumee River → Lake Erie
+  confluence_note: Town Creek combines with Maddox Creek to form Middle Creek.
+  source: data/documents/oepa/van-wert/2PD00006.f8aaad0a.pdf, composite sheets 49 and 52 (the attached fact sheet)
+  tag: '[verified]'
+
+  designated_uses:   # OAC 3745-1-11, as printed for the segment receiving the discharge
+    listed: [Modified Warmwater Habitat, Agricultural Water Supply, Industrial Water Supply,
+             Secondary Contact Recreation]
+    public_water_supply_listed: false
+    tag: '[verified]'
+    open_question: >-
+      Public Water Supply is not among the uses printed for the discharge segment, and the City
+      draws its drinking water from this creek. The intake is upstream of the outfall, so the two
+      need not be the same WQS segment — but which segment carries a PWS designation, and where
+      its boundary falls relative to the pump stations, is `[open]`. Instrument to pull: OAC
+      3745-1-11 use designation table for river code 04-143, and the Ohio EPA Drinking Water
+      Source Protection area delineation for PWS OH8100611.
+
+  impairment:   # EPA ATTAINS via ECHO DFR, 2024 reporting cycle, read 2026-08-01
+    assessment_unit: OH041000070804
+    name: Lower Town Creek
+    condition: Impaired - 303(d) Listed
+    causes: [PATHOGENS, POLYCHLORINATED BIPHENYLS (PCBS)]
+    uses:
+      aquatic_life: Fully Supporting
+      ecological: Fully Supporting
+      drinking_water: Fully Supporting
+      fish_consumption: Not Supporting
+      recreation: Not Supporting
+    possible_impairing_parameters_echo: [E. coli MTEC-MF, Fecal coliform]
+    url: https://mywaterway.epa.gov/waterbody-report/21OHIO/OH041000070804
+    tag: '[verified]'
+    note: >-
+      The creek is 303(d)-listed for pathogens and its recreation use is Not Supporting — on a
+      reach whose five combined sewer overflows the permit's own public-access-area table lists as
+      impacting no public access area at all (see `combined_sewer_overflows.public_access_areas`).
+
+  one_flowline:
+    tag: '[verified]'
+    method: >-
+      Each ICIS-NPDES facility coordinate snapped to NHDPlus v2 through the USGS NLDI
+      linked-data/comid/position service on 2026-08-01 (watermark.hydrology.connectors.nldi).
+    comid: 15653063
+    length_km: 17.05
+    upstream_end: {lat: 40.833845, lon: -84.572991}
+    downstream_end: {lat: 40.931526, lon: -84.517449}
+    flow_direction: south → north-northeast
+    members:
+    - {what: Van Wert WWTP outfall 001, npdes: OH0027910, lat: 40.8882410, lon: -84.58437518}
+    - {what: Van Wert Water Plant discharge, npdes: OHG8P0006, lat: 40.8469444, lon: -84.5772222}
+    - {what: City of Van Wert (CSO area permit at the water plant address), npdes: OH0135569, lat: 40.847601, lon: -84.574769}
+    finding: >-
+      All three snap to the SAME NHDPlus flowline. The drinking-water plant and the wastewater
+      outfall are 4.61 km apart in a straight line on one 17 km reach, and the five CSO outfalls
+      (lat 40.8683 – 40.8800) fall between them.
+    upstream_downstream:
+      tag: '[inference]'
+      reasoning: >-
+        The flowline's upstream end (lat 40.8338) is south of the water plant and its downstream
+        end (lat 40.9315) is north of the WWTP; the upstream-main trace from the outfall extends
+        south and the downstream-main trace north. The water-plant points therefore lie upstream
+        of the outfall, and the CSOs between them.
+      order: intake / water plant → five CSOs → WWTP outfall 001 (RM 13.87)
+      caveat: >-
+        The water plant's ICIS coordinate is the PLANT, not the raw-water intake. The City
+        describes "two pumping stations east of the reservoirs" as what fills the reservoirs from
+        the creek; those pump stations are not coordinate-pinned in any captured source and their
+        river mile relative to RM 13.87 is `[open]`.
+
+# ── Drinking water ────────────────────────────────────────────────────────────
+drinking_water:
+  pws_id: OH8100611
+  pws_name: VAN WERT CITY
+  system_type: Community water system (CWS)
+  primary_source: Surface water (SDWIS PrimarySourceCode "SW")
+  population_served: 10846
+  activity: Active
+  source: EPA ECHO sdw_rest_services.get_systems, Van Wert County OH, read 2026-08-01 (SDWIS extract 2026-07-09)
+  tag: '[verified]'
+  county_context:
+    tag: '[verified]'
+    detail: >-
+      Van Wert City is the ONLY surface-water public water system in Van Wert County. Every other
+      system in the county index is ground water; the only two other surface-water entries are
+      "Surface water purchased" (SWP) systems buying treated water. There is no alternative
+      surface source in the county to switch to.
+
+  source_water:
+    tag: '[reference]'
+    source: City of Van Wert Utilities, vanwert.org/water-treatment (self-published, read 2026-08-01)
+    as_published:
+      creek: >-
+        "The water that the people of Van Wert use and drink comes from Town Creek. This is the
+        name of the stream that flows through our City."
+      pump_stations: >-
+        "East of the reservoirs are two pumping stations that we use to fill the reservoirs when
+        stream flow is great enough to allow the pumps to be operated."
+      pump_capacity: >-
+        "The pump stations can pump 48.96 million gallons of water per day when all eight pumps
+        are running."
+      reservoir_capacity: >-
+        "The capacity of our reservoirs is 1.01 billion gallons and can supply Van Wert for
+        theoretically 21 months" — reduced to 15–16 months in practice because "the bottom 2 feet
+        is not available and evaporation depletes resources further."
+      historic_yield: >-
+        "Since 1951 the creek has provided as little as 180 million gallons and as much as 1.26
+        billion gallons in a calendar year."
+    why_this_matters:
+      tag: '[inference]'
+      arithmetic: 1,010 MG reservoir capacity ÷ 180 MG (the record-low annual yield) = 5.6
+      reading: >-
+        The City's own figures put a 7x spread between the creek's worst year and its best. In the
+        worst year on record the creek delivers less than a fifth of what the reservoirs hold, and
+        the reservoirs are the buffer that makes a 4.0 MGD wastewater plant and a ~1.5 MGD city
+        possible on a creek this size. Any new municipal demand is a claim on that buffer, not on
+        the creek's average. The QTS campus's water and sewer service is not yet an executed
+        agreement (data/extracted/van-wert/data-centers.md), so no volume is screened here.
+    caveat: >-
+      A utility's own page is `[reference]`, not a controlling record — it is the operator
+      describing its own system, with no permit or engineering report behind it in this corpus.
+      Instrument to pull: the City's Consumer Confidence Report and the Ohio EPA Drinking Water
+      Source Protection plan for OH8100611, which would pin the intake location and the permitted
+      withdrawal.
+
+  compliance:
+    tag: '[verified]'
+    source: EPA ECHO dfr_rest_services.get_dfr (OH8100611), read 2026-08-01, SDWIS extract 2026-07-09
+    current_snc: 'No'
+    quarters_in_noncompliance: 8
+    window: 2023-04-01 .. 2026-03-31
+    note: >-
+      Eight of twelve quarters in noncompliance on the SDWA side, SNC flag No. The violation
+      TYPES are not resolved here — the DFR's SDWIS violation detail was not transcribed, and
+      naming a cause without reading it would be invention. `[open]`: pull the SDWIS violation
+      table for OH8100611 and the City's Consumer Confidence Reports for 2023–2025.
+
+# ── The permit in force ───────────────────────────────────────────────────────
+wastewater_permit:
+  permit_no: 2PD00006*WD
+  application_no: OH0027910
+  permittee: City of Van Wert
+  facility: Van Wert WWTP, 7998 S.R. 127 N., Van Wert, OH 45891
+  receiving_water: Town Creek at River Mile 13.87
+  outfall_001: {design_flow_gpd: 4000000, lat: 40.8882410, lon: -84.58437518}
+  average_design_flow_mgd: 4.0
+  peak_hydraulic_capacity_mgd: 8.0
+  population_served: 11039
+  collection_system: 35% separate sewers, 65% combined sewers
+  action_date: '2026-05-18'
+  public_notice_no: '221593'
+  public_notice_date: '2026-05-25'
+  comment_period_end: '2026-06-24'
+  entered_directors_journal: '2026-06-30'
+  effective: '2026-07-01'
+  expires: '2030-05-31'
+  supersedes: 2PD00006*VD (renewal, action 2025-04-18, effective 2025-06-01)
+  source: data/extracted/oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml
+  tag: '[verified]'
+  out_of_service_note: >-
+    "The roughing trickling filters and peak flow primary tanks are currently not in use at
+    treatment plant. Flows above 5 MGD are bypassed around the primary clarifiers directly to the
+    secondary treatment activated sludge tanks." (fact sheet, composite sheet 52) — a plant
+    running above 5 MGD is a plant with its primary treatment bypassed, on a permit whose average
+    design flow is 4.0 MGD and whose peak hydraulic capacity is 8.0.
+
+# ── The CSO construction schedule the modification put in force ───────────────
+cso_schedule:
+  tag: '[verified]'
+  source: data/documents/oepa/van-wert/2PD00006.f8aaad0a.pdf, composite sheets 20–23 (Part I.C)
+  what_the_modification_did: >-
+    Removed the completed milestones for the CSO Long Term Control Plan Compliance Assistance Plan
+    and inserted the new ones. That is its whole operative act: it converts a submitted plan into
+    dated, event-coded obligations inside the enforceable part of the permit.
+  history:
+    ltcp_submitted: 1999
+    ltcp_goal: four CSO events or less per typical year
+    ltcp_amended: 2011
+    completion_evaluation_report: 2022
+    finding: goals of the LTCP had NOT been attained; additional control is needed
+  compliance_assistance_plan:
+    submitted_per_permit: '2025-07-24'
+    submitted_per_fact_sheet: '2026-02-02'
+    approved: null
+    approval_as_printed: '[approval pending]'
+    discrepancy_tag: '[open]'
+    note: >-
+      Two submission dates in the same package (permit Part I.C.1 vs fact sheet composite sheet
+      52), and the issued permit still prints the literal placeholder "[approval pending]" where
+      the plan's approval date belongs. The instrument that entered the Director's Journal on
+      2026-06-30 enforces a schedule derived from a plan it does not record as approved. Which
+      submission is operative, and whether an approval has since issued, is `[open]`.
+  control_projects:
+  - project: Blaine Street interceptor sewer + Town Creek siphon
+    purpose: increase conveyance downstream of CSO 004
+    pti: DSW-6320, approved 2025-10-12
+  - project: Bonnewitz Pump Station weir adjustment
+    purpose: maximize storage in the existing 15-MG equalization basin
+  - project: raise the CSO 010 overflow weir
+    amount: six inches
+  milestones:
+  - {due: '2026-08-01', event_code: '3099', requirement: begin construction; notify Ohio EPA within 14 days}
+  - {due: '2026-10-01', event_code: '1299', requirement: submit the revised 2020 PCCM Plan}
+  - {due: '2027-01-01', event_code: '96899', requirement: attain operational level; notify Ohio EPA within 14 days}
+  - {due: '2027-03-01', event_code: '21599', requirement: initiate the 24-month PCCM period}
+  - {due: '2028-03-01', event_code: '95999', requirement: PCCM progress report (12 months of occurrence, volume, precipitation)}
+  - {due: '2029-03-01', event_code: '1599', requirement: conclude PCCM}
+  - {due: '2029-06-01', event_code: '34099', requirement: submit the LTCP Completion Evaluation Report}
+  watch_item:
+    tag: '[open]'
+    detail: >-
+      The first milestone — begin construction, event code 3099 — falls 2026-08-01, one month
+      after the modification took effect. Whether construction began, and whether the 14-day
+      notification was filed, is not established by any captured source. This is the single
+      highest-value thing to re-check on the next pass: the same permittee's three OTHER CSO
+      schedule events have been recorded "unachieved and not reported" since 2024 (see
+      `noncompliance.permit_schedule_violations`), so the base rate for this obligation being met
+      on time is not good, and it is now testable against a dated deadline.
+
+combined_sewer_overflows:
+  tag: '[verified]'
+  source: data/documents/oepa/van-wert/2PD00006.f8aaad0a.pdf, composite sheet 26 (Part II, C — Lake Erie Basin CSO Discharges)
+  authorization: discharge permitted "only during wet weather periods when the flow in the sewer system exceeds the capacity of the sewer system"
+  monitoring: overflow occurrence (74062) and overflow volume (74063), when discharging; DMR every month
+  outfalls:
+  - {station: 2PD00006004, location: Wall Street, lat: 40.8769, lon: -84.5878, receiving_stream: Town Creek}
+  - {station: 2PD00006005, location: First & Monroe Street, lat: 40.88, lon: -84.5867, receiving_stream: Town Creek}
+  - {station: 2PD00006007, location: Main Street, lat: 40.8689, lon: -84.5853, receiving_stream: Town Creek}
+  - {station: 2PD00006009, location: Central, lat: 40.8683, lon: -84.5853, receiving_stream: Town Creek}
+  - {station: 2PD00006010, location: Keplar, lat: 40.8828, lon: -84.5797, receiving_stream: Town Creek}
+  sso_station: {station: 2PD00006300, kind: sanitary sewer overflow reporting}
+  public_access_areas:
+    listed: []
+    as_printed: '"None were identified in the 2018 - CSO Notification Plan"'
+    tag: '[verified]'
+    note: >-
+      A cited absence, not evidence of absence. Five overflows discharge into a creek whose
+      recreation use ATTAINS records as Not Supporting and whose 303(d) listing is for pathogens,
+      and the notification plan behind this table dates to 2018-08-07. Instrument to pull: the
+      City's CSO Public Notification Plan itself.
+  volumes:
+    tag: '[open]'
+    detail: >-
+      Reported overflow occurrence and volume per CSO are in the DMR record and are NOT
+      transcribed here. Pull: ECHO eff_rest_services.get_effluent_chart for OH0027910, parameter
+      codes 74062 and 74063, by outfall. The attempt on 2026-08-01 failed — ECHO's effluent-chart
+      service returned read timeouts and a 502 across a three-year and a one-year window. Recorded
+      as unattempted-successfully, not as absent.
+
+# ── Phosphorus and the Maumee TMDL ────────────────────────────────────────────
+total_phosphorus:
+  tag: '[verified]'
+  source: data/documents/oepa/van-wert/2PD00006.f8aaad0a.pdf, composite sheet 35 (Part II, AE)
+  tmdl: Maumee Watershed Nutrient TMDL Report, approved September 2023
+  individual_wla_kg: 1000
+  critical_season: March through July
+  regulated_through: the Maumee Watershed Total Phosphorus NPDES General Permit (no number printed in the permit)
+  corpus_general_permit: data/documents/oepa/OHP000001.pdf
+  coverage: granted
+  reopener: >-
+    "In the event the permittee is no longer covered by the general permit, this individual permit
+    may be modified, or revoked and reissued, to incorporate effluent limits consistent with the
+    wasteload allocation."
+  permit_limits:
+    parameter_code: '00665'
+    weekly_average_mg_l: 1.5
+    monthly_average_mg_l: 1.0
+    weekly_average_kg_day: 23
+    monthly_average_kg_day: 15
+    identical_in_interim_and_final_tables: true
+  headroom:
+    tag: '[inference]'
+    arithmetic: 15 kg/day × 153 days (Mar 1 – Jul 31) = 2,295 kg
+    wla_kg: 1000
+    ratio: 2.30
+    reading: >-
+      Held at its own monthly-average loading limit through the whole critical season, the
+      individual permit allows 2.30× the phosphorus the Maumee TMDL individually allocated to this
+      plant for the same window. That is not a violation — it is the reason Part II.AE routes
+      compliance to the general permit instead of to a number in Part I.A, and the reason the
+      individual permit carries a reopener. It is a ceiling comparison, not a measured load.
+  local_limits_review:
+    due: '2026-12-01'
+    event_code: '52599'
+    target_mg_l: 0.5
+    tag: '[verified]'
+    detail: >-
+      Part I.C.B requires the City to determine whether local industrial-user limits for total
+      phosphorus would make substantial progress toward a monthly average effluent concentration
+      of 0.5 mg/L — half the permit's own 1.0 mg/L limit — or to submit evidence that local limits
+      are not appropriate. Three categorical industrial users discharge 0.176 MGD into this plant.
+  measured_load:
+    tag: '[open]'
+    detail: >-
+      What the plant actually discharged in a critical season is not established. ECHO's DFR
+      records TP exceedances in two quarters (13% of 2023-Q3 monthly averages, 30% of 2025-Q3 —
+      see `noncompliance`), but the loads themselves need the effluent chart, which would not
+      respond on 2026-08-01. Pull: eff_rest_services.get_effluent_chart, p_id OH0027910,
+      parameter_code 00665, one year per request.
+
+mercury_variance:
+  tag: '[verified]'
+  source: data/documents/oepa/van-wert/2PD00006.f8aaad0a.pdf, composite sheet 32 (Part II, Y)
+  action: renewed, under OAC 3745-1-38(J)
+  wqbel_monthly_average_ng_l: 1.3
+  achievable_annual_average_ng_l: 12
+  multiple: 9.2   # [inference] 12 ÷ 1.3; the gap the variance covers
+  conditions: pollutant minimization program — control strategy, periodic source and system monitoring, annual reporting
+  note: >-
+    The variance dates to a 2007 application and a plan of study from that application. It is
+    renewed, not resolved: the plant is ~9× the water-quality-based limit and the instrument's
+    answer is a minimization program, not a compliance schedule.
+
+# ── The compliance record ─────────────────────────────────────────────────────
+noncompliance:
+  tag: '[verified]'
+  source: EPA ECHO dfr_rest_services.get_dfr, p_id OH0027910, read 2026-08-01
+  regenerate: curl -s "https://echodata.epa.gov/echo/dfr_rest_services.get_dfr?p_id=OH0027910&output=JSON"
+  icis_npdes_extract_date: '2026-07-24'
+  permit_universe: 'Major: NPDES Individual Permit — Biosolids, CSO, POTW, Pretreatment'
+  facility_status: Effective
+  current_snc: 'No'
+  current_as_of: '2026-03-31'
+  quarters_in_noncompliance_reported: 12
+  quarterly_grid:
+    displayed_quarters: 13
+    window: 2023-04-01 .. 2026-07-24
+    violation_identified: 12
+    no_violation_identified: 1
+    clean_quarter: 2023-Q4 (2023-10-01 .. 2023-12-31)
+    counting_note:
+      tag: '[inference]'
+      detail: >-
+        ECHO's ComplianceSummary reports QtrsInNC = 12 with a CurrentAsOf of 2026-03-31, i.e.
+        against a 12-quarter window. But within those twelve quarters (Qtr1–Qtr12) only ELEVEN
+        carry a violation, because 2023-Q4 reads "No Violation Identified". The count of 12 matches
+        the THIRTEEN-quarter grid ECHO displays, which extends to the partial quarter ending on the
+        extract date. Both figures are recorded; the reconciliation is ours, not ECHO's, and the
+        headline to use is "12 of the 13 quarters ECHO displays", never "12 of 12".
+  reportable_noncompliance:
+    other_violation: [2023-Q2, 2023-Q3]
+    reportable_noncompliance: [2024-Q1, 2024-Q2, 2024-Q3, 2024-Q4, 2025-Q1, 2025-Q2, 2025-Q3, 2025-Q4, 2026-Q1]
+    none: [2023-Q4]
+    note: RNC status runs continuously from 2024-Q1 through 2026-Q1, the last full quarter in the window.
+  effluent_exceedances:   # CWAEffluentCompliance; % = share of the quarter's reports exceeding
+  - {parameter_code: '31648', parameter: E. coli MTEC-MF, outfall: '001', basis: non-monthly, quarters: {2023-Q2: 4%, 2025-Q3: 4%, 2025-Q4: 4%}}
+  - {parameter_code: '00665', parameter: Phosphorus total (as P), outfall: '001', basis: monthly, quarters: {2023-Q3: 13%, 2025-Q3: 30%}}
+  - {parameter_code: '00665', parameter: Phosphorus total (as P), outfall: '001', basis: non-monthly, quarters: {2025-Q3: 30%}}
+  - {parameter_code: '00530', parameter: Total suspended solids, outfall: '001', basis: monthly, quarters: {2024-Q2: 10%}}
+  - {parameter_code: '00530', parameter: Total suspended solids, outfall: '001', basis: non-monthly, quarters: {2024-Q2: 14%, 2025-Q3: 28%}}
+  - {parameter_code: '61427', parameter: Acute toxicity — Pimephales promelas, outfall: '001', basis: non-monthly, quarters: {2024-Q3: 10%}}
+  - {parameter_code: '61426', parameter: Chronic toxicity — Ceriodaphnia dubia, outfall: '001', basis: monthly, quarters: {2024-Q1: 10%, 2024-Q3: 100%, 2025-Q3: 40%}}
+  - {parameter_code: '61942', parameter: pH minimum, outfall: '001', basis: limit violation, quarters: {2024-Q2: LIMIT VIOLATION, 2024-Q3: LIMIT VIOLATION}}
+  permit_schedule_violations:   # CWAPSCompliance — the continuing half of the record
+  - schedule_event: CSO Event Report
+    violation: Schedule Event unachieved and not reported
+    started: '2024-01-01'
+    open_through: the current quarter (grid Qtr13, ending 2026-07-24)
+    npdes_violation_id: '3674270156'
+  - schedule_event: Operation and Maintenance (O&M) Report
+    violation: Schedule Event unachieved and not reported
+    started: '2024-02-01'
+    open_through: the current quarter (grid Qtr13, ending 2026-07-24)
+  - schedule_event: Combined Sewer Report
+    violation: Schedule Event unachieved and not reported
+    started: '2024-06-01'
+    open_through: the current quarter (grid Qtr13, ending 2026-07-24)
+  - schedule_event: CSO Event Report
+    violation: Schedule Event reported late
+    period: 2024-01-15 .. 2024-01-25
+    resolved: true
+  - schedule_event: Combined Sewer Report
+    violation: Schedule Event achieved late but reported
+    started: '2024-06-01'
+    resolved: true
+  enforcement:
+    inspections: 5
+    window: 2021-07-25 .. 2026-03-31
+    last_inspection: '2024-05-07'
+    last_inspection_type: Pretreatment - Evaluation
+    formal_enforcement_actions: 0
+    total_penalties: $0
+    note: >-
+      No formal action, no penalty, over a window containing 30 months of continuously open CSO
+      reporting-schedule violations. Recorded as fact, not as an accusation of anything: state
+      practice is generally to work a POTW's CSO obligations through the permit rather than
+      through enforcement, and the *WD modification is arguably that mechanism operating.
+  missing_or_late_dmrs:
+    tag: '[verified]'
+    label: MISSING
+    counts: {2025-Q2: 20, 2025-Q3: 8}
+    detail: 20 missing DMRs in June 2025 and 8 in August 2025 (ECHO CWA3YrD80D90Counts).
+  loadings:   # DmrPollLoads, lb/year
+    tag: '[verified]'
+    dmr_pollutant_loadings: {2022: 4507006, 2023: 4215220, 2024: 4015335, 2025: 4374668, 2026: 2466615}
+    load_over_limit: {2022: 0, 2023: 0, 2024: 1852, 2025: 0, 2026: 0}
+    toxic_weighted_loadings_lb_eq: {2022: 23.33, 2023: 29.94, 2024: 12.62, 2025: 13.30, 2026: 16.92}
+    note: 2026 is a partial year (through the 2026-07-24 extract).
+
+# ── The other two permits on this reach ───────────────────────────────────────
+other_permits_on_the_reach:
+  tag: '[verified]'
+  source: EPA ECHO dfr_rest_services.get_dfr (OH8100611 / OH0135569), read 2026-08-01
+  permits:
+  - npdes: OHG8P0006
+    name: VAN WERT WATER PLANT
+    address: 1260 S. Washington St.
+    sic: 4941 (Water Supply)
+    universe: 'Non-Major: General Permit Covered Facility'
+    expires: '2027-10-17'
+    status: Effective
+    quarters_in_noncompliance: 0
+  - npdes: OH0135569
+    name: CITY OF VAN WERT
+    address: 1260 S Washington St.
+    sic: 4941 (Water Supply)
+    universe: 'Non-Major: NPDES Individual Permit'
+    areas: CSO
+    expires: '2029-12-31'
+    status: Effective
+    quarters_in_noncompliance: 1
+  note: >-
+    The water treatment plant has its own NPDES discharge coverage, and a second individual permit
+    at the same address carries a CSO area flag. Neither instrument is in this corpus — only their
+    ECHO index rows. `[open]`: pull OHG8P0006's general permit and OH0135569 from the Ohio EPA DAM
+    and establish what OH0135569 actually covers; a CSO-flagged permit at the WATER PLANT address
+    is not self-explanatory, and guessing at it would be invention.
+
+# ── What to pull next, in priority order ──────────────────────────────────────
+instruments_to_pull:
+- item: Whether CSO construction began by the 2026-08-01 milestone, and the 14-day notification.
+  why: The first enforceable date the *WD modification created; testable now.
+  route: Ohio EPA NWDO file review / STREAMS event record for 2PD00006, event code 3099.
+- item: The CSO Long Term Control Plan Compliance Assistance Plan itself, and its approval date.
+  why: The issued permit prints "[approval pending]" and two different submission dates.
+  route: Ohio EPA NWDO; the City of Van Wert Safety-Service Director.
+- item: Ohio EPA DSW plan approval PTI DSW-6320 (Blaine Street interceptor + Town Creek siphon).
+  why: The engineering instrument behind two of the four control projects; approved 2025-10-12.
+  route: Ohio EPA eDocument portal (docs/… — the open scriptable route for Ohio permits).
+- item: The Drinking Water Source Protection delineation for PWS OH8100611.
+  why: Pins the raw-water intake location and river mile — the one geometry this file leaves open.
+  route: Ohio EPA Division of Drinking and Ground Waters.
+- item: ECHO effluent chart for OH0027910 — parameters 00665 (TP) and 74062/74063 (CSO occurrence and volume).
+  why: Turns the TMDL headroom inference and the CSO record from ceilings into measured loads.
+  route: eff_rest_services.get_effluent_chart, one year per request (the service 502'd on wider windows 2026-08-01).
+- item: OHG8P0006 and OH0135569 — the two water-plant NPDES instruments.
+  why: Two more permitted discharges on the same reach, neither in the corpus.
+  route: Ohio EPA DAM.
+- item: The City's CSO Public Notification Plan (2018-08-07) and Consumer Confidence Reports 2023–2025.
+  why: The empty public-access-area table and the eight SDWA quarters in noncompliance.
+  route: City of Van Wert Utilities; Ohio EPA DDAGW.
+
+sources:
+- {kind: primary, id: 2PD00006*WD, path: data/documents/oepa/van-wert/2PD00006.f8aaad0a.pdf, extraction: data/extracted/oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml}
+- {kind: primary, id: 2PD00006*WD draft public notice, path: data/documents/oepa/van-wert/2PD00006.36a58063.pdf, extraction: data/extracted/oepa/van-wert/2PD00006.36a58063.npdes.yaml}
+- {kind: primary, id: 2PD00006*VD, path: data/documents/oepa/van-wert/2PD00006.pdf, extraction: data/extracted/oepa/van-wert/2PD00006.npdes.yaml}
+- {kind: primary, id: 2PD00006*VD fact sheet, path: data/documents/oepa/van-wert/2PD00006.fs.pdf, extraction: data/extracted/oepa/van-wert/2PD00006.fs.npdes.yaml}
+- {kind: federal, system: EPA ECHO / ICIS-NPDES, service: dfr_rest_services.get_dfr, ids: [OH0027910, OH8100611, OH0135569], read: '2026-08-01', extract: '2026-07-24'}
+- {kind: federal, system: EPA ECHO / SDWIS, service: sdw_rest_services.get_systems, query: 'p_co=Van Wert&p_st=OH', read: '2026-08-01', extract: '2026-07-09'}
+- {kind: federal, system: USGS NLDI / NHDPlus v2, service: linked-data/comid/position + navigation, read: '2026-08-01'}
+- {kind: reference, publisher: City of Van Wert Utilities, url: 'https://vanwert.org/water-treatment/', read: '2026-08-01'}
