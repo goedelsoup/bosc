@@ -41,9 +41,9 @@
   {
     "id": "OHD000001",
     "origin": "lead",
-    "question": "Track Ohio EPA's statewide data-center NPDES general permit (OHD000001) to finalization",
-    "detail": "OHD000001 is the likely vehicle for any data-center process/stormwater discharge coverage. The comment period closed 2026-01-16 (hearing 2025-12-17); as of the 2026-07-11 refresh the Director's final action was still pending — not finalized, and no Piqua/J5-specific coverage found under it. `[reported]`/`[open]`. Once issued, confirm whether it covers this facility.",
-    "source": "Ohio EPA — wastewater-discharges-from-data-centers general permit (OHD000001)",
+    "question": "OHD000001 was withdrawn — is there an individual NPDES or pretreatment record for the campus?",
+    "detail": "RESOLVED NEGATIVE on the original thread: Ohio EPA abandoned the draft statewide data-center general permit. Its Community Notice of 2026-07-21 states the agency \"has decided not to move forward with finalizing the general permit. The individual NPDES permit issuance process is the most appropriate path forward.\" `[verified]`. The comment period had closed 2026-01-16 (hearing 2025-12-17) and the Director's final action was still pending at the 2026-07-11 refresh; it never came, so no Piqua/J5 coverage can ever exist under OHD000001. Still `[open]` on the successor question: with the general permit gone, an INDIVIDUAL NPDES permit is the only remaining instrument on a direct-discharge path — but that path is not established here. A facility blowing down to the Piqua sanitary sewer files no DMR at all and is disclosed instead by an industrial-pretreatment (IU) permit and sewer-use agreement. No individual NPDES or IU record naming J5 LLC / Shaytura LLC has been located, and this has not been run as a dated, direct DAM/eSuite search — unsearched, not a searched negative.",
+    "source": "Ohio EPA NPDES General Permits page — Community Notice 2026-07-21 abandoning OHD000001",
     "kind": "signal",
     "status": "unanswered",
     "issue": 1486,

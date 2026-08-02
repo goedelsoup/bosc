@@ -81,15 +81,23 @@ leads:
   kind: signal
   status: unanswered
   tag: open
-  title: Track Ohio EPA's statewide data-center NPDES general permit (OHD000001) to finalization
+  title: OHD000001 was withdrawn — is there an individual NPDES or pretreatment record for the campus?
   detail: >
-    OHD000001 is the likely vehicle for any data-center process/stormwater discharge coverage. The
-    comment period closed 2026-01-16 (hearing 2025-12-17); as of the 2026-07-11 refresh the Director's
-    final action was still pending — not finalized, and no Piqua/J5-specific coverage found under it.
-    `[reported]`/`[open]`. Once issued, confirm whether it covers this facility.
-  source: Ohio EPA — wastewater-discharges-from-data-centers general permit (OHD000001)
+    RESOLVED NEGATIVE on the original thread: Ohio EPA abandoned the draft statewide data-center
+    general permit. Its Community Notice of 2026-07-21 states the agency "has decided not to move
+    forward with finalizing the general permit. The individual NPDES permit issuance process is the
+    most appropriate path forward." `[verified]`. The comment period had closed 2026-01-16 (hearing
+    2025-12-17) and the Director's final action was still pending at the 2026-07-11 refresh; it never
+    came, so no Piqua/J5 coverage can ever exist under OHD000001.
+    Still `[open]` on the successor question: with the general permit gone, an INDIVIDUAL NPDES permit
+    is the only remaining instrument on a direct-discharge path — but that path is not established
+    here. A facility blowing down to the Piqua sanitary sewer files no DMR at all and is disclosed
+    instead by an industrial-pretreatment (IU) permit and sewer-use agreement. No individual NPDES or
+    IU record naming J5 LLC / Shaytura LLC has been located, and this has not been run as a dated,
+    direct DAM/eSuite search — unsearched, not a searched negative.
+  source: Ohio EPA NPDES General Permits page — Community Notice 2026-07-21 abandoning OHD000001
   issue: 1486
-  note: next check — re-poll the OHD000001 page for the Director's final action and any Piqua/J5 authorization
+  note: next check — search Ohio EPA DAM/eSuite for an individual NPDES permit or an IU/pretreatment record naming J5 LLC / Shaytura LLC (the records ask is #1688)
 - id: WWTP-WLA
   kind: question
   status: review
@@ -103,6 +111,10 @@ leads:
     modification has not been checked against the fact sheet's WLA basis (the low-flow denominator).
     `[inference]`, unresolved: the committed fact-sheet extraction currently captures only the header
     pages, so the WLA table itself is a pull target.
+    Weight raised by the OHD000001 withdrawal (2026-07-21): with no data-center general permit, a
+    campus routing to the sanitary sewer files no DMR of its own, so the City's industrial-pretreatment
+    (IU) permit and sewer-use agreement — not a facility NPDES — become the instruments that would
+    disclose the actual load against this headroom.
   source: data/extracted/oepa/troy-piqua/1PD00008.fs.npdes.yaml · data/extracted/troy-piqua/wwtp-oh0027049.dmr.yaml (2023 DMR)
   issue: 1486
 - id: CONSTRUCTION-SWPPP
