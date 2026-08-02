@@ -31,3 +31,11 @@ notes: >-
   vision read → Pydantic `Estimate`). Figures come from the page image, never the garbled
   OCR text layer. `summary` is the assembled summary sheet; `detail` adds per-section line
   items. Static: a fixed public record, regenerable but not refreshed.
+
+  PRODUCER CHANGED 2026-08-01, OUTPUT UNAFFECTED (issue 1406). `save_extraction`'s two
+  path-side fixes — mirroring a registered-site subdirectory into the extracted tree, and
+  recording a repo-relative instead of an absolute `source_path` — leave this dataset where it
+  is and byte-identical. `data/documents/aedg/PRR-01-bundle.ocr.pdf` has no site subdirectory to
+  mirror, and these two artifacts are hand-assembled reads that carry no absolute path. The
+  entry is touched because the producer is shared with every site's permit extraction, where
+  both fixes do change the result.
