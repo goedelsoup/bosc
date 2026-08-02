@@ -10,10 +10,11 @@
  */
 import Base from "../layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import { LENS_ORDER, lensConfig } from "@watermark/core/directory";
+import type { SiteTier } from "@watermark/core/bundle";
+import { LENS_ORDER, lensConfig, TIER_PILL } from "@watermark/core/directory";
 import type { HypothesisItem } from "@watermark/core/feeds";
 import { withBase, withSite, siteUrl } from "@watermark/core/site";
-import { groupSites, SITE_STATUS_META, SITES, type SiteStatus } from "@watermark/core/sites";
+import { groupSites, networkRollup, SITE_STATUS_META, SITES, type SiteStatus } from "@watermark/core/sites";
 
 const totalSites = SITES.length;
 const basins = groupSites("basin").length;
@@ -35,11 +36,31 @@ const phaseCounts = PHASE_ORDER.map((k) => ({
   color: PHASE_COLOR[k],
 }));
 
+// What the network has actually ASSEMBLED, summed over every site's exported bundle (#1861) —
+// the registry figures above only count sites we've registered. Both move on their own: the
+// ledger rises when a site lands records and falls when a source dries up, at every export.
+const net = networkRollup();
+const num = (n: number): string => n.toLocaleString("en-US");
+
+// Readiness-tier distribution, in depth order — the peer bar to build phase. Colors come from
+// the directory's TIER_PILL dots so the home ledger and the scorecard read as one encoding.
+// Unbuilt sites are held out of the bar entirely rather than shown as `stub`, which would
+// assert a computed tier no export has produced.
+const TIER_ORDER: SiteTier[] = ["reference", "case", "backdrop", "stub"];
+const tierCounts = TIER_ORDER.map((k) => ({
+  key: k,
+  label: TIER_PILL[k].label,
+  count: net.byTier[k],
+  color: TIER_PILL[k].dot,
+})).filter((t) => t.count > 0);
+
 const stats = [
   { n: String(totalSites), l: "Sites" },
   { n: String(basins).padStart(2, "0"), l: "Basins" },
   { n: String(liveCount).padStart(2, "0"), l: "Live reference" },
   { n: String(states).padStart(2, "0"), l: "States" },
+  { n: num(net.documents), l: "Documents" },
+  { n: num(net.records), l: "Records" },
 ];
 
 // The three hypotheses, in brief — config + status only (the scorecard does the scoring).
@@ -141,6 +162,27 @@ const featured = SITES.slice(0, 8).map((s, i) => ({
                 </span>
               ))
             }
+          </div>
+        </div>
+        <div class="dirh-phase">
+          <div class="dirh-phase-head">Readiness tier</div>
+          <div class="dirh-phase-bar">
+            {
+              tierCounts.map((t) => (
+                <span style={`flex:${t.count};background:${t.color}`} title={`${t.count} ${t.label}`} />
+              ))
+            }
+          </div>
+          <div class="dirh-phase-legend">
+            {
+              tierCounts.map((t) => (
+                <span class="dirh-leg">
+                  <span class="dirh-leg-dot" style={`background:${t.color}`} />
+                  {t.count} {t.label.toLowerCase()}
+                </span>
+              ))
+            }
+            {net.unbuilt > 0 && <span class="dirh-leg dirh-leg--out">{net.unbuilt} not yet exported</span>}
           </div>
         </div>
       </div>
@@ -337,6 +379,11 @@ const featured = SITES.slice(0, 8).map((s, i) => ({
     padding: 0.9rem;
     border-top: 1px solid var(--bosc-ink);
   }
+  /* Build phase and readiness tier are peer bars in one band — the ink rule opens the band,
+     a hairline separates the two inside it. */
+  .dirh-phase + .dirh-phase {
+    border-top-color: var(--bosc-rule);
+  }
   .dirh-phase-head {
     margin-bottom: 0.55rem;
   }
@@ -361,6 +408,11 @@ const featured = SITES.slice(0, 8).map((s, i) => ({
     font-family: var(--bosc-mono);
     font-size: 0.7rem;
     color: var(--bosc-muted);
+  }
+  /* Sites held OUT of the tier bar (no committed bundle) — dotless, so the legend never implies
+     they carry a computed tier. */
+  .dirh-leg--out {
+    color: var(--bosc-faint);
   }
   .dirh-leg-dot {
     width: 8px;

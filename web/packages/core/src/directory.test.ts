@@ -1,13 +1,30 @@
 import { describe, expect, it } from "vitest";
-import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount, lensDatum } from "./directory";
+import {
+  buildLens,
+  indexAssessments,
+  LENS_ORDER,
+  lensConfig,
+  lensCount,
+  lensDatum,
+  TIER_PILL,
+} from "./directory";
 import type { FacilityStatus, HypothesisAssessmentItem, HypothesisItem } from "./feeds";
-import { SITES } from "./sites";
+import { SITES, type SiteRollup } from "./sites";
 
-const LIMA_COUNTS = { docs: "2,140", records: "318" };
-
-// A pure stub for buildLens's facility-status lookup (#1628) — the real page passes the
-// bundle-backed `facilityStatus`; this keeps the unit test offline (no bundle).
+// Pure stubs for buildLens's two bundle-backed lookups — the real page passes `facilityStatus`
+// (#1628) and `siteRollup` (#1861); these keep the unit test offline (no bundle). The rollup stub
+// covers the four cases the renderer must distinguish: the reference build, a worked `case`, a
+// built-but-empty site (real zeros), and a registered site with no bundle at all (nulls).
 const FAC_STATUS = (slug: string): FacilityStatus => (slug === "lima" ? "construction" : "investigation");
+
+const ROLLUPS: Record<string, SiteRollup> = {
+  lima: { documents: 3247, records: 56, tier: "reference" },
+  "bowling-green": { documents: 8, records: 5, tier: "case" },
+  sandusky: { documents: 0, records: 0, tier: "stub" },
+};
+// Every other slug is registered but unbuilt — nothing measured.
+const NO_BUNDLE: SiteRollup = { documents: null, records: null, tier: null };
+const ROLLUP = (slug: string): SiteRollup => ROLLUPS[slug] ?? NO_BUNDLE;
 
 // The committed (site x hypothesis) cells, as they arrive from the `hypothesis-assessments`
 // feed. Mirrors data/hypotheses/**; the Python port-parity test guards these against LENS_DATA.
@@ -111,7 +128,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("water lens groups all sites by basin, nested under the two divides", () => {
-    const v = buildLens("water", LIMA_COUNTS, DATA, FAC_STATUS);
+    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
     expect(v.groups).toHaveLength(11); // eleven basins
     const total = v.groups.reduce((n, g) => n + g.rows.length, 0);
     expect(total).toBe(SITES.length);
@@ -134,23 +151,59 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     ]);
   });
 
-  it("water lens shows Lima's real counts and a dash everywhere else — never a fabricated number", () => {
-    const v = buildLens("water", LIMA_COUNTS, DATA, FAC_STATUS);
+  it("water lens rolls each site's OWN bundle counts up per row, not Lima's alone (#1861)", () => {
+    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
     const rows = v.groups.flatMap((g) => g.rows);
-    const lima = rows.find((r) => r.slug === "lima");
-    // cols: site, watershed, phase, documents, records, facility
-    expect(lima?.cells[3].text).toBe("2,140");
-    expect(lima?.cells[4].text).toBe("318");
+    const row = (slug: string) => rows.find((r) => r.slug === slug);
+    // cols: site, watershed, phase, tier, documents, records, facility
+    expect(v.cols.map((c) => c.label)).toEqual([
+      "Site",
+      "Watershed point",
+      "Build phase",
+      "Tier",
+      "Documents",
+      "Records",
+      "Facility status",
+    ]);
+    expect(v.gridCols.split(" ")).toHaveLength(v.cols.length); // one width per column
+    expect([row("lima")?.cells[4].text, row("lima")?.cells[5].text]).toEqual(["3,247", "56"]);
+    // The symptom this fixes: a worked peer used to read "—/—" beside a rolled-up facility pill.
+    expect([row("bowling-green")?.cells[4].text, row("bowling-green")?.cells[5].text]).toEqual(["8", "5"]);
+  });
+
+  it("distinguishes a measured zero from an unmeasured dash — the two are different claims", () => {
+    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
+    const rows = v.groups.flatMap((g) => g.rows);
+    // Built, but its export carries nothing: a real 0, rendered un-muted — a measurement.
+    const sandusky = rows.find((r) => r.slug === "sandusky");
+    expect(sandusky?.cells[4].text).toBe("0");
+    expect(sandusky?.cells[4].muted).toBe(false);
+    // No committed bundle: a muted dash, never a fabricated zero.
     for (const r of rows) {
-      if (r.slug === "lima") continue;
-      expect(r.cells[3].text).toBe("—");
+      if (["lima", "bowling-green", "sandusky"].includes(r.slug)) continue;
       expect(r.cells[4].text).toBe("—");
-      expect(r.cells[3].muted).toBe(true);
+      expect(r.cells[5].text).toBe("—");
+      expect(r.cells[4].muted).toBe(true);
     }
   });
 
+  it("surfaces readiness.tier as its own pill — and withholds it where no export produced one", () => {
+    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
+    const rows = v.groups.flatMap((g) => g.rows);
+    const tier = (slug: string) => rows.find((r) => r.slug === slug)?.cells[3];
+    expect(tier("lima")?.pill).toEqual(TIER_PILL.reference);
+    expect(tier("bowling-green")?.pill).toEqual(TIER_PILL.case);
+    // An empty stub and a worked case are no longer visually identical (the #1861 complaint).
+    expect(tier("sandusky")?.pill).toEqual(TIER_PILL.stub);
+    expect(tier("sandusky")?.pill).not.toEqual(tier("bowling-green")?.pill);
+    // An unbuilt site gets a dash, not a `stub` pill — that would assert a tier nothing computed.
+    const unbuilt = rows.find((r) => !["lima", "bowling-green", "sandusky"].includes(r.slug));
+    expect(unbuilt?.cells[3].pill).toBeUndefined();
+    expect(unbuilt?.cells[3].text).toBe("—");
+  });
+
   it("defense lens groups assessed sites and sweeps the rest into a 'not yet assessed' chip tail", () => {
-    const v = buildLens("defense", LIMA_COUNTS, DATA, FAC_STATUS);
+    const v = buildLens("defense", ROLLUP, DATA, FAC_STATUS);
     const rowGroups = v.groups.filter((g) => g.kind === "rows");
     const chipGroups = v.groups.filter((g) => g.kind === "chips");
     expect(rowGroups.map((g) => [g.abbr, g.count])).toEqual([
@@ -166,7 +219,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("surveillance lens splits on-record from signal-only, with the rest in the chip tail", () => {
-    const v = buildLens("surveillance", LIMA_COUNTS, DATA, FAC_STATUS);
+    const v = buildLens("surveillance", ROLLUP, DATA, FAC_STATUS);
     const rowGroups = v.groups.filter((g) => g.kind === "rows");
     expect(rowGroups.map((g) => [g.abbr, g.count])).toEqual([
       ["OPR", 2], // Lima, New Albany
@@ -215,7 +268,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     const data = indexAssessments(cellsWithTag);
     expect(lensDatum("lima", data).surv.sub_thesis).toBe("capture");
     // The scorecard row appends · [capture] to the operator cell.
-    const v = buildLens("surveillance", LIMA_COUNTS, data, FAC_STATUS);
+    const v = buildLens("surveillance", ROLLUP, data, FAC_STATUS);
     const limaRow = v.groups.flatMap((g) => g.rows).find((r) => r.slug === "lima");
     expect(limaRow?.cells[1].text).toBe("Project BOSC · [capture]");
   });
