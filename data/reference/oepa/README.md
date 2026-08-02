@@ -47,11 +47,18 @@ process is the most appropriate path forward at this time." The permit is **WITH
 
 Every candidate still resolves to `not_available`, but read it correctly: the absence is
 now **permanent, not pending**. No coverage list will ever exist, so this is no longer a
-watch that closes by waiting — the only instrument that would ever disclose a data
-center's cooling discharge is an **individual NPDES permit**, which is a substantially
-better evidentiary object than a general-permit coverage row (public-noticed,
-fact-sheeted, individually limited). The replacement watch is whether such an application
-or draft permit appears for any cohort campus.
+watch that closes by waiting — on the direct-discharge path the only remaining instrument
+is an **individual NPDES permit**, which is a substantially better evidentiary object than
+a general-permit coverage row (public-noticed, fact-sheeted, individually limited). The
+replacement watch is whether such an application or draft permit appears for any cohort
+campus.
+
+Mind the scope of that claim. It is about the **NPDES path only**. A facility that blows
+down to a POTW **sanitary sewer** discharges to no water of the state, holds no NPDES
+permit, and files no DMR — its cooling flow is disclosed instead by the City's
+**industrial-pretreatment / IU permit and sewer-use agreement**, which ECHO never carries.
+That is why the C2 request (#1688) asks for those records rather than waiting on a permit,
+and why a `route_blind` row re-aims the ask at the utility rather than at Ohio EPA.
 
 The lifecycle lives in one cited place — the `OHD000001` constant in
 `watermark.hydrology.blowdown`; update it there and rerun the regenerate command. The

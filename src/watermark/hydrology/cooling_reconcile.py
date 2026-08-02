@@ -1918,7 +1918,12 @@ _BOWLING_GREEN_RESERVED_MAKEUP = ProvenancedValue.from_reference(
         "(#1439), and which B5 does not resolve either. Neither the NWWSD-Meta service agreement nor "
         "the August 2024 City-NWWSD wholesale contract (ceiling raised to 1.5 MGD against ~860,000 "
         "gpd then actually purchased) is in-corpus; both are R.C. 149.43 targets (C2, #1688). A "
-        "reserved capacity ceiling, NOT a withdrawal record."
+        "reserved capacity ceiling, NOT a withdrawal record. ⚠️ Do NOT read the Wood County "
+        "registry as corroborating this figure: BOWLING GREEN CITY PWS (00251) reports a 2024 "
+        "RETURN of 220.84 MG ≈ 0.605 MGD, which resembles it numerically and is unrelated to it — "
+        "that is the water treatment plant's own filter-backwash and residuals, discharged under "
+        "the plant's NPDES permit OH0030848 (McDowell WTP), and every reported year sits in the "
+        "same 206-235 MG band with the earliest at 2016, before the campus existed."
     ),
     confidence="medium",  # a real demand signal, but with a competing operator figure and no instrument
 )

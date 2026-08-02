@@ -167,10 +167,14 @@ this site in 2026, so the campus's non-appearance is a **route**, not a hole in 
 7. **A public system's `returns` series is plant backwash, not a customer's discharge.**
    Bowling Green City PWS (00251) reports a 2024 return of **220.84 MG ≈ 0.605 MGD**,
    which numerically resembles the disputed ~600,000 gpd Meta demand figure that the B5
-   review (#1685) turns on. It is not that figure and cannot settle it: the same series
-   runs 206–235 MG every year back to 2015, a decade before the campus existed, and is
-   the water-treatment plant's own filter-backwash and residuals return. Read a `returns`
-   row against the facility that reports it, never against one of its customers.
+   review (#1685) turns on. It is not that figure and cannot settle it: it is the water
+   treatment plant's own filter-backwash and residuals return — the plant discharges it
+   under its own NPDES permit (`OH0030848`, McDowell WTP) — and every reported year in
+   this file sits in a narrow **206–235 MG** band, the earliest of them **2016**, years
+   before the campus existed. (The series is reported for 2016 and 2018–2024; 2015 and
+   2017 carry no return row, so read it as a *stable reported band*, not as continuous
+   annual coverage.) Read a `returns` row against the facility that reports it, never
+   against one of its customers.
 
 ## Field reference
 

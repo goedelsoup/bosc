@@ -16,10 +16,14 @@ changed shape: **OHD000001 was withdrawn** — Ohio EPA publicly declined to fin
 individual NPDES process "is the most appropriate path forward" (it had been public-noticed
 2025-10-31 with comment closing 2026-01-16). Every candidate still resolves to ``not_available``,
 but the absence is now **permanent rather than pending**: no amount of waiting produces a coverage
-list, and the only instrument that would ever disclose a data center's cooling discharge is an
-individual NPDES permit. That is a materially stronger finding than the draft-gated one it
-replaces — a general permit would have carried generic limits, whereas an individual permit is
-public-noticed, fact-sheeted and individually limited. The lifecycle lives in one cited place
+list, and on the NPDES path the only remaining instrument is an **individual** permit. That is a
+materially stronger finding than the draft-gated one it replaces — a general permit would have
+carried generic limits, whereas an individual permit is public-noticed, fact-sheeted and
+individually limited. Note the scope of that claim: it is about the NPDES path only. A facility
+blowing down to a POTW **sanitary sewer** holds no NPDES permit at all, and its cooling discharge
+is disclosed instead by the City's industrial-pretreatment / IU permit and sewer-use agreement —
+which is why the C2 records request (#1688) asks for those and not merely for a permit.
+The lifecycle lives in one cited place
 (:data:`OHD000001`); update it there and regenerate the coverage artifact. The per-facility
 authorization check remains the forward-compatible seam in :func:`resolve_coverage`, now
 unreachable for this permit and kept for the next general permit that does issue.
@@ -233,8 +237,11 @@ def resolve_coverage(candidate: Candidate, *, gp: GeneralPermit = OHD000001) -> 
         coverage_read = (
             f"{gp.permit_id} was WITHDRAWN (Ohio EPA declined to finalize it, {gp.asof}); it will "
             f"never issue, so {candidate.facility} can never hold blowdown coverage under it. "
-            f"This absence is permanent, not pending: an INDIVIDUAL NPDES permit is now the only "
-            f"instrument that would disclose this facility's cooling discharge."
+            f"This absence is permanent, not pending: on the NPDES path an INDIVIDUAL permit is "
+            f"now the only instrument that would disclose this facility's cooling discharge. That "
+            f"path is not the only one — a facility that blows down to a POTW sanitary sewer holds "
+            f"no NPDES permit at all, and its flow is disclosed instead by the City's "
+            f"industrial-pretreatment / IU permit and sewer-use agreement (the C2 ask, #1688)."
         )
     elif not gp.effective:
         status = CoverageStatus.NOT_AVAILABLE
@@ -320,8 +327,11 @@ def coverage_document(gp: GeneralPermit, coverages: list[BlowdownCoverage]) -> d
                 "draft (not effective), or once it has been withdrawn, no facility can be "
                 "authorized, so the per-candidate status is not_available — a [verified] cited "
                 "absence. Ohio EPA WITHDREW OHD000001 on 2026-07-21, so that absence is now "
-                "permanent rather than pending, and an individual NPDES permit is the only "
-                "instrument that would disclose a data center's cooling discharge. "
+                "permanent rather than pending, and on the NPDES path an individual permit is the "
+                "only remaining instrument that would disclose a data center's cooling discharge "
+                "— though a facility blowing down to a POTW sanitary sewer holds no NPDES permit "
+                "at all and is disclosed instead by the City's industrial-pretreatment / IU permit "
+                "and sewer-use agreement. "
                 "Facility-own discharge presence is "
                 "unknown until a search establishes it (the C2 records request); an absence under a "
                 "closed-loop-dry claim is a finding, never read as 'confirmed dry'. No per-site "

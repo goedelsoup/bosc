@@ -96,7 +96,9 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   `DischargeSummary.seasonality` / the `dmr_document()` `seasonality:` block. (2) `blowdown.py`
   resolves **OHD000001** (Ohio's data-center NPDES general permit — **withdrawn 2026-07-21**, Ohio
   EPA declined to finalize it, so its non-coverage is now a permanent absence rather than a pending
-  one and an individual NPDES permit is the only instrument left) coverage per closed-loop
+  one, and on the NPDES path an individual permit is the only instrument left — but a
+  sewer-discharging facility holds no NPDES permit at all and is disclosed by the City's
+  IU/pretreatment record instead, which is what the C2 ask targets) coverage per closed-loop
   candidate: while the permit is draft it is gated to `not_available` (a `[verified]` cited
   absence), written to `data/reference/oepa/ohd000001-coverage.yaml` by `watermark oepa coverage
   --write`. The cohort is registry-derived (`SiteFacility.cooling_model` in
