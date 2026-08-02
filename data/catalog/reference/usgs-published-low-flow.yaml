@@ -1,0 +1,51 @@
+id: usgs-published-low-flow
+title: USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: U.S. Geological Survey published reports — WRI 01-4140 (Straub, 2001) and SIR 2024-5075
+    (VonIns and Koltun, 2024, ver. 1.1), downloaded verbatim from pubs.usgs.gov
+  external_url: https://pubs.usgs.gov/publication/sir20245075
+license: U.S. Government work (public domain)
+access_tier: public
+site_scope: basin-shared
+storage:
+- relpath: reference/usgs/low-flow/wri20014140.pdf
+  media_type: application/pdf
+  lfs: true
+- relpath: reference/usgs/low-flow/sir20245075.pdf
+  media_type: application/pdf
+  lfs: true
+- relpath: reference/usgs/low-flow/sir20245075_app1_table1.1.csv
+  media_type: text/csv
+  lfs: false
+- relpath: reference/usgs/low-flow/sir20245075_app2_table2.1.csv
+  media_type: text/csv
+  lfs: false
+- relpath: reference/usgs/low-flow/README.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-08-02'
+provenance: reference
+tags:
+- 7q10
+- low-flow
+- usgs
+- published
+- blanchard-river
+- primary-source
+notes: >-
+  The published counterweight to the network's own derived LP3 denominators (issue 1458). Straub 2001
+  supplies a published 7Q10 at a named gage over the pre-1998 record; SIR 2024-5075 supplies modern
+  (WY1975-2020) statistics plus, in its table 1, a published per-gage `Regulated`/`Unregulated`
+  low-flow classification — the third-party judgment `mainstem-gages.yaml` now cites when it demotes a
+  regulated screening denominator. Static published documents at permanent URLs, so there is no
+  connector and no regen command; re-fetch is `curl -O` plus a sha256 compare against README.md. Two
+  traps recorded in that README — (1) the PDF cover and both CSV headnotes print report number
+  "2024-5057" while the publication, DOI and suggested citation are "2024-5075", and both name the
+  same instrument; (2) a gage's ABSENCE from SIR 2024-5075 is not evidence of regulation, because
+  regulated gages ARE listed with statistics — USGS 04189000 (Blanchard River near Findlay) is absent
+  from all three tables with no stated reason.

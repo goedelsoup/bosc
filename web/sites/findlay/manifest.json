@@ -2,9 +2,9 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "1.51.0",
-  "generated_at": "2026-08-02T10:43:14+00:00",
+  "generated_at": "2026-08-02T17:42:59+00:00",
   "feed_count": 32,
-  "row_total": 600,
+  "row_total": 601,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 64
+      "count": 65
     },
     {
       "name": "facts",

@@ -36,4 +36,10 @@ tags:
 - usgs-nwis
 notes: 'Three files under one entry: low-flow-7q10.yaml is document-cited (Ohio EPA fact sheets), low-flow-7q10.derived.yaml
   is NWIS→LP3-derived, and mainstem-gages.yaml is the hand-curated input table (gage IDs + ECHO aliases)
-  the derivation reads — they are not interchangeable.'
+  the derivation reads — they are not interchangeable. #1458 added two cross-file mechanisms: a cited entry in
+  low-flow-7q10.yaml may declare `permits:` (the value binds to those NPDES/OEPA ids only — Ohio EPA
+  computes the design low flow AT THE OUTFALL, so one river carries several correct, non-interchangeable
+  values), and a mainstem-gages.yaml gage may carry cited `published`/`regulation`/`cross_check_gages`
+  blocks that the derivation copies into the derived file, where `regulation.status: regulated` demotes
+  that denominator to confidence `low`. Author those blocks in mainstem-gages.yaml, never in the
+  regenerated derived output.'

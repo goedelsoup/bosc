@@ -20,13 +20,16 @@ the same nutrient cap, so the sites are nested nodes on one connected basin, not
   one provenance-tagged `BasinNetwork` (`watermark.network`). Regenerate with `watermark basin-network
   --write`; do not hand-edit. Reads only committed reference data — no network calls.
 
-- **`findlay-ottawa-comparison.yaml`** — *curated, cited (#417).* The network's **only** along-one-river
-  (intra-tributary) control: Findlay (upstream, 15 MGD) and the Village of Ottawa (downstream, 3 MGD)
-  both discharge to the **Blanchard River**, ~40 river-miles apart, so their effluent is screened
-  against one **shared** derived Blanchard 7Q10 (8.67 cfs, USGS 04189000; `low-flow-7q10.derived.yaml`,
-  from #414). It is hand-assembled, **not** produced by `watermark basin-network` — that synthesis
-  leaves both nodes `no_receiving_water` because ECHO carries no receiving-water name for OH0025135 /
-  OH0026921. Watershed identity is held constant; only the discharge point + plant size vary.
+- **`findlay-ottawa-comparison.yaml`** — *curated, cited (#417, rewritten by #1458).* The network's
+  **only** along-one-river (intra-tributary) control: Findlay (upstream, 15 MGD) and the Village of
+  Ottawa (downstream, 3 MGD) both discharge to the **Blanchard River**, 34.32 river-miles apart
+  (RM 56.42 vs RM 22.1). Each is now screened against **its own** Ohio EPA fact-sheet design low
+  flow at its own outfall — 0.21 cfs and 7.78 cfs — not against one shared derived 8.67 cfs. That
+  shared denominator was retired: USGS 04189000 is a *regulated* gage (Findlay Reservoir low-flow
+  augmentation) sitting *downstream of the Findlay outfall*, so it contained the discharge it was
+  screening. Hand-assembled, **not** produced by `watermark basin-network`. Findlay now screens in
+  that synthesis (its ECHO receiving water landed via the curation overlay, #1460/#352); Ottawa is
+  still `no_receiving_water` there, which is the artifact's own open item.
 
 ## Discipline
 

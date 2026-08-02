@@ -85,6 +85,60 @@ def low_flow_for(
     return load_low_flows(settings=settings).get(_normalize(receiving_water))
 
 
+def normalize_permit(permit: str) -> str:
+    """Normalize a permit/application id for lookup (``2PD00008*UD`` -> ``2pd00008``).
+
+    Ohio EPA appends a two-letter action suffix to the permit number for each issuance
+    (``*UD`` renewal, ``*VD`` modification), so the id printed on a fact sheet is not the id
+    ECHO carries. The design low flow is a property of the OUTFALL, not of which issuance is
+    current, so the suffix is stripped: a permit-scoped value stays bound across renewals.
+    """
+    return str(permit).split("*", 1)[0].strip().lower()
+
+
+def load_permit_low_flows(*, settings: Settings | None = None) -> dict[str, ProvenancedValue]:
+    """Return ``{normalized permit id -> that permit's own cited 7Q10}`` (#1458).
+
+    The **permit-scoped** index over the same committed table :func:`load_low_flows` reads by
+    receiving-water name. An entry that declares ``permits:`` is binding for exactly those NPDES
+    application / Ohio EPA permit ids and nothing else, because Ohio EPA computes the design low
+    flow **at the outfall** — one river can carry several correct, non-interchangeable values (the
+    Blanchard's 0.21 cfs at Findlay's RM 56.42 and 7.78 cfs at Ottawa's RM 22.1, 37x apart).
+
+    Name-keying cannot express that: :func:`_normalize` strips ``at …`` on purpose, so every
+    reach of one river collapses to one key. The basin screen therefore prefers this index over
+    any name match for a facility it can identify by permit; the routed-network solver does not
+    read it at all, because it resolves a *reach*, which is not a permit.
+    """
+    settings = settings or get_settings()
+    path = _reference_path(settings)
+    if not path.is_file():
+        return {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    out: dict[str, ProvenancedValue] = {}
+    for name, entry in (data.get("streams") or {}).items():
+        if not isinstance(entry, dict) or entry.get("seven_q10_cfs") is None:
+            continue
+        permits = entry.get("permits") or []
+        if not isinstance(permits, list):
+            raise ValueError(f"low-flow entry {name!r}: `permits` must be a list, got {permits!r}")
+        for permit in permits:
+            key = normalize_permit(str(permit))
+            if key in out:
+                raise ValueError(
+                    f"low-flow permit {permit!r} is claimed by two entries — a permit has exactly "
+                    "one design low flow; fix data/reference/hydrology/low-flow-7q10.yaml"
+                )
+            out[key] = ProvenancedValue(
+                value=float(entry["seven_q10_cfs"]),
+                unit="cfs",
+                source=str(entry.get("source", "document")),
+                citation=entry.get("citation"),
+                confidence=str(entry.get("confidence", "high")),
+            )
+    return out
+
+
 def load_acute_low_flows(*, settings: Settings | None = None) -> dict[str, ProvenancedValue]:
     """Return ``{normalized receiving water -> cited 1Q10 ProvenancedValue}``.
 
