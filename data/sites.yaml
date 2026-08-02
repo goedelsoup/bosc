@@ -1,7 +1,7 @@
 # Canonical identity registry for all Watermark network sites (tracking → live).
 # This file is the single source of truth for site identity — the authoritative record for
-# slug, place, basin display label, receiving water, state, status, map defaults, and the
-# frontend badge (codename / mono). See docs/onboarding.md for the field guide.
+# slug, place, basin display label, major basin, receiving water, state, status, map defaults,
+# and the frontend badge (codename / mono). See docs/onboarding.md for the field guide.
 #
 # Usage:
 #   - Python: watermark.sites loads this at import time; SiteProfile back-fills identity fields.
@@ -12,8 +12,16 @@
 #   slug         kebab-case registry key
 #   place        display name for the city / area
 #   basin_label  receiving-water / sub-basin display string (TypeScript `basin` field)
+#   basin_major  the MAJOR river basin this site groups under (kebab slug: maumee, great-miami,
+#                scioto, …) — a different granularity from `basin_label`, and the grouping axis
+#                for the basin lens / the water-lens scorecard / the two continental divides.
+#                Authoritative here (#1863): it back-stops the Python `SiteProfile.basin` literal
+#                (`watermark sites check` fails on disagreement) and reaches the frontend registry
+#                so `groupSites("basin")` derives its placement instead of keeping a parallel copy.
+#                Its display label / abbr / region / divide live in web/packages/core/src/basins.ts.
 #   receiving_water  Python receiving_water_name on the active NPDES (null for tracking-only)
-#   state        two-letter abbreviation (OH, IN)
+#   state        two-letter abbreviation (OH, IN) — the grouping axis for the state lens, and the
+#                source of the per-site dateline ("Lima, Ohio") via `siteState` (#1863)
 #   county       economic/administrative county as it reads in a citation ("Allen County, OH");
 #                back-fills Python county_name, and reaches the frontend registry so the
 #                ask-index can stamp it as a retrieval facet (#1691). null = no profile yet.
@@ -31,6 +39,7 @@ sites:
   - slug: lima
     place: "Lima"
     basin_label: "Ottawa River · Lima, OH"
+    basin_major: "maumee"
     receiving_water: "Ottawa River"
     state: "OH"
     county: "Allen County, OH"
@@ -46,6 +55,7 @@ sites:
   - slug: fort-wayne
     place: "Fort Wayne"
     basin_label: "Maumee headwaters"
+    basin_major: "maumee"
     receiving_water: "Maumee River"
     state: "IN"
     county: "Allen County, IN"
@@ -61,6 +71,7 @@ sites:
   - slug: urbana
     place: "Urbana"
     basin_label: "Mad River · Great Miami"
+    basin_major: "great-miami"
     receiving_water: "Mad River"
     state: "OH"
     county: "Champaign County, OH"
@@ -78,6 +89,7 @@ sites:
   - slug: defiance
     place: "Defiance"
     basin_label: "Maumee mainstem"
+    basin_major: "maumee"
     receiving_water: "Maumee River"
     state: "OH"
     county: "Defiance County, OH"
@@ -93,6 +105,7 @@ sites:
   - slug: findlay
     place: "Findlay"
     basin_label: "Blanchard River"
+    basin_major: "maumee"
     receiving_water: "Blanchard River"
     state: "OH"
     county: "Hancock County, OH"
@@ -108,6 +121,7 @@ sites:
   - slug: toledo
     place: "Toledo"
     basin_label: "Lucas Co WRRF"
+    basin_major: "maumee"
     receiving_water: "Maumee River"
     state: "OH"
     county: "Lucas County, OH"
@@ -125,6 +139,9 @@ sites:
   - slug: bowling-green
     place: "Bowling Green · Middleton Twp"
     basin_label: "Portage · Maumee divide"
+    # Its OWN basin, not the Maumee's: the discharge decides the grouping, and the Portage is a
+    # distinct Lake Erie basin. (It still nests in the Maumee *region* — see placement.ts.)
+    basin_major: "portage"
     receiving_water: "North Branch Portage River"
     state: "OH"
     county: "Wood County, OH"
@@ -140,6 +157,7 @@ sites:
   - slug: van-wert
     place: "Van Wert"
     basin_label: "Town Creek · Little Auglaize"
+    basin_major: "maumee"
     receiving_water: "Town Creek"
     state: "OH"
     county: "Van Wert County, OH"
@@ -155,6 +173,7 @@ sites:
   - slug: bryan
     place: "Bryan"
     basin_label: "Prairie Creek · Tiffin River"
+    basin_major: "maumee"
     receiving_water: "Prairie Creek"
     state: "OH"
     county: "Williams County, OH"
@@ -170,6 +189,7 @@ sites:
   - slug: ottawa
     place: "Ottawa"
     basin_label: "Blanchard River (lower)"
+    basin_major: "maumee"
     receiving_water: "Blanchard River"
     state: "OH"
     county: "Putnam County, OH"
@@ -185,6 +205,7 @@ sites:
   - slug: springfield
     place: "Springfield"
     basin_label: "Mad River · Great Miami"
+    basin_major: "great-miami"
     receiving_water: "Mad River"
     state: "OH"
     county: "Clark County, OH"
@@ -200,6 +221,7 @@ sites:
   - slug: xenia
     place: "Xenia"
     basin_label: "Little Miami"
+    basin_major: "little-miami"
     receiving_water: "Little Miami River"
     state: "OH"
     county: "Greene County, OH"
@@ -215,6 +237,7 @@ sites:
   - slug: wpafb
     place: "Dayton · WPAFB"
     basin_label: "Mad River · Great Miami"
+    basin_major: "great-miami"
     receiving_water: "Mad River"
     state: "OH"
     county: "Montgomery County, OH"
@@ -230,6 +253,7 @@ sites:
   - slug: hamilton-middletown
     place: "Hamilton · Middletown"
     basin_label: "Great Miami (lower)"
+    basin_major: "great-miami"
     receiving_water: "Great Miami River"
     state: "OH"
     county: "Butler County, OH"
@@ -245,6 +269,7 @@ sites:
   - slug: troy-piqua
     place: "Troy · Piqua"
     basin_label: "Great Miami (upper)"
+    basin_major: "great-miami"
     receiving_water: "Great Miami River"
     state: "OH"
     county: "Miami County, OH"
@@ -260,6 +285,7 @@ sites:
   - slug: sidney
     place: "Sidney"
     basin_label: "Great Miami · headwaters"
+    basin_major: "great-miami"
     receiving_water: "Great Miami River"
     state: "OH"
     county: "Shelby County, OH"
@@ -275,6 +301,7 @@ sites:
   - slug: greenville
     place: "Greenville · Darke Co"
     basin_label: "Stillwater · basin divide"
+    basin_major: "great-miami"
     receiving_water: "Greenville Creek"
     state: "OH"
     county: "Darke County, OH"
@@ -290,6 +317,7 @@ sites:
   - slug: wilmington
     place: "Wilmington"
     basin_label: "Todd Fork · Little Miami"
+    basin_major: "little-miami"
     receiving_water: "Lytle Creek"
     state: "OH"
     county: "Clinton County, OH"
@@ -308,6 +336,7 @@ sites:
   - slug: west-union
     place: "West Union · Adams Co"
     basin_label: "Ohio Brush Creek · Ohio River"
+    basin_major: "ohio-brush-creek"
     receiving_water: "Ohio Brush Creek"
     state: "OH"
     county: "Adams County, OH"
@@ -325,6 +354,7 @@ sites:
   - slug: new-albany
     place: "New Albany · Licking"
     basin_label: "Scioto ↔ Muskingum divide"
+    basin_major: "scioto"
     receiving_water: "Big Walnut Creek"
     state: "OH"
     county: "Licking County, OH"
@@ -340,6 +370,7 @@ sites:
   - slug: columbus
     place: "Columbus"
     basin_label: "Scioto · Olentangy"
+    basin_major: "scioto"
     receiving_water: "Scioto River"
     state: "OH"
     county: "Franklin County, OH"
@@ -355,6 +386,7 @@ sites:
   - slug: coshocton
     place: "Coshocton"
     basin_label: "Tuscarawas + Walhonding"
+    basin_major: "muskingum"
     receiving_water: "Muskingum River"
     state: "OH"
     county: "Coshocton County, OH"
@@ -370,6 +402,7 @@ sites:
   - slug: piketon
     place: "Piketon"
     basin_label: "Scioto River · PORTS"
+    basin_major: "scioto"
     receiving_water: null  # [open] PORTS water/wastewater plan undisclosed; Scioto is the likely (unconfirmed) receiving water — _PIKETON keeps plant_receiving empty
     state: "OH"
     county: "Pike County, OH"
@@ -385,6 +418,7 @@ sites:
   - slug: sandusky
     place: "Sandusky · Perkins Twp"
     basin_label: "Sandusky Bay · Lake Erie"
+    basin_major: "sandusky"
     receiving_water: "Sandusky Bay"
     state: "OH"
     county: "Erie County, OH"
@@ -403,6 +437,7 @@ sites:
   - slug: mansfield
     place: "Mansfield"
     basin_label: "Rocky Fork Mohican · Muskingum"
+    basin_major: "muskingum"
     # [verified — Ohio EPA 2PE00001 fact sheet] the receiving water is Rocky Fork of Mohican River;
     # kept null per the registry field guide above (tracking-only) — #1429 wires the confirmed
     # NPDES receiving water once the record/water domain is active
@@ -421,6 +456,10 @@ sites:
   - slug: portsmouth
     place: "Portsmouth · Green Twp"
     basin_label: "Ohio River · lower Scioto"
+    # Groups with the Scioto even though the footprint discharges to the Ohio mainstem BELOW the
+    # confluence: the lower Scioto is the reach the site sits on and the one its screen runs
+    # against. Not `ohio-brush-creek` — that basin is a separate direct-to-Ohio drainage (#1117).
+    basin_major: "scioto"
     # [open] the Green Township / Franklin Furnace footprint (Project Dazzler) discharges to the
     # Ohio River mainstem below the Scioto confluence; precise receiving water pending the screen —
     # kept null per the field guide (tracking-only) until the record/water domain is active
@@ -442,6 +481,7 @@ sites:
   - slug: newark
     place: "Newark"
     basin_label: "Licking River"
+    basin_major: "muskingum"
     receiving_water: null
     state: "OH"
     county: null
@@ -457,6 +497,7 @@ sites:
   - slug: zanesville
     place: "Zanesville"
     basin_label: "Muskingum mainstem"
+    basin_major: "muskingum"
     receiving_water: null
     state: "OH"
     county: null
@@ -474,6 +515,7 @@ sites:
   - slug: fremont
     place: "Fremont · Clyde"
     basin_label: "Lower Sandusky"
+    basin_major: "sandusky"
     receiving_water: null
     state: "OH"
     county: null
@@ -489,6 +531,7 @@ sites:
   - slug: tiffin
     place: "Tiffin"
     basin_label: "Sandusky (mid)"
+    basin_major: "sandusky"
     receiving_water: null
     state: "OH"
     county: null
@@ -504,6 +547,7 @@ sites:
   - slug: bucyrus
     place: "Bucyrus"
     basin_label: "Sandusky headwaters"
+    basin_major: "sandusky"
     receiving_water: null
     state: "OH"
     county: null
@@ -521,6 +565,7 @@ sites:
   - slug: cleveland
     place: "Cleveland"
     basin_label: "Lower Cuyahoga"
+    basin_major: "cuyahoga"
     receiving_water: null
     state: "OH"
     county: null
@@ -536,6 +581,7 @@ sites:
   - slug: akron
     place: "Akron"
     basin_label: "Upper Cuyahoga · CVNP"
+    basin_major: "cuyahoga"
     receiving_water: null
     state: "OH"
     county: null
@@ -553,6 +599,7 @@ sites:
   - slug: lordstown
     place: "Lordstown · Warren"
     basin_label: "Upper Mahoning"
+    basin_major: "mahoning"
     receiving_water: null
     state: "OH"
     county: null
@@ -568,6 +615,7 @@ sites:
   - slug: youngstown
     place: "Youngstown"
     basin_label: "Mahoning mainstem"
+    basin_major: "mahoning"
     receiving_water: null
     state: "OH"
     county: null
@@ -585,6 +633,7 @@ sites:
   - slug: lancaster
     place: "Lancaster"
     basin_label: "Upper Hocking"
+    basin_major: "hocking"
     receiving_water: null
     state: "OH"
     county: null
@@ -600,6 +649,7 @@ sites:
   - slug: athens
     place: "Athens"
     basin_label: "Lower Hocking"
+    basin_major: "hocking"
     receiving_water: null
     state: "OH"
     county: null
@@ -615,6 +665,7 @@ sites:
   - slug: logan
     place: "Logan"
     basin_label: "Hocking Hills"
+    basin_major: "hocking"
     receiving_water: null
     state: "OH"
     county: null

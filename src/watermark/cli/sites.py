@@ -29,6 +29,11 @@ def _build_registry_json() -> str:
                 "slug": entry.slug,
                 "place": entry.place,
                 "basin": entry.basin_label,
+                # The major grouping basin (#1863) — the coarser peer of `basin` above. The
+                # frontend derives its (state, basin) placement from these two fields instead of
+                # keeping a parallel `PLACEMENT` table, so a site registered here can no longer be
+                # silently dropped from the selector lenses and the water-lens scorecard.
+                "basin_major": entry.basin_major,
                 "state": entry.state,
                 # The county the site's records are filed in (#1691) — the ask-index stamps it
                 # onto every retrieval unit as the `county` facet, the way `site` is stamped.
@@ -90,7 +95,12 @@ def sites_show(
 @sites_app.command("new")
 def sites_new(
     slug: str = typer.Argument(..., help="New site slug (kebab-case)."),
-    basin: str = typer.Option("maumee", "--basin", help="Basin slug (default: maumee)."),
+    basin: str = typer.Option(
+        "",
+        "--basin",
+        help="Basin slug override; defaults to the site's `basin_major` in data/sites.yaml "
+        "(else maumee).",
+    ),
 ) -> None:
     """Print a paste-ready SiteProfile stub for a new site (output relpaths pre-slug-scoped)."""
     from watermark.sites import scaffold_profile_src
@@ -99,7 +109,10 @@ def sites_new(
         raise typer.BadParameter(f"site {slug!r} is already registered", param_hint="slug")
     # soft_wrap so the paste-ready stub isn't re-wrapped to the terminal width.
     console.print(
-        scaffold_profile_src(slug, basin=basin), markup=False, highlight=False, soft_wrap=True
+        scaffold_profile_src(slug, basin=basin or None),
+        markup=False,
+        highlight=False,
+        soft_wrap=True,
     )
 
 
@@ -121,6 +134,7 @@ def sites_check() -> None:
     Checks:
     - Every Python SITES slug has an entry in data/sites.yaml.
     - Every registered profile's county_name agrees with the YAML's `county`.
+    - Every registered profile's `basin` agrees with the YAML's `basin_major` (#1863).
     - The @watermark/core registry byte-matches what `watermark sites sync` would write.
     - No registered profile carries a raw 'TODO' grid-identity citation (B3/#1639).
     """
@@ -154,6 +168,19 @@ def sites_check() -> None:
             errors.append(
                 f"site {slug!r} has a registered profile but no `county` in data/sites.yaml — "
                 f'add `county: "{SITES[slug].county_name}"` there and run `watermark sites sync`'
+            )
+        # The major grouping basin is the same datum published twice (#1863) — the YAML carries it
+        # for all 38 entries (including the tracking-only ones with no profile, which is what the
+        # frontend groups by), and the profile carries it as a *cited* literal whose HUC-8
+        # provenance lives beside it in `_profiles.py`. Keeping both is deliberate: the citation
+        # belongs with the profile, the completeness belongs with the YAML. What was missing was
+        # the link asserting they agree — without it a site could group under one basin in the
+        # selector and screen its receiving water against another.
+        if SITES[slug].basin != identity[slug].basin_major:
+            errors.append(
+                f"site {slug!r}: profile basin {SITES[slug].basin!r} disagrees with "
+                f"data/sites.yaml basin_major {identity[slug].basin_major!r} — the two name the "
+                "same major basin; fix whichever is wrong and run `watermark sites sync`"
             )
 
     for violation in grid_identity_todo_violations():

@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { loadFeed, loadManifest } from "./bundle";
 import type { DocumentCollectionItem } from "./feeds";
+import { placementViolations } from "./placement";
 import {
   ACTIVE_SITE_SLUG,
   activeSite,
@@ -12,6 +13,7 @@ import {
   facilityStageIndex,
   facilityStatus,
   groupSites,
+  groupSitesIn,
   networkRollup,
   SITE_STATUS_META,
   SITES,
@@ -194,6 +196,25 @@ describe("grouped selector — State / Basin lenses (#307/#308)", () => {
       const total = groupSites(by).reduce((n, g) => n + g.sites.length, 0);
       expect(total).toBe(SITES.length);
     }
+  });
+
+  // The named peer of the count check above (#1863). Both lenses read the registry's `state` /
+  // `basin_major`, so a site can only fall out of one by being placed somewhere `./placement`
+  // doesn't know — and this says which site and which value, where the count above says only
+  // that the arithmetic stopped working.
+  it("every registered site is placed in a known state and basin", () => {
+    expect(placementViolations(SITES)).toEqual([]);
+  });
+
+  it("an unplaced site is a named throw, never a silently dropped row", () => {
+    // What the old hand-maintained PLACEMENT table did instead: `continue`. A slug registered in
+    // data/sites.yaml but absent there vanished from both lenses AND the water-lens scorecard,
+    // and nothing named it. Registry placement is repo-authoring data — it fails the build.
+    const stray = { ...SITES[0], slug: "kokosing-falls", basinMajor: "kokosing" };
+    for (const by of ["state", "basin"] as const) {
+      expect(() => groupSitesIn([...SITES, stray], by)).toThrow(/kokosing-falls/);
+    }
+    expect(() => groupSitesIn([{ ...SITES[0], state: "MI" }], "state")).toThrow(/UNKNOWN/);
   });
   it("by state: Indiana holds only Fort Wayne; Ohio carries the OH abbr tag", () => {
     const groups = groupSites("state");

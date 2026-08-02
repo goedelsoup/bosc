@@ -20,6 +20,7 @@
  */
 import type { SiteTier } from "./bundle";
 import type { FacilityStatus, HypothesisAssessmentItem, HypothesisItem } from "./feeds";
+import { basinsOfDivide, DIVIDES } from "./placement";
 import {
   FACILITY_STATUS_META,
   groupSites,
@@ -168,20 +169,9 @@ export function lensDatum(slug: string, data: LensData): { def: DefFact; surv: S
 }
 
 // --- The two continental divides (water lens grouping) ------------------------------------------
-// Basins nest under the divide they drain to — the water thesis's organizing fact. Labels match
-// `PLACEMENT`'s basin names so `groupSites("basin")` keys line up.
-const DIVIDES: readonly { label: string; note: string; basins: readonly string[] }[] = [
-  {
-    label: "Lake Erie drainage",
-    note: "north — into Lake Erie",
-    basins: ["Maumee", "Portage", "Sandusky", "Cuyahoga"],
-  },
-  {
-    label: "Ohio River drainage",
-    note: "south — into the Ohio & Mississippi",
-    basins: ["Great Miami", "Little Miami", "Scioto", "Muskingum", "Mahoning", "Hocking", "Ohio Brush Creek"],
-  },
-];
+// Basins nest under the divide they drain to — the water thesis's organizing fact. Both the
+// divides and their basin membership now come from the one `./placement` table each basin is a row
+// in (#1863), so adding a basin can't leave it grouped in the selector but missing from this lens.
 
 // --- Lens configuration (cards, framing, columns) ----------------------------------------------
 export interface LensConfig {
@@ -408,9 +398,12 @@ export function buildLens(
   if (lens === "water") {
     const byBasin = new Map(groupSites("basin").map((g) => [g.label, g]));
     for (const d of DIVIDES) {
-      d.basins.forEach((basinLabel, i) => {
-        const grp = byBasin.get(basinLabel);
-        if (!grp?.sites.length) return;
+      // The banner opens the first basin of the divide that actually RENDERS, not the first one
+      // in the table — a divide whose leading basin holds no sites yet still gets its heading.
+      let openBanner = true;
+      for (const basin of basinsOfDivide(d.key)) {
+        const grp = byBasin.get(basin.label);
+        if (!grp?.sites.length) continue;
         const rows: Row[] = grp.sites.map((s) => {
           const roll = rollupOf(s.slug);
           return {
@@ -436,15 +429,18 @@ export function buildLens(
           rows,
           chips: [],
         };
-        if (i === 0) g.divide = { label: d.label, note: d.note };
+        if (openBanner) {
+          g.divide = { label: d.label, note: d.note };
+          openBanner = false;
+        }
         groups.push(g);
-      });
+      }
     }
     axisGroups.push(
       ...DIVIDES.map((d) => ({
         label: d.label,
-        chips: d.basins
-          .map((b) => ({ name: b, count: byBasin.get(b)?.sites.length ?? 0 }))
+        chips: basinsOfDivide(d.key)
+          .map((b) => ({ name: b.label, count: byBasin.get(b.label)?.sites.length ?? 0 }))
           .filter((c) => c.count > 0),
       })),
     );

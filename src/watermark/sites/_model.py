@@ -36,6 +36,15 @@ class SiteEntry(BaseModel):
     slug: str
     place: str
     basin_label: str
+    # The MAJOR river basin the site groups under (a kebab slug: ``maumee``, ``great-miami``,
+    # ``ohio-brush-creek``, …) — deliberately a coarser granularity than ``basin_label``, which is
+    # the finer receiving-water subline. Authoritative here (#1863): ``SiteProfile.basin`` carries
+    # the same value as a *cited* literal (its HUC-8 provenance lives beside it in ``_profiles.py``)
+    # and ``watermark sites check`` fails when the two disagree, so neither copy can drift; the
+    # frontend registry carries it so ``groupSites("basin")`` derives its placement rather than
+    # keeping a hand-maintained parallel table. Every entry has one, including a tracking-only
+    # site with no Python profile — that is what keeps it off the silent-drop path.
+    basin_major: str
     receiving_water: str | None = None
     state: str
     codename: str | None = None

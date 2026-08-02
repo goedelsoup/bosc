@@ -160,6 +160,16 @@ build; the basin sites come online incrementally. Two sources of truth (both in
 ([`nav.ts`](packages/core/src/nav.ts) — the header tabs, the per-section
 TOC rail, and the search index).
 
+- **Per-site identity is `data/sites.yaml`, not the TypeScript.** `sites.ts` reads the
+  generated `sites-registry.json` (`watermark sites sync`) — including each site's `state` and
+  its major `basin_major`, the two axes the selector lenses and the water-lens scorecard pivot
+  on. What *is* authored here is the vocabulary those axes resolve *through*:
+  [`placement.ts`](packages/core/src/placement.ts) holds one row per major basin (label, code,
+  region super-group, continental divide), so adding a basin is one row rather than six parallel
+  maps, and a site placed in a basin no table knows is a named throw rather than a row that
+  quietly disappears from the lens
+  ([#1863](https://github.com/watermark-directory/the-watermark-directory/issues/1863)).
+
 - **Lima's record content is physically re-rooted under `/bosc`** so future sites are clean
   siblings (`/gcp`, …). `/` redirects there (`public/_redirects`, a *temporary* 302 — the
   root will host network content once a second site lands). The topbar **project switcher**

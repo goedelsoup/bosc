@@ -252,6 +252,24 @@ def test_scaffold_stub_is_constructible_and_collision_safe(monkeypatch) -> None:
     assert output_path_collisions("findlay") == {}  # collision-safe vs Lima
 
 
+def test_scaffold_seeds_basin_from_the_yaml_registry() -> None:
+    """#1863: a registered slug's stub carries the YAML's basin, not a guess.
+
+    The profile's `basin` must agree with `data/sites.yaml`'s `basin_major` (`watermark sites
+    check` enforces it), and the runbook has you register identity in the YAML *before*
+    scaffolding — so a stub that defaulted to `maumee` for a Scioto site was authoring the
+    disagreement the gate then rejects. An explicit `--basin` still wins, and an unregistered
+    slug keeps the old TODO'd fallback.
+    """
+    assert "basin='scioto'" in scaffold_profile_src("piketon")  # YAML: basin_major "scioto"
+    assert "TODO: confirm the basin" not in scaffold_profile_src("piketon")
+    assert "basin='maumee'" in scaffold_profile_src("piketon", basin="maumee")  # override wins
+
+    unregistered = scaffold_profile_src("nowhere")
+    assert "basin='maumee'" in unregistered
+    assert "TODO: confirm the basin" in unregistered
+
+
 def test_readiness_flags_placeholders_and_lima_copies(monkeypatch) -> None:  # type: ignore[no-untyped-def]
     # A bare Lima copy: every field matches Lima (verify) and the slug differs.
     copy = SITES["lima"].model_copy(update={"slug": "copycat"})
@@ -306,18 +324,63 @@ def test_grid_identity_todo_gate_detects_a_registered_violation(monkeypatch) -> 
     assert any("badgrid.lmp_citation" in v for v in grid_identity_todo_violations())
 
 
-def test_python_sites_registered_in_frontend() -> None:
-    # Every Python-registered site must also exist in the shared identity registry (#1027).
-    # The registry JSON is the SSOT consumed by both Python (via _model.py) and TypeScript.
-    # The registry moved into @watermark/core when web/ was split into packages (Epic #1549).
+def registry_entries() -> list[dict[str, object]]:
+    """The frontend registry `watermark sites sync` writes, as committed.
+
+    The registry JSON is the SSOT consumed by both Python (via `_model.py`) and TypeScript. It
+    moved into @watermark/core when web/ was split into packages (Epic #1549).
+    """
     registry = json.loads(
         (REPO_ROOT / "web" / "packages" / "core" / "src" / "sites-registry.json").read_text(
             encoding="utf-8"
         )
     )
-    registry_slugs = {entry["slug"] for entry in registry["sites"]}
+    entries: list[dict[str, object]] = registry["sites"]
+    return entries
+
+
+def test_python_sites_registered_in_frontend() -> None:
+    # Every Python-registered site must also exist in the shared identity registry (#1027).
+    registry_slugs = {entry["slug"] for entry in registry_entries()}
     assert registry_slugs, "sites-registry.json has no entries — run `watermark sites sync`"
     assert set(SITES) <= registry_slugs, set(SITES) - registry_slugs
+
+
+def test_profile_basin_agrees_with_yaml_major_basin() -> None:
+    """#1863: the major grouping basin is one datum, published twice — hold them together.
+
+    The profile carries it as a cited literal (its HUC-8 provenance sits beside it in
+    `_profiles.py`); `data/sites.yaml` carries it for all 38 entries, including the tracking-only
+    ones with no profile, because that is what the frontend groups by. `watermark sites check`
+    is the CI gate; this is its pytest peer so a local run catches the drift too. A disagreement
+    means a site would group under one basin in the selector and screen its receiving water
+    against another.
+    """
+    from watermark.sites._model import _get_identity
+
+    identity = _get_identity()
+    mismatched = {
+        slug: (prof.basin, identity[slug].basin_major)
+        for slug, prof in SITES.items()
+        if slug in identity and prof.basin != identity[slug].basin_major
+    }
+    assert not mismatched, mismatched
+
+
+def test_every_registry_entry_carries_its_placement() -> None:
+    """#1863: every frontend registry entry is placeable — a state and a major basin.
+
+    The frontend derives `groupSites`' two lenses from these fields instead of a hand-maintained
+    parallel table, so an entry missing either would be the silent-drop this replaced. The
+    *vocabulary* check (is this basin slug one the frontend knows?) lives in
+    `web/packages/core/src/placement.test.ts`; this end holds that the values are all emitted.
+    """
+    unplaced = {
+        entry["slug"]: entry
+        for entry in registry_entries()
+        if not entry.get("state") or not entry.get("basin_major")
+    }
+    assert not unplaced, sorted(unplaced)
 
 
 def test_per_site_output_paths_resolve(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]

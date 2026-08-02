@@ -11,6 +11,18 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   `data/sites.yaml`); `is_reference_site` here is the peer of the frontend's `isReferenceSite`
   in `web/packages/core/src/readiness.ts`. Change a site's identity in **`data/sites.yaml`**, not in
   two places — the profile back-fills identity from it (below).
+- **A site's placement (`state` + `basin_major`) is YAML identity, and the frontend derives it**
+  (#1863). Both are the grouping axes of the selector's two lenses and the water-lens scorecard;
+  they used to live in a hand-maintained `PLACEMENT` table in `sites.ts` parallel to this registry,
+  so registering a site here without editing that table silently dropped it from all three.
+  `basin_major` is the one identity field the profile *also* keeps a literal of — `SiteProfile.basin`,
+  which carries the cited HUC-8 provenance beside it — and `watermark sites check` fails when the
+  two disagree, because a site that groups under one basin and screens its receiving water against
+  another is worse than either error alone. `watermark sites new` seeds the stub's `basin` from the
+  YAML so a fresh profile can't author that disagreement. Note the two granularities: `basin_major`
+  is the coarse grouping basin (`great-miami`), `basin_label` the finer receiving-water subline
+  ("Mad River · Great Miami"). The basin's display vocabulary — label, code, region, divide — is
+  presentation and lives in `web/packages/core/src/placement.ts`, one row per basin.
 - **`SiteProfile` (`_model.py`) is a frozen, `extra="forbid"` Pydantic model** — the master
   record for a site. Its fields fall in bands: identity (slug/place/basin); the
   connector/data **config knobs** that feed `Settings`; optional **GIS schemas**
