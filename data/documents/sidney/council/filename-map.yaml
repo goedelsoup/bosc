@@ -1,0 +1,170 @@
+meta:
+  subject: >
+    Canonical filename map for sidney/council/ — the City of Sidney legislative record behind the
+    AWS "Sidney Data Center Campus" / Project Rey incentive and service instruments (#1380): the
+    Community Reinvestment Area Agreement (Res. 80-25), the two school-district agreements that
+    split its proceeds (Res. 81-25 / 82-25), the water-and-wastewater service agreement (Res.
+    26-26), the public-infrastructure Development Agreement (Res. 27-26), and the staff
+    presentation Council heard before adopting the last two.
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their as-received
+    names — including the CivicPlus upload-timestamp suffixes (`_2026011413421917 93`) the City's
+    document center appends to some uploads and not others, and the "(PDF)" the City typed into
+    one title. Names come from the `Content-Disposition` header the City's document center sends;
+    the URL path slug is NOT the filename. `content_verified` records HOW the date below was
+    established from the document's own bytes (the native text layer, or OCR of a scan) — never
+    from the filename. Where the two disagree, the body wins and the filename's apparent date is
+    recorded separately as `filename_date_unverified` (see sidney/permits/).
+  retrieved: "2026-08-01"
+  source_base_url: "https://www.sidneyoh.com/DocumentCenter/View/"
+  source_page: "https://www.sidneyoh.com/526/Proposed-Data-Center-FAQ"
+  naming: >-
+    Ohio EPA files this campus as "Sidney Data Center Campus" (surface water) and "CMH-232"
+    (401/wetlands). The City's OWN executed Development Agreement with the school boards names
+    it "Project Rey" — twice. "Project Galaxy" is the trade-press name and, on Ohio EPA's own
+    record, belongs to a DIFFERENT Amazon campus in Fayette County. See
+    data/extracted/sidney/data-centers.md, "Disambiguation guardrail".
+
+documents:
+  - filename: 80-25 - Authorizing a CRA Agreement - Amazon Data Services Inc_202601141342191793.pdf
+    document_center_id: "4356"
+    canonical: sidney-council-res-80-25-cra-agreement-amazon-data-services-2025-10-27.pdf
+    type: council-resolution-with-executed-agreement
+    date: "2025-10-27"
+    content_verified: text-layer   # body: "RESOLUTION NO. 80-25 … Passed this 27th day of October 2025."
+    pages: 30
+    sha256: "d915fe3f13ab01ef3980864cf241ff9d75df19f592ac21335f371f5dbe784983"
+    bytes: 2608889
+    carries:
+      - "Resolution 80-25 (pp. 0-1) — authorizing the City Manager to enter into a Community Reinvestment Area Agreement with Amazon Data Services, Inc."
+      - "THE INSTRUMENT: the executed CRA Agreement itself (pp. 2-14), 28 numbered pages, effective 2025-10-27, Docusign envelope BA694CA4-6647-470C-88C2-2A02D605BB64, signed for the Company by Hillary Lambert, Authorized Signatory, 2025-11-06"
+      - "§4 — the 30-year / 100% real property tax exemption, with the tax-year 2035 commencement cutoff and the tax-year 2065 outer bound"
+      - "§7 + Exhibit E (p. 29) — the PILOT schedule: 14 years, capped in the text at $46,000,000"
+      - "§8 — a SEPARATE one-time $4,000,000 Initial Payment (the other half of the '$50 million' figure in the press)"
+      - "§32 — the public-records clause: notice to the Company and at least 5 business days before the City may disclose 'Confidential Information'"
+      - "§34 — the exemptions are CONDITIONED on prior execution of the Development Agreement (which is Res. 27-26, six months later)"
+      - "Exhibit A (pp. 15-16) — Project Site described as '+/- 240 acres'"
+      - "Recitals — the CRA designating legislation is Resolution No. 69-25, adopted 2025-09-08; SCSD approval by resolution 2025-10-08; Ohio Tax Credit Authority Sixth Amendment to Tax Credit Agreement, 2025-10-08, R.C. 122.17 megaproject / megaproject operator"
+    notes: >-
+      Native text layer throughout; the scanned RECORD OF ORDINANCES cover sheets (pp. 0-1) carry
+      an OCR layer of poor quality, so the resolution number and passage date were confirmed
+      against the agreement's own §14 recital ("approved by Resolution No. 80-25 of the City
+      Council on October 27, 2025"), not against the cover-sheet OCR alone.
+
+  - filename: 81-25 - Authorizing Development Agreement with Sidney City Schools and Upper Valley - Amazon Data Services_202601141342204952.pdf
+    document_center_id: "4358"
+    canonical: sidney-council-res-81-25-development-agreement-school-districts-2025-10-27.pdf
+    type: council-resolution-with-executed-agreement
+    date: "2025-10-27"
+    content_verified: text-layer   # body: "RESOLUTION NO. 81-25 … Passed this 27th day of October, 2025."
+    pages: 9
+    sha256: "78a532e7600954c81c3bf1f277104db4d3b64b5e7acec7995ce214dcd617e286"
+    bytes: 3057438
+    carries:
+      - "Resolution 81-25 (pp. 0-1)"
+      - "THE INSTRUMENT: Development Agreement — City of Sidney / Sidney City Schools / Upper Valley Career Center, made 2025-10-27 (pp. 2-7)"
+      - "§1.1 — the Company's Total Payments are $50,000,000 (the $46M PILOT cap plus the $4M Initial Payment)"
+      - "§2.1 — distribution 50% City / 50% the two school districts"
+      - "§3.1 — SCSD and UVCC IRREVOCABLY waive notice under R.C. 3735.671, 5709.83 and 5715.27, waive any right to approve, and waive any defects"
+      - "Exhibit A (p. 8) — the year-by-year distribution schedule: City $25,000,000 (incl. the $4,000,000 up front); Sidney City Schools $21,220,529 (84.882116%); Upper Valley Career Center $3,779,471 (15.117884%)"
+      - "The name 'Project Rey' — used twice, in the recitals and in §6.4 (Non-Precedent)"
+    notes: >-
+      Signatories named in the body: Jon Crusey (City Manager), Gregory Snyder (Superintendent,
+      Sidney City Schools), Jason Haak (Superintendent, Upper Valley Career Center). Pages 5-7
+      are three partially-executed signature-page scans of the same page; the executed
+      counterpart set is not published.
+
+  - filename: 82-25 - Authorizing Income Tax Sharing Agreement - Sidney City Schools and Upper Valley - Amazon Data Services_202601141345054883.pdf
+    document_center_id: "4359"
+    canonical: sidney-council-res-82-25-income-tax-sharing-agreement-2025-10-27.pdf
+    type: council-resolution-with-executed-agreement
+    date: "2025-10-27"
+    content_verified: text-layer   # body: "RESOLUTION NO. 82-25 … Passed this 27th day of October, 2025."
+    pages: 9
+    sha256: "321b0a567990924c334b7cc31c0110b9eda30c9e64aae98ccc8c48499e7402d6"
+    bytes: 2406329
+    carries:
+      - "Resolution 82-25 (pp. 0-1)"
+      - "THE INSTRUMENT: Income Tax Sharing Agreement under R.C. 5709.82 (pp. 2-5)"
+      - "Recitals — CRA designated by Resolution No. 69-25, adopted 2025-09-08; the Director of the Ohio Department of Development designated it CRA area # 149-72424-06A effective 2025-09-19"
+      - "§4 — the City calculates 75% of municipal income tax withheld from New Employees; SCSD receives the LESSER of that and (foregone property tax × 85%); UVCC receives (foregone property tax × 15%)"
+      - "§2 — the sharing base is the City's permanent 1.5% income tax levy (Codified Ordinances §142.012, withholding §142.06)"
+    notes: >-
+      This is the instrument that carries the Ohio Department of Development's CRA area number.
+      Note the two school splits differ between instruments: 84.88/15.12 for the PILOT
+      distribution (Res. 81-25 Exhibit A), 85/15 for the income-tax sharing (here, §4.3).
+
+  - filename: 26-26 - Authorize Water and Sewer Service Agreement - Amazon Web Services.pdf
+    document_center_id: "4473"
+    canonical: sidney-council-res-26-26-water-wastewater-service-agreement-aws-2026-04-27.pdf
+    type: council-resolution-with-executed-agreement
+    date: "2026-04-27"
+    content_verified: text-layer   # body: "RESOLUTION NO. 26-26 … Passed this 27th day of April 2026"
+    pages: 12
+    sha256: "6da592e4ac075657d64cb788c1d8a9d02f71ce3df9609de02e39c22bb57bb38a"
+    bytes: 1086818
+    carries:
+      - "Resolution 26-26 (pp. 0-1)"
+      - "THE INSTRUMENT: Water and Wastewater Service Agreement, 'Execution Version' (pp. 2-9), between Amazon Web Services, Inc. and the City of Sidney"
+      - "§1.1 — the four reserved capacities: cooling water 1.0 MGD at ≤694 gpm (4,600,000 gal/yr projected); fire flow ≥1,818 gpm at ≥20 psi; POTABLE water ≤14,000 gpd; SEWER discharge ≤390,493 gpd at ≤716 gpm gravity (1,160,000 gal/yr projected)"
+      - "§2.1 — the City covenants NOT to create a separate class of water or sewer rates for data centers during the Term"
+      - "§3 — 10-year initial Term, auto-renewing annually; AWS may terminate on 90 days' notice at any time, the City only after 3 years AND 12 consecutive months of ceased operations"
+      - "§1.5 — if the City cannot supply, AWS may secure substitute services and the City must provide access to its infrastructure"
+      - "Schedule 1 (pp. 10-11) — the reserve-capacity impact fees: water 14.3% of the 7 MGD system at $7.23/ccf → $1.033/ccf on unused reservation; sewer 5.60% at $4.11/ccf → $0.230/ccf"
+    notes: >-
+      The only one of the five instruments whose counterparty is Amazon WEB Services, Inc. rather
+      than Amazon DATA Services, Inc., and the resolution and the agreement agree on that. Contrast
+      Res. 27-26, where they do not. Clean native text layer (pp. 2-11).
+
+  - filename: 27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf
+    document_center_id: "4474"
+    canonical: sidney-council-res-27-26-development-agreement-millcreek-road-2026-04-27.pdf
+    type: council-resolution-with-executed-agreement
+    date: "2026-04-27"
+    content_verified: text-layer   # body: "RESOLUTION NO. 27-26 … Passed this 27th day of April 2026"
+    pages: 32
+    sha256: "ec32b7b722f98deffa592ebe5013336da90a530a5f14bc110b76ea9c13125a26"
+    bytes: 2742009
+    carries:
+      - "Resolution 27-26 (pp. 0-1) — authorizing a Development Agreement with Amazon WEB Services, Inc."
+      - "THE INSTRUMENT: the Development Agreement (pp. 2-21), whose own Project Summary names the Developer as Amazon DATA Services, Inc. — the resolution and the agreement name different Amazon entities"
+      - "Project Summary (p. 2) — the NDA is dated DECEMBER 19, 2023"
+      - "Recitals (p. 3) — 'approximately 243.1 acres', being portions of the five predecessor parcels 02-26-03-226-001, -126-001, -201-001, -251-001 and -251-002"
+      - "Art. 1 — Developer's Contribution 'not to exceed $8,000,000', escrowed with Fidelity National Title; City Improvements = the widening of W. Mill Creek Road; Liquidated Damages $5,000/day for a Critical Milestone Delay"
+      - "§3.8 — Developer Sewer Improvements must reach final completion by 2026-09-30"
+      - "§5.1(a) — the City must secure right-of-way for a planned ROUNDABOUT at W. Millcreek Road and Fair Road"
+      - "§8.17 — the same notice-before-disclosure public-records clause as the CRA Agreement, plus continuing compliance with the 2023 NDA"
+      - "Exhibit A (pp. 22-23) — the metes-and-bounds legal description, 243.0924 acres, by Farnsworth Group, Inc. (Justin A. Bischof, P.S. #8596), bounded north by the CSX Transportation right-of-way (D.V. 381 p. 290); and THE THREE SOURCE DEEDS: O.R. 2329 p. 445 (Lot 7648), p. 449 (Lot 7647), p. 454 (Lot 7646), all to Amazon Data Services Inc."
+      - "Exhibit E (p. 31) — the City must file a monthly construction report to a Developer-directed WorkDocs portal by the 5th business day of each month"
+    notes: >-
+      REDACTED IN PART, with the exempting statute hand-written in blue ink beside each
+      redaction: "ORC 149.433" (security and infrastructure records), read from the rendered page
+      image rather than from the OCR text layer. Blacked out: sewer line size, manhole count and
+      linear footage and the water-service-line size and location in the Art. 1 definitions, and
+      the WHOLE of the Exhibit D water service exhibit (p. 30), which survives only as its title,
+      its scale bar (1 inch = 150 feet) and stray linework. The redactions are the City's, on the
+      copy it published — they are recorded here, not reconstructed. Exhibits B and C (City
+      Improvements drawings and the Critical Milestone schedule) are image-only; the schedule
+      block is titled for a "MILLCREEK ROAD AND FAIR ROAD RECONSTRUCTION" project and its dates
+      have NOT been read.
+
+  - filename: Presentation Sewer and Water Agreement 4.27.26 (PDF).pdf
+    document_center_id: "4480"
+    canonical: sidney-council-presentation-aws-water-sewer-agreement-2026-04-27.pdf
+    type: city-staff-presentation
+    date: "2026-04-27"
+    content_verified: text-layer   # slide footers: "City of Sidney - April 27, 2026"
+    pages: 14
+    sha256: "02974e0934b369b1243cfd38cb2a13e29643a0a255a4ced68d0a4de5b8ad2ee1"
+    bytes: 105057
+    carries:
+      - "The City's own capacity arithmetic: water 2025 avg daily demand 3.1 MGD against a 7.0 MGD plant, ~3.9 MGD remaining → ~2.9 MGD after the AWS reservation"
+      - "Wastewater 2025 avg daily flow 4.6 MGD against a 7.0 MGD plant, ~2.4 MGD remaining → ~2.0 MGD after the AWS reservation"
+      - "'All wastewater, including COOLING TOWER discharges, are required to be discharged to the sanitary sewer' — the only disclosure of the cooling mechanism on the public record"
+      - "Ohio EPA approved raw pumping capacity 14.0 MGD (distinct from the 7.0 MGD treatment design)"
+      - "AWS does not qualify for the City's High Water Use Rebate Program (Ordinance 911.012) and does not rank among the top five water users"
+    notes: >-
+      A City staff deck, not an instrument — but it is the City's own arithmetic, presented to
+      Council in open session on the night the agreement was authorized, and it is the source of
+      the remaining-headroom figures the agreement itself does not state. Every figure in it that
+      also appears in the executed agreement agrees with the agreement.

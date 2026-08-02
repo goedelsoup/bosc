@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-01T23:08:38.148137+00:00'
+reconciled_at: '2026-08-02T00:43:43.436523+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -192,8 +192,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: 0b99def94673a7385e855397345b300861f7699574876d2fd466c63ad7a2e2cd
-    size_bytes: 217815
+    sha256: aba63a12d1eb634a4232108a6962cf04d8186a655337ae37636545de17eb6d23
+    size_bytes: 240750
     lfs_materialized: true
     file_count: 13
     missing: []
@@ -222,8 +222,8 @@ entries:
     site_scope: site:ottawa
   data-centers-sidney:
     exists: true
-    sha256: 214d1dd7543dacb3375982ba954c9bfc043a951af519760f67a5c2ef8aed191d
-    size_bytes: 24039
+    sha256: 2cbf86bd587271e6f41c40e046b73550b929d1a61709254974632e962e5560a5
+    size_bytes: 46974
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -1062,10 +1062,10 @@ entries:
     site_scope: state:OH
   oepa-sidney:
     exists: true
-    sha256: 937ea9cb73b1210b6ca367288a517c788861604c60c48d2f39b48af3b90f139e
-    size_bytes: 2466
+    sha256: 576c147a32dc7ddbdf2997d60419f85db5ae08417ed215cf294e94e0ea90f959
+    size_bytes: 17779
     lfs_materialized: true
-    file_count: 1
+    file_count: 7
     missing: []
     asof: null
     stale: false
@@ -1300,6 +1300,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  sidney-incentive-instruments:
+    exists: true
+    sha256: 970e8dbd00988f4f11af63296b2b4d899f28388c987917092f546b4bfe32b7b0
+    size_bytes: 49003
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:sidney
   sidney-regulatory-watch:
     exists: true
     sha256: 0a2d34b092871ecfe58f905a2eacad352483d81000b3d2c550ddc4d2beba69bd

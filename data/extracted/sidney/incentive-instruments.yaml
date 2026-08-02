@@ -1,0 +1,735 @@
+# Sidney "Sidney Data Center Campus" / Project Rey — the incentive, service and development
+# instruments (structured record)
+#
+# What the City of Sidney actually signed for the Amazon campus, read from the City's own
+# published legislative record:
+#   data/documents/sidney/council/   (five resolutions, each carrying its executed agreement)
+#   data/documents/sidney/permits/   (the City grading permit)
+# issue 1380 · sub-issue of issue 1275 · strengthens `record`.
+#
+# THE HEADLINE, so it is not mis-read downstream: the "$50 million PILOT over 15 years, $25M to
+# the City and $25M to Sidney City Schools" that this register and the trade press both carried is
+# three things at once, and only one of them is a PILOT. The CRA Agreement caps PILOTs at
+# $46,000,000 over FOURTEEN years (§7(b), Exhibit E) and separately obliges a one-time $4,000,000
+# Initial Payment (§8). The $50,000,000 total is then split 50/50 City/schools by a DIFFERENT
+# instrument (Res. 81-25) — and the schools' half is not the schools' half: Upper Valley Career
+# Center takes $3,779,471 of it, leaving Sidney City Schools $21,220,529, not $25,000,000.
+#
+# TAG VOCABULARY (per CLAUDE.md / evidentiary-discipline):
+#   [verified]  — read from the executed instrument or the adopting resolution: agreement text,
+#                 exhibit text, recitals, the City's own staff arithmetic presented in open
+#                 session, and a signature block read from the document's own bytes.
+#   [reference] — a party's account of its own conduct (the City FAQ, a press release), or a
+#                 statute read through a fetched page.
+#   [inference] — arithmetic this record derives by combining cited figures (the cycles of
+#                 concentration back-solved from makeup and blowdown; the headroom shares).
+#   [open]      — not in corpus (Res. 69-25 itself; the recorded deeds; the Ohio SOS
+#                 registrations; the approved site plan; the redacted infrastructure details).
+
+as_of: "2026-08-01"
+site: sidney
+strengthens: [record]
+issue: "watermark-directory/the-watermark-directory#1380"
+epic: "watermark-directory/the-watermark-directory#1275"
+
+sources:
+  - instrument: council-resolution-with-executed-agreement
+    ref: "Res. 80-25"
+    file: "data/documents/sidney/council/80-25 - Authorizing a CRA Agreement - Amazon Data Services Inc_202601141342191793.pdf"
+    sha256: "d915fe3f13ab01ef3980864cf241ff9d75df19f592ac21335f371f5dbe784983"
+    content_verified: text-layer
+    carries: "The executed Community Reinvestment Area Agreement, 28 pp., + Exhibits A-E"
+  - instrument: council-resolution-with-executed-agreement
+    ref: "Res. 81-25"
+    file: "data/documents/sidney/council/81-25 - Authorizing Development Agreement with Sidney City Schools and Upper Valley - Amazon Data Services_202601141342204952.pdf"
+    sha256: "78a532e7600954c81c3bf1f277104db4d3b64b5e7acec7995ce214dcd617e286"
+    content_verified: text-layer
+    carries: "The City/SCSD/UVCC Development Agreement + Exhibit A, the distribution schedule"
+  - instrument: council-resolution-with-executed-agreement
+    ref: "Res. 82-25"
+    file: "data/documents/sidney/council/82-25 - Authorizing Income Tax Sharing Agreement - Sidney City Schools and Upper Valley - Amazon Data Services_202601141345054883.pdf"
+    sha256: "321b0a567990924c334b7cc31c0110b9eda30c9e64aae98ccc8c48499e7402d6"
+    content_verified: text-layer
+    carries: "The R.C. 5709.82 Income Tax Sharing Agreement; the ODOD CRA area number"
+  - instrument: council-resolution-with-executed-agreement
+    ref: "Res. 26-26"
+    file: "data/documents/sidney/council/26-26 - Authorize Water and Sewer Service Agreement - Amazon Web Services.pdf"
+    sha256: "6da592e4ac075657d64cb788c1d8a9d02f71ce3df9609de02e39c22bb57bb38a"
+    content_verified: text-layer
+    carries: "The Water and Wastewater Service Agreement (Execution Version) + Schedule 1"
+  - instrument: council-resolution-with-executed-agreement
+    ref: "Res. 27-26"
+    file: "data/documents/sidney/council/27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf"
+    sha256: "ec32b7b722f98deffa592ebe5013336da90a530a5f14bc110b76ea9c13125a26"
+    content_verified: text-layer
+    carries: "The public-infrastructure Development Agreement + Exhibit A legal description"
+  - instrument: city-staff-presentation
+    ref: "Water & Sewer Agreement presentation, 2026-04-27"
+    file: "data/documents/sidney/council/Presentation Sewer and Water Agreement 4.27.26 (PDF).pdf"
+    sha256: "02974e0934b369b1243cfd38cb2a13e29643a0a255a4ced68d0a4de5b8ad2ee1"
+    content_verified: text-layer
+    carries: "The City's own remaining-capacity arithmetic; the word 'cooling tower'"
+  - instrument: city-grading-permit
+    ref: "Grading Permit, 2026-05-15"
+    file: "data/documents/sidney/permits/Grading Permit 5-14-2026 - AWS Data Center 2388 W. Millcreek Road.pdf"
+    sha256: "a8f3276bd43e9244873ae635bd8a487cd7d26789169369f8f70485b638907c21"
+    content_verified: ocr
+    carries: "The City's excavation/site-prep authorization; contractor of record; the true date"
+
+# =============================================================================================
+# 1. THE CHAIN OF LEGISLATION — five resolutions over six months, in the order they bind.
+# =============================================================================================
+legislative_chain:
+  - ref: "Res. 69-25"
+    adopted: "2025-09-08"                     # [verified] — recited in BOTH the CRA Agreement and Res. 82-25
+    subject: "Designation of the City of Sidney City-Wide Community Reinvestment Area under R.C. 3735.65-.70"
+    in_corpus: false                          # [open] — the City does not publish it; see `open_items`
+    note: >-
+      The register carried the CRA legislation as "Resolution 18-25 … October 2025". That is
+      wrong on both the number and the month, and it is why no such instrument could be found.
+      The designating legislation is Resolution No. 69-25, adopted 2025-09-08, and the CRA it
+      designates is CITY-WIDE, not a project-specific envelope.
+    state_certification:
+      designator: "Director, Ohio Department of Development"
+      effective: "2025-09-19"                 # [verified] — Res. 82-25 recitals
+      cra_area_number: "149-72424-06A"        # [verified] — Res. 82-25 recitals
+
+  - ref: "Res. 80-25"
+    adopted: "2025-10-27"                     # [verified]
+    subject: "Authorizing the City Manager to enter into a Community Reinvestment Area Agreement with Amazon Data Services, Inc."
+    in_corpus: true
+
+  - ref: "Res. 81-25"
+    adopted: "2025-10-27"                     # [verified]
+    subject: "Authorizing a Development Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding the CRA tax abatement"
+    in_corpus: true
+
+  - ref: "Res. 82-25"
+    adopted: "2025-10-27"                     # [verified]
+    subject: "Authorizing an Income Tax Sharing Agreement with the same two boards of education"
+    in_corpus: true
+
+  - ref: "Res. 26-26"
+    adopted: "2026-04-27"                     # [verified]
+    subject: "Authorizing a Water and Wastewater Service Agreement with Amazon Web Services, Inc."
+    in_corpus: true
+
+  - ref: "Res. 27-26"
+    adopted: "2026-04-27"                     # [verified]
+    subject: "Authorizing a Development Agreement with Amazon Web Services, Inc."
+    in_corpus: true
+    entity_mismatch: >-
+      [verified] The resolution authorizes an agreement with Amazon WEB Services, Inc.; the
+      agreement it authorizes names Amazon DATA Services, Inc., a Delaware corporation, as
+      "Developer" in its own Project Summary and signature block. Both entities are real and both
+      appear elsewhere in this record, so this is not a transcription slip in one direction — the
+      City legislated one counterparty and executed with another. Not resolved here.
+
+# =============================================================================================
+# 2. THE CRA AGREEMENT — Res. 80-25. The abatement instrument.
+# =============================================================================================
+cra_agreement:
+  parties:
+    city: "City of Sidney, Ohio"
+    company: "Amazon Data Services, Inc., a Delaware corporation"     # [verified]
+  effective_date: "2025-10-27"                # [verified]
+  approved_by: "Resolution No. 80-25, passed 2025-10-27"              # [verified] — §14
+  execution:
+    docusign_envelope_id: "BA694CA4-6647-470C-88C2-2A02D605BB64"      # [verified]
+    company_signatory: "Hillary Lambert, Authorized Signatory"        # [verified]
+    company_date_signed: "2025-11-06"                                 # [verified]
+    city_date_signed: null                                            # [open] — handwritten, not legible in the published scan
+    document_control_code: "CC 0TH 00444437 2025 TR"                  # [verified] — header stamp on every page
+    confidentiality_marking: "AMAZON CONFIDENTIAL"                    # [verified] — footer on every page of the agreement
+  statutory_basis: ["R.C. 3735.65-.70", "R.C. 3735.67(A)", "R.C. 3735.671"]
+
+  exemption:
+    rate_pct: 100                             # [verified] — §4
+    term_years: 30                            # [verified] — §4
+    unit: "each Building constructed at the Project Site"             # [verified]
+    no_exemption_commences_after_tax_year: 2035                       # [verified] — §4
+    no_exemption_extends_beyond_tax_year: 2065                        # [verified] — §4
+    project_may_exceed_30_years_overall: true                         # [verified] — §4, per-building clock
+    applies_regardless_of_owner: true                                 # [verified] — §4, Company/Affiliate/other
+    condition_precedent: >-
+      [verified] §34 — the provision of the real property tax exemptions is CONDITIONED upon the
+      prior execution of a separate Development Agreement for public infrastructure. That
+      Development Agreement is Res. 27-26, authorized six months later on 2026-04-27, so the
+      abatement had no operative effect until then.
+
+  project_estimates:                          # [verified] — §1/§2, expressly "good faith estimates" under R.C. 3735.671(B)
+    investment_usd: 3000000000
+    first_building_operations_by: "2028-12-31"
+    jobs_by: "2030-12-31"
+    jobs_count: 75
+    annual_payroll_usd: 6750000
+    baseline_jobs_at_site: 0
+    binding: false
+    note: >-
+      §1 and §2 both state in terms that these estimates "will not limit the amount or term of
+      the tax exemptions … or allow the City to compel the Company to make investments" / "to
+      create positions". The $3B and the 75 jobs are not covenants; they are the recitals the
+      exemption was granted against.
+
+  payments:
+    pilot:
+      term_years: 14                          # [verified] — §7(a)
+      cap_usd: 46000000                       # [verified] — §7(b), "the sum of all PILOTs … will equal no more than $46,000,000"
+      schedule_source: "Exhibit E"
+      schedule:                               # [verified] — Exhibit E, p. 29
+        - {year: 1,  usd: 3333333}
+        - {year: 2,  usd: 3333333}
+        - {year: 3,  usd: 3333333}
+        - {year: 4,  usd: 3333333}
+        - {year: 5,  usd: 3333333}
+        - {year: 6,  usd: 3333333}
+        - {year: 7,  usd: 3333333}
+        - {year: 8,  usd: 3333333}
+        - {year: 9,  usd: 3333333}
+        - {year: 10, usd: 3333333}
+        - {year: 11, usd: 3333333}
+        - {year: 12, usd: 3333333}
+        - {year: 13, usd: 3333333}
+        - {year: 14, usd: 2666671}
+      first_pilot_due: "the calendar year following the first tax year an exemption applies"  # [verified] — §7(a)
+      payable_by: "May 15, on a City invoice delivered at least 60 days earlier"              # [verified] — §7(c)
+      cap_mechanism: >-
+        [verified] §7(b) — in any tax year where the Company's total payments would exceed 100%
+        of the taxes otherwise payable, the PILOT is reduced to that ceiling and the shortfall is
+        carried forward into the next year as an "Increased PILOT". The abatement therefore
+        cannot make the Company pay more than an unabated taxpayer would.
+      city_has_no_duty_to_apply_proceeds: true    # [verified] — §7(e)
+    initial_payment:
+      usd: 4000000                            # [verified] — §8
+      timing: "once, within 90 days of a City invoice, which the City may send any time after the Effective Date"
+      note: "Separate from and in addition to the PILOTs. This is the other $4M of the '$50 million'."
+    total_to_city_usd: 50000000               # [verified] — Res. 81-25 §1.1 states the Total Payments as $50,000,000
+
+  megaproject:
+    tca_authorization_date: "2025-10-08"      # [verified] — CRA Agreement recitals
+    instrument: "Sixth Amendment to Tax Credit Agreement, authorized by the Ohio Tax Credit Authority"
+    statutory_basis: ["R.C. 122.17(A)(11)", "R.C. 122.17(A)(12)"]
+    claim: "the Company's Ohio investment and operations qualify as a 'megaproject' and it as a 'megaproject operator'"
+    enforcement_hook: >-
+      [verified] §12 — the City may terminate or suspend the exemption for years 16 THROUGH 30
+      if the Company neither holds a current Megaproject Certificate nor makes the annual
+      certification under §3(b). Years 1-15 carry no such condition.
+    in_corpus: false                          # [open] — a state instrument this record does not hold; see `open_items`
+
+  school_district_consent:
+    sidney_city_school_district:
+      approved_by_resolution_on: "2025-10-08" # [verified] — CRA Agreement recitals, R.C. 3735.671
+    upper_valley_career_center:
+      basis: "waiver / notice under the CRA Act and R.C. 5709.83; R.C. 5709.82(C)-(D) compliance"  # [verified]
+
+  remedies_and_limits:
+    city_sole_remedy_for_material_breach: "terminate, suspend or modify the exemptions (§12)"   # [verified]
+    city_sole_remedy_for_unpaid_taxes: "rescission of the Agreement (§6)"                       # [verified]
+    clawback_of_paid_pilots: false            # [verified] — no repayment provision exists
+    company_may_terminate_at_will: true       # [verified] — §28, any reason or no reason, 30 days' written notice
+    parties_barred_from_challenging_validity: true   # [verified] — §20, both the Agreement and the CRA itself
+    transfer_freely_permitted_to: "Permitted Transferees — buyers of any part of a Building or the Project Site, Affiliates, and successors"  # [verified] — §17
+    jury_trial_waived: true                   # [verified] — §29
+    venue: ["S.D. Ohio", "Shelby County Court of Common Pleas"]                                 # [verified] — §29
+
+  public_records_clause:                      # [verified] — §32
+    summary: >-
+      Before disclosing anything it treats as the Company's "Confidential Information" in
+      response to a public-records request, the City must give the Company written notice and a
+      copy of the request, and allow the Company at least five business days to either negotiate
+      a response with the requester or "pursue, at its sole cost and expense, legal remedies to
+      stop the City's release of the requested information."
+    exemptions_recited: ["R.C. 718.13", "R.C. 5703.21", "R.C. 149.43(A)(v)", "R.C. 149.45", "R.C. 122.36", "R.C. 1333.61 et seq.", "R.C. 122.75"]
+    survives_termination: true
+    note: >-
+      The materially identical clause appears at §8.17 of the Development Agreement (Res. 27-26),
+      which additionally binds the City to continuing compliance with the 2023 NDA. Neither
+      clause enlarges any exemption in R.C. 149.43 — both are contractual notice-and-delay
+      obligations layered on top of the statute. See `records_posture`.
+
+  project_site_as_described: "+/- 240 acres"  # [verified] — Exhibit A. A fourth acreage figure; see `acreage_figures`.
+
+# =============================================================================================
+# 3. WHERE THE MONEY GOES — Res. 81-25 (distribution) and Res. 82-25 (income tax).
+# =============================================================================================
+revenue_sharing:
+  development_agreement_with_school_boards:   # Res. 81-25
+    made: "2025-10-27"                        # [verified]
+    parties:
+      - "City of Sidney, Ohio"
+      - "Board of Education of the Sidney City School District, 750 S. Fourth Avenue, Sidney"
+      - "Board of Education of the Upper Valley Career Center, 8811 Career Drive, Piqua"
+    project_name_used: "Project Rey"          # [verified] — recitals and §6.4. Closes the register's `[open]` on the name "Rey".
+    signatories:
+      city: "Jon Crusey, City Manager"                       # [verified]
+      scsd: "Gregory Snyder, Superintendent"                 # [verified]
+      uvcc: "Jason Haak, Superintendent"                     # [verified]
+    total_payment_revenue_usd: 50000000       # [verified] — §1.1
+    split:
+      city_pct: 50
+      schools_pct: 50
+    distribution:                             # [verified] — Exhibit A
+      city_usd: 25000000
+      schools_combined_usd: 25000000
+      sidney_city_schools_usd: 21220529
+      sidney_city_schools_pct_of_school_share: 84.882116
+      upper_valley_career_center_usd: 3779471
+      upper_valley_career_center_pct_of_school_share: 15.117884
+      shape: >-
+        The City takes the $4,000,000 Initial Payment up front and 100% of it; then Years 1-3 run
+        $2,500,000 City / $833,333 schools; Years 4-12 run level at $1,666,667 each; and Years
+        13-15 invert to $0 City / $2,500,000 schools. Each column sums to $25,000,000.
+    consents_and_waivers: >-
+      [verified] §3.1 — in consideration of the agreement, SCSD and UVCC each IRREVOCABLY (a)
+      approve every exemption grantable under the CRA Agreement, (b) waive the notice
+      requirements of R.C. 3735.671, 5709.83 and 5715.27, (c) waive any right to grant approvals
+      required by R.C. 3735.671, and (d) waive any defects or irregularities in the
+      authorization. The boards contracted away their statutory objection rights for the term.
+    entirety_of_compensation: >-
+      [verified] §4.2 — this agreement and the Income Tax Sharing Agreement "provide for the
+      entirety of the compensation to which the City, the School District, and Upper Valley may
+      be entitled" for the exemption.
+    term: "the duration of the CRA Agreement"                # [verified] — §5.1
+    non_precedent_clause: true                               # [verified] — §6.4
+
+  income_tax_sharing_agreement:               # Res. 82-25
+    made: "October 2025"                      # [verified] — the day is blank in the published copy
+    statutory_basis: "R.C. 5709.82"
+    tax_base: "the City's permanent 1.5% income tax levy, withheld under Codified Ordinances §142.06 from New Employees"   # [verified] — §2
+    new_employee_definition: >-
+      [verified] §1 — an employee first employed at the Project site who has not been subject to
+      the City income tax on income from the Employer, its subsidiaries, affiliates or
+      contractors within the previous two years, and who does not replace a non-new employee.
+    formula:                                  # [verified] — §4
+      step_1: "the City annually calculates 75% of income tax revenues from all New Employees"
+      step_2: "the City annually calculates the real property taxes foregone because of the exemption"
+      scsd_payment: "the LESSER of step 1 and (step 2 x 85%)"
+      uvcc_payment: "step 2 x 15%"
+      disbursed: "the second week of May each year"
+    ceiling_intent: >-
+      [verified] §3 — the districts are to receive "no more than the amount of property tax
+      revenues the Project investment would have generated". The agreement is drafted as partial
+      compensation with a hard ceiling, not as a share of upside.
+    reconciliation_note: >-
+      [inference] The two instruments use different school splits for different money: 84.882116
+      / 15.117884 for the PILOT distribution (Res. 81-25 Exhibit A) and a flat 85 / 15 for the
+      income-tax sharing (Res. 82-25 §4.3). Not contradictory — different bases — but they are
+      not the same ratio and should not be quoted interchangeably.
+
+  schedule_term_discrepancy:
+    finding: >-
+      [verified] The CRA Agreement's PILOT schedule (Exhibit E) runs FOURTEEN years and totals
+      $46,000,000. The distribution schedule attached to Res. 81-25 (Exhibit A) lays the same
+      $46,000,000 across FIFTEEN years, and its own workspace cells carry "Total $50,000,000 /
+      Per Year $3,333,333.33" — i.e. it was modelled as $50M over 15 years, then reconciled to
+      the columns by tapering Year 12 and zeroing the City in Years 13-15.
+    status: "[open]"
+    why_it_matters: >-
+      The binding cap is the CRA Agreement's: no more than $46,000,000 of PILOTs, over a 14-year
+      term measured from the first exemption year. The distribution schedule's fifteenth row has
+      no PILOT behind it in the CRA Agreement. Which document governs the final year has not been
+      resolved from the record and is not resolved here.
+
+# =============================================================================================
+# 4. WATER AND WASTEWATER — Res. 26-26. The instrument that finally states a sewer number.
+# =============================================================================================
+water_and_wastewater_service_agreement:
+  parties:
+    aws: "Amazon Web Services, Inc., a Delaware corporation, 410 Terry Avenue North, Seattle"
+    provider: "City of Sidney, Ohio — Jon Crusey, City Manager"
+  version_marking: "Execution Version"        # [verified]
+  term:
+    initial_years: 10                         # [verified] — §3.1
+    renewal: "automatic successive one-year periods"
+    aws_termination: "at any time on 90 days' written notice"                       # [verified] — §3.2
+    city_termination: "90 days' notice, but only after 3 years AND 12 consecutive months of ceased operations"   # [verified] — §3.2
+
+  reserved_capacity:                          # [verified] — §1.1
+    cooling_water:
+      max_mgd: 1.0
+      max_rate_gpm: 694
+      projected_annual_gallons: 4600000
+    fire_flow:
+      min_gpm: 1818
+      min_psi: 20
+    potable_water:
+      max_gpd: 14000
+    sewer_discharge:
+      max_gpd: 390493
+      max_rate_gpm: 716
+      flow_type: "gravity"
+      projected_annual_gallons: 1160000
+
+  impact_fees:                                # [verified] — §2.2 + Schedule 1
+    principle: >-
+      AWS pays the ordinary metered rate for what it uses AND a monthly reserve-capacity impact
+      fee on the UNUSED portion of its reservation, priced at the reserved fraction of the
+      standard rate. The stated rationale is the cost of maintaining held-back capacity, the
+      lost revenue when usage falls below the reservation, and the lost opportunity to sell that
+      capacity to another customer.
+    water:
+      reserved_fraction_pct: 14.3             # 1.0 MGD of the system's 7 MGD
+      standard_rate_usd_per_ccf: 7.23
+      capacity_fee_rate_usd_per_ccf: 1.033
+    sewer:
+      reserved_fraction_pct: 5.60             # 0.390493 MGD of the system's 7 MGD
+      standard_rate_usd_per_ccf: 4.11
+      capacity_fee_rate_usd_per_ccf: 0.230
+    reopener: "every three years from the third anniversary of build-out completion, proportionate to actual burden and to any City capacity upgrades"   # [verified] — §2.2
+    fractions_are_fixed: true                 # [verified] — the percentages are fixed; the dollar rates track the City's ordinance rates
+
+  rate_class_covenant: >-
+    [verified] §2.1 — "During the Term of this Agreement, Provider shall not take steps to create
+    a separate class of water or sewer rates for data centers or similar high level, but highly
+    variable, users of water and sewer services." For ten years the City has contracted away its
+    ability to put this customer, or any customer like it, into its own municipal rate class.
+    Note the contrast with the electric side of the same campus, where AES Ohio's PUCO
+    stipulation of 2026-07-21 is reported to CREATE a data-center tariff.
+
+  substitute_supply_right: >-
+    [verified] §1.5 — if the City for any reason does not supply sufficient water or sewer
+    service, AWS "may secure its own substitute services", and the City must on request provide
+    access to its infrastructure to obtain them. The City's FAQ statement that "no onsite wells
+    will be used" is a present-tense description, not a contractual bar.
+
+  regulatory_passthrough: >-
+    [verified] §6.2 — fines, damages or penalties assessed by a regulator against the City that
+    directly result from AWS consuming or discharging above the §1.2 maxima are direct damages
+    reimbursable by AWS on a pass-through basis.
+
+  city_capacity_context:                      # [verified] — the 2026-04-27 staff presentation
+    water_plant_design_mgd: 7.0
+    water_2025_avg_daily_demand_mgd: 3.1
+    water_remaining_before_reservation_mgd: 3.9
+    water_remaining_after_reservation_mgd: 2.9
+    water_ohio_epa_approved_pumping_mgd: 14.0
+    wwtp_design_mgd: 7.0
+    wwtp_2025_avg_daily_flow_mgd: 4.6
+    wwtp_remaining_before_reservation_mgd: 2.4
+    wwtp_remaining_after_reservation_mgd: 2.0
+
+  derived:
+    - claim: "The cooling loop runs at roughly four cycles of concentration."
+      value: 3.97
+      tag: "[inference]"
+      basis: >-
+        Projected makeup 4,600,000 gal/yr divided by projected blowdown 1,160,000 gal/yr
+        (both [verified], §1.1.1 and §1.1.4). A makeup-to-blowdown ratio near 4 is the signature
+        of a closed-loop evaporative cooling tower, and the City's own presentation names
+        "cooling tower discharges" in terms. This is the first documentary handle on this
+        campus's cooling design, which the profile still carries as UNKNOWN.
+    - claim: "Projected consumptive loss is 3,440,000 gallons per year, not 4,600,000."
+      value_gal_per_year: 3440000
+      tag: "[inference]"
+      basis: >-
+        Makeup 4,600,000 minus discharge 1,160,000. The register described the 4,600,000 figure
+        as "projected cooling-water consumption"; the agreement calls it the annual cooling water
+        VOLUME, i.e. the withdrawal, and books the return separately. Consumption is the
+        difference. In cfs: 0.0146, against the cited regulatory Great Miami 7Q10 of 24.0 cfs
+        that is 0.061% — not the 0.08% the register carried.
+    - claim: "The reservation takes about a quarter of the City's remaining water headroom."
+      value_pct: 25.6
+      tag: "[inference]"
+      basis: "1.0 MGD of the ~3.9 MGD the City states as remaining treatment capacity."
+    - claim: "The reservation takes about a sixth of the City's remaining sewer headroom."
+      value_pct: 16.3
+      tag: "[inference]"
+      basis: "0.390493 MGD of the ~2.4 MGD the City states as remaining treatment capacity."
+
+# =============================================================================================
+# 5. PUBLIC INFRASTRUCTURE — Res. 27-26. The condition precedent to the abatement.
+# =============================================================================================
+development_agreement:
+  parties:
+    developer: "Amazon Data Services, Inc., a Delaware corporation"   # [verified] — Project Summary, notwithstanding the resolution's caption
+    city: "The City of Sidney, Ohio"
+    county_named_but_not_a_party: "Shelby County, Ohio"               # [verified] — defined in the Project Summary, signs nothing
+  nda:
+    dated: "2023-12-19"                       # [verified] — Project Summary
+    executed_by: "the City, for the benefit of Developer and its Affiliates"
+    note: >-
+      The register carried the NDA as "executed mid-2025 … prior to public announcement",
+      sourced to an advocacy site. The instrument dates it 2023-12-19 — roughly twenty-two
+      months before the CRA vote and twenty-three before the first council resolution in this
+      chain. The Development Agreement further binds the City to CONTINUING compliance with it
+      (§8.17), so the 2023 NDA is still operative.
+  developer_notice_routing: "Amazon.com, Inc., Attention: Real Estate Manager (AWS) CMH232"   # [verified] — a second corpus tie between this campus and the AWS designation CMH-232
+  outside_counsel_on_notice: ["lsullivan@bakerlaw.com", "jemitchell@bakerlaw.com"]            # [verified] — BakerHostetler
+
+  developer_contribution:
+    cap_usd: 8000000                          # [verified] — Art. 1 definition
+    mechanism: "deposited into escrow with Fidelity National Title, National Commercial Services, within 10 business days of the Effective Date; drawn monthly against City Engineer certification, up to 5% retainage"   # [verified] — §2.5
+    city_bears_the_overrun: true              # [verified] — §2.4, the City pays all City Improvements Costs above the contribution
+    unspent_balance_refunded_to_developer: true   # [verified] — §2.5
+
+  city_improvements:
+    scope: "the widening of W. Mill Creek Road and related traffic infrastructure"   # [verified] — Art. 1 definition
+    roundabout: "the City must secure the right-of-way for a planned roundabout at W. Millcreek Road and Fair Road"   # [verified] — §5.1(a)
+    developer_approval_over_city_plans: >-
+      [verified] §2.2/§2.3 — the City's own improvement plans must be submitted to the Developer
+      for approval before construction, and after approval the City may not accept a change
+      raising cost by more than $100,000 without the Developer's written consent.
+    liquidated_damages_usd_per_day: 5000      # [verified] — Art. 1 definition; owed to the CITY by its contractors, not by the City to the Developer
+    monthly_reporting: "the City must upload a 13-item construction progress report to a Developer-directed WorkDocs portal by the 5th business day of each month"   # [verified] — §2.6, Exhibit E
+    certificate_of_occupancy_decoupled: >-
+      [verified] §2.7 — the campus certificate of occupancy may not be withheld, delayed or
+      conditioned on the state of completion of the City's own road work, and the agreement
+      calls that a material inducement.
+
+  developer_improvements:
+    sewer_completion_deadline: "2026-09-30"   # [verified] — §3.8
+    scope: "replacement sanitary sewer line and removal/abandonment of the existing gravity line; two private water service line extensions and a water meter enclosure"   # [verified] — Art. 1
+    fiber_easement: "the City covenants to grant an easement over City land or right-of-way for a fiber pathway to the Project Site"   # [verified] — §3.5
+    no_other_public_infrastructure: >-
+      [verified] §3.1 — "The City will not require Developer to complete (or contribute towards
+      the costs of completing) any other public infrastructure in connection with the Project
+      that does not exclusively serve the Project."
+
+  fees_acknowledged_paid_or_payable:          # [verified] — §5.4, by City ordinance section
+    - "site plan fee (Codified Ordinances §1309.11)"
+    - "water tap fee (§911.02)"
+    - "plant investment fee (§911.04)"
+    - "water tap reimbursement (§911.06 — Reimbursement No. 55, Millcreek Water Line Extension, 2004-10-04)"
+    - "sewer tap-in fee (§913.11)"
+    - "Southwest Sewer District Assessment (§913.11)"
+    - "sewer tap reimbursement (§913.09 — Millcreek Sanitary Sewer Reimbursements, October 2001)"
+
+  liability:
+    aggregate_cap: "the sum of the Developer's Contribution"          # [verified] — §6.2
+    developer_sole_remedies: "specific performance of the City Work, or recovery of the undisbursed contribution"   # [verified] — §6.2
+    developer_may_assign_without_city_consent: true                   # [verified] — §7.1
+    city_may_not_assign_without_developer_consent: true               # [verified] — §7.2
+
+  legal_description:                          # [verified] — Exhibit A
+    acres: 243.0924
+    surveyor: "Farnsworth Group, Inc., 9403 Kenwood Road Suite 8209, Cincinnati — Justin A. Bischof, P.S., Ohio Registration No. 8596"
+    basis_of_bearings: "Ohio State Plane, North Zone (3401), NAVD 88, 2011 adjustment, GEOID 18, GRS 80"
+    situated: "north half of Section 3, Township 7 North, Range 6 East, City of Sidney, Clinton Township, Shelby County"
+    bounded:
+      east: "centerline of S. Vandemark Road (80.00 ft R/W)"
+      south: "centerlines of Fair Road and W. Millcreek Road (60.00 ft R/W)"
+      north: "southerly right-of-way line of CSX Transportation, Inc., D.V. 381 p. 290"
+      west: "Mill Creek Subdivisions Nos. 1-4 and two private tracts"
+    abutting_owners_named:
+      - {name: "Mill Creek Subdivision No. 1", ref: "Plat Book 5, Page 96 (SCRO)"}
+      - {name: "Mill Creek Subdivision No. 2", ref: "Plat Book 7, Page 23 (SCRO)"}
+      - {name: "Mill Creek Subdivision No. 3", ref: "Plat Book 7, Page 34 (SCRO)"}
+      - {name: "Mill Creek Subdivision No. 4", ref: "Plat Book 7, Page 47 (SCRO)"}
+      - {name: "Bridget Douglas", ref: "O.R. 2269, Page 659 (SCRO)"}
+      - {name: "John A. Clark, Jr.", ref: "O.R. 2319, Page 5821 (SCRO)"}
+
+# =============================================================================================
+# 6. THE DEEDS — recited by the Development Agreement, not yet read from the recorder.
+# =============================================================================================
+land_acquisition:
+  finding: >-
+    [verified] The Development Agreement's Exhibit A closes with "Being all of the lands now or
+    formerly owned by" and names THREE source deeds, each to Amazon Data Services Inc., each at
+    a different page of Official Record volume 2329. The auditor CAMA that #1379 read carried
+    only one conveyance (O.R. 2329/454) against the consolidated parcel. The acquisition was at
+    least three recorded instruments, not one.
+  source: "data/documents/sidney/council/27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf, Exhibit A"
+  deeds:
+    - {official_record: "2329/445", lot: 7648, predecessor_parcel: "02-2603226.001", grantee: "Amazon Data Services Inc."}
+    - {official_record: "2329/449", lot: 7647, predecessor_parcel: "02-2603201.001", grantee: "Amazon Data Services Inc."}
+    - {official_record: "2329/454", lot: 7646, predecessor_parcel: "02-2603126.001", grantee: "Amazon Data Services Inc."}
+  predecessor_parcels_recited:                # [verified] — Res. 27-26 recitals AND Res. 26-26 recitals, independently
+    - "02-26-03-126-001"
+    - "02-26-03-201-001"
+    - "02-26-03-226-001"
+    - "02-26-03-251-001"
+    - "02-26-03-251-002"
+  corroborates_1379: >-
+    [verified] #1379 reconstructed exactly these five predecessor tracts by a geometric
+    containment test of the current CAMA against the 2023 OGRIP statewide extract, with no
+    instrument naming them. Two independent City instruments now recite the same five parcel
+    numbers. The geometric reconstruction is confirmed by document.
+  unresolved:
+    - >-
+      [open] Only three deeds are named for five predecessor parcels. Whether 02-26-03-251-001
+      and -251-002 came in under one of these three instruments or under further deeds not
+      recited is not determinable from this record.
+    - >-
+      [open] Grantors, sequential instrument numbers, consideration per deed, and any recorded
+      easements are all still unread — they are in the Recorder's index, not in this agreement.
+      The auditor CAMA gives a single conveyance date of 2025-11-24 and a single price of
+      $5,621,490 (#1379); how that price distributes across three instruments is unknown.
+    - >-
+      [open] Lot numbers 7646/7647/7648 here are NOT Lot 7658, the lot created by the
+      Consolidation & Roadway Dedication Plat (Plat V37 P50) that #1379 identified. The
+      relationship between the two lot series is unread.
+
+# =============================================================================================
+# 7. THE CITY GRADING PERMIT
+# =============================================================================================
+grading_permit:
+  issuer: "City of Sidney Engineering Department"
+  for: "AWS Data Center Site, 2388 W. Millcreek Road"
+  contractor: "George J. Igel & Co., Inc., 3500 Alum Creek Drive, Columbus, OH 43207"   # [verified]
+  signed_by: "Chad M. Arkenberg, Engineering Manager"                                   # [verified]
+  date: "2026-05-15"                          # [verified] — handwritten in the signature block
+  date_on_city_filename: "2026-05-14"         # NOT evidence of a date; recorded for traceability only
+  valid_days: 180                             # [verified]
+  scope_limit: "excavation and site preparation only; no other excavation permitted under it"   # [verified]
+  recites_unpublished_records:
+    - "the grading plan on file at the City's Engineering Department"
+    - "the storm water report on file at the City's Engineering Department"
+  note: >-
+    The contractor named here is the same firm Ohio EPA added as co-permittee on stormwater
+    coverage 1GC10596*AG on 2026-04-22 — the state and municipal records corroborate each other
+    on who is moving the earth.
+
+# =============================================================================================
+# 8. ACREAGE — five figures for one site, none of them a campus footprint.
+# =============================================================================================
+acreage_figures:
+  figures:
+    - {value_acres: 243.092,  measure: "deeded, Shelby County CAMA", source: "data/reference/sidney/parcel-assemblage.geojson (issue 1379)", tag: "[verified]"}
+    - {value_acres: 243.0924, measure: "metes-and-bounds legal description", source: "Res. 27-26 Exhibit A", tag: "[verified]"}
+    - {value_acres: 235.468,  measure: "planar, UTM 16N, from the committed polygon", source: "issue 1379", tag: "[verified]"}
+    - {value_acres: 236.7,    measure: "land converted, applicant's own words", source: "OEPA 401 application, oepa/sidney/3935117.pdf §2.C", tag: "[verified]"}
+    - {value_acres: 230.7,    measure: "total land disturbance declared", source: "stormwater NOI, oepa/sidney/3931140.pdf §III", tag: "[verified]"}
+    - {value_acres: 240,      measure: "'+/- 240 acres' Project Site", source: "CRA Agreement Exhibit A", tag: "[verified]"}
+  note: >-
+    The legal description and the CAMA now agree to four decimal places, which retires any doubt
+    about the parcel of record. None of these is a disclosed BUILDING footprint or floor area,
+    and no instrument in this set states one — which is why the facility's IT-load bracket
+    remains investment-scaled rather than floor-area-scaled (#1378).
+
+# =============================================================================================
+# 9. RECORDS POSTURE — what this set says about getting the rest of it.
+# =============================================================================================
+records_posture:
+  redactions_in_the_published_development_agreement:
+    what: "sewer line size, manhole count and linear footage (Art. 1 'Replacement Sewer Improvements'); water service line size and location (Art. 1 'Developer Water Improvements'); and the ENTIRE Exhibit D water service exhibit (p. 30), blacked out edge to edge"
+    exempting_statute_cited: "ORC 149.433"    # [verified] — hand-written in blue ink beside each redaction on the City's published copy, read from the page image (the OCR text layer garbles it)
+    tag: "[verified]"
+    note: >-
+      R.C. 149.433 exempts security and infrastructure records. The City applied it to utility
+      dimensions inside an executed development agreement, and to a whole exhibit — the water
+      service exhibit survives only as its title, its scale bar (1 inch = 150 feet) and stray
+      linework. Whether that application is sound is not assessed here. What is recorded is that
+      the redactions exist, what they cover, and which statute the City wrote beside them.
+  contractual_layer:
+    tag: "[verified]"
+    clauses:
+      - "CRA Agreement §32 — notice to the Company + at least 5 business days before any disclosure"
+      - "Development Agreement §8.17 — the same, plus continuing compliance with the 2023-12-19 NDA"
+  city_posted_the_ag_exemptions_chart:
+    what: "The Ohio Attorney General's 'Statutory Provisions Exempting Records from the Ohio Public Records Act' chart is published on the City's data-center FAQ page itself"
+    url: "https://www.sidneyoh.com/DocumentCenter/View/4586/Statutory-Exemptions---Public-Records-PDF"
+    tag: "[verified]"
+    in_corpus: false
+    why_not: >-
+      It is the Attorney General's statewide chart, not a Sidney instrument, and committing it
+      would put 39 pages of general Ohio law into a site corpus. Its presence ON the FAQ is the
+      fact worth recording, and it is recorded here.
+  implication: >-
+    [inference] A records request to the City for anything in this project should expect a
+    five-business-day contractual delay while the company is noticed, and should anticipate
+    R.C. 149.433 asserted over utility and site-infrastructure detail. Requests are best framed
+    to the instrument or the approval, not to the engineering drawing.
+
+# =============================================================================================
+# 10. WHAT THIS RECORD CORRECTS
+# =============================================================================================
+corrections_to_the_register:
+  - field: "CRA legislation"
+    was: "Resolution 18-25 (Sidney City Council), October 2025 — [verified]"
+    now: "Resolution 69-25, adopted 2025-09-08, designating a CITY-WIDE CRA; the abatement agreement is Res. 80-25, 2025-10-27"
+    source: "CRA Agreement recitals; Res. 82-25 recitals"
+  - field: "PILOT"
+    was: "$50 million total over 15 years — $25 million to City of Sidney, $25 million to Sidney City Schools — [verified]"
+    now: >-
+      PILOTs are capped at $46,000,000 over 14 years (CRA Agreement §7(b), Exhibit E); a separate
+      one-time $4,000,000 Initial Payment (§8) brings Total Payments to $50,000,000; that total
+      is split 50/50 City/schools by Res. 81-25, and the schools' $25,000,000 divides
+      $21,220,529 to Sidney City Schools and $3,779,471 to Upper Valley Career Center
+    source: "CRA Agreement §7-§8 + Exhibit E; Res. 81-25 §1.1, §2.1 + Exhibit A"
+  - field: "NDA"
+    was: "executed mid-2025 between Sidney City Council and AWS prior to public announcement — [verified], sourced to stopohiodatacenters.org"
+    now: "dated 2023-12-19, executed by the City for the benefit of Developer and its Affiliates, and still operative"
+    source: "Development Agreement Project Summary; §8.17"
+  - field: "projected cooling-water consumption"
+    was: "4.6 million gallons per year (~12,600 GPD average) — [verified]"
+    now: >-
+      4,600,000 gal/yr is the projected annual WITHDRAWAL; 1,160,000 gal/yr returns to the
+      sanitary sewer; consumption is the 3,440,000 gal/yr difference (~9,425 GPD, 0.0146 cfs,
+      0.061% of the cited 24.0 cfs 7Q10)
+    source: "Water and Wastewater Service Agreement §1.1.1 and §1.1.4"
+  - field: "grading permit date"
+    was: "issued 2026-05-14 — [verified], sourced to sidneyoh.com/526"
+    now: "2026-05-15, from the permit's own signature block; 5-14-2026 is the City's filename, which is not evidence of a date"
+    source: "data/documents/sidney/permits/"
+  - field: "the name 'Rey'"
+    was: "appears once in a resident's question on the City FAQ … corroborated by nothing else — [open]"
+    now: "'Project Rey' is the project name in the City's OWN executed Development Agreement with the two school boards, used in the recitals and again in the non-precedent clause — [verified]"
+    source: "Res. 81-25, recitals and §6.4"
+  - field: "campus sewer discharge"
+    was: "no instrument separates the campus's wastewater from the WWTP's totals — [open]"
+    now: >-
+      Still true of ACTUAL metered discharge, which needs the City's industrial-pretreatment/SIU
+      permit. But the RESERVED capacity is now documented: 390,493 gpd maximum at 716 gpm, 5.60%
+      of the 7 MGD plant, with 1,160,000 gal/yr projected
+    source: "Water and Wastewater Service Agreement §1.1.4, Schedule 1"
+
+# =============================================================================================
+# 11. STILL OPEN — with the route, so the next pull is a task and not a search.
+# =============================================================================================
+open_items:
+  - item: "Resolution 69-25 — the CRA designating legislation itself"
+    tag: "[open]"
+    checked: "2026-08-01"
+    negative: >-
+      The City's data-center FAQ publishes five resolutions and does not include this one; the
+      City's Document Center index does not surface it; a web search on the number returns
+      nothing. Its content is [verified] only through the recitals of two instruments that do
+      cite it.
+    route: >-
+      The City's legislative portal is https://sidneycityoh.documents-on-demand.com/ — reachable
+      but behind a Cloudflare managed JavaScript challenge (HTTP 403 with a
+      cf_chl challenge page to scripted clients), so it is UNSEARCHED, not empty. Otherwise an
+      R.C. 149.43 request to the Sidney City Clerk, 201 W. Poplar St.
+  - item: "The three recorded deeds — O.R. 2329 pp. 445, 449, 454 — grantors, instrument numbers, consideration, easements"
+    tag: "[open]"
+    checked: "2026-08-01"
+    negative: >-
+      Shelby County's recorder search is https://search.shelbyco.net/eservices/home.page.3 — it
+      answers HTTP 200 but is an Apache-Wicket application that posts a browser
+      fingerprint before it will run a search, so there is no scripted route from here. The
+      index is stated to run from 1989-07-01 forward.
+    route: "Copy Request form to recorder@shelbyco.net (fax 937-498-7272), or the Kofile portal in a browser session. Book and page are now known, so this is a retrieval, not a search."
+  - item: "Plat V37 P50 — Lot 7658 Consolidation & Roadway Dedication Plat"
+    tag: "[open]"
+    note: "Would reconcile the 7.6-acre deeded-vs-planar spread as a roadway dedication and connect Lots 7646/7647/7648 to Lot 7658. Same recorder route."
+  - item: "Ohio SOS foreign-corporation registrations for Amazon Data Services, Inc. and Amazon Web Services, Inc."
+    tag: "[open]"
+    checked: "2026-08-01"
+    negative: >-
+      VERIFIED NEGATIVE ROUTE, not a verified absence. businesssearch.ohiosos.gov returns
+      HTTP 403 with a ~1.3 MB challenge body to scripted clients; businesssearch.ohiosos.com no
+      longer resolves. Both corporations are recited as Delaware corporations in the executed
+      instruments, so the jurisdiction and entity type are [verified] from a primary source even
+      though the SOS record itself is unpulled.
+    route: "Manual browser session on the Ohio SOS business search, or a certified copy request to the Secretary of State."
+  - item: "The Ohio Tax Credit Authority's Sixth Amendment to Tax Credit Agreement (2025-10-08) and the megaproject certification"
+    tag: "[open]"
+    note: >-
+      NEW LEAD out of this ingest — the CRA Agreement recites it and hangs years 16-30 of the
+      abatement on it, but it is a State of Ohio instrument that no prior register entry names.
+      Route: Ohio Department of Development / Tax Credit Authority minutes and agreements.
+  - item: "The approved site plan (Zoning Code §1115.09, administrative)"
+    tag: "[open]"
+    note: "Unchanged from the register. Would give the building count and the only real footprint."
+  - item: "The grading plan and storm water report recited by the grading permit"
+    tag: "[open]"
+    note: "NEW LEAD — both are named as on file with the City Engineering Department. R.C. 149.43 request; expect R.C. 149.433 to be asserted over parts."
+  - item: "The City's industrial-pretreatment / significant-industrial-user permit for the campus"
+    tag: "[open]"
+    note: "Unchanged. Still the only instrument that would separate actual campus wastewater from the WWTP's reported totals."
+  - item: "The redacted utility dimensions in the Development Agreement"
+    tag: "[open]"
+    note: "See `records_posture`. R.C. 149.433 asserted; an unredacted copy would require challenging that application."
+  - item: "Which schedule governs the final PILOT year — the CRA Agreement's 14 or Res. 81-25's 15"
+    tag: "[open]"
+    note: "See `revenue_sharing.schedule_term_discrepancy`."

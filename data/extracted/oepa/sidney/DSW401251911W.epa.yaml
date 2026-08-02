@@ -1,0 +1,56 @@
+doc_id: 3935117-d54eae8b
+source_path: data/documents/oepa/sidney/3935117.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: 'Application ID: 461193445; Rev. 8/2014 Page 1. Application for Section 401 Water
+  Quality Certification Division of Surface Water 401 Water Quality Certification and Isolated Wetland
+  Permitting Unit Section 1: Applicant (Project Proponent) and Consultant/Agent Information Applicant
+  (Project Proponent) Consultant/Agent Company/Agency Name: Amazon Data Services, Inc. Smart Services,
+  Inc Address: 410 Terry Ave N, Seattle, WA 98109 88 W Church St, Newark, OH 43055 Contact Name/Title:
+  Robert Truedinger/Director, Enviro C'
+action:
+  confidence: high
+  warnings:
+  - The applicant's own form prints the project ZIP as 43103 for 'Millcreek Road, Sidney, OH'. 43103 is
+    Ashville, Pickaway County; Sidney is 45365. Recorded as printed — it is the applicant's error, not
+    a transcription error.
+  - Project acreage here (236.7 ac converted) is the applicant's project figure and differs from the 230.7
+    ac land disturbance on its own stormwater NOI and the 243.0924 ac of the deeded parcel — three measures
+    of one site, none of them a building footprint.
+  - The form carries two contact columns. contact_name/contact_firm hold the CONSULTANT/AGENT pair (Chris
+    Klein of Smart Services, Inc), because those fields drive the applicant's representation edges. The
+    applicant-side contacts (Robert Truedinger, Director Enviro, robbtrue@amazon.com; technical contact
+    Seth Bell) are Amazon's own staff and are recorded in `note` so the graph does not present them as
+    outside representation.
+  agency: Ohio EPA, Division of Surface Water
+  program: 401 Water Quality Certification and Isolated Wetland Permitting Unit
+  permit_no: 'DSW401251911W (Ohio EPA ID No. 251911W); Application ID: 461193445'
+  action: application
+  action_date: '2025-12-10'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Amazon Data Services, Inc.
+  applicant_address: 410 Terry Ave N, Seattle, WA 98109
+  contact_name: Chris Klein
+  contact_email: cklein@smartservices-inc.com
+  contact_firm: Smart Services, Inc
+  project_name: CMH-232
+  site_address: Millcreek Road, Sidney, OH (Clinton Township, Shelby County)
+  affected_resource: 0.24 ac of one forested Category 2 isolated wetland and 0.18 ac of two non-forested
+    wetlands; HUC-12 050800010703 (Brush Creek-Great Miami River) and 050800010604 (Mill Creek-Loramie
+    Creek); USACE Huntington District
+  parcel_ids: []
+  note: 'THE DOCUMENT THAT TIES THE NAME TO THE PLACE: project name ''CMH-232'' — Amazon Data Services''
+    own internal designation — against coordinates 40.266278 / -84.194246 west of Millcreek Road. The
+    same designation reappears in the City''s Development Agreement notice block (''Real Estate Manager
+    (AWS) CMH232''), independently corroborating it from the municipal side. In the applicant''s own words
+    the project will ''convert 236.7 acres of agricultural and residential land into a data center''.
+    Consultant Smart Services, Inc (Chris Klein, Mitchel Strain); construction 2026-03-01 to 2026-10-31.
+    The 2026-01-15 modification of the resulting authorization re-classified the wetlands Category 2 to
+    Category 1 (oepa/sidney/3972773.pdf). Applicant-side contacts on the form: Robert Truedinger, Director,
+    Enviro (robbtrue@amazon.com) and technical contact Seth Bell (sefb@amazon.com) — both Amazon Data
+    Services staff. Consultant technical contact: Mitchel Strain, Smart Services, Inc.'

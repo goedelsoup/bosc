@@ -1,0 +1,35 @@
+doc_id: 3931142-c5e0dc71
+source_path: data/documents/oepa/sidney/3931142.pdf
+kind: npdes
+pages_read:
+- 0
+dpi: 150
+source_text_excerpt: '50 W. Town Street Suite 700 Columbus, Ohio 43215 U.S.A. 614 | 644 3020 epa.ohio.gov
+  The State of Ohio is an Equal Opportunity Employer and Provider of ADA Services December 5, 2025 Amazon
+  Data Services, Inc. Robert Truedinger 410 Terry Ave N Seattle WA 98109 Re: Approval Under Ohio EPA National
+  Pollutant Discharge Elimination System (NPDES) – Construction Site Stormwater General Permit – OHC000006
+  Dear Applicant, Your NPDES Notice of Intent (NOI) application is approved for the following facility/site.
+  Please use y'
+permit:
+  confidence: high
+  warnings:
+  - The approval letter states no receiving water; it is carried on the NOI (1GC10596.noi.npdes.yaml)
+    for the same facility permit number.
+  facility_name: Sidney Data Center Campus
+  permit_no: 1GC10596*AG
+  permit_action: general permit coverage approval
+  applicant: Amazon Data Services, Inc.
+  application_no: OHC000006
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 2388 West Millcreek Road, Sidney, OH, Shelby County
+  discharge_address: null
+  receiving_water: null
+  stream_network: null
+  outfalls: []
+  note: Ohio EPA approval letter of 2025-12-05 granting coverage under Construction Site Stormwater General
+    Permit OHC000006. Ohio EPA Facility Permit Number 1GC10596*AG; effective 2025-12-05, expiring 2028-04-22;
+    ICIS federal ID OHGC16923. Addressed to Robert Truedinger at Amazon Data Services, Inc. The letter
+    expressly notes that placing fill in regulated waters may additionally require a 401 WQC and/or an
+    Isolated Wetlands Permit — both of which this applicant then obtained under Ohio EPA ID 251911W.

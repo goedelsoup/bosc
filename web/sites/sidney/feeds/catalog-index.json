@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "2503eb354ea249058fb8bef65a754a87a4109de873720834dc13db42c710fbd3",
+  "catalog_version": "e4763dd78206ab4ce96af9b334b074e687f48fa8d0f6f1e250cce96134101f75",
   "contract_version": "1.50.0",
   "atoms": [
     {
@@ -1068,6 +1068,38 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:sidney:AMAZON DATA SERVICES",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "AMAZON DATA SERVICES",
+      "title": "Amazon Data Services, Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:sidney:CHRIS KLEIN",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "CHRIS KLEIN",
+      "title": "Chris Klein",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:sidney:CITY OF SIDNEY",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "CITY OF SIDNEY",
+      "title": "City of Sidney",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:sidney:CLUNE CONSULTING SERVICES",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "CLUNE CONSULTING SERVICES",
+      "title": "Clune Consulting Services",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:sidney:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "sidney",
@@ -1084,11 +1116,51 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:sidney:GEORGE IGEL &",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "GEORGE IGEL &",
+      "title": "George J. Igel & Co., Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:sidney:MARCUS MOAN",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "MARCUS MOAN",
+      "title": "Marcus Moan",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:sidney:MILL CREEK",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "MILL CREEK",
+      "title": "Mill Creek",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:sidney:SMART SERVICES",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "SMART SERVICES",
+      "title": "Smart Services, Inc",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:sidney:TAWAWA CREEK",
       "kind": "entity",
       "site": "sidney",
       "local_id": "TAWAWA CREEK",
       "title": "Tawawa Creek",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:sidney:npdes:1GC10596",
+      "kind": "entity",
+      "site": "sidney",
+      "local_id": "npdes:1GC10596",
+      "title": "Sidney Data Center Campus",
       "feed": "entities"
     },
     {
@@ -1098,6 +1170,30 @@
       "local_id": "npdes:1PV00037",
       "title": "Hidden Valley Mobile Home Park",
       "feed": "entities"
+    },
+    {
+      "handle": "record:sidney:oepa/sidney/1GC10596.approval.npdes.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "oepa/sidney/1GC10596.approval.npdes.yaml",
+      "title": "Sidney Data Center Campus",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:oepa/sidney/1GC10596.copermittee-igel.npdes.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "oepa/sidney/1GC10596.copermittee-igel.npdes.yaml",
+      "title": "Sidney Data Center Campus",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:oepa/sidney/1GC10596.noi.npdes.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "oepa/sidney/1GC10596.noi.npdes.yaml",
+      "title": "Sidney Data Center Campus",
+      "feed": "records"
     },
     {
       "handle": "record:sidney:oepa/sidney/1PD00009.npdes.yaml",
@@ -1116,12 +1212,60 @@
       "feed": "records"
     },
     {
+      "handle": "record:sidney:oepa/sidney/DSW401251911W.epa.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "oepa/sidney/DSW401251911W.epa.yaml",
+      "title": "CMH-232",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:oepa/sidney/DSW401252256W.epa.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "oepa/sidney/DSW401252256W.epa.yaml",
+      "title": "West Millcreek Road/Fair Road Development",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:oepa/sidney/DSWPTI-260517.epa.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "oepa/sidney/DSWPTI-260517.epa.yaml",
+      "title": "SIDNEY DATA CENTER CAMPUS — Public Sanitary Sewer Relocation, 2388 West Millcreek Rd",
+      "feed": "records"
+    },
+    {
       "handle": "record:sidney:sidney/wwtp-oh0027421.dmr.yaml",
       "kind": "record",
       "site": "sidney",
       "local_id": "sidney/wwtp-oh0027421.dmr.yaml",
       "title": "SIDNEY WWTP",
       "feed": "records"
+    },
+    {
+      "handle": "timeline:sidney:DSW401251911W (Ohio EPA ID No. 251911W); Application ID: 461193445",
+      "kind": "timeline",
+      "site": "sidney",
+      "local_id": "DSW401251911W (Ohio EPA ID No. 251911W); Application ID: 461193445",
+      "title": "401 Water Quality Certification and Isolated Wetland Permitting Unit DSW401251911W (Ohio EPA ID No. 251911W); Application ID: 461193445 — application (CMH-232)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:sidney:DSW401252256W (Ohio EPA ID No. 252256W)",
+      "kind": "timeline",
+      "site": "sidney",
+      "local_id": "DSW401252256W (Ohio EPA ID No. 252256W)",
+      "title": "401 Water Quality Certification / Isolated Wetland Permit DSW401252256W (Ohio EPA ID No. 252256W) — correspondence — mitigation purchase complete (West Millcreek Road/Fair Road Development)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:sidney:DSWPTI-260517",
+      "kind": "timeline",
+      "site": "sidney",
+      "local_id": "DSWPTI-260517",
+      "title": "Surface Water Permit to Install (long term) DSWPTI-260517 — permit to install issued (SIDNEY DATA CENTER CAMPUS — Public Sanitary Sewer Relocation, 2388 West Millcreek Rd)",
+      "feed": "timeline"
     }
   ]
 }

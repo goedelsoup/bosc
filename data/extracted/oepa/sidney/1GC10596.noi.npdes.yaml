@@ -1,0 +1,42 @@
+doc_id: 3931140-ab27188c
+source_path: data/documents/oepa/sidney/3931140.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: Division of Surface Water - Notice of Intent (NOI) For Coverage Under Ohio Environmental
+  Protection Agency General NPDES Permit (Read accompanying instructions carefully before completing this
+  form.) Submission of this NOI constitutes notice that the party identified in Section I of this form
+  intends to be authorized to discharge into state surface waters under Ohio EPA's NPDES general permit
+  program. Becoming a permittee obligates a discharger to comply with the terms and conditions of the
+  permit. Complete all req
+permit:
+  confidence: high
+  warnings:
+  - Receiving stream is printed on the NOI as 'Mill Creek, Mill Branch' — two named waters in one field.
+    Recorded here as 'Mill Creek' so the entity graph resolves one water per node; the verbatim field
+    value is preserved in `note`.
+  - The NOI declares Ohio EPA PTI status 'YET_TO_APPLY' — the sanitary-sewer PTI (DSWPTI-260517) did not
+    issue until 2026-06-16, six months later.
+  facility_name: Sidney Data Center Campus
+  permit_no: 1GC10596
+  permit_action: notice of intent
+  applicant: Amazon Data Services, Inc.
+  application_no: OHC000006
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 2388 West Millcreek Road, Sidney, OH 45365, Shelby County
+  discharge_address: null
+  receiving_water: Mill Creek
+  stream_network: Mill Creek -> Loramie Creek -> Great Miami River (HUC-12 050800010604)
+  outfalls: []
+  note: Notice of Intent for coverage under Construction Site Stormwater General Permit OHC000006, electronically
+    submitted 2025-12-01. Applicant Amazon Data Services, Inc., 410 Terry Ave N, Seattle WA; applicant
+    contact Robert Truedinger; facility contact Seth Bell. Coordinates 40.26920527 / -84.19566214. Receiving
+    stream field reads verbatim 'Mill Creek, Mill Branch'. Total land disturbance 230.7 acres; project
+    2025-10-31 to 2027-05-31. Declares Isolated Wetland 'YET_TO_APPLY', Individual NPDES 'NO', individual
+    401 WQC 'NO', USACE nationwide permit 'NO'. The stormwater outlet is Mill Creek, NOT the Great Miami
+    mainstem the campus's sanitary wastewater reaches via the Sidney WWTP (1PD00009/OH0027421) — two different
+    denominators for two different flows.

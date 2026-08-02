@@ -1,0 +1,36 @@
+doc_id: 4091850-a361e5dd
+source_path: data/documents/oepa/sidney/4091850.pdf
+kind: npdes
+pages_read:
+- 0
+dpi: 150
+source_text_excerpt: '50 W. Town Street Suite 700 Columbus, Ohio 43215 U.S.A. 614 | 644 3020 epa.ohio.gov
+  The State of Ohio is an Equal Opportunity Employer and Provider of ADA Services April 22, 2026 George
+  J. Igel & Co., Inc. Sara Steinhausser 3500 Alum Creek Drive Columbus OH 43207 Re: Approval for Coverage
+  Under Ohio EPA – Construction Site Stormwater General Permit – OHC000006 Dear Co-Permittee Applicant,
+  The Ohio Environmental Protection Agency has received your application for coverage under the above
+  referenced general permit yo'
+permit:
+  confidence: high
+  warnings:
+  - 'A co-permittee approval, not a separate permit: Ohio EPA covers co-permittees under the SAME facility
+    permit number as the initial NOI applicant, so this shares 1GC10596*AG with 1GC10596.approval.npdes.yaml
+    and is a second operator on one coverage, not a second coverage.'
+  facility_name: Sidney Data Center Campus
+  permit_no: 1GC10596*AG
+  permit_action: co-permittee coverage approval
+  applicant: George J. Igel & Co., Inc.
+  application_no: OHC000006
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 2388 West Millcreek Road, Sidney, OH, Shelby County
+  discharge_address: null
+  receiving_water: null
+  stream_network: null
+  outfalls: []
+  note: Ohio EPA approval letter of 2026-04-22 adding George J. Igel & Co., Inc. (3500 Alum Creek Drive,
+    Columbus OH 43207; contact Sara Steinhausser) as co-permittee/operator on the campus stormwater coverage.
+    Effective 2026-04-22, expiring 2028-04-22. Only the initial NOI applicant may terminate the facility
+    permit number. The same firm is named as contractor of record on the City of Sidney grading permit
+    signed 2026-05-15 — 23 days later.

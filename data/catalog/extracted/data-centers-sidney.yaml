@@ -4,7 +4,7 @@ scope: extracted
 status: reviewed
 producer:
   kind: manual
-  source: Sidney City Council resolutions (18-25, 26-26, 27-26, 80-25, 81-25, 82-25);
+  source: Sidney City Council resolutions (69-25, 80-25, 81-25, 82-25, 26-26, 27-26);
     sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great
     Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory
 license: public record / public domain
@@ -31,9 +31,13 @@ notes: '#511 I-75 corridor sweep (2026-07-02); regulatory record re-checked and 
   instruments ingested 2026-07-31 (#1383, see catalog id sidney-regulatory-watch). One
   confirmed project: Amazon Data Services'' campus at 2388 W. Millcreek Rd, Sidney — $3B,
   30-yr CRA abatement (Oct 2025), construction started Jan 2026, ops target 2028, max 1.0
-  MGD water draw. Ohio EPA permits it as "Sidney Data Center Campus" / "CMH-232"; the local
+  MGD water draw (and 390,493 gpd reserved sewer). Ohio EPA permits it as "Sidney Data Center Campus" / "CMH-232"; the local
   codename "Project Galaxy" belongs, on the agency''s own record, to a DIFFERENT Amazon
   campus in Fayette County — do not search on it. Site extent now permit-sourced: 236.7 ac
-  converted, 230.7 ac disturbed. No second operator found in RSEI, ECHO, or web sweep. Open
-  items: power MW, air PTI, recorder deeds, SOS filings, the approved site plan, and a
-  City-issued significant-industrial-user permit.'
+  converted, 230.7 ac disturbed. No second operator found in RSEI, ECHO, or web sweep. The City''s own
+  primary instruments were ingested 2026-08-01 (issue 1380, see catalog id
+  sidney-incentive-instruments), which corrected the CRA legislation number, the PILOT total and
+  term, the school split, the NDA date, the projected consumption and the grading-permit date.
+  Open items: power MW, air PTI, Res. 69-25 itself, the three recorder deeds at O.R. 2329
+  pp. 445/449/454, SOS filings, the Ohio Tax Credit Authority Sixth Amendment, the approved site
+  plan, and a City-issued significant-industrial-user permit.'

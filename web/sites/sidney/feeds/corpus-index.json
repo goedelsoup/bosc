@@ -11,6 +11,94 @@
     "updated": "2026-08-01"
   },
   {
+    "id": "artifact/amazon-data-services",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Amazon Data Services, Inc.",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "artifact/chris-klein",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Chris Klein",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/city-of-sidney",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Sidney",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/clune-consulting-services",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Clune Consulting Services",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/george-igel",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "George J. Igel & Co., Inc.",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/marcus-moan",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Marcus Moan",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/mill-creek",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Mill Creek",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-1gc10596",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Sidney Data Center Campus",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 3,
+    "lines": 14,
+    "updated": null
+  },
+  {
     "id": "artifact/npdes-1pv00037",
     "node_class": "artifact",
     "kind": "entity",
@@ -28,8 +116,19 @@
     "label": "Sidney",
     "scope": "site",
     "links_out": 3,
-    "links_in": 6,
+    "links_in": 15,
     "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/smart-services",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Smart Services, Inc",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
     "updated": null
   },
   {
@@ -911,6 +1010,83 @@
     "links_in": 0,
     "lines": 15,
     "updated": "2026-08-01"
+  },
+  {
+    "id": "relation/amazon-data-services--operates--npdes-1gc10596",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "AMAZON DATA SERVICES operates npdes:1GC10596",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/amazon-data-services--represented-by--chris-klein",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "AMAZON DATA SERVICES represented_by CHRIS KLEIN",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "relation/chris-klein--affiliated-with--smart-services",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CHRIS KLEIN affiliated_with SMART SERVICES",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-sidney--represented-by--marcus-moan",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF SIDNEY represented_by MARCUS MOAN",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "relation/george-igel--operates--npdes-1gc10596",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "GEORGE IGEL & operates npdes:1GC10596",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/marcus-moan--affiliated-with--clune-consulting-services",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "MARCUS MOAN affiliated_with CLUNE CONSULTING SERVICES",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-1gc10596--discharges-to--mill-creek",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:1GC10596 discharges_to MILL CREEK",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
   },
   {
     "id": "relation/npdes-1pv00037--discharges-to--tawawa-creek",
