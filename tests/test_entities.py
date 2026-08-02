@@ -124,13 +124,25 @@ def test_split_principal() -> None:
         None,
     )
     assert _split_principal("THE PORT AUTHORITY OF ALLEN COUNTY, OHIO")[1] is None
-    # A comma before a BARE corporate designator is punctuation inside one name, not a
-    # separator between a person and an org. Splitting these produced the organization
-    # "Inc." — which normalizes to the empty key and crashed the graph build (issue 1380).
+    # A comma before a corporate designator is punctuation inside one name, not a separator
+    # between a person and an org. Splitting these produced the organization "Inc." — which
+    # normalizes to the empty key, crashing the graph build where the applicant carried an
+    # address and silently dropping the applicant where it did not (issue 1380).
     assert _split_principal("Amazon Data Services, Inc.") == ("Amazon Data Services, Inc.", None)
     assert _split_principal("Amazon Web Services, Inc.") == ("Amazon Web Services, Inc.", None)
     assert _split_principal("George J. Igel & Co., Inc.") == ("George J. Igel & Co., Inc.", None)
     assert _split_principal("Tilted Gate, LLC") == ("Tilted Gate, LLC", None)
+    # The designator run is bounded by the NEXT comma, so a trailing descriptive clause does
+    # not resurrect the bad split: only "Inc." is weighed here, not "a Delaware corporation".
+    # (The "a "/"an "/"the " guard never fires for this one — the clause is not leading.)
+    assert _split_principal("Amazon Data Services, Inc., a Delaware corporation") == (
+        "Amazon Data Services, Inc., a Delaware corporation",
+        None,
+    )
+    # Exercises the ``CO`` bare-suffix token specifically: "Marcus Moan" passes the person
+    # check and "Co., Inc." is org-like, so only ``CO`` being a recognized suffix token keeps
+    # this whole — drop it from _CORPORATE_SUFFIX_TOKENS and this splits.
+    assert _split_principal("Marcus Moan, Co., Inc.") == ("Marcus Moan, Co., Inc.", None)
 
 
 def _deed(

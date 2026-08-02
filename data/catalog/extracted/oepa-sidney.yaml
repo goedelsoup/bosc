@@ -1,5 +1,5 @@
 id: oepa-sidney
-title: Ohio EPA Permit Extractions (Sidney — AWS data-center campus, WWTP, Hidden Valley MHP)
+title: Ohio EPA Permit Extractions (Sidney — AWS data-center campus, City road permit, Hidden Valley MHP)
 scope: extracted
 status: reviewed
 producer:
@@ -47,7 +47,8 @@ tags:
 - sidney-data-center-campus
 - cmh-232
 - sidney
-notes: 'Three facilities. (1) The AWS campus, added 2026-08-01 (issue 1380) over bytes
+notes: 'Three permittees; the Sidney WWTP is NOT among them — its extraction is catalogued by
+  sidney-regulatory-watch, and is referenced below only as a cross-reference. (1) The AWS campus, added 2026-08-01 (issue 1380) over bytes
   ingested 2026-07-31 (issue 1383): construction stormwater coverage 1GC10596*AG under
   OHC000006 — the NOI (applicant Amazon Data Services, Inc.; receiving Mill Creek; 230.7 ac
   disturbed), the 2025-12-05 Director''s approval, and the 2026-04-22 co-permittee approval

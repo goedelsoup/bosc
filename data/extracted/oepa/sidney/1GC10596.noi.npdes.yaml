@@ -19,8 +19,13 @@ permit:
     value is preserved in `note`.
   - The NOI declares Ohio EPA PTI status 'YET_TO_APPLY' — the sanitary-sewer PTI (DSWPTI-260517) did not
     issue until 2026-06-16, six months later.
+  - The NOI carries the FULL facility permit number 1GC10596*AG in its 'Existing NPDES Facility Permit
+    Number' field even though it is the application, submitted 2025-12-01, four days before the 2025-12-05
+    approval letter that grants the coverage. Recorded as printed. Entity-graph facility identity keys
+    on the base number either way (`_base_permit` strips the *AG action suffix), so this and the approval
+    and co-permittee records resolve to one facility node.
   facility_name: Sidney Data Center Campus
-  permit_no: 1GC10596
+  permit_no: 1GC10596*AG
   permit_action: notice of intent
   applicant: Amazon Data Services, Inc.
   application_no: OHC000006

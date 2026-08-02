@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "e4763dd78206ab4ce96af9b334b074e687f48fa8d0f6f1e250cce96134101f75",
+  "catalog_version": "3afd615aeac3dbadbf41173c86c6d65419586fe55a3ddaf4a7f6d539998652b1",
   "contract_version": "1.50.0",
   "atoms": [
     {
@@ -936,7 +936,7 @@
       "kind": "dataset",
       "site": "sidney",
       "local_id": "oepa-sidney",
-      "title": "Ohio EPA NPDES Permit Extractions (Sidney / Hidden Valley MHP)",
+      "title": "Ohio EPA Permit Extractions (Sidney — AWS data-center campus, City road permit, Hidden Valley MHP)",
       "feed": "catalog"
     },
     {
@@ -1001,6 +1001,14 @@
       "site": "sidney",
       "local_id": "rsei-inventory",
       "title": "Shelby County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:sidney-incentive-instruments",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "sidney-incentive-instruments",
+      "title": "Sidney — AWS \"Project Rey\" Incentive, Service and Development Instruments",
       "feed": "catalog"
     },
     {

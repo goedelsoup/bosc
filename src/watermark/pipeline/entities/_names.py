@@ -107,21 +107,25 @@ def _split_principal(raw: str) -> tuple[str, str | None]:
     Delaware limited liability company" — the part before the comma isn't a
     person, so it is left intact).
 
-    A comma before a *bare* corporate designator is punctuation inside one name, not a
-    separator between two parties: "Amazon Data Services, Inc." is one company, and
-    splitting it yielded the person "Amazon Data Services" and the organization "Inc.",
-    which normalizes to the empty key and took the whole graph build down with a
-    ``KeyError`` as soon as such an applicant also carried an address. So the part after
-    the comma must contain something *besides* corporate designators to count as an org.
+    A comma before a corporate designator is punctuation inside one name, not a separator
+    between two parties: "Amazon Data Services, Inc." is one company, and splitting it
+    yielded the person "Amazon Data Services" and the organization "Inc.", which normalizes
+    to the empty key — taking the whole graph build down with a ``KeyError`` when such an
+    applicant also carried an address, and silently dropping the applicant otherwise. So the
+    designator run *immediately* after the comma is tested, not the whole tail: "Inc., a
+    Delaware corporation" is still the same company's suffix plus a descriptive clause,
+    whereas "Tilted Gate, LLC" leads with a real org name and is a genuine second party.
     """
     if "," not in raw:
         return raw, None
     before, after = (p.strip() for p in raw.split(",", 1))
     after_tokens = [t for t in re.split(r"[\s.,&]+", after.upper()) if t]
     after_is_org = any(t in _CORPORATE_TOKENS for t in after_tokens)
-    # "Inc." / "Co., Inc." / "LLC" alone is this name's own suffix, not a second party.
-    after_is_bare_suffix = bool(after_tokens) and all(
-        t in _CORPORATE_SUFFIX_TOKENS for t in after_tokens
+    # Only the run up to the NEXT comma decides: "Inc." and "Co., Inc." are this name's own
+    # legal suffix even when a descriptive clause trails them ("Inc., a Delaware corporation").
+    head_tokens = [t for t in re.split(r"[\s.&]+", after.split(",", 1)[0].upper()) if t]
+    after_is_bare_suffix = bool(head_tokens) and all(
+        t in _CORPORATE_SUFFIX_TOKENS for t in head_tokens
     )
     if (
         _looks_like_person(before)

@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "0b99def94673a7385e855397345b300861f7699574876d2fd466c63ad7a2e2cd",
-      "size_bytes": 217815,
+      "sha256": "f35a00ef654bd42a8a893291849e44e6eaf91ed5205ade421a24a0343eb992fc",
+      "size_bytes": 240751,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -140,7 +140,7 @@
     "producer_kind": "manual",
     "command": null,
     "connector_ref": null,
-    "source": "Sidney City Council resolutions (18-25, 26-26, 27-26, 80-25, 81-25, 82-25); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
+    "source": "Sidney City Council resolutions (69-25, 80-25, 81-25, 82-25, 26-26, 27-26); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
     "external_url": null,
     "license": "public record / public domain",
     "access_tier": "public",
@@ -168,15 +168,15 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "214d1dd7543dacb3375982ba954c9bfc043a951af519760f67a5c2ef8aed191d",
-      "size_bytes": 24039,
+      "sha256": "9dc95bb3a5416aff9838c5a1ab9e4f6132d152da3cf504f3cff64c6c084fa628",
+      "size_bytes": 46975,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Sidney City Council resolutions (18-25, 26-26, 27-26, 80-25, 81-25, 82-25); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
+      "source": "Sidney City Council resolutions (69-25, 80-25, 81-25, 82-25, 26-26, 27-26); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
       "source_kind": "reference",
       "page": null,
       "pages": null,
@@ -408,14 +408,14 @@
   },
   {
     "id": "oepa-sidney",
-    "title": "Ohio EPA NPDES Permit Extractions (Sidney / Hidden Valley MHP)",
+    "title": "Ohio EPA Permit Extractions (Sidney — AWS data-center campus, City road permit, Hidden Valley MHP)",
     "scope": "extracted",
     "collection": "oepa",
     "status": "reviewed",
     "producer_kind": "extracted",
     "command": null,
     "connector_ref": null,
-    "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits at facilities in Sidney, Ohio (Shelby County)",
+    "source": "Ohio EPA — issued NPDES permits, general-permit coverages, 401/isolated-wetland authorizations, surface-water permits to install, fact sheets and draft public notices for facilities in Sidney, Ohio (Shelby County), retrieved from the eDocument public portal and the DAM permit slots",
     "external_url": null,
     "license": "Public record (Ohio R.C. 149.43)",
     "access_tier": "public",
@@ -428,6 +428,11 @@
       "npdes",
       "permits",
       "wastewater",
+      "stormwater",
+      "wetlands",
+      "data-center",
+      "sidney-data-center-campus",
+      "cmh-232",
       "sidney"
     ],
     "storage": [
@@ -435,25 +440,112 @@
         "relpath": "extracted/oepa/sidney/1PV00037.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/1GC10596.noi.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/1GC10596.approval.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/1GC10596.copermittee-igel.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/DSWPTI-260517.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/DSW401251911W.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/DSW401252256W.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "937ea9cb73b1210b6ca367288a517c788861604c60c48d2f39b48af3b90f139e",
-      "size_bytes": 2466,
+      "sha256": "6356c54ebd74184bd75f3c8847246984bdbc25b7de5d7c2eea128695e341398e",
+      "size_bytes": 18754,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 7,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits at facilities in Sidney, Ohio (Shelby County)",
+      "source": "Ohio EPA — issued NPDES permits, general-permit coverages, 401/isolated-wetland authorizations, surface-water permits to install, fact sheets and draft public notices for facilities in Sidney, Ohio (Shelby County), retrieved from the eDocument public portal and the DAM permit slots",
       "source_kind": "document",
       "page": null,
       "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
+    }
+  },
+  {
+    "id": "sidney-incentive-instruments",
+    "title": "Sidney — AWS \"Project Rey\" Incentive, Service and Development Instruments",
+    "scope": "extracted",
+    "collection": "sidney",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted 2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and data/documents/sidney/permits/filename-map.yaml.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:sidney",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "data-center",
+      "aws",
+      "amazon",
+      "cra",
+      "pilot",
+      "tax-abatement",
+      "water",
+      "wastewater",
+      "development-agreement",
+      "public-records",
+      "project-rey",
+      "sidney"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/sidney/incentive-instruments.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "9840bb0df2d33aa0f7d9bcad4f33874afc52669eb4d1600571266657bec32417",
+      "size_bytes": 49653,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted 2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and data/documents/sidney/permits/filename-map.yaml.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

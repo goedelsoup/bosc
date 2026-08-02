@@ -98,7 +98,8 @@
     "confidence": "high",
     "warnings": [
       "The permit names the Southwest District Office as the responsible DSW district, while air-program jurisdiction for Shelby County is Northwest District Office — the two programs split districts for the same county, which matters when searching for the still-open air PTI.",
-      "Ohio EPA staff on this permit (Brandon Oyer, transmitting; Tony Nosko P.E., PTI Unit) are recorded in `note`, NOT in contact_name: the contact fields feed applicant-representation edges in the entity graph, and a regulator is not the applicant's representative."
+      "Ohio EPA staff on this permit (Brandon Oyer, transmitting; Tony Nosko P.E., PTI Unit) are recorded in `note`, NOT in contact_name: the contact fields feed applicant-representation edges in the entity graph, and a regulator is not the applicant's representative.",
+      "Applicant address variance, recorded as printed on each document: this PTI prints '1812 Boren Ave, Seattle, WA 98101' for Amazon Data Services, Inc., while the stormwater NOI, the coverage approval and the 401 application all print '410 Terry Ave N, Seattle, WA 98109' for the same company, and the CRA Agreement routes notices to P.O. Box 81226 / P.O. Box 80416. All are the same applicant — do not resolve them as separate entities on the strength of the address."
     ],
     "fields": {
       "agency": "Ohio EPA, Division of Surface Water",
@@ -223,11 +224,12 @@
     "confidence": "high",
     "warnings": [
       "Receiving stream is printed on the NOI as 'Mill Creek, Mill Branch' — two named waters in one field. Recorded here as 'Mill Creek' so the entity graph resolves one water per node; the verbatim field value is preserved in `note`.",
-      "The NOI declares Ohio EPA PTI status 'YET_TO_APPLY' — the sanitary-sewer PTI (DSWPTI-260517) did not issue until 2026-06-16, six months later."
+      "The NOI declares Ohio EPA PTI status 'YET_TO_APPLY' — the sanitary-sewer PTI (DSWPTI-260517) did not issue until 2026-06-16, six months later.",
+      "The NOI carries the FULL facility permit number 1GC10596*AG in its 'Existing NPDES Facility Permit Number' field even though it is the application, submitted 2025-12-01, four days before the 2025-12-05 approval letter that grants the coverage. Recorded as printed. Entity-graph facility identity keys on the base number either way (`_base_permit` strips the *AG action suffix), so this and the approval and co-permittee records resolve to one facility node."
     ],
     "fields": {
       "facility_name": "Sidney Data Center Campus",
-      "permit_no": "1GC10596",
+      "permit_no": "1GC10596*AG",
       "permit_action": "notice of intent",
       "applicant": "Amazon Data Services, Inc.",
       "application_no": "OHC000006",
