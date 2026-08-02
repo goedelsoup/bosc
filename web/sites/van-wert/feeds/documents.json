@@ -5,6 +5,36 @@
     "description": "**Collection:** `oepa/` · immutable source evidence",
     "entries": [
       {
+        "rel": "oepa/van-wert/2PD00006.36a58063.pdf",
+        "name": "2PD00006.36a58063.pdf",
+        "size_bytes": 1210329,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/van-wert/2PD00006.f8aaad0a.pdf",
+        "name": "2PD00006.f8aaad0a.pdf",
+        "size_bytes": 1454356,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
         "rel": "oepa/van-wert/2PD00006.fs.pdf",
         "name": "2PD00006.fs.pdf",
         "size_bytes": 1543040,

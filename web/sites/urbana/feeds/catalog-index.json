@@ -1,7 +1,7 @@
 {
   "site": "urbana",
-  "catalog_version": "b5fc8c2c0c984a7a7e4eef2ac3cfedaed4187a736629836289896f2f59f7fc15",
-  "contract_version": "1.50.0",
+  "catalog_version": "87ff530ecbaa470e7110e8b17e70b772749e4b92b515d25ae9adb054fa3f0cc8",
+  "contract_version": "1.51.0",
   "atoms": [
     {
       "handle": "concept:urbana:7q10",
@@ -924,6 +924,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:urbana:ohio-water-withdrawal-champaign",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "ohio-water-withdrawal-champaign",
+      "title": "Champaign County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:urbana:onboard-bundle",
       "kind": "dataset",
       "site": "urbana",
@@ -1073,6 +1081,38 @@
       "site": "urbana",
       "local_id": "THOR-FED",
       "title": "Thor v. City of Urbana (S.D. Ohio 3:26-cv-00196) — federal suit over the data-center zoning reversal is live",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:urbana:URB-0624C",
+      "kind": "lead",
+      "site": "urbana",
+      "local_id": "URB-0624C",
+      "title": "Resolve Urbana0624C, LLC — the City calls it \"Highland\", but no corporate filing has been read",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:urbana:URB-CRA-GAP",
+      "kind": "lead",
+      "site": "urbana",
+      "local_id": "URB-CRA-GAP",
+      "title": "No abatement exists — and most of the Thor assembly is outside the CRA it is associated with",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:urbana:URB-PREANNEX",
+      "kind": "lead",
+      "site": "urbana",
+      "local_id": "URB-PREANNEX",
+      "title": "Urbana pre-committed to de-annex the data-center land on the developer's demand — and the executed agreement is not public",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:urbana:URB-WATER-METER",
+      "kind": "lead",
+      "site": "urbana",
+      "local_id": "URB-WATER-METER",
+      "title": "The \"office building\" water claim is untestable by any state instrument — and the City holds the only record that could settle it",
       "feed": "leads"
     },
     {

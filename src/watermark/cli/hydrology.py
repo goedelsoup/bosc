@@ -346,7 +346,9 @@ def cooling_reconcile_cmd(
         # denominator) or an ongoing draw marked "(disclosed)" (Van Wert B2, #1682) — so a self-report
         # is never read as a metered use either.
         # A route_blind row shows what the registry DID record, marked "(non-cooling)", so the
-        # cell is never blank in a way that reads as "no records exist" (B6, #1686).
+        # cell is never blank in a way that reads as "no records exist" (B6, #1686) — or, where the
+        # registry reached the SUPPLIER rather than the facility, that system total marked
+        # "(supplier)" (Urbana B4, #1684), which is the denominator and never the facility's water.
         reserved = a.reserved_makeup or a.reserved_blowdown
         if documented is not None:
             documented_cell = f"{documented.value:g} MGD"
@@ -356,6 +358,8 @@ def cooling_reconcile_cmd(
             documented_cell = f"{a.disclosed_ceiling.value:g} MGD (ceiling)"
         elif a.nonprocess_makeup is not None:
             documented_cell = f"{a.nonprocess_makeup.value:g} MGD (non-cooling)"
+        elif a.supplier_withdrawal is not None:
+            documented_cell = f"{a.supplier_withdrawal.value:g} MGD (supplier)"
         elif a.disclosed_makeup is not None:
             documented_cell = f"{a.disclosed_makeup.value:g} MGD (disclosed)"
         else:
@@ -419,7 +423,10 @@ def cooling_reconcile_cmd(
         r"state, not purchases) and/or blowdown to a POTW sanitary sewer (no outfall, so no DMR): "
         r"their ~0 is jurisdiction, not measurement, so it can never corroborate a dry claim. Its "
         r"'non-cooling' documented cell is a real metered withdrawal that is NOT the cooling account "
-        r"(construction-phase water), and a 'refused' predicted-makeup cell means the archetype "
+        r"(construction-phase water); a 'supplier' cell (Urbana B4, #1684) is the withdrawal of the "
+        r"municipal SYSTEM that supplies a route-blind campus — a system total across every "
+        r"customer, so it can never corroborate or contradict one facility's claim, carried only as "
+        r"the denominator the claim has to be read against. A 'refused' predicted-makeup cell means the archetype "
         r"account was not derivable at all (every archetype is IT-load-parameterized; a semiconductor "
         r"fab has no IT load) — read it as \[open], never as zero. corrob† = the A4 "
         r"independent corroborators (air-permit cooling-tower PM + Tier II chemistry) reconciled "

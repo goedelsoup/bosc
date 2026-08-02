@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-02T04:02:47.945739+00:00'
+reconciled_at: '2026-08-02T11:02:44.767522+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -1032,8 +1032,8 @@ entries:
     site_scope: lima-legacy
   oepa-cooling-reconciliation:
     exists: true
-    sha256: 5ba6a2bb3c4f4ced89283f5fd6840f0cc63710f59c86c5f9e2002648b04cdfe8
-    size_bytes: 85223
+    sha256: f2002062d0084eec4afb2d7667d6d33f54a20d258788571b17a0a5fd6608733e
+    size_bytes: 94002
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -1110,6 +1110,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:lima
+  ohio-water-withdrawal-champaign:
+    exists: true
+    sha256: 52636cb5e14b20e64a4b2309689d6a88ab255087b34c2b1019c8bd104076d158
+    size_bytes: 88107
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:urbana
   ohio-water-withdrawal-licking:
     exists: true
     sha256: 8cf34a86b64849217841531050a6f1b92c83a3be72a44859fbaf5c7b73c144af
@@ -1402,10 +1412,10 @@ entries:
     site_scope: site:troy-piqua
   urbana:
     exists: true
-    sha256: 1134a032f37c48976feb95004bcf5bb56f636bb02739029aa4cbf5401432088f
-    size_bytes: 155226
+    sha256: 87114379b37b05d51220f74e69d9013bee8f43e008df57169e2348380e53e31a
+    size_bytes: 165993
     lfs_materialized: true
-    file_count: 10
+    file_count: 11
     missing: []
     asof: null
     stale: false

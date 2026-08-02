@@ -1,7 +1,7 @@
 {
   "site": "van-wert",
-  "catalog_version": "8abc2b14b0a483e7cee6b12a9b44a0a3360d0f102918a4a0e5488f93f4e0b37c",
-  "contract_version": "1.50.0",
+  "catalog_version": "388eb5de7abf2c15904e5aa27e788de183380299c3c99d2ab3345a0d81765445",
+  "contract_version": "1.51.0",
   "atoms": [
     {
       "handle": "concept:van-wert:7q10",
@@ -1044,6 +1044,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:van-wert:van-wert-water-watch",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "van-wert-water-watch",
+      "title": "Van Wert — Standing Water Watch + NPDES 2PD00006*WD / PWS OH8100611 Instrument Set (Extractions)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:van-wert:wqs-criteria",
       "kind": "dataset",
       "site": "van-wert",
@@ -1064,7 +1072,7 @@
       "kind": "entity",
       "site": "van-wert",
       "local_id": "CITY OF VAN WERT",
-      "title": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+      "title": "City of Van Wert",
       "feed": "entities"
     },
     {
@@ -1108,6 +1116,22 @@
       "feed": "entities"
     },
     {
+      "handle": "record:van-wert:oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+      "title": "Van Wert WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:van-wert:oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
+      "title": "Van Wert WWTP",
+      "feed": "records"
+    },
+    {
       "handle": "record:van-wert:oepa/van-wert/2PD00006.fs.npdes.yaml",
       "kind": "record",
       "site": "van-wert",
@@ -1129,6 +1153,14 @@
       "site": "van-wert",
       "local_id": "2PD00006*VD",
       "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — public notice",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:van-wert:2PD00006*WD",
+      "kind": "timeline",
+      "site": "van-wert",
+      "local_id": "2PD00006*WD",
+      "title": "NPDES 2PD00006*WD (Van Wert WWTP) — public notice",
       "feed": "timeline"
     }
   ]

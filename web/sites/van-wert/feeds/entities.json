@@ -79,11 +79,13 @@
     ],
     "signals": [],
     "roles": {
-      "facility": 2
+      "facility": 4
     },
     "parcels": [],
     "addresses": [],
     "sources": [
+      "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+      "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
       "oepa/van-wert/2PD00006.fs.npdes.yaml",
       "oepa/van-wert/2PD00006.npdes.yaml"
     ],
@@ -93,21 +95,25 @@
   },
   {
     "key": "CITY OF VAN WERT",
-    "display": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+    "display": "City of Van Wert",
     "kind": "government",
     "classification": "government_local",
     "relation_class": null,
     "relation_basis": null,
     "variants": [
+      "City of Van Wert",
+      "City of Van Wert, 515 East Main St., Van Wert, OH 45891",
       "City of Van Wert, 515 North Main Street, Van Wert, OH 45891"
     ],
     "signals": [],
     "roles": {
-      "applicant": 1
+      "applicant": 3
     },
     "parcels": [],
     "addresses": [],
     "sources": [
+      "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+      "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
       "oepa/van-wert/2PD00006.fs.npdes.yaml"
     ],
     "lei": null,
@@ -126,11 +132,13 @@
     ],
     "signals": [],
     "roles": {
-      "receiving_water": 2
+      "receiving_water": 4
     },
     "parcels": [],
     "addresses": [],
     "sources": [
+      "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+      "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
       "oepa/van-wert/2PD00006.fs.npdes.yaml",
       "oepa/van-wert/2PD00006.npdes.yaml"
     ],

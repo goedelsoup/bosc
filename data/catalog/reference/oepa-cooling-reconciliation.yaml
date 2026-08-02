@@ -101,7 +101,23 @@ notes: >-
   and `prediction_refused`, which leaves `it_load` + all three `predicted_*` null because every
   archetype is IT-load-parameterized and a fab has no IT load. `meta.reference_band` records the
   per-IT-MW evaporative screening band, derived from the archetype spec and explicitly NOT from the
-  fab that was supposed to ground it. Every other
+  fab that was supposed to ground it. **Urbana** (B4 #1684) is the second `route_blind` row and the
+  origin of the whole pattern — the campus whose disclosed "water use comparable to a standard
+  office building" took the buried-valley abstraction thesis off the table (#1327) before the same
+  framing appeared at the other sites. Its route rests on the CITY'S OWN instruments rather than
+  press: Ord. 4612-24's Pre-Annexation Agreement obliges the City to "provide water and sewer" (and
+  makes failing to a de-annexation trigger), so the campus buys City water — absent from all 31
+  Champaign County WWFRP registrations, a SEARCHED absence — and discharges to the City WPCF sewer
+  (no outfall, so no DMR; a City industrial-user permit under its OEPA-audited pretreatment program
+  is what would carry it, and ECHO never holds those). Its claim also carries NO figure at all, so
+  unlike Van Wert/Springfield nothing lands on the `disclosed_*` slots. What the registry does reach
+  is the SUPPLIER, on a sixth slot `supplier_withdrawal`: the City reported 644.99 MG in 2024
+  (1.76 MGD) across two plants on the same buried-valley aquifer. Like every non-`documented_*`
+  register it NEVER feeds the classifier — a system total aggregates every customer on it — and a
+  model validator refuses it without a cited municipal supply route. It is carried as the
+  DENOMINATOR: an evaporative read of the same campus at its own screening IT-load bracket implies
+  0.49-1.64 MGD, i.e. 28-93% of everything the City withdrew, while the office-building reading sits
+  below the 0.01 MGD noise floor — and no instrument on either side can tell them apart. Every other
   live cohort facility resolves to `gap` today (no documented makeup/blowdown: OHD000001 was
   WITHDRAWN on 2026-07-21 rather than finalized, so no general-permit coverage will ever appear, and
   no facility-own DMR is on record). Each record

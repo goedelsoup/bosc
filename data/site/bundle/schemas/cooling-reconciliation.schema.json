@@ -647,6 +647,17 @@
           ],
           "default": null
         },
+        "supplier_withdrawal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "route": {
           "anyOf": [
             {

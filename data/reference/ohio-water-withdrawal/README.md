@@ -61,6 +61,11 @@ genuine empty cell (never an estimate).
   Franklin-County city core). 55 registered facilities, 35 active, 46 with a 2015+
   report. Pulled for the B6 (#1686) positive-control review; see the blind-spot caveat
   below.
+- [**`champaign.yaml`**](champaign.yaml) — Champaign County, OH (Urbana — the Thor
+  Equities "Urbana Technology Hub" at SR-55 / US-68). 31 registered facilities, 25
+  active, 20 with a 2015+ report. Pulled for the B4 (#1684) review of the origin
+  closed-loop claim; the campus does **not** appear in it (caveat 6), and what does is
+  its *supplier* — the City of Urbana's public water system (caveat 8).
 - [**`wood.yaml`**](wood.yaml) — Wood County, OH (Bowling Green — the Meta "Project
   Accordion" campus and the Apollo generating plant, both in Middleton Township). 36
   registered facilities, 26 active, 31 with a 2015+ report. Pulled for the B5 (#1685)
@@ -94,6 +99,34 @@ the reason this county was pulled (B6, #1686) — are the finding, not the volum
 | 03575 | Amazon Data Services - Newton Court Site | 0.18 MGD (1 well) | 0.00 | registered 2024-04-20 |
 
 Read caveat 6 before treating any of those as a cooling-water account.
+
+## Headline (Champaign County, last pull)
+
+**31** registered facilities — **25 active**, **20** with a 2015+ annual report. By
+declared primary use: 12 Agriculture, 10 Public, 3 Mineral Extraction, 3 Misc, 2 Golf
+Course, 1 Industry. The county was pulled for the B4 (#1684) review of the Urbana
+Technology Hub, and the first finding is an **absence**: no Thor Equities, Highland55,
+Urbana Owner, or Urbana Technology Hub registration exists. That is caveat 6 again — the
+campus is contracted onto the City's water and sewer (Ord. 4612-24's Pre-Annexation
+Agreement obliges the City to "provide water and sewer"), so it withdraws nothing from
+waters of the state and the registry never sees it. What the registry *does* see is its
+supplier:
+
+| reg# | facility | use | registered | 2024 MG | 2024 MGD |
+|------|----------|-----|-----------:|--------:|---------:|
+| 01223 | Michael Farms-East | Agriculture | 11.78 MGD | 940.01 | 2.57 |
+| **00837** | **Urbana City PWS OTP** (Old Troy Pike, 6 wells) | Public | **5.76 MGD** | **644.99** | **1.76** |
+| 02036 | Freshwater Farms of Ohio | Misc | 0.11 MGD | 296.40 | 0.81 |
+| 01704 | J. Rettenmaier USA, LP | Industry | 2.32 MGD | 292.00 | 0.80 |
+| **03719** | **Urbana City PWS 29 WTP** (2047 State Rte 29 W, 3 wells) | Public | **3.00 MGD** | *no report yet* | — |
+
+The City runs the two plants on the same high-yield buried-valley aquifer (its own water
+division page describes both). Registration **03719 is dated 2026-03-26 and has filed no
+annual report** — it brings the City's *registered* capacity to **8.76 MGD** against
+**1.76 MGD** actually reported in 2024. Do **not** read that registration as capacity
+added for the data center: the SR-29 plant is a long-standing City facility with its own
+NPDES permit (**OH0137618**, effective, expiring 2027-12-31), so the 2026 date is a
+registry event whose occasion is `[open]` — a records-request item, not a finding.
 
 ## Headline (Wood County, last pull)
 
@@ -159,6 +192,10 @@ this site in 2026, so the campus's non-appearance is a **route**, not a hole in 
    City-held (metered water-service consumption; the industrial pretreatment / IU
    permit), which is the C2 (#1688) records request.
 
+   Champaign County is the same shape at Urbana: the campus is absent from all 31
+   registrations because the City's own Pre-Annexation Agreement obliges it to
+   "provide water and sewer", so the campus withdraws nothing itself.
+
    Wood County adds the *control* for that caveat. Bowling Green's campus is likewise
    absent — but "Apollo Power Generation Facility - TEMP" (03717) registered a 0.27 MGD
    surface intake in the campus's own HUC-12 on **2026-03-26**. The register is live at
@@ -175,6 +212,17 @@ this site in 2026, so the campus's non-appearance is a **route**, not a hole in 
    2017 carry no return row, so read it as a *stable reported band*, not as continuous
    annual coverage.) Read a `returns` row against the facility that reports it, never
    against one of its customers.
+
+8. **The supplier is in here even when the facility is not — and it is the denominator
+   (#1684).** Champaign County is the clean case: the Urbana campus is absent, but the
+   City of Urbana's public water system is registered and reporting, so the registry
+   still fixes the *scale* the claim has to be read against. The A3 harness carries that
+   figure on its own `supplier_withdrawal` slot precisely so it is never mistaken for the
+   facility's makeup — it is the *system's* account. Two rules follow. A supplier's
+   withdrawal never corroborates or contradicts a facility's cooling claim (it aggregates
+   every customer on the system). And a county's largest reported withdrawer is often not
+   its city: Champaign's is an agricultural irrigator (Michael Farms-East, 940 MG in
+   2024), 46% above the City PWS.
 
 ## Field reference
 
@@ -209,6 +257,16 @@ Regenerate: `watermark water-withdrawal --county Allen`
 | file | type | lfs |
 | --- | --- | --- |
 | `reference/ohio-water-withdrawal/allen.yaml` | application/x-yaml | no |
+
+### `ohio-water-withdrawal-champaign` — Champaign County, OH water-withdrawal registry (Ohio DNR WWFRP)
+
+Source: Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports) · License: Ohio public record · Access: public · Site scope: site:urbana · Refresh: annual (ttl 365d)
+
+Regenerate: `watermark water-withdrawal --county Champaign`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/ohio-water-withdrawal/champaign.yaml` | application/x-yaml | no |
 
 ### `ohio-water-withdrawal-licking` — Licking County, OH water-withdrawal registry (Ohio DNR WWFRP)
 

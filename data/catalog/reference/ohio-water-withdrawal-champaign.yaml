@@ -1,0 +1,48 @@
+id: ohio-water-withdrawal-champaign
+title: Champaign County, OH water-withdrawal registry (Ohio DNR WWFRP)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: water-withdrawal --county Champaign
+  connector_ref: watermark.hydrology.connectors.ohio_water_withdrawal
+  source: >-
+    Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration
+    Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)
+  external_url: https://ohiodnr.gov/wwfacilitylocator
+license: Ohio public record
+access_tier: public
+# The Champaign-County registry is Urbana's (its county); a peer site adds its own county
+# sibling rather than sharing this one.
+site_scope: site:urbana
+storage:
+- relpath: reference/ohio-water-withdrawal/champaign.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: annual
+  ttl_days: 365
+provenance: connector
+schema_ref: watermark.hydrology.connectors.ohio_water_withdrawal.WithdrawalRegistry
+tags:
+- water-withdrawal
+- wwfrp
+- ohio-dnr
+- cooling
+- makeup
+notes: >-
+  Every WWFRP-registered facility in Champaign County, OH — the makeup-side record for the B4
+  (#1684) review of the Urbana Technology Hub's closed-loop claim, the origin of the
+  "closed loop undercuts the water thesis" pattern (#1327). Two things in it are the finding.
+  (1) The campus is NOT here: no Thor / Highland55 / Urbana Technology Hub registration exists
+  among the county's 31 registrants, which is exactly what a municipally-supplied campus looks
+  like in a registry of withdrawals from waters of the state — an absence of jurisdiction, not a
+  measurement of a dry loop (caveat 6). (2) What IS here is the supplier: the City of Urbana's
+  public water system, on two registrations drawing the same buried-valley aquifer — 00837
+  "URBANA CITY PWS OTP" (Old Troy Pike, 6 wells / 5.76 MGD registered, 644.99 MG reported in
+  2024 = 1.76 MGD) and 03719 "URBANA CITY PWS 29 WTP" (the State Route 29 W plant, 3 wells /
+  3.00 MGD registered, registered 2026-03-26 with no annual report filed yet). That City total
+  is the denominator any campus draw lands inside, and it is what the A3 harness carries on
+  supplier_withdrawal — the supplier's account, never the facility's. The facility registry is
+  kept in full; annual series are floored at 2015. See
+  data/reference/ohio-water-withdrawal/README.md.

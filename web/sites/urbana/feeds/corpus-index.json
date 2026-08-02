@@ -6,7 +6,7 @@
     "label": "Urbana",
     "scope": "site",
     "links_out": 3,
-    "links_in": 6,
+    "links_in": 10,
     "lines": 13,
     "updated": null
   },
@@ -899,6 +899,50 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 22,
+    "updated": null
+  },
+  {
+    "id": "question/lead-urb-0624c",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Resolve Urbana0624C, LLC — the City calls it \"Highland\", but no corporate filing has been read",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
+    "id": "question/lead-urb-cra-gap",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "No abatement exists — and most of the Thor assembly is outside the CRA it is associated with",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
+    "id": "question/lead-urb-preannex",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Urbana pre-committed to de-annex the data-center land on the developer's demand — and the executed agreement is not public",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
+    "id": "question/lead-urb-water-meter",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The \"office building\" water claim is untestable by any state instrument — and the City holds the only record that could settle it",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 23,
     "updated": null
   }
 ]

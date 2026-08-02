@@ -42,5 +42,53 @@
       "note": null,
       "verified": true
     }
+  },
+  {
+    "date": "2026-05-25",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PD00006*WD (Van Wert WWTP) — public notice",
+    "ref": "2PD00006*WD",
+    "parties": [
+      "City of Van Wert",
+      "Van Wert WWTP"
+    ],
+    "detail": "action modification; receiving Town Creek",
+    "source": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+    "also_sources": [
+      "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml"
+    ],
+    "citation": {
+      "source": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-06-24",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PD00006*WD (Van Wert WWTP) — comment period ends",
+    "ref": "2PD00006*WD",
+    "parties": [
+      "City of Van Wert",
+      "Van Wert WWTP"
+    ],
+    "detail": "",
+    "source": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+    "also_sources": [
+      "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml"
+    ],
+    "citation": {
+      "source": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
   }
 ]

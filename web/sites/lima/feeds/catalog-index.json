@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "60026a79b5fd5d5b82df30ee33ec2b77aeac5c538d59bfe2b544a047c41f69b7",
-  "contract_version": "1.50.0",
+  "catalog_version": "12623d8ec43b7b52e031828bbc0bac6c23bcae3e7708ef702272bdd6dbcbf8bc",
+  "contract_version": "1.51.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -737,6 +737,22 @@
       "site": "lima",
       "local_id": "american-township-meetings",
       "title": "American Township Trustee Meeting Records",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:bowling-green-apollo-power",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "bowling-green-apollo-power",
+      "title": "Bowling Green — Apollo Power Generation Facility, OPSB 25-0973-EL-BLN + Ohio EPA PTI P0139272 (Extractions)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:bowling-green-water-watch",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "bowling-green-water-watch",
+      "title": "Bowling Green — Standing Water Watch + NPDES 2PD00009 / PWS OH8700311 Instrument Set (Extractions)",
       "feed": "catalog"
     },
     {
@@ -1480,7 +1496,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "oepa-sidney",
-      "title": "Ohio EPA NPDES Permit Extractions (Sidney / Hidden Valley MHP)",
+      "title": "Ohio EPA Permit Extractions (Sidney — AWS data-center campus, City road permit, Hidden Valley MHP)",
       "feed": "catalog"
     },
     {
@@ -1516,11 +1532,27 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:ohio-water-withdrawal-champaign",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "ohio-water-withdrawal-champaign",
+      "title": "Champaign County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:ohio-water-withdrawal-licking",
       "kind": "dataset",
       "site": "lima",
       "local_id": "ohio-water-withdrawal-licking",
       "title": "Licking County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:ohio-water-withdrawal-wood",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "ohio-water-withdrawal-wood",
+      "title": "Wood County, OH water-withdrawal registry (Ohio DNR WWFRP)",
       "feed": "catalog"
     },
     {
@@ -1668,6 +1700,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:sidney-incentive-instruments",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "sidney-incentive-instruments",
+      "title": "Sidney — AWS \"Project Rey\" Incentive, Service and Development Instruments",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:sidney-regulatory-watch",
       "kind": "dataset",
       "site": "lima",
@@ -1745,6 +1785,14 @@
       "site": "lima",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:van-wert-water-watch",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "van-wert-water-watch",
+      "title": "Van Wert — Standing Water Watch + NPDES 2PD00006*WD / PWS OH8100611 Instrument Set (Extractions)",
       "feed": "catalog"
     },
     {

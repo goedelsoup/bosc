@@ -27,7 +27,7 @@ from watermark.site.cooling_reconciliation import (
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.50.0"
+_CV = "1.51.0"
 
 
 def _settings(site: str, data_dir: Path | None = None) -> Settings:
@@ -103,6 +103,7 @@ def test_caveats_are_carried_and_pinned_to_the_meta_discipline() -> None:
         "cannot upgrade the",
         "absence of jurisdiction",
         "not the cooling account",
+        "the supplier's account",
         "never the sole basis for a re-archetype",
     ]
     for caveat, phrase in zip(DISCIPLINE_CAVEATS, pins, strict=True):
@@ -138,9 +139,19 @@ def test_urbana_bundle_ships_the_feed_byte_consistent(
     ]
     assert payload["candidates"] == committed
     row = payload["candidates"][0]
-    assert row["outcome"] == "gap"
+    # B4 (#1684): Urbana is route_blind, not a gap — the City's own Pre-Annexation Agreement puts
+    # the campus on City water and City sewer, which is exactly where A1/A2 do not look, so the
+    # ~0 they return is jurisdiction rather than measurement. The distinction has to survive the
+    # bundle: a `gap` reads as an unfinished lookup, and no amount of pulling A1/A2 finishes this.
+    assert row["outcome"] == "route_blind"
     assert row["claim_source"] == "reference"
     assert row["account"]["predicted_makeup"]["value"] == 0.0
+    assert row["account"]["route"]["supply"] == "municipal"
+    assert row["account"]["route"]["discharge"] == "sanitary_sewer"
+    # The supplier's withdrawal ships as its OWN register — never folded into documented_*.
+    assert row["account"]["supplier_withdrawal"]["value"] == 1.7623
+    assert row["account"]["documented_makeup"] is None
+    assert row["account"]["documented_blowdown"] is None
     assert not row["is_control"]
     assert payload["caveats"] == list(DISCIPLINE_CAVEATS)
 

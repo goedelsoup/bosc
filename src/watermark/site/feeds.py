@@ -542,7 +542,24 @@ from watermark.sites import (
 #   ground it. Existing rows are unchanged and stay valid; a pre-1.50 schema rejects the new keys
 #   and a pre-1.50 CONSUMER must handle the nullable predicted side — MINOR, back-compatible for
 #   data, schema refresh required.
-CONTRACT_VERSION = "1.50.0"
+# 1.51.0: the `cooling-reconciliation` feed learns that a blind instrument still reaches the
+#   SUPPLIER (#1684, epic #1676 B4 — Urbana, the origin of the closed-loop framing). One additive
+#   shape on `CoolingWaterAccount`:
+#   * `supplier_withdrawal` — the reported withdrawal of the municipal SYSTEM that supplies a
+#     `route_blind` facility. The registry meters the city, not its customers, so a municipally
+#     supplied campus is absent from it while its supplier is fully in it. A sixth register,
+#     alongside `documented_*` (metered, this facility), `reserved_*` (a negotiated ceiling),
+#     `disclosed_*` (a self-report), and `nonprocess_makeup` (metered, this facility, not the
+#     cooling account): it is the SUPPLIER's account, aggregating every customer on the system,
+#     so it can never corroborate or contradict one facility's cooling claim. It is carried
+#     because it is the DENOMINATOR — Urbana's campus discloses no water figure at all (only the
+#     comparison "water use comparable to a standard office building", which is why nothing lands
+#     on `disclosed_makeup`), while the City of Urbana reported 1.76 MGD in 2024 and an
+#     evaporative read of the same campus at its screening IT load would draw 0.49-1.64 MGD.
+#     Valid only alongside a cited municipal supply `route` (a model validator enforces it).
+#   Existing rows are unchanged and stay valid; a pre-1.51 schema rejects the new key — MINOR,
+#   back-compatible for data, schema refresh required.
+CONTRACT_VERSION = "1.51.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
