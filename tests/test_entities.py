@@ -124,6 +124,13 @@ def test_split_principal() -> None:
         None,
     )
     assert _split_principal("THE PORT AUTHORITY OF ALLEN COUNTY, OHIO")[1] is None
+    # A comma before a BARE corporate designator is punctuation inside one name, not a
+    # separator between a person and an org. Splitting these produced the organization
+    # "Inc." — which normalizes to the empty key and crashed the graph build (issue 1380).
+    assert _split_principal("Amazon Data Services, Inc.") == ("Amazon Data Services, Inc.", None)
+    assert _split_principal("Amazon Web Services, Inc.") == ("Amazon Web Services, Inc.", None)
+    assert _split_principal("George J. Igel & Co., Inc.") == ("George J. Igel & Co., Inc.", None)
+    assert _split_principal("Tilted Gate, LLC") == ("Tilted Gate, LLC", None)
 
 
 def _deed(

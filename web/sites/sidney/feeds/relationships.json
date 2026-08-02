@@ -1,5 +1,35 @@
 [
   {
+    "src": "AMAZON DATA SERVICES",
+    "rel": "operates",
+    "dst": "npdes:1GC10596",
+    "date": "",
+    "ref": "1GC10596*AG",
+    "source": "oepa/sidney/1GC10596.approval.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "GEORGE IGEL &",
+    "rel": "operates",
+    "dst": "npdes:1GC10596",
+    "date": "",
+    "ref": "1GC10596*AG",
+    "source": "oepa/sidney/1GC10596.copermittee-igel.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1GC10596",
+    "rel": "discharges_to",
+    "dst": "MILL CREEK",
+    "date": "",
+    "ref": "1GC10596",
+    "source": "oepa/sidney/1GC10596.noi.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "ALEXANDER RECK DBA HIDDEN VALLEY MHP",
     "rel": "operates",
     "dst": "npdes:1PV00037",
@@ -16,6 +46,46 @@
     "date": "",
     "ref": "1PV00037*ED",
     "source": "oepa/sidney/1PV00037.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "AMAZON DATA SERVICES",
+    "rel": "represented_by",
+    "dst": "CHRIS KLEIN",
+    "date": "",
+    "ref": "",
+    "source": "oepa/sidney/DSW401251911W.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CHRIS KLEIN",
+    "rel": "affiliated_with",
+    "dst": "SMART SERVICES",
+    "date": "",
+    "ref": "",
+    "source": "oepa/sidney/DSW401251911W.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF SIDNEY",
+    "rel": "represented_by",
+    "dst": "MARCUS MOAN",
+    "date": "",
+    "ref": "",
+    "source": "oepa/sidney/DSW401252256W.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MARCUS MOAN",
+    "rel": "affiliated_with",
+    "dst": "CLUNE CONSULTING SERVICES",
+    "date": "",
+    "ref": "",
+    "source": "oepa/sidney/DSW401252256W.epa.yaml",
     "relation_class": null,
     "relation_basis": null
   },

@@ -1,1 +1,69 @@
-[]
+[
+  {
+    "date": "2025-12-10",
+    "category": "epa_permit_action",
+    "title": "401 Water Quality Certification and Isolated Wetland Permitting Unit DSW401251911W (Ohio EPA ID No. 251911W); Application ID: 461193445 — application (CMH-232)",
+    "ref": "DSW401251911W (Ohio EPA ID No. 251911W); Application ID: 461193445",
+    "parties": [
+      "Amazon Data Services, Inc.",
+      "Chris Klein",
+      "Smart Services, Inc"
+    ],
+    "detail": "affected 0.24 ac of one forested Category 2 isolated wetland and 0.18 ac of two non-forested wetlands; HUC-12 050800010703 (Brush Creek-Great Miami River) and 050800010604 (Mill Creek-Loramie Creek); USACE Huntington District",
+    "source": "oepa/sidney/DSW401251911W.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/sidney/DSW401251911W.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-05-06",
+    "category": "epa_permit_action",
+    "title": "401 Water Quality Certification / Isolated Wetland Permit DSW401252256W (Ohio EPA ID No. 252256W) — correspondence — mitigation purchase complete (West Millcreek Road/Fair Road Development)",
+    "ref": "DSW401252256W (Ohio EPA ID No. 252256W)",
+    "parties": [
+      "City of Sidney",
+      "Marcus Moan",
+      "Clune Consulting Services"
+    ],
+    "detail": "affected isolated wetlands within the West Millcreek Road/Fair Road right-of-way improvements",
+    "source": "oepa/sidney/DSW401252256W.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/sidney/DSW401252256W.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-06-16",
+    "category": "epa_permit_action",
+    "title": "Surface Water Permit to Install (long term) DSWPTI-260517 — permit to install issued (SIDNEY DATA CENTER CAMPUS — Public Sanitary Sewer Relocation, 2388 West Millcreek Rd)",
+    "ref": "DSWPTI-260517",
+    "parties": [
+      "Amazon Data Services, Inc."
+    ],
+    "detail": "affected public sanitary sewer relocation (internal reference DSW-7167)",
+    "source": "oepa/sidney/DSWPTI-260517.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/sidney/DSWPTI-260517.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  }
+]

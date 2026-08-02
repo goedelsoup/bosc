@@ -1,0 +1,45 @@
+doc_id: 4109706-2cf39903
+source_path: data/documents/oepa/sidney/4109706.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: '50 W. Town Street Suite 700 Columbus, Ohio 43215 U.S.A. 614 | 644 3020 epa.ohio.gov
+  The State of Ohio is an Equal Opportunity Employer and Provider of ADA Services May 6, 2026 TRANSMITTED
+  ELECTRONICALLY Jon Crusey City of Sidney 201 W Poplar Street Sidney, OH 45365 jcrusey@sidneyoh.com Re:
+  West Millcreek Road/Fair Road Development Permit - Intermediate Correspondence 401 Wetlands Shelby DSW401252256W
+  Subject: Mitigation Purchase Agreement, Isolated Wetland Permit West Millcreek Road/Fair Road Development
+  Ohio EPA I'
+action:
+  confidence: high
+  warnings:
+  - 'Different permittee and different Ohio EPA ID from the Amazon campus authorization (251911W). Do
+    not merge: this is the CITY''s permit for the road project, not the developer''s for the campus.'
+  - Jon Crusey is the City Manager and the addressee of this letter, not the City's consultant. He is
+    recorded in `note`, not in contact_name, so the entity graph does not assert that the City is 'represented
+    by' its own City Manager or that he is affiliated with Clune.
+  agency: Ohio EPA, Division of Surface Water
+  program: 401 Water Quality Certification / Isolated Wetland Permit
+  permit_no: DSW401252256W (Ohio EPA ID No. 252256W)
+  action: correspondence — mitigation purchase complete
+  action_date: '2026-05-06'
+  plans_received_date: null
+  expiration_date: null
+  applicant: City of Sidney
+  applicant_address: 201 W Poplar Street, Sidney, OH 45365
+  contact_name: Marcus Moan
+  contact_email: null
+  contact_firm: Clune Consulting Services
+  project_name: West Millcreek Road/Fair Road Development
+  site_address: W. Millcreek Road / Fair Road, Sidney, OH, Shelby County
+  affected_resource: isolated wetlands within the West Millcreek Road/Fair Road right-of-way improvements
+  parcel_ids: []
+  note: 'Ohio EPA issued the underlying Isolated Wetland Permit to the City of Sidney on 2026-05-04; this
+    2026-05-06 letter from Mitigation Coordinator Andrea Kilbourne records that the required mitigation-credit
+    purchase is complete and no further action is needed. The ROAD side of the same development: the City
+    improvements this permit covers are the W. Mill Creek Road widening and the Fair Road roundabout that
+    the Development Agreement (Res. 27-26) obliges the City to build with Amazon Data Services'' $8,000,000
+    escrowed contribution. Copied to Marcus Moan (Clune Consulting Services) and Ohio EPA DSW staff Heather
+    Allamon and Jeff Boyles. Addressed to Jon Crusey, City Manager, 201 W Poplar Street, jcrusey@sidneyoh.com
+    — the same official who signs the City''s agreements with Amazon.'

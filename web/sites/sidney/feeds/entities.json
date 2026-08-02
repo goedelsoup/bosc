@@ -1,5 +1,35 @@
 [
   {
+    "key": "AMAZON DATA SERVICES",
+    "display": "Amazon Data Services, Inc.",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Amazon Data Services, Inc."
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 2,
+      "epa_applicant": 2
+    },
+    "parcels": [],
+    "addresses": [
+      "1812 Boren Ave, Seattle, WA",
+      "410 Terry Ave N, Seattle, WA 98109"
+    ],
+    "sources": [
+      "oepa/sidney/1GC10596.approval.npdes.yaml",
+      "oepa/sidney/1GC10596.noi.npdes.yaml",
+      "oepa/sidney/DSW401251911W.epa.yaml",
+      "oepa/sidney/DSWPTI-260517.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "GENERAL DYNAMICS",
     "display": "GENERAL DYNAMICS CORPORATION",
     "kind": "corporate",
@@ -44,6 +74,77 @@
     "federal_obligations": null
   },
   {
+    "key": "GEORGE IGEL &",
+    "display": "George J. Igel & Co., Inc.",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "George J. Igel & Co., Inc."
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/sidney/1GC10596.copermittee-igel.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SMART SERVICES",
+    "display": "Smart Services, Inc",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Smart Services, Inc"
+    ],
+    "signals": [],
+    "roles": {
+      "firm": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/sidney/DSW401251911W.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF SIDNEY",
+    "display": "City of Sidney",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Sidney"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "201 W Poplar Street, Sidney, OH 45365"
+    ],
+    "sources": [
+      "oepa/sidney/DSW401252256W.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "ALEXANDER RECK DBA HIDDEN VALLEY MHP",
     "display": "Alexander R. Reck dba Hidden Valley MHP",
     "kind": "individual",
@@ -67,6 +168,100 @@
     "federal_obligations": null
   },
   {
+    "key": "CHRIS KLEIN",
+    "display": "Chris Klein",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Chris Klein"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/sidney/DSW401251911W.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CLUNE CONSULTING SERVICES",
+    "display": "Clune Consulting Services",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Clune Consulting Services"
+    ],
+    "signals": [],
+    "roles": {
+      "firm": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/sidney/DSW401252256W.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MARCUS MOAN",
+    "display": "Marcus Moan",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Marcus Moan"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/sidney/DSW401252256W.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1GC10596",
+    "display": "Sidney Data Center Campus",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Sidney Data Center Campus"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/sidney/1GC10596.approval.npdes.yaml",
+      "oepa/sidney/1GC10596.copermittee-igel.npdes.yaml",
+      "oepa/sidney/1GC10596.noi.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "npdes:1PV00037",
     "display": "Hidden Valley Mobile Home Park",
     "kind": "individual",
@@ -84,6 +279,29 @@
     "addresses": [],
     "sources": [
       "oepa/sidney/1PV00037.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MILL CREEK",
+    "display": "Mill Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Mill Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/sidney/1GC10596.noi.npdes.yaml"
     ],
     "lei": null,
     "uei": null,

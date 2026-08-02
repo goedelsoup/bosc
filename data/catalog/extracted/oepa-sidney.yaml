@@ -1,16 +1,36 @@
 id: oepa-sidney
-title: Ohio EPA NPDES Permit Extractions (Sidney / Hidden Valley MHP)
+title: Ohio EPA Permit Extractions (Sidney — AWS data-center campus, WWTP, Hidden Valley MHP)
 scope: extracted
 status: reviewed
 producer:
   kind: extracted
-  source: Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for
-    permits at facilities in Sidney, Ohio (Shelby County)
+  source: Ohio EPA — issued NPDES permits, general-permit coverages, 401/isolated-wetland
+    authorizations, surface-water permits to install, fact sheets and draft public notices
+    for facilities in Sidney, Ohio (Shelby County), retrieved from the eDocument public
+    portal and the DAM permit slots
 license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:sidney
 storage:
 - relpath: extracted/oepa/sidney/1PV00037.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/sidney/1GC10596.noi.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/sidney/1GC10596.approval.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/sidney/1GC10596.copermittee-igel.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/sidney/DSWPTI-260517.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/sidney/DSW401251911W.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/sidney/DSW401252256W.epa.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:
@@ -21,9 +41,24 @@ tags:
 - npdes
 - permits
 - wastewater
+- stormwater
+- wetlands
+- data-center
+- sidney-data-center-campus
+- cmh-232
 - sidney
-notes: Hidden Valley MHP permit 1PV00037*ED, renewal effective 2025-09-01 through
-  2030-08-31, receiving Tawawa Creek at River Mile 3.3. Outfalls 1PV00037001 (final
-  treated effluent after UV disinfection) and 1PV00037588 (sludge/biosolids transfer
-  station). Design flow 0.015 MGD. Add additional Sidney OEPA extractions (WWTPs,
-  other facilities) to storage as produced.
+notes: 'Three facilities. (1) The AWS campus, added 2026-08-01 (issue 1380) over bytes
+  ingested 2026-07-31 (issue 1383): construction stormwater coverage 1GC10596*AG under
+  OHC000006 — the NOI (applicant Amazon Data Services, Inc.; receiving Mill Creek; 230.7 ac
+  disturbed), the 2025-12-05 Director''s approval, and the 2026-04-22 co-permittee approval
+  for George J. Igel & Co., Inc.; surface-water PTI DSWPTI-260517 for the sanitary sewer
+  relocation (2026-06-16); and the 401/isolated-wetland application 251911W under Amazon''s
+  own project name CMH-232. (2) The City of Sidney''s OWN isolated-wetland permit 252256W for
+  the W. Millcreek/Fair Road work — different permittee, do not merge with 251911W. (3)
+  Hidden Valley MHP permit 1PV00037*ED, renewal effective 2025-09-01 through 2030-08-31,
+  receiving Tawawa Creek at River Mile 3.3; outfalls 1PV00037001 (final treated effluent
+  after UV disinfection) and 1PV00037588 (sludge/biosolids transfer station), design flow
+  0.015 MGD. NOTE: extracted/oepa/sidney/1PD00009.npdes.yaml (the Sidney WWTP read) carries
+  no extraction envelope and is rejected by the corpus loader — see
+  data/extracted/sidney/README.md, "Platform gaps". Add further Sidney OEPA extractions to
+  storage as produced.'

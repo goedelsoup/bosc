@@ -1,5 +1,264 @@
 [
   {
+    "rel": "oepa/sidney/DSW401251911W.epa.yaml",
+    "group": "permits-epa",
+    "title": "CMH-232",
+    "confidence": "high",
+    "warnings": [
+      "The applicant's own form prints the project ZIP as 43103 for 'Millcreek Road, Sidney, OH'. 43103 is Ashville, Pickaway County; Sidney is 45365. Recorded as printed — it is the applicant's error, not a transcription error.",
+      "Project acreage here (236.7 ac converted) is the applicant's project figure and differs from the 230.7 ac land disturbance on its own stormwater NOI and the 243.0924 ac of the deeded parcel — three measures of one site, none of them a building footprint.",
+      "The form carries two contact columns. contact_name/contact_firm hold the CONSULTANT/AGENT pair (Chris Klein of Smart Services, Inc), because those fields drive the applicant's representation edges. The applicant-side contacts (Robert Truedinger, Director Enviro, robbtrue@amazon.com; technical contact Seth Bell) are Amazon's own staff and are recorded in `note` so the graph does not present them as outside representation."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "program": "401 Water Quality Certification and Isolated Wetland Permitting Unit",
+      "permit_no": "DSW401251911W (Ohio EPA ID No. 251911W); Application ID: 461193445",
+      "action": "application",
+      "action_date": "2025-12-10",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Amazon Data Services, Inc.",
+      "applicant_address": "410 Terry Ave N, Seattle, WA 98109",
+      "contact_name": "Chris Klein",
+      "contact_email": "cklein@smartservices-inc.com",
+      "contact_firm": "Smart Services, Inc",
+      "project_name": "CMH-232",
+      "site_address": "Millcreek Road, Sidney, OH (Clinton Township, Shelby County)",
+      "affected_resource": "0.24 ac of one forested Category 2 isolated wetland and 0.18 ac of two non-forested wetlands; HUC-12 050800010703 (Brush Creek-Great Miami River) and 050800010604 (Mill Creek-Loramie Creek); USACE Huntington District",
+      "parcel_ids": [],
+      "note": "THE DOCUMENT THAT TIES THE NAME TO THE PLACE: project name 'CMH-232' — Amazon Data Services' own internal designation — against coordinates 40.266278 / -84.194246 west of Millcreek Road. The same designation reappears in the City's Development Agreement notice block ('Real Estate Manager (AWS) CMH232'), independently corroborating it from the municipal side. In the applicant's own words the project will 'convert 236.7 acres of agricultural and residential land into a data center'. Consultant Smart Services, Inc (Chris Klein, Mitchel Strain); construction 2026-03-01 to 2026-10-31. The 2026-01-15 modification of the resulting authorization re-classified the wetlands Category 2 to Category 1 (oepa/sidney/3972773.pdf). Applicant-side contacts on the form: Robert Truedinger, Director, Enviro (robbtrue@amazon.com) and technical contact Seth Bell (sefb@amazon.com) — both Amazon Data Services staff. Consultant technical contact: Mitchel Strain, Smart Services, Inc."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/sidney/DSW401251911W.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/3935117.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/sidney/DSW401252256W.epa.yaml",
+    "group": "permits-epa",
+    "title": "West Millcreek Road/Fair Road Development",
+    "confidence": "high",
+    "warnings": [
+      "Different permittee and different Ohio EPA ID from the Amazon campus authorization (251911W). Do not merge: this is the CITY's permit for the road project, not the developer's for the campus.",
+      "Jon Crusey is the City Manager and the addressee of this letter, not the City's consultant. He is recorded in `note`, not in contact_name, so the entity graph does not assert that the City is 'represented by' its own City Manager or that he is affiliated with Clune."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "program": "401 Water Quality Certification / Isolated Wetland Permit",
+      "permit_no": "DSW401252256W (Ohio EPA ID No. 252256W)",
+      "action": "correspondence — mitigation purchase complete",
+      "action_date": "2026-05-06",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "City of Sidney",
+      "applicant_address": "201 W Poplar Street, Sidney, OH 45365",
+      "contact_name": "Marcus Moan",
+      "contact_email": null,
+      "contact_firm": "Clune Consulting Services",
+      "project_name": "West Millcreek Road/Fair Road Development",
+      "site_address": "W. Millcreek Road / Fair Road, Sidney, OH, Shelby County",
+      "affected_resource": "isolated wetlands within the West Millcreek Road/Fair Road right-of-way improvements",
+      "parcel_ids": [],
+      "note": "Ohio EPA issued the underlying Isolated Wetland Permit to the City of Sidney on 2026-05-04; this 2026-05-06 letter from Mitigation Coordinator Andrea Kilbourne records that the required mitigation-credit purchase is complete and no further action is needed. The ROAD side of the same development: the City improvements this permit covers are the W. Mill Creek Road widening and the Fair Road roundabout that the Development Agreement (Res. 27-26) obliges the City to build with Amazon Data Services' $8,000,000 escrowed contribution. Copied to Marcus Moan (Clune Consulting Services) and Ohio EPA DSW staff Heather Allamon and Jeff Boyles. Addressed to Jon Crusey, City Manager, 201 W Poplar Street, jcrusey@sidneyoh.com — the same official who signs the City's agreements with Amazon."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/sidney/DSW401252256W.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/4109706.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/sidney/DSWPTI-260517.epa.yaml",
+    "group": "permits-epa",
+    "title": "SIDNEY DATA CENTER CAMPUS — Public Sanitary Sewer Relocation, 2388 West Millcreek Rd",
+    "confidence": "high",
+    "warnings": [
+      "The permit names the Southwest District Office as the responsible DSW district, while air-program jurisdiction for Shelby County is Northwest District Office — the two programs split districts for the same county, which matters when searching for the still-open air PTI.",
+      "Ohio EPA staff on this permit (Brandon Oyer, transmitting; Tony Nosko P.E., PTI Unit) are recorded in `note`, NOT in contact_name: the contact fields feed applicant-representation edges in the entity graph, and a regulator is not the applicant's representative."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "program": "Surface Water Permit to Install (long term)",
+      "permit_no": "DSWPTI-260517",
+      "action": "permit to install issued",
+      "action_date": "2026-06-16",
+      "plans_received_date": "2026-05-22",
+      "expiration_date": null,
+      "applicant": "Amazon Data Services, Inc.",
+      "applicant_address": "1812 Boren Ave, Seattle, WA",
+      "contact_name": null,
+      "contact_email": null,
+      "contact_firm": null,
+      "project_name": "SIDNEY DATA CENTER CAMPUS — Public Sanitary Sewer Relocation, 2388 West Millcreek Rd",
+      "site_address": "2388 West Millcreek Rd, Sidney, OH, Shelby County",
+      "affected_resource": "public sanitary sewer relocation (internal reference DSW-7167)",
+      "parcel_ids": [],
+      "note": "The state-side counterpart of the Developer Sewer Improvements the City's Development Agreement (Res. 27-26 §3.8) requires to reach final completion by 2026-09-30. Condition WW restates that a PTI is not an authorization to discharge and that an NPDES permit must be applied for 180 days before any discharge to waters of the state; condition AB places operation and maintenance of the relocated sewer on the City of Sidney — which the Development Agreement independently provides for at §3.7.2 on dedication and acceptance. Appealable to the Environmental Review Appeals Commission within 30 days under R.C. 3745.04. The 20 MB approved plan set (eDoc 4158406) and the application package (eDoc 4158414) are on the same permit and are deliberately not in the corpus. Ohio EPA staff of record: Brandon Oyer (transmittal) and Tony Nosko, P.E., PTI Unit. The permit names no applicant-side contact."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/sidney/DSWPTI-260517.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/4160653.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/sidney/1GC10596.approval.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Sidney Data Center Campus",
+    "confidence": "high",
+    "warnings": [
+      "The approval letter states no receiving water; it is carried on the NOI (1GC10596.noi.npdes.yaml) for the same facility permit number."
+    ],
+    "fields": {
+      "facility_name": "Sidney Data Center Campus",
+      "permit_no": "1GC10596*AG",
+      "permit_action": "general permit coverage approval",
+      "applicant": "Amazon Data Services, Inc.",
+      "application_no": "OHC000006",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "2388 West Millcreek Road, Sidney, OH, Shelby County",
+      "discharge_address": null,
+      "receiving_water": null,
+      "stream_network": null,
+      "outfalls": [],
+      "note": "Ohio EPA approval letter of 2025-12-05 granting coverage under Construction Site Stormwater General Permit OHC000006. Ohio EPA Facility Permit Number 1GC10596*AG; effective 2025-12-05, expiring 2028-04-22; ICIS federal ID OHGC16923. Addressed to Robert Truedinger at Amazon Data Services, Inc. The letter expressly notes that placing fill in regulated waters may additionally require a 401 WQC and/or an Isolated Wetlands Permit — both of which this applicant then obtained under Ohio EPA ID 251911W."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/sidney/1GC10596.approval.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/3931142.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/sidney/1GC10596.copermittee-igel.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Sidney Data Center Campus",
+    "confidence": "high",
+    "warnings": [
+      "A co-permittee approval, not a separate permit: Ohio EPA covers co-permittees under the SAME facility permit number as the initial NOI applicant, so this shares 1GC10596*AG with 1GC10596.approval.npdes.yaml and is a second operator on one coverage, not a second coverage."
+    ],
+    "fields": {
+      "facility_name": "Sidney Data Center Campus",
+      "permit_no": "1GC10596*AG",
+      "permit_action": "co-permittee coverage approval",
+      "applicant": "George J. Igel & Co., Inc.",
+      "application_no": "OHC000006",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "2388 West Millcreek Road, Sidney, OH, Shelby County",
+      "discharge_address": null,
+      "receiving_water": null,
+      "stream_network": null,
+      "outfalls": [],
+      "note": "Ohio EPA approval letter of 2026-04-22 adding George J. Igel & Co., Inc. (3500 Alum Creek Drive, Columbus OH 43207; contact Sara Steinhausser) as co-permittee/operator on the campus stormwater coverage. Effective 2026-04-22, expiring 2028-04-22. Only the initial NOI applicant may terminate the facility permit number. The same firm is named as contractor of record on the City of Sidney grading permit signed 2026-05-15 — 23 days later."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/sidney/1GC10596.copermittee-igel.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/4091850.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/sidney/1GC10596.noi.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Sidney Data Center Campus",
+    "confidence": "high",
+    "warnings": [
+      "Receiving stream is printed on the NOI as 'Mill Creek, Mill Branch' — two named waters in one field. Recorded here as 'Mill Creek' so the entity graph resolves one water per node; the verbatim field value is preserved in `note`.",
+      "The NOI declares Ohio EPA PTI status 'YET_TO_APPLY' — the sanitary-sewer PTI (DSWPTI-260517) did not issue until 2026-06-16, six months later."
+    ],
+    "fields": {
+      "facility_name": "Sidney Data Center Campus",
+      "permit_no": "1GC10596",
+      "permit_action": "notice of intent",
+      "applicant": "Amazon Data Services, Inc.",
+      "application_no": "OHC000006",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "2388 West Millcreek Road, Sidney, OH 45365, Shelby County",
+      "discharge_address": null,
+      "receiving_water": "Mill Creek",
+      "stream_network": "Mill Creek -> Loramie Creek -> Great Miami River (HUC-12 050800010604)",
+      "outfalls": [],
+      "note": "Notice of Intent for coverage under Construction Site Stormwater General Permit OHC000006, electronically submitted 2025-12-01. Applicant Amazon Data Services, Inc., 410 Terry Ave N, Seattle WA; applicant contact Robert Truedinger; facility contact Seth Bell. Coordinates 40.26920527 / -84.19566214. Receiving stream field reads verbatim 'Mill Creek, Mill Branch'. Total land disturbance 230.7 acres; project 2025-10-31 to 2027-05-31. Declares Isolated Wetland 'YET_TO_APPLY', Individual NPDES 'NO', individual 401 WQC 'NO', USACE nationwide permit 'NO'. The stormwater outlet is Mill Creek, NOT the Great Miami mainstem the campus's sanitary wastewater reaches via the Sidney WWTP (1PD00009/OH0027421) — two different denominators for two different flows."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/sidney/1GC10596.noi.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/3931140.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "oepa/sidney/1PD00009.npdes.yaml",
     "group": "permits-npdes",
     "title": "City of Sidney WWTP",

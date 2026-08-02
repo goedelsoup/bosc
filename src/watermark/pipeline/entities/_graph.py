@@ -289,7 +289,11 @@ def build_entity_graph(
             # person becomes its principal (de-fragments the org across letters).
             org_raw, person_raw = _split_principal(a.applicant)
             app_key = graph._register(org_raw, role="epa_applicant", source=rel)
-            if a.applicant_address:
+            # ``_register`` returns "" for a name that normalizes to nothing. Every other
+            # use here guards on that; this one did not, so an unregisterable applicant
+            # *with* an address raised KeyError and took the whole graph down instead of
+            # dropping one node. One bad extraction must not blind the cross-document layer.
+            if a.applicant_address and app_key:
                 graph.entities[app_key].addresses.add(a.applicant_address)
             if person_raw:
                 principal_key = graph._register(person_raw, role="principal", source=rel)

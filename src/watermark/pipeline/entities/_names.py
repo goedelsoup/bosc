@@ -31,6 +31,12 @@ _LEGAL_SUFFIXES = frozenset(
 _CORPORATE_TOKENS = frozenset(
     {"LLC", "LLP", "LP", "INC", "CORP", "CORPORATION", "COMPANY", "LTD", "PLLC"}
 )
+# The subset that can stand alone *after* a comma as a name's own legal suffix
+# ("Amazon Data Services, Inc.", "George J. Igel & Co., Inc.") rather than as a separate
+# organization. ``CO`` is here but deliberately not in ``_CORPORATE_TOKENS``: it is too
+# short to match safely inside a name, but it must be recognized when a trailing
+# "Co., Inc." is being tested for being suffix-only. See :func:`_split_principal`.
+_CORPORATE_SUFFIX_TOKENS = _CORPORATE_TOKENS | {"CO"}
 # Phrases that mark a government / public body (matched on the raw upper string).
 _GOV_PHRASES = (
     "PORT AUTHORITY",
@@ -100,16 +106,27 @@ def _split_principal(raw: str) -> tuple[str, str | None]:
     ``(raw, None)`` when the string isn't that pattern (e.g. "Bistrozzi LLC, a
     Delaware limited liability company" — the part before the comma isn't a
     person, so it is left intact).
+
+    A comma before a *bare* corporate designator is punctuation inside one name, not a
+    separator between two parties: "Amazon Data Services, Inc." is one company, and
+    splitting it yielded the person "Amazon Data Services" and the organization "Inc.",
+    which normalizes to the empty key and took the whole graph build down with a
+    ``KeyError`` as soon as such an applicant also carried an address. So the part after
+    the comma must contain something *besides* corporate designators to count as an org.
     """
     if "," not in raw:
         return raw, None
     before, after = (p.strip() for p in raw.split(",", 1))
-    after_is_org = bool(
-        re.search(r"\b(?:LLC|LLP|LP|INC|CORP|CORPORATION|COMPANY|LTD|PLLC)\b", after.upper())
+    after_tokens = [t for t in re.split(r"[\s.,&]+", after.upper()) if t]
+    after_is_org = any(t in _CORPORATE_TOKENS for t in after_tokens)
+    # "Inc." / "Co., Inc." / "LLC" alone is this name's own suffix, not a second party.
+    after_is_bare_suffix = bool(after_tokens) and all(
+        t in _CORPORATE_SUFFIX_TOKENS for t in after_tokens
     )
     if (
         _looks_like_person(before)
         and after_is_org
+        and not after_is_bare_suffix
         and not after.lower().startswith(("a ", "an ", "the "))
     ):
         return after, before

@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-01T23:08:38.148137+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-02T00:43:43.436523+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **149** catalogued datasets — **148** reviewed.
-- **149** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **150** catalogued datasets — **149** reviewed.
+- **150** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -41,7 +41,7 @@ Snapshot reconciled: **2026-08-01T23:08:38.148137+00:00**. Regenerate with `wate
 | extracted | recorder | 1 | 1 | 0 | 0 |
 | extracted | regulatory | 1 | 1 | 0 | 0 |
 | extracted | shawnee-township | 1 | 1 | 0 | 0 |
-| extracted | sidney | 3 | 3 | 0 | 0 |
+| extracted | sidney | 4 | 4 | 0 | 0 |
 | extracted | toledo | 1 | 1 | 0 | 0 |
 | extracted | troy-piqua | 2 | 2 | 0 | 0 |
 | extracted | urbana | 1 | 1 | 0 | 0 |
@@ -105,7 +105,7 @@ Snapshot reconciled: **2026-08-01T23:08:38.148137+00:00**. Regenerate with `wate
 | piketon | 52 | 35 | 17 |
 | portsmouth | 53 | 36 | 17 |
 | sandusky | 52 | 35 | 17 |
-| sidney | 57 | 48 | 9 |
+| sidney | 58 | 49 | 9 |
 | springfield | 53 | 43 | 10 |
 | toledo | 57 | 45 | 12 |
 | troy-piqua | 58 | 49 | 9 |

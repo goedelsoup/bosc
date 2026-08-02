@@ -1,0 +1,56 @@
+id: sidney-incentive-instruments
+title: Sidney — AWS "Project Rey" Incentive, Service and Development Instruments
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted
+    2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed
+    agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering
+    Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney
+    Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center
+    FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and
+    data/documents/sidney/permits/filename-map.yaml.
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:sidney
+storage:
+- relpath: extracted/sidney/incentive-instruments.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- aws
+- amazon
+- cra
+- pilot
+- tax-abatement
+- water
+- wastewater
+- development-agreement
+- public-records
+- project-rey
+- sidney
+notes: 'Clause-level structured read of what the City of Sidney actually signed for the Amazon
+  campus (issue 1380). It corrects six facts this site''s register previously carried as
+  [verified] from the City FAQ, the trade press or an advocacy site: the CRA legislation is
+  Res. 69-25 of 2025-09-08 (city-wide), not "Res. 18-25, October 2025"; the PILOT is capped at
+  $46,000,000 over 14 years with a SEPARATE $4,000,000 initial payment, not $50M over 15; the
+  schools'' half divides $21,220,529 to Sidney City Schools and $3,779,471 to Upper Valley Career
+  Center, not $25M to Sidney; the NDA is dated 2023-12-19, not mid-2025; projected cooling-water
+  CONSUMPTION is 3,440,000 gal/yr (withdrawal 4,600,000 less 1,160,000 returned to sewer), not
+  4,600,000; and the grading permit is signed 2026-05-15, not the 2026-05-14 in the City''s
+  filename. It also closes the "Rey" open item — "Project Rey" is the City''s own name for the
+  investment in the executed Res. 81-25 agreement — and documents the campus''s reserved sewer
+  capacity (390,493 gpd, 5.60% of the 7 MGD plant) for the first time. New leads recorded: the
+  Ohio Tax Credit Authority Sixth Amendment (2025-10-08) that megaproject-certifies the company
+  and conditions abatement years 16-30; three recorded deeds at O.R. 2329 pp. 445/449/454 rather
+  than the single conveyance the auditor CAMA showed; and the grading plan and storm water report
+  on file with the City Engineer. Records posture is recorded too: the City published the
+  Development Agreement with utility dimensions redacted under R.C. 149.433, and both major
+  agreements oblige the City to notice the company and wait five business days before disclosing
+  its "Confidential Information". Regenerate by re-reading the committed source PDFs; nothing here
+  is machine-derived.'

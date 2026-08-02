@@ -1,0 +1,39 @@
+meta:
+  subject: >
+    Canonical filename map for sidney/permits/ — City of Sidney (municipal) permits issued for the
+    AWS "Sidney Data Center Campus" (#1380). Distinct from data/documents/oepa/sidney/, which
+    holds the STATE (Ohio EPA) permits for the same campus.
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), the source file keeps its
+    as-received name — the name the City's document center sends in `Content-Disposition`.
+    `content_verified` records HOW the date below was established from the document's own bytes.
+    Here the two disagree and it matters: the City's filename says 5-14-2026, the permit's own
+    signature block says 5/15/2026. The body wins; the filename's apparent date is recorded as
+    `filename_date_unverified` and is NOT propagated.
+  retrieved: "2026-08-01"
+  source_base_url: "https://www.sidneyoh.com/DocumentCenter/View/"
+  source_page: "https://www.sidneyoh.com/526/Proposed-Data-Center-FAQ"
+
+documents:
+  - filename: Grading Permit 5-14-2026 - AWS Data Center 2388 W. Millcreek Road.pdf
+    document_center_id: "4528"
+    canonical: sidney-engineering-grading-permit-aws-data-center-2026-05-15.pdf
+    type: city-grading-permit
+    date: "2026-05-15"
+    filename_date_unverified: "2026-05-14"
+    content_verified: ocr   # scanned, no text layer; rendered at 300 DPI and read — signature block "Date: 5/15/2026"
+    pages: 1
+    sha256: "a8f3276bd43e9244873ae635bd8a487cd7d26789169369f8f70485b638907c21"
+    bytes: 326734
+    carries:
+      - "City of Sidney Engineering Department GRADING PERMIT for 'AWS Data Center Site', 2388 W. Millcreek Road"
+      - "Contractor of record: George J. Igel & Co., Inc., 3500 Alum Creek Drive, Columbus, OH 43207 — the same firm added as co-permittee on Ohio EPA stormwater coverage 1GC10596*AG on 2026-04-22"
+      - "Signed by Chad M. Arkenberg, Engineering Manager; dated 5/15/2026 in his own hand"
+      - "Valid 180 calendar days from issue"
+      - "Scope limit: 'This permit only applies toward excavation and site preparation… No other excavation on this site is allowed under this permit' — it is NOT a building permit"
+      - "Recites a 'grading plan and storm water report on file at the City's Engineering Department' — neither is published; both are R.C. 149.43 records not yet requested"
+    notes: >-
+      The register and the City's FAQ both carried this permit as issued 2026-05-14, taking the
+      date from the City's own filename. The instrument's own signature block reads 5/15/2026.
+      One day, and it changes nothing downstream — but the filename is not evidence of a date
+      and this is the corpus's standing rule, so the corrected date is the one carried forward.
