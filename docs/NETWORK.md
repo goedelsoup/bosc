@@ -51,7 +51,7 @@ Blanchard is unregulated, USGS publishes a 7Q10 of 0-0.03 cfs. See
 *LQ = location quotient (county sector share ÷ national); >1 = over-represented. RSEI = TRI/RSEI
 reporting facilities in the county, **EPA RSEI v2.3.12 (TRI reporting years 1988–2022)** — one
 vintage network-wide, so the counts are cross-site comparable (#436). ¢/kWh = EIA-861 bundled
-SSO-cohort price. Dilution ratios are screening-grade (gage proxies). DC MW is disclosed IT load.*
+SSO-cohort price. Dilution ratios are screening-grade; the derived rows (Defiance) use a gage proxy, while Lima, Van Wert and Findlay run on their permits' own cited design low flows — Findlay's is Ohio EPA's at-outfall value, not a gage proxy (see ³). DC MW is disclosed IT load.*
 
 ## What the network shows
 

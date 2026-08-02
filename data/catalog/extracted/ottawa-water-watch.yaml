@@ -64,7 +64,10 @@ notes: >-
   and no longer carries a shared derived denominator at all — each plant is screened on its own
   at-outfall fact-sheet value (7.78 cfs here, 0.21 cfs at Findlay), and the derived 8.67 cfs was
   retired for the Blanchard because USGS 04189000 is regulated and sits below the Findlay outfall.
-  Ottawa's own screen is unaffected (TIGHT either way). The two outfalls are 34.32 river miles apart
+  Ottawa's own band in that comparison is unaffected (TIGHT on either denominator) — but that is
+  the curated comparison's band, NOT a computed screen status: in basin-network.yaml Ottawa's
+  status is still `no_receiving_water`, because ECHO carries no receiving water for OH0026921
+  and no curation-overlay entry exists yet. The two outfalls are 34.32 river miles apart
   (RM 56.42 vs RM 22.1), cited to both fact sheets rather than estimated.
   THINGS TO CARRY. (1) The 4.5 ng/L mercury monthly-average limit is the plant's OWN 63-sample
   projected effluent quality average (fact sheet Table 8), adopted as its limit — a limit set at a

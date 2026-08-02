@@ -263,8 +263,10 @@ def test_regulated_gage_carries_its_caveat_into_the_committed_derived_entry(
 
     The `published` / `regulation` / `cross_check_gages` blocks are authored in the curated
     ``mainstem-gages.yaml`` and copied forward by the derivation, so a hand-edit of the generated
-    file would be reverted. This asserts the committed file already matches what the emitter would
-    produce — the property that makes those blocks trustworthy.
+    file would be reverted. This asserts the committed file matches what the emitter would produce
+    **in both directions** — no annotation missing, none left over from an earlier curation that
+    the reference table no longer declares — which is the property that makes those blocks
+    trustworthy.
     """
     import yaml
 
@@ -280,6 +282,13 @@ def test_regulated_gage_carries_its_caveat_into_the_committed_derived_entry(
     committed = (yaml.safe_load(path.read_text(encoding="utf-8")) or {})["streams"][
         "blanchard river"
     ]
+    # `confidence` is a base key the overlay REPLACES, so it is compared by value below rather
+    # than counted here; the rest exist only because the curated table declares them.
+    annotation_keys = {"published", "regulation", "cross_check_gages", "confidence_reason"}
+    assert annotation_keys & committed.keys() == annotation_keys & emitted.keys(), (
+        "committed derived entry has annotations mainstem-gages.yaml no longer declares "
+        "(or is missing ones it does) — re-emit it through write_derived_low_flows"
+    )
     for key, value in emitted.items():
         assert committed[key] == value, (
             f"committed derived entry drifted from mainstem-gages.yaml: {key}"

@@ -58,9 +58,10 @@ A ratio of 1.0 is the floor of the calculation. It means that at design flow, be
 expressed as 30 percent mortality in 100 percent effluent.
 
 **This is now the low flow the network carries for Findlay** (issue 1458, reconciled 2026-08-02).
-It used to screen at 2.68× against a *derived* 8.67 cfs — an LP3 fit at gage 04189000 — and the
-reconciliation retired that denominator for this plant on two grounds neither number could be
-argued out of:
+It used to screen at **0.37:1** dilution against a *derived* 8.67 cfs — an LP3 fit at gage
+04189000, i.e. effluent 2.68× the low flow — and the reconciliation retired that denominator for
+this plant on two grounds neither number could be argued out of (both ratios below are stated
+low-flow-to-effluent, the `dilution_ratio` convention: smaller is worse):
 
 - **The gage sits below this outfall.** USGS 04189000 is at 41.05589 / −83.68799, ~1.1 mi WNW of
   outfall 2PD00008001 at 41.049722 / −83.667778, on a reach the Blanchard runs westward; Straub
@@ -74,7 +75,8 @@ argued out of:
 Where the Blanchard is *unregulated*, USGS publishes a 7Q10 of **0.03 cfs** (04188337, below Mt.
 Blanchard, WY2008–2020) and **0 cfs** for its Eagle Creek tributary (04188496). The 0.21 cfs Ohio
 EPA computed at RM 56.42 is consistent with that; the 8.67 was never the river's own low flow.
-The screen now reads **0.009:1** and the comparison artifact
+The screen now reads **0.009:1** — ~41× tighter than the 0.37:1 it replaced, effluent 110× the
+low flow rather than 2.68× — and the comparison artifact
 (`data/reference/network/findlay-ottawa-comparison.yaml`) is re-based on each plant's own fact
 sheet. Sources: `data/reference/usgs/low-flow/` (bytes + traps),
 `data/reference/hydrology/mainstem-gages.yaml` (the reviewed reads).
