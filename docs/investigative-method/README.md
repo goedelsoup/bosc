@@ -25,6 +25,7 @@ docs/investigative-method/
   README.md          # this file
   SYSTEM_PROMPT.md   # candidate standing instructions for the in-app research agent
   ENRICHMENT.md      # binds the abstract skills to this repo's facts, formats, and identifiers
+  STYLE-STE.md       # the impact study's writing register (Simplified Technical English)
 ```
 
 ## How the pieces relate
