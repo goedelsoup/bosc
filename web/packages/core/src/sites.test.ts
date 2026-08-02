@@ -1,6 +1,8 @@
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { loadFeed, loadManifest } from "./bundle";
+import type { DocumentCollectionItem } from "./feeds";
 import {
   ACTIVE_SITE_SLUG,
   activeSite,
@@ -10,11 +12,13 @@ import {
   facilityStageIndex,
   facilityStatus,
   groupSites,
+  networkRollup,
   SITE_STATUS_META,
   SITES,
   siteBadge,
   siteForPath,
   siteForSlug,
+  siteRollup,
   storyComingSoon,
   surfacedStories,
 } from "./sites";
@@ -266,6 +270,51 @@ describe("facility-status rail — the 4-stage facility clock (#401)", () => {
   it("defaults an undisclosed facility to step 0 (investigation)", () => {
     expect(facilityStatus("toledo")).toBe("investigation");
     expect(facilityStageIndex(facilityStatus("toledo"))).toBe(0);
+  });
+});
+
+describe("siteRollup / networkRollup — the directory's per-site record depth (#1861)", () => {
+  // Reads the same committed bundles as the facility rail above. Assertions are pinned to
+  // invariants and tier, not to exact volatile counts, so a re-export doesn't break the suite.
+
+  it("counts DOCUMENTS as individual files, not the manifest's collection count", () => {
+    // The semantic choice this issue had to make: a manifest `documents` feed `count` is the
+    // number of *collections* (Lima: 21); the column says "Documents", so it sums their entries.
+    const collections = loadManifest("lima").feeds.find((f) => f.name === "documents")?.count ?? 0;
+    const files = siteRollup("lima").documents ?? 0;
+    expect(collections).toBeGreaterThan(0);
+    expect(files).toBeGreaterThan(collections);
+    expect(files).toBe(
+      loadFeed<DocumentCollectionItem[]>("documents", "lima").reduce((n, c) => n + c.entries.length, 0),
+    );
+  });
+
+  it("rolls up a worked peer's own figures — the row that used to read '—/—' beside a facility pill", () => {
+    const bg = siteRollup("bowling-green");
+    expect(bg.tier).toBe("case");
+    expect(bg.documents).toBeGreaterThan(0);
+    expect(bg.records).toBeGreaterThan(0);
+    // Lima is no longer the only site with numbers: every committed bundle reports its own.
+    expect(siteRollup("lima").tier).toBe("reference");
+  });
+
+  it("reports nulls — not zeros — for a registered site with no committed bundle", () => {
+    // Lordstown is in the registry (it carries a defense assessment) but has never been exported.
+    expect(siteRollup("lordstown")).toEqual({ documents: null, records: null, tier: null });
+  });
+
+  it("sums the network over built sites only, holding the unbuilt out of every tier", () => {
+    const net = networkRollup();
+    const tiered = Object.values(net.byTier).reduce((a, b) => a + b, 0);
+    // Every registered site is counted exactly once — either at a tier, or as unbuilt.
+    expect(tiered + net.unbuilt).toBe(SITES.length);
+    expect(net.unbuilt).toBeGreaterThan(0);
+    expect(net.byTier.reference).toBe(1); // Lima alone
+    // The sums are the per-site rollups, so the ledger and the scorecard can never disagree.
+    const built = SITES.map((s) => siteRollup(s.slug)).filter((r) => r.tier !== null);
+    expect(net.documents).toBe(built.reduce((n, r) => n + (r.documents ?? 0), 0));
+    expect(net.records).toBe(built.reduce((n, r) => n + (r.records ?? 0), 0));
+    expect(net.documents).toBeGreaterThan(siteRollup("lima").documents ?? 0); // peers contribute
   });
 });
 

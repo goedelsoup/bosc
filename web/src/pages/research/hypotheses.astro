@@ -8,25 +8,15 @@
  *
  * Discipline (see `lib/directory.ts`): H2/H3 are hypotheses under test. A site carries a
  * defense/surveillance entry only with a real, on-the-record fact; inference is labeled; the
- * rest are "Not yet assessed". Counts are real (Lima from the bundle) or a dash — never invented.
+ * rest are "Not yet assessed". The water lens's tier + doc/record counts are rolled up per row
+ * from each site's OWN exported bundle (#1861) — real, or a dash where no bundle is committed.
  */
 import Base from "~/layouts/Base.astro";
-import { getHypotheses, hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
+import { getHypotheses, hasFeed, loadFeed } from "@watermark/core/bundle";
 import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount } from "@watermark/core/directory";
-import type { DocumentCollectionItem, HypothesisAssessmentItem } from "@watermark/core/feeds";
+import type { HypothesisAssessmentItem } from "@watermark/core/feeds";
 import { withBase } from "@watermark/core/site";
-import { facilityStatus } from "@watermark/core/sites";
-
-const manifest = loadManifest();
-const byName = new Map(manifest.feeds.map((f) => [f.name, f]));
-const feedCount = (n: string): number => byName.get(n)?.count ?? 0;
-const num = (n: number): string => n.toLocaleString("en-US");
-
-// Lima's real figures from the live bundle — the only fully-assembled site today.
-const documents = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
-const nFiles = documents.reduce((a, c) => a + c.entries.length, 0);
-const nRecords = feedCount("records");
-const limaCounts = { docs: nFiles ? num(nFiles) : "—", records: nRecords ? num(nRecords) : "—" };
+import { facilityStatus, siteRollup } from "@watermark/core/sites";
 
 // The boom-origin hypotheses + their (site x hypothesis) evidence cells (#308) — now read from
 // the bundle, no longer hardcoded in directory.ts. Each cell carries a Citation (provenance).
@@ -39,7 +29,7 @@ const lensData = indexAssessments(cells);
 
 const lenses = LENS_ORDER.map((key) => ({
   cfg: lensConfig(key, hypByKey.get(key)),
-  view: buildLens(key, limaCounts, lensData, facilityStatus),
+  view: buildLens(key, siteRollup, lensData, facilityStatus),
   count: lensCount(key, lensData),
 }));
 
@@ -710,8 +700,9 @@ const statusSwatch = (kind: "live" | "new") =>
     .dir-table {
       overflow-x: auto;
     }
+    /* Sized for the widest lens — water, at seven columns since the tier joined it (#1861). */
     .dir-trow {
-      min-width: 640px;
+      min-width: 720px;
     }
   }
 </style>

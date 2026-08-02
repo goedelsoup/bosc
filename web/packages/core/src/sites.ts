@@ -16,8 +16,9 @@
  *  sections coming online; `queued` = registered profile + coming-soon page, in the build queue;
  *  `tracking` = a GitHub-tracked candidate with an issue but no registered profile yet (the
  *  earliest phase — it routes to a lightweight "watch" page). Only `live` is selectable. */
-import { manifestOrNull, runWithSite } from "./bundle";
-import type { FacilityStatus } from "./feeds";
+import { loadFeed, manifestOrNull, runWithSite } from "./bundle";
+import type { SiteTier } from "./bundle";
+import type { DocumentCollectionItem, FacilityStatus } from "./feeds";
 import { DEFAULT_STORY_CODENAME, SITE_BASE, siteBase } from "./routes";
 import sitesRegistry from "./sites-registry.json";
 
@@ -335,6 +336,92 @@ const FACILITY_STATUSES: ReadonlySet<FacilityStatus> = new Set([
 export function facilityStatus(slug: string): FacilityStatus {
   const status = manifestOrNull(slug)?.facility?.status;
   return status && FACILITY_STATUSES.has(status) ? status : "investigation";
+}
+
+/**
+ * A site's rolled-up bundle figures — the record depth the network directory shows beside its
+ * name (#1861). The peer of {@link facilityStatus}: same `manifestOrNull` seam, so a registered-
+ * but-unbuilt slug degrades to nulls instead of throwing the way `readiness.siteTier` would.
+ *
+ * `null` and `0` are DIFFERENT claims and both are load-bearing. `null` (rendered "—") means the
+ * site has no committed bundle, so nothing has been measured; `0` means its export ran and the
+ * bundle carries none. Never collapse one into the other — a fabricated zero reads as a cleared
+ * verdict, and a dash over a real zero understates the network's assembled state.
+ */
+export interface SiteRollup {
+  /** Individual source files, summed across the `documents` feed's collections — NOT that feed's
+   *  manifest `count`, which is the number of *collections* (Lima: 3,247 files in 21). The
+   *  scorecard column says "Documents", so it counts documents. */
+  documents: number | null;
+  /** Structured record rows — the `records` feed's manifest count. */
+  records: number | null;
+  /** The standing readiness tier from the manifest `readiness` block, recomputed at every export. */
+  tier: SiteTier | null;
+}
+
+/** The four known readiness tiers — the guard that keeps a foreign/newer-minor bundle's
+ *  unrecognized `tier` string from indexing the directory's `TIER_PILL` to `undefined` (the
+ *  peer of `FACILITY_STATUSES` above). */
+const SITE_TIERS: ReadonlySet<SiteTier> = new Set(["stub", "backdrop", "case", "reference"]);
+
+const NO_BUNDLE: SiteRollup = { documents: null, records: null, tier: null };
+
+// `documents` is the one figure that needs the feed body rather than the manifest index, and
+// Lima's is ~1.8 MB — memoize per slug so the three lens builds plus the home ledger parse it
+// once per build instead of once per read. (`manifestOrNull` already caches its own side.)
+const rollups = new Map<string, SiteRollup>();
+
+/** {@link SiteRollup} for one site — nulls when it has no committed bundle. */
+export function siteRollup(slug: string): SiteRollup {
+  const cached = rollups.get(slug);
+  if (cached) return cached;
+  const manifest = manifestOrNull(slug);
+  if (!manifest) return NO_BUNDLE;
+  const feed = (name: string) => manifest.feeds.find((f) => f.name === name);
+  const tier = manifest.readiness?.tier;
+  const rollup: SiteRollup = {
+    // A bundle with no `documents` feed genuinely carries no documents — 0, not "unmeasured".
+    documents: feed("documents")
+      ? loadFeed<DocumentCollectionItem[]>("documents", slug).reduce((n, c) => n + c.entries.length, 0)
+      : 0,
+    records: feed("records")?.count ?? 0,
+    // A pre-1.17 bundle without the block is `stub` — the same all-absent floor `readiness.ts` uses.
+    tier: tier && SITE_TIERS.has(tier) ? tier : "stub",
+  };
+  rollups.set(slug, rollup);
+  return rollup;
+}
+
+/** The whole network's assembled record, summed over every registered site (#1861) — what the home
+ *  ledger reads to answer "how much record has the network actually assembled". A site with no
+ *  committed bundle contributes to `unbuilt` and to no tier, so the sums stay measured-only. */
+export interface NetworkRollup {
+  documents: number;
+  records: number;
+  /** How many built sites sit at each readiness tier — the ledger's tier bar. */
+  byTier: Record<SiteTier, number>;
+  /** Registered sites with no committed bundle yet. */
+  unbuilt: number;
+}
+
+export function networkRollup(): NetworkRollup {
+  const total: NetworkRollup = {
+    documents: 0,
+    records: 0,
+    byTier: { stub: 0, backdrop: 0, case: 0, reference: 0 },
+    unbuilt: 0,
+  };
+  for (const site of SITES) {
+    const r = siteRollup(site.slug);
+    if (r.tier === null) {
+      total.unbuilt += 1;
+      continue;
+    }
+    total.documents += r.documents ?? 0;
+    total.records += r.records ?? 0;
+    total.byTier[r.tier] += 1;
+  }
+  return total;
 }
 
 export const FACILITY_STATUS_META: Record<

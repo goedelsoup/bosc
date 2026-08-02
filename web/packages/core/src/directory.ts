@@ -11,11 +11,14 @@
  * only when there's a real, public, on-the-record fact behind it; inference is labeled as such;
  * everything else is "—" and lands in a "Not yet assessed under this thesis" chip group — never
  * a zero, which would read as a cleared verdict. We never fabricate a nexus, an operator, or a
- * count: the doc/record figures come from the live bundle (Lima only today) and are "—" elsewhere.
+ * count: the doc/record/tier figures are each site's OWN exported bundle (#1861), rolled up per
+ * row, and "—" only where no bundle is committed yet.
  *
- * Pure (no bundle import) so it unit-tests offline: the page loads the `hypotheses` +
- * `hypothesis-assessments` feeds and passes the folded assessment data (and Lima's counts) in.
+ * Pure (no bundle read) so it unit-tests offline: the page loads the `hypotheses` +
+ * `hypothesis-assessments` feeds and passes the folded assessment data in, and threads the
+ * bundle-backed `siteRollup` / `facilityStatus` lookups as resolvers.
  */
+import type { SiteTier } from "./bundle";
 import type { FacilityStatus, HypothesisAssessmentItem, HypothesisItem } from "./feeds";
 import {
   FACILITY_STATUS_META,
@@ -23,6 +26,7 @@ import {
   type NetworkSite,
   SITES,
   siteBadge,
+  type SiteRollup,
   type SiteStatus,
 } from "./sites";
 
@@ -55,6 +59,17 @@ export const PHASE_PILL: Record<SiteStatus, Swatch> = {
   building: { label: "Building", color: "#1f6f4a", bg: "#e4ece4", dot: "#1f6f4a" },
   queued: { label: "Queued", color: "#9a6a14", bg: "#efe6d0", dot: "#9a6a14" },
   tracking: { label: "Tracking", color: "#566159", bg: "#e8e4d8", dot: "#8c9389" },
+};
+
+/** Readiness-tier pill swatches (#1861) — the manifest `readiness.tier`, a THIRD clock beside the
+ *  build phase (our progress on the website) and the facility status (the plant in the ground).
+ *  This one is neither: it is how much record the site's own export has actually assembled, and
+ *  unlike the other two it is computed at every export rather than hand-maintained. */
+export const TIER_PILL: Record<SiteTier, Swatch> = {
+  reference: { label: "Reference", color: "#1f6f4a", bg: "#e4ece4", dot: "#1f6f4a" },
+  case: { label: "Case", color: "#1f6f4a", bg: "#e4ece4", dot: "#3f8a63" },
+  backdrop: { label: "Backdrop", color: "#566159", bg: "#e8e4d8", dot: "#8c9389" },
+  stub: { label: "Stub", color: "#8c9389", bg: "#faf8f1", dot: "#cdc8b8" },
 };
 
 // --- The defense (H2) and surveillance (H3) reading of each site --------------------------------
@@ -205,17 +220,20 @@ export const LENSES: Record<DirLens, LensConfig> = {
       "The original thesis: hyperscale compute lands where it can pull power and water, and a data center's intake, discharge, and downstream effects are basin facts. Sites nest by drainage — two divides, eleven basins. Lima is the live, fully-assembled reference. A coercion sub-thesis (#903): in municipalities with declining populations, the receiving WWTP may be running lean on influent — below the biological-treatment minimum that keeps it in NPDES compliance. A datacenter's high-volume, consistent discharge provides the flow buffer the plant needs, structurally compelling municipal acceptance. The Clean Water Act is the backstop that makes the need non-negotiable.",
     axisTitle: "Two divides · eleven basins",
     scoreTitle: "Every point, by drainage",
-    scoreNote: "Build phase and facility status are two clocks — kept distinct.",
-    footNote: "A dash means the section isn't assembled yet — never a zero, which would read as a finding.",
+    scoreNote:
+      "Build phase, readiness tier, and facility status are three clocks — our progress on the site, the record it has assembled, and the plant in the ground — kept distinct.",
+    footNote:
+      "Tier and counts are read from each site's own exported bundle at build time. A dash means no bundle is committed yet — nothing measured; a zero means the export ran and the site carries none.",
     cols: [
       { label: "Site" },
       { label: "Watershed point" },
       { label: "Build phase" },
+      { label: "Tier" },
       { label: "Documents", align: "right" },
       { label: "Records", align: "right" },
       { label: "Facility status" },
     ],
-    fr: ["1.5fr", "1.4fr", "0.95fr", "0.78fr", "0.78fr", "1.15fr"],
+    fr: ["1.35fr", "1.2fr", "0.9fr", "0.9fr", "0.7fr", "0.66fr", "1.15fr"],
   },
   defense: {
     key: "defense",
@@ -358,20 +376,25 @@ const textCell = (t: string, muted = false): Cell => {
   return { kind: "text", text: t || "—", muted: muted || empty };
 };
 const numCell = (t: string): Cell => ({ kind: "num", text: t, muted: t === "—" });
+/** A rolled-up figure for the scorecard: thousands-separated, or "—" when nothing was measured
+ *  (`null` = no committed bundle). A real 0 renders as "0" — it is a measurement, not a gap. */
+const figure = (n: number | null): string => (n === null ? "—" : n.toLocaleString("en-US"));
 const pillCell = (s: Swatch): Cell => ({ kind: "pill", pill: s });
 
 const facPill = (status: FacilityStatus): Cell => pillCell(FACILITY_STATUS_META[status]);
 
 /**
  * Build a lens's full view model: the scorecard column spec, the grouped rows (or chip groups),
- * and the framing-panel axis chips. `limaCounts` carries Lima's real bundle figures; every other
- * site shows "—" (no assembled record yet). `facilityStatusOf` resolves each site's facility
- * lifecycle stage — the page passes the bundle-backed `facilityStatus` (#1628), so this builder
- * stays pure (no bundle import); a caller may pass a stub in an offline unit test.
+ * and the framing-panel axis chips.
+ *
+ * Two bundle-backed lookups are threaded in as resolvers so this builder stays pure (no bundle
+ * read) and a unit test can stub both: `facilityStatusOf` resolves the facility lifecycle stage
+ * (#1628), and `rollupOf` resolves the site's own documents/records/tier (#1861 — it replaces the
+ * Lima-only hardcoded counts this used to take). The page passes `facilityStatus` / `siteRollup`.
  */
 export function buildLens(
   lens: DirLens,
-  limaCounts: { docs: string; records: string },
+  rollupOf: (slug: string) => SiteRollup,
   data: LensData,
   facilityStatusOf: (slug: string) => FacilityStatus,
 ): LensView {
@@ -388,18 +411,23 @@ export function buildLens(
       d.basins.forEach((basinLabel, i) => {
         const grp = byBasin.get(basinLabel);
         if (!grp?.sites.length) return;
-        const rows: Row[] = grp.sites.map((s) => ({
-          slug: s.slug,
-          live: s.status === "live",
-          cells: [
-            siteCell(s),
-            textCell(s.basin),
-            pillCell(PHASE_PILL[s.status]),
-            numCell(s.slug === "lima" ? limaCounts.docs : "—"),
-            numCell(s.slug === "lima" ? limaCounts.records : "—"),
-            facPill(facilityStatusOf(s.slug)),
-          ],
-        }));
+        const rows: Row[] = grp.sites.map((s) => {
+          const roll = rollupOf(s.slug);
+          return {
+            slug: s.slug,
+            live: s.status === "live",
+            cells: [
+              siteCell(s),
+              textCell(s.basin),
+              pillCell(PHASE_PILL[s.status]),
+              // No bundle ⇒ no computed tier: a muted dash, not a `stub` pill we'd be asserting.
+              roll.tier ? pillCell(TIER_PILL[roll.tier]) : textCell("—", true),
+              numCell(figure(roll.documents)),
+              numCell(figure(roll.records)),
+              facPill(facilityStatusOf(s.slug)),
+            ],
+          };
+        });
         const g: Group = {
           kind: "rows",
           abbr: grp.tag,
