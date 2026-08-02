@@ -52,7 +52,7 @@ const chipPlace = current ? current.place : "All sites";
 const chipCodename = current?.codename ?? null;
 const herePhase = current ? SITE_STATUS_META[current.status] : null;
 
-// The grouped selector (#307/#308): the same 32-site panel, pivoted by State or Basin
+// The grouped selector (#307/#308): the same whole-registry panel, pivoted by State or Basin
 // (default Basin, design "Site Selector"). No-JS — radio inputs + :checked.
 const stateGroups = groupSites("state");
 const basinGroups = groupSites("basin");
