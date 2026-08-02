@@ -131,7 +131,7 @@ def extract_opc_page(
 
     extraction = PageExtraction(
         doc_id=doc.doc_id,
-        source_path=str(doc.path),
+        source_path=_recorded_source_path(doc.path),
         page_index=page_index,
         pdf_page=page_index + 1,
         dpi=dpi,
@@ -176,22 +176,57 @@ def extract_page(
             raise
 
 
+def _recorded_source_path(path: Path) -> str:
+    """The ``source_path`` an extraction records — repo-relative whenever it can be.
+
+    ``settings.data_dir`` is anchored at the repo root, so ``doc.path`` is absolute and
+    ``str(doc.path)`` bakes a checkout-specific prefix (``/Users/<someone>/…``) into a
+    **committed** artifact — machine-specific, and different for every reviewer. Every
+    extraction already in the corpus is recorded relative to the repo root; keep it that way.
+    A document outside the repo (a relocated ``WATERMARK_DATA_DIR``, a test tmpdir) keeps
+    its absolute path — there is nothing to be relative to.
+    """
+    from watermark.config import _REPO_ROOT
+
+    try:
+        return str(path.resolve().relative_to(_REPO_ROOT))
+    except ValueError:
+        return str(path)
+
+
 def _collection_dir(source_path: str, settings: Settings) -> Path:
-    """Sub-directory of ``extracted`` mirroring the source's collection.
+    """Sub-directory of ``extracted`` mirroring the source's collection — and its site.
 
     The extracted tree parallels ``data/documents``: an artifact lands under the
     same first-level collection as its source (e.g. ``recorder``, ``oepa``),
     mirroring :func:`ingest.discover` (``collection = rel.parts[0]``). Sources that
     sit directly under ``documents`` — or outside it entirely (tests) — map to the
     root of ``extracted``. The directory is created.
+
+    A **second** segment is mirrored only when it names a registered site
+    (``oepa/van-wert/`` → ``oepa/van-wert/``): that nesting *is* the site attribution
+    ``watermark.sites._eponymous_prefixes`` reads (#1405), so an extraction shelved
+    flat at ``oepa/`` lands in Lima's reference record instead of its own site's and
+    that site's record domain can never rise from permit ingest. Any other sub-nesting
+    (``permits/bistrozzi-permits/``) carries no such meaning and is flattened as before.
     """
+    from watermark.config import _REPO_ROOT
+    from watermark.sites import SITES
+
+    # ``source_path`` is repo-relative (see :func:`_recorded_source_path`); anchor it at the
+    # repo root rather than the CWD so this holds wherever the process was started.
+    src = Path(source_path)
+    src = src if src.is_absolute() else _REPO_ROOT / src
+
     target = settings.extracted_dir
     try:
-        rel = Path(source_path).resolve().relative_to(settings.documents_dir.resolve())
+        rel = src.resolve().relative_to(settings.documents_dir.resolve())
     except ValueError:
         rel = None
     if rel is not None and len(rel.parts) > 1:
         target = target / rel.parts[0]
+        if len(rel.parts) > 2 and rel.parts[1] in SITES:
+            target = target / rel.parts[1]
     target.mkdir(parents=True, exist_ok=True)
     return target
 
@@ -578,7 +613,7 @@ def _extract_doc(
     extraction = spec.extraction_cls(
         **{
             "doc_id": doc.doc_id,
-            "source_path": str(doc.path),
+            "source_path": _recorded_source_path(doc.path),
             "kind": kind,
             "pages_read": pages,
             "image_pages_read": image_pages_read,
@@ -761,7 +796,7 @@ def extract_plan(
     )
     extraction = PlanExtraction(
         doc_id=doc.doc_id,
-        source_path=str(doc.path),
+        source_path=_recorded_source_path(doc.path),
         kind="plan",
         pages_read=[0],
         dpi=0,

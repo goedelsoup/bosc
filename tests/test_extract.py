@@ -218,3 +218,73 @@ def test_save_extraction_suffix_depends_on_line_items(tmp_path: Path) -> None:
     )
     assert save_extraction(summary, settings=settings).name.endswith(".p1.opc.yaml")
     assert save_extraction(detail, settings=settings).name.endswith(".p1.detail.opc.yaml")
+
+
+# --- where an extraction lands, and what path it records (#1406) -------------
+#
+# Two committed-artifact properties, both surfaced by ingesting the Van Wert 2PD00006*WD
+# modification. Neither is about the model's read; both are about what ends up in git.
+
+
+def _rel_doc(settings: Settings, relpath: str) -> SourceDocument:
+    """A SourceDocument at ``data/documents/<relpath>`` under ``settings``' data dir."""
+    path = settings.documents_dir / relpath
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(b"%PDF-1.4\n")
+    return SourceDocument(
+        doc_id="d", path=path, collection=relpath.split("/")[0], size_bytes=9, suffix=".pdf"
+    )
+
+
+def test_collection_dir_mirrors_a_site_subdirectory(tmp_path: Path) -> None:
+    """``oepa/van-wert/`` IS the site attribution the corpus scope reads (#1405).
+
+    An extraction shelved flat at ``oepa/`` lands in Lima's reference record instead of Van
+    Wert's, and that site's ``record`` domain can never rise from permit ingest.
+    """
+    from watermark.pipeline.extract import _collection_dir
+
+    settings = Settings(data_dir=tmp_path)
+    doc = _rel_doc(settings, "oepa/van-wert/2PD00006.pdf")
+    assert _collection_dir(str(doc.path), settings) == settings.extracted_dir / "oepa" / "van-wert"
+
+
+def test_collection_dir_flattens_a_non_site_subdirectory(tmp_path: Path) -> None:
+    """Other sub-nesting carries no attribution meaning and is flattened, as before."""
+    from watermark.pipeline.extract import _collection_dir
+
+    settings = Settings(data_dir=tmp_path)
+    doc = _rel_doc(settings, "permits/bistrozzi-permits/some.pdf")
+    assert _collection_dir(str(doc.path), settings) == settings.extracted_dir / "permits"
+
+
+def test_collection_dir_accepts_a_repo_relative_source_path(tmp_path: Path) -> None:
+    """A relative ``source_path`` resolves the same way an absolute one does."""
+    from watermark.pipeline.extract import _collection_dir
+
+    settings = Settings(data_dir=tmp_path)
+    doc = _rel_doc(settings, "oepa/van-wert/2PD00006.pdf")
+    rel = str(doc.path.relative_to(tmp_path.parent))
+    absolute = _collection_dir(str(doc.path), settings)
+    # The tmp data dir is outside the repo, so a relative path can't be resolved against the repo
+    # root — it falls back to the extracted root rather than guessing. The absolute form still
+    # mirrors the site; that asymmetry is why extractions record a REPO-relative path.
+    assert absolute == settings.extracted_dir / "oepa" / "van-wert"
+    assert _collection_dir(rel, settings) == settings.extracted_dir
+
+
+def test_recorded_source_path_is_repo_relative() -> None:
+    """A committed extraction must not carry a checkout-specific ``/Users/<someone>/…`` prefix."""
+    from watermark.config import _REPO_ROOT
+    from watermark.pipeline.extract import _recorded_source_path
+
+    inside = _REPO_ROOT / "data" / "documents" / "oepa" / "van-wert" / "2PD00006.pdf"
+    assert _recorded_source_path(inside) == "data/documents/oepa/van-wert/2PD00006.pdf"
+
+
+def test_recorded_source_path_keeps_an_outside_path_absolute(tmp_path: Path) -> None:
+    """A document outside the repo has nothing to be relative to."""
+    from watermark.pipeline.extract import _recorded_source_path
+
+    outside = tmp_path / "elsewhere.pdf"
+    assert _recorded_source_path(outside) == str(outside)

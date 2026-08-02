@@ -16,6 +16,14 @@ to *pull*. Every figure is cited; none is fabricated.
 > The **grantor** and the recorder instrument numbers stay `[open]` — the county's parcel layer
 > carries neither, so the Marsh Foundation → Thor → QTS chain is still #1401's pull.
 >
+> **Water record committed (2026-08-01, #1406):** the municipal water instruments are now in the
+> corpus — NPDES **2PD00006\*WD**, the modification that put the CSO Long Term Control Plan on a
+> dated construction schedule effective 2026-07-01, plus its draft public notice
+> (`data/documents/oepa/van-wert/`, extractions under `data/extracted/oepa/van-wert/`). The
+> standing register is `data/extracted/van-wert/water-watch.yaml`. Its finding: **Van Wert drinks
+> Town Creek and discharges to Town Creek**, on one NHDPlus flowline, with the five CSO outfalls
+> in between — see the water section below.
+>
 > **Profile pin (2026-07-13, #1402):** the campus below is now registered as a SITE-PLAN-grounded
 > `SiteFacility` on the Van Wert `SiteProfile` (the #1327 Urbana precedent) — the 500 MW is carried
 > as a `[reference]` bracket (never a disclosure; QTS declines to state capacity), with closed-loop-dry
@@ -123,15 +131,59 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   `data/reference/oepa/cooling-reconciliation.yaml`. `[open]`
 - **Wastewater path / NPDES:** not disclosed for the facility; no facility-specific NPDES number
   found. `[open]`
-- **Receiving water:** Van Wert's stream is Town Creek → Little Auglaize River → Auglaize River →
-  Maumee River (Lake Erie basin). HUC-12: Lower Town Creek–Lower Little Auglaize River
-  (04100007 08 04). `[verified]` Source: City of Van Wert; Ohio EPA HUC-12 reports.
+- **Receiving water:** Van Wert's stream is Town Creek → Middle Creek → Little Auglaize River →
+  Auglaize River → Maumee River (Lake Erie basin). HUC-12: Lower Town Creek (04100007 08 04);
+  Ohio EPA river code 04-143. `[verified]` Source: Ohio EPA permit 2PD00006*WD fact sheet,
+  composite sheets 49 and 52 (`data/documents/oepa/van-wert/2PD00006.f8aaad0a.pdf`).
+  (The stream network above corrects an earlier line that omitted Middle Creek.)
+- **The City drinks the creek it discharges to — one reach, three claims on it** (#1406). Van Wert
+  City is the **only surface-water public water system in Van Wert County** (PWS **OH8100611**,
+  community system, primary source `SW`, 10,846 served, active — EPA SDWIS via ECHO, extract
+  2026-07-09) `[verified]`, and the City's own utilities page says outright that "the water that
+  the people of Van Wert use and drink comes from Town Creek" `[reference]`. Snapped to NHDPlus v2
+  through USGS NLDI on 2026-08-01, the **water plant, the city's second NPDES point and the WWTP
+  outfall all fall on one 17.05 km flowline (COMID 15653063)** running south → north, with the
+  **five CSO outfalls in between** (Wall St., First & Monroe, Main St., Central, Keplar — all
+  discharging to Town Creek, coordinates in Part II.C of the permit). `[verified]` The intake side
+  is therefore **upstream** of the CSOs and the outfall — nobody drinks this plant's effluent —
+  but every claim on the creek's flow is a claim on the same water in sequence. `[inference]`
+  And the buffer is thin: the City's reservoirs hold **1.01 billion gallons**, while the creek's
+  recorded annual yield since 1951 runs from **180 million gallons to 1.26 billion** — a 7× spread,
+  with the worst year delivering under a fifth of storage. `[reference]` Standing watch, with the
+  compliance record and every open thread: `data/extracted/van-wert/water-watch.yaml`.
+- **The municipal wastewater permit is under a CSO construction schedule as of 2026-07-01**
+  (#1406). NPDES **2PD00006\*WD** (modification of the \*VD renewal; action 2026-05-18, Public
+  Notice 221593, comment closed 2026-06-24, entered the Director's Journal 2026-06-30, effective
+  2026-07-01, expires 2030-05-31) rewrote Part I.C around the CSO **Long Term Control Plan
+  Compliance Assistance Plan** — the 2022 Completion Evaluation Report having found the 1999
+  plan's ≤4-events-per-typical-year goal **not attained**. Four control projects (Blaine St.
+  interceptor, **Town Creek siphon**, Bonnewitz pump-station weir, raising the CSO 010 weir six
+  inches) are now dated obligations: **begin construction by 2026-08-01**, operational by
+  2027-01-01, 24-month post-construction monitoring 2027-03 → 2029-03, completion evaluation
+  2029-06-01. `[verified]` Whether construction actually began by that first date is `[open]` —
+  and the same permittee's CSO Event Report, O&M Report and Combined Sewer Report schedule events
+  have been recorded by ECHO as "unachieved and not reported" **continuously since early 2024**,
+  with **zero formal enforcement actions and $0 in penalties**. `[verified]` (ECHO DFR OH0027910,
+  read 2026-08-01, ICIS-NPDES extract 2026-07-24; **12 of the 13 quarters ECHO displays** carry a
+  violation, the exception being 2023-Q4 — *not* "12 of 12", which is what the pre-ingest research
+  had.)
+- **Maumee TMDL phosphorus:** the plant carries an individual wasteload allocation of **1,000 kg
+  total phosphorus for the critical season (March–July)** under the September 2023 Maumee
+  Watershed Nutrient TMDL, and Part II.AE routes compliance to "the Maumee Watershed Total
+  Phosphorus NPDES General Permit" — **the permit prints no general-permit number**, so binding
+  that to the corpus's `OHP000001` is our identification, not the instrument's. `[verified]` Held
+  at its own 15 kg/day monthly-average loading limit across the 153-day season the individual
+  permit would allow 2,295 kg — **2.30× the allocation** — which is why the condition defers to
+  the general permit and carries a reopener. `[inference]` The same permit's Part II.AE names the
+  covered facility "**Defiance** Van Wert WWTP", boilerplate carried over from another permittee
+  and printed verbatim in an issued instrument. `[verified]`
 
 ### Hydrology screen
 
 - **Receiving water:** Town Creek / Little Auglaize (the Van Wert WWTP receiving reach is
-  OH0027910 → Town Creek RM 13.87; design flow 4.0 MGD; Ohio EPA fact sheet 2PD00006 — see the
-  Van Wert `SiteProfile`). `[verified]`
+  OH0027910 → Town Creek RM 13.87; design flow 4.0 MGD, peak hydraulic capacity 8.0 MGD;
+  **outfall 001 at 40.8882410 N, -84.58437518 W** — permit 2PD00006\*WD and its draft public
+  notice, #1406; see the Van Wert `SiteProfile`). `[verified]`
 - **Nearest mainstem gage:** USGS 04186500 (Auglaize River near Fort Jennings) — on the Auglaize
   mainstem, **not** Town Creek/Little Auglaize; a Town Creek 7Q10 needs separate derivation.
   `[reference]`/`[open]`
@@ -192,10 +244,17 @@ standard as of 2026-07-02. `[open]` — re-sweep on the next pass.
 2. **Van Wert City Council / County Commissioners** — executed CRA / PILOT / TIF ordinance(s) with
    %/term, plus the Lincolnview + Vantage school-compensation agreements.
 3. **OEPA air PTI** — emergency generator bank PTI(s) for the Mega Site (NWDO, Van Wert County).
-4. **Ohio EPA / EPA ECHO** — any facility NPDES coverage / notice-of-intent under OHD000001; the
-   wastewater discharge outfall and receiving water; a Town Creek / Little Auglaize 7Q10.
+4. **Ohio EPA / EPA ECHO** — any facility NPDES coverage / notice-of-intent under OHD000001, and
+   a Town Creek / Little Auglaize 7Q10. The **municipal** half of this item is **done** (#1406):
+   permit 2PD00006\*WD is committed, the outfall is coordinate-pinned, and the compliance record
+   is dated and regenerable in `data/extracted/van-wert/water-watch.yaml`. What that register
+   leaves open — the raw-water intake's own location, the CSO volumes, a measured critical-season
+   phosphorus load, and the two uncommitted water-plant permits (OHG8P0006, OH0135569) — is
+   itemized there under `instruments_to_pull`.
 5. **City of Van Wert water/sewer** — the closed-loop fill volume and any water/sewer service
-   agreement (the peak-withdrawal figure to screen against Town Creek).
+   agreement (the peak-withdrawal figure to screen against Town Creek). Sharpened by #1406: the
+   creek's own recorded annual yield ranges 180 MG–1.26 BG since 1951, so the screen a service
+   agreement needs is against a **dry year**, not an average one.
 
 ## Sources
 
@@ -211,4 +270,7 @@ standard as of 2026-07-02. `[open]` — re-sweep on the next pass.
 - Bricker (draft NPDES OHD000001): [ohio-epa-issues-draft-general-npdes-permit-for-data-centers](https://www.bricker.com/insights/publications/ohio-epa-issues-draft-general-npdes-permit-for-data-centers)
 - City of Van Wert water: [vanwert.org/water-treatment](https://vanwert.org/water-treatment/)
 - Ohio EPA HUC-12 (Lower Town Creek–Lower Little Auglaize): [nps report PDF](https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/nps/Lower%20Town%20Creek-Lower%20Little%20Auglaize%20River_Ver1.0_10-31-2023.pdf)
+- Ohio EPA NPDES 2PD00006 (the DAM slot; now serves the \*WD modification): [2PD00006.pdf](https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00006.pdf)
+- EPA ECHO Detailed Facility Report, Van Wert WWTP: [OH0027910](https://echodata.epa.gov/echo/dfr_rest_services.get_dfr?p_id=OH0027910&output=JSON)
+- EPA "How's My Waterway", Lower Town Creek: [OH041000070804](https://mywaterway.epa.gov/waterbody-report/21OHIO/OH041000070804)
 - Stop Ohio Data Centers (advocacy, leads only): [stopohiodatacenters.org/data-center-water-usage-ohio](https://stopohiodatacenters.org/data-center-water-usage-ohio)

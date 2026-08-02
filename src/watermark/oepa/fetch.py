@@ -133,26 +133,60 @@ def fetch_one(
     )
 
 
+#: Reviewed keys a human adds to a ``filename-map`` entry that no fetch can reproduce — the
+#: canonical name of the sub-document, the date verified from its own text layer, the
+#: as-received DAM basename behind a collision-suffixed filename, and any review note. A
+#: re-fetch of the *same bytes* must not erase them.
+_REVIEWED_KEYS = ("canonical_name", "content_verified_date", "as_received_name")
+
+_DEFAULT_META = {
+    "subject": "OEPA/DAM permit download manifest",
+    "policy": "non-destructive — originals keep as-received names",
+}
+
+
 def update_filename_map(records: list[FetchedPermit], map_path: Path) -> None:
-    """Merge new fetch records into ``filename-map.yaml`` (keyed by source_url)."""
+    """Merge new fetch records into ``filename-map.yaml`` — keyed by ``(source_url, sha256)``.
+
+    Chain of custody, two ways (#1406):
+
+    * **A slot that later serves different bytes does not overwrite the earlier capture.**
+      Ohio EPA re-serves ``permits/doc/<id>.pdf`` in place when a permit is modified, so the
+      same URL yields the ``*VD`` renewal one month and the ``*WD`` modification the next.
+      Both files are on disk under the fetcher's collision rule; keying the manifest on the URL
+      alone silently dropped the older one's provenance — a document we hold with no record of
+      where it came from. The key is the URL *and* the content hash.
+    * **Reviewed fields survive a re-fetch.** ``canonical_name`` / ``content_verified_date`` /
+      ``as_received_name`` and a hand-written ``note`` are the human half of the manifest and
+      are not derivable from an HTTP response; they are carried forward onto the matching entry.
+      A hand-authored ``meta`` is likewise preserved (only ``generated_at`` is refreshed).
+    """
     from typing import Any
 
-    existing: dict[str, dict[str, Any]] = {}
+    def key(url: str, sha: str | None) -> tuple[str, str | None]:
+        return (url, sha)
+
+    existing: dict[tuple[str, str | None], dict[str, Any]] = {}
+    meta: dict[str, Any] = dict(_DEFAULT_META)
     if map_path.exists():
         data = yaml.safe_load(map_path.read_text(encoding="utf-8")) or {}
+        meta = {**meta, **(data.get("meta") or {})}
         for entry in data.get("documents", []):
-            existing[entry["source_url"]] = entry
+            existing[key(entry["source_url"], entry.get("sha256"))] = entry
 
     for r in records:
-        existing[r.source_url] = r.model_dump()
+        k = key(r.source_url, r.sha256)
+        prior = existing.get(k, {})
+        merged = r.model_dump()
+        for field in _REVIEWED_KEYS:
+            if field in prior:
+                merged[field] = prior[field]
+        # A reviewed note outranks the fetcher's boilerplate; a fetch error still speaks.
+        if prior.get("note") and r.status != "error":
+            merged["note"] = prior["note"]
+        existing[k] = merged
 
-    doc = {
-        "meta": {
-            "subject": "OEPA/DAM permit download manifest",
-            "generated_at": datetime.now(UTC).date().isoformat(),
-            "policy": "non-destructive — originals keep as-received names",
-        },
-        "documents": list(existing.values()),
-    }
+    meta["generated_at"] = datetime.now(UTC).date().isoformat()
+    doc = {"meta": meta, "documents": list(existing.values())}
     map_path.parent.mkdir(parents=True, exist_ok=True)
     map_path.write_text(yaml.safe_dump(doc, sort_keys=False, allow_unicode=True), encoding="utf-8")

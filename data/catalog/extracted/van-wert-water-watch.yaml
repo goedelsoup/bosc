@@ -1,0 +1,109 @@
+id: van-wert-water-watch
+title: Van Wert — Standing Water Watch + NPDES 2PD00006*WD / PWS OH8100611 Instrument Set (Extractions)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Two primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00006*WD /
+    application OH0027910 — the modification package as issued (action date 2026-05-18, Public
+    Notice 221593, entered the Director's Journal 2026-06-30, effective 2026-07-01, expires
+    2030-05-31; a composite of the Director's transmittal letter, the 47-page modified permit and
+    the modification's own 8-page Fact Sheet) and its draft public notice from the DAM's DraftPN
+    slot — both fetched from the Ohio EPA DAM 2026-08-01
+    (data/documents/oepa/van-wert/filename-map.yaml). Ohio EPA re-serves the `permits/doc/` slot
+    IN PLACE on modification, so the same URL that delivered the *VD renewal in June 2026
+    delivers the *WD package now; both sets of bytes are held and the manifest is keyed on URL
+    plus sha256. Both permit: blocks are the pipeline's six-page read with header fields CORRECTED
+    on review from the fact sheet bound inside the same PDF; the superseded extractor warnings are
+    preserved in each file. The water-watch digest additionally reads EPA ECHO
+    (dfr_rest_services.get_dfr for OH0027910, OH8100611 and OH0135569;
+    sdw_rest_services.get_systems over Van Wert County OH for the public-water-system index) read
+    2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09, and USGS NLDI /
+    NHDPlus v2 (linked-data/comid/position plus upstream/downstream navigation) snapped 2026-08-01
+    to establish that the intake, the five CSOs and the outfall share one flowline and in what
+    order.
+license: public record / public domain
+access_tier: public
+site_scope: site:van-wert
+storage:
+- relpath: extracted/oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/van-wert/2PD00006.36a58063.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/van-wert/water-watch.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+provenance: document
+tags:
+- npdes
+- sdwa
+- oepa
+- van-wert
+- van-wert-county
+- town-creek
+- little-auglaize
+- maumee
+- cso
+- ltcp
+- schedule-of-compliance
+- phosphorus
+- tmdl
+- mercury-variance
+- enforcement
+- shared-reach
+notes: >-
+  Issue 1406 (under epic 1267). THINGS TO CARRY. (1) VAN WERT DRINKS THE CREEK IT DISCHARGES TO,
+  and this is the network's tightest shared-reach case — the inverse of Bowling Green, whose two
+  water sides share a city and nothing else. Snapped to NHDPlus v2, the water plant (OHG8P0006 /
+  OH0135569), the five CSO outfalls and the WWTP outfall 001 (RM 13.87, 40.8882410 N /
+  -84.58437518 W) all fall on ONE 17.05 km flowline, COMID 15653063, running south to north, in
+  that order. The intake side is UPSTREAM — nobody drinks this plant's effluent — but PWS
+  OH8100611 is the only surface-water public water system in the county and the City's own
+  utilities page says the water "comes from Town Creek." Its reservoirs hold 1.01 BG against a
+  creek whose recorded annual yield since 1951 runs 180 MG to 1.26 BG, a 7x spread; any new
+  municipal demand is a claim on that buffer, not on an average. (2) THE MODIFICATION IS A
+  CONSTRUCTION SCHEDULE. Its whole operative act is to put four CSO control projects (Blaine St.
+  interceptor, Town Creek siphon, Bonnewitz pump-station weir, raising the CSO 010 weir six
+  inches) on dated, event-coded milestones — begin construction 2026-08-01, operational
+  2027-01-01, 24-month PCCM 2027-03 to 2029-03, completion evaluation 2029-06-01 — after the 2022
+  LTCP Completion Evaluation Report found the 1999 plan's four-events-per-typical-year goal
+  unattained. Limits, the mercury variance and the design flow are untouched. (3) THE COMPLIANCE
+  COUNT IN THE ISSUE BODY IS WRONG AND THE CORRECTION MATTERS: it is 12 of the THIRTEEN quarters
+  ECHO displays, not 12 of 12 — 2023-Q4 reads "No Violation Identified", and ECHO's own QtrsInNC
+  of 12 reconciles to the 13-quarter grid, not to the 12-quarter window it is stamped against.
+  (4) THE DRIVER IS NOT EFFLUENT. Effluent exceedances are intermittent (E. coli, phosphorus, TSS,
+  acute and chronic toxicity, two pH limit violations). What runs UNBROKEN from early 2024 to the
+  current quarter is three permit-schedule events — CSO Event Report, O&M Report, Combined Sewer
+  Report — each recorded "Schedule Event unachieved and not reported," against zero formal
+  enforcement actions and $0 in penalties. The 2026-08-01 construction milestone is the first
+  testable date on the same permittee's record. (5) THE PERMIT DOES NOT NAME OHP000001. Part II.AE
+  routes the 1,000 kg critical-season (March-July) total-phosphorus wasteload allocation from the
+  September 2023 Maumee Watershed Nutrient TMDL to "the Maumee Watershed Total Phosphorus NPDES
+  General Permit" by TITLE ONLY; binding that to the corpus's OHP000001 is our identification, not
+  the instrument's. Held at its own 15 kg/day monthly-average loading limit across the 153-day
+  season the individual permit would allow 2,295 kg, 2.30x the allocation — which is why the
+  condition defers to the general permit and carries a reopener. (6) THE INSTRUMENT NAMES THE
+  WRONG FACILITY: Part II.AE reads "under which Defiance Van Wert WWTP has been granted coverage."
+  Defiance is a different city ~40 river miles downstream with its own WWTP. Boilerplate carried
+  over unedited and printed verbatim in an issued permit. (7) THE ISSUED PERMIT ENFORCES A PLAN IT
+  DOES NOT RECORD AS APPROVED: Part I.C.1 prints the literal placeholder "[approval pending]"
+  where the Compliance Assistance Plan's approval date belongs, and the permit and its own bound
+  fact sheet give TWO different submission dates for that plan (2025-07-24 vs 2026-02-02). Both
+  preserved as printed; which is operative is [open]. (8) THE CSO PUBLIC-ACCESS-AREA TABLE IS
+  EMPTY — "None were identified in the 2018 - CSO Notification Plan" — for five overflows into a
+  creek that ATTAINS lists as 303(d)-impaired for pathogens with recreation use Not Supporting.
+  Recorded as a cited absence, not as evidence of absence. (9) The mercury variance is RENEWED,
+  not resolved: an achievable annual average of 12 ng/L against a 1.3 ng/L water-quality-based
+  limit, roughly 9x, answered with a pollutant minimization program dating to a 2007 application.
+  (10) Two further NPDES instruments sit on this same reach and are NOT in the corpus — OHG8P0006
+  (the water plant's general-permit discharge) and OH0135569 (an individual permit at the water
+  plant address carrying a CSO area flag). Seven named instruments to pull are itemized in the
+  digest's own `instruments_to_pull` block, led by whether construction actually began on
+  2026-08-01 and where the raw-water intake physically is. The ECHO effluent chart for parameters
+  00665, 74062 and 74063 was ATTEMPTED and failed (read timeouts and a 502 across three-year and
+  one-year windows on 2026-08-01) — recorded as unattempted-successfully, not as absent.

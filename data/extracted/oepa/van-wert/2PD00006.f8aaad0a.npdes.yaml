@@ -1,0 +1,395 @@
+doc_id: 2PD00006.f8aaad0a-5e45a7aa
+source_path: data/documents/oepa/van-wert/2PD00006.f8aaad0a.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "50 W. Town Street\nSuite 700\nColumbus, Ohio 43215 U.S.A.\n\
+  614 | 644 3020\nepa.ohio.gov\nThe State of Ohio is an Equal Opportunity Employer\
+  \ and Provider of ADA Services\nMay 18, 2026\nOhio EPA permit No.  2PD00006*VD \n\
+  Application No. OH0027910 Effective \nDate: July 1, 2026  \nFacility Name:  Van\
+  \ Wert WWTP\nVan Wert WWTP\nGreg Reinhart\n7998 S.R. 127 N.\nVan Wert, OH 45891\n\
+  Dear Ladies and Gentlemen:\nIn accordance with Rule 3745-33-04 (D) of the Ohio Administrative\
+  \ Code, the above referenced NPDES \nPermit is hereby modified as follows:\nRevision\n\
+  1. Modification of the Part I.C - Schedule of Compliance to rem"
+# WHAT THIS FILE IS — read this before quoting the permit number.
+#
+# The Ohio EPA DAM slot `permits/doc/2PD00006.pdf` no longer serves the 2025 *VD renewal. Since
+# 2026-07-02 it serves the LATER modification package, which is this file's source: a 2026-05-18
+# transmittal letter from Director John Logue, the modified permit as issued (2PD00006*WD, 47 pp.,
+# entered the Director's Journal 2026-06-30, effective 2026-07-01), and — from 0-based page 48 —
+# the modification's own 8-page fact sheet (Public Notice 221593). 56 pages total. The *VD bytes
+# are still held alongside (`2PD00006.pdf`); see the filename-map.
+#
+# TWO PAGE NUMBERINGS. Citations below use the COMPOSITE's 1-based printed sheet. The permit's own
+# header numbering runs one behind it (permit "Page 2" is composite sheet 3), and the attached fact
+# sheet restarts at "Page 1 of 8" on composite sheet 49. Name which one you mean.
+#
+# The `permit:` block is the pipeline's read of the first six pages. `permit_no` was CORRECTED on
+# review to *WD: the six-page window opens on the transmittal letter, whose header cites *VD as
+# "the above referenced NPDES Permit" being modified, and the extractor recorded that. Every one of
+# the 47 permit pages that follows is headed 2PD00006*WD, and the letter itself states the number
+# changes on the effective date. This document IS the *WD instrument. The extractor's warnings
+# about it and about the notice fields are superseded and preserved below rather than deleted.
+permit:
+  confidence: high
+  warnings:
+  - >-
+    This PDF is a COMPOSITE — transmittal letter + the modified permit + the modification's own
+    fact sheet (from 0-based p. 48). Cite the sub-document, not just the file.
+  - >-
+    The permit number transitions from 2PD00006*VD (the permit being modified, cited in the
+    transmittal letter's header) to 2PD00006*WD (as modified, effective 2026-07-01); the number
+    recorded here is the effective one, *WD.
+  superseded_warnings:   # the extractor's, corrected on review; kept for audit
+  - '2PD00006*VD recorded as the permit_no on the cover letter — SUPERSEDED: see the header
+    comment; the instrument is *WD.'
+  - 'No public_notice_no found in document — SUPERSEDED: Public Notice No. 221593 is printed on
+    composite sheet 49 (the attached modification fact sheet), outside the six-page read window.'
+  - 'No comment_period_end found in document — SUPERSEDED: "Comment Period Ends: 6/24/2026" is
+    printed on composite sheet 49.'
+  - 'Stream network downstream of Town Creek not stated — SUPERSEDED: "Middle Creek to Little
+    Auglaize River to Auglaize River to Maumee River to Lake Erie", composite sheet 49.'
+  - 'public_notice_date inferred from the letter date 2026-05-18 — SUPERSEDED: the letter date is
+    the modification ACTION date; the public notice date is 2026-05-25 (composite sheet 49).'
+  facility_name: Van Wert WWTP
+  permit_no: 2PD00006*WD
+  permit_action: modification
+  # Normalized to the bare permittee. The letter is addressed "Van Wert WWTP / Greg Reinhart /
+  # 7998 S.R. 127 N." — Greg Reinhart is the ADDRESSEE, not a co-applicant, and folding him into
+  # this field forks the City into a second entity node in the cross-document graph. Recorded as
+  # `contact`. The permit body names the permittee "City of Van Wert" (composite sheet 2).
+  applicant: City of Van Wert, 515 East Main St., Van Wert, OH 45891
+  contact: Greg Reinhart
+  application_no: OH0027910   # unchanged by the modification
+  public_notice_no: '221593'
+  public_notice_date: '2026-05-25'
+  comment_period_end: '2026-06-24'
+  facility_address: Van Wert WWTP, 7998 S.R. 127 N., Van Wert, OH 45891, Van Wert County
+  discharge_address: Van Wert WWTP, 7998 S.R. 127 N., Van Wert, OH 45891, Van Wert County
+  receiving_water: Town Creek at River Mile 13.87
+  stream_network: Middle Creek, Little Auglaize River, Auglaize River, Maumee River, Lake Erie
+  outfalls:
+  - '001'
+  note: >-
+    Outfall 001 (station 2PD00006001) is the sole FINAL outfall — 4,000,000 GPD at
+    40.8882410 N / -84.58437518 W (the coordinate is printed on the draft public notice, not in
+    this package; see 2PD00006.36a58063.npdes.yaml). The permit body authorizes discharge "from
+    the Van Wert WWTP wastewater treatment works … (and associated combined sewer overflows)":
+    the five CSOs are authorized wet-weather discharges under the same permit and are recorded
+    under `stations:` below with the SSO, sludge, influent and in-stream stations.
+
+# --- reviewed augmentation (issue 1406) -------------------------------------------------------
+
+review:
+  issue: 1406
+  reviewed_on: '2026-08-01'
+  method: >-
+    Verbatim transcription from this PDF's embedded text layer (pypdf), page by page. Page numbers
+    below are 1-based printed sheets of the 56-page composite unless a field says otherwise.
+
+modification:
+  action: NPDES permit modification under OAC 3745-33-04(D)
+  letter_date: '2026-05-18'
+  signed_by: John Logue, Director, Ohio Environmental Protection Agency
+  action_date: '2026-05-18'          # "Modification Action Date", composite sheet 2
+  public_notice_no: '221593'
+  public_notice_date: '2026-05-25'
+  comment_period_end: '2026-06-24'
+  entered_directors_journal: '2026-06-30'   # printed under the Director's signature, composite sheet 2
+  effective: '2026-07-01'
+  expires: '2030-05-31'              # unchanged by the modification
+  permit_no_before: 2PD00006*VD
+  permit_no_after: 2PD00006*WD
+  application_no: OH0027910          # unchanged by the modification
+  permit_page_count: 47              # "Total Pages: 47", composite sheet 2
+  revisions:
+  - >-
+    "1. Modification of the Part I.C - Schedule of Compliance to remove the completed milestones
+    for the submitted Combined Sewer Overflow Long Term Control Plan Compliance Assistance plan
+    and include the new milestones proposed in the submitted plan."
+  scope_statement: >-
+    "All terms and conditions of the existing permit not recommended for modification by this
+    document will remain in effect. Any modified term or condition contained in this modification
+    shall supersede, on the date this modification is effective, the existing respective term or
+    condition of the permit."
+  fact_sheet_adds: >-
+    The attached fact sheet (composite sheet 53) states one further change the transmittal letter
+    does not enumerate: "a revised Part III is proposed to be included. References to Part III in
+    other parts have been updated." Part III is the boilerplate general conditions.
+  finding: >-
+    The substance of this modification is a CONSTRUCTION SCHEDULE. It puts dated, event-coded
+    milestones for four physical CSO control projects into the enforceable part of the permit —
+    the first of them, "begin construction", falling 2026-08-01. Effluent limits, the mercury
+    variance, the design flow and the TMDL condition are untouched.
+
+schedule_of_compliance:
+  pages: [20, 23]
+  milestone_summary_report:   # transcribed from the table on composite sheet 20, in the order printed
+  - {section: New Effluent Limit Schedule, report_event: Submit First Annual Report, event_code: '90199', due: '2026-08-01'}
+  - {section: CSO Schedule, report_event: Begin Construction, event_code: '3099', due: '2026-08-01'}
+  - {section: CSO Schedule, report_event: Final Study Plan Submitted, event_code: '1299', due: '2026-10-01'}
+  - {section: Municipal Pretreatment Schedule, report_event: Effluent Limits For Pollutants, event_code: '52599', due: '2026-12-01'}
+  - {section: CSO Schedule, report_event: Attain Operational Level, event_code: '96899', due: '2027-01-01'}
+  - {section: CSO Schedule, report_event: Begin Study, event_code: '21599', due: '2027-03-01'}
+  - {section: New Effluent Limit Schedule, report_event: Submit Second Report, event_code: '90299', due: '2027-06-01'}
+  - {section: CSO Schedule, report_event: Study Status Report, event_code: '95999', due: '2028-03-01'}
+  - {section: New Effluent Limit Schedule, report_event: Final Compliance with Effluent Limits, event_code: '5699', due: '2028-06-01'}
+  - {section: CSO Schedule, report_event: Study Completed, event_code: '1599', due: '2029-03-01'}
+  - {section: CSO Schedule, report_event: Submit Study Plan, event_code: '34099', due: '2029-06-01'}
+  note: >-
+    The summary table's "Study" language is the eDMR event vocabulary, not the permit's. In Part
+    I.C.2 the same events are the 24-month POST-CONSTRUCTION COMPLIANCE MONITORING period: "Begin
+    Study" (21599) is initiate PCCM, "Study Completed" (1599) is conclude PCCM, and "Submit Study
+    Plan" (34099) is the LTCP Completion Evaluation Report. Event code 5699 prints as "05699" in
+    the Part I.C.A body text and "5699" in this table; both as printed.
+
+  part_i_c_a_new_effluent_limit_schedule:
+    page: 20
+    pollutants: [dissolved hexavalent chromium, pentachlorophenol, selenium, silver]
+    milestones:
+    - {due: '2026-08-01', event_code: '90199', requirement: progress report incl. 12 months influent/effluent data}
+    - {due: '2027-06-01', event_code: '90299', requirement: second progress report, same content}
+    - {due: '2028-06-01', event_code: '05699', requirement: attain compliance with the final limits; notify NWDO within 14 days}
+
+  part_i_c_b_municipal_pretreatment_schedule:
+    pages: [20, 21]
+    due: '2026-12-01'
+    event_code: '52599'
+    requirement: >-
+      Evaluate the adequacy of local industrial-user limitations and submit either a pretreatment
+      program modification request or technical justification for retaining the existing limits.
+    total_phosphorus_review: >-
+      "A review of technical information in consideration of local industrial user limitation for
+      total phosphorus is required. The permittee shall determine whether application of local
+      limits will facilitate substantial progress toward achieving a monthly average effluent
+      concentration target of 0.5 mg/L." That target is HALF this permit's own 1.0 mg/L monthly
+      average TP limit, and the permittee may instead submit evidence that local limits are not
+      appropriate.
+
+  part_i_c_c_cso_schedule:
+    pages: [21, 23]
+    history_as_printed: >-
+      "The permittee submitted a Long Term Control Plan (LTCP) to Ohio EPA in 1999, which proposed
+      to attain a level of control of four CSO events or less per typical year and which was
+      amended in 2011. In 2022, the permittee submitted an LTCP Completion Evaluation Report which
+      determined that the goals of the LTCP had not been attained, therefore additional control is
+      needed."
+    plan_submitted: '2025-07-24'
+    plan_approved: null
+    approval_placeholder_as_printed: >-
+      "On July 24, 2025, the permittee submitted an updated Combined Sewer Overflow Long Term
+      Control Plan Compliance Assistance plan, which was approved by Ohio EPA on [approval
+      pending]." The bracketed placeholder is printed VERBATIM in the issued permit — the
+      instrument that entered the Director's Journal on 2026-06-30 still carries no approval date
+      for the plan whose schedule it enforces. Transcribed as found; not "corrected".
+    control_projects:
+    - Blaine St. interceptor sewer
+    - Town Creek siphon
+    - modification of the Bonnewitz pump station weir structure
+    - raising of the CSO 010 weir elevation
+    milestones:
+    - {due: '2026-08-01', event_code: '3099', requirement: begin construction of the control projects; notify Ohio EPA within 14 days of commencing}
+    - {due: '2027-01-01', event_code: '96899', requirement: obtain operational level of the control projects; notify Ohio EPA within 14 days}
+    - {due: '2026-10-01', event_code: '1299', requirement: revise the 2020 Post-Construction Compliance Monitoring (PCCM) Plan and submit it}
+    - {due: '2027-03-01', event_code: '21599', requirement: initiate a 24-month PCCM period}
+    - {due: '2028-03-01', event_code: '95999', requirement: PCCM progress report — 12 months of CSO occurrence/volume and the precipitation that caused it}
+    - {due: '2029-03-01', event_code: '1599', requirement: conclude PCCM}
+    - {due: '2029-06-01', event_code: '34099', requirement: submit the LTCP Completion Evaluation Report (seven enumerated contents)}
+    level_of_control_goal: >-
+      "no more than an average of 4 overflow events per year", system wide — the same goal the
+      1999 LTCP set and the 2022 Completion Evaluation Report found unattained.
+    discrepancy: >-
+      The permit dates the Compliance Assistance Plan submission 2025-07-24 (Part I.C.1). The fact
+      sheet bound into the SAME package dates it 2026-02-02 ("Combined Sewer Overflow Long Term
+      Control Plan Compliance Assistance Plan was submitted February 2, 2026", composite sheet 52).
+      Both preserved as printed; neither is corrected here, and which one is the operative
+      submission is `[open]`.
+
+stations:
+  final_outfall:
+  - {station: 2PD00006001, kind: final effluent, design_flow_gpd: 4000000, lat: 40.8882410, lon: -84.58437518,
+     coordinate_source: draft public notice (2PD00006.36a58063.pdf, sheet 1) — not printed in this package}
+  combined_sewer_overflows:   # Part II, C (composite sheet 26) — authorized wet-weather discharges only
+  - {station: 2PD00006004, description: Combined sewer overflow at Wall Street, lat: 40.8769, lon: -84.5878, receiving_stream: Town Creek}
+  - {station: 2PD00006005, description: Combined sewer overflow at First & Monroe Street, lat: 40.88, lon: -84.5867, receiving_stream: Town Creek}
+  - {station: 2PD00006007, description: Combined sewer overflow at Main Street, lat: 40.8689, lon: -84.5853, receiving_stream: Town Creek}
+  - {station: 2PD00006009, description: Combined sewer overflow at Central, lat: 40.8683, lon: -84.5853, receiving_stream: Town Creek}
+  - {station: 2PD00006010, description: Combined sewer overflow at Keplar, lat: 40.8828, lon: -84.5797, receiving_stream: Town Creek}
+  other:
+  - {station: 2PD00006300, kind: SSO reporting station, page: 12}
+  - {station: 2PD00006581, kind: sludge, page: 14}
+  - {station: 2PD00006586, kind: sludge, page: 16}
+  - {station: 2PD00006601, kind: influent monitoring, page: 17}
+  - {station: 2PD00006801, kind: in-stream upstream of the discharge, page: 18}
+  - {station: 2PD00006901, kind: in-stream downstream-nearfield of the discharge, page: 19}
+  in_stream_note: >-
+    Both in-stream stations monitor total phosphorus, ammonia, TKN, nitrite+nitrate and E. coli
+    monthly; 801 adds the four acute/chronic toxicity tests and 901 adds temperature, pH and
+    hardness. Part II, Item N requires 001, 601, 801 and 901 to be sampled THE SAME DAY — an
+    upstream/downstream pairing, not four independent records.
+  cso_public_access_areas:
+    page: 26
+    areas: []
+    as_printed: '"None were identified in the 2018 - CSO Notification Plan"'
+    note: >-
+      The permit's public-access-area table is EMPTY by the City's own 2018 CSO Public Notification
+      Plan — no public access area is named as potentially impacted by any of the five CSOs, all of
+      which discharge into the reach the City's own raw-water pump stations draw from. Recorded as
+      a cited absence, not as evidence there is none.
+
+effluent_limits:
+  outfall: 2PD00006001
+  interim_period: {from: effective date of the modification, until: '2028-05-31', page: 3}
+  final_period: {from: '2028-06-01', until: '2030-05-31', page: 5}
+  total_phosphorus:
+    parameter_code: '00665'
+    weekly_average_mg_l: 1.5
+    monthly_average_mg_l: 1.0
+    weekly_average_kg_day: 23
+    monthly_average_kg_day: 15
+    frequency: 1/Week, 24-hr composite, all months
+    unchanged_between_periods: true
+  note: >-
+    The interim and final tables differ only in the metals/organics that the Part I.C.A schedule
+    is driving to compliance — dissolved hexavalent chromium, pentachlorophenol, selenium and
+    silver acquire numeric limits on 2028-06-01. TSS, ammonia, phosphorus, D.O. and E. coli carry
+    the same numbers in both.
+
+mercury_variance:
+  page: 32
+  item: Part II, Y — General Mercury Variance
+  action: renewal, granted under OAC 3745-1-38(J)
+  wqbel_monthly_average_ng_l: 1.3
+  achievable_annual_average_ng_l: 12
+  as_printed: >-
+    "The City of Van Wert has demonstrated that the facility is currently unable to comply with the
+    monthly average water quality based effluent limit of 1.3 ng/L without construction of
+    expensive end-of-pipe controls more stringent than those required by sections 301(b) and 306
+    of the Clean Water Act. The City of Van Wert is currently able to achieve an annual average
+    mercury concentration of 12 ng/L."
+  conditions: >-
+    Continue a pollutant minimization program (PMP) for mercury — control strategy, periodic
+    source and treatment-system monitoring, annual reporting. The plan of study dates to the
+    permittee's 2007 application for coverage under the general variance.
+
+tmdl_wasteload_allocation:
+  page: 35
+  item: Part II, AE
+  tmdl: Maumee Watershed Nutrient Total Maximum Daily Load Report, approved September 2023
+  individual_wla_kg_total_phosphorus: 1000
+  critical_season: March through July
+  regulated_through: Maumee Watershed Total Phosphorus NPDES General Permit
+  general_permit_id: null
+  coverage_status_as_printed: has been granted coverage
+  reopener: >-
+    "In the event the permittee is no longer covered by the general permit, this individual permit
+    may be modified, or revoked and reissued, to incorporate effluent limits consistent with the
+    wasteload allocation."
+  as_printed: >-
+    "AE. The Maumee Watershed Nutrient Total Maximum Daily Load (TMDL) Report was approved in
+    September 2023. The TMDL assigned an individual wasteload allocation to Van Wert WWTP of 1,000
+    kg of total phosphorus for the critical season (March through July). Compliance with this
+    individual wasteload allocation will be regulated through the Maumee Watershed Total
+    Phosphorus NPDES General Permit, under which Defiance Van Wert WWTP has been granted
+    coverage."
+  text_defect: >-
+    "under which **Defiance** Van Wert WWTP has been granted coverage" — printed verbatim in the
+    issued permit. There is no facility named "Defiance Van Wert WWTP"; Defiance is a different
+    city, 40 miles downstream, with its own WWTP and its own permit. The boilerplate was carried
+    over unedited from another permittee's condition. Transcribed as found; the sentence still
+    grants coverage to this permittee, but the instrument's own naming of the covered facility is
+    wrong on its face.
+  general_permit_not_named: >-
+    The permit does NOT print a general-permit number anywhere — it names the general permit only
+    by title. OHP000001 is the Maumee Watershed Total Phosphorus general permit held in this corpus
+    (data/documents/oepa/OHP000001.pdf); binding the two is a corpus-side identification, NOT
+    something this instrument states. Do not quote this permit as the source for "OHP000001".
+  headroom_check:
+    tag: '[inference]'
+    arithmetic: 15 kg/day (permit monthly-average TP loading limit) x 153 days (Mar 1 - Jul 31) = 2,295 kg
+    wla_kg: 1000
+    ratio: 2.30
+    reading: >-
+      Held at its own monthly-average loading limit for the whole critical season, this permit
+      allows 2.30x the total phosphorus the Maumee TMDL individually allocated to this plant for
+      the same window. That is not a violation of anything — it is why Part II.AE hands compliance
+      to the general permit rather than to a number in Part I.A, and why the individual permit
+      carries a reopener. The arithmetic is a ceiling comparison, not a measured load; what the
+      plant actually discharged in a critical season is `[open]` pending an ECHO effluent-chart
+      pull for parameter 00665 (see data/extracted/van-wert/water-watch.yaml).
+
+attached_fact_sheet:
+  pages: [49, 56]
+  title: Fact Sheet for NPDES Permit Modification, Van Wert WWTP, 2026
+  public_notice_no: '221593'
+  public_notice_date: '2026-05-25'
+  comment_period_end: '2026-06-24'
+  contact: Lori Komorowski, Ohio EPA, 419-373-3016
+  river_mile: 13.87
+  confluence: Town Creek combines with Maddox Creek to form Middle Creek
+  ohio_epa_river_code: 04-143
+  huc12: 04100007-08-04
+  ecoregion: Huron-Erie Lake Plains
+  designated_uses:   # OAC 3745-1-11, as printed on composite sheet 52
+  - Modified Warmwater Habitat
+  - Agricultural Water Supply
+  - Industrial Water Supply
+  - Secondary Contact Recreation
+  designated_use_note: >-
+    Public Water Supply is NOT among the designated uses printed for this segment, and the City of
+    Van Wert's drinking water comes from Town Creek. The intake is upstream of this outfall, so the
+    two need not be the same WQS segment — but the gap is worth naming rather than assuming. See
+    data/extracted/van-wert/water-watch.yaml.
+  facility:
+    constructed: 1935
+    last_upgraded: 2001
+    average_design_flow_mgd: 4.0
+    peak_hydraulic_capacity_mgd: 8.0
+    population_served: 11039
+    treatment: [influent pumping, bar screen, grit removal, primary sedimentation,
+      trickling filter (rock media), activated sludge (conventional), alum addition (secondary),
+      secondary clarification, ultraviolet disinfection]
+    sludge_treatment: [aerobic digestion, gravity thickening, mechanical dewatering (filter press)]
+    out_of_service: >-
+      "The roughing trickling filters and peak flow primary tanks are currently not in use at
+      treatment plant. Flows above 5 MGD are bypassed around the primary clarifiers directly to
+      the secondary treatment activated sludge tanks."
+    collection_system: 35% separate sewers, 65% combined sewers
+    pretreatment: approved program; three categorical users discharging 0.176 MGD
+  cso_projects_as_described:
+  - Completing a new interceptor sewer on Blaine Street and installing a new siphon at Town Creek,
+    to increase conveyance downstream of CSO 004
+  - Adjusting the weir at the Bonnewitz Pump Station to maximize storage in the existing 15-MG
+    equalization basin
+  - Raising the overflow weir at CSO 010 by six inches
+  related_permit_to_pull: >-
+    "The permittee received an approved PTI DSW-6320 for the Blaine Street interceptor and the
+    Town Creek siphon on October 12, 2025." Ohio EPA Division of Surface Water plan-approval
+    DSW-6320 is NOT in this corpus — it is the engineering instrument behind two of the four
+    control projects.
+  typo_as_printed: >-
+    "Can Wert WWTP was constructed in 1935" (composite sheet 52) — the fact sheet's own typo for
+    "Van Wert". Noted so a text search for the facility name does not silently miss the page.
+  status_language: >-
+    The fact sheet is the DRAFT-cycle document, bound unchanged into the final package: it speaks
+    of "the draft permit", says the plan's approval "is proposed and is currently open for comment
+    in a concurrent public notice period", and describes the schedule as what "the permit is
+    proposed to be modified to include". It was not re-issued at finalization.
+
+relevance:
+  tags: [verified, npdes, oepa, van-wert, van-wert-county, town-creek, cso, ltcp, modification,
+         schedule-of-compliance, maumee-tmdl, total-phosphorus, mercury-variance]
+  note: >-
+    The instrument in force at the Van Wert watershed point. Its operative act is to put four CSO
+    control projects on a dated, event-coded construction schedule beginning 2026-08-01 — on the
+    same reach of Town Creek from which the City draws its drinking water, and into which the QTS
+    Van Wert campus's municipal water and sewer service would resolve. Standing watch:
+    data/extracted/van-wert/water-watch.yaml.

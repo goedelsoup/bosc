@@ -1105,9 +1105,10 @@ def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     ``record`` then rose to ``live`` in #1405 — not on new evidence, on plumbing. The 2PD00006*VD
     permit and its fact sheet had been ingested and extracted since #837, but the extractions sat
     flat at ``data/extracted/oepa/`` while the site's scope reached only ``van-wert/``, so they
-    rendered inside Lima's Allen-County record and Van Wert owned nothing. Two ``RecordItem``s
-    clear ``RECORD_LIVE_THRESHOLD``; the count is the honest one (a permit and its fact sheet),
-    not a fabricated breadth.
+    rendered inside Lima's Allen-County record and Van Wert owned nothing. #1406 added the
+    2PD00006*WD modification package and its draft public notice, so the domain now stands on
+    four ``RecordItem``s rather than two — still the honest count (two permit cycles, each with
+    its own notice-side document), not a fabricated breadth.
 
     The other two stay put, and pinning them is the point: ``facility`` remains ``seeded``
     because the #1630 downgrade holds (QTS declines to state capacity, so the IT load is an
@@ -1127,9 +1128,15 @@ def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     assert domains["story"] == "absent"
 
     # The records that activated the domain are this site's OEPA instruments — read from the
-    # site-attributed subtree that mirrors their source at data/documents/oepa/van-wert/.
+    # site-attributed subtree that mirrors their source at data/documents/oepa/van-wert/. The
+    # two hash-infixed names are the *WD modification package and its draft public notice: Ohio
+    # EPA re-serves the DAM's `permits/doc/` slot in place on modification, so both cycles' bytes
+    # land under one basename and the fetcher's collision rule appends each file's own sha256
+    # prefix (#1406).
     rels = sorted(r["rel"] for r in _rows(bundle, _feeds_by_name(bundle)["records"]))
     assert rels == [
+        "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+        "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
         "oepa/van-wert/2PD00006.fs.npdes.yaml",
         "oepa/van-wert/2PD00006.npdes.yaml",
     ]

@@ -1,0 +1,123 @@
+doc_id: 2PD00006.36a58063-0dbb3a9c
+source_path: data/documents/oepa/van-wert/2PD00006.36a58063.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "  Application No.:  OH0027910 \n  Ohio EPA Permit No.:  2PD00006*WD\
+  \ \nPublic Notice No.: 221593 \n \n \n \n \nNational Pollutant Discharge Elimination\
+  \ System (NPDES) Permit Program \n \n P U B L I C  N O T I C E  \n \n NPDES Permit\
+  \ Modification to Discharge to State Waters \n \nOhio Environmental Protection Agency\
+  \ \nPermits Section \n50 West Town St., Suite 700 \nP. O. Box 1049 \nColumbus, Ohio\
+  \ 43216-1049 \n(614) 644-2001 \n \nPublic Notice No.: 221593 \n \nDate of Issuance\
+  \ of Proposed Modification: May 18, 2026 \nDate of Public Notice: 5/25/2026 \nEffective\
+  \ Date of Modification: PROPOSED \n \nName and Address of Appli"
+# WHAT THIS FILE IS.
+#
+# The DRAFT of the 2PD00006*WD modification, from the DAM's `permits/DraftPN/` slot. 59 pages:
+# a three-page PUBLIC NOTICE, then the same 47-page permit and 8-page fact sheet that the final
+# `permits/doc/` package carries (2PD00006.f8aaad0a.npdes.yaml) — with the effective date still
+# printed "PROPOSED". Held for what only the notice pages carry: the public notice number as the
+# agency itself prints it, the comment window, and the outfall's coordinate and design flow.
+#
+# The FINAL instrument is 2PD00006.f8aaad0a.pdf. Cite this file for the notice, never for what
+# the permit requires — the draft's "PROPOSED" effective date is not the term in force.
+permit:
+  confidence: high
+  warnings:
+  - >-
+    This is the DRAFT public-notice package, not the issued instrument. Its permit cover prints
+    "Modification Effective Date: PROPOSED (July 1, 2026)" and the notice prints "Effective Date
+    of Modification: PROPOSED".
+  - 'Two permit numbers appear in the document: 2PD00006*VD (prior/cover letter) and
+    2PD00006*WD (new/modified); recorded the new modified permit number.'
+  - Discharge address is same as facility address; no distinct discharge address provided.
+  superseded_warnings:   # the extractor's, corrected on review; kept for audit
+  - 'Comment period end calculated as 30 days after the public notice date — SUPERSEDED: the
+    attached fact sheet prints it outright, "Comment Period Ends: 6/24/2026" (0-based p. 51).
+    The inferred date and the printed one agree.'
+  facility_name: Van Wert WWTP
+  permit_no: 2PD00006*WD
+  permit_action: modification
+  applicant: City of Van Wert
+  application_no: OH0027910
+  public_notice_no: '221593'
+  public_notice_date: '2026-05-25'
+  comment_period_end: '2026-06-24'
+  facility_address: 7998 S.R. 127 N., Van Wert, OH 45891, Van Wert County
+  discharge_address: null
+  receiving_water: Town Creek
+  stream_network: null
+  outfalls:
+  - '001'
+  note: >-
+    The modification changes the Part I.C Schedule of Compliance for the Combined Sewer Overflow
+    Long Term Control Plan; the permit number changes from 2PD00006*VD to 2PD00006*WD on the
+    effective date. The outfall identifier appears as both '001' (public notice location table)
+    and '2PD00006001' (effluent limitation tables).
+
+# --- reviewed augmentation (issue 1406) -------------------------------------------------------
+
+review:
+  issue: 1406
+  reviewed_on: '2026-08-01'
+  method: >-
+    Verbatim transcription from this PDF's embedded text layer (pypdf). Page numbers are 1-based
+    printed sheets of the 59-page composite.
+
+public_notice:
+  pages: [1, 3]
+  public_notice_no: '221593'
+  date_of_issuance_of_proposed_modification: '2026-05-18'
+  date_of_public_notice: '2026-05-25'
+  effective_date_as_printed: PROPOSED
+  applicant_as_printed: City of Van Wert, 7998 S.R. 127 N., Van Wert, OH, 45891
+  facility_as_printed: Van Wert WWTP, 7998 S.R. 127 N., Van Wert, OH, 45891, Van Wert County
+  receiving_water: Town Creek
+  location_of_discharge:
+    outfall: '001'
+    design_flow_gpd: 4000000
+    lat: 40.8882410
+    lon: -84.58437518
+  purpose_as_printed: >-
+    "1. Modification of the Part I.C - Schedule of Compliance to remove the completed milestones
+    for the submitted Combined Sewer Overflow Long Term Control Plan Compliance Assistance plan
+    and include the new milestones proposed in the submitted plan."
+  tentative_clause: >-
+    "The proposed modification is tentative but shall become final on the effective date unless:
+    1) an adjudication hearing is requested, 2) the Director withdraws and revises the proposed
+    modification after consideration of the record of a public meeting, written comments, or
+    statements, or 3) upon disapproval by the administrator of the U.S. Environmental Protection
+    Agency."
+  outcome: >-
+    It became final. The issued package entered the Director's Journal 2026-06-30, six days after
+    the comment period closed, effective 2026-07-01 — see 2PD00006.f8aaad0a.npdes.yaml. Whether
+    any comment, hearing request or public-meeting petition was filed in the 2026-05-25 →
+    2026-06-24 window is `[open]`; the response-to-comments, if one exists, is not in this corpus.
+
+public_notice_number_discrepancy:
+  as_printed_on_notice: '221593'
+  as_printed_on_fact_sheet: '2215932'
+  resolution: >-
+    The three public-notice pages print "Public Notice No.: 221593" four times, in the page
+    headers and in the body. The attached fact sheet's two-column header extracts as "Public
+    Notice No.: 2215932 Ohio EPA Permit No.: 2PD00006*WD" in both this copy and the final
+    package's. Ohio EPA public notice numbers in this corpus are six digits (210566, 216133,
+    205259), so 221593 is recorded as the number and the trailing digit is read as a
+    column-merge artifact of the text layer. Recorded because the artifact is identical in both
+    copies and will reappear in any text search.
+
+relevance:
+  tags: [verified, npdes, oepa, van-wert, van-wert-county, town-creek, cso, modification,
+         public-notice, draft]
+  note: >-
+    The notice half of the *WD record. Its unique contribution to the corpus is the outfall 001
+    coordinate (40.8882410 N, -84.58437518 W) — the point on Town Creek the whole water screen
+    hangs off, and one the issued permit never prints.
