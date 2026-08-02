@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9619bd306d379ff70c9a224c584f3d88e85d4602e08b744e6a10afd2493282ae",
-      "size_bytes": 209440,
+      "sha256": "79db95280cc80967923422d1ea5715d03698c39b265c3b97bd898c954291b1b0",
+      "size_bytes": 246563,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -361,7 +361,7 @@
     "producer_kind": "extracted",
     "command": null,
     "connector_ref": null,
-    "source": "Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/)",
+    "source": "Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/), City of Urbana council packets and approved minutes (urbana/council/)",
     "external_url": null,
     "license": "Public record (Ohio R.C. 149.43)",
     "access_tier": "public",
@@ -379,7 +379,13 @@
       "mad-river",
       "land-assembly",
       "recorder-deeds",
-      "litigation"
+      "litigation",
+      "community-reinvestment-area",
+      "pre-annexation-agreement",
+      "tax-incentives",
+      "cooling",
+      "water-withdrawal",
+      "industrial-pretreatment"
     ],
     "storage": [
       {
@@ -421,19 +427,34 @@
         "relpath": "extracted/urbana/litigation-thor-v-urbana.md",
         "media_type": "text/markdown",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/urbana/incentive-instruments.yaml",
+        "media_type": "application/yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/urbana/incentive-instruments.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/urbana/cooling-water-account.md",
+        "media_type": "text/markdown",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "c7eb4c596fe6b4eb6a160f6970a1ae94ac8c2c9950f9aae1cbee9bc73861689a",
-      "size_bytes": 95322,
+      "sha256": "87114379b37b05d51220f74e69d9013bee8f43e008df57169e2348380e53e31a",
+      "size_bytes": 165993,
       "lfs_materialized": true,
-      "file_count": 8,
+      "file_count": 11,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/)",
+      "source": "Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/), City of Urbana council packets and approved minutes (urbana/council/)",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -1021,8 +1042,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "7f5e29511e137d0b882ac94655ac684e9dc37b22d2d8f0ccc3478f0c94adb5b7",
-      "size_bytes": 104545,
+      "sha256": "89e2ed7ea954374b81b85875277c7ee6cfff717e117b907bb6397ecaed63782a",
+      "size_bytes": 104549,
       "lfs_materialized": true,
       "file_count": 22,
       "stale": false,
@@ -2175,8 +2196,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "dfeb17fe61d6b131c989d98a292a3c934f313ee04fda7c7765deb50d5c62e700",
-      "size_bytes": 75608,
+      "sha256": "67c1d11b8ae92bad4a36e238e6e32e0a2c6175514904ae6102ba95118a9c001e",
+      "size_bytes": 84612,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -2306,6 +2327,56 @@
       "confidence": "medium",
       "note": null,
       "verified": false
+    }
+  },
+  {
+    "id": "ohio-water-withdrawal-champaign",
+    "title": "Champaign County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+    "scope": "reference",
+    "collection": "ohio-water-withdrawal",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "water-withdrawal --county Champaign",
+    "connector_ref": "watermark.hydrology.connectors.ohio_water_withdrawal",
+    "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+    "external_url": "https://ohiodnr.gov/wwfacilitylocator",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "site:urbana",
+    "cadence": "annual",
+    "ttl_days": 365,
+    "last_refreshed": null,
+    "tags": [
+      "water-withdrawal",
+      "wwfrp",
+      "ohio-dnr",
+      "cooling",
+      "makeup"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/ohio-water-withdrawal/champaign.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "52636cb5e14b20e64a4b2309689d6a88ab255087b34c2b1019c8bd104076d158",
+      "size_bytes": 88107,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark water-withdrawal --county Champaign",
+      "verified": true
     }
   },
   {
@@ -2500,10 +2571,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d551ea721313db26174fcb76f932c158a733d61b144f06d5b74bc66f340b8535",
-      "size_bytes": 440076,
+      "sha256": "41921e30b33b8494e8367d64753a0704ce48fdb0e979ca8aa5f3b337a4ede48d",
+      "size_bytes": 492562,
       "lfs_materialized": true,
-      "file_count": 8,
+      "file_count": 9,
       "stale": false,
       "asof": null
     },

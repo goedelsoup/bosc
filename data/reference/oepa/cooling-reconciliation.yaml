@@ -11,8 +11,8 @@ meta:
     discrepancy: 0
     corroborated: 1
     reservation_conflict: 2
-    gap: 4
-    route_blind: 1
+    gap: 3
+    route_blind: 2
   discipline: 'The harness RECOMMENDS; it never mutates cooling_model — re-archetyping is a reviewed B1-B6
     edit with the instrument cited. A back-solved cycles-of-concentration is an [inference] bracket, never
     a headline scalar. A gap (no documented makeup/blowdown) is an [open] records-request lead for C2
@@ -45,7 +45,16 @@ meta:
     groundwater) rides on `nonprocess_makeup`, never `documented_*`. Where an archetype''s water account
     cannot be derived at all — a semiconductor fab has no IT load, and every archetype is IT-load-parameterized
     — the prediction is REFUSED with its reason on `prediction_refused` and the three `predicted_*` are
-    null; a reader must show the refusal, never substitute a zero.'
+    null; a reader must show the refusal, never substitute a zero. Where a route_blind facility''s SUPPLIER
+    is on record even though the facility is not (B4 Urbana, #1684), that system''s reported withdrawal
+    rides on `supplier_withdrawal` — never `documented_*`. It is the supplier''s account, aggregating
+    every customer on the system, so like the self-report slots it can neither corroborate nor contradict
+    one facility''s cooling claim; it is carried because it is the DENOMINATOR — the scale the untestable
+    claim would land inside. Urbana is the case the epic started from: the City reported 1.76 MGD in 2024
+    while an evaporative read of the same campus, at its [inference] screening IT load, would draw 0.49-1.64
+    MGD, and the disclosed claim (''water use comparable to a standard office building'' — a comparison,
+    not a figure, so nothing lands on `disclosed_makeup`) sits below the 0.01 MGD noise floor. Three orders
+    of magnitude, and no instrument on either side can tell them apart.'
   reference_band:
     basis: the evaporative_tower archetype spec's own defaults, run through watermark.hydrology.cooling_models
       and normalized per IT-MW
@@ -192,6 +201,7 @@ candidates:
       high: null
     disclosed_ceiling: null
     nonprocess_makeup: null
+    supplier_withdrawal: null
     route:
       supply: municipal
       discharge: unknown
@@ -359,6 +369,7 @@ candidates:
       asof: null
       low: null
       high: null
+    supplier_withdrawal: null
     route:
       supply: municipal
       discharge: sanitary_sewer
@@ -574,6 +585,7 @@ candidates:
       low: null
       high: null
     nonprocess_makeup: null
+    supplier_withdrawal: null
     route: null
     disclosed_cycles: null
     backsolved_cycles: null
@@ -747,6 +759,7 @@ candidates:
     disclosed_makeup: null
     disclosed_ceiling: null
     nonprocess_makeup: null
+    supplier_withdrawal: null
     route: null
     disclosed_cycles: null
     backsolved_cycles:
@@ -829,7 +842,15 @@ candidates:
   claim_citation: '[reference] Closed-loop cooling disclosed at the Feb-2026 City of Urbana meeting —
     developer stated water use ''comparable to a standard office building'' (Urbana Daily Citizen 2026-02-18).
     Undercuts the buried-valley water-abstraction thesis. Not a document extraction; refine to [verified]
-    on an ingested mechanical/plumbing permit.'
+    on an ingested mechanical/plumbing permit. B4 (#1684) reviewed it against the record and the pin is
+    KEPT unchanged, because neither instrument the reconciliation harness reads can reach this campus:
+    the City''s own Pre-Annexation Agreement (Ord. 4612-24) obliges it to ''provide water and sewer'',
+    so the campus buys City water (invisible to the Ohio DNR withdrawal registry — it is absent from all
+    31 Champaign County registrations) and discharges to the City WPCF''s sewer (no NPDES outfall, so
+    no DMR). Outcome route_blind, NOT ''confirmed dry''. The claim also states no figure at all, and its
+    two readings are three orders of magnitude apart: an evaporative read at this facility''s own screening
+    IT-load bracket implies 0.49-1.64 MGD against the City''s entire reported 1.76 MGD municipal withdrawal
+    (2024). See data/reference/oepa/cooling-reconciliation.yaml + data/extracted/urbana/cooling-water-account.md.'
   account:
     archetype: closed_loop_dry
     it_load:
@@ -892,32 +913,100 @@ candidates:
     disclosed_makeup: null
     disclosed_ceiling: null
     nonprocess_makeup: null
-    route: null
+    supplier_withdrawal:
+      value: 1.7623
+      unit: MGD
+      source: reference
+      citation: '[verified] The SUPPLIER''S account, not the facility''s: the City of Urbana''s public
+        water system reported 644.99 MG of ground water in 2024 on Ohio DNR WWFRP registration 00837 ''URBANA
+        CITY PWS OTP'' (Old Troy Pike, 6 wells, 5.76 MGD registered capacity) — 644.99 MG / 366 d = 1.7623
+        MGD, the county''s second-largest reported withdrawal after an agricultural irrigator. The City''s
+        second plant, registration 03719 ''URBANA CITY PWS 29 WTP'' (2047 State Rte 29 W, 3 wells, 3.00
+        MGD registered, registered 2026-03-26), has filed no annual report yet, so registered capacity
+        totals 8.76 MGD against 1.76 MGD reported; both plants draw the same high-yield buried-valley
+        aquifer. Do NOT read the 2026 registration as capacity added for the campus — the SR-29 plant
+        is a long-standing City facility carrying its own NPDES permit (OH0137618, effective, expiring
+        2027-12-31), so the registration date is a registry event whose occasion is [open]. This figure
+        is a SYSTEM total across every customer: it can neither corroborate nor contradict the campus''s
+        cooling claim, and is carried only as the denominator the claim has to be read against. That comparison
+        is the B4 finding. At the campus''s [inference] screening IT-load bracket (34.5 / 74.8 / 115 MW,
+        from 460,000 sq ft) the evaporative reference band in this artifact''s meta (0.0143 MGD makeup
+        per IT-MW) implies 0.49 / 1.07 / 1.64 MGD — 28% / 61% / 93% of everything the City withdrew in
+        2024 — while the ''comparable to a standard office building'' reading sits below this harness''s
+        0.01 MGD noise floor. Three orders of magnitude, and no instrument on either side of the account
+        can tell them apart. Source: data/reference/ohio-water-withdrawal/champaign.yaml (Ohio DNR WWFRP,
+        R.C. 1521.16).'
+      confidence: high
+      asof: '2024-12-31'
+      low: null
+      high: null
+    route:
+      supply: municipal
+      discharge: sanitary_sewer
+      citation: '[verified] Both sides of the Urbana Technology Hub''s water account are outside the instruments
+        this harness reads, on the CITY''S OWN legislative record. MAKEUP: Ordinance 4612-24 (passed 5-0,
+        2024-12-17) authorized a Pre-Annexation Agreement with Urbana0624C, LLC — which the City''s own
+        public notice identifies as ''Highland'' — under which the City must ''provide water and sewer''
+        to the property, and whose section 3(c) makes the failure to make ''water and sewer capacity ...
+        available to satisfy the Developer''s schedule'' a trigger for de-annexing the entire property
+        on demand; the companion statement-of-services ordinance 4613-24 (R.C. 709.023) passed 5-0 the
+        same night, and the territory was annexed by Ord. 4619-25. A campus supplied by the City withdraws
+        nothing itself, and the Ohio DNR WWFRP registers withdrawals FROM WATERS OF THE STATE (R.C. 1521.16)
+        — so A1 can never meter it. The registry bears that out as a SEARCHED absence: none of the 31
+        WWFRP registrations in Champaign County is the campus, Thor Equities, Highland55, or Urbana Owner
+        (data/reference/ohio-water-withdrawal/champaign.yaml). DISCHARGE: the same City duty routes wastewater
+        to the City of Urbana Water Reclamation Facility (NPDES OH0027880 / Ohio EPA 1PD00011, 4.5 MGD
+        design, outfall 001 to the Mad River), so the campus has no outfall of its own and files no DMR
+        — ECHO''s 21-facility Champaign County CWA inventory carries no permit at the SR-55/US-68 site.
+        What WOULD record a cooling discharge is the City''s OEPA-audited industrial pretreatment program
+        (an IU permit; the program''s own 2025-09-09 Pretreatment Compliance Inspection and 2025-10-07
+        pretreatment SNC Notice of Violation are in corpus at data/documents/oepa/urbana/), and ECHO never
+        carries those. NB the campus is also NOT BUILT — its Feb-2026 site plan was denied as ''incomplete'',
+        a 12-month emergency moratorium (Res. 2727-26) is in force, and the zoning is in federal litigation
+        (Thor v. City of Urbana, S.D. Ohio 3:26-cv-00196) — so what the request seeks is the service and
+        capacity record that exists now (will-serve, capacity analysis, IU pre-application), not a historical
+        meter. Sources: data/documents/urbana/council/2024-11-19_regular_meeting_packet.pdf (Ord. 4612-24
+        Exh. A); data/extracted/urbana/incentive-instruments.yaml.'
+      tag: '[verified]'
+      confidence: high
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
-  outcome: gap
+  outcome: route_blind
   recommended_archetype: null
   recommended_source: null
-  kept_archetype: null
+  kept_archetype: closed_loop_dry
   lead:
     kind: records-request
     site: urbana
     facility: Urbana Technology Hub
-    subject: cooling-water account — makeup + blowdown records
+    subject: cooling-water account — the metered municipal record, because the withdrawal registry and
+      the NPDES discharge record cannot reach this facility
     records_sought:
-    - industrial pretreatment / indirect-discharge (IU) permit
-    - sewer-use agreement + any cooling-tower blowdown authorization
-    - metered water-service use (makeup withdrawal)
-    - cooling-tower blowdown / low-volume-wastewater DMR
+    - metered municipal water-service consumption for the campus (the meter that records the makeup the
+      withdrawal registry cannot see)
+    - industrial pretreatment / indirect-discharge (IU) permit + its reported flow
+    - sewer-use agreement / capacity reservation for the campus
+    - water-service agreement or will-serve letter (the contracted supply the campus draws on)
+    - the water system's capacity / supply-adequacy analysis for the campus — what draw the supplier planned
+      for (the figure the operator's claim never states)
     - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
     - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
-    holder: City / municipal water-sewer authority serving urbana; Ohio EPA / regional air agency (DAPC);
-      SERC / LEPC
-    rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
-      makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
-      or the loop is genuinely dry.
-    epic_ref: '#1688 (C2)'
+    holder: City of Urbana — Water Division (205 S Main St; the metered water-service consumption and
+      any will-serve / capacity analysis for the campus) and the City's Industrial Pretreatment Program
+      coordinator at the Water Reclamation Facility (the IU permit + sewer-use agreement that would carry
+      cooling blowdown; the program is OEPA-audited annually); Ohio EPA (NPDES / OHD000001); Ohio EPA
+      / regional air agency (DAPC); SERC / LEPC
+    rationale: 'The closed_loop_dry claim (source=reference) cannot be tested against A1/A2 at all: this
+      facility is outside their reach on the side(s) that matter — makeup (purchased municipal supply
+      — outside the A1 withdrawal registry); blowdown (to a POTW sanitary sewer — outside the A2 NPDES/DMR
+      record). Their ~0 is an absence of jurisdiction, not a measurement, so it must never be read as
+      documented ~0 water (which would corroborate a dry claim on nothing). The registry does reach the
+      SUPPLIER: 1.7623 MGD across the supplying system''s own public-supply registrations — the system
+      total this campus''s draw will sit inside, which is the scale the request is asking the utility
+      to resolve. Pulling A1/A2 harder cannot resolve it; the record that can is City-held (#1684 / lead
+      URB-WATER-METER).'
+    epic_ref: '#1688 (C2); #1684 / lead URB-WATER-METER'
     tag: '[open]'
   corroborators:
     air_permit:
@@ -947,12 +1036,18 @@ candidates:
     net_stance: silent
     summary: Neither corroborator is on record for Urbana Technology Hub (air permit + Tier II) — both
       are C2 records-request items, not read as confirming the claim.
-  tag: '[open]'
-  confidence: low
-  finding: 'No documented makeup or blowdown for Urbana Technology Hub: the closed_loop_dry claim (source=reference)
-    cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
-    #1688). Predicted makeup 0 MGD. Neither corroborator is on record for Urbana Technology Hub (air permit
-    + Tier II) — both are C2 records-request items, not read as confirming the claim.'
+  tag: '[verified]'
+  confidence: high
+  finding: 'The closed_loop_dry claim for Urbana Technology Hub (source=reference) cannot be tested by
+    this harness at all — the facility is outside the reach of the instruments it reads on makeup (purchased
+    municipal supply — outside the A1 withdrawal registry); blowdown (to a POTW sanitary sewer — outside
+    the A2 NPDES/DMR record). Their ~0 is an absence of jurisdiction, NOT a documented ~0, so it can neither
+    corroborate nor contradict the claim and must never upgrade the source. The supplying system''s own
+    withdrawal IS on record (1.7623 MGD) — that is the scale the campus''s draw will sit inside, not a
+    measurement of the campus. The record that would answer it is City-held — metered water-service consumption
+    + the industrial pretreatment / IU permit (→ C2 records request #1688). Neither corroborator is on
+    record for Urbana Technology Hub (air permit + Tier II) — both are C2 records-request items, not read
+    as confirming the claim.'
 - site: van-wert
   facility: Van Wert Mega Site
   is_control: false
@@ -1054,6 +1149,7 @@ candidates:
       high: null
     disclosed_ceiling: null
     nonprocess_makeup: null
+    supplier_withdrawal: null
     route: null
     disclosed_cycles: null
     backsolved_cycles: null
@@ -1203,6 +1299,7 @@ candidates:
     disclosed_makeup: null
     disclosed_ceiling: null
     nonprocess_makeup: null
+    supplier_withdrawal: null
     route: null
     disclosed_cycles: null
     backsolved_cycles: null
@@ -1355,6 +1452,7 @@ candidates:
     disclosed_makeup: null
     disclosed_ceiling: null
     nonprocess_makeup: null
+    supplier_withdrawal: null
     route: null
     disclosed_cycles:
       value: 5.0

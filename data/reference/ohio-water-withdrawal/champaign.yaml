@@ -1,0 +1,5275 @@
+meta:
+  subject: Ohio DNR Water Withdrawal Facilities Registration Program — Champaign County,
+    OH
+  source: Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration
+    Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)
+  source_url: https://services5.arcgis.com/ajRlmtxbNBjZggOT/arcgis/rest/services/Water_Withdrawal_Facility/FeatureServer/0
+  county: Champaign
+  state: OH
+  since_year: 2015
+  facility_count: 31
+  active_count: 25
+  reporting_count: 20
+  use_type_counts:
+    Agriculture: 12
+    Golf Course: 2
+    Industry: 1
+    Mineral Extraction: 3
+    Misc: 3
+    Public: 10
+  units: annual/monthly withdrawal + return values are million gallons (MG)
+  caveats:
+  - Withdrawal/return amounts are verbatim from the WWFRP annual-total tables; nothing
+    is inferred, normalized, or backfilled — a blank month is null.
+  - Capacities (total_capacity_mgd, *_capacity_mgd) are the REGISTERED capacity, not
+    the reported withdrawal (which lives on the annual series).
+  - Annual series are floored at 2015; the facility registry is kept in full. Older
+    years remain live at the source.
+  - Registration is self-reported; a use type is the registrant's declared primary
+    use. Any IT-load inversion from a withdrawal is [inference], never [verified].
+facilities:
+- registration_number: 00129
+  name: NORTH LEWISBURG VILLAGE PWS
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Active
+  total_capacity_mgd: 0.46
+  gw_wells: 1
+  gw_capacity_mgd: 0.46
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050600011902
+  latitude: 40.2194444
+  longitude: -83.5625
+  registration_date: '1990-01-01'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 35.7
+    count: 1
+    monthly_mg:
+      JAN: 3.0
+      FEB: 2.6
+      MAR: 3.0
+      APR: 2.6
+      MAY: 3.3
+      JUN: 3.3
+      JUL: 3.2
+      AUG: 2.9
+      SEP: 3.0
+      OCT: 2.8
+      NOV: 2.8
+      DEC: 3.2
+  - year: 2023
+    total_mg: 39.4
+    count: 1
+    monthly_mg:
+      JAN: 4.01
+      FEB: 3.48
+      MAR: 3.47
+      APR: 3.37
+      MAY: 3.68
+      JUN: 3.27
+      JUL: 3.33
+      AUG: 3.09
+      SEP: 3.0
+      OCT: 2.96
+      NOV: 2.9
+      DEC: 2.84
+  - year: 2022
+    total_mg: 44.85
+    count: 1
+    monthly_mg:
+      JAN: 3.32
+      FEB: 3.35
+      MAR: 3.53
+      APR: 3.8
+      MAY: 4.37
+      JUN: 4.63
+      JUL: 3.82
+      AUG: 3.68
+      SEP: 3.59
+      OCT: 3.31
+      NOV: 3.33
+      DEC: 4.12
+  - year: 2021
+    total_mg: 35.01
+    count: 1
+    monthly_mg:
+      JAN: 2.97
+      FEB: 2.65
+      MAR: 2.65
+      APR: 2.71
+      MAY: 2.67
+      JUN: 2.92
+      JUL: 3.0
+      AUG: 3.0
+      SEP: 2.4
+      OCT: 3.3
+      NOV: 3.6
+      DEC: 3.14
+  - year: 2020
+    total_mg: 44.92
+    count: 1
+    monthly_mg:
+      JAN: 4.8
+      FEB: 4.66
+      MAR: 4.51
+      APR: 4.4
+      MAY: 4.61
+      JUN: 3.77
+      JUL: 2.85
+      AUG: 3.1
+      SEP: 2.92
+      OCT: 3.0
+      NOV: 3.25
+      DEC: 3.05
+  - year: 2019
+    total_mg: 38.3
+    count: 1
+    monthly_mg:
+      JAN: 3.4
+      FEB: 3.3
+      MAR: 3.0
+      APR: 3.2
+      MAY: 3.1
+      JUN: 3.2
+      JUL: 3.4
+      AUG: 3.3
+      SEP: 3.1
+      OCT: 3.2
+      NOV: 3.0
+      DEC: 3.1
+  - year: 2018
+    total_mg: 38.3
+    count: 1
+    monthly_mg:
+      JAN: 3.4
+      FEB: 3.3
+      MAR: 3.0
+      APR: 3.2
+      MAY: 3.1
+      JUN: 3.2
+      JUL: 3.4
+      AUG: 3.3
+      SEP: 3.1
+      OCT: 3.2
+      NOV: 3.0
+      DEC: 3.1
+  - year: 2017
+    total_mg: 37.57
+    count: 1
+    monthly_mg:
+      JAN: 3.14
+      FEB: 2.42
+      MAR: 3.04
+      APR: 2.7
+      MAY: 3.4
+      JUN: 3.2
+      JUL: 3.4
+      AUG: 3.52
+      SEP: 3.23
+      OCT: 3.4
+      NOV: 3.03
+      DEC: 3.09
+  - year: 2016
+    total_mg: 40.16
+    count: 1
+    monthly_mg:
+      JAN: 3.63
+      FEB: 3.27
+      MAR: 3.22
+      APR: 3.19
+      MAY: 3.45
+      JUN: 3.37
+      JUL: 3.64
+      AUG: 3.68
+      SEP: 3.31
+      OCT: 3.4
+      NOV: 2.92
+      DEC: 3.08
+  - year: 2015
+    total_mg: 45.69
+    count: 1
+    monthly_mg:
+      JAN: 3.81
+      FEB: 3.69
+      MAR: 4.42
+      APR: 4.35
+      MAY: 5.15
+      JUN: 4.34
+      JUL: 4.37
+      AUG: 3.3
+      SEP: 2.87
+      OCT: 2.8
+      NOV: 3.34
+      DEC: 3.25
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 30.1
+    count: 1
+    monthly_mg:
+      JAN: 3.34
+      FEB: 2.85
+      MAR: 2.3
+      APR: 2.33
+      MAY: 2.38
+      JUN: 2.79
+      JUL: 2.2
+      AUG: 2.58
+      SEP: 2.44
+      OCT: 2.32
+      NOV: 2.44
+      DEC: 2.13
+  - year: 2022
+    total_mg: 42.62
+    count: 1
+    monthly_mg:
+      JAN: 3.15
+      FEB: 3.18
+      MAR: 3.38
+      APR: 3.61
+      MAY: 4.15
+      JUN: 4.4
+      JUL: 3.63
+      AUG: 3.5
+      SEP: 3.41
+      OCT: 3.14
+      NOV: 3.16
+      DEC: 3.91
+  - year: 2021
+    total_mg: 35.01
+    count: 1
+    monthly_mg:
+      JAN: 2.97
+      FEB: 2.65
+      MAR: 2.65
+      APR: 2.71
+      MAY: 2.67
+      JUN: 2.92
+      JUL: 3.0
+      AUG: 3.0
+      SEP: 2.4
+      OCT: 3.3
+      NOV: 3.6
+      DEC: 3.14
+  - year: 2020
+    total_mg: 47.04
+    count: 1
+    monthly_mg:
+      JAN: 5.1
+      FEB: 4.81
+      MAR: 4.68
+      APR: 4.95
+      MAY: 4.84
+      JUN: 3.87
+      JUL: 3.0
+      AUG: 3.24
+      SEP: 2.82
+      OCT: 3.13
+      NOV: 3.39
+      DEC: 3.21
+  - year: 2018
+    total_mg: 49.26
+    count: 1
+    monthly_mg:
+      JAN: 5.61
+      FEB: 3.9
+      MAR: 5.1
+      APR: 4.41
+      MAY: 4.91
+      JUN: 3.63
+      JUL: 3.95
+      AUG: 3.01
+      SEP: 2.95
+      OCT: 3.11
+      NOV: 4.87
+      DEC: 3.81
+  - year: 2017
+    total_mg: 48.42
+    count: 1
+    monthly_mg:
+      JAN: 5.72
+      FEB: 3.78
+      MAR: 5.22
+      APR: 4.36
+      MAY: 4.89
+      JUN: 3.44
+      JUL: 3.76
+      AUG: 3.04
+      SEP: 2.71
+      OCT: 2.72
+      NOV: 5.35
+      DEC: 3.43
+  - year: 2016
+    total_mg: 33.97
+    count: 1
+    monthly_mg:
+      JAN: 4.8
+      FEB: 2.4
+      MAR: 4.7
+      APR: 3.9
+      MAY: 3.0
+      JUN: 2.2
+      JUL: 1.67
+      AUG: 1.9
+      SEP: 2.4
+      OCT: 1.1
+      NOV: 2.3
+      DEC: 3.6
+  - year: 2015
+    total_mg: 45.11
+    count: 1
+    monthly_mg:
+      JAN: 3.92
+      FEB: 3.55
+      MAR: 1.97
+      APR: 4.79
+      MAY: 3.43
+      JUN: 4.93
+      JUL: 5.31
+      AUG: 3.45
+      SEP: 2.9
+      OCT: 3.02
+      NOV: 3.31
+      DEC: 4.53
+- registration_number: '00231'
+  name: SAINT PARIS VILLAGE PWS
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Active
+  total_capacity_mgd: 1.2
+  gw_wells: 4
+  gw_capacity_mgd: 1.2
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011603
+  latitude: 40.1263888
+  longitude: -83.9655555
+  registration_date: '1990-01-01'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 113.7
+    count: 4
+    monthly_mg:
+      JAN: 10.83
+      FEB: 9.75
+      MAR: 9.09
+      APR: 8.67
+      MAY: 9.48
+      JUN: 9.66
+      JUL: 9.66
+      AUG: 9.21
+      SEP: 9.63
+      OCT: 9.06
+      NOV: 9.15
+      DEC: 9.51
+  - year: 2023
+    total_mg: 101.01
+    count: 4
+    monthly_mg:
+      JAN: 7.8
+      FEB: 7.2
+      MAR: 6.9
+      APR: 7.8
+      MAY: 8.4
+      JUN: 8.7
+      JUL: 8.88
+      AUG: 8.19
+      SEP: 8.49
+      OCT: 9.69
+      NOV: 9.18
+      DEC: 9.78
+  - year: 2022
+    total_mg: 90.03
+    count: 4
+    monthly_mg:
+      JAN: 8.13
+      FEB: 7.83
+      MAR: 6.72
+      APR: 6.42
+      MAY: 7.08
+      JUN: 7.68
+      JUL: 7.32
+      AUG: 7.68
+      SEP: 7.83
+      OCT: 8.1
+      NOV: 7.11
+      DEC: 8.13
+  - year: 2021
+    total_mg: 98.82
+    count: 1
+    monthly_mg:
+      JAN: 7.8
+      FEB: 7.08
+      MAR: 7.71
+      APR: 7.71
+      MAY: 8.28
+      JUN: 8.07
+      JUL: 8.76
+      AUG: 9.51
+      SEP: 8.94
+      OCT: 9.06
+      NOV: 7.44
+      DEC: 8.46
+  - year: 2020
+    total_mg: 99.18
+    count: 1
+    monthly_mg:
+      JAN: 8.25
+      FEB: 7.74
+      MAR: 8.1
+      APR: 7.5
+      MAY: 7.92
+      JUN: 8.37
+      JUL: 8.7
+      AUG: 8.94
+      SEP: 8.16
+      OCT: 9.84
+      NOV: 7.71
+      DEC: 7.95
+  - year: 2019
+    total_mg: 108.56
+    count: 1
+    monthly_mg:
+      JAN: 9.71
+      FEB: 8.79
+      MAR: 9.62
+      APR: 9.98
+      MAY: 12.0
+      JUN: 9.97
+      JUL: 9.4
+      AUG: 8.36
+      SEP: 7.76
+      OCT: 7.96
+      NOV: 7.31
+      DEC: 7.7
+  - year: 2018
+    total_mg: 86.46
+    count: 1
+    monthly_mg:
+      JAN: 7.38
+      FEB: 5.91
+      MAR: 6.6
+      APR: 5.97
+      MAY: 7.32
+      JUN: 6.78
+      JUL: 6.63
+      AUG: 8.07
+      SEP: 7.44
+      OCT: 9.27
+      NOV: 7.02
+      DEC: 8.07
+  - year: 2017
+    total_mg: 77.4
+    count: 1
+    monthly_mg:
+      JAN: 6.23
+      FEB: 5.93
+      MAR: 6.29
+      APR: 6.07
+      MAY: 6.84
+      JUN: 7.17
+      JUL: 7.38
+      AUG: 6.81
+      SEP: 6.44
+      OCT: 6.58
+      NOV: 5.91
+      DEC: 5.75
+  - year: 2016
+    total_mg: 82.28
+    count: 1
+    monthly_mg:
+      JAN: 6.48
+      FEB: 6.15
+      MAR: 6.3
+      APR: 6.29
+      MAY: 6.87
+      JUN: 7.3
+      JUL: 7.53
+      AUG: 8.18
+      SEP: 7.67
+      OCT: 6.96
+      NOV: 6.12
+      DEC: 6.43
+  - year: 2015
+    total_mg: 80.08
+    count: 1
+    monthly_mg:
+      JAN: 6.84
+      FEB: 6.67
+      MAR: 6.67
+      APR: 6.68
+      MAY: 6.67
+      JUN: 6.94
+      JUL: 7.16
+      AUG: 7.18
+      SEP: 6.64
+      OCT: 6.83
+      NOV: 5.75
+      DEC: 6.05
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: null
+    count: 1
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2023
+    total_mg: null
+    count: 1
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2022
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2020
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2016
+    total_mg: 0.06
+    count: 1
+    monthly_mg:
+      JAN: 0.01
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.01
+      MAY: 0.0
+      JUN: 0.01
+      JUL: 0.01
+      AUG: 0.0
+      SEP: 0.01
+      OCT: 0.0
+      NOV: 0.01
+      DEC: 0.0
+  - year: 2015
+    total_mg: 0.04
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.01
+      MAY: 0.0
+      JUN: 0.01
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.01
+      NOV: 0.0
+      DEC: 0.01
+- registration_number: '00354'
+  name: INDIAN SPRINGS GOLF CLUB
+  county: CHAMPAIGN
+  primary_use_type: Golf Course
+  status: Inactive
+  total_capacity_mgd: 0.72
+  gw_wells: 0
+  gw_capacity_mgd: null
+  sw_intakes: 1
+  sw_capacity_mgd: 0.72
+  huc12: '050600012003'
+  latitude: 40.1027777
+  longitude: -83.5333333
+  registration_date: '1990-01-01'
+  inactive_date: '2018-12-18'
+  last_annual_report_year: 2019
+  ground_water: []
+  surface_water:
+  - year: 2019
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2018
+    total_mg: 5.6
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.2
+      JUN: 2.0
+      JUL: 1.1
+      AUG: 1.2
+      SEP: 1.1
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2017
+    total_mg: 9.34
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.38
+      JUN: 2.23
+      JUL: 1.51
+      AUG: 1.84
+      SEP: 2.49
+      OCT: 0.89
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2016
+    total_mg: 27.83
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.52
+      MAY: 2.0
+      JUN: 6.41
+      JUL: 6.32
+      AUG: 6.5
+      SEP: 4.98
+      OCT: 1.1
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2015
+    total_mg: 26.22
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 2.05
+      MAY: 2.95
+      JUN: 6.03
+      JUL: 6.12
+      AUG: 7.06
+      SEP: 2.01
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  returns: []
+- registration_number: 00485
+  name: MECHANICSBURG VILLAGE PWS
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Active
+  total_capacity_mgd: 0.51
+  gw_wells: 3
+  gw_capacity_mgd: 0.51
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: '050600012003'
+  latitude: 40.0763888
+  longitude: -83.5680555
+  registration_date: '1990-01-01'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 64.79
+    count: 3
+    monthly_mg:
+      JAN: 5.4
+      FEB: 4.2
+      MAR: 5.58
+      APR: 5.04
+      MAY: 3.84
+      JUN: 5.61
+      JUL: 6.48
+      AUG: 6.84
+      SEP: 5.58
+      OCT: 5.62
+      NOV: 5.58
+      DEC: 5.02
+  - year: 2023
+    total_mg: 65.76
+    count: 3
+    monthly_mg:
+      JAN: 7.5
+      FEB: 5.25
+      MAR: 6.93
+      APR: 4.44
+      MAY: 4.74
+      JUN: 6.63
+      JUL: 4.68
+      AUG: 4.86
+      SEP: 5.04
+      OCT: 5.13
+      NOV: 4.86
+      DEC: 5.7
+  - year: 2022
+    total_mg: 66.93
+    count: 3
+    monthly_mg:
+      JAN: 7.17
+      FEB: 2.49
+      MAR: 5.7
+      APR: 18.42
+      MAY: 7.08
+      JUN: 6.66
+      JUL: 5.64
+      AUG: 4.29
+      SEP: 2.88
+      OCT: 2.16
+      NOV: 2.19
+      DEC: 2.25
+  - year: 2021
+    total_mg: 53.37
+    count: 1
+    monthly_mg:
+      JAN: 4.18
+      FEB: 4.8
+      MAR: 2.85
+      APR: 5.13
+      MAY: 4.71
+      JUN: 4.62
+      JUL: 5.19
+      AUG: 5.45
+      SEP: 5.25
+      OCT: 4.47
+      NOV: 3.39
+      DEC: 3.33
+  - year: 2020
+    total_mg: 66.16
+    count: 1
+    monthly_mg:
+      JAN: 9.28
+      FEB: 5.1
+      MAR: 5.9
+      APR: 4.6
+      MAY: 5.5
+      JUN: 4.7
+      JUL: 3.88
+      AUG: 5.3
+      SEP: 5.7
+      OCT: 5.6
+      NOV: 5.2
+      DEC: 5.4
+  - year: 2019
+    total_mg: 58.9
+    count: 1
+    monthly_mg:
+      JAN: 5.5
+      FEB: 5.0
+      MAR: 5.4
+      APR: 4.7
+      MAY: 4.4
+      JUN: 4.6
+      JUL: 5.3
+      AUG: 5.1
+      SEP: 4.9
+      OCT: 4.7
+      NOV: 4.5
+      DEC: 4.8
+  - year: 2018
+    total_mg: 61.23
+    count: 1
+    monthly_mg:
+      JAN: 7.5
+      FEB: 4.41
+      MAR: 4.02
+      APR: 4.98
+      MAY: 4.29
+      JUN: 4.11
+      JUL: 5.4
+      AUG: 5.43
+      SEP: 5.67
+      OCT: 4.95
+      NOV: 4.92
+      DEC: 5.55
+  - year: 2017
+    total_mg: 59.42
+    count: 1
+    monthly_mg:
+      JAN: 7.52
+      FEB: 5.0
+      MAR: 4.52
+      APR: 4.42
+      MAY: 4.38
+      JUN: 4.2
+      JUL: 4.54
+      AUG: 5.92
+      SEP: 5.63
+      OCT: 3.83
+      NOV: 4.13
+      DEC: 5.33
+  - year: 2016
+    total_mg: 58.64
+    count: 1
+    monthly_mg:
+      JAN: 5.01
+      FEB: 4.85
+      MAR: 4.39
+      APR: 4.62
+      MAY: 5.79
+      JUN: 6.02
+      JUL: 6.02
+      AUG: 5.56
+      SEP: 4.53
+      OCT: 3.84
+      NOV: 3.85
+      DEC: 4.16
+  - year: 2015
+    total_mg: 67.64
+    count: 1
+    monthly_mg:
+      JAN: 5.39
+      FEB: 5.13
+      MAR: 5.74
+      APR: 5.73
+      MAY: 6.25
+      JUN: 5.68
+      JUL: 5.1
+      AUG: 6.25
+      SEP: 6.23
+      OCT: 5.92
+      NOV: 4.92
+      DEC: 5.3
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: null
+    count: 1
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2020
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+- registration_number: 00649
+  name: HARVEST SQUARE MHP
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Active
+  total_capacity_mgd: 0.42
+  gw_wells: 2
+  gw_capacity_mgd: 0.42
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011801
+  latitude: 40.0277777
+  longitude: -83.7833333
+  registration_date: '1990-08-06'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 3.33
+    count: 2
+    monthly_mg:
+      JAN: 0.3
+      FEB: 0.23
+      MAR: 0.28
+      APR: 0.32
+      MAY: 0.32
+      JUN: 0.25
+      JUL: 0.22
+      AUG: 0.23
+      SEP: 0.26
+      OCT: 0.28
+      NOV: 0.26
+      DEC: 0.38
+  - year: 2023
+    total_mg: 2.97
+    count: 2
+    monthly_mg:
+      JAN: 0.28
+      FEB: 0.21
+      MAR: 0.3
+      APR: 0.32
+      MAY: 0.28
+      JUN: 0.21
+      JUL: 0.22
+      AUG: 0.24
+      SEP: 0.22
+      OCT: 0.22
+      NOV: 0.23
+      DEC: 0.24
+  - year: 2022
+    total_mg: 3.85
+    count: 2
+    monthly_mg:
+      JAN: 0.33
+      FEB: 0.34
+      MAR: 0.56
+      APR: 0.44
+      MAY: 0.4
+      JUN: 0.3
+      JUL: 0.3
+      AUG: 0.21
+      SEP: 0.2
+      OCT: 0.22
+      NOV: 0.24
+      DEC: 0.31
+  - year: 2021
+    total_mg: 3.24
+    count: 1
+    monthly_mg:
+      JAN: 0.3
+      FEB: 0.31
+      MAR: 0.39
+      APR: 0.3
+      MAY: 0.27
+      JUN: 0.25
+      JUL: 0.24
+      AUG: 0.22
+      SEP: 0.23
+      OCT: 0.22
+      NOV: 0.23
+      DEC: 0.28
+  - year: 2020
+    total_mg: 3.73
+    count: 1
+    monthly_mg:
+      JAN: 0.3
+      FEB: 0.27
+      MAR: 0.36
+      APR: 0.36
+      MAY: 0.48
+      JUN: 0.37
+      JUL: 0.28
+      AUG: 0.25
+      SEP: 0.25
+      OCT: 0.26
+      NOV: 0.26
+      DEC: 0.29
+  - year: 2019
+    total_mg: 7.32
+    count: 1
+    monthly_mg:
+      JAN: 0.8
+      FEB: 0.98
+      MAR: 0.94
+      APR: 0.8
+      MAY: 0.94
+      JUN: 0.78
+      JUL: 0.54
+      AUG: 0.42
+      SEP: 0.28
+      OCT: 0.26
+      NOV: 0.3
+      DEC: 0.28
+  - year: 2018
+    total_mg: 6.28
+    count: 1
+    monthly_mg:
+      JAN: 0.47
+      FEB: 0.5
+      MAR: 0.76
+      APR: 0.86
+      MAY: 0.56
+      JUN: 0.52
+      JUL: 0.48
+      AUG: 0.35
+      SEP: 0.34
+      OCT: 0.36
+      NOV: 0.5
+      DEC: 0.58
+  - year: 2017
+    total_mg: 4.48
+    count: 1
+    monthly_mg:
+      JAN: 0.36
+      FEB: 0.32
+      MAR: 0.36
+      APR: 0.32
+      MAY: 0.48
+      JUN: 0.34
+      JUL: 0.4
+      AUG: 0.34
+      SEP: 0.3
+      OCT: 0.34
+      NOV: 0.48
+      DEC: 0.44
+  - year: 2016
+    total_mg: 4.85
+    count: 1
+    monthly_mg:
+      JAN: 0.46
+      FEB: 0.6
+      MAR: 0.56
+      APR: 0.48
+      MAY: 0.4
+      JUN: 0.33
+      JUL: 0.28
+      AUG: 0.34
+      SEP: 0.42
+      OCT: 0.28
+      NOV: 0.33
+      DEC: 0.37
+  - year: 2015
+    total_mg: 8.04
+    count: 1
+    monthly_mg:
+      JAN: 0.22
+      FEB: 0.12
+      MAR: 0.3
+      APR: 0.56
+      MAY: 0.74
+      JUN: 1.06
+      JUL: 1.08
+      AUG: 1.06
+      SEP: 1.04
+      OCT: 0.72
+      NOV: 0.66
+      DEC: 0.48
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 3.07
+    count: 1
+    monthly_mg:
+      JAN: 0.28
+      FEB: 0.21
+      MAR: 0.26
+      APR: 0.3
+      MAY: 0.29
+      JUN: 0.23
+      JUL: 0.2
+      AUG: 0.22
+      SEP: 0.23
+      OCT: 0.26
+      NOV: 0.24
+      DEC: 0.35
+  - year: 2023
+    total_mg: 2.67
+    count: 1
+    monthly_mg:
+      JAN: 0.25
+      FEB: 0.19
+      MAR: 0.27
+      APR: 0.3
+      MAY: 0.26
+      JUN: 0.2
+      JUL: 0.2
+      AUG: 0.2
+      SEP: 0.2
+      OCT: 0.2
+      NOV: 0.2
+      DEC: 0.2
+  - year: 2022
+    total_mg: 3.5
+    count: 1
+    monthly_mg:
+      JAN: 0.3
+      FEB: 0.31
+      MAR: 0.52
+      APR: 0.4
+      MAY: 0.35
+      JUN: 0.27
+      JUL: 0.27
+      AUG: 0.19
+      SEP: 0.18
+      OCT: 0.2
+      NOV: 0.22
+      DEC: 0.29
+  - year: 2021
+    total_mg: 2.89
+    count: 1
+    monthly_mg:
+      JAN: 0.26
+      FEB: 0.28
+      MAR: 0.35
+      APR: 0.27
+      MAY: 0.24
+      JUN: 0.22
+      JUL: 0.22
+      AUG: 0.2
+      SEP: 0.2
+      OCT: 0.2
+      NOV: 0.2
+      DEC: 0.25
+  - year: 2020
+    total_mg: 3.33
+    count: 1
+    monthly_mg:
+      JAN: 0.27
+      FEB: 0.24
+      MAR: 0.32
+      APR: 0.32
+      MAY: 0.43
+      JUN: 0.33
+      JUL: 0.25
+      AUG: 0.22
+      SEP: 0.23
+      OCT: 0.23
+      NOV: 0.23
+      DEC: 0.26
+  - year: 2019
+    total_mg: 6.66
+    count: 1
+    monthly_mg:
+      JAN: 0.73
+      FEB: 0.89
+      MAR: 0.85
+      APR: 0.73
+      MAY: 0.85
+      JUN: 0.71
+      JUL: 0.49
+      AUG: 0.38
+      SEP: 0.25
+      OCT: 0.25
+      NOV: 0.27
+      DEC: 0.26
+  - year: 2018
+    total_mg: 5.71
+    count: 1
+    monthly_mg:
+      JAN: 0.43
+      FEB: 0.45
+      MAR: 0.69
+      APR: 0.78
+      MAY: 0.51
+      JUN: 0.48
+      JUL: 0.44
+      AUG: 0.32
+      SEP: 0.31
+      OCT: 0.32
+      NOV: 0.45
+      DEC: 0.53
+  - year: 2017
+    total_mg: 4.2
+    count: 1
+    monthly_mg:
+      JAN: 0.34
+      FEB: 0.3
+      MAR: 0.34
+      APR: 0.3
+      MAY: 0.44
+      JUN: 0.32
+      JUL: 0.38
+      AUG: 0.32
+      SEP: 0.29
+      OCT: 0.32
+      NOV: 0.45
+      DEC: 0.4
+  - year: 2016
+    total_mg: 4.48
+    count: 1
+    monthly_mg:
+      JAN: 0.43
+      FEB: 0.55
+      MAR: 0.52
+      APR: 0.45
+      MAY: 0.37
+      JUN: 0.3
+      JUL: 0.26
+      AUG: 0.31
+      SEP: 0.39
+      OCT: 0.26
+      NOV: 0.3
+      DEC: 0.34
+  - year: 2015
+    total_mg: 7.41
+    count: 1
+    monthly_mg:
+      JAN: 0.21
+      FEB: 0.12
+      MAR: 0.28
+      APR: 0.52
+      MAY: 0.68
+      JUN: 0.97
+      JUL: 0.99
+      AUG: 0.98
+      SEP: 0.95
+      OCT: 0.67
+      NOV: 0.6
+      DEC: 0.44
+- registration_number: 00837
+  name: URBANA CITY PWS OTP
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Active
+  total_capacity_mgd: 5.76
+  gw_wells: 6
+  gw_capacity_mgd: 5.76
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011607
+  latitude: 40.085214
+  longitude: -83.798608
+  registration_date: '1990-01-01'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 644.99
+    count: 6
+    monthly_mg:
+      JAN: 58.74
+      FEB: 54.2
+      MAR: 54.63
+      APR: 49.97
+      MAY: 54.52
+      JUN: 53.98
+      JUL: 55.63
+      AUG: 54.3
+      SEP: 52.87
+      OCT: 52.77
+      NOV: 50.7
+      DEC: 52.68
+  - year: 2023
+    total_mg: 623.25
+    count: 6
+    monthly_mg:
+      JAN: 51.26
+      FEB: 48.32
+      MAR: 52.02
+      APR: 49.11
+      MAY: 52.83
+      JUN: 52.79
+      JUL: 50.93
+      AUG: 50.41
+      SEP: 52.76
+      OCT: 54.84
+      NOV: 52.8
+      DEC: 55.18
+  - year: 2022
+    total_mg: 581.2
+    count: 6
+    monthly_mg:
+      JAN: 49.48
+      FEB: 46.79
+      MAR: 51.38
+      APR: 46.46
+      MAY: 49.77
+      JUN: 49.08
+      JUL: 50.57
+      AUG: 54.24
+      SEP: 45.34
+      OCT: 43.79
+      NOV: 44.32
+      DEC: 49.98
+  - year: 2021
+    total_mg: 579.1
+    count: 1
+    monthly_mg:
+      JAN: 49.0
+      FEB: 49.0
+      MAR: 52.7
+      APR: 48.8
+      MAY: 51.6
+      JUN: 50.6
+      JUL: 53.0
+      AUG: 46.8
+      SEP: 45.3
+      OCT: 42.1
+      NOV: 42.5
+      DEC: 47.7
+  - year: 2020
+    total_mg: 565.82
+    count: 1
+    monthly_mg:
+      JAN: 53.77
+      FEB: 46.13
+      MAR: 48.6
+      APR: 46.18
+      MAY: 46.26
+      JUN: 45.64
+      JUL: 52.94
+      AUG: 49.31
+      SEP: 42.8
+      OCT: 42.9
+      NOV: 42.48
+      DEC: 48.81
+  - year: 2019
+    total_mg: 660.33
+    count: 1
+    monthly_mg:
+      JAN: 59.66
+      FEB: 56.32
+      MAR: 59.65
+      APR: 57.17
+      MAY: 56.1
+      JUN: 54.03
+      JUL: 58.61
+      AUG: 54.04
+      SEP: 50.53
+      OCT: 52.81
+      NOV: 48.82
+      DEC: 52.59
+  - year: 2018
+    total_mg: 701.51
+    count: 1
+    monthly_mg:
+      JAN: 66.38
+      FEB: 57.31
+      MAR: 63.65
+      APR: 62.61
+      MAY: 62.82
+      JUN: 53.8
+      JUL: 59.0
+      AUG: 59.1
+      SEP: 53.51
+      OCT: 53.91
+      NOV: 55.27
+      DEC: 54.15
+  - year: 2017
+    total_mg: 694.07
+    count: 1
+    monthly_mg:
+      JAN: 62.18
+      FEB: 58.09
+      MAR: 61.87
+      APR: 57.23
+      MAY: 59.39
+      JUN: 56.14
+      JUL: 56.86
+      AUG: 57.56
+      SEP: 52.16
+      OCT: 54.76
+      NOV: 58.32
+      DEC: 59.51
+  - year: 2016
+    total_mg: 669.91
+    count: 1
+    monthly_mg:
+      JAN: 58.31
+      FEB: 61.91
+      MAR: 63.42
+      APR: 60.51
+      MAY: 57.95
+      JUN: 54.67
+      JUL: 55.02
+      AUG: 53.35
+      SEP: 49.92
+      OCT: 50.31
+      NOV: 48.62
+      DEC: 55.92
+  - year: 2015
+    total_mg: 684.63
+    count: 1
+    monthly_mg:
+      JAN: 64.34
+      FEB: 59.85
+      MAR: 64.99
+      APR: 58.27
+      MAY: 57.02
+      JUN: 54.66
+      JUL: 56.87
+      AUG: 57.5
+      SEP: 53.61
+      OCT: 54.47
+      NOV: 50.62
+      DEC: 52.43
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 6.47
+    count: 1
+    monthly_mg:
+      JAN: 0.57
+      FEB: 0.57
+      MAR: 0.5
+      APR: 0.51
+      MAY: 0.63
+      JUN: 0.51
+      JUL: 0.51
+      AUG: 0.51
+      SEP: 0.51
+      OCT: 0.57
+      NOV: 0.51
+      DEC: 0.57
+  - year: 2023
+    total_mg: 6.36
+    count: 1
+    monthly_mg:
+      JAN: 0.57
+      FEB: 0.51
+      MAR: 0.58
+      APR: 0.51
+      MAY: 0.58
+      JUN: 0.55
+      JUL: 0.38
+      AUG: 0.63
+      SEP: 0.51
+      OCT: 0.58
+      NOV: 0.51
+      DEC: 0.45
+  - year: 2022
+    total_mg: 6.7
+    count: 1
+    monthly_mg:
+      JAN: 0.51
+      FEB: 0.52
+      MAR: 0.64
+      APR: 0.52
+      MAY: 0.63
+      JUN: 0.51
+      JUL: 0.59
+      AUG: 0.59
+      SEP: 0.58
+      OCT: 0.51
+      NOV: 0.51
+      DEC: 0.59
+  - year: 2021
+    total_mg: 6.78
+    count: 1
+    monthly_mg:
+      JAN: 0.73
+      FEB: 0.51
+      MAR: 0.57
+      APR: 0.57
+      MAY: 0.53
+      JUN: 0.58
+      JUL: 0.52
+      AUG: 0.51
+      SEP: 0.61
+      OCT: 0.53
+      NOV: 0.61
+      DEC: 0.51
+  - year: 2020
+    total_mg: 8.81
+    count: 1
+    monthly_mg:
+      JAN: 0.74
+      FEB: 0.67
+      MAR: 0.66
+      APR: 0.75
+      MAY: 0.67
+      JUN: 0.81
+      JUL: 0.83
+      AUG: 0.68
+      SEP: 0.77
+      OCT: 0.78
+      NOV: 0.68
+      DEC: 0.77
+  - year: 2019
+    total_mg: 8.6
+    count: 1
+    monthly_mg:
+      JAN: 0.74
+      FEB: 0.65
+      MAR: 0.65
+      APR: 0.75
+      MAY: 0.74
+      JUN: 0.66
+      JUL: 0.74
+      AUG: 0.75
+      SEP: 0.69
+      OCT: 0.82
+      NOV: 0.66
+      DEC: 0.75
+  - year: 2018
+    total_mg: 10.85
+    count: 1
+    monthly_mg:
+      JAN: 0.67
+      FEB: 0.64
+      MAR: 0.81
+      APR: 2.0
+      MAY: 1.11
+      JUN: 0.84
+      JUL: 0.9
+      AUG: 0.92
+      SEP: 0.84
+      OCT: 0.83
+      NOV: 0.72
+      DEC: 0.57
+  - year: 2017
+    total_mg: 6.25
+    count: 1
+    monthly_mg:
+      JAN: 0.67
+      FEB: 0.38
+      MAR: 0.56
+      APR: 0.5
+      MAY: 0.69
+      JUN: 0.38
+      JUL: 0.25
+      AUG: 0.48
+      SEP: 0.51
+      OCT: 0.54
+      NOV: 0.68
+      DEC: 0.61
+  - year: 2016
+    total_mg: 6.05
+    count: 1
+    monthly_mg:
+      JAN: 0.51
+      FEB: 0.45
+      MAR: 0.57
+      APR: 0.57
+      MAY: 0.51
+      JUN: 0.64
+      JUL: 0.72
+      AUG: 0.41
+      SEP: 0.38
+      OCT: 0.38
+      NOV: 0.35
+      DEC: 0.56
+  - year: 2015
+    total_mg: 5.78
+    count: 1
+    monthly_mg:
+      JAN: 0.57
+      FEB: 0.38
+      MAR: 0.45
+      APR: 0.56
+      MAY: 0.36
+      JUN: 0.46
+      JUL: 0.46
+      AUG: 0.45
+      SEP: 0.56
+      OCT: 0.51
+      NOV: 0.45
+      DEC: 0.57
+- registration_number: 00896
+  name: URBANA COUNTRY CLUB
+  county: CHAMPAIGN
+  primary_use_type: Golf Course
+  status: Active
+  total_capacity_mgd: 1.22
+  gw_wells: 2
+  gw_capacity_mgd: 1.22
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011702
+  latitude: 40.1083333
+  longitude: -83.6583333
+  registration_date: '1990-01-01'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 22.3
+    count: 2
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.0
+      JUN: 2.6
+      JUL: 5.3
+      AUG: 5.6
+      SEP: 4.7
+      OCT: 3.1
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 10.4
+    count: 2
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.5
+      JUN: 1.7
+      JUL: 2.3
+      AUG: 3.2
+      SEP: 1.8
+      OCT: 0.9
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: 15.1
+    count: 2
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.1
+      JUN: 2.9
+      JUL: 3.3
+      AUG: 4.0
+      SEP: 2.7
+      OCT: 1.1
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2021
+    total_mg: 14.9
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.2
+      JUN: 2.1
+      JUL: 3.3
+      AUG: 5.0
+      SEP: 3.3
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2020
+    total_mg: 13.7
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 2.4
+      JUL: 2.8
+      AUG: 4.0
+      SEP: 3.3
+      OCT: 1.2
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2019
+    total_mg: 25.8
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.6
+      JUN: 5.6
+      JUL: 6.0
+      AUG: 4.0
+      SEP: 6.6
+      OCT: 2.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2018
+    total_mg: 14.74
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.2
+      JUN: 2.7
+      JUL: 3.5
+      AUG: 4.7
+      SEP: 2.04
+      OCT: 0.6
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2017
+    total_mg: 19.2
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.6
+      JUN: 3.0
+      JUL: 5.1
+      AUG: 6.0
+      SEP: 3.6
+      OCT: 0.9
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2016
+    total_mg: 18.4
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.5
+      JUN: 2.3
+      JUL: 4.1
+      AUG: 5.3
+      SEP: 4.7
+      OCT: 0.5
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2015
+    total_mg: 14.6
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.8
+      JUN: 0.0
+      JUL: 2.3
+      AUG: 5.1
+      SEP: 3.6
+      OCT: 1.8
+      NOV: 0.0
+      DEC: 0.0
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: null
+    count: 1
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2021
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2020
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2015
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+- registration_number: 00953
+  name: GRAHAM HIGH SCHOOL
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Active
+  total_capacity_mgd: 0.32
+  gw_wells: 2
+  gw_capacity_mgd: 0.32
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011603
+  latitude: 40.1222222
+  longitude: -83.9083333
+  registration_date: '1990-01-01'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 2.26
+    count: 2
+    monthly_mg:
+      JAN: 0.48
+      FEB: 0.28
+      MAR: 0.14
+      APR: 0.16
+      MAY: 0.16
+      JUN: 0.16
+      JUL: 0.14
+      AUG: 0.14
+      SEP: 0.16
+      OCT: 0.16
+      NOV: 0.14
+      DEC: 0.14
+  - year: 2023
+    total_mg: 2.2
+    count: 2
+    monthly_mg:
+      JAN: 0.16
+      FEB: 0.14
+      MAR: 0.16
+      APR: 0.16
+      MAY: 0.16
+      JUN: 0.18
+      JUL: 0.18
+      AUG: 0.18
+      SEP: 0.22
+      OCT: 0.22
+      NOV: 0.2
+      DEC: 0.24
+  - year: 2022
+    total_mg: 1.75
+    count: 2
+    monthly_mg:
+      JAN: 0.21
+      FEB: 0.14
+      MAR: 0.15
+      APR: 0.11
+      MAY: 0.14
+      JUN: 0.15
+      JUL: 0.1
+      AUG: 0.16
+      SEP: 0.17
+      OCT: 0.16
+      NOV: 0.14
+      DEC: 0.12
+  - year: 2021
+    total_mg: 1.7
+    count: 1
+    monthly_mg:
+      JAN: 0.14
+      FEB: 0.12
+      MAR: 0.11
+      APR: 0.09
+      MAY: 0.12
+      JUN: 0.26
+      JUL: 0.15
+      AUG: 0.08
+      SEP: 0.14
+      OCT: 0.13
+      NOV: 0.16
+      DEC: 0.2
+  - year: 2020
+    total_mg: 0.85
+    count: 1
+    monthly_mg:
+      JAN: 0.07
+      FEB: 0.08
+      MAR: 0.11
+      APR: 0.04
+      MAY: 0.07
+      JUN: 0.03
+      JUL: 0.04
+      AUG: 0.07
+      SEP: 0.08
+      OCT: 0.09
+      NOV: 0.08
+      DEC: 0.09
+  - year: 2019
+    total_mg: 1.23
+    count: 1
+    monthly_mg:
+      JAN: 0.11
+      FEB: 0.11
+      MAR: 0.1
+      APR: 0.17
+      MAY: 0.1
+      JUN: 0.13
+      JUL: 0.11
+      AUG: 0.07
+      SEP: 0.1
+      OCT: 0.09
+      NOV: 0.07
+      DEC: 0.07
+  - year: 2018
+    total_mg: 1.11
+    count: 1
+    monthly_mg:
+      JAN: 0.06
+      FEB: 0.08
+      MAR: 0.08
+      APR: 0.07
+      MAY: 0.08
+      JUN: 0.11
+      JUL: 0.11
+      AUG: 0.09
+      SEP: 0.1
+      OCT: 0.11
+      NOV: 0.1
+      DEC: 0.12
+  - year: 2017
+    total_mg: 0.3
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.06
+      SEP: 0.01
+      OCT: 0.09
+      NOV: 0.06
+      DEC: 0.08
+  - year: 2016
+    total_mg: 3.31
+    count: 1
+    monthly_mg:
+      JAN: 0.25
+      FEB: 0.18
+      MAR: 0.16
+      APR: 0.37
+      MAY: 0.35
+      JUN: 0.07
+      JUL: 0.21
+      AUG: 0.4
+      SEP: 0.3
+      OCT: 0.26
+      NOV: 0.38
+      DEC: 0.38
+  - year: 2015
+    total_mg: 4.3
+    count: 1
+    monthly_mg:
+      JAN: 0.28
+      FEB: 0.78
+      MAR: 0.23
+      APR: 0.24
+      MAY: 0.32
+      JUN: 0.42
+      JUL: 0.55
+      AUG: 0.39
+      SEP: 0.26
+      OCT: 0.27
+      NOV: 0.28
+      DEC: 0.28
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: null
+    count: 1
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2023
+    total_mg: null
+    count: 1
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2022
+    total_mg: null
+    count: 1
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+- registration_number: 00964
+  name: CHRISTIANSBURG VILLAGE PWS
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Active
+  total_capacity_mgd: 0.28
+  gw_wells: 2
+  gw_capacity_mgd: 0.28
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800012002
+  latitude: 40.0569444
+  longitude: -84.0222222
+  registration_date: '1990-01-01'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2023
+    total_mg: 21.22
+    count: 2
+    monthly_mg:
+      JAN: 1.36
+      FEB: 1.56
+      MAR: 0.82
+      APR: 1.58
+      MAY: 2.04
+      JUN: 2.02
+      JUL: 2.02
+      AUG: 3.38
+      SEP: 1.86
+      OCT: 1.46
+      NOV: 1.62
+      DEC: 1.5
+  - year: 2022
+    total_mg: 19.04
+    count: 2
+    monthly_mg:
+      JAN: 1.1
+      FEB: 2.5
+      MAR: 1.4
+      APR: 1.12
+      MAY: 1.74
+      JUN: 1.88
+      JUL: 1.48
+      AUG: 1.52
+      SEP: 1.7
+      OCT: 1.48
+      NOV: 1.72
+      DEC: 1.4
+  - year: 2021
+    total_mg: 16.02
+    count: 1
+    monthly_mg:
+      JAN: 1.6
+      FEB: 1.4
+      MAR: 1.04
+      APR: 1.06
+      MAY: 1.38
+      JUN: 1.52
+      JUL: 1.28
+      AUG: 1.66
+      SEP: 1.54
+      OCT: 1.26
+      NOV: 1.14
+      DEC: 1.14
+  - year: 2020
+    total_mg: 17.76
+    count: 1
+    monthly_mg:
+      JAN: 1.08
+      FEB: 1.16
+      MAR: 1.11
+      APR: 1.13
+      MAY: 1.47
+      JUN: 1.94
+      JUL: 2.05
+      AUG: 1.6
+      SEP: 1.54
+      OCT: 1.79
+      NOV: 1.32
+      DEC: 1.57
+  - year: 2019
+    total_mg: 17.63
+    count: 1
+    monthly_mg:
+      JAN: 1.21
+      FEB: 1.35
+      MAR: 1.25
+      APR: 1.15
+      MAY: 1.4
+      JUN: 1.36
+      JUL: 1.9
+      AUG: 1.81
+      SEP: 2.41
+      OCT: 1.52
+      NOV: 1.17
+      DEC: 1.1
+  - year: 2018
+    total_mg: 17.44
+    count: 1
+    monthly_mg:
+      JAN: 1.29
+      FEB: 1.32
+      MAR: 1.26
+      APR: 1.28
+      MAY: 1.65
+      JUN: 1.82
+      JUL: 1.62
+      AUG: 2.27
+      SEP: 1.5
+      OCT: 1.3
+      NOV: 1.03
+      DEC: 1.1
+  - year: 2017
+    total_mg: 18.11
+    count: 1
+    monthly_mg:
+      JAN: 1.22
+      FEB: 1.05
+      MAR: 1.22
+      APR: 1.55
+      MAY: 1.63
+      JUN: 2.73
+      JUL: 1.81
+      AUG: 1.92
+      SEP: 1.04
+      OCT: 1.54
+      NOV: 1.14
+      DEC: 1.26
+  - year: 2016
+    total_mg: 21.94
+    count: 1
+    monthly_mg:
+      JAN: 1.57
+      FEB: 1.47
+      MAR: 1.88
+      APR: 1.71
+      MAY: 1.75
+      JUN: 2.09
+      JUL: 2.14
+      AUG: 2.5
+      SEP: 2.03
+      OCT: 1.87
+      NOV: 1.6
+      DEC: 1.33
+  - year: 2015
+    total_mg: 21.62
+    count: 1
+    monthly_mg:
+      JAN: 1.57
+      FEB: 1.47
+      MAR: 1.88
+      APR: 1.71
+      MAY: 1.8
+      JUN: 1.95
+      JUL: 1.96
+      AUG: 1.17
+      SEP: 2.43
+      OCT: 2.18
+      NOV: 1.81
+      DEC: 1.69
+  surface_water: []
+  returns:
+  - year: 2023
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+- registration_number: '01031'
+  name: DETWILER FARMS-WEST LIBERTY
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Inactive
+  total_capacity_mgd: 2.4
+  gw_wells: 2
+  gw_capacity_mgd: 2.4
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011504
+  latitude: 40.2333333
+  longitude: -83.7511111
+  registration_date: '1990-01-01'
+  inactive_date: '2008-01-01'
+  last_annual_report_year: 2007
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: '01163'
+  name: RUNYAN FARM
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 4.32
+  gw_wells: 0
+  gw_capacity_mgd: null
+  sw_intakes: 2
+  sw_capacity_mgd: 4.32
+  huc12: 050800011801
+  latitude: 40.0333333
+  longitude: -83.7888888
+  registration_date: '1991-01-07'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water: []
+  surface_water:
+  - year: 2024
+    total_mg: 0.0
+    count: 2
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 0.0
+    count: 2
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: 0.0
+    count: 2
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2021
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2020
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2019
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2018
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2017
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2016
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2015
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  returns: []
+- registration_number: 01181
+  name: GAINER SEED FARM-MOORE'S RUN
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Inactive
+  total_capacity_mgd: 0.36
+  gw_wells: 0
+  gw_capacity_mgd: null
+  sw_intakes: 1
+  sw_capacity_mgd: 0.36
+  huc12: 050800011801
+  latitude: 40.0291666
+  longitude: -83.7916666
+  registration_date: '1991-01-01'
+  inactive_date: '2005-05-02'
+  last_annual_report_year: 2003
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: '01223'
+  name: MICHAEL FARMS-EAST
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 11.78
+  gw_wells: 18
+  gw_capacity_mgd: 11.78
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011705
+  latitude: 40.0375
+  longitude: -83.725
+  registration_date: '1991-01-14'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 940.01
+    count: 18
+    monthly_mg:
+      JAN: 0.6
+      FEB: 1.0
+      MAR: 1.2
+      APR: 11.1
+      MAY: 51.45
+      JUN: 242.45
+      JUL: 212.39
+      AUG: 222.1
+      SEP: 131.47
+      OCT: 55.05
+      NOV: 10.6
+      DEC: 0.6
+  - year: 2023
+    total_mg: 411.4
+    count: 18
+    monthly_mg:
+      JAN: 0.6
+      FEB: 1.0
+      MAR: 1.2
+      APR: 2.1
+      MAY: 36.75
+      JUN: 123.86
+      JUL: 63.42
+      AUG: 80.31
+      SEP: 74.92
+      OCT: 25.04
+      NOV: 1.6
+      DEC: 0.6
+  - year: 2022
+    total_mg: 425.5
+    count: 18
+    monthly_mg:
+      JAN: 0.6
+      FEB: 1.0
+      MAR: 1.2
+      APR: 2.1
+      MAY: 23.25
+      JUN: 143.71
+      JUL: 68.26
+      AUG: 94.41
+      SEP: 66.38
+      OCT: 22.39
+      NOV: 1.6
+      DEC: 0.6
+  - year: 2021
+    total_mg: 446.44
+    count: 1
+    monthly_mg:
+      JAN: 0.6
+      FEB: 1.0
+      MAR: 1.2
+      APR: 2.4
+      MAY: 23.06
+      JUN: 100.67
+      JUL: 104.79
+      AUG: 89.7
+      SEP: 88.94
+      OCT: 31.78
+      NOV: 1.7
+      DEC: 0.6
+  - year: 2020
+    total_mg: 544.88
+    count: 1
+    monthly_mg:
+      JAN: 0.7
+      FEB: 1.1
+      MAR: 1.2
+      APR: 2.1
+      MAY: 10.89
+      JUN: 65.98
+      JUL: 174.87
+      AUG: 138.91
+      SEP: 104.28
+      OCT: 42.45
+      NOV: 1.8
+      DEC: 0.6
+  - year: 2019
+    total_mg: 48.6
+    count: 1
+    monthly_mg:
+      JAN: 0.65
+      FEB: 0.65
+      MAR: 0.3
+      APR: 2.2
+      MAY: 4.2
+      JUN: 7.3
+      JUL: 10.4
+      AUG: 10.2
+      SEP: 7.0
+      OCT: 4.6
+      NOV: 0.5
+      DEC: 0.6
+  - year: 2018
+    total_mg: 286.58
+    count: 1
+    monthly_mg:
+      JAN: 0.9
+      FEB: 1.1
+      MAR: 1.2
+      APR: 10.7
+      MAY: 90.3
+      JUN: 29.22
+      JUL: 84.79
+      AUG: 57.97
+      SEP: 4.6
+      OCT: 3.6
+      NOV: 1.6
+      DEC: 0.6
+  - year: 2017
+    total_mg: 359.17
+    count: 1
+    monthly_mg:
+      JAN: 1.0
+      FEB: 1.3
+      MAR: 1.2
+      APR: 13.33
+      MAY: 61.78
+      JUN: 118.26
+      JUL: 25.28
+      AUG: 66.57
+      SEP: 62.65
+      OCT: 5.1
+      NOV: 2.0
+      DEC: 0.7
+  - year: 2016
+    total_mg: 518.53
+    count: 1
+    monthly_mg:
+      JAN: 1.1
+      FEB: 1.3
+      MAR: 1.1
+      APR: 16.2
+      MAY: 31.34
+      JUN: 90.82
+      JUL: 167.71
+      AUG: 63.15
+      SEP: 102.2
+      OCT: 32.81
+      NOV: 1.8
+      DEC: 9.0
+  - year: 2015
+    total_mg: 345.76
+    count: 1
+    monthly_mg:
+      JAN: 1.2
+      FEB: 1.2
+      MAR: 1.2
+      APR: 2.19
+      MAY: 34.4
+      JUN: 99.25
+      JUL: 53.36
+      AUG: 53.98
+      SEP: 69.6
+      OCT: 24.66
+      NOV: 3.72
+      DEC: 1.0
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: null
+    count: 1
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2020
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+- registration_number: '01245'
+  name: MICHAEL FARMS-WEST
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 0.86
+  gw_wells: 2
+  gw_capacity_mgd: 0.86
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011607
+  latitude: 40.0730555
+  longitude: -83.7819444
+  registration_date: '1991-01-24'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 38.02
+    count: 2
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 9.54
+      JUN: 19.08
+      JUL: 2.82
+      AUG: 2.82
+      SEP: 2.82
+      OCT: 0.94
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 33.18
+    count: 2
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 6.36
+      JUN: 13.01
+      JUL: 5.35
+      AUG: 2.82
+      SEP: 3.76
+      OCT: 1.88
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: 34.84
+    count: 2
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 3.18
+      JUN: 12.72
+      JUL: 6.36
+      AUG: 5.64
+      SEP: 5.64
+      OCT: 1.3
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2021
+    total_mg: 29.85
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 4.48
+      JUN: 8.96
+      JUL: 7.01
+      AUG: 5.64
+      SEP: 3.76
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2020
+    total_mg: 28.26
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 2.24
+      JUN: 5.42
+      JUL: 10.84
+      AUG: 3.76
+      SEP: 4.12
+      OCT: 1.88
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2018
+    total_mg: 16.19
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 6.0
+      JUN: 2.24
+      JUL: 7.95
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2017
+    total_mg: 25.15
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.95
+      JUN: 5.35
+      JUL: 8.24
+      AUG: 7.66
+      SEP: 1.95
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2016
+    total_mg: 30.5
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 8.24
+      JUN: 15.25
+      JUL: 7.01
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2015
+    total_mg: 21.72
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 11.13
+      JUN: 4.48
+      JUL: 0.0
+      AUG: 4.23
+      SEP: 1.88
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  surface_water: []
+  returns: []
+- registration_number: '01463'
+  name: MOORE'S EXCAVATING COMPANY
+  county: CHAMPAIGN
+  primary_use_type: Mineral Extraction
+  status: Inactive
+  total_capacity_mgd: 0.39
+  gw_wells: 2
+  gw_capacity_mgd: 0.39
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011503
+  latitude: 40.1666666
+  longitude: -83.7416666
+  registration_date: '1991-06-27'
+  inactive_date: '2005-02-08'
+  last_annual_report_year: 2003
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: '01506'
+  name: MECHANICSBURG SAND & GRAVEL
+  county: CHAMPAIGN
+  primary_use_type: Mineral Extraction
+  status: Active
+  total_capacity_mgd: 1.26
+  gw_wells: 4
+  gw_capacity_mgd: 1.26
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011701
+  latitude: 40.050009
+  longitude: -83.624952
+  registration_date: '1991-07-17'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 143.0
+    count: 4
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 14.0
+      MAY: 18.0
+      JUN: 24.0
+      JUL: 26.0
+      AUG: 13.0
+      SEP: 12.0
+      OCT: 12.0
+      NOV: 13.0
+      DEC: 11.0
+  - year: 2023
+    total_mg: 148.0
+    count: 4
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 20.0
+      JUN: 26.0
+      JUL: 25.0
+      AUG: 12.0
+      SEP: 12.0
+      OCT: 13.0
+      NOV: 15.0
+      DEC: 10.0
+  - year: 2022
+    total_mg: 150.0
+    count: 4
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 12.0
+      SEP: 12.0
+      OCT: 12.0
+      NOV: 15.0
+      DEC: 10.0
+  - year: 2021
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 15.0
+      DEC: 10.0
+  - year: 2020
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 15.0
+      DEC: 10.0
+  - year: 2019
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 15.0
+      DEC: 10.0
+  - year: 2018
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 15.0
+      DEC: 10.0
+  - year: 2017
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 10.0
+      DEC: 15.0
+  - year: 2016
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 15.0
+      DEC: 10.0
+  - year: 2015
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 15.0
+      DEC: 10.0
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2020
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2017
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 15.0
+      DEC: 10.0
+  - year: 2016
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 15.0
+      DEC: 10.0
+  - year: 2015
+    total_mg: 192.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 15.0
+      MAY: 22.0
+      JUN: 26.0
+      JUL: 26.0
+      AUG: 26.0
+      SEP: 26.0
+      OCT: 26.0
+      NOV: 15.0
+      DEC: 10.0
+- registration_number: '01704'
+  name: J. RETTENMAIER USA, LP
+  county: CHAMPAIGN
+  primary_use_type: Industry
+  status: Active
+  total_capacity_mgd: 2.32
+  gw_wells: 6
+  gw_capacity_mgd: 2.32
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011602
+  latitude: 40.1055555
+  longitude: -83.7708333
+  registration_date: '1992-11-18'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 292.0
+    count: 6
+    monthly_mg:
+      JAN: 25.7
+      FEB: 24.6
+      MAR: 24.8
+      APR: 24.9
+      MAY: 21.3
+      JUN: 21.8
+      JUL: 23.1
+      AUG: 23.0
+      SEP: 22.6
+      OCT: 27.3
+      NOV: 26.6
+      DEC: 26.3
+  - year: 2023
+    total_mg: 296.7
+    count: 6
+    monthly_mg:
+      JAN: 25.8
+      FEB: 25.2
+      MAR: 24.7
+      APR: 25.1
+      MAY: 21.8
+      JUN: 22.1
+      JUL: 24.0
+      AUG: 23.3
+      SEP: 23.4
+      OCT: 27.9
+      NOV: 27.2
+      DEC: 26.2
+  - year: 2022
+    total_mg: 322.3
+    count: 6
+    monthly_mg:
+      JAN: 26.0
+      FEB: 25.3
+      MAR: 25.8
+      APR: 25.6
+      MAY: 26.1
+      JUN: 27.7
+      JUL: 28.0
+      AUG: 28.3
+      SEP: 28.0
+      OCT: 27.8
+      NOV: 26.9
+      DEC: 26.8
+  - year: 2021
+    total_mg: 307.3
+    count: 1
+    monthly_mg:
+      JAN: 26.1
+      FEB: 25.7
+      MAR: 26.0
+      APR: 25.5
+      MAY: 26.0
+      JUN: 23.6
+      JUL: 24.1
+      AUG: 24.6
+      SEP: 24.0
+      OCT: 27.6
+      NOV: 27.4
+      DEC: 26.7
+  - year: 2020
+    total_mg: 307.3
+    count: 1
+    monthly_mg:
+      JAN: 26.1
+      FEB: 25.7
+      MAR: 26.0
+      APR: 25.5
+      MAY: 26.0
+      JUN: 23.6
+      JUL: 24.1
+      AUG: 24.6
+      SEP: 24.0
+      OCT: 27.6
+      NOV: 27.4
+      DEC: 26.7
+  - year: 2019
+    total_mg: 308.0
+    count: 1
+    monthly_mg:
+      JAN: 26.7
+      FEB: 25.4
+      MAR: 25.8
+      APR: 26.1
+      MAY: 27.6
+      JUN: 23.6
+      JUL: 24.4
+      AUG: 24.6
+      SEP: 24.0
+      OCT: 24.7
+      NOV: 27.6
+      DEC: 27.5
+  - year: 2018
+    total_mg: 305.9
+    count: 1
+    monthly_mg:
+      JAN: 26.3
+      FEB: 25.5
+      MAR: 26.1
+      APR: 26.1
+      MAY: 27.6
+      JUN: 22.9
+      JUL: 23.9
+      AUG: 24.0
+      SEP: 23.3
+      OCT: 26.2
+      NOV: 27.1
+      DEC: 26.9
+  - year: 2017
+    total_mg: 308.4
+    count: 1
+    monthly_mg:
+      JAN: 26.7
+      FEB: 25.4
+      MAR: 25.8
+      APR: 26.1
+      MAY: 27.6
+      JUN: 23.6
+      JUL: 24.4
+      AUG: 24.6
+      SEP: 24.0
+      OCT: 24.8
+      NOV: 27.8
+      DEC: 27.6
+  - year: 2016
+    total_mg: 255.5
+    count: 1
+    monthly_mg:
+      JAN: 24.5
+      FEB: 21.2
+      MAR: 22.7
+      APR: 24.2
+      MAY: 18.5
+      JUN: 18.5
+      JUL: 19.2
+      AUG: 19.3
+      SEP: 18.5
+      OCT: 18.2
+      NOV: 25.6
+      DEC: 25.1
+  - year: 2015
+    total_mg: 257.66
+    count: 1
+    monthly_mg:
+      JAN: 24.56
+      FEB: 21.11
+      MAR: 23.53
+      APR: 25.25
+      MAY: 18.65
+      JUN: 18.4
+      JUL: 19.13
+      AUG: 19.35
+      SEP: 18.36
+      OCT: 18.41
+      NOV: 25.74
+      DEC: 25.17
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 296.7
+    count: 1
+    monthly_mg:
+      JAN: 25.8
+      FEB: 25.2
+      MAR: 24.7
+      APR: 25.1
+      MAY: 21.8
+      JUN: 22.1
+      JUL: 24.0
+      AUG: 23.3
+      SEP: 23.4
+      OCT: 27.9
+      NOV: 27.2
+      DEC: 26.2
+  - year: 2022
+    total_mg: 322.3
+    count: 1
+    monthly_mg:
+      JAN: 26.0
+      FEB: 25.3
+      MAR: 25.8
+      APR: 25.6
+      MAY: 26.1
+      JUN: 27.7
+      JUL: 28.0
+      AUG: 28.3
+      SEP: 28.0
+      OCT: 27.8
+      NOV: 26.9
+      DEC: 26.8
+  - year: 2021
+    total_mg: 307.3
+    count: 1
+    monthly_mg:
+      JAN: 26.1
+      FEB: 25.7
+      MAR: 26.0
+      APR: 25.5
+      MAY: 26.0
+      JUN: 23.6
+      JUL: 24.1
+      AUG: 24.6
+      SEP: 24.0
+      OCT: 27.6
+      NOV: 27.4
+      DEC: 26.7
+  - year: 2020
+    total_mg: 307.3
+    count: 1
+    monthly_mg:
+      JAN: 26.1
+      FEB: 25.7
+      MAR: 26.0
+      APR: 25.5
+      MAY: 26.0
+      JUN: 23.6
+      JUL: 24.1
+      AUG: 24.6
+      SEP: 24.0
+      OCT: 27.6
+      NOV: 27.4
+      DEC: 26.7
+  - year: 2019
+    total_mg: 308.0
+    count: 1
+    monthly_mg:
+      JAN: 26.7
+      FEB: 25.4
+      MAR: 25.8
+      APR: 26.1
+      MAY: 27.6
+      JUN: 23.6
+      JUL: 24.4
+      AUG: 24.6
+      SEP: 24.0
+      OCT: 24.7
+      NOV: 27.6
+      DEC: 27.5
+  - year: 2018
+    total_mg: 305.9
+    count: 1
+    monthly_mg:
+      JAN: 26.3
+      FEB: 25.5
+      MAR: 26.1
+      APR: 26.1
+      MAY: 27.6
+      JUN: 22.9
+      JUL: 23.9
+      AUG: 24.0
+      SEP: 23.3
+      OCT: 26.2
+      NOV: 27.1
+      DEC: 26.9
+  - year: 2017
+    total_mg: 308.4
+    count: 1
+    monthly_mg:
+      JAN: 26.7
+      FEB: 25.4
+      MAR: 25.8
+      APR: 26.1
+      MAY: 27.6
+      JUN: 23.6
+      JUL: 24.4
+      AUG: 24.6
+      SEP: 24.0
+      OCT: 24.8
+      NOV: 27.8
+      DEC: 27.6
+- registration_number: 01896
+  name: URBANA MATERIALS
+  county: CHAMPAIGN
+  primary_use_type: Mineral Extraction
+  status: Active
+  total_capacity_mgd: 4.02
+  gw_wells: 2
+  gw_capacity_mgd: 2.0
+  sw_intakes: 1
+  sw_capacity_mgd: 2.02
+  huc12: 050800011602
+  latitude: 40.1041666
+  longitude: -83.7722222
+  registration_date: '1996-08-21'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: null
+    count: 2
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2023
+    total_mg: null
+    count: 2
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2022
+    total_mg: null
+    count: 2
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  surface_water:
+  - year: 2024
+    total_mg: 3.13
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 3.13
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 111.6
+    count: 1
+    monthly_mg:
+      JAN: 6.0
+      FEB: 0.0
+      MAR: 7.2
+      APR: 12.0
+      MAY: 13.2
+      JUN: 12.6
+      JUL: 10.8
+      AUG: 13.2
+      SEP: 8.4
+      OCT: 11.4
+      NOV: 9.0
+      DEC: 7.8
+  - year: 2022
+    total_mg: 108.0
+    count: 1
+    monthly_mg:
+      JAN: 2.4
+      FEB: 0.0
+      MAR: 4.8
+      APR: 7.8
+      MAY: 12.0
+      JUN: 11.4
+      JUL: 12.6
+      AUG: 13.8
+      SEP: 12.6
+      OCT: 12.6
+      NOV: 10.8
+      DEC: 7.2
+  - year: 2021
+    total_mg: 143.27
+    count: 1
+    monthly_mg:
+      JAN: 5.52
+      FEB: 4.49
+      MAR: 6.96
+      APR: 15.5
+      MAY: 10.93
+      JUN: 13.12
+      JUL: 16.01
+      AUG: 18.6
+      SEP: 15.22
+      OCT: 16.59
+      NOV: 13.3
+      DEC: 7.03
+  - year: 2020
+    total_mg: 105.6
+    count: 1
+    monthly_mg:
+      JAN: 6.6
+      FEB: 0.6
+      MAR: 10.2
+      APR: 13.2
+      MAY: 10.8
+      JUN: 13.2
+      JUL: 7.2
+      AUG: 11.4
+      SEP: 10.8
+      OCT: 13.2
+      NOV: 8.4
+      DEC: 0.0
+  - year: 2019
+    total_mg: 62.4
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 7.2
+      JUL: 0.0
+      AUG: 7.8
+      SEP: 11.4
+      OCT: 14.4
+      NOV: 12.0
+      DEC: 9.6
+  - year: 2018
+    total_mg: 103.3
+    count: 1
+    monthly_mg:
+      JAN: 4.4
+      FEB: 3.2
+      MAR: 8.7
+      APR: 11.5
+      MAY: 17.8
+      JUN: 8.4
+      JUL: 8.6
+      AUG: 5.8
+      SEP: 5.8
+      OCT: 10.2
+      NOV: 8.6
+      DEC: 10.3
+  - year: 2017
+    total_mg: 55.2
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 8.4
+      JUL: 18.0
+      AUG: 7.2
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 12.6
+      DEC: 9.0
+  - year: 2016
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2015
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  returns:
+  - year: 2024
+    total_mg: 4.13
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 4.13
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 108.2
+    count: 1
+    monthly_mg:
+      JAN: 5.8
+      FEB: 0.0
+      MAR: 7.0
+      APR: 11.6
+      MAY: 12.8
+      JUN: 12.2
+      JUL: 10.5
+      AUG: 12.8
+      SEP: 8.1
+      OCT: 11.1
+      NOV: 8.7
+      DEC: 7.6
+  - year: 2022
+    total_mg: 104.8
+    count: 1
+    monthly_mg:
+      JAN: 2.3
+      FEB: 0.0
+      MAR: 4.7
+      APR: 7.6
+      MAY: 11.6
+      JUN: 11.1
+      JUL: 12.2
+      AUG: 13.4
+      SEP: 12.2
+      OCT: 12.2
+      NOV: 10.5
+      DEC: 7.0
+  - year: 2021
+    total_mg: 138.92
+    count: 1
+    monthly_mg:
+      JAN: 5.35
+      FEB: 4.35
+      MAR: 6.72
+      APR: 15.03
+      MAY: 10.6
+      JUN: 12.73
+      JUL: 15.53
+      AUG: 18.04
+      SEP: 14.76
+      OCT: 16.09
+      NOV: 12.9
+      DEC: 6.82
+  - year: 2020
+    total_mg: 102.5
+    count: 1
+    monthly_mg:
+      JAN: 6.4
+      FEB: 0.6
+      MAR: 9.9
+      APR: 12.8
+      MAY: 10.5
+      JUN: 12.8
+      JUL: 7.0
+      AUG: 11.1
+      SEP: 10.5
+      OCT: 12.8
+      NOV: 8.1
+      DEC: 0.0
+  - year: 2019
+    total_mg: 60.6
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 7.0
+      JUL: 0.0
+      AUG: 7.6
+      SEP: 11.1
+      OCT: 14.0
+      NOV: 11.6
+      DEC: 9.3
+  - year: 2015
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+- registration_number: 01954
+  name: TRUTEC INDUSTRIES-URBANA JOBBING PLANT
+  county: CHAMPAIGN
+  primary_use_type: Misc
+  status: Active
+  total_capacity_mgd: 3.3
+  gw_wells: 5
+  gw_capacity_mgd: 3.3
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011504
+  latitude: 40.184362
+  longitude: -83.779771
+  registration_date: '1997-12-03'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 28.54
+    count: 5
+    monthly_mg:
+      JAN: 2.52
+      FEB: 2.4
+      MAR: 2.67
+      APR: 2.75
+      MAY: 2.56
+      JUN: 2.56
+      JUL: 2.65
+      AUG: 2.67
+      SEP: 2.15
+      OCT: 2.09
+      NOV: 1.76
+      DEC: 1.76
+  - year: 2023
+    total_mg: 26.35
+    count: 5
+    monthly_mg:
+      JAN: 1.91
+      FEB: 2.22
+      MAR: 2.42
+      APR: 2.12
+      MAY: 2.11
+      JUN: 1.95
+      JUL: 2.1
+      AUG: 2.22
+      SEP: 2.04
+      OCT: 2.36
+      NOV: 2.45
+      DEC: 2.45
+  - year: 2022
+    total_mg: 29.7
+    count: 5
+    monthly_mg:
+      JAN: 2.9
+      FEB: 2.8
+      MAR: 3.2
+      APR: 2.6
+      MAY: 2.3
+      JUN: 3.1
+      JUL: 2.1
+      AUG: 2.6
+      SEP: 2.2
+      OCT: 2.1
+      NOV: 2.1
+      DEC: 1.7
+  - year: 2021
+    total_mg: 37.25
+    count: 1
+    monthly_mg:
+      JAN: 3.29
+      FEB: 3.21
+      MAR: 3.61
+      APR: 3.21
+      MAY: 3.15
+      JUN: 3.07
+      JUL: 2.92
+      AUG: 3.11
+      SEP: 2.8
+      OCT: 3.21
+      NOV: 2.9
+      DEC: 2.77
+  - year: 2020
+    total_mg: 37.47
+    count: 1
+    monthly_mg:
+      JAN: 3.51
+      FEB: 3.84
+      MAR: 2.82
+      APR: 1.93
+      MAY: 1.9
+      JUN: 3.47
+      JUL: 3.57
+      AUG: 3.66
+      SEP: 3.39
+      OCT: 3.69
+      NOV: 2.57
+      DEC: 3.12
+  - year: 2019
+    total_mg: 38.27
+    count: 1
+    monthly_mg:
+      JAN: 3.28
+      FEB: 2.84
+      MAR: 3.17
+      APR: 3.18
+      MAY: 3.28
+      JUN: 3.0
+      JUL: 2.9
+      AUG: 3.59
+      SEP: 3.33
+      OCT: 3.67
+      NOV: 3.34
+      DEC: 2.69
+  - year: 2018
+    total_mg: 36.6
+    count: 1
+    monthly_mg:
+      JAN: 3.41
+      FEB: 3.1
+      MAR: 3.1
+      APR: 2.94
+      MAY: 2.97
+      JUN: 3.12
+      JUL: 2.66
+      AUG: 3.03
+      SEP: 3.02
+      OCT: 3.58
+      NOV: 3.1
+      DEC: 2.57
+  - year: 2017
+    total_mg: 37.03
+    count: 1
+    monthly_mg:
+      JAN: 2.9
+      FEB: 2.48
+      MAR: 3.21
+      APR: 2.88
+      MAY: 3.1
+      JUN: 3.38
+      JUL: 3.38
+      AUG: 3.42
+      SEP: 3.14
+      OCT: 3.22
+      NOV: 3.02
+      DEC: 2.9
+  - year: 2016
+    total_mg: 34.52
+    count: 1
+    monthly_mg:
+      JAN: 2.65
+      FEB: 2.77
+      MAR: 3.02
+      APR: 2.95
+      MAY: 2.79
+      JUN: 3.12
+      JUL: 2.5
+      AUG: 2.95
+      SEP: 2.97
+      OCT: 3.21
+      NOV: 3.0
+      DEC: 2.59
+  - year: 2015
+    total_mg: 30.94
+    count: 1
+    monthly_mg:
+      JAN: 2.22
+      FEB: 2.01
+      MAR: 2.38
+      APR: 2.43
+      MAY: 2.56
+      JUN: 2.96
+      JUL: 2.59
+      AUG: 2.96
+      SEP: 2.68
+      OCT: 2.9
+      NOV: 2.68
+      DEC: 2.57
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: null
+    count: 1
+    monthly_mg:
+      JAN: null
+      FEB: null
+      MAR: null
+      APR: null
+      MAY: null
+      JUN: null
+      JUL: null
+      AUG: null
+      SEP: null
+      OCT: null
+      NOV: null
+      DEC: null
+  - year: 2020
+    total_mg: 37.47
+    count: 1
+    monthly_mg:
+      JAN: 3.51
+      FEB: 3.84
+      MAR: 2.82
+      APR: 1.93
+      MAY: 1.9
+      JUN: 3.47
+      JUL: 3.57
+      AUG: 3.66
+      SEP: 3.39
+      OCT: 3.69
+      NOV: 2.57
+      DEC: 3.12
+  - year: 2019
+    total_mg: 38.37
+    count: 1
+    monthly_mg:
+      JAN: 3.28
+      FEB: 2.94
+      MAR: 3.17
+      APR: 3.18
+      MAY: 3.28
+      JUN: 3.0
+      JUL: 2.9
+      AUG: 3.59
+      SEP: 3.33
+      OCT: 3.67
+      NOV: 3.34
+      DEC: 2.69
+  - year: 2018
+    total_mg: 36.6
+    count: 1
+    monthly_mg:
+      JAN: 3.41
+      FEB: 3.1
+      MAR: 3.1
+      APR: 2.94
+      MAY: 2.97
+      JUN: 3.12
+      JUL: 2.66
+      AUG: 3.03
+      SEP: 3.02
+      OCT: 3.58
+      NOV: 3.1
+      DEC: 2.57
+  - year: 2017
+    total_mg: 37.03
+    count: 1
+    monthly_mg:
+      JAN: 2.9
+      FEB: 2.48
+      MAR: 3.21
+      APR: 2.88
+      MAY: 3.1
+      JUN: 3.38
+      JUL: 3.38
+      AUG: 3.42
+      SEP: 3.14
+      OCT: 3.22
+      NOV: 3.02
+      DEC: 2.9
+  - year: 2016
+    total_mg: 34.52
+    count: 1
+    monthly_mg:
+      JAN: 2.65
+      FEB: 2.77
+      MAR: 3.02
+      APR: 2.95
+      MAY: 2.79
+      JUN: 3.12
+      JUL: 2.5
+      AUG: 2.95
+      SEP: 2.97
+      OCT: 3.21
+      NOV: 3.0
+      DEC: 2.59
+  - year: 2015
+    total_mg: 30.94
+    count: 1
+    monthly_mg:
+      JAN: 2.22
+      FEB: 2.01
+      MAR: 2.38
+      APR: 2.43
+      MAY: 2.56
+      JUN: 2.96
+      JUL: 2.59
+      AUG: 2.96
+      SEP: 2.68
+      OCT: 2.9
+      NOV: 2.68
+      DEC: 2.57
+- registration_number: '02036'
+  name: FRESHWATER FARMS OF OHIO
+  county: CHAMPAIGN
+  primary_use_type: Misc
+  status: Active
+  total_capacity_mgd: 0.11
+  gw_wells: 4
+  gw_capacity_mgd: 0.11
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011503
+  latitude: 40.1444444
+  longitude: -83.7486111
+  registration_date: '2000-02-28'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 296.4
+    count: 4
+    monthly_mg:
+      JAN: 25.0
+      FEB: 24.2
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.0
+      AUG: 25.0
+      SEP: 24.3
+      OCT: 25.0
+      NOV: 24.3
+      DEC: 25.0
+  - year: 2023
+    total_mg: 274.8
+    count: 4
+    monthly_mg:
+      JAN: 23.2
+      FEB: 22.4
+      MAR: 23.2
+      APR: 22.5
+      MAY: 23.2
+      JUN: 22.5
+      JUL: 23.2
+      AUG: 23.2
+      SEP: 22.5
+      OCT: 23.2
+      NOV: 22.5
+      DEC: 23.2
+  - year: 2022
+    total_mg: 296.4
+    count: 4
+    monthly_mg:
+      JAN: 25.0
+      FEB: 24.2
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.0
+      AUG: 25.0
+      SEP: 24.3
+      OCT: 25.0
+      NOV: 24.3
+      DEC: 25.0
+  - year: 2021
+    total_mg: 296.4
+    count: 1
+    monthly_mg:
+      JAN: 25.0
+      FEB: 24.2
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.0
+      AUG: 25.0
+      SEP: 24.3
+      OCT: 25.0
+      NOV: 24.3
+      DEC: 25.0
+  - year: 2020
+    total_mg: 296.4
+    count: 1
+    monthly_mg:
+      JAN: 25.0
+      FEB: 24.2
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.0
+      AUG: 25.0
+      SEP: 24.3
+      OCT: 25.0
+      NOV: 24.3
+      DEC: 25.0
+  - year: 2019
+    total_mg: 295.7
+    count: 1
+    monthly_mg:
+      JAN: 25.0
+      FEB: 23.5
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.0
+      AUG: 25.0
+      SEP: 24.3
+      OCT: 25.0
+      NOV: 24.3
+      DEC: 25.0
+  - year: 2018
+    total_mg: 252.4
+    count: 1
+    monthly_mg:
+      JAN: 3.7
+      FEB: 3.6
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.5
+      AUG: 25.5
+      SEP: 24.8
+      OCT: 25.0
+      NOV: 22.5
+      DEC: 23.2
+  - year: 2017
+    total_mg: 281.4
+    count: 1
+    monthly_mg:
+      JAN: 23.2
+      FEB: 21.0
+      MAR: 23.2
+      APR: 22.5
+      MAY: 25.2
+      JUN: 24.5
+      JUL: 25.2
+      AUG: 25.2
+      SEP: 22.5
+      OCT: 23.2
+      NOV: 22.5
+      DEC: 23.2
+  - year: 2016
+    total_mg: 281.3
+    count: 1
+    monthly_mg:
+      JAN: 23.2
+      FEB: 21.0
+      MAR: 23.1
+      APR: 22.5
+      MAY: 25.2
+      JUN: 24.5
+      JUL: 25.2
+      AUG: 25.2
+      SEP: 22.5
+      OCT: 23.2
+      NOV: 22.5
+      DEC: 23.2
+  - year: 2015
+    total_mg: 289.4
+    count: 1
+    monthly_mg:
+      JAN: 23.2
+      FEB: 21.0
+      MAR: 23.2
+      APR: 22.5
+      MAY: 25.2
+      JUN: 24.5
+      JUL: 27.2
+      AUG: 27.2
+      SEP: 24.5
+      OCT: 25.2
+      NOV: 22.5
+      DEC: 23.2
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: 296.4
+    count: 1
+    monthly_mg:
+      JAN: 25.0
+      FEB: 24.2
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.0
+      AUG: 25.0
+      SEP: 24.3
+      OCT: 25.0
+      NOV: 24.3
+      DEC: 25.0
+  - year: 2021
+    total_mg: 296.4
+    count: 1
+    monthly_mg:
+      JAN: 25.0
+      FEB: 24.2
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.0
+      AUG: 25.0
+      SEP: 24.3
+      OCT: 25.0
+      NOV: 24.3
+      DEC: 25.0
+  - year: 2020
+    total_mg: 296.4
+    count: 1
+    monthly_mg:
+      JAN: 25.0
+      FEB: 24.2
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.0
+      AUG: 25.0
+      SEP: 24.3
+      OCT: 25.0
+      NOV: 24.3
+      DEC: 25.0
+  - year: 2019
+    total_mg: 295.7
+    count: 1
+    monthly_mg:
+      JAN: 25.0
+      FEB: 23.5
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.0
+      AUG: 25.0
+      SEP: 24.3
+      OCT: 25.0
+      NOV: 24.3
+      DEC: 25.0
+  - year: 2018
+    total_mg: 252.4
+    count: 1
+    monthly_mg:
+      JAN: 3.7
+      FEB: 3.6
+      MAR: 25.0
+      APR: 24.3
+      MAY: 25.0
+      JUN: 24.3
+      JUL: 25.5
+      AUG: 25.5
+      SEP: 24.8
+      OCT: 25.0
+      NOV: 22.5
+      DEC: 23.2
+  - year: 2017
+    total_mg: 281.4
+    count: 1
+    monthly_mg:
+      JAN: 23.2
+      FEB: 21.0
+      MAR: 23.2
+      APR: 22.5
+      MAY: 25.2
+      JUN: 24.5
+      JUL: 25.2
+      AUG: 25.2
+      SEP: 22.5
+      OCT: 23.2
+      NOV: 22.5
+      DEC: 23.2
+  - year: 2016
+    total_mg: 281.3
+    count: 1
+    monthly_mg:
+      JAN: 23.2
+      FEB: 21.0
+      MAR: 23.1
+      APR: 22.5
+      MAY: 25.2
+      JUN: 24.5
+      JUL: 25.2
+      AUG: 25.2
+      SEP: 22.5
+      OCT: 23.2
+      NOV: 22.5
+      DEC: 23.2
+  - year: 2015
+    total_mg: 289.4
+    count: 1
+    monthly_mg:
+      JAN: 23.2
+      FEB: 21.0
+      MAR: 23.2
+      APR: 22.5
+      MAY: 25.2
+      JUN: 24.5
+      JUL: 27.2
+      AUG: 27.2
+      SEP: 24.5
+      OCT: 25.2
+      NOV: 22.5
+      DEC: 23.2
+- registration_number: '02106'
+  name: CHAMPAIGN BERRY FARM
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 0.36
+  gw_wells: 1
+  gw_capacity_mgd: 0.36
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011702
+  latitude: 40.0827777
+  longitude: -83.6397222
+  registration_date: '2002-07-19'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 21.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.0
+      JUN: 2.0
+      JUL: 5.0
+      AUG: 6.0
+      SEP: 5.0
+      OCT: 2.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 17.9
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.2
+      JUN: 2.3
+      JUL: 4.4
+      AUG: 8.0
+      SEP: 2.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: 13.2
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.2
+      MAY: 1.0
+      JUN: 2.0
+      JUL: 3.0
+      AUG: 3.0
+      SEP: 3.0
+      OCT: 1.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2021
+    total_mg: 18.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.5
+      JUN: 2.0
+      JUL: 5.0
+      AUG: 8.0
+      SEP: 2.0
+      OCT: 0.5
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2020
+    total_mg: 22.2
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.0
+      JUN: 2.2
+      JUL: 6.0
+      AUG: 10.0
+      SEP: 2.0
+      OCT: 1.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2019
+    total_mg: 7.6
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 1.2
+      AUG: 3.3
+      SEP: 2.6
+      OCT: 0.5
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2018
+    total_mg: 11.6
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.2
+      JUN: 3.0
+      JUL: 3.0
+      AUG: 2.2
+      SEP: 1.9
+      OCT: 0.3
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2017
+    total_mg: 23.3
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.3
+      MAY: 0.5
+      JUN: 2.5
+      JUL: 3.0
+      AUG: 8.0
+      SEP: 8.0
+      OCT: 1.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2016
+    total_mg: 11.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 1.0
+      JUL: 3.0
+      AUG: 5.0
+      SEP: 1.0
+      OCT: 1.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2015
+    total_mg: 11.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 1.0
+      JUN: 1.0
+      JUL: 1.5
+      AUG: 4.5
+      SEP: 3.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2020
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+- registration_number: '02146'
+  name: GRAHAM NORTH ELEMENTARY SCHOOL
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Inactive
+  total_capacity_mgd: 0.07
+  gw_wells: 1
+  gw_capacity_mgd: 0.07
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800010702
+  latitude: 40.2166666
+  longitude: -83.9555555
+  registration_date: '2005-03-21'
+  inactive_date: '2008-04-15'
+  last_annual_report_year: 2007
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: '02147'
+  name: GRAHAM SOUTH ELEMENTARY SCHOOL
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Inactive
+  total_capacity_mgd: 0.01
+  gw_wells: 1
+  gw_capacity_mgd: 0.01
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011606
+  latitude: 40.0888888
+  longitude: -83.9583333
+  registration_date: '2005-03-21'
+  inactive_date: '2008-04-15'
+  last_annual_report_year: 2007
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: 02219
+  name: CHAMPAIGN SPRINGS
+  county: CHAMPAIGN
+  primary_use_type: Misc
+  status: Active
+  total_capacity_mgd: 0.57
+  gw_wells: 1
+  gw_capacity_mgd: 0.57
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011607
+  latitude: 40.04654
+  longitude: -83.832183
+  registration_date: '2008-06-13'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water:
+  - year: 2024
+    total_mg: 40.69
+    count: 1
+    monthly_mg:
+      JAN: 2.72
+      FEB: 2.39
+      MAR: 3.27
+      APR: 3.68
+      MAY: 4.46
+      JUN: 3.83
+      JUL: 3.89
+      AUG: 3.24
+      SEP: 3.74
+      OCT: 3.4
+      NOV: 3.01
+      DEC: 3.06
+  - year: 2023
+    total_mg: 31.0
+    count: 1
+    monthly_mg:
+      JAN: 2.1
+      FEB: 2.1
+      MAR: 3.0
+      APR: 2.9
+      MAY: 3.6
+      JUN: 4.0
+      JUL: 3.4
+      AUG: 2.3
+      SEP: 2.0
+      OCT: 1.8
+      NOV: 1.9
+      DEC: 1.9
+  - year: 2022
+    total_mg: 25.3
+    count: 1
+    monthly_mg:
+      JAN: 1.1
+      FEB: 0.9
+      MAR: 1.5
+      APR: 2.4
+      MAY: 3.1
+      JUN: 3.0
+      JUL: 2.7
+      AUG: 2.4
+      SEP: 2.3
+      OCT: 2.1
+      NOV: 1.9
+      DEC: 1.9
+  - year: 2021
+    total_mg: 18.4
+    count: 1
+    monthly_mg:
+      JAN: 1.0
+      FEB: 1.0
+      MAR: 1.1
+      APR: 1.2
+      MAY: 1.7
+      JUN: 3.3
+      JUL: 2.7
+      AUG: 2.2
+      SEP: 1.1
+      OCT: 1.0
+      NOV: 1.1
+      DEC: 1.0
+  - year: 2020
+    total_mg: 16.6
+    count: 1
+    monthly_mg:
+      JAN: 1.2
+      FEB: 1.06
+      MAR: 1.14
+      APR: 1.4
+      MAY: 1.5
+      JUN: 1.6
+      JUL: 2.4
+      AUG: 2.0
+      SEP: 1.2
+      OCT: 1.4
+      NOV: 0.7
+      DEC: 1.0
+  - year: 2019
+    total_mg: 13.47
+    count: 1
+    monthly_mg:
+      JAN: 0.67
+      FEB: 0.75
+      MAR: 1.12
+      APR: 1.25
+      MAY: 1.57
+      JUN: 1.6
+      JUL: 1.47
+      AUG: 1.23
+      SEP: 1.35
+      OCT: 0.72
+      NOV: 0.7
+      DEC: 1.04
+  - year: 2018
+    total_mg: 8.11
+    count: 1
+    monthly_mg:
+      JAN: 0.75
+      FEB: 0.57
+      MAR: 0.52
+      APR: 0.32
+      MAY: 1.04
+      JUN: 0.73
+      JUL: 0.7
+      AUG: 0.77
+      SEP: 0.77
+      OCT: 0.66
+      NOV: 0.54
+      DEC: 0.74
+  - year: 2017
+    total_mg: 6.84
+    count: 1
+    monthly_mg:
+      JAN: 0.28
+      FEB: 0.18
+      MAR: 0.29
+      APR: 0.51
+      MAY: 0.61
+      JUN: 0.71
+      JUL: 0.67
+      AUG: 0.93
+      SEP: 0.8
+      OCT: 0.78
+      NOV: 0.48
+      DEC: 0.6
+  - year: 2016
+    total_mg: 3.22
+    count: 1
+    monthly_mg:
+      JAN: 0.24
+      FEB: 0.24
+      MAR: 0.04
+      APR: 0.24
+      MAY: 0.27
+      JUN: 0.34
+      JUL: 0.59
+      AUG: 0.33
+      SEP: 0.42
+      OCT: 0.28
+      NOV: 0.09
+      DEC: 0.14
+  - year: 2015
+    total_mg: 6.5
+    count: 1
+    monthly_mg:
+      JAN: 0.34
+      FEB: 0.44
+      MAR: 0.33
+      APR: 0.74
+      MAY: 1.48
+      JUN: 0.96
+      JUL: 0.98
+      AUG: 0.34
+      SEP: 0.33
+      OCT: 0.3
+      NOV: 0.08
+      DEC: 0.18
+  surface_water: []
+  returns:
+  - year: 2024
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2022
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2020
+    total_mg: 0.0
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 0.0
+      AUG: 0.0
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+- registration_number: '03524'
+  name: Kirby Farm
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 0.09
+  gw_wells: 0
+  gw_capacity_mgd: null
+  sw_intakes: 1
+  sw_capacity_mgd: 0.09
+  huc12: 050800011602
+  latitude: 40.039528
+  longitude: -83.683544
+  registration_date: '2023-05-30'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water: []
+  surface_water:
+  - year: 2024
+    total_mg: 15.55
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 3.84
+      JUL: 4.42
+      AUG: 4.99
+      SEP: 2.3
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  - year: 2023
+    total_mg: 6.48
+    count: 1
+    monthly_mg:
+      JAN: 0.0
+      FEB: 0.0
+      MAR: 0.0
+      APR: 0.0
+      MAY: 0.0
+      JUN: 0.0
+      JUL: 3.24
+      AUG: 3.24
+      SEP: 0.0
+      OCT: 0.0
+      NOV: 0.0
+      DEC: 0.0
+  returns: []
+- registration_number: '03643'
+  name: RANDALL FAMILY FARMS
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 1.87
+  gw_wells: 2
+  gw_capacity_mgd: 1.87
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011702
+  latitude: 40.076457
+  longitude: -83.693678
+  registration_date: '2025-03-10'
+  inactive_date: null
+  last_annual_report_year: 2025
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: 03709
+  name: Haerr - RAH Geron Farm
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 1.15
+  gw_wells: 1
+  gw_capacity_mgd: 1.15
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011801
+  latitude: 40.025502
+  longitude: -83.744274
+  registration_date: '2026-02-19'
+  inactive_date: null
+  last_annual_report_year: null
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: '03710'
+  name: S & A Haerr Lands LLC Bair Rd
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 1.01
+  gw_wells: 1
+  gw_capacity_mgd: 1.01
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011607
+  latitude: 40.06944
+  longitude: -83.821865
+  registration_date: '2026-02-19'
+  inactive_date: null
+  last_annual_report_year: null
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: '03711'
+  name: Haerr - Dallas Rd
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 1.94
+  gw_wells: 1
+  gw_capacity_mgd: 1.94
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011607
+  latitude: 40.042974
+  longitude: -83.814222
+  registration_date: '2026-02-19'
+  inactive_date: null
+  last_annual_report_year: null
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: '03712'
+  name: Haerr - Faulkner
+  county: CHAMPAIGN
+  primary_use_type: Agriculture
+  status: Active
+  total_capacity_mgd: 3.17
+  gw_wells: 3
+  gw_capacity_mgd: 3.17
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011604
+  latitude: 40.099799
+  longitude: -83.834562
+  registration_date: '2026-02-20'
+  inactive_date: null
+  last_annual_report_year: null
+  ground_water: []
+  surface_water: []
+  returns: []
+- registration_number: 03719
+  name: URBANA CITY PWS 29 WTP
+  county: CHAMPAIGN
+  primary_use_type: Public
+  status: Active
+  total_capacity_mgd: 3.0
+  gw_wells: 3
+  gw_capacity_mgd: 3.0
+  sw_intakes: 0
+  sw_capacity_mgd: null
+  huc12: 050800011607
+  latitude: 40.150342
+  longitude: -83.791505
+  registration_date: '2026-03-26'
+  inactive_date: null
+  last_annual_report_year: null
+  ground_water: []
+  surface_water: []
+  returns: []

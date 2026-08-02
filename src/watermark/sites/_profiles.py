@@ -1714,7 +1714,19 @@ _URBANA = SiteProfile(
                 "[reference] Closed-loop cooling disclosed at the Feb-2026 City of Urbana meeting — "
                 "developer stated water use 'comparable to a standard office building' (Urbana Daily "
                 "Citizen 2026-02-18). Undercuts the buried-valley water-abstraction thesis. Not a "
-                "document extraction; refine to [verified] on an ingested mechanical/plumbing permit."
+                "document extraction; refine to [verified] on an ingested mechanical/plumbing permit. "
+                "B4 (#1684) reviewed it against the record and the pin is KEPT unchanged, because "
+                "neither instrument the reconciliation harness reads can reach this campus: the "
+                "City's own Pre-Annexation Agreement (Ord. 4612-24) obliges it to 'provide water and "
+                "sewer', so the campus buys City water (invisible to the Ohio DNR withdrawal "
+                "registry — it is absent from all 31 Champaign County registrations) and discharges "
+                "to the City WPCF's sewer (no NPDES outfall, so no DMR). Outcome route_blind, NOT "
+                "'confirmed dry'. The claim also states no figure at all, and its two readings are "
+                "three orders of magnitude apart: an evaporative read at this facility's own "
+                "screening IT-load bracket implies 0.49-1.64 MGD against the City's entire reported "
+                "1.76 MGD municipal withdrawal (2024). See "
+                "data/reference/oepa/cooling-reconciliation.yaml + "
+                "data/extracted/urbana/cooling-water-account.md."
             ),
         ),
     ),

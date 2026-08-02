@@ -180,6 +180,46 @@ groundwater (WWFRP 03498; ~89% returned, hydrostatic-test coverage held by Becht
 with `it_load` and the three `predicted_*` left null — a consumer must render the refusal and
 **never substitute a zero**.
 
+### The supplier is the denominator (B4, #1684) — the Urbana origin claim
+
+Urbana is where the closed-loop framing entered this network: the developer told a February-2026
+City meeting the campus would use closed-loop cooling with water use *"comparable to a standard
+office building"*, which took the Mad River buried-valley abstraction thesis off the table for the
+site (#1327) before appearing at Van Wert, Springfield, Troy-Piqua and Bowling Green. Two things
+distinguish its row.
+
+**Its claim carries no number.** Every other B-site disclosed a quantity — Troy-Piqua's 2.0 MGD
+reservation, Van Wert's ~660,000 gal, Springfield's 300,000 gal/day ceiling. A comparison is not a
+self-reported figure, so nothing lands on `disclosed_makeup` or `disclosed_ceiling`; what is
+asserted is an order of magnitude, and its two readings are three orders apart.
+
+**Its route is established on the City's own instruments**, not on press: Ord. 4612-24's
+Pre-Annexation Agreement makes providing *"water and sewer"* a City duty and makes the failure to
+provide it a de-annexation trigger, and the R.C. 709.023 statement-of-services ordinance (4613-24)
+passed the same night. The consequence is confirmed as a **searched** absence — none of the 31
+Champaign County WWFRP registrations is the campus, and ECHO's 21-facility county CWA inventory
+carries no permit at the site.
+
+What the registry *does* reach is the **supplier**, and that rides on a sixth slot —
+**`supplier_withdrawal`**. The rule is the same as every other non-`documented_*` register: a
+system total aggregates every customer on it, so it **never feeds the classifier** and can neither
+corroborate nor contradict one facility's claim (a model validator refuses it outright without a
+cited municipal supply route). It is carried because it makes the blindness quantitative:
+
+| | figure |
+|---|---:|
+| City of Urbana, reported 2024 withdrawal (WWFRP 00837, 644.99 MG) | **1.76 MGD** |
+| Evaporative read of the campus at its screening bracket (34.5 / 74.8 / 115 MW × 0.0143) | 0.49 / 1.07 / **1.64 MGD** |
+| …as a share of everything the City withdrew in 2024 | 28 % / 61 % / **93 %** |
+| The claim's own reading ("office building") | below the 0.01 MGD noise floor |
+
+That is the difference between a rounding error on the City's system and a second City-sized
+demand on the same aquifer — and no instrument on either side can tell them apart. It is also why
+the lead adds an ask the other route-blind rows do not have: the water system's own **capacity /
+supply-adequacy analysis** for the campus, i.e. the draw the *supplier* planned for, which is the
+figure the operator's claim never states. Full read:
+[`data/extracted/urbana/cooling-water-account.md`](../../extracted/urbana/cooling-water-account.md).
+
 ### The reference band (B6, #1686)
 
 `meta.reference_band` records the per-IT-MW evaporative screening band (makeup / consumptive /

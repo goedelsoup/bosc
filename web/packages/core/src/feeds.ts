@@ -393,10 +393,11 @@ export interface CoolingWaterRoute {
 export type CorroboratorStance = "corroborates" | "contradicts" | "silent";
 
 /** One facility's water account (`bosc.hydrology.cooling_reconcile.WaterAccount`): the
- *  archetype-predicted side plus the FIVE structurally-distinct provenance slots — documented
+ *  archetype-predicted side plus the SIX structurally-distinct provenance slots — documented
  *  (a metered/record instrument), reserved (a will-serve CEILING, not an instrument),
  *  disclosed (an operator self-report, never an upgrade), the self-disclosed permit ceiling,
- *  and nonprocess (metered, on record, but not the cooling account). A renderer must keep
+ *  nonprocess (metered, on record, but not the cooling account), and supplier (the municipal
+ *  system's own withdrawal — the denominator, not this facility's water). A renderer must keep
  *  those registers apart — collapsing them is the exact failure the harness exists to
  *  prevent. Both the predicted side and the instruments' reach can be absent; see below. */
 export interface CoolingWaterAccount {
@@ -421,6 +422,12 @@ export interface CoolingWaterAccount {
    *  test (#1686 — Intel's construction-phase groundwater). A fifth register: never render it
    *  as makeup, and never fold it into the documented slots. */
   nonprocess_makeup?: ProvenancedValue | null;
+  /** The reported withdrawal of the MUNICIPAL SYSTEM that supplies a route-blind facility
+   *  (#1684 — Urbana). A sixth register: the registry meters the city, not its customers, so
+   *  this is the supplier's account across every customer on it. It can never corroborate or
+   *  contradict one facility's cooling claim; render it as the denominator the claim is read
+   *  against, never as the facility's makeup. */
+  supplier_withdrawal?: ProvenancedValue | null;
   /** Whether the instruments can reach this facility's water at all (#1686). */
   route?: CoolingWaterRoute | null;
   disclosed_cycles?: ProvenancedValue | null;

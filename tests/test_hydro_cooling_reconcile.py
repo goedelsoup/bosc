@@ -226,13 +226,20 @@ def test_cohort_is_registry_derived_gaps_plus_troy_piqua_and_intel_control() -> 
     assert all(r.claimed_archetype in {"closed_loop_dry", "hybrid_adiabatic"} for r in claim_cohort)
     # A2's registry-derived cohort facilities resolve to a gap today: no facility-own DMR is on
     # record, and OHD000001 — which would have been the other route to one — was withdrawn rather
-    # than finalized (2026-07-21), so no general-permit coverage will ever appear either. The
-    # exceptions are the sites whose own records carry a quantified figure: Bowling Green (B5,
-    # #1685) has an independently-sourced reservation ceiling, so it is a reservation_conflict.
-    cohort = [r for r in live if r.site not in {"troy-piqua", "new-albany", "bowling-green"}]
+    # than finalized (2026-07-21), so no general-permit coverage will ever appear either. Two
+    # exceptions, and they fail to be gaps for different reasons. Bowling Green (B5, #1685) has an
+    # independently-sourced reservation ceiling — a quantified figure of its own — so it is a
+    # reservation_conflict. Urbana (B4, #1684) has no figure at all, but its ROUTE to the City's
+    # water and sewer is itself on the record, so its absence of documents is a blind instrument
+    # rather than an unfinished lookup.
+    cohort = [
+        r for r in live if r.site not in {"troy-piqua", "new-albany", "bowling-green", "urbana"}
+    ]
     assert cohort
     assert all(r.outcome is cr.ReconcileOutcome.GAP for r in cohort)
-    assert "urbana" in {r.site for r in cohort}
+    urbana = [r for r in live if r.site == "urbana"]
+    assert len(urbana) == 1
+    assert urbana[0].outcome is cr.ReconcileOutcome.ROUTE_BLIND
     # Troy-Piqua (B1 #1681) pins UNKNOWN so it is NOT in A2's cohort, but its FAQ-vs-reservation
     # conflict is reconciled as an explicit live reservation_conflict — not a gap.
     troy = [r for r in live if r.site == "troy-piqua"]
@@ -940,6 +947,162 @@ def test_reference_band_says_out_loud_it_is_not_intel_derived() -> None:
     disclosed = intel.account.disclosed_makeup
     assert disclosed is not None
     assert band.makeup_mgd_per_mw != disclosed.value  # nothing quietly divided Intel's 5 MGD
+
+
+# ------------------------------------------------- B4 the Urbana origin claim (#1684)
+
+
+def test_supplier_withdrawal_requires_a_cited_municipal_route() -> None:
+    # The slot only has a referent under a municipal supply: off that route a system total parked
+    # next to a facility that does not buy from it is the category error the slot exists to avoid,
+    # and a self-supplied facility's own withdrawal belongs on documented_makeup.
+    supplier = ProvenancedValue.from_reference(1.76, "MGD", citation="test: city system total")
+    with pytest.raises(ValueError, match="cited municipal supply route"):
+        cr.reconcile_facility(
+            _dry_facility(),
+            site="test-site",
+            claim_source="reference",
+            claim_citation="[reference] closed-loop claim",
+            settings=Settings(),
+            supplier_withdrawal=supplier,
+        )
+    with pytest.raises(ValueError, match="cited municipal supply route"):
+        cr.reconcile_facility(
+            _dry_facility(),
+            site="test-site",
+            claim_source="reference",
+            claim_citation="[reference] closed-loop claim",
+            settings=Settings(),
+            supplier_withdrawal=supplier,
+            route=cr.WaterRoute(
+                supply=cr.SupplyRoute.SELF_SUPPLIED,
+                discharge=cr.DischargeRoute.SANITARY_SEWER,
+                citation="test: own wells",
+                tag="[verified]",
+                confidence="high",
+            ),
+        )
+
+
+def test_a_suppliers_withdrawal_never_feeds_the_classifier() -> None:
+    # A system total aggregates every customer on it, so however large it is it can never make one
+    # facility's dry claim a discrepancy. The row stays route_blind and no re-archetype is offered.
+    huge = ProvenancedValue.from_reference(
+        50.0, "MGD", citation="test: the city withdraws a great deal for everyone else"
+    )
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop claim",
+        settings=Settings(),
+        supplier_withdrawal=huge,
+        route=_municipal_route(),
+    )
+    assert rec.outcome is cr.ReconcileOutcome.ROUTE_BLIND
+    assert rec.recommended_archetype is None
+    assert rec.account.documented_makeup is None  # never folded into the metered register
+    assert rec.account.supplier_withdrawal is not None
+
+
+def test_reconcile_urbana_b4_route_blind_origin_claim() -> None:
+    # The B4 case: the campus whose "water use comparable to a standard office building" is where
+    # the closed-loop framing entered the network (#1327). It IS in A2's cohort (pins
+    # closed_loop_dry) but is reconciled explicitly so its cited municipal route and its supplier's
+    # withdrawal are carried — which is what makes it route_blind rather than a bare gap.
+    rec = cr.reconcile_urbana(settings=Settings())
+    assert rec.site == "urbana"
+    assert rec.facility == "Urbana Technology Hub"
+    assert rec.is_control is False
+    assert rec.claimed_archetype == "closed_loop_dry"
+    assert rec.claim_source == "reference"
+    assert rec.outcome is cr.ReconcileOutcome.ROUTE_BLIND
+    assert rec.recommended_archetype is None  # the instruments never reached it; nothing to say
+    assert rec.kept_archetype == "closed_loop_dry"  # the pin is KEPT, never promoted
+    a = rec.account
+    assert a.route is not None
+    assert a.route.supply is cr.SupplyRoute.MUNICIPAL
+    assert a.route.discharge is cr.DischargeRoute.SANITARY_SEWER
+    assert a.route.tag == "[verified]"
+    # The route is established on the CITY'S OWN instruments, not on press.
+    assert "4612-24" in a.route.citation and "provide water and sewer" in a.route.citation
+    assert "1PD00011" in a.route.citation  # the POTW that would receive any blowdown
+    # The claim is a COMPARISON, not a figure — so nothing lands on the self-report slots.
+    assert a.disclosed_makeup is None
+    assert a.disclosed_ceiling is None
+    assert a.reserved_makeup is None and a.reserved_blowdown is None
+    assert a.documented_makeup is None and a.documented_blowdown is None
+    # What IS on record is the supplier's own withdrawal — its own register, its own citation.
+    assert a.supplier_withdrawal is not None
+    assert a.supplier_withdrawal.value == pytest.approx(1.7623)
+    assert "SUPPLIER'S account, not the facility's" in a.supplier_withdrawal.citation
+    # The ask is re-aimed at the holder that actually meters it — here the site's OWN city, on
+    # both sides (contrast New Albany, where the meter belongs to Columbus).
+    assert rec.lead is not None
+    assert "City of Urbana" in rec.lead.holder
+    assert "Industrial Pretreatment" in rec.lead.holder
+    assert any("capacity / supply-adequacy analysis" in r for r in rec.lead.records_sought)
+    # The durable pointer is the leads-board id, not just the issue that closes on merge.
+    assert "URB-WATER-METER" in rec.lead.epic_ref
+    # The profile pin is untouched — the harness recommends, it never mutates.
+    urbana_fac = next(f for f in cr.SITES["urbana"].facilities if f.name == "Urbana Technology Hub")
+    assert urbana_fac.cooling_model is CoolingModelType.CLOSED_LOOP_DRY
+
+
+def test_cohort_includes_urbana_b4_route_blind_exactly_once() -> None:
+    # Urbana IS in A2's cohort but is reconciled explicitly (skipped in the generic loop) — so it
+    # appears exactly once, as a route_blind, not twice and never as a plain gap.
+    records = cr.reconcile_cohort(settings=Settings())
+    urbana = [r for r in records if r.site == "urbana"]
+    assert len(urbana) == 1
+    assert urbana[0].outcome is cr.ReconcileOutcome.ROUTE_BLIND
+    assert urbana[0].account.supplier_withdrawal is not None
+    assert urbana[0].is_control is False
+
+
+def test_urbanas_denominator_reconciles_with_the_registry_and_the_band() -> None:
+    """The B4 measurement is arithmetic over committed inputs — pin it so it can't drift.
+
+    The supplier figure is the City's own WWFRP annual total annualized, and the comparison the
+    citation states is that total against the evaporative reference band run at the campus's
+    committed screening IT-load bracket. Both sides move if their sources move; this recomputes
+    them from those sources so a stale hand-written figure fails here instead of shipping.
+    """
+    registry = yaml.safe_load(
+        (
+            Path(__file__).resolve().parent.parent
+            / "data/reference/ohio-water-withdrawal/champaign.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    pws = next(f for f in registry["facilities"] if f["registration_number"] == "00837")
+    total_2024 = next(y["total_mg"] for y in pws["ground_water"] if y["year"] == 2024)
+    assert total_2024 == 644.99
+    annualized = total_2024 / 366  # 2024 is a leap year
+    rec = cr.reconcile_urbana(settings=Settings())
+    supplier = rec.account.supplier_withdrawal
+    assert supplier is not None
+    assert supplier.value == pytest.approx(annualized, abs=5e-5)
+    assert "644.99 MG" in supplier.citation
+
+    # The campus is ABSENT from the same registry — the searched absence the route rests on.
+    names = " ".join(f["name"].upper() for f in registry["facilities"])
+    for token in ("THOR", "HIGHLAND", "TECHNOLOGY HUB", "DATA CENTER"):
+        assert token not in names
+
+    # The counterfactual: the evaporative band at the profile's own screening bracket.
+    band = cr.reference_band(settings=Settings())
+    fac = next(f for f in cr.SITES["urbana"].facilities if f.name == "Urbana Technology Hub")
+    assert fac.it_load_low_mw is not None and fac.it_load_high_mw is not None
+    low = fac.it_load_low_mw * band.makeup_mgd_per_mw
+    high = fac.it_load_high_mw * band.makeup_mgd_per_mw
+    assert round(low, 2) == 0.49 and round(high, 2) == 1.64
+    assert "0.49 / 1.07 / 1.64 MGD" in supplier.citation
+    assert f"{round(100 * low / annualized)}%" == "28%"
+    assert f"{round(100 * high / annualized)}%" == "93%"
+    assert "28% / 61% / 93%" in supplier.citation
+    # And the claim's own reading is below the harness's own noise floor — the whole point.
+    assert cr._MEANINGFUL_FLOW_MGD == 0.01
+    assert "0.01 MGD noise floor" in supplier.citation
 
 
 # --------------------------------------------------------------------- A4 corroborators (#1680)

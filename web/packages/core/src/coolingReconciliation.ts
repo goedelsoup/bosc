@@ -1,7 +1,7 @@
 /**
  * Build-time reader for the **`cooling-reconciliation`** object feed (#1805, epic #1803 P2) —
  * the site's own claim-vs-record cooling-cycling account (epic #1676: the A3 harness, the A4
- * secondary corroborators, the B1-B3 provenance slots), shipped verbatim from the committed
+ * secondary corroborators, the B1-B6 provenance slots), shipped verbatim from the committed
  * reference artifact by `watermark.site.cooling_reconciliation`.
  *
  * Discipline, in the shape `dilution.ts`/`thermal.ts` established: **no fallback, no other
@@ -9,8 +9,9 @@
  * water chapter simply renders without the reconciliation block. The feed's `caveats` are the
  * harness's discipline rules (a ceiling is not an instrument; a self-report never upgrades
  * the source; corroborators never change the outcome; a back-solved CoC is a bracket; an
- * instrument that cannot reach a facility returns absence, not zero) — callers MUST render
- * them, never drop them (the `gridBackdrop.ts` rule).
+ * instrument that cannot reach a facility returns absence, not zero; a supplying system's
+ * withdrawal is the denominator, not the facility's water) — callers MUST render them, never
+ * drop them (the `gridBackdrop.ts` rule).
  *
  * NOT client-safe (imports the node bundle loader) — pages render these plain objects.
  */

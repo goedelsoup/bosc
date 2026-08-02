@@ -4,8 +4,8 @@
     "rel": "operates",
     "dst": "npdes:2PD00006",
     "date": "",
-    "ref": "2PD00006*VD",
-    "source": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+    "ref": "2PD00006*WD",
+    "source": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
     "relation_class": null,
     "relation_basis": null
   },
@@ -14,8 +14,8 @@
     "rel": "discharges_to",
     "dst": "TOWN CREEK",
     "date": "",
-    "ref": "2PD00006*VD",
-    "source": "oepa/van-wert/2PD00006.fs.npdes.yaml",
+    "ref": "2PD00006*WD",
+    "source": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
     "relation_class": null,
     "relation_basis": null
   },

@@ -20,13 +20,34 @@ describe("cooling-reconciliation — the site's own claim-vs-record account", ()
     expect(feed?.site).toBe("urbana");
     expect(feed?.candidates).toHaveLength(1);
     const row = feed!.candidates[0];
-    expect(row.outcome).toBe("gap");
+    // B4 (#1684): route_blind, not gap — the City's own Pre-Annexation Agreement puts the campus
+    // on City water and City sewer, which is exactly where the two instruments do not look.
+    expect(row.outcome).toBe("route_blind");
     expect(row.claim_source).toBe("reference"); // an operator claim, not an instrument
     expect(row.claimed_archetype).toBe("closed_loop_dry");
     expect(row.account.predicted_makeup?.value).toBe(0); // predicted ~0 MGD
     expect(row.lead?.records_sought.length).toBeGreaterThan(0);
     // The discipline travels as data — a renderer must have caveats to show.
     expect(feed!.caveats.length).toBeGreaterThan(0);
+  });
+
+  it("urbana's supplier withdrawal ships as its own register — the denominator (#1684)", () => {
+    // The claim here states no figure at all ("comparable to a standard office building"), so
+    // nothing lands on the self-report slots. What IS on record is the SUPPLIER's withdrawal —
+    // the City system's total across every customer. A renderer must keep that apart from the
+    // facility's own metered account, which is empty and will stay empty.
+    const feed = buildCoolingReconciliation("urbana");
+    const row = feed!.candidates[0];
+    expect(row.account.route?.supply).toBe("municipal");
+    expect(row.account.route?.discharge).toBe("sanitary_sewer");
+    expect(row.account.supplier_withdrawal?.value).toBeGreaterThan(0);
+    expect(row.account.documented_makeup ?? null).toBeNull();
+    expect(row.account.documented_blowdown ?? null).toBeNull();
+    expect(row.account.disclosed_makeup ?? null).toBeNull();
+    expect(row.account.disclosed_ceiling ?? null).toBeNull();
+    // The ask goes to the site's own city — on BOTH sides, unlike New Albany's out-of-county meter.
+    expect(row.lead?.holder).toMatch(/City of Urbana/);
+    expect(row.lead?.records_sought.some((r) => /capacity/i.test(r))).toBe(true);
   });
 
   it("a site outside the cohort carries no feed (lima) — never an empty shell", () => {

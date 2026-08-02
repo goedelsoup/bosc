@@ -1,5 +1,113 @@
 [
   {
+    "rel": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Van Wert WWTP",
+    "confidence": "high",
+    "warnings": [
+      "This is the DRAFT public-notice package, not the issued instrument. Its permit cover prints \"Modification Effective Date: PROPOSED (July 1, 2026)\" and the notice prints \"Effective Date of Modification: PROPOSED\".",
+      "Two permit numbers appear in the document: 2PD00006*VD (prior/cover letter) and 2PD00006*WD (new/modified); recorded the new modified permit number.",
+      "Discharge address is same as facility address; no distinct discharge address provided."
+    ],
+    "fields": {
+      "superseded_warnings": [
+        "Comment period end calculated as 30 days after the public notice date — SUPERSEDED: the attached fact sheet prints it outright, \"Comment Period Ends: 6/24/2026\" (0-based p. 51). The inferred date and the printed one agree."
+      ],
+      "facility_name": "Van Wert WWTP",
+      "permit_no": "2PD00006*WD",
+      "permit_action": "modification",
+      "applicant": "City of Van Wert",
+      "application_no": "OH0027910",
+      "public_notice_no": "221593",
+      "public_notice_date": "2026-05-25",
+      "comment_period_end": "2026-06-24",
+      "facility_address": "7998 S.R. 127 N., Van Wert, OH 45891, Van Wert County",
+      "discharge_address": null,
+      "receiving_water": "Town Creek",
+      "stream_network": null,
+      "outfalls": [
+        "001"
+      ],
+      "note": "The modification changes the Part I.C Schedule of Compliance for the Combined Sewer Overflow Long Term Control Plan; the permit number changes from 2PD00006*VD to 2PD00006*WD on the effective date. The outfall identifier appears as both '001' (public notice location table) and '2PD00006001' (effluent limitation tables)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/van-wert/2PD00006.36a58063.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Van Wert WWTP",
+    "confidence": "high",
+    "warnings": [
+      "This PDF is a COMPOSITE — transmittal letter + the modified permit + the modification's own fact sheet (from 0-based p. 48). Cite the sub-document, not just the file.",
+      "The permit number transitions from 2PD00006*VD (the permit being modified, cited in the transmittal letter's header) to 2PD00006*WD (as modified, effective 2026-07-01); the number recorded here is the effective one, *WD."
+    ],
+    "fields": {
+      "superseded_warnings": [
+        "2PD00006*VD recorded as the permit_no on the cover letter — SUPERSEDED: see the header comment; the instrument is *WD.",
+        "No public_notice_no found in document — SUPERSEDED: Public Notice No. 221593 is printed on composite sheet 49 (the attached modification fact sheet), outside the six-page read window.",
+        "No comment_period_end found in document — SUPERSEDED: \"Comment Period Ends: 6/24/2026\" is printed on composite sheet 49.",
+        "Stream network downstream of Town Creek not stated — SUPERSEDED: \"Middle Creek to Little Auglaize River to Auglaize River to Maumee River to Lake Erie\", composite sheet 49.",
+        "public_notice_date inferred from the letter date 2026-05-18 — SUPERSEDED: the letter date is the modification ACTION date; the public notice date is 2026-05-25 (composite sheet 49)."
+      ],
+      "facility_name": "Van Wert WWTP",
+      "permit_no": "2PD00006*WD",
+      "permit_action": "modification",
+      "applicant": "City of Van Wert, 515 East Main St., Van Wert, OH 45891",
+      "contact": "Greg Reinhart",
+      "application_no": "OH0027910",
+      "public_notice_no": "221593",
+      "public_notice_date": "2026-05-25",
+      "comment_period_end": "2026-06-24",
+      "facility_address": "Van Wert WWTP, 7998 S.R. 127 N., Van Wert, OH 45891, Van Wert County",
+      "discharge_address": "Van Wert WWTP, 7998 S.R. 127 N., Van Wert, OH 45891, Van Wert County",
+      "receiving_water": "Town Creek at River Mile 13.87",
+      "stream_network": "Middle Creek, Little Auglaize River, Auglaize River, Maumee River, Lake Erie",
+      "outfalls": [
+        "001"
+      ],
+      "note": "Outfall 001 (station 2PD00006001) is the sole FINAL outfall — 4,000,000 GPD at 40.8882410 N / -84.58437518 W (the coordinate is printed on the draft public notice, not in this package; see 2PD00006.36a58063.npdes.yaml). The permit body authorizes discharge \"from the Van Wert WWTP wastewater treatment works … (and associated combined sewer overflows)\": the five CSOs are authorized wet-weather discharges under the same permit and are recorded under `stations:` below with the SSO, sludge, influent and in-stream stations."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/van-wert/2PD00006.f8aaad0a.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "oepa/van-wert/2PD00006.fs.npdes.yaml",
     "group": "permits-npdes",
     "title": "Van Wert Wastewater Treatment Plant (WWTP)",

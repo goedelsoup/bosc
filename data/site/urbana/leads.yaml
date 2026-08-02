@@ -37,6 +37,34 @@ leads:
     between the Champaign Economic Partnership / Board of County Commissioners and Urbana0624C.
   source: 'City of Urbana public notice + Ord. 4612-24 Exhibit A · data/extracted/urbana/incentive-instruments.yaml counterparty'
   issue: 1354
+- id: URB-WATER-METER
+  kind: question
+  status: unanswered
+  tag: open
+  title: 'The "office building" water claim is untestable by any state instrument — and the City holds the only record that could settle it'
+  detail: >
+    The disclosed closed-loop cooling claim — water use "comparable to a standard office building",
+    stated at the February-2026 City meeting — is the sentence that took the Mad River
+    buried-valley abstraction thesis off the table for this site, and the framing then propagated
+    to Van Wert, Springfield, Troy-Piqua and Bowling Green. The B4 reconciliation (issue 1684)
+    established that neither state instrument can test it, on the City's OWN record: Ord. 4612-24's
+    Pre-Annexation Agreement obliges the City to "provide water and sewer", so the campus buys City
+    water (and is absent from all 31 Champaign County withdrawal registrations) and discharges to
+    the City WPCF sewer (no outfall, so no DMR). The outcome is route_blind, never "confirmed dry".
+    The claim also states no figure at all, and its two readings are three orders of magnitude
+    apart — against the City's entire reported 1.76 MGD municipal withdrawal (2024), an evaporative
+    read of this campus at its own screening IT-load bracket implies 0.49-1.64 MGD, i.e. 28-93% of
+    everything the City withdrew, while the office-building reading falls below the screen's own
+    0.01 MGD noise floor. OPEN — request from the City of Urbana, under R.C. 149.43, the metered
+    water-service consumption for the campus, the industrial-user (IU) permit and sewer-use
+    agreement under the City's OEPA-audited industrial pretreatment program, the water-service
+    agreement or will-serve letter, and above all the water system's own capacity /
+    supply-adequacy analysis for the campus — the draw the SUPPLIER planned for, which is the
+    figure the developer's claim never states. Note the campus is not built — its site plan was
+    denied as "incomplete", a 12-month moratorium is in force, and the zoning is in federal
+    litigation — so what exists now is the service and capacity record, not a meter history.
+  source: 'data/extracted/urbana/cooling-water-account.md · data/reference/oepa/cooling-reconciliation.yaml (route_blind row) · data/reference/ohio-water-withdrawal/champaign.yaml · Ord. 4612-24 Exhibit A in data/documents/urbana/council/'
+  issue: 1684
 - id: URB-CRA-GAP
   kind: signal
   status: unanswered

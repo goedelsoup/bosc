@@ -39,6 +39,9 @@ storage:
 - relpath: extracted/urbana/incentive-instruments.md
   media_type: text/markdown
   lfs: false
+- relpath: extracted/urbana/cooling-water-account.md
+  media_type: text/markdown
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -56,6 +59,9 @@ tags:
 - community-reinvestment-area
 - pre-annexation-agreement
 - tax-incentives
+- cooling
+- water-withdrawal
+- industrial-pretreatment
 notes: >
   Onboarding record and investigative findings for the Urbana watershed point (Mad River corridor,
   Champaign County OH). highland55-findings.md documents the Thor Equities data-center project west
@@ -92,3 +98,17 @@ notes: >
   §401 WQC filings; it carries a clause obliging the City to de-annex on the developer's demand.
   Exhibit B's enacted parcel list EXCLUDES 133.256 of the assembly's 230.346 ac.
   JobsOhio / ODOD / R.C. 122.175 searched negative.
+  cooling-water-account.md is the B4 (#1684) reconciliation of the disclosed closed-loop claim —
+  "water use comparable to a standard office building", the sentence that took the buried-valley
+  abstraction thesis off the table here (#1327) and then propagated to the other sites — against
+  the record. Outcome route_blind, NOT "confirmed dry" and NOT a gap: the City's own
+  Pre-Annexation Agreement (Ord. 4612-24) obliges it to "provide water and sewer", so the campus
+  buys City water (absent from all 31 Champaign County WWFRP registrations) and discharges to the
+  City WPCF sewer (no outfall, so no DMR) — both instruments are out of reach by construction and
+  the pin is KEPT [reference]. What the registry does reach is the SUPPLIER: the City's own public
+  water system reported 644.99 MG in 2024 (1.76 MGD) across two plants on the same aquifer, which
+  is the denominator the claim has to be read against — an evaporative read of the same campus at
+  its own screening IT-load bracket implies 0.49-1.64 MGD, i.e. 28-93% of everything the City
+  withdrew, while the office-building reading sits below the screen's 0.01 MGD noise floor.
+  The record that would settle it is City-held (the metered service, the IU permit under the
+  City's OEPA-audited pretreatment program, and the supplier's own capacity analysis) → C2 #1688.

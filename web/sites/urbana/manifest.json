@@ -1,10 +1,10 @@
 {
   "site": "urbana",
   "bundle_version": "1.0.0",
-  "contract_version": "1.50.0",
-  "generated_at": "2026-08-01T16:38:14+00:00",
+  "contract_version": "1.51.0",
+  "generated_at": "2026-08-02T10:57:21+00:00",
   "feed_count": 34,
-  "row_total": 429,
+  "row_total": 447,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 3
+      "count": 4
     },
     {
       "name": "exhibits",
@@ -117,7 +117,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 3
+      "count": 7
     },
     {
       "name": "rsei",
@@ -229,7 +229,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 54
+      "count": 55
     },
     {
       "name": "geo/campus",
@@ -253,7 +253,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 6
     },
     {
       "name": "impact-study",
@@ -277,7 +277,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 82
+      "count": 86
     },
     {
       "name": "corpus-nodes",
@@ -285,7 +285,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 82
+      "count": 86
     },
     {
       "name": "ask-embeddings",

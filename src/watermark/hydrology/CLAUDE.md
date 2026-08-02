@@ -167,6 +167,27 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   the refusal total and cited — a half-refused account would read downstream as a real zero.
   `meta.reference_band` records the per-IT-MW evaporative screening band, derived from the
   **archetype spec**, explicitly NOT from the fab that was supposed to ground it.
+- **A blind instrument still reaches the SUPPLIER — and that is the denominator** (B4 #1684, the
+  Urbana origin claim). Urbana is where "closed loop undercuts the water thesis" entered this
+  network, and its claim is the one that carries **no number at all**: "water use comparable to a
+  standard office building" is a comparison, so nothing lands on `disclosed_makeup`/
+  `disclosed_ceiling` the way Van Wert's ~660k gal or Springfield's 300k gpd ceiling did. Its route
+  is `route_blind`, established on a stronger instrument than New Albany's — the City's **own**
+  Pre-Annexation Agreement (Ord. 4612-24) obliges it to "provide water and sewer", so the campus is
+  absent from all 31 Champaign County WWFRP registrations (a *searched* absence) and files no DMR.
+  What the registry does reach is the **City**, and its withdrawal rides on a sixth slot,
+  `supplier_withdrawal`. Same rule as every non-`documented_*` register: it **never feeds
+  `_classify`** — a system total aggregates every customer on it, so it can neither corroborate nor
+  contradict one facility's claim — and a `WaterAccount` validator **refuses it without a cited
+  municipal supply route** (off that route it has no referent; a self-supplied facility's own
+  withdrawal is `documented_makeup`). It is carried because it turns a bare negative into a
+  quantified one: the City reported **1.76 MGD** in 2024, an evaporative read of the same campus at
+  its `[inference]` screening IT-load bracket implies **0.49-1.64 MGD** (28-93% of that), and the
+  office-building reading sits below the 0.01 MGD noise floor — three orders of magnitude, and no
+  instrument on either side can tell them apart. That is what makes the untested question material
+  rather than academic, and it is why the ask is re-aimed at the supplier's **capacity /
+  supply-adequacy analysis** — the draw the utility planned for, which is the figure the operator's
+  claim never states.
 - **A blind route does not erase a reservation, and two conflicting figures are split by
   PROVENANCE rather than by size** (B5 #1685, Bowling Green). This is the guard above exercised on a
   real second site, and it matters because it is what stops `route_blind` from swallowing every

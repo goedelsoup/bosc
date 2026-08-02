@@ -1,10 +1,10 @@
 {
   "site": "van-wert",
   "bundle_version": "1.0.0",
-  "contract_version": "1.50.0",
-  "generated_at": "2026-08-01T16:39:00+00:00",
+  "contract_version": "1.51.0",
+  "generated_at": "2026-08-02T10:58:03+00:00",
   "feed_count": 32,
-  "row_total": 442,
+  "row_total": 447,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 4
     },
     {
       "name": "timeline",
@@ -37,7 +37,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 4
     },
     {
       "name": "entities",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 57
+      "count": 58
     },
     {
       "name": "geo/campus",

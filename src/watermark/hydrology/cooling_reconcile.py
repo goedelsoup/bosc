@@ -301,6 +301,18 @@ class WaterAccount(BaseModel):
     # it documents what the registry actually measured, so a reader can see that the ~0 cooling
     # signal is not the registry being silent. MGD (annualized from the reported annual total).
     nonprocess_makeup: ProvenancedValue | None = None
+    # The documented withdrawal of the MUNICIPAL SYSTEM that supplies a route-blind facility
+    # (B4, #1684) — the only withdrawal record A1 can reach once ``route.supply`` is municipal,
+    # because the registry meters the city, not its customers. It is the SUPPLIER's account, so
+    # like every other non-``documented_*`` slot it never feeds ``_classify``: a system total
+    # aggregates every customer on it and can neither corroborate nor contradict one facility's
+    # cooling claim. What it does is give a route_blind a DENOMINATOR — the scale a future
+    # disclosure lands inside — which is the difference between "we cannot see it" and "we cannot
+    # see it, and here is how big the thing we cannot see would be". Urbana is the case: the City
+    # reported 1.76 MGD across its two public-supply plants in 2024, while an evaporative read of
+    # the same campus at its screening IT load would draw 0.49-1.64 MGD. MGD (annualized from the
+    # reported annual total). Set only alongside a municipal supply route (enforced below).
+    supplier_withdrawal: ProvenancedValue | None = None
     # Whether A1 / A2 can reach this facility's water at all (B6, #1686). ``None`` = not
     # established (the honest default — a route is a cited determination, never assumed).
     route: WaterRoute | None = None
@@ -338,6 +350,26 @@ class WaterAccount(BaseModel):
             raise ValueError(
                 "the predicted account is absent with no prediction_refused reason — refusing to "
                 "derive an archetype's water is a cited stance, never a silent omission"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _supplier_withdrawal_needs_a_municipal_route(self) -> WaterAccount:
+        """A supplier's withdrawal only means anything under a cited municipal supply (B4, #1684).
+
+        The slot exists because a municipally-supplied facility is invisible to A1 while its
+        *supplier* is not. Off that route the figure has no referent: a self-supplied facility's
+        own withdrawal belongs on ``documented_makeup``, and a system total parked next to a
+        facility that does not buy from that system is the category error the slot was added to
+        prevent. So the route must be set and must say ``municipal``.
+        """
+        if self.supplier_withdrawal is None:
+            return self
+        if self.route is None or self.route.supply is not SupplyRoute.MUNICIPAL:
+            raise ValueError(
+                "supplier_withdrawal is set without a cited municipal supply route — a supplying "
+                "system's withdrawal is only the facility's denominator when the facility buys "
+                "from it; a self-supplied facility's own withdrawal is documented_makeup"
             )
         return self
 
@@ -888,6 +920,15 @@ def _route_blind_lead(
         "sewer-use agreement / capacity reservation for the campus",
         "water-service agreement or will-serve letter (the contracted supply the campus draws on)",
     ]
+    if account.supplier_withdrawal is not None:
+        # B4 (#1684): where the supplying system's own withdrawal is on record, the sharper ask is
+        # what that system PLANNED for. A capacity analysis sized to a campus draw is the supplier
+        # writing down the number the operator would not — and it is a different document from the
+        # customer's meter reading, held by the same utility.
+        records_sought.append(
+            "the water system's capacity / supply-adequacy analysis for the campus — what draw the "
+            "supplier planned for (the figure the operator's claim never states)"
+        )
     holders = [
         water_holder or f"City / municipal water-sewer utility serving {site}",
         "Ohio EPA (NPDES / OHD000001)",
@@ -900,6 +941,14 @@ def _route_blind_lead(
         f" The registry's non-zero series for this facility ({nonprocess.value:g} MGD) is NOT the "
         "cooling account — it is a separate, non-cooling withdrawal, recorded as such."
         if nonprocess is not None
+        else ""
+    )
+    supplier = account.supplier_withdrawal
+    supplier_clause = (
+        f" The registry does reach the SUPPLIER: {supplier.value:g} MGD across the supplying "
+        "system's own public-supply registrations — the system total this campus's draw will sit "
+        "inside, which is the scale the request is asking the utility to resolve."
+        if supplier is not None
         else ""
     )
     return RecordsRequestLead(
@@ -916,8 +965,8 @@ def _route_blind_lead(
             "A1/A2 at all: this facility is outside their reach on the side(s) that matter — "
             f"{blind}. Their ~0 is an absence of jurisdiction, not a measurement, so it must never "
             "be read as documented ~0 water (which would corroborate a dry claim on nothing)."
-            f"{nonprocess_clause} Pulling A1/A2 harder cannot resolve it; the record that can is "
-            f"City-held ({issue_ref})."
+            f"{nonprocess_clause}{supplier_clause} Pulling A1/A2 harder cannot resolve it; the "
+            f"record that can is City-held ({issue_ref})."
         ),
         epic_ref=f"#1688 (C2); {issue_ref}",
         tag="[open]",
@@ -1045,14 +1094,24 @@ def _finding(
             if disclosed is not None
             else ""
         )
+        # B4 (#1684): a supplying system's own reported withdrawal is the DENOMINATOR — it fixes
+        # the scale the unmeasurable claim would land inside. It is the supplier's account, not the
+        # facility's, so it stays a comparison and never a reading of this facility's water.
+        supplier = account.supplier_withdrawal
+        supplier_clause = (
+            f" The supplying system's own withdrawal IS on record ({supplier.value:g} MGD) — that "
+            "is the scale the campus's draw will sit inside, not a measurement of the campus."
+            if supplier is not None
+            else ""
+        )
         return (
             f"The {arche} claim for {fac.name} (source={claim_source}) cannot be tested by this "
             f"harness at all — the facility is outside the reach of the instruments it reads on "
             f"{blind}. Their ~0 is an absence of jurisdiction, NOT a documented ~0, so it can "
             "neither corroborate nor contradict the claim and must never upgrade the source."
-            f"{nonprocess_clause}{disclosed_clause}{refused} The record that would answer it is "
-            "City-held — metered water-service consumption + the industrial pretreatment / IU "
-            "permit (→ C2 records request #1688)."
+            f"{nonprocess_clause}{supplier_clause}{disclosed_clause}{refused} The record that "
+            "would answer it is City-held — metered water-service consumption + the industrial "
+            "pretreatment / IU permit (→ C2 records request #1688)."
         )
     if outcome is ReconcileOutcome.GAP:
         if account.disclosed_ceiling is not None:
@@ -1215,6 +1274,7 @@ def reconcile_facility(
     disclosed_makeup: ProvenancedValue | None = None,
     disclosed_ceiling: ProvenancedValue | None = None,
     nonprocess_makeup: ProvenancedValue | None = None,
+    supplier_withdrawal: ProvenancedValue | None = None,
     route: WaterRoute | None = None,
     prediction_refused: str | None = None,
     seasonality_warm_ratio: float | None = None,
@@ -1257,6 +1317,14 @@ def reconcile_facility(
     NOT the cooling account under test (Intel's construction-phase groundwater at New Albany) —
     kept distinct from ``documented_*`` because reading it as cooling makeup is a category error,
     not a conservative approximation. Like the self-report slots it never feeds the classifier.
+
+    ``supplier_withdrawal`` (B4, #1684) is the documented withdrawal of the municipal **system**
+    that supplies a route-blind facility — the only withdrawal A1 can reach once the supply route
+    is municipal, because the registry meters the city and not its customers. It never feeds the
+    classifier either (a system total aggregates every customer on it), and it is only valid
+    alongside a cited municipal supply route. Its job is to give a ``route_blind`` a denominator:
+    Urbana's campus is invisible to the registry, but the City of Urbana's own 1.76 MGD is not,
+    and that is the scale any later disclosure has to be read against.
 
     ``route`` (B6, #1686) states whether A1 / A2 can reach this facility's water at all. A facility
     on purchased municipal supply and/or a POTW sanitary sewer is outside them, so their ~0 is an
@@ -1334,6 +1402,7 @@ def reconcile_facility(
         disclosed_makeup=disclosed_makeup,
         disclosed_ceiling=disclosed_ceiling,
         nonprocess_makeup=nonprocess_makeup,
+        supplier_withdrawal=supplier_withdrawal,
         route=route,
         disclosed_cycles=disclosed_cycles,
         backsolved_cycles=backsolved_cycles,
@@ -2253,6 +2322,164 @@ def reconcile_intel_new_albany(*, settings: Settings | None = None) -> Reconcili
     )
 
 
+# ------------------------------------------- the Urbana B4 route-blind origin claim (#1684)
+
+# Urbana is where this whole pattern started. In February 2026 the developer of the "Urbana
+# Technology Hub" told a City of Urbana meeting the campus would use closed-loop cooling with water
+# use "comparable to a standard office building" — and that sentence is what took the Mad River
+# buried-valley abstraction thesis off the table for this site (#1327/#1330), then propagated as a
+# framing to Van Wert, Springfield, Troy-Piqua and Bowling Green. B4 (#1684) asks what the record
+# can actually say about it. The answer has three parts, and only the third is a surprise.
+#
+# 1. THE CLAIM CARRIES NO NUMBER. Every other B-site disclosed a quantity to argue with — Troy-
+#    Piqua's 2.0 MGD reservation (B1), Van Wert's ~660k gal (B2), Springfield's 300k gal/day
+#    ceiling (B3). Urbana disclosed a COMPARISON. There is nothing to put on `disclosed_makeup`,
+#    because a simile is not a self-reported figure; it is a claim about which order of magnitude
+#    the campus belongs to, and the two candidate readings are three orders apart.
+# 2. THE INSTRUMENTS CANNOT REACH IT — the B6 (#1686) result, and here it is established on a
+#    stronger instrument than New Albany's. The City's own Pre-Annexation Agreement (Ord. 4612-24
+#    Exh. A) makes providing "water and sewer" a City duty and makes the FAILURE to provide it a
+#    trigger for de-annexation, and the companion statement-of-services ordinance (4613-24,
+#    R.C. 709.023) passed the same night. A campus on City water withdraws nothing from waters of
+#    the state, so A1 never sees it; a campus on the City sewer files no DMR, so A2 never sees it.
+#    The Champaign County registry confirms the consequence: 31 registrations, not one of them the
+#    campus. The campus is also not built, so no meter reading exists anywhere yet.
+# 3. THE SUPPLIER IS ON RECORD EVEN THOUGH THE FACILITY IS NOT — and that is what makes this row
+#    something other than a shrug. The City of Urbana's public water system reported 1.76 MGD in
+#    2024. An evaporative read of this same campus, at its own [inference] screening IT load,
+#    would draw 0.49-1.64 MGD: between a quarter and substantially all of what the City withdrew
+#    in a year. The claim's own reading is below the harness's 0.01 MGD noise floor. So the
+#    untested question is not academic — it is the difference between a rounding error on the
+#    City's system and a second City-sized demand on the same buried-valley aquifer, and the only
+#    party holding the record that settles it is the City that is currently being sued by the
+#    developer. Hence `supplier_withdrawal`: not the facility's water, but the scale of it.
+_URBANA_FACILITY_NAME = "Urbana Technology Hub"
+_URBANA_ROUTE = WaterRoute(
+    supply=SupplyRoute.MUNICIPAL,
+    discharge=DischargeRoute.SANITARY_SEWER,
+    citation=(
+        "[verified] Both sides of the Urbana Technology Hub's water account are outside the "
+        "instruments this harness reads, on the CITY'S OWN legislative record. MAKEUP: Ordinance "
+        "4612-24 (passed 5-0, 2024-12-17) authorized a Pre-Annexation Agreement with Urbana0624C, "
+        "LLC — which the City's own public notice identifies as 'Highland' — under which the City "
+        "must 'provide water and sewer' to the property, and whose section 3(c) makes the failure "
+        "to make 'water and sewer capacity ... available to satisfy the Developer's schedule' a "
+        "trigger for de-annexing the entire property on demand; the companion statement-of-services "
+        "ordinance 4613-24 (R.C. 709.023) passed 5-0 the same night, and the territory was annexed "
+        "by Ord. 4619-25. A campus supplied by the City withdraws nothing itself, and the Ohio DNR "
+        "WWFRP registers withdrawals FROM WATERS OF THE STATE (R.C. 1521.16) — so A1 can never "
+        "meter it. The registry bears that out as a SEARCHED absence: none of the 31 WWFRP "
+        "registrations in Champaign County is the campus, Thor Equities, Highland55, or Urbana "
+        "Owner (data/reference/ohio-water-withdrawal/champaign.yaml). DISCHARGE: the same City "
+        "duty routes wastewater to the City of Urbana Water Reclamation Facility (NPDES "
+        "OH0027880 / Ohio EPA 1PD00011, 4.5 MGD design, outfall 001 to the Mad River), so the "
+        "campus has no outfall of its own and files no DMR — ECHO's 21-facility Champaign County "
+        "CWA inventory carries no permit at the SR-55/US-68 site. What WOULD record a cooling "
+        "discharge is the City's OEPA-audited industrial pretreatment program (an IU permit; the "
+        "program's own 2025-09-09 Pretreatment Compliance Inspection and 2025-10-07 pretreatment "
+        "SNC Notice of Violation are in corpus at data/documents/oepa/urbana/), and ECHO never "
+        "carries those. NB the campus is also NOT BUILT — its Feb-2026 site plan was denied as "
+        "'incomplete', a 12-month emergency moratorium (Res. 2727-26) is in force, and the zoning "
+        "is in federal litigation (Thor v. City of Urbana, S.D. Ohio 3:26-cv-00196) — so what the "
+        "request seeks is the service and capacity record that exists now (will-serve, capacity "
+        "analysis, IU pre-application), not a historical meter. Sources: data/documents/urbana/council/"
+        "2024-11-19_regular_meeting_packet.pdf (Ord. 4612-24 Exh. A); "
+        "data/extracted/urbana/incentive-instruments.yaml."
+    ),
+    tag="[verified]",
+    confidence="high",
+)
+# 644.99 MG (2024, WWFRP registration 00837) / 366 days = 1.7623 MGD. The City's second plant
+# (03719, SR-29 W) has filed no annual report, so this is the whole reported system draw.
+_URBANA_SUPPLIER_WITHDRAWAL = ProvenancedValue.from_reference(
+    1.7623,
+    "MGD",
+    citation=(
+        "[verified] The SUPPLIER'S account, not the facility's: the City of Urbana's public water "
+        "system reported 644.99 MG of ground water in 2024 on Ohio DNR WWFRP registration 00837 "
+        "'URBANA CITY PWS OTP' (Old Troy Pike, 6 wells, 5.76 MGD registered capacity) — 644.99 MG "
+        "/ 366 d = 1.7623 MGD, the county's second-largest reported withdrawal after an "
+        "agricultural irrigator. The City's second plant, registration 03719 'URBANA CITY PWS 29 "
+        "WTP' (2047 State Rte 29 W, 3 wells, 3.00 MGD registered, registered 2026-03-26), has "
+        "filed no annual report yet, so registered capacity totals 8.76 MGD against 1.76 MGD "
+        "reported; both plants draw the same high-yield buried-valley aquifer. Do NOT read the "
+        "2026 registration as capacity added for the campus — the SR-29 plant is a long-standing "
+        "City facility carrying its own NPDES permit (OH0137618, effective, expiring 2027-12-31), "
+        "so the registration date is a registry event whose occasion is [open]. This figure is a "
+        "SYSTEM total across every customer: it can neither corroborate nor contradict the "
+        "campus's cooling claim, and is carried only as the denominator the claim has to be read "
+        "against. That comparison is the B4 finding. At the campus's [inference] screening IT-load "
+        "bracket (34.5 / 74.8 / 115 MW, from 460,000 sq ft) the evaporative reference band in this "
+        "artifact's meta (0.0143 MGD makeup per IT-MW) implies 0.49 / 1.07 / 1.64 MGD — 28% / 61% "
+        "/ 93% of everything the City withdrew in 2024 — while the 'comparable to a standard "
+        "office building' reading sits below this harness's 0.01 MGD noise floor. Three orders of "
+        "magnitude, and no instrument on either side of the account can tell them apart. Source: "
+        "data/reference/ohio-water-withdrawal/champaign.yaml (Ohio DNR WWFRP, R.C. 1521.16)."
+    ),
+    confidence="high",
+    asof="2024-12-31",  # the reporting year the annual total closes on
+)
+# The holder that actually meters this campus. Unlike New Albany — where the meter belongs to
+# Columbus, two counties from the site's own address (B6) — Urbana's holder IS the site's own city,
+# on both sides: the Water Division for the makeup meter, the Industrial Pretreatment Program (its
+# coordinator is the named OEPA-audited contact) for the IU permit that would carry blowdown. Worth
+# stating, because it is also the City currently being sued by the developer over this project.
+_URBANA_WATER_HOLDER = (
+    "City of Urbana — Water Division (205 S Main St; the metered water-service consumption and any "
+    "will-serve / capacity analysis for the campus) and the City's Industrial Pretreatment Program "
+    "coordinator at the Water Reclamation Facility (the IU permit + sewer-use agreement that would "
+    "carry cooling blowdown; the program is OEPA-audited annually)"
+)
+# Urbana's standing water lead. Named as the issue AND the leads-board id, because the issue closes
+# when this lands while the ask does not: URB-WATER-METER on `data/site/urbana/leads.yaml` is the
+# durable thread. (#1330, which recorded the closed-loop disclosure as having undercut the
+# abstraction thesis, is already closed and is deliberately not cited as a live lead.)
+_URBANA_LEAD_REF = "#1684 / lead URB-WATER-METER"
+
+
+def reconcile_urbana(*, settings: Settings | None = None) -> ReconciliationRecord:
+    """The Urbana B4 route-blind origin claim (#1684) — "comparable to a standard office building".
+
+    Peer of :func:`reconcile_van_wert` / :func:`reconcile_springfield`: a real registered site (not
+    a control) that IS in A2's registry-derived cohort (it pins ``closed_loop_dry``), reconciled
+    explicitly rather than through the generic loop so its route and its supplier's withdrawal are
+    carried. The outcome is ``route_blind``, not ``gap`` — the difference matters here more than
+    anywhere else in the cohort, because a ``gap`` reads as an unfinished lookup, and no amount of
+    pulling A1/A2 harder can finish this one: the City's own Pre-Annexation Agreement puts the
+    campus on City water and City sewer, which is precisely where neither instrument looks.
+
+    What keeps it from being a bare negative is ``supplier_withdrawal``. The campus is absent from
+    the Champaign County registry, but its supplier is not — the City of Urbana reported 1.76 MGD
+    in 2024 — and an evaporative read of the same campus at its screening load would draw
+    0.49-1.64 MGD against that. The pin stays ``closed_loop_dry`` / ``[reference]`` (nothing here
+    is an instrument about the facility), the claim stays untested, and the ask goes to the City.
+    Closed-loop-dry needs no climatology, so a per-site ``Settings`` resolves it.
+    """
+    base = settings or get_settings()
+    site_settings = _site_settings("urbana", base)
+    profile = SITES["urbana"]
+    fac = next((f for f in profile.facilities if f.name == _URBANA_FACILITY_NAME), None)
+    if fac is None:  # pragma: no cover - the registered profile always carries this facility
+        raise ValueError(
+            f"urbana profile has no {_URBANA_FACILITY_NAME!r} facility — the B4 route-blind "
+            "reconciliation tests that facility's closed-loop claim; the profile must register it "
+            "(watermark.sites)"
+        )
+    return reconcile_facility(
+        fac,
+        site="urbana",
+        claim_source=fac.cooling_model_source or "reference",
+        claim_citation=fac.cooling_model_citation or "[reference] developer closed-loop claim",
+        settings=site_settings,
+        supplier_withdrawal=_URBANA_SUPPLIER_WITHDRAWAL,
+        route=_URBANA_ROUTE,
+        corroborators=resolve_corroborators(fac, settings=site_settings),
+        water_lead_ref=_URBANA_LEAD_REF,
+        water_holder=_URBANA_WATER_HOLDER,
+        is_control=False,
+    )
+
+
 # --------------------------------------------------------------------- cohort
 
 
@@ -2266,11 +2493,14 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     resolved under the same settings. The **Troy-Piqua B1 reservation conflict** (#1681,
     :func:`reconcile_troy_piqua`) is appended explicitly — it pins ``UNKNOWN`` so it is NOT in A2's
     cohort, but its FAQ-vs-2.0-MGD-reservation conflict is reconciled as a first-class live finding.
-    **Van Wert** (#1682, :func:`reconcile_van_wert`) and **Springfield** (#1683,
-    :func:`reconcile_springfield`) ARE in A2's cohort but are reconciled explicitly (skipped in the
-    generic loop) so their self-disclosed figures sharpen the gap — Van Wert's operator-disclosed ~660k
-    gal draw + the #1409 initial-fill open quantity, Springfield's self-disclosed 300k gal/day permitted
-    ceiling + the #1415 actual-vs-ceiling denominator for its "not evaporative" claim. **Bowling Green**
+    **Van Wert** (#1682, :func:`reconcile_van_wert`), **Springfield** (#1683,
+    :func:`reconcile_springfield`) and **Urbana** (#1684, :func:`reconcile_urbana`) ARE in A2's cohort
+    but are reconciled explicitly (skipped in the generic loop) so what the record holds for each is
+    carried — Van Wert's operator-disclosed ~660k gal draw + the #1409 initial-fill open quantity,
+    Springfield's self-disclosed 300k gal/day permitted ceiling + the #1415 actual-vs-ceiling
+    denominator for its "not evaporative" claim, and Urbana's municipal route (cited to the City's own
+    Pre-Annexation Agreement) + its supplier's 1.76 MGD, which turns the origin claim's row from a gap
+    into a quantified ``route_blind``. **Bowling Green**
     (#1685, :func:`reconcile_bowling_green`) is likewise a cohort member reconciled explicitly, but its
     figures split across two families: the NWWSD-linked ~600,000 gpd design commitment is an
     independent reservation (so it classifies) while Meta's own announced ~50,000 gpd is a self-report
@@ -2284,12 +2514,13 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     settings = settings or get_settings()
     records: list[ReconciliationRecord] = []
     for candidate in blowdown.closed_loop_candidates(settings=settings):
-        # Van Wert (B2, #1682), Springfield (B3, #1683) and Bowling Green (B5, #1685) are cohort
-        # members but are reconciled explicitly below so their disclosed/reserved figures are
-        # carried — Van Wert's ~660k gal draw + #1409 initial-fill, Springfield's 300k gal/day
-        # permitted ceiling + #1415, Bowling Green's NWWSD-linked ~600k gpd reservation against
+        # Van Wert (B2, #1682), Springfield (B3, #1683), Urbana (B4, #1684) and Bowling Green
+        # (B5, #1685) are cohort members but are reconciled explicitly below so what the record
+        # actually holds for each is carried — Van Wert's ~660k gal draw + #1409 initial-fill,
+        # Springfield's 300k gal/day permitted ceiling + #1415, Urbana's cited municipal route +
+        # its supplier's withdrawal, Bowling Green's NWWSD-linked ~600k gpd reservation against
         # Meta's own ~50k gpd + #1439 — skip the generic gap here to avoid a double row.
-        if candidate.site in {"van-wert", "springfield", "bowling-green"}:
+        if candidate.site in {"van-wert", "springfield", "urbana", "bowling-green"}:
             continue
         profile = SITES[candidate.site]
         fac = next((f for f in profile.facilities if f.name == candidate.facility), None)
@@ -2316,6 +2547,9 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     records.append(
         reconcile_springfield(settings=settings)
     )  # B3 (#1683) — disclosed 300k gal/day permitted ceiling + #1415 "not evaporative" gap
+    records.append(
+        reconcile_urbana(settings=settings)
+    )  # B4 (#1684) — the origin claim: route_blind on the City's own instruments + its denominator
     records.append(
         reconcile_bowling_green(settings=settings)
     )  # B5 (#1685) — NWWSD-linked ~600k gpd reservation vs the "dry coolers" claim
@@ -2508,7 +2742,19 @@ def reconciliation_document(
                 "cannot be derived at all — a semiconductor fab has no IT load, and every archetype "
                 "is IT-load-parameterized — the prediction is REFUSED with its reason on "
                 "`prediction_refused` and the three `predicted_*` are null; a reader must show the "
-                "refusal, never substitute a zero."
+                "refusal, never substitute a zero. Where a route_blind facility's SUPPLIER is on "
+                "record even though the facility is not (B4 Urbana, #1684), that system's reported "
+                "withdrawal rides on `supplier_withdrawal` — never `documented_*`. It is the "
+                "supplier's account, aggregating every customer on the system, so like the "
+                "self-report slots it can neither corroborate nor contradict one facility's cooling "
+                "claim; it is carried because it is the DENOMINATOR — the scale the untestable "
+                "claim would land inside. Urbana is the case the epic started from: the City "
+                "reported 1.76 MGD in 2024 while an evaporative read of the same campus, at its "
+                "[inference] screening IT load, would draw 0.49-1.64 MGD, and the disclosed claim "
+                "('water use comparable to a standard office building' — a comparison, not a "
+                "figure, so nothing lands on `disclosed_makeup`) sits below the 0.01 MGD noise "
+                "floor. Three orders of magnitude, and no instrument on either side can tell them "
+                "apart."
             ),
             "reference_band": band.model_dump(mode="json"),
         },

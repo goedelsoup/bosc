@@ -1,7 +1,7 @@
 """The ``cooling-reconciliation`` bundle feed (#1805, epic #1803 P2).
 
 The cooling-cycling reconciliation harness (epic #1676: A3 #1679 the claim-vs-documented
-account, A4 #1680 the independent corroborators, B1-B3 the per-site provenance slots) writes
+account, A4 #1680 the independent corroborators, B1-B6 the per-site provenance slots) writes
 one committed cross-site artifact — ``data/reference/oepa/cooling-reconciliation.yaml`` —
 that until now nothing bundle-side read: the study's water chapter quoted its outcome as
 hand-curated MDX prose, which can drift from the artifact it quotes.
@@ -64,6 +64,10 @@ DISCIPLINE_CAVEATS: tuple[str, ...] = (
     "A documented withdrawal that is not the cooling account (construction-phase water) is kept "
     "on its own slot, and a prediction the harness could not derive is shown as refused, never "
     "as zero.",
+    "Where the facility is invisible to the withdrawal registry but its municipal supplier is "
+    "not, the system's reported withdrawal is the supplier's account — a total across every "
+    "customer, carried as the denominator the claim has to be read against, never as the "
+    "facility's own water.",
     "The corroborators (air-permit PM, Tier II chemistry) are secondary — recorded and "
     "reconciled against the claim, never the sole basis for a re-archetype and never "
     "changing the outcome.",

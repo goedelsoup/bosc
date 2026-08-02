@@ -11,6 +11,7 @@
     "An operator self-report lands on its own disclosed_* slot, never on documented_*, and cannot upgrade the claim's source.",
     "An instrument that cannot reach a facility returns an absence of jurisdiction, not a measurement — a municipally-supplied, sewer-discharging campus reads ~0 in the withdrawal registry and the discharge record by construction, and that ~0 never corroborates a claim.",
     "A documented withdrawal that is not the cooling account (construction-phase water) is kept on its own slot, and a prediction the harness could not derive is shown as refused, never as zero.",
+    "Where the facility is invisible to the withdrawal registry but its municipal supplier is not, the system's reported withdrawal is the supplier's account — a total across every customer, carried as the denominator the claim has to be read against, never as the facility's own water.",
     "The corroborators (air-permit PM, Tier II chemistry) are secondary — recorded and reconciled against the claim, never the sole basis for a re-archetype and never changing the outcome."
   ],
   "candidates": [
@@ -89,6 +90,7 @@
           "high": null
         },
         "nonprocess_makeup": null,
+        "supplier_withdrawal": null,
         "route": null,
         "disclosed_cycles": null,
         "backsolved_cycles": null,

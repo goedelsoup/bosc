@@ -337,6 +337,172 @@
     }
   },
   {
+    "id": "bowling-green-apollo-power",
+    "title": "Bowling Green — Apollo Power Generation Facility, OPSB 25-0973-EL-BLN + Ohio EPA PTI P0139272 (Extractions)",
+    "scope": "extracted",
+    "collection": "grid",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Five primary documents across two agencies, plus two blocked routes recorded as per-source negatives. SITING: the OPSB Staff Report of Investigation in case 25-0973-EL-BLN (report date 2026-01-27, DIS-stamped 1/27/2026, 26 pp incl. cover letter and project maps), captured 2026-08-01 from WTOL-11's mirror because the issuing docket system dis.puc.state.oh.us serves an F5/BIG-IP JavaScript bot-challenge to automated retrieval — the custody chain runs through a news organization and that is stated in data/documents/grid/bowling-green/filename-map.yaml. AIR: the whole Ohio EPA DAPC permit-to-install chain for facility 0387022027 / permit P0139272 — the application completeness letter (2025-12-08), the draft permit noticed for comment (2026-03-05, with the Permit Strategy Write-Up bound in), Ohio EPA's own public information session and hearing deck (2026-04-08), and the FINAL permit (2026-06-02, with a 42-comment Response to Comments) — retrieved 2026-08-01 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov, searched by Entity Name \"WILL-POWER\") and the Ohio DAM (data/documents/oepa/bowling-green/air/filename-map.yaml). Every action: and digest block is a REVIEWED TRANSCRIPTION read from each PDF's own text layer; the one digit-level claim that could not rest on OCR (the draft write-up's mismatched facility ID) was confirmed by rendering the page image at 170 dpi. No vision extraction pass was run.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:bowling-green",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "opsb",
+      "siting",
+      "letter-of-notification",
+      "behind-the-meter",
+      "natural-gas",
+      "bess",
+      "battery-storage",
+      "air-permit",
+      "pti",
+      "title-v",
+      "psd",
+      "nsr",
+      "oepa",
+      "dapc",
+      "emissions",
+      "aermod",
+      "air-toxics",
+      "bowling-green",
+      "wood-county",
+      "data-center",
+      "meta",
+      "williams",
+      "hb15",
+      "self-generation",
+      "pjm",
+      "access-blocked"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/grid/bowling-green/apollo-power-generation-facility.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/bowling-green/P0139272.pti.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/bowling-green/P0139272.draft-pti.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/bowling-green/P0139272.completeness.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/power-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "19ecb941f3aabfe6cc2cb870bb6e0b13fe023c787108c54bfd99e99996dd1e97",
+      "size_bytes": 107520,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Five primary documents across two agencies, plus two blocked routes recorded as per-source negatives. SITING: the OPSB Staff Report of Investigation in case 25-0973-EL-BLN (report date 2026-01-27, DIS-stamped 1/27/2026, 26 pp incl. cover letter and project maps), captured 2026-08-01 from WTOL-11's mirror because the issuing docket system dis.puc.state.oh.us serves an F5/BIG-IP JavaScript bot-challenge to automated retrieval — the custody chain runs through a news organization and that is stated in data/documents/grid/bowling-green/filename-map.yaml. AIR: the whole Ohio EPA DAPC permit-to-install chain for facility 0387022027 / permit P0139272 — the application completeness letter (2025-12-08), the draft permit noticed for comment (2026-03-05, with the Permit Strategy Write-Up bound in), Ohio EPA's own public information session and hearing deck (2026-04-08), and the FINAL permit (2026-06-02, with a 42-comment Response to Comments) — retrieved 2026-08-01 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov, searched by Entity Name \"WILL-POWER\") and the Ohio DAM (data/documents/oepa/bowling-green/air/filename-map.yaml). Every action: and digest block is a REVIEWED TRANSCRIPTION read from each PDF's own text layer; the one digit-level claim that could not rest on OCR (the draft write-up's mismatched facility ID) was confirmed by rendering the page image at 170 dpi. No vision extraction pass was run.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "bowling-green-water-watch",
+    "title": "Bowling Green — Standing Water Watch + NPDES 2PD00009 / PWS OH8700311 Instrument Set (Extractions)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Three primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00009*TD / application OH0024139 — the *TD renewal as issued (action date 2022-03-28, effective 2022-05-01, expires 2027-04-30) and its Fact Sheet Regarding an NPDES Permit to Discharge (Public Notice 22-02-025) — both fetched from the Ohio DAM 2026-08-01 (data/documents/oepa/bowling-green/filename-map.yaml). The City of Bowling Green's 2025 Drinking Water Consumer Confidence Report, PWS OH8700311, fetched from the City's own CivicPlus DocumentCenter 2026-08-01 (data/documents/bowling-green/drinking-water/filename-map.yaml). Both permit: blocks are REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text layer — these are digitally generated documents, not scans, and no vision pass was run. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0024139/FRS 110002321005 and for PWS OH8700311 and OH8752212; eff_rest_services.get_effluent_chart for the DMR series; cwa_rest_services.get_facility_info over Wood County FIPS 39173 for the construction general-permit sweep), read 2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:bowling-green",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "sdwa",
+      "oepa",
+      "bowling-green",
+      "wood-county",
+      "portage-river",
+      "poe-ditch",
+      "maumee",
+      "phosphorus",
+      "mbas",
+      "surfactants",
+      "snc",
+      "cso",
+      "tmdl",
+      "7q10",
+      "dilution",
+      "enforcement",
+      "construction-stormwater",
+      "cgp",
+      "two-basins"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/bowling-green/2PD00009.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/water-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "097c42fc89a3617cf57a9ecb6294ad513b4701cd72b7be10d3feb1777b85b061",
+      "size_bytes": 83749,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Three primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00009*TD / application OH0024139 — the *TD renewal as issued (action date 2022-03-28, effective 2022-05-01, expires 2027-04-30) and its Fact Sheet Regarding an NPDES Permit to Discharge (Public Notice 22-02-025) — both fetched from the Ohio DAM 2026-08-01 (data/documents/oepa/bowling-green/filename-map.yaml). The City of Bowling Green's 2025 Drinking Water Consumer Confidence Report, PWS OH8700311, fetched from the City's own CivicPlus DocumentCenter 2026-08-01 (data/documents/bowling-green/drinking-water/filename-map.yaml). Both permit: blocks are REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text layer — these are digitally generated documents, not scans, and no vision pass was run. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0024139/FRS 110002321005 and for PWS OH8700311 and OH8752212; eff_rest_services.get_effluent_chart for the DMR series; cwa_rest_services.get_facility_info over Wood County FIPS 39173 for the construction general-permit sweep), read 2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "commissioners",
     "title": "Allen County Commissioners — Legislative Record Analysis (Project BOSC)",
     "scope": "extracted",
@@ -571,8 +737,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9619bd306d379ff70c9a224c584f3d88e85d4602e08b744e6a10afd2493282ae",
-      "size_bytes": 209440,
+      "sha256": "79db95280cc80967923422d1ea5715d03698c39b265c3b97bd898c954291b1b0",
+      "size_bytes": 246563,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -711,7 +877,7 @@
     "producer_kind": "manual",
     "command": null,
     "connector_ref": null,
-    "source": "Sidney City Council resolutions (18-25, 26-26, 27-26, 80-25, 81-25, 82-25); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
+    "source": "Sidney City Council resolutions (69-25, 80-25, 81-25, 82-25, 26-26, 27-26); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
     "external_url": null,
     "license": "public record / public domain",
     "access_tier": "public",
@@ -739,15 +905,15 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "214d1dd7543dacb3375982ba954c9bfc043a951af519760f67a5c2ef8aed191d",
-      "size_bytes": 24039,
+      "sha256": "9dc95bb3a5416aff9838c5a1ab9e4f6132d152da3cf504f3cff64c6c084fa628",
+      "size_bytes": 46975,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Sidney City Council resolutions (18-25, 26-26, 27-26, 80-25, 81-25, 82-25); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
+      "source": "Sidney City Council resolutions (69-25, 80-25, 81-25, 82-25, 26-26, 27-26); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
       "source_kind": "reference",
       "page": null,
       "pages": null,
@@ -846,8 +1012,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e6fc6826f2aa7590f73b48836b53cc563e41d68825401593b64544855aea5d6f",
-      "size_bytes": 17685,
+      "sha256": "e00c59ccb33b5785dc9700c079a03c6934f6191685d58136b800c6b679ee6437",
+      "size_bytes": 23497,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1076,10 +1242,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "15ff4b8c5792d50e7e799de1e9316816aaff39631540ad70bffe92da5acd1bfa",
-      "size_bytes": 115592,
+      "sha256": "cea5591e8f98e5267a1bc4adf2dead2deac48859616b7e183f7da49a7bbf1e02",
+      "size_bytes": 140924,
       "lfs_materialized": true,
-      "file_count": 11,
+      "file_count": 12,
       "stale": false,
       "asof": null
     },
@@ -3232,14 +3398,14 @@
   },
   {
     "id": "oepa-sidney",
-    "title": "Ohio EPA NPDES Permit Extractions (Sidney / Hidden Valley MHP)",
+    "title": "Ohio EPA Permit Extractions (Sidney — AWS data-center campus, City road permit, Hidden Valley MHP)",
     "scope": "extracted",
     "collection": "oepa",
     "status": "reviewed",
     "producer_kind": "extracted",
     "command": null,
     "connector_ref": null,
-    "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits at facilities in Sidney, Ohio (Shelby County)",
+    "source": "Ohio EPA — issued NPDES permits, general-permit coverages, 401/isolated-wetland authorizations, surface-water permits to install, fact sheets and draft public notices for facilities in Sidney, Ohio (Shelby County), retrieved from the eDocument public portal and the DAM permit slots",
     "external_url": null,
     "license": "Public record (Ohio R.C. 149.43)",
     "access_tier": "public",
@@ -3252,6 +3418,11 @@
       "npdes",
       "permits",
       "wastewater",
+      "stormwater",
+      "wetlands",
+      "data-center",
+      "sidney-data-center-campus",
+      "cmh-232",
       "sidney"
     ],
     "storage": [
@@ -3259,19 +3430,49 @@
         "relpath": "extracted/oepa/sidney/1PV00037.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/1GC10596.noi.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/1GC10596.approval.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/1GC10596.copermittee-igel.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/DSWPTI-260517.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/DSW401251911W.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/DSW401252256W.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "937ea9cb73b1210b6ca367288a517c788861604c60c48d2f39b48af3b90f139e",
-      "size_bytes": 2466,
+      "sha256": "6356c54ebd74184bd75f3c8847246984bdbc25b7de5d7c2eea128695e341398e",
+      "size_bytes": 18754,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 7,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits at facilities in Sidney, Ohio (Shelby County)",
+      "source": "Ohio EPA — issued NPDES permits, general-permit coverages, 401/isolated-wetland authorizations, surface-water permits to install, fact sheets and draft public notices for facilities in Sidney, Ohio (Shelby County), retrieved from the eDocument public portal and the DAM permit slots",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -4220,6 +4421,63 @@
     }
   },
   {
+    "id": "sidney-incentive-instruments",
+    "title": "Sidney — AWS \"Project Rey\" Incentive, Service and Development Instruments",
+    "scope": "extracted",
+    "collection": "sidney",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted 2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and data/documents/sidney/permits/filename-map.yaml.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:sidney",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "data-center",
+      "aws",
+      "amazon",
+      "cra",
+      "pilot",
+      "tax-abatement",
+      "water",
+      "wastewater",
+      "development-agreement",
+      "public-records",
+      "project-rey",
+      "sidney"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/sidney/incentive-instruments.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "9840bb0df2d33aa0f7d9bcad4f33874afc52669eb4d1600571266657bec32417",
+      "size_bytes": 49653,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted 2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and data/documents/sidney/permits/filename-map.yaml.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "sidney-regulatory-watch",
     "title": "Sidney — Standing Regulatory Watch (air PTI, construction stormwater, OH0027421, PUCO 25-958-EL-AIR, site plan)",
     "scope": "extracted",
@@ -4342,7 +4600,7 @@
     "producer_kind": "extracted",
     "command": null,
     "connector_ref": null,
-    "source": "Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/)",
+    "source": "Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/), City of Urbana council packets and approved minutes (urbana/council/)",
     "external_url": null,
     "license": "Public record (Ohio R.C. 149.43)",
     "access_tier": "public",
@@ -4360,7 +4618,13 @@
       "mad-river",
       "land-assembly",
       "recorder-deeds",
-      "litigation"
+      "litigation",
+      "community-reinvestment-area",
+      "pre-annexation-agreement",
+      "tax-incentives",
+      "cooling",
+      "water-withdrawal",
+      "industrial-pretreatment"
     ],
     "storage": [
       {
@@ -4402,25 +4666,111 @@
         "relpath": "extracted/urbana/litigation-thor-v-urbana.md",
         "media_type": "text/markdown",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/urbana/incentive-instruments.yaml",
+        "media_type": "application/yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/urbana/incentive-instruments.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/urbana/cooling-water-account.md",
+        "media_type": "text/markdown",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "c7eb4c596fe6b4eb6a160f6970a1ae94ac8c2c9950f9aae1cbee9bc73861689a",
-      "size_bytes": 95322,
+      "sha256": "87114379b37b05d51220f74e69d9013bee8f43e008df57169e2348380e53e31a",
+      "size_bytes": 165993,
       "lfs_materialized": true,
-      "file_count": 8,
+      "file_count": 11,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/)",
+      "source": "Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/), City of Urbana council packets and approved minutes (urbana/council/)",
       "source_kind": "document",
       "page": null,
       "pages": null,
       "confidence": "medium",
       "note": null,
       "verified": true
+    }
+  },
+  {
+    "id": "van-wert-water-watch",
+    "title": "Van Wert — Standing Water Watch + NPDES 2PD00006*WD / PWS OH8100611 Instrument Set (Extractions)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Two primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00006*WD / application OH0027910 — the modification package as issued (action date 2026-05-18, Public Notice 221593, entered the Director's Journal 2026-06-30, effective 2026-07-01, expires 2030-05-31; a composite of the Director's transmittal letter, the 47-page modified permit and the modification's own 8-page Fact Sheet) and its draft public notice from the DAM's DraftPN slot — both fetched from the Ohio EPA DAM 2026-08-01 (data/documents/oepa/van-wert/filename-map.yaml). Ohio EPA re-serves the `permits/doc/` slot IN PLACE on modification, so the same URL that delivered the *VD renewal in June 2026 delivers the *WD package now; both sets of bytes are held and the manifest is keyed on URL plus sha256. Both permit: blocks are the pipeline's six-page read with header fields CORRECTED on review from the fact sheet bound inside the same PDF; the superseded extractor warnings are preserved in each file. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0027910, OH8100611 and OH0135569; sdw_rest_services.get_systems over Van Wert County OH for the public-water-system index) read 2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09, and USGS NLDI / NHDPlus v2 (linked-data/comid/position plus upstream/downstream navigation) snapped 2026-08-01 to establish that the intake, the five CSOs and the outfall share one flowline and in what order.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:van-wert",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "sdwa",
+      "oepa",
+      "van-wert",
+      "van-wert-county",
+      "town-creek",
+      "little-auglaize",
+      "maumee",
+      "cso",
+      "ltcp",
+      "schedule-of-compliance",
+      "phosphorus",
+      "tmdl",
+      "mercury-variance",
+      "enforcement",
+      "shared-reach"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/van-wert/2PD00006.36a58063.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/water-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "3ea003988f360ad2196e73c933c850144652664fb8650e8dd9485095689beec0",
+      "size_bytes": 65509,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Two primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00006*WD / application OH0027910 — the modification package as issued (action date 2026-05-18, Public Notice 221593, entered the Director's Journal 2026-06-30, effective 2026-07-01, expires 2030-05-31; a composite of the Director's transmittal letter, the 47-page modified permit and the modification's own 8-page Fact Sheet) and its draft public notice from the DAM's DraftPN slot — both fetched from the Ohio EPA DAM 2026-08-01 (data/documents/oepa/van-wert/filename-map.yaml). Ohio EPA re-serves the `permits/doc/` slot IN PLACE on modification, so the same URL that delivered the *VD renewal in June 2026 delivers the *WD package now; both sets of bytes are held and the manifest is keyed on URL plus sha256. Both permit: blocks are the pipeline's six-page read with header fields CORRECTED on review from the fact sheet bound inside the same PDF; the superseded extractor warnings are preserved in each file. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0027910, OH8100611 and OH0135569; sdw_rest_services.get_systems over Van Wert County OH for the public-water-system index) read 2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09, and USGS NLDI / NHDPlus v2 (linked-data/comid/position plus upstream/downstream navigation) snapped 2026-08-01 to establish that the intake, the five CSOs and the outfall share one flowline and in what order.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -4519,8 +4869,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "04809992746936d296fc9f11cba055744fe13cbb5e8c5d47942610256602ceff",
-      "size_bytes": 6185,
+      "sha256": "820e8698bb23de7967cd98685c2e8b905d79ef270b3323af2e674a8be31e46c2",
+      "size_bytes": 25936,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -5911,8 +6261,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "7f5e29511e137d0b882ac94655ac684e9dc37b22d2d8f0ccc3478f0c94adb5b7",
-      "size_bytes": 104545,
+      "sha256": "89e2ed7ea954374b81b85875277c7ee6cfff717e117b907bb6397ecaed63782a",
+      "size_bytes": 104549,
       "lfs_materialized": true,
       "file_count": 22,
       "stale": false,
@@ -6741,8 +7091,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "73723851ed3eaa71fc6c8bc5c21ac63471b8097ca3db2ebd2aec8806ca9e7edf",
-      "size_bytes": 30674,
+      "sha256": "a80c90d0fc55374bf75bbb34060f0fc26020a15d9c53725de0a85dee1b76eefe",
+      "size_bytes": 31973,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -7604,8 +7954,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "dfeb17fe61d6b131c989d98a292a3c934f313ee04fda7c7765deb50d5c62e700",
-      "size_bytes": 75608,
+      "sha256": "67c1d11b8ae92bad4a36e238e6e32e0a2c6175514904ae6102ba95118a9c001e",
+      "size_bytes": 84612,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -7788,6 +8138,56 @@
     }
   },
   {
+    "id": "ohio-water-withdrawal-champaign",
+    "title": "Champaign County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+    "scope": "reference",
+    "collection": "ohio-water-withdrawal",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "water-withdrawal --county Champaign",
+    "connector_ref": "watermark.hydrology.connectors.ohio_water_withdrawal",
+    "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+    "external_url": "https://ohiodnr.gov/wwfacilitylocator",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "site:urbana",
+    "cadence": "annual",
+    "ttl_days": 365,
+    "last_refreshed": null,
+    "tags": [
+      "water-withdrawal",
+      "wwfrp",
+      "ohio-dnr",
+      "cooling",
+      "makeup"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/ohio-water-withdrawal/champaign.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "52636cb5e14b20e64a4b2309689d6a88ab255087b34c2b1019c8bd104076d158",
+      "size_bytes": 88107,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark water-withdrawal --county Champaign",
+      "verified": true
+    }
+  },
+  {
     "id": "ohio-water-withdrawal-licking",
     "title": "Licking County, OH water-withdrawal registry (Ohio DNR WWFRP)",
     "scope": "reference",
@@ -7834,6 +8234,48 @@
       "pages": null,
       "confidence": "medium",
       "note": "watermark water-withdrawal --county Licking",
+      "verified": true
+    }
+  },
+  {
+    "id": "ohio-water-withdrawal-wood",
+    "title": "Wood County, OH water-withdrawal registry (Ohio DNR WWFRP)",
+    "scope": "reference",
+    "collection": "ohio-water-withdrawal",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "water-withdrawal --county Wood",
+    "connector_ref": "watermark.hydrology.connectors.ohio_water_withdrawal",
+    "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+    "external_url": "https://ohiodnr.gov/wwfacilitylocator",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "site:bowling-green",
+    "cadence": "annual",
+    "ttl_days": 365,
+    "last_refreshed": null,
+    "tags": [
+      "water-withdrawal",
+      "wwfrp",
+      "ohio-dnr",
+      "cooling",
+      "makeup"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/ohio-water-withdrawal/wood.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "citation": {
+      "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark water-withdrawal --county Wood",
       "verified": true
     }
   },
@@ -8079,10 +8521,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d551ea721313db26174fcb76f932c158a733d61b144f06d5b74bc66f340b8535",
-      "size_bytes": 440076,
+      "sha256": "41921e30b33b8494e8367d64753a0704ce48fdb0e979ca8aa5f3b337a4ede48d",
+      "size_bytes": 492562,
       "lfs_materialized": true,
-      "file_count": 8,
+      "file_count": 9,
       "stale": false,
       "asof": null
     },

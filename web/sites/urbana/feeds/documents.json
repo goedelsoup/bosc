@@ -394,5 +394,117 @@
         "supersedes": []
       }
     ]
+  },
+  {
+    "slug": "urbana",
+    "title": "Urbana",
+    "description": "",
+    "entries": [
+      {
+        "rel": "urbana/council/2024-11-19_regular_meeting_packet.pdf",
+        "name": "2024-11-19_regular_meeting_packet.pdf",
+        "size_bytes": 22661522,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "urbana/council/2024-12-17_approved_city_council_meeting_minutes.pdf",
+        "name": "2024-12-17_approved_city_council_meeting_minutes.pdf",
+        "size_bytes": 843871,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "urbana/council/2025-10-21_approved_city_council_meeting_minutes.pdf",
+        "name": "2025-10-21_approved_city_council_meeting_minutes.pdf",
+        "size_bytes": 1069860,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "urbana/council/2025-11-04_approved_city_council_meeting_minutes.pdf",
+        "name": "2025-11-04_approved_city_council_meeting_minutes.pdf",
+        "size_bytes": 944606,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "urbana/council/2025-11-04_regular_meeting_packet.pdf",
+        "name": "2025-11-04_regular_meeting_packet.pdf",
+        "size_bytes": 27007238,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "urbana/council/data_center_timeline_public_notice_2.26.26.docx.pdf",
+        "name": "data_center_timeline_public_notice_2.26.26.docx.pdf",
+        "size_bytes": 220624,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "urbana/council/project_overview_-_urbana_technolody_hub.pdf",
+        "name": "project_overview_-_urbana_technolody_hub.pdf",
+        "size_bytes": 692684,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
   }
 ]
