@@ -9,6 +9,7 @@ import {
   TIER_PILL,
 } from "./directory";
 import type { FacilityStatus, HypothesisAssessmentItem, HypothesisItem } from "./feeds";
+import { SITE_BASE } from "./routes";
 import { SITES, type SiteRollup } from "./sites";
 
 // Pure stubs for buildLens's two bundle-backed lookups — the real page passes `facilityStatus`
@@ -200,6 +201,39 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     const unbuilt = rows.find((r) => !["lima", "bowling-green", "sandusky"].includes(r.slug));
     expect(unbuilt?.cells[3].pill).toBeUndefined();
     expect(unbuilt?.cells[3].text).toBe("—");
+  });
+
+  it("routes every row to the site it names — the directory's click-through (#1862)", () => {
+    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
+    const rows = v.groups.flatMap((g) => g.rows);
+    const href = (slug: string) => rows.find((r) => r.slug === slug)?.href;
+    // Lima is the one site whose URL id isn't its slug — it must land on the re-rooted base,
+    // never a fabricated /network/lima (which no route serves).
+    expect(href("lima")).toBe(SITE_BASE);
+    expect(href("lima")).not.toBe("/network/lima");
+    // Every other site routes to its own /network/<slug> page, including the unbuilt ones:
+    // a queued/tracking row lands on its watch page rather than a dead end.
+    expect(href("bowling-green")).toBe("/network/bowling-green");
+    expect(href("toledo")).toBe("/network/toledo");
+    // No row is stranded, and none carries the deploy base — the page applies that at render.
+    expect(rows).toHaveLength(SITES.length);
+    for (const r of rows) {
+      expect(r.href).toBe(SITES.find((s) => s.slug === r.slug)?.href);
+      expect(r.href.startsWith("/network/")).toBe(true);
+    }
+  });
+
+  it("routes the not-yet-assessed chips too — H2/H3 leave no site unreachable (#1862)", () => {
+    for (const lens of ["defense", "surveillance"] as const) {
+      const v = buildLens(lens, ROLLUP, DATA, FAC_STATUS);
+      const dests = [
+        ...v.groups.flatMap((g) => g.rows).map((r) => r.href),
+        ...v.groups.flatMap((g) => g.chips).map((c) => c.href),
+      ];
+      // Rows + chips cover the whole network, and every one of them goes somewhere real.
+      expect(dests).toHaveLength(SITES.length);
+      expect(new Set(dests)).toEqual(new Set(SITES.map((s) => s.href)));
+    }
   });
 
   it("defense lens groups assessed sites and sweeps the rest into a 'not yet assessed' chip tail", () => {

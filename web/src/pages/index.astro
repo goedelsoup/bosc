@@ -96,12 +96,15 @@ const doors = [
   },
 ];
 
-// A featured slice across the network for the home table (the scorecard holds all 32).
+// A featured slice across the network for the home table (the scorecard holds all 32). Each
+// row goes to the site it names (#1862) — the registry href, the same destination the switcher
+// and the scorecard use; it used to send all eight to the one scorecard page.
 const featured = SITES.slice(0, 8).map((s, i) => ({
   idx: String(i + 1).padStart(2, "0"),
   code: s.codename ?? s.mono,
   place: s.place,
   basin: s.basin,
+  href: s.href,
   phaseLabel: SITE_STATUS_META[s.status].label,
   phaseColor: PHASE_COLOR[s.status],
   rowBg: i % 2 ? "#ece8dc" : "transparent",
@@ -244,7 +247,7 @@ const featured = SITES.slice(0, 8).map((s, i) => ({
         </div>
         {
           featured.map((f) => (
-            <a class="dirh-trow dirh-drow" href={withBase("/research/hypotheses")} style={`background:${f.rowBg}`}>
+            <a class="dirh-trow dirh-drow" href={withBase(f.href)} style={`background:${f.rowBg}`}>
               <span class="dirh-td-idx">{f.idx}</span>
               <span class="dirh-td-code">{f.code}</span>
               <span class="dirh-td-place">{f.place}</span>
@@ -590,6 +593,11 @@ const featured = SITES.slice(0, 8).map((s, i) => ({
   }
   .dirh-drow:last-child {
     border-bottom: 0;
+  }
+  /* The row's background is inline (the zebra stripe), so hover signals on the place instead. */
+  .dirh-drow:hover .dirh-td-place,
+  .dirh-drow:focus-visible .dirh-td-place {
+    text-decoration: underline;
   }
   .dirh-td-idx,
   .dirh-td-code {
