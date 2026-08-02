@@ -135,7 +135,8 @@ so it is *reconciled* with them, not a competing index (the `/ask` feed stays ca
   `docs/onboarding.md`): it scaffolds the per-site data dirs, runs the portable reach
   connectors (per-site point outputs are slug-scoped so Lima is never clobbered; basin-level
   outputs stay shared), and prints a **blocking review checklist** — promotion to
-  `live`/`selectable` in `web/packages/core/src/sites.ts` stays a manual, parity-gated edit.
+  `live`/`selectable` in `data/sites.yaml` (then `watermark sites sync`) stays a manual,
+  parity-gated edit.
   **Registered ≠ selectable, and a thin peer is still engageable** (#781/#782): a
   non-reference `/network/<site>` page **degrades, doesn't break**. Readiness is **domain
   activation, not Lima-shape-matching** (#1220): a site is defined by the **domains that

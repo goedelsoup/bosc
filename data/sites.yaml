@@ -18,7 +18,7 @@
 #                Authoritative here (#1863): it back-stops the Python `SiteProfile.basin` literal
 #                (`watermark sites check` fails on disagreement) and reaches the frontend registry
 #                so `groupSites("basin")` derives its placement instead of keeping a parallel copy.
-#                Its display label / abbr / region / divide live in web/packages/core/src/basins.ts.
+#                Its display label / abbr / region / divide live in web/packages/core/src/placement.ts.
 #   receiving_water  Python receiving_water_name on the active NPDES (null for tracking-only)
 #   state        two-letter abbreviation (OH, IN) — the grouping axis for the state lens, and the
 #                source of the per-site dateline ("Lima, Ohio") via `siteState` (#1863)
