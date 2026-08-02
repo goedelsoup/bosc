@@ -15,6 +15,7 @@ import { getEntry, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
 import ReferenceAnnex from "~/components/study/ReferenceAnnex.astro";
 import StudyGap from "~/components/study/StudyGap.astro";
+import StudyNoteFrame from "~/components/study/StudyNoteFrame.astro";
 import StudyStatusChip from "~/components/study/StudyStatusChip.astro";
 import StudyWayfinding from "~/components/study/StudyWayfinding.astro";
 import { chapterSection, STUDY_COMPONENTS } from "~/components/study";
@@ -85,13 +86,9 @@ const walkCh = story?.chapters.find((c) => c.studySection === chapterId && c.liv
 
     {
       NoteContent && (
-        <section class="studych-note">
-          <div class="studych-note-eyebrow">
-            Reading this chapter · {place}
-            {note?.data.updated && <span class="studych-note-date"> · updated {note.data.updated}</span>}
-          </div>
+        <StudyNoteFrame label={`Reading this chapter · ${place}`} updated={note?.data.updated}>
           <NoteContent components={STUDY_COMPONENTS} />
-        </section>
+        </StudyNoteFrame>
       )
     }
 
@@ -192,29 +189,8 @@ const walkCh = story?.chapters.find((c) => c.studySection === chapterId && c.liv
   .studych-nav-toc:hover {
     text-decoration: underline;
   }
-  /* The per-site note: the site's own reading of the chapter, visibly distinct from the
-     templated screen (a rule + eyebrow, same paper — narrative, not more chrome). */
-  .studych-note {
-    border-top: 1px solid var(--bosc-rule);
-    margin-top: 1.8rem;
-    padding-top: 1rem;
-    max-width: 680px;
-  }
-  .studych-note-eyebrow {
-    font-family: var(--bosc-mono);
-    font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    color: var(--bosc-muted);
-    margin-bottom: 0.7rem;
-  }
-  .studych-note-date {
-    font-weight: 400;
-    color: var(--bosc-faint);
-    text-transform: none;
-    letter-spacing: 0;
-  }
+  /* The per-site note's frame lives in `StudyNoteFrame.astro` — one owner, shared with the
+     cover's abstract. */
   .studych-walklink {
     font-size: 0.9rem;
     margin-top: 1.4rem;
