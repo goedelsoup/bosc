@@ -72,9 +72,11 @@ The three **civic/flood** holdings the Blanchard story walks: 26 parcels, **1,92
   ([`eagle-creek-basin-footprint.handoff.yaml`](../../extracted/findlay/flood/eagle-creek-basin-footprint.handoff.yaml))
   found only verbal bounds in the public record and committed no geometry. The county parcel record
   carries it: 18 MWCD parcels with situs on exactly the four roads the handoff and the issue name
-  (TR 76, TR 77, TR 49, US-68), spanning 40.9739–40.9890 N — 3.4–4.5 mi south of downtown — with
-  seven **Eagle Creek** flowline segments through the block (USGS NHD) and the township confirmed
-  via Census TIGER.
+  (TR 76, TR 77, TR 49, US-68). Their **polygon extent** spans 40.9681–40.9902 N and their parcel
+  **centroids** 40.9738–40.9890 N — 3.0–4.6 mi south of downtown by extent, 3.4–4.5 by centroid,
+  so it is the centroid span that reads as the published "~4 miles south". Seven **Eagle Creek**
+  flowline segments run through the block (USGS NHD) and the township is confirmed via Census
+  TIGER.
 - **765 ac and 795 ac are different measurements.** `hancockcountyflooding.com` publishes
   "approximately 765 acres" for the area **within the dam alignment**; this file carries 795.35 ac
   of **land acquired** in three non-contiguous blocks. Acquired land properly exceeds the
@@ -84,8 +86,12 @@ The three **civic/flood** holdings the Blanchard story walks: 26 parcels, **1,92
 - **The WPCC parcel contains the permitted outfall** — a point-in-polygon `[verified]`: outfall
   `2PD00008001` at Blanchard River RM 56.42 (41.049722/−83.667778, Ohio EPA fact sheet
   `2PD00008*UD` p. 7) falls inside `610000926490`. ⚠️ That parcel's served geometry measures only
-  **39.758 planar ac against 50.52 CAMA** — a 21% shortfall well outside the ±3% the other 25
-  parcels show. Cite the deeded acreage; don't use the polygon as a plant-area measurement.
+  **39.758 planar ac against 50.52 CAMA** — a 10.76-ac, **−21.3%** shortfall, the largest gap in
+  the file. It is **not a lone outlier**, and the spread it sits in is worth reading before
+  trusting any single planar figure here: `200001032776` is **−17.5%**, and the other 24 parcels
+  run **−7.2% to +5.2%**. Two readings fit that spread and this file does not choose between them: served
+  geometry that under-covers the deed, or CAMA acreages never re-surveyed. Cite the deeded
+  acreage; don't use the polygon as a plant-area measurement.
 - **The two reservoirs are named by NHD, not by the parcel layer.** The USGS NHD Waterbody
   (Large Scale) layer carries **Findlay Reservoir** (177.9 ac) and **Findlay Upground Reservoir
   Number Two** (628.9 ac) over this block — 806.8 ac of water surface inside 1,048.57 ac of city
@@ -98,12 +104,15 @@ The three **civic/flood** holdings the Blanchard story walks: 26 parcels, **1,92
 
 - Onboarding seed — **review every value against a cited source before promotion**
   (`data/sites.yaml` + `web/packages/core/src/sites.ts` `status`/`selectable`, parity-gated).
-- **Owner comes from the mailing label, not an owner field.** The OGRIP public view is
+- **There is no owner field here, and the property names say so.** The OGRIP public view is
   owner-redacted (`OHIO_STATEWIDE_PARCEL_SCHEMA` sets `owner_field=""`, and the connector's `owner`
-  decodes to `null`), so `owner_of_record` in both files is parsed from `MailAddressAll` — the
-  recipient line of the tax-bill mailing label — with the trailing city/ZIP stripped.
-  `owner_mailing_address` carries the label verbatim. A tax-bill recipient is the best available
-  proxy for the owner of record and **is not the same thing as one**.
+  decodes to `null`). Both files therefore carry **`owner_mailing_name`** — the recipient line of
+  the tax-bill mailing label, trailing city/ZIP stripped — and deliberately **not** an `owner` or
+  `owner_of_record` property, because a tax-bill recipient is the best available proxy for the
+  owner of record and **is not the same thing as one**. `owner_mailing_address` carries the label
+  verbatim. Consequence to expect downstream: the `geo/campus` feed's `grantee` reads `null` for
+  every Findlay parcel, since `campus_from_parcels` fills it from `owner`. That is the correct
+  reading — the grantee is exactly what is `[open]`.
 - ⚠️ **The layer serves one row per polygon PART, not one row per parcel** (the Wood-County CAMA
   shape, #1436). Five of the 26 civic/flood parcels come back as 2–4 rows; each is merged into one
   MultiPolygon and `geometry_parts` records how many rows it took. Deduping the query result by
@@ -151,7 +160,7 @@ Raw API responses cache under the git-ignored `data/cache/`.
 
 Source: OGRIP — Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped County='Hancock' via the OHIO_STATEWIDE_PARCEL_SCHEMA field-map. Waterbody names/areas cross-checked against the USGS NHD Waterbody (Large Scale) layer; township attribution against the Census TIGER county-subdivision layer. · License: Public records (local government open data) · Access: public · Site scope: site:findlay · Refresh: on-demand, last 2026-08-02
 
-Regenerate: `watermark watermark.hydrology.connectors.allen_gis.query_parcels_geojson("LocalParcelID IN (…)", settings=Settings(site="findlay"))  # PIN-list; enriched per reference/findlay/README.md`
+Regenerate: `watermark --site findlay parcels --parcel 610000926490`
 
 | file | type | lfs |
 | --- | --- | --- |

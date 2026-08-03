@@ -188,10 +188,15 @@ civic_and_flood_places:
       (data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml) — falls INSIDE this parcel on a
       point-in-polygon test, which is an independent confirmation of the situs. Average design
       flow 15 MGD (23.208 cfs), peak hydraulic 40 MGD. ⚠️ The parcel's served geometry measures
-      only 39.758 planar ac against 50.52 CAMA — a 21% shortfall well outside the +/-3% the other
-      25 parcels show, so cite the deeded acreage and do not use this polygon as a plant-area
-      measurement. The adjoining 27.33-ac city parcel 610000926560 is carried on ADJACENCY and
-      common ownership only; no instrument assigns it to the plant.
+      only 39.758 planar ac against 50.52 CAMA — a 10.76-ac, -21.3% shortfall, the largest gap in
+      the file, so cite the deeded acreage and do not use this polygon as a plant-area measurement.
+      It is NOT a lone outlier: parcel 200001032776 is -17.5% (3.25 CAMA -> 2.68 planar) and the
+      other 24 parcels run -7.2% to +5.2%. Two readings fit that spread and neither is chosen here
+      — served geometry that under-covers the deed, or CAMA acreages never re-surveyed. The
+      adjoining city parcel 610000926560 measures 28.737 planar against 27.33 CAMA (+5.2%, the
+      file's largest overshoot) and is carried on ADJACENCY and common ownership only; no
+      instrument assigns it to the plant. The 68.495 planar_acres above is the sum of the two
+      (39.758 + 28.737), against 77.85 CAMA.
 
   upground_reservoirs:
     parcels: ['330001006644', '330001006645', '330001006646', '330001016943', '330001022264', '330001022266']
@@ -222,8 +227,10 @@ civic_and_flood_places:
       #1465 could find only verbal bounds and an acreage in the public record, so it committed no
       geometry. The county parcel record carries it — 18 parcels standing in the Maumee Watershed
       Conservancy District's name in Eagle Township, situs addresses on exactly the four roads the
-      handoff and the issue name (TR 76, TR 77, TR 49, US RT 68), spanning 40.9739-40.9890 N
-      (3.4-4.5 mi south of downtown Findlay at 41.0440). The USGS NHD large-scale flowline layer
+      handoff and the issue name (TR 76, TR 77, TR 49, US RT 68). Their POLYGON extent spans
+      40.9681-40.9902 N and their parcel CENTROIDS 40.9738-40.9890 N, against downtown Findlay at
+      41.0440 — 3.0-4.6 mi south by polygon extent, 3.4-4.5 by centroid, so the centroid span is
+      the one that reads as the published "~4 miles south". The USGS NHD large-scale flowline layer
       puts seven Eagle Creek segments through the block; township confirmed via the Census TIGER
       county-subdivision layer. ⚠️ 795.35 ac of LAND ACQUIRED is not the published "approximately
       765 acres" of IMPOUNDMENT within the dam alignment (hancockcountyflooding.com) — acquired

@@ -10,7 +10,8 @@
 #
 # NOTE: this file deliberately carries NO top-level `deed`/`action`/`permit`/`filing`/`plan`/`meta`
 # key, so it is inert to the record + corpus classifiers — it does not become a record row and does
-# not lift the places domain (which correctly gates on committed `geo/campus` geometry, still absent).
+# not lift the places domain by itself (that gates on committed `geo/campus` geometry). #1462 later
+# committed that geometry from the parcel record — see `handoff.accepted_by` and `acquired_land`.
 # It is NOT the data-center campus footprint: that is the profile's `footprint_relpath`
 # (extracted/findlay/bosc-site-footprint.yaml), owned by the facility places thread — do not merge.
 
@@ -24,8 +25,10 @@ handoff:
     acquisition. data/reference/findlay/civic-and-flood-places.geojson commits 18 parcels standing
     in the Maumee Watershed Conservancy District's name in Eagle Township — 795.35 ac CAMA / 782.77
     ac planar, place_role 'flood_storage_basin' — with situs addresses on exactly the four roads
-    this descriptor names (TR 76, TR 77, TR 49, US RT 68), spanning 40.9739-40.9890 N against
-    downtown Findlay at 41.0440 (3.4-4.5 mi south), and seven Eagle Creek flowline segments through
+    this descriptor names (TR 76, TR 77, TR 49, US RT 68), spanning 40.9681-40.9902 N by POLYGON
+    EXTENT and 40.9738-40.9890 by parcel CENTROID against downtown Findlay at 41.0440 — 3.0-4.6 mi
+    south by extent, 3.4-4.5 by centroid, so it is the centroid span that reads as the
+    "approximately 4 miles south" recorded below — and seven Eagle Creek flowline segments through
     the block (USGS NHD large-scale). Township confirmed via Census TIGER. Every verbal bound below
     checks out against it.
   still_open: >-
@@ -106,7 +109,7 @@ acquired_land:            # [verified] the committed acquisition geometry (#1462
 
 cross_refs:
 - data/extracted/findlay/flood-mitigation.md
-- data/extracted/findlay/flood/eagle-creek-basin was described from hancockcountyflooding.com/eagle-creek-dry-storage
+- data/extracted/findlay/flood/fema-fma-obligation-2026.epa.yaml   # the basin's funding instrument
 - data/reference/findlay/civic-and-flood-places.geojson   # [verified] the acquisition geometry (#1462)
 - data/extracted/findlay/bosc-site-footprint.yaml         # civic_and_flood_places.eagle_creek_dry_storage_basin
 - data/reference/findlay/parcel-assemblage.geojson        # the site's own campus geometry — the Megawatt Hub holding
