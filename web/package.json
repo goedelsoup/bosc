@@ -16,6 +16,7 @@
     "check:charts": "tsc -p packages/charts/tsconfig.json",
     "check:viz": "tsc -p packages/viz/tsconfig.json",
     "check:links": "node scripts/check-links.mjs",
+    "check:routes": "node scripts/check-routes.mjs",
     "gen:icons": "node scripts/gen-icons.mjs",
     "test": "vitest run",
     "lint": "biome ci src functions scripts packages",
