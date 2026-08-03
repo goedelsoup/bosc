@@ -65,7 +65,7 @@ const profileToc = sections.length >= 2 ? sections : [];
       )
     }
 
-    {person.body && <Fragment set:html={renderBody(person.body, wikiIndex({ scoped: true }))} />}
+    {person.body && <Fragment set:html={renderBody(person.body, wikiIndex())} />}
 
     {
       person.sources.length > 0 && (

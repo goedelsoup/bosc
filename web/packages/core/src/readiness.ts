@@ -297,7 +297,6 @@ export type RecordFacet =
   | "people"
   | "places"
   | "legal"
-  | "concepts"
   | "reference";
 
 /**
@@ -387,22 +386,13 @@ export const RECORD_FACETS: Record<RecordFacet, FacetDeclaration> = {
       "through a content collection, so `scopedLegal` supplies the corpus-scope read the exporter " +
       "does for everything else (#1886).",
   },
-  concepts: {
-    route: "/site/concepts/",
-    label: "Glossary",
-    section: "record",
-    domain: null,
-    scope: "network-global",
-    note:
-      "DECLARED network-global (#1886, the concepts decision). The glossary is the network's SHARED " +
-      "method vocabulary — 7Q10, consumptive cooling, NPDES mean the same thing at every watershed " +
-      "point — plus whatever terms a site tags for itself (#1567), so peers legitimately serve an " +
-      "identical core set. It renders INSIDE each site build (rather than once, network-global) " +
-      "because the record's `[[wiki links]]` must resolve without leaving the site (`wikiScope.ts`); " +
-      "it carries no domain gate for the same reason — the vocabulary is readable before a site has " +
-      "a corpus. The residual duplication against the network-global `/wiki/concepts/` build is a " +
-      "separate, known problem: one taxonomy per noun, tracked in #1892.",
-  },
+  // The glossary is deliberately NOT a facet anymore (#1892, closing the residual half of the
+  // #1886 concepts decision): it was the one `network-global` entry — the shared method vocabulary,
+  // rendered inside every site build so `[[wiki links]]` resolved without leaving the site — and
+  // that render was the duplication. The glossary now builds ONCE at `/wiki/concepts/` (the noun's
+  // canonical page, `taxonomy.ts`); a record's `[[wiki links]]` resolve there, the retired
+  // `/site/concepts/*` routes 301 there, and the record hub's Glossary door is a plain
+  // cross-reference, not a gated facet.
   reference: {
     route: "/site/reference/",
     label: "Reference data",
@@ -428,8 +418,6 @@ function facetHasContent(slug: string, facet: RecordFacet): boolean {
       return feedCount(slug, "people") > 0;
     case "places":
       return feedCount(slug, "places") > 0;
-    case "concepts":
-      return feedCount(slug, "concepts") > 0;
     case "legal":
       return scopedLegal(slug).length > 0;
     case "reference":

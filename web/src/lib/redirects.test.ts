@@ -69,5 +69,9 @@ describe("public/_redirects", () => {
   it("still redirects the routes that really did move", () => {
     // The sibling rule survives — /network/hypotheses predates /research/hypotheses.
     expect(RULES).toContainEqual(["/network/hypotheses", "/research/hypotheses", "301"]);
+    // The per-site glossary collapsed into the one network-global build (#1892): the retired
+    // `/site/concepts/` routes must keep resolving, at their canonical.
+    expect(RULES).toContainEqual(["/network/:site/site/concepts", "/wiki/concepts/", "301"]);
+    expect(RULES).toContainEqual(["/network/:site/site/concepts/*", "/wiki/concepts/:splat", "301"]);
   });
 });

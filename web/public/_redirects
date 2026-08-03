@@ -60,6 +60,13 @@
 /network/:site/site/icon-showcase       /showcase/icons                                        301
 /network/:site/site/teardown-showcase   /showcase/teardown                                     301
 
+# The per-site glossary collapsed into the network-global wiki (#1892 — one taxonomy per noun):
+# 75 of its 77 entries were byte-identical at every watershed point, so the concept pages build
+# ONCE at /wiki/concepts/ and a record's [[wiki links]] point there. `:site` captures exactly one
+# slug segment, so these can't shadow a static route (the old routes are deleted, not real pages).
+/network/:site/site/concepts            /wiki/concepts/                                        301
+/network/:site/site/concepts/*          /wiki/concepts/:splat                                  301
+
 # Old network-hub URLs (pre-#402, when the hub was /network). Research is /research/hypotheses.
 # Exact rules only — /network/<slug> is real coming-soon content.
 #

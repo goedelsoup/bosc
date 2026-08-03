@@ -6,7 +6,7 @@ import { hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
 import type { DocumentCollectionItem, MeetingItem, TimelineEntry } from "@watermark/core/feeds";
 import { type RecordFacet, facetAvailable } from "@watermark/core/readiness";
 import { scopedReference } from "@watermark/core/reference";
-import { withSite } from "@watermark/core/site";
+import { withBase, withSite } from "@watermark/core/site";
 
 const { slug } = Astro.props as { slug: string };
 // Every door is a record FACET, and each is dropped when this site has nothing of its own behind
@@ -111,14 +111,16 @@ const allDoors: Door[] = [
     note: "filings & analysis",
   },
   {
+    // Not a facet: the glossary is the network's shared vocabulary and builds ONCE, on the wiki
+    // (#1892 — one taxonomy per noun). This door is the record's cross-reference to that one
+    // canonical build; the record's own `[[wiki links]]` resolve there too.
     id: "concepts",
-    facet: "concepts",
     kind: "Glossary",
-    href: withSite("/site/concepts/"),
+    href: withBase("/wiki/concepts/"),
     count: num(count("concepts")),
     title: "Glossary",
-    desc: "Term and method definitions for this site — the shared network vocabulary plus the terms specific to this watershed point.",
-    note: "the method, defined",
+    desc: "Term and method definitions — the network's shared vocabulary, kept once on the wiki. The terms this site's record uses link straight into it.",
+    note: "network-global · wiki",
   },
   {
     id: "reference",
