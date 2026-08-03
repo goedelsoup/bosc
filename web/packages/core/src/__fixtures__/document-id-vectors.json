@@ -1,0 +1,86 @@
+{
+  "_comment": "Golden vectors for the stable document handle (#1887). Asserted from BOTH web/packages/core/src/documentId.test.ts and tests/test_site_document_id.py — the two implementations must agree byte-for-byte or every document citation silently 404s. Regenerate only with a deliberate, documented handle-scheme change; a diff here invalidates every published citation.",
+  "algorithm": "crockford_base32_lower(fnv1a64(utf8(rel)) >> 24), 8 chars",
+  "vectors": [
+    {
+      "rel": "aedg/PRR-01-bundle.ocr.pdf",
+      "id": "ps6mee06",
+      "note": "plain ASCII rel"
+    },
+    {
+      "rel": "a/b",
+      "id": "wrgc6684",
+      "note": "shortest plausible rel"
+    },
+    {
+      "rel": "",
+      "id": "sfs9ss44",
+      "note": "empty string — still yields a well-formed handle"
+    },
+    {
+      "rel": "A/B.pdf",
+      "id": "xbhxc5n3",
+      "note": "case matters: differs from a/b.pdf"
+    },
+    {
+      "rel": "a/b.pdf",
+      "id": "t18gre1v",
+      "note": "lower-case peer of A/B.pdf"
+    },
+    {
+      "rel": "legal/SH & AB SSO Findings and Orders/School District Notice.pdf",
+      "id": "1tpqp3we",
+      "note": "spaces and an ampersand"
+    },
+    {
+      "rel": "legal/prr-mandamus/Email-PO#_00018640_2026.pdf",
+      "id": "5e3fthjv",
+      "note": "a literal # in an as-received name"
+    },
+    {
+      "rel": "odd/100%_report#2.pdf",
+      "id": "6cz1dkx6",
+      "note": "percent and hash together"
+    },
+    {
+      "rel": "oepa/Résumé naïve.pdf",
+      "id": "kqbmb29j",
+      "note": "2-byte UTF-8 (Latin-1 supplement)"
+    },
+    {
+      "rel": "oepa/dash—em—dash.pdf",
+      "id": "5yf97pr2",
+      "note": "3-byte UTF-8 (em dash)"
+    },
+    {
+      "rel": "odd/🙂.pdf",
+      "id": "rn71htxh",
+      "note": "4-byte UTF-8 (emoji — a surrogate pair in JS, one code point in Python)"
+    },
+    {
+      "rel": "commissioners/meetings/2024-01-04-commissioners-journal.pdf",
+      "id": "7w2b7qkr",
+      "note": "a real shallow rel"
+    },
+    {
+      "rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/9/SH & AB SSO Findings and Orders/Phase 1 SECAP Constr Projects/Ph 1 SECAP American-Bath Trunk Sewer-URS/Construction Corr/Change Order/Final Change Order Correspondence/ConcDr/cap019.bmp",
+      "id": "a33mfknp",
+      "note": "the deepest real rel in the corpus (12 segments)"
+    },
+    {
+      "rel": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.pdf",
+      "id": "eet5evab",
+      "note": "very long name"
+    },
+    {
+      "rel": "trailing/dot.",
+      "id": "pkwf1tq0",
+      "note": "name ending in a dot"
+    },
+    {
+      "rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/9/SH & AB SSO Findings and Orders/Phase 1 SECAP Constr Projects/Ph 1 Shawnee Force Main/Bid and Construction Corr/S&S Force Main Issues/Mediation Info/Mediator Selection/Thumbs.db",
+      "id": "zk738199",
+      "note": "a non-routable rel still has a handle"
+    }
+  ]
+}
