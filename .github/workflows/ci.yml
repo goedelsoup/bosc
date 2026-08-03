@@ -271,6 +271,9 @@ jobs:
       - name: Check internal links
         run: pnpm run check:links
 
+      - name: Check route budgets
+        run: pnpm run check:routes
+
   # Repo-wide Markdown lint (markdownlint-cli2). Node, but separate from the Astro
   # frontend job — it lints hand-authored docs across the repo (data/, docs/, root, …),
   # not the site. Config + ignores (generated docs, frontend, notebooks) live in
