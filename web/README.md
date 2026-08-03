@@ -182,12 +182,24 @@ TOC rail, and the search index).
   gated by its manifest's readiness block, not by a hand-kept list.
 - **Cross-cutting pages are network-global** at the root, shared across every site:
   `/about`, `/about-me`, `/wiki/*`, `/ask`, `/search`, `/network/*`, and the `/api/*` functions.
+  (Mechanically, a root page renders the **reference bundle** — outside `/network/<site>/` the
+  middleware's active site falls back to Lima — so "global" holds insofar as the underlying feed
+  is the same everywhere, which the taxonomy below is the discipline for.)
+- **One taxonomy per noun**
+  ([#1892](https://github.com/watermark-directory/the-watermark-directory/issues/1892), declared in
+  [`taxonomy.ts`](packages/core/src/taxonomy.ts)): every noun has exactly one canonical page.
+  **Entities, concepts, and hypotheses are network-global** — `/wiki/entities/`, `/wiki/concepts/`
+  (one build; the retired per-site `/site/concepts/*` routes 301 there, and a record's
+  `[[wiki links]]` resolve there), and `/wiki/hypotheses/<id>/` (the `/research/hypotheses`
+  scorecard is its declared *projection*, linked both ways). **People are per-site** —
+  `/network/<site>/site/people/`, profiles curated from that site's own record, with the wiki
+  entity as the canonical spine; there is deliberately no `/wiki/people/`.
 
 The four header tabs (the reconciled IA, design dictate 02 / [#307](https://github.com/watermark-directory/the-watermark-directory/issues/307)):
 
 - **The BOSC site** (`/bosc/site/`) — documents, records, timeline, exhibits, people & places, legal
 - **Watershed** (`/bosc/watershed/`) — hydrology, watershed map, imagery, RSEI/toxics
-- **Wiki** (`/wiki/`) — entity & concept pages (global)
+- **Wiki** (`/wiki/`) — the network-global nouns: entities, concepts, hypotheses (see the taxonomy above)
 - **Docs** (`/bosc/docs/`) — the long-form essays + methodology
 
 Home is the logo lockup (`/bosc`); the guided walk (`/bosc/start`) and **Ask** (`/ask`) are

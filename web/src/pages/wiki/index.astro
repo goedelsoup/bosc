@@ -1,7 +1,7 @@
 ---
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadManifest } from "@watermark/core/bundle";
-import { withBase, siteUrl } from "@watermark/core/site";
+import { withBase } from "@watermark/core/site";
 
 const manifest = loadManifest();
 const byName = new Map(manifest.feeds.map((f) => [f.name, f]));
@@ -17,6 +17,10 @@ interface Door {
   desc: string;
   note: string;
 }
+// Every door is network-global — the wiki hub's contract (#1892). People are deliberately NOT a
+// door: a person's profile is per-site (curated from ONE site's record, `taxonomy.ts`), so the
+// hub doesn't pretend to own the category — individuals with a site-curated profile are reached
+// from their entity page's backlinks, and from each site's own record hub.
 const doors: Door[] = [
   {
     id: "entities",
@@ -24,7 +28,7 @@ const doors: Door[] = [
     href: "/wiki/entities/",
     count: num(count("entities")),
     title: "Entities",
-    desc: "Resolved parties — variants, parcels, identifiers, graph neighborhood, and sources.",
+    desc: "Resolved parties — variants, parcels, identifiers, graph neighborhood, and sources. Individuals with a site-curated profile link from their entity page.",
     note: "who appears",
   },
   {
@@ -44,15 +48,6 @@ const doors: Door[] = [
     title: "Concepts",
     desc: "Glossary entries cross-linked via [[wiki links]] — the method, defined.",
     note: "the glossary",
-  },
-  {
-    id: "people",
-    kind: "Profiles",
-    href: siteUrl("/site/people/"),
-    count: num(count("people")),
-    title: "People",
-    desc: "Curated individual profiles, kept under the BOSC site.",
-    note: "profiles",
   },
 ];
 if (hasFeed("hypotheses")) {
