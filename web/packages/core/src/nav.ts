@@ -23,6 +23,7 @@ import { sectionStatus } from "./readiness";
 import { siteBase, storyBase } from "./routes";
 import type { NetworkSite } from "./sites";
 import { STUDY_CHAPTERS, STUDY_PARTS } from "./study";
+import { NETWORK_NOUNS } from "./taxonomy";
 import { type Story, activeStory, chapterHref, storyContentsHref } from "./walk";
 
 export type SectionId =
@@ -229,10 +230,9 @@ export function sections(): Section[] {
       href: "/wiki/",
       blurb: "Entity & concept pages with backlinks and a graph neighborhood.",
       toc: [
-        { label: "Entities", anchor: "entities" },
-        { label: "People", anchor: "people" },
-        { label: "Concepts", anchor: "concepts" },
-        { label: "Hypotheses", anchor: "hypotheses" },
+        // The network-global nouns, straight from the taxonomy (#1892): the nav model states the
+        // canonical view per noun. People are per-site (each site's record hub), so not listed.
+        ...NETWORK_NOUNS.map((n) => ({ label: n.label, anchor: n.anchor })),
         { label: "Open questions", anchor: "open-questions" },
         { label: "Curated entities", anchor: "curated" },
       ],

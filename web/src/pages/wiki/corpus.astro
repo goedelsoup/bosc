@@ -16,6 +16,7 @@ import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import { type KindGroup, groupByKind, summarizeByKind, topByDegree } from "@watermark/core/corpusIndex";
 import type { CorpusNodeItem, CorpusNodeKind } from "@watermark/core/feeds";
 import { withBase } from "@watermark/core/site";
+import { TAXONOMY } from "@watermark/core/taxonomy";
 
 const nodes = hasFeed("corpus-index") ? loadFeed<CorpusNodeItem[]>("corpus-index") : [];
 const tallies = summarizeByKind(nodes);
@@ -31,10 +32,12 @@ const asOf = nodes.reduce<string | null>(
 );
 
 // Where a kind's group header points, when a browsable section for it exists (else no link).
+// The noun kinds read the taxonomy (#1892) — the canonical page per noun is declared once,
+// not re-decided here; the non-noun kinds keep their local wiki homes.
 const SECTION_HREF: Partial<Record<CorpusNodeKind, string>> = {
-  entity: "/wiki/entities/",
-  concept: "/wiki/concepts/",
-  hypothesis: "/wiki/hypotheses/",
+  entity: TAXONOMY.entity.index,
+  concept: TAXONOMY.concept.index,
+  hypothesis: TAXONOMY.hypothesis.index,
   relation: "/wiki/graph",
   lead: "/wiki/open-questions/",
   "open-question": "/wiki/open-questions/",
