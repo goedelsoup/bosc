@@ -1,0 +1,72 @@
+id: findlay-civic-flood-places
+title: Findlay Civic & Flood Places — WPCC, Upground Reservoirs, Eagle Creek Dry Storage Basin
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: >-
+    watermark.hydrology.connectors.allen_gis.query_parcels_geojson("LocalParcelID IN (…)",
+    settings=Settings(site="findlay"))  # PIN-list; enriched per reference/findlay/README.md
+  connector_ref: watermark.hydrology.connectors.allen_gis
+  source: >-
+    OGRIP — Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped
+    County='Hancock' via the OHIO_STATEWIDE_PARCEL_SCHEMA field-map. Waterbody names/areas
+    cross-checked against the USGS NHD Waterbody (Large Scale) layer; township attribution against
+    the Census TIGER county-subdivision layer.
+  external_url: https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/OhioStatewidePacels_full_view/FeatureServer/0
+license: Public records (local government open data)
+access_tier: public
+# Deliberately its OWN entry rather than a second storage row on `parcel-assemblage`: that entry's
+# relpath template feeds SiteProfile.parcels_relpath, which drives the geo/campus map feed, the
+# SSURGO dominant-HSG sample and the stormwater screen's area. These are the site's PUBLIC places,
+# not its campus, and folding them into that path would draw municipal infrastructure as "campus".
+site_scope: site:findlay
+storage:
+- relpath: reference/findlay/civic-and-flood-places.geojson
+  media_type: application/geo+json
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-08-02'
+provenance: connector
+tags:
+- parcels
+- gis
+- flood
+- wastewater
+- water-supply
+- findlay
+- hancock-county
+notes: >-
+  The three civic/flood land holdings of the Findlay watershed point (#1462, sub-issue of #1265) —
+  26 parcels, 1,921.77 ac CAMA / 1,870.83 ac planar (UTM 17N) — split by a `place_role` property
+  that must be read before any acreage is quoted. flood_storage_basin: 18 parcels, 795.35 ac, held
+  by the MAUMEE WATERSHED CONSERVANCY DISTRICT in Eagle Township — the Eagle Creek Dry Storage
+  Basin acquisition, which CLOSES the polygon #1465's handoff had to leave [open] (situs on exactly
+  the four roads it names — TR 76, TR 77, TR 49, US-68 — spanning 40.9739-40.9890 N, 3.4-4.5 mi
+  south of downtown, with seven Eagle Creek flowline segments through the block per USGS NHD).
+  ⚠️ 795.35 ac of LAND ACQUIRED is NOT the published "approximately 765 acres" of IMPOUNDMENT
+  within the dam alignment; acquired land properly exceeds the impoundment, the two are consistent,
+  neither is derived from the other, and the dam alignment itself stays [open] (no surveyed polygon,
+  no ODNR Dam Safety exhibit in corpus). water_supply_reservoir: 6 City of Findlay parcels on
+  TR 207/205 in Marion Township, 1,048.57 ac, over which the USGS NHD Waterbody layer carries
+  exactly two reservoirs — "Findlay Reservoir" (177.9 ac) and "Findlay Upground Reservoir Number
+  Two" (628.9 ac), 806.8 ac of water surface inside the city land; which parcel underlies which
+  reservoir is NOT asserted, the two geometries come from different producers and were not
+  reconciled. This is the same Findlay Reservoir whose diversion and low-flow augmentation release
+  make USGS gage 04189000 a REGULATED station — the defect that retired the derived 8.67 cfs 7Q10
+  for the WPCC reach in #1458. wwtp: the City's Water Pollution Control Center at 1201 S River Rd
+  (610000926490) plus one adjoining city parcel carried on ADJACENCY and common ownership only.
+  The plant's permitted outfall 2PD00008001 at Blanchard River RM 56.42 (41.049722/-83.667778, Ohio
+  EPA fact sheet 2PD00008*UD p.7) falls INSIDE 610000926490 on a point-in-polygon test —
+  `contains_wpcc_outfall` records it — which independently confirms the situs. ⚠️ That parcel's
+  served geometry measures 39.758 planar ac against 50.52 CAMA, a 21% shortfall well outside the
+  ±3% the other 25 parcels show; cite the deeded acreage and do not use the polygon as a plant-area
+  measurement. Three notes for a re-pull. THE LAYER SERVES ONE ROW PER POLYGON PART, not per parcel
+  (the Wood-County shape): five of these 26 parcels return 2-4 rows, each merged here into one
+  MultiPolygon with `geometry_parts` recording how many — deduping on the id would have dropped
+  220 ac. The Hancock slice's CurrentTo is 2023-05-08, so for the still-in-progress Eagle Creek
+  acquisition 795.35 ac is a FLOOR, not a closing figure. And the OGRIP public view is
+  owner-redacted (owner_field=''), so owner_of_record is parsed from the MailAddressAll tax-bill
+  mailing label — the source itself truncates the conservancy district's name inconsistently
+  ("MAUMEE WATERSHED CONSERVANCY" vs "… CONSERVANCY DISTRICT"), and neither form is corrected.

@@ -16,7 +16,7 @@ Living record for the Findlay watershed point (basin: maumee), scaffolded by `wa
 | scaffold | ok | created 6 dir(s); 6 README(s) |
 | derive-low-flows | ok¹ | reference/hydrology/low-flow-7q10.derived.yaml |
 | corridor-ddf | ok | reference/hydrology/findlay/atlas14-corridor-ddf.yaml |
-| ssurgo-hsg | skipped | footprint missing: extracted/findlay/bosc-site-footprint.yaml |
+| ssurgo-hsg | ok³ | HSG C/D; matches profile (dual group: drained C / undrained D) — was `skipped` until #1462 committed the parcel geometry |
 | climatology | ok | reference/hydrology/findlay/nasa-power-climatology.yaml |
 | basin-screen | ok² | 7/129 dischargers screened (1 violation, 2 tight) — superseded; see reconciliation below |
 | econ-baseline | ok | reference/economics/findlay/baseline.yaml |
@@ -26,14 +26,15 @@ Living record for the Findlay watershed point (basin: maumee), scaffolded by `wa
 
 ¹ `ok` means the step ran without error — **not** that it produced a Blanchard value. On the recorded run it emitted only the four Maumee-side mainstems (no Blanchard). The Blanchard River 7Q10 (**8.67 cfs**, LP3 over USGS 04189000) was added to `low-flow-7q10.derived.yaml` later, under #417.
 ² Superseded by the #416 reconciliation below (now 8/129, 2 violation/2 tight/4 ok). Neither the Findlay WPCC nor any other Blanchard mainstem POTW is in the screened set — see the reconciliation section (driven by the `receiving_water` names in `data/reference/echo/maumee-wwtp.potw.yaml` and the `screen_facility` short-circuit logic in `src/watermark/hydrology/basin.py`).
+³ Re-run under #1462 (2026-08-02), after the parcel assemblage was committed. The recorded-run value was `skipped`; the row above is the current result. Note the letter **changed**: the step now says "matches profile" only because the profile was corrected from `D` to `C/D` in the same issue.
 
 ## GIS pulls (manual; not part of `watermark onboard`)
 
 | layer | status | output |
 |---|---|---|
 | zoning catalog | ok (2026-06-19) | reference/findlay-gis/zoning-districts.yaml — 15 districts (dissolved layer, 1 polygon each) |
-| parcels | wired (PR #406) | Hancock County publishes no county REST (Beacon/Schneider only) → OGRIP Ohio statewide layer scoped to `County='Hancock'` (partial / owner-redacted: id+situs+land-use+acreage, no owner/value/sale). `reference/findlay-gis/` |
-| floodzone | n/a | shared national FEMA NFHL — spatial query; needs an identified site footprint |
+| parcels | wired (PR #406) · **two slices committed (#1462)** | Hancock County publishes no county REST (Beacon/Schneider only) → OGRIP Ohio statewide layer scoped to `County='Hancock'` (partial / owner-redacted: id+situs+land-use+acreage, no owner/value/sale). Catalog: `reference/findlay-gis/`. Committed slices: `reference/findlay/parcel-assemblage.geojson` (the 8-parcel Megawatt Hub holding, 108.65 ac) and `reference/findlay/civic-and-flood-places.geojson` (WPCC + upground reservoirs + the Eagle Creek Dry Storage Basin, 26 parcels / 1,921.77 ac). ⚠️ **CurrentTo 2023-05-08**, and neither county system is machine-readable (Beacon = Cloudflare 403, Kofile recorder = login-gated) — the deed chain is unsearched, not empty. |
+| floodzone | n/a | shared national FEMA NFHL — spatial query; the site footprint now exists (`reference/findlay/parcel-assemblage.geojson`, #1462), so this is runnable |
 
 ## Self-research (Phase 5; #247) — recorded 2026-06-21 (#353)
 
@@ -130,14 +131,20 @@ time; two of its claims are now **superseded**, and the sections above are delib
    (USGS 04188337, 04188496). See `data/reference/network/findlay-ottawa-comparison.yaml` and
    `data/reference/usgs/low-flow/`.
 
-**GIS — parcels now wired.** The zoning catalog is committed and the Hancock parcel `[open]` was
-resolved by the OGRIP statewide-parcel wiring (#406, partial/owner-redacted). Floodzone = shared
-national NFHL.
+**GIS — parcels now wired, and two reviewed slices are committed (#1462).** The zoning catalog is
+committed and the Hancock parcel `[open]` was resolved by the OGRIP statewide-parcel wiring (#406,
+partial/owner-redacted). Floodzone = shared national NFHL. #1462 added the site's own geometry —
+`reference/findlay/parcel-assemblage.geojson` (the Megawatt Hub holding, which is what
+`SiteProfile.parcels_relpath` points at) and `reference/findlay/civic-and-flood-places.geojson` (the
+WPCC, the upground reservoirs and the Eagle Creek Dry Storage Basin) — which activated the
+**`places`** readiness domain (`absent` → `live`) and unskipped the SSURGO step. **Still `[open]`:**
+the deed chain for the 2025 40-ac and 2026-03-05 110-ac purchases, because the OGRIP Hancock export
+is dated 2023-05-08 and both county systems refuse automated retrieval.
 
 ## Review gate (blocking)
 
 - [ ] Every written reference value is reviewed against a cited source (no fabricated values).
-- [ ] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation.
+- [x] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation. **#1462:** the step ran for the first time — it had reported `skipped — parcel geometry missing` since onboarding — and returned **C/D at 23 of 23 grid points** over the newly committed `reference/findlay/parcel-assemblage.geojson` (`grid_n=8`, 2026-08-02), unanimous again at `grid_n=12` (53/53) and `grid_n=16` (89/89). The profile's `[inference]` **D** was **corrected to C/D** with a citation naming the four map units (Del Rey-Blount, Pewamo, Glynwood-Blount-Houcktown, Shinrock till-substratum-Glynwood). Closes **#355**. Recorded verbatim per WS-20/#1620 so `pre_drainage_condition`/`post_drainage_condition` resolve the dual rating.
 - [x] basin-screen coverage is sane for this site's receiving waters. **Current state (#1460 + #1458):** the Findlay WPCC **is screened** — the ECHO curation overlay supplied its cited receiving water (closing #352) and it runs against Ohio EPA's own at-outfall design 7Q10 of **0.21 cfs**, giving **0.009:1** (violation). The #416 reconciliation recorded above, which found it correctly held out as `no_receiving_water`, describes the superseded state. Ottawa (OH0026921) is still held out on that null.
 - [x] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md). Schema-driven (#237); Findlay zoning field-map registered + catalog committed; parcels wired via the OGRIP statewide layer (PR #406).
 - [x] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/) — see self-research summary above; the shared Blanchard 7Q10 gap is resolved — first by the derived 8.67 cfs (#414 closed via #417), then re-based by #1458 onto the cited at-outfall 0.21 cfs, the derived value having been retired for this reach — and the basin-screen reconciliation is complete (#416 section above, superseded by the #1458 section); parcels closed by #406.

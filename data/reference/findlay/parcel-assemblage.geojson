@@ -1,0 +1,557 @@
+{
+  "type": "FeatureCollection",
+  "bosc:provenance": {
+    "subject": "The One Power Co / One Energy \"Findlay Megawatt Hub\" (MWHub 01) land holding, Allen Township, Hancock County OH (FIPS 39063) \u2014 EIGHT parcels, 108.65 ac county-CAMA / 105.873 ac planar, standing in the names of THREE One Energy vehicles (One Energy Enterprises LLC, OEE XX LLC, OEE XXX LAND LLC) in TWO contiguous blocks 200 m apart: a 73.89-ac NORTH block off TR 215 / CR 216 and a 34.76-ac SOUTH block off TR 99. #1462, sub-issue of #1265. THIS IS THE 2023-05-08 RECORD \u2014 see the vintage caveat.",
+    "source": "OGRIP \u2014 Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped County='Hancock', read through the ohio_parcels connector (OHIO_STATEWIDE_PARCEL_SCHEMA). Hancock County publishes no county parcel ArcGIS REST: the auditor's CAMA is Beacon/Schneider-only and the recorder's index is Kofile CountyFusion, both machine-inaccessible (see caveats).",
+    "source_url": "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/OhioStatewidePacels_full_view/FeatureServer/0",
+    "read": "2026-08-02",
+    "cama_current_to": "2023-05-08",
+    "crs": "EPSG:4326 (WGS84)",
+    "count": 8,
+    "distinct_parcels": 8,
+    "parcel_ids": [
+      "020000004530",
+      "020000004900",
+      "020001001794",
+      "020001002940",
+      "020001005171",
+      "020001011628",
+      "020001011800",
+      "020001011802"
+    ],
+    "owners_of_record": [
+      "OEE XX LLC",
+      "OEE XXX LAND LLC",
+      "ONE ENERGY ENTERPRISES LLC"
+    ],
+    "north_block_cama_acres": 73.89,
+    "north_block_planar_acres": 71.858,
+    "south_block_cama_acres": 34.76,
+    "south_block_planar_acres": 34.015,
+    "total_cama_acres": 108.65,
+    "total_planar_acres": 105.873,
+    "union_planar_acres": 105.873,
+    "caveats": [
+      "\u26a0\ufe0f VINTAGE IS THE FIRST THING TO READ. The OGRIP Hancock slice carries CurrentTo 2023-05-08 \u2014 it is a three-year-old export, and it PREDATES every transaction this issue was asked to trace: the 40 ac bought in 2025 and the 110 ac closed 2026-03-05 for $5.9M in the North Findlay Industrial Park (theohioregister.com, [reference]). So this file is the holding AS OF 2023-05-08 and nothing in it can name a 2025 or 2026 grantee. Everything here is stated in those terms; no current-ownership claim is made.",
+      "\u26a0\ufe0f NO CURRENT COUNTY SOURCE IS MACHINE-READABLE, AND THAT IS UNSEARCHED, NOT EMPTY. The Hancock County Auditor's CAMA is published only through Beacon/Schneider (beacon.schneidercorp.com AppID 1128, also fronted at regis.co.hancock.oh.us), which returns Cloudflare HTTP 403 to every non-browser request; the Recorder's index is Kofile CountyFusion (countyfusion2.kofiletech.us, countyname=HancockOH), whose 'Login as Guest' POST target returns 404 outside a browser session. Both were probed 2026-08-02. The deed chain \u2014 grantor, grantee vehicle, instrument number, consideration, recorded easements \u2014 is therefore [open] pending a manual/authenticated pull, NOT a negative finding.",
+      "OWNER COMES FROM THE MAILING LABEL, NOT AN OWNER FIELD. The OGRIP public view is owner-redacted: OHIO_STATEWIDE_PARCEL_SCHEMA sets owner_field='' and the connector's `owner` decodes to null, which is why `owner_of_record` here is parsed from `MailAddressAll` (the recipient line of the tax-bill mailing label) with the trailing city/ZIP stripped. A tax-bill recipient is the best available proxy for the owner of record and is not the same thing as one \u2014 a contract purchaser, a life tenant or a servicer can receive the bill. `owner_mailing_address` carries the label verbatim.",
+      "THE HOLDING IS TWO BLOCKS, NOT ONE CAMPUS, AND THE SPLIT IS MEASURED. Each block's polygons abut without overlapping \u2014 the union of the north block is a SINGLE polygon of 71.857 ac against a parts-sum of 71.858 ac, and the south block 34.016 vs 34.015 ac \u2014 but the two blocks do not touch: the shortest distance between them is 200.2 m (UTM 17N / EPSG:32617). Do not quote 108.65 ac as a contiguous campus.",
+      "THE NORTH BLOCK IS THE '74-ACRE WIND CAMPUS' OF THE PRESS REPORTING \u2014 73.89 CAMA ac (69.82 ac OEE XX LLC at CR 216, land use 399 Ind-Other, plus the 4.07-ac One Energy Enterprises LLC office at 12411 TR 215, land use 447 Com-Office) against The Ohio Register's 'a 74-acre wind energy campus along Interstate 75'. [inference] on the identification, [verified] on the acreage.",
+      "'ALONG INTERSTATE 75' IS CORRIDOR LANGUAGE, NOT FRONTAGE. Measured in UTM 17N against the Census TIGER 2026 primary-road centerline, the north block's nearest boundary point (41.09950, -83.64512) lies 1,224 m \u2014 0.76 mi \u2014 east of I-75 (41.09958, -83.65969). The south block is 1,794 m out. Neither block abuts the interstate right-of-way.",
+      "SEVEN OF HANCOCK COUNTY'S TEN WIND TURBINES STAND ON THIS HOLDING \u2014 a geometric containment test, [verified]. The USGS U.S. Wind Turbine Database (USWTDB, read 2026-08-02) carries exactly ten turbines in Hancock County OH, all 1.5 MW, in four named projects; point-in-polygon against these parcels puts four inside 020000004530 (Whirlpool Corp. Findlay Wind Farm 2015 x2, Zephyr Wind Project 2015 x2), two inside 020001011628 and one inside 020001011800 (Zephyr Wind Project 2.0, 2019). The remaining three \u2014 one 2015 Zephyr turbine at 41.09441,-83.63913 and both 2018 Valfilm Wind turbines \u2014 fall outside it. So the register's 'already includes 10 utility-scale turbines' is a COUNTY count, not a count on this land: seven is the number this holding carries, and the seven-vs-ten gap is itself evidence that the 2023 holding is not the whole campus. `turbines_contained` records the test per parcel.",
+      "THE HUB'S OWN ADDRESS IS NOT IN THIS EXTRACT. One Power Co's SEC filings give the Findlay Megawatt Hub as 12385 Township Road 215; no parcel in the 2023-05-08 Hancock slice carries that situs (12411 TR 215, the One Energy office, is the nearest). Whether 12385 is a post-2023 split, a building address on an existing parcel, or a renumbering is [open] \u2014 and note the road itself was contested: One Energy petitioned the county commissioners on 2023-12-05 to rename TR 215 'Electric Avenue' (One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees, 2026-Ohio-405).",
+      "THE S-1's '~170-ACRE CAMPUS' IS NOT RECONCILED TO THIS HOLDING AND IS NOT FORCED TO BE. 108.65 ac stand in One Energy names here; the S-1 describes ~170 acres. The 61-ac gap is consistent with the 2025 40-ac purchase plus land held by lease, option or a vehicle whose mailing label does not read 'OEE'/'ONE ENERGY' \u2014 none of which this extract can see. No parcel is added to close the gap.",
+      "acres is the county CAMA (auditor) figure carried in the OGRIP LandArea column; planar_acres is measured from this geometry in UTM 17N (EPSG:32617). They differ by -1.9 to 0.0 ac per parcel and by 2.78 ac (2.6%) in total; the two are NOT reconciled and neither is adjusted to the other \u2014 cite the CAMA figures for the record and the planar ones for area/runoff modelling.",
+      "NO VALUE, SALE, DEED OR TAX-DISTRICT COLUMNS EXIST TO CARRY. Unlike the Shelby / Clinton / Wood county assemblages, the OGRIP public view has no market value, no conveyance date or amount, no deed book-page, no legal description and no CAUV/exemption/abatement flags. Those fields are absent from this file because the source has none \u2014 not because they were dropped.",
+      "Right-county guard: Hancock County OHIO (FIPS 39063), Allen Township \u2014 not Hancock County IN/IL/WV/KY, and not the City of Findlay corporate limits (these parcels carry the '02' Allen Township tax-district prefix; the City's own zoning FeatureServer does not reach them). Township confirmed against the Census TIGER county-subdivision layer."
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.642094760394,
+              41.1020686762031
+            ],
+            [
+              -83.6420682854159,
+              41.1005206066132
+            ],
+            [
+              -83.6407298712243,
+              41.1005336919786
+            ],
+            [
+              -83.6407296505652,
+              41.1003214020509
+            ],
+            [
+              -83.6407239885542,
+              41.0948783589367
+            ],
+            [
+              -83.6407304798054,
+              41.0948783049987
+            ],
+            [
+              -83.6415722112045,
+              41.0948765566555
+            ],
+            [
+              -83.6451253532027,
+              41.0948691082264
+            ],
+            [
+              -83.645124905581,
+              41.0950151696614
+            ],
+            [
+              -83.6451213210451,
+              41.0969347638566
+            ],
+            [
+              -83.6451132325783,
+              41.0992365285487
+            ],
+            [
+              -83.6451185876465,
+              41.0995032038671
+            ],
+            [
+              -83.6450965164205,
+              41.1011103828703
+            ],
+            [
+              -83.6450972816611,
+              41.1020144602946
+            ],
+            [
+              -83.6439887142379,
+              41.1020623846137
+            ],
+            [
+              -83.642094760394,
+              41.1020686762031
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "020000004530",
+        "state_parcel_id": "39063-020000004530",
+        "assemblage_role": "hub_holding",
+        "cluster": "north",
+        "owner_of_record": "OEE XX LLC",
+        "owner_mailing_address": "OEE XX LLC FINDLAY 45840",
+        "situs_address": "0 COUNTY RD 216 FINDLAY 45840",
+        "land_use_code": 399,
+        "land_use_name": "Ind-Other",
+        "acres": 69.82,
+        "planar_acres": 67.895,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": [
+          "Whirlpool Corp. Findlay Wind Farm (2015)",
+          "Whirlpool Corp. Findlay Wind Farm (2015)",
+          "Zephyr Wind Project (2015)",
+          "Zephyr Wind Project (2015)"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6360085663147,
+              41.0883150806853
+            ],
+            [
+              -83.6360099490572,
+              41.0877990128585
+            ],
+            [
+              -83.636383839383,
+              41.0877999379319
+            ],
+            [
+              -83.6363854442199,
+              41.0883169090272
+            ],
+            [
+              -83.6360085663147,
+              41.0883150806853
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "020000004900",
+        "state_parcel_id": "39063-020000004900",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 0.5,
+        "planar_acres": 0.447,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6419732001814,
+              41.1020690785632
+            ],
+            [
+              -83.6415382684113,
+              41.1020705858736
+            ],
+            [
+              -83.6415277674244,
+              41.101612251663
+            ],
+            [
+              -83.6407309957942,
+              41.101615010417
+            ],
+            [
+              -83.6407298712243,
+              41.1005336919786
+            ],
+            [
+              -83.6420682854159,
+              41.1005206066132
+            ],
+            [
+              -83.642094760394,
+              41.1020686762031
+            ],
+            [
+              -83.6419732001814,
+              41.1020690785632
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "020001001794",
+        "state_parcel_id": "39063-020001001794",
+        "assemblage_role": "hub_holding",
+        "cluster": "north",
+        "owner_of_record": "ONE ENERGY ENTERPRISES LLC",
+        "owner_mailing_address": "ONE ENERGY ENTERPRISES LLC FINDLAY 45840",
+        "situs_address": "12411 TOWNSHIP RD 215 FINDLAY 45840",
+        "land_use_code": 447,
+        "land_use_name": "Com-Office",
+        "acres": 4.07,
+        "planar_acres": 3.963,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6360051503588,
+              41.089586929524
+            ],
+            [
+              -83.6360082239441,
+              41.0884342982345
+            ],
+            [
+              -83.6369373219434,
+              41.088436831665
+            ],
+            [
+              -83.6369376579524,
+              41.088319974428
+            ],
+            [
+              -83.6369388741076,
+              41.0878018250974
+            ],
+            [
+              -83.6371565398832,
+              41.0878026264332
+            ],
+            [
+              -83.6371353918619,
+              41.0895910970839
+            ],
+            [
+              -83.6360051503588,
+              41.089586929524
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "020001002940",
+        "state_parcel_id": "39063-020001002940",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 3.44,
+        "planar_acres": 3.335,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6373808714146,
+              41.08884673982
+            ],
+            [
+              -83.6373932017919,
+              41.087803498381
+            ],
+            [
+              -83.6379712142262,
+              41.0878056244466
+            ],
+            [
+              -83.6379588926751,
+              41.0888488659438
+            ],
+            [
+              -83.6373808714146,
+              41.08884673982
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "020001005171",
+        "state_parcel_id": "39063-020001005171",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "12620 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 521,
+        "land_use_name": "Res-Custom Code",
+        "acres": 1.5,
+        "planar_acres": 1.391,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6359908821899,
+              41.0949107970485
+            ],
+            [
+              -83.6360050612184,
+              41.0896203485847
+            ],
+            [
+              -83.6360051503588,
+              41.089586929524
+            ],
+            [
+              -83.6371353918619,
+              41.0895910970839
+            ],
+            [
+              -83.6371565398832,
+              41.0878026264332
+            ],
+            [
+              -83.6373932017919,
+              41.087803498381
+            ],
+            [
+              -83.6373808714146,
+              41.08884673982
+            ],
+            [
+              -83.6373614168954,
+              41.0904923997363
+            ],
+            [
+              -83.6383929109499,
+              41.090498817998
+            ],
+            [
+              -83.638382224841,
+              41.0914040061568
+            ],
+            [
+              -83.6383796326731,
+              41.0916235904038
+            ],
+            [
+              -83.6383570380983,
+              41.0935373201728
+            ],
+            [
+              -83.6383546796496,
+              41.0937370943927
+            ],
+            [
+              -83.6383409682088,
+              41.0948983524629
+            ],
+            [
+              -83.6359908821899,
+              41.0949107970485
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "020001011628",
+        "state_parcel_id": "39063-020001011628",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 28.32,
+        "planar_acres": 27.928,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": [
+          "Zephyr Wind Project 2.0 (2019)",
+          "Zephyr Wind Project 2.0 (2019)"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6360082239441,
+              41.0884342982345
+            ],
+            [
+              -83.6360085663147,
+              41.0883150806853
+            ],
+            [
+              -83.6363854442199,
+              41.0883169090272
+            ],
+            [
+              -83.6367628734597,
+              41.0883184050628
+            ],
+            [
+              -83.6369122640233,
+              41.0883197527515
+            ],
+            [
+              -83.6369134801338,
+              41.0878017321489
+            ],
+            [
+              -83.6369388741076,
+              41.0878018250974
+            ],
+            [
+              -83.6369376579524,
+              41.088319974428
+            ],
+            [
+              -83.6369373219434,
+              41.088436831665
+            ],
+            [
+              -83.6360082239441,
+              41.0884342982345
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "020001011800",
+        "state_parcel_id": "39063-020001011800",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 0.31,
+        "planar_acres": 0.284,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": [
+          "Zephyr Wind Project 2.0 (2019)"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6367628734597,
+              41.0883184050628
+            ],
+            [
+              -83.6363854442199,
+              41.0883169090272
+            ],
+            [
+              -83.636383839383,
+              41.0877999379319
+            ],
+            [
+              -83.6365273005026,
+              41.0878003091466
+            ],
+            [
+              -83.6369134801338,
+              41.0878017321489
+            ],
+            [
+              -83.6369122640233,
+              41.0883197527515
+            ],
+            [
+              -83.6367628734597,
+              41.0883184050628
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "020001011802",
+        "state_parcel_id": "39063-020001011802",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 0.69,
+        "planar_acres": 0.63,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    }
+  ]
+}

@@ -350,13 +350,40 @@ _FINDLAY = SiteProfile(
     design_lat=41.0428,  # [verified] city centroid = NOAA Atlas-14 point
     design_lon=-83.6422,
     corridor_name="Blanchard River corridor",  # [inference] the receiving-water design corridor
-    dominant_hsg="D",  # [inference] Great Black Swamp very-poorly-drained clays (Hoytville/Pewamo) → HSG D
+    # [verified] SSURGO over the committed Megawatt Hub assemblage (#1462, closing #355) — and it
+    # CORRECTS the prior [inference] D by one notch, the same correction Ottawa (#1420) and Van
+    # Wert (#1403) took. The county-scale reasoning was not wrong about the region, but it was
+    # wrong about this ground: the hub sits on the Wisconsinan till/moraine mix east of the lake
+    # plain, and NRCS rates every map unit under it the DUAL group C/D — not the flat D the
+    # inference read off Hoytville. Pewamo IS here, and NRCS rates Pewamo C/D too, so the profile's
+    # letter was wrong even for the series it named; Hoytville does not appear under this footprint
+    # at all. Recorded verbatim per WS-20/#1620 so pre_/post_drainage_condition resolve the dual
+    # rating rather than the profile pre-collapsing a letter no scenario can see.
+    dominant_hsg="C/D",
     hsg_citation=(
-        "Hancock County, OH (NRCS area OH063) dominant hydrologic soil group D — very-poorly-"
-        "drained Great Black Swamp clays (Hoytville/Pewamo); NRCS Soil Survey of Hancock County "
-        "2006 + Hoytville OSD; [inference] pending an SSURGO area-weighted confirmation"
+        'One Power Co "Findlay Megawatt Hub" holding, Allen Township — SSURGO dominant hydrologic '
+        "soil group C/D at 23 of 23 grid points over "
+        "data/reference/findlay/parcel-assemblage.geojson "
+        "(watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8, read 2026-08-02): Del "
+        "Rey-Blount complex 0-3% slopes (12 points, Del Rey 55%, somewhat poorly drained), Pewamo "
+        "silty clay loam 0-1% (6, Pewamo 85%, very poorly drained), Glynwood-Blount-Houcktown "
+        "complex 1-4% (4) and Shinrock till-substratum-Glynwood complex 1-4% (1). UNANIMOUS on "
+        "two finer grids as well — 53 of 53 points at grid_n=12 and 89 of 89 at grid_n=16 — so "
+        "the dual rating is the whole footprint, not a sampling artifact. C where the field tile "
+        "is installed and maintained, D in the natural undrained condition. This RETIRES the "
+        "county-scale [inference] D (NRCS Soil Survey of Hancock County 2006 + Hoytville OSD): "
+        "Hoytville is not under this ground, and Pewamo — the other series that inference named — "
+        "is rated C/D, not D. See data/extracted/findlay/bosc-site-footprint.yaml"
     ),
-    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
+    # [open] The land-cover scenario stays unfilled, but the REASON has moved (#1462): the site is
+    # no longer unidentified — the committed assemblage names it — and what is missing now is a
+    # measured cover split. The auditor classes the holding industrial/commercial (399 Ind-Other,
+    # 301 Ind-Custom, 447 Com-Office, 521 Res-Custom), which is enough to rule OUT Van Wert's
+    # `cropland` pre-cover but not enough to adopt Ottawa's `developed_campus`: a use class is not
+    # an impervious fraction, and a wind campus is mostly pervious ground around turbine pads and
+    # access drives. Needs the OEPA Rule-5 / CGP construction-stormwater NOI or a site plan — the
+    # same instrument that would let load_site_footprint() validate and the discharge screen run.
+    pre_cover="TODO",
     post_cover="TODO",
     developed_pervious_cover="TODO",
     noaa_fallback_24h_depth_in={  # [reference] NOAA Atlas-14 Vol 2 v3 (Ohio River Basin) PDS at 41.0428/-83.6422
@@ -371,8 +398,18 @@ _FINDLAY = SiteProfile(
         500: 6.72,
         1000: 7.42,
     },
-    parcels_relpath="reference/findlay/parcel-assemblage.geojson",  # [open] commit the site's own geometry
-    footprint_relpath="extracted/findlay/bosc-site-footprint.yaml",  # [open] pending an identified site
+    # [verified] committed 2026-08-02 (#1462) — the eight One Energy / OEE parcels of the Megawatt
+    # Hub holding (108.65 ac CAMA / 105.873 ac planar, two blocks 200 m apart), read through the
+    # ohio_parcels connector off the OGRIP Hancock scope. ⚠️ That scope's CurrentTo is 2023-05-08,
+    # so the file is the holding as of that date and can name no 2025/2026 grantee; the deed chain
+    # stays [open] because the county's own systems are machine-inaccessible (Beacon = Cloudflare
+    # 403, Kofile CountyFusion = login-gated). See the geojson's `bosc:provenance`.
+    parcels_relpath="reference/findlay/parcel-assemblage.geojson",
+    # The footprint record is documentary, not a permit transcription: like every peer's (Sidney,
+    # Ottawa, Wilmington, Van Wert) it deliberately does NOT validate as `SiteFootprint` — no
+    # Rule-5/CGP earth-disturbance permit for the hub is in the corpus, so the discharge screen
+    # stays held out rather than run on invented acreages.
+    footprint_relpath="extracted/findlay/bosc-site-footprint.yaml",
     # per-site onboard reach outputs (slug-scoped — never clobber Lima)
     climatology_relpath="reference/hydrology/findlay/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/findlay/atlas14-corridor-ddf.yaml",

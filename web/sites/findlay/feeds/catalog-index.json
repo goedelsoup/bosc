@@ -1,6 +1,6 @@
 {
   "site": "findlay",
-  "catalog_version": "0d30ea8aea82a80640866e4e88f9c4404ed8193d84096382ae3a574a5f016b62",
+  "catalog_version": "818732eacdc0bac117074a626ea7f550a87d108d2aeb313354e46c5d2c950322",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -753,6 +753,14 @@
       "site": "findlay",
       "local_id": "ferc",
       "title": "FERC↔PUCO Regulatory Seam (Federal Power Act + FERC eLibrary)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:findlay:findlay-civic-flood-places",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "findlay-civic-flood-places",
+      "title": "Findlay Civic & Flood Places — WPCC, Upground Reservoirs, Eagle Creek Dry Storage Basin",
       "feed": "catalog"
     },
     {

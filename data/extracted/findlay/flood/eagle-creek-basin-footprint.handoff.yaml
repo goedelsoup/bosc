@@ -17,8 +17,26 @@
 handoff:
   to_issue: 1462          # readiness(findlay) places — committed geometry + SSURGO HSG
   from_issue: 1465        # the flood-mitigation instrument chain
-  status: descriptor-only
-  polygon: open           # [open] no surveyed polygon / parcel list in the public record yet
+  status: accepted        # #1462 committed the ACQUISITION geometry; see acquired_land below
+  polygon: open           # STILL [open] — the dam alignment / impoundment outline. See below.
+  accepted_by: >-
+    #1462 took the gis_seed_hint's second path and it worked: the Hancock parcel record carries the
+    acquisition. data/reference/findlay/civic-and-flood-places.geojson commits 18 parcels standing
+    in the Maumee Watershed Conservancy District's name in Eagle Township — 795.35 ac CAMA / 782.77
+    ac planar, place_role 'flood_storage_basin' — with situs addresses on exactly the four roads
+    this descriptor names (TR 76, TR 77, TR 49, US RT 68), spanning 40.9739-40.9890 N against
+    downtown Findlay at 41.0440 (3.4-4.5 mi south), and seven Eagle Creek flowline segments through
+    the block (USGS NHD large-scale). Township confirmed via Census TIGER. Every verbal bound below
+    checks out against it.
+  still_open: >-
+    ⚠️ THE ACQUISITION IS NOT THE IMPOUNDMENT, and this file's `polygon: open` stands for the thing
+    it was always about. 795.35 ac of LAND ACQUIRED is not the published "approximately 765 acres"
+    WITHIN THE DAM ALIGNMENT: acquired land properly exceeds the impoundment (embankment, access,
+    buffer), so the two are consistent, but neither is derived from the other and no surveyed
+    impoundment outline or ODNR Dam Safety permit exhibit is in the corpus. Also note the vintage —
+    the OGRIP Hancock slice is a 2023-05-08 export cut while acquisition was still in progress, so
+    795.35 ac is a FLOOR on what MWCD holds today, not a closing figure. The permit exhibit remains
+    the instrument to pull.
 
 eagle_creek_dry_storage_basin:
   impoundment_acres:
@@ -75,7 +93,20 @@ phase2_downtown_benching:
   source: wfin.com soil-remediation completion story (403; search-rendered)
   polygon: open
 
+acquired_land:            # [verified] the committed acquisition geometry (#1462) — NOT the impoundment
+  geojson: data/reference/findlay/civic-and-flood-places.geojson
+  place_role: flood_storage_basin
+  owner: Maumee Watershed Conservancy District
+  parcels: 18
+  cama_acres: 795.35
+  planar_acres: 782.77    # UTM 17N (EPSG:32617); three non-contiguous blocks
+  township: Eagle Township, Hancock County, OH
+  source: OGRIP Ohio statewide parcels public view, County='Hancock' (CurrentTo 2023-05-08), read 2026-08-02
+  tag: verified
+
 cross_refs:
 - data/extracted/findlay/flood-mitigation.md
 - data/extracted/findlay/flood/eagle-creek-basin was described from hancockcountyflooding.com/eagle-creek-dry-storage
-- data/reference/findlay/parcel-assemblage.geojson   # [open] the site's own committed geometry, pending
+- data/reference/findlay/civic-and-flood-places.geojson   # [verified] the acquisition geometry (#1462)
+- data/extracted/findlay/bosc-site-footprint.yaml         # civic_and_flood_places.eagle_creek_dry_storage_basin
+- data/reference/findlay/parcel-assemblage.geojson        # the site's own campus geometry — the Megawatt Hub holding

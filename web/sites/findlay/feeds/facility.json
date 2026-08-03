@@ -28,7 +28,7 @@
     "cooling_model": "unknown",
     "cooling_model_source": "reference",
     "cooling_model_citation": "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed range). MARA has not stated the Findlay cooling design; the One Power hub is a behind-the-meter natural-gas-generation compute campus. Refine to a selected model on a disclosed mechanical/plumbing permit or an ingested cooling spec.",
-    "parcels_relpath": null,
-    "footprint_relpath": null
+    "parcels_relpath": "reference/findlay/parcel-assemblage.geojson",
+    "footprint_relpath": "extracted/findlay/bosc-site-footprint.yaml"
   }
 ]

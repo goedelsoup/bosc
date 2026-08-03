@@ -693,9 +693,10 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
     instrument-grounded load, not a screening bracket — so it lifts the domain, not merely seeds it.
     ``story`` is ``seeded`` (the committed per-site leads board,
     ``data/site/findlay/leads.yaml``, is a leads-first resting state — Findlay is not yet in
-    ``STORY_SLUGS``). ``places`` stays ``absent`` (no committed campus geometry), so this needs its
-    own test rather than the backdrop parametrize group (which asserts ``record`` stays
-    unscaffolded)."""
+    ``STORY_SLUGS``). ``places`` went ``absent`` -> ``live`` in #1462, off the committed Megawatt
+    Hub parcel assemblage. So four of the five domains are live and only ``story`` is short of it;
+    this still needs its own test rather than the backdrop parametrize group (which asserts
+    ``record`` stays unscaffolded)."""
     out = site_bundle("findlay")
     manifest = _manifest(out)
     assert manifest["contract_version"] == _CV
@@ -709,8 +710,15 @@ def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> Non
     assert domains["facility"] == "live"
     # ``story`` is seeded off the committed leads board, not a registered guided walk.
     assert domains["story"] == "seeded"
-    # ``places`` stays absent: no committed campus geometry (a separate epic #1265 sub-issue).
-    assert domains["places"] == "absent", "findlay places must not scaffold"
+    # ``places`` is live off COMMITTED campus geometry, not scaffolding (#1462): the eight Allen
+    # Township parcels standing in three One Energy vehicles (One Energy Enterprises LLC, OEE XX
+    # LLC, OEE XXX LAND LLC) — 108.65 ac CAMA / 105.873 ac planar, ``reference/findlay/
+    # parcel-assemblage.geojson`` — which surface as the ``geo/campus`` feed. The trigger is the
+    # evidence: this asserts the FEED, so a profile relpath pointing at a missing file (which is
+    # what it did before #1462) cannot float the domain.
+    assert domains["places"] == "live", "findlay places must be live off committed campus geometry"
+    campus = _feeds_by_name(out)["geo/campus"]
+    assert campus["count"] == 8, f"expected the 8 Megawatt Hub parcels, got {campus}"
 
     # ``record`` is live off real, in-scope agency records — never scaffolding. The feed is
     # pinned by exact source path so a stray artifact can't quietly float the domain. It began
