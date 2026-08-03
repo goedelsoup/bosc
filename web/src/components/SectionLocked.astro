@@ -16,12 +16,16 @@ interface Props {
   section: ReadinessSection;
   /** Override the default "what lands here" line for a page-specific framing. */
   holds?: string;
+  /** Override the heading noun — a record FACET names itself ("Documents"), not the section it
+   *  borrows its lock from ("The record"), so the lock reads as the page you're standing on (#1886). */
+  label?: string;
   /** A short, truthful standing note (e.g. "tracked in #740"); omitted by default. */
   note?: string;
 }
-const { section, holds, note } = Astro.props as Props;
+const { section, holds, label, note } = Astro.props as Props;
 const meta = SECTION_META[section];
 const blurb = holds ?? meta.holds;
+const heading = label ?? meta.label;
 const REPO_URL = "https://github.com/watermark-directory/the-watermark-directory";
 ---
 
@@ -35,7 +39,7 @@ const REPO_URL = "https://github.com/watermark-directory/the-watermark-directory
       Not on the record yet
     </span>
   </div>
-  <h2 class="seclock-h">{meta.label} is still being assembled.</h2>
+  <h2 class="seclock-h">{heading} is still being assembled.</h2>
   <p class="seclock-dek">
     This site doesn't yet carry {blurb}. We don't fill the gap with another site's record —
     the section opens the moment a source does.

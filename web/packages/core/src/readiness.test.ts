@@ -72,10 +72,19 @@ describe("a partial peer (Fort Wayne)", () => {
     expect(sectionStatus("fort-wayne", "leads")).toBe("locked");
   });
 
+  it("locks the legal record it does not own (#1886)", () => {
+    // `record` is LIVE here — FW has its own extractions — so the domain alone was never going to
+    // catch this. The section additionally asks whether any published filing came out of THIS
+    // site's corpus; none did, so an Indiana watershed point stops serving an Ohio hearing.
+    expect(domainPresent("fort-wayne", "record")).toBe(true);
+    expect(sectionStatus("fort-wayne", "legal")).toBe("locked");
+  });
+
   it("reports the full locked set", () => {
-    // `story` is locked too now — its walk is held coming-soon (#1526), not open.
+    // `story` is locked too now — its walk is held coming-soon (#1526), not open. `legal` joined
+    // the set at #1886: it is a real gap on a peer, and the needs board now asks for it.
     expect(lockedSections("fort-wayne").sort()).toEqual(
-      ["contacts", "exhibits", "leads", "people", "reports", "story", "timeline"].sort(),
+      ["contacts", "exhibits", "leads", "legal", "people", "reports", "story", "timeline"].sort(),
     );
   });
 });

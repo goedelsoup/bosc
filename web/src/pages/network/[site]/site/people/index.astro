@@ -2,9 +2,17 @@
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
+import SectionLocked from "~/components/SectionLocked.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { PersonItem } from "@watermark/core/feeds";
+import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
 import { withSite } from "@watermark/core/site";
+
+// The declared facet gate (#1886) — the page no longer relies on merely reading a per-site feed
+// to stay honest; a site with no people of its own renders the lock and the ask.
+const { slug } = Astro.props as { slug: string };
+const facet = RECORD_FACETS.people;
+const locked = !facetAvailable(slug, "people");
 
 const people = hasFeed("people") ? loadFeed<PersonItem[]>("people") : [];
 ---
@@ -15,13 +23,17 @@ const people = hasFeed("people") ? loadFeed<PersonItem[]>("people") : [];
       <div>
         <div class="hub-eyebrow">The record · people</div>
         <h1>People</h1>
-        <p class="hub-lead">
-          Curated individual profiles — the people behind the entity graph.
-          For sites and parcels, see <a href={withSite("/site/places/")}>Places &amp; parcels</a>.
-        </p>
+        {!locked && (
+          <p class="hub-lead">
+            Curated individual profiles — the people behind the entity graph.
+            For sites and parcels, see <a href={withSite("/site/places/")}>Places &amp; parcels</a>.
+          </p>
+        )}
       </div>
-      <span class="hub-count">{people.length} people</span>
+      {!locked && <span class="hub-count">{people.length} people</span>}
     </div>
+
+    {locked && <SectionLocked section={facet.section} label={facet.label} />}
 
     <div class="hub-grid">
       {

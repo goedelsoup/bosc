@@ -13,11 +13,17 @@ import type {
   ScenarioResult,
 } from "@watermark/core/feeds";
 import type { FigureStatData } from "@watermark/core/viz";
+import { hasLegalDoc } from "@watermark/core/legal";
 import { withSite } from "@watermark/core/site";
 import { fmtRanged } from "@watermark/core/format";
 import { COOLING_MODEL_LABELS } from "@watermark/core/study";
 import { buildThermal } from "@watermark/core/thermal";
 import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
+
+// The memo cross-link below is a deep link into the legal facet, which is now corpus-scoped
+// (#1886) — a peer must not link into the reference build's filings, so it is gated on THIS
+// site's corpus actually carrying the memo.
+const { slug } = Astro.props as { slug: string };
 
 const scenarios = hasFeed("hydrology-scenarios") ? loadFeed<ScenarioResult[]>("hydrology-scenarios") : [];
 
@@ -102,11 +108,13 @@ const thermalOverCriterion = thermal?.meta.permits_over_daily_max_criterion ?? [
       gauge and permit figures are <strong>grounded</strong>; scenario draws are
       labelled assumptions.
     </p>
-    <p class="card-meta">
-      A written walk-through of this screen — including the newly document-sourced
-      sanitary figures — is in the
-      <a href={withSite("/site/legal/water-balance-screen")}>water-balance assimilative screen</a> memo.
-    </p>
+    {hasLegalDoc(slug, "water-balance-screen") && (
+      <p class="card-meta">
+        A written walk-through of this screen — including the newly document-sourced
+        sanitary figures — is in the
+        <a href={withSite("/site/legal/water-balance-screen")}>water-balance assimilative screen</a> memo.
+      </p>
+    )}
 
     {
       showScreen && drawV && lowV && worst && (

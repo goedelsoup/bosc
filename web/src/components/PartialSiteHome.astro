@@ -18,7 +18,13 @@
 import SiteNeeds from "./SiteNeeds.astro";
 import StoryTeaser from "./story/StoryTeaser.astro";
 import { loadManifest } from "@watermark/core/bundle";
-import { type ReadinessSection, SECTION_META, isAvailable, lockedSections } from "@watermark/core/readiness";
+import {
+  type ReadinessSection,
+  SECTION_META,
+  facetAvailable,
+  isAvailable,
+  lockedSections,
+} from "@watermark/core/readiness";
 import { studyStatusSummary } from "@watermark/core/study";
 import { withBase, withSite, withStory } from "@watermark/core/site";
 import {
@@ -56,6 +62,7 @@ const SECTION_ROUTE: Record<ReadinessSection, string> = {
   people: "/site/people/",
   places: "/site/places/",
   exhibits: "/site/exhibits",
+  legal: "/site/legal/",
   environment: "/environment/",
   economy: "/economy/",
   reports: "/reports/",
@@ -85,6 +92,12 @@ const DATA_SECTIONS: ReadinessSection[] = [
   "story",
   "contacts",
 ];
+// A `places` domain can be live off committed GEOMETRY alone, with no per-place profile behind it
+// (Urbana's parcel assemblage) — the section is genuinely on the record, but its leaf page locks
+// (#1886). Send the card where that evidence actually renders rather than through a lock.
+const placesHref = facetAvailable(slug, "places")
+  ? withSite(SECTION_ROUTE.places)
+  : withSite("/environment/map");
 const onRecord = DATA_SECTIONS.filter((s) => isAvailable(slug, s)).map((s) => {
   const feed = SECTION_COUNT_FEED[s];
   const n = feed ? count(feed) : 0;
@@ -92,7 +105,7 @@ const onRecord = DATA_SECTIONS.filter((s) => isAvailable(slug, s)).map((s) => {
     section: s,
     label: SECTION_META[s].label,
     holds: SECTION_META[s].holds,
-    href: s === "story" ? withStory("") : withSite(SECTION_ROUTE[s]),
+    href: s === "story" ? withStory("") : s === "places" ? placesHref : withSite(SECTION_ROUTE[s]),
     count: n > 0 ? n : null,
   };
 });

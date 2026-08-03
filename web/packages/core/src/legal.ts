@@ -9,7 +9,14 @@
  * `PUBLISHED_LEGAL`) the link-rewrite map the rehype plugin consults so intra-set
  * cross-links resolve to their `/network/american-sugar-creek-allen-co/site/legal/<slug>` routes. The source is read
  * AS-IS — never moved or edited.
+ *
+ * Unlike every other record facet, this set has no bundle feed between it and the corpus — it is
+ * read straight off `data/extracted/` — so nothing was scoping it to a site, and every selectable
+ * peer served all fifteen of these Allen-County-OH pages verbatim (#1886). `scopedLegal` supplies
+ * the missing seam, off the same slug-derived corpus-scope rule Python resolves at export.
  */
+import { corpusOwner } from "./corpusScope";
+
 export interface LegalDoc {
   /** Path under `data/extracted/` (the source markdown). */
   repo: string;
@@ -19,6 +26,15 @@ export interface LegalDoc {
   /** Display group on the legal-history index. */
   group: string;
   blurb: string;
+  /**
+   * The owning site, declared — for a document the corpus files by PROJECT or CASE name
+   * (`legal/thor-v-urbana/…`, `permits/highland55/…`) rather than under the site-attribution
+   * path `corpusOwner` derives from the slug. This is the call-site peer of the Python profile's
+   * `corpus_relpaths` exceptions (`watermark.sites.SiteProfile`), which the frontend does not
+   * carry. **Omit it whenever `repo` is rule-derivable** — an unnecessary literal here is exactly
+   * the re-hardcoding the site axis forbids. Every doc below is rule-derivable, so none sets it.
+   */
+  site?: string;
 }
 
 const SELECT = "Select Committee on Data Centers (2026)";
@@ -142,3 +158,29 @@ export const legalBySlug = new Map(LEGAL.map((d) => [d.slug, d]));
 
 /** Distinct groups, in first-seen order (for the index). */
 export const LEGAL_GROUPS: string[] = [...new Set(LEGAL.map((d) => d.group))];
+
+/** The site whose corpus a published legal doc belongs to — its declared `site`, else the
+ *  slug-derived corpus-scope rule over its `repo` path (#1886). */
+export function legalOwner(doc: LegalDoc): string {
+  return doc.site ?? corpusOwner(doc.repo);
+}
+
+/**
+ * The legal-history docs scoped to `slug` (#1886) — the peer of `scopedReference`.
+ *
+ * A doc surfaces on a site iff that site's corpus is the one it was extracted from. This is what
+ * stops `/network/fort-wayne/site/legal/hearing-am` from rendering an **Ohio** Select-Committee
+ * hearing under an **Indiana** watershed point, and `withholding-map` /
+ * `corpus-completeness-audit` — Allen-County-OH public-records artifacts — from reading as a
+ * peer's own filings. A site with none of its own gets the section lock and the ask instead.
+ */
+export function scopedLegal(slug: string): LegalDoc[] {
+  return LEGAL.filter((d) => legalOwner(d) === slug);
+}
+
+/** Whether `slug`'s own corpus carries the published legal doc `docSlug` — the guard a page uses
+ *  before deep-linking one (a peer's page must not link into the reference build's filings). */
+export function hasLegalDoc(slug: string, docSlug: string): boolean {
+  const doc = legalBySlug.get(docSlug);
+  return doc !== undefined && legalOwner(doc) === slug;
+}
