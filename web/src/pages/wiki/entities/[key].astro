@@ -269,7 +269,8 @@ const profileToc = [
           <ul class="neighborhood">
             {profiles.map((p) => (
               <li>
-                Profile: <a href={`${withSite("/site/people/")}${p.slug}/`}>{p.name}</a>
+                {/* The per-site canonical view of this person (#1892) — this entity is the spine. */}
+                Profile (site record): <a href={`${withSite("/site/people/")}${p.slug}/`}>{p.name}</a>
               </li>
             ))}
           </ul>

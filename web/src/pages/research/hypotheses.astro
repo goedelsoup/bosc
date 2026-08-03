@@ -17,6 +17,7 @@ import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount } from "
 import type { HypothesisAssessmentItem } from "@watermark/core/feeds";
 import { withBase } from "@watermark/core/site";
 import { facilityStatus, siteRollup } from "@watermark/core/sites";
+import { hypothesisHref } from "@watermark/core/wiki";
 
 // The boom-origin hypotheses + their (site x hypothesis) evidence cells (#308) — now read from
 // the bundle, no longer hardcoded in directory.ts. Each cell carries a Citation (provenance).
@@ -146,6 +147,12 @@ const statusSwatch = (kind: "live" | "new") =>
                       Open the basin view — every site against the drainage ›
                     </a>
                   )}
+                  {/* This scorecard is a PROJECTION of the hypothesis (#1892): the canonical
+                      record of the reading is its wiki node — definition, evidence matrix, and
+                      the concepts, entities, and open questions it bears on. */}
+                  <a class="dir-frame-link" href={hypothesisHref(l.cfg.key)}>
+                    Read {l.cfg.n} as a wiki node — definition, related concepts, open questions ›
+                  </a>
                 </div>
                 <div class="dir-frame-r">
                   <div class="dir-axis-title">{l.view.axisTitle}</div>
