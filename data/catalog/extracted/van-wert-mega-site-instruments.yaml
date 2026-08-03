@@ -1,0 +1,99 @@
+id: van-wert-mega-site-instruments
+title: Van Wert — Mega Site Primary-Instrument Set (City Ordinances, Public Hearing, Council Minutes)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Nine City of Van Wert documents pulled 2026-08-03 from the City's open WordPress upload tree
+    (https://vanwert.org/wp-content/uploads/), committed at data/documents/van-wert/council/ with
+    a filename map: the three emergency ordinances of 2026-05-11 in both posted variants
+    (26-05-028 annexation body + exhibits, 26-05-029 code amendment body + Exhibit A, 26-05-030
+    conditional zoning body + Exhibits A/B/C), the certified 2026-05-04 statutory public-hearing
+    record (107 pp), and the approved council minutes of 2026-04-27 and 2026-05-11. Eight of the
+    nine are image-only scans; every figure was read via watermark.civic.indexer.ocr_pdf at 300
+    DPI with targeted 450/500-DPI re-renders, never from a filename or upload path. Located
+    through the site's open WordPress REST media index — the /ordinances/ page is a rolling
+    window of pending items and had already dropped the May 2026 ordinances.
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:van-wert
+storage:
+- relpath: extracted/van-wert/mega-site-instruments.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/van-wert/mega-site-instruments.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- van-wert
+- van-wert-county
+- van-wert-mega-site
+- data-center
+- qts
+- thor-equities
+- marsh-foundation
+- annexation
+- pre-annexation-agreement
+- zoning
+- conditional-zoning
+- emergency-ordinance
+- council-minutes
+- public-hearing
+- aep-ohio
+- town-creek
+- maumee
+notes: >-
+  Issue 1401 (under epic 1267). THINGS TO CARRY. (1) THE RUNWAY WAS LAID IN 2014, NOT 2026.
+  Ordinance 26-05-028 recites three Pre-Annexation Agreements as its foundation — 2014-11-14
+  (Ridge Twp), 2014-12-22 (Hoaglin Twp), 2016-06-14 (Pleasant Twp) — each among City Council, a
+  township board of trustees and the Board of County Commissioners, a decade before any data
+  center was named. None is in the corpus and all three are now the top of the pull list. The
+  recurring public-comment claim of a 2007 designation is supported by NOTHING in the instrument
+  set. (2) THE CITY DEFINED "DATA CENTER" AND ZONED 901.698 ACRES FOR IT IN THE SAME SITTING.
+  Ord. 26-05-029 wrote the term into Van Wert Code §150.03 for the first time (naming generators,
+  cooling towers and fuel storage as accessory) and added it to the I-2 permitted-use list; the
+  same ordinance rewrote "Public Service Facility" to confine power plants and substations to I-2.
+  (3) EXHIBIT C IS THE WHOLE OF THE "CONDITIONAL" IN THE CONDITIONAL ZONING — a six-foot landscape
+  mound at 75% opacity in five years, triggered only within 1,000 ft of a residential abutter. No
+  noise, height, water, discharge, lighting or hours limit. Recorded as an absence in the
+  instrument, not as an inference. (4) TWO REGISTER FIGURES WERE WRONG. The annexation is 901.698
+  ± ac, not "~962" — and Exhibit A's components sum exactly to it (630.491 + 114.861 + 31.213 =
+  776.565 Parcel One; + 125.133 Parcel Two = 901.698), which retires the 61.4-ac gap the press
+  figure had created. And the minutes record NO numeric tally for any of the three ordinances,
+  only "all concurred", so "6-0" is a press reconstruction; Roberts was excused during public
+  comment and abstained as an employee of the Marsh Foundation. (5) THE RECORD CONTRADICTS ITSELF
+  ON ITS OWN STATUTORY ROUTE. The 2026-04-27 committee motion, the ordinance the City posted
+  2026-05-07, and the 2026-05-11 agenda all say Expedited TYPE 2; the title as read at passage
+  says TYPE 1, explained as an agenda-only typo. It cannot be settled here because NO SIGNED OR
+  CERTIFIED COPY IS PUBLIC — all six ordinance PDFs were uploaded four days before the vote and
+  print an unfilled "Passed this ___ day of ___, 2026". A certified copy from the Clerk of Council
+  is the resolution route and priority 1. (6) THE COUNTY GRANTED THE PETITION ONE DAY AFTER IT WAS
+  FILED — filed 2026-03-09 by Charles F. Koch, agent for petitioners; BOC resolution 2026-03-10.
+  The petitioners are named on the record by the City Auditor: THE MARSH FOUNDATION and VAN WERT
+  EAST OWNER LLC — this corpus's first primary-source naming of the Thor SPE as a party to a Van
+  Wert instrument. QTS is named in NONE of the nine documents. (7) THE CITY'S WATER RECORD
+  DISAGREES WITH ITSELF: ~660,000 gal framed as one-time (Safety-Service Director, 2026-04-21) vs
+  700,000 gal "will last for 6 to 8 years" (County Commissioner, 2026-05-04) vs 5,500 gal
+  attributed to the now-lost city FAQ — and six days after his own press release the same director
+  told Council the City "would be incapable" of supplying fill water at all. This DEEPENS the
+  #1409 / B2 #1682 fill-vs-annual gap rather than settling it; the closed_loop_dry pin stays
+  [reference]. He also stated facility water goes "directly to the wastewater treatment plant …
+  not … town creek", while that plant's outfall 001 discharges to Town Creek (#1406). (8) AEP OHIO
+  PUT ITS OWN PIPELINE ON A MUNICIPAL RECORD: "more than 30,000 megawatts" of early interest
+  against "5,342 MW … advanced to signed agreements" under the PUCO-approved data-center tariff.
+  It states NO megawatt figure for this campus, so the 500 MW bracket stays [reference]. (9) THE
+  WRITTEN COMMENT WAS SUBSTANTIALLY A LETTER CAMPAIGN: of 88 comment pages, 21 repeat an earlier
+  page's body verbatim (67 distinct bodies, one appearing five times) — reproducible by
+  normalising and hashing the leading 900 characters. The $200M/20yr, 200-250 jobs and $80,000
+  salary figures appear ONLY there, never in an instrument. (10) THE CHAIN-OF-CUSTODY WINDOW #1401
+  FLAGGED HAS ALREADY CLOSED: vanwertohiodatacenter.com was a client-rendered Next.js app, so the
+  Internet Archive holds only its shell ("Loading topics…") — the FAQ prose is unrecoverable, two
+  of its claims survive only by citation inside the hearing record, and Council recorded that its
+  answers "came from Thor, AEP, the Safety Service Director". A JS-rendered municipal microsite is
+  NOT preserved by the Wayback Machine. PUCO/OPSB DIS is bot-blocked for both 25-0697-EL-BLN and
+  24-508-EL-ATA (third confirmation) and the GovOS recorder is a session login, so the deeds and
+  the LON stay uningested — recorded as per-source negatives, not absences.

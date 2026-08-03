@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "79db95280cc80967923422d1ea5715d03698c39b265c3b97bd898c954291b1b0",
-      "size_bytes": 246563,
+      "sha256": "aa51180a5b185de199f4d2bfa99ea0f3650deb6df398424788058368fe25707e",
+      "size_bytes": 269677,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -168,8 +168,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e00c59ccb33b5785dc9700c079a03c6934f6191685d58136b800c6b679ee6437",
-      "size_bytes": 23497,
+      "sha256": "183e0e983a49cbe860c8c9acd5ce230aa9609e057abbaa0da34c41a656c3de11",
+      "size_bytes": 40267,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -459,6 +459,73 @@
       "confidence": "medium",
       "note": null,
       "verified": true
+    }
+  },
+  {
+    "id": "van-wert-mega-site-instruments",
+    "title": "Van Wert — Mega Site Primary-Instrument Set (City Ordinances, Public Hearing, Council Minutes)",
+    "scope": "extracted",
+    "collection": "van-wert",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Nine City of Van Wert documents pulled 2026-08-03 from the City's open WordPress upload tree (https://vanwert.org/wp-content/uploads/), committed at data/documents/van-wert/council/ with a filename map: the three emergency ordinances of 2026-05-11 in both posted variants (26-05-028 annexation body + exhibits, 26-05-029 code amendment body + Exhibit A, 26-05-030 conditional zoning body + Exhibits A/B/C), the certified 2026-05-04 statutory public-hearing record (107 pp), and the approved council minutes of 2026-04-27 and 2026-05-11. Eight of the nine are image-only scans; every figure was read via watermark.civic.indexer.ocr_pdf at 300 DPI with targeted 450/500-DPI re-renders, never from a filename or upload path. Located through the site's open WordPress REST media index — the /ordinances/ page is a rolling window of pending items and had already dropped the May 2026 ordinances.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:van-wert",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "van-wert",
+      "van-wert-county",
+      "van-wert-mega-site",
+      "data-center",
+      "qts",
+      "thor-equities",
+      "marsh-foundation",
+      "annexation",
+      "pre-annexation-agreement",
+      "zoning",
+      "conditional-zoning",
+      "emergency-ordinance",
+      "council-minutes",
+      "public-hearing",
+      "aep-ohio",
+      "town-creek",
+      "maumee"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/van-wert/mega-site-instruments.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/mega-site-instruments.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "bd8eb36ee0b65b7fb9a3921b0ff5f45743ad0389abd789dd645b1f37efc3715c",
+      "size_bytes": 68228,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Nine City of Van Wert documents pulled 2026-08-03 from the City's open WordPress upload tree (https://vanwert.org/wp-content/uploads/), committed at data/documents/van-wert/council/ with a filename map: the three emergency ordinances of 2026-05-11 in both posted variants (26-05-028 annexation body + exhibits, 26-05-029 code amendment body + Exhibit A, 26-05-030 conditional zoning body + Exhibits A/B/C), the certified 2026-05-04 statutory public-hearing record (107 pp), and the approved council minutes of 2026-04-27 and 2026-05-11. Eight of the nine are image-only scans; every figure was read via watermark.civic.indexer.ocr_pdf at 300 DPI with targeted 450/500-DPI re-renders, never from a filename or upload path. Located through the site's open WordPress REST media index — the /ordinances/ page is a rolling window of pending items and had already dropped the May 2026 ordinances.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -2185,8 +2252,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "292c011fddcac9c50a1ca6d4696825c68cd5f1ccf68cee47d4f2efa69d968f9b",
-      "size_bytes": 28607,
+      "sha256": "5291ce440bc0e1377050ab42863f5669553b5628ea71580ce2fd16405b60fc61",
+      "size_bytes": 32637,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -2466,12 +2533,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "67c1d11b8ae92bad4a36e238e6e32e0a2c6175514904ae6102ba95118a9c001e",
-      "size_bytes": 84612,
+      "sha256": "f2002062d0084eec4afb2d7667d6d33f54a20d258788571b17a0a5fd6608733e",
+      "size_bytes": 94002,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
@@ -2519,12 +2586,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "561ef21ac83fe62d11b188ad9afee6bdc6fcf991b1bd80cb114396ec84d94a33",
-      "size_bytes": 8215,
+      "sha256": "b7cb1fadd57009ca92c4cbb371182d7141ea7ea3e72482c77742e9e90ffb167d",
+      "size_bytes": 14340,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
@@ -2791,10 +2858,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "41921e30b33b8494e8367d64753a0704ce48fdb0e979ca8aa5f3b337a4ede48d",
-      "size_bytes": 492562,
+      "sha256": "2821a004103b7ee1c8856afa07def1597678c8344121ccd1c0879dec0da88228",
+      "size_bytes": 513672,
       "lfs_materialized": true,
-      "file_count": 9,
+      "file_count": 10,
       "stale": false,
       "asof": null
     },
@@ -3191,6 +3258,77 @@
       "confidence": "medium",
       "note": "watermark usaspending",
       "verified": true
+    }
+  },
+  {
+    "id": "usgs-published-low-flow",
+    "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
+    "scope": "reference",
+    "collection": "usgs",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "U.S. Geological Survey published reports — WRI 01-4140 (Straub, 2001) and SIR 2024-5075 (VonIns and Koltun, 2024, ver. 1.1), downloaded verbatim from pubs.usgs.gov",
+    "external_url": "https://pubs.usgs.gov/publication/sir20245075",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-02",
+    "tags": [
+      "7q10",
+      "low-flow",
+      "usgs",
+      "published",
+      "blanchard-river",
+      "primary-source"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/usgs/low-flow/wri20014140.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "reference/usgs/low-flow/sir20245075.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "reference/usgs/low-flow/sir20245075_app1_table1.1.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/usgs/low-flow/sir20245075_app2_table2.1.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/usgs/low-flow/README.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "6394cfcbee1c698849e244e915709a04902bf32d0e48650fbed96edfdf21b9e5",
+      "size_bytes": 16615064,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "U.S. Geological Survey published reports — WRI 01-4140 (Straub, 2001) and SIR 2024-5075 (VonIns and Koltun, 2024, ver. 1.1), downloaded verbatim from pubs.usgs.gov",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

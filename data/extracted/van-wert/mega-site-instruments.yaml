@@ -1,0 +1,882 @@
+# City of Van Wert (Van Wert County, OH) — the Mega Site primary-instrument set.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# THE ONE FACT THIS FILE EXISTS TO HOLD: the QTS Van Wert campus did not become legally possible
+# on 2026-05-11. It became legally possible on 2014-11-14, 2014-12-22 and 2016-06-14, the dates of
+# the three Pre-Annexation Agreements the annexation ordinance recites as its own foundation —
+# each one signed by the City, a township board of trustees, and the Board of County
+# Commissioners, a decade before any data center was named. The 2026 ordinances execute a track
+# that was laid in 2014. Everything downstream of that — the same-week county approval, the
+# emergency clauses, the single reading — reads differently once the ten-year runway is on the
+# record.
+#
+# THE SECOND FACT: on 2026-05-11 the City of Van Wert had no zoning category for what it was
+# approving. Ordinance 26-05-029 wrote the words "Data Center" into the Van Wert Code of
+# Ordinances for the first time, and Ordinance 26-05-030 designated 901.698 acres for that use in
+# the same sitting. The definition and the campus were created in the same hour.
+#
+# Nothing here is a characterization of motive. Where the record contradicts itself — and it does,
+# on the annexation's own statutory route and on how much water the City is selling — both
+# readings are printed with their citations and the conflict is left standing.
+
+meta:
+  subject: >-
+    The City of Van Wert legislative instruments that annexed, defined and zoned the QTS Van Wert
+    Mega Site — Ordinances 26-05-028 / 029 / 030, passed as emergencies on first and final reading
+    2026-05-11 — together with the 2026-05-04 statutory public-hearing record and the 2026-04-27
+    meeting that ordered them
+  kind: instrument-set
+  site: van-wert
+  captured_for: issue 1401 (epic 1267, readiness(van-wert))
+  extracted_at: '2026-08-03'
+  sources:
+    documents: data/documents/van-wert/council/
+    manifest: data/documents/van-wert/council/filename-map.yaml
+  method: >-
+    Nine PDFs pulled 2026-08-03 from the City's open WordPress upload tree
+    (https://vanwert.org/wp-content/uploads/). Eight of the nine are image-only scans with no
+    usable text layer; every figure and quotation below was read by rendering the page with
+    pypdfium2 and running tesseract (watermark.civic.indexer.ocr_pdf) at 300 DPI, with targeted
+    450- and 500-DPI re-renders where the 300-DPI read was ambiguous — never from the OCR of a
+    filename or an upload path. The two files with partial text layers (5.11.26.pdf,
+    5.4.26-Public-Hearing-1.pdf) carry text only in their typed attachments; their minutes bodies
+    are images and were OCR'd like the rest. Page numbers below are 0-based PDF page indices.
+  ocr_caveat: >-
+    26-05-028.pdf and the Exhibit-A pages of 26-05-030.pdf are photocopies of a bound record book,
+    heavily skewed and degraded. Metes-and-bounds courses in those exhibits are NOT transcribed
+    here — OCR at 450 DPI still garbles bearings and distances, and a wrong bearing is worse than
+    no bearing. Only figures that survived a clean read at two DPIs are stated, and the acreage
+    reconciliation below is arithmetic over four such figures, shown in full.
+  visually_verified: >-
+    Four load-bearing readings were confirmed by rendering the page and READING IT, not by
+    trusting tesseract: the "TYPE 2" in the posted 26-05-028 title against the "TYPE 1" in the
+    minutes' passage title, the 660,000-gallon fill sentence, the 5,342 MW / 30,000 MW sentence,
+    and the handwritten approval stamp on 5.11.26.pdf p. 4. HANDWRITING IS THE RULE, NOT THE
+    EXCEPTION: tesseract read that stamp as "5/211202¢6" at both 300 and 500 DPI, and a
+    digit-by-digit reading of that OCR gives 2026-05-21 — a Thursday on which Council did not
+    meet. The page plainly reads "Approved on 5/27/2026", which IS the meeting (the second May
+    meeting moved to Wednesday the 27th for Memorial Day). Do not date anything in this corpus
+    from OCR of handwriting.
+
+# ── The instruments ───────────────────────────────────────────────────────────
+instruments:
+
+- id: ord-26-05-028
+  ordinance: '26-05-028'
+  committee: Judiciary and Annexation
+  title_as_posted: >-
+    AN ORDINANCE TO ACCEPT THE EXPEDITED TYPE 2 ANNEXATION OF 901.698+/- ACRES FROM HOAGLIN
+    TOWNSHIP, PLEASANT TOWNSHIP, AND RIDGE TOWNSHIP TO THE CITY OF VAN WERT, OHIO AND DECLARING
+    AN EMERGENCY.
+  title_as_passed: >-
+    AN ORDINANCE TO ACCEPT THE EXPEDITED TYPE 1 ANNEXATION OF 901.698+/- ACRES FROM HOAGLIN
+    TOWNSHIP, PLEASANT TOWNSHIP, AND RIDGE TOWNSHIP TO THE CITY OF VAN WERT, OHIO AND DECLARING
+    AN EMERGENCY.
+  tag: '[verified]'
+  source:
+    body: 26-05-028-draft-ordinance.pdf pp. 0-1
+    exhibits: 26-05-028.pdf pp. 0-9
+    passage: 5.11.26.pdf p. 3
+  effect: >-
+    Accepts the annexation of 901.698 ± acres from three townships into the City of Van Wert;
+    directs the Clerk to deliver certified copies to the County Auditor, the County Recorder and
+    the Ohio Secretary of State.
+  emergency: true
+  readings: first and final (statutory rules suspended)
+  vote_as_recorded: '"Agler seconded; all concurred. Ordinance passed." — no numeric tally'
+
+- id: ord-26-05-029
+  ordinance: '26-05-029'
+  committee: Judiciary and Annexation
+  title: >-
+    AN ORDINANCE TO AMEND VAN WERT CODE OF ORDINANCES SECTION 150.03 TO ADD THE TERM "DATA CENTER"
+    AS A DEFINED TERM AND TO MODIFY THE DEFINITION OF THE TERM "PUBLIC SERVICE FACILITY", TO AMEND
+    VAN WERT CODE OF ORDINANCES SECTION 150.15(h)(1) BY ADDING DATA CENTERS AS A PERMITTED USE IN
+    THE I-2 GENERAL INDUSTRIAL ZONING CLASSIFICATION, AND DECLARING AN EMERGENCY.
+  tag: '[verified]'
+  source:
+    body: 26-05-029-draft-ordinance.pdf pp. 0-1
+    exhibit_a: 26-05-029.pdf pp. 2-3
+    passage: 5.11.26.pdf p. 4
+  effect: >-
+    Writes "Data Center" into the Van Wert Code of Ordinances for the first time, adds it to the
+    I-2 General Industrial permitted-use list, and rewrites the "Public Service Facility"
+    definition.
+  emergency: true
+  readings: first and final (statutory rules suspended)
+  vote_as_recorded: '"Moore seconded; all concurred. Ordinance passed." — no numeric tally'
+  new_definition_verbatim: >-
+    "Data Center. A facility comprised of a building or group of buildings designed to incorporate
+    a large number of computer servers used for the storage of, processing, and distribution of
+    large amounts of data, and the accessory equipment and structures necessary to support the
+    critical functions of the facility such as (but not limited to) generators, cooling towers,
+    fuel storage, and electrical equipment."
+  definition_note: >-
+    [verified] The City's own definition names GENERATORS, COOLING TOWERS and FUEL STORAGE as
+    accessory equipment a data center is expected to carry — written into the code in the same
+    sitting that approved a campus the record elsewhere describes as closed-loop and
+    non-evaporative. The definition is generic and permits an evaporative build; it is not a
+    constraint on this campus and does not contradict the closed-loop disclosures. Recorded
+    because the code text, not the press release, is what binds the next applicant.
+  public_service_facility_change: >-
+    [verified] The amended §150.03 definition adds a footnote to "power plants or substations":
+    "*These facilities can only be operated in the I-2 zoning district." Generation and substation
+    siting citywide was narrowed to I-2 in the same ordinance that made data centers an I-2 use.
+  permitted_use_list_as_amended:
+    - General manufacturing
+    - Manufacturing, sale and storage of building materials
+    - Transport and trucking terminals
+    - Wholesale business
+    - Warehousing
+    - Food processing
+    - Public service facility
+    - Grain elevators and feed mills
+    - "Sexually oriented businesses, subject to § 150.51"
+    - Homeless shelter
+    - Emergency shelter
+    - Drop in center
+    - Permanent supportive housing
+    - Transitional housing
+    - Data Center
+
+- id: ord-26-05-030
+  ordinance: '26-05-030'
+  committee: Judiciary and Annexation
+  title: >-
+    AN ORDINANCE TO AMEND THE CITY OF VAN WERT ZONING MAP BY APPROVING A CONDITIONAL ZONING
+    PETITION FILED PURSUANT TO VAN WERT CODE OF ORDINANCES SECTION 150.12 (C) TO DESIGNATE CERTAIN
+    REAL PROPERTY CONSISTING OF 901.698+/- ACRES WITH THE I-2, GENERAL INDUSTRIAL ZONING
+    CLASSIFICATION AND DECLARING AN EMERGENCY.
+  tag: '[verified]'
+  source:
+    body: 26-05-030-draft-ordinance.pdf pp. 0-1
+    exhibits: 26-05-030.pdf pp. 0-11
+    passage: 5.11.26.pdf p. 4
+  effect: >-
+    Classifies the 901.698 ± acres as I-2 General Industrial and requires the buffering in
+    Exhibit C where development differs from adjacent residential use.
+  emergency: true
+  readings: first and final (statutory rules suspended)
+  vote_as_recorded: '"Agler seconded; all concurred. Ordinance passed." — no numeric tally'
+  conditions_exhibit_c:
+    tag: '[verified]'
+    source: 26-05-030.pdf p. 11
+    summary: >-
+      A minimum six-foot mound along each perimeter boundary abutting residentially used or zoned
+      property, carrying a mixed deciduous/evergreen/shrub landscape buffer reaching 75% opacity
+      five years after planting to a total height of 12 feet above ground level. Installed within
+      the minimum pavement setback, may extend inward. A parcel separated only by a public street
+      right-of-way still counts as abutting. Utilities and access drives may cross the buffer.
+      Required ONLY where a parking area, structure, building or permanent equipment will sit
+      within 1,000 linear feet of the shared perimeter. Installed by the earlier of 60 days after
+      pavement, or before any vertical construction.
+    what_it_does_not_contain: >-
+      [verified] This is the whole of Exhibit C, and Exhibit C is the whole of the "conditional"
+      in the conditional zoning. It sets NO noise limit, NO height limit, NO water-supply or
+      discharge condition, NO hours-of-construction limit, NO lighting standard, and no setback
+      beyond the zoning minimum. Read this as a recorded absence in the instrument — the City may
+      hold such conditions elsewhere (a development agreement, a building permit), and none is in
+      the corpus.
+
+# ── The land, reconciled ──────────────────────────────────────────────────────
+land:
+  annexed_acres_stated: 901.698
+  tag: '[verified]'
+  source: 26-05-028-draft-ordinance.pdf p. 0 (title) · 26-05-028.pdf pp. 0-9 (Exhibit A)
+  parcels:
+  - name: PARCEL ONE
+    acres: 776.565
+    detail: >-
+      Sections 6 and 7, Town 2 South, Range 3, Ridge Township, and a quarter of Section 31,
+      Town 1 South, Range 3 East, Hoaglin Township. Exhibit A's own split: 630.491 ac in
+      Section 6 (Ridge Twp), 114.861 ac elsewhere in Ridge Twp, 31.213 ac in Section 31
+      (Hoaglin Twp).
+  - name: PARCEL TWO
+    acres: 125.133
+    detail: >-
+      Northeast and Southeast Quarters of Section 1, Town 2 South, Pleasant Township. Township
+      read at 450 DPI from 26-05-030.pdf p. 4 ("Pleasant Towns[hip]"); the 300-DPI read was
+      illegible.
+  reconciliation:
+    tag: '[verified]'
+    arithmetic: 630.491 + 114.861 + 31.213 = 776.565 (Parcel One); 776.565 + 125.133 = 901.698
+    note: >-
+      The four component acreages in Exhibit A sum EXACTLY to the acreage in the ordinance title
+      and in the conditional-zoning ordinance title. That is the strongest internal check the
+      instrument offers, and it holds.
+  township_split:
+    ridge: 745.352
+    pleasant: 125.133
+    hoaglin: 31.213
+  survey: >-
+    [verified] "a survey prepared by Michael L. Howbert, Registered Professional Surveyor",
+    dated 2025 (the registration number and the month are illegible in the record-book scan).
+  petition_parcels:
+    tag: '[verified]'
+    source: 5.4.26-Public-Hearing-1.pdf p. 0 (hearing notice, read into the certified minutes)
+    numbers: ['17-034718.0000', '33-047500.0000', '12-034459.0000', '17-034718.0100']
+    note: >-
+      FOUR parcels are named in the notice that went to adjoining landowners. #1403 committed FIVE
+      parcels deeded to QTS VAN WERT LLC (data/reference/van-wert/parcel-assemblage.geojson),
+      900.59 ac deeded / 901.502 ac planar. Total acreage reconciles (901.698 ± zoned vs 900.59
+      deeded = 1.1 ac, inside deed-vs-survey rounding); the PARCEL LIST does not. Against the
+      committed CAMA acreages the four noticed parcels total 742.75 ac (362.23 + 31.24 + 128.13 +
+      221.15) — 82.4% of what the ordinance zones. The missing 157.84 ac is `17-034718.0200`, the
+      fifth deeded parcel, which the notice does not name.
+    likeliest_explanation:
+      tag: '[inference]'
+      text: >-
+        Timing, not scope. The petition was filed 2026-03-09, and the county survey records on
+        these parcels (VW-SD522-1, VW-SD522-2, VW-SD522-523, VW-SD524) are the splits that carved
+        the campus out of the Marsh tract, so `.0200` may not have existed as a separate number
+        when the notice issued. NOT established. What defines the zoned area is the Exhibit A
+        metes-and-bounds, not the parcel list; reconciling the two is the cleanest remaining check
+        on the campus boundary. `17-034718.0100` is the 221.15-ac anchor (PIN 170347180100)
+        already carried as the connector fixture.
+
+# ── Chronology, from the instruments themselves ───────────────────────────────
+chronology:
+- date: '2014-11-14'
+  event: Pre-Annexation Agreement — City Council, Board of Trustees of Ridge Township, and the Board of County Commissioners.
+  tag: '[verified]'
+  source: 26-05-028-draft-ordinance.pdf p. 1 (recital)
+- date: '2014-12-22'
+  event: Pre-Annexation Agreement — City Council, Board of Trustees of Hoaglin Township, and the BOC.
+  tag: '[verified]'
+  source: 26-05-028-draft-ordinance.pdf p. 1 (recital)
+- date: '2016-06-14'
+  event: Pre-Annexation Agreement — City Council, Board of Trustees of Pleasant Township, and the BOC.
+  tag: '[verified]'
+  source: 26-05-028-draft-ordinance.pdf p. 1 (recital)
+- date: '2026-03-09'
+  event: >-
+    Annexation petition filed with the Board of Commissioners by Charles F. Koch, agent for
+    petitioners; the §150.12(C) conditional zoning petition filed with the City the same day.
+  tag: '[verified]'
+  source: 26-05-028-draft-ordinance.pdf p. 0 · 26-05-030-draft-ordinance.pdf p. 0
+- date: '2026-03-10'
+  event: >-
+    The Board of Commissioners approved and granted the annexation petition by resolution — ONE
+    DAY after filing. The ordinance recites the resolution, petition and related documentation as
+    delivered to the City Auditor the same day.
+  tag: '[verified]'
+  source: 26-05-028-draft-ordinance.pdf p. 0
+  note: >-
+    This closes the "county commissioners' annexation approval date [open]" carried in the
+    register since 2026-07-02. The BOC's own journal entry is still not in the corpus — what is
+    verified is the ordinance's recital of it.
+- date: '2026-03-11'
+  event: >-
+    City Auditor Erika Blackmore records receiving the official transcript of proceedings from the
+    Clerk of the Board of Commissioners, for the petition "filed by The Marsh Foundation and Van
+    Wert East Owner LLC."
+  tag: '[verified]'
+  source: 4.27.26.pdf pp. 0-1 · 5.11.26.pdf p. 1
+- date: '2026-03-26'
+  event: >-
+    City Planning Commission initiates the §150.03 / §150.15(H)(1) code amendments under
+    §150.76(A)(1), and holds its hearing on the conditional zoning petition, voting to recommend
+    approval.
+  tag: '[verified]'
+  source: 26-05-029-draft-ordinance.pdf p. 0 · 26-05-030-draft-ordinance.pdf p. 0
+- date: '2026-03-31'
+  event: Planning Commission refers the proposed amendments to the Van Wert County Regional Planning Commission.
+  tag: '[verified]'
+  source: 26-05-029-draft-ordinance.pdf p. 0
+- date: '2026-04-20'
+  event: >-
+    Van Wert Economic Development Corporation stakeholder tour of the New Albany business park and
+    data-center campus, "sponsored by Thor Equities" — thanked in a letter read into the record on
+    behalf of City Council.
+  tag: '[verified]'
+  source: 4.27.26.pdf p. 1
+- date: '2026-04-21'
+  event: Van Wert County Regional Planning Commission hearing on the amendments; recommendation transmitted.
+  tag: '[verified]'
+  source: 26-05-029-draft-ordinance.pdf p. 0
+- date: '2026-04-21'
+  event: >-
+    City of Van Wert press release over Safety-Service Director Jay C. Fleming's signature, on the
+    project's water use. Reproduced in the hearing record.
+  tag: '[verified]'
+  source: 5.4.26-Public-Hearing-1.pdf p. 14
+- date: '2026-04-27'
+  event: >-
+    Planning Commission public hearing on the code amendments; recommendation transmitted to
+    Council. The same evening, Council's Judiciary & Annexation committee moves to have the law
+    director prepare all three ordinances — describing the annexation as EXPEDITED TYPE 2 — with
+    Roberts abstaining.
+  tag: '[verified]'
+  source: 26-05-029-draft-ordinance.pdf p. 0 · 4.27.26.pdf pp. 2-3
+- date: '2026-05-04'
+  event: >-
+    Statutory public hearing, First Federal Lecture Hall, Niswonger Performing Arts Center,
+    6:30-8:03 pm. ~200 attending, ~40 speakers, two minutes each, comment-only. Roberts absent
+    (previously excused).
+  tag: '[verified]'
+  source: 5.4.26-Public-Hearing-1.pdf pp. 0-1
+- date: '2026-05-07'
+  event: >-
+    All six ordinance PDFs uploaded to vanwert.org at 17:10 UTC — four days before the vote. None
+    is signed; each prints an unfilled "Passed this ___ day of ___, 2026".
+  tag: '[verified]'
+  source: HTTP Last-Modified on the six upload URLs, recorded in the filename map
+- date: '2026-05-10'
+  event: The R.C. 709 sixty-day holding period expires (per the City Auditor's own statement).
+  tag: '[verified]'
+  source: 4.27.26.pdf p. 1 · 5.11.26.pdf p. 1
+- date: '2026-05-11'
+  event: >-
+    All three ordinances introduced, statutory rules suspended, and passed on first and final
+    reading as emergencies. Roberts excused during public comment, abstaining as an employee of
+    the Marsh Foundation. Meeting 6:34-8:05 pm.
+  tag: '[verified]'
+  source: 5.11.26.pdf pp. 0-4
+- date: '2026-05-27'
+  event: >-
+    The 2026-05-11 minutes approved — at the second May meeting, moved to Wednesday because
+    May 25 was Memorial Day (announced at the 2026-04-27 meeting).
+  tag: '[verified]'
+  source: 5.11.26.pdf p. 4 (handwritten stamp, read visually at 600 DPI — see the filename map's
+    note on why the OCR read of this stamp is not usable)
+
+# ── Where the record contradicts itself ───────────────────────────────────────
+# Printed, not resolved. Each is a discrepancy inside the City's OWN documents.
+discrepancies:
+
+- id: expedited-type
+  question: Was this an Expedited Type 1 or an Expedited Type 2 annexation?
+  tag: '[verified]' # that the conflict exists; which route governs is [open]
+  type_2_appears_in:
+  - 4.27.26.pdf p. 3 — the committee motion that ordered the ordinance ("expedited Type 2 annexation of approximately 901.69[8] acres")
+  - 26-05-028-draft-ordinance.pdf p. 0 — the ordinance title the City posted on 2026-05-07
+  - 5.11.26.pdf p. 0 — the 2026-05-11 agenda, before it was amended
+  type_1_appears_in:
+  - 5.11.26.pdf p. 3 — the title as read at passage
+  the_citys_explanation: >-
+    At the top of the 2026-05-11 meeting, Law Director Hatcher requested a motion to amend the
+    agenda from "Type 2" to "Type 1" as "a typographical error in the agenda only, the Ordinance
+    title is true and accurate." The minutes then add: "This EXPEDITED TYPE 1 ANNEXATION is
+    consistent with the change in the Agenda at the start of the meeting and is consistent with
+    the heading of Ordinance 26-05-028 itself."
+  why_that_does_not_close_it: >-
+    The minutes' own added sentence — "This EXPEDITED TYPE 1 ANNEXATION … is consistent with the
+    heading of Ordinance 26-05-028 itself" — is contradicted by that heading. The ordinance the
+    City published on 2026-05-07 is titled "AN ORDINANCE TO ACCEPT THE EXPEDITED TYPE 2
+    ANNEXATION OF 901.698+/- ACRES…", and the committee motion two weeks earlier said Type 2 as
+    well. BOTH READINGS WERE CONFIRMED VISUALLY at 400 DPI, so this is a discrepancy in the
+    record and not an OCR artifact. The correction was framed as agenda-only; the record shows
+    the same word in two other places. Whether the ENACTED instrument reads Type 1 cannot be
+    settled from any document in this corpus, because no signed or certified copy is public —
+    only unsigned pre-passage uploads and the minutes' account of the title as read.
+  why_it_matters: >-
+    [inference] R.C. 709.022 (expedited type 1) and R.C. 709.023 (expedited type 2) are different
+    procedures with different consequences for township taxation and for what the annexed
+    territory remains subject to. The three recited Pre-Annexation Agreements among the City, the
+    townships and the BOC are the kind of instrument a type-1 route rests on, which is consistent
+    with the passed title — but that is a reading of the statute against the recitals, not a fact
+    the record states.
+  resolution_route: >-
+    A certified copy of Ordinance 26-05-028 from the Clerk of Council, and/or the annexation
+    transcript filed with the County Recorder and the Ohio Secretary of State under the
+    ordinance's own Section 2.
+
+- id: initial-fill-volume
+  question: How much water is the City selling for the initial closed-loop fill?
+  tag: '[verified]' # that three figures are on one record; which is right is [open]
+  figures:
+  - value: ~660,000 gallons
+    framing: >-
+      "there will be a one-time initial fill of the closed-loop system. The city will sell the
+      developers approximately 660,000 gallons of water for this purpose … This is a one-time
+      transaction required only at startup."
+    who: Jay C. Fleming, Safety-Service Director, City of Van Wert
+    source: 5.4.26-Public-Hearing-1.pdf p. 14 (City press release, 2026-04-21)
+  - value: 700,000 gallons
+    framing: >-
+      "The cooling loop system uses less than a half a day's water for the City of Van Wert
+      (700,000 gallons of the city's 1.6 million daily consumption), and that will last for 6 to
+      8 years."
+    who: Thad Lichtensteiger, Van Wert County Commissioner (on Commissioners' letterhead)
+    source: 5.4.26-Public-Hearing-1.pdf p. 15 (written comment, 2026-05-04)
+  - value: 5,500 gallons
+    framing: attributed by an opposing commenter to the city-launched project website's own answers page
+    who: written public comment, citing "Van Wert Ohio Data Center (2026)"
+    source: 5.4.26-Public-Hearing-1.pdf p. 104
+  the_conflict: >-
+    Two officials, one week apart, give two volumes for the same fill — and they do not agree on
+    whether it recurs. Fleming: "a one-time transaction required only at startup." Lichtensteiger:
+    "that will last for 6 to 8 years," which describes a service life, not a one-time purchase.
+    The third figure is two orders of magnitude smaller and reaches the record only second-hand.
+  bearing_on_the_corpus: >-
+    This is the same fill-vs-annual ambiguity already logged as the #1409 open question and
+    carried as WaterAccount.disclosed_makeup by B2 (#1682). The primary record now DEEPENS that
+    ambiguity rather than settling it — the discrepancy is not between the corpus and the City,
+    it is inside the City's own record. Per the B2 rule, a self-report of the very claim under
+    test never upgrades the source, so the closed-loop pin stays [reference] and the gap stays a
+    gap.
+
+- id: where-the-facility-water-goes
+  question: Does facility water reach Town Creek?
+  tag: '[verified]' # that the two statements sit oddly together
+  statement: >-
+    Fleming, 2026-04-27: "any time the facility must clean or dispose water, it goes directly to
+    the wastewater treatment plant to be dealt with. It will not be put in the ground, aquifers or
+    town creek." (4.27.26.pdf p. 4)
+  the_tension: >-
+    Van Wert's WWTP discharges to Town Creek. Outfall 001 under NPDES 2PD00006*WD sits at River
+    Mile 13.87 on COMID 15653063 — the same flowline as the City's own raw-water intake — and five
+    CSO outfalls sit between them (data/extracted/van-wert/water-watch.yaml, #1406). Water routed
+    "directly to the wastewater treatment plant" reaches Town Creek by definition, after
+    treatment. The statement is defensible as a claim about DIRECT discharge and about
+    groundwater; as stated it is not accurate about Town Creek.
+  bearing: >-
+    [inference] If the facility routes cleaning/blowdown water to the WWTP, the receiving-water
+    question for this campus is not "will it discharge to Town Creek" but "what does it add to a
+    plant already under a dated CSO construction schedule." That is a different and more tractable
+    question than the one the public debate was having.
+
+- id: acreage-in-the-register
+  question: How many acres were annexed?
+  tag: '[verified]'
+  correction: >-
+    901.698 ± acres. The figure carried in this corpus's register since 2026-07-02 — "~962 acres
+    annexed 2026-05-11" — came from press coverage and is WRONG. The instrument states 901.698 in
+    two ordinance titles, and its own Exhibit A components sum to exactly that. Corrected in
+    data/extracted/van-wert/data-centers.md.
+
+- id: vote-tally
+  question: Did the ordinances pass 6-0?
+  tag: '[verified]'
+  correction: >-
+    The minutes record NO numeric tally for any of the three ordinances — each reads "all
+    concurred. Ordinance passed." Seven members answered roll call; Roberts was excused during
+    public comment and abstained as a Marsh Foundation employee, leaving six. "6-0" is a
+    reasonable reconstruction and it is how the press reported it, but it is not what the
+    instrument says. The one roll-called Mega Site vote in this document set is the 2026-04-27
+    preparation motion: "Hurless, Agler, Ringwald, Johnson, Block, and Moore voted yes. Roberts
+    abstained." (4.27.26.pdf p. 2)
+
+# ── Claims made ON the record by named officials ──────────────────────────────
+# These are primary-source statements. They are [verified] as to what was said and by whom,
+# NOT as to whether the underlying assertion is true.
+record_statements:
+
+- topic: municipal water — capacity to supply the fill
+  who: Jay C. Fleming, Safety-Service Director
+  when: '2026-04-27'
+  tag: '[verified]'
+  source: 4.27.26.pdf p. 4
+  said: >-
+    Asked whether the City could supply water to fill a data-center system, Fleming "states, no,
+    even if the question presented itself, the city would be incapable of fulfilling the requires.
+    Therefore, the misinformation that the city will be providing the data center with water is
+    not even possible." He adds that he "is tasked with making sure the city is never
+    overcommitted."
+  note: >-
+    [verified] Read against the 2026-04-21 press release over the same signature — "The city will
+    sell the developers approximately 660,000 gallons of water for this purpose" — the two
+    statements are six days apart and point opposite ways on whether the City supplies fill water.
+    Both are printed; neither is reconciled here.
+
+- topic: municipal water — reservoir and headroom
+  who: Jay C. Fleming, Safety-Service Director
+  when: '2026-04-21'
+  tag: '[verified]'
+  source: 5.4.26-Public-Hearing-1.pdf p. 14
+  said: >-
+    "Our reservoir is currently more than 85% full, and we maintain an excess daily treatment and
+    distribution capacity of approximately 2 million gallons." Cooling is "a sealed mixture of
+    water and glycol (an environmentally safe antifreeze)" circulating through a heat exchanger,
+    with "no continuous or daily consumption of water from our supply" beyond restrooms and staff
+    areas.
+  corroboration: >-
+    On 2026-04-27 Fleming separately "reports reservoirs are over 90% full" (4.27.26.pdf p. 0).
+    The reservoir capacity itself — 1.01 billion gallons against a creek yielding 180 MG to
+    1.26 BG a year — is the figure already committed at data/extracted/van-wert/water-watch.yaml.
+
+- topic: grid — AEP Ohio's data-center pipeline
+  who: Zach Miller, Director of Economic Development and Data Center Integration, AEP Ohio
+  when: '2026-05-04'
+  tag: '[verified]'
+  source: 5.4.26-Public-Hearing-1.pdf pp. 11-12
+  said: >-
+    AEP Ohio "paused new load studies" while developing a Data Center Tariff "approved by the
+    Public Utilities Commission of Ohio last summer — one of the first policies of its kind in the
+    country," which requires more accurate forecasts, reduces speculative projects, and "places
+    financial accountability on large customers if they use less electricity than they estimated."
+    Then the numbers: "Early interest totaled more than 30,000 megawatts of potential demand.
+    Today, projects estimating 5,342 MW have advanced to signed agreements."
+  why_it_matters: >-
+    [verified] This is a utility officer stating AEP Ohio's own data-center funnel on a municipal
+    public record: ~30 GW of inquiry against 5,342 MW under signed agreement, an 18% conversion.
+    It is the first primary-source AEP Ohio pipeline figure in this corpus. The testimony is
+    about the tariff regime in general — it states NO megawatt figure for the Van Wert campus, so
+    the 500 MW bracket on the Van Wert SiteProfile stays [reference] and is not upgraded by it.
+  tariff: >-
+    [inference] "approved … last summer" matches PUCO case 24-508-EL-ATA, approved 2025-07-09.
+    The testimony does not print the case number; the identification is ours.
+
+- topic: transmission — the cost of the upgrades
+  who: Thad Lichtensteiger, Van Wert County Commissioner
+  when: '2026-05-04'
+  tag: '[reference]'
+  source: 5.4.26-Public-Hearing-1.pdf p. 15
+  said: >-
+    "They do use a lot of electricity, but Thor is paying through the nose to get the upgrades
+    needed: that cost is $72 million."
+  note: >-
+    A sitting county commissioner — one of the three who granted the annexation petition on
+    2026-03-10 — advocating in writing for the project, on Commissioners' letterhead, at the City's
+    hearing. The $72M figure is unsourced in the letter and does not match the $45M carried in the
+    register for OPSB case 25-0697-EL-BLN (the AEP Ohio Transco Van Wert-Haviland 138 kV line).
+    The two may cover different scopes; neither is reconciled. Van Wert County Commissioners as
+    printed on that letterhead: Thad Lichtensteiger, Stan D. Owens, Todd D. Wolfrum; Ryanne
+    Bollenbacher, Clerk.
+
+- topic: sourcing and vetting
+  who: Brent Stevens, Executive Director, Van Wert Area Economic Development
+  when: '2026-05-04'
+  tag: '[verified]'
+  source: 5.4.26-Public-Hearing-1.pdf pp. 23-24
+  said: >-
+    "As the individual who first sourced this opportunity more than two years ago, I have
+    personally overseen an extensive vetting process involving over 25 different data center
+    groups that expressed interest in our community." The facility "will utilize advanced
+    closed-loop cooling systems, eliminating the need for evaporative cooling and significantly
+    reducing water usage … and the project avoids unnecessary drilling of wells." He urges Council
+    "to approve the necessary incentives, zoning, and permitting."
+  note: >-
+    "More than two years" before 2026-05-04 puts first contact in or before early 2024 — earlier
+    than the register's Aug-2025 Thor acquisition and consistent with a written comment recalling
+    hearing of it from Stevens "almost two years ago" (p. 17). The word "incentives" is the
+    project's only appearance in this instrument set; no incentive instrument for the Mega Site is
+    in the corpus (#1407).
+
+- topic: jobs and buildout
+  who: Council, in answer to a question from the floor
+  when: '2026-04-27'
+  tag: '[reference]'
+  source: 4.27.26.pdf p. 4
+  said: >-
+    "The end user will create at least 250 jobs. The construction of the project will take several
+    thousand. It will take 5-6 years to complete."
+
+- topic: noise
+  who: Eric Hurless, Council President Pro Tempore, relaying the New Albany site visit
+  when: '2026-04-27'
+  tag: '[reference]'
+  source: 4.27.26.pdf p. 3
+  said: >-
+    "The data center representatives provided information on 5 noise complaints since 2015. Of the
+    five, four of them were resolved within days."
+  note: Second-hand and about a different campus. Recorded because it is the only noise figure anywhere in this instrument set.
+
+- topic: site access
+  who: Jay C. Fleming, Safety-Service Director
+  when: '2026-04-27'
+  tag: '[verified]'
+  source: 4.27.26.pdf p. 4
+  said: >-
+    Asked about "a new exit on Mendon Road at the time of construction," Fleming "answered there
+    will be a temporarily ramp for construction purposes only."
+
+- topic: a same-night AEP contract
+  who: Jay C. Fleming, Safety-Service Director
+  when: '2026-05-11'
+  tag: '[open]'
+  source: 5.11.26.pdf p. 3
+  said: >-
+    "an agreement has been made with AEP on a 10 year contract. This info will be presented to
+    council prior to the next meeting in an effort to work toward a signed Lease Agreement for the
+    city."
+  note: >-
+    Under Unfinished Business, unconnected in the minutes to the Mega Site. A ten-year AEP
+    agreement moving toward a City lease could be a tower/land lease, a street-lighting contract,
+    or something else entirely. Do not assume a connection; the instrument is [open] and worth a
+    records request.
+
+- topic: a moratorium was requested and declined
+  who: Councilman Block
+  when: '2026-04-27'
+  tag: '[verified]'
+  source: 4.27.26.pdf p. 2
+  said: >-
+    "A member of the public requested a moratorium on data centers; Block does not feel the need
+    to move this request forward at this point in time."
+  note: >-
+    A second moratorium request reaches the record on 2026-05-04, in the one substantively cited
+    written comment ("I implore you to consider a moratorium until full transparency can be
+    provided and proper environmental and public health impact assessments are done" —
+    5.4.26-Public-Hearing-1.pdf p. 105). No moratorium legislation appears anywhere in this set.
+
+# ── The written-comment record ────────────────────────────────────────────────
+public_comment:
+  hearing_2026_05_04:
+    attendance: ~200
+    speakers: ~40
+    format: comment-only, two minutes each, one turn per person, no questions taken
+    tag: '[verified]'
+    source: 5.4.26-Public-Hearing-1.pdf pp. 0-1
+    written_comment_pages: 88   # pp. 17-106
+  meeting_2026_05_11:
+    speakers_on_annexation: 18  # named list, 5.11.26.pdf p. 5
+    written_comment_signers: 25 # sign-in sheet, 5.11.26.pdf p. 6
+    tag: '[verified]'
+  duplication:
+    tag: '[verified]'
+    finding: >-
+      Of the 88 written-comment pages in the 2026-05-04 record, 21 repeat the body text of an
+      earlier page verbatim. Normalising each page (lowercase, letters and spaces only) and
+      hashing the first 900 characters yields 67 distinct letter bodies across 88 pages; 15 bodies
+      appear more than once and one appears five times (pp. 31, 32, 34, 40, 49).
+    method: >-
+      Reproducible from the committed PDF: OCR at 300 DPI, split on page, normalise, hash the
+      leading 900 normalised characters, group.
+    caveats: >-
+      A repeat may be one person's letter scanned twice, a two-page letter counted as two pages,
+      or different signers submitting identical text — the signature blocks are handwritten and
+      largely illegible to OCR, so the count is of PAGES, not of people. What is not in doubt is
+      that a common body of text recurs: the same claim set (a $10 billion investment, $200
+      million in community revenue over 20 years, 200-250 permanent jobs at roughly $80,000,
+      1,000-1,500 construction jobs, closed-loop cooling, and a site "designated and pre-annexed
+      for industrial use since 2007") appears across many letters in near-identical wording.
+  the_2007_claim:
+    tag: '[open]'
+    finding: >-
+      "The site has been designated and pre-annexed for industrial use since 2007" recurs across
+      the support letters. NOTHING in this instrument set supports 2007. The ordinances' own
+      recitals date the pre-annexation agreements to 2014-11-14, 2014-12-22 and 2016-06-14. The
+      2007 date may refer to a Mega Site designation, a comprehensive plan, or a JEDD — none of
+      which is in the corpus. Do not carry 2007 as a fact; carry the three agreement dates.
+  the_one_cited_opposition:
+    tag: '[verified]'
+    source: 5.4.26-Public-Hearing-1.pdf pp. 104-106
+    finding: >-
+      One written comment (pp. 104-106, submitted with a full reference list) argues the water
+      case with citations: that all Van Wert County subwatersheds are impaired and Lower Town
+      Creek specifically for E. coli and PCBs, with no plan in place eight years after detection
+      (EPA, HUC 041000070804); that the reservoir holds 1.01 billion gallons against a creek
+      yielding 180 MG to 1.26 BG a year; that county annual public surface-water withdrawal is
+      1.002 billion gallons; that Ohio EPA's draft data-center general permit OHD000001 would
+      loosen discharge regulation; and that closed-loop systems still require line bleeds carrying
+      PFAS.
+    why_it_is_recorded: >-
+      Two of its figures — the 1.01 BG reservoir and the 180 MG-1.26 BG creek yield — are the same
+      figures independently committed at data/extracted/van-wert/water-watch.yaml from the City's
+      own utilities publications. The corpus and an informed member of the public reached the same
+      numbers from the same public sources. Its arithmetic elsewhere does NOT survive checking
+      (it multiplies a 500 MW figure by a per-MWh water intensity to get "1,400,000 gallons of
+      water an hour", conflating MW with MWh, and its 5,500-gallon fill is two orders of magnitude
+      off the City's own figure) — recorded so the citation is usable and the arithmetic is not.
+    ohd000001_note: >-
+      The comment cites OHD000001 as a live draft. It is not: Ohio EPA WITHDREW the draft
+      data-center general permit on 2026-07-21 (see the Bowling Green record, #1685). The hearing
+      record preserves a regulatory premise that has since lapsed.
+
+# ── Entities named in the instruments ─────────────────────────────────────────
+entities:
+- name: The Marsh Foundation
+  role: annexation petitioner (with Van Wert East Owner LLC); landowner
+  tag: '[verified]'
+  source: 4.27.26.pdf p. 0 · 5.11.26.pdf p. 1 (City Auditor's R.C. 709 statement)
+- name: Van Wert East Owner LLC
+  role: annexation co-petitioner — the Thor SPE
+  tag: '[verified]'
+  source: 4.27.26.pdf p. 0 · 5.11.26.pdf p. 1
+  note: >-
+    This is the corpus's first PRIMARY-SOURCE naming of the Thor entity as a party to a Van Wert
+    instrument. #1403 found it gone from the county roll by 2026-07-31; here it is, on the record
+    as a petitioner five months earlier.
+- name: Charles F. Koch (Koch & White)
+  role: agent for petitioners; presented to Council 2026-05-11 as "landowner's agent"
+  tag: '[verified]'
+  source: 26-05-028-draft-ordinance.pdf p. 0 · 5.11.26.pdf p. 2
+- name: Thor Equities
+  role: developer; sponsor of the 2026-04-20 New Albany stakeholder tour; named by VWAED as the partner that identified the end user
+  tag: '[verified]'
+  source: 4.27.26.pdf p. 1 · 5.4.26-Public-Hearing-1.pdf pp. 23-24
+- name: QTS
+  role: not named anywhere in this instrument set
+  tag: '[open]'
+  note: >-
+    Worth stating plainly: the City legislated the campus without the end user appearing in any
+    of the nine documents. VWAED's letter says only that Thor "successfully identified an end
+    user." QTS was publicly named later, in late May-June 2026.
+- name: Michael L. Howbert
+  role: Registered Professional Surveyor — the annexation survey (2025)
+  tag: '[verified]'
+  source: 26-05-028.pdf p. 2
+- name: Van Wert Area Economic Development (VWAED)
+  role: sourced and vetted the project; Brent Stevens, Executive Director; Lauren Buchanan, Workforce Development Manager
+  tag: '[verified]'
+  source: 5.4.26-Public-Hearing-1.pdf pp. 16, 23-24
+- name: AEP Ohio
+  role: serving utility; testified at the 2026-05-04 hearing
+  tag: '[verified]'
+  source: 5.4.26-Public-Hearing-1.pdf pp. 11-12
+- name: Danfoss A/S
+  role: >-
+    existing Van Wert manufacturer; wrote to VWAED 2026-03-19 projecting 53 new direct jobs at its
+    Van Wert operation from data-center product growth
+  tag: '[verified]'
+  source: 5.4.26-Public-Hearing-1.pdf p. 13
+- name: City officers
+  role: >-
+    Kenneth J. Markward, Mayor; Thad R. Eikenbary, President of Council (Acting Mayor 2026-05-11);
+    Eric Hurless, President Pro Tempore and Chair, Judiciary & Annexation; Jay C. Fleming,
+    Safety-Service Director; Erika Blackmore, City Auditor; Stephanie R. Phillips, Clerk of
+    Council; Hatcher, Law Director. Council: Ringwald, Johnson, Block, Agler, Roberts, Moore,
+    Hurless.
+  tag: '[verified]'
+  source: 4.27.26.pdf · 5.11.26.pdf
+- name: Councilman Roberts
+  role: recused — "an employee of the Marsh Foundation"
+  tag: '[verified]'
+  source: 5.11.26.pdf p. 2
+- name: True North Partners Holdings, LLC / Cool Machines Holdings, Inc
+  role: NOT Mega Site parties
+  tag: '[verified]'
+  source: 26-04-026 · 4.27.26.pdf p. 5 · 5.11.26.pdf p. 3
+  note: >-
+    Two Community Reinvestment Area agreements passed as emergencies alongside the Mega Site
+    ordinances (True North on 2026-05-11, Cool Machines on 2026-04-27). True North's is a
+    $14,000,000 building at 205 Bonnewitz Crossing, 15 jobs, 90% abatement over ten years.
+    Checked and excluded — recorded so they are not re-chased as data-center incentives.
+
+# ── Adjacent finding: the CSO money moved the same night ──────────────────────
+cross_link_cso_appropriation:
+  tag: '[verified]'
+  source: 5.11.26.pdf pp. 0, 2
+  finding: >-
+    At the same 2026-05-11 meeting, Council passed Ordinance 26-05-031 as an emergency, moving
+    $700,000 from the sewer fund to cover a CSO project bid of $2.1 million against a $1.85
+    million estimate. Safety-Service Director Fleming: it was "the only bid for the project, the
+    city is obligated to move forward under Ohio EPA guidelines therefore the bid will be awarded
+    to move the project forward."
+  why_it_matters: >-
+    NPDES 2PD00006*WD put the CSO Long Term Control Plan on a dated construction schedule with its
+    first milestone — begin construction, event code 3099 — due 2026-08-01
+    (data/extracted/van-wert/water-watch.yaml, #1406). This is that money, appropriated eleven
+    weeks before the deadline, at a 14% overrun on a single-bid procurement. The construction
+    milestone and the annexation were carried by the same council on the same evening.
+
+# ── Per-source negatives from this pass ───────────────────────────────────────
+# Recorded as negatives against a named route, never as absences.
+source_negatives:
+
+- source: PUCO / OPSB Docketing Information System (dis.puc.state.oh.us)
+  attempted: '2026-08-03'
+  targets: ['25-0697-EL-BLN (AEP Ohio Transco Van Wert-Haviland 138 kV LON)', '24-508-EL-ATA (AEP Ohio data-center tariff)']
+  result: >-
+    Both CaseRecord requests returned a 245-byte F5/BIG-IP "Request Rejected" page with a support
+    ID — a JavaScript bot challenge, not a UA block. No scripted route. This is the same block
+    already recorded at #1437 and #1464; confirmed a third time here, now for both Van Wert cases.
+  workaround_that_has_worked_elsewhere: a news organisation's mirror of the filing, found by web search on the case number.
+
+- source: Van Wert County Recorder — GovOS CountyFusion (countyfusion14.govos.com)
+  attempted: '2026-08-03'
+  target: the Marsh Foundation → Thor → QTS deed chain
+  result: >-
+    Reachable, but serves a session-based Java login page (24 KB), not a document index. Not
+    scripted in this pass. The deed chain therefore remains uningested — though the annexation
+    record now names the petitioners (Marsh Foundation and Van Wert East Owner LLC), which was one
+    of the two things the deeds were wanted for.
+
+- source: vanwertohiodatacenter.com — the city-launched project FAQ
+  attempted: '2026-08-03'
+  result: >-
+    THE FAQ TEXT IS NOT RECOVERABLE, and the chain-of-custody window flagged in #1401 has already
+    closed. The live domain 301-redirects to q.com/data-centers/van-wert. The Internet Archive
+    holds captures of `/` (2026-03-24, 2026-04-13, 2026-05-14) and `/answers` (2026-04-01,
+    2026-04-13) — but the site was a client-rendered Next.js application, and the archived HTML
+    contains only the shell: the /answers capture renders "Loading topics…" and no FAQ prose. The
+    two /answers captures have different digests, so the page DID change between 2026-04-01 and
+    2026-04-13, but neither body was preserved. No JSON/RSC data endpoint was captured.
+  what_survives: >-
+    Two of the FAQ's claims survive by CITATION inside the hearing record: a written comment
+    attributes to it both a 5,500-gallon initial fill and a "500 MWh" figure
+    (5.4.26-Public-Hearing-1.pdf pp. 104-106). And the 2026-04-27 minutes record the answers'
+    PROVENANCE from Council: they "came from Thor, AEP, the Safety Service Director, or any other
+    parties directly involved with their part of the project" (4.27.26.pdf p. 4).
+  note: >-
+    Treat this as the general lesson, not a one-off: a JavaScript-rendered municipal microsite is
+    NOT preserved by the Wayback Machine. Capturing one requires a rendered capture at the time it
+    is live, not a URL submitted after the fact.
+
+- source: The auditor parcel-number annotation in Exhibit A
+  attempted: '2026-08-03 at 300 and 450 DPI'
+  result: >-
+    Illegible. The bound-record-book photocopy loses the parcel numbers that follow the survey
+    attribution in 26-05-028.pdf p. 2. The four petition parcel numbers were obtained instead from
+    the hearing notice printed in the certified minutes (5.4.26-Public-Hearing-1.pdf p. 0).
+
+# ── What is still not in the corpus ───────────────────────────────────────────
+instruments_to_pull:
+- id: certified-ordinances
+  what: Certified copies of Ordinances 26-05-028 / 029 / 030 as passed and signed.
+  why: >-
+    The only public copies are unsigned uploads posted four days before the vote. A certified copy
+    is the only thing that settles the Type 1 / Type 2 question.
+  route: records request to the Clerk of Council, City of Van Wert.
+  priority: 1
+
+- id: pre-annexation-agreements
+  what: The three Pre-Annexation Agreements — 2014-11-14 (Ridge), 2014-12-22 (Hoaglin), 2016-06-14 (Pleasant).
+  why: >-
+    These are the foundation the 2026 ordinances recite. They are a decade older than the project
+    and were signed by the City, the township trustees and the Board of County Commissioners. They
+    are the earliest datable instruments in the Mega Site's chain and nothing about their terms is
+    known.
+  route: >-
+    records request to the Clerk of Council and/or the Board of County Commissioners; possibly
+    recorded with the County Recorder.
+  priority: 1
+
+- id: boc-journal-entry
+  what: The Board of County Commissioners' 2026-03-10 resolution granting the annexation petition, and the transcript of proceedings.
+  why: The ordinance recites it; the corpus does not hold it. It was granted one day after filing.
+  route: records request to the Clerk of the Board (Ryanne Bollenbacher). Agendas are online; journal entries are not.
+  priority: 2
+
+- id: hearing-audio
+  what: The 2026-05-04 hearing's audio/video recording and the written comments in the Clerk's official file.
+  why: >-
+    The certified minutes name both as part of the official record but summarise ~40 speakers in a
+    single paragraph. The spoken opposition at that hearing exists nowhere in this corpus.
+  route: records request to the Clerk of Council.
+  priority: 2
+
+- id: recorder-deeds
+  what: The Marsh Foundation → Thor → QTS deed chain, with instrument numbers and book/page.
+  why: The grantor and the recorder instrument numbers are still [open] from #1403.
+  route: GovOS CountyFusion (countyfusion14.govos.com, VanWertOH) — session login, not scripted yet.
+  priority: 2
+
+- id: opsb-lon
+  what: OPSB 25-0697-EL-BLN, the AEP Ohio Transco Van Wert-Haviland 138 kV letter of notification.
+  why: >-
+    The only transmission instrument for this load, and the record now carries a conflicting cost
+    figure ($72M from a county commissioner vs $45M in the register).
+  route: DIS is bot-blocked; try a news-organisation mirror, or the OPSB's own public files.
+  priority: 3
+
+- id: mega-site-designation-2007
+  what: Whatever 2007 document underlies the recurring "designated and pre-annexed for industrial use since 2007" claim.
+  why: It appears in many public comments and in no instrument. Either it exists and belongs in the chronology, or it does not and the claim should stop.
+  route: City comprehensive plan / Mega Site designation records; VWAED.
+  priority: 3
+
+- id: incentive-instruments
+  what: Any CRA, TIF, PILOT, JEDD or development agreement for the Mega Site.
+  why: >-
+    VWAED asked Council on 2026-05-04 to "approve the necessary incentives"; no Mega Site
+    incentive instrument exists in the corpus. Two same-week CRAs were checked and are for other
+    projects.
+  route: Clerk of Council; County Auditor; Ohio Department of Development. Tracked as #1407.
+  priority: 2

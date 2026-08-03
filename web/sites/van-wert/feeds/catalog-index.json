@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "388eb5de7abf2c15904e5aa27e788de183380299c3c99d2ab3345a0d81765445",
+  "catalog_version": "5ebfc9c0d2849deabf16590d0fee9519144759e101b75a2acd262a1360d395a8",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1041,6 +1041,22 @@
       "site": "van-wert",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:van-wert-mega-site-instruments",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "van-wert-mega-site-instruments",
+      "title": "Van Wert — Mega Site Primary-Instrument Set (City Ordinances, Public Hearing, Council Minutes)",
       "feed": "catalog"
     },
     {

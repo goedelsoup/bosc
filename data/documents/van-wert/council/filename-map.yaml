@@ -1,0 +1,251 @@
+meta:
+  subject: >
+    Canonical filename map for van-wert/council/ — the City of Van Wert legislative record behind
+    the QTS Van Wert Mega Site (#1401): the three 2026-05-11 emergency ordinances that annexed and
+    rezoned the campus, the 2026-05-04 statutory public-hearing record they rest on, and the two
+    council meetings (2026-04-27, 2026-05-11) that ordered and passed them.
+  note: >
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their as-received
+    names — the City's own WordPress upload names, which are bare US dates for minutes
+    (`5.11.26.pdf`) and `YY-MM-NNN` ordinance numbers for legislation. `content_verified` records
+    HOW the date below was established from the document's own bytes (the native text layer, or
+    OCR of the scanned body at 300 DPI) — never from the filename or the upload path. Every one of
+    these files is a scan with no usable text layer except `5.11.26.pdf` and
+    `5.4.26-Public-Hearing-1.pdf`, whose text layers cover only their typed attachments; the
+    minutes bodies themselves are images in both.
+  custody_caveat: >
+    NONE of the six ordinance PDFs is a signed or certified as-passed copy. All six were uploaded
+    2026-05-07 17:10 UTC — four days BEFORE the 2026-05-11 vote — and every one prints an unfilled
+    "Passed this ___ day of ___, 2026" and unsigned signature lines. The as-passed text, the
+    titles as read, and the fact of passage are evidenced by `5.11.26.pdf` (the approved minutes),
+    not by the ordinance files. A certified copy is a records request to the Clerk of Council.
+  retrieved: "2026-08-03"
+  source_base_url: "https://vanwert.org/wp-content/uploads/"
+  source_index_pages:
+    - "https://vanwert.org/meeting-minutes/"
+    - "https://vanwert.org/ordinances/"
+  source_note: >
+    The `https://vanwert.org/ordinances/` page carries only PENDING legislation — on 2026-08-03 it
+    listed eight June/July 2026 items and nothing from May. The May 2026 ordinances were located
+    through the site's open WordPress REST media index
+    (`/wp-json/wp/v2/media?search=26-05&per_page=100`), which enumerates the full upload archive
+    with `date`, `title` and `source_url` and required no auth. Record that route: the ordinances
+    page is a rolling window, the media index is the archive.
+
+documents:
+  - filename: 26-04-026.pdf
+    committed: false
+    reason: >
+      Checked and deliberately NOT ingested. Ordinance 26-04-026, passed 2026-05-11 on second and
+      final reading as an emergency, approves a Community Reinvestment Area agreement with TRUE
+      NORTH PARTNERS HOLDINGS, LLC — 90% property-tax abatement over ten years for a $14,000,000
+      building at 205 Bonnewitz Crossing creating 15 jobs. It is NOT the Mega Site; neither is
+      26-04-027 (the same night's CRA with COOL MACHINES HOLDINGS, INC). Recorded here so the
+      next pass does not re-chase two same-meeting CRAs as data-center incentives.
+    source_url: "https://vanwert.org/wp-content/uploads/2026/04/26-04-026.pdf"
+
+  - filename: 4.27.26.pdf
+    canonical: van-wert-council-minutes-2026-04-27-approved.pdf
+    type: council-minutes-approved
+    date: "2026-04-27"
+    content_verified: ocr        # body p.0: "MINUTES OF THE VAN WERT CITY COUNCIL / April 27, 2026"
+    approved: "2026-05-11"       # stamped p.6: "Approved on: May 11, 2026"
+    pages: 8
+    bytes: 3114560
+    sha256: "7a4cae33047c75262791b8ae6663a5acb8930e2f6df7c6762c17c4db4870b61a"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/05/4.27.26.pdf"
+    source_last_modified: "2026-05-21T17:50:41Z"
+    text_layer: false
+    carries:
+      - "The Judiciary & Annexation motion that ORDERED the three ordinances — and it says 'expedited Type 2 annexation of approximately 901.69[8] acres', not Type 1"
+      - "Roll on the conditional-zoning prep motion: Hurless, Agler, Ringwald, Johnson, Block, Moore yes; ROBERTS ABSTAINED"
+      - "City Auditor Blackmore: the annexation transcript was received from the County Commissioners' clerk on 2026-03-11 and the R.C. 709 sixty-day hold expires 2026-05-10"
+      - "Safety-Service Director Fleming, on the record: the City COULD NOT supply water to fill a data-center system, and facility water sent for cleaning/disposal 'goes directly to the wastewater treatment plant … It will not be put in the ground, aquifers or town creek'"
+      - "A member of the public requested a data-center moratorium; Block declined to move it forward"
+      - "Council letter thanking Van Wert Area Economic Development and THOR EQUITIES for sponsoring an April 20, 2026 stakeholder tour of the New Albany data-center campus"
+      - "Provenance of the vanwertohiodatacenter.com Q&A: answers 'came from Thor, AEP, the Safety Service Director, or any other parties directly involved'"
+      - "Ord. 26-04-026 (True North CRA) and 26-04-027 (Cool Machines CRA) — Block the sole no vote on both"
+
+  - filename: 5.4.26-Public-Hearing-1.pdf
+    canonical: van-wert-council-public-hearing-2026-05-04-record.pdf
+    type: council-public-hearing-record
+    date: "2026-05-04"
+    content_verified: ocr        # body p.0: "Van Wert City Council Public Hearing Minutes of May 4, 2026"
+    approved: "2026-05-11"       # p.1: "Approved by Council on May 11, 2026", certified by Clerk Phillips
+    pages: 107
+    bytes: 28721870
+    sha256: "6b3ec8cba8b4bbcb162a1ef780bcea1dfe16b7e7dd845c37523ca82648f285e1"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/05/5.4.26-Public-Hearing-1.pdf"
+    source_last_modified: "2026-05-26T18:17:31Z"
+    text_layer: partial          # 10,777 chars, all in typed attachments; pp.0-1 minutes are images
+    structure:
+      - "pp. 0-1 — the certified hearing minutes (Niswonger PAC lecture hall; ~200 attending, ~40 speakers; 6:30-8:03 pm)"
+      - "pp. 2-10 — handwritten sign-in sheets, sorted City / adjacent landowner / County / outside County. Largely illegible to OCR; recorded as held, not as read"
+      - "p. 11-12 — AEP Ohio testimony, Zach Miller, Director of Economic Development and Data Center Integration"
+      - "p. 13 — Danfoss A/S letter (Wade R. Adamson, 2026-03-19) to VWAED"
+      - "p. 14 — City of Van Wert press release, Safety-Service Director Jay C. Fleming, 2026-04-21, on water"
+      - "p. 15 — written comment of Van Wert County Commissioner Thad Lichtensteiger, on Commissioners' letterhead"
+      - "p. 16, 23-24 — Van Wert Area Economic Development (Lauren Buchanan; Executive Director Brent Stevens)"
+      - "pp. 17-106 — 88 pages of written public comment"
+    carries:
+      - "THE FOUR PARCELS in the conditional-zoning petition, stated in the hearing notice: 17-034718.0000, 33-047500.0000, 12-034459.0000, 17-034718.0100"
+      - "AEP Ohio: early data-center interest exceeded 30,000 MW; 5,342 MW have advanced to signed agreements under the PUCO-approved data-center tariff"
+      - "Fleming (2026-04-21): no ongoing municipal water; sealed water+glycol closed loop; ONE-TIME initial fill of ~660,000 gallons SOLD BY THE CITY; reservoir >85% full; ~2 MGD excess treatment/distribution capacity"
+      - "Commissioner Lichtensteiger: the same fill at 700,000 gallons against 1.6 MGD city consumption, 'that will last for 6 to 8 years'; Thor's power-upgrade cost '$72 million'"
+      - "Brent Stevens (VWAED): sourced the opportunity 'more than two years ago', vetted 'over 25 different data center groups'; urges Council to approve 'the necessary incentives, zoning, and permitting'"
+      - "Danfoss: 53 new direct jobs at its Van Wert operation from data-center product growth"
+      - "The one substantively cited opposition comment (pp. 104-106) — Lower Town Creek impairment, Ohio EPA draft general permit OHD000001, and the two figures it attributes to the now-lost city FAQ (a 5,500-gallon fill and '500 MWh')"
+    notes: >
+      The hearing was comment-only by rule — no questions, two minutes each, one turn per person.
+      Written comments are "retained in the Clerk's official file" and an audio/video recording is
+      "maintained as part of the official record by the Clerk of Council": two records requests
+      this file names but does not contain.
+
+  - filename: 26-05-028-draft-ordinance.pdf
+    canonical: van-wert-ord-26-05-028-annexation-body.pdf
+    type: ordinance-body-as-introduced
+    ordinance: "26-05-028"
+    date: null                   # the document itself prints "Passed this ___ day of ___, 2026"
+    filename_date_unverified: "2026-05"
+    content_verified: ocr        # "Ordinance No: 26-05-028 Committee: Judiciary and Annexation"
+    pages: 2
+    bytes: 671600
+    sha256: "039823955abb314a99f96cab530d30292aec5bd37fdcfe82b6460aa78ef56d7a"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/05/26-05-028-draft-ordinance.pdf"
+    source_last_modified: "2026-05-07T17:10:14Z"
+    text_layer: false
+    carries:
+      - "TITLE AS POSTED: 'AN ORDINANCE TO ACCEPT THE EXPEDITED TYPE 2 ANNEXATION OF 901.698+/- ACRES FROM HOAGLIN TOWNSHIP, PLEASANT TOWNSHIP, AND RIDGE TOWNSHIP … AND DECLARING AN EMERGENCY' — Type 2, which the 2026-05-11 minutes contradict"
+      - "Petition filed by Charles F. Koch, agent for petitioners, with the Board of Commissioners 2026-03-09; BOC granted it by resolution 2026-03-10; delivered to the City Auditor 2026-03-10"
+      - "THREE PRE-ANNEXATION AGREEMENTS: 2014-11-14 (Ridge Twp), 2014-12-22 (Hoaglin Twp), 2016-06-14 (Pleasant Twp), each with the City and the Board of County Commissioners"
+      - "Signature block: Eric Hurless, President Pro Tempore; Thad R. Eikenbary, ACTING Mayor; attest Stephanie R. Phillips, Clerk"
+
+  - filename: 26-05-028.pdf
+    canonical: van-wert-ord-26-05-028-annexation-exhibits.pdf
+    type: ordinance-exhibits
+    ordinance: "26-05-028"
+    date: null
+    filename_date_unverified: "2026-05"
+    content_verified: ocr        # p.0 header "City of Van Wert … Record of Ordinances and Resolutions / Exhibit \"A\""
+    pages: 10
+    bytes: 826996
+    sha256: "8b50dfac6936c1699fbaaf83e11a9336a53a276b0c474f4c9d3b535c94b186bb"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/05/26-05-028.pdf"
+    source_last_modified: "2026-05-07T17:10:16Z"
+    text_layer: false
+    carries:
+      - "Exhibit A — metes-and-bounds for PARCEL ONE (776.565 ac: 630.491 ac and 114.861 ac in Ridge Twp, 31.213 ac in Section 31 Hoaglin Twp) and PARCEL TWO (125.133 ac, Section 1)"
+      - "Exhibit B — the annexation plat"
+      - "Survey attribution: Michael L. Howbert, Registered Professional Surveyor, 2025"
+    notes: >
+      This file carries NO ordinance body — it opens directly on Exhibit "A". The body is the
+      companion `26-05-028-draft-ordinance.pdf`. Photocopied from a bound record book with heavy
+      skew and loss; OCR at 300 and at 450 DPI both fail on the auditor parcel-number annotation
+      that follows the survey attribution, so those numbers stay unread HERE — the four petition
+      parcels are legible in `5.4.26-Public-Hearing-1.pdf` p.0 instead.
+
+  - filename: 26-05-029-draft-ordinance.pdf
+    canonical: van-wert-ord-26-05-029-zoning-text-body.pdf
+    type: ordinance-body-as-introduced
+    ordinance: "26-05-029"
+    date: null
+    filename_date_unverified: "2026-05"
+    content_verified: ocr
+    pages: 2
+    bytes: 716829
+    sha256: "736be373da1a881a132efd6adca07465998e8f05266e4792574a17eba82ceccd"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/05/26-05-029-draft-ordinance.pdf"
+    source_last_modified: "2026-05-07T17:10:17Z"
+    text_layer: false
+    carries:
+      - "The procedural chain: Planning Commission initiated 2026-03-26 under §150.76(A)(1); referred to the Van Wert County Regional Planning Commission 2026-03-31; RPC hearing 2026-04-21; Planning Commission hearing 2026-04-27; Council hearing 2026-05-04"
+      - "Signature block: the President Pro Tempore / Acting Mayor set (differs from the companion 26-05-029.pdf)"
+
+  - filename: 26-05-029.pdf
+    canonical: van-wert-ord-26-05-029-zoning-text-with-exhibit-a.pdf
+    type: ordinance-with-exhibits
+    ordinance: "26-05-029"
+    date: null
+    filename_date_unverified: "2026-05"
+    content_verified: ocr
+    pages: 4
+    bytes: 207499
+    sha256: "5ce738d193586429fdf9551b65a01016d072c9db16bfedb9beac9262aee0d82b"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/05/26-05-029.pdf"
+    source_last_modified: "2026-05-07T17:10:19Z"
+    text_layer: false
+    carries:
+      - "EXHIBIT A — the operative code text. The new §150.03 definition of 'Data Center' verbatim, naming generators, cooling towers, fuel storage and electrical equipment as accessory"
+      - "The amended §150.03 'PUBLIC SERVICE FACILITY' definition, whose new footnote confines power plants and substations to the I-2 district"
+      - "The amended §150.15(H)(1) I-2 permitted-use list with 'Data Center' appended last"
+      - "Signature block: Thad R. Eikenbary, President of Council; Kenneth J. Markward, Mayor"
+
+  - filename: 26-05-030-draft-ordinance.pdf
+    canonical: van-wert-ord-26-05-030-conditional-zoning-body.pdf
+    type: ordinance-body-as-introduced
+    ordinance: "26-05-030"
+    date: null
+    filename_date_unverified: "2026-05"
+    content_verified: ocr
+    pages: 2
+    bytes: 737133
+    sha256: "ebb37f7cb5a3557338e1975d5c94c9315e2adf5e34dfd9818c8f5416e06dfc1a"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/05/26-05-030-draft-ordinance.pdf"
+    source_last_modified: "2026-05-07T17:10:21Z"
+    text_layer: false
+    carries:
+      - "Conditional zoning petition filed 2026-03-09 under §150.12(C) for 901.698+/- ac; Planning Commission hearing and recommendation 2026-03-26; Council hearing 2026-05-04"
+      - "The same three pre-annexation agreements recited in 26-05-028"
+
+  - filename: 26-05-030.pdf
+    canonical: van-wert-ord-26-05-030-conditional-zoning-with-exhibits.pdf
+    type: ordinance-with-exhibits
+    ordinance: "26-05-030"
+    date: null
+    filename_date_unverified: "2026-05"
+    content_verified: ocr
+    pages: 12
+    bytes: 862033
+    sha256: "3bf6b2f655651aab753cf80984c3652d441b844cb2aa3ea5292e3e757b65a85c"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/05/26-05-030.pdf"
+    source_last_modified: "2026-05-07T17:10:23Z"
+    text_layer: false
+    carries:
+      - "Exhibit A — the same two-parcel legal description as 26-05-028, ending '…125.133 acres, more or less'"
+      - "Exhibit B — the plat, labelled 125.133 ACRES for Parcel Two"
+      - "EXHIBIT C — THE ENTIRE SET OF CONDITIONS attached to the I-2 designation: a 6-ft mound plus mixed landscape buffer reaching 75% opacity at 5 years to 12 ft, required only where a parking area, structure, building or permanent equipment falls within 1,000 linear feet of a residentially used or zoned abutter, installed by the earlier of 60 days after paving or before any vertical construction"
+    notes: >
+      Exhibit C is the whole of the "conditional" in the conditional zoning. It sets no noise
+      limit, no height limit, no water or discharge condition, no hours-of-construction limit and
+      no setback beyond the zoning minimum. Read the absence as recorded, not as inferred.
+
+  - filename: 5.11.26.pdf
+    canonical: van-wert-council-minutes-2026-05-11-approved.pdf
+    type: council-minutes-approved
+    date: "2026-05-11"
+    content_verified: ocr        # body p.0: "MINUTES OF THE VAN WERT CITY COUNCIL / May 11, 2026"
+    # Handwritten stamp p.4: "Approved on 5/27/2026". Read VISUALLY from a 600-DPI render —
+    # tesseract returned "5/211202¢6" at 300 and at 500 DPI and a digit-by-digit read of that
+    # would have written 2026-05-21, a date on which Council did not meet. 5/27 is the meeting
+    # itself: the 2026-04-27 minutes record the second May meeting moved to Wednesday May 27
+    # because May 25 was Memorial Day.
+    approved: "2026-05-27"
+    pages: 32
+    bytes: 7946103
+    sha256: "b28c9490841817a8dea314d11128ca1f031dc49bc924934cb2b6445bf705fcb5"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/06/5.11.26.pdf"
+    source_last_modified: "2026-06-22T18:47:22Z"
+    text_layer: partial          # 24,853 chars, all in the typed written-comment attachments
+    structure:
+      - "pp. 0-4 — the minutes (images)"
+      - "p. 5 — the list of 18 members of the public who spoke on the annexation"
+      - "p. 6 — a 25-name written-comment sign-in sheet"
+      - "pp. 7-31 — the written comments themselves (typed; these are the file's text layer)"
+    carries:
+      - "THE PASSAGE RECORD for all three ordinances — each introduced, statutory rules suspended, and passed 'on its first and final reading' as an emergency. No second reading; no numeric tally is recorded for any of them, only 'all concurred'"
+      - "THE TITLE DISCREPANCY: at the top of the meeting the agenda was amended from 'Type 2' to 'TYPE 1' as 'a typographical error in the agenda only, the Ordinance title is true and accurate' — but the ordinance file the City itself posted reads Type 2, as did the 2026-04-27 motion"
+      - "Councilman Roberts asked to be excused and left during public comment, abstaining as an employee of the Marsh Foundation — so six members remained"
+      - "City Auditor Erika Blackmore's formal R.C. 709 presentation, naming the petitioners: THE MARSH FOUNDATION and VAN WERT EAST OWNER LLC; transcript received 2026-03-11; sixty-day hold expired 2026-05-10"
+      - "A presentation by Charles Koch, landowner's agent, before public comment"
+      - "Ord. 26-05-031 — a $700,000 supplemental appropriation from the sewer fund, passed the same night as an emergency, to cover a CSO project bid of $2.1M against a $1.85M estimate (sole bid)"
+      - "Safety-Service Director Fleming: 'an agreement has been made with AEP on a 10 year contract', moving toward a signed lease agreement for the City"
