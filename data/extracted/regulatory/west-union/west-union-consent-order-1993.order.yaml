@@ -1,0 +1,354 @@
+# State of Ohio ex rel. Fisher v. Village of West Union — 1993 water-pollution consent order.
+#
+# The FIRST record in the West Union corpus (site: west-union, epic 1278). Structured read of the
+# instrument the Ohio AG's Environmental Enforcement Section publishes at
+# data/documents/regulatory/west-union/Village-of-West-Union-Consent-Order-1993.pdf
+#
+# TAG VOCABULARY (per CLAUDE.md / evidentiary-discipline). This is a FILED, ENTERED, JUDGE-SIGNED
+# court instrument — not a party's pleading — so its terms are the court's, not an allegation:
+#   [verified]  — every date, figure, article, party, permit number and Appendix "A" cell below,
+#                 read from the page images at 600 DPI. The scan carries a 2014 Acrobat Paper
+#                 Capture OCR layer; it was used for NOTHING except cross-reading prose, per the
+#                 root CLAUDE.md rule that OCR digits are never trusted.
+#   [reference] — what the order RECITES rather than adjudicates: the State's Complaint allegations
+#                 (Art. III.A), which the order resolves "without trial of any issue of fact or law".
+#   [inference] — the two internal-consistency readings in `document_defects`, which compare
+#                 articles the instrument does not itself reconcile.
+#   [open]      — not in the corpus: the 1989 Complaint, the 1992 Facilities Plan, NPDES
+#                 0PC00019*CD itself, and ALL post-1993 docket activity.
+
+doc_id: west-union-consent-order-1993
+source_path: data/documents/regulatory/west-union/Village-of-West-Union-Consent-Order-1993.pdf
+kind: order
+pages_read: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+method: >-
+  manual transcription from the page images rendered at 600 DPI (pypdfium2), all 10 pages. The
+  Adams County Clerk FILED stamp (p. 1), the schedule table (p. 4) and the Appendix "A" limits
+  table (p. 9) were each re-rendered and re-read as cropped detail before transcription. Figures,
+  dates and reporting codes copied as printed.
+
+order:
+  confidence: high
+  warnings:
+  - >-
+    Article V milestone (c) prints "August 2, 1993" with a stray overstrike mark immediately right
+    of the "2" — a typewriter correction or scan artifact. The digit "2" itself is unambiguous at
+    600 DPI and no second digit is legible, so the date is recorded as 1993-08-02; verify against
+    the page image before citing the day in a filing.
+  - >-
+    Three values on the instrument are HANDWRITTEN, not typed: the day and month in the entry line
+    ("Entered this 29th day of June, 1993", p. 7), the resolution number (p. 10) and the resolution
+    date (p. 10). The entry date is corroborated by the clerk's MECHANICAL file stamp and is
+    [verified]; the resolution number and date rest on the handwriting alone.
+  - >-
+    The Village Clerk's PRINTED name appears nowhere in the instrument — only a signature on p. 10.
+    It is left null rather than transcribed from the hand. The Mayor's name is printed (p. 8) and
+    is not affected.
+
+  agency: Ohio Attorney General (Environmental Enforcement Section), for the State of Ohio
+  instrument: Consent Order (Adams County C.P. 89-CIV-228)
+  case_no: 89-CIV-228
+  respondent: The Village of West Union, Ohio
+  facility: >-
+    Village of West Union wastewater treatment plant and sanitary sewer system, Adams County, Ohio.
+    The order does NOT print a plant address or name a receiving water.
+  permit_no: 0PC00019*CD
+  issued_date: '1993-06-29'
+  effective_date: '1993-06-29'
+
+  # $5,000 under R.C. 6111.09 (Art. X) — certified check to "Treasurer, State of Ohio" within 45
+  # days of the court's entry. Costs of the action also assessed to the Village (Art. XIII).
+  penalty_usd: 5000
+  stipulated_penalties: >-
+    Two schedules (Art. XI), both per day and PER VIOLATION, payable by certified check to
+    "Treasurer, State of Ohio" within 10 days of the failure (Art. XI.C). For the CONSTRUCTION
+    milestones, Art. V(a)-(f): $100/day up to 30 days, $200/day for 31-60, $300/day for 60-90,
+    $400/day over 90. For the COMPLIANCE milestone, Art. V(g): $500/day up to 30 days, $750/day
+    for 31-60, $1,000/day over 60 — a 2.5x-to-5x step up from the construction tiers.
+
+  status: >-
+    unresolved in corpus — the published bytes are a 1993 snapshot. The court expressly RETAINED
+    jurisdiction to enforce (Art. XII) and the instrument contains no termination provision at all
+    (unlike the 1996 Allen County CWA decree, which conditions termination on 12 consecutive
+    compliant months). Nothing in the corpus shows whether the 1995 milestones were met or whether
+    jurisdiction was ever released.
+
+  summary: >-
+    Entered and filed 1993-06-29 in the Adams County Court of Common Pleas (Judge Elmer Spencer)
+    on the State's 1989 complaint, resolving alleged violations of the discharge limitations and
+    monitoring requirements of NPDES permit 0PC00019*CD and of R.C. Chapter 6111. Three
+    injunctions run together: immediate compliance with R.C. Ch. 6111 and the permit (Art. IV.A);
+    Appendix "A" interim effluent limits until 1994-10-03 and the permit's final effluent
+    standards after (Art. IV.B/C); and elimination of all sanitary-sewer overflows and bypasses
+    plus completion of the WWTP improvements described in the Facilities Plan submitted to Ohio
+    EPA on 1992-05-26, on a seven-milestone schedule ending 1995-05-01 (Art. V). $5,000 civil
+    penalty, stipulated penalties on every milestone, and reporting to Ohio EPA's Southeast
+    District Office within 7 days of each milestone date.
+
+  # ---- Art. V, the construction-schedule injunction (p. 3-4) -------------------------------
+  obligations:
+  - {requirement: 'Initiation of Project Design Work (Art. V(a))', deadline: 'Completed'}
+  - {requirement: 'Submittal of Approvable Plans and Specifications to Ohio EPA (Art. V(b))',
+     deadline: '1993-05-03'}
+  - {requirement: 'Advertisement of Building Bids (Art. V(c))', deadline: '1993-08-02'}
+  - {requirement: 'Execution of Building Contracts (Art. V(d))', deadline: '1993-11-15'}
+  - {requirement: 'Initiation of Construction (Art. V(e))', deadline: '1994-01-04'}
+  - {requirement: 'Completion of construction of sufficient wetstream treatment facilities to
+      ensure compliance with final effluent limits, and to eliminate all bypasses and overflows
+      from the system (Art. V(f))', deadline: '1995-04-03'}
+  - {requirement: 'Attain compliance with final effluent limitations (Art. V(g))', deadline: '1995-05-01'}
+  - {requirement: 'Comply with the Appendix "A" interim effluent limitations (Art. IV.B)',
+     deadline: '1994-10-03'}
+  - {requirement: 'Meet the final effluent standards of NPDES 0PC00019*CD (Art. IV.C)',
+     deadline: 'after 1994-10-03'}
+  - {requirement: 'Written report to Ohio EPA Southeast District Office, Division of Water
+      Pollution Control, 2195 Front Street, Logan, Ohio 43138, stating whether each milestone was
+      performed (Art. VII)', deadline: '7 days from each milestone completion date'}
+  - {requirement: 'Pay the $5,000 civil penalty by certified check to "Treasurer, State of Ohio"
+      (Art. X)', deadline: '45 days from the court''s entry'}
+  - {requirement: 'Properly operate and maintain the WWTP and any associated equipment and
+      structures (Art. IV.D)', deadline: 'continuing'}
+  - {requirement: 'Provide a copy of the Consent Order to each contractor employed on the work,
+      and require each general contractor to provide a copy to its subcontractors (Art. II)',
+     deadline: 'continuing'}
+
+  note: >-
+    [verified] All figures, dates and codes read from the instrument's own page images. The order
+    is entered "without trial of any issue of fact or law, and upon consent of the parties"
+    (p. 1), so the State's characterization of the Village's conduct is an allegation the order
+    RESOLVES, not a finding it makes — see `alleged_violations`. Compliance with the order's terms
+    constitutes full satisfaction of civil liability for all claims alleged in the Complaint
+    (Art. III.B), but does not limit the State as to claims not alleged, including violations
+    occurring after the filing (Art. III.C).
+
+# ==============================================================================================
+# THE CASE — what the instrument IS. [verified] from the caption, file stamp and signature pages.
+# ==============================================================================================
+case:
+  caption: State of Ohio, ex rel. Lee Fisher, Attorney General of Ohio v. The Village of West Union, Ohio
+  court: Adams County, Ohio — Court of Common Pleas
+  case_no: 89-CIV-228
+  judge: Elmer Spencer
+  filed: '1993-06-29'         # Adams County Clerk of Courts FILED stamp, p. 1 — "93 JUN 29 PM 2:55"
+  entered: '1993-06-29'       # "Entered this 29th day of June, 1993", p. 7 (day + month handwritten)
+  statutory_basis: Ohio Revised Code Chapter 6111 (water pollution control)
+  venue_basis: R.C. Ch. 6111; venue found proper in Adams County (Art. I)
+  posture: >-
+    Consent order on the State's complaint, entered without trial of any issue of fact or law and
+    upon the consent of the parties. The case number's "89-" prefix places the complaint in 1989 —
+    the order resolves it roughly four years later.
+  binds: >-
+    The parties, their agents, officers, employees, assigns, successors in interest, and any person
+    acting in concert or privity with them (Art. II).
+  retention_of_jurisdiction: >-
+    "The Court will retain jurisdiction of this action for the purpose of enforcing the terms and
+    provisions of this Consent Order." (Art. XII)
+
+parties:
+  plaintiff:
+    name: State of Ohio, ex rel. Lee Fisher, Attorney General of Ohio
+    counsel:
+      name: Retanio Aj Rucker
+      ohio_bar_no: '0039744'
+      title: Assistant Attorney General, Environmental Enforcement
+      address: 30 East Broad Street, 25th fl., Columbus, Ohio 43266-0410
+      phone: (614) 466-2766
+  defendant:
+    name: The Village of West Union, Ohio
+    counsel:
+      name: Cecelia J. Potts
+      ohio_bar_no: '0034613'
+      title: Village Solicitor
+      address: 221 South High Street, P.O. Box 474, Mt. Orab, Ohio 45154
+      phone: (513) 444-2576
+    authorized_representative:
+      name: Donald Kirker      # printed "DONALD KIRKER, MAYOR" p. 8; the signature reads "Donald N. Kirker"
+      title: Mayor
+  oversight_agency:
+    name: Ohio EPA — Southeast District Office, Division of Water Pollution Control
+    address: 2195 Front Street, Logan, Ohio 43138
+    role: >-
+      Recipient of the Art. VII milestone reports and of the Art. V(b) plans and specifications.
+      The Southeast District assignment is consistent with the permit's leading "0" district digit.
+
+# ==============================================================================================
+# WHAT THE STATE ALLEGED — [reference]. Recited in Art. III.A and resolved, not adjudicated.
+# ==============================================================================================
+alleged_violations:
+  as_pleaded: >-
+    That the Village "has operated its wastewater treatment plant and sewer system in such a manner
+    as to result in numerous violations of the discharge limitations and monitoring requirements of
+    its National Pollutant Discharge Elimination System ('NPDES') permit issued by the Director of
+    Environmental Protection ... and in violation of the water pollution control laws of the State
+    of Ohio, i.e., RC Chapter 6111. and the rules adopted thereunder." (Art. III.A)
+  tag: reference
+  note: >-
+    No violation is itemized, dated or quantified anywhere in the instrument — no outfall
+    exceedance table, no overflow count, no monitoring-lapse list. The 1989 Complaint would carry
+    them and is [open]. What the order DOES establish independently of the allegation is the remedy
+    it imposes: Art. V orders the Village "to eliminate discharges from overflows and bypasses from
+    its sanitary sewer system", which is relief the court entered, not a pleading.
+
+# ==============================================================================================
+# APPENDIX "A" — interim effluent limitations and monitoring requirements. [verified] from p. 9.
+# Outfall 0PC00019001. Blank cells in the source are recorded as null: the parameter is MONITORED
+# with no numeric limit, which is not the same as a limit of zero and must not be read as one.
+# ==============================================================================================
+interim_limits:
+  outfall: 0PC00019001
+  applies_from: '1993-06-29'
+  applies_until: '1994-10-03'   # from Art. IV.B; Appendix A's own terminus is defective — see document_defects
+  status_disclaimer: >-
+    "The interim effluent limits contained in Appendix 'A' do not constitute an NPDES permit for a
+    modification of any existing permit." (Art. IV.B, as printed)
+  loading_basis_mgd: 0.6        # footnote: "The average effluent loading limitations are established using the following flow value: 0.6 MGD."
+  document_control: 0280E
+  parameters:
+  - {code: '00010', parameter: Temperature, units: deg C, limit_30day: null, limit_7day: null,
+     measurement_frequency: Daily, sample_type: '(Max.) Ind. Therm.'}
+  - {code: '00530', parameter: Suspended Solids, units: mg/l, limit_30day: 30, limit_7day: 45,
+     measurement_frequency: 2/week, sample_type: Composite}
+  - {code: '00556', parameter: Oil & Grease, units: mg/l, limit_30day: null, limit_7day: null,
+     other_units: Not to exceed 10 at any time, measurement_frequency: 1/month, sample_type: Grab}
+  - {code: '00610', parameter: Ammonia (N), units: mg/l, limit_30day: null, limit_7day: null,
+     measurement_frequency: 2/month, sample_type: Composite}
+  - {code: '31616', parameter: Fecal Coliform (Summer Only), units: Count/100ml, limit_30day: null,
+     limit_7day: null, measurement_frequency: 2/week, sample_type: Grab}
+  - {code: '50050', parameter: Flow, units: MGD, limit_30day: null, limit_7day: null,
+     measurement_frequency: Daily, sample_type: 24 hour total continuous}
+  - {code: '80082', parameter: CBOD5, units: mg/l, limit_30day: 25, limit_7day: 40,
+     measurement_frequency: 2/week, sample_type: Composite}
+  narrative_conditions:
+  - {code: '00400', parameter: pH, condition: not less than 6.5 S.U. nor greater than 9.0 S.U.,
+     measurement_frequency: daily, sample_type: grab}
+  - {code: '50060', parameter: Chlorine Residual, condition: 'if the entity uses chlorine for
+      disinfection, maintained at a level not to exceed 0.5 mg/l (Summer only)',
+     measurement_frequency: daily, sample_type: grab}
+  - {code: '00300', parameter: Dissolved Oxygen, condition: monitored only — no limit stated,
+     measurement_frequency: daily, sample_type: grab}
+  note: >-
+    [verified] Every cell read from the p. 9 image. NOTE the loading columns (kg/day, 30-day and
+    7-day) are blank for EVERY parameter — the table sets concentration limits only, and the
+    0.6 MGD footnote describes the flow value the average loading limitations "are established
+    using" even though no loading limitation is printed. Do not compute a kg/day load from it.
+
+# ==============================================================================================
+# THE ACCEPTING RESOLUTION — p. 10, attached to the order. [verified] except as noted.
+# ==============================================================================================
+village_resolution:
+  number: '1993-14'          # HANDWRITTEN on the form's blank; read at 600 DPI, not from OCR
+  date: '1993-06-08'         # HANDWRITTEN ("June 8, 1993"); 21 days before entry
+  body: >-
+    Recites the pending Adams County case ("State of Ohio ex rel. Fisher -vs- The Village of West
+    Union, Ohio, Case No. 89 CIV 228") and a proposed consent order "submitted to the village by
+    the State of Ohio and agreed to and approved by the village attorney and village solicitor as
+    well as consultants for the village". Resolves that the council "accepts the proposed consent
+    order and authorizes the mayor ... to sign the proposed consent order and return to the
+    Attorney General for filing in the above captioned court case."
+  signatories:
+  - {role: Mayor, name: Donald N. Kirker, basis: signature; the printed name on p. 8 is "DONALD KIRKER"}
+  - {role: Clerk, name: null, basis: 'signature only — no printed name anywhere in the instrument;
+      deliberately not transcribed from the hand'}
+  observations:
+  - >-
+    [verified] The resolution distinguishes "the village attorney" from "the village solicitor" as
+    two reviewers. The order's signature block names only a Village Solicitor (Cecelia J. Potts).
+    Whether the Village had a separate attorney, and who, is [open].
+  - >-
+    [verified] The council accepted the order on 1993-06-08, three weeks before the court entered
+    it on 1993-06-29. The resolution is the Village's authorization, not the operative instrument.
+
+# ==============================================================================================
+# INTERNAL DEFECTS — things the instrument does not reconcile with itself. The dates and text are
+# [verified]; reading them as a tension is [inference], and neither is a finding about compliance.
+# ==============================================================================================
+document_defects:
+- id: appendix-a-milestone-j
+  tag: verified
+  what: >-
+    Appendix "A" fixes the interim-limits period as lasting "until the date that the improved
+    wastewater treatment works are to attain operational level as specified in milestone (j),
+    Article V of this Consent Order". Article V is lettered (a) through (g). There is no
+    milestone (j).
+  effect: >-
+    Appendix "A" has no working terminus of its own. Art. IV.B independently ends the interim
+    period on 1994-10-03, which is the date recorded in `interim_limits.applies_until` — but the
+    two provisions arrive at it by different mechanisms and only one of them functions. Most
+    likely a lettering carry-over from a template with a longer schedule.
+- id: final-standards-before-the-schedule-requires-them
+  tag: inference
+  what: >-
+    Art. IV.C enjoins the Village to "meet the final effluent standards set forth in its NPDES
+    permit" AFTER 1994-10-03, while Art. V(g) does not require it to "attain compliance with final
+    effluent limitations" until 1995-05-01, and Art. V(f) allows construction of the treatment
+    facilities needed to get there to run to 1995-04-03.
+  effect: >-
+    On the face of the instrument there is a roughly seven-month window (1994-10-03 to 1995-05-01)
+    in which the injunction demands the final standards while the construction schedule still
+    permits the plant that would achieve them to be unbuilt. Art. XI.B prices failure at the V(g)
+    milestone 2.5x to 5x higher than the construction milestones, which is consistent with V(g)
+    being the operative deadline. This is a reading of the text, not a finding that the Village
+    was out of compliance in that window — the corpus holds no DMR or docket evidence either way.
+- id: stipulated-penalty-tier-overlap
+  tag: verified
+  what: >-
+    In Art. XI.A the second tier runs "from thirty-one (31) to sixty days (60)" at $200/day and the
+    third runs "from sixty (60) to ninety (90) days" at $300/day. Day 60 falls in both tiers.
+  effect: >-
+    A one-day ambiguity in the construction-milestone penalty schedule. Art. XI.B, the compliance
+    schedule, is drafted cleanly ("over sixty (60) days") and has no overlap.
+
+# ==============================================================================================
+open_targets:
+- >-
+  The 1989 Complaint in Adams County C.P. 89-CIV-228 — the only place the alleged violations are
+  itemized. Not in corpus.
+- >-
+  NPDES permit 0PC00019*CD as it stood in 1993, and its final effluent limitations. The order
+  binds the Village to limits it does not reproduce, so the Appendix "A" interim table cannot be
+  compared to the final standards from these bytes alone.
+- >-
+  The Facilities Plan submitted to Ohio EPA on 1992-05-26 — the engineering scope Art. V orders
+  built. Not in corpus.
+- >-
+  ALL post-1993 docket activity in 89-CIV-228: milestone reports under Art. VII, any stipulated-
+  penalty demand, any motion to terminate, any modification. The AG publishes the entered order
+  only. The Adams County Clerk of Courts is the route.
+- >-
+  Whether the 1995-04-03 construction and 1995-05-01 compliance milestones were met, and whether
+  the sanitary-sewer overflows and bypasses Art. V ordered eliminated were in fact eliminated.
+  A current-day answer would come from the plant's NPDES record (0PC00019 / US EPA OH0028088)
+  and EPA ECHO, neither of which is pulled for this site yet.
+- >-
+  The rest of the Ohio AG Environmental Enforcement Section's published consent-order library.
+  It is served as flat files under a Consent-Orders path with no index or listing endpoint, so
+  enumeration needs a discovery step; several registered sites likely have instruments there.
+
+relevance:
+  tags: [verified, enforcement, consent-order, wastewater, npdes, sso, bypass, west-union,
+    adams-county, ohio-ag, rc-6111, record-domain]
+  note: >-
+    The FIRST record in the West Union corpus — the site stood at `backdrop` tier with zero
+    extractions (epic 1278). What it establishes, on a judge-signed instrument: the Village's WWTP
+    and sewer system (NPDES 0PC00019*CD, Ohio EPA Southeast District) were under a state
+    water-pollution injunction from 1993-06-29, carrying interim effluent limits, a $5,000 penalty,
+    a court-ordered obligation to ELIMINATE all sanitary-sewer overflows and bypasses, and a
+    plant-improvement schedule running to 1995-05-01 — with jurisdiction retained and no
+    termination provision. That is a documented capacity-and-enforcement history for the only
+    municipal POTW on record at this watershed point.
+    NOT established, and deliberately not asserted: any receiving water (the order never names
+    one — the profile's Beasley Fork attribution comes from the Ohio EPA NPDES service, not from
+    here); any link to data-center development (West Union has NO identified development site, and
+    the profile is explicit that it stays [open] until one is); and any statement about whether
+    the order was ever satisfied.
+  reconciliation: >-
+    The Appendix "A" loading basis of 0.6 MGD (1993) sits below the 0.7 MGD design flow the
+    SiteProfile carries for the West Union WWTP from the Ohio EPA NPDES service. These are
+    different quantities measured 30+ years apart — a 1993 interim average-loading basis versus a
+    present-day design flow — and the gap is NOT evidence of an expansion. The Art. V improvements
+    are described only by reference to the 1992 Facilities Plan, which is [open]; nothing in these
+    bytes states a before-or-after plant capacity. Do not present 0.6 -> 0.7 as a capacity change.
+  cross_refs:
+  - data/extracted/regulatory/wastewater-enforcement-history.yaml   # the Allen County peer: 1996 federal CWA consent decree + 2005 SSO-elimination agreement, same genre, different watershed point
+  - data/documents/regulatory/allen-co-cwa-consent-decree-1996.pdf  # the corpus's other consent instrument — a useful contrast: $100,000 penalty and an explicit 12-consecutive-compliant-months termination test
+  - data/extracted/west-union/ONBOARDING.md                          # the site's review gate; the record domain was unchecked before this

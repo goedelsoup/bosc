@@ -1,0 +1,41 @@
+id: regulatory-west-union
+title: Water-Pollution Enforcement Instruments (Village of West Union)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: >-
+    Ohio Attorney General, Environmental Enforcement Section — published consent orders
+    (https://www.ohioattorneygeneral.gov/Files/About/Departments-and-Offices/Environmental-Enforcement-Section/Consent-Orders/).
+    Served as flat files with no index, listing endpoint or API, so acquisition is manual and
+    there is no connector to name here; the per-document provenance, source URL and verified
+    sha256 live in data/documents/regulatory/west-union/filename-map.yaml.
+license: Public record (Ohio R.C. 149.43) — filed court instrument, published by the Ohio AG
+access_tier: public
+site_scope: site:west-union
+storage:
+- relpath: extracted/regulatory/west-union/west-union-consent-order-1993.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- regulatory
+- enforcement
+- consent-order
+- wastewater
+- npdes
+- west-union
+notes: >-
+  State of Ohio ex rel. Fisher v. The Village of West Union, Adams County Court of Common Pleas
+  89-CIV-228, entered and filed 1993-06-29. An R.C. Chapter 6111 consent order on the Village
+  WWTP's NPDES permit 0PC00019*CD: Appendix "A" interim effluent limits for outfall 0PC00019001
+  (0.6 MGD loading basis), a $5,000 civil penalty, two stipulated-penalty schedules, an order to
+  eliminate all sanitary-sewer overflows and bypasses, and a seven-milestone plant-improvement
+  schedule running to 1995-05-01. The court retained jurisdiction and the instrument carries no
+  termination provision. `cadence: static` because the entered order is a fixed historical
+  instrument, NOT because the matter is closed — post-1993 docket activity is an [open] target
+  and would land as an additional artifact under this entry, not as a refresh of this one. The
+  first record in the West Union corpus (epic 1278); add further west-union enforcement
+  extractions here.

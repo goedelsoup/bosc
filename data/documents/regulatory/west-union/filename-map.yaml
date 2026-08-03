@@ -1,0 +1,50 @@
+# Provenance manifest — Village of West Union consent order (issue 1278).
+#
+# Hand-authored, not connector-produced: the Ohio Attorney General's Environmental
+# Enforcement Section publishes its consent orders as flat files under
+# /Files/About/Departments-and-Offices/Environmental-Enforcement-Section/Consent-Orders/,
+# with no index, API or listing endpoint the corpus can enumerate — so there is no
+# fetcher to write this map, and the shape follows the connector manifests
+# (`../../oepa/*/filename-map.yaml`) by hand instead.
+meta:
+  subject: >-
+    Ohio AG Environmental Enforcement Section — published consent order, State of Ohio
+    ex rel. Fisher v. Village of West Union, Adams County C.P. 89-CIV-228 (issue 1278)
+  generated_at: '2026-08-03'
+  policy: >-
+    non-destructive — the original keeps its as-received name. The AG serves this file with no
+    extension in the URL path; `Village-of-West-Union-Consent-Order-1993.pdf` is the name the
+    download landed under and is kept verbatim. The canonical name and the content-verified
+    date below are read from the instrument's own pages, never from the filename.
+documents:
+- filename: Village-of-West-Union-Consent-Order-1993.pdf
+  canonical_name: >-
+    Consent Order, State of Ohio ex rel. Lee Fisher, Attorney General v. The Village of West
+    Union, Ohio — Adams County Court of Common Pleas, Case No. 89-CIV-228 (Judge Elmer Spencer),
+    entered and filed 1993-06-29. 10 pp: the 8-page order, Appendix "A" (interim effluent
+    limitations and monitoring requirements for outfall 0PC00019001), and Village Resolution
+    1993-14 accepting it.
+  content_verified_date: '1993-06-29'   # Adams County Clerk of Courts FILED stamp, p. 1 ("93 JUN 29 PM 2:55")
+  content_verified_by: >-
+    page-image read at 600 DPI. The clerk's mechanical FILED stamp on p. 1 and the typed
+    "Entered this 29th day of June, 1993" on p. 7 (the day handwritten) agree independently.
+    The scan also carries an OCR text layer, which was NOT used for any figure or date.
+  case_no: 89-CIV-228
+  permit_id: 0PC00019
+  source_url: https://www.ohioattorneygeneral.gov/Files/About/Departments-and-Offices/Environmental-Enforcement-Section/Consent-Orders/Village-of-West-Union-Consent-Order-1993
+  sha256: c156e07be9256c287469acb9dbfadabc285627f184f068aba5d90465df0b2b20
+  bytes: 294586
+  content_type: application/pdf
+  fetched_at: '2026-08-03'
+  status: downloaded
+  scan_metadata: >-
+    /CreationDate 2007-07-11 ("Acrobat 5.0 Scan Plug-in for Windows"), /ModDate 2014-07-31
+    ("Adobe Acrobat Pro 11.0.6 Paper Capture Plug-in") — the AG scanned the paper instrument in
+    2007 and OCR'd it in 2014. Recorded because it dates the DIGITIZATION, not the instrument.
+  note: >-
+    Operator-supplied, then verified against the live source: the committed bytes hash
+    byte-identical to what the AG URL served on 2026-08-03 (HTTP 200, 294,586 B,
+    sha256 c156e07b…), so the copy in hand and the published record are the same document.
+    The published order is a SNAPSHOT of 1993 and carries no later docket activity — whether
+    West Union met the 1995 milestones, and whether the court ever terminated its retained
+    jurisdiction, are not in these bytes. See the extraction's `open_targets`.
