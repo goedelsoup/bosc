@@ -2,9 +2,9 @@
   "site": "van-wert",
   "bundle_version": "1.0.0",
   "contract_version": "1.51.0",
-  "generated_at": "2026-08-02T10:58:03+00:00",
+  "generated_at": "2026-08-03T11:14:35+00:00",
   "feed_count": 32,
-  "row_total": 447,
+  "row_total": 450,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 2
     },
     {
       "name": "exhibits",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 58
+      "count": 60
     },
     {
       "name": "geo/campus",
