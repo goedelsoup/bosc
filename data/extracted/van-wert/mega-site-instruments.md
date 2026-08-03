@@ -17,11 +17,11 @@ Before this pass the Van Wert corpus held the *water* instruments (#1406) and th
 made a data center a permitted use in Van Wert at all — was carried on newspaper citations. It
 now rests on the City's own record.
 
-## 1 — The runway was laid in 2014, not 2026
+## 1 — A 2026 ordinance reaches back to 2014 to justify itself
 
-Ordinance 26-05-028 recites its own foundation: **three Pre-Annexation Agreements**, each among
-the City, a township board of trustees, and the Board of County Commissioners. `[verified]`
-(`26-05-028-draft-ordinance.pdf` p. 1)
+Ordinance 26-05-028 declares itself "in furtherance of" **three Pre-Annexation Agreements**, each
+recited as being among City Council, a named township's board of trustees, and the Board of County
+Commissioners. `[verified]` (`26-05-028-draft-ordinance.pdf` p. 1)
 
 | Date | Township |
 |---|---|
@@ -29,16 +29,24 @@ the City, a township board of trustees, and the Board of County Commissioners. `
 | **2014-12-22** | Hoaglin |
 | **2016-06-14** | Pleasant |
 
-A decade before any data center was named, the three jurisdictions that would have to agree had
-already agreed. The 2026 ordinances execute that track. The same-week county approval, the
-emergency clauses and the single reading all read differently against a ten-year runway — and
-none of it was visible from the press coverage the register previously cited.
+**That recital is the whole of what is verified** — the dates, the parties, and the ordinance's own
+statement of what it furthers. None of the three agreements is in the corpus. Their terms, the
+territory they cover, whether they bind anyone to anything, and whether they bear on this
+annexation beyond being cited by it are all `[open]`.
+
+`[inference]` Reading them as a decade-early runway for the campus is the obvious reading, and it
+is only that: an inference from a recital, resting on documents nobody in this project has seen.
+It should not be restated as fact, and nothing here supports saying the jurisdictions had "already
+agreed" to this project — the agreements predate it by a decade and may have nothing to do with a
+data center. What is solid, and was invisible from the press coverage the register previously
+cited, is that the annexation reached back to 2014 and 2016 instruments to justify itself. That is
+why those three agreements are the priority-1 pull.
 
 The recurring public-comment claim that the site has been "designated and pre-annexed for
 industrial use **since 2007**" is **not supported by anything in this instrument set**. `[open]`
 Carry the three agreement dates, not 2007.
 
-## 2 — The City defined "data center" and zoned 901.698 acres for it in the same hour
+## 2 — The City defined "data center" and zoned 901.698 acres for it in the same sitting
 
 Ordinance **26-05-029** wrote the term into the Van Wert Code of Ordinances for the first time.
 `[verified]` (`26-05-029.pdf` pp. 2-3, Exhibit A):
@@ -184,20 +192,34 @@ Separately, Commissioner Lichtensteiger's written comment puts Thor's power-upgr
 **25-0697-EL-BLN** (the Van Wert–Haviland 138 kV line). The two may cover different scopes;
 neither is reconciled.
 
-## 7 — The public comment was substantially a letter campaign
+## 7 — 21 of 88 written-comment pages share an identical opening
 
-Of the 88 written-comment pages in the 2026-05-04 record, **21 repeat the body text of an earlier
-page verbatim**: normalising each page and hashing its leading 900 characters yields **67 distinct
-letter bodies across 88 pages**, with 15 bodies appearing more than once and one appearing **five
-times**. `[verified]` — reproducible from the committed PDF.
+Of the 88 written-comment pages in the 2026-05-04 record, **21 share an identical normalised
+900-character opening with an earlier page**. Clustering on that prefix gives **67 distinct
+openings across 88 pages**, with 15 clusters holding more than one page and the largest holding
+**five**. `[verified]` — reproducible from the committed PDF.
 
-A repeat may be one letter scanned twice, a two-page letter counted twice, or different signers
-submitting identical text; the signature blocks are handwritten and largely illegible to OCR, so
-the count is of **pages, not people**. What is not in doubt is that a common claim set recurs in
-near-identical wording: $10 billion invested, **$200 million in community revenue over 20 years**,
-**200-250 permanent jobs at roughly $80,000**, **1,000-1,500 construction jobs**, closed-loop
-cooling, and the unsupported 2007 date. None of those figures appears in any instrument — they are
-`[reference]` at best, and their provenance is a letter campaign.
+**They are near-identical, not verbatim, and the distinction is measured.** Compared over the
+*whole* normalised body, only **one** pair is byte-identical (pp. 17 and 64, two scans of the same
+two-page letter) — 87 distinct bodies across 88 pages on that test. The other 20 diverge somewhere
+after the first 900 characters, but only slightly: full-body similarity to their cluster's first
+page runs **0.974–1.000, median 0.987** (`difflib.SequenceMatcher` over normalised text, median
+body 1,114 characters), and the divergence sits in the tail — signature blocks, addresses and
+closing lines, which are handwritten and OCR-noisy. `[verified]`
+
+The count is of **pages, not people**: a cluster may be one letter scanned twice, a two-page letter
+counted twice, or different signers submitting the same text. Who signed what is not established
+from this file.
+
+`[inference]` Twenty-one pages opening with 900 identical characters and staying ~98–99% identical
+thereafter is very hard to produce by independent authorship, and the same claim set recurs across
+them in near-identical wording — $10 billion invested, **$200 million in community revenue over 20
+years**, **200-250 permanent jobs at roughly $80,000**, **1,000-1,500 construction jobs**,
+closed-loop cooling, and the unsupported 2007 date. Reading that as a coordinated letter campaign
+is the natural inference and is labelled as one; who organised it, whether signers knew the text
+was shared, and how many distinct people are behind the 21 pages are all `[open]`. What is
+independent of the inference: **none of those figures appears in any instrument**, so they are
+`[reference]` at best wherever they are repeated.
 
 One written comment (pp. 104-106) argues the water case with a full reference list, and two of its
 figures — the **1.01 billion gallon** reservoir and the **180 MG–1.26 BG** annual creek yield —
