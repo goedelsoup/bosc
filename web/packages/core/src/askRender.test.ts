@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { documentId } from "./documentId";
 import { escapeHtml } from "./format";
 import {
   type AskCitation,
@@ -42,8 +43,11 @@ describe("withBasePath", () => {
 });
 
 describe("citationHref", () => {
-  it("resolves a document-sourced citation to the doc viewer page (#328)", () => {
-    expect(citationHref(CITES[0], "/")).toBe("/site/documents/aedg/PRR-01-bundle.ocr.pdf");
+  it("resolves a document-sourced citation to the document's permalink (#328, #1887)", () => {
+    // The handle is derived from the rel, so the Worker resolves it with no lookup table —
+    // see `documentId`. Pinned literally here: a drift silently 404s every published citation.
+    expect(citationHref(CITES[0], "/")).toBe("/doc/ps6mee06/");
+    expect(documentId("aedg/PRR-01-bundle.ocr.pdf")).toBe("ps6mee06");
   });
 
   it("falls back to the bundle url for non-document sources", () => {
@@ -53,15 +57,15 @@ describe("citationHref", () => {
 
   it("prefixes with the site base", () => {
     expect(citationHref(CITES[0], "/network/american-sugar-creek-allen-co")).toBe(
-      "/network/american-sugar-creek-allen-co/site/documents/aedg/PRR-01-bundle.ocr.pdf",
+      "/network/american-sugar-creek-allen-co/doc/ps6mee06/",
     );
   });
 });
 
 describe("renderAnswer", () => {
-  it("links a [n] marker to the doc viewer page when source is a document (#328)", () => {
+  it("links a [n] marker to the document's permalink when source is a document (#328)", () => {
     const html = renderAnswer("The roundabouts cost ~$1.2M [1].", CITES, "/");
-    expect(html).toContain('<a href="/site/documents/aedg/PRR-01-bundle.ocr.pdf"');
+    expect(html).toContain('<a href="/doc/ps6mee06/"');
     expect(html).toContain("[1]</a>");
     // Title tooltip still includes the source path and page for orientation.
     expect(html).toContain(
@@ -84,9 +88,9 @@ describe("renderAnswer", () => {
     expect(renderAnswer("**bold** claim", [], "/")).toContain("<strong>bold</strong>");
   });
 
-  it("prefixes doc viewer citation links with the site base (#328)", () => {
+  it("prefixes permalink citation links with the site base (#328)", () => {
     expect(renderAnswer("x [1]", CITES, "/network/american-sugar-creek-allen-co")).toContain(
-      'href="/network/american-sugar-creek-allen-co/site/documents/aedg/PRR-01-bundle.ocr.pdf"',
+      'href="/network/american-sugar-creek-allen-co/doc/ps6mee06/"',
     );
   });
 });
@@ -112,8 +116,8 @@ describe("renderSources", () => {
     expect(renderSources([], "/")).toBe("");
     const html = renderSources(CITES, "/");
     expect(html).toContain("Sources used");
-    // Document-sourced citation links to the viewer page, not the abstract records page.
-    expect(html).toContain('href="/site/documents/aedg/PRR-01-bundle.ocr.pdf"');
+    // Document-sourced citation links to the document itself, not the abstract records page.
+    expect(html).toContain('href="/doc/ps6mee06/"');
     expect(html).not.toContain('href="/site/records/opc/"');
     expect(html).toContain("evidence-verified");
     expect(html).toContain("p.318");

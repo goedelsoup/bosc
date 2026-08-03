@@ -9,7 +9,8 @@
 // produced.
 import { folderPathOf } from "@watermark/core/docBrowse";
 import { nonRoutableReason } from "@watermark/core/docRouting";
-import { docAccess, docApiUrl, docPagePath } from "@watermark/core/docView";
+import { docPermalinkForRel } from "@watermark/core/documentId";
+import { docAccess, docApiUrl } from "@watermark/core/docView";
 import { type DocumentEntry, formatBytes } from "@watermark/core/feeds";
 import { withSite } from "@watermark/core/site";
 
@@ -32,9 +33,9 @@ const NON_ROUTABLE_LABEL = {
   "web-page-sidecar": "page sidecar",
 } as const;
 
-// The client filter re-renders rows from `catalog.json`, which stores no rel — it rebuilds each
-// one and needs the same site-prefixed viewer base this SSR pass uses.
-const docBase = withSite("/site/documents/");
+// The client filter re-renders rows from `catalog.json` and needs the same site-prefixed
+// permalink base this SSR pass uses.
+const docBase = withSite("/doc/");
 
 // Rows carry no `data-folder`: on a deep production the trail runs ~200 bytes, and the row
 // already prints it in its own cell — which the no-catalog fallback in `doc-catalog.ts` reads
@@ -74,7 +75,7 @@ const rows = entries.map((entry) => ({
                   <span class="dchip dchip--lfs doccat-excluded">{NON_ROUTABLE_LABEL[excluded]}</span>
                 </>
               ) : (
-                <a href={withSite(docPagePath(entry.rel))}>{entry.name}</a>
+                <a href={withSite(docPermalinkForRel(entry.rel))}>{entry.name}</a>
               )}
             </td>
             {showFolder && <td class="doccat-folder">{folder || "—"}</td>}

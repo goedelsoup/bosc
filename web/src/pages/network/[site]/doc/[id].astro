@@ -1,0 +1,142 @@
+---
+// A source document's permanent address (#1887, epic #1884 phase 3) — `/network/<site>/doc/<id>/`.
+//
+// Replaces `…/site/documents/<rel>/`, which mirrored the corpus directory tree one-to-one and
+// reached sixteen URL segments. The handle is derived from the rel (`@watermark/core/documentId`)
+// and is the ONLY thing in the URL: flat and collection-free, so the address survives any
+// re-shelving of the corpus. Where the file actually sits — collection, container, and the full
+// as-received folder trail — is rendered on the page as the custody record instead, which is
+// where that information was always more useful than in a path.
+//
+// Every routable document gets one of these whether or not its bytes are currently public. The
+// publish gate (#280) is default-deny — only 32 of Lima's 3,247 files are cleared today — but a
+// gated document is still a record of the production, still citable, and the gate can lift later.
+// The viewer renders for all of them: in dev/preview it serves every file, which is exactly how
+// the redaction review that lifts the gate gets done.
+import { withSitePaths } from "@watermark/core/sites";
+import Base from "~/layouts/Base.astro";
+import DocViewer from "~/components/DocViewer.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { collectionLayout, containerOf, folderPathOf, summarizeCollections } from "@watermark/core/docBrowse";
+import { isRoutableDoc } from "@watermark/core/docRouting";
+import { documentId } from "@watermark/core/documentId";
+import { docAccess } from "@watermark/core/docView";
+import { type DocumentCollectionItem, type DocumentEntry, formatBytes } from "@watermark/core/feeds";
+import { facetAvailable } from "@watermark/core/readiness";
+import { withSite } from "@watermark/core/site";
+
+type DocProps = {
+  entry: DocumentEntry;
+  collectionTitle: string;
+  collectionSlug: string;
+  containerSlug: string | null;
+  /** Whether this document's container is itself a route — see `containerHref` below. */
+  containerRouted: boolean;
+};
+
+export function getStaticPaths() {
+  return withSitePaths((slug: string) => {
+    if (!facetAvailable(slug, "documents")) return [];
+    const feed = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
+    const summaries = new Map(summarizeCollections(feed).map((s) => [s.slug, s]));
+    return feed.flatMap((collection) => {
+      const summary = summaries.get(collection.slug);
+      const routesContainers = summary !== undefined && collectionLayout(summary) === "containers";
+      return collection.entries.filter(isRoutableDoc).map((entry) => ({
+        params: { id: documentId(entry.rel) },
+        props: {
+          entry,
+          collectionTitle: collection.title,
+          collectionSlug: collection.slug,
+          containerSlug: containerOf(entry.rel),
+          containerRouted: routesContainers,
+        } satisfies DocProps,
+      }));
+    });
+  });
+}
+const { entry, collectionTitle, collectionSlug, containerSlug, containerRouted } =
+  Astro.props as unknown as DocProps;
+
+const access = docAccess(entry);
+const accessChip = {
+  published: { cls: "dchip--present", label: "● published" },
+  "dev-only": { cls: "dchip--devonly", label: "dev-only" },
+  absent: { cls: "dchip--lfs", label: "LFS pointer" },
+}[access];
+
+const folder = folderPathOf(entry.rel);
+// The container earns a breadcrumb LINK only where it is actually a route — a collection big
+// enough to break its productions out. In a flat collection the container is a real directory in
+// the corpus but has no landing (the collection lists its files directly), so it renders as plain
+// text. Linking it unconditionally produced 21 broken links; either way the folder trail below
+// still records where the file sits.
+const containerHref =
+  containerSlug && containerRouted ? withSite(`/site/documents/${collectionSlug}/${containerSlug}/`) : null;
+---
+
+<Base title={entry.name} section="site">
+  <article class="docpage">
+    <p class="rec-crumb">
+      <a href={withSite("/site/documents/")}>Documents</a>
+      <span aria-hidden="true">→</span>
+      <a href={withSite(`/site/documents/${collectionSlug}/`)}>{collectionTitle}</a>
+      {
+        containerSlug && (
+          <>
+            <span aria-hidden="true">→</span>
+            {containerHref ? (
+              <a href={containerHref}>{containerSlug}</a>
+            ) : (
+              <span class="rec-crumb-plain">{containerSlug}</span>
+            )}
+          </>
+        )
+      }
+      <span aria-hidden="true">→</span>
+      <span class="rec-crumb-here">{entry.name}</span>
+    </p>
+
+    <h1 class="docpage-title">{entry.name}</h1>
+
+    <p class="docpage-meta">
+      <span class="dchip dchip--type">{entry.render_class}</span>
+      <span class={`dchip ${accessChip.cls}`}>{accessChip.label}</span>
+      <span class="docpage-dim">{entry.media_type}</span>
+      <span class="docpage-dim">{formatBytes(entry.size_bytes)}</span>
+    </p>
+
+    {
+      access === "dev-only" && (
+        <p class="docpage-gatenote">
+          Not on the public allowlist — viewable in dev/preview; the public site serves it only
+          after a redaction review (#280/#281).
+        </p>
+      )
+    }
+
+    <DocViewer entry={entry} />
+
+    <section class="docpage-custody">
+      <h2 class="docpage-custody-head">Where this came from</h2>
+      {
+        folder.length > 0 && (
+          <p class="docpage-folder">
+            Filed as received under{" "}
+            {folder.map((segment, i) => (
+              <>
+                {i > 0 && <span aria-hidden="true"> / </span>}
+                <span class="docpage-folder-seg">{segment}</span>
+              </>
+            ))}
+          </p>
+        )
+      }
+      <p class="docpage-prov">
+        Source of record: <code>data/documents/{entry.rel}</code> — immutable chain-of-custody
+        evidence, served verbatim. The address of this page is derived from that path and does not
+        change when the page does.
+      </p>
+    </section>
+  </article>
+</Base>
