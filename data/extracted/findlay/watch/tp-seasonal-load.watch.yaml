@@ -86,9 +86,11 @@ method:
   cross_check: >-
     An independent arithmetic — summing the reported MO AVG loading in kg/day multiplied by each
     month's day count (the permit also reports total phosphorus at outfall 001 in kg/d) — gives
-    2,870 kg for 2024 and 2,845 kg for 2025 against this method's 2,756 and 3,101. Both methods
-    put both complete seasons under 3,200 kg. The spread between them, roughly 100-260 kg, is a
-    second, empirical measure of the reconstruction's precision.
+    2,870 kg for 2024 and 2,845 kg for 2025 against this method's 2,756 and 3,101. Both methods put
+    the 2024 AND 2025 seasons under 3,200 kg. The spread between them, roughly 100-260 kg, is a
+    second, empirical measure of the reconstruction's precision. This cross-check covers 2024 and
+    2025 only and says nothing about 2023, which BOTH the derivation and the TMDL's own record put
+    well above the limit — there are three complete seasons on this record, not two.
 
 # --- the derived seasons -----------------------------------------------------------------------
 
@@ -173,10 +175,13 @@ season_findings:
     resolved: false
     finding: >-
       [open] Season incomplete — March through June only. Through June the plant is at 2,258 kg
-      with a 0.395 mg/L median, tracking like 2024 and 2025 rather than 2023. July is
-      historically the season's highest-concentration month (0.81 in 2023, 0.53 in 2024, 0.42 in
-      2025), so the season total is not predictable from the partial. The reported figure is due
-      2026-08-20 (see watch_triggers).
+      with a 0.395 mg/L median, tracking like 2024 and 2025 rather than 2023. July's observed
+      monthly means were 0.81 mg/L in 2023, 0.53 in 2024 and 0.42 in 2025 — the season's highest
+      month in 2024, but not in 2023 (June, 0.87) or 2025 (March, 0.48), so July carries no
+      reliable seasonal pattern to extrapolate from. Both the missing month's concentration and its
+      flow move the total, and the statistic is a median, so a single month can shift it or not
+      depending on where it falls in the order. The season total is not predictable from the
+      partial. The reported figure is due 2026-08-20 (see watch_triggers).
 
 # --- what changed, and why it is the finding ---------------------------------------------------
 

@@ -128,22 +128,36 @@ finding:
 
 lead_and_copper:
   action_level_lead_mg_l: 0.015
-  ninetieth_percentile_lead_mg_l:
+  sample_periods_listed: 8
+  published_results: 5
+  ninetieth_percentile_lead_mg_l:   # the five periods carrying a published result
     '2025-01-01 to 2025-12-31': 0.0021
     '2024-01-01 to 2024-12-31': 0.0023
-    '2023-07-01 to 2023-12-31': 0.0
     '2023-01-01 to 2023-06-30': 0.0025
     '2022-07-01 to 2022-12-31': 0.0023
     '2022-01-01 to 2022-06-30': 0.0021
-    '2021-07-01 to 2021-12-31': 0.0
-    '2021-01-01 to 2021-06-30': 0.0
-  sample_rounds_on_record: 8
+  periods_without_a_published_result:
+    periods: ['2023-07-01 to 2023-12-31', '2021-07-01 to 2021-12-31', '2021-01-01 to 2021-06-30']
+    echo_prints: 0 mg/L
+    tag: inference
+    reading: >-
+      ECHO prints "0 mg/L" for these three periods. A 90th-percentile lead concentration of exactly
+      zero is not a plausible analytical result — a 90th percentile is an order statistic over
+      reported sample values, and zero would require the bulk of the round to be reported as
+      identically zero. These are read as NO PUBLISHED RESULT rather than as a measurement of zero,
+      which is the same absence-is-not-a-result rule applied to copper below. It is an inference:
+      ECHO does not distinguish a null from a zero in this field.
+    consequence: >-
+      The lead range is stated over the FIVE published rounds only. Do not report a lead 90th
+      percentile of 0 mg/L, and do not describe the record as eight rounds of results.
   copper: >-
     ECHO lists no copper 90th-percentile results for this system in the five-year window
     (iCU90 = 0). Absence of a published result is not a result — do not report a copper figure.
   finding: >-
-    [verified] Every reported lead 90th percentile in the five-year window is at or below 0.0025
-    mg/L against a 0.015 mg/L action level. No lead action-level exceedance.
+    [verified] Across the five periods carrying a published result, the lead 90th percentile runs
+    0.0021 to 0.0025 mg/L against a 0.015 mg/L action level — a factor of six to seven below it in
+    every round. No lead action-level exceedance. The conclusion does not depend on how the three
+    zero-printed periods are read: they cannot raise a percentile.
 
 sanitary_surveys:
   cadence: >-

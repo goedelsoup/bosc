@@ -128,6 +128,13 @@ reconciliation:
       industrial users discharging 0.428 MGD are the load it would reach. It is the one scheduled
       event in this permit that could change the plant's phosphorus trajectory, and it is the one
       the federal record says has not been reported.
+    siu_citation:
+      source: data/documents/oepa/findlay/2PD00008.fs.pdf
+      page: 8
+      verbatim: >-
+        "The City of Findlay has an approved pretreatment program. The City of Findlay has eight
+        significant industrial users including five categorical users that discharge 0.428 MGD of
+        flow."
 
 # --- the rest of the federal compliance picture ------------------------------------------------
 
