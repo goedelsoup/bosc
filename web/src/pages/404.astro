@@ -1,0 +1,45 @@
+---
+/**
+ * The site's 404 page (#1887).
+ *
+ * Added here because the document layer's legacy-path redirect depends on it, and because its
+ * absence was a real bug on its own. Cloudflare Pages, with no `404.html` in the build, falls
+ * back to serving the ROOT `index.html` with status **200** for every unmatched path — so until
+ * now a mistyped or dead URL returned the network directory page and told the browser, search
+ * engines, and any link checker that it was the page you asked for.
+ *
+ * For `functions/network/[site]/site/documents/[[rel]].ts` that behaviour is fatal rather than
+ * merely untidy: it decides whether a path is a retired document URL by asking the asset server
+ * first (`ctx.next()`) and redirecting only what genuinely 404s. With no 404 page, nothing ever
+ * 404s, and every cited legacy document URL would quietly serve the directory instead of
+ * redirecting to the document.
+ */
+import Base from "~/layouts/Base.astro";
+import { withBase } from "@watermark/core/base";
+---
+
+<Base
+  title="Not found"
+  section="directory"
+  description="That page isn't here."
+  noindex
+>
+  <article class="prose">
+    <h1>Not found</h1>
+    <p class="section-lead">
+      There's nothing at this address. If you followed a link from somewhere else, it may point at
+      a page that has since moved.
+    </p>
+    <p>
+      Source documents were re-addressed in 2026: each one now lives at a short permanent handle
+      rather than a path mirroring its folder in the corpus. Old document links redirect
+      themselves, so if you reached this page from one, the document has most likely been
+      withdrawn from the catalog rather than moved.
+    </p>
+    <ul>
+      <li><a href={withBase("/")}>The network directory</a> — every watershed point</li>
+      <li><a href={withBase("/search")}>Search</a></li>
+      <li><a href={withBase("/about")}>About this project</a></li>
+    </ul>
+  </article>
+</Base>

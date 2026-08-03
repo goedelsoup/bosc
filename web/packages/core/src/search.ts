@@ -160,7 +160,7 @@ export function buildSearchIndex(): SearchDoc[] {
     for (const c of loadFeed<DocumentCollectionItem[]>("documents")) {
       docs.push({
         title: c.title,
-        url: siteUrl(`/site/documents/#doc-${c.slug}`),
+        url: siteUrl(`/site/documents/${c.slug}/`),
         section: SITE,
         text: blob(c.description, ...c.entries.slice(0, 12).map((e) => e.name)),
         kind: "Document",

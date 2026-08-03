@@ -327,7 +327,7 @@ export function buildAskIndex(): AskUnit[] {
         id: `documents:${c.slug}`,
         feed: "documents",
         title: c.title,
-        url: siteUrl(`/site/documents/#doc-${c.slug}`),
+        url: siteUrl(`/site/documents/${c.slug}/`),
         text: blob(c.description, ...c.entries.map((x) => x.name)),
         source: c.entries[0]?.rel,
         source_kind: "document",

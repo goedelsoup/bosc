@@ -77,8 +77,7 @@ export function getStaticPaths() {
   });
 }
 
-const { collectionTitle, collectionSlug, containerSlug, page, entries } =
-  Astro.props as unknown as SubProps;
+const { collectionTitle, collectionSlug, containerSlug, page, entries } = Astro.props as unknown as SubProps;
 
 const isContainer = containerSlug !== null;
 const base = isContainer

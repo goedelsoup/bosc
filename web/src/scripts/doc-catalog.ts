@@ -10,6 +10,7 @@
 // fetch is lazy so a reader who never filters never pays for it, and everything degrades to the
 // SSR page plus its pager with JS off.
 import { compareDocs, type DocFilters, matchesDoc } from "@watermark/core/docCatalog";
+import { documentId } from "@watermark/core/documentId";
 
 /** A row of the compact catalog asset; see `catalog.json.ts` for the field encoding. */
 interface CatalogRow {
@@ -102,11 +103,8 @@ if (tools && table) {
   /** The `/api/doc/<rel>` byte URL — path-segment-encoded, matching `docApiUrl`. */
   const apiUrl = (rel: string): string => `/api/doc/${rel.split("/").map(encodeURIComponent).join("/")}`;
 
-  /** The legacy viewer path, encoded exactly as `docPagePath` does. */
-  const pagePath = (rel: string): string => {
-    const base = table.dataset.docBase ?? "";
-    return `${base}${rel.replace(/%/g, "%25").replace(/#/g, "%23").replace(/\?/g, "%3F")}`;
-  };
+  /** The document's permalink — the handle is derived, so no lookup table rides along. */
+  const pagePath = (rel: string): string => `${table.dataset.docBase ?? ""}${documentId(rel)}/`;
 
   const renderRow = (row: CatalogRow): HTMLTableRowElement => {
     const rel = relOf(row);
