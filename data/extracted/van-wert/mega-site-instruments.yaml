@@ -6,19 +6,23 @@
 #   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
 #   [open]      = not established by any captured source — do NOT assert
 #
-# THE ONE FACT THIS FILE EXISTS TO HOLD: the QTS Van Wert campus did not become legally possible
-# on 2026-05-11. It became legally possible on 2014-11-14, 2014-12-22 and 2016-06-14, the dates of
-# the three Pre-Annexation Agreements the annexation ordinance recites as its own foundation —
-# each one signed by the City, a township board of trustees, and the Board of County
-# Commissioners, a decade before any data center was named. The 2026 ordinances execute a track
-# that was laid in 2014. Everything downstream of that — the same-week county approval, the
-# emergency clauses, the single reading — reads differently once the ten-year runway is on the
-# record.
+# THE ONE FACT THIS FILE EXISTS TO HOLD, stated as narrowly as the record allows: Ordinance
+# 26-05-028 declares itself to be "in furtherance of" three Pre-Annexation Agreements dated
+# 2014-11-14, 2014-12-22 and 2016-06-14, each recited as being among City Council, a named
+# township's board of trustees, and the Board of County Commissioners. That recital — dates,
+# parties, and the ordinance's own statement of what it furthers — is what is [verified].
+# NOTHING MORE. None of the three agreements is in the corpus: their terms, the territory they
+# cover, whether they bind anyone to anything, and whether they bear on THIS annexation at all are
+# every one of them [open]. Reading them as a decade-early runway for the campus is an
+# [inference], and a load-bearing one — do not restate it as fact, and do not write that the
+# jurisdictions had "already agreed" to this project. What is verified is that a 2026 annexation
+# ordinance reached back to instruments from 2014 and 2016 to justify itself, which is why those
+# three agreements are the priority-1 pull.
 #
 # THE SECOND FACT: on 2026-05-11 the City of Van Wert had no zoning category for what it was
 # approving. Ordinance 26-05-029 wrote the words "Data Center" into the Van Wert Code of
 # Ordinances for the first time, and Ordinance 26-05-030 designated 901.698 acres for that use in
-# the same sitting. The definition and the campus were created in the same hour.
+# the same sitting.
 #
 # Nothing here is a characterization of motive. Where the record contradicts itself — and it does,
 # on the annexation's own statutory route and on how much water the City is selling — both
@@ -39,13 +43,14 @@ meta:
     manifest: data/documents/van-wert/council/filename-map.yaml
   method: >-
     Nine PDFs pulled 2026-08-03 from the City's open WordPress upload tree
-    (https://vanwert.org/wp-content/uploads/). Eight of the nine are image-only scans with no
-    usable text layer; every figure and quotation below was read by rendering the page with
-    pypdfium2 and running tesseract (watermark.civic.indexer.ocr_pdf) at 300 DPI, with targeted
-    450- and 500-DPI re-renders where the 300-DPI read was ambiguous — never from the OCR of a
-    filename or an upload path. The two files with partial text layers (5.11.26.pdf,
-    5.4.26-Public-Hearing-1.pdf) carry text only in their typed attachments; their minutes bodies
-    are images and were OCR'd like the rest. Page numbers below are 0-based PDF page indices.
+    (https://vanwert.org/wp-content/uploads/). SEVEN of the nine carry no text layer at all (0
+    extractable characters): the six ordinance files and 4.27.26.pdf. The remaining TWO
+    (5.11.26.pdf, 5.4.26-Public-Hearing-1.pdf) carry a PARTIAL text layer covering only their
+    typed attachments — their minutes bodies are images. So every figure and quotation below was
+    read by rendering the page with pypdfium2 and running tesseract
+    (watermark.civic.indexer.ocr_pdf) at 300 DPI, with targeted 450- and 500-DPI re-renders where
+    the 300-DPI read was ambiguous and a 600-DPI render for the handwritten approval stamp — never
+    from the OCR of a filename or an upload path. Page numbers below are 0-based PDF page indices.
   ocr_caveat: >-
     26-05-028.pdf and the Exhibit-A pages of 26-05-030.pdf are photocopies of a bound record book,
     heavily skewed and degraded. Metes-and-bounds courses in those exhibits are NOT transcribed
@@ -625,27 +630,51 @@ public_comment:
     source: 5.4.26-Public-Hearing-1.pdf pp. 0-1
     written_comment_pages: 88   # pp. 17-106
   meeting_2026_05_11:
-    speakers_on_annexation: 18  # named list, 5.11.26.pdf p. 5
-    written_comment_signers: 25 # sign-in sheet, 5.11.26.pdf p. 6
+    speakers_on_annexation: 18
+    written_comment_signers: 25
     tag: '[verified]'
+    source:
+      speakers_on_annexation: 5.11.26.pdf p. 5 (named list, "Members of the Public who spoke in regards to annexation")
+      written_comment_signers: 5.11.26.pdf p. 6 (written-comment sign-in sheet)
   duplication:
-    tag: '[verified]'
+    tag: '[verified]'   # the measurement; the "campaign" reading of it is the [inference] below
     finding: >-
-      Of the 88 written-comment pages in the 2026-05-04 record, 21 repeat the body text of an
-      earlier page verbatim. Normalising each page (lowercase, letters and spaces only) and
-      hashing the first 900 characters yields 67 distinct letter bodies across 88 pages; 15 bodies
-      appear more than once and one appears five times (pp. 31, 32, 34, 40, 49).
+      Of the 88 written-comment pages in the 2026-05-04 record, 21 share an IDENTICAL normalised
+      900-character opening with an earlier page. Clustering on that prefix yields 67 distinct
+      openings across 88 pages; 15 clusters hold more than one page and the largest holds five
+      (pp. 31, 32, 34, 40, 49).
+    full_body_check: >-
+      Measured separately, because a shared opening is not a verbatim page. Compared over the
+      WHOLE normalised body, only ONE pair of pages is byte-identical (pp. 17 and 64, two scans of
+      the same two-page letter); on that test there are 87 distinct bodies across 88 pages. The
+      other 20 differ from their cluster-mate somewhere after the first 900 characters. They do
+      not differ by much: full-body similarity to the cluster's first page runs 0.974 to 1.000
+      with a median of 0.987 (difflib.SequenceMatcher over the normalised text, median body 1,114
+      characters), and the divergence sits in the tail — signature blocks, addresses and closing
+      lines, which are handwritten and OCR-noisy. So: near-identical, not verbatim. Do not write
+      "verbatim" of anything but pp. 17/64.
     method: >-
-      Reproducible from the committed PDF: OCR at 300 DPI, split on page, normalise, hash the
-      leading 900 normalised characters, group.
+      Reproducible from the committed PDF: OCR at 300 DPI, split on page, keep pages whose
+      normalised body is >= 400 characters (this is the 88), lowercase and strip to letters and
+      spaces, then (a) group on a hash of the leading 900 characters and (b) group on a hash of
+      the whole body, and score full-body pairs with difflib.
     caveats: >-
-      A repeat may be one person's letter scanned twice, a two-page letter counted as two pages,
-      or different signers submitting identical text — the signature blocks are handwritten and
-      largely illegible to OCR, so the count is of PAGES, not of people. What is not in doubt is
-      that a common body of text recurs: the same claim set (a $10 billion investment, $200
-      million in community revenue over 20 years, 200-250 permanent jobs at roughly $80,000,
-      1,000-1,500 construction jobs, closed-loop cooling, and a site "designated and pre-annexed
-      for industrial use since 2007") appears across many letters in near-identical wording.
+      The count is of PAGES, not of people: a cluster may be one letter scanned twice, a two-page
+      letter counted as two pages, or different signers submitting the same text — the signature
+      blocks are handwritten and largely illegible to OCR, so who signed what is not established
+      from this file.
+    campaign_reading:
+      tag: '[inference]'
+      text: >-
+        That 21 of 88 pages open with 900 identical characters and stay ~98-99% identical
+        thereafter is very hard to produce by independent authorship, and the same claim set
+        recurs across them in near-identical wording (a $10 billion investment, $200 million in
+        community revenue over 20 years, 200-250 permanent jobs at roughly $80,000, 1,000-1,500
+        construction jobs, closed-loop cooling, and a site "designated and pre-annexed for
+        industrial use since 2007"). Reading that as a coordinated letter campaign is the natural
+        inference and it is labelled as one. What the record does NOT establish is who organised
+        it, whether signers knew the text was shared, or how many distinct people are behind the
+        21 pages.
   the_2007_claim:
     tag: '[open]'
     finding: >-

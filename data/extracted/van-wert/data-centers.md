@@ -315,12 +315,17 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   Foundation**, leaving six. `[verified]` The one roll-called Mega Site vote in the ingested set is
   the 2026-04-27 preparation motion: "Hurless, Agler, Ringwald, Johnson, Block, and Moore voted
   yes. Roberts abstained." `[verified]` (`5.11.26.pdf` pp. 0-4; `4.27.26.pdf` p. 2)
-- **The route was laid a decade early (#1401).** Ord. 26-05-028 recites **three Pre-Annexation
-  Agreements** as its foundation — **2014-11-14** (Ridge Twp), **2014-12-22** (Hoaglin Twp),
-  **2016-06-14** (Pleasant Twp) — each among City Council, a township board of trustees and the
-  Board of County Commissioners. `[verified]` None is in the corpus; all three are now the top of
-  the pull list. The recurring public-comment claim that the site was "designated and pre-annexed
-  for industrial use **since 2007**" is supported by **nothing** in the instrument set. `[open]`
+- **The 2026 ordinance reaches back to 2014 to justify itself (#1401).** Ord. 26-05-028 declares
+  itself "in furtherance of" **three Pre-Annexation Agreements** — **2014-11-14** (Ridge Twp),
+  **2014-12-22** (Hoaglin Twp), **2016-06-14** (Pleasant Twp) — each recited as being among City
+  Council, a township board of trustees and the Board of County Commissioners. **That recital is
+  the whole of what is `[verified]`**: the dates, the parties, and what the ordinance says it
+  furthers. None of the three is in the corpus, so their terms, the territory they cover, whether
+  they bind anyone, and whether they bear on this annexation beyond being cited by it are all
+  `[open]` — and reading them as a decade-early runway for the campus is an `[inference]` from a
+  recital, not a finding. All three are now the top of the pull list. The recurring public-comment
+  claim that the site was "designated and pre-annexed for industrial use **since 2007**" is
+  supported by **nothing** in the instrument set. `[open]`
 - **County approval, now dated (#1401):** the annexation petition was filed with the Board of
   Commissioners by **Charles F. Koch, agent for petitioners**, on **2026-03-09**, and the BOC
   "approved and granted the petition by the passage and approval of a resolution on **2026-03-10**"
@@ -365,15 +370,20 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   `[verified]` A moratorium was requested twice and moved neither time — from the floor on
   2026-04-27 ("Block does not feel the need to move this request forward at this point in time")
   and in writing at the hearing. `[verified]`
-- **The written comment was substantially a letter campaign (#1401).** `[verified]` Of the 88
-  written-comment pages in the 2026-05-04 record, **21 repeat the body text of an earlier page
-  verbatim** — 67 distinct letter bodies across 88 pages, 15 bodies appearing more than once and
-  one appearing **five times** (reproducible: OCR at 300 DPI, normalise, hash the leading 900
-  characters). The count is of pages, not people; signature blocks are handwritten and largely
-  illegible. A common claim set recurs in near-identical wording — $10B invested, **$200M in
-  community revenue over 20 years**, **200-250 permanent jobs at ~$80,000**, **1,000-1,500
-  construction jobs** — and **none of those figures appears in any instrument**. They are
-  `[reference]` at best, and their provenance is the campaign.
+- **21 of 88 written-comment pages share an identical opening (#1401).** `[verified]` Of the 88
+  written-comment pages in the 2026-05-04 record, **21 share an identical normalised 900-character
+  opening with an earlier page** — 67 distinct openings across 88 pages, 15 clusters holding more
+  than one page, the largest holding **five**. **Near-identical, not verbatim:** over the *whole*
+  normalised body only **one** pair is byte-identical (pp. 17/64, the same letter scanned twice),
+  while the other 20 run **0.974–1.000 similarity, median 0.987**, diverging only in the tail
+  (signature blocks and addresses, handwritten and OCR-noisy). Reproducible: OCR at 300 DPI,
+  normalise, cluster on the leading 900 characters, then score full bodies with difflib. The count
+  is of pages, not people. `[inference]` That pattern is very hard to produce by independent
+  authorship, so a coordinated letter campaign is the natural reading — but who organised it and
+  how many distinct people are behind the 21 pages are `[open]`. Independent of that inference:
+  the recurring claim set — $10B invested, **$200M in community revenue over 20 years**,
+  **200-250 permanent jobs at ~$80,000**, **1,000-1,500 construction jobs** — **appears in no
+  instrument**, so it is `[reference]` at best wherever repeated.
 - **One cited opposition comment (#1401).** A written comment (pp. 104-106) argues the water case
   with a full reference list; two of its figures — the **1.01 BG** reservoir and the **180 MG–1.26
   BG** annual creek yield — are the same figures independently committed in `water-watch.yaml`
