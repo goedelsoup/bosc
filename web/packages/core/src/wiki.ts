@@ -18,23 +18,12 @@ import {
 } from "./feeds";
 import { escapeHtml } from "./format";
 import { withBase, withSite } from "./site";
+import { TAXONOMY } from "./taxonomy";
 
 export interface WikiTarget {
   url: string;
   label: string;
   kind: "concept" | "entity" | "person";
-}
-
-export interface WikiIndexOptions {
-  /**
-   * Resolve concept links to the **active site's own** glossary
-   * (`/network/<id>/site/concepts/<slug>/`) instead of the network-global
-   * `/wiki/concepts/<slug>/` (#1567). Set it on per-site pages so a `[[term]]` in a
-   * concept/person/place body stays inside that site's build and points at the same
-   * scoped concept feed the page renders. People are always site-scoped; entities stay
-   * network-global (the entity graph is a network-global host) in both modes.
-   */
-  scoped?: boolean;
 }
 
 /** Normalize any label/key/slug to a comparable token. */
@@ -46,22 +35,22 @@ export function norm(s: string): string {
 }
 
 /**
- * The concept page URL for a slug, network-global or scoped to the active site.
- * Both feed off the same per-site `concepts` feed; only the page root differs.
+ * The concept page URL for a slug — always the network-global wiki, the noun's one canonical
+ * build (#1892). The per-site glossary render this used to switch to (#1567's `scoped` mode)
+ * is retired; which terms *linkify* on a site is still the active site's own `concepts` feed.
  */
-function conceptHref(slug: string, scoped: boolean): string {
-  return scoped ? withSite(`/site/concepts/${slug}/`) : `${withBase("/wiki/concepts/")}${slug}/`;
+function conceptHref(slug: string): string {
+  return `${withBase(TAXONOMY.concept.index)}${slug}/`;
 }
 
-// Keyed by `${activeSite()}::${scoped}` — a single module-level Map that isn't
-// site-aware silently serves the first site's index to every other site in a
-// multi-site build (#1567), bleeding e.g. Lima's concepts into a peer's pages.
+// Keyed by `activeSite()` — a single module-level Map that isn't site-aware silently
+// serves the first site's index to every other site in a multi-site build (#1567),
+// bleeding e.g. Lima's concepts into a peer's pages.
 const cache = new Map<string, Map<string, WikiTarget>>();
 
 /** The resolution index: normalized name/alias/slug → its page, for the active site. */
-export function wikiIndex(options: WikiIndexOptions = {}): Map<string, WikiTarget> {
-  const scoped = options.scoped ?? false;
-  const key = `${activeSite()}::${scoped ? "site" : "global"}`;
+export function wikiIndex(): Map<string, WikiTarget> {
+  const key = activeSite();
   const hit = cache.get(key);
   if (hit) return hit;
 
@@ -76,7 +65,7 @@ export function wikiIndex(options: WikiIndexOptions = {}): Map<string, WikiTarge
   if (hasFeed("concepts")) {
     for (const c of loadFeed<ConceptItem[]>("concepts")) {
       add([c.slug, c.title, ...c.aliases], {
-        url: conceptHref(c.slug, scoped),
+        url: conceptHref(c.slug),
         label: c.title,
         kind: "concept",
       });
@@ -178,12 +167,8 @@ export function renderBody(body: string, index = wikiIndex()): string {
 }
 
 /** Concepts that point at `slug` — via `related` or a `[[link]]` in their body. */
-export function conceptBacklinks(
-  slug: string,
-  options: WikiIndexOptions = {},
-): { url: string; label: string }[] {
+export function conceptBacklinks(slug: string): { url: string; label: string }[] {
   if (!hasFeed("concepts")) return [];
-  const scoped = options.scoped ?? false;
   const concepts = loadFeed<ConceptItem[]>("concepts");
   const self = concepts.find((c) => c.slug === slug);
   const names = self
@@ -195,7 +180,7 @@ export function conceptBacklinks(
     const viaRelated = c.related.some((r) => norm(r) === norm(slug));
     const viaBody = [...c.body.matchAll(/\[\[([^\]]+)\]\]/g)].some((m) => names.has(norm(m[1])));
     if (viaRelated || viaBody) {
-      out.push({ url: conceptHref(c.slug, scoped), label: c.title });
+      out.push({ url: conceptHref(c.slug), label: c.title });
     }
   }
   return out;
@@ -215,22 +200,17 @@ export interface RelatedConcept {
  * any of the entity's names (its display + variants, passed in) appears as a **whole normalized
  * phrase** in the concept's title/summary/body — the same specificity floor as the open-questions
  * and hypothesis backlinks (`backlinkable`), so a two-letter initialism can't match noise. Reads
- * the active site's `concepts` feed; a build without one yields none. `scoped` points the links at
- * the site-own glossary rather than the network-global one, matching `wikiIndex`.
+ * the active site's `concepts` feed; a build without one yields none.
  */
-export function relatedConcepts(
-  names: (string | null | undefined)[],
-  options: WikiIndexOptions = {},
-): RelatedConcept[] {
+export function relatedConcepts(names: (string | null | undefined)[]): RelatedConcept[] {
   if (!hasFeed("concepts")) return [];
-  const scoped = options.scoped ?? false;
   const tokens = [...new Set(names.filter((n): n is string => n != null && backlinkable(n)).map(norm))];
   if (!tokens.length) return [];
   const out: RelatedConcept[] = [];
   for (const c of loadFeed<ConceptItem[]>("concepts")) {
     const hay = ` ${norm(`${c.title} ${c.summary} ${c.body}`)} `;
     if (tokens.some((t) => hay.includes(` ${t} `))) {
-      out.push({ slug: c.slug, title: c.title, url: conceptHref(c.slug, scoped) });
+      out.push({ slug: c.slug, title: c.title, url: conceptHref(c.slug) });
     }
   }
   return out;

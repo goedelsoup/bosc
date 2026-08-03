@@ -34,8 +34,6 @@ function contentKey(slug: string, facet: RecordFacet): string {
       return feed("people");
     case "places":
       return feed("places");
-    case "concepts":
-      return feed("concepts");
     case "legal":
       return JSON.stringify(scopedLegal(slug).map((d) => d.slug));
     case "reference":
@@ -76,14 +74,13 @@ describe("the record-facet declaration", () => {
     }
   });
 
-  it("declares exactly one network-global facet — the glossary (the #1886 concepts decision)", () => {
+  it("declares NO network-global facet — every record leaf is the site's own (#1892)", () => {
+    // The glossary was the one network-global entry, rendered inside every site build; #1892
+    // retired that render (one taxonomy per noun — concepts build once, at `/wiki/concepts/`,
+    // declared in `taxonomy.ts`). The scope vocabulary stays: a future network-global facet is
+    // still expressible, but it must be declared and justified, and today there are none.
     const global = FACETS.filter((f) => RECORD_FACETS[f].scope === "network-global");
-    expect(global).toEqual(["concepts"]);
-    // The decision lives in the module, not a commit message: the shared method vocabulary is the
-    // same at every watershed point, and it renders inside each site build so the record's
-    // `[[wiki links]]` resolve without leaving the site (#1567).
-    expect(RECORD_FACETS.concepts.note).toContain("#1567");
-    expect(RECORD_FACETS.concepts.note).toContain("#1892");
+    expect(global).toEqual([]);
   });
 });
 
@@ -154,12 +151,6 @@ describe("facet gating on the committed bundles", () => {
     expect(facetAvailable("fort-wayne", "timeline")).toBe(false);
     expect(facetAvailable("fort-wayne", "people")).toBe(false);
     expect(facetAvailable("fort-wayne", "exhibits")).toBe(false);
-  });
-
-  it("keeps the glossary open on a peer — declared network-global, so it is not a leak", () => {
-    for (const peer of ["fort-wayne", "urbana", "troy-piqua"]) {
-      expect(facetAvailable(peer, "concepts")).toBe(true);
-    }
   });
 
   it("locks the places FACET without closing the places SECTION (Urbana)", () => {

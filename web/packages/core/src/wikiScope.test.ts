@@ -4,9 +4,11 @@ import { join } from "node:path";
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import type { ConceptItem } from "./feeds";
 
-// Per-site glossary scoping (#1567): each site's bundle carries only its own scoped
-// `concepts` feed, and `wikiIndex` must resolve against the *active* site — never bleed
-// one site's concepts (or a global cache entry) into another site's build.
+// Per-site glossary scoping (#1567), narrowed by #1892 to term MATCHING only: each site's
+// bundle carries only its own scoped `concepts` feed, and `wikiIndex` must resolve against
+// the *active* site — never bleed one site's concepts (or a global cache entry) into another
+// site's build. Where a resolved link POINTS is no longer per-site: the glossary builds once,
+// at the network-global `/wiki/concepts/` (one taxonomy per noun).
 
 const tmpDirs: string[] = [];
 
@@ -76,35 +78,25 @@ describe("wikiIndex — per-site scoping (#1567)", () => {
   it("resolves concepts against the ACTIVE site, never bleeding a peer's cache entry", async () => {
     const { bundle, wiki } = await load(parent());
 
-    const lima = bundle.runWithSite("lima", () => wiki.wikiIndex({ scoped: true }));
+    const lima = bundle.runWithSite("lima", () => wiki.wikiIndex());
     expect(lima.has(wiki.norm("NPDES"))).toBe(true);
     expect(lima.has(wiki.norm("RDA"))).toBe(true); // Lima's own concept + its alias
 
     // The peer must NOT see Lima's site-scoped term — the cache-not-keyed-by-site bug.
-    const fw = bundle.runWithSite("fort-wayne", () => wiki.wikiIndex({ scoped: true }));
+    const fw = bundle.runWithSite("fort-wayne", () => wiki.wikiIndex());
     expect(fw.has(wiki.norm("NPDES"))).toBe(true);
     expect(fw.has(wiki.norm("RDA"))).toBe(false);
   });
 
-  it("scoped concept URLs point at the active site's own glossary", async () => {
+  it("concept URLs point at the network-global wiki from EVERY site — one build (#1892)", async () => {
+    // The per-site glossary render is retired: a peer's record still linkifies only its own
+    // term set (above), but a resolved link lands on the one canonical page, not a site copy.
     const { bundle, wiki } = await load(parent());
 
-    const limaUrl = bundle.runWithSite(
-      "lima",
-      () => wiki.wikiIndex({ scoped: true }).get(wiki.norm("NPDES"))?.url,
-    );
-    expect(limaUrl).toBe("/network/american-sugar-creek-allen-co/site/concepts/npdes/");
+    const limaUrl = bundle.runWithSite("lima", () => wiki.wikiIndex().get(wiki.norm("NPDES"))?.url);
+    expect(limaUrl).toBe("/wiki/concepts/npdes/");
 
-    const fwUrl = bundle.runWithSite(
-      "fort-wayne",
-      () => wiki.wikiIndex({ scoped: true }).get(wiki.norm("NPDES"))?.url,
-    );
-    expect(fwUrl).toBe("/network/fort-wayne/site/concepts/npdes/");
-  });
-
-  it("unscoped (default) concept URLs stay on the network-global wiki", async () => {
-    const { bundle, wiki } = await load(parent());
-    const url = bundle.runWithSite("lima", () => wiki.wikiIndex().get(wiki.norm("NPDES"))?.url);
-    expect(url).toBe("/wiki/concepts/npdes/");
+    const fwUrl = bundle.runWithSite("fort-wayne", () => wiki.wikiIndex().get(wiki.norm("NPDES"))?.url);
+    expect(fwUrl).toBe("/wiki/concepts/npdes/");
   });
 });

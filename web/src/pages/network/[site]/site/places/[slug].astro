@@ -79,7 +79,7 @@ const profileToc = sections.length >= 2 ? sections : [];
       )
     }
 
-    {place.body && <Fragment set:html={renderBody(place.body, wikiIndex({ scoped: true }))} />}
+    {place.body && <Fragment set:html={renderBody(place.body, wikiIndex())} />}
 
     {
       place.members.length > 0 && (

@@ -70,12 +70,10 @@ describe("relatedConcepts — concepts that name an entity (#1572)", () => {
     expect(amazon.map((c) => c.slug)).toEqual(["assimilative-capacity"]);
   });
 
-  it("returns network-global concept URLs by default, site-scoped ones when asked (#1567)", async () => {
+  it("returns network-global concept URLs — the noun's one canonical build (#1892)", async () => {
     const { bundle, wiki } = await load(makeBundle("lima", { concepts: CONCEPTS }));
-    const global = bundle.runWithSite("lima", () => wiki.relatedConcepts(["Google"]));
-    expect(global[0].url).toBe("/wiki/concepts/consumptive-cooling/");
-    const scoped = bundle.runWithSite("lima", () => wiki.relatedConcepts(["Google"], { scoped: true }));
-    expect(scoped[0].url).toContain("/site/concepts/consumptive-cooling/");
+    const hits = bundle.runWithSite("lima", () => wiki.relatedConcepts(["Google"]));
+    expect(hits[0].url).toBe("/wiki/concepts/consumptive-cooling/");
   });
 
   it("holds the specificity floor — a ≤3-char single-token name can't match noise", async () => {
