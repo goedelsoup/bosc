@@ -1,0 +1,142 @@
+---
+step: 1
+slug: who
+title: "Who is running 150 megawatts up there?"
+skill: "Reading a withdrawn registration statement · two-sided corroboration · an entity-name guard"
+anchor: "One Power Co Form S-1 + the MARA release, against the committed eight-parcel holding"
+anchorRecordRels:
+  - findlay/bosc-site-footprint.yaml
+live: true
+pageTitle: "Who is running 150 megawatts up there? — Chapter 1"
+studySection: project
+description: "Findlay's data-center story has no shell company to unmask. It has something harder: a disclosed number, a withdrawn filing, and a land holding that doesn't add up to the acreage its owner claims."
+---
+
+Most of the campuses in this network were assembled quietly, through Delaware shells, and the first
+job is figuring out who is behind them. Findlay is the opposite case. The host and the customer both
+put the facility in a filing with the Securities and Exchange Commission, four months apart, and the
+numbers agree. That makes this the network's cleanest **disclosed** load — and it changes the skill
+you need. When the developer tells you the number, the question stops being *who* and becomes *what
+exactly did they commit to, in what document, and what happened to that document afterward*.
+
+## The facility, from both sides
+
+**One Power Co** — privately held, CEO Jereme Kent — owns a campus in **Allen Township, Hancock
+County**, at I-75 and Township Road 215, about four miles north of downtown Findlay. Its Form S-1
+calls the facility **MWHub 01, the "Findlay Megawatt Hub,"** and describes it in the register's own
+vocabulary: `[verified]`
+
+> Current Capacity 30 MW · Planned Maximum 150 MW · Status: **Operating**
+
+First energized in 2023 with what the filing calls "the first fully digital substation in the United
+States." The anchor customer is named in the same document: **MARA Holdings, Inc.** (NASDAQ: MARA),
+a bitcoin miner, on a **150 MW, 15-year, take-or-pay** lease — payment "due regardless of whether or
+not the customer elects to purchase power." `[verified]`
+
+Then the customer said it too, independently. MARA's release of **2024-11-11** describes "a
+150-megawatt operation in Findlay, Ohio, which already has 30 megawatts of capacity," one of three
+Ohio sites totalling ~372 MW, with full energization "intended by end-2025." `[verified]`
+
+> **The skill:** two-sided corroboration. A single company's description of its own project is a
+> claim. The *same* figure, from the counterparty, in a separate instrument, filed for a different
+> purpose, is a fact. That is why the 150 MW here is `[verified]` while every acreage-derived load in
+> this network — Urbana's, Sidney's, Van Wert's — is `[inference]`.
+
+Whether the full 150 MW is energized *today* is `[open]`. "Intended by end-2025" is a plan, and no
+reviewed source confirms the build-out completed. That is the standing check on this facility.
+
+## The guard that has to come first
+
+<div class="callout" id="mara-guard">
+  <p class="callout-title">MARA Holdings ≠ Marathon Petroleum</p>
+  <p>
+    <strong>MARA Holdings, Inc.</strong> (NASDAQ: MARA), formerly Marathon Digital Holdings, is a
+    bitcoin-mining company and the 150 MW customer here. <strong>Marathon Petroleum Corp</strong>
+    (NYSE: MPC) is a petroleum refiner <em>headquartered in Findlay</em> and a Hancock County
+    NPDES and air permittee. They are unrelated. Both attach to the string "Marathon … Findlay,
+    Ohio," and a graph that merges them would attribute a refinery's permits to a data center in
+    the same county. The entity graph carries an explicit disambiguation note on both records.
+  </p>
+</div>
+
+This is not a hypothetical. It is exactly the trap an automated entity resolver falls into, and it
+is the reason this chapter opens with a name rather than a number.
+
+## The filing that stopped
+
+The S-1 is the primary disclosure, and its own history is part of the record:
+
+- Form **S-1 filed 2025-01-23** (EDGAR CIK 2039139; confidential draft submission 2024-11-12).
+- **Withdrawn** — Form RW — **2025-05-09**. The IPO never went effective.
+- Form **D** private placement, **2025-07-23**. `[reference]`
+- A September 2025 reorganization, layoffs, and a lender workout. `[reference]`
+- **2026-02-16: OnSite Partners acquires One Power Company.** OnSite is owned by funds advised by
+  **Basalt Infrastructure Partners**. `[verified]`
+
+Read that sequence as a whole and it says something the individual items don't: a developer that
+tried the public markets, withdrew, restructured under lender pressure, and was bought by an
+infrastructure fund — while holding a fifteen-year take-or-pay contract that pays whether or not the
+tenant draws power. The contract is the asset. That is a `[reference]`-grade reading of a corporate
+chain, not a finding about anyone's solvency, and it is written here as such.
+
+<div class="callout callout--open">
+  <p class="callout-title">A withdrawn filing is still evidence — of a specific kind</p>
+  <p>
+    An S-1 that never went effective was still signed, and still carries liability for what it
+    states about the company's existing operations. Its account of a running facility is strong.
+    Its account of what the company <em>plans</em> is a marketing document that no regulator ever
+    tested — which is precisely the distinction Chapter 2 turns on.
+  </p>
+</div>
+
+## The land, and the sixty-one acres that don't reconcile
+
+The holding of record is committed:
+**eight Allen Township parcels, 108.65 acres by county CAMA / 105.873 acres planar**, standing in
+**three One Energy vehicles** — `ONE ENERGY ENTERPRISES LLC` (the 4.07-acre office at 12411 TR 215),
+`OEE XX LLC` (69.82 acres at CR 216), and `OEE XXX LAND LLC` (six parcels on TR 99). It is two blocks
+about 200 metres apart; the north block is **73.89 acres**, matching the reported 74-acre wind campus,
+and **seven of Hancock County's ten wind turbines** stand inside it. `[verified]`
+
+The S-1 calls the campus **"~170 acres."** The record shows 108.65. **The 61-acre gap is not closed
+here, and no parcel was invented to close it.** It is consistent with a reported 2025 40-acre
+purchase plus land held by lease, option, or a vehicle whose tax-mailing label reads neither `OEE`
+nor `ONE ENERGY`. Likewise **12385 TR 215**, the hub's own address in its SEC filing, appears in no
+parcel in the source at all — the nearest situs is the office at 12411. `[open]`
+
+## Why the deed chain is missing, precisely
+
+Press reporting puts **110 acres closed 2026-03-05 for $5.9 million** in the North Findlay Industrial
+Park, plus 40 acres in 2025. `[reference]` The grantee vehicle for both is `[open]` — and the reason
+matters more than the gap:
+
+- Hancock County publishes **no parcel ArcGIS REST service**. The only machine-readable source is the
+  OGRIP Ohio statewide public view, whose Hancock slice is a **2023-05-08 export** — it predates both
+  closings.
+- The Auditor's live CAMA is **Beacon/Schneider only** and returns **Cloudflare HTTP 403** to every
+  non-browser request.
+- The Recorder's index is **Kofile CountyFusion**, whose guest login 404s outside a browser session.
+
+Both were probed on 2026-08-02.
+
+> **The skill:** distinguishing *unsearched* from *empty*. "No grantee found" reads like a negative
+> finding and is nothing of the kind here — the deed exists, it is public, and two county systems
+> simply refuse automated retrieval. The honest record says so, names the instrument to pull, and
+> leaves the tag `[open]`. A negative check is only worth `[verified]` when the search actually ran.
+
+## What you've established
+
+There is an operating **30 MW** compute load with **150 MW contracted** on a fifteen-year take-or-pay,
+in a township, north of a city, disclosed by both parties to the SEC. The land of record is 108.65
+acres in three affiliated LLCs; the developer's own acreage claim exceeds it by 61 acres that the
+public record does not yet explain. The developer withdrew its IPO and was acquired.
+
+None of that came from a press release. It came from a registration statement, a counterparty's
+release, and a county parcel export — and from being explicit about the two places the chain breaks.
+
+**Records read in this chapter** (in the library under *Places* / *Records*):
+
+- `findlay/bosc-site-footprint.yaml` — the committed eight-parcel holding, its three owner vehicles,
+  and the full reconciliation of what the county sources could and could not answer.
+- `data/extracted/findlay/data-centers.md` — the county's data-center activity register, including
+  every negative check that protects this finding.

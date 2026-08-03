@@ -20,8 +20,10 @@ import {
   siteBadge,
   siteForPath,
   siteForSlug,
+  siteRegistersStory,
   siteRollup,
   storyComingSoon,
+  storyHostSites,
   surfacedStories,
 } from "./sites";
 
@@ -138,17 +140,42 @@ describe("sites registry — the Watermark network (#304)", () => {
 });
 
 describe("editorial story states — live vs coming-soon vs hidden (#1526/#1527)", () => {
-  it("Lima's walk is readable (live), Fort Wayne's stays `comingSoon`, and no story anywhere `hidden`", () => {
-    // The two in-line stories are Lima's project-bosc and Fort Wayne's project-zodiac. Lima's record
-    // is finished, so its walk is readable; Fort Wayne's is still held behind the coming-soon teaser.
+  it("Lima's walk is readable (live), Fort Wayne's and Findlay's stay `comingSoon`, and no story anywhere `hidden`", () => {
+    // Three in-line stories: Lima's project-bosc, Fort Wayne's project-zodiac, Findlay's flagpole.
+    // Lima's record is finished, so its walk is readable. Fort Wayne's is held while its record is
+    // finished. Findlay's is held for a DIFFERENT reason (#1466) — its record IS finished (all five
+    // readiness domains live) but the site is not yet `selectable`, and promotion is a manual,
+    // parity-gated `data/sites.yaml` edit. Same held state, two different reasons to be in it.
     const lima = siteForSlug("lima")?.stories ?? [];
     const ftw = siteForSlug("fort-wayne")?.stories ?? [];
+    const fin = siteForSlug("findlay")?.stories ?? [];
     expect(lima.map((s) => s.codename)).toEqual(["project-bosc"]);
     expect(ftw.map((s) => s.codename)).toEqual(["project-zodiac"]);
+    expect(fin.map((s) => s.codename)).toEqual(["flagpole"]);
     expect(lima.every((s) => !s.comingSoon)).toBe(true);
     expect(ftw.every((s) => s.comingSoon === true)).toBe(true);
+    expect(fin.every((s) => s.comingSoon === true)).toBe(true);
     // The silent `hidden` state is unused today — every registered story is either live or coming-soon.
     expect(SITES.every((s) => (s.stories ?? []).every((r) => !r.hidden))).toBe(true);
+  });
+
+  it("emits story routes on REGISTRATION, not on `selectable` (#1466)", () => {
+    // The route gate that used to be `selectable`. Findlay is the first non-selectable site to
+    // register a walk, and its peer home renders a teaser pointing at /stories/<codename>/ — so
+    // gating the routes on switchability would have made that teaser a dead link.
+    expect(siteForSlug("findlay")?.selectable).toBe(false);
+    expect(siteRegistersStory("findlay", "flagpole")).toBe(true);
+    // Registration is readability-blind: it holds for the held walks and the readable one alike.
+    expect(siteRegistersStory("lima", "project-bosc")).toBe(true);
+    expect(siteRegistersStory("fort-wayne", "project-zodiac")).toBe(true);
+    // …but it is still a REGISTRY check, so unregistered MDX and typo'd codenames emit nothing.
+    expect(siteRegistersStory("findlay", "project-bosc")).toBe(false);
+    expect(siteRegistersStory("urbana", "flagpole")).toBe(false);
+    expect(
+      storyHostSites()
+        .map((s) => s.slug)
+        .sort(),
+    ).toEqual(["findlay", "fort-wayne", "lima"]);
   });
 
   it("surfacedStories returns Lima's, comingSoonStories returns Fort Wayne's — the states are distinguishable", () => {
@@ -351,7 +378,15 @@ describe("siteRollup / networkRollup — the directory's per-site record depth (
     // Every registered site is counted exactly once — either at a tier, or as unbuilt.
     expect(tiered + net.unbuilt).toBe(SITES.length);
     expect(net.unbuilt).toBeGreaterThan(0);
-    expect(net.byTier.reference).toBe(1); // Lima alone
+    // Lima and Findlay (#1466). The READINESS tier is computed from domain activation, so a second
+    // site reaching it is the model working, not a backdoor — `is_reference_site`, the
+    // network-global-host ROLE, is a different axis and stays Lima's alone (asserted below).
+    expect(net.byTier.reference).toBe(2);
+    expect(
+      SITES.filter((s) => siteRollup(s.slug).tier === "reference")
+        .map((s) => s.slug)
+        .sort(),
+    ).toEqual(["findlay", "lima"]);
     // The sums are the per-site rollups, so the ledger and the scorecard can never disagree.
     const built = SITES.map((s) => siteRollup(s.slug)).filter((r) => r.tier !== null);
     expect(net.documents).toBe(built.reduce((n, r) => n + (r.documents ?? 0), 0));

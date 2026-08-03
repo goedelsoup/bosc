@@ -3170,6 +3170,9 @@ a.walk-dot:hover { opacity: 0.82; }
 .netsite-stage-title { font-size: var(--fs-body); font-weight: 700; margin: 0.8rem 0 0.25rem; }
 .netsite-stage-desc { font-size: var(--fs-meta); color: var(--bosc-muted); line-height: 1.45; }
 .netsite-doors-wrap { margin-bottom: 2rem; }
+/* The held-walk teaser (#1466) — same rhythm as the locked-doors block it sits above, so an
+   advertised story reads as part of the peer page rather than a bolted-on card. */
+.netsite-story-wrap { margin-bottom: 2rem; }
 .netsite-doors-kicker { margin-bottom: 0.9rem; }
 .netsite-faint { color: var(--bosc-faint); font-weight: 400; text-transform: none; letter-spacing: 0; }
 .netsite-doors { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }

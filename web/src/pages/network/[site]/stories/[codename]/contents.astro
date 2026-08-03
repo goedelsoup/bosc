@@ -12,12 +12,13 @@ import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
 import { siteBase } from "@watermark/core/routes";
 import { siteHref } from "@watermark/core/site";
-import { SITES, storyComingSoon } from "@watermark/core/sites";
+import { storyComingSoon, storyHostSites } from "@watermark/core/sites";
 import { type Story, chapterHref, storyFor, storyHomeHref } from "@watermark/core/walk";
 
 export async function getStaticPaths() {
   const paths = [];
-  for (const site of SITES.filter((s) => s.selectable)) {
+  // Every site that REGISTERS a story, not every selectable one (#1466) — see `siteRegistersStory`.
+  for (const site of storyHostSites()) {
     const siteId = siteBase(site.slug).replace("/network/", "");
     for (const ref of site.stories ?? []) {
       const literal = fileURLToPath(

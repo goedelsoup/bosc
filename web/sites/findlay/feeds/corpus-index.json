@@ -39,7 +39,7 @@
     "label": "Findlay",
     "scope": "site",
     "links_out": 3,
-    "links_in": 46,
+    "links_in": 50,
     "lines": 13,
     "updated": null
   },
@@ -979,6 +979,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-city-transparency-episodes",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Three reported transparency episodes around the city moratorium are uncorroborated — locate the primary records",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
     "id": "question/lead-conservancy-court-2021",
     "node_class": "question",
     "kind": "lead",
@@ -1089,6 +1100,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-hub-deed-chain",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Pull the deed chain for the 2025 and 2026 Megawatt Hub land purchases — grantee, instrument, consideration",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
     "id": "question/lead-hub-esa-customer",
     "node_class": "question",
     "kind": "lead",
@@ -1144,6 +1166,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-micropolitan-ranking-vs-warn",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Source Findlay's micropolitan economic-development ranking from its publisher before pairing it with the WARN filings",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
     "id": "question/lead-netzero-whirlpool-cod",
     "node_class": "question",
     "kind": "lead",
@@ -1153,6 +1186,17 @@
     "links_in": 0,
     "lines": 21,
     "updated": "2026-07-31"
+  },
+  {
+    "id": "question/lead-one-power-distress-and-capital",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The host withdrew its IPO and was acquired while holding a 15-year take-or-pay — watch the contract, not the company",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
   },
   {
     "id": "question/lead-onsite-partners-at-the-drafting-table",

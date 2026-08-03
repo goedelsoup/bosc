@@ -681,35 +681,47 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         assert domains[above_floor] == "absent", f"{slug} {above_floor} must not scaffold"
 
 
-def test_findlay_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None:
-    """Findlay's floor (economics-baseline, consumer-energy, rsei) is committed. Two above-floor
-    domains are live: ``record`` from the #1465 flood-mitigation-chain ingest (the FEMA Flood
-    Mitigation Assistance $24M obligation + the USACE Blanchard-watershed feasibility Review Plan,
-    two in-scope ``permits-epa`` extractions clearing ``RECORD_LIVE_THRESHOLD``), and ``facility``
-    from the disclosed One Power "Findlay Megawatt Hub" / MARA 150 MW take-or-pay ``SiteFacility``
-    (#1459). Facility is graded ``live`` on DOCUMENTARY DEPTH (#1630): unlike the site-plan-grounded
+def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -> None:
+    """Findlay is the network's SECOND reference-tier site (#1466) — all five domains live.
+
+    Its floor (economics-baseline, consumer-energy, rsei, grid) is committed. Above it:
+    ``record`` from the #1465 flood-mitigation-chain ingest (the FEMA Flood Mitigation Assistance
+    $24M obligation + the USACE Blanchard-watershed feasibility Review Plan, two in-scope
+    ``permits-epa`` extractions clearing ``RECORD_LIVE_THRESHOLD``) plus the #1460 primary-instrument
+    ingest; ``facility`` from the disclosed One Power "Findlay Megawatt Hub" / MARA 150 MW
+    take-or-pay ``SiteFacility`` (#1459); ``places`` from the committed Megawatt Hub parcel
+    assemblage (#1462); and now ``story`` (#1466).
+
+    Facility is graded ``live`` on DOCUMENTARY DEPTH (#1630): unlike the site-plan-grounded
     Urbana/Sidney facilities, the MW here is a `[verified]` filed disclosure (One Power's SEC Form
     S-1: 30 MW energized / 150 MW contracted — ``it_load_grounding`` is ``disclosure``), an
     instrument-grounded load, not a screening bracket — so it lifts the domain, not merely seeds it.
-    ``story`` is ``seeded`` (the committed per-site leads board,
-    ``data/site/findlay/leads.yaml``, is a leads-first resting state — Findlay is not yet in
-    ``STORY_SLUGS``). ``places`` went ``absent`` -> ``live`` in #1462, off the committed Megawatt
-    Hub parcel assemblage. So four of the five domains are live and only ``story`` is short of it;
-    this still needs its own test rather than the backdrop parametrize group (which asserts
-    ``record`` stays unscaffolded)."""
+
+    ``story`` went ``seeded`` -> ``live`` in #1466: the committed per-site leads board
+    (``data/site/findlay/leads.yaml``) was already one signal, and registering the ``flagpole`` walk
+    in ``STORY_SLUGS`` + the ``sites.ts`` overlay supplies the other. Note the deliberate divergence
+    from the frontend: the walk is ``comingSoon`` (Findlay is not yet ``selectable``, and promotion
+    is a manual, parity-gated ``data/sites.yaml`` edit), so ``readiness.ts``'s ``story`` FACET stays
+    locked while the DOMAIN reads live — readiness measures the evidence, the facet measures
+    readability. Fort Wayne is the same shape one signal short (registered story, no leads feed).
+
+    ``reference`` here is the computed READINESS tier and is NOT ``is_reference_site``, the
+    network-global-host role (routed-hydrograph, hypothesis matrix, catalog, concepts, the ``docs/``
+    long-form), which stays Lima's alone. The two are deliberately distinct — see ``site_tier``.
+    """
     out = site_bundle("findlay")
     manifest = _manifest(out)
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
-    assert readiness["tier"] == "case", f"findlay should be a Case site, got {readiness}"
+    assert readiness["tier"] == "reference", f"findlay should be a Reference site, got {readiness}"
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
     assert domains["record"] == "live"
     # The disclosed SiteFacility's [verified] filed load disclosure (SEC S-1) grades facility live —
     # instrument-grounded documentary depth, not its demand-pressure feed (#1630 / #1459).
     assert domains["facility"] == "live"
-    # ``story`` is seeded off the committed leads board, not a registered guided walk.
-    assert domains["story"] == "seeded"
+    # ``story`` is live on BOTH signals: the registered ``flagpole`` walk + the leads board (#1466).
+    assert domains["story"] == "live"
     # ``places`` is live off COMMITTED campus geometry, not scaffolding (#1462): the eight Allen
     # Township parcels standing in three One Energy vehicles (One Energy Enterprises LLC, OEE XX
     # LLC, OEE XXX LAND LLC) — 108.65 ac CAMA / 105.873 ac planar, ``reference/findlay/

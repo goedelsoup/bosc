@@ -2,17 +2,17 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "1.51.0",
-  "generated_at": "2026-08-03T09:53:27+00:00",
+  "generated_at": "2026-08-03T14:43:43+00:00",
   "feed_count": 33,
-  "row_total": 642,
+  "row_total": 658,
   "readiness": {
-    "tier": "case",
+    "tier": "reference",
     "domains": {
       "backdrop": "live",
       "facility": "live",
       "places": "live",
       "record": "live",
-      "story": "seeded"
+      "story": "live"
     }
   },
   "facility": {
@@ -117,7 +117,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 40
+      "count": 44
     },
     {
       "name": "rsei",
@@ -245,7 +245,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 36
+      "count": 40
     },
     {
       "name": "impact-study",
@@ -269,7 +269,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 124
+      "count": 128
     },
     {
       "name": "corpus-nodes",
@@ -277,7 +277,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 124
+      "count": 128
     },
     {
       "name": "ask-embeddings",
