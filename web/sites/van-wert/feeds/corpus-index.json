@@ -11,6 +11,17 @@
     "updated": "2026-08-01"
   },
   {
+    "id": "artifact/npdes-2gc08872",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "QTS Data Center",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 13,
+    "updated": null
+  },
+  {
     "id": "artifact/npdes-2pd00006",
     "node_class": "artifact",
     "kind": "entity",
@@ -22,13 +33,24 @@
     "updated": "2026-08-01"
   },
   {
+    "id": "artifact/qts-realty",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "QTS Realty Trust Inc.",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 13,
+    "updated": null
+  },
+  {
     "id": "artifact/site-van-wert",
     "node_class": "artifact",
     "kind": "site",
     "label": "Van Wert",
     "scope": "site",
     "links_out": 3,
-    "links_in": 7,
+    "links_in": 9,
     "lines": 13,
     "updated": null
   },
@@ -39,8 +61,8 @@
     "label": "Town Creek",
     "scope": "site",
     "links_out": 1,
-    "links_in": 1,
-    "lines": 15,
+    "links_in": 2,
+    "lines": 16,
     "updated": "2026-08-01"
   },
   {
@@ -924,6 +946,17 @@
     "updated": "2026-08-01"
   },
   {
+    "id": "relation/npdes-2gc08872--discharges-to--town-creek",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:2GC08872 discharges_to TOWN CREEK",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
     "id": "relation/npdes-2pd00006--discharges-to--town-creek",
     "node_class": "relation",
     "kind": "relation",
@@ -933,6 +966,17 @@
     "links_in": 0,
     "lines": 15,
     "updated": "2026-08-01"
+  },
+  {
+    "id": "relation/qts-realty--operates--npdes-2gc08872",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "QTS REALTY operates npdes:2GC08872",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
   },
   {
     "id": "relation/van-wert-wwtp--operates--npdes-2pd00006",

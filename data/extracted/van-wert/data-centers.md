@@ -38,14 +38,34 @@ ingested, and the lines they ground cite them. Every figure is cited; none is fa
 > Town Creek and discharges to Town Creek**, on one NHDPlus flowline, with the five CSO outfalls
 > in between — see the water section below.
 >
-> **Profile pin (2026-07-13, #1402):** the campus below is now registered as a SITE-PLAN-grounded
+> **Construction-stormwater instrument committed (2026-08-03, #1402):** the campus's **own** first
+> state permit is now in the corpus — Ohio EPA NPDES **Construction Site Stormwater General Permit
+> OHC000006, coverage `2GC08872*AG`**: the applicant's Notice of Intent (certified under penalty of
+> law **2026-07-21**), the site map it attaches, and Ohio EPA's approval letter (**2026-07-30**),
+> under `data/documents/oepa/van-wert/stormwater/`, extracted to
+> `data/extracted/oepa/van-wert/2GC08872.{noi,approval}.npdes.yaml`. **It is a construction-phase
+> instrument and grounds nothing about operations** — no cooling, no process discharge, no operating
+> water use, no load. What it does establish, on the applicant's own certification: the operator of
+> record is **QTS Realty Trust Inc.** of Duluth GA (not the "QTS Realty Trust, LLC / Overland Park KS"
+> press carried); the receiving stream is **Town Creek**; land disturbance is **792.0000 ac**
+> (87.8% of the zoned area); the project runs **2026-08-03 → 2030-08-03**, not the press's "Q4 2026
+> groundbreaking / ~2032 buildout"; and the **air permit-to-install is `YET_TO_APPLY`** — the first
+> instrument-grade, dated statement of that negative. The attached site map is the **first site plan
+> in the corpus**.
+>
+> **Profile pin (2026-07-13, revised 2026-08-03, #1402):** the campus below is registered as a
 > `SiteFacility` on the Van Wert `SiteProfile` (the #1327 Urbana precedent) — the 500 MW is carried
 > as a `[reference]` bracket (never a disclosure; QTS declines to state capacity), with closed-loop-dry
-> cooling and the ~$10B investment. This activates the **facility** readiness domain (the
-> `economics-demand-pressure` feed; `tier` backdrop → case). The pin cites this public record; of
-> the grounding *instruments* #1401 was to ingest, the **ordinances and the hearing record are now
-> committed** (see the note above) — the **deeds** and the **OPSB LON** are not, and both routes
-> are recorded as per-source negatives in `mega-site-instruments.yaml`.
+> cooling and the ~$10B investment, and its citations now rest on the committed ordinances (#1401)
+> and the stormwater NOI rather than on press. The **facility** readiness domain reads **`seeded`,
+> not `live`** — and that is the correct reading, not a gap. Since #1630 the domain grades on
+> documentary depth (`SiteFacility.is_instrument_grounded`): it needs an air permit or filed
+> disclosure grounding the **load**, or a `[verified]` document grounding the **cooling**. Van Wert
+> has neither, and both absences are now *documented* rather than merely unfound — QTS certifies the
+> PTI is yet to be applied for, and AEP Ohio stated no megawatt figure for this campus on the record.
+> The site's `tier` is **case**. Of the grounding *instruments*, the **ordinances, the hearing record**
+> (#1401) and now the **stormwater coverage** are committed; the **deeds** and the **OPSB LON** are
+> not, and both routes are recorded as per-source negatives in `mega-site-instruments.yaml`.
 
 ## Disambiguation guardrail
 
@@ -56,9 +76,17 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
 
 ## 1 — QTS "Van Wert Mega Site" campus
 
-- **Operator / end user:** QTS Data Centers (legal entity QTS Realty Trust, LLC; Overland Park,
-  KS), Blackstone-owned since its 2021 take-private. Publicly named as the end user late
-  May–June 2026. `[verified]` Source: q.com/data-centers/van-wert; DCD; VW Independent.
+- **Operator / end user:** QTS Data Centers, Blackstone-owned since its 2021 take-private. Publicly
+  named as the end user late May–June 2026. `[verified]` Source: q.com/data-centers/van-wert; DCD;
+  VW Independent. **The legal entity on the instrument is `QTS Realty Trust Inc.`, 2470 Satellite
+  Blvd NW, Duluth GA 30096** — the applicant of record on the campus's construction-stormwater NOI,
+  certified under penalty of law 2026-07-21. `[verified]` (`edoc-4209395.pdf` p. 0) This register
+  previously carried "QTS Realty Trust, **LLC**; Overland Park, KS" from press coverage; **both the
+  entity form and the address were wrong** (#1402). Three QTS names are now live and none is a
+  synonym for another: **QTS Data Centers** (the brand), **QTS Realty Trust Inc.** (the permit
+  applicant), and **QTS VAN WERT LLC** (the deed grantee, below). How they relate is `[open]` —
+  the SOS filings that would show it are unreachable (see the blocked-route note in
+  `mega-site-instruments.yaml`).
 - **Land developer:** Thor Equities Group, via its data-center division Form8tion ("Form8tion
   Van Wert"). `[verified]` Source: GlobeNewswire (Aug 19, 2025); citybiz; DCD.
 - **Seller:** The Marsh Foundation (local non-profit; owner of the Mega Site). `[verified]`
@@ -345,14 +373,35 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   `Passed this ___ day of ___, 2026`. `[verified]` R.C. 709.022 and 709.023 are different
   procedures with different township-taxation consequences. A certified copy from the Clerk of
   Council resolves it.
-- **Timeline:** groundbreaking Q4 2026 (planned); first building operational Q1 2029; full buildout
-  ~2032. `[reference]` Council, answering from the floor 2026-04-27: "It will take 5-6 years to
-  complete"; "the end user will create at least 250 jobs." `[reference]` (`4.27.26.pdf` p. 4)
-- **Ohio EPA air PTI (emergency generators):** `[open]` — QTS says generators are emergency backup
-  only, tested monthly; no facility-specific PTI number found. Emergency generators <500 hr/yr may
-  fall under permit-by-rule; otherwise a PTI/PTIO is required. Instrument to pull: OEPA air permits
-  DB / eDoc, Van Wert County, entity "QTS" / "Form8tion" / shell LLC.
-- **NPDES / stormwater:** Ohio EPA's draft general NPDES permit for data centers, **OHD000001**
+- **Timeline — the applicant's filed dates now supersede the press ones (#1402).** The
+  construction-stormwater NOI gives **project start 2026-08-03** and **estimated completion
+  2030-08-03**. `[verified]` (`edoc-4209395.pdf` p. 0) The press schedule the register previously
+  carried — groundbreaking Q4 2026, full buildout ~2032 — is `[reference]` and is **two years long
+  at the far end**; first building operational Q1 2029 is unaffected and remains `[reference]`.
+  Council, answering from the floor 2026-04-27: "It will take 5-6 years to complete"; "the end user
+  will create at least 250 jobs." `[reference]` (`4.27.26.pdf` p. 4)
+- **Ohio EPA air PTI (emergency generators):** still **not applied for**, and that is now
+  `[verified]` rather than an unsuccessful search (#1402). The campus's own NOI answers the permit
+  status field **`PTI: YET_TO_APPLY`**, certified under penalty of law 2026-07-21.
+  (`edoc-4209395.pdf` p. 0) A full eDoc sweep on entity "QTS" the same day returned **35 documents
+  and no Van Wert air permit of any kind** — QTS's entire Ohio air-permit fleet is Licking County
+  (New Albany, facility IDs 0145000602/0145000603). QTS says generators are emergency backup only,
+  tested monthly; emergency generators <500 hr/yr may fall under permit-by-rule, otherwise a
+  PTI/PTIO is required — whether one is required here is `[open]`, and the certification promises
+  no filing. **This is the single instrument that would lift the facility domain to `live`**, so
+  re-run the eDoc sweep on cadence.
+- **NPDES / construction stormwater — the campus's first state permit (#1402).** Coverage
+  **`2GC08872*AG`** under general permit **OHC000006** was approved **2026-07-30**, effective the
+  same day, expiring 2028-04-22 (the general permit's own cycle date, not a project milestone).
+  Applicant **QTS Realty Trust Inc.**; facility "QTS Data Center", **8002 Mendon Road**; point
+  **40.893356 / -84.5528**; receiving stream **Town Creek**; **792.0000 ac** of land disturbance.
+  `[verified]` (`edoc-4209395.pdf`, `edoc-4209398.pdf`) Ohio EPA's letter names township
+  **Pleasant** only where the NOI names **Pleasant and Ridge** — recorded, not resolved. No
+  **co-permittee** NOI is on file, so the general contractor is `[open]`; Sidney's identical
+  coverage produced one, so this is a live watch. The NOI answers "NO" to both an individual 401
+  WQC and an isolated-wetlands permit while answering **`YET_TO_APPLY`** on the USACE nationwide
+  permit — applicant assertions on a form, not agency determinations.
+- **NPDES / operating discharge:** Ohio EPA's draft general NPDES permit for data centers, **OHD000001**
   (public hearing/comment close Dec 17, 2025 — non-contact cooling water, cooling-tower/boiler
   blowdown, low-volume wastewater, industrial stormwater), was **WITHDRAWN 2026-07-21** and never
   took effect. `[verified]` (`data/reference/oepa/ohd000001-coverage.yaml`) It was never linked to
@@ -423,6 +472,16 @@ standard as of 2026-07-02. `[open]` — re-sweep on the next pass.
 2. **Van Wert City Council / County Commissioners** — executed CRA / PILOT / TIF ordinance(s) with
    %/term, plus the Lincolnview + Vantage school-compensation agreements.
 3. **OEPA air PTI** — emergency generator bank PTI(s) for the Mega Site (NWDO, Van Wert County).
+   **Now known not to exist yet** (#1402): the campus's own NOI certifies `PTI: YET_TO_APPLY` as of
+   2026-07-21, and an eDoc sweep on "QTS" returns no Van Wert air document. So this is no longer a
+   pull but a **watch** — and the highest-value one on this list, because it is the instrument that
+   would ground the campus load and lift the facility domain from `seeded` to `live`. Re-run the
+   eDoc entity search on cadence.
+3a. **Co-permittee NOI + City grading/building permit** — new from #1402. Ohio EPA's approval
+   requires each additional operator at the site to file its own co-permittee NOI (Sidney's
+   identical coverage produced one), so the general contractor is `[open]`. The City grading permit
+   is the network's trigger for moving the facility from `confirmed` to `construction`, and the
+   applicant's filed start date is 2026-08-03.
 4. **Ohio EPA / EPA ECHO** — any facility NPDES coverage / notice-of-intent under OHD000001, and
    a Town Creek / Little Auglaize 7Q10. The **municipal** half of this item is **done** (#1406):
    permit 2PD00006\*WD is committed, the outfall is coordinate-pinned, and the compliance record
@@ -447,7 +506,12 @@ standard as of 2026-07-02. `[open]` — re-sweep on the next pass.
   public-hearing record; council minutes **2026-04-27** and **2026-05-11**.
 - **Ohio EPA NPDES 2PD00006\*WD + draft public notice (#1406)** — `data/documents/oepa/van-wert/`,
   extractions `data/extracted/oepa/van-wert/`, standing register
-  `data/extracted/van-wert/water-watch.yaml`.
+  `data/extracted/van-wert/water-watch.yaml`. **The CITY's plant**, not the campus.
+- **Ohio EPA construction-stormwater coverage `2GC08872*AG` (#1402)** —
+  `data/documents/oepa/van-wert/stormwater/` (manifest: `filename-map.yaml`; three PDFs pulled
+  2026-08-03 from the eDocument portal). Extractions
+  `data/extracted/oepa/van-wert/2GC08872.noi.npdes.yaml` and `2GC08872.approval.npdes.yaml`.
+  **The CAMPUS's own permit** — construction-phase only. Includes the corpus's first site plan.
 - **Campus parcel geometry (#1403)** — `data/reference/van-wert/parcel-assemblage.geojson`,
   `data/extracted/van-wert/bosc-site-footprint.yaml`.
 
@@ -455,6 +519,15 @@ standard as of 2026-07-02. `[open]` — re-sweep on the next pass.
 pending items only — the May 2026 ordinances had already dropped off it by 2026-08-03. The site's
 open WordPress REST media index (`/wp-json/wp/v2/media?search=26-05&per_page=100`) enumerates the
 whole upload archive with dates, titles and URLs, needs no auth, and is how these were found.
+
+**Route note for Ohio EPA permits:** the eDocument public portal
+(`edocpub.epa.ohio.gov/publicportal/edochome.aspx`) is open to scripted search with no auth and no
+challenge, and searching one operator name returns its **whole Ohio fleet** — which is how the
+2026-07-30 Van Wert coverage was found four days after issuance, and how the absence of any Van
+Wert air permit was established rather than assumed. Search by Entity Name ("QTS"); the portal
+serves documents with **no `Content-Disposition`**, so the numeric docid is the as-served identity
+and the committed files are named `edoc-<docid>.pdf`. Re-run it on cadence: the air PTI is the
+instrument that would move this site's facility domain.
 
 ### Secondary / press
 

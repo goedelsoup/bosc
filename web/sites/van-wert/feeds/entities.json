@@ -121,6 +121,54 @@
     "federal_obligations": null
   },
   {
+    "key": "npdes:2GC08872",
+    "display": "QTS Data Center",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "QTS Data Center"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/van-wert/2GC08872.approval.npdes.yaml",
+      "oepa/van-wert/2GC08872.noi.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "QTS REALTY",
+    "display": "QTS Realty Trust Inc.",
+    "kind": "trust",
+    "classification": "trust",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "QTS Realty Trust Inc."
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/van-wert/2GC08872.approval.npdes.yaml",
+      "oepa/van-wert/2GC08872.noi.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "TOWN CREEK",
     "display": "Town Creek",
     "kind": "water",
@@ -132,11 +180,12 @@
     ],
     "signals": [],
     "roles": {
-      "receiving_water": 4
+      "receiving_water": 5
     },
     "parcels": [],
     "addresses": [],
     "sources": [
+      "oepa/van-wert/2GC08872.noi.npdes.yaml",
       "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
       "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
       "oepa/van-wert/2PD00006.fs.npdes.yaml",

@@ -805,9 +805,11 @@ _FORT_WAYNE = SiteProfile(
 # *coming-soon* point; an Ohio site (AEP Ohio / PJM AEP zone, the Ohio LSC connector applies),
 # so the cross-state connector axis is not re-exercised. Geography is sourced + cited below. The
 # data-center dimension is no longer undisclosed: the QTS Van Wert Mega Site went public 2026-05-29
-# ($10B, 902 ac of the ~962 ac annexed 2026-05-11), so a SITE-PLAN-grounded `SiteFacility` is now
-# pinned below (#1402, the #1327 Urbana precedent) — the campus MW is a [reference] bracket, never
-# a fabricated disclosure. See data/extracted/van-wert/data-centers.md.
+# ($10B on the 901.698 ± ac the City annexed and zoned on 2026-05-11 — the ordinances' OWN figure,
+# read off Exhibit A in #1401; the "~962 ac" this comment used to carry was a press number with no
+# support in the record), so a `SiteFacility` is pinned below (#1402, the #1327 Urbana precedent)
+# — the campus MW is a [reference] bracket, never a fabricated disclosure.
+# See data/extracted/van-wert/data-centers.md.
 # Neither floor area nor investment-scaled load screens Van Wert; the only MW figure is the
 # announced "up to 500 MW" ceiling → the announced-ceiling screen (watermark.facility.screening,
 # #1629; central/high = the ceiling, low divides out the PUE ceiling). Replaces the old literal.
@@ -844,7 +846,13 @@ _VAN_WERT = SiteProfile(
     # stormwater (the Atlas-14 corridor point = city centroid; cover scenario pending a site)
     design_lat=40.8696,  # [verified] city centroid = NOAA Atlas-14 point
     design_lon=-84.5829,
-    corridor_name="Town Creek / Little Auglaize corridor",  # [inference] the receiving-water reach
+    # [verified] the receiving-water reach. Instrument-confirmed for the CAMPUS since #1402: the
+    # QTS construction-stormwater NOI (2GC08872*AG) names "Town Creek" as the receiving stream,
+    # the same water the City's WWTP discharges to (2PD00006) and draws its drinking water from.
+    # The name is verified; treating this reach as the design-storm subject is still the modeling
+    # choice `design_lat/lon` encodes (city centroid, NOT the campus point the NOI gives —
+    # 40.893356/-84.5528, 3.66 km northeast; re-pointing is a hydrology decision, not this pin's).
+    corridor_name="Town Creek / Little Auglaize corridor",
     # [verified] SSURGO over the committed campus assemblage (#1403). The old [inference] named the
     # right ground — the Great Black Swamp lake plain — but pre-collapsed a DUAL rating to its
     # undrained letter. Recorded verbatim per WS-20/#1620 so pre_/post_drainage_condition resolve
@@ -908,27 +916,62 @@ _VAN_WERT = SiteProfile(
     supply_gage_secondary="TODO",
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
-    # grid / facility — the disclosed QTS Van Wert Mega Site (#1402). SITE-PLAN-grounded (#1327 Urbana
-    # precedent), NOT air-permit-grounded (contrast Lima / Fort Wayne): operator/type/investment are
-    # disclosed [verified], but the campus MW is NOT officially disclosed — QTS's own FAQ declines to
-    # state capacity. The only MW figure is Thor/Form8tion's "up to 500 MW" [reference], carried as a
-    # bracket (never a point disclosure). Unlike Urbana/Troy-Piqua/Bowling Green, no gross floor area
-    # is disclosed, so the it_load bracket is built off the 500 MW ceiling (not a floor-area screen):
-    # 500 MW central/high (the announced "up to" ceiling — conservative-high downstream, like the
-    # Bowling Green disclosed-peak pin #1435), and a low that reads the same 500 MW as the ALL-IN
-    # campus draw and divides out the PUE ceiling (500 / 1.43 ~= 350 MW implied IT). No on-site
-    # gensets or air permit are disclosed (emergency backup only, no PTI found), so genset_count/
-    # genset_mw/air_permit_citation stay None and the it_load is grounded by it_load_citation.
+    # grid / facility — the disclosed QTS Van Wert Mega Site (#1402). NOT air-permit-grounded
+    # (contrast Lima / Fort Wayne): operator/type/investment are disclosed [verified], but the campus
+    # MW is NOT officially disclosed — QTS's own FAQ declines to state capacity. The only MW figure is
+    # Thor/Form8tion's "up to 500 MW" [reference], carried as a bracket (never a point disclosure).
+    # Unlike Urbana/Troy-Piqua/Bowling Green, no gross floor area is disclosed, so the it_load bracket
+    # is built off the 500 MW ceiling (not a floor-area screen): 500 MW central/high (the announced
+    # "up to" ceiling — conservative-high downstream, like the Bowling Green disclosed-peak pin
+    # #1435), and a low that reads the same 500 MW as the ALL-IN campus draw and divides out the PUE
+    # ceiling (500 / 1.43 ~= 350 MW implied IT).
+    #
+    # READINESS GRADE — this facility is `seeded`, NOT `live`, and that is the correct reading, not a
+    # gap to close. Since #1630 `SiteFacility.is_instrument_grounded` grades the facility domain on
+    # documentary depth: an air permit or a filed disclosure grounding the LOAD, or a [verified]
+    # document/connector grounding the COOLING. Van Wert has neither, and the instruments committed
+    # since the original pin make that a DOCUMENTED negative rather than an unsuccessful search:
+    #   * the campus's construction-stormwater NOI certifies, under penalty of law on 2026-07-21,
+    #     that the air permit-to-install is `YET_TO_APPLY` (data/extracted/oepa/van-wert/
+    #     2GC08872.noi.npdes.yaml) — so no PTI exists to ground the load, on the applicant's own word;
+    #   * AEP Ohio told Council ">30,000 MW" of early interest against 5,342 MW under signed
+    #     agreements and stated NO MW for this campus (#1401, mega-site-instruments.yaml);
+    #   * that NOI is a CONSTRUCTION-phase instrument and documents no cooling system at all.
+    # So the load stays [reference] and the cooling stays the operator's [reference] claim. Do not
+    # reach for `live` by re-grading either one — the network's rule is to let a domain lock and ask
+    # for the source (#1220). What would legitimately lift it: an OEPA air PTI, a PJM interconnection
+    # filing, the AEP Ohio load contract, or a document-grade cooling design.
+    #
+    # No on-site gensets or air permit are disclosed, so genset_count/genset_mw/air_permit_citation
+    # stay None and the it_load is grounded by it_load_citation.
     # See data/extracted/van-wert/data-centers.md.
     facilities=(
         SiteFacility(
             name="Van Wert Mega Site",
-            status=FacilityLifecycle.CONFIRMED,  # land assembled/annexed/zoned; groundbreaking Q4 2026
-            operator="QTS Data Centers (QTS Realty Trust, LLC — Blackstone); developer Thor Equities Group",
+            # Land assembled / annexed / zoned / deeded, and now authorized to disturb ground — but
+            # NOT yet `construction`. The network's trigger for that stage is a grading or building
+            # permit (the Sidney precedent, whose IDENTICAL OHC000006 stormwater coverage issued
+            # 2025-12-05 and did NOT move it — the City grading permit of 2026-05-14 did). Van Wert's
+            # equivalent City permit is not in the corpus, so the stage stays `confirmed` and the
+            # grading permit is the watch (#1408). NOTE the press "groundbreaking Q4 2026" is now
+            # contradicted by the applicant's own filing: the NOI gives a project start of
+            # 2026-08-03 and completion 2030-08-03.
+            status=FacilityLifecycle.CONFIRMED,
+            operator="QTS Data Centers (QTS Realty Trust Inc. — Blackstone); developer Thor Equities Group",
             operator_citation=(
                 "[verified] QTS Data Centers publicly named as the Van Wert Mega Site end user/owner "
                 "2026-05-29 (q.com/data-centers/van-wert; Data Center Dynamics; VW Independent); land "
-                "assembled by Thor Equities / Form8tion."
+                "assembled by Thor Equities / Form8tion. The operator is now INSTRUMENT-named as well "
+                "as press-named: the campus's Ohio EPA construction-stormwater NOI, certified under "
+                "penalty of law 2026-07-21 and approved 2026-07-30, gives the applicant of record as "
+                "'QTS Realty Trust Inc.', 2470 Satellite Blvd NW, Duluth GA 30096 (coverage "
+                "2GC08872*AG, facility 'QTS Data Center', 8002 Mendon Road — data/extracted/oepa/"
+                "van-wert/2GC08872.noi.npdes.yaml). Two register corrections ride on that: the entity "
+                "is an **Inc.**, not the 'QTS Realty Trust, LLC' press carried, and its address of "
+                "record is Georgia, not Overland Park KS. The LAND-HOLDING entity is a third and "
+                "different one — QTS Van Wert LLC, the June 2026 deed grantee (#1403) — so all three "
+                "names are live and none is a synonym for the others; the SOS/deed chain that would "
+                "relate them is still [open] (#1404)."
             ),
             end_use=DcEndUse.COLOCATION,
             end_use_citation=(
@@ -960,30 +1003,55 @@ _VAN_WERT = SiteProfile(
                 "#1435). Replace with the disclosed load when an OEPA air PTI, a PJM interconnection "
                 "filing, or the AEP Ohio load contract (PUCO tariff 24-508-EL-ATA) surfaces it; the "
                 "AEP Ohio Transco Van Wert-Haviland 138 kV LON (OPSB 25-0697-EL-BLN, $45M, in-service "
-                "Dec 2026) is a [reference] transmission signal whose stated need is generic (#1401)."
+                "Dec 2026) is a [reference] transmission signal whose stated need is generic (#1401). "
+                "TWO COMMITTED INSTRUMENTS NOW DATE THE ABSENCE rather than merely failing to find a "
+                "source. (1) The air PTI does not exist yet ON THE APPLICANT'S OWN CERTIFICATION: the "
+                "campus's construction-stormwater NOI, signed under penalty of law 2026-07-21, "
+                "answers the Ohio EPA permit-status field 'PTI: YET_TO_APPLY' (data/extracted/oepa/"
+                "van-wert/2GC08872.noi.npdes.yaml). That converts 'no PTI found' from an unsuccessful "
+                "search into a dated, instrument-grade negative — it does NOT promise a filing, and "
+                "it does not establish that one is required. (2) AEP Ohio addressed Council on the "
+                "record with '>30,000 MW' of early interest against 5,342 MW under signed agreements "
+                "and stated NO megawatt figure for this campus (#1401). Neither instrument discloses "
+                "a load, which is exactly why this stays a [reference] bracket."
             ),
-            # No disclosed gensets or air permit (site-plan-grounded) → the N+1 backup cross-check and the
-            # air-dispatch fleet model are absent; QTS states the generators are emergency backup only
-            # (tested monthly) and no facility-specific PTI was found (#1408).
+            # No disclosed gensets or air permit → the N+1 backup cross-check and the air-dispatch
+            # fleet model are absent; QTS states the generators are emergency backup only (tested
+            # monthly), and the PTI is certified 'YET_TO_APPLY' as of 2026-07-21 (see above; #1408).
             facility_type=(
                 'hyperscale data-center campus ("Van Wert Mega Site"; end user/operator QTS Data Centers '
-                "(QTS Realty Trust, LLC — Blackstone); developer of record Thor Equities Group via "
-                "Form8tion; land-holding entity QTS Van Wert LLC)"
-            ),  # [verified] operator/developer; [reference] land-holding LLC (pending deed/SOS pulls, #1404)
+                "(permit applicant of record QTS Realty Trust Inc. — Blackstone); developer of record "
+                "Thor Equities Group via Form8tion; land-holding entity QTS Van Wert LLC)"
+            ),  # [verified] operator/developer + the Inc. from the 2026-07-21 NOI; [verified] land-holding LLC (#1403 CAMA)
             # gross_floor_area_sqft NOT disclosed → left None (up to 7 buildings; no floor area on record).
             disclosed_investment_usd=10_000_000_000,  # [verified] ~$10B total capital investment (QTS; all outlets)
             disclosure_citation=(
                 "[verified] QTS Data Centers publicly named as the Van Wert Mega Site end user/owner on "
                 "2026-05-29 (q.com/data-centers/van-wert; Data Center Dynamics; VW Independent 2026-05-29; "
-                "corroborated by Toledo Blade, WANE): a ~$10B campus on 902 ac of the ~962 ac annexed by "
-                "the City on 2026-05-11 (emergency ordinances, 6-0 — annexed + zoned I-2 General "
-                "Industrial with conditional data-center use), up to 7 buildings, ~200 permanent "
-                "full-time jobs (>1,500 construction), groundbreaking Q4 2026, first building operational "
-                "Q1 2029, buildout ~2032. Land assembled by Thor Equities / Form8tion from the Marsh "
-                "Foundation (~221-ac initial buy Aug 2025, anchor parcel 170347180100). Gross floor area "
-                "is NOT disclosed (left None). End-use [verified] (public disclosure by the named "
-                "operator); ingesting the naming annexation/site-plan instrument set is #1401's job. See "
-                "data/extracted/van-wert/data-centers.md."
+                "corroborated by Toledo Blade, WANE): a ~$10B campus, up to 7 buildings, ~200 permanent "
+                "full-time jobs (>1,500 construction), first building operational Q1 2029. Land assembled "
+                "by Thor Equities / Form8tion from the Marsh Foundation (~221-ac initial buy Aug 2025, "
+                "anchor parcel 170347180100). Gross floor area is NOT disclosed (left None). End-use "
+                "[verified] (public disclosure by the named operator). "
+                "THE NAMING INSTRUMENTS ARE NOW COMMITTED and three press figures this citation used to "
+                "carry are corrected against them (#1401, data/extracted/van-wert/mega-site-instruments"
+                ".yaml). The City annexed and zoned **901.698 ± ac**, not '902 of ~962' — Exhibit A's "
+                "four component acreages sum exactly to the figure in both ordinance titles, and the "
+                "962 has no support in the record. The three emergency ordinances of 2026-05-11 "
+                "(26-05-028 annexation, 26-05-029 the amendment that defined 'Data Center' in the Van "
+                "Wert Code for the first time and made it an I-2 use, 26-05-030 the conditional I-2 "
+                "zoning) did NOT pass '6-0' — the minutes record no numeric tally at all, only 'all "
+                "concurred', with Roberts abstaining as an employee of the Marsh Foundation; '6-0' is a "
+                "press reconstruction. And the 'conditional' in the conditional zoning is a landscape "
+                "mound: Exhibit C is the entire set of conditions, with no noise, height, water-supply "
+                "or discharge limit. "
+                "THE CONSTRUCTION SCHEDULE IS NOW THE APPLICANT'S OWN, not the press's: its Ohio EPA "
+                "construction-stormwater NOI (2GC08872*AG, effective 2026-07-30) gives a project start "
+                "of **2026-08-03** and completion **2030-08-03**, against the press 'groundbreaking Q4 "
+                "2026 / buildout ~2032', and puts **792.0000 ac** of land disturbance — 87.8% of the "
+                "zoned area — inside the property line, standing back from Town Creek in the northwest "
+                "(data/extracted/oepa/van-wert/2GC08872.noi.npdes.yaml; the site map it attaches is the "
+                "first site plan in the corpus). See data/extracted/van-wert/data-centers.md."
             ),
             # Cooling archetype (#1054): CLOSED_LOOP_DRY recorded as the operator's [reference] claim —
             # the same closed-loop pattern that undercut the Urbana water thesis (#1327), not a document
@@ -1012,7 +1080,20 @@ _VAN_WERT = SiteProfile(
                 "documented cooling design when an NPDES/mechanical instrument lands — which, with OHD000001 "
                 "withdrawn, means an INDIVIDUAL NPDES permit on the direct-discharge path, or the "
                 "City industrial-pretreatment (IU) permit / sewer-use agreement if it blows down to "
-                "sewer (#1408)."
+                "sewer (#1408). "
+                "AN NPDES INSTRUMENT DID LAND ON 2026-07-30 AND IT IS NOT THAT ONE. Coverage "
+                "2GC08872*AG under general permit OHC000006 is CONSTRUCTION-SITE STORMWATER: it "
+                "authorizes runoff from 792 ac of land disturbance, expires 2028-04-22, and documents "
+                "no cooling system, no process discharge and no operating water use whatsoever. It "
+                "leaves this archetype exactly where it was — the operator's [reference] claim. Do not "
+                "let a permit number matching 'NPDES' upgrade the cooling grade. "
+                "The fill discrepancy also WIDENED on the City instruments (#1401): the ~660,000 gal "
+                "'one-time' figure (Safety-Service Director, 2026-04-21) sits against 700,000 gal that "
+                "'will last 6 to 8 years' (a County Commissioner) and 5,500 gal (the since-lost FAQ) — "
+                "and six days after his own press release the same director told Council the City "
+                "'would be incapable' of supplying the fill water. He also said facility water goes to "
+                "the WWTP 'not ... town creek', which the WWTP's own permit contradicts: 2PD00006 "
+                "discharges to Town Creek (#1406)."
             ),
         ),
     ),

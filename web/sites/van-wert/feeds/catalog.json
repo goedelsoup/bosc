@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "aa51180a5b185de199f4d2bfa99ea0f3650deb6df398424788058368fe25707e",
-      "size_bytes": 269677,
+      "sha256": "9a2d7aceae88807be30554ed412b9bc20e41874bb3425095c79a60da01748f76",
+      "size_bytes": 277095,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -168,8 +168,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "183e0e983a49cbe860c8c9acd5ce230aa9609e057abbaa0da34c41a656c3de11",
-      "size_bytes": 40267,
+      "sha256": "239d6fb653e367a351c552202a765c7cf4974b0451ad7f6c9d493db311d6faa6",
+      "size_bytes": 47685,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -462,6 +462,68 @@
     }
   },
   {
+    "id": "van-wert-construction-stormwater",
+    "title": "Van Wert — QTS Campus Construction-Stormwater Coverage 2GC08872*AG (OHC000006) Extractions",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Three documents pulled 2026-08-03 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), committed at data/documents/oepa/van-wert/stormwater/ with a filename map: the applicant's Notice of Intent for coverage under NPDES general permit OHC000006 (EPA form 4494, Application ID 288738011, electronically submitted 2026-07-21 and certified under penalty of law by Tamir Mengesha, Project Manager), the site map it attaches (Site_Map_QTS_Van_Wert.pdf), and Ohio EPA's approval letter of 2026-07-30 granting coverage as facility permit 2GC08872*AG. All three carry clean native text layers and were transcribed from them; nothing was OCR'd. The portal serves no Content-Disposition header, so each file is named for the numeric docid that is its as-served identity. Located by entity-name search on \"QTS\", which returns the operator's whole Ohio fleet — 35 documents, of which these three are the only Van Wert rows.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:van-wert",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "van-wert",
+      "van-wert-county",
+      "van-wert-mega-site",
+      "data-center",
+      "qts",
+      "oepa",
+      "npdes",
+      "stormwater",
+      "construction",
+      "permits",
+      "town-creek",
+      "maumee"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/van-wert/2GC08872.noi.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/van-wert/2GC08872.approval.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "9b89884307aa7e0b8c1563405afdf1ee2c7e8cedad6f71da58cde0a6c43c60b8",
+      "size_bytes": 8732,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Three documents pulled 2026-08-03 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), committed at data/documents/oepa/van-wert/stormwater/ with a filename map: the applicant's Notice of Intent for coverage under NPDES general permit OHC000006 (EPA form 4494, Application ID 288738011, electronically submitted 2026-07-21 and certified under penalty of law by Tamir Mengesha, Project Manager), the site map it attaches (Site_Map_QTS_Van_Wert.pdf), and Ohio EPA's approval letter of 2026-07-30 granting coverage as facility permit 2GC08872*AG. All three carry clean native text layers and were transcribed from them; nothing was OCR'd. The portal serves no Content-Disposition header, so each file is named for the numeric docid that is its as-served identity. Located by entity-name search on \"QTS\", which returns the operator's whole Ohio fleet — 35 documents, of which these three are the only Van Wert rows.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "van-wert-mega-site-instruments",
     "title": "Van Wert — Mega Site Primary-Instrument Set (City Ordinances, Public Hearing, Council Minutes)",
     "scope": "extracted",
@@ -511,8 +573,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "bd8eb36ee0b65b7fb9a3921b0ff5f45743ad0389abd789dd645b1f37efc3715c",
-      "size_bytes": 68228,
+      "sha256": "dcbf7c39bd57d57d9b89d6be496b4d7dd118b3c2c7333c72de4b010e9dc9c17c",
+      "size_bytes": 72066,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,

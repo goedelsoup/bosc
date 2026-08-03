@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "5ebfc9c0d2849deabf16590d0fee9519144759e101b75a2acd262a1360d395a8",
+  "catalog_version": "b11014a085743e51d2d3e5618bb0aff0071e2df30739c5c08b569da77e70b239",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1052,6 +1052,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:van-wert:van-wert-construction-stormwater",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "van-wert-construction-stormwater",
+      "title": "Van Wert — QTS Campus Construction-Stormwater Coverage 2GC08872*AG (OHC000006) Extractions",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:van-wert:van-wert-mega-site-instruments",
       "kind": "dataset",
       "site": "van-wert",
@@ -1108,6 +1116,14 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:van-wert:QTS REALTY",
+      "kind": "entity",
+      "site": "van-wert",
+      "local_id": "QTS REALTY",
+      "title": "QTS Realty Trust Inc.",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:van-wert:TOWN CREEK",
       "kind": "entity",
       "site": "van-wert",
@@ -1124,12 +1140,36 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:van-wert:npdes:2GC08872",
+      "kind": "entity",
+      "site": "van-wert",
+      "local_id": "npdes:2GC08872",
+      "title": "QTS Data Center",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:van-wert:npdes:2PD00006",
       "kind": "entity",
       "site": "van-wert",
       "local_id": "npdes:2PD00006",
       "title": "Van Wert WWTP",
       "feed": "entities"
+    },
+    {
+      "handle": "record:van-wert:oepa/van-wert/2GC08872.approval.npdes.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "oepa/van-wert/2GC08872.approval.npdes.yaml",
+      "title": "QTS Data Center",
+      "feed": "records"
+    },
+    {
+      "handle": "record:van-wert:oepa/van-wert/2GC08872.noi.npdes.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "oepa/van-wert/2GC08872.noi.npdes.yaml",
+      "title": "QTS Data Center",
+      "feed": "records"
     },
     {
       "handle": "record:van-wert:oepa/van-wert/2PD00006.36a58063.npdes.yaml",

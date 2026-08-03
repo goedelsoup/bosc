@@ -1122,6 +1122,16 @@ def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     because the #1630 downgrade holds (QTS declines to state capacity, so the IT load is an
     announced-ceiling ``[reference]`` bracket — committing land does not ground a load); ``story``
     is absent. A future change that floats either off geometry alone fails here.
+
+    #1402 sharpened that same point on a second axis. The campus's OWN first state permit is now
+    committed — Ohio EPA construction-stormwater coverage ``2GC08872*AG`` under general permit
+    OHC000006, the applicant's NOI and Ohio EPA's approval — and ``facility`` STILL reads
+    ``seeded``. That is the assertion worth having: an instrument naming the operator, the site
+    and the receiving water is not an instrument grounding the *load* or the *cooling*, which is
+    what ``SiteFacility.is_instrument_grounded`` actually grades. The NOI is construction-phase,
+    expires 2028-04-22, and documents no cooling system, process discharge or electrical load; it
+    even certifies that the air PTI is ``YET_TO_APPLY``. So a change that lifts this domain merely
+    because a permit whose number matches "NPDES" landed in the corpus fails here.
     """
     bundle = site_bundle("van-wert")
     manifest = _manifest(bundle)
@@ -1141,8 +1151,16 @@ def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     # EPA re-serves the DAM's `permits/doc/` slot in place on modification, so both cycles' bytes
     # land under one basename and the fetcher's collision rule appends each file's own sha256
     # prefix (#1406).
+    #
+    # TWO FACILITIES SHARE THIS LIST AND ONE RECEIVING WATER, which is why the 2GC08872 pair is
+    # asserted beside the 2PD00006 set rather than folded into it: `2PD00006` is the CITY's
+    # wastewater plant and `2GC08872` is the PRIVATE QTS campus's construction-stormwater
+    # coverage (#1402). Both discharge to Town Creek — a finding about the water, not a
+    # relationship between the permits.
     rels = sorted(r["rel"] for r in _rows(bundle, _feeds_by_name(bundle)["records"]))
     assert rels == [
+        "oepa/van-wert/2GC08872.approval.npdes.yaml",
+        "oepa/van-wert/2GC08872.noi.npdes.yaml",
         "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
         "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
         "oepa/van-wert/2PD00006.fs.npdes.yaml",
