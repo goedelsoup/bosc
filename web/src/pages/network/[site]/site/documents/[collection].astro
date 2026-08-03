@@ -1,0 +1,102 @@
+---
+// A collection's landing (#1887) — `…/site/documents/<collection>/`.
+//
+// Two shapes, chosen by `collectionLayout`. Most collections are small enough to show every file
+// on one page; `legal` (1,732) and `commissioners` (995) instead break out their containers, and
+// the rows live one level down. The container level is earned rather than assumed — routing
+// `aedg`'s five files through a container hop would recreate in miniature the walk this whole
+// phase exists to remove.
+import { withSitePaths } from "@watermark/core/sites";
+import Base from "~/layouts/Base.astro";
+import DocPager from "~/components/DocPager.astro";
+import DocTable from "~/components/DocTable.astro";
+import DocFilters from "~/components/DocFilters.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import {
+  type CollectionSummary,
+  collectionLayout,
+  DOCS_PER_PAGE,
+  entriesFor,
+  pageCount,
+  pageSlice,
+  summarizeCollections,
+} from "@watermark/core/docBrowse";
+import { formatBytes, type DocumentCollectionItem, type DocumentEntry } from "@watermark/core/feeds";
+import { facetAvailable } from "@watermark/core/readiness";
+import { withSite } from "@watermark/core/site";
+
+export function getStaticPaths() {
+  return withSitePaths((slug: string) => {
+    // Respect the #1886 facet gate: a site whose documents facet is locked builds no landings.
+    if (!facetAvailable(slug, "documents")) return [];
+    const feed = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
+    return feed.map((collection) => ({
+      params: { collection: collection.slug },
+      props: { collection },
+    }));
+  });
+}
+
+const { collection } = Astro.props as { collection: DocumentCollectionItem };
+const summary = summarizeCollections([collection])[0] as CollectionSummary;
+const layout = collectionLayout(summary);
+
+const base = `/site/documents/${collection.slug}`;
+// Flat layout carries page 1 of every file; containers layout carries only the loose ones —
+// the files that arrived outside any production.
+const listed: DocumentEntry[] = layout === "flat" ? collection.entries : entriesFor(collection, null);
+const pages = pageCount(listed.length, DOCS_PER_PAGE);
+const rows = pageSlice(listed, 1, DOCS_PER_PAGE);
+---
+
+<Base title={`${collection.title} — documents`} section="site">
+  <article class="prose">
+    <p class="rec-crumb">
+      <a href={withSite("/site/documents/")}>Documents</a>
+      <span aria-hidden="true">→</span>
+      <span class="rec-crumb-here">{collection.title}</span>
+    </p>
+    <h1>{collection.title}</h1>
+    <p class="section-lead">
+      {summary.count.toLocaleString("en-US")} documents · {formatBytes(summary.bytes)} · catalogued
+      from <code>data/documents/{collection.slug}/</code>
+    </p>
+    {collection.description && <p class="doccoll-desc">{collection.description}</p>}
+  </article>
+
+  {
+    layout === "containers" && (
+      <ul class="doccoll-grid doccoll-grid--containers">
+        {summary.containers.map((container) => (
+          <li class="doccoll">
+            <a class="doccoll-link" href={withSite(`${base}/${container.slug}/`)}>
+              <h2 class="doccoll-title doccoll-title--mono">{container.slug}</h2>
+            </a>
+            <p class="doccoll-counts">
+              <span class="doccoll-n">{container.count.toLocaleString("en-US")}</span>
+              <span class="doccoll-unit">{container.count === 1 ? "document" : "documents"}</span>
+              <span class="doccoll-bytes">{formatBytes(container.bytes)}</span>
+            </p>
+            {container.folders > 0 && (
+              <p class="doccoll-desc">
+                {container.folders.toLocaleString("en-US")} folders as received, nested up to{" "}
+                {container.maxDepth} deep — shown on each document as provenance, not walked as URLs.
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    rows.length > 0 && (
+      <>
+        {layout === "containers" && <h2 class="doccat-subhead">Files outside a production</h2>}
+        <DocFilters entries={listed} collection={collection.slug} looseOnly={layout === "containers"} />
+        <DocTable entries={rows} />
+        <DocPager base={base} current={1} total={pages} />
+      </>
+    )
+  }
+</Base>

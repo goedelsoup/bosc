@@ -1,0 +1,97 @@
+---
+// One page of catalogued documents (#1887). Shared by the collection and container landings so
+// the two can't drift apart on what a row says.
+//
+// Every catalogued file appears here, including the ones that get no page of their own (OS
+// artifacts, Office "Save as Web Page" sidecars). A public-records production has to stay
+// provably complete, so those are rendered as rows with their as-received name and a direct byte
+// link — they are simply not links to a page. Hiding them would understate what the custodian
+// produced.
+import { folderPathOf } from "@watermark/core/docBrowse";
+import { nonRoutableReason } from "@watermark/core/docRouting";
+import { docAccess, docApiUrl, docPagePath } from "@watermark/core/docView";
+import { type DocumentEntry, formatBytes } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
+
+interface Props {
+  entries: DocumentEntry[];
+  /** Show the provenance folder trail below the container — the nesting the URL no longer carries. */
+  showFolder?: boolean;
+}
+const { entries, showFolder = false } = Astro.props;
+
+const ACCESS_CHIP = {
+  published: { cls: "dchip--present", label: "● published" },
+  "dev-only": { cls: "dchip--devonly", label: "dev-only" },
+  absent: { cls: "dchip--lfs", label: "LFS pointer" },
+} as const;
+
+const NON_ROUTABLE_LABEL = {
+  "os-artifact": "OS artifact",
+  "inline-image": "inline image",
+  "web-page-sidecar": "page sidecar",
+} as const;
+
+// The client filter re-renders rows from `catalog.json`, which stores no rel — it rebuilds each
+// one and needs the same site-prefixed viewer base this SSR pass uses.
+const docBase = withSite("/site/documents/");
+
+// Rows carry no `data-folder`: on a deep production the trail runs ~200 bytes, and the row
+// already prints it in its own cell — which the no-catalog fallback in `doc-catalog.ts` reads
+// instead. Duplicating it would put the corpus's longest strings on every page three times.
+const rows = entries.map((entry) => ({
+  entry,
+  folder: folderPathOf(entry.rel).join(" / "),
+  access: docAccess(entry),
+  excluded: nonRoutableReason(entry),
+}));
+---
+
+<div class="dtable doccat">
+  <table data-doc-base={docBase}>
+    <thead>
+      <tr>
+        <th data-sort="name" aria-sort="none">File</th>
+        {showFolder && <th data-sort="folder" aria-sort="none">Folder (as received)</th>}
+        <th data-sort="type" aria-sort="none">Type</th>
+        <th class="num" data-sort="size" data-numeric aria-sort="none">Size</th>
+        <th data-sort="access" aria-sort="none">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map(({ entry, folder, access, excluded }) => (
+          <tr
+            data-name={entry.name.toLowerCase()}
+            data-type={entry.render_class}
+            data-access={access}
+            data-size={entry.size_bytes}
+          >
+            <td class="file">
+              {excluded ? (
+                <>
+                  <a href={docApiUrl(entry.rel)}>{entry.name}</a>
+                  <span class="dchip dchip--lfs doccat-excluded">{NON_ROUTABLE_LABEL[excluded]}</span>
+                </>
+              ) : (
+                <a href={withSite(docPagePath(entry.rel))}>{entry.name}</a>
+              )}
+            </td>
+            {showFolder && <td class="doccat-folder">{folder || "—"}</td>}
+            <td>
+              <span class="dchip dchip--type">{entry.render_class}</span>
+            </td>
+            <td class="num">{formatBytes(entry.size_bytes)}</td>
+            <td>
+              <span class={`dchip ${ACCESS_CHIP[access].cls}`}>{ACCESS_CHIP[access].label}</span>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<script>
+  import "~/scripts/doc-catalog.ts";
+</script>

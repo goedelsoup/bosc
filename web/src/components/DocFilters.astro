@@ -1,0 +1,84 @@
+---
+// The facet toolbar for a documents landing (#1887).
+//
+// Hidden until `scripts/doc-catalog.ts` enables it, so a no-JS reader gets the SSR page and pager
+// rather than dead controls. When it activates it filters the WHOLE listing — it fetches
+// `catalog.json` and re-renders matching rows across every page — so a facet on a 7-page
+// production means what it says.
+//
+// The facets are the ones the documents feed already carries: type (`render_class`), access
+// (published / dev-only / LFS pointer), and the as-received folder trail. Date is deliberately
+// absent: the feed has no date field, and parsing one out of file and folder names would be an
+// inference presented as a filter.
+import { folderFacets } from "@watermark/core/docBrowse";
+import { docAccess } from "@watermark/core/docView";
+import type { DocumentEntry } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
+
+interface Props {
+  /** The full listing this toolbar filters — not just the current page. */
+  entries: DocumentEntry[];
+  collection: string;
+  container?: string | null;
+  /** Scope to files with NO container — the "outside a production" table on a container landing. */
+  looseOnly?: boolean;
+}
+const { entries, collection, container = null, looseOnly = false } = Astro.props;
+
+const types = [...new Set(entries.map((e) => e.render_class))].sort((a, b) => a.localeCompare(b));
+const accesses = [...new Set(entries.map((e) => docAccess(e)))].sort();
+const folders = folderFacets(entries);
+
+const ACCESS_LABEL = { published: "published", "dev-only": "dev-only", absent: "LFS pointer" } as const;
+---
+
+<div
+  class="doccat-tools"
+  hidden
+  data-doc-filters
+  data-catalog={withSite("/site/documents/catalog.json")}
+  data-collection={collection}
+  data-container={container ?? ""}
+  data-loose={looseOnly ? "true" : undefined}
+>
+  <input
+    type="search"
+    class="doccat-search"
+    placeholder="Search file names…"
+    aria-label="Search documents by file name"
+    autocomplete="off"
+  />
+  <label class="doccat-filter">
+    <span>Type</span>
+    <select data-filter="type">
+      <option value="">All types</option>
+      {types.map((t) => <option value={t}>{t}</option>)}
+    </select>
+  </label>
+  <label class="doccat-filter">
+    <span>Access</span>
+    <select data-filter="access">
+      <option value="">All</option>
+      {accesses.map((a) => <option value={a}>{ACCESS_LABEL[a]}</option>)}
+    </select>
+  </label>
+  {
+    folders.length > 0 && (
+      <label class="doccat-filter doccat-filter--folder">
+        <span>Folder (as received)</span>
+        <select data-filter="folder">
+          <option value="">All {folders.length.toLocaleString("en-US")} folders</option>
+          {folders.map((f) => (
+            <option value={f.path}>
+              {" ".repeat((f.depth - 1) * 2)}
+              {f.name}
+              {f.count > 0 ? ` (${f.count})` : ""}
+            </option>
+          ))}
+        </select>
+      </label>
+    )
+  }
+  <span class="doccat-count" aria-live="polite"></span>
+</div>
+<p class="doccat-empty" hidden>No documents match these filters.</p>

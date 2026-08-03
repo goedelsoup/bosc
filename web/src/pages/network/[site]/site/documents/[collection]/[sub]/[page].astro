@@ -1,0 +1,91 @@
+---
+// Pages 2..N of a container listing (#1887) — `…/site/documents/<collection>/<container>/page-N/`.
+//
+// The deepest route in the document layer, at five segments below the site root. The paths it
+// replaces reached sixteen.
+import { withSitePaths } from "@watermark/core/sites";
+import Base from "~/layouts/Base.astro";
+import DocFilters from "~/components/DocFilters.astro";
+import DocPager from "~/components/DocPager.astro";
+import DocTable from "~/components/DocTable.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import {
+  collectionLayout,
+  DOCS_PER_PAGE,
+  entriesFor,
+  folderFacets,
+  pageCount,
+  pageSegment,
+  pageSlice,
+  summarizeCollections,
+} from "@watermark/core/docBrowse";
+import type { DocumentCollectionItem, DocumentEntry } from "@watermark/core/feeds";
+import { facetAvailable } from "@watermark/core/readiness";
+import { withSite } from "@watermark/core/site";
+
+export function getStaticPaths() {
+  return withSitePaths((slug: string) => {
+    if (!facetAvailable(slug, "documents")) return [];
+    const feed = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
+    return summarizeCollections(feed).flatMap((summary) => {
+      if (collectionLayout(summary) !== "containers") return [];
+      const collection = feed.find((c) => c.slug === summary.slug);
+      if (!collection) return [];
+      return summary.containers.flatMap((container) => {
+        const entries = entriesFor(collection, container.slug);
+        const pages = pageCount(entries.length, DOCS_PER_PAGE);
+        return Array.from({ length: pages - 1 }, (_, i) => i + 2).map((page) => ({
+          params: {
+            collection: summary.slug,
+            sub: container.slug,
+            page: pageSegment(page) as string,
+          },
+          props: {
+            collectionTitle: collection.title,
+            collectionSlug: summary.slug,
+            containerSlug: container.slug,
+            page,
+            entries,
+          },
+        }));
+      });
+    });
+  });
+}
+
+const { collectionTitle, collectionSlug, containerSlug, page, entries } = Astro.props as {
+  collectionTitle: string;
+  collectionSlug: string;
+  containerSlug: string;
+  page: number;
+  entries: DocumentEntry[];
+};
+
+const base = `/site/documents/${collectionSlug}/${containerSlug}`;
+const pages = pageCount(entries.length, DOCS_PER_PAGE);
+const rows = pageSlice(entries, page, DOCS_PER_PAGE);
+const folders = folderFacets(entries);
+---
+
+<Base title={`${containerSlug} page ${page} — ${collectionTitle}`} section="site">
+  <article class="prose">
+    <p class="rec-crumb">
+      <a href={withSite("/site/documents/")}>Documents</a>
+      <span aria-hidden="true">→</span>
+      <a href={withSite(`/site/documents/${collectionSlug}/`)}>{collectionTitle}</a>
+      <span aria-hidden="true">→</span>
+      <a href={withSite(`${base}/`)}>{containerSlug}</a>
+      <span aria-hidden="true">→</span>
+      <span class="rec-crumb-here">page {page}</span>
+    </p>
+    <h1 class="docpage-title docpage-title--mono">{containerSlug}</h1>
+    <p class="section-lead">
+      Page {page} of {pages} · {entries.length.toLocaleString("en-US")} documents as received under
+      <code>data/documents/{collectionSlug}/{containerSlug}/</code>
+    </p>
+  </article>
+
+  <DocFilters entries={entries} collection={collectionSlug} container={containerSlug} />
+  <DocTable entries={rows} showFolder={folders.length > 0} />
+  <DocPager base={base} current={page} total={pages} />
+</Base>
