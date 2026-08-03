@@ -23,12 +23,14 @@ interface Props {
   slug: string;
 }
 const { title, dek, slug } = Astro.props as Props;
-// The escape hatch has to point at a page that BUILDS. Every site-interior route
-// (`/site/`, `/timeline`, …) is emitted by `selectableSitePaths`, so a non-selectable peer has
-// none of them — its only front door is the flat `/network/<slug>` peer home (`[site].astro`),
-// which is exactly where its record inventory and needs board render anyway. Findlay is the first
-// site to hit this: it registers a held walk (#1466) while still awaiting the manual, parity-gated
-// promotion to `selectable`, so a hardcoded `/site/` here was a broken link the link-checker caught.
+// The escape hatch has to point at a page that BUILDS, and has to promise only what that page
+// actually delivers. Every site-interior route (`/site/`, `/timeline`, …) comes from
+// `selectableSitePaths`, so a non-selectable peer has none of them; its only front door is the flat
+// `/network/<slug>` peer page (`[site].astro`), which is a BUILD-STATUS page — stages, locked
+// doors, a notify CTA — not a browsable record. (The record inventory lives in `PartialSiteHome`,
+// which is itself selectable-only.) So the CTA and the copy both branch: offering to "browse the
+// record" there would send a reader to a wall of locks. Findlay is the first site to hit this — it
+// registers a held walk (#1466) while awaiting the manual, parity-gated promotion to `selectable`.
 const selectable = siteForSlug(slug)?.selectable ?? false;
 const recordHref = selectable ? siteHref(slug, "/site/") : siteHref(slug, "");
 ---
@@ -40,12 +42,16 @@ const recordHref = selectable ? siteHref(slug, "/site/") : siteHref(slug, "");
   <h1>{title}</h1>
   <p class="walk-onramp-lead">{dek}</p>
   <p class="story-soon-note">
-    This guided walk is being finished in the open — the record it teaches is still being
-    assembled. It's <strong>coming soon</strong>; nothing in the walk is readable yet. In the
-    meantime, the underlying record is public and fully browsable.
+    This guided walk is being finished in the open. It's <strong>coming soon</strong>; nothing in
+    the walk is readable yet.
+    {
+      selectable
+        ? " In the meantime, the underlying record is public and fully browsable."
+        : " This site is still being assembled too, so its record pages aren't open yet — its build status, and what will land there, are on the site page."
+    }
   </p>
   <div class="walk-cta">
-    <a class="btn" href={recordHref}>Browse the record →</a>
+    <a class="btn" href={recordHref}>{selectable ? "Browse the record →" : "See the site's build status →"}</a>
     <a class="walk-cta-secondary" href={withBase("/ask")}>or ask the record a question</a>
   </div>
 </div>
