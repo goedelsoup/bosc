@@ -39,7 +39,7 @@ source:
 
 method_trap:
   finding: >-
-    Six of the overflow outfalls (002, 003, 011, 012, 015, 016, 018, 024, 025, 026 — every SANITARY
+    Ten of the overflow outfalls (002, 003, 011, 012, 015, 016, 018, 024, 025, 026 — every SANITARY
     station) return TWO parameter blocks from the effluent-chart service, carrying overlapping
     monitoring periods with identical values, because the permit term spans two limit sets. Summing
     every returned row double-counts them. The ten CSO stations and station 300 return one block
@@ -75,7 +75,8 @@ combined_sewer_overflows:
     outfalls: ['013', '014', '022', '023']
     finding: >-
       Four of the ten authorized CSOs reported no overflow in the entire 42-month window,
-      including 013 — one of the two Eagle Creek outfalls.
+      including 013 — one of the two Eagle Creek outfalls. These are affirmative zeros, not gaps:
+      every monitoring period at these stations carries NODI code C, "No Discharge".
   totals:
     events: {'2023': 4, '2024': 8, '2025': 12, '2026_partial': 11}
     volume_million_gallons: {'2023': 1.27, '2024': 5.87, '2025': 6.46, '2026_partial': 7.50}
@@ -86,29 +87,73 @@ combined_sewer_overflows:
     '007': 0.81
     '010': 0.65
     '019': 1.30
+    rounding_note: >-
+      These six values sum to 7.51, while the total above is 7.50. The total is correct: the raw
+      sum of the underlying DMR values is 7.504 MG, which rounds to 7.50, whereas each per-outfall
+      part rounded to two decimals independently and then summed gives 7.51. The 0.01 difference is
+      rounding of the parts, not a missing outfall. Same convention as the deduplication note
+      above — arithmetic is done on the raw values and rounded once, at the end.
 
 # --- sanitary sewer overflows --------------------------------------------------------------------
 
 sanitary_sewer_overflows:
   monitored_count: 10
-  plus_reporting_station: >-
-    Station 300 is the permit's SSO reporting station rather than a located outfall; it is listed
-    separately below and not attributed to a street address.
-  reported_events_by_outfall:
-    '002': {'2023': 1, '2024': 2, '2025': 1, '2026_partial': 0, location: West end of Edinborough
-            Drive}
-    '011': {'2023': 2, '2024': 5, '2025': 3, '2026_partial': 3, location: First and Bank Street}
-    '018': {'2023': 3, '2024': 7, '2025': 3, '2026_partial': 3, location: East End of Tioga Avenue}
-    '026': {'2023': 0, '2024': 0, '2025': 0, '2026_partial': 1, location: Fairway and Greendale}
-    '300': {'2023': 1, '2024': 3, '2025': 8, '2026_partial': 1, location: SSO reporting station}
-  totals:
-    events: {'2023': 7, '2024': 17, '2025': 15, '2026_partial': 8}
+  two_counting_bases:
+    caution: >-
+      ⚠️ The ten located SSO stations and station 300 are TWO DIFFERENT COUNTING BASES and MUST NOT
+      BE SUMMED. Station 300 is a system-wide reporting station, not a located outfall, and the
+      permit defines its occurrence count over the whole collection system.
+    station_300_verbatim:
+      source: data/documents/oepa/findlay/2PD00008.pdf
+      page: 7
+      part: I, B.3 — SSO Monitoring, Notes for Station Number 2PD00008300
+      text: >-
+        "Only sanitary sewer overflows that enter waters of the state, either directly or through a
+        storm sewer or other conveyance, must be reported under this monitoring station." And for
+        counting: "each location on the sanitary sewer system where there is an overflow, spill,
+        release, or diversion of wastewater on a given day that enters waters of the state is
+        counted as one occurrence... At the end of the month, total the daily occurrences."
+    consequence: >-
+      Station 300 counts overflows anywhere on the sanitary system — manholes, damaged pipe, any
+      location — restricted to those reaching waters of the state, and counts one occurrence per
+      location per day. The ten located stations count at their own named points on a different
+      basis. An overflow could appear in both, in one, or in neither. A combined "sanitary total"
+      is therefore not a defined quantity, and this record no longer publishes one.
+  located_stations:
+    reported_events_by_outfall:
+      '002': {'2023': 1, '2024': 2, '2025': 1, '2026_partial': 0, location: West end of Edinborough
+              Drive}
+      '011': {'2023': 2, '2024': 5, '2025': 3, '2026_partial': 3, location: First and Bank Street}
+      '018': {'2023': 3, '2024': 7, '2025': 3, '2026_partial': 3, location: East End of Tioga
+              Avenue}
+      '026': {'2023': 0, '2024': 0, '2025': 0, '2026_partial': 1, location: Fairway and Greendale}
+    subtotal_located: {'2023': 6, '2024': 14, '2025': 7, '2026_partial': 7}
+  system_wide_station_300:
+    reported_occurrences: {'2023': 1, '2024': 3, '2025': 8, '2026_partial': 1}
+    note: >-
+      Reported on its own basis, per the permit language quoted above. The rise from 3 in 2024 to 8
+      in 2025 is a rise in system-wide occurrences reaching waters of the state; it is not additive
+      with the located-station subtotal and does not necessarily represent different events.
+  silent_outfalls:
+    outfalls: ['003', '012', '015', '016', '024', '025']
+    finding: >-
+      Six of the ten located SSO stations reported no overflow occurrence in the entire 42-month
+      window: 003 (Howard Run), 012 (Sixth and South Main Street), 015 (Findlay and Shinkle
+      Street), 016 (Northwest of Hull and Milton), 024 (Washington Street and Marshall Street) and
+      025 (Park and First Street).
+    these_are_reported_zeros_not_gaps: >-
+      [verified] Each carries all 84 of its monitoring rows (42 months x the two limit-set blocks)
+      with NODI code C, "No Discharge" — the only NODI code present anywhere in this permit's
+      overflow record. So these are affirmative monthly reports of no overflow, NOT unreported
+      periods, and the absence-is-not-zero rule that applies to sanitary VOLUME below does not
+      apply to these occurrence counts.
   volume:
     reported: false
     caution: >-
       Volume is NOT reported for any sanitary overflow station in this record — parameter 74063
       returns no value at any of them. Read that as not reported, never as zero. Only the combined
-      outfalls carry volumes.
+      outfalls carry volumes. (Distinct from the occurrence counts above, where a blank IS an
+      affirmative "No Discharge" report.)
 
 # --- what the numbers say, and what they do not -------------------------------------------------
 
@@ -126,10 +171,23 @@ findings:
     zero in 2023, one in 2024 and two in 2025 — the steepest per-outfall trend in the set.
 - tag: verified
   finding: >-
-    Sanitary sewer overflows outnumber combined ones in every year of the record: 17 against 8 in
-    2024, 15 against 12 in 2025. Two stations — 011 (First and Bank Street) and 018 (East End of
-    Tioga Avenue) — account for most of them, and station 300's reported count rose from 3 in 2024
-    to 8 in 2025.
+    The LOCATED sanitary stations reported more overflow occurrences than the combined outfalls in
+    2023 (6 against 4) and 2024 (14 against 8), and FEWER in 2025 (7 against 12) and in the 2026
+    partial (7 against 11). So sanitary activity does not outrun combined activity across the
+    record — it did in the first two years and does not in the last two. Two stations, 011 (First
+    and Bank Street) and 018 (East End of Tioga Avenue), account for nearly all of it; six of the
+    ten located stations reported none at all.
+  supersedes: >-
+    An earlier draft of this record stated that sanitary overflows outnumber combined ones "in
+    every year", on totals that SUMMED the located stations with station 300. That sum is not a
+    defined quantity — see `two_counting_bases` above — and the claim does not survive separating
+    them. Recorded here because the erroneous figures (7/17/15/8) may have propagated.
+- tag: verified
+  finding: >-
+    Station 300, the system-wide SSO reporting station, went 1 -> 3 -> 8 occurrences across 2023,
+    2024 and 2025, with 1 through June 2026. On its own basis that is the sharpest rise anywhere in
+    this record, and 2025's 8 exceeds the 7 reported that year across all ten located stations
+    combined — which is possible precisely because the two bases count different things.
 - tag: open
   finding: >-
     Whether any of the reported sanitary overflows was treated by Ohio EPA as an unauthorized

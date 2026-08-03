@@ -154,7 +154,8 @@ What 52599 requires is the phosphorus milestone: a technical justification for r
 retaining local industrial-user limits, including specifically whether local limits for total
 phosphorus "will facilitate substantial progress toward achieving a monthly average effluent
 concentration target of **0.5 mg/L**" — half the permit's own limit — or evidence that they would
-not. The eight significant industrial users discharging 0.428 MGD are the load that reaches. It is
+not. The eight significant industrial users discharging 0.428 MGD (renewal fact sheet, p. 8) are
+the load that reaches. It is
 the one scheduled event in this permit that could change the plant's phosphorus trajectory, and it
 is the one the federal record says has not been reported.
 
@@ -193,14 +194,29 @@ The DMRs supply one:
 |---|---|---|---|---|
 | CSO events | 4 | 8 | 12 | **11** |
 | CSO volume, MG | 1.27 | 5.87 | 6.46 | **7.50** |
-| SSO events | 7 | 17 | 15 | 8 |
+| SSO events, located stations | 6 | 14 | 7 | 7 |
+| SSO occurrences, station 300 | 1 | 3 | 8 | 1 |
+
+The two sanitary rows are **separate counting bases and must not be added**. Station 300 is not a
+located outfall: the permit makes it a system-wide reporting point counting overflows anywhere on
+the collection system — "each location… where there is an overflow, spill, release, or diversion of
+wastewater on a given day that enters waters of the state is counted as one occurrence" — and only
+those reaching waters of the state. An overflow may appear in one row, both, or neither, so there
+is no defined "sanitary total" and this record does not publish one.
 
 Combined-sewer activity is rising, and through the first six months of 2026 the system has already
 released **more volume than in any complete year on the record**. Four of the ten authorized CSOs
 reported nothing at all across the whole 42 months. Outfall 004, East of Old WWTP, has gone
-0 → 1 → 2 → 3 and is the steepest per-outfall trend in the set. Sanitary overflows outnumber
-combined ones every year — 17 against 8 in 2024, 15 against 12 in 2025 — concentrated at First and
-Bank Street and East End of Tioga Avenue, and no volume is reported for any of them.
+0 → 1 → 2 → 3 and is the steepest per-outfall trend in the set.
+
+On the sanitary side the picture is narrower than it first looks. The located stations reported
+more occurrences than the combined outfalls in **2023 (6 against 4) and 2024 (14 against 8)**, and
+**fewer in 2025 (7 against 12) and through June 2026 (7 against 11)** — so sanitary activity does
+not outrun combined activity across the record; it did in the first two years and does not in the
+last two. What is concentrated is the source: 011 (First and Bank Street) and 018 (East End of
+Tioga Avenue) account for nearly all of it, and six of the ten located stations reported none at
+all. Station 300 is the one line that rises monotonically — 1 → 3 → 8 — and on its own basis that
+is the sharpest trend in the record. No volume is reported for any sanitary station.
 
 Two things this does **not** establish, both recorded in the artifact so nobody does the arithmetic
 later. It does not say the four-overflows-per-typical-year level of control is or is not attained:
@@ -270,8 +286,12 @@ single informal State Violation/Reminder Notice the day it was recorded and noth
 governs the annual water-quality report a system delivers to its customers. It is a *reporting*
 rule. There is **no maximum-contaminant-level violation, no treatment-technique violation, and no
 monitoring violation of any other rule** anywhere in the record. Lead at the 90th percentile runs
-0.0021–0.0025 mg/L against a 0.015 mg/L action level across eight sample rounds — a factor of six
-to seven below. ECHO publishes no copper result, which is an absence, not a zero.
+0.0021–0.0025 mg/L against a 0.015 mg/L action level across the five periods carrying a published
+result — a factor of six to seven below. ECHO lists eight periods and prints "0 mg/L" for three of
+them; a 90th percentile of exactly zero is not a plausible analytical result, so those are read as
+no published result rather than a measured zero — the same absence rule that applies to copper,
+which has no published result at all. Reading them either way leaves the conclusion untouched: a
+zero cannot raise a percentile.
 
 Whether the 2019 item is a continuing failure or a record the state never closed stays `[open]`.
 Seven and a half years unaddressed with one same-day informal notice and no escalation looks more
