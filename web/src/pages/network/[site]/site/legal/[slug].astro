@@ -2,13 +2,24 @@
 import { withSitePaths } from "@watermark/core/sites";
 import { getCollection, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
-import { legalBySlug } from "@watermark/core/legal";
+import { legalBySlug, scopedLegal } from "@watermark/core/legal";
+import { facetAvailable } from "@watermark/core/readiness";
 import { withSite } from "@watermark/core/site";
 
 export async function getStaticPaths() {
   // Only the curated legal-history set (lib/legal.ts) is published.
   const entries = await getCollection("legal", (e) => legalBySlug.has(e.id));
-  return withSitePaths(entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } })));
+  // Per-site (#1886): emit a doc route for a site only when the document came out of THAT site's
+  // corpus subtree — so a peer cannot open the reference build's Select-Committee testimony,
+  // withholding map, or corpus-completeness audit by URL. Same shape as the reference facet's
+  // #1260 gate; the callback form binds `facetAvailable`'s bundle reads to each site.
+  return withSitePaths((slug) => {
+    if (!facetAvailable(slug, "legal")) return [];
+    const owned = new Set(scopedLegal(slug).map((d) => d.slug));
+    return entries
+      .filter((entry) => owned.has(entry.id))
+      .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+  });
 }
 
 const { entry } = Astro.props;

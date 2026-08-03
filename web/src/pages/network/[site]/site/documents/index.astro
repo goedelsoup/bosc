@@ -2,10 +2,18 @@
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
+import SectionLocked from "~/components/SectionLocked.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import { docAccess, docPagePath } from "@watermark/core/docView";
 import { formatBytes, type DocumentCollectionItem } from "@watermark/core/feeds";
+import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
 import { withSite } from "@watermark/core/site";
+
+// The declared facet gate (#1886) — the catalog mirrors THIS site's `data/documents/` subtree, so
+// a site with none of its own gets the lock and the ask rather than an empty table.
+const { slug } = Astro.props as { slug: string };
+const facet = RECORD_FACETS.documents;
+const locked = !facetAvailable(slug, "documents");
 
 const collections = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
 
@@ -44,12 +52,20 @@ const accesses = [...new Set(rows.map((r) => r.access))];
 <Base title="Documents catalog" section="site">
   <article class="prose">
     <h1>Documents catalog</h1>
-    <p class="section-lead">
-      {rows.length.toLocaleString("en-US")} primary source documents across
-      {collections.length} collections, mirrored from <code>data/documents/</code>.
-      Source bytes are immutable chain-of-custody evidence; as-received filenames
-      are preserved verbatim.
-    </p>
+    {locked ? (
+      <SectionLocked
+        section={facet.section}
+        label={facet.label}
+        holds="source documents of its own — the primary records this watershed point's story is read from"
+      />
+    ) : (
+      <p class="section-lead">
+        {rows.length.toLocaleString("en-US")} primary source documents across
+        {collections.length} collections, mirrored from <code>data/documents/</code>.
+        Source bytes are immutable chain-of-custody evidence; as-received filenames
+        are preserved verbatim.
+      </p>
+    )}
   </article>
 
   <div class="doccat-tools" hidden>

@@ -2,9 +2,20 @@
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
+import SectionLocked from "~/components/SectionLocked.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { PlaceItem } from "@watermark/core/feeds";
+import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
 import { withSite } from "@watermark/core/site";
+
+// The declared facet gate (#1886). NOTE it is narrower than the `places` DOMAIN: a site can have
+// committed campus/footprint geometry — which lights the domain and draws the map — without any
+// per-place PROFILE. So the lock here asks for the profiles specifically, and the section stays
+// open elsewhere; claiming a site "has no places" when its parcel assemblage is committed would
+// be the mirror-image error to the one this issue fixes.
+const { slug } = Astro.props as { slug: string };
+const facet = RECORD_FACETS.places;
+const locked = !facetAvailable(slug, "places");
 
 const places = hasFeed("places") ? loadFeed<PlaceItem[]>("places") : [];
 const sorted = [...places].sort((a, b) => a.name.localeCompare(b.name));
@@ -17,13 +28,19 @@ const sorted = [...places].sort((a, b) => a.name.localeCompare(b.name));
       <a href={withSite("/site/people/")}>People</a>
     </p>
     <h1>Places &amp; parcels</h1>
-    <p class="section-lead">
-      The geographic detail behind the entity graph — the campus, the corridor sites,
-      and the parcels the record turns on. {places.length} profile(s).
-    </p>
+    {!locked && (
+      <p class="section-lead">
+        The geographic detail behind the entity graph — the campus, the corridor sites,
+        and the parcels the record turns on. {places.length} profile(s).
+      </p>
+    )}
     {
-      places.length === 0 ? (
-        <p class="stub-note">No places have been published yet for this site.</p>
+      locked ? (
+        <SectionLocked
+          section={facet.section}
+          label={facet.label}
+          holds="individual place profiles — the parcels, facilities, and waters the record locates, each with a page of its own"
+        />
       ) : (
         <table>
           <thead>

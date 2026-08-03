@@ -2,8 +2,16 @@
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
+import SectionLocked from "~/components/SectionLocked.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { ExhibitItem } from "@watermark/core/feeds";
+import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
+
+// The declared facet gate (#1886) — a site with nothing curated of its own asks for a source
+// instead of standing an empty page under a section lead that promises one.
+const { slug } = Astro.props as { slug: string };
+const facet = RECORD_FACETS.exhibits;
+const locked = !facetAvailable(slug, "exhibits");
 
 const exhibits = hasFeed("exhibits") ? loadFeed<ExhibitItem[]>("exhibits") : [];
 ---
@@ -11,13 +19,15 @@ const exhibits = hasFeed("exhibits") ? loadFeed<ExhibitItem[]>("exhibits") : [];
 <Base title="Exhibits" section="site">
   <article class="prose">
     <h1>Exhibits</h1>
-    <p class="section-lead">
-      Curated, citable slices of the source record — a whole document or a
-      page-range slice of a bundle (0-based, inclusive). Downloads point at the
-      immutable source under <code>data/documents/</code>.
-    </p>
-
-    {exhibits.length === 0 && <p class="stub-note">No exhibits have been published yet for this site.</p>}
+    {locked ? (
+      <SectionLocked section={facet.section} label={facet.label} />
+    ) : (
+      <p class="section-lead">
+        Curated, citable slices of the source record — a whole document or a
+        page-range slice of a bundle (0-based, inclusive). Downloads point at the
+        immutable source under <code>data/documents/</code>.
+      </p>
+    )}
 
     <div class="cards">
       {
