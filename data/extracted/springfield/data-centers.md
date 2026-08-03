@@ -60,10 +60,14 @@ enters this register.
 
 - **City moratorium:** a 6-month moratorium on *new* data centers was proposed at the **2026-06-16**
   Springfield City Commission (Cmsr. Ricketts); does **not** affect 5C (already under construction). `[verified]`
-- **Ohio EPA Draft General NPDES Permit for Data Centers (OHD000001):** statewide draft (comment thru
-  2025-12-17) covering non-contact cooling water, cooling-tower/boiler blowdown, generator/fuel
-  stormwater; bars discharge within 500 yds upstream of a public-water surface intake. Directly
-  relevant to the Springfield receiving-water screen. `[verified]`
+- **Ohio EPA General NPDES Permit for Data Centers (OHD000001) — WITHDRAWN:** public-noticed as a
+  draft 2025-10-31 (hearing 2025-12-17, comment closed 2026-01-16), it would have covered
+  non-contact cooling water, cooling-tower/boiler blowdown and generator/fuel stormwater, and barred
+  discharge within 500 yds upstream of a public-water surface intake. Ohio EPA's **2026-07-21**
+  Community Notice declined to finalize it, calling individual NPDES issuance "the most appropriate
+  path forward". So no general permit will ever disclose a Springfield data center's cooling
+  discharge; on the NPDES path only an individual permit remains, and a campus discharging to the
+  City's sanitary sewer holds no NPDES permit at all. `[verified]`
 
 ## Filed land-use instruments (Clark County)
 
@@ -121,10 +125,12 @@ air-permit power figure before relying on the draw. `[open]`
 **Cooling-cycling reconciliation (B3, #1683).** The A3 harness (`watermark cooling-reconcile`) tested
 the `closed_loop_dry` "not evaporative" claim against the record. **No matching makeup record is on file**
 (the Ohio DNR WWFRP water-withdrawal registry — the A1 connector — has no Clark County withdrawal pull
-built) and **no matching facility-own discharge record is on file** (OHD000001, the Ohio EPA draft
-data-center NPDES general permit, comment thru 2025-12-17, is still draft and not yet linked to the
-facility by name; no facility-specific NPDES/DMR located) — an **absence of records, not evidence of zero
-use or discharge**. So the outcome is a **`gap`** — the pin stays `closed_loop_dry` / `[reference]`,
+built) and **no matching facility-own discharge record is on file** (OHD000001, the Ohio EPA
+data-center NPDES general permit, was **withdrawn 2026-07-21** and never covered the facility; no
+facility-specific NPDES/DMR located) — an **absence of records, not evidence of zero
+use or discharge**. That discharge-side absence is now **permanent rather than pending**: no general
+permit will ever supply the record, which sharpens the records ask rather than closing it. So the
+outcome is a **`gap`** — the pin stays `closed_loop_dry` / `[reference]`,
 **not** upgraded to `document`-grade. The pivotal call: the 300,000 gal/day figure is a **permitted
 withdrawal ceiling** (a >80 °F extreme-heat max, "near zero" most of the year, ~30k gal/day realistic)
 **self-disclosed by the same City FAQ that makes the claim** — so, unlike Troy-Piqua's
@@ -150,8 +156,12 @@ request (#1688 / #1415). See `data/reference/oepa/cooling-reconciliation.yaml`. 
    parcel when disclosed (location + land-assembly).
 4. **City of Springfield Enterprise Zone Agreement** + ordinance/minutes (5C public-subsidy edge).
 5. **Ohio TCA award documents** — Constant Company (Oct 2025) + Crusoe DC sales-tax exemptions (state edges).
-6. **Ohio EPA NPDES** — whether 5C/Crusoe take coverage under draft General Permit OHD000001 (the Mad
-   River discharge edge, if any; closed-loop should minimize it).
+6. **Ohio EPA NPDES / City pretreatment** — OHD000001 was withdrawn 2026-07-21, so the general-permit
+   route is closed: ask instead whether an **individual** NPDES permit or application exists for
+   5C/Crusoe (the Mad River discharge edge, if any), and — because a campus on the City's sanitary
+   sewer holds no NPDES permit at all — the City's **industrial-user / pretreatment permit and
+   sewer-use agreement**, which is the instrument that would actually disclose cooling blowdown
+   (C2, #1688).
 7. **Clark County C&ED — rezoning Z-2026-05 file** (application + staff report + parcel map) and the
    **Springfield-Beckley Airport JEDD** agreement, to name the end use of the 5232 Peacock Rd I-1
    rezoning (data center vs. generic industrial). Records request **#523**.

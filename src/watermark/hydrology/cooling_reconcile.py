@@ -1643,8 +1643,8 @@ def _documented_water(
     Wires the A1 + A2 seams; returns ``(None, None, None)`` for every live candidate today —
     the honest current state, which is itself the gap finding:
 
-    * **Blowdown (A2)** comes from :func:`watermark.hydrology.blowdown.resolve_coverage`. While
-      OHD000001 is a draft permit and no facility-own DMR is on record, it is ``unknown`` → no
+    * **Blowdown (A2)** comes from :func:`watermark.hydrology.blowdown.resolve_coverage`. With
+      OHD000001 WITHDRAWN (2026-07-21) and no facility-own DMR on record, it is ``unknown`` → no
       documented blowdown. When a DMR relpath lands, this reads it.
     * **Makeup (A1)** would come from the Ohio DNR WWFRP registry, but that connector has only
       built Allen County and none of the closed-loop candidates report withdrawal there — so
@@ -1775,8 +1775,11 @@ def reconcile_troy_piqua(*, settings: Settings | None = None) -> ReconciliationR
 # fill — the unresolved #1409 fill-vs-annual discrepancy. B2 reconciles it explicitly so the disclosed
 # figure is recorded (as a self-report, never a metered instrument) and the gap's lead names the
 # specific open quantity (the initial closed-loop fill). Records A1 (no Van Wert County withdrawal
-# built) + A2 (OHD000001 draft, no facility-own DMR) are absent → the honest outcome stays a GAP with
-# the [reference] pin KEPT, never silently promoted (the issue's acceptance).
+# built) + A2 (OHD000001 WITHDRAWN 2026-07-21, no facility-own DMR) are absent → the honest outcome
+# stays a GAP with the [reference] pin KEPT, never silently promoted (the issue's acceptance). That
+# A2 absence is permanent rather than pending: no general permit will ever supply the record, so on
+# the NPDES path only an individual permit is left, and a campus on the City's sanitary sewer holds
+# no NPDES permit at all — its disclosing instrument is the City's IU/pretreatment file (#1688).
 #
 # 660,000 gal/yr / 365 ≈ 1,808 gal/day ≈ 0.0018 MGD — below the ~0 screening floor, so the disclosed
 # figure is consistent with a dry loop; but a single-source self-report cannot upgrade the source.
@@ -1806,9 +1809,10 @@ def reconcile_van_wert(*, settings: Settings | None = None) -> ReconciliationRec
     ``closed_loop_dry``), reconciled explicitly rather than through the generic cohort loop so its
     operator-disclosed ~660k gal figure is recorded (on ``disclosed_makeup`` — never ``documented_*``,
     a self-report is not a metered instrument) and its gap lead is sharpened onto the initial-fill open
-    quantity (#1409). With no A1 withdrawal (Van Wert County is not built) and no A2 blowdown (OHD000001
-    is draft, no facility-own DMR), the honest outcome is a GAP that KEEPS the [reference] pin — the
-    disclosed figure is consistent with a dry loop at screening scale but cannot upgrade the source.
+    quantity (#1409). With no A1 withdrawal (Van Wert County is not built) and no A2 blowdown
+    (OHD000001 WITHDRAWN 2026-07-21, no facility-own DMR), the honest outcome is a GAP that KEEPS the
+    [reference] pin — the disclosed figure is consistent with a dry loop at screening scale but
+    cannot upgrade the source. The A2 absence is permanent, not pending.
     Closed-loop-dry needs no climatology, so a per-site ``Settings`` resolves it.
     """
     base = settings or get_settings()
@@ -1842,8 +1846,12 @@ def reconcile_van_wert(*, settings: Settings | None = None) -> ReconciliationRec
 # >80degF extreme-heat max, "near zero" most of the year, ~30k gal/day realistic. B3 reconciles it
 # explicitly so both self-reported figures are recorded (the ceiling on ``disclosed_ceiling``, the
 # realistic draw on ``disclosed_makeup`` — never ``documented_*`` or ``reserved_*``) and the gap lead
-# names the actual-vs-ceiling denominator. A1 (no Clark County withdrawal built) + A2 (OHD000001 draft,
-# no facility-own DMR) are absent → the honest outcome stays a GAP with the [reference] pin KEPT.
+# names the actual-vs-ceiling denominator. A1 (no Clark County withdrawal built) + A2 (OHD000001
+# WITHDRAWN 2026-07-21, no facility-own DMR) are absent → the honest outcome stays a GAP with the
+# [reference] pin KEPT. The A2 absence is now PERMANENT rather than pending — no general permit will
+# ever supply the blowdown record — which sharpens the C2 ask rather than closing it: on the NPDES
+# path only an individual permit is left, and a campus discharging to the City's sanitary sewer holds
+# no NPDES permit at all, so its disclosing instrument is the City's IU/pretreatment record (#1688).
 #
 # The pivotal B3 call (vs B1 Troy-Piqua): a permitted PEAK ceiling self-disclosed by the claim's OWN
 # source is NOT a reservation_conflict. Troy-Piqua's 2.0 MGD was an independently-negotiated reservation
@@ -1898,11 +1906,14 @@ def reconcile_springfield(*, settings: Settings | None = None) -> Reconciliation
     ``disclosed_ceiling`` and the ~30k gal/day "realistic" ongoing draw on ``disclosed_makeup`` (never
     ``documented_*`` (metered) or ``reserved_*`` (a negotiated reservation) — both are self-reports from
     the claim's own source). With no A1 withdrawal (Clark County is not built) and no A2 blowdown
-    (OHD000001 is draft, no facility-own DMR), the honest outcome is a GAP that KEEPS the [reference]
-    pin: a self-disclosed permit ceiling from the claim's own source is not a ``reservation_conflict``
-    (a dry loop sits far below it) and cannot corroborate the claim (that would be circular). The lead
-    sharpens onto the actual-vs-ceiling denominator (#1415). Closed-loop-dry needs no climatology, so a
-    per-site ``Settings`` resolves it.
+    (OHD000001 WITHDRAWN 2026-07-21, no facility-own DMR), the honest outcome is a GAP that KEEPS the
+    [reference] pin: a self-disclosed permit ceiling from the claim's own source is not a
+    ``reservation_conflict`` (a dry loop sits far below it) and cannot corroborate the claim (that
+    would be circular). The A2 absence is permanent, not pending — no general permit will ever
+    supply the blowdown record — so the lead sharpens onto the actual-vs-ceiling denominator
+    (#1415) and the City's own IU/pretreatment record (#1688), the instrument that discloses a
+    sewer-discharging campus. Closed-loop-dry needs no climatology, so a per-site ``Settings``
+    resolves it.
     """
     base = settings or get_settings()
     site_settings = _site_settings("springfield", base)

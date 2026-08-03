@@ -98,8 +98,9 @@ class GeneralPermit(BaseModel):
         return self.state is GeneralPermitState.EFFECTIVE and self.effective_date is not None
 
 
-# The OHD000001 lifecycle, cited. Draft as of ``asof``; this is the single place to update when the
-# Director issues final action (flip ``state``/``effective_date``), then rerun ``watermark oepa
+# The OHD000001 lifecycle, cited. WITHDRAWN as of ``asof`` — the Director acted, by declining, so
+# this is terminal rather than pending. It remains the single place to update should the agency ever
+# revive a general permit (flip ``state``/``effective_date``), then rerun ``watermark oepa
 # coverage --write``. It is a documented fact about one statewide permit, not a per-site knob —
 # so it lives as a cited named constant (the WS-23 pattern), not baked into a site profile.
 OHD000001 = GeneralPermit(

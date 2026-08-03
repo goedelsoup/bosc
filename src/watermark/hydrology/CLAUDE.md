@@ -99,8 +99,10 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   one, and on the NPDES path an individual permit is the only instrument left — but a
   sewer-discharging facility holds no NPDES permit at all and is disclosed by the City's
   IU/pretreatment record instead, which is what the C2 ask targets) coverage per closed-loop
-  candidate: while the permit is draft it is gated to `not_available` (a `[verified]` cited
-  absence), written to `data/reference/oepa/ohd000001-coverage.yaml` by `watermark oepa coverage
+  candidate: a permit that is not effective — draft or withdrawn — gates every candidate to
+  `not_available` (a `[verified]` cited absence; the two share that status but not the finding, a
+  draft absence being pending and a withdrawn one permanent), written to
+  `data/reference/oepa/ohd000001-coverage.yaml` by `watermark oepa coverage
   --write`. The cohort is registry-derived (`SiteFacility.cooling_model` in
   {`closed_loop_dry`, `hybrid_adiabatic`}); a facility-own discharge absence stays an `[open]`
   gap (→ a C2 records request), never read as "confirmed dry". (3) `cooling_reconcile.py` (A3,
