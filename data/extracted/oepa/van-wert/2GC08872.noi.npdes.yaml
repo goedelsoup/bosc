@@ -35,8 +35,17 @@ permit:
     Permit Number' field even though it is the application, submitted 2026-07-21, nine days before
     the 2026-07-30 approval letter that grants the coverage. Recorded as printed — the same pattern
     as Sidney's 1GC10596 NOI.
-  - Receiving water is printed as 'Town Creek' with no river mile. The downstream network below is
-    NOT from this document; it is the committed Van Wert hydrology (see stream_network).
+  # Block scalar, not a plain one — this text quotes a field label ("Subsequent Stream Network:")
+  # and an unquoted ": " inside a plain scalar makes YAML read a mapping, which silently dropped
+  # this whole extraction from the corpus load once already.
+  - >-
+    Receiving water is printed as 'Town Creek' with no river mile. The downstream network below is
+    NOT from this document — the NOI names only the receiving stream. It is carried from the
+    committed Van Wert hydrology, which traces to a primary source: the 2PD00006 fact sheet prints
+    "Subsequent Stream Network: Middle Creek, Little Auglaize River, Auglaize River, Maumee River,
+    Lake Erie" (2PD00006.fs.npdes.yaml), and Town Creek reaches Middle Creek by combining with
+    Maddox Creek (data/extracted/van-wert/water-watch.yaml). MIDDLE CREEK IS NOT OPTIONAL in that
+    chain — an earlier register line omitted it and was corrected; do not drop it again.
   facility_name: QTS Data Center
   permit_no: 2GC08872*AG
   permit_action: notice of intent
@@ -48,7 +57,8 @@ permit:
   facility_address: 8002 Mendon Road, Van Wert, OH 45891, Van Wert County, Pleasant and Ridge townships
   discharge_address: null
   receiving_water: Town Creek
-  stream_network: Town Creek -> Little Auglaize River -> Auglaize River -> Maumee River (HUC-8 04100007)
+  stream_network: Town Creek -> Middle Creek -> Little Auglaize River -> Auglaize River -> Maumee
+    River -> Lake Erie (HUC-8 04100007)
   outfalls: []
   note: >-
     Notice of Intent for coverage under Construction Site Stormwater General Permit OHC000006,
