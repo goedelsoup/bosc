@@ -2891,6 +2891,36 @@ a.walk-dot:hover { opacity: 0.82; }
 .doccat th[aria-sort="descending"]::after { content: " \2193"; }
 .doccat-empty { color: var(--bosc-muted); font-size: var(--fs-sm); margin: 0.6rem 0; }
 
+/* Collection / container landings + pagination (#1887) — the document layer's wayfinding.
+   The front door is a grid of collections now, not one 2 MB table of every file. */
+.doccoll-grid { list-style: none; padding: 0; margin: 1.2rem 0 1.6rem; display: grid; gap: var(--sp-3);
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
+.doccoll { border: 1px solid var(--bosc-rule); border-radius: 12px; padding: var(--sp-3) var(--sp-4);
+  background: var(--bosc-bg); display: flex; flex-direction: column; gap: var(--sp-1); }
+.doccoll-link { text-decoration: none; }
+.doccoll-title { margin: 0; font-size: var(--fs-md); line-height: 1.25; }
+.doccoll-title--mono { font-family: var(--bosc-mono); font-size: var(--fs-sm); overflow-wrap: anywhere; }
+.doccoll-counts { margin: 0; display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.doccoll-n { font-family: var(--bosc-mono); font-size: var(--fs-md); font-weight: 700; color: var(--bosc-ink); }
+.doccoll-unit, .doccoll-bytes { font-size: var(--fs-meta); color: var(--bosc-muted); }
+.doccoll-bytes { font-family: var(--bosc-mono); }
+.doccoll-desc { margin: 0; font-size: var(--fs-sm); color: var(--bosc-muted); }
+.doccoll-containers { margin: 0; font-size: var(--fs-meta); color: var(--td-faint); font-family: var(--bosc-mono);
+  overflow-wrap: anywhere; }
+.doccat-subhead { font-size: var(--fs-md); margin: 1.6rem 0 0.4rem; }
+.doccat-note { color: var(--bosc-muted); font-size: var(--fs-sm); max-width: 46rem; margin: 1.2rem 0; }
+.doccat-folder { color: var(--bosc-muted); font-size: var(--fs-meta); overflow-wrap: anywhere; }
+/* A catalogued file that gets no page of its own — listed so the production stays complete. */
+.doccat-excluded { margin-left: var(--sp-2); }
+.doccat-filter--folder select { max-width: 20rem; }
+
+.docpager { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; margin: 1rem 0 2rem; }
+.docpager-list { list-style: none; display: flex; gap: var(--sp-1); flex-wrap: wrap; padding: 0; margin: 0; }
+.docpager-page, .docpager-step { display: inline-block; padding: var(--sp-1) var(--sp-2); border-radius: 7px;
+  font-family: var(--bosc-mono); font-size: var(--fs-meta); text-decoration: none; border: 1px solid var(--bosc-rule); }
+.docpager-page--here { background: var(--td-tint); font-weight: 700; color: var(--bosc-ink); }
+.docpager-step--off { color: var(--td-faint); border-color: var(--td-line); }
+
 /* ===========================================================================
    Document viewer (/site/documents/<rel>, epic #274 D1–D2): the tiered renderer
    over /api/doc, plus the per-document page chrome.

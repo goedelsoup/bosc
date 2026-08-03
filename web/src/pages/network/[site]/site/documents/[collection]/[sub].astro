@@ -1,0 +1,135 @@
+---
+// One level below a collection (#1887) — `…/site/documents/<collection>/<sub>/`.
+//
+// `<sub>` is one of two things, and they share a route file because Astro resolves routes by
+// pattern: two files at `[collection]/[x]` would be a duplicate-pattern conflict, so the branch
+// lives here rather than in the filesystem.
+//
+//   • a CONTAINER landing — for a collection big enough to break its productions out
+//     (`legal/prr-mandamus`, 1,619 files). This is the LAST segment that becomes a route: the 238
+//     folders below it are provenance shown in a column and a facet, never walked as URLs.
+//   • a PAGE of a flat collection — `page-N`, for a collection that lists every file itself and
+//     overflows one page. `page-N` rather than a bare number so a container directory named `9`,
+//     `11`, `14` or `15` (the sanitary production's batches, as received) can never be read as a
+//     page number.
+import { withSitePaths } from "@watermark/core/sites";
+import Base from "~/layouts/Base.astro";
+import DocFilters from "~/components/DocFilters.astro";
+import DocPager from "~/components/DocPager.astro";
+import DocTable from "~/components/DocTable.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import {
+  collectionLayout,
+  DOCS_PER_PAGE,
+  entriesFor,
+  folderFacets,
+  pageCount,
+  pageSegment,
+  pageSlice,
+  summarizeCollections,
+} from "@watermark/core/docBrowse";
+import { formatBytes, type DocumentCollectionItem, type DocumentEntry } from "@watermark/core/feeds";
+import { facetAvailable } from "@watermark/core/readiness";
+import { withSite } from "@watermark/core/site";
+
+// The two shapes this route serves differ only in `containerSlug`, so they share one props type —
+// otherwise TypeScript widens the flatMap into a union that `withSitePaths` can't accept.
+// A `type`, not an `interface`: only a type alias gets the implicit index signature that
+// `withSitePaths`'s `Record<string, unknown>` props parameter requires.
+type SubProps = {
+  collectionTitle: string;
+  collectionSlug: string;
+  containerSlug: string | null;
+  page: number;
+  entries: DocumentEntry[];
+};
+
+export function getStaticPaths() {
+  return withSitePaths((slug: string) => {
+    if (!facetAvailable(slug, "documents")) return [];
+    const feed = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
+    return summarizeCollections(feed).flatMap(
+      (summary): Array<{ params: { collection: string; sub: string }; props: SubProps }> => {
+        const collection = feed.find((c) => c.slug === summary.slug);
+        if (!collection) return [];
+        const shared = { collectionTitle: collection.title, collectionSlug: summary.slug };
+
+        if (collectionLayout(summary) === "containers") {
+          return summary.containers.map((container) => ({
+            params: { collection: summary.slug, sub: container.slug },
+            props: {
+              ...shared,
+              containerSlug: container.slug,
+              page: 1,
+              entries: entriesFor(collection, container.slug),
+            },
+          }));
+        }
+
+        // Flat collection: page 1 IS the collection landing, so only pages 2..N live here.
+        const pages = pageCount(collection.entries.length, DOCS_PER_PAGE);
+        return Array.from({ length: pages - 1 }, (_, i) => i + 2).map((page) => ({
+          params: { collection: summary.slug, sub: pageSegment(page) as string },
+          props: { ...shared, containerSlug: null, page, entries: collection.entries },
+        }));
+      },
+    );
+  });
+}
+
+const { collectionTitle, collectionSlug, containerSlug, page, entries } =
+  Astro.props as unknown as SubProps;
+
+const isContainer = containerSlug !== null;
+const base = isContainer
+  ? `/site/documents/${collectionSlug}/${containerSlug}`
+  : `/site/documents/${collectionSlug}`;
+const pages = pageCount(entries.length, DOCS_PER_PAGE);
+const rows = pageSlice(entries, page, DOCS_PER_PAGE);
+const folders = folderFacets(entries);
+const bytes = entries.reduce((n, e) => n + e.size_bytes, 0);
+const heading = isContainer ? (containerSlug as string) : `${collectionTitle} — page ${page}`;
+---
+
+<Base title={`${heading} — documents`} section="site">
+  <article class="prose">
+    <p class="rec-crumb">
+      <a href={withSite("/site/documents/")}>Documents</a>
+      <span aria-hidden="true">→</span>
+      <a href={withSite(`/site/documents/${collectionSlug}/`)}>{collectionTitle}</a>
+      <span aria-hidden="true">→</span>
+      <span class="rec-crumb-here">{isContainer ? containerSlug : `page ${page}`}</span>
+    </p>
+    <h1 class:list={["docpage-title", isContainer && "docpage-title--mono"]}>{heading}</h1>
+    {
+      isContainer ? (
+        <p class="section-lead">
+          {entries.length.toLocaleString("en-US")} documents · {formatBytes(bytes)} · as received
+          under{" "}
+          <code>
+            data/documents/{collectionSlug}/{containerSlug}/
+          </code>
+        </p>
+      ) : (
+        <p class="section-lead">
+          Page {page} of {pages} · {entries.length.toLocaleString("en-US")} documents in{" "}
+          {collectionTitle}
+        </p>
+      )
+    }
+    {
+      isContainer && folders.length > 0 && (
+        <p class="doccoll-desc">
+          The production arrived in {folders.length.toLocaleString("en-US")} folders, nested up to{" "}
+          {Math.max(...folders.map((f) => f.depth))} deep. That structure is part of the record, so
+          it is kept and shown — in the folder column, in the filter, and on each document's page —
+          but it is not a hierarchy to click through.
+        </p>
+      )
+    }
+  </article>
+
+  <DocFilters entries={entries} collection={collectionSlug} container={containerSlug} />
+  <DocTable entries={rows} showFolder={folders.length > 0} />
+  <DocPager base={base} current={page} total={pages} />
+</Base>

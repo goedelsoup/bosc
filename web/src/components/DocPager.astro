@@ -1,0 +1,59 @@
+---
+// Pagination for a document landing (#1887). Page 1 is the bare landing; every later page is a
+// `page-N` segment, so a container whose as-received directory name is a number (the sanitary
+// production's batches are literally `9`, `11`, `14`, `15`) can never be read as a page number.
+import { pageSegment } from "@watermark/core/docBrowse";
+import { withSite } from "@watermark/core/site";
+
+interface Props {
+  /** Site-relative base for this listing, e.g. `/site/documents/legal/prr-mandamus`. */
+  base: string;
+  current: number;
+  total: number;
+}
+const { base, current, total } = Astro.props;
+
+const href = (page: number): string => {
+  const segment = pageSegment(page);
+  return withSite(segment ? `${base}/${segment}/` : `${base}/`);
+};
+const pages = Array.from({ length: total }, (_, i) => i + 1);
+---
+
+{
+  total > 1 && (
+    <nav class="docpager" aria-label="Pagination">
+      {current > 1 ? (
+        <a class="docpager-step" href={href(current - 1)} rel="prev">
+          ← Previous
+        </a>
+      ) : (
+        <span class="docpager-step docpager-step--off">← Previous</span>
+      )}
+      <ol class="docpager-list">
+        {pages.map((page) =>
+          page === current ? (
+            <li>
+              <span class="docpager-page docpager-page--here" aria-current="page">
+                {page}
+              </span>
+            </li>
+          ) : (
+            <li>
+              <a class="docpager-page" href={href(page)}>
+                {page}
+              </a>
+            </li>
+          ),
+        )}
+      </ol>
+      {current < total ? (
+        <a class="docpager-step" href={href(current + 1)} rel="next">
+          Next →
+        </a>
+      ) : (
+        <span class="docpager-step docpager-step--off">Next →</span>
+      )}
+    </nav>
+  )
+}

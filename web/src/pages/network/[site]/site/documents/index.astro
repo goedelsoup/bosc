@@ -1,10 +1,17 @@
 ---
+// The documents front door (#1887, epic #1884 phase 3).
+//
+// This page used to be the whole catalog: one table of every catalogued file — 3,247 rows,
+// 3,533 links, 2.0 MB of HTML — sitting behind the site's "For the researcher / Browse the
+// record" door, one of the two primary ways in. It is now an index of collections; the rows live
+// on each collection's own landing, paginated. The per-column filter toolbar moved down with
+// them (a facet over 21 cards is not a facet).
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import SectionLocked from "~/components/SectionLocked.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import { docAccess, docPagePath } from "@watermark/core/docView";
+import { collectionLayout, summarizeCollections } from "@watermark/core/docBrowse";
 import { formatBytes, type DocumentCollectionItem } from "@watermark/core/feeds";
 import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
 import { withSite } from "@watermark/core/site";
@@ -15,130 +22,75 @@ const { slug } = Astro.props as { slug: string };
 const facet = RECORD_FACETS.documents;
 const locked = !facetAvailable(slug, "documents");
 
-const collections = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
+const feed = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
+const collections = summarizeCollections(feed);
 
-// Storage/access chip per row: published (public + viewable), dev-only (bytes present,
-// gated in prod), or LFS pointer (bytes absent). The viewer page renders any of them.
-const ACCESS_CHIP = {
-  published: { cls: "dchip--present", label: "● published" },
-  "dev-only": { cls: "dchip--devonly", label: "dev-only" },
-  absent: { cls: "dchip--lfs", label: "LFS pointer" },
-} as const;
-
-// One flat row per document across every collection (#725) — the catalog is a single
-// sortable/filterable table, not a stack of per-collection tables. SSR carries the full
-// table (readable with JS off); `scripts/doc-catalog.ts` adds the toolbar + sort.
-const rows = collections.flatMap((c) =>
-  c.entries.map((e) => ({
-    collection: c.title,
-    slug: c.slug,
-    rel: e.rel,
-    name: e.name,
-    type: e.render_class,
-    size: e.size_bytes,
-    access: docAccess(e),
-  })),
-);
-// The first row of each collection carries the `doc-<slug>` anchor the document-page breadcrumb
-// jumps to (#1217). Rows are grouped by collection (the flatMap preserves collection order), so
-// keying the id off the first `rel` seen per slug lands it once per collection and stays unique.
-const anchorRelForSlug = new Map<string, string>();
-for (const r of rows) if (!anchorRelForSlug.has(r.slug)) anchorRelForSlug.set(r.slug, r.rel);
-const collectionNames = [...new Set(rows.map((r) => r.collection))].sort((a, b) => a.localeCompare(b));
-const types = [...new Set(rows.map((r) => r.type))].sort((a, b) => a.localeCompare(b));
-const accesses = [...new Set(rows.map((r) => r.access))];
+const totalDocuments = collections.reduce((n, c) => n + c.count, 0);
+const totalBytes = collections.reduce((n, c) => n + c.bytes, 0);
+const totalNonRoutable = collections.reduce((n, c) => n + c.nonRoutableCount, 0);
 ---
 
 <Base title="Documents catalog" section="site">
   <article class="prose">
     <h1>Documents catalog</h1>
-    {locked ? (
-      <SectionLocked
-        section={facet.section}
-        label={facet.label}
-        holds="source documents of its own — the primary records this watershed point's story is read from"
-      />
-    ) : (
-      <p class="section-lead">
-        {rows.length.toLocaleString("en-US")} primary source documents across
-        {collections.length} collections, mirrored from <code>data/documents/</code>.
-        Source bytes are immutable chain-of-custody evidence; as-received filenames
-        are preserved verbatim.
-      </p>
-    )}
+    {
+      locked ? (
+        <SectionLocked
+          section={facet.section}
+          label={facet.label}
+          holds="source documents of its own — the primary records this watershed point's story is read from"
+        />
+      ) : (
+        <p class="section-lead">
+          {totalDocuments.toLocaleString("en-US")} primary source documents across
+          {collections.length} collections — {formatBytes(totalBytes)} of scans, filings and
+          correspondence, catalogued from <code>data/documents/</code>. Source bytes are immutable
+          chain-of-custody evidence; as-received filenames are preserved verbatim, and each
+          document's page records the path it arrived on.
+        </p>
+      )
+    }
   </article>
 
-  <div class="doccat-tools" hidden>
-    <input
-      type="search"
-      class="doccat-search"
-      placeholder="Search name or collection…"
-      aria-label="Search documents by name or collection"
-      autocomplete="off"
-    />
-    <label class="doccat-filter">
-      <span>Collection</span>
-      <select data-filter="collection">
-        <option value="">All collections</option>
-        {collectionNames.map((n) => <option value={n}>{n}</option>)}
-      </select>
-    </label>
-    <label class="doccat-filter">
-      <span>Type</span>
-      <select data-filter="type">
-        <option value="">All types</option>
-        {types.map((t) => <option value={t}>{t}</option>)}
-      </select>
-    </label>
-    <label class="doccat-filter">
-      <span>Access</span>
-      <select data-filter="access">
-        <option value="">All</option>
-        {accesses.map((a) => <option value={a}>{ACCESS_CHIP[a].label.replace("● ", "")}</option>)}
-      </select>
-    </label>
-    <span class="doccat-count" aria-live="polite"></span>
-  </div>
+  {
+    !locked && (
+      <>
+        <ul class="doccoll-grid">
+          {collections.map((collection) => (
+            <li class="doccoll">
+              <a class="doccoll-link" href={withSite(`/site/documents/${collection.slug}/`)}>
+                <h2 class="doccoll-title">{collection.title}</h2>
+              </a>
+              <p class="doccoll-counts">
+                <span class="doccoll-n">{collection.count.toLocaleString("en-US")}</span>
+                <span class="doccoll-unit">{collection.count === 1 ? "document" : "documents"}</span>
+                <span class="doccoll-bytes">{formatBytes(collection.bytes)}</span>
+              </p>
+              {collection.description && <p class="doccoll-desc">{collection.description}</p>}
+              {collectionLayout(collection) === "containers" && (
+                <p class="doccoll-containers">
+                  {collection.containers.length} productions —{" "}
+                  {collection.containers
+                    .slice(0, 3)
+                    .map((c) => `${c.slug} (${c.count.toLocaleString("en-US")})`)
+                    .join(", ")}
+                  {collection.containers.length > 3 && ", …"}
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
 
-  <div class="dtable doccat">
-    <table id="doccat-table">
-      <thead>
-        <tr>
-          <th data-sort="collection" aria-sort="none">Collection</th>
-          <th data-sort="name" aria-sort="none">File</th>
-          <th data-sort="type" aria-sort="none">Type</th>
-          <th class="num" data-sort="size" data-numeric aria-sort="none">Size</th>
-          <th data-sort="access" aria-sort="none">Access</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          rows.map((r) => (
-            <tr
-              id={anchorRelForSlug.get(r.slug) === r.rel ? `doc-${r.slug}` : undefined}
-              data-collection={r.collection}
-              data-slug={r.slug}
-              data-name={r.name.toLowerCase()}
-              data-type={r.type}
-              data-access={r.access}
-              data-size={r.size}
-            >
-              <td class="doccat-coll">{r.collection}</td>
-              <td class="file">
-                <a href={withSite(docPagePath(r.rel))}>{r.name}</a>
-              </td>
-              <td><span class="dchip dchip--type">{r.type}</span></td>
-              <td class="num">{formatBytes(r.size)}</td>
-              <td><span class={`dchip ${ACCESS_CHIP[r.access].cls}`}>{ACCESS_CHIP[r.access].label}</span></td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
-  <p class="doccat-empty" hidden>No documents match these filters.</p>
-
-  <script>
-    import "~/scripts/doc-catalog.ts";
-  </script>
+        {totalNonRoutable > 0 && (
+          <p class="doccat-note">
+            {totalNonRoutable} catalogued files are machine exhaust swept up with the responsive
+            records — Windows thumbnail caches and the sidecar files Office writes when a document
+            is saved as a web page. They stay listed with their as-received paths and stay
+            downloadable, so each production remains provably complete, but they get no page of
+            their own.
+          </p>
+        )}
+      </>
+    )
+  }
 </Base>
