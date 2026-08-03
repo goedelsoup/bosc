@@ -1,0 +1,77 @@
+# HAND-READ, not a vision extraction. Both pages of this NOI carry a clean native text layer
+# (pypdf, 3,573 + 117 characters); every field below is transcribed from it verbatim and nothing
+# was OCR'd. Page numbers in `pages_read` are 0-based PDF page indices.
+doc_id: edoc-4209395-14974e09
+source_path: data/documents/oepa/van-wert/stormwater/edoc-4209395.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: Division of Surface Water - Notice of Intent (NOI) For Coverage Under Ohio Environmental
+  Protection Agency General NPDES Permit (Read accompanying instructions carefully before completing this
+  form.) Submission of this NOI constitutes notice that the party identified in Section I of this form
+  intends to be authorized to discharge into state surface waters under Ohio EPA's NPDES general permit
+  program. Becoming a permittee obligates a discharger to comply with the terms and conditions of the
+  permit. Complete all req
+permit:
+  confidence: high
+  warnings:
+  - CONSTRUCTION-PHASE ONLY. This instrument authorizes stormwater discharge from land disturbance
+    and expires 2028-04-22. It states NOTHING about the campus's operating water use, cooling
+    system, process discharge, or electrical load, and it must not be cited for any of them. It
+    does not ground the facility's IT load, which remains the [reference] 500 MW press bracket
+    (see src/watermark/sites/_profiles.py and data/extracted/van-wert/data-centers.md).
+  - The NOI declares Ohio EPA PTI status 'YET_TO_APPLY' and USACE nationwide permit 'YET_TO_APPLY',
+    certified under penalty of law on 2026-07-21. This is the corpus's ONLY instrument-grade
+    statement that no air permit-to-install had been applied for; before it, the absence of a PTI
+    was an unsuccessful-search negative. It dates the negative — it does not promise a future
+    filing, and it says nothing about whether one is required.
+  - Two townships are printed in the NOI's location block (Pleasant AND Ridge, on two County/Township
+    lines) but Ohio EPA's approval letter for the same coverage names Pleasant only. Both are
+    recorded as printed; the discrepancy is not resolved here. Recorded in `facility_address` as the
+    NOI prints it, since the NOI is the applicant's own description of the site.
+  - The NOI carries the FULL facility permit number 2GC08872*AG in its 'Existing NPDES Facility
+    Permit Number' field even though it is the application, submitted 2026-07-21, nine days before
+    the 2026-07-30 approval letter that grants the coverage. Recorded as printed — the same pattern
+    as Sidney's 1GC10596 NOI.
+  - Receiving water is printed as 'Town Creek' with no river mile. The downstream network below is
+    NOT from this document; it is the committed Van Wert hydrology (see stream_network).
+  facility_name: QTS Data Center
+  permit_no: 2GC08872*AG
+  permit_action: notice of intent
+  applicant: QTS Realty Trust Inc.
+  application_no: OHC000006
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 8002 Mendon Road, Van Wert, OH 45891, Van Wert County, Pleasant and Ridge townships
+  discharge_address: null
+  receiving_water: Town Creek
+  stream_network: Town Creek -> Little Auglaize River -> Auglaize River -> Maumee River (HUC-8 04100007)
+  outfalls: []
+  note: >-
+    Notice of Intent for coverage under Construction Site Stormwater General Permit OHC000006,
+    electronically submitted 2026-07-21 by user 79558633 and certified under penalty of law by
+    Tamir Mengesha, Project Manager. EPA form 4494 (Rev. 4/13), Application ID 288738011.
+    Applicant QTS Realty Trust **Inc.**, 2470 Satellite Blvd NW, Duluth GA 30096 — note that this
+    is neither the entity form nor the address the register carried from press coverage ("QTS
+    Realty Trust, LLC", Overland Park KS); the applicant of record on the instrument is an Inc. at
+    a Georgia address. Applicant and facility contact are the same person, Tamir Mengesha, at
+    PreDev2026@Q.com. Coordinates 40.893356 / -84.5528 — the CAMPUS point, 3.66 km at bearing 44°
+    (northeast) from the city centroid (40.8696 / -84.5829) that the site profile uses for its
+    NASA POWER climatology and Atlas-14 design point; re-pointing those to the campus is a
+    separate hydrology decision (#1403/#829), deliberately NOT taken here. Total land disturbance
+    792.0000 acres, on a campus the City zoned at 901.698 ac and the county deeded at 900.59 ac
+    (#1401 / #1403), i.e. the disturbance is 87.8% of the zoned area (792 / 901.698) and 87.9% of
+    the deeded acreage; the attached site map draws the limits of
+    disturbance inside the property line and standing back from the watercourse in the northwest.
+    Project window: start 2026-08-03, estimated completion 2030-08-03. Both dates are the
+    applicant's own, and both differ from the press schedule the register carried (groundbreaking
+    "Q4 2026", buildout "~2032"). Declares Individual NPDES 'NO', individual 401 WQC 'NO',
+    Isolated Wetland 'NO', PTI 'YET_TO_APPLY', USACE nationwide permit 'YET_TO_APPLY'; SWP3
+    attachment '<None>'. The Facility/Map Attachment is named 'Site_Map_QTS_Van_Wert.pdf' and is
+    committed beside this document as edoc-4209396.pdf. The stormwater outlet is Town Creek — the
+    SAME water the City of Van Wert both withdraws its drinking water from and discharges its
+    WWTP effluent to (2PD00006, #1406), which is a finding about the receiving water, not a
+    relationship between the two permits.

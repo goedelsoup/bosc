@@ -1,0 +1,52 @@
+# HAND-READ, not a vision extraction. The page carries a clean native text layer (pypdf, 2,043
+# characters); every field below is transcribed from it verbatim and nothing was OCR'd.
+doc_id: edoc-4209398-1aeef269
+source_path: data/documents/oepa/van-wert/stormwater/edoc-4209398.pdf
+kind: npdes
+pages_read:
+- 0
+dpi: 150
+source_text_excerpt: '50 W. Town Street Suite 700 Columbus, Ohio 43215 U.S.A. 614 | 644 3020 epa.ohio.gov
+  The State of Ohio is an Equal Opportunity Employer and Provider of ADA Services July 30, 2026 QTS Realty
+  Trust Inc. Tamir Mengesha 2470 Satellite Blvd NW Duluth GA 30096 Re: Approval Under Ohio EPA National
+  Pollutant Discharge Elimination System (NPDES) – Construction Site Stormwater General Permit – OHC000006
+  Dear Applicant, Your NPDES Notice of Intent (NOI) application is approved for the following facility/site.
+  Please use y'
+permit:
+  confidence: high
+  warnings:
+  - CONSTRUCTION-PHASE ONLY. Coverage expires 2028-04-22, which is the general permit OHC000006's
+    own cycle date and NOT a project milestone — the same expiry appears on Sidney's 1GC10596*AG
+    approval issued eight months earlier. Do not read it as a construction schedule.
+  - The approval letter states no receiving water; it is carried on the NOI (2GC08872.noi.npdes.yaml)
+    for the same facility permit number.
+  - The letter names township **Pleasant** only, where the NOI for the same coverage names Pleasant
+    AND Ridge. Recorded as printed on each; not resolved here.
+  facility_name: QTS Data Center
+  permit_no: 2GC08872*AG
+  permit_action: general permit coverage approval
+  applicant: QTS Realty Trust Inc.
+  application_no: OHC000006
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 8002 Mendon Road, Van Wert, OH, Van Wert County, Pleasant township
+  discharge_address: null
+  receiving_water: null
+  stream_network: null
+  outfalls: []
+  note: >-
+    Ohio EPA approval letter of 2026-07-30, signed by Director John Logue, granting coverage under
+    Construction Site Stormwater General Permit OHC000006. Ohio EPA Facility Permit Number
+    2GC08872*AG; permit effective 2026-07-30, expiring 2028-04-22. Addressed to Tamir Mengesha at
+    QTS Realty Trust Inc., 2470 Satellite Blvd NW, Duluth GA 30096. Nine days after the NOI was
+    submitted, and four days before the applicant's own stated construction start of 2026-08-03.
+    The letter expressly notes that each additional operator engaged at the site must file its own
+    Co-Permittee NOI — none is in the corpus as of 2026-08-03, and the general contractor is
+    therefore [open]; Sidney's campus produced exactly such a co-permittee filing
+    (1GC10596.copermittee-igel.npdes.yaml), so this is a live watch, not a settled absence. It
+    also warns that placing fill in regulated waters may additionally require a 401 Water Quality
+    Certification and/or an Isolated Wetlands Permit; the NOI answers 'NO' to both while answering
+    'YET_TO_APPLY' on the USACE nationwide permit. Those are the applicant's assertions on a form,
+    not agency determinations, and no 401/isolated-wetland instrument for this campus is in the
+    corpus.

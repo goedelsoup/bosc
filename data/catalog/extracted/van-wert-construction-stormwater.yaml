@@ -1,0 +1,89 @@
+id: van-wert-construction-stormwater
+title: Van Wert — QTS Campus Construction-Stormwater Coverage 2GC08872*AG (OHC000006) Extractions
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Three documents pulled 2026-08-03 from the Ohio EPA eDocument public portal
+    (edocpub.epa.ohio.gov/publicportal), committed at data/documents/oepa/van-wert/stormwater/ with
+    a filename map: the applicant's Notice of Intent for coverage under NPDES general permit
+    OHC000006 (EPA form 4494, Application ID 288738011, electronically submitted 2026-07-21 and
+    certified under penalty of law by Tamir Mengesha, Project Manager), the site map it attaches
+    (Site_Map_QTS_Van_Wert.pdf), and Ohio EPA's approval letter of 2026-07-30 granting coverage as
+    facility permit 2GC08872*AG. All three carry clean native text layers and were transcribed from
+    them; nothing was OCR'd. The portal serves no Content-Disposition header, so each file is named
+    for the numeric docid that is its as-served identity. Located by entity-name search on "QTS",
+    which returns the operator's whole Ohio fleet — 35 documents, of which these three are the only
+    Van Wert rows.
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:van-wert
+storage:
+- relpath: extracted/oepa/van-wert/2GC08872.noi.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/van-wert/2GC08872.approval.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+provenance: document
+tags:
+- van-wert
+- van-wert-county
+- van-wert-mega-site
+- data-center
+- qts
+- oepa
+- npdes
+- stormwater
+- construction
+- permits
+- town-creek
+- maumee
+notes: >-
+  Issue 1402 (under epic 1267). THE CAMPUS'S FIRST STATE PERMIT — and the site's WWTP entries
+  (oepa-van-wert, van-wert-water-watch) are a DIFFERENT FACILITY: this is the private QTS campus,
+  those are the City's plant. The one real connection is the receiving water, and it is a finding
+  rather than a filing relationship — both discharge to Town Creek, which is also the City's
+  drinking-water source. THINGS TO CARRY. (1) CONSTRUCTION-PHASE ONLY. It authorizes stormwater
+  runoff from land disturbance and expires 2028-04-22 — which is general permit OHC000006's own
+  cycle date and NOT a project milestone (Sidney's 1GC10596*AG, issued eight months earlier,
+  carries the same expiry). It documents no cooling system, no process discharge, no operating
+  water use and no electrical load. It therefore does NOT ground the campus IT load and does not
+  lift the facility readiness domain above `seeded` (watermark.sites.SiteFacility.is_instrument_grounded,
+  issue 1630). Do not let a permit number matching "NPDES" upgrade the cooling or load grade.
+  (2) THE AIR PTI IS CERTIFIED NOT-YET-APPLIED-FOR. The NOI answers the permit status field
+  "PTI: YET_TO_APPLY" under penalty of law as of 2026-07-21, and the same eDoc sweep found no Van
+  Wert air document of any kind (QTS's entire Ohio air-permit fleet is Licking County — New Albany,
+  facility IDs 0145000602/0145000603). That converts "no PTI found" from an unsuccessful search
+  into a dated, instrument-grade negative. It promises no future filing and does not establish that
+  one is required. The PTI remains the instrument that would ground the load, so re-run the sweep
+  on cadence. (3) TWO REGISTER CORRECTIONS ON THE OPERATOR. The applicant of record is QTS Realty
+  Trust **Inc.** at 2470 Satellite Blvd NW, Duluth GA 30096 — not the "QTS Realty Trust, LLC" of
+  "Overland Park, KS" the register carried from press. Three QTS names are now live and none is a
+  synonym for another: QTS Data Centers (brand), QTS Realty Trust Inc. (permit applicant), QTS VAN
+  WERT LLC (deed grantee, issue 1403); how they relate is [open], the SOS route being blocked.
+  (4) THE APPLICANT'S OWN SCHEDULE CONTRADICTS THE PRESS ONE. Project start 2026-08-03, estimated
+  completion 2030-08-03, against press "groundbreaking Q4 2026" and "buildout ~2032" — two years
+  apart at the far end. The stage nonetheless stays `confirmed`, not `construction`: the network's
+  trigger for that is a grading or building permit (the Sidney precedent, where this same OHC000006
+  coverage did NOT move the stage and a City grading permit five months later did), and no Van Wert
+  City permit is in the corpus. (5) 792.0000 AC OF DISTURBANCE — 87.8% of the 901.698 ac the City
+  zoned (issue 1401) and 87.9% of the 900.59 ac deeded (issue 1403). (6) THE SITE MAP IS THE FIRST
+  SITE PLAN IN THE CORPUS. It draws the limits of disturbance INSIDE the property line, standing
+  back from the watercourse in the northwest and routing around a wooded block near the centre. It
+  is a drawing, not a survey — unregistered and unscaled, it cannot settle a boundary, and it
+  carries NO date of its own, so its date is [open] and must not be taken from the NOI's.
+  Cross-checking its outline against the committed 1403 deeded assemblage is a real remaining check
+  and was not done here. (7) TWO DISCREPANCIES RECORDED, NOT RESOLVED: the NOI names townships
+  Pleasant AND Ridge where the approval letter names Pleasant only; and the facility point the NOI
+  gives (40.893356 / -84.5528) sits 3.66 km at bearing 44 degrees from the city centroid the site
+  profile uses for its NASA POWER climatology and Atlas-14 design point — re-pointing those is a
+  hydrology decision (issues 1403/829), deliberately not taken. (8) NO CO-PERMITTEE NOI IS ON FILE,
+  so the general contractor is [open]; the approval letter requires each additional operator to
+  file one and Sidney's campus produced exactly such a filing, making this a live watch rather than
+  a settled absence. The NOI answers "NO" to an individual 401 WQC and an isolated-wetlands permit
+  while answering "YET_TO_APPLY" on the USACE nationwide permit — applicant assertions on a form,
+  not agency determinations.

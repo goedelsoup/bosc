@@ -1,0 +1,148 @@
+# Capture / alias manifest — the QTS Van Wert campus construction-stormwater instrument,
+# Ohio EPA Division of Surface Water, issue #1402 (epic #1267).
+#
+# Three documents covering the whole NOI-to-approval chain for the general NPDES
+# construction site stormwater permit OHC000006, coverage 2GC08872*AG: the applicant's
+# Notice of Intent, the site map it attaches, and Ohio EPA's approval letter.
+#
+# Raw bytes are never edited. All three come from Ohio EPA's eDocument public portal,
+# which serves documents by numeric document ID with no filename in the response (no
+# Content-Disposition header), so the docid IS the as-served identity and the file is
+# named for it; the canonical name is recorded beside it.
+#
+# The `content_verified` date is read from each file's OWN text layer, never from the
+# URL, the portal's result row, or the fetch time.
+#
+# evidence: native_text = PDF text layer (pypdf) confirms the identity + date quoted below.
+meta:
+  subject: >-
+    Ohio EPA NPDES construction site stormwater general permit OHC000006, coverage
+    2GC08872*AG — QTS Data Center, 8002 Mendon Road, Van Wert, OH (issue #1402, epic #1267)
+  collection: oepa/van-wert/stormwater/
+  captured_by: issue #1402 (epic #1267, readiness(van-wert) — the facility grounding instrument)
+  generated_at: '2026-08-03'
+  policy: >-
+    non-destructive — as-served bytes. Ohio EPA's eDocument portal serves no filename,
+    so `edoc-<docid>.pdf` preserves the server's own document identity.
+
+  scope_warning: >-
+    THIS SUBDIRECTORY IS A DIFFERENT FACILITY FROM ITS PARENT. `oepa/van-wert/` holds
+    the CITY of Van Wert's wastewater instrument (NPDES 2PD00006, Van Wert WWTP — see
+    the filename-map one level up). `oepa/van-wert/stormwater/` holds the PRIVATE QTS
+    campus's construction-stormwater coverage (2GC08872*AG), which shares nothing with
+    the city plant but the county, the agency, and the receiving stream. The shared
+    receiving stream is the one real connection and it is a finding, not a filing
+    relationship: BOTH discharge to Town Creek, which is also the city's drinking-water
+    source (see data/extracted/van-wert/water-watch.yaml). Do not let the shared parent
+    directory imply a shared facility, operator, or permit family.
+
+  scope_note: >-
+    A CONSTRUCTION-PHASE instrument, not an operating one. It authorizes stormwater
+    discharge from land disturbance and expires 2028-04-22; it says nothing about the
+    campus's operating water use, cooling, discharge, or electrical load. It does NOT
+    ground the facility's IT load and does not lift the facility readiness domain to
+    `live` (`watermark.sites.SiteFacility.is_instrument_grounded`, #1630) — see
+    data/extracted/oepa/van-wert/2GC08872.npdes.yaml.
+
+  identifiers:
+    ohio_epa_facility_permit_number: 2GC08872*AG
+    general_permit_number: OHC000006
+    application_id: '288738011'
+    portal: https://edocpub.epa.ohio.gov/publicportal/edochome.aspx  # search by Entity Name "QTS"
+
+documents:
+  - filename: edoc-4209395.pdf
+    canonical: 2GC08872-AG-notice-of-intent-2026-07-21.pdf
+    title: >-
+      Division of Surface Water — Notice of Intent (NOI) for Coverage Under Ohio EPA
+      General NPDES Permit OHC000006, QTS Data Center, Van Wert — EPA form 4494
+      (Rev. 4/13), Application ID 288738011
+    issuer: QTS Realty Trust Inc. (applicant); filed with Ohio EPA, Division of Surface Water
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4209395
+    edoc_docid: 4209395
+    edoc_doc_type: Permit - Short Term
+    edoc_program: NPDES
+    sha256: 5909f1fbd57ec8459ee79cc94c0e2a0ec227715c8a5f939480a34e3b709ecded
+    bytes: 10051
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-08-03'
+    content_verified: '2026-07-21'   # signature block, p. 1: "Electronically submitted on 07/21/2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The applicant's own certification, signed under penalty of law by Tamir Mengesha,
+      Project Manager, and electronically submitted by user 79558633 on 07/21/2026 — nine
+      days before Ohio EPA approved it. It is the document of record for the campus's
+      legal applicant name and address (QTS Realty Trust **Inc.**, 2470 Satellite Blvd NW,
+      Duluth GA 30096 — NOT the "QTS Realty Trust, LLC / Overland Park, KS" the register
+      carried from press), the facility point (40.893356, -84.5528), the receiving stream
+      (Town Creek), the two townships (Pleasant AND Ridge), the disturbance area (792.0000
+      ac), and the construction window (start 2026-08-03, completion 2030-08-03). It also
+      records, on the applicant's own certification, that the air PERMIT-TO-INSTALL is
+      `YET_TO_APPLY` and the U.S. Army Corps nationwide permit is `YET_TO_APPLY` — the
+      only instrument-grade statement of those two negatives in the corpus.
+
+  - filename: edoc-4209396.pdf
+    canonical: 2GC08872-AG-site-map-Site_Map_QTS_Van_Wert.pdf
+    title: >-
+      Site map — "QTS DATA CENTER", aerial with PROPERTY LINE (green) and LIMITS OF
+      DISTURBANCE = ~792 ACRES (red); the NOI's Facility/Map Attachment
+    issuer: QTS Realty Trust Inc. (applicant); attachment to the NOI above
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4209396
+    edoc_docid: 4209396
+    edoc_doc_type: Permit - Short Term
+    edoc_program: NPDES
+    sha256: 3dc7d17f61610a620a89870bfaf27b7acb4ae5d7ce5b808fdeec721886f78a57
+    bytes: 188860
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-08-03'
+    content_verified: null
+    evidence: >-
+      native_text — the sheet carries NO date of its own, in the text layer or in the
+      image, so none is recorded. It is bound to the NOI by name: the NOI's
+      Facility/Map Attachment field reads `Site_Map_QTS_Van_Wert.pdf`, and the portal
+      serves it in the same 2GC08872 document group. Its date is therefore [open]; do
+      not date it from the NOI's or the approval's date.
+    status: downloaded
+    note: >-
+      THE FIRST SITE PLAN IN THE CORPUS. A drawing, not a survey — read the geometry as
+      indicative and the acreage as the applicant's own label ("~ 792 ACRES"). What it
+      shows that no other committed document does: the limits of disturbance are drawn
+      INSIDE the property line and stand back from the watercourse in the northwest, and
+      they route around a wooded block near the center of the site. Roads labelled:
+      Highway 127 (224) west, Marsh Road, Stripe Road, Mendon Road east, Highway 30
+      south, Griffin Road north. Cross-checking this outline against the committed
+      #1403 deeded assemblage (data/reference/van-wert/parcel-assemblage.geojson) is a
+      real remaining check and is NOT done here — the sheet is unregistered and
+      unscaled, so it cannot settle a boundary.
+
+  - filename: edoc-4209398.pdf
+    canonical: 2GC08872-AG-approval-letter-2026-07-30.pdf
+    title: >-
+      Letter: Approval Under Ohio EPA NPDES Construction Site Stormwater General Permit
+      OHC000006 — QTS Data Center, Ohio EPA Facility Permit Number 2GC08872*AG
+    issuer: Ohio EPA (John Logue, Director), 50 W. Town Street, Suite 700, Columbus
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4209398
+    edoc_docid: 4209398
+    edoc_doc_type: Permit - Short Term
+    edoc_program: NPDES
+    sha256: 9ed716dcbbe4f3d3bbf4432afe6411ad8e496610445cf8b2870b9fd17464c0a8
+    bytes: 139197
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-08-03'
+    content_verified: '2026-07-30'   # letter date line, p. 1: "July 30, 2026"; "Permit Effective Date: July 30, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The operative authorization: effective 2026-07-30, expiring 2028-04-22 (the
+      general permit's own cycle date, not a project milestone). Names the township as
+      **Pleasant** only, where the NOI names Pleasant AND Ridge — the letter is the
+      narrower of the two and the NOI is the applicant's own description of the site;
+      the discrepancy is recorded, not resolved. Notes that additional operators must
+      each file a Co-Permittee NOI, and warns that fill in regulated waters may require
+      a 401 Water Quality Certification and/or Isolated Wetlands Permit — which the NOI
+      answers "NO" to both, while answering `YET_TO_APPLY` on the Army Corps nationwide
+      permit. Those are the applicant's assertions on a form, not agency determinations.

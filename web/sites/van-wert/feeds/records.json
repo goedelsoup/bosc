@@ -1,5 +1,90 @@
 [
   {
+    "rel": "oepa/van-wert/2GC08872.approval.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "QTS Data Center",
+    "confidence": "high",
+    "warnings": [
+      "CONSTRUCTION-PHASE ONLY. Coverage expires 2028-04-22, which is the general permit OHC000006's own cycle date and NOT a project milestone — the same expiry appears on Sidney's 1GC10596*AG approval issued eight months earlier. Do not read it as a construction schedule.",
+      "The approval letter states no receiving water; it is carried on the NOI (2GC08872.noi.npdes.yaml) for the same facility permit number.",
+      "The letter names township **Pleasant** only, where the NOI for the same coverage names Pleasant AND Ridge. Recorded as printed on each; not resolved here."
+    ],
+    "fields": {
+      "facility_name": "QTS Data Center",
+      "permit_no": "2GC08872*AG",
+      "permit_action": "general permit coverage approval",
+      "applicant": "QTS Realty Trust Inc.",
+      "application_no": "OHC000006",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "8002 Mendon Road, Van Wert, OH, Van Wert County, Pleasant township",
+      "discharge_address": null,
+      "receiving_water": null,
+      "stream_network": null,
+      "outfalls": [],
+      "note": "Ohio EPA approval letter of 2026-07-30, signed by Director John Logue, granting coverage under Construction Site Stormwater General Permit OHC000006. Ohio EPA Facility Permit Number 2GC08872*AG; permit effective 2026-07-30, expiring 2028-04-22. Addressed to Tamir Mengesha at QTS Realty Trust Inc., 2470 Satellite Blvd NW, Duluth GA 30096. Nine days after the NOI was submitted, and four days before the applicant's own stated construction start of 2026-08-03. The letter expressly notes that each additional operator engaged at the site must file its own Co-Permittee NOI — none is in the corpus as of 2026-08-03, and the general contractor is therefore [open]; Sidney's campus produced exactly such a co-permittee filing (1GC10596.copermittee-igel.npdes.yaml), so this is a live watch, not a settled absence. It also warns that placing fill in regulated waters may additionally require a 401 Water Quality Certification and/or an Isolated Wetlands Permit; the NOI answers 'NO' to both while answering 'YET_TO_APPLY' on the USACE nationwide permit. Those are the applicant's assertions on a form, not agency determinations, and no 401/isolated-wetland instrument for this campus is in the corpus."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/van-wert/2GC08872.approval.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/van-wert/stormwater/edoc-4209398.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/van-wert/2GC08872.noi.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "QTS Data Center",
+    "confidence": "high",
+    "warnings": [
+      "CONSTRUCTION-PHASE ONLY. This instrument authorizes stormwater discharge from land disturbance and expires 2028-04-22. It states NOTHING about the campus's operating water use, cooling system, process discharge, or electrical load, and it must not be cited for any of them. It does not ground the facility's IT load, which remains the [reference] 500 MW press bracket (see src/watermark/sites/_profiles.py and data/extracted/van-wert/data-centers.md).",
+      "The NOI declares Ohio EPA PTI status 'YET_TO_APPLY' and USACE nationwide permit 'YET_TO_APPLY', certified under penalty of law on 2026-07-21. This is the corpus's ONLY instrument-grade statement that no air permit-to-install had been applied for; before it, the absence of a PTI was an unsuccessful-search negative. It dates the negative — it does not promise a future filing, and it says nothing about whether one is required.",
+      "Two townships are printed in the NOI's location block (Pleasant AND Ridge, on two County/Township lines) but Ohio EPA's approval letter for the same coverage names Pleasant only. Both are recorded as printed; the discrepancy is not resolved here. Recorded in `facility_address` as the NOI prints it, since the NOI is the applicant's own description of the site.",
+      "The NOI carries the FULL facility permit number 2GC08872*AG in its 'Existing NPDES Facility Permit Number' field even though it is the application, submitted 2026-07-21, nine days before the 2026-07-30 approval letter that grants the coverage. Recorded as printed — the same pattern as Sidney's 1GC10596 NOI.",
+      "Receiving water is printed as 'Town Creek' with no river mile. The downstream network below is NOT from this document; it is the committed Van Wert hydrology (see stream_network)."
+    ],
+    "fields": {
+      "facility_name": "QTS Data Center",
+      "permit_no": "2GC08872*AG",
+      "permit_action": "notice of intent",
+      "applicant": "QTS Realty Trust Inc.",
+      "application_no": "OHC000006",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "8002 Mendon Road, Van Wert, OH 45891, Van Wert County, Pleasant and Ridge townships",
+      "discharge_address": null,
+      "receiving_water": "Town Creek",
+      "stream_network": "Town Creek -> Little Auglaize River -> Auglaize River -> Maumee River (HUC-8 04100007)",
+      "outfalls": [],
+      "note": "Notice of Intent for coverage under Construction Site Stormwater General Permit OHC000006, electronically submitted 2026-07-21 by user 79558633 and certified under penalty of law by Tamir Mengesha, Project Manager. EPA form 4494 (Rev. 4/13), Application ID 288738011. Applicant QTS Realty Trust **Inc.**, 2470 Satellite Blvd NW, Duluth GA 30096 — note that this is neither the entity form nor the address the register carried from press coverage (\"QTS Realty Trust, LLC\", Overland Park KS); the applicant of record on the instrument is an Inc. at a Georgia address. Applicant and facility contact are the same person, Tamir Mengesha, at PreDev2026@Q.com. Coordinates 40.893356 / -84.5528 — the CAMPUS point, 3.66 km at bearing 44° (northeast) from the city centroid (40.8696 / -84.5829) that the site profile uses for its NASA POWER climatology and Atlas-14 design point; re-pointing those to the campus is a separate hydrology decision (#1403/#829), deliberately NOT taken here. Total land disturbance 792.0000 acres, on a campus the City zoned at 901.698 ac and the county deeded at 900.59 ac (#1401 / #1403), i.e. the disturbance is 87.8% of the zoned area (792 / 901.698) and 87.9% of the deeded acreage; the attached site map draws the limits of disturbance inside the property line and standing back from the watercourse in the northwest. Project window: start 2026-08-03, estimated completion 2030-08-03. Both dates are the applicant's own, and both differ from the press schedule the register carried (groundbreaking \"Q4 2026\", buildout \"~2032\"). Declares Individual NPDES 'NO', individual 401 WQC 'NO', Isolated Wetland 'NO', PTI 'YET_TO_APPLY', USACE nationwide permit 'YET_TO_APPLY'; SWP3 attachment '<None>'. The Facility/Map Attachment is named 'Site_Map_QTS_Van_Wert.pdf' and is committed beside this document as edoc-4209396.pdf. The stormwater outlet is Town Creek — the SAME water the City of Van Wert both withdraws its drinking water from and discharges its WWTP effluent to (2PD00006, #1406), which is a finding about the receiving water, not a relationship between the two permits."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/van-wert/2GC08872.noi.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/van-wert/stormwater/edoc-4209395.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
     "group": "permits-npdes",
     "title": "Van Wert WWTP",

@@ -2,9 +2,9 @@
   "site": "van-wert",
   "bundle_version": "1.0.0",
   "contract_version": "1.51.0",
-  "generated_at": "2026-08-03T11:43:29+00:00",
-  "feed_count": 32,
-  "row_total": 450,
+  "generated_at": "2026-08-03T12:43:06+00:00",
+  "feed_count": 34,
+  "row_total": 586,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -19,7 +19,7 @@
     "status": "confirmed",
     "count": 1,
     "primary_name": "Van Wert Mega Site",
-    "primary_operator": "QTS Data Centers (QTS Realty Trust, LLC — Blackstone); developer Thor Equities Group",
+    "primary_operator": "QTS Data Centers (QTS Realty Trust Inc. — Blackstone); developer Thor Equities Group",
     "primary_end_use": "colocation"
   },
   "feeds": [
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 4
+      "count": 6
     },
     {
       "name": "timeline",
@@ -45,7 +45,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 6
+      "count": 8
     },
     {
       "name": "relationships",
@@ -53,7 +53,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 4
+      "count": 6
     },
     {
       "name": "people",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 60
+      "count": 61
     },
     {
       "name": "geo/campus",
@@ -248,6 +248,14 @@
       "count": 13
     },
     {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 121
+    },
+    {
       "name": "catalog-index",
       "path": "feeds/catalog-index.json",
       "media_type": "application/json",
@@ -261,7 +269,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 86
+      "count": 90
     },
     {
       "name": "corpus-nodes",
@@ -269,13 +277,21 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 86
+      "count": 90
     },
     {
       "name": "ask-embeddings",
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }
