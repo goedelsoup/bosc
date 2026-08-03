@@ -19,7 +19,7 @@
     "links_out": 1,
     "links_in": 2,
     "lines": 13,
-    "updated": null
+    "updated": "2026-08-03"
   },
   {
     "id": "artifact/npdes-2pd00006",
@@ -41,7 +41,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 13,
-    "updated": null
+    "updated": "2026-08-03"
   },
   {
     "id": "artifact/site-van-wert",
@@ -63,7 +63,7 @@
     "links_out": 1,
     "links_in": 2,
     "lines": 16,
-    "updated": "2026-08-01"
+    "updated": "2026-08-03"
   },
   {
     "id": "artifact/van-wert-wwtp",
@@ -954,7 +954,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-03"
   },
   {
     "id": "relation/npdes-2pd00006--discharges-to--town-creek",
@@ -976,7 +976,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-03"
   },
   {
     "id": "relation/van-wert-wwtp--operates--npdes-2pd00006",

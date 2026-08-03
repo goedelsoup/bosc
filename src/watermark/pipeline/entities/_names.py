@@ -230,9 +230,15 @@ def classify(raw: str) -> tuple[str, str, tuple[str, ...]]:
     is_county_body = bool(re.search(r"\bCOUNTY\b", up)) and "FARM" not in up
     if any(p in up for p in _GOV_PHRASES) or is_county_body:
         return "government", "government_local", signals
-    if "TRUST" in up or "TRUSTEE" in up:
+    # A name can contain "TRUST" and still be a corporation: REIT naming is the common case
+    # ("QTS Realty Trust Inc.", the applicant of record on the Van Wert campus's NPDES coverage —
+    # #1402). An explicit corporate legal token is dispositive and outranks the bare word, so the
+    # substring no longer captures a company whose charter form is stated. A family instrument
+    # ("Kyle C. Brenneman Living Trust") carries no such token and still resolves to `trust`.
+    is_corporate = any(re.search(rf"\b{re.escape(t)}\b", up) for t in _CORPORATE_TOKENS)
+    if ("TRUST" in up or "TRUSTEE" in up) and not is_corporate:
         return "trust", "trust", signals
-    if any(re.search(rf"\b{re.escape(t)}\b", up) for t in _CORPORATE_TOKENS):
+    if is_corporate:
         klass = "corporate_out_of_state" if signals else "corporate_domestic"
         return "corporate", klass, signals
     if any(re.search(rf"\b{h}\b", up) for h in _WATER_HINTS):

@@ -800,7 +800,8 @@ _FORT_WAYNE = SiteProfile(
 
 # The small-stream headwaters comparator: Van Wert, OH — the Auglaize-subbasin point. Unlike
 # the mainstem comparators (Defiance 12 MGD, Fort Wayne 74 MGD), Van Wert's WWTP is a 4.0 MGD
-# plant discharging to a *small tributary* (Town Creek → Little Auglaize → Auglaize → Maumee),
+# plant discharging to a *small tributary* (Town Creek → Middle Creek → Little Auglaize → Auglaize
+# → Maumee → Lake Erie),
 # so the dilution denominator is tiny — the effluent-dominance end of the basin spectrum. A
 # *coming-soon* point; an Ohio site (AEP Ohio / PJM AEP zone, the Ohio LSC connector applies),
 # so the cross-state connector axis is not re-exercised. Geography is sourced + cited below. The
@@ -816,7 +817,11 @@ _FORT_WAYNE = SiteProfile(
 _VAN_WERT_LOAD = ceiling_screen(500.0)
 _VAN_WERT = SiteProfile(
     slug="van-wert",
-    basin="maumee",  # [verified] Town Creek → Little Auglaize → Auglaize → Maumee; HUC-8 04100007
+    # [verified] Town Creek → Middle Creek → Little Auglaize → Auglaize → Maumee → Lake Erie;
+    # HUC-8 04100007. Town Creek reaches Middle Creek by combining with Maddox Creek — the chain
+    # is the 2PD00006 fact sheet's own "Subsequent Stream Network" line, and MIDDLE CREEK IS NOT
+    # OPTIONAL in it (this comment omitted it until #1402).
+    basin="maumee",
     # config knobs
     nwis_sites=[
         "04191000",  # [verified] Town Creek near Van Wert OH (the WWTP receiving reach; HUC 04100007)
