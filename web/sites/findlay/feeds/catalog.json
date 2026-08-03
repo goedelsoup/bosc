@@ -180,8 +180,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8d5cbfaca5982ea614b93a8cb188d9c8419205a17de6946fb8d7e9dad62d8703",
-      "size_bytes": 250854,
+      "sha256": "e1f1fb54953a461e61a81284d0b7e3552e645fbe4747d66f3337b9cfcf71bf95",
+      "size_bytes": 252907,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -257,8 +257,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5c4f0c3a7706c7199a3076e3a5f88f530d2f132c16edc6e57c25f10e5a9dbc06",
-      "size_bytes": 56123,
+      "sha256": "ade2f8a21cabb1aa5b8ed0e821521cea91dce1a511f75023d88c2c97e77cf4fd",
+      "size_bytes": 56372,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -397,8 +397,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8e370ee3cc46e645af3bf265eefb9dee9a611b6a854d2d130bb04a40dc8b3271",
-      "size_bytes": 32650,
+      "sha256": "fc929363b4e35670c321336ab021a65bbab0067ed4fab9ca1841faf6481e059c",
+      "size_bytes": 34971,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -497,8 +497,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6809b9de934c77820b56ff5f0d980477f181529690bf2d607209fedbe07ebbbf",
-      "size_bytes": 109336,
+      "sha256": "3c4167956f817d6d18ea754d6ead6a3d1d8fa282a85e52cd8a2a59578836ef7d",
+      "size_bytes": 111692,
       "lfs_materialized": true,
       "file_count": 9,
       "stale": false,
@@ -1724,6 +1724,58 @@
     }
   },
   {
+    "id": "findlay-civic-flood-places",
+    "title": "Findlay Civic & Flood Places — WPCC, Upground Reservoirs, Eagle Creek Dry Storage Basin",
+    "scope": "reference",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "watermark.hydrology.connectors.allen_gis.query_parcels_geojson(\"LocalParcelID IN (…)\", settings=Settings(site=\"findlay\"))  # PIN-list; enriched per reference/findlay/README.md",
+    "connector_ref": "watermark.hydrology.connectors.allen_gis",
+    "source": "OGRIP — Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped County='Hancock' via the OHIO_STATEWIDE_PARCEL_SCHEMA field-map. Waterbody names/areas cross-checked against the USGS NHD Waterbody (Large Scale) layer; township attribution against the Census TIGER county-subdivision layer.",
+    "external_url": "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/OhioStatewidePacels_full_view/FeatureServer/0",
+    "license": "Public records (local government open data)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-02",
+    "tags": [
+      "parcels",
+      "gis",
+      "flood",
+      "wastewater",
+      "water-supply",
+      "findlay",
+      "hancock-county"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/findlay/civic-and-flood-places.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "a6671d8a462aca626577903500822725ab4c4bea5eed2f360801a905ae92c887",
+      "size_bytes": 204209,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "OGRIP — Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped County='Hancock' via the OHIO_STATEWIDE_PARCEL_SCHEMA field-map. Waterbody names/areas cross-checked against the USGS NHD Waterbody (Large Scale) layer; township attribution against the Census TIGER county-subdivision layer.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark watermark.hydrology.connectors.allen_gis.query_parcels_geojson(\"LocalParcelID IN (…)\", settings=Settings(site=\"findlay\"))  # PIN-list; enriched per reference/findlay/README.md",
+      "verified": true
+    }
+  },
+  {
     "id": "findlay-gis",
     "title": "City of Findlay, Ohio Zoning Districts",
     "scope": "reference",
@@ -2576,8 +2628,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "c0bce369b8cb3d2aef5ba5f05655642c38261522c18a245745aa02cdc7946499",
-      "size_bytes": 32154,
+      "sha256": "5291ce440bc0e1377050ab42863f5669553b5628ea71580ce2fd16405b60fc61",
+      "size_bytes": 32637,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -3182,10 +3234,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "41921e30b33b8494e8367d64753a0704ce48fdb0e979ca8aa5f3b337a4ede48d",
-      "size_bytes": 492562,
+      "sha256": "0118c0e42601fd3b2dfabbaae3f829b2217216dc5f67b84341295653ffefaf50",
+      "size_bytes": 513376,
       "lfs_materialized": true,
-      "file_count": 9,
+      "file_count": 10,
       "stale": false,
       "asof": null
     },
@@ -3688,8 +3740,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4ab6faa612496d56a7bc63a84e2721baee3f228123b83c925d2581b4168b5963",
-      "size_bytes": 16614877,
+      "sha256": "6394cfcbee1c698849e244e915709a04902bf32d0e48650fbed96edfdf21b9e5",
+      "size_bytes": 16615064,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,

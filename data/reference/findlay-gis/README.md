@@ -29,12 +29,24 @@ City of Findlay (Hancock County, OH) GIS layers for the Findlay watershed point
   address, land-use code, acreage, and geometry (the catalog + resolve-to-parcel funnel), but **no
   owner name** (only the mailing label in `MailAddressAll`), and **no market/CAUV value, sale, or
   tax-district** fields. Owner / defense scans refuse cleanly. No bulk parcel dump is committed
-  (the county is ~50k parcels and Findlay has no identified facility AOI yet); a reviewed slice
-  awaits a site.
+  (the county is ~50k parcels), but **two reviewed slices now are** (#1462) — the Megawatt Hub
+  holding (`../findlay/parcel-assemblage.geojson`) and the civic/flood places
+  (`../findlay/civic-and-flood-places.geojson`). See [`../findlay/README.md`](../findlay/README.md)
+  for both, and read its vintage warning first.
   `source_url`: <https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/OhioStatewidePacels_full_view/FeatureServer/0>
+- ⚠️ **The Hancock slice is a 2023-05-08 export, and the county's live systems are
+  machine-inaccessible.** `CurrentTo` reads 2023-05-08 for every Hancock row. The Auditor's live
+  CAMA is Beacon/Schneider-only (`beacon.schneidercorp.com` AppID 1128, also fronted at
+  `regis.co.hancock.oh.us`) and returns **Cloudflare HTTP 403** to every non-browser request; the
+  Recorder's index is **Kofile CountyFusion** (`countyfusion2.kofiletech.us`,
+  `countyname=HancockOH`), whose "Login as Guest" POST target **404s outside a browser session**
+  (both probed 2026-08-02). Treat any current-ownership question here as **unsearched, not empty**.
+- ⚠️ **One row per polygon PART, not one row per parcel.** A multi-part parcel comes back as
+  several rows sharing a `LocalParcelID`. Merge the parts per parcel; deduping the query result by
+  id silently drops real geometry — it would have cost the civic/flood slice 220 ac.
 - **Floodzone** is served by the shared national FEMA NFHL layer (no committed catalog: a
   national `1=1` catalog is not meaningful — flood is a spatial query against an identified
-  footprint, which Findlay does not have yet).
+  footprint, which Findlay now has: `../findlay/parcel-assemblage.geojson`, #1462).
 
 ### Regenerate
 

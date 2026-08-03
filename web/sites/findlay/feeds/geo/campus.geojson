@@ -1,0 +1,558 @@
+{
+  "type": "FeatureCollection",
+  "feed": "campus",
+  "meta": {
+    "crs": "WGS84 (EPSG:4326)",
+    "layers": [
+      "campus"
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.642094760394,
+              41.1020686762031
+            ],
+            [
+              -83.6420682854159,
+              41.1005206066132
+            ],
+            [
+              -83.6407298712243,
+              41.1005336919786
+            ],
+            [
+              -83.6407296505652,
+              41.1003214020509
+            ],
+            [
+              -83.6407239885542,
+              41.0948783589367
+            ],
+            [
+              -83.6407304798054,
+              41.0948783049987
+            ],
+            [
+              -83.6415722112045,
+              41.0948765566555
+            ],
+            [
+              -83.6451253532027,
+              41.0948691082264
+            ],
+            [
+              -83.645124905581,
+              41.0950151696614
+            ],
+            [
+              -83.6451213210451,
+              41.0969347638566
+            ],
+            [
+              -83.6451132325783,
+              41.0992365285487
+            ],
+            [
+              -83.6451185876465,
+              41.0995032038671
+            ],
+            [
+              -83.6450965164205,
+              41.1011103828703
+            ],
+            [
+              -83.6450972816611,
+              41.1020144602946
+            ],
+            [
+              -83.6439887142379,
+              41.1020623846137
+            ],
+            [
+              -83.642094760394,
+              41.1020686762031
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "0 COUNTY RD 216 FINDLAY 45840",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": null,
+        "parcel_id": "020000004530",
+        "state_parcel_id": "39063-020000004530",
+        "assemblage_role": "hub_holding",
+        "cluster": "north",
+        "owner_of_record": "OEE XX LLC",
+        "owner_mailing_address": "OEE XX LLC FINDLAY 45840",
+        "situs_address": "0 COUNTY RD 216 FINDLAY 45840",
+        "land_use_code": 399,
+        "land_use_name": "Ind-Other",
+        "acres": 69.82,
+        "planar_acres": 67.895,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": [
+          "Whirlpool Corp. Findlay Wind Farm (2015)",
+          "Whirlpool Corp. Findlay Wind Farm (2015)",
+          "Zephyr Wind Project (2015)",
+          "Zephyr Wind Project (2015)"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6360085663147,
+              41.0883150806853
+            ],
+            [
+              -83.6360099490572,
+              41.0877990128585
+            ],
+            [
+              -83.636383839383,
+              41.0877999379319
+            ],
+            [
+              -83.6363854442199,
+              41.0883169090272
+            ],
+            [
+              -83.6360085663147,
+              41.0883150806853
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": null,
+        "parcel_id": "020000004900",
+        "state_parcel_id": "39063-020000004900",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 0.5,
+        "planar_acres": 0.447,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6419732001814,
+              41.1020690785632
+            ],
+            [
+              -83.6415382684113,
+              41.1020705858736
+            ],
+            [
+              -83.6415277674244,
+              41.101612251663
+            ],
+            [
+              -83.6407309957942,
+              41.101615010417
+            ],
+            [
+              -83.6407298712243,
+              41.1005336919786
+            ],
+            [
+              -83.6420682854159,
+              41.1005206066132
+            ],
+            [
+              -83.642094760394,
+              41.1020686762031
+            ],
+            [
+              -83.6419732001814,
+              41.1020690785632
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "12411 TOWNSHIP RD 215 FINDLAY 45840",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": null,
+        "parcel_id": "020001001794",
+        "state_parcel_id": "39063-020001001794",
+        "assemblage_role": "hub_holding",
+        "cluster": "north",
+        "owner_of_record": "ONE ENERGY ENTERPRISES LLC",
+        "owner_mailing_address": "ONE ENERGY ENTERPRISES LLC FINDLAY 45840",
+        "situs_address": "12411 TOWNSHIP RD 215 FINDLAY 45840",
+        "land_use_code": 447,
+        "land_use_name": "Com-Office",
+        "acres": 4.07,
+        "planar_acres": 3.963,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6360051503588,
+              41.089586929524
+            ],
+            [
+              -83.6360082239441,
+              41.0884342982345
+            ],
+            [
+              -83.6369373219434,
+              41.088436831665
+            ],
+            [
+              -83.6369376579524,
+              41.088319974428
+            ],
+            [
+              -83.6369388741076,
+              41.0878018250974
+            ],
+            [
+              -83.6371565398832,
+              41.0878026264332
+            ],
+            [
+              -83.6371353918619,
+              41.0895910970839
+            ],
+            [
+              -83.6360051503588,
+              41.089586929524
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": null,
+        "parcel_id": "020001002940",
+        "state_parcel_id": "39063-020001002940",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 3.44,
+        "planar_acres": 3.335,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6373808714146,
+              41.08884673982
+            ],
+            [
+              -83.6373932017919,
+              41.087803498381
+            ],
+            [
+              -83.6379712142262,
+              41.0878056244466
+            ],
+            [
+              -83.6379588926751,
+              41.0888488659438
+            ],
+            [
+              -83.6373808714146,
+              41.08884673982
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "12620 TOWNSHIP RD 99 FINDLAY 45840",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": null,
+        "parcel_id": "020001005171",
+        "state_parcel_id": "39063-020001005171",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "12620 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 521,
+        "land_use_name": "Res-Custom Code",
+        "acres": 1.5,
+        "planar_acres": 1.391,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6359908821899,
+              41.0949107970485
+            ],
+            [
+              -83.6360050612184,
+              41.0896203485847
+            ],
+            [
+              -83.6360051503588,
+              41.089586929524
+            ],
+            [
+              -83.6371353918619,
+              41.0895910970839
+            ],
+            [
+              -83.6371565398832,
+              41.0878026264332
+            ],
+            [
+              -83.6373932017919,
+              41.087803498381
+            ],
+            [
+              -83.6373808714146,
+              41.08884673982
+            ],
+            [
+              -83.6373614168954,
+              41.0904923997363
+            ],
+            [
+              -83.6383929109499,
+              41.090498817998
+            ],
+            [
+              -83.638382224841,
+              41.0914040061568
+            ],
+            [
+              -83.6383796326731,
+              41.0916235904038
+            ],
+            [
+              -83.6383570380983,
+              41.0935373201728
+            ],
+            [
+              -83.6383546796496,
+              41.0937370943927
+            ],
+            [
+              -83.6383409682088,
+              41.0948983524629
+            ],
+            [
+              -83.6359908821899,
+              41.0949107970485
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": null,
+        "parcel_id": "020001011628",
+        "state_parcel_id": "39063-020001011628",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 28.32,
+        "planar_acres": 27.928,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": [
+          "Zephyr Wind Project 2.0 (2019)",
+          "Zephyr Wind Project 2.0 (2019)"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6360082239441,
+              41.0884342982345
+            ],
+            [
+              -83.6360085663147,
+              41.0883150806853
+            ],
+            [
+              -83.6363854442199,
+              41.0883169090272
+            ],
+            [
+              -83.6367628734597,
+              41.0883184050628
+            ],
+            [
+              -83.6369122640233,
+              41.0883197527515
+            ],
+            [
+              -83.6369134801338,
+              41.0878017321489
+            ],
+            [
+              -83.6369388741076,
+              41.0878018250974
+            ],
+            [
+              -83.6369376579524,
+              41.088319974428
+            ],
+            [
+              -83.6369373219434,
+              41.088436831665
+            ],
+            [
+              -83.6360082239441,
+              41.0884342982345
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": null,
+        "parcel_id": "020001011800",
+        "state_parcel_id": "39063-020001011800",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 0.31,
+        "planar_acres": 0.284,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": [
+          "Zephyr Wind Project 2.0 (2019)"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6367628734597,
+              41.0883184050628
+            ],
+            [
+              -83.6363854442199,
+              41.0883169090272
+            ],
+            [
+              -83.636383839383,
+              41.0877999379319
+            ],
+            [
+              -83.6365273005026,
+              41.0878003091466
+            ],
+            [
+              -83.6369134801338,
+              41.0878017321489
+            ],
+            [
+              -83.6369122640233,
+              41.0883197527515
+            ],
+            [
+              -83.6367628734597,
+              41.0883184050628
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "layer": "campus",
+        "label": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": null,
+        "parcel_id": "020001011802",
+        "state_parcel_id": "39063-020001011802",
+        "assemblage_role": "hub_holding",
+        "cluster": "south",
+        "owner_of_record": "OEE XXX LAND LLC",
+        "owner_mailing_address": "OEE XXX LAND LLC FINDLAY 45840",
+        "situs_address": "0 TOWNSHIP RD 99 FINDLAY 45840",
+        "land_use_code": 301,
+        "land_use_name": "Ind-Custom Code",
+        "acres": 0.69,
+        "planar_acres": 0.63,
+        "cama_current_to": "2023-05-08",
+        "turbines_contained": []
+      }
+    }
+  ]
+}

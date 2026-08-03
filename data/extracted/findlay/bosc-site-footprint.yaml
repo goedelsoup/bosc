@@ -1,0 +1,291 @@
+# One Power Co "Findlay Megawatt Hub" (MWHub 01) — footprint record for the Findlay, OH
+# (Blanchard River) watershed point. LIKE Sidney's / Troy-Piqua's / Urbana's / Van Wert's (and
+# UNLIKE Lima's document-transcribed stormwater-permit footprint), the boundary here is the
+# RECORDED OWNERSHIP holding — the eight Allen Township parcels standing in One Energy vehicle
+# names, committed as data/reference/findlay/parcel-assemblage.geojson. building/impervious/
+# developed stay [open] pending a Rule-5 construction-stormwater permit or a site plan.
+#
+# ⚠️ READ boundary_basis FIRST. The only machine-readable Hancock parcel source is a 2023-05-08
+# export, so this record describes the holding as of that date and names NO grantee for the 2025
+# 40-ac or the 2026-03-05 110-ac purchases. Nothing here is a current-ownership claim.
+#
+# This file does NOT validate as watermark.hydrology.models.SiteFootprint, and that is deliberate
+# (every peer's is the same shape): a SiteFootprint is a transcription of a permitted earth-
+# disturbance record, and no Rule-5 / CGP permit for this campus is in the corpus. The discharge
+# screen therefore stays held out rather than run on invented acreages.
+#
+# Source tags: reference = committed GIS reference dataset; connector = a live public-data read;
+# document = transcribed from a corpus instrument; assumption = a stated modeling input.
+# #1462 (places) / #1459 (facility), sub-issues of #1265.
+site: >-
+  Allen Township, Hancock County, OH — the One Power Co "Findlay Megawatt Hub" (MWHub 01), an
+  eight-parcel holding in two blocks off Township Road 215 / County Road 216 and Township Road 99,
+  about 4 mi north of downtown Findlay. One Power's SEC filings give the hub's address as 12385
+  Township Road 215; the nearest situs in the county record is 12411 TR 215, the One Energy
+  Enterprises LLC office parcel — see boundary_basis.
+operator: >-
+  MARA Holdings, Inc. (NASDAQ: MARA) is the 150 MW / 15-year take-or-pay customer; One Power Co
+  (CEO Jereme Kent) is the host, acquired by OnSite Partners — funds advised by Basalt
+  Infrastructure Partners — announced 2026-02-16. The land stands in THREE One Energy vehicles:
+  One Energy Enterprises LLC, OEE XX LLC and OEE XXX LAND LLC. ⚠️ EntityGraph guard: MARA
+  Holdings, Inc. is NOT Marathon Petroleum Corp (the Findlay-HQ refiner and a Hancock County NPDES
+  permittee) — two unrelated companies; never merge them.
+  See data/extracted/findlay/data-centers.md.
+boundary_basis: >-
+  Recorded ownership holding — the eight Hancock County parcels whose tax-bill mailing label reads
+  ONE ENERGY ENTERPRISES LLC (020001001794), OEE XX LLC (020000004530) or OEE XXX LAND LLC (the
+  other six), committed as data/reference/findlay/parcel-assemblage.geojson. NOT a surveyed
+  earth-disturbance boundary; no Ohio EPA construction stormwater (NPDES OHC000005 / Rule-5)
+  footprint and no campus site plan is in the corpus. ⚠️ THE SOURCE IS THREE YEARS OLD AND THE
+  COUNTY'S CURRENT SYSTEMS ARE MACHINE-INACCESSIBLE. Hancock County publishes no parcel ArcGIS
+  REST; the substitute is the OGRIP Ohio statewide public view scoped County='Hancock', whose
+  Hancock slice carries CurrentTo 2023-05-08. The Auditor's live CAMA is Beacon/Schneider-only
+  (beacon.schneidercorp.com AppID 1128, also at regis.co.hancock.oh.us) and returns Cloudflare
+  HTTP 403 to every non-browser request; the Recorder's index is Kofile CountyFusion
+  (countyname=HancockOH), whose guest-login POST target 404s outside a browser session. Both were
+  probed 2026-08-02. So the deed chain — grantor, grantee vehicle, instrument number,
+  consideration, easements — is [open] as UNSEARCHED, not as a negative finding, and this holding
+  is the 2023-05-08 record. Full reconciliation in the geojson `bosc:provenance` and
+  data/reference/findlay/README.md.
+
+parcel_acres:
+  value: 108.65
+  unit: acre
+  source: reference
+  citation: >-
+    [verified] Sum of the county-CAMA `LandArea` across the eight committed parcels
+    (parcel-assemblage.geojson). The planar figure measured from the same geometry in UTM 17N
+    (EPSG:32617, watermark.hydrology.geo.parcels_total_acres) is 105.873 ac, 2.78 ac (2.6%) lower;
+    the two are NOT reconciled and neither is adjusted to the other — cite the CAMA figure for the
+    record and the planar one for area/runoff modelling. ⚠️ THIS IS NOT ONE CONTIGUOUS CAMPUS. The
+    holding is two blocks whose nearest boundaries are 200.2 m apart: a NORTH block of 73.89 CAMA
+    ac / 71.858 planar (parcels 020000004530 + 020001001794, one contiguous polygon) and a SOUTH
+    block of 34.76 / 34.015 (the six TR 99 parcels, also one contiguous polygon).
+  confidence: high
+
+north_block_acres:
+  value: 73.89
+  unit: acre
+  source: reference
+  citation: >-
+    [verified] as the acreage; [inference] on the identification. The north block — 69.82 ac of
+    OEE XX LLC ground at County Road 216 (land use 399 Ind-Other) plus the 4.07-ac One Energy
+    Enterprises LLC office at 12411 TR 215 (447 Com-Office) — is the "74-acre wind energy campus
+    along Interstate 75" of The Ohio Register's reporting (theohioregister.com,
+    "Findlay hiding looming data center project", [reference]). 73.89 CAMA ac against a reported
+    74 is as close as a CAMA figure and a press figure get. ⚠️ "ALONG INTERSTATE 75" IS CORRIDOR
+    LANGUAGE, NOT FRONTAGE: measured in UTM 17N against the Census TIGER primary-road centerline,
+    the block's nearest boundary point (41.09950, -83.64512) is 1,224 m — 0.76 mi — east of I-75.
+    The south block is 1,794 m out. Neither abuts the interstate right-of-way.
+  confidence: high
+
+turbines_on_the_holding:
+  value: 7
+  unit: turbine
+  source: connector
+  citation: >-
+    [verified] as a geometric containment test. The USGS U.S. Wind Turbine Database (USWTDB, read
+    2026-08-02) carries exactly TEN turbines in Hancock County OH, all 1.5 MW, in four named
+    projects: Whirlpool Corp. Findlay Wind Farm (2015, 2), Zephyr Wind Project (2015, 3), Valfilm
+    Wind (2018, 2) and Zephyr Wind Project 2.0 (2019, 3). Point-in-polygon against the committed
+    parcels puts SEVEN inside the holding — four in 020000004530 (both Whirlpool turbines + two
+    Zephyr), two in 020001011628 and one in 020001011800 (all three Zephyr 2.0). The other three —
+    one 2015 Zephyr turbine at 41.09441/-83.63913 and both Valfilm turbines — fall outside it.
+    ⚠️ So the register's "already includes 10 utility-scale turbines" is a COUNTY count, not a
+    count on this land, and the 7-vs-10 gap is itself evidence that the 2023 holding is not the
+    whole campus. Note also what the containment shows about One Power's model: the two turbines
+    branded for WHIRLPOOL's Findlay plant stand on One Energy's own ground, not Whirlpool's —
+    behind-the-meter generation sited on the developer's land.
+  confidence: high
+
+building_footprint_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No campus site plan is in the corpus and neither One Power nor MARA has disclosed a
+    gross floor area or a building count for MWHub 01 — contrast Troy-Piqua (~700k sq ft
+    disclosed) or Urbana (~460k sq ft reported). Unusually for this network the load does NOT
+    depend on it: the IT basis here is a DISCLOSED 150 MW take-or-pay (One Power Form S-1, EDGAR
+    CIK 2039139; MARA release 2024-11-11), not a floor-area screening bracket (#1459). Needs the
+    assembled site-plan / Rule-5 SWPPP extraction.
+  confidence: null
+
+impervious_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No impervious tabulation on record. Requires the Ohio EPA construction stormwater
+    (NPDES OHC000005 / Rule-5) permit or the campus site plan; a NOI for the 110-ac North Findlay
+    Industrial Park parcel is expected but unconfirmed (data/extracted/findlay/data-centers.md,
+    Regulatory record). ⚠️ Do not infer it from the auditor land-use classes: the holding is
+    classed industrial/commercial (399/301/447/521), but a use class is not an impervious fraction
+    and a wind campus is mostly pervious ground around turbine pads and access drives.
+  confidence: null
+
+developed_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] Total disturbed/developed area is unknown pending the SWPPP / construction stormwater
+    permit; it will be >= impervious_acres once that lands. This is the value that would let the
+    profile's pre_cover / post_cover / developed_pervious_cover come off TODO and the discharge
+    screen run.
+  confidence: null
+
+dominant_hsg:
+  value: C/D
+  source: connector
+  citation: >-
+    [verified] USDA NRCS SSURGO via Soil Data Access (SDA), 8x8 grid sample (23 interior points)
+    over parcel-assemblage.geojson (watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8,
+    2026-08-02): C/D at 23 of 23 points (100%). UNANIMOUS on two finer grids as well — 53 of 53 at
+    grid_n=12 and 89 of 89 at grid_n=16 — so the dual rating is the whole footprint, not a
+    sampling artifact. The map units are Del Rey-Blount complex, 0-3% slopes (12 points; Del Rey
+    55%, somewhat poorly drained), Pewamo silty clay loam, 0-1% (6; Pewamo 85%, very poorly
+    drained), Glynwood-Blount-Houcktown complex, 1-4% (4; Glynwood 40%) and Shinrock, till
+    substratum-Glynwood complex, 1-4% (1). A SINGLE group, and it is DUAL — C where the field tile
+    is installed and maintained, D in the natural undrained condition — so the drained-vs-undrained
+    switch (watermark.hsg / WS-20 / #1620) is live here and pre_/post_drainage_condition resolve
+    it. This CORRECTS the prior profile [inference] of HSG "D", and corrects its REASONING as well
+    as its letter: that inference read the county as Great Black Swamp very-poorly-drained clays
+    and named Hoytville/Pewamo. Hoytville does not appear under this footprint at all — the hub
+    sits on the Wisconsinan till/moraine mix east of the lake plain — and NRCS rates Pewamo, the
+    other series it named, C/D rather than flat D. The same surface-vs-region correction found at
+    Ottawa (D -> C/D) and Van Wert (D -> C/D) elsewhere in the Maumee basin. CLOSES #355.
+  confidence: high
+
+receiving_water: >-
+  [open] for the CAMPUS. The holding sits on the Blanchard River drainage (HUC-8 04100008, Maumee
+  basin) about 4 mi north of downtown Findlay, but the specific stormwater receptor — a Blanchard
+  tributary, the Eagle Creek system, or a roadside/township ditch network — is not established:
+  there is no construction stormwater permit, no outfall and no drainage report in the corpus, and
+  no water-service agreement or withdrawal figure has been disclosed for the hub (contrast Sidney's
+  Res 26-26 1.0 MGD ceiling). No assimilative screen is run and no figure is invented. ⚠️ DO NOT
+  BORROW THE CITY'S DENOMINATOR: the cited 7Q10 of 0.21 cfs at Blanchard River RM 56.42 (Ohio EPA
+  fact sheet 2PD00008*UD, Table 12) is the WPCC OUTFALL'S design low flow, permit-scoped to
+  2PD00008 by #1458, and RM 56.42 is downstream of this holding. It is the municipal plant's
+  number, not the hub's.
+
+# ------------------------------------------------------------------------------------------
+# The site's OTHER committed places (#1462 acceptance item 2). These are public infrastructure,
+# not the campus: they live in data/reference/findlay/civic-and-flood-places.geojson and are
+# deliberately NOT wired to SiteProfile.parcels_relpath, because that path drives the geo/campus
+# map feed, the SSURGO sample and the stormwater denominator.
+# ------------------------------------------------------------------------------------------
+civic_and_flood_places:
+  geojson: data/reference/findlay/civic-and-flood-places.geojson
+  total_cama_acres: 1921.77
+  total_planar_acres: 1870.83
+
+  water_pollution_control_center:
+    parcels: ['610000926490', '610000926560']
+    cama_acres: 77.85
+    planar_acres: 68.495
+    citation: >-
+      [verified] City of Findlay WPCC, situs 1201 S River Rd (parcel 610000926490, 50.52 CAMA ac,
+      land use 640 Exm-Municipality). The plant's permitted outfall 2PD00008001 — Blanchard River
+      River Mile 56.42, 41.049722/-83.667778, per Ohio EPA NPDES fact sheet 2PD00008*UD p.7
+      (data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml) — falls INSIDE this parcel on a
+      point-in-polygon test, which is an independent confirmation of the situs. Average design
+      flow 15 MGD (23.208 cfs), peak hydraulic 40 MGD. ⚠️ The parcel's served geometry measures
+      only 39.758 planar ac against 50.52 CAMA — a 21% shortfall well outside the +/-3% the other
+      25 parcels show, so cite the deeded acreage and do not use this polygon as a plant-area
+      measurement. The adjoining 27.33-ac city parcel 610000926560 is carried on ADJACENCY and
+      common ownership only; no instrument assigns it to the plant.
+
+  upground_reservoirs:
+    parcels: ['330001006644', '330001006645', '330001006646', '330001016943', '330001022264', '330001022266']
+    cama_acres: 1048.57
+    planar_acres: 1019.565
+    water_surface_acres: 806.8
+    citation: >-
+      [verified] Six City of Findlay parcels on Township Road 207 / 205 in Marion Township,
+      1,048.57 CAMA ac of municipal land. The parcel rows carry no reservoir name; the USGS NHD
+      Waterbody (Large Scale) layer carries exactly two reservoirs (FType 436) over this block —
+      "Findlay Reservoir" at 177.9 ac and "Findlay Upground Reservoir Number Two" at 628.9 ac,
+      806.8 ac of water surface inside the 1,048.57 ac of land. ⚠️ Which parcel underlies which
+      reservoir is NOT asserted: parcel and waterbody boundaries come from different producers and
+      were not reconciled. This is the same Findlay Reservoir whose diversion and low-flow
+      augmentation release make USGS gage 04189000 a REGULATED station — the defect that (with the
+      gage sitting below the WPCC outfall) retired the derived 8.67 cfs 7Q10 for that reach in
+      #1458.
+
+  eagle_creek_dry_storage_basin:
+    parcels_count: 18
+    owner: Maumee Watershed Conservancy District
+    cama_acres: 795.35
+    planar_acres: 782.77
+    published_impoundment_acres: 765
+    citation: >-
+      [verified] The flood-program acquisition, and it CLOSES the polygon that
+      data/extracted/findlay/flood/eagle-creek-basin-footprint.handoff.yaml had to leave [open]:
+      #1465 could find only verbal bounds and an acreage in the public record, so it committed no
+      geometry. The county parcel record carries it — 18 parcels standing in the Maumee Watershed
+      Conservancy District's name in Eagle Township, situs addresses on exactly the four roads the
+      handoff and the issue name (TR 76, TR 77, TR 49, US RT 68), spanning 40.9739-40.9890 N
+      (3.4-4.5 mi south of downtown Findlay at 41.0440). The USGS NHD large-scale flowline layer
+      puts seven Eagle Creek segments through the block; township confirmed via the Census TIGER
+      county-subdivision layer. ⚠️ 795.35 ac of LAND ACQUIRED is not the published "approximately
+      765 acres" of IMPOUNDMENT within the dam alignment (hancockcountyflooding.com) — acquired
+      land properly exceeds the impoundment (embankment, access, buffer), the two are consistent,
+      and neither is derived from the other. THE DAM ALIGNMENT ITSELF STAYS [open]: no surveyed
+      impoundment polygon and no ODNR Dam Safety permit exhibit is in the corpus, so nothing here
+      is the basin outline. And because the OGRIP export is dated 2023-05-08 while acquisition was
+      still in progress, 795.35 ac is a FLOOR on what MWCD holds today, not a closing figure.
+    phase1_phase2_benching: >-
+      [open] Still descriptor-only. The Phase 1 benching reach (Blanchard River between Howard Run
+      and the Norfolk Southern bridge, completed 2024) and the Phase 2 downtown reach (Cory St to
+      the CSX tracks) are public-works footprints on land the City and others already hold; no
+      parcel set or surveyed reach polygon identifies them in the record. See the handoff.
+
+notes:
+  - >-
+    THIS RECORD ACTIVATES THE `places` DOMAIN AND UNSKIPS THE ONBOARD SSURGO STEP. Before it, the
+    profile declared two relpaths that pointed at nothing, so `watermark onboard findlay` reported
+    "ssurgo-hsg: skipped — parcel geometry missing" and readiness.places sat at `absent`. Both were
+    real absences, not gaps in the model: the trigger is the evidence, and until this the evidence
+    was not committed.
+  - >-
+    WHAT THE DEED PULL WOULD ADD, AND WHY IT IS STILL [open]. #1462 called the grantee vehicle for
+    the 110 ac closed 2026-03-05 for $5.9M in the North Findlay Industrial Park "the highest-value
+    unknown in the whole refresh", and it remains unknown. The only machine-readable Hancock parcel
+    source predates that closing by nearly three years, and both county systems that would carry it
+    refuse automated retrieval (see boundary_basis). What this record CAN say is that as of
+    2023-05-08 the One Energy vehicles held 108.65 ac against the S-1's "~170-acre campus" — a
+    61-ac gap consistent with the 2025 40-ac purchase plus land held by lease, option, or a vehicle
+    whose mailing label reads neither "OEE" nor "ONE ENERGY". No parcel was added to close it.
+  - >-
+    THE HUB'S OWN ADDRESS IS NOT IN THE EXTRACT. One Power's SEC filings give 12385 Township Road
+    215; no parcel in the 2023-05-08 Hancock slice carries that situs (12411 TR 215 is the nearest,
+    and it is the 4.07-ac office). Whether 12385 is a post-2023 split, a building address on an
+    existing parcel, or a renumbering is [open]. The road itself was contested: One Energy
+    petitioned the county commissioners on 2023-12-05 to rename TR 215 "Electric Avenue", the
+    petition the township opposed in the meeting sequence that produced One Energy Ents., Inc. v.
+    Allen Twp. Bd. of Trustees, 2026-Ohio-405.
+  - >-
+    THE ZONING DISTRICT OVER THE HOLDING IS [open], AND THE REASON IS STRUCTURAL. The City of
+    Findlay's zoning FeatureServer is city-limits-only, polygon-only (no parcel id, so per-parcel
+    joins are unsupported for this site) and does not reach Allen Township. The township's own
+    zoning regime is new — adopted over One Energy's objection in the litigation above — and its
+    map is not published as a layer. This matters because Allen Township's proposed Section 1521
+    would cap a data center at 10 MW over a 150 MW site and permits one conditionally only in I-1
+    and I-2 (data/extracted/findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml,
+    #1463).
+  - >-
+    A NEIGHBOURING WATCH SURFACE, DELIBERATELY EXCLUDED FROM THIS FILE. Interstate Capital, LLC's
+    "Allen Commerce Park" rezoning petition (A-1 -> I-1, heard 2026-08-05) covers 135.298 ac about
+    2 mi from this holding. It is NOT committed as campus geometry and its parcels are not in
+    parcel-assemblage.geojson: the application states its use as "Warehousing / Manufacturing" and
+    the corpus record is explicit that nothing connects Interstate Capital to a data center, so
+    drawing it as campus would manufacture the link that record refuses to draw. What #1462 DID
+    resolve there is the parcel-number discrepancy the record flagged as-received — see
+    data/extracted/findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml.
+  - >-
+    STORMWATER SCREENS STAY HELD OUT, WITH A NAMED INSTRUMENT TO UNBLOCK THEM. This file does not
+    validate as `SiteFootprint` (no citation_index, no measured_parcel_acres, no
+    outfall_diameter_in) because none of those exist for this campus — exactly the posture of
+    every peer footprint record. `load_site_footprint(Settings(site="findlay"))` therefore raises,
+    the discharge screen does not run, and the profile's pre_cover / post_cover /
+    developed_pervious_cover stay TODO. The instrument that changes all of it at once is the Ohio
+    EPA Rule-5 / CGP construction-stormwater NOI. When it lands, regenerate the screen with
+    `hydro_fixtures_dir` set, NOT bare `--offline` (the fixture-vs-offline HSG divergence, #1610).

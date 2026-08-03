@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-02T23:34:28.505000+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-03T01:04:37.241847+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **154** catalogued datasets — **153** reviewed.
-- **154** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **155** catalogued datasets — **154** reviewed.
+- **155** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -60,6 +60,7 @@ Snapshot reconciled: **2026-08-02T23:34:28.505000+00:00**. Regenerate with `wate
 | reference | eia | 4 | 4 | 0 | 0 |
 | reference | federal | 1 | 1 | 0 | 0 |
 | reference | ferc | 1 | 1 | 0 | 0 |
+| reference | findlay | 1 | 1 | 0 | 0 |
 | reference | findlay-gis | 1 | 1 | 0 | 0 |
 | reference | gleif | 1 | 1 | 0 | 0 |
 | reference | greenops | 5 | 5 | 0 | 0 |
@@ -95,7 +96,7 @@ Snapshot reconciled: **2026-08-02T23:34:28.505000+00:00**. Regenerate with `wate
 | columbus | 53 | 42 | 11 |
 | coshocton | 53 | 36 | 17 |
 | defiance | 56 | 44 | 12 |
-| findlay | 65 | 55 | 10 |
+| findlay | 66 | 57 | 9 |
 | fort-wayne | 46 | 34 | 12 |
 | greenville | 54 | 42 | 12 |
 | hamilton-middletown | 55 | 44 | 11 |

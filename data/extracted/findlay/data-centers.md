@@ -74,8 +74,27 @@ host's SEC filing and the customer's own release.
 ### Land assembly
 
 - 110 ac @ **$5.9M closed 2026-03-05** (North Findlay Industrial Park) + 40 ac in 2025 + the 74-ac
-  wind campus. `[open — Hancock County Recorder pull]` — grantee vehicle / parcel IDs pending the
-  epic #1265 recorder/places sub-issue.
+  wind campus. `[reference]` The Ohio Register.
+- **The land of record is now committed** (#1462):
+  [`data/reference/findlay/parcel-assemblage.geojson`](../../reference/findlay/parcel-assemblage.geojson)
+  — **eight Allen Township parcels, 108.65 ac CAMA / 105.873 ac planar**, standing in **three One
+  Energy vehicles**: `ONE ENERGY ENTERPRISES LLC` (the 4.07-ac office at 12411 TR 215),
+  `OEE XX LLC` (69.82 ac at CR 216) and `OEE XXX LAND LLC` (six parcels on TR 99). The holding is
+  **two blocks 200 m apart**; the **north block is 73.89 ac**, matching the reported 74-ac wind
+  campus, and **seven of Hancock County's ten wind turbines** (USGS USWTDB) stand inside the
+  holding. `[verified]`
+- **The grantee vehicle for the 2026 and 2025 purchases is still `[open]`, and that is
+  *unsearched*, not empty.** Hancock County publishes no parcel ArcGIS REST; the only
+  machine-readable source is the OGRIP statewide public view, whose Hancock slice is a
+  **2023-05-08** export that predates both closings. The Auditor's live CAMA is Beacon/Schneider
+  only and returns **Cloudflare HTTP 403**; the Recorder's index is **Kofile CountyFusion**, whose
+  guest login 404s outside a browser session (both probed 2026-08-02). The instrument to pull is
+  the deed, by hand or with a recorder account.
+- **The S-1's "~170-acre campus" is not reconciled to the 108.65 ac of record and is not forced to
+  be** — the 61-ac gap is consistent with the 2025 40-ac purchase plus land held by lease, option,
+  or a vehicle whose mailing label reads neither `OEE` nor `ONE ENERGY`. No parcel was invented to
+  close it. Likewise **12385 TR 215**, the hub's own SEC address, appears in no parcel in the 2023
+  slice (12411 TR 215, the office, is the nearest) — `[open]`.
 - **Hyperscale end-use for the land assembly is press speculation only** (`[reference]`, The Ohio
   Register) — **no operator, no instrument.** It stays **out of this register's numbered entries**
   and out of the `SiteFacility`: the disclosed facility (entry 1) is the MARA compute load, not a
@@ -201,8 +220,12 @@ A negative check tagged `[verified]` is a result, not a gap — it protects the 
 1. **One Power Co Form S-1** (EDGAR CIK 2039139) — the primary disclosure of the hub capacity +
    the MARA take-or-pay contract (already cited; ingest for the corpus).
 2. **MARA Holdings 10-K / operations updates** — resolve the 2026 energization status `[open]`.
-3. **Hancock County Recorder** — deed(s) for the 110-ac (2026-03-05, $5.9M) + 40-ac + 74-ac
-   parcels: grantee vehicle, parcel IDs, acreage (epic #1265 places sub-issue).
+3. **Hancock County Recorder / Auditor** — deed(s) for the 110-ac (2026-03-05, $5.9M) and 40-ac
+   (2025) purchases: grantee vehicle, parcel IDs, consideration, instrument number. ⚠️ **Both county
+   systems refuse automated retrieval** (Beacon/Schneider CAMA = Cloudflare 403; Kofile CountyFusion
+   recorder index = login-gated, guest POST 404s), so this is a **manual or account-authenticated
+   pull**, not a scriptable one — probed 2026-08-02 under #1462. The **74-ac wind campus is already
+   answered** (parcels `020000004530` + `020001001794`); what is missing is the post-2023 chain.
 4. **OEPA Air PTI** (NWDO eSuite) — One Power / MARA generator-bank permit(s), Allen Township.
 5. **OEPA CGP stormwater NOI** — the North Findlay Industrial Park construction coverage.
 6. **OHD000001 comment docket** — scan for Findlay-area commenters.

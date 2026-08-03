@@ -141,6 +141,30 @@ notes: >-
   pull time (flagged rezoning_contestable_2026_07_07); the abutting FirstEnergy/ATSI and NWWSD
   tracts are measured adjacencies recorded in the footprint yaml and deliberately NOT committed
   here, since this file feeds the geo/campus layer.
+  Findlay (#1462): the EIGHT parcels standing in three One Energy vehicles — One Energy Enterprises
+  LLC, OEE XX LLC and OEE XXX LAND LLC — the One Power Co "Findlay Megawatt Hub" (MWHub 01) holding
+  in Allen Township, 108.65 ac CAMA / 105.873 ac planar. THE ONLY ENTRY IN THIS SET STILL PULLED
+  FROM THE OGRIP STATEWIDE SUBSTITUTE, and the vintage is the first thing to read: Hancock's slice
+  carries CurrentTo 2023-05-08, so the file PREDATES both the 40 ac bought in 2025 and the 110 ac
+  closed 2026-03-05 for $5.9M in the North Findlay Industrial Park, and can name no grantee for
+  either. Unlike Shelby / Clinton / Wood, no county layer can replace it: the Auditor's live CAMA is
+  Beacon/Schneider-only and returns Cloudflare HTTP 403 to every non-browser request, and the
+  Recorder's index is Kofile CountyFusion whose guest login 404s outside a browser session (both
+  probed 2026-08-02) — so the deed chain is UNSEARCHED, not empty. The OGRIP public view is
+  owner-redacted (owner_field=''), so owner_of_record is parsed from the MailAddressAll tax-bill
+  mailing label, and it carries no value, sale, deed, legal-description or tax-district columns at
+  all. TWO BLOCKS, NOT ONE CAMPUS, kept apart by a `cluster` property: each block's polygons abut
+  without overlapping (north union 71.857 ac vs parts-sum 71.858; south 34.016 vs 34.015) but the
+  blocks are 200.2 m apart. The 73.89-ac north block is the press's "74-acre wind campus along
+  I-75" — though "along I-75" is corridor language, not frontage: measured against the Census TIGER
+  centerline it is 1,224 m (0.76 mi) east of the interstate. `turbines_contained` records a
+  point-in-polygon test against the USGS USWTDB: seven of Hancock County's ten turbines stand on
+  this holding, so the register's "already includes 10 utility-scale turbines" is a COUNTY count,
+  and both turbines branded for Whirlpool's Findlay plant stand on One Energy's ground. The S-1's
+  "~170-acre campus" is NOT reconciled to the 108.65 ac of record and no parcel was added to close
+  the gap; 12385 TR 215, the hub's own SEC address, appears in no parcel in the 2023 slice. The
+  site's civic/flood places (WPCC, upground reservoirs, the Eagle Creek Dry Storage Basin) are
+  deliberately a SEPARATE committed file — see the findlay-civic-flood-places entry.
   Distinct from the Periplus frozen import
   (reference/periplus/bosc-parcels.geojson, catalogued under the periplus entry), which covers the
   Lima corridor parcels only.

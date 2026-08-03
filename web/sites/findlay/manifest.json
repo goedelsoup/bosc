@@ -2,15 +2,15 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "1.51.0",
-  "generated_at": "2026-08-02T23:31:01+00:00",
-  "feed_count": 32,
-  "row_total": 601,
+  "generated_at": "2026-08-03T01:08:56+00:00",
+  "feed_count": 33,
+  "row_total": 610,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "live",
-      "places": "absent",
+      "places": "live",
       "record": "live",
       "story": "seeded"
     }
@@ -221,7 +221,15 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 65
+      "count": 66
+    },
+    {
+      "name": "geo/campus",
+      "path": "feeds/geo/campus.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 8
     },
     {
       "name": "facts",
