@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-03T13:47:31.508852+00:00'
+reconciled_at: '2026-08-03T19:13:26.068317+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -1310,6 +1310,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  regulatory-west-union:
+    exists: true
+    sha256: 4cd112b04ecb04b0b8e8fccdd2e47df74dc6603856f1572585a298a6771d7cb8
+    size_bytes: 23592
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:west-union
   rsei:
     exists: true
     sha256: 55a028aeca6401035261a9cad9016f6b38510ae75abd8d5354bcd1f588b7c2ce

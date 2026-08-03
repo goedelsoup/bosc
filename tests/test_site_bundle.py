@@ -666,6 +666,20 @@ def test_every_committed_bundle_readiness_matches_its_own_feed_counts() -> None:
 # their committed floor data alone (no fabricated corpus), and the true stubs stay `stub`. We
 # assert the derived readiness end-to-end through the real export rather than committing ~370
 # unrendered fixture files for these non-selectable sites (their bundles regenerate on promotion).
+#
+# Above-floor domains a backdrop-staged site is EXPECTED to have risen on, keyed by slug —
+# anything not listed must read `absent`. Readiness is a standing property, so a site sitting at
+# Backdrop tier is not a promise that its corpus stays empty; it is a promise that nothing above
+# the floor was *scaffolded*. Naming the exceptions keeps the guard sharp either way: a domain
+# that lights up without an entry here still fails, and an entry whose evidence is later removed
+# fails too. Each one owes a cited instrument.
+_BACKDROP_ABOVE_FLOOR: dict[str, dict[str, str]] = {
+    # The 1993 Adams County consent order on the Village WWTP's NPDES 0PC00019*CD (#1278) — one
+    # in-scope `enforcement` record, so the domain SEEDS. `live` needs RECORD_LIVE_THRESHOLD (2).
+    "west-union": {"record": "seeded"},
+}
+
+
 @pytest.mark.parametrize("slug", ["toledo", "west-union"])
 def test_backdrop_staged_site_exports_at_backdrop_tier(
     slug: str, site_bundle: Callable[[str], Path]
@@ -675,10 +689,19 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]
-    # The floor is live; nothing above it is scaffolded (the epic's additive rule).
+    # The floor is live; nothing above it is scaffolded (the epic's additive rule). A domain that
+    # rose on a real, cited source is not scaffolding — it is declared above, with its instrument.
     assert domains["backdrop"] == "live"
+    risen = _BACKDROP_ABOVE_FLOOR.get(slug, {})
     for above_floor in ("facility", "places", "record"):
-        assert domains[above_floor] == "absent", f"{slug} {above_floor} must not scaffold"
+        expected = risen.get(above_floor, "absent")
+        assert domains[above_floor] == expected, (
+            f"{slug} {above_floor}: expected {expected!r}, got {domains[above_floor]!r} — "
+            "a domain must not scaffold, and one that rose on evidence belongs in "
+            "_BACKDROP_ABOVE_FLOOR with its instrument named"
+        )
+    # Seeding is not lifting: no above-floor domain may read `live` at Backdrop tier.
+    assert "live" not in set(risen.values())
 
 
 def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -> None:
