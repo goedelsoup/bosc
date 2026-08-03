@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "12623d8ec43b7b52e031828bbc0bac6c23bcae3e7708ef702272bdd6dbcbf8bc",
+  "catalog_version": "a56a710567442a21c4c6fd4b6e0bac573154abead12ccbcfee745cfac2802d3f",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -996,6 +996,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:findlay-civic-flood-places",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "findlay-civic-flood-places",
+      "title": "Findlay Civic & Flood Places — WPCC, Upground Reservoirs, Eagle Creek Dry Storage Basin",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:findlay-discharge-record",
       "kind": "dataset",
       "site": "lima",
@@ -1041,6 +1049,14 @@
       "site": "lima",
       "local_id": "findlay-grid",
       "title": "Findlay — Grid Posture (OPSB siting pair, Schedule DCT, behind-the-meter fleet, the +300 MW gap)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:findlay-water-watch",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "findlay-water-watch",
+      "title": "Findlay — Standing Water Watch (the derived spring phosphorus load, the ECHO-vs-state schedule reconciliation, the CSO/SSO overflow record, the SDWA primary check)",
       "feed": "catalog"
     },
     {
@@ -1785,6 +1801,14 @@
       "site": "lima",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

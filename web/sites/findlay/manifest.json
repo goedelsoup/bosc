@@ -2,9 +2,9 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "1.51.0",
-  "generated_at": "2026-08-03T01:56:36+00:00",
+  "generated_at": "2026-08-03T03:37:50+00:00",
   "feed_count": 33,
-  "row_total": 610,
+  "row_total": 642,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -117,7 +117,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 32
+      "count": 40
     },
     {
       "name": "rsei",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 66
+      "count": 67
     },
     {
       "name": "geo/campus",
@@ -245,7 +245,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 29
+      "count": 36
     },
     {
       "name": "impact-study",
@@ -269,7 +269,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 116
+      "count": 124
     },
     {
       "name": "corpus-nodes",
@@ -277,7 +277,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 116
+      "count": 124
     },
     {
       "name": "ask-embeddings",

@@ -219,9 +219,32 @@ Report).
 
 ## Open threads
 
-- `CSO-LTCP-2026-11-01` — the LTCP addendum deadline, and whether it moves again.
-- `TP-SEASON-REPORTS` — the plant's own phosphorus loads since 2021.
-- `UD-ISSUANCE-BYTES` — the as-issued `*UD` permit, which the DAM no longer serves.
-- `MERCURY-VARIANCE-RENEWAL` — the annual 12 ng/L condition.
+Four of these were carried forward into the standing water watch (issue 1461,
+[`water-watch.md`](water-watch.md)), which pulled the reported record from EPA ECHO on 2026-08-02
+and answered two of them:
+
+- `CSO-LTCP-2026-11-01` — the LTCP addendum deadline, and whether it moves again. **Still open**,
+  now with the overflow series measured under it: combined-sewer activity has risen from 4 events
+  in 2023 to 12 in 2025, and the first six months of 2026 already carry more volume than any
+  complete year.
+- `TP-SEASON-REPORTS` — the plant's own phosphorus loads since 2021. **Largely answered.**
+  Reconstructing the general permit's own load equation from the DMRs gives 4,450 kg for spring
+  2023, **2,756 kg for 2024** and 3,101 kg for 2025 against the 3,200 kg limit — so the plant went
+  under its allocation in the first season the general permit governed, and the 4.8–5.5 MT record
+  above no longer describes it. The 2025 season is too close to call from monthly data and the
+  reported figure is still a records request.
+- `UD-ISSUANCE-BYTES` — the as-issued `*UD` permit, which the DAM no longer serves. **Still open**,
+  and now higher value: it would settle whether ECHO's unachieved "Study Plan" event dated
+  2025-12-01 is the superseded pre-modification instance of event 34099. Separately, the DMR record
+  independently corroborates the 2024-11-01 effective date — the mercury monthly limit steps from
+  3.9 to 3.3 ng/L at the 2024-11-30 monitoring period.
+- `MERCURY-VARIANCE-RENEWAL` — the annual 12 ng/L condition. **Answered, and quiet.** The worst
+  calendar year on the reported record averages 1.115 ng/L, about a factor of eleven below the
+  trigger. Downgraded to an annual check.
 - Issue **1458** — the derived-vs-cited low-flow reconciliation. This record supplies the cited
   side; it does not resolve the conflict.
+
+The watch also opened a thread this record did not anticipate: the sibling pretreatment milestone,
+**event 52599 due 2026-05-01**, is recorded by ECHO as unachieved and not reported as of the
+2026-07-31 extract — and unlike the CSO event, no state modification explains it
+(`PRETREATMENT-52599-SUBMITTAL`).

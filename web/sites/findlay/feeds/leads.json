@@ -82,8 +82,8 @@
     "status": "unanswered",
     "tag": "open",
     "title": "The CSO Long-Term Control Plan addendum is due 2026-11-01 — a dated deadline on an issued permit",
-    "detail": "NPDES modification 2PD00008*VD (effective 2026-02-01) exists to move one thing, twice — the Municipal CSO Schedule milestone event code 34099 and the Long-Term Control Plan Addendum, both to \"No later than November 1, 2026.\" The City's 1998 LTCP did not attain its designated level of control of four overflows per typical year; a 2018 evaluation found 12 of the CSO outfalls no longer had combined sewer upstream (they are now SSOs); the updated integrated LTCP approved 2021-07-08 was then superseded by the City's request for more time. Ten CSOs remain authorized, two of them to Eagle Creek. WATCH — capture the addendum when filed, and whether the deadline moves a third time. The pretreatment milestone (event 52599, due 2026-05-01) is the sibling date, and it asks whether Findlay will impose local industrial-user limits for total phosphorus toward a 0.5 mg/L target.\n",
-    "source": "data/extracted/oepa/findlay/2PD00008.npdes.yaml · data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml",
+    "detail": "NPDES modification 2PD00008*VD (effective 2026-02-01) exists to move one thing, twice — the Municipal CSO Schedule milestone event code 34099 and the Long-Term Control Plan Addendum, both to \"No later than November 1, 2026.\" The City's 1998 LTCP did not attain its designated level of control of four overflows per typical year; a 2018 evaluation found 12 of the CSO outfalls no longer had combined sewer upstream (they are now SSOs); the updated integrated LTCP approved 2021-07-08 was then superseded by the City's request for more time. Ten CSOs remain authorized, two of them to Eagle Creek. WATCH — capture the addendum when filed, and whether the deadline moves a third time. The pretreatment milestone (event 52599, due 2026-05-01) is the sibling date, and it asks whether Findlay will impose local industrial-user limits for total phosphorus toward a 0.5 mg/L target — see PRETREATMENT-52599-SUBMITTAL, which ECHO now records as unachieved. MEASUREMENT ADDED by issue 1461 from the DMR record: combined-sewer overflow activity is rising — 4 events / 1.27 MG in 2023, 8 / 5.87 MG in 2024, 12 / 6.46 MG in 2025, and 11 events / 7.50 MG in the first six months of 2026 alone, already more volume than any complete year on the record. Outfall 004 (East of Old WWTP) has gone 0 -> 1 -> 2 -> 3. Four of the ten authorized CSOs reported nothing across the whole 42 months. Read the addendum against that series when it lands — and note that raw counts must NOT be compared to the four-per-typical-year control level, which is a modeled design-rainfall standard whose attainment is Ohio EPA's determination.\n",
+    "source": "data/extracted/findlay/watch/cso-sso-overflow-record.watch.yaml · data/extracted/oepa/findlay/2PD00008.npdes.yaml",
     "issue": 1460,
     "note": null
   },
@@ -92,10 +92,10 @@
     "kind": "question",
     "status": "unanswered",
     "tag": "open",
-    "title": "Request Findlay WPCF's annual OHP000001 Total Phosphorus Season Reports (is it still over 3,200 kg?)",
-    "detail": "The Maumee TMDL allocated Findlay WPCF 3.2 metric tons of spring total phosphorus, and the plant reported 4.8-5.5 MT in every year the TMDL published — 2017 through 2021 — plus 4.4 MT in the 2008 baseline. General permit OHP000001 makes that a violation ONLY when the 39-facility cumulative load also breaches its cap, and in 2024 the group reported 43,304 kg against a 64,170 kg limit, so it was not. OPEN — nothing in the corpus says what Findlay's own load has been since 2021. The record that would is the Season Report each permittee must file by September 1 under OHP000001 Part IV.D, carrying \"the calculated Individual Load and a brief assessment comparing the Individual Load to the permittee's Individual Load Limit.\" Request the 2022-2026 reports from Ohio EPA DSW; the group's own headroom is the thing to watch shrinking.\n",
-    "source": "data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml · data/documents/oepa/OHP000001.pdf (Part IV.C, IV.D)",
-    "issue": 1460,
+    "title": "Request Findlay WPCF's reported Individual Seasonal Loads — the derivation says 2024 is UNDER and cannot call 2025",
+    "detail": "NARROWED by issue 1461, which reconstructed the load from the DMRs using the general permit's own equation (OHP000001 Part III.1.b — median seasonal concentration x season volume x 3.7854). The derived spring loads are 4,450 kg for 2023, 2,756 kg for 2024 and 3,101 kg for 2025 against a 3,200 kg Individual Load Limit — so the plant went UNDER its allocation in the first season the general permit governed, having been ~39% over in 2023, and the 2017-2021 TMDL record of 4.8-5.5 MT no longer describes it. Two things still need the reported number. (1) The 2025 season CANNOT BE CALLED from monthly data: its break-even median is 0.4334 mg/L, which falls between the season's own monthly means, so the approximation error spans the limit. (2) The bound figure is a REPORTED value — parameter 51451, \"Phosphorus, Total - Kg\", entered on the July eDMR — and it is absent from OH0025135's effluent chart entirely, while a pull against OHP000001 itself returns zero DMR rows. It lives in Ohio EPA's eDMR under the general-permit coverage, which ECHO does not mirror. ASK — the Season Reports for 2024, 2025 and 2026 (Part IV.D, due each September 1, submitted through the eBusiness Center), each carrying \"the calculated Individual Load and a brief assessment comparing the Individual Load to the permittee's Individual Load Limit.\" Ohio EPA DSW.\n",
+    "source": "data/extracted/findlay/watch/tp-seasonal-load.watch.yaml · data/documents/oepa/OHP000001.pdf (Part III.1.b, IV.C, IV.D)",
+    "issue": 1461,
     "note": null
   },
   {
@@ -104,8 +104,8 @@
     "status": "unanswered",
     "tag": "open",
     "title": "Obtain the original 2PD00008*UD issuance — the DAM now serves only the *VD modification package",
-    "detail": "Ohio EPA's DAM slot for this permit (permits/doc/2PD00008.pdf) serves the 2025 modification package, not the 2024 renewal it modified, so the corpus holds the *UD FACT SHEET but not the *UD permit as issued. Its term is recorded from a third instrument — the January 2026 statewide variance list, which prints \"2PD00008*UD | 001 | 11/1/2024 | 10/31/2029\" — rather than from the permit itself. OPEN — request the as-issued *UD permit (and its transmittal) from Ohio EPA DSW so the chain is byte-complete and the 2024-11-01 effective date is grounded in the instrument that carries it, not in a list about it.\n",
-    "source": "data/documents/oepa/findlay/filename-map.yaml · data/documents/oepa/Jan_2026_List_of_Variances.pdf",
+    "detail": "Ohio EPA's DAM slot for this permit (permits/doc/2PD00008.pdf) serves the 2025 modification package, not the 2024 renewal it modified, so the corpus holds the *UD FACT SHEET but not the *UD permit as issued. Its term is recorded from a third instrument — the January 2026 statewide variance list, which prints \"2PD00008*UD | 001 | 11/1/2024 | 10/31/2029\" — rather than from the permit itself. OPEN — request the as-issued *UD permit (and its transmittal) from Ohio EPA DSW so the chain is byte-complete and the 2024-11-01 effective date is grounded in the instrument that carries it, not in a list about it. RAISED IN PRIORITY by issue 1461: these bytes would settle a live reconciliation. ECHO carries an unachieved \"Study Plan\" schedule violation dated 2025-12-01, but the permit in force has no milestone due that date — it has event 34099 due 2026-11-01, which is the date the *VD modification moved. That the 2025-12-01 flag is the superseded pre-modification instance of 34099 is currently [inference] precisely BECAUSE the *UD permit is not in corpus; its Schedule of Compliance page would print the original due date and convert the inference to [verified] in one step. Separately, the DMR record now corroborates the 2024-11-01 effective date independently — the mercury monthly limit steps from 3.9 to 3.3 ng/L at the 2024-11-30 monitoring period — so the term no longer rests on the variance list alone.\n",
+    "source": "data/extracted/findlay/watch/icis-compliance-reconciliation.watch.yaml · data/documents/oepa/findlay/filename-map.yaml · data/documents/oepa/Jan_2026_List_of_Variances.pdf",
     "issue": 1460,
     "note": null
   },
@@ -115,8 +115,8 @@
     "status": "unanswered",
     "tag": "open",
     "title": "The mercury variance runs with the permit to 2029-10-31 — track the annual 12 ng/L condition",
-    "detail": "Findlay's mercury variance dates to a 2010 permit modification and was renewed in the 2024 action under OAC 3745-1-38(H). The water-quality-based limit is 1.3 ng/L; the variance-based monthly average is 3.3 ng/L, with a daily maximum of 1700 ng/L and a standing condition that the ANNUAL average stay at or below 12 ng/L. Ohio EPA records the effluent falling from 8.5 ng/L at issue to 2.2 ng/L now. The January 2026 statewide variance list carries a Modified Allowable Ambient Concentration of 3.29 ng/L for this outfall — essentially identical to the effluent limit, which is what a 1.0 acute dilution ratio means in practice. WATCH — the annual condition is the trigger that would end the variance, and DMR mercury is the series that answers it.\n",
-    "source": "data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml · data/documents/oepa/Jan_2026_List_of_Variances.pdf",
+    "detail": "Findlay's mercury variance dates to a 2010 permit modification and was renewed in the 2024 action under OAC 3745-1-38(H). The water-quality-based limit is 1.3 ng/L; the variance-based monthly average is 3.3 ng/L, with a daily maximum of 1700 ng/L and a standing condition that the ANNUAL average stay at or below 12 ng/L. Ohio EPA records the effluent falling from 8.5 ng/L at issue to 2.2 ng/L now. The January 2026 statewide variance list carries a Modified Allowable Ambient Concentration of 3.29 ng/L for this outfall — essentially identical to the effluent limit, which is what a 1.0 acute dilution ratio means in practice. WATCH — the annual condition is the trigger that would end the variance, and DMR mercury is the series that answers it. ANSWERED for now by issue 1461, which pulled that series: the worst calendar year on the reported record averages 1.115 ng/L (2024) against the 12 ng/L trigger — roughly a factor of eleven of headroom — and the highest single month ever reported, 1.49 ng/L in September 2024, is under half the 3.3 ng/L monthly limit. The fact sheet's 2.2 ng/L for 2018-2023 has fallen further. DOWNGRADED to an ANNUAL check: nothing in the trajectory justifies a shorter interval, and the trigger is an annual average by its own terms. Re-check the DMR mercury series once per calendar year.\n",
+    "source": "data/extracted/findlay/watch/icis-compliance-reconciliation.watch.yaml · data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml",
     "issue": 1460,
     "note": null
   },
@@ -349,6 +349,94 @@
     "detail": "Subsection D.1 of the proposed Section 1521 permits only \"air cooled (dry cooling)\" and then expressly prohibits \"Closed-loop liquid cooling systems, where water or coolant is continuously recirculated within a sealed system and is not consumed through evaporation\". Dry cooling at data-center scale is normally implemented AS a sealed recirculating liquid loop rejecting heat to air through a dry cooler, so as drafted the permitted method and the third prohibited method describe overlapping equipment — a rule aimed at water consumption that also catches the lowest-water option. This is a drafting observation, not a legal opinion, and the prohibition may be intended to reach liquid immersion or district heat rejection; the text does not say. It bears directly on the platform's own third cooling axis (the CLOSED_LOOP_DRY archetype, epic 1676). Worth a public comment before 2026-08-19 rather than an analysis after.\n",
     "source": "data/extracted/findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml",
     "issue": 1463,
+    "note": null
+  },
+  {
+    "id": "TP-2026-EDMR-AUGUST-20",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "The 2026 Individual Seasonal Load hits the July eDMR on 2026-08-20 — the cheapest check on the file",
+    "detail": "OHP000001's fact sheet prints the general permit's own annual calendar (Attachment 3, p. 9), and it carries a milestone the issue body did not have: by AUGUST 20 each year the permittee must submit the calculated Individual Seasonal Load in kilograms to the July eDMR, under parameter 51451 (\"Phosphorus, Total - Kg\", 1/Year, Calculated, monitoring month July). That is eighteen days after this record was written. TIME-SENSITIVE — re-pull the effluent chart for OH0025135 (and try OHP000001) after 2026-08-20 and look for 51451. If it appears it is the REPORTED, permit-bound number and supersedes every derived figure in tp-seasonal-load.watch.yaml; if it carries prior seasons it would also close the 2025 season, which the derivation explicitly cannot call. Note that 51451 is absent from the chart today and that OHP000001 itself returns zero DMR rows, so it is possible the value never reaches ECHO at all — that outcome is itself the answer, and it makes the Season Report records request (TP-SEASON-REPORTS) the only route.\n",
+    "source": "data/documents/oepa/OHP000001_FS.pdf (Attachment 3, p. 9) · data/extracted/findlay/watch/tp-seasonal-load.watch.yaml",
+    "issue": 1461,
+    "note": "time-sensitive — 2026-08-20, then 2026-09-01 (Season Report) and 2026-11-01 (GP Annual Report)"
+  },
+  {
+    "id": "PRETREATMENT-52599-SUBMITTAL",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Was the 2026-05-01 local-limits phosphorus justification submitted? ECHO says unachieved and not reported",
+    "detail": "This is the LIVE half of the ECHO-vs-state schedule reconciliation, and the issue body's blanket \"federal ICIS not reflecting the state modification\" does not explain it. Event 52599 (Municipal Pretreatment Schedule, \"Eff Limits For Pollutants\") is due 2026-05-01 in the permit AS CURRENTLY IN FORCE (2PD00008*VD, p. 14); the *VD modification's two revisions touch only event 34099 and the LTCP addendum language, so no state action moved it. ICIS records it \"Schedule Event unachieved and not reported\" as of the 2026-07-31 extract — three months past due. What it requires is the phosphorus milestone: a technical justification for revising or retaining local industrial-user limits, including specifically whether local limits for total phosphorus \"will facilitate substantial progress toward achieving a monthly average effluent concentration target of 0.5 mg/L\" — half the permit's own limit — or evidence that they would not. The eight significant industrial users discharging 0.428 MGD are the load that reaches. OPEN — whether the City submitted it and Ohio EPA has not entered it, or whether it was not submitted, is unresolved; a state-to-federal data lag is a real and common cause. ASK the two addressees the permit itself names: Ohio EPA Central Office Pretreatment Unit and Ohio EPA Northwest District Office, for the submittal and any acceptance letter. This is the one scheduled event in this permit that could change the plant's phosphorus trajectory.\n",
+    "source": "data/extracted/findlay/watch/icis-compliance-reconciliation.watch.yaml · data/documents/oepa/findlay/2PD00008.pdf (p. 14)",
+    "issue": 1461,
+    "note": null
+  },
+  {
+    "id": "ICIS-RNC-QUARTERS-UNEXPLAINED",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "What drives the three Reportable Noncompliance quarters ECHO's own detail blocks cannot explain?",
+    "detail": "ECHO flags OH0025135 as in Reportable Noncompliance in Q1 2025, Q2 2025 and Q1 2026, and nothing in the Detailed Facility Report accounts for them. The single numeric effluent violation in the whole record (ammonia, 1.41 against a 1.4 mg/L weekly max, period ending 2023-10-31) accounts for Q4 2023. The two permit-schedule violations begin 2025-12-01 and 2026-05-01 and cannot reach the 2025 quarters. CWASECompliance, CWACSCompliance, CWAEffluentALRExceedences, CWA3YrD80D90Counts, Notices, FormalActions and ICISFormalActions are ALL EMPTY for this permit — no formal action, no penalty, no notice. OPEN, and deliberately unguessed: candidate categories exist (DMR non-receipt, pretreatment reporting, biosolids reporting — the facility carries both a biosolids and a sewage-sludge report flag) but nothing in the retrieved record selects among them. Resolve from EPA's ICIS-NPDES quarterly non-compliance history (QNCR) tables in the ECHO bulk downloads, which carry the noncompliance category per quarter, or from Ohio EPA Northwest District Office's own quarterly reports. Matters because \"5 quarters in noncompliance\" is the figure a reader meets first, and three of the five are currently unattributable.\n",
+    "source": "data/extracted/findlay/watch/icis-compliance-reconciliation.watch.yaml (ECHO DFR pulled 2026-08-02)",
+    "issue": 1461,
+    "note": null
+  },
+  {
+    "id": "GP-ANNUAL-REPORT-NOT-PUBLISHED",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Ohio EPA's General Permit Annual Report is promised each November 1 and no edition can be found",
+    "detail": "OHP000001's fact sheet (Attachment 3) commits Ohio EPA to release a General Permit Annual Report each November 1 that determines compliance with the Cumulative Limit, identifies facilities in violation, and publishes the permittee list and the Cumulative Limit for the upcoming critical season. NO EDITION IS PUBLICLY DISCOVERABLE for 2024 or 2025 — eight candidate filenames were probed in the same Ohio EPA portal folder that serves OHP000001.pdf and OHP000001_FS.pdf (both return 200), all 404, and targeted searches surface nothing. Record as an ACCESS GAP, not a negative, and note precisely what it is: Attachment 3 lists that row's Permit Condition as \"--\", so this is an administrative commitment in a fact sheet, NOT an enforceable permit term. It matters because it is the instrument that would say whether the 39-facility bubble still holds — the last published group figure is the 2024 Biennial Report's 43,304 kg against a 64,170 kg cap, for the 2024 season only. Related: the permit's own cited URL for the Season Report form (Part IV.D) is also dead, 404 in both its printed and hyphenated forms. ASK Ohio EPA DSW whether the annual reports exist and where; and watch for the 2026 Biennial Report, which had not appeared as of 2026-08-02.\n",
+    "source": "data/documents/oepa/OHP000001_FS.pdf (Attachment 3, p. 9) · data/extracted/findlay/watch/tp-seasonal-load.watch.yaml",
+    "issue": 1461,
+    "note": null
+  },
+  {
+    "id": "TP-SEASONAL-TURN",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "inference",
+    "title": "What did Findlay actually do in 2024 to halve its spring phosphorus, and what did it cost?",
+    "detail": "The DMR record shows a clean behavioural break. Through 2023 the plant's effluent phosphorus ran at roughly the same concentration all year — spring 0.708 mg/L against 0.761 mg/L the rest of the year. From the 2024 season onward it runs at roughly 0.40 mg/L inside the March-July TMDL season and roughly 0.75 mg/L outside it, against an individual-permit concentration limit of 1.0 mg/L that never changes. The derived seasonal load falls from 4,450 kg in 2023 to 2,756 kg in 2024. The timing points at the general permit, which took effect 2023-11-01 and whose first governed season was spring 2024. What the corpus does NOT hold is what changed operationally — the plant precipitates phosphorus with ferric chloride, so a seasonal chemical-dose increase is the obvious candidate, but that is inference and the operating record is not in evidence. The Season Report is the document that would say: OHP000001 Part IV.D requires \"a summary of any activities, projects, or planning conducted in the previous 12 months with a goal to reduce the total phosphorus load.\" STORY — a plant that cut its spring load by about 38 percent the season a watershed permit took effect, and that now runs two different treatment regimes in the same year, is the concrete local answer to what the Maumee TMDL actually does. Pair with the chemical cost and the WPCLF absence.\n",
+    "source": "data/extracted/findlay/watch/tp-seasonal-load.watch.yaml · data/extracted/findlay/water-watch.md",
+    "issue": 1466,
+    "note": null
+  },
+  {
+    "id": "SDWA-CCR-2019-UNADDRESSED",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Is Findlay City PWS's 2019 Consumer Confidence Rule violation live, or a record Ohio EPA never closed?",
+    "detail": "The SDWA primary check on PWS OH3200111 (FINDLAY CITY PWS — active, community, surface water, 54,040 served) returns no health-based violation: no MCL, no treatment-technique and no other monitoring violation, with lead 90th percentiles of 0.0021-0.0025 mg/L against a 0.015 action level across eight rounds. But ECHO shows the system in \"Violation Identified\" status for twelve consecutive quarters, and all twelve are ONE item carried forward — a Consumer Confidence Rule violation, category \"Other\", Unaddressed since 2019-01-03, which drew a single informal State Violation/Reminder Notice the day it was recorded and nothing since. The CCR governs the annual water-quality report a system delivers to its customers; it is a reporting rule, not a contaminant standard. OPEN — seven and a half years unaddressed with one same-day informal notice and no escalation looks more like an unclosed record than a live enforcement posture, but that is a pattern argument, not evidence. Resolve with Ohio EPA DDAGW Northwest District Office, which holds the CCR certifications, and by obtaining the City's own published Consumer Confidence Reports for 2019-2025. DO NOT publish \"Findlay's drinking water is in violation\" or \"the city has not reported water quality to its customers since 2019\" — neither follows from this record. DISAMBIGUATION: OH3200114 \"FINDLAY WATER DEPARTMENT\" is a different, INACTIVE system (inactive since 1988-08-01) whose enforcement history ends in the 1980s; never cite it.\n",
+    "source": "data/extracted/findlay/watch/sdwa-findlay-city-pws.watch.yaml (ECHO SDWIS DFR pulled 2026-08-02)",
+    "issue": 1461,
+    "note": null
+  },
+  {
+    "id": "SDWA-SANITARY-SURVEY-2024",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Obtain the 2024-06-04 sanitary survey report — the 2021 survey was clean and this one was not",
+    "detail": "Ohio EPA's district office runs complete sanitary surveys of Findlay City PWS on a roughly triennial cadence. The 2021-06-15 survey recorded no deficiencies AND no recommendations in any evaluated category. The 2024-06-04 survey recorded recommendations in five — Source, Treatment, Finished Water Storage, Pumps and Distribution — with deficiencies in none. ECHO publishes only the coded summary, not what the recommendations were. OPEN — whether the change reflects aging plant, a different surveyor, or a routine shift in emphasis is not determinable from the codes. Worth pulling because the supply-side financing thread is already live: the corpus carries a 2025-04-18 report that sewer repair bills are adding up, and Findlay is absent from the WPCLF PY2025 and PY2026 project lists. Request from Ohio EPA DDAGW Northwest District Office. Next survey falls due around mid-2027 on the observed cadence.\n",
+    "source": "data/extracted/findlay/watch/sdwa-findlay-city-pws.watch.yaml",
+    "issue": 1461,
+    "note": null
+  },
+  {
+    "id": "CSO-2018-EVALUATION-BYTES",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Pull the 2018 CSO evaluation that found twelve outfalls were in substance sanitary overflows",
+    "detail": "The permit record recites, but the corpus does not hold, the 2018 evaluation report that found Findlay's 1998 LTCP had not attained its designated level of control of four overflows per typical year and that twelve of the CSO outfalls no longer had combined sewer upstream — making them, in substance, sanitary sewer overflows. That document matters more now that the overflow series is measured: sanitary overflows outnumber combined ones in every year of the DMR record (17 against 8 in 2024, 15 against 12 in 2025), no volume is reported for any of them, and four of the ten authorized CSOs reported nothing at all across 42 months. Which station is really which is the question the 2018 evaluation answers, and it bears directly on whether any reported sanitary overflow was an unauthorized discharge — a CSO is authorized under Part II.D, an SSO is not. Request from Ohio EPA DSW; it should also be an attachment to the LTCP record due 2026-11-01.\n",
+    "source": "data/extracted/findlay/watch/cso-sso-overflow-record.watch.yaml · data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml",
+    "issue": 1461,
     "note": null
   }
 ]

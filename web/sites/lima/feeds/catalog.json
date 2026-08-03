@@ -737,8 +737,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "79db95280cc80967923422d1ea5715d03698c39b265c3b97bd898c954291b1b0",
-      "size_bytes": 246563,
+      "sha256": "e1f1fb54953a461e61a81284d0b7e3552e645fbe4747d66f3337b9cfcf71bf95",
+      "size_bytes": 252907,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -958,8 +958,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d56c21736bd8b22c4a17fa9543c7d59bf3db495db970fdefa8f135a271a48fd3",
-      "size_bytes": 26817,
+      "sha256": "2d2f8d9d8ea4d936013df62e41eb3c91d1cc6080d6acd7df13cc7ff8bc8ad3bc",
+      "size_bytes": 27853,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1242,10 +1242,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "cea5591e8f98e5267a1bc4adf2dead2deac48859616b7e183f7da49a7bbf1e02",
-      "size_bytes": 140924,
+      "sha256": "7966e519542cea6d87234cc36340745a6871a101f0bbc5f51d7db9fa1ea17ecd",
+      "size_bytes": 161734,
       "lfs_materialized": true,
-      "file_count": 12,
+      "file_count": 13,
       "stale": false,
       "asof": null
     },
@@ -1319,8 +1319,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "b12dd12fbe53d2f38d0e38cbfb100563b83b3e3b7318b5f9762158d1914b0439",
-      "size_bytes": 54658,
+      "sha256": "f3bef56801dfbc1b009172e40da1c7990930a7765e7d4ef8d125508b293da0ae",
+      "size_bytes": 58103,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -1459,8 +1459,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8e370ee3cc46e645af3bf265eefb9dee9a611b6a854d2d130bb04a40dc8b3271",
-      "size_bytes": 32650,
+      "sha256": "173e43b86b835fd88f153219751fe506cfb041bfdc6bb54c81f2f804ce04434e",
+      "size_bytes": 35242,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -1559,8 +1559,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6809b9de934c77820b56ff5f0d980477f181529690bf2d607209fedbe07ebbbf",
-      "size_bytes": 109336,
+      "sha256": "3c4167956f817d6d18ea754d6ead6a3d1d8fa282a85e52cd8a2a59578836ef7d",
+      "size_bytes": 111692,
       "lfs_materialized": true,
       "file_count": 9,
       "stale": false,
@@ -1642,6 +1642,89 @@
     },
     "citation": {
       "source": "AEP Ohio Transmission Company's Letter of Notification for the Rocky Ford 138 kV Station Project (OPSB 24-0707-EL-BLN) and Ohio Power Company's Construction Notice for the Ebersole-Fostoria Central #2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV Tie Line Project (OPSB 24-0706-EL-BNR), both filed 2024-09-10, plus AEP's public notice for the pair; Ohio Power Company's filed retail tariff P.U.C.O. No. 22 (Schedule DCT, Original Sheet Nos. 223-1..223-7); AEP's 2025 Load Forecast Adjustments presented to the PJM Load Analysis Subcommittee 2025-09-16. All four captured under data/documents/grid/findlay/. Secondary/uncommitted reads (cited by URL, not carried as bytes): One Power Co's Form S-1 (EDGAR CIK 2039139, filed 2025-01-23, withdrawn 2025-05-09), the OCC merit brief in Ohio S.Ct. 2025-1458, and the SEL / Goldwind / OnSite vendor releases.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "findlay-water-watch",
+    "title": "Findlay — Standing Water Watch (the derived spring phosphorus load, the ECHO-vs-state schedule reconciliation, the CSO/SSO overflow record, the SDWA primary check)",
+    "scope": "extracted",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "EPA ECHO public web services, pulled 2026-08-02 against an ICIS-NPDES system extract of 2026-07-31 and an SDWIS extract of 2026-07-09. Three services: dfr_rest_services.get_dfr for NPDES OH0025135 (the Detailed Facility Report — permit-schedule violations, compliance summary, inspections, assessed waters); eff_rest_services.get_effluent_chart for the same permit over 2023-01-01 to 2026-07-31 (the reported effluent record — total phosphorus, flow, mercury, overflow counts and volumes), pulled through this repository's own connector watermark.hydrology.connectors.echo_dmr.fetch_effluent_chart so every figure is regenerable; and sdw_rest_services.get_systems plus the SDWIS Detailed Facility Report for public water system OH3200111. The load equation, the Individual Load Limit, the Season Report requirement and the annual schedule of events are read from the committed general-permit bytes (data/documents/oepa/OHP000001.pdf and OHP000001_FS.pdf); the Schedule of Compliance and the station inventory are read from the committed permit bytes (data/documents/oepa/findlay/2PD00008.pdf, pages 14, 16 and 18).",
+    "external_url": null,
+    "license": "Public data (US EPA ECHO — ICIS-NPDES and SDWIS republication; Ohio EPA NPDES permits)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-02",
+    "tags": [
+      "npdes",
+      "phosphorus",
+      "tmdl",
+      "general-permit",
+      "wasteload-allocation",
+      "cso",
+      "sso",
+      "mercury-variance",
+      "whole-effluent-toxicity",
+      "sdwa",
+      "drinking-water",
+      "echo",
+      "icis",
+      "compliance",
+      "findlay",
+      "hancock-county",
+      "blanchard-river",
+      "lake-erie"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/findlay/water-watch.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/watch/tp-seasonal-load.watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/watch/icis-compliance-reconciliation.watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/watch/cso-sso-overflow-record.watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/watch/sdwa-findlay-city-pws.watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "42cfdbd2d2bd89ef88470ae9a0e67df8e6703cc5e40a0929d69c906d7091857b",
+      "size_bytes": 74170,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA ECHO public web services, pulled 2026-08-02 against an ICIS-NPDES system extract of 2026-07-31 and an SDWIS extract of 2026-07-09. Three services: dfr_rest_services.get_dfr for NPDES OH0025135 (the Detailed Facility Report — permit-schedule violations, compliance summary, inspections, assessed waters); eff_rest_services.get_effluent_chart for the same permit over 2023-01-01 to 2026-07-31 (the reported effluent record — total phosphorus, flow, mercury, overflow counts and volumes), pulled through this repository's own connector watermark.hydrology.connectors.echo_dmr.fetch_effluent_chart so every figure is regenerable; and sdw_rest_services.get_systems plus the SDWIS Detailed Facility Report for public water system OH3200111. The load equation, the Individual Load Limit, the Season Report requirement and the annual schedule of events are read from the committed general-permit bytes (data/documents/oepa/OHP000001.pdf and OHP000001_FS.pdf); the Schedule of Compliance and the station inventory are read from the committed permit bytes (data/documents/oepa/findlay/2PD00008.pdf, pages 14, 16 and 18).",
       "source_kind": "reference",
       "page": null,
       "pages": null,
@@ -3789,8 +3872,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "65de52d690feb909021694483b5b19fb24a235f41a8346f3ec7cb472b68cfe3e",
-      "size_bytes": 110392,
+      "sha256": "e6ea9173497570071e16fc12ddef7416b6dc36f85a0ba331d1dbbcc0441ecc56",
+      "size_bytes": 110845,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -6481,6 +6564,58 @@
     }
   },
   {
+    "id": "findlay-civic-flood-places",
+    "title": "Findlay Civic & Flood Places — WPCC, Upground Reservoirs, Eagle Creek Dry Storage Basin",
+    "scope": "reference",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "--site findlay parcels --parcel 610000926490",
+    "connector_ref": "watermark.hydrology.connectors.allen_gis",
+    "source": "OGRIP — Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped County='Hancock' via the OHIO_STATEWIDE_PARCEL_SCHEMA field-map. Waterbody names/areas cross-checked against the USGS NHD Waterbody (Large Scale) layer; township attribution against the Census TIGER county-subdivision layer.",
+    "external_url": "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/OhioStatewidePacels_full_view/FeatureServer/0",
+    "license": "Public records (local government open data)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-02",
+    "tags": [
+      "parcels",
+      "gis",
+      "flood",
+      "wastewater",
+      "water-supply",
+      "findlay",
+      "hancock-county"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/findlay/civic-and-flood-places.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "d90a10bddcfd5e53e99e4af89b3814f02bdf615682f2277ec718ff70687b470c",
+      "size_bytes": 205067,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "OGRIP — Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped County='Hancock' via the OHIO_STATEWIDE_PARCEL_SCHEMA field-map. Waterbody names/areas cross-checked against the USGS NHD Waterbody (Large Scale) layer; township attribution against the Census TIGER county-subdivision layer.",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark --site findlay parcels --parcel 610000926490",
+      "verified": true
+    }
+  },
+  {
     "id": "findlay-gis",
     "title": "City of Findlay, Ohio Zoning Districts",
     "scope": "reference",
@@ -7091,8 +7226,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "a80c90d0fc55374bf75bbb34060f0fc26020a15d9c53725de0a85dee1b76eefe",
-      "size_bytes": 31973,
+      "sha256": "b181cca88fed8f45aec4018baf5415e031b7cdcfad099683055936744957f483",
+      "size_bytes": 52919,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -7673,8 +7808,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "292c011fddcac9c50a1ca6d4696825c68cd5f1ccf68cee47d4f2efa69d968f9b",
-      "size_bytes": 28607,
+      "sha256": "5291ce440bc0e1377050ab42863f5669553b5628ea71580ce2fd16405b60fc61",
+      "size_bytes": 32637,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -7954,12 +8089,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "67c1d11b8ae92bad4a36e238e6e32e0a2c6175514904ae6102ba95118a9c001e",
-      "size_bytes": 84612,
+      "sha256": "f2002062d0084eec4afb2d7667d6d33f54a20d258788571b17a0a5fd6608733e",
+      "size_bytes": 94002,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
@@ -8007,12 +8142,12 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "561ef21ac83fe62d11b188ad9afee6bdc6fcf991b1bd80cb114396ec84d94a33",
-      "size_bytes": 8215,
+      "sha256": "b7cb1fadd57009ca92c4cbb371182d7141ea7ea3e72482c77742e9e90ffb167d",
+      "size_bytes": 14340,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
-      "asof": "2026-07-11"
+      "asof": "2026-07-21"
     },
     "citation": {
       "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
@@ -8268,7 +8403,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "14e6f196d33f3dab09010c4e945f152fb7c92135f3b4863b3da73e3eac504e2d",
+      "size_bytes": 112871,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "citation": {
       "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
       "source_kind": "connector",
@@ -8521,10 +8664,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "41921e30b33b8494e8367d64753a0704ce48fdb0e979ca8aa5f3b337a4ede48d",
-      "size_bytes": 492562,
+      "sha256": "2821a004103b7ee1c8856afa07def1597678c8344121ccd1c0879dec0da88228",
+      "size_bytes": 513672,
       "lfs_materialized": true,
-      "file_count": 9,
+      "file_count": 10,
       "stale": false,
       "asof": null
     },
@@ -9120,6 +9263,77 @@
       "confidence": "medium",
       "note": "watermark usaspending",
       "verified": true
+    }
+  },
+  {
+    "id": "usgs-published-low-flow",
+    "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
+    "scope": "reference",
+    "collection": "usgs",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "U.S. Geological Survey published reports — WRI 01-4140 (Straub, 2001) and SIR 2024-5075 (VonIns and Koltun, 2024, ver. 1.1), downloaded verbatim from pubs.usgs.gov",
+    "external_url": "https://pubs.usgs.gov/publication/sir20245075",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-02",
+    "tags": [
+      "7q10",
+      "low-flow",
+      "usgs",
+      "published",
+      "blanchard-river",
+      "primary-source"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/usgs/low-flow/wri20014140.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "reference/usgs/low-flow/sir20245075.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "reference/usgs/low-flow/sir20245075_app1_table1.1.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/usgs/low-flow/sir20245075_app2_table2.1.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/usgs/low-flow/README.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "6394cfcbee1c698849e244e915709a04902bf32d0e48650fbed96edfdf21b9e5",
+      "size_bytes": 16615064,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "U.S. Geological Survey published reports — WRI 01-4140 (Straub, 2001) and SIR 2024-5075 (VonIns and Koltun, 2024, ver. 1.1), downloaded verbatim from pubs.usgs.gov",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

@@ -1,0 +1,297 @@
+# Findlay WPCF — the spring total-phosphorus Individual Load, derived from the eDMR record
+#
+# Issue 1461 · sub-issue of 1265 · corpus, NOT a RecordItem (no `action:`/`permit:` block).
+#
+# WHAT THIS ANSWERS. Issue 1460 left `TP-SEASON-REPORTS` open: the TMDL's per-facility record
+# stops at 2021 (4.8-5.5 MT against a 3.2 MT allocation) and the 2024 Biennial Report publishes
+# only the 39-facility group total, so the corpus could not say whether Findlay was still over.
+# Acceptance criterion 2 of issue 1461 permits closing it "via the Season Report / GP Annual
+# Report OR an eDMR pull". Neither report is obtainable (see `authoritative_number` below), so
+# this is the eDMR route: the general permit publishes its own load equation, and every input to
+# that equation is in the reported effluent record.
+#
+# ⚠️ THE RESULT IS [inference], NOT [verified]. The number the permit actually binds is a
+# REPORTED value (parameter 51451, submitted by the permittee); this is a RECONSTRUCTION of it.
+# The one approximation is identified and bounded under `method` — and for the 2025 season it is
+# large enough that the season CANNOT be called. Read `season_findings[2025].resolved` before
+# quoting anything about 2025.
+
+as_of: '2026-08-02'
+site: findlay
+issue: 'watermark-directory/the-watermark-directory#1461'
+epic: 'watermark-directory/the-watermark-directory#1265'
+status: derived-from-reported-data
+tag: inference
+
+instrument_chain:
+  individual_permit: 2PD00008 (application OH0025135) — supplies the concentration and flow data
+  general_permit: OHP000001 — supplies the load equation, the 3,200 kg Individual Load Limit and
+    the compliance rule
+  tmdl: Maumee Watershed Nutrient TMDL, US EPA approval 2023-09-28 — supplies the 3.2 MT
+    wasteload allocation the general permit restates
+  cross_refs:
+  - data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml
+  - data/extracted/oepa/findlay/2PD00008.npdes.yaml
+  - data/extracted/findlay/discharge-record.md
+
+# --- the equation, verbatim from the instrument that imposes it ---------------------------------
+
+load_equation:
+  source: data/documents/oepa/OHP000001.pdf
+  part: III — Monitoring Requirements, item 1.b
+  page: 7
+  verbatim: >-
+    "The Individual Load shall be calculated according to the following equation, using data
+    collected as required by each permittee's respective individual NPDES permit:
+    Load = C_M * Q_S * F   Where: C_M = median of total phosphorus effluent concentration data
+    for the season in mg/L; Q_S = sum of all effluent daily flow rate data for the season in
+    million gallons; F = conversion factor = 3.7854"
+  season_definition: >-
+    Part III, item 1.c and Part IV.A.2 — the "spring" season begins in March and lasts through
+    July. Both the equation and the limit are seasonal; neither is an annual quantity.
+  reporting_slot: >-
+    Part III, item 1.a — the calculated Individual Load is reported "to two significant figures
+    under the maximum concentration" for parameter 51451 (Phosphorus, Total - Kg), measuring
+    frequency 1/Year, sampling type Calculated, monitoring month July.
+
+# --- how this reconstruction was made, and where it is soft ------------------------------------
+
+method:
+  source: >-
+    EPA ECHO effluent-chart service (eff_rest_services.get_effluent_chart) for NPDES OH0025135,
+    window 2023-01-01 to 2026-07-31, pulled 2026-08-02 through the repository's own connector
+    (watermark.hydrology.connectors.echo_dmr.fetch_effluent_chart), which caches every response
+    and passes values through verbatim. ICIS-NPDES system extract date 2026-07-31.
+  inputs:
+  - >-
+    C_M — approximated as the MEDIAN OF THE FIVE MONTHLY AVERAGE concentrations (parameter 00665,
+    Phosphorus total as P, outfall 001, Effluent Gross, statistical base MO AVG, mg/L).
+  - >-
+    Q_S — the sum over the season of (monthly average flow in MGD x days in that month), from
+    parameter 50050 at outfall 001, statistical base MO AVG, MGD.
+  - F — 3.7854, the permit's own constant.
+  q_s_is_exact: >-
+    Q_S is NOT an approximation. The permit asks for "the sum of all effluent daily flow rate
+    data for the season", and the mean daily flow for a month multiplied by that month's day
+    count IS that sum for the month. Summing the five months reproduces the season exactly, to
+    DMR rounding. A major POTW meters flow continuously, so no daily value is missing.
+  c_m_is_the_approximation: >-
+    C_M is where this differs from the permit's own number. The permit takes the median of ALL
+    total-phosphorus effluent samples in the season; the eDMR publishes only each month's
+    average, so the median here is taken over five monthly means rather than over the full
+    sample set. The median is a robust statistic and the two agree closely when the within-month
+    spread is modest, but they are not the same quantity. `break_even_c_m` below states, for each
+    season, the C_M that would put the load exactly at 3,200 kg — that is the honest test of
+    whether the approximation can change the answer.
+  cross_check: >-
+    An independent arithmetic — summing the reported MO AVG loading in kg/day multiplied by each
+    month's day count (the permit also reports total phosphorus at outfall 001 in kg/d) — gives
+    2,870 kg for 2024 and 2,845 kg for 2025 against this method's 2,756 and 3,101. Both methods
+    put both complete seasons under 3,200 kg. The spread between them, roughly 100-260 kg, is a
+    second, empirical measure of the reconstruction's precision.
+
+# --- the derived seasons -----------------------------------------------------------------------
+
+derived_individual_loads:
+  units: kilograms of total phosphorus, spring season (March-July)
+  individual_load_limit_kg: 3200
+  seasons:
+  - season: 2023
+    months_of_data: 5
+    complete: true
+    monthly_mean_mg_l: {'03': 0.42, '04': 0.708, '05': 0.73, '06': 0.87, '07': 0.81}
+    monthly_mean_flow_mgd: {'03': 16.789, '04': 9.9645, '05': 8.842, '06': 8.8402, '07': 8.114}
+    c_m_mg_l: 0.730
+    q_s_million_gallons: 1610.2
+    derived_load_kg: 4450
+    ratio_to_limit: 1.39
+    break_even_c_m_mg_l: 0.5250
+    under_limit: false
+  - season: 2024
+    months_of_data: 5
+    complete: true
+    monthly_mean_mg_l: {'03': 0.39, '04': 0.40, '05': 0.35, '06': 0.45, '07': 0.53}
+    monthly_mean_flow_mgd: {'03': 11.639, '04': 17.566, '05': 11.805, '06': 9.9086, '07': 8.6908}
+    c_m_mg_l: 0.400
+    q_s_million_gallons: 1820.4
+    derived_load_kg: 2756
+    ratio_to_limit: 0.86
+    break_even_c_m_mg_l: 0.4644
+    under_limit: true
+  - season: 2025
+    months_of_data: 5
+    complete: true
+    monthly_mean_mg_l: {'03': 0.48, '04': 0.39, '05': 0.30, '06': 0.42, '07': 0.42}
+    monthly_mean_flow_mgd: {'03': 10.057, '04': 14.201, '05': 18.746, '06': 11.487, '07': 9.2627}
+    c_m_mg_l: 0.420
+    q_s_million_gallons: 1950.7
+    derived_load_kg: 3101
+    ratio_to_limit: 0.97
+    break_even_c_m_mg_l: 0.4334
+    under_limit: null   # deliberately null — see season_findings below
+  - season: 2026
+    months_of_data: 4
+    complete: false
+    incomplete_reason: >-
+      July 2026 had not been reported at the 2026-07-31 ICIS extract. The season is not over on
+      this record and NO 2026 load may be quoted as a season total.
+    monthly_mean_mg_l: {'03': 0.41, '04': 0.29, '05': 0.38, '06': 0.45}
+    monthly_mean_flow_mgd: {'03': 10.175, '04': 15.487, '05': 14.221, '06': 9.6351}
+    c_m_mg_l: 0.395
+    q_s_million_gallons: 1509.9
+    derived_load_kg: 2258
+    ratio_to_limit: null
+    under_limit: null
+
+season_findings:
+  '2023':
+    resolved: true
+    finding: >-
+      [inference] Over the allocation, and robustly so — 4,450 kg against a 3,200 kg limit, 39
+      percent above. The approximation cannot rescue it: the median would have to fall to 0.5250
+      mg/L, and four of the season's five monthly means (0.708, 0.73, 0.87, 0.81) sit above that.
+      This is the last spring before the general permit took effect on 2023-11-01, and it is
+      consistent with the TMDL's own 2017-2021 record of 4.8-5.5 metric tons.
+  '2024':
+    resolved: true
+    finding: >-
+      [inference] Under the allocation — 2,756 kg, 86 percent of the limit. For the true sample
+      median to reach the 0.4644 mg/L break-even, more than half the season's samples would have
+      to exceed a value that only ONE of the five monthly means (July, 0.53) reaches. The
+      independent kg/day cross-check agrees at 2,870 kg. This is the first spring the general
+      permit governed.
+  '2025':
+    resolved: false
+    finding: >-
+      [open] NOT RESOLVED BY THIS RECONSTRUCTION. The derived load is 3,101 kg — 97 percent of
+      the limit — and the break-even median is 0.4334 mg/L, which falls BETWEEN the season's
+      0.42 cluster and its 0.48 March mean. A within-month distribution modestly different from
+      the monthly means could put the true sample median above the break-even. The margin is
+      smaller than the method's own error, so this season may be either side of the limit. Do
+      not publish 2025 as compliant or as an exceedance without the reported number.
+  '2026':
+    resolved: false
+    finding: >-
+      [open] Season incomplete — March through June only. Through June the plant is at 2,258 kg
+      with a 0.395 mg/L median, tracking like 2024 and 2025 rather than 2023. July is
+      historically the season's highest-concentration month (0.81 in 2023, 0.53 in 2024, 0.42 in
+      2025), so the season total is not predictable from the partial. The reported figure is due
+      2026-08-20 (see watch_triggers).
+
+# --- what changed, and why it is the finding ---------------------------------------------------
+
+seasonal_operating_shift:
+  observation: >-
+    [verified from the DMR record] The plant began treating phosphorus markedly harder inside the
+    TMDL season than outside it, starting with the 2024 season — the first spring the general
+    permit governed. Before that the two halves of the year are indistinguishable.
+  spring_vs_non_spring_mean_mg_l:
+    '2023': {spring: 0.708, non_spring: 0.761, ratio: 0.93}
+    '2024': {spring: 0.424, non_spring: 0.752, ratio: 0.56}
+    '2025': {spring: 0.402, non_spring: 0.761, ratio: 0.53}
+    '2026': {spring: 0.383, non_spring: 0.670, ratio: 0.57, note: partial year — Jan-Jun only}
+  reading: >-
+    [inference] This is what a seasonal mass limit is designed to produce, and the record shows
+    it working: outside March-July the effluent runs at roughly 0.75 mg/L, inside it at roughly
+    0.40 mg/L, against an individual-permit concentration limit of 1.0 mg/L that never changes.
+    The non-spring concentration did not rise, so this reads as additional treatment during the
+    season rather than as load shifted out of it — but the corpus holds no operating record, so
+    the CAUSE is inference. What is verified is the pattern and its timing.
+  caution: >-
+    Do not describe this as the plant "coming into compliance." Under OHP000001 Part IV.C.3 an
+    over-limit individual load was never a violation while the group bubble held, so there was no
+    non-compliance to cure. What changed is the load, not a compliance status.
+
+# --- why the authoritative number is not here --------------------------------------------------
+
+authoritative_number:
+  what_would_settle_it: >-
+    The permittee's calculated Individual Load for each season, reported under parameter 51451.
+  not_in_the_federal_record: >-
+    [verified] Parameter 51451 does not appear anywhere in OH0025135's effluent chart — the
+    permit's own DMR record carries the concentration and flow inputs but not the calculated
+    load. A pull against the general permit itself (p_id=OHP000001) returns a chart with ZERO
+    DMR rows. So the number the general permit binds is not retrievable from ECHO at all; it
+    lives in Ohio EPA's eDMR/eBusiness system under the general-permit coverage.
+  season_report: >-
+    OHP000001 Part IV.D — due September 1 each year, submitted electronically through the Ohio
+    EPA eBusiness Center, carrying "the calculated Individual Load and a brief assessment
+    comparing the Individual Load to the permittee's Individual Load Limit." A submission, not a
+    published document. Records-request route. Lead TP-SEASON-REPORTS.
+  general_permit_annual_report: >-
+    The fact sheet's Attachment 3 commits Ohio EPA to release a General Permit Annual Report each
+    November 1 that determines compliance with the Cumulative Limit, identifies facilities in
+    violation, and publishes the permittee list and the next season's Cumulative Limit. NO SUCH
+    REPORT IS PUBLICLY DISCOVERABLE for 2024 or 2025 — eight candidate filenames were probed in
+    the Ohio EPA portal folder that serves OHP000001.pdf and OHP000001_FS.pdf, all 404, and
+    targeted searches surface nothing. Note that Attachment 3 lists this row's Permit Condition
+    as "--": it is an administrative commitment in a fact sheet, NOT an enforceable permit term.
+    Record as an access gap, not as a negative. Lead GP-ANNUAL-REPORT-NOT-PUBLISHED.
+  dead_link: >-
+    OHP000001 Part IV.D cites the Season Report form at
+    https://epa.ohio.gov/divisions-and-offices/surface-water/guides-manuals/permits-program-technicalassistance
+    — that URL returns HTTP 404 (checked 2026-08-02), as does the hyphenated
+    ".../permits-program-technical-assistance" variant.
+
+# --- the standing calendar ---------------------------------------------------------------------
+
+watch_triggers:
+  source: data/documents/oepa/OHP000001_FS.pdf — Attachment 3, "Approximate Annual Schedule of
+    Events", page 9
+  verbatim_schedule:
+  - {date: March 1 to July 31, item: Critical Season, action: Permittee collect total phosphorus
+     (mg/L) and flow rate (MGD) data, condition: Individual Permit}
+  - {date: August 20, item: Individual Seasonal Load, action: Permittee submit Individual
+     Seasonal Load (kg) to July eDMR for general permit, condition: GP Part III}
+  - {date: September 1, item: Season Report, action: Permittee submit Season Report w/ required
+     information, condition: 'GP Part IV, Item D'}
+  - {date: November 1, item: General Permit Annual Report, action: Ohio EPA release General
+     Permit Annual Report — determination of compliance with Cumulative Limit; identify
+     facilities in violation; publish list of permittees, Cumulative Limit for upcoming critical
+     season, condition: '--'}
+  - {date: November 1, item: Termination Notices, action: Ohio EPA send termination notices to
+     individual facilities identified by termination procedure, condition: 'GP Part I, Item C.4.b'}
+  next_checks:
+  - date: '2026-08-20'
+    what: >-
+      The 2026 Individual Seasonal Load lands on the July eDMR. This is the FIRST of the year's
+      triggers and it is 18 days after this record was written. Re-pull the effluent chart for
+      OH0025135 and OHP000001 after this date and look for parameter 51451; if it appears, it
+      supersedes every derived figure above.
+    closes: the 2026 season, and possibly the 2025 [open] if prior seasons are carried
+  - date: '2026-09-01'
+    what: The 2026 Season Report is due to Ohio EPA. Not published — a records-request target
+      covering the 2024, 2025 and 2026 reports together.
+    closes: TP-SEASON-REPORTS, and the 2025 [open] definitively
+  - date: '2026-11-01'
+    what: >-
+      Ohio EPA's General Permit Annual Report for the 2026 season is due to be released, with the
+      Cumulative Load determination and any facilities identified in violation. Two prior years
+      of this report were never found; check whether one appears at all.
+    closes: whether the group bubble still holds, and GP-ANNUAL-REPORT-NOT-PUBLISHED
+  - date: '2026-11-01'
+    what: Termination notices, if any, go out under GP Part I, Item C.4.b. A termination would
+      move the 3,200 kg limit into the individual permit as an effluent limit.
+    closes: the standing question of whether the bubble is Findlay's actual shield
+
+# --- the bubble, restated with what is now known -----------------------------------------------
+
+bubble_status:
+  rule: >-
+    OHP000001 Part IV.C.3 — an individual permittee is in violation of its Individual Load Limit
+    ONLY IF the 39-facility Cumulative Load exceeds the Cumulative Load Limit AND that permittee's
+    Individual Load exceeds its own limit.
+  last_published_group_season: >-
+    2024 Biennial Report: 43,304 kg reported against a 64,170 kg Cumulative Load Limit (including
+    a 1,400 kg allowance for future growth) — 20,866 kg of headroom, for the March-July 2024
+    season.
+  what_this_record_changes: >-
+    Issue 1461 was framed as "over-WLA phosphorus, shielded by the bubble." On the reconstructed
+    record that framing holds for the 2023 season and stops there. In 2024 the derived load is
+    below the individual limit, so the bubble shielded nothing that season — the plant was inside
+    its own allocation. 2025 is too close to call. The watch therefore shifts from "is the bubble
+    holding?" to "is the margin closing?": 4,450 -> 2,756 -> 3,101 kg is not a trend toward
+    safety.
+  still_open: >-
+    No group total has been published for 2025 or 2026. The 2026 Biennial Report — the next one
+    due after the committed 2024 edition — had not appeared as of 2026-08-02.
