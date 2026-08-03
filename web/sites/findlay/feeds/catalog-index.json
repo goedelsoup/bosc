@@ -1,6 +1,6 @@
 {
   "site": "findlay",
-  "catalog_version": "818732eacdc0bac117074a626ea7f550a87d108d2aeb313354e46c5d2c950322",
+  "catalog_version": "d2adaa710501ecd8dd810f6248f349f7480cbd8483b9bdb51d7407ac985c19d4",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -812,6 +812,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:findlay-water-watch",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "findlay-water-watch",
+      "title": "Findlay — Standing Water Watch (the derived spring phosphorus load, the ECHO-vs-state schedule reconciliation, the CSO/SSO overflow record, the SDWA primary check)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:gleif",
       "kind": "dataset",
       "site": "findlay",
@@ -1252,6 +1260,14 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:CSO-2018-EVALUATION-BYTES",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "CSO-2018-EVALUATION-BYTES",
+      "title": "Pull the 2018 CSO evaluation that found twelve outfalls were in substance sanitary overflows",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:CSO-LTCP-2026-11-01",
       "kind": "lead",
       "site": "findlay",
@@ -1300,6 +1316,14 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:GP-ANNUAL-REPORT-NOT-PUBLISHED",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "GP-ANNUAL-REPORT-NOT-PUBLISHED",
+      "title": "Ohio EPA's General Permit Annual Report is promised each November 1 and no edition can be found",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:HUB-ESA-CUSTOMER",
       "kind": "lead",
       "site": "findlay",
@@ -1313,6 +1337,14 @@
       "site": "findlay",
       "local_id": "HUB-PARCEL-DISTRICT-AND-NONCONFORMING-USE",
       "title": "Determine which adopted district covers the Megawatt Hub parcels, and what Section 1502 preserves",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:ICIS-RNC-QUARTERS-UNEXPLAINED",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "ICIS-RNC-QUARTERS-UNEXPLAINED",
+      "title": "What drives the three Reportable Noncompliance quarters ECHO's own detail blocks cannot explain?",
       "feed": "leads"
     },
     {
@@ -1372,6 +1404,14 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:PRETREATMENT-52599-SUBMITTAL",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "PRETREATMENT-52599-SUBMITTAL",
+      "title": "Was the 2026-05-01 local-limits phosphorus justification submitted? ECHO says unachieved and not reported",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:PUCO-DIS-ACCESS",
       "kind": "lead",
       "site": "findlay",
@@ -1404,11 +1444,43 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:SDWA-CCR-2019-UNADDRESSED",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "SDWA-CCR-2019-UNADDRESSED",
+      "title": "Is Findlay City PWS's 2019 Consumer Confidence Rule violation live, or a record Ohio EPA never closed?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:SDWA-SANITARY-SURVEY-2024",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "SDWA-SANITARY-SURVEY-2024",
+      "title": "Obtain the 2024-06-04 sanitary survey report — the 2021 survey was clean and this one was not",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:TP-2026-EDMR-AUGUST-20",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "TP-2026-EDMR-AUGUST-20",
+      "title": "The 2026 Individual Seasonal Load hits the July eDMR on 2026-08-20 — the cheapest check on the file",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:TP-SEASON-REPORTS",
       "kind": "lead",
       "site": "findlay",
       "local_id": "TP-SEASON-REPORTS",
-      "title": "Request Findlay WPCF's annual OHP000001 Total Phosphorus Season Reports (is it still over 3,200 kg?)",
+      "title": "Request Findlay WPCF's reported Individual Seasonal Loads — the derivation says 2024 is UNDER and cannot call 2025",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:TP-SEASONAL-TURN",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "TP-SEASONAL-TURN",
+      "title": "What did Findlay actually do in 2024 to halve its spring phosphorus, and what did it cost?",
       "feed": "leads"
     },
     {

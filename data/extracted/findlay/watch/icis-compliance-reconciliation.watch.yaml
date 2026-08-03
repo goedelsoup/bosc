@@ -1,0 +1,269 @@
+# Findlay WPCF — reconciling ECHO's federal compliance record against the state permit in force
+#
+# Issue 1461 · sub-issue of 1265 · corpus, NOT a RecordItem (no `action:`/`permit:`/`order:` block).
+#
+# WHAT THIS ANSWERS. Acceptance criterion 2 of issue 1461: "the ECHO-vs-state schedule-violation
+# mismatch reconciled." The issue body carried a single hypothesis for both flagged violations —
+# `[inference: federal ICIS not reflecting the state modification]`. That hypothesis is CORRECT
+# FOR ONE OF THEM AND WRONG FOR THE OTHER, and the difference matters: one is a stale record, the
+# other is a live milestone that the permit in force still requires and that ICIS records as
+# neither achieved nor reported.
+
+as_of: '2026-08-02'
+site: findlay
+issue: 'watermark-directory/the-watermark-directory#1461'
+epic: 'watermark-directory/the-watermark-directory#1265'
+status: reconciled-with-one-open-item
+
+source:
+  federal: >-
+    EPA ECHO Detailed Facility Report, dfr_rest_services.get_dfr for p_id=OH0025135, pulled
+    2026-08-02. ICIS-NPDES system extract date 2026-07-31; SDWIS extract 2026-07-09.
+  state: >-
+    Ohio EPA NPDES permit 2PD00008*VD as issued, page 14 (Part I, C — Schedule of Compliance),
+    read from the committed source bytes at data/documents/oepa/findlay/2PD00008.pdf. Effective
+    2026-02-01.
+  cross_refs:
+  - data/extracted/oepa/findlay/2PD00008.npdes.yaml
+  - data/extracted/findlay/discharge-record.md
+
+# --- the state's schedule, complete ------------------------------------------------------------
+
+permit_schedule_in_force:
+  permit: 2PD00008*VD
+  page: 14
+  note: >-
+    [verified] The permit in force carries EXACTLY TWO milestones. This matters for the
+    reconciliation below: any ICIS violation dated outside these two rows is not a milestone the
+    current permit imposes.
+  milestones:
+  - section: Municipal Pretreatment Schedule
+    report_event: Eff Limits For Pollutants
+    event_code: '52599'
+    due: '2026-05-01'
+    substance: >-
+      Technical justification for revising or for retaining local industrial-user limits, "as soon
+      as possible, but no later than May 1, 2026". Includes the specific requirement that the City
+      determine whether local limits for TOTAL PHOSPHORUS "will facilitate substantial progress
+      toward achieving a monthly average effluent concentration target of 0.5 mg/L" — half the
+      permit's own 1.0 mg/L limit — or submit evidence supporting a determination that they are
+      not appropriate.
+  - section: Municipal CSO Schedule
+    report_event: Submit Study Plan
+    event_code: '34099'
+    due: '2026-11-01'
+    substance: >-
+      Page 16, Part I, C, 2(b): "No later than November 1, 2026, the permittee shall submit to
+      Ohio EPA the LTCP addendum. The addendum shall include a list of projects and an
+      implementation schedule for the projects that will meet the goals of the LTCP. (Event Code
+      34099)". This is the date the *VD modification moved.
+
+# --- what ICIS carries -------------------------------------------------------------------------
+
+icis_schedule_violations:
+  block: ECHO DFR, CWAPSCompliance (permit-schedule compliance)
+  count: 2
+  violations:
+  - perm_schedule_event_id: '3601140533'
+    npdes_violation_id: '3685636407'
+    schedule_event_desc: Study Plan
+    violation_desc: Schedule Event unachieved and not reported
+    violation_start: '2025-12-01'
+    still_open_at_extract: true
+    quarters_flagged: 'Qtr11 (2025-10-01/2025-12-31) onward, carried forward through Qtr13
+      (2026-04-01/2026-07-31)'
+  - perm_schedule_event_id: '3601349692'
+    npdes_violation_id: '3689036167'
+    schedule_event_desc: Plan, Report, or Scope of Work - Category 2
+    violation_desc: Schedule Event unachieved and not reported
+    violation_start: '2026-05-01'
+    still_open_at_extract: true
+    quarters_flagged: Qtr13 (2026-04-01/2026-07-31)
+
+# --- the reconciliation ------------------------------------------------------------------------
+
+reconciliation:
+  study_plan_2025_12_01:
+    verdict: stale federal record — the issue body's hypothesis holds HERE
+    tag: inference
+    reasoning: >-
+      The permit in force carries one and only one "Submit Study Plan" event, code 34099, and its
+      due date is 2026-11-01. It carries no milestone of any kind due 2025-12-01. The *VD
+      modification's entire substance was to change 34099's due date, and a modification that
+      moves a deadline forward implies an earlier deadline that it replaced. ICIS's unachieved
+      Study Plan dated 2025-12-01 is therefore the pre-modification instance of event 34099,
+      superseded by a state action effective 2026-02-01 that the federal system has not retired.
+    why_not_verified: >-
+      The *UD permit AS ISSUED is not in the corpus — the Ohio EPA DAM's permits/doc slot serves
+      the *VD modification package instead (issue 1460, lead UD-ISSUANCE-BYTES). So the
+      pre-modification due date of event 34099 is not held as a byte anywhere, and 2025-12-01 is
+      inferred from ICIS rather than read from the instrument. Obtaining the *UD issuance would
+      convert this to [verified] in one step, which is a concrete payoff for that standing lead.
+    do_not_write: >-
+      Do not write that Findlay missed a CSO study-plan deadline. On the state record the
+      deadline is 2026-11-01 and has not arrived.
+  plan_report_2026_05_01:
+    verdict: LIVE — the issue body's hypothesis does NOT hold here
+    tag: verified
+    reasoning: >-
+      The date matches exactly, and the milestone is in the permit AS CURRENTLY IN FORCE. Event
+      52599 is due 2026-05-01 under the *VD permit at page 14; the *VD modification did not touch
+      it — the transmittal letter's two revisions are confined to event 34099 and the LTCP
+      addendum language. So no state action explains this flag. As of the 2026-07-31 ICIS extract
+      the milestone stands recorded as neither achieved nor reported, three months past due.
+    what_is_still_open:
+      tag: open
+      question: >-
+        Whether the City submitted the local-limits technical justification and Ohio EPA has not
+        entered it, or whether it was not submitted. "Unachieved and not reported" is an ICIS
+        status, and a state-to-federal data lag is a real and common cause. What is established
+        is that the modification does NOT explain it.
+      how_to_close: >-
+        Ohio EPA Central Office Pretreatment Unit and the Northwest District Office are the two
+        addressees the permit names for this submission. A records request for the submittal and
+        any Ohio EPA acceptance letter would close it.
+    why_it_matters: >-
+      This is the phosphorus milestone. The evaluation it requires is whether local industrial
+      limits would move the plant toward 0.5 mg/L monthly average — and the eight significant
+      industrial users discharging 0.428 MGD are the load it would reach. It is the one scheduled
+      event in this permit that could change the plant's phosphorus trajectory, and it is the one
+      the federal record says has not been reported.
+
+# --- the rest of the federal compliance picture ------------------------------------------------
+
+compliance_posture:
+  as_of: '2026-03-31'   # ECHO's own CurrentAsOf for the CWA compliance summary
+  current_snc: 'No'
+  quarters_in_noncompliance: 5
+  quarters_in_snc: 0
+  current_status: Violation Identified
+  formal_enforcement_actions: 0
+  total_penalties: $0
+  inspections_since_2021_08: 4
+  last_inspection: {date: '2024-08-28', type: Pretreatment - Audit, lead_agency: State, snc_flag: 'N'}
+  other_inspections:
+  - {date: '2022-11-29', type: Base Program - Sampling, lead_agency: State}
+  - {date: '2022-07-26', type: Pretreatment - Evaluation, lead_agency: State}
+  - {date: '2022-02-14', type: Base Program - Evaluation, lead_agency: State}
+
+effluent_violations:
+  finding: >-
+    [verified] Exactly ONE numeric effluent violation appears in the entire reported record for
+    2023-01 through 2026-06 — 6,014 DMR rows, one flagged.
+  the_violation:
+    monitoring_period_end: '2023-10-31'
+    outfall: '001'
+    parameter: 00610 — Nitrogen, ammonia total (as N)
+    statistical_base: WKLY MAX
+    reported: 1.41
+    limit: 1.4
+    units: mg/L
+    exceedance: 1 percent (ECHO's own figure)
+    violation_desc: DMR, Limited - Numeric Violation
+  reading: >-
+    A 0.01 mg/L exceedance of a weekly maximum. It is a violation and is recorded as one, but it
+    is the only one, and it is not a phosphorus, mercury or toxicity event. The renewal fact
+    sheet's statement that Ohio EPA recorded no effluent limit violations in the previous five
+    years predates it.
+
+unexplained_noncompliance_quarters:
+  tag: open
+  finding: >-
+    ECHO flags THREE quarters as "Reportable Noncompliance" that none of its own detail blocks
+    explains — Qtr8 (2025-01-01/2025-03-31), Qtr9 (2025-04-01/2025-06-30) and Qtr12
+    (2026-01-01/2026-03-31). The 2023-10 ammonia exceedance accounts for Qtr3; the two schedule
+    violations begin 2025-12-01 and 2026-05-01 and so cannot reach the two 2025 quarters.
+  what_was_checked: >-
+    CWAEffluentCompliance and CWAEffluentComplianceEXP carry only the 2023-10 ammonia row.
+    CWASECompliance, CWACSCompliance, CWAEffluentALRExceedences, CWA3YrD80D90Counts, Notices,
+    FormalActions and ICISFormalActions are all EMPTY for this permit. No formal action, no
+    penalty, no notice.
+  do_not_speculate: >-
+    The driver is not published in the Detailed Facility Report. Candidate categories exist —
+    DMR non-receipt, pretreatment reporting, biosolids reporting (the facility carries both a
+    biosolids and a sewage-sludge report flag) — but nothing in the retrieved record selects
+    among them, and no guess is recorded here.
+  how_to_close: >-
+    The ICIS-NPDES quarterly non-compliance history (QNCR) tables in EPA's ECHO bulk downloads
+    carry the noncompliance category per quarter; alternatively Ohio EPA's Northwest District
+    Office holds the quarterly reports. Lead ICIS-RNC-QUARTERS-UNEXPLAINED.
+
+# --- the CSO clock -----------------------------------------------------------------------------
+
+cso_clock:
+  deadline: '2026-11-01'
+  what_is_due: >-
+    The LTCP Addendum — a list of projects and an implementation schedule that will meet the goals
+    of the Long-Term Control Plan — together with the Municipal CSO Schedule milestone summary
+    report, event 34099. Both were moved to this date by the *VD modification issued 2025-11-07,
+    effective 2026-02-01.
+  history: >-
+    Findlay's 1998 LTCP did not attain its designated level of control of four overflows per
+    typical year. A 2018 evaluation found twelve CSO outfalls no longer had combined sewer
+    upstream and were in substance sanitary sewer overflows. An updated integrated plan was
+    submitted 2020-01-31 and approved 2021-07-08; the City then asked for more time to evaluate
+    its treatment system and develop a new plan, and 2026-11-01 is where that request landed.
+  days_remaining_at_ingest: 91
+  watch: >-
+    Whether the addendum lands on time, and whether the date moves a third time. A further
+    modification would appear as a new public notice on the 2PD00008 permit and would carry a new
+    letter suffix (*WD).
+  see_also: data/extracted/findlay/watch/cso-sso-overflow-record.watch.yaml
+
+# --- the mercury variance trigger --------------------------------------------------------------
+
+mercury_variance_trigger:
+  tag: verified
+  standing_condition: >-
+    The permit's mercury variance sets a monthly average of 3.3 ng/L and a daily maximum of 1,700
+    ng/L, departing from a water-quality-based limit of 1.3 ng/L. Its standing condition is that
+    the ANNUAL average stay at or below 12 ng/L; exceeding it starts a six-month clock to an
+    individual-variance application, failing which the 1.3 ng/L WQBEL applies.
+  measured:
+    source: DMR parameter 50092 (Mercury, total low level), outfall 001, MO AVG, ng/L
+    annual_mean_of_reported_months:
+      '2023': {mean_ng_l: 0.688, months_reported: 11, max_month: 1.03}
+      '2024': {mean_ng_l: 1.115, months_reported: 4, max_month: 1.49}
+      '2025': {mean_ng_l: 0.749, months_reported: 6, max_month: 0.91}
+      '2026': {mean_ng_l: 0.855, months_reported: 4, max_month: 1.04}
+    highest_single_month_in_record: {value_ng_l: 1.49, period: '2024-09'}
+  finding: >-
+    Quiet, and not close. The worst calendar year on this record averages 1.115 ng/L against a
+    12 ng/L trigger — a factor of roughly 11 — and the single highest month ever reported, 1.49
+    ng/L, is under half the 3.3 ng/L monthly limit. The fact sheet's 2.2 ng/L (2018-2023) has
+    fallen further. No month in the record approaches any mercury limit.
+  method_caveat: >-
+    [inference] on the averaging only: these are means of the REPORTED MONTHLY AVERAGES, not the
+    permit's own annual-average computation, and mercury is sampled in some months and not others
+    (4 to 11 months per year). The conclusion is insensitive to the method — the gap to the
+    trigger is an order of magnitude — but the figures are not the permit's own arithmetic.
+  incidental_corroboration:
+    tag: verified
+    finding: >-
+      The DMR record shows the mercury monthly-average limit changing from 3.9 to 3.3 ng/L at the
+      2024-11-30 monitoring period. That is independent corroboration, from the federal effluent
+      record, of the *UD renewal's 2024-11-01 effective date — which until now rested only on the
+      January 2026 statewide variance list, because the *UD permit as issued is not in the corpus.
+  next_check: >-
+    Annual. The trigger is an annual average, so the check is once per calendar year against the
+    12 ng/L condition; nothing in the current trajectory requires a shorter interval.
+
+# --- WET, for anyone citing the dilution screen -------------------------------------------------
+
+whole_effluent_toxicity:
+  finding: >-
+    [verified from the renewal fact sheet] The prior 1.0 TUa / 1.0 TUc final limits were removed
+    at the 2024 renewal — no toxicity was detected in the reporting period and reasonable
+    potential was not demonstrated. Table 14 now lists all four endpoints (acute and chronic
+    Ceriodaphnia dubia and Pimephales promelas) as monitoring only, annual chronic testing with
+    determination of acute endpoints retained.
+  why_it_is_on_the_watch: >-
+    The acute dilution ratio at this outfall is 1.0 — at design flow the Blanchard below River
+    Mile 56.42 IS the effluent (issue 1458). Toxicity limits were removed on a reach with no
+    dilution. That is not an error and not a violation; reasonable potential is the standard the
+    rule prescribes. But any prose that cites the 1.0 dilution screen should carry it, because
+    the two facts sit oddly together and a reader will ask.
+  dmr_record: >-
+    The effluent chart carries the four toxicity parameters (61425, 61426, 61427, 61428) and the
+    percent-effect parameters (TCM3B, TCP3B, TCN6C) at six to ten rows each across the window,
+    with no violation flagged on any row.

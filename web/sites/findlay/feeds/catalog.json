@@ -257,8 +257,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "ade2f8a21cabb1aa5b8ed0e821521cea91dce1a511f75023d88c2c97e77cf4fd",
-      "size_bytes": 56372,
+      "sha256": "f3bef56801dfbc1b009172e40da1c7990930a7765e7d4ef8d125508b293da0ae",
+      "size_bytes": 58103,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -580,6 +580,89 @@
     },
     "citation": {
       "source": "AEP Ohio Transmission Company's Letter of Notification for the Rocky Ford 138 kV Station Project (OPSB 24-0707-EL-BLN) and Ohio Power Company's Construction Notice for the Ebersole-Fostoria Central #2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV Tie Line Project (OPSB 24-0706-EL-BNR), both filed 2024-09-10, plus AEP's public notice for the pair; Ohio Power Company's filed retail tariff P.U.C.O. No. 22 (Schedule DCT, Original Sheet Nos. 223-1..223-7); AEP's 2025 Load Forecast Adjustments presented to the PJM Load Analysis Subcommittee 2025-09-16. All four captured under data/documents/grid/findlay/. Secondary/uncommitted reads (cited by URL, not carried as bytes): One Power Co's Form S-1 (EDGAR CIK 2039139, filed 2025-01-23, withdrawn 2025-05-09), the OCC merit brief in Ohio S.Ct. 2025-1458, and the SEL / Goldwind / OnSite vendor releases.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "findlay-water-watch",
+    "title": "Findlay — Standing Water Watch (the derived spring phosphorus load, the ECHO-vs-state schedule reconciliation, the CSO/SSO overflow record, the SDWA primary check)",
+    "scope": "extracted",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "EPA ECHO public web services, pulled 2026-08-02 against an ICIS-NPDES system extract of 2026-07-31 and an SDWIS extract of 2026-07-09. Three services: dfr_rest_services.get_dfr for NPDES OH0025135 (the Detailed Facility Report — permit-schedule violations, compliance summary, inspections, assessed waters); eff_rest_services.get_effluent_chart for the same permit over 2023-01-01 to 2026-07-31 (the reported effluent record — total phosphorus, flow, mercury, overflow counts and volumes), pulled through this repository's own connector watermark.hydrology.connectors.echo_dmr.fetch_effluent_chart so every figure is regenerable; and sdw_rest_services.get_systems plus the SDWIS Detailed Facility Report for public water system OH3200111. The load equation, the Individual Load Limit, the Season Report requirement and the annual schedule of events are read from the committed general-permit bytes (data/documents/oepa/OHP000001.pdf and OHP000001_FS.pdf); the Schedule of Compliance and the station inventory are read from the committed permit bytes (data/documents/oepa/findlay/2PD00008.pdf, pages 14, 16 and 18).",
+    "external_url": null,
+    "license": "Public data (US EPA ECHO — ICIS-NPDES and SDWIS republication; Ohio EPA NPDES permits)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-02",
+    "tags": [
+      "npdes",
+      "phosphorus",
+      "tmdl",
+      "general-permit",
+      "wasteload-allocation",
+      "cso",
+      "sso",
+      "mercury-variance",
+      "whole-effluent-toxicity",
+      "sdwa",
+      "drinking-water",
+      "echo",
+      "icis",
+      "compliance",
+      "findlay",
+      "hancock-county",
+      "blanchard-river",
+      "lake-erie"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/findlay/water-watch.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/watch/tp-seasonal-load.watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/watch/icis-compliance-reconciliation.watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/watch/cso-sso-overflow-record.watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/findlay/watch/sdwa-findlay-city-pws.watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "42cfdbd2d2bd89ef88470ae9a0e67df8e6703cc5e40a0929d69c906d7091857b",
+      "size_bytes": 74170,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA ECHO public web services, pulled 2026-08-02 against an ICIS-NPDES system extract of 2026-07-31 and an SDWIS extract of 2026-07-09. Three services: dfr_rest_services.get_dfr for NPDES OH0025135 (the Detailed Facility Report — permit-schedule violations, compliance summary, inspections, assessed waters); eff_rest_services.get_effluent_chart for the same permit over 2023-01-01 to 2026-07-31 (the reported effluent record — total phosphorus, flow, mercury, overflow counts and volumes), pulled through this repository's own connector watermark.hydrology.connectors.echo_dmr.fetch_effluent_chart so every figure is regenerable; and sdw_rest_services.get_systems plus the SDWIS Detailed Facility Report for public water system OH3200111. The load equation, the Individual Load Limit, the Season Report requirement and the annual schedule of events are read from the committed general-permit bytes (data/documents/oepa/OHP000001.pdf and OHP000001_FS.pdf); the Schedule of Compliance and the station inventory are read from the committed permit bytes (data/documents/oepa/findlay/2PD00008.pdf, pages 14, 16 and 18).",
       "source_kind": "reference",
       "page": null,
       "pages": null,

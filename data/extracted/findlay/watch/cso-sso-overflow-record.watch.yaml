@@ -1,0 +1,172 @@
+# Findlay — what the overflow outfalls actually reported, 2023 through June 2026
+#
+# Issue 1461 · sub-issue of 1265 · corpus, NOT a RecordItem (no `action:`/`permit:` block).
+#
+# WHY THIS EXISTS. The CSO clock is one of the issue's three watch threads, and until now the
+# corpus held only the permit's structure — ten authorized combined sewer overflows, ten sanitary
+# sewer overflows, a 1998 LTCP that did not attain its four-overflows-per-typical-year level of
+# control, and a compliance milestone moved to 2026-11-01. It held no measurement. This record
+# supplies the reported activity from the plant's own DMRs so the 2026-11-01 addendum can be read
+# against what the system is doing rather than against a 2018 evaluation.
+
+as_of: '2026-08-02'
+site: findlay
+issue: 'watermark-directory/the-watermark-directory#1461'
+epic: 'watermark-directory/the-watermark-directory#1265'
+status: measured
+tag: verified
+
+source:
+  service: >-
+    EPA ECHO effluent-chart service (eff_rest_services.get_effluent_chart) for NPDES OH0025135,
+    window 2023-01-01 to 2026-07-31, pulled 2026-08-02 through
+    watermark.hydrology.connectors.echo_dmr.fetch_effluent_chart. ICIS-NPDES extract 2026-07-31.
+  parameters:
+    '74062': Overflows, reported in occurrences per month
+    '74063': Overflow volume (SSO volume, CSO volume), reported in million gallons
+  outfall_classification: >-
+    Combined vs sanitary is taken from the permit's own station inventory (2PD00008*VD page 18,
+    committed at data/extracted/oepa/findlay/2PD00008.npdes.yaml), not from the parameter code.
+    ICIS parameter 74063 covers BOTH sanitary and combined overflows and does not distinguish
+    them — a known trap already recorded for this connector.
+  coverage:
+    '2023': 12 months
+    '2024': 12 months
+    '2025': 12 months
+    '2026': 6 months — January through June. NOT a comparable annual figure.
+
+# --- a counting trap, recorded because it changes the numbers -----------------------------------
+
+method_trap:
+  finding: >-
+    Six of the overflow outfalls (002, 003, 011, 012, 015, 016, 018, 024, 025, 026 — every SANITARY
+    station) return TWO parameter blocks from the effluent-chart service, carrying overlapping
+    monitoring periods with identical values, because the permit term spans two limit sets. Summing
+    every returned row double-counts them. The ten CSO stations and station 300 return one block
+    each and are unaffected.
+  consequence: >-
+    A naive sum reports 31 sanitary overflow events in 2024 instead of 17. Every figure below is
+    deduplicated to one value per (outfall, monitoring period); no (outfall, period) pair carried
+    conflicting values, so the dedup is lossless.
+
+# --- combined sewer overflows -------------------------------------------------------------------
+
+combined_sewer_overflows:
+  authorized_count: 10
+  authorized_note: >-
+    Authorized wet-weather discharges under Part II, D of the permit. Eight discharge to the
+    Blanchard River and two — 010 (Hancock and Bank Street) and 013 (East Sandusky and Blanchard
+    Street) — to Eagle Creek, the same Eagle Creek the flood-mitigation program is building a dry
+    storage basin on.
+  reported_events_by_outfall:
+    '004': {'2023': 0, '2024': 1, '2025': 2, '2026_partial': 3, location: East of Old WWTP,
+            receiving: Blanchard River}
+    '005': {'2023': 1, '2024': 4, '2025': 3, '2026_partial': 2, location: North West and High
+            Street, receiving: Blanchard River}
+    '006': {'2023': 0, '2024': 1, '2025': 3, '2026_partial': 2, location: North Side of Liberty
+            Street Dam, receiving: Blanchard River}
+    '007': {'2023': 1, '2024': 1, '2025': 1, '2026_partial': 1, location: Liberty and Washington,
+            receiving: Blanchard River}
+    '010': {'2023': 0, '2024': 0, '2025': 1, '2026_partial': 1, location: Hancock and Bank Street,
+            receiving: Eagle Creek}
+    '019': {'2023': 2, '2024': 1, '2025': 2, '2026_partial': 2, location: North Cory at Walnut
+            Street Alley, receiving: Blanchard River}
+  silent_outfalls:
+    outfalls: ['013', '014', '022', '023']
+    finding: >-
+      Four of the ten authorized CSOs reported no overflow in the entire 42-month window,
+      including 013 — one of the two Eagle Creek outfalls.
+  totals:
+    events: {'2023': 4, '2024': 8, '2025': 12, '2026_partial': 11}
+    volume_million_gallons: {'2023': 1.27, '2024': 5.87, '2025': 6.46, '2026_partial': 7.50}
+  volume_by_outfall_2026_partial:
+    '004': 1.87
+    '005': 2.11
+    '006': 0.77
+    '007': 0.81
+    '010': 0.65
+    '019': 1.30
+
+# --- sanitary sewer overflows --------------------------------------------------------------------
+
+sanitary_sewer_overflows:
+  monitored_count: 10
+  plus_reporting_station: >-
+    Station 300 is the permit's SSO reporting station rather than a located outfall; it is listed
+    separately below and not attributed to a street address.
+  reported_events_by_outfall:
+    '002': {'2023': 1, '2024': 2, '2025': 1, '2026_partial': 0, location: West end of Edinborough
+            Drive}
+    '011': {'2023': 2, '2024': 5, '2025': 3, '2026_partial': 3, location: First and Bank Street}
+    '018': {'2023': 3, '2024': 7, '2025': 3, '2026_partial': 3, location: East End of Tioga Avenue}
+    '026': {'2023': 0, '2024': 0, '2025': 0, '2026_partial': 1, location: Fairway and Greendale}
+    '300': {'2023': 1, '2024': 3, '2025': 8, '2026_partial': 1, location: SSO reporting station}
+  totals:
+    events: {'2023': 7, '2024': 17, '2025': 15, '2026_partial': 8}
+  volume:
+    reported: false
+    caution: >-
+      Volume is NOT reported for any sanitary overflow station in this record — parameter 74063
+      returns no value at any of them. Read that as not reported, never as zero. Only the combined
+      outfalls carry volumes.
+
+# --- what the numbers say, and what they do not -------------------------------------------------
+
+findings:
+- tag: verified
+  finding: >-
+    Combined-sewer overflow activity is rising across the record: 4 events and 1.27 million
+    gallons in 2023, 8 events and 5.87 MG in 2024, 12 events and 6.46 MG in 2025. Through the
+    first six months of 2026 the system has already reported 11 events and 7.50 million gallons —
+    more volume in half a year than in any complete year on the record.
+- tag: verified
+  finding: >-
+    No single combined outfall has reported more than four overflow events in any calendar year
+    on this record. Outfall 004 (East of Old WWTP) is at three through June 2026, having reported
+    zero in 2023, one in 2024 and two in 2025 — the steepest per-outfall trend in the set.
+- tag: verified
+  finding: >-
+    Sanitary sewer overflows outnumber combined ones in every year of the record: 17 against 8 in
+    2024, 15 against 12 in 2025. Two stations — 011 (First and Bank Street) and 018 (East End of
+    Tioga Avenue) — account for most of them, and station 300's reported count rose from 3 in 2024
+    to 8 in 2025.
+- tag: open
+  finding: >-
+    Whether any of the reported sanitary overflows was treated by Ohio EPA as an unauthorized
+    discharge. A combined sewer overflow is an authorized wet-weather discharge under Part II, D;
+    a sanitary sewer overflow is not authorized by the permit. The DMR records occurrences, not
+    characterizations, and ECHO carries no formal enforcement action against this permit. The 2018
+    CSO evaluation's finding that twelve outfalls no longer had combined sewer upstream and were
+    in substance sanitary overflows makes the classification itself a live question.
+
+do_not_write:
+  four_per_typical_year: >-
+    Do NOT compare these counts to the LTCP's four-overflows-per-typical-year level of control and
+    conclude anything about attainment. "Typical year" is a defined design-rainfall year in the
+    LTCP, not a calendar year, and the determination is Ohio EPA's to make against the plan's own
+    methodology. Rainfall in any given calendar year may be well above or below the typical year.
+    These are reported occurrences; the control level is a modeled design standard. State the
+    counts, state the standard, and do not do the arithmetic between them.
+  causation: >-
+    Do not attribute the rising trend to any cause. Wet-weather activity tracks rainfall, and the
+    corpus holds no precipitation normalization for these years. The permit does require rainfall
+    reporting (parameter 46529), which would be the input to such a normalization — that is an
+    open analysis, not a finding.
+
+next_checks:
+- date: '2026-11-01'
+  what: >-
+    The LTCP Addendum and the Municipal CSO Schedule milestone summary report (event 34099) are
+    due. The addendum must list projects and an implementation schedule that will meet the LTCP's
+    goals. Read it against the 2025 and 2026 overflow record above.
+  lead: CSO-LTCP-2026-11-01
+- date: quarterly
+  what: >-
+    Re-pull the effluent chart and extend the overflow series. The 2026 full-year figure will be
+    complete after the December 2026 monitoring period is reported, in early 2027.
+- date: on-demand
+  what: >-
+    Pull the 2018 CSO evaluation report itself, which identified twelve outfalls as in substance
+    sanitary overflows. It is the document that would say which of the stations above are which,
+    and it is not in the corpus.
+  lead: CSO-2018-EVALUATION-BYTES

@@ -1,0 +1,196 @@
+# Findlay's drinking water — the SDWA primary compliance check
+#
+# Issue 1461 · sub-issue of 1265 · corpus, NOT a RecordItem (no `action:`/`permit:` block).
+#
+# WHAT THIS ANSWERS. Acceptance criterion 3 of issue 1461: "SDWA/PWS primary check run (Ohio EPA
+# drinking-water compliance for PWS Findlay); result recorded even if a clean negative." The
+# issue body carried this as `[open]` with the note "no violation surfaced; primary check
+# pending." The check has now been run, and the result is NOT a clean negative — but neither is
+# it a health-based problem. It needs decomposing, because the headline ECHO status for this
+# system is "Violation Identified" in twelve consecutive quarters and that phrase would badly
+# mislead anyone who quoted it without reading what drives it.
+
+as_of: '2026-08-02'
+site: findlay
+issue: 'watermark-directory/the-watermark-directory#1461'
+epic: 'watermark-directory/the-watermark-directory#1265'
+status: checked
+tag: verified
+
+source:
+  service: >-
+    EPA ECHO — sdw_rest_services.get_systems (Hancock County, OH; 198 systems) to identify the
+    system, then dfr_rest_services.get_dfr with p_system=SDWIS for the Detailed Facility Report.
+    Pulled 2026-08-02.
+  currency: SDWIS system extract date 2026-07-09. ECHO's SDWA compliance window runs 2023-04-01
+    through 2026-03-31 for the three-year summary, with a partial quarter to 2026-06-30.
+  note: >-
+    ECHO republishes SDWIS, which is Ohio EPA's own reporting to US EPA. It is the federal mirror
+    of the state primacy agency's record, not an independent measurement.
+
+# --- identifying the right system --------------------------------------------------------------
+
+system_identification:
+  finding: >-
+    [verified] Hancock County has 198 public water systems and thirteen carry "Findlay" in the
+    name. Two of those are city systems, and only one is live. Getting this wrong would attribute
+    a dead 1988 record to the operating utility.
+  operative:
+    pwsid: OH3200111
+    name: FINDLAY CITY PWS
+    status: Active
+    type: Community water system
+    owner: Local government
+    primary_service_area: Municipality
+    source_water: Surface water
+    population_served: 54040
+    registry_id: '110009656791'
+    epa_region: '05'
+  superseded:
+    pwsid: OH3200114
+    name: FINDLAY WATER DEPARTMENT
+    status: Inactive - 1988-08-01
+    population_served_of_record: 40000
+    caution: >-
+      Do NOT cite this system. It has been inactive since 1988-08-01 and its enforcement history
+      ends in the 1980s (informal state notices dated 1985-09-20 and 1986-10-15). It survives in
+      SDWIS as a legacy identifier.
+  source_water_note: >-
+    "Surface water" is consistent with the record already held: Findlay impounds the Blanchard
+    into two upground reservoirs, and the city's supply is drawn from them rather than from
+    groundwater. The same reservoir system is what regulates USGS gage 04189000 downstream and so
+    disqualified it as a low-flow denominator (issue 1458).
+
+# --- the compliance result ---------------------------------------------------------------------
+
+compliance_summary:
+  current_status: Violation Identified
+  quarters_in_noncompliance: 12
+  quarters_in_significant_noncompliance: 0
+  informal_enforcement_actions: 1
+  formal_enforcement_actions: 0
+  penalties: none recorded
+  quarterly_status: >-
+    "Violation" in all twelve quarters from 2023-04-01 through 2026-03-31; "In Progress" for the
+    partial quarter ending 2026-06-30.
+
+violations:
+  count: 1
+  the_only_violation:
+    violation_id: '8484809'
+    federal_rule: Consumer Confidence Rule
+    contaminant_name: Consumer Confidence Rule
+    category_code: Other
+    category_desc: Other Violation
+    compliance_period_begin: '2019-01-03'
+    noncompliance_period_begin: '2019-01-03'
+    noncompliance_period_end: ongoing — ECHO prints "--->"
+    status: Unaddressed
+    enforcement_actions:
+    - {date: '2019-01-03', type: Informal, action: State Violation/Reminder Notice, agency: State,
+       enforcement_id: '8102610'}
+  what_it_is: >-
+    The Consumer Confidence Rule governs the annual water-quality report a community system must
+    deliver to its customers and certify to the primacy agency. A CCR violation is a REPORTING
+    violation. It is not a contaminant exceedance, not a treatment-technique failure, and not a
+    monitoring failure.
+  what_it_is_not: >-
+    There is no maximum-contaminant-level violation, no treatment-technique violation and no
+    monitoring or reporting violation of any other rule anywhere in this system's record for the
+    period. The twelve "Violation" quarters are twelve quarters of ONE unresolved 2019 reporting
+    item being carried forward, not twelve quarters of new findings.
+
+# --- the honest reading ------------------------------------------------------------------------
+
+finding:
+  headline: >-
+    [verified] No health-based drinking-water violation for Findlay City PWS in 2024, 2025 or
+    2026 to date. Lead at the 90th percentile runs a factor of six to seven below the action
+    level. The only open item is a Consumer Confidence Rule reporting violation that has stood
+    unaddressed on the federal record since 2019-01-03, drawing one informal state notice the day
+    it was recorded and nothing since.
+  the_2019_item:
+    tag: open
+    question: >-
+      Whether the CCR violation reflects a continuing failure to deliver or certify the annual
+      report, or an ICIS/SDWIS record the state never closed after the fact. Seven and a half
+      years unaddressed with a single same-day informal notice and no escalation is more
+      characteristic of an unclosed record than of a live enforcement posture — but that is a
+      pattern argument, not evidence, and it is recorded as a question.
+    how_to_close: >-
+      Ohio EPA Division of Drinking and Ground Waters, Northwest District Office, holds the CCR
+      certifications. The City also publishes its annual Consumer Confidence Report; obtaining
+      the 2019 through 2025 editions and their certifications would resolve it directly.
+    do_not_write: >-
+      Do not write that Findlay's drinking water is in violation, or that the city has failed to
+      report water quality to its customers for seven years. Neither follows from an unaddressed
+      "Other Violation" record. State what the record says and what it does not settle.
+
+lead_and_copper:
+  action_level_lead_mg_l: 0.015
+  ninetieth_percentile_lead_mg_l:
+    '2025-01-01 to 2025-12-31': 0.0021
+    '2024-01-01 to 2024-12-31': 0.0023
+    '2023-07-01 to 2023-12-31': 0.0
+    '2023-01-01 to 2023-06-30': 0.0025
+    '2022-07-01 to 2022-12-31': 0.0023
+    '2022-01-01 to 2022-06-30': 0.0021
+    '2021-07-01 to 2021-12-31': 0.0
+    '2021-01-01 to 2021-06-30': 0.0
+  sample_rounds_on_record: 8
+  copper: >-
+    ECHO lists no copper 90th-percentile results for this system in the five-year window
+    (iCU90 = 0). Absence of a published result is not a result — do not report a copper figure.
+  finding: >-
+    [verified] Every reported lead 90th percentile in the five-year window is at or below 0.0025
+    mg/L against a 0.015 mg/L action level. No lead action-level exceedance.
+
+sanitary_surveys:
+  cadence: >-
+    Complete sanitary surveys by the district office, roughly triennial — the two in ECHO's
+    window are 2021-06-15 and 2024-06-04. The next would fall due around mid-2027.
+  '2024-06-04':
+    visit_type: Sanitary Survey, Complete
+    agency: District
+    recommendations_made: [Distribution, Finished Water Storage, Pumps, Source, Treatment]
+    no_deficiencies_or_recommendations: [Data Verification, Management/Operation, Operator
+      Compliance, Security, Financial]
+    other_evaluation: Not Applicable
+    reading: >-
+      Recommendations in five of eleven categories and deficiencies in none. ECHO's coding
+      distinguishes "R" (recommendations made) from a deficiency finding; nothing in this survey
+      is coded as a deficiency. The recommendations themselves are not published in ECHO — the
+      survey report is held by the district office.
+  '2021-06-15':
+    visit_type: Sanitary Survey, Complete
+    agency: District
+    finding: No deficiencies or recommendations in any evaluated category.
+  observation: >-
+    [inference] The 2021 survey was clean across the board and the 2024 survey raised
+    recommendations in source, treatment, storage, pumps and distribution — that is a broader set
+    of touches than three years earlier. Whether that reflects aging infrastructure, a different
+    surveyor, or a routine change in emphasis is not determinable from the coded summary. It is
+    worth naming because the city's own financing question is live: the corpus already carries a
+    2025-04-18 report that "sewer repair bills [are] adding up" and Findlay is absent from the
+    WPCLF PY2025 and PY2026 project lists. The 2024 survey report is the document that would say.
+
+next_checks:
+- date: annual
+  what: >-
+    Re-pull the SDWIS Detailed Facility Report for OH3200111 and check (a) whether the 2019 CCR
+    item is still Unaddressed, (b) whether any health-based violation has appeared, and (c) the
+    latest lead 90th percentile.
+- date: '~2027-06'
+  what: The next complete sanitary survey falls due on the observed triennial cadence.
+- date: on-demand
+  what: >-
+    Request the 2024-06-04 sanitary survey report from Ohio EPA DDAGW Northwest District Office —
+    it is the only document that says what the five categories of recommendations actually were,
+    and it bears on the supply-side financing thread.
+  lead: SDWA-SANITARY-SURVEY-2024
+
+scope_note: >-
+  This record covers the DRINKING-WATER system (PWS OH3200111). The wastewater plant that
+  discharges to the Blanchard is a different instrument entirely (NPDES 2PD00008 / OH0025135) and
+  is covered by the sibling records in this directory. Both are the City of Findlay; they are not
+  the same facility and their compliance records are unrelated.

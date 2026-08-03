@@ -1,0 +1,144 @@
+id: findlay-water-watch
+title: Findlay — Standing Water Watch (the derived spring phosphorus load, the ECHO-vs-state schedule reconciliation, the CSO/SSO overflow record, the SDWA primary check)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    EPA ECHO public web services, pulled 2026-08-02 against an ICIS-NPDES system extract of
+    2026-07-31 and an SDWIS extract of 2026-07-09. Three services: dfr_rest_services.get_dfr for
+    NPDES OH0025135 (the Detailed Facility Report — permit-schedule violations, compliance
+    summary, inspections, assessed waters); eff_rest_services.get_effluent_chart for the same
+    permit over 2023-01-01 to 2026-07-31 (the reported effluent record — total phosphorus, flow,
+    mercury, overflow counts and volumes), pulled through this repository's own connector
+    watermark.hydrology.connectors.echo_dmr.fetch_effluent_chart so every figure is regenerable;
+    and sdw_rest_services.get_systems plus the SDWIS Detailed Facility Report for public water
+    system OH3200111. The load equation, the Individual Load Limit, the Season Report requirement
+    and the annual schedule of events are read from the committed general-permit bytes
+    (data/documents/oepa/OHP000001.pdf and OHP000001_FS.pdf); the Schedule of Compliance and the
+    station inventory are read from the committed permit bytes
+    (data/documents/oepa/findlay/2PD00008.pdf, pages 14, 16 and 18).
+license: Public data (US EPA ECHO — ICIS-NPDES and SDWIS republication; Ohio EPA NPDES permits)
+access_tier: public
+site_scope: site:findlay
+storage:
+- relpath: extracted/findlay/water-watch.md
+  media_type: text/markdown
+  lfs: false
+- relpath: extracted/findlay/watch/tp-seasonal-load.watch.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/watch/icis-compliance-reconciliation.watch.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/watch/cso-sso-overflow-record.watch.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/watch/sdwa-findlay-city-pws.watch.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-08-02'
+provenance: connector
+tags:
+- npdes
+- phosphorus
+- tmdl
+- general-permit
+- wasteload-allocation
+- cso
+- sso
+- mercury-variance
+- whole-effluent-toxicity
+- sdwa
+- drinking-water
+- echo
+- icis
+- compliance
+- findlay
+- hancock-county
+- blanchard-river
+- lake-erie
+notes: >-
+  Issue 1461 (under epic 1265) — the standing watch on the Findlay WPCC's regulatory posture, and
+  the record-domain companion that keeps readiness honest as the sources move. Four structured
+  artifacts plus a narrative, all corpus rather than RecordItems: these are readings of the
+  federal compliance record, not agency actions, and publishing an ECHO API read into the
+  permits-epa group would misrepresent what it is. The site's record domain is already live, so
+  nothing here moves readiness and nothing bumps the contract — the same call issues 1463 and
+  1464 made.
+  WHAT IT CHANGES. The issue was commissioned on a finding — over-WLA phosphorus shielded by the
+  general-permit bubble — and the reconstruction retires that framing for the current record.
+  OHP000001 Part III publishes its own load equation (Load = median seasonal concentration x
+  season volume x 3.7854) and every input is in the reported DMRs, so the seasonal Individual Load
+  can be rebuilt: 4,450 kg for spring 2023, 2,756 kg for 2024, 3,101 kg for 2025, against a 3,200
+  kg Individual Load Limit. The 2023 season is the last before the general permit took effect and
+  matches the TMDL's 4.8-5.5 MT record; the 2024 season, the first the permit governed, is 1.7
+  metric tons lower. The mechanism is visible and seasonal — spring effluent runs at roughly 0.40
+  mg/L against 0.75 mg/L the rest of the year from 2024 onward, where in 2023 the two halves of
+  the year were indistinguishable, all against an individual-permit concentration limit of 1.0
+  mg/L that never changes.
+  THE LIMITS OF THAT, STATED IN THE ARTIFACT. The result is [inference], not [verified]: the bound
+  number is a REPORTED value (parameter 51451, on the July eDMR) and this is a reconstruction. The
+  season volume is exact; the median is not, because the eDMR publishes monthly averages and the
+  permit takes the median of all samples. Each season therefore carries a break-even median — the
+  value that would put it exactly at 3,200 kg — and for 2025 that break-even (0.4334 mg/L) falls
+  between the season's own monthly means, so THE 2025 SEASON IS NOT CALLED. 2024's break-even sits
+  above four of its five monthly means and is robust. The trend 4,450 -> 2,756 -> 3,101 is not a
+  trend toward safety, and the watch question shifts from whether the bubble holds to whether the
+  margin is closing.
+  WHY THE AUTHORITATIVE NUMBER IS ABSENT. Parameter 51451 does not appear in OH0025135's effluent
+  chart at all, and a pull against OHP000001 itself returns zero DMR rows — the bound figure lives
+  in Ohio EPA's eDMR under the general-permit coverage, which ECHO does not mirror. The Season
+  Report (Part IV.D, due each September 1) is an eBusiness Center submission, not a publication.
+  And Ohio EPA's General Permit Annual Report, which the fact sheet commits the agency to release
+  each November 1 with the cumulative determination and any facilities in violation, could not be
+  found for 2024 or 2025 — eight candidate filenames in the portal folder serving OHP000001.pdf
+  all 404. Recorded as an access gap, not a negative, and noted precisely: Attachment 3 lists that
+  row's Permit Condition as "--", so it is an administrative commitment in a fact sheet, not an
+  enforceable term. The permit's own cited URL for the Season Report form is also dead (404).
+  THE SCHEDULE RECONCILIATION SPLITS. The issue carried one hypothesis for both ECHO schedule
+  violations — federal ICIS not reflecting the state modification. It is right about one and wrong
+  about the other. The permit in force carries exactly two milestones (2PD00008*VD p. 14): event
+  52599 due 2026-05-01 and event 34099 due 2026-11-01. The "Study Plan" violation dated 2025-12-01
+  matches no milestone the current permit imposes and is the pre-modification instance of 34099
+  that ICIS has not retired — [inference] only because the *UD permit as issued is not in corpus
+  (lead UD-ISSUANCE-BYTES would settle it). The second violation is LIVE: event 52599 is in the
+  permit as it stands, the modification never touched it, and ICIS records it unachieved and not
+  reported three months past due. That is the phosphorus milestone — the technical justification
+  for whether local industrial-user limits would move the plant toward a 0.5 mg/L monthly average,
+  half its own limit, reaching the eight significant industrial users discharging 0.428 MGD.
+  Whether it was submitted and not entered, or not submitted, stays open.
+  OTHER FINDINGS. Exactly ONE numeric effluent violation exists in 6,014 DMR rows across the
+  window — ammonia at 1.41 against a 1.4 mg/L weekly maximum, period ending 2023-10-31. Three
+  quarters flagged Reportable Noncompliance (Q1 2025, Q2 2025, Q1 2026) are explained by NOTHING
+  in ECHO's own detail blocks, which are otherwise empty for this permit; recorded as open with no
+  guess (lead ICIS-RNC-QUARTERS-UNEXPLAINED). Combined-sewer overflows are rising — 4 events/1.27
+  MG in 2023, 8/5.87 in 2024, 12/6.46 in 2025, and 11 events/7.50 MG in the first six months of
+  2026, already more volume than any complete year — while sanitary overflows outnumber combined
+  ones every year and report no volume at all. The mercury variance is quiet by an order of
+  magnitude: worst annual mean 1.115 ng/L against a 12 ng/L trigger. And the DMR record shows the
+  mercury limit stepping from 3.9 to 3.3 ng/L at the 2024-11-30 period — independent corroboration
+  of the *UD renewal's 2024-11-01 effective date, which until now rested only on the January 2026
+  variance list.
+  THE SDWA CHECK IS DECOMPOSED, NOT QUOTED. ECHO shows Findlay City PWS in "Violation Identified"
+  for twelve consecutive quarters, and that headline would mislead. Two city PWSIDs exist and only
+  OH3200111 is live (active, community, surface water, 54,040 served); OH3200114 has been inactive
+  since 1988-08-01 and must not be cited. The twelve quarters are ONE Consumer Confidence Rule
+  reporting item, Unaddressed since 2019-01-03, with a single same-day informal notice and no
+  escalation. There is no MCL violation, no treatment-technique violation and no other monitoring
+  violation; lead 90th percentiles run 0.0021-0.0025 mg/L against a 0.015 action level across
+  eight rounds, and no copper result is published (an absence, not a zero). Whether the 2019 item
+  is live or an unclosed record stays open. The artifacts carry explicit do-not-write rules on
+  this, on the four-overflows-per-typical-year control level (a modeled design standard against a
+  calendar-year count — the arithmetic between them is Ohio EPA's to do, not ours), and on
+  attributing the overflow trend to any cause absent rainfall normalization.
+  TRAPS WORTH REUSING. The effluent-chart service returns TWO parameter blocks for every SANITARY
+  overflow station (overlapping periods, identical values, two limit sets spanning the permit
+  term) while the combined outfalls return one — summing every row reports 31 sanitary events in
+  2024 instead of 17. Deduplicate by (outfall, monitoring period). And the JSON get_effluent_chart
+  service reaches further back than the CSV download_effluent_chart endpoint for this permit: the
+  CSV starts at 2023-04 and so silently drops March 2023, which changes the 2023 season from an
+  incomplete 3,176 kg over four months to a complete 4,450 kg — the difference between a season
+  that looks near the limit and one that is 39 percent over it.
