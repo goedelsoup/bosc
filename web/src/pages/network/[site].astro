@@ -8,10 +8,11 @@
 import FacilityStatusRail from "~/components/FacilityStatusRail.astro";
 import Icon from "~/components/Icon.astro";
 import SiteLocked from "~/components/SiteLocked.astro";
+import StoryTeaser from "~/components/story/StoryTeaser.astro";
 import Base from "~/layouts/Base.astro";
-import { siteHref } from "@watermark/core/base";
+import { siteHref, storyHref } from "@watermark/core/base";
 import { LIMA_SLUG } from "@watermark/core/routes";
-import { type NetworkSite, comingSoonSites } from "@watermark/core/sites";
+import { type NetworkSite, comingSoonSites, comingSoonStories } from "@watermark/core/sites";
 
 export function getStaticPaths() {
   return comingSoonSites().map((site) => ({ params: { site: site.slug }, props: { site } }));
@@ -23,6 +24,15 @@ const tracking = site.status === "tracking";
 const issueUrl = site.issue
   ? `https://github.com/watermark-directory/the-watermark-directory/issues/${site.issue}`
   : undefined;
+
+// A HELD editorial walk on a not-yet-selectable peer (#1466). `comingSoon` means *advertised, not
+// readable* — but the teaser that advertises it lives in `PartialSiteHome`, which only renders for a
+// selectable site, so without this a registered walk here would be silent (i.e. `hidden` in all but
+// name). The teaser's target is the real, emitted coming-soon interstitial — the story routes gate
+// on registration rather than `selectable` — so this advertises without leaking any chapter prose.
+// Slug-parameterized `storyHref`, not the ambient `withStory`, because this route renders one
+// arbitrary peer rather than the active site.
+const heldStory = comingSoonStories(site.slug)[0];
 
 // The build phase, in this page's vocabulary. A `tracking` site is the earliest phase — a
 // GitHub-tracked candidate with no scaffold yet, so this is a "watch" page rather than a build gauge.
@@ -145,6 +155,21 @@ const doors = [
         }
       </div>
     </section>
+
+    {
+      heldStory ? (
+        <section class="netsite-story-wrap" aria-label="The story">
+          <div class="netsite-kicker netsite-doors-kicker">
+            The story <span class="netsite-faint">— a guided walk over this record, coming soon</span>
+          </div>
+          <StoryTeaser
+            title={heldStory.title}
+            dek={heldStory.dek}
+            href={storyHref(site.slug, heldStory.codename, "")}
+          />
+        </section>
+      ) : null
+    }
 
     <section class="netsite-doors-wrap" aria-label="What will land here">
       <div class="netsite-kicker netsite-doors-kicker">

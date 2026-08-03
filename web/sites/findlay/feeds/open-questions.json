@@ -466,5 +466,57 @@
     "hypothesis": null,
     "hypothesis_label": null,
     "signal": null
+  },
+  {
+    "id": "HUB-DEED-CHAIN",
+    "origin": "lead",
+    "question": "Pull the deed chain for the 2025 and 2026 Megawatt Hub land purchases — grantee, instrument, consideration",
+    "detail": "The committed holding is a 2023-05-08 county export — eight Allen Township parcels, 108.65 ac CAMA / 105.873 ac planar, standing in three One Energy vehicles. Press reporting puts 110 ac closed 2026-03-05 for $5.9M in the North Findlay Industrial Park plus 40 ac in 2025, and neither appears in that source because it predates both closings. Two further gaps sit on the same thread. The One Power Form S-1 calls the campus \"~170 acres\" against the 108.65 ac of record, a 61-acre difference no parcel was invented to close; and 12385 TR 215, the hub's own address in that filing, matches no parcel in the 2023 slice at all (12411 TR 215, the office, is the nearest). OPEN and specifically UNSEARCHED, never a negative finding — Hancock County publishes no parcel ArcGIS REST service; the Auditor's live CAMA is Beacon/Schneider only and returns Cloudflare HTTP 403 to every non-browser request; the Recorder's index is Kofile CountyFusion, whose guest login 404s outside a browser session. Both were probed 2026-08-02, so this is a manual or account-authenticated pull rather than a scriptable one. What the deeds would settle, in order of value — the grantee vehicle for each purchase, the instrument numbers and grantors, the considerations, any easements, and whether the 61-acre gap is owned, leased or optioned.",
+    "source": "data/extracted/findlay/bosc-site-footprint.yaml · data/reference/findlay/README.md · data/extracted/findlay/data-centers.md",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1466,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "ONE-POWER-DISTRESS-AND-CAPITAL",
+    "origin": "lead",
+    "question": "The host withdrew its IPO and was acquired while holding a 15-year take-or-pay — watch the contract, not the company",
+    "detail": "One Power Co filed a Form S-1 on 2025-01-23 (EDGAR CIK 2039139, confidential draft submission 2024-11-12), withdrew it by Form RW on 2025-05-09, and placed securities privately by Form D on 2025-07-23. A September 2025 reorganization with layoffs and a lender workout is [reference]. On 2026-02-16 OnSite Partners — owned by funds advised by Basalt Infrastructure Partners — announced its acquisition of One Power [verified]. Through all of it the MARA instrument is unchanged, 150 MW for 15 years on a take-or-pay basis payable whether or not the tenant draws power. SIGNAL, not a finding. Nothing here establishes distress at the Findlay site and no claim about any party's solvency is carried or should be written. The reason to watch it is structural — ownership of the hub changed hands while its principal revenue instrument stayed fixed, and a change of host is the most likely route by which the unresolved service agreement (HUB-ESA-CUSTOMER) and the +300 MW claim finally acquire a document. Next checks, cheapest first — MARA's 10-K and operations updates for the Findlay energization status, then any Ohio Secretary of State or UCC filing recording the OnSite transfer.",
+    "source": "data/extracted/findlay/data-centers.md · data/extracted/grid/findlay/megawatt-hub-interconnection.gap.yaml",
+    "kind": "signal",
+    "status": "unanswered",
+    "issue": 1466,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "CITY-TRANSPARENCY-EPISODES",
+    "origin": "lead",
+    "question": "Three reported transparency episodes around the city moratorium are uncorroborated — locate the primary records",
+    "detail": "The issue that commissioned this story names three episodes of friction around Findlay's data-center moratorium — a data-center meeting described as invite-only, a resident cut off while addressing council, and the moratorium passing only on a second attempt. THE CORPUS HOLDS NONE OF THEM, from any source. They are recorded here as uncorroborated assertions, not as facts, and none of them is writable anywhere until a record supports it. The retrieval routes are the ones already blocked for Ordinance 2026-42 itself — findlayohio.gov, American Legal's code library and the unprovisioned Legistar tenant all refuse retrieval — so the council journals for 2026-03-17, 2026-04-07 and 2026-04-22, the meeting notices, and any minutes recording public comment are items in the drafted, unsent R.C. 149.43 request to the Clerk of Council. One caution before any of it is repeated. The Allen Township zoning referendum genuinely did take two attempts, the first undone over abbreviated ballot language, so a second-try account may be a conflation of the township vote with the city ordinance. Establish which instrument the account belongs to first.",
+    "source": "data/extracted/findlay/governance-watch.md · data/extracted/findlay/governance/findlay-ordinance-2026-42.gap.yaml · data/extracted/findlay/governance/records-requests/2026-07-31-findlay-clerk-of-council.md",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1466,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "MICROPOLITAN-RANKING-VS-WARN",
+    "origin": "lead",
+    "question": "Source Findlay's micropolitan economic-development ranking from its publisher before pairing it with the WARN filings",
+    "detail": "Findlay's civic identity rests substantially on a repeatedly cited top-ranked micropolitan economic-development record, and the corpus holds that ranking from no source at all — no publisher, no year, no criteria. It is therefore not assertable, and the economic-identity counterpoint it would support cannot be drawn yet. What the corpus does hold is the other half of the pairing. Goodyear's 2026-01-30 WARN notice gives a permanent closing at Tall Timbers Mold with 85 separations weighted to skilled work, naming no destination plant and no labor organization. Michigan Sugar's is a courtesy filing covering four employees in which the employer disclaims the trigger, and its real value is an infrastructure datum — rail service was previously severed to the Findlay site. Pull the ranking from the publication that issues it, with its year and its methodology, and only then decide whether the pairing is a real tension or two unrelated facts about the same county. Do not publish the juxtaposition before the ranking is sourced.",
+    "source": "data/extracted/findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml · data/extracted/findlay/warn/michigan-sugar-findlay-2025.warn.yaml · data/extracted/findlay/dislocation-and-brownfields.md",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1466,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
   }
 ]

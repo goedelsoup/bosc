@@ -1,0 +1,136 @@
+---
+step: 2
+slug: power
+title: "On whose contract does it sit?"
+skill: "Reading a tariff off the filed sheets · telling a jurisdictional negative from a blocked search"
+anchor: "AEP Ohio Schedule DCT, P.U.C.O. No. 22 Sheets 223-1..223-7, against the +300 MW claim"
+live: true
+pageTitle: "On whose contract does it sit? — Chapter 2"
+studySection: power
+description: "The tariff that governs a 150 MW crypto load names cryptocurrency outright. Finding out whether it actually binds this site meant reading seven tariff sheets — and then hitting a firewall."
+---
+
+Chapter 1 left a disclosed 150 megawatts and one more sentence from the same filing:
+
+> "In 2024, we expanded the Findlay Megawatt Hub to make available an additional **300 MW** of
+> capacity with a standalone interconnection site." `[verified]`
+
+Four hundred and fifty megawatts, in a county of 75,000 people, from a company that withdrew the
+filing four months later. This chapter is about what it takes to find out whether that is real — and
+what it means when the one place the answer would be filed won't let you in.
+
+## Start with the rule, not the reporting
+
+The relevant instrument is **AEP Ohio's Schedule DCT**, the data-center tariff, and there is a great
+deal written about it that is close to right. The version that governs lives at **P.U.C.O. No. 22,
+Original Sheet Nos. 223-1 through 223-7**, inside the utility's own filed tariff book. Read there,
+four things bear directly on this site.
+
+**It names cryptocurrency mining outright.** The schedule's "Mobile Data Center" definition reaches
+electronic information services "(including mining of cryptocurrency)" with portable or distributable
+load above **25,000 kW**. MARA's contracted 150,000 kW is six times that threshold. `[verified]`
+
+**A Mobile Data Center customer must swear an oath.** Before receiving service it must provide "a
+sworn statement, under penalty of perjury, that neither the customer nor any of its affiliates is
+owned or controlled by … any foreign adversary as defined in 15 C.F.R. § 7.4." `[verified]` It is the
+only attestation anywhere in the schedule.
+
+**The +300 MW cannot ride a grandfather.** The schedule defines Existing Load that signs a new
+electric service agreement to expand by **more than 25,000 kW** as *New Load*. Three hundred megawatts
+is twelve times that trigger. `[inference]` — the conclusion follows from the sheets; the premise, that
+an executed pre-tariff agreement exists at all, is `[open]`.
+
+**And the famous number is not what it is usually quoted as.** "Data centers must pay for 85% of
+contracted capacity for 12 years" is a shorthand that is not precise enough to quote. The 85% is a
+*floor*, applied during a ramp (Year 1 50%, Year 2 65%, Year 3 80%, Year 4 90% of Contract Capacity)
+and afterwards to a rolling 11-month peak or a Minimum Demand table. Existing Load bills at **60%**,
+not 85%. Term is the ramp (up to four years) plus eight. `[verified]`
+
+> **The skill:** read the tariff sheets, not the press summary. Every one of the four points above
+> is available in secondary coverage in a form that is subtly wrong — the threshold, the oath, the
+> percentage, the term. The sheets are public, they are seven pages, and they settle it.
+
+<div class="callout callout--open">
+  <p class="callout-title">Do not write that the tariff was upheld</p>
+  <p>
+    Schedule DCT is <strong>on appeal to the Supreme Court of Ohio</strong> — <em>In re Application of
+    Ohio Power Co.</em>, case <strong>2025-1458</strong>, with the Office of the Ohio Consumers'
+    Counsel's merit brief filed 2026-03-24. It is undecided. The sheets quoted above are the version
+    filed pursuant to the April 2026 order in AEP Ohio's distribution rate case
+    <strong>25-392-EL-AIR</strong> — not the July 2025 compliance sheet, which is not captured. Any
+    comparison between the two is <code>[open]</code>.
+  </p>
+</div>
+
+## Who is the customer, though?
+
+Here the tariff runs out. One Power owns the site and its own transmission-voltage substation; MARA
+leases capacity behind it. Whether Schedule DCT reaches the **host**, the **tenant**, or neither turns
+on an electric service agreement that nobody has produced. `[open]` That single unproduced document
+would settle three questions at once — who the DCT customer is, whether the site is Existing or New
+Load, and whether the +300 MW is contracted at all.
+
+## Two things that look like the answer and aren't
+
+**Rocky Ford Station is not this load's interconnection.** In 2024 a fresh **138 kV** station went up
+in Hancock County — two OPSB cases, both filed 2024-09-10: **24-0707-EL-BLN** (AEP Ohio Transco, the
+6.25-acre station, approximately **$8,700,000**) and **24-0706-EL-BNR** (Ohio Power Company, the cut-in
+and tie line, approximately **$2,214,000**), all reimbursed by the interconnecting customer.
+`[verified]` It is tempting, and wrong, to read a new substation as the hub's service. Both filings
+state the need themselves: it serves **Border Basin I, LLC**, an independent power producer building
+a solar plant near **Arcadia** — PJM queue position **AE1-146**, in **Cass Township**, not the Allen
+Township where the Megawatt Hub sits. `[verified]` That is a *generation* interconnection. A generator
+queue is not a load queue, and a new station four townships over is not evidence about a compute
+campus.
+
+**"No OPSB case for the Central Findlay work" is a jurisdictional fact, not a search failure.** AEP's
+own scope for that rebuild is **69 kV** — four miles rebuilt, two miles of new overhead, one mile of
+new underground. R.C. 4906.01(B)(2) starts OPSB jurisdiction at transmission lines "of one hundred
+kilovolts or more." A 69 kV project generates no case because it can generate none. `[verified]`
+
+> **The skill:** before recording an absence, ask whether the record you searched could ever have
+> contained the thing. A negative that follows from a statute is worth `[verified]`. A negative that
+> follows from a search is worth exactly as much as the search was.
+
+## The firewall
+
+Which brings us to the one route that would actually decide it.
+
+A Findlay large-load instrument — an ESA, a letter of agreement, an intervention in the tariff
+docket — would be filed at the **Public Utilities Commission of Ohio**. PUCO's Docketing Information
+System, `dis.puc.state.oh.us`, **rejects automated retrieval outright**: every request, with and
+without a browser user-agent, referer, or session cookie, returns an application-firewall "Request
+Rejected" page. PUCO's own news page for the July 2025 order 404s; only a GovDelivery mirror survives.
+
+<div class="callout">
+  <p class="callout-title">This is recorded as an access failure, and the distinction is the point</p>
+  <p>
+    Four routes were checked for the +300 MW instrument. PJM is structurally the wrong forum — its
+    queue is a generation queue, and large load reaches PJM only as an aggregate zone forecast. AEP's
+    own 2025-09-16 Load Analysis Subcommittee deck names no county, substation, customer, or project
+    across seven slides; only zone totals. AEP's 2026-02-13 report to the PUCO (5,642 MW signed under
+    the tariff, 17,861 MW total through 2035) is territory-wide and mentions neither Findlay, Hancock
+    County, One Power, nor MARA. Those three are genuine <code>[verified — negative]</code> results.
+    The fourth — the docket — <strong>was never searched</strong>. Its silence proves nothing, and is
+    written down as proving nothing.
+  </p>
+</div>
+
+## What you've established
+
+The rule that would govern a 150 MW crypto load in AEP Ohio's territory exists, names cryptocurrency
+by name, demands a sworn oath, and would treat a 300 MW expansion as new load no matter what came
+before. Whether it binds *this* site is unresolved, because the contract is private and the docket is
+closed to machines.
+
+So the +300 MW stands where it started: **one sentence, in a withdrawn registration statement, whose
+filing never mentions AEP or PJM anywhere.** Read it as a developer's availability claim to a
+prospective investor. Never as documented grid capacity. `[open]`
+
+**Records read in this chapter** (under *Records* / *Reference*, in `data/extracted/grid/findlay/`):
+
+- `aep-dct-tariff-posture.yaml` — Schedule DCT read verbatim off the filed sheets, term by term.
+- `megawatt-hub-interconnection.gap.yaml` — the +300 MW claim and the four-route search, each route
+  recorded with what was checked, when, and what came back.
+- `rocky-ford-138kv-2024.project.yaml` — the two OPSB cases, and why they are a solar interconnection.
+- `behind-the-meter-generation.yaml` — the wind fleet that serves industrial hosts' meters, not the hub.

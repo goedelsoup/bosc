@@ -133,7 +133,14 @@ LEADS_FEED = "leads"
 # mirror is kept in sync by convention + test, the same way ``is_reference_site`` mirrors
 # ``isReferenceSite``. A ``[[network-baseline-domain-activation]]`` follow-up may lift both to
 # ``data/sites.yaml``.
-STORY_SLUGS: frozenset[str] = frozenset({"lima", "fort-wayne"})
+#
+# **Registration, not readability.** This set mirrors the overlay's KEYS — a story counts here the
+# moment a site registers one, whether it is readable, ``hidden`` (#1256) or ``comingSoon`` (#1526).
+# That is deliberate and it is where the two peers legitimately diverge: readiness measures the
+# *evidence* (a walk exists over this record), while the frontend's story facet gates on
+# ``surfacedStories`` and so stays locked until the walk is actually readable. Fort Wayne and Findlay
+# are both held (``comingSoon``) and both belong here.
+STORY_SLUGS: frozenset[str] = frozenset({"lima", "fort-wayne", "findlay"})
 
 # Every manifest feed name this module keys a domain on — the single enumerable coupling to the
 # exporter's feed spec (``watermark.site.export``). ``export.py`` shares these very constants for

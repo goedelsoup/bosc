@@ -1,6 +1,6 @@
 {
   "site": "findlay",
-  "catalog_version": "d2adaa710501ecd8dd810f6248f349f7480cbd8483b9bdb51d7407ac985c19d4",
+  "catalog_version": "2999595ba7fd26e2ece715861970d3814187c91fcd13cf34c04d3f5b26e5ccc0",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1244,6 +1244,14 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:CITY-TRANSPARENCY-EPISODES",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "CITY-TRANSPARENCY-EPISODES",
+      "title": "Three reported transparency episodes around the city moratorium are uncorroborated — locate the primary records",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:CONSERVANCY-COURT-2021",
       "kind": "lead",
       "site": "findlay",
@@ -1324,6 +1332,14 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:HUB-DEED-CHAIN",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "HUB-DEED-CHAIN",
+      "title": "Pull the deed chain for the 2025 and 2026 Megawatt Hub land purchases — grantee, instrument, consideration",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:HUB-ESA-CUSTOMER",
       "kind": "lead",
       "site": "findlay",
@@ -1364,11 +1380,27 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:findlay:MICROPOLITAN-RANKING-VS-WARN",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "MICROPOLITAN-RANKING-VS-WARN",
+      "title": "Source Findlay's micropolitan economic-development ranking from its publisher before pairing it with the WARN filings",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:findlay:NETZERO-WHIRLPOOL-COD",
       "kind": "lead",
       "site": "findlay",
       "local_id": "NETZERO-WHIRLPOOL-COD",
       "title": "Did Whirlpool's Hancock County Net Zero project (14.4 MW wind + 6.0 MW solar) reach operation?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:ONE-POWER-DISTRESS-AND-CAPITAL",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "ONE-POWER-DISTRESS-AND-CAPITAL",
+      "title": "The host withdrew its IPO and was acquired while holding a 15-year take-or-pay — watch the contract, not the company",
       "feed": "leads"
     },
     {

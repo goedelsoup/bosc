@@ -12,6 +12,7 @@
  */
 import { siteHref } from "@watermark/core/site";
 import { withBase } from "@watermark/core/site";
+import { siteForSlug } from "@watermark/core/sites";
 
 interface Props {
   /** Story display title, e.g. "Project BOSC". */
@@ -22,7 +23,14 @@ interface Props {
   slug: string;
 }
 const { title, dek, slug } = Astro.props as Props;
-const recordHref = siteHref(slug, "/site/");
+// The escape hatch has to point at a page that BUILDS. Every site-interior route
+// (`/site/`, `/timeline`, …) is emitted by `selectableSitePaths`, so a non-selectable peer has
+// none of them — its only front door is the flat `/network/<slug>` peer home (`[site].astro`),
+// which is exactly where its record inventory and needs board render anyway. Findlay is the first
+// site to hit this: it registers a held walk (#1466) while still awaiting the manual, parity-gated
+// promotion to `selectable`, so a hardcoded `/site/` here was a broken link the link-checker caught.
+const selectable = siteForSlug(slug)?.selectable ?? false;
+const recordHref = selectable ? siteHref(slug, "/site/") : siteHref(slug, "");
 ---
 
 <div class="walk-onramp story-soon">

@@ -17,7 +17,7 @@ import { STORY_COMPONENTS } from "~/components/story";
 import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
 import { siteBase } from "@watermark/core/routes";
-import { SITES, siteForSlug, storyComingSoon } from "@watermark/core/sites";
+import { siteForSlug, siteRegistersStory, storyComingSoon } from "@watermark/core/sites";
 import { withBase } from "@watermark/core/site";
 import {
   type Story,
@@ -32,13 +32,14 @@ import { chapterNumber, STUDY_PARTS, studyChapter } from "@watermark/core/study"
 import { withSite } from "@watermark/core/site";
 
 export async function getStaticPaths() {
-  const selectable = new Set(SITES.filter((s) => s.selectable).map((s) => s.slug));
   const entries = await getCollection("stories");
   const paths = [];
   for (const entry of entries) {
     if (typeof (entry.data as { step?: unknown }).step !== "number") continue; // skip the home
     const [slug, codename, chapter] = String(entry.id).split("/");
-    if (!selectable.has(slug)) continue;
+    // Gate on story REGISTRATION, not switchability (#1466) — see `siteRegistersStory`. A held
+    // (`comingSoon`) chapter still emits its URL; only the render target differs, so links resolve.
+    if (!slug || !codename || !siteRegistersStory(slug, codename)) continue;
     const siteId = siteBase(slug).replace("/network/", "");
     const literal = fileURLToPath(
       new URL(`../../../${siteId}/stories/${codename}/${chapter}.astro`, import.meta.url),

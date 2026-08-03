@@ -144,6 +144,16 @@ def test_story_states() -> None:
     fw = SITES["fort-wayne"]
     assert "fort-wayne" in STORY_SLUGS
     assert domain_states(fw, _counts())["story"] == "seeded"
+    # Both signals → live, even though the walk is HELD (#1466). Findlay registers the ``flagpole``
+    # story as ``comingSoon`` in the ``sites.ts`` overlay because the site is not yet ``selectable``.
+    # ``STORY_SLUGS`` mirrors the overlay's KEYS, not its readable subset, so the domain is live on
+    # the evidence (a walk exists over this record) while the frontend's ``story`` facet — which
+    # gates on ``surfacedStories`` — stays locked. That divergence is the design, not a drift.
+    findlay = SITES["findlay"]
+    assert "findlay" in STORY_SLUGS
+    assert domain_states(findlay, _counts(leads=44))["story"] == "live"
+    # And it is genuinely two-signal: drop the leads board and it falls back to seeded.
+    assert domain_states(findlay, _counts())["story"] == "seeded"
     # Leads only, no registered story → seeded (Urbana's record/leads case).
     urbana = SITES["urbana"]
     assert "urbana" not in STORY_SLUGS

@@ -133,7 +133,15 @@ export interface NetworkSite {
 // hub, catalog/atoms, record backlinks); `surfacedStories("lima")` returns it, `comingSoonStories`
 // does not. Fort Wayne's Project Zodiac stays `comingSoon` (#1526): held behind a visible teaser
 // while its record is finished — `comingSoonStories("fort-wayne")` returns it, `surfacedStories`
-// does not.
+// does not. Findlay's Flagpole is `comingSoon` for a different reason (#1466): its record IS
+// finished (all five readiness domains live), but the site is not yet `selectable`, and promotion
+// is a manual, parity-gated edit to `data/sites.yaml`. Held rather than hidden so the walk is
+// advertised — the peer home renders its teaser and the story routes serve the interstitial.
+//
+// ⚠️ "Flagpole" is an EDITORIAL title, not a developer codename. Zodiac is Google's own local name
+// for the Fort Wayne campus, recovered from a permit caption; Findlay has no cloak to lift (host
+// and customer are both named in SEC filings), so nothing in that story may imply One Power or MARA
+// ever used this word.
 const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
   lima: [
     {
@@ -147,6 +155,14 @@ const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
       codename: "project-zodiac",
       title: "Project Zodiac",
       dek: "Project Zodiac — a $2B Google data center in Fort Wayne, read from the records.",
+      comingSoon: true,
+    },
+  ],
+  findlay: [
+    {
+      codename: "flagpole",
+      title: "Flagpole",
+      dek: "Flagpole — Findlay impounds the Blanchard, augments it, discharges into it, and floods from it, and a 150 MW load arrived above town before any government had a rule for it.",
       comingSoon: true,
     },
   ],
@@ -514,6 +530,27 @@ export function siteForSlug(slug: string): NetworkSite | undefined {
  */
 export function surfacedStories(slug: string): readonly StoryRef[] {
   return siteForSlug(slug)?.stories?.filter((s) => !s.hidden && !s.comingSoon) ?? [];
+}
+
+/**
+ * Whether a site **registers** a story codename at all — readable, `hidden`, or `comingSoon` alike.
+ *
+ * This is the **route-emission** gate (#1466), and it is deliberately NOT `selectable`. Both
+ * not-readable states hold a story's *content*, never its URL: `hidden` keeps it "reachable by
+ * direct URL, just not advertised," and `comingSoon` serves an interstitial at the same routes
+ * (#1529) so links resolve instead of 404ing. Switchability is a different axis — a non-selectable
+ * peer still builds its own `/network/<slug>/` home, and that home advertises a held story with a
+ * teaser pointing at `/network/<slug>/stories/<codename>/`. While `selectable` gated the story
+ * routes, that teaser became a dead link the moment a non-selectable site registered a walk, which
+ * Findlay's `flagpole` (#1466) is the first to do.
+ */
+export function siteRegistersStory(slug: string, codename: string): boolean {
+  return (siteForSlug(slug)?.stories ?? []).some((s) => s.codename === codename);
+}
+
+/** Every site registering at least one story, in registry order — the story routes' path source. */
+export function storyHostSites(): readonly NetworkSite[] {
+  return SITES.filter((s) => (s.stories?.length ?? 0) > 0);
 }
 
 /**

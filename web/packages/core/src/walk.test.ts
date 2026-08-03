@@ -122,6 +122,29 @@ describe("Story model", () => {
     expect(fw?.chapters.map((c) => c.slug)).toEqual(["who", "power", "water"]);
     expect(fw?.chapters.every((c) => c.live)).toBe(true);
   });
+
+  it("resolves Findlay's flagpole walk in reading order (#1466)", () => {
+    const fin = storyFor("findlay", "flagpole");
+    expect(fin, "Findlay's flagpole story must resolve from the collection").toBeDefined();
+    expect(fin?.title).toBe("Flagpole");
+    // Ordered cause → consequence, so no chapter leans on a figure a later one establishes: the
+    // disclosed load, then the tariff it would sit under, then the ground it sits on, then the
+    // river's denominator, then the load reconstruction that denominator's permit governs, then
+    // what the river has already cost.
+    expect(fin?.chapters.map((c) => c.slug)).toEqual([
+      "who",
+      "power",
+      "ground",
+      "water",
+      "phosphorus",
+      "flood",
+    ]);
+    expect(fin?.chapters.map((c) => c.step)).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(fin?.chapters.every((c) => c.live)).toBe(true);
+    // Record → chapter backlinks invert from the chapters' own anchorRecordRels.
+    expect(storyAnchorFor(fin!, "oepa/findlay/2PD00008.fs.npdes.yaml")?.slug).toBe("water");
+    expect(storyAnchorFor(fin!, "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml")?.slug).toBe("phosphorus");
+  });
 });
 
 describe("story surface resolution — Lima readable, Fort Wayne coming-soon (#1526)", () => {
@@ -141,6 +164,13 @@ describe("story surface resolution — Lima readable, Fort Wayne coming-soon (#1
     expect(surfacedStories("fort-wayne")).toHaveLength(0);
     expect(comingSoonStories("fort-wayne").map((s) => s.codename)).toEqual(["project-zodiac"]);
     expect(storyComingSoon("fort-wayne", "project-zodiac")).toBe(true);
+    // Findlay's flagpole is held on the same terms (#1466) — so the readiness `story` FACET stays
+    // locked for it even though its manifest `story` DOMAIN is live. The two measure different
+    // things: the domain measures whether a walk exists over the record, the facet whether it reads.
+    expect(siteSurfacesStory("findlay", "flagpole")).toBe(false);
+    expect(surfacedStories("findlay")).toHaveLength(0);
+    expect(comingSoonStories("findlay").map((s) => s.codename)).toEqual(["flagpole"]);
+    expect(storyComingSoon("findlay", "flagpole")).toBe(true);
   });
 
   it("resolves Lima's ambient readable story + backlinks, but none for a held or story-less site", () => {
