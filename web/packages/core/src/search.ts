@@ -30,6 +30,7 @@ import { LEGAL } from "./legal";
 import { getSection, sections } from "./nav";
 import { NARRATIVE } from "./narrative";
 import { REFERENCE } from "./reference";
+import { SITES, siteBadge, siteState } from "./sites";
 import type { TagKind } from "./teardown";
 
 export interface SearchDoc {
@@ -61,6 +62,33 @@ export function buildSearchIndex(): SearchDoc[] {
         kind: "Section",
       });
     }
+  }
+
+  // The network's own sites (#1888) — the canonical index, plus one entry per REGISTERED site.
+  // Off the registry, not the bundle, so a site is findable the moment it's registered and a
+  // reader searching a place name lands on that site instead of on whichever page happens to
+  // mention it. Deeper per-site corpus coverage is #1890.
+  const network = getSection("directory").label;
+  docs.push({
+    title: "The network — every site",
+    url: "/network",
+    section: network,
+    text: blob(
+      "network index directory every registered watershed point site",
+      `${SITES.length} sites`,
+      ...SITES.map((s) => s.place),
+    ),
+    kind: "Section",
+  });
+  for (const site of SITES) {
+    docs.push({
+      title: site.place,
+      url: site.href,
+      section: network,
+      text: blob(site.basin, site.county, site.codename, site.mono, siteState(site.slug)),
+      kind: "Site",
+      id: siteBadge(site),
+    });
   }
 
   // Migrated narrative prose (#69) — by title + blurb. Network-global at the root (#1304), so a

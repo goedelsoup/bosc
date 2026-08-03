@@ -368,8 +368,22 @@ const FACILITY_STATUSES: ReadonlySet<FacilityStatus> = new Set([
 ]);
 
 export function facilityStatus(slug: string): FacilityStatus {
+  return facilityStatusOrNull(slug) ?? "investigation";
+}
+
+/**
+ * The MEASURED peer of {@link facilityStatus} (#1888) — the facility stage a bundle actually
+ * carries, or `null` where none does.
+ *
+ * `facilityStatus` floors to `"investigation"`, which is the right degrade on a *site's own* page:
+ * an undisclosed facility genuinely is inferential. On the network index it is not, because there
+ * the value is a **filter axis over 38 sites at once** — flooring would sweep every registered-but-
+ * unexported site into "Investigating" and print a facet count that no export supports. Callers
+ * that show one site keep the floor; callers that count sites take the `null`.
+ */
+export function facilityStatusOrNull(slug: string): FacilityStatus | null {
   const status = manifestOrNull(slug)?.facility?.status;
-  return status && FACILITY_STATUSES.has(status) ? status : "investigation";
+  return status && FACILITY_STATUSES.has(status) ? status : null;
 }
 
 /**
