@@ -4,9 +4,13 @@ scope: reference
 status: reviewed
 producer:
   kind: connector
-  command: >-
-    watermark.hydrology.connectors.allen_gis.query_parcels_geojson("LocalParcelID IN (…)",
-    settings=Settings(site="findlay"))  # PIN-list; enriched per reference/findlay/README.md
+  # Rendered as `watermark <command>` by `watermark catalog render`, so this must stay a runnable
+  # CLI invocation. There is no one-shot CLI path for this file: the OGRIP schema has no owner
+  # field, so `parcels --owner … --geojson …` refuses and the set is PIN-driven. The nearest
+  # runnable entry point is the per-parcel read; the full PIN-list + enrichment recipe lives in
+  # reference/findlay/README.md, and the Python entry point it calls is
+  # `allen_gis.query_parcels_geojson("LocalParcelID IN (…)", settings=Settings(site="findlay"))`.
+  command: --site findlay parcels --parcel 610000926490
   connector_ref: watermark.hydrology.connectors.allen_gis
   source: >-
     OGRIP — Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped
@@ -43,8 +47,8 @@ notes: >-
   that must be read before any acreage is quoted. flood_storage_basin: 18 parcels, 795.35 ac, held
   by the MAUMEE WATERSHED CONSERVANCY DISTRICT in Eagle Township — the Eagle Creek Dry Storage
   Basin acquisition, which CLOSES the polygon #1465's handoff had to leave [open] (situs on exactly
-  the four roads it names — TR 76, TR 77, TR 49, US-68 — spanning 40.9739-40.9890 N, 3.4-4.5 mi
-  south of downtown, with seven Eagle Creek flowline segments through the block per USGS NHD).
+  the four roads it names — TR 76, TR 77, TR 49, US-68 — spanning 40.9681-40.9902 N by polygon extent and
+  40.9738-40.9890 by parcel centroid, 3.0-4.6 mi south of downtown, with seven Eagle Creek flowline segments through the block per USGS NHD).
   ⚠️ 795.35 ac of LAND ACQUIRED is NOT the published "approximately 765 acres" of IMPOUNDMENT
   within the dam alignment; acquired land properly exceeds the impoundment, the two are consistent,
   neither is derived from the other, and the dam alignment itself stays [open] (no surveyed polygon,
@@ -60,13 +64,16 @@ notes: >-
   The plant's permitted outfall 2PD00008001 at Blanchard River RM 56.42 (41.049722/-83.667778, Ohio
   EPA fact sheet 2PD00008*UD p.7) falls INSIDE 610000926490 on a point-in-polygon test —
   `contains_wpcc_outfall` records it — which independently confirms the situs. ⚠️ That parcel's
-  served geometry measures 39.758 planar ac against 50.52 CAMA, a 21% shortfall well outside the
-  ±3% the other 25 parcels show; cite the deeded acreage and do not use the polygon as a plant-area
-  measurement. Three notes for a re-pull. THE LAYER SERVES ONE ROW PER POLYGON PART, not per parcel
+  served geometry measures 39.758 planar ac against 50.52 CAMA, a 10.76-ac / -21.3% shortfall — the
+  largest gap in the file but NOT a lone outlier: 200001032776 is -17.5% and the other 24 parcels
+  run -7.2% to +5.2%. Served geometry that under-covers the deed and CAMA acreages never
+  re-surveyed both fit that spread, and this entry chooses neither; cite the deeded acreage and do
+  not use the polygon as a plant-area measurement. Three notes for a re-pull. THE LAYER SERVES ONE ROW PER POLYGON PART, not per parcel
   (the Wood-County shape): five of these 26 parcels return 2-4 rows, each merged here into one
   MultiPolygon with `geometry_parts` recording how many — deduping on the id would have dropped
   220 ac. The Hancock slice's CurrentTo is 2023-05-08, so for the still-in-progress Eagle Creek
   acquisition 795.35 ac is a FLOOR, not a closing figure. And the OGRIP public view is
-  owner-redacted (owner_field=''), so owner_of_record is parsed from the MailAddressAll tax-bill
-  mailing label — the source itself truncates the conservancy district's name inconsistently
+  owner-redacted (owner_field=''), so the files carry `owner_mailing_name` — parsed from the
+  MailAddressAll tax-bill mailing label, and deliberately not an `owner`/`owner_of_record`
+  property — the source itself truncates the conservancy district's name inconsistently
   ("MAUMEE WATERSHED CONSERVANCY" vs "… CONSERVANCY DISTRICT"), and neither form is corrected.

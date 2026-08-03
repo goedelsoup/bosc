@@ -397,8 +397,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "fc929363b4e35670c321336ab021a65bbab0067ed4fab9ca1841faf6481e059c",
-      "size_bytes": 34971,
+      "sha256": "173e43b86b835fd88f153219751fe506cfb041bfdc6bb54c81f2f804ce04434e",
+      "size_bytes": 35242,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -1730,7 +1730,7 @@
     "collection": "findlay",
     "status": "reviewed",
     "producer_kind": "connector",
-    "command": "watermark.hydrology.connectors.allen_gis.query_parcels_geojson(\"LocalParcelID IN (…)\", settings=Settings(site=\"findlay\"))  # PIN-list; enriched per reference/findlay/README.md",
+    "command": "--site findlay parcels --parcel 610000926490",
     "connector_ref": "watermark.hydrology.connectors.allen_gis",
     "source": "OGRIP — Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped County='Hancock' via the OHIO_STATEWIDE_PARCEL_SCHEMA field-map. Waterbody names/areas cross-checked against the USGS NHD Waterbody (Large Scale) layer; township attribution against the Census TIGER county-subdivision layer.",
     "external_url": "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/OhioStatewidePacels_full_view/FeatureServer/0",
@@ -1758,8 +1758,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "a6671d8a462aca626577903500822725ab4c4bea5eed2f360801a905ae92c887",
-      "size_bytes": 204209,
+      "sha256": "d90a10bddcfd5e53e99e4af89b3814f02bdf615682f2277ec718ff70687b470c",
+      "size_bytes": 205067,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1771,7 +1771,7 @@
       "page": null,
       "pages": null,
       "confidence": "medium",
-      "note": "watermark watermark.hydrology.connectors.allen_gis.query_parcels_geojson(\"LocalParcelID IN (…)\", settings=Settings(site=\"findlay\"))  # PIN-list; enriched per reference/findlay/README.md",
+      "note": "watermark --site findlay parcels --parcel 610000926490",
       "verified": true
     }
   },
@@ -3234,8 +3234,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "0118c0e42601fd3b2dfabbaae3f829b2217216dc5f67b84341295653ffefaf50",
-      "size_bytes": 513376,
+      "sha256": "2821a004103b7ee1c8856afa07def1597678c8344121ccd1c0879dec0da88228",
+      "size_bytes": 513672,
       "lfs_materialized": true,
       "file_count": 10,
       "stale": false,

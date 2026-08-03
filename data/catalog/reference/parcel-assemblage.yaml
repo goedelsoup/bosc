@@ -151,9 +151,11 @@ notes: >-
   Beacon/Schneider-only and returns Cloudflare HTTP 403 to every non-browser request, and the
   Recorder's index is Kofile CountyFusion whose guest login 404s outside a browser session (both
   probed 2026-08-02) — so the deed chain is UNSEARCHED, not empty. The OGRIP public view is
-  owner-redacted (owner_field=''), so owner_of_record is parsed from the MailAddressAll tax-bill
-  mailing label, and it carries no value, sale, deed, legal-description or tax-district columns at
-  all. TWO BLOCKS, NOT ONE CAMPUS, kept apart by a `cluster` property: each block's polygons abut
+  owner-redacted (owner_field=''), so this file carries `owner_mailing_name` — parsed from the
+  MailAddressAll tax-bill mailing label — and deliberately NOT an `owner`/`owner_of_record`
+  property, which means its geo/campus features read grantee=null (campus_from_parcels fills
+  grantee from `owner`); that is correct here, the grantee is exactly what is [open]. It carries
+  no value, sale, deed, legal-description or tax-district columns at all. TWO BLOCKS, NOT ONE CAMPUS, kept apart by a `cluster` property: each block's polygons abut
   without overlapping (north union 71.857 ac vs parts-sum 71.858; south 34.016 vs 34.015) but the
   blocks are 200.2 m apart. The 73.89-ac north block is the press's "74-acre wind campus along
   I-75" — though "along I-75" is corridor language, not frontage: measured against the Census TIGER
