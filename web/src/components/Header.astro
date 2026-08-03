@@ -61,7 +61,13 @@ const totalSites = SITES.length;
 const stateCount = stateGroups.length;
 const basinCount = basinGroups.length;
 const lockedCount = SITES.filter((s) => s.locked).length;
-const openCount = totalSites - lockedCount;
+// What a reader can actually ENTER — the registry's `selectable`, not "everything minus the
+// locked ones", which no site is, so the panel used to advertise all 38 as open (#1888). The
+// switcher, the home, and `/network` now all count the same way; the index is where the full
+// listing lives, and this panel is the jump affordance over it.
+const openCount = SITES.filter((s) => s.selectable).length;
+const watchCount = totalSites - openCount;
+const indexHref = withBase("/network");
 
 // Auth chip — only rendered when the PUBLIC_ build vars are set (kill switch mirrors submit/ask).
 const cognitoDomain = import.meta.env.PUBLIC_COGNITO_DOMAIN ?? "";
@@ -167,8 +173,10 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
         <span class="switcher-foot-note">
           Each site is a section of the Watermark platform — pivoted by <span class="sw-scope sw-scope-basin"
             >basin</span
-          ><span class="sw-scope sw-scope-state">state</span>. Live &amp; building sites open; queued and tracking
-          sites route to their coming-soon / watch page.
+          ><span class="sw-scope sw-scope-state">state</span>. <b>{openCount} open</b>; the other {watchCount}
+          route to their coming-soon / watch page. <a class="switcher-index" href={indexHref}
+            >The full index →</a
+          >
         </span>
         <span class="switcher-legend" aria-hidden="true">
           <span class="leg leg-live">Live</span>
@@ -298,6 +306,9 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
             <span class="v2-fl-campus v2-fl-operational">Operational</span>
           </span>
         </div>
+        {/* The panel is a jump affordance, not the network's only listing (#1888) — the canonical,
+            linkable, filterable index of all {totalSites} sites is `/network`. */}
+        <a class="v2-foot-index" href={indexHref}>All {totalSites} sites — the network index →</a>
       </div>
     </div>
   </details>

@@ -60,7 +60,11 @@
 /network/:site/site/icon-showcase       /showcase/icons                                        301
 /network/:site/site/teardown-showcase   /showcase/teardown                                     301
 
-# Old network-hub URLs (pre-#402, when the hub was /network). The hub is now `/`; research is
-# /research/hypotheses. Exact rules only — /network/<slug> is real coming-soon content.
-/network                /                                                                      301
+# Old network-hub URLs (pre-#402, when the hub was /network). Research is /research/hypotheses.
+# Exact rules only — /network/<slug> is real coming-soon content.
+#
+# ⚠️ There is deliberately NO rule for `/network`: since #1888 that is the real site index (the
+# canonical listing of every registered site), served statically. A redirect here would ALWAYS
+# fire before the static asset — the page would work in dev, in the build, and in the link check,
+# and 301 away in production only. `src/lib/redirects.test.ts` guards that.
 /network/hypotheses     /research/hypotheses                                                   301

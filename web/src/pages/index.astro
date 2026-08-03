@@ -253,7 +253,10 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
       <div class="dirh-sec-head">
         <div class="dirh-kicker">Across the network</div>
         <span class="dirh-sec-sub">— the {featured.length} deepest-assembled sites, by readiness tier.</span>
-        <a class="dirh-sec-link" href={withBase("/research/hypotheses")}>See all {totalSites} →</a>
+        {/* The canonical index, not the scorecard (#1888): "see all" asks *which sites are there*,
+            and /research/hypotheses answers a different question — which boom-origin thesis each
+            site bears on. That view keeps its own two entries above. */}
+        <a class="dirh-sec-link" href={withBase("/network")}>See all {totalSites} →</a>
       </div>
       <div class="dirh-table">
         <div class="dirh-trow dirh-thead">

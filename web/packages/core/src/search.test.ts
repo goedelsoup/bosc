@@ -5,6 +5,7 @@
 import { describe, expect, it } from "vitest";
 import { sections } from "./nav";
 import { buildSearchIndex, type SearchDoc } from "./search";
+import { SITES } from "./sites";
 
 describe("buildSearchIndex (#592)", () => {
   const docs = buildSearchIndex();
@@ -40,6 +41,19 @@ describe("buildSearchIndex (#592)", () => {
     for (const d of docs) expect(allowed.has(d.tag)).toBe(true);
     // a row without a tag is fine; a tagged row must be a real evidence kind (asserted above)
     expect(docs.some((d) => d.tag === undefined)).toBe(true);
+  });
+
+  it("indexes every registered network site, and the index page (#1888)", () => {
+    // Off the registry, not the bundle: a site is findable the moment it's registered, so a
+    // reader searching a place name lands on that site rather than on whichever page mentions it.
+    const siteDocs = new Map(docs.filter((d) => d.kind === "Site").map((d) => [d.url, d]));
+    expect(siteDocs.size).toBe(SITES.length);
+    for (const site of SITES) {
+      const doc = siteDocs.get(site.href);
+      expect(doc, `no search entry for "${site.slug}"`).toBeDefined();
+      expect(doc?.title).toBe(site.place);
+    }
+    expect(docs.some((d) => d.url === "/network")).toBe(true);
   });
 
   it("is deterministic across runs", () => {

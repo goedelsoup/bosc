@@ -12,6 +12,7 @@ import {
   FACILITY_STAGES,
   facilityStageIndex,
   facilityStatus,
+  facilityStatusOrNull,
   groupSites,
   groupSitesIn,
   networkRollup,
@@ -339,6 +340,19 @@ describe("facility-status rail — the 4-stage facility clock (#401)", () => {
   it("defaults an undisclosed facility to step 0 (investigation)", () => {
     expect(facilityStatus("toledo")).toBe("investigation");
     expect(facilityStageIndex(facilityStatus("toledo"))).toBe(0);
+  });
+
+  it("reports the same undisclosed facility as UNMEASURED through the nullable peer (#1888)", () => {
+    // The floor is right on a site's own page (an undisclosed facility genuinely is inferential)
+    // and wrong on a filter axis over the whole registry, where it would print a facet count no
+    // export supports. Same slug, two callers, two correct answers.
+    expect(facilityStatusOrNull("toledo")).toBeNull();
+    expect(facilityStatusOrNull("lima")).toBe("construction");
+    expect(facilityStatusOrNull("fort-wayne")).toBe("live");
+    // A registered site with no committed bundle at all — also null, never floored.
+    const unbuilt = SITES.find((s) => siteRollup(s.slug).tier === null);
+    expect(unbuilt, "expected at least one registered site with no committed bundle").toBeDefined();
+    if (unbuilt) expect(facilityStatusOrNull(unbuilt.slug)).toBeNull();
   });
 });
 

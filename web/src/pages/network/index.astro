@@ -1,0 +1,717 @@
+---
+/**
+ * `/network` — the canonical site index (#1888, epic #1884 phase 4).
+ *
+ * The registry holds every watershed point the platform tracks, and until now the only place a
+ * reader could see all of them was the header switcher: a `<details>` panel, transient, unlinkable,
+ * unshareable. The home's "See all N →" pointed at `/research/hypotheses`, which answers a
+ * different question. This is the directory the directory didn't have.
+ *
+ * Two things it owes the reader, from the acceptance criteria:
+ *   1. **Every** registered site, at a stable linkable URL (each row carries `id={slug}`, so
+ *      `/network#findlay` resolves) — one page, crawlable, no JS required to see it all.
+ *   2. An honest split of what OPENS versus what is merely tracked. Never a bare count of the
+ *      registry, which advertises breadth the build can't deliver.
+ *
+ * Filtering and sorting are pure CSS (the switcher's `gb-radio` idiom, scaled up): one radio group
+ * per axis with an "All" default, plus `order` on a flex column for the sort. See the generated
+ * rules below for why single-select per axis is the load-bearing choice.
+ *
+ * ⚠️ `/network` was a 301 to `/` in `public/_redirects` until this page existed. On Cloudflare
+ * Pages a redirect ALWAYS fires before a matching static asset, so leaving that rule in place
+ * would have made this page unreachable in production while working perfectly in dev, in the
+ * build, and in the link check. `redirects.test.ts` guards it.
+ */
+import Base from "~/layouts/Base.astro";
+import { withBase } from "@watermark/core/site";
+import {
+  buildNetworkIndex,
+  NETWORK_SORTS,
+  networkCounts,
+  networkFacets,
+  rowData,
+} from "@watermark/core/networkIndex";
+import { FACILITY_STATUS_META, facilityStatusOrNull, siteRollup } from "@watermark/core/sites";
+import { PHASE_PILL, TIER_PILL } from "@watermark/core/directory";
+
+const rows = buildNetworkIndex(siteRollup, facilityStatusOrNull);
+const facets = networkFacets(rows);
+const counts = networkCounts(rows);
+const num = (n: number): string => n.toLocaleString("en-US");
+
+// The sites a reader can actually enter today, deepest record first — the answer to "which of
+// these is worth my time", which the switcher never gave. Registry `selectable`, not bundle
+// presence: see the note in networkIndex.ts on why those are different questions.
+const openSites = rows.filter((r) => r.open).sort((a, b) => a.order.tier - b.order.tier);
+
+// --- The no-JS controls -------------------------------------------------------------------------
+// Every generated rule only ever HIDES a row. That is what lets the six axes AND together without
+// combinatorics: each axis contributes at most one `display:none` rule, and nothing ever sets a
+// row back to visible, so a row survives only if it matched on every axis. Single-select within an
+// axis (radio, not checkbox) is what buys that — expressing "OR within an axis" in CSS would need
+// a rule per subset, i.e. 2^11 for the basins.
+const inputId = (facet: string, value: string): string => `nx-${facet}-${value.toLowerCase()}`;
+
+const filterCss = facets
+  .flatMap((f) =>
+    f.options.map(
+      (o) =>
+        `.nx:has(#${inputId(f.key, o.value)}:checked) .nx-row:not([${f.attr}="${o.value}"]){display:none}`,
+    ),
+  )
+  .join("\n");
+
+// Sorting is `order` on a flex column, so every ordering is resolved at build time into a custom
+// property per row and selected here. No JS, and the DOM order (the registry) stays the crawlable
+// one regardless of what the reader picked.
+const sortCss = NETWORK_SORTS.map(
+  (s) => `.nx:has(#nx-sort-${s.key}:checked) .nx-row{order:var(--o-${s.key})}`,
+).join("\n");
+
+const orderStyle = (row: (typeof rows)[number]): string =>
+  NETWORK_SORTS.map((s) => `--o-${s.key}:${row.order[s.key]}`).join(";");
+
+const title = "The network";
+const description =
+  `Every watershed point Watermark tracks — ${counts.total} sites across ${counts.basins} basins, ` +
+  `${counts.open} open to read and ${counts.watch} tracked. Filter by state, basin, record assembled, ` +
+  `build phase, and facility status.`;
+---
+
+<Base title={title} section="directory" rail={false} description={description}>
+  {/* Generated filter + sort rules. Global (not scoped) because they're built from the registry at
+      build time; every selector is anchored on the `.nx*` classes this page alone uses. Inside the
+      layout slot so it lands in the document body rather than after `</html>`. */}
+  <style is:inline set:html={`${filterCss}\n${sortCss}`}></style>
+  <div class="nx">
+    <!-- hero — the honest count, never a bare total -->
+    <section class="nx-hero">
+      <div class="nx-eyebrow">The Watermark network</div>
+      <h1 class="nx-h1">Every site on the record.</h1>
+      <p class="nx-lead">
+        The network is <b>{counts.total} watershed points</b> across {counts.basins} basins in {
+          counts.states
+        } states. <b>{counts.open} open to read today</b>; the other {counts.watch} are registered and
+        tracked, and each one has a page saying what we have and what we're still missing. Nothing here
+        is a verdict.
+      </p>
+    </section>
+
+    <!-- what's open — the reader's actual question, answered before the table -->
+    <section class="nx-open" aria-label="Sites open to read">
+      <div class="nx-sechead">
+        <span class="nx-kicker">Open now</span>
+        <span class="nx-sechead-sub">— {counts.open} of {counts.total} sites you can read today.</span>
+      </div>
+      <div class="nx-opengrid">
+        {
+          openSites.map((s) => (
+            <a class="nx-opencard" href={withBase(s.href)}>
+              <span class="nx-opencard-top">
+                <span class="nx-opencard-code">{s.badge}</span>
+                {s.tier && (
+                  <span class="nx-pill" style={`color:${TIER_PILL[s.tier].color};background:${TIER_PILL[s.tier].bg}`}>
+                    <span class="nx-dot" style={`background:${TIER_PILL[s.tier].dot}`} />
+                    {TIER_PILL[s.tier].label}
+                  </span>
+                )}
+              </span>
+              <span class="nx-opencard-place">{s.place}</span>
+              <span class="nx-opencard-basin">{s.basin}</span>
+              <span class="nx-opencard-figs">
+                {s.documents === null ? "—" : num(s.documents)} documents · {
+                  s.records === null ? "—" : num(s.records)
+                } records
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- the index proper -->
+    <section class="nx-index" aria-label="Every registered site">
+      <div class="nx-sechead">
+        <span class="nx-kicker">The index</span>
+        <span class="nx-sechead-sub">— all {counts.total}, filterable and sortable.</span>
+      </div>
+
+      <form class="nx-controls">
+        <div class="nx-facets">
+          {
+            facets.map((f) => (
+              <fieldset class="nx-facet">
+                <legend class="nx-facet-legend">
+                  {f.label}
+                  <span class="nx-facet-note">{f.note}</span>
+                </legend>
+                <div class="nx-facet-opts">
+                  <input
+                    type="radio"
+                    name={`nx-f-${f.key}`}
+                    id={inputId(f.key, "all")}
+                    class="nx-radio"
+                    checked
+                  />
+                  <label class="nx-chip nx-chip--all" for={inputId(f.key, "all")}>
+                    All <span class="nx-chip-n">{counts.total}</span>
+                  </label>
+                  {f.options.map((o) => (
+                    <>
+                      <input
+                        type="radio"
+                        name={`nx-f-${f.key}`}
+                        id={inputId(f.key, o.value)}
+                        class="nx-radio"
+                      />
+                      <label class="nx-chip" for={inputId(f.key, o.value)}>
+                        {o.dot && <span class="nx-dot" style={`background:${o.dot}`} />}
+                        {o.label} <span class="nx-chip-n">{o.count}</span>
+                      </label>
+                    </>
+                  ))}
+                </div>
+              </fieldset>
+            ))
+          }
+        </div>
+        <div class="nx-sortbar">
+          <fieldset class="nx-facet nx-facet--sort">
+            <legend class="nx-facet-legend">Sort</legend>
+            <div class="nx-facet-opts">
+              {
+                NETWORK_SORTS.map((s, i) => (
+                  <>
+                    <input
+                      type="radio"
+                      name="nx-sort"
+                      id={`nx-sort-${s.key}`}
+                      class="nx-radio"
+                      checked={i === 0}
+                    />
+                    <label class="nx-chip" for={`nx-sort-${s.key}`}>
+                      {s.label}
+                    </label>
+                  </>
+                ))
+              }
+            </div>
+          </fieldset>
+          {/* Native form reset — restores every default-checked radio at once, no script. */}
+          <button type="reset" class="nx-reset">Clear filters</button>
+        </div>
+        <p class="nx-controls-note">
+          Filters combine: a site shows only if it matches every selection. Some combinations have
+          no site yet — <b>Clear filters</b> resets the view.
+        </p>
+      </form>
+
+      <div class="nx-table">
+        <div class="nx-head" aria-hidden="true">
+          <span>Code</span>
+          <span>Place</span>
+          <span>Basin</span>
+          <span>Build phase</span>
+          <span>Record</span>
+          <span>Facility</span>
+          <span class="is-right">Docs</span>
+          <span class="is-right">Records</span>
+          <span class="is-right">Access</span>
+        </div>
+        <div class="nx-rows">
+          {
+            rows.map((r) => (
+              <a
+                class:list={["nx-row", { "is-open": r.open }]}
+                id={r.slug}
+                href={withBase(r.href)}
+                style={orderStyle(r)}
+                {...rowData(r)}
+              >
+                <span class="nx-td-code">{r.badge}</span>
+                <span class="nx-td-place">
+                  <span class="nx-td-placename">{r.place}</span>
+                  <span class="nx-td-sub">{r.county ?? r.stateName}</span>
+                </span>
+                <span class="nx-td-basin">
+                  <span class="nx-td-basinname">{r.basinLabel}</span>
+                  <span class="nx-td-sub">{r.basin}</span>
+                </span>
+                <span class="nx-td-pill">
+                  <span
+                    class="nx-pill"
+                    style={`color:${PHASE_PILL[r.status].color};background:${PHASE_PILL[r.status].bg}`}
+                  >
+                    <span class="nx-dot" style={`background:${PHASE_PILL[r.status].dot}`} />
+                    {PHASE_PILL[r.status].label}
+                  </span>
+                </span>
+                <span class="nx-td-pill">
+                  {r.tier ? (
+                    <span
+                      class="nx-pill"
+                      style={`color:${TIER_PILL[r.tier].color};background:${TIER_PILL[r.tier].bg}`}
+                    >
+                      <span class="nx-dot" style={`background:${TIER_PILL[r.tier].dot}`} />
+                      {TIER_PILL[r.tier].label}
+                    </span>
+                  ) : (
+                    <span class="nx-none" title="No committed bundle — nothing measured here yet">—</span>
+                  )}
+                </span>
+                <span class="nx-td-pill">
+                  {r.facility ? (
+                    <span
+                      class="nx-pill"
+                      style={`color:${FACILITY_STATUS_META[r.facility].color};background:${FACILITY_STATUS_META[r.facility].bg}`}
+                    >
+                      <span class="nx-dot" style={`background:${FACILITY_STATUS_META[r.facility].dot}`} />
+                      {FACILITY_STATUS_META[r.facility].label}
+                    </span>
+                  ) : (
+                    <span
+                      class="nx-none"
+                      title={
+                        r.facilityFacet === "undisclosed"
+                          ? "Exported — no facility on the record"
+                          : "No committed bundle — nothing measured here yet"
+                      }
+                    >
+                      {r.facilityFacet === "undisclosed" ? "None disclosed" : "—"}
+                    </span>
+                  )}
+                </span>
+                {/* A dash and a zero are different claims: "—" is unmeasured, 0 is an export that
+                    ran and found none. Never collapse one into the other. */}
+                <span class="nx-td-n">{r.documents === null ? "—" : num(r.documents)}</span>
+                <span class="nx-td-n">{r.records === null ? "—" : num(r.records)}</span>
+                <span class="nx-td-access">{r.open ? "Open →" : "Watch ›"}</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <p class="nx-foot">
+        <b>Three clocks, and they move independently.</b> <b>Build phase</b> is our progress
+        assembling the website. <b>Record</b> is how much of the record that site's own export has
+        assembled — a standing property recomputed at every export, so it rises when a source lands
+        and falls when one dries up. <b>Facility</b> is the plant in the ground. A queued site can
+        document a live facility, and a built site can document one still under investigation. A
+        dash means no committed bundle has measured that figure yet — it is not a zero, and it is
+        not a finding.
+      </p>
+      <p class="nx-foot nx-foot--links">
+        Reading the network by thesis instead? The <a href={withBase("/research/hypotheses")}>hypothesis
+        scorecard</a> groups these same sites by which boom-origin thesis they bear on. Know something
+        about a site we're still tracking? <a href={withBase("/submit")}>Submit a lead</a>.
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .nx {
+    max-width: 82rem;
+    margin: 0 auto;
+  }
+  .nx-eyebrow,
+  .nx-kicker {
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    font-weight: 500;
+  }
+  .nx-kicker {
+    color: var(--bosc-faint);
+  }
+
+  /* hero */
+  .nx-hero {
+    padding: 0.5rem 0 1.9rem;
+    border-bottom: 1px solid var(--bosc-ink);
+  }
+  .nx-h1 {
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    margin: 0.5rem 0 0;
+  }
+  .nx-lead {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--bosc-muted);
+    max-width: 46rem;
+    margin: 0.9rem 0 0;
+  }
+  .nx-lead b {
+    color: var(--bosc-ink);
+  }
+
+  /* section heads */
+  .nx-sechead {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+  }
+  .nx-sechead-sub {
+    font-size: 0.85rem;
+    color: var(--bosc-faint);
+  }
+
+  /* open-now cards */
+  .nx-open {
+    padding: 1.9rem 0;
+    border-bottom: 1px solid var(--bosc-rule);
+  }
+  .nx-opengrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+  .nx-opencard {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--bosc-rule);
+    padding: 0.1rem 1.3rem;
+    text-decoration: none;
+    color: var(--bosc-ink);
+  }
+  .nx-opencard:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .nx-opencard-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .nx-opencard-code {
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    border: 1px solid var(--bosc-ink);
+    padding: 1px 7px;
+  }
+  .nx-opencard-place {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-top: 0.7rem;
+  }
+  .nx-opencard:hover .nx-opencard-place,
+  .nx-opencard:focus-visible .nx-opencard-place {
+    text-decoration: underline;
+  }
+  .nx-opencard-basin {
+    font-size: 0.82rem;
+    color: var(--bosc-muted);
+    line-height: 1.45;
+    margin-top: 0.2rem;
+  }
+  .nx-opencard-figs {
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    color: var(--bosc-faint);
+    margin-top: 0.6rem;
+  }
+
+  /* shared pill + dot (the swatches come from the shared status palettes, inline) */
+  .nx-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--bosc-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+  .nx-dot {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    display: inline-block;
+  }
+
+  /* controls */
+  .nx-index {
+    padding: 1.9rem 0 0;
+  }
+  .nx-controls {
+    border-top: 1px solid var(--bosc-rule);
+    border-bottom: 1px solid var(--bosc-rule);
+    padding: 1rem 0;
+    margin-bottom: 1.2rem;
+  }
+  .nx-facets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 0.9rem 1.6rem;
+  }
+  .nx-facet {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  .nx-facet-legend {
+    font-family: var(--bosc-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--bosc-ink);
+    font-weight: 600;
+    padding: 0;
+    margin-bottom: 0.4rem;
+  }
+  .nx-facet-note {
+    display: block;
+    font-family: var(--bosc-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 400;
+    color: var(--bosc-faint);
+    margin-top: 0.15rem;
+  }
+  .nx-facet-opts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  /* The radios are the whole mechanism — visually hidden, never removed from the a11y tree. */
+  .nx-radio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+  .nx-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    padding: 3px 7px;
+    border: 1px solid var(--bosc-rule);
+    color: var(--bosc-muted);
+    cursor: pointer;
+    user-select: none;
+  }
+  .nx-chip:hover {
+    border-color: var(--bosc-ink);
+    color: var(--bosc-ink);
+  }
+  .nx-chip-n {
+    color: var(--bosc-faint);
+  }
+  .nx-radio:checked + .nx-chip {
+    border-color: var(--bosc-forest);
+    background: var(--bosc-forest);
+    color: var(--bosc-bg);
+  }
+  .nx-radio:checked + .nx-chip .nx-chip-n {
+    color: var(--bosc-bg);
+    opacity: 0.75;
+  }
+  /* "All" is the resting state, not a filter — the forest signal is reserved for a selection that
+     actually narrows the table, so six green chips don't shout on a page nobody has filtered yet. */
+  .nx-radio:checked + .nx-chip--all {
+    border-color: var(--bosc-ink);
+    background: transparent;
+    color: var(--bosc-ink);
+    font-weight: 600;
+  }
+  .nx-radio:checked + .nx-chip--all .nx-chip-n {
+    color: var(--bosc-faint);
+    opacity: 1;
+  }
+  .nx-radio:focus-visible + .nx-chip {
+    outline: 2px solid var(--bosc-forest);
+    outline-offset: 2px;
+  }
+  .nx-sortbar {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px dashed var(--bosc-rule);
+  }
+  .nx-facet--sort {
+    flex: 1 1 24rem;
+  }
+  .nx-reset {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--bosc-ink);
+    background: transparent;
+    color: var(--bosc-ink);
+    cursor: pointer;
+  }
+  .nx-reset:hover {
+    background: var(--bosc-ink);
+    color: var(--bosc-bg);
+  }
+  .nx-controls-note {
+    font-size: 0.76rem;
+    color: var(--bosc-faint);
+    line-height: 1.5;
+    margin: 0.8rem 0 0;
+  }
+
+  /* table */
+  .nx-table {
+    border-top: 1px solid var(--bosc-ink);
+    border-bottom: 1px solid var(--bosc-ink);
+  }
+  .nx-head,
+  .nx-row {
+    display: grid;
+    grid-template-columns:
+      74px minmax(8rem, 1.15fr) minmax(8rem, 1.15fr) 104px 104px 132px 62px 62px 68px;
+    align-items: center;
+    column-gap: 0.85rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.45rem;
+    border-left: 3px solid transparent;
+  }
+  .nx-head {
+    font-family: var(--bosc-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+    border-bottom: 1px solid var(--bosc-rule);
+  }
+  .nx-head .is-right {
+    text-align: right;
+  }
+  /* Flex column so the CSS sort can reorder rows with `order`. */
+  .nx-rows {
+    display: flex;
+    flex-direction: column;
+  }
+  /* Hairlines only, no zebra: `nth-child` follows DOM order, which the CSS sort deliberately
+     doesn't — a striped row would keep its stripe after reordering and read as noise. */
+  .nx-row {
+    text-decoration: none;
+    color: var(--bosc-ink);
+    border-bottom: 1px solid var(--bosc-rule);
+  }
+  /* The one forest signal: the left rail marks a site you can actually read. */
+  .nx-row.is-open {
+    border-left-color: var(--bosc-forest);
+  }
+  .nx-row:hover .nx-td-placename,
+  .nx-row:focus-visible .nx-td-placename {
+    text-decoration: underline;
+  }
+  .nx-td-code {
+    font-family: var(--bosc-mono);
+    font-size: 0.74rem;
+    font-weight: 600;
+  }
+  .nx-td-place,
+  .nx-td-basin {
+    min-width: 0;
+  }
+  .nx-td-placename,
+  .nx-td-basinname {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nx-td-basinname {
+    font-weight: 500;
+  }
+  .nx-td-sub {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--bosc-faint);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nx-none {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    color: var(--bosc-faint);
+  }
+  .nx-td-n {
+    font-family: var(--bosc-mono);
+    font-size: 0.76rem;
+    text-align: right;
+  }
+  .nx-td-access {
+    font-family: var(--bosc-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    text-align: right;
+    color: var(--bosc-faint);
+  }
+  .is-open .nx-td-access {
+    color: var(--bosc-forest);
+    font-weight: 600;
+  }
+
+  /* footnotes */
+  .nx-foot {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--bosc-muted);
+    max-width: 52rem;
+    margin: 1.2rem 0 0;
+  }
+  .nx-foot b {
+    color: var(--bosc-ink);
+  }
+  .nx-foot--links {
+    margin-bottom: 1.4rem;
+  }
+
+  @media (max-width: 1040px) {
+    .nx-table {
+      overflow-x: auto;
+    }
+    .nx-head,
+    .nx-row {
+      min-width: 58rem;
+    }
+  }
+  @media (max-width: 820px) {
+    .nx-opengrid {
+      grid-template-columns: 1fr;
+    }
+    .nx-opencard {
+      border-left: 0;
+      padding-left: 0;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--bosc-rule);
+    }
+    .nx-opencard:first-child {
+      border-top: 0;
+      padding-top: 0.25rem;
+    }
+  }
+</style>
