@@ -9,6 +9,7 @@
  * are **flagged, not silently dropped** (the whole point of grounding an evidence corpus).
  */
 
+import { isRoutableDoc } from "./docRouting";
 import { docPermalinkForRel } from "./documentId";
 import { escapeHtml } from "./format";
 
@@ -20,6 +21,9 @@ export interface AskCitation {
   title: string;
   url: string;
   source?: string | null;
+  /** The `data/documents` rel of the source document, when the unit joined to one — see
+   * `AskUnit.doc_rel`. The only field that reliably names a document; `source` does not. */
+  doc_rel?: string | null;
   page?: number | null;
   source_kind?: string | null;
   verified?: boolean;
@@ -38,14 +42,45 @@ export function withBasePath(base: string, path: string): string {
 }
 
 /**
- * The most precise deep link for a citation (#328): document-sourced citations go to the
- * viewer page (`/site/documents/<rel>`) so the reader can verify against the source bytes;
- * otherwise falls back to the bundle page (`c.url`).
+ * The `/network/<id>` root of a site-rooted bundle URL, or null when the URL is network-global.
+ *
+ * A unit's `url` is stamped at index-build time and is the only thing a citation carries that
+ * knows which site it belongs to — the wiki's entity and concept units are rooted at `/wiki/`
+ * instead, and have no site to speak of.
+ */
+function siteRootOf(url: string): string | null {
+  return /^(\/network\/[^/]+)(?=\/|$)/.exec(url)?.[1] ?? null;
+}
+
+/**
+ * The most precise deep link for a citation (#328): a citation that joined to a source document
+ * goes to that document's permalink so the reader can verify against the source bytes; otherwise
+ * it falls back to the page the unit itself lives on (`c.url`).
+ *
+ * The join key is **`doc_rel`**, not `source` (#1890). This used to test `source` for a leading
+ * `data/documents/` and strip it — a prefix no unit's `source` has ever carried, because `source`
+ * is as often the extracted-YAML artifact the claim was read from. Measured across all 26 committed
+ * bundles: 2,587 units, **zero** matches. So the deep link had been inert since it was written, and
+ * every citation silently resolved to the fallback. `doc_rel` is the field that exists for exactly
+ * this — set from a record's `source_doc_rel` (the #276 join), and already the join the MCP
+ * `search_corpus` tool returns as `document_id`. It matches 106 units, 52 of them in Lima's, which
+ * is the bundle the deployed `/ask-index.json` is built from.
+ *
+ * Two conditions guard the link, because the permalink route is narrower than the corpus:
+ *
+ *  - The site root comes from `c.url`. `docPermalink` is site-relative by contract, and the one
+ *    route that serves it is `/network/<site>/doc/<id>/`; prefixing it with the *deploy* base (`/`
+ *    in every environment — `BASE_PATH` is unset) is what the old code did, and would have 404'd
+ *    had it ever fired. A network-global unit has no site, so it keeps its own page.
+ *  - `isRoutableDoc` — the same predicate `network/[site]/doc/[id].astro` builds from. 54 of Lima's
+ *    catalogued files are OS exhaust that is listed and fetchable but deliberately not routed, and
+ *    a citation is not a reason to promise one a page.
  */
 export function citationHref(c: AskCitation, base: string): string {
-  const DOC_PREFIX = "data/documents/";
-  if (c.source_kind === "document" && c.source?.startsWith(DOC_PREFIX)) {
-    return withBasePath(base, docPermalinkForRel(c.source.slice(DOC_PREFIX.length)));
+  const rel = c.doc_rel;
+  const site = rel ? siteRootOf(c.url) : null;
+  if (rel && site && isRoutableDoc({ rel, name: rel.split("/").pop() ?? "" })) {
+    return withBasePath(base, `${site}${docPermalinkForRel(rel)}`);
   }
   return withBasePath(base, c.url);
 }
