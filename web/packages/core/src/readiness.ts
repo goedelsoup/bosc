@@ -30,10 +30,14 @@
  * declaration is the module's record of the `concepts` decision, and the property `facets.test.ts`
  * enforces — no two sites may serve identical non-empty content at the same facet route unless the
  * facet says outright that it is network-global.
+ *
+ * Above all three sits a fourth, purely *derived* band: `lensStatus` (#1913), which composes the
+ * two gates for the five Lenses declared in `lenses.ts`. It reads them; it does not change them.
  */
 import { hasFeed, loadFeed, loadManifest } from "./bundle";
 import type { DomainState, Readiness, SiteTier } from "./bundle";
 import type { ScenarioResult } from "./feeds";
+import { LENSES, type LensId } from "./lenses";
 import { scopedLegal } from "./legal";
 import { scopedReference } from "./reference";
 import { LIMA_SLUG } from "./routes";
@@ -440,4 +444,38 @@ export function facetStatus(slug: string, facet: RecordFacet): SectionStatus {
 /** Convenience: is this record facet ready to render for the site? */
 export function facetAvailable(slug: string, facet: RecordFacet): boolean {
   return facetStatus(slug, facet) === "available";
+}
+
+// --- the lens band: a composition over the two gates above (#1913, epic #1911) -------------
+//
+// **Lens is a nav/landing concept; section stays the gating concept**, and the two are allowed to
+// be different granularities. Nothing above this line moves: `environment` and `economy` remain
+// the gated `ReadinessSection`s that map to manifest domains, and a lens simply declares which of
+// those sections and which activation domains its reading stands on (`lenses.ts`). This function
+// is the composition — the model is pure and lives there, the bundle read lives here.
+//
+// So the five lenses cut across the bands rather than replacing them: `land` and `disclosure` are
+// pure domain reads (`places` / `record`), `environment` and `economy` inherit their same-named
+// section's gate verbatim (including the #1057 cooling lock, which a lens must never route
+// around), and `power` — the one genuine split out of `economy` — takes the economy section AND
+// the `facility` domain, because "whose grid carries it" presupposes an *it* on the record.
+//
+// There is no `isReferenceSite` path here: Lima's five lenses open because its manifest says every
+// domain is live, and a `stub`-tier peer locks all five for the same reason, in reverse.
+
+/**
+ * A lens's status for a site: `available` (open its landing) or `locked` (show the lock + the ask).
+ *
+ * Every declared section must be available AND every declared domain must carry evidence — a lens
+ * is a *view over* those gates, so it can never be more open than the narrowest thing it gathers.
+ */
+export function lensStatus(slug: string, lens: LensId): SectionStatus {
+  const { sections, domains } = LENSES[lens];
+  const open = sections.every((s) => isAvailable(slug, s)) && domains.every((d) => domainPresent(slug, d));
+  return open ? "available" : "locked";
+}
+
+/** Convenience: is this lens ready to open for the site? */
+export function lensAvailable(slug: string, lens: LensId): boolean {
+  return lensStatus(slug, lens) === "available";
 }
