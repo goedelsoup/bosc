@@ -1,12 +1,12 @@
 id: eia
-title: PJM Balancing-Authority Interchange Aggregates (EIA-930)
+title: Balancing-Authority Interchange Aggregates (EIA-930)
 scope: reference
 status: reviewed
 producer:
   kind: connector
   command: interchange
   connector_ref: watermark.economics.connectors.eia
-  source: U.S. EIA — Form EIA-930 Hourly Electric Grid Monitor (PJM region demand/net-gen/interchange)
+  source: U.S. EIA — Form EIA-930 Hourly Electric Grid Monitor (BA region demand/net-gen/interchange)
   external_url: https://www.eia.gov/electricity/gridmonitor/
 license: U.S. Government work (public domain)
 access_tier: keyed

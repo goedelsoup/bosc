@@ -157,7 +157,10 @@ const reference = defineCollection({
 // note is additive and never inherited — that is the whole point of moving the prose out.
 const referenceNotes = defineCollection({
   loader: glob({
-    pattern: [`${REFERENCE_SETS}/instances/*.md`, "hydrology/wbd/instances/*.md"],
+    // The `!README.md` mirrors `instanceSites()`, which skips it for the same reason: a filename
+    // here IS a site slug. Without it the two halves disagree — core would ignore a directory
+    // README while this loader tried to schema-validate it as a note.
+    pattern: [`${REFERENCE_SETS}/instances/*.md`, "hydrology/wbd/instances/*.md", "!**/instances/README.md"],
     base: "../data/reference",
     generateId: ({ entry }) => {
       // `<set…>/instances/<site>.md` → `<datasetSlug>/<site>`; the set may nest (hydrology/wbd).

@@ -119,9 +119,11 @@ each value carrying the `source`/`confidence` it was resolved at.
 
 **Cataloged datasets** — generated from `data/catalog/reference/`; run `watermark catalog render --apply` after editing an entry.
 
-### `eia` — PJM Balancing-Authority Interchange Aggregates (EIA-930)
+A `{…}` placeholder in a title resolves to the site reading it — a slug-scoped dataset holds each site's own copy, so its title names each site's own county.
 
-Source: U.S. EIA — Form EIA-930 Hourly Electric Grid Monitor (PJM region demand/net-gen/interchange) · License: U.S. Government work (public domain) · Access: keyed · Site scope: basin-shared · Refresh: on-demand
+### `eia` — Balancing-Authority Interchange Aggregates (EIA-930)
+
+Source: U.S. EIA — Form EIA-930 Hourly Electric Grid Monitor (BA region demand/net-gen/interchange) · License: U.S. Government work (public domain) · Access: keyed · Site scope: basin-shared · Refresh: on-demand
 
 Regenerate: `watermark interchange`
 
@@ -129,9 +131,9 @@ Regenerate: `watermark interchange`
 | --- | --- | --- |
 | `reference/eia/ba-interchange.yaml` | application/x-yaml | no |
 
-### `eia-consumer-energy` — Ohio Consumer Energy-Cost Baseline (EIA API v2)
+### `eia-consumer-energy` — {state} Consumer Energy-Cost Baseline (EIA API v2)
 
-Source: U.S. EIA — API v2 seriesid route (OH residential electricity/gas price, total retail sales) · License: U.S. Government work (public domain) · Access: keyed · Site scope: slug-scoped · Refresh: annual
+Source: U.S. EIA — API v2 seriesid route (state residential electricity/gas price, total retail sales) · License: U.S. Government work (public domain) · Access: keyed · Site scope: slug-scoped · Refresh: annual
 
 Regenerate: `watermark eia`
 
@@ -153,7 +155,7 @@ Regenerate: `watermark eia`
 
 ### `eia-grid-profile` — Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)
 
-Source: U.S. EIA — Form EIA-861 (AEP Ohio retail sales) + Form EIA-930 (PJM hourly demand) · License: U.S. Government work (public domain) · Access: keyed · Site scope: slug-scoped · Refresh: annual
+Source: U.S. EIA — Form EIA-861 (serving-utility retail sales) + Form EIA-930 (balancing-authority hourly demand) · License: U.S. Government work (public domain) · Access: keyed · Site scope: slug-scoped · Refresh: annual
 
 Regenerate: `watermark grid`
 

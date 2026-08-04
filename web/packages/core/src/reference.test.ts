@@ -124,6 +124,14 @@ describe("the reference prose-scope declaration", () => {
     }
   });
 
+  it("skips a directory README — a filename there is a site slug, not prose", () => {
+    // `data/reference/rsei/instances/README.md` documents the convention and is the live fixture
+    // for this: without the skip it would read as a site called "README", and the `referenceNotes`
+    // glob would hard-fail the build trying to schema-validate it as a note.
+    expect(instanceSites("rsei")).toEqual(["lima"]);
+    expect(instanceSites("rsei")).not.toContain("README");
+  });
+
   it("each instance note's `site:` front matter agrees with its filename", () => {
     // The runtime resolves a note by its PATH-derived id, so nothing reads `site:` — which is
     // exactly why it is declared and checked here (the same guard the study collection's
