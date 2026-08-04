@@ -37,11 +37,11 @@
 import { hasFeed, loadFeed, loadManifest } from "./bundle";
 import type { DomainState, Readiness, SiteTier } from "./bundle";
 import type { ScenarioResult } from "./feeds";
-import { LENSES, type LensId } from "./lenses";
+import { LENSES, type LensFacet, type LensId } from "./lenses";
 import { scopedLegal } from "./legal";
 import { scopedReference } from "./reference";
 import { LIMA_SLUG } from "./routes";
-import { surfacedStories } from "./sites";
+import { selectableSitePaths, surfacedStories } from "./sites";
 
 export type { DomainState, SiteTier } from "./bundle";
 
@@ -478,4 +478,70 @@ export function lensStatus(slug: string, lens: LensId): SectionStatus {
 /** Convenience: is this lens ready to open for the site? */
 export function lensAvailable(slug: string, lens: LensId): boolean {
   return lensStatus(slug, lens) === "available";
+}
+
+/**
+ * Whether this site puts anything behind one of a lens's doors (#1908, over #1915's declaration).
+ *
+ * A record facet carries its own declared gate; the rest name the feeds that open them. The rule
+ * itself is #1915's and unchanged — what moved is *where it lives*. It was written inline in
+ * `lens/[lens].astro`, which made it the landing's private opinion, and the landing was the only
+ * surface that held it: `getStaticPaths` built the leaf for every selectable site and `search.ts`
+ * indexed every facet the model declares, so nineteen leaves were built and findable on sites whose
+ * landing correctly refused to offer them. A search result is a promise that there is somewhere to
+ * land, and "no thermal-discharge screen has been modeled for this site yet" is not that.
+ *
+ * So the gate is one function with three consumers — the landing that draws the door, the route
+ * that emits the leaf, and the walk that indexes it. They cannot disagree, which is the only
+ * arrangement in which "every built page is reachable" stays true after the next facet is added.
+ *
+ * NOT a page gate in the other direction: a leaf that IS offered still renders its own honest empty
+ * state, and the record facets keep building on every selectable site because their locks are real
+ * destinations with a real ask on them.
+ */
+export function facetOffered(slug: string, facet: LensFacet): boolean {
+  if (facet.facet) return facetAvailable(slug, facet.facet);
+  if (facet.requires) return facet.requires.some((feed) => hasFeed(feed, slug));
+  return true;
+}
+
+/**
+ * The same gate, keyed by route — for the in-page cross-links that point at a lens leaf.
+ *
+ * Once the route stopped building everywhere, every hand-written link into it became a potential
+ * 404: the study's annex footers, the watershed map's "see the imagery slider", the network lens
+ * page's facet list. They were all correct while the leaf existed unconditionally and rendered
+ * "nothing modeled here yet" — which is exactly why the stub pages were load-bearing, and why
+ * `check-links` found them the moment they weren't.
+ *
+ * `true` for any route no lens declares, so a caller can ask this of an arbitrary path (a study
+ * reference may point at `/methodology`) without special-casing. This is the ONE place that
+ * defaults open; the three gates above default to the declaration.
+ */
+export function facetOfferedAt(slug: string, route: string): boolean {
+  const bare = route.split("#")[0];
+  const facet = Object.values(LENSES)
+    .flatMap((l) => l.facets)
+    .find((f) => f.route.split("#")[0] === bare);
+  return facet ? facetOffered(slug, facet) : true;
+}
+
+/**
+ * `getStaticPaths` for a lens leaf: the selectable sites whose lens landing actually offers it.
+ *
+ * The second of {@link facetOffered}'s three consumers. A leaf page reads its OWN route here rather
+ * than restating the condition, so the route it emits and the door that links it are decided by one
+ * line of `lenses.ts` — the same discipline `how-to-read` uses to stay Lima-only, generalized.
+ *
+ * Throws on a route no lens declares. That is the tripwire worth having: a leaf that quietly failed
+ * this lookup would fall back to building everywhere, which is the state this is here to end.
+ */
+export function offeredFacetPaths(
+  route: string,
+): Array<{ params: { site: string }; props: { slug: string } }> {
+  const facet = Object.values(LENSES)
+    .flatMap((l) => l.facets)
+    .find((f) => f.route === route);
+  if (!facet) throw new Error(`no lens declares the facet route "${route}" — see lenses.ts`);
+  return selectableSitePaths().filter((p) => facetOffered(p.props.slug, facet));
 }

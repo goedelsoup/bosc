@@ -11,7 +11,7 @@ import { hasFeed, loadFeed, runWithSite } from "./bundle";
 import { isRoutableDoc } from "./docRouting";
 import { isDocumentId } from "./documentId";
 import { slugify, type DocumentCollectionItem, type EntityNode } from "./feeds";
-import { sections } from "./nav";
+import { CONNECT_LINK, sections } from "./nav";
 import { facetAvailable } from "./readiness";
 import { networkEntities } from "./networkEntities";
 import { LIMA_SLUG, siteBase } from "./routes";
@@ -79,10 +79,15 @@ describe("the network-global shard", () => {
     );
     const indexed = new Set(docs.filter((d) => d.kind === "Section").map((d) => d.section));
     for (const label of globals) expect(indexed.has(label)).toBe(true);
-    // A per-site section landing (`/network/<id>/timeline`) must not be here; the only
-    // `/network/…` rows are the directory's own, which point at site *homes*.
-    const siteRooted = docs.filter((d) => d.url.startsWith("/network/") && d.kind !== "Site");
+    // A per-site section landing (`/network/<id>/timeline`) must not be here. Asked of the REGISTRY
+    // rather than of the `/network/` prefix (#1908): `/network/connect` is a network-global page
+    // that happens to live under it, and a prefix test excluded the one page it was never about —
+    // the chrome carried Connect from two surfaces while search reached it from none.
+    const siteRooted = docs.filter(
+      (d) => d.kind !== "Site" && SITES.some((s) => d.url.startsWith(`${siteBase(s.slug)}/`)),
+    );
     expect(siteRooted.map((d) => d.url)).toEqual([]);
+    expect(docs.map((d) => d.url)).toContain(CONNECT_LINK.href);
   });
 
   it("indexes every registered network site, and the index page (#1888)", () => {

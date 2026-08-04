@@ -29,6 +29,8 @@
  * to stop.
  */
 
+import { runWithSite } from "./bundle";
+import { contextualLeaves } from "./nav";
 import { storyBase } from "./routes";
 import { searchShardRefs } from "./search";
 import { comingSoonStories, SITES } from "./sites";
@@ -143,34 +145,26 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
   },
   ...heldStoryInteriors(),
   {
-    pattern: "^/network/[^/]+/(site/records/how-to-read|submit)/$",
-    label: "Pages the nav model doesn't carry",
-    verdict: "gap",
+    pattern: "^/network/[^/]+/submit/$",
+    label: "The site-tier submit form",
+    verdict: "represented",
     note:
-      "#1908. Real per-site pages reachable only from inside another page — the record's " +
-      "how-to-read primer and the per-site submit form. Everything else at this level is indexed " +
-      "by walking `siteTabs()`, on the rule that search reaches whatever the chrome navigates to; " +
-      "these are the routes that rule exposes as missing FROM THE NAV. Hardcoding them here would " +
-      "hide a wayfinding bug behind a search fix. The enclave and groundwater reads LEFT this " +
-      "family at #1915: they are lens facets now (Land and Environment), so a landing navigates to " +
-      "them and the same rule reaches them — the gap closed by fixing the wayfinding, which is " +
-      "what declaring it rather than indexing around it was for.",
-  },
-  {
-    pattern: "^/(about/(data|sustainability|catalog|contributing)|privacy|network/connect)/$",
-    label: "Network pages the nav model doesn't carry",
-    verdict: "gap",
-    note: "#1908, the same finding at the root: real pages, linked from body copy but not from the nav model.",
+      "#1908. The same `<SubmitForm>` the network-tier `/submit` renders, at a site-rooted address " +
+      "so a correction raised inside a site keeps that site's chrome and carries the `?ref_kind=` " +
+      "of the record being corrected. That row IS indexed (`Submit a lead`, kind `Page`, off the " +
+      "platform cluster), and it is the destination a reader searching 'submit' means; four " +
+      "site-rooted copies of one form would be three near-identical results. The route is declared " +
+      "a contextual leaf in `nav.ts` — reachable, deliberately not in the chrome.",
   },
 ];
 
 /**
  * The fraction of content routes that must carry a search row.
  *
- * **98.8%, against 99.0% measured** — 3,823 of 3,860 content routes, up from 13% before #1890.
+ * **98.85%, against 98.905% measured** — 3,794 of 3,836 content routes, up from 13% before #1890.
  *
- * Three closures moved it since, and their arithmetic is worth keeping side by side, because it is
- * three different kinds of arithmetic.
+ * Four closures moved it since, and their arithmetic is worth keeping side by side, because it is
+ * four different kinds of arithmetic.
  *
  * What closing **#1907** bought is the counter-example to the #1906 note below. That family named
  * eight routes that were **routed and unindexed** — Findlay's held `flagpole` walk — so it really
@@ -199,17 +193,46 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
  * chrome navigates to") reached them on its own. The gap closed by fixing the wayfinding, which is
  * exactly what declaring it rather than indexing around it was for.
  *
- * The remaining shortfall is the two surviving `gap` families (#1908) plus the routes no family has
- * declared yet — the reports/exhibits/legal/people landings on the peers promoted since #1890, and
- * the wiki's own hypothesis and open-questions pages. Those are the ones a raise is really waiting
- * on.
+ * **#1908** is the fourth, and the only one where the measured number went **down** — from 99.0% to
+ * 98.905% — while the declaration got strictly more honest. Both remaining `gap` families closed,
+ * so there are now none. Read alone that is a raise; the arithmetic underneath is four separate
+ * movements, and flattening them would hide the one that matters:
  *
- * The margin is deliberately thin. A new page family that nobody indexes will breach this, which is
+ *  - **−19 routes, −19 rows.** Seven `/environment/*` leaves are gated on feeds their lens landing
+ *    already checks before drawing a door (`LensFacet.requires`, #1915). The landing was the only
+ *    surface holding that rule, so the route built and the index indexed on every selectable site
+ *    regardless — nineteen pages that no landing and no menu linked, findable by search alone. All
+ *    four `/environment/enclave` copies were among them: the `enclave` feed exists on wpafb, which
+ *    is not selectable, so every built copy said the site has no federal enclave. Now `getStaticPaths`
+ *    reads the same gate and the pages don't exist.
+ *  - **−13 rows, no routes.** The same walk indexed the record facets past their own `facetStatus`,
+ *    so a locked `/site/legal/` or `/site/reference/` on a peer had a row pointing at its lock. Those
+ *    routes still build — a lock is a real destination with a real ask — but they are misses again,
+ *    which they always were before #1915 covered them by accident.
+ *  - **−5 routes.** `/about/data` retired to `/about/catalog` (one feed had two addresses, and only
+ *    one was reachable), and the four site-tier `/submit` routes became `represented` by the network
+ *    `/submit` they share a form with.
+ *  - **+3 rows.** `/about/sustainability` joined the About menu, `/network/connect` became reachable
+ *    by the index it was already in the chrome for, and the how-to-read primer is indexed as a
+ *    declared contextual leaf.
+ *
+ * **A number that falls because rows were withdrawn is worth more than one that rose because rows
+ * were added.** Thirteen of those rows were promises that there was somewhere to land, delivering a
+ * lock; nineteen more pointed at pages that should never have been built. The floor rises anyway —
+ * 0.988 → 0.9885 — because the misses that remain are fewer, but the raise is a tenth of what
+ * closing two gap families would suggest, and that gap between expectation and arithmetic IS the
+ * finding.
+ *
+ * The remaining shortfall is the 42 routes no family has declared yet — the reports and record
+ * landings on the peers promoted since #1890, and the wiki's own hypothesis and open-questions
+ * pages. Those are the ones the next raise is waiting on.
+ *
+ * The margin is deliberately thin — about two routes. A new page family that nobody indexes will breach this, which is
  * the intended pressure: adding routes should force a choice between indexing them and writing down
  * why not, and a floor with comfortable headroom would let coverage rot back toward 13% one page at
  * a time — which is precisely how it got there.
  */
-export const COVERAGE_FLOOR = 0.988;
+export const COVERAGE_FLOOR = 0.9885;
 
 /**
  * A ceiling on the largest emitted shard, gzipped, in bytes.
@@ -222,10 +245,31 @@ export const COVERAGE_FLOOR = 0.988;
  */
 export const SHARD_GZIP_BUDGET = 200 * 1024;
 
+/**
+ * Every contextual leaf `nav.ts` declares, across every site that builds one (#1908).
+ *
+ * Emitted so `check-routes.mjs` can hold each to its `via` — assert some OTHER built page really
+ * links it. Without that the declaration is only a promise: "reached from another page's body copy"
+ * is exactly the claim that stops being true when the carrying paragraph is rewritten, and the
+ * whole point of writing it down was to stop a decision and an orphan from looking the same.
+ *
+ * Read per site rather than once, because the leaves are per site — Lima's how-to-read primer is
+ * one route the whole network points at, while the submit form is one per site.
+ */
+function contextualDeclarations(): { href: string; via: string }[] {
+  const out = new Map<string, string>();
+  for (const site of SITES.filter((s) => s.selectable)) {
+    for (const leaf of runWithSite(site.slug, () => contextualLeaves())) out.set(leaf.href, leaf.via);
+  }
+  return [...out].map(([href, via]) => ({ href, via }));
+}
+
 export interface CoverageDeclaration {
   families: CoverageFamily[];
   floor: number;
   shardGzipBudget: number;
+  /** The declared contextual leaves — see {@link contextualDeclarations}. */
+  contextual: { href: string; via: string }[];
   /**
    * Every shard the build is expected to emit, root-absolute. The post-build guard compares what
    * it finds against this exact set rather than counting: a shard that silently stops emitting for
@@ -241,6 +285,7 @@ export function searchCoverage(): CoverageDeclaration {
     families: COVERAGE_FAMILIES,
     floor: COVERAGE_FLOOR,
     shardGzipBudget: SHARD_GZIP_BUDGET,
+    contextual: contextualDeclarations(),
     shards: ["/search-index.json", ...searchShardRefs().map((r) => r.path)],
   };
 }

@@ -1,6 +1,9 @@
 ---
-import { selectableSitePaths } from "@watermark/core/sites";
-export const getStaticPaths = selectableSitePaths;
+import { offeredFacetPaths } from "@watermark/core/readiness";
+// Built only where the Environment/Land landing offers this door (#1908): the leaf route,
+// the door and the search row share ONE gate (`lenses.ts` declares it, `facetOffered` reads
+// it), so this page can no longer exist on a site whose landing correctly withholds it.
+export const getStaticPaths = () => offeredFacetPaths("/environment/enclave");
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { EnclaveFeed } from "@watermark/core/feeds";
@@ -10,6 +13,11 @@ import type { EnclaveFeed } from "@watermark/core/feeds";
 // addressed in — so its own land / water / wastewater / power / toxics are assembled from federal
 // registers instead. Enclave-gated: the feed exists only where a `federal_installation` facility is
 // registered, and everything below is projected from the bundle, never restated here.
+//
+// The route gate above now guarantees the feed, so the null branch is a defensive fallback rather
+// than a state a reader reaches. It used to be the common case: the page built for all four
+// selectable sites and none of them is a base, so every copy said "no federal enclave on the
+// record" while the Land landing correctly refused to link any of them (#1908).
 const enclave = hasFeed("enclave") ? loadFeed<EnclaveFeed>("enclave") : null;
 const num = (v: number | null | undefined): string => (v == null ? "—" : Number(v).toLocaleString("en-US"));
 const water = enclave?.water;

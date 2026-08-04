@@ -62,10 +62,18 @@ import { blob } from "./format";
 import { scopedLegal } from "./legal";
 import { DOMAINS } from "./methodology";
 import { LENS_ORDER, LENSES } from "./lenses";
-import { getSection, networkTabs, platformLinks, sections, siteTabs, type NavItem } from "./nav";
+import {
+  contextualLeaves,
+  getSection,
+  networkTabs,
+  platformLinks,
+  sections,
+  siteTabs,
+  type NavItem,
+} from "./nav";
 import { NARRATIVE } from "./narrative";
 import { networkEntities } from "./networkEntities";
-import { facetAvailable, RECORD_FACETS, sectionStatus, type RecordFacet } from "./readiness";
+import { facetAvailable, facetOffered, RECORD_FACETS, sectionStatus, type RecordFacet } from "./readiness";
 import { scopedReference } from "./reference";
 import { REPORT_PAGES } from "./reports";
 import { groupLabel } from "./records";
@@ -271,9 +279,17 @@ export function buildNetworkSearchIndex(): SearchDoc[] {
   // Every destination the network chrome navigates to: /about/*, /methodology, /basin, the
   // research hypotheses, Connect. Hand-authored pages with no feed behind them, and unreachable by
   // search until now.
+  //
+  // What "belongs to a site" means here is asked of the registry rather than of the string (#1908).
+  // The old test was `startsWith("/network/")`, which is true of every site-rooted href AND of
+  // `/network/connect` — the one network-global page that happens to live under that prefix. So
+  // Connect was carried by the chrome (the Research dropdown, the footer) and dropped by this walk,
+  // and the site shards skip it too because it isn't under any site's base. It was findable from
+  // nowhere while being linked from two places, which no rule stated and nothing would have caught.
+  const siteRoots = SITES.map((s) => `${siteBase(s.slug)}/`);
   const seen = new Set(docs.map((d) => d.url));
   for (const dest of navDestinations([...networkTabs(), ...platformLinks().map(toNavLink)])) {
-    if (dest.href.startsWith("/network/") || seen.has(dest.href)) continue;
+    if (siteRoots.some((r) => dest.href.startsWith(r)) || seen.has(dest.href)) continue;
     seen.add(dest.href);
     docs.push({
       title: dest.label,
@@ -661,12 +677,29 @@ export function buildSiteSearchIndex(slug: string): SearchDoc[] {
     // reading the lens model here is the same move as reading the nav model above, not an
     // exception to it. Anchored facets (`…#consumer-energy`) resolve to their page, which is
     // already indexed under its own label, so `seen` drops them.
+    //
+    // Gated on `facetOffered` (#1908), which is the half this walk originally left out. The rule is
+    // "whatever the chrome navigates to" — and a landing that withholds a door is not navigating
+    // anywhere. Ungated, this indexed nineteen leaves no landing offered: `/environment/thermal` on
+    // a site with no thermal feed, every `/environment/enclave`, and the record facets sitting
+    // behind their own locks. A row for a lock is a search result that promises somewhere to land
+    // and delivers the ask instead. The leaf ROUTES now carry the same gate (`offeredFacetPaths`),
+    // so for the feed-gated ones there is no longer a page here to index either.
     for (const id of LENS_ORDER) {
       const lens = LENSES[id];
       for (const f of lens.facets) {
-        if (f.route.includes("#")) continue;
+        if (f.route.includes("#") || !facetOffered(slug, f)) continue;
         push_(f.label, `${base}${f.route}`, `${f.blurb} ${lens.name} ${lens.question}`);
       }
+    }
+
+    // The site's declared contextual leaves (#1908) — real content the chrome deliberately doesn't
+    // carry, reached from another page's body copy. Not being in the menu is a wayfinding decision;
+    // it was never a reason to be unfindable, and before this the two were the same thing. A leaf
+    // that declares itself `represented` is skipped: the row it names is already here.
+    for (const leaf of contextualLeaves()) {
+      if (leaf.represented) continue;
+      push_(leaf.label, leaf.href, `${leaf.blurb} ${leaf.via}`);
     }
 
     return docs;

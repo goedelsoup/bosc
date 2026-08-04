@@ -360,6 +360,66 @@ function checkSearchCoverage() {
 }
 checkSearchCoverage();
 
+// ------------------------------------------- 6b. contextual leaves are actually linked (#1908)
+//
+// `nav.ts` lets a page opt out of the chrome by declaring itself a contextual leaf — real content
+// reached from another page's body copy, with the carrier and the reason written down. That is a
+// legitimate answer to "every built page must be reachable", and #1893 spent a whole issue proving
+// that not everything belongs in a menu.
+//
+// It is also the easiest claim in the codebase to make falsely. "Reached from the records index"
+// stays true only until somebody rewrites that paragraph, and nothing about the declaration would
+// change — so the register would go on asserting reachability for a page that had become an orphan,
+// which is worse than the silence it replaced, because now it reads as checked.
+//
+// So it is checked, against the built HTML rather than the source: at least one OTHER page must
+// emit an href to the leaf. Deliberately not "the page named in `via`" — `via` is prose describing
+// a carrier that may be a component rendered on many routes, and pinning it to one route would fail
+// for the right reason on the wrong day. What must not happen is nobody linking it at all.
+function checkContextualLeaves() {
+  const declPath = join(DIST, "search-coverage.json");
+  if (!existsSync(declPath)) return; // already reported by checkSearchCoverage
+  const { contextual } = JSON.parse(readFileSync(declPath, "utf-8"));
+  if (!Array.isArray(contextual) || contextual.length === 0) {
+    failures.push(
+      "search-coverage.json declares no contextual leaves — `contextualLeaves()` emitted nothing, " +
+        "so this guard is asserting reachability for an empty set",
+    );
+    return;
+  }
+  // `href="…<leaf>"` with an optional trailing slash and an optional query/fragment: the submit
+  // leaf is deep-linked as `…/submit?ref_kind=place&amp;…` from every record page that offers a
+  // correction. Prefixed loosely so a non-empty deploy base still matches.
+  const linkers = contextual.map((leaf) => ({
+    ...leaf,
+    re: new RegExp(`href="[^"]*${leaf.href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/?(?:["?#])`),
+  }));
+  const found = new Map(contextual.map((leaf) => [leaf.href, 0]));
+  for (const { file, route } of all) {
+    const html = readFileSync(file, "utf-8");
+    for (const leaf of linkers) {
+      // Its own page linking itself proves nothing — `/about/sustainability`'s footer used to be
+      // the only thing pointing at `/about/data`, which is how that page went unreachable.
+      if (`/${route}` === leaf.href || `/${route}/` === `${leaf.href}/`) continue;
+      if (leaf.re.test(html)) found.set(leaf.href, found.get(leaf.href) + 1);
+    }
+  }
+  const orphaned = contextual.filter((leaf) => found.get(leaf.href) === 0);
+  if (orphaned.length > 0) {
+    failures.push(
+      `${orphaned.length} contextual leaf/leaves are linked from no other built page — they are ` +
+        "orphans, not contextual. Restore the link, or drop the declaration in " +
+        `packages/core/src/nav.ts:\n${orphaned.map((l) => `      ${l.href} — via ${l.via}`).join("\n")}`,
+    );
+    return;
+  }
+  console.log(
+    `check-routes: ${contextual.length} contextual leaf/leaves carried by ` +
+      `${contextual.map((l) => found.get(l.href)).join(" / ")} page(s)`,
+  );
+}
+checkContextualLeaves();
+
 // -------------------------------------- 7. one site switcher, one copy of the registry (#1893)
 //
 // The acceptance criterion of the nav diet: "exactly one site-switcher implementation in the built

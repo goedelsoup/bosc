@@ -1,6 +1,9 @@
 ---
-import { selectableSitePaths } from "@watermark/core/sites";
-export const getStaticPaths = selectableSitePaths;
+import { offeredFacetPaths } from "@watermark/core/readiness";
+// Built only where the Environment/Land landing offers this door (#1908): the leaf route,
+// the door and the search row share ONE gate (`lenses.ts` declares it, `facetOffered` reads
+// it), so this page can no longer exist on a site whose landing correctly withholds it.
+export const getStaticPaths = () => offeredFacetPaths("/environment/imagery");
 import BeforeAfterSlider from "~/components/BeforeAfterSlider.astro";
 import ImagerySlider from "@watermark/viz/islands/ImagerySlider.tsx";
 import Base from "~/layouts/Base.astro";

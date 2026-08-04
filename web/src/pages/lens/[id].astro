@@ -22,8 +22,8 @@ import {
   type LensResolvers,
   lensNetworkCounts,
 } from "@watermark/core/lensView";
-import { lensStatus } from "@watermark/core/readiness";
-import { siteBase } from "@watermark/core/routes";
+import { facetOfferedAt, lensStatus } from "@watermark/core/readiness";
+import { LIMA_SLUG, siteBase } from "@watermark/core/routes";
 import { TAIL_META } from "@watermark/core/scorecard";
 import { withBase } from "@watermark/core/site";
 import { SITES, siteFeedCount, siteRollup } from "@watermark/core/sites";
@@ -44,9 +44,14 @@ const resolvers: LensResolvers = {
 const view = buildLensView(id, SITES, resolvers);
 const counts = lensNetworkCounts(SITES, resolvers);
 const others = LENS_ORDER.filter((k) => k !== id).map((k) => LENSES[k]);
-// The facets are ROUTES under `/network/<site>` — shown against the reference build, which is the
-// one site where every one of them is open. They are the same leaves the site's own chrome carries.
-const referenceBase = siteBase("lima");
+// The facets are ROUTES under `/network/<site>`, shown against the reference build. This used to
+// say that build was "the one site where every one of them is open", which was never quite true and
+// is now demonstrably false: the Land lens gathers `/environment/enclave`, and Lima is not a federal
+// installation, so that leaf builds nowhere selectable. Filtered on the same gate the landings use
+// (#1908), which also stops this list emitting a link to a page that doesn't exist.
+const referenceBase = siteBase(LIMA_SLUG);
+const facets = lens.facets.filter((f) => facetOfferedAt(LIMA_SLUG, f.route));
+const withheld = lens.facets.length - facets.length;
 ---
 
 <Base
@@ -97,13 +102,23 @@ const referenceBase = siteBase("lima");
     <section class="ln-sec">
       <h2 class="ln-h2">What this lens gathers on a site</h2>
       <p class="ln-sub">
-        {lens.facets.length} existing {lens.facets.length === 1 ? "page" : "pages"} under every site, shown
-        here against the reference build. A lens is a view over these routes, not a new store — the URLs
-        are unchanged, and each still gates on its own section's readiness.
+        {facets.length} existing {facets.length === 1 ? "page" : "pages"}, shown here against the
+        reference build. A lens is a view over these routes, not a new store — the URLs are unchanged,
+        and each still gates on its own section's readiness.
+        {
+          withheld > 0 && (
+            <Fragment>
+              {" "}
+              {withheld} more {withheld === 1 ? "leaf is" : "leaves are"} declared by this lens and
+              open only where a site's record carries {withheld === 1 ? "it" : "them"} — the
+              reference build is not one of those sites.
+            </Fragment>
+          )
+        }
       </p>
       <ul class="ln-facets">
         {
-          lens.facets.map((f) => (
+          facets.map((f) => (
             <li>
               <a href={withBase(`${referenceBase}${f.route}`)}>{f.label}</a>
               <span class="ln-facet-b">{f.blurb}</span>

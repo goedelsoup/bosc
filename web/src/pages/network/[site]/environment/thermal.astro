@@ -1,6 +1,9 @@
 ---
-import { selectableSitePaths } from "@watermark/core/sites";
-export const getStaticPaths = selectableSitePaths;
+import { offeredFacetPaths } from "@watermark/core/readiness";
+// Built only where the Environment/Land landing offers this door (#1908): the leaf route,
+// the door and the search row share ONE gate (`lenses.ts` declares it, `facetOffered` reads
+// it), so this page can no longer exist on a site whose landing correctly withholds it.
+export const getStaticPaths = () => offeredFacetPaths("/environment/thermal");
 /**
  * Thermal discharge — the receiving water's heat budget and CWA §316(a) (#1719, epic #1715
  * Phase 4). The **third cooling axis**: the water-balance page carries cooling VOLUME and the
