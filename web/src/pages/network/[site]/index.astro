@@ -15,6 +15,7 @@ import { isReferenceSite } from "@watermark/core/readiness";
 import { hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
 import type { DocumentCollectionItem } from "@watermark/core/feeds";
 import { NARRATIVE } from "@watermark/core/narrative";
+import { siteHomePromotions } from "@watermark/core/nav";
 import {
   activeSite,
   comingSoonStories,
@@ -57,8 +58,11 @@ const nLeads = count("leads");
 const fac = FACILITY_STATUS_META[facilityStatus(slug)];
 
 // The impact study — the site's PRIMARY artifact (the promotion pass): the home leads with
-// it, and its door carries the verdict rollup, never a fabricated completeness claim.
+// it, and its door carries the verdict rollup, never a fabricated completeness claim. The door
+// itself is `siteHomePromotions()`, a declared navigation surface (#1893): the study is carried by
+// exactly two — this band and the header tab — and it left the footer to stay under that ceiling.
 const study = studyStatusSummary(slug);
+const [studyDoor] = siteHomePromotions();
 
 // Dataset JSON-LD — gated on Astro.site (production builds only).
 const astroSite = Astro.site;
@@ -127,11 +131,14 @@ const stats: FigureStatData[] = [
     </div>
 
     {/* The primary artifact — the impact study, full-width above the entry fork (the promotion
-        pass). The count line is the verdict rollup, real per-site: gaps are named, not hidden. */}
-    <a class="home-study" href={withSite("/study/")}>
+        pass). The count line is the verdict rollup, real per-site: gaps are named, not hidden.
+        The href + title come from `siteHomePromotions()`, which is one of the five surfaces the
+        nav-diet ceiling is counted over (#1893) — so this band is a declared surface, not an
+        in-page link the rule can't see. */}
+    <a class="home-study" href={withBase(studyDoor.href)}>
       <div class="home-study-main">
         <span class="home-study-eyebrow">The primary artifact · for the resident &amp; the official</span>
-        <span class="home-study-title">Read the impact study</span>
+        <span class="home-study-title">{studyDoor.label}</span>
         <span class="home-study-desc">
           The environmental and economic study that should precede any abatement or rezoning —
           assembled from the public record. Where the record is silent, the silence is the finding.
