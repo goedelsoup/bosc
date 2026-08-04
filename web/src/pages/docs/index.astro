@@ -6,8 +6,10 @@
  * investigation's method and analysis, not per-watershed-site data — so it builds once at the
  * root, not per selectable site. Essays group by the thematic section each belongs to.
  */
+import { getCollection } from "astro:content";
 import Base from "~/layouts/Base.astro";
-import { NARRATIVE } from "@watermark/core/narrative";
+import HubLede from "~/components/HubLede.astro";
+import { NARRATIVE, bySlug } from "@watermark/core/narrative";
 import { getSection, sections, type SectionId } from "@watermark/core/nav";
 import { withBase } from "@watermark/core/site";
 
@@ -18,6 +20,22 @@ const groups = sections()
     docs: NARRATIVE.filter((d) => d.section === (s.id as SectionId)),
   }))
   .filter((g) => g.docs.length > 0);
+
+// The lede (#1891). The collection carries no publication date — `docs/` is read as-is and the
+// git-freshness walk (`bosc.site.corpus_index`) covers `data/`, not this tree — so this does NOT
+// claim a "most recent" piece it cannot source. What it can measure is the collection itself:
+// the real word count of every published body, and the one essay that synthesizes the rest.
+// `ENTRY` is a declared editorial choice, and the copy says "start here", not "newest".
+const ENTRY = "dossier";
+const bodies = (await getCollection("narrative", (e) => bySlug.has(e.id))).map((e) => ({
+  slug: e.id,
+  words: (e.body ?? "").split(/\s+/).filter(Boolean).length,
+}));
+const totalWords = bodies.reduce((a, b) => a + b.words, 0);
+// 220 wpm — the conventional silent-reading rate, and the same divisor the story chapters quote.
+const minutes = (words: number): number => Math.max(1, Math.round(words / 220));
+const entry = bySlug.get(ENTRY) ?? null;
+const entryWords = bodies.find((b) => b.slug === ENTRY)?.words ?? 0;
 ---
 
 <Base title="Docs" section="docs" rail={false} description="The project's narrative prose — the dossier, hydrology, economics, and legal analysis.">
@@ -35,6 +53,35 @@ const groups = sections()
       </div>
       <span class="hub-count">{NARRATIVE.length} essays · {groups.length} sections</span>
     </div>
+
+    <HubLede
+      label="Start here"
+      absent={entry ? null : "No essay in this collection is published yet."}
+      cite={`${NARRATIVE.length} published essays, ${totalWords.toLocaleString("en-US")} words — counted from the bodies this build renders. The collection carries no publication dates, so nothing here is ordered by recency.`}
+      href={entry ? withBase(`/docs/${entry.slug}`) : null}
+      cta="Read the dossier"
+    >
+      {
+        entry && (
+          <>
+            <p class="hublede-say">
+              <strong>{entry.title}</strong> — {entry.blurb}
+            </p>
+            <div class="hublede-chips">
+              <span class="hublede-chip">
+                <span class="hublede-chip-n">{minutes(entryWords)}</span> min read
+              </span>
+              <span class="hublede-chip">
+                <span class="hublede-chip-n">{NARRATIVE.length}</span> essays
+              </span>
+              <span class="hublede-chip">
+                <span class="hublede-chip-n">{minutes(totalWords)}</span> min end to end
+              </span>
+            </div>
+          </>
+        )
+      }
+    </HubLede>
 
     {
       groups.map((g) => (

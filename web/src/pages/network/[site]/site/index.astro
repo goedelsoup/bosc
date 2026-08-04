@@ -2,8 +2,10 @@
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
+import HubLede from "~/components/HubLede.astro";
 import { hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
-import type { DocumentCollectionItem, MeetingItem, TimelineEntry } from "@watermark/core/feeds";
+import type { DocumentCollectionItem, MeetingItem, RecordItem, TimelineEntry } from "@watermark/core/feeds";
+import { flaggedRecords, isoDate, recentEvents, recordSpan } from "@watermark/core/hubLede";
 import { type RecordFacet, facetAvailable } from "@watermark/core/readiness";
 import { scopedReference } from "@watermark/core/reference";
 import { withBase, withSite } from "@watermark/core/site";
@@ -25,6 +27,19 @@ const documents = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("doc
 const nFiles = documents.reduce((a, c) => a + c.entries.length, 0);
 const timeline = hasFeed("timeline") ? loadFeed<TimelineEntry[]>("timeline") : [];
 const meetings = hasFeed("meetings") ? loadFeed<MeetingItem[]>("meetings") : [];
+
+// The lede (#1891). The record hub knew all of this — it was loading the feeds to print the
+// counts on the door cards — and showed a reader nothing but the counts. So it leads with the
+// record itself: what it spans, the newest dated things in it, and where its own extraction
+// flagged a figure. Every line is this site's feeds; a site with nothing extracted yet reads
+// the absence instead (the doors below are already facet-gated, #1886).
+const records = hasFeed("records") ? loadFeed<RecordItem[]>("records") : [];
+const flagged = flaggedRecords(records);
+const span = recordSpan(timeline);
+const latest = facetAvailable(slug, "timeline") ? recentEvents(timeline, 3) : [];
+const exported = isoDate(manifest.generated_at);
+const year = (iso: string): string => iso.slice(0, 4);
+const empty = nFiles === 0 && records.length === 0 && timeline.length === 0;
 
 // Door ids match the section's nav anchors so the rail (shown on leaf pages) resolves.
 interface Door {
@@ -159,6 +174,60 @@ const doors = allDoors.filter((d) => d.facet === undefined || facetAvailable(slu
       </div>
       <span class="hub-count">{num(nFiles)} source files indexed</span>
     </div>
+
+    <HubLede
+      label="What the record holds"
+      absent={empty
+        ? "Nothing has been ingested for this site yet — no source documents, no extractions, no dated events. That's the honest state, not a placeholder: the doors below open as each facet lands, and a document you hold is the fastest way to open the first one."
+        : null}
+      cite={`Counted from this site's own documents / records / timeline feeds${exported ? `, exported ${exported}` : ""}. Nothing here is carried over from another site.`}
+      href={withSite("/timeline")}
+      cta="Open the timeline"
+    >
+      <p class="hublede-say">
+        <span class="num">{num(nFiles)}</span> source files across{" "}
+        <span class="num">{documents.length}</span> {documents.length === 1 ? "collection" : "collections"},
+        read into <span class="num">{num(records.length)}</span> structured records{
+          span ? (
+            <Fragment>
+              {" "}and <span class="num">{num(timeline.length)}</span> dated events spanning{" "}
+              <span class="num">{year(span.first)}–{year(span.last)}</span>.
+            </Fragment>
+          ) : (
+            "."
+          )
+        }
+        {flagged.length > 0 && (
+          <Fragment>
+            {" "}
+            <a href={withSite("/site/records/")}>
+              {num(flagged.length)} of those records carry a transcription warning
+            </a>{" "}
+            — read them against the page they came off.
+          </Fragment>
+        )}
+      </p>
+      {
+        latest.length > 0 && (
+          <ul class="hublede-list">
+            {latest.map((e) => (
+              <li class="hublede-item">
+                <span class="hublede-item-k">{e.date}</span>
+                <span class="hublede-item-b">
+                  <a class="hublede-item-t" href={withSite("/timeline")}>
+                    {e.title}
+                  </a>
+                  <span class="hublede-item-m">
+                    {e.category.replace(/_/g, " ")} · {e.source}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </HubLede>
+
     <div class="hub-grid">
       {
         doors.map((d) => (
