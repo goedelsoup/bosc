@@ -25,10 +25,6 @@ const { Content, headings } = await render(entry);
 const toc = headings.filter((h) => h.depth === 2).map((h) => ({ anchor: h.slug, label: h.text }));
 
 const docsHref = withBase("/docs/");
-const breadcrumbs = [
-  { label: "Docs", href: docsHref },
-  { label: doc.title, href: Astro.url.pathname },
-];
 
 const articleLd = Astro.site
   ? {
@@ -43,7 +39,7 @@ const articleLd = Astro.site
   : null;
 ---
 
-<Base title={doc.title} section="docs" description={doc.blurb} toc={toc} ogType="article" breadcrumbs={breadcrumbs}>
+<Base title={doc.title} section="docs" description={doc.blurb} toc={toc} ogType="article">
   {articleLd && <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(articleLd)} />}
   <article class="prose">
     <p><a href={docsHref}>← All docs</a></p>

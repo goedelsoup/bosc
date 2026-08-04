@@ -40,11 +40,13 @@ const firstSlug = story.chapters[0]?.slug ?? "";
 // A `comingSoon` story (#1526) holds its content: the table of contents serves the interstitial
 // (no chapter list, no chapter links), not the readable index (#1529).
 const held = storyComingSoon(slug, codename);
+// The codename segment is a URL key; the trail wants the story's name (#1889).
+const trailLabels = { [codename]: story.title };
 ---
 
 {
   held ? (
-    <Base title={`${story.title} — coming soon`} section="story" description={story.dek}>
+    <Base title={`${story.title} — coming soon`} section="story" description={story.dek} trailLabels={trailLabels}>
       <StoryComingSoon title={story.title} dek={story.dek} slug={slug} />
     </Base>
   ) : (
@@ -52,6 +54,7 @@ const held = storyComingSoon(slug, codename);
       title="The story"
       section="story"
       description="The narrative spine over the BOSC record: six chapters that tell the story and teach you to read the documents."
+      trailLabels={trailLabels}
     >
       <div class="walk-onramp">
         <p><a href={storyHomeHref(story)}>← Start here</a></p>

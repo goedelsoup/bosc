@@ -1,4 +1,5 @@
 ---
+import Breadcrumb from "../components/Breadcrumb.astro";
 import Header from "../components/Header.astro";
 import Icon from "../components/Icon.astro";
 import Logo from "../components/Logo.astro";
@@ -7,6 +8,7 @@ import SEO from "../components/SEO.astro";
 import SectionToc from "../components/SectionToc.astro";
 import { footerGroups, type SectionId, type TocEntry } from "@watermark/core/nav";
 import { SITE_NAME, SITE_DESCRIPTION, withBase } from "@watermark/core/site";
+import { type Crumb, trailFor } from "@watermark/core/trail";
 import "../styles/site.css";
 
 interface BaseProps {
@@ -28,8 +30,18 @@ interface BaseProps {
   /** Sequential navigation — emitted as <link rel="prev/next"> for crawlers and Bing. */
   prevHref?: string;
   nextHref?: string;
-  /** Breadcrumb trail — passed to SEO.astro to emit BreadcrumbList JSON-LD. */
-  breadcrumbs?: { label: string; href: string }[];
+  // --- Breadcrumb trail (#1889) ------------------------------------------------------------
+  // Derived from the route, not passed per page: every template gets a trail for free. What a
+  // page contributes is only what the URL cannot know. See `@watermark/core/trail`.
+  /** Label for the current page's crumb on a data-named leaf. Defaults to `title`, which is
+   *  right wherever the title IS the thing's name and wrong wherever it's decorated. */
+  trailLeaf?: string;
+  /** Labels for segments the route model can't name — a record group, a story codename, a
+   *  document container's as-received directory name. Keyed by the segment value. */
+  trailLabels?: Record<string, string>;
+  /** Ancestors the URL deliberately doesn't carry, spliced in before the leaf (the flat
+   *  document permalink's collection + container). */
+  trailInsert?: readonly Crumb[];
 }
 
 // `.astro` pages pass these props directly; `.mdx` pages using `layout:` pass
@@ -46,9 +58,20 @@ const {
   noindex = false,
   prevHref,
   nextHref,
-  breadcrumbs,
+  trailLeaf,
+  trailLabels,
+  trailInsert,
 } = raw.frontmatter ?? raw;
 const showRail = rail !== false && toc.length > 0;
+
+// The trail, resolved from this page's own route. `Astro.url.pathname` carries the deploy base;
+// `trailFor` strips it to resolve and returns pre-base hrefs, which `Breadcrumb` re-prefixes.
+const trail = trailFor(Astro.url.pathname, {
+  base: import.meta.env.BASE_URL || "/",
+  leaf: trailLeaf ?? title,
+  labels: trailLabels,
+  insert: trailInsert,
+});
 ---
 
 <!doctype html>
@@ -77,7 +100,7 @@ const showRail = rail !== false && toc.length > 0;
     {prevHref && <link rel="prev" href={prevHref} />}
     {nextHref && <link rel="next" href={nextHref} />}
     <title>{title === SITE_NAME ? title : `${title} · ${SITE_NAME}`}</title>
-    <SEO title={title} description={description} type={ogType} noindex={noindex} breadcrumbs={breadcrumbs} />
+    <SEO title={title} description={description} type={ogType} noindex={noindex} breadcrumbs={trail} />
     <slot name="head" />
   </head>
   <body>
@@ -93,6 +116,7 @@ const showRail = rail !== false && toc.length > 0;
     <div class:list={["layout", { "no-rail": !showRail }]}>
       {showRail && <SectionToc items={toc} title={tocTitle} />}
       <main id="main" class="content" tabindex="-1">
+        <Breadcrumb items={trail} />
         <slot />
       </main>
     </div>

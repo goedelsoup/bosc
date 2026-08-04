@@ -1,32 +1,51 @@
 ---
 /**
- * A breadcrumb trail (#584) — a list of ancestor links ending in the current page.
- * Items with an `href` render as links joined by `›`; the final item (no `href`) is
- * the current location. Hrefs are deploy-base-aware (the caller passes `withSite(...)`).
- * Today's consumer is the record detail page; the primitive is the canonical pattern
- * for any future leaf that needs a trail rather than a single `<BackLink>`.
+ * The breadcrumb trail (#584, generalized by #1889) — the site's positional wayfinding.
+ *
+ * `Base.astro` renders exactly one of these per page from `trailFor(Astro.url.pathname)`, so a
+ * reader who lands deep — from search, from `/ask`, from a shared link, from a study citation —
+ * can see where they are and climb out. Every crumb but the last is a link to a real ancestor
+ * page; the last is the current location, marked `aria-current="page"`.
+ *
+ * An `<ol>` rather than a row of spans: the trail is an ordered ancestry, and a screen reader
+ * should announce it as "list, 6 items" rather than as one run-on sentence. The `›` separators
+ * are CSS `::before` content so they're never read aloud or copied with the text.
+ *
+ * Hrefs arrive root-absolute and pre-deploy-base (the `nav.ts` convention); this applies
+ * `withBase`. A crumb with no `href` renders as plain text — used both for the current page and
+ * for an ancestor segment that names a namespace with no landing of its own.
  */
-interface Crumb {
-  label: string;
-  /** Omit on the last (current) crumb. */
-  href?: string;
-}
+import type { Crumb } from "@watermark/core/trail";
+import { withBase } from "@watermark/core/site";
+
 interface Props {
   items: Crumb[];
-  /** Nav class; defaults to the record trail's `rec-crumb`. */
-  class?: string;
   ariaLabel?: string;
 }
-const { items, class: className = "rec-crumb", ariaLabel = "Breadcrumb" } = Astro.props;
+const { items, ariaLabel = "Breadcrumb" } = Astro.props;
 ---
 
-<nav class:list={[className]} aria-label={ariaLabel}>
-  {
-    items.map((c, i) => (
-      <>
-        {i > 0 && " › "}
-        {c.href ? <a href={c.href}>{c.label}</a> : <span class="rec-crumb-here">{c.label}</span>}
-      </>
-    ))
-  }
-</nav>
+{
+  items.length > 0 && (
+    <nav class="trail" aria-label={ariaLabel}>
+      <ol class="trail-list">
+        {items.map((crumb, i) => (
+          <li class="trail-item">
+            {crumb.href ? (
+              <a class="trail-link" href={withBase(crumb.href)}>
+                {crumb.label}
+              </a>
+            ) : (
+              <span
+                class:list={["trail-here", { "trail-plain": i < items.length - 1 }]}
+                aria-current={i === items.length - 1 ? "page" : undefined}
+              >
+                {crumb.label}
+              </span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}

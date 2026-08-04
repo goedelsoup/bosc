@@ -10,33 +10,51 @@ import { withSitePaths } from "@watermark/core/sites";
  */
 import type { GetStaticPaths } from "astro";
 import Base from "~/layouts/Base.astro";
-import Breadcrumb from "~/components/Breadcrumb.astro";
 import RecordBlock from "~/components/RecordBlock.astro";
 import RecordTeardown from "~/components/RecordTeardown.astro";
-import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import SiblingNav from "~/components/SiblingNav.astro";
+import { activeSite, hasFeed, loadFeed } from "@watermark/core/bundle";
 import { slugify, type RecordItem } from "@watermark/core/feeds";
 import { groupLabel } from "@watermark/core/records";
 import { recordToBlock } from "@watermark/core/recordBlock";
+import { siteBase } from "@watermark/core/routes";
 import { teardownForRel } from "@watermark/core/teardowns";
-import { withSite } from "@watermark/core/site";
 
 export const getStaticPaths: GetStaticPaths = () =>
   withSitePaths(() => {
     const records = hasFeed("records") ? loadFeed<RecordItem[]>("records") : [];
-    return records.map((r) => ({
-      params: { group: r.group, id: slugify(r.rel) },
-      props: { record: r },
-    }));
+    return records.map((r) => {
+      // Siblings are the record's neighbours WITHIN ITS GROUP, in the order the group index
+      // lists them (that index renders `records.filter(group)` in feed order, so this is the
+      // same sequence — "next" here is the row below there). Resolved once per record here
+      // rather than re-scanning the feed at render.
+      const siblings = records.filter((s) => s.group === r.group);
+      const at = siblings.findIndex((s) => s.rel === r.rel);
+      return {
+        params: { group: r.group, id: slugify(r.rel) },
+        props: { record: r, prev: siblings[at - 1] ?? null, next: siblings[at + 1] ?? null },
+      };
+    });
   });
 
 interface Props {
   record: RecordItem;
+  prev: RecordItem | null;
+  next: RecordItem | null;
 }
-const { record } = Astro.props;
+const { record, prev, next } = Astro.props as Props;
+// Trail + sibling hrefs are pre-deploy-base — the components apply it.
+const sitePath = (path: string): string => `${siteBase(activeSite())}${path}`;
+const recordPath = (r: RecordItem): string => sitePath(`/site/records/${r.group}/${slugify(r.rel)}/`);
+const prevSib = prev ? { label: prev.title, href: recordPath(prev) } : undefined;
+const nextSib = next ? { label: next.title, href: recordPath(next) } : undefined;
 const block = recordToBlock(record);
 const teardown = teardownForRel(record.rel);
 const hasAnnotated = Boolean(teardown?.pins?.length);
-const groupName = groupLabel(record.group).replace(/ —.*$/, "");
+// The group crumb carries the FULL label, not the head of it: three groups share the head
+// "Permits", so "Permits — NPDES" and "Permits — Ohio EPA / USACE" would climb to the same
+// word and the trail would stop saying which index it lands on.
+const groupName = groupLabel(record.group);
 
 // The rail is this record's own anchors (#195, design "Record Screen"): the block,
 // then the teardown's five beats. The beat ids live on the DEFAULT (split) teardown
@@ -60,17 +78,11 @@ const toc = teardown
   toc={toc}
   tocTitle="On this record"
   description={`${record.title} — the record, read in the open with provenance on every figure.`}
+  trailLabels={{ [record.group]: groupName }}
+  prevHref={prevSib?.href}
+  nextHref={nextSib?.href}
 >
   <div class="rec">
-    <Breadcrumb
-      items={[
-        { label: "The record", href: withSite("/site/") },
-        { label: "Records", href: withSite("/site/records/") },
-        { label: groupName, href: withSite(`/site/records/${record.group}/`) },
-        { label: record.title },
-      ]}
-    />
-
     <div class="rec-part" id="the-record">The record</div>
     <div class="rb-list"><RecordBlock record={block} density="full" /></div>
 
@@ -126,5 +138,11 @@ const toc = teardown
         </Fragment>
       )
     }
+
+    <SiblingNav
+      prev={prevSib}
+      next={nextSib}
+      within={{ label: groupName, href: sitePath(`/site/records/${record.group}/`) }}
+    />
   </div>
 </Base>

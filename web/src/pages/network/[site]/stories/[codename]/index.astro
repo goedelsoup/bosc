@@ -52,15 +52,17 @@ if (!entry || !("kind" in entry.data) || entry.data.kind !== "home") {
 }
 const fm = entry.data;
 const Content = held ? undefined : (await render(entry)).Content;
+// The trail's leaf is the story itself; the codename segment is a URL key, not a name (#1889).
+const trailLeaf = storyFor(slug, codename)?.title ?? heldTitle;
 ---
 
 {
   held ? (
-    <Base title={`${heldTitle} — coming soon`} section="story" description={heldDek}>
+    <Base title={`${heldTitle} — coming soon`} section="story" description={heldDek} trailLeaf={trailLeaf}>
       <StoryComingSoon title={heldTitle} dek={heldDek} slug={slug} />
     </Base>
   ) : (
-    <Base title={fm.pageTitle ?? fm.h1} section="story" description={fm.description}>
+    <Base title={fm.pageTitle ?? fm.h1} section="story" description={fm.description} trailLeaf={trailLeaf}>
       <div class="walk-onramp">
         {fm.kicker && <div class="walk-kicker">{fm.kicker}</div>}
         <h1>{fm.h1}</h1>

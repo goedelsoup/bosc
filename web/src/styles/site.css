@@ -1057,6 +1057,61 @@ html[data-ssv2] .site-switcher > .switcher-menu:not(.switcher-menu-v2) { display
   min-width: 0;
   padding: var(--sp-6) var(--sp-10) var(--sp-16);
 }
+
+/* ---- Breadcrumb trail (#1889) — positional wayfinding, one per page from Base.astro.
+   Mono and quiet: it's chrome, not content, and it sits above every H1 on the site, so it
+   has to read as an address line rather than compete with the heading. Forest only on the
+   links (the one accent signal); the current crumb is ink. Wraps rather than scrolling —
+   a deep trail is six crumbs, which is two comfortable lines on a phone — and each crumb
+   truncates so an as-received document filename can't push the row off the page. ---- */
+.trail {
+  margin-bottom: var(--sp-4);
+}
+.trail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  font-family: var(--bosc-mono);
+  font-size: var(--fs-caption);
+  line-height: 1.6;
+}
+.trail-item {
+  max-width: 22rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.trail-item + .trail-item::before {
+  content: "›";
+  color: var(--bosc-faint);
+  padding: 0 0.45em;
+}
+.trail-link {
+  color: var(--bosc-muted);
+  text-decoration: none;
+}
+.trail-link:hover,
+.trail-link:focus-visible {
+  color: var(--bosc-forest);
+  text-decoration: underline;
+}
+.trail-here {
+  color: var(--bosc-ink);
+  font-weight: 600;
+}
+/* A namespace segment with no landing of its own — named, but never styled as "you are here". */
+.trail-plain {
+  color: var(--bosc-muted);
+  font-weight: 400;
+}
+@media (max-width: 700px) {
+  .trail-item {
+    max-width: 14rem;
+  }
+}
 .prose { max-width: 52rem; }
 .prose h1 { font-size: var(--fs-title); line-height: 1.2; margin-top: 0.2rem; }
 .prose h2 { margin-top: 2.5rem; padding-bottom: var(--sp-1); border-bottom: 1px solid var(--bosc-rule); }
@@ -3045,14 +3100,10 @@ a.walk-dot:hover { opacity: 0.82; }
 .door--capstone { border-color: var(--bosc-forest); background: linear-gradient(180deg, var(--td-tint, var(--td-tint)), transparent); }
 
 /* ===========================================================================
-   Record Screen (/site/records/<group>/<id>, #193): breadcrumb → the record
-   (full block) → the teardown flow, with a no-JS CSS layout toggle.
+   Record Screen (/site/records/<group>/<id>, #193): the record (full block) → the
+   teardown flow, with a no-JS CSS layout toggle. The trail above it is Base's (#1889).
    =========================================================================== */
 .rec { max-width: 62rem; }
-.rec-crumb { font-size: var(--fs-meta); color: var(--bosc-muted); margin: 0 0 1.1rem; line-height: 1.7; }
-.rec-crumb a { color: var(--td-chip-kind); text-decoration: none; }
-.rec-crumb a:hover { text-decoration: underline; }
-.rec-crumb-here { color: var(--bosc-ink); font-weight: 600; }
 .rec-part { font-size: var(--fs-micro); letter-spacing: 1px; text-transform: uppercase; color: var(--td-faint); font-weight: 700; margin-bottom: 0.7rem; }
 .rec-part.is-forest { color: var(--bosc-forest); }
 

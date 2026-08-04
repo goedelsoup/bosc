@@ -30,7 +30,6 @@ import {
 } from "@watermark/core/docBrowse";
 import { formatBytes, type DocumentCollectionItem, type DocumentEntry } from "@watermark/core/feeds";
 import { facetAvailable } from "@watermark/core/readiness";
-import { withSite } from "@watermark/core/site";
 
 // The two shapes this route serves differ only in `containerSlug`, so they share one props type —
 // otherwise TypeScript widens the flatMap into a union that `withSitePaths` can't accept.
@@ -88,17 +87,21 @@ const rows = pageSlice(entries, page, DOCS_PER_PAGE);
 const folders = folderFacets(entries);
 const bytes = entries.reduce((n, e) => n + e.size_bytes, 0);
 const heading = isContainer ? (containerSlug as string) : `${collectionTitle} — page ${page}`;
+
+// The trail's collection crumb wants the collection's title, and a container crumb its
+// as-received directory name verbatim — neither is derivable from the slug (#1889).
+const trailLabels: Record<string, string> = {
+  [collectionSlug]: collectionTitle,
+  ...(containerSlug ? { [containerSlug]: containerSlug } : {}),
+};
 ---
 
-<Base title={`${heading} — documents`} section="site">
+<Base
+  title={`${heading} — documents`}
+  section="site"
+  trailLabels={trailLabels}
+>
   <article class="prose">
-    <p class="rec-crumb">
-      <a href={withSite("/site/documents/")}>Documents</a>
-      <span aria-hidden="true">→</span>
-      <a href={withSite(`/site/documents/${collectionSlug}/`)}>{collectionTitle}</a>
-      <span aria-hidden="true">→</span>
-      <span class="rec-crumb-here">{isContainer ? containerSlug : `page ${page}`}</span>
-    </p>
     <h1 class:list={["docpage-title", isContainer && "docpage-title--mono"]}>{heading}</h1>
     {
       isContainer ? (

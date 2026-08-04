@@ -17,8 +17,7 @@ import { STORY_COMPONENTS } from "~/components/story";
 import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
 import { siteBase } from "@watermark/core/routes";
-import { siteForSlug, siteRegistersStory, storyComingSoon } from "@watermark/core/sites";
-import { withBase } from "@watermark/core/site";
+import { siteRegistersStory, storyComingSoon } from "@watermark/core/sites";
 import {
   type Story,
   chapterHref,
@@ -88,13 +87,8 @@ const studyLabel =
     ? `The impact study, §${studyPart.num}·${chapterNumber(studyTarget.id)} ${studyTarget.title}`
     : null;
 
-const networkSite = siteForSlug(slug);
-const breadcrumbs = [
-  { label: "Network", href: withBase("/network") },
-  { label: networkSite?.place ?? "Site", href: withBase(siteBase(slug)) },
-  { label: story.title, href: storyHomeHref(story) },
-  { label: ch.title, href: Astro.url.pathname },
-];
+// The codename segment is a URL key; the trail wants the story's name (#1889).
+const trailLabels = { [codename]: story.title };
 
 const articleLd = Astro.site
   ? {
@@ -111,11 +105,25 @@ const articleLd = Astro.site
 
 {
   held ? (
-    <Base title={`${story.title} — coming soon`} section="story" description={story.dek}>
+    <Base
+      title={`${story.title} — coming soon`}
+      section="story"
+      description={story.dek}
+      trailLabels={trailLabels}
+      trailLeaf={ch.title}
+    >
       <StoryComingSoon title={story.title} dek={story.dek} slug={slug} />
     </Base>
   ) : (
-    <Base title={pageTitle} section="story" description={fm.description} prevHref={prevHref} nextHref={nextHref} breadcrumbs={breadcrumbs}>
+    <Base
+      title={pageTitle}
+      section="story"
+      description={fm.description}
+      prevHref={prevHref}
+      nextHref={nextHref}
+      trailLabels={trailLabels}
+      trailLeaf={ch.title}
+    >
       {articleLd && <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(articleLd)} />}
       <div class="walk-chapter-page">
         <PathWayfinding step={step} story={story} />

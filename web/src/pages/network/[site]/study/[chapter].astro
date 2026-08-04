@@ -79,6 +79,7 @@ const walkCh = story?.chapters.find((c) => c.studySection === chapterId && c.liv
 <Base
   title={`${def.title} — The impact study`}
   section="study"
+  trailLeaf={def.title}
   description={def.dek}
   prevHref={prev ? chapterPath(prev.id) : undefined}
   nextHref={next ? chapterPath(next.id) : undefined}

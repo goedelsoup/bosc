@@ -1,0 +1,144 @@
+---
+/**
+ * Sibling navigation for a leaf that sits in a sequence (#1889, epic #1884 phase 5).
+ *
+ * The breadcrumb answers "where am I and how do I go up". This answers the other half — "what
+ * is next to me" — for the two leaves that had neither: a record inside its group, and a source
+ * document inside its container. Both are positions in a list a reader is usually working
+ * through, and both were dead ends: the only way to the adjacent item was back up to the index
+ * and down again.
+ *
+ * The prose leaves (story chapters, study chapters, methodology domains) already render their
+ * own sequence rails, each with its own voice — a numbered chapter title, a "back to the cover"
+ * fallback. Those are deliberately not folded in here; this is the plain-leaf shape.
+ *
+ * The order is the INDEX's order, not a new one. Both callers derive prev/next from the same
+ * list their listing page renders, so "next" here and "the row below" there are the same item.
+ *
+ * `Base` should also receive the same hrefs as `prevHref`/`nextHref` so `<link rel="prev/next">`
+ * is emitted for crawlers — the markup peer of this visible rail.
+ */
+/** Root-absolute, pre-deploy-base `href` — `withBase` is applied here. */
+interface Sibling {
+  label: string;
+  href: string;
+}
+interface Props {
+  prev?: Sibling;
+  next?: Sibling;
+  /** What the sequence is, e.g. "in Permits — NPDES" — the rail's own middle label. */
+  within?: { label: string; href: string };
+}
+import { withBase } from "@watermark/core/site";
+
+const { prev, next, within } = Astro.props as Props;
+---
+
+{
+  (prev || next || within) && (
+    <nav class="sibnav" aria-label="Sibling navigation">
+      {prev ? (
+        <a class="sibnav-link" href={withBase(prev.href)} rel="prev">
+          <span class="sibnav-dir">← Previous</span>
+          <span class="sibnav-label">{prev.label}</span>
+        </a>
+      ) : (
+        <span class="sibnav-link sibnav-end">
+          <span class="sibnav-dir">← Previous</span>
+          <span class="sibnav-label">First of the set</span>
+        </span>
+      )}
+      {within && (
+        <a class="sibnav-within" href={withBase(within.href)}>
+          {within.label}
+        </a>
+      )}
+      {next ? (
+        <a class="sibnav-link sibnav-next" href={withBase(next.href)} rel="next">
+          <span class="sibnav-dir">Next →</span>
+          <span class="sibnav-label">{next.label}</span>
+        </a>
+      ) : (
+        <span class="sibnav-link sibnav-next sibnav-end">
+          <span class="sibnav-dir">Next →</span>
+          <span class="sibnav-label">Last of the set</span>
+        </span>
+      )}
+    </nav>
+  )
+}
+
+<style>
+  .sibnav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: stretch;
+    gap: var(--sp-3);
+    margin-top: 2.4rem;
+    padding-top: var(--sp-4);
+    border-top: 1px solid var(--bosc-rule);
+  }
+  .sibnav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding: var(--sp-3) var(--sp-4);
+    border: 1px solid var(--bosc-rule);
+    background: var(--bosc-surface);
+    text-decoration: none;
+    color: inherit;
+  }
+  a.sibnav-link:hover,
+  a.sibnav-link:focus-visible {
+    border-color: var(--bosc-forest);
+  }
+  .sibnav-next {
+    text-align: right;
+  }
+  /* The end of the sequence is stated, not hidden — a missing card would read as a layout
+     glitch, and "First of the set" is itself positional information. */
+  .sibnav-end {
+    opacity: 0.55;
+  }
+  .sibnav-dir {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-micro);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+  }
+  .sibnav-label {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sibnav-within {
+    display: flex;
+    align-items: center;
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-caption);
+    color: var(--bosc-muted);
+    text-decoration: none;
+    padding: 0 var(--sp-2);
+    text-align: center;
+  }
+  .sibnav-within:hover {
+    color: var(--bosc-forest);
+    text-decoration: underline;
+  }
+  @media (max-width: 700px) {
+    .sibnav {
+      grid-template-columns: 1fr;
+    }
+    .sibnav-next {
+      text-align: left;
+    }
+    .sibnav-within {
+      order: 3;
+      justify-content: center;
+    }
+  }
+</style>
