@@ -13,6 +13,7 @@
  */
 import { getEntry, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
+import ChapterRecord from "~/components/study/ChapterRecord.astro";
 import ReferenceAnnex from "~/components/study/ReferenceAnnex.astro";
 import StudyGap from "~/components/study/StudyGap.astro";
 import StudyNoteFrame from "~/components/study/StudyNoteFrame.astro";
@@ -26,6 +27,7 @@ import {
   STUDY_CHAPTERS,
   STUDY_PARTS,
   studyChapter,
+  studyChapterEvidence,
   studyChapterModel,
 } from "@watermark/core/study";
 import { withSite } from "@watermark/core/site";
@@ -58,6 +60,14 @@ const note =
 const noteLive = note?.data.live === true;
 const NoteContent = noteLive ? (await render(note!)).Content : null;
 const place = siteForSlug(slug)?.place ?? slug;
+
+// The chapter's evidence annex (#1885) — the records, documents, and reference datasets its
+// figures were read from, resolved against THIS site's own feeds. The live note's raw source
+// rides along so the annex also lists what the prose cites by hand; a held note contributes
+// nothing, exactly as its body renders nothing.
+const evidence = studyChapterEvidence(chapterId, slug, {
+  noteBody: noteLive ? note?.body : undefined,
+});
 
 // The walk↔study cross-link, study side (one hop, never an inline): the surfaced story's
 // chapter that teaches toward this study chapter. A held (`comingSoon`) or absent walk
@@ -104,6 +114,8 @@ const walkCh = story?.chapters.find((c) => c.studySection === chapterId && c.liv
         </p>
       )
     }
+
+    <ChapterRecord evidence={evidence} />
 
     <ReferenceAnnex references={def.references} slug={slug} />
 

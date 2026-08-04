@@ -24,6 +24,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { loadFeed, loadManifest } from "@watermark/core/bundle";
+import { citeSpecsInNote, resolveCiteSpec } from "@watermark/core/cite";
 import type {
   EconomicBaseline,
   EconomicScenarios,
@@ -46,6 +47,8 @@ interface Note {
   chapter: string;
   frontmatterChapter: string;
   body: string;
+  /** The body with its line breaks intact — what the `<Cite>` scanner reads. */
+  raw: string;
 }
 
 function walk(dir: string, rel = ""): string[] {
@@ -71,6 +74,7 @@ const notes: Note[] = walk(ROOT).map((rel) => {
     // to match a claim that the source happens to line-wrap, and must never be satisfied by
     // a date or a slug in the frontmatter block.
     body: rest.join("---").replace(/\s+/g, " ").trim(),
+    raw: rest.join("---"),
   };
 });
 
@@ -103,6 +107,37 @@ describe(`study notes — wiring (${notes.length} notes)`, () => {
     expect(CHAPTER_IDS.has(n.chapter) || RESERVED.has(n.chapter)).toBe(true);
     // `data.chapter` is declarative — nothing reads it — so it can only drift. Pin it.
     expect(n.frontmatterChapter).toBe(n.chapter);
+  });
+});
+
+/**
+ * The authored-citation gate (#1885).
+ *
+ * A `<Cite>` that names a source the site doesn't hold already fails the Astro build, but it
+ * fails deep in a page render with no clue which note wrote it. This runs the same resolution
+ * over every note's source and names the file, the site, and the identifier — and it runs in
+ * the unit suite, so a bad citation is caught before anyone waits on a build.
+ *
+ * The second assertion is the regression pin on the finding itself, and it is deliberately
+ * demanded of the reference build rather than of every site: all thirteen of Lima's chapters
+ * had zero outbound links into the record, and Lima is the one site whose corpus is deep
+ * enough that "this chapter cites nothing" is always a defect rather than a gap. A peer's
+ * thinner note is covered by the resolution gate above and by `study.evidence.test.ts`.
+ */
+describe("study notes — authored citations resolve", () => {
+  it.each(notes.map((n) => n.id))("%s — every <Cite> names a source this site holds", (id) => {
+    const n = note(id);
+    const unresolved = citeSpecsInNote(n.raw)
+      .filter((spec) => resolveCiteSpec(spec, n.site) === null)
+      .map((spec) => `${spec.kind}="${spec.key}"`);
+    expect(unresolved, `${id}: <Cite> targets absent from site "${n.site}"`).toEqual([]);
+  });
+
+  it("all thirteen Lima chapters link into the record", () => {
+    const bare = LIMA_NOTES.filter((id) => id !== "lima/_cover").filter(
+      (id) => citeSpecsInNote(note(id).raw).length === 0,
+    );
+    expect(bare, "Lima study chapters citing nothing").toEqual([]);
   });
 });
 

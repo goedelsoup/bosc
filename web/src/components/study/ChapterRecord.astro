@@ -1,0 +1,161 @@
+---
+/**
+ * "The record behind this chapter" (#1885) — the chapter's evidence annex.
+ *
+ * Distinct from `ReferenceAnnex` directly below it, and the distinction is the point: that one
+ * offers the DASHBOARDS a reader can go read next; this one offers the SOURCES the chapter's
+ * figures came out of. A reader checking a number wants the second, and until now the study
+ * offered only the first.
+ *
+ * Three bands, narrowest last:
+ *   ① the record-group indexes this chapter reads (declared per chapter, resolved per site);
+ *   ② the individual records and documents this chapter's own feeds cite by name (derived from
+ *      the feed citations, so a peer site's chapter cites the peer's sources);
+ *   ③ the published reference datasets the screen rests on.
+ *
+ * Everything is resolved by `studyChapterEvidence` and is therefore a page this build emits.
+ * An empty annex renders NOTHING — a chapter whose record genuinely isn't here says so through
+ * its gap panel, and a hollow "the record behind this chapter" heading over no links would be
+ * the same empty promise this issue exists to retire.
+ */
+import type { StudyChapterEvidence } from "@watermark/core/study";
+import { withSite } from "@watermark/core/site";
+
+interface Props {
+  evidence: StudyChapterEvidence;
+}
+const { evidence } = Astro.props as Props;
+const { groups, sources, datasets } = evidence;
+const any = groups.length + sources.length + datasets.length > 0;
+const plural = (n: number, one: string): string => `${n} ${one}${n === 1 ? "" : "s"}`;
+---
+
+{
+  any && (
+    <section class="chrec" aria-labelledby="chrec-h">
+      <h2 class="chrec-h" id="chrec-h">
+        The record behind this chapter
+      </h2>
+      <p class="chrec-lede">
+        Every figure above is checkable. These are the sources it was read from — the same pages
+        the record screens serve, not a second copy.
+      </p>
+
+      {sources.length > 0 && (
+        <div class="chrec-band">
+          <div class="chrec-eyebrow">Cited by name</div>
+          <ul class="chrec-list">
+            {sources.map((s) => (
+              <li class="chrec-item">
+                <a class="chrec-link" href={withSite(s.href)}>
+                  {s.label}
+                </a>
+                <span class="chrec-detail">{s.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {groups.length > 0 && (
+        <div class="chrec-band">
+          <div class="chrec-eyebrow">Record groups this chapter reads</div>
+          <ul class="chrec-list">
+            {groups.map((g) => (
+              <li class="chrec-item">
+                <a class="chrec-link" href={withSite(g.href)}>
+                  {g.label}
+                </a>
+                <span class="chrec-detail">{plural(g.count, "record")}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {datasets.length > 0 && (
+        <div class="chrec-band">
+          <div class="chrec-eyebrow">Reference data</div>
+          <ul class="chrec-list">
+            {datasets.map((d) => (
+              <li class="chrec-item">
+                <a class="chrec-link" href={withSite(d.href)}>
+                  {d.label}
+                </a>
+                <span class="chrec-detail">{d.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </section>
+  )
+}
+
+<style>
+  /* Same annex family as `ReferenceAnnex` — hairline rule, bone, square corners — but heavier,
+     because this is the chapter's evidence and the dashboards below it are not. */
+  .chrec {
+    border-top: 2px solid var(--bosc-ink);
+    margin-top: 2.4rem;
+    padding-top: 1rem;
+    max-width: 660px;
+  }
+  .chrec-h {
+    font-size: 1.02rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    margin: 0;
+  }
+  .chrec-lede {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: #3a4036;
+    margin: 0.45rem 0 0;
+  }
+  .chrec-band {
+    margin-top: 1rem;
+  }
+  .chrec-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    margin-bottom: 6px;
+  }
+  .chrec-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .chrec-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-top: 1px solid var(--bosc-rule);
+    padding: 6px 0;
+  }
+  .chrec-link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--bosc-forest);
+    text-decoration: none;
+    /* A record title or an as-received filename can be long; let it wrap rather than push the
+       detail column off the row. */
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .chrec-link:hover {
+    text-decoration: underline;
+  }
+  .chrec-detail {
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    color: var(--bosc-faint);
+    margin-left: auto;
+    flex: 0 0 auto;
+    text-align: right;
+  }
+</style>

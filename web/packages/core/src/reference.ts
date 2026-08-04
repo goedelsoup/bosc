@@ -73,6 +73,31 @@ export const REFERENCE: ReferenceDataset[] = [
     catalogIds: ["economics-baseline"],
   },
   {
+    // Published for #1885: the study's power chapter reads the serving utility, the balancing
+    // authority, and all three load denominators off this dataset and tags them `[verified]`.
+    // Until it had a page, that tag was the study's only claim with no destination behind it —
+    // every site owns the EIA catalog entries (the backdrop floor is EIA-keyed), so every site's
+    // power chapter can now cite the series its figures came from.
+    repo: "eia/README.md",
+    slug: "eia",
+    title: "Grid & consumer energy (US EIA)",
+    blurb:
+      "The serving utility and balancing authority (EIA-861/930), the state retail market, and the household energy prices the ratepayer read is built on.",
+    catalogIds: ["eia-grid-profile", "eia-consumer-energy", "eia-demand-pressure", "eia"],
+  },
+  {
+    // Also published for #1885 — the study's groundwater chapter screens the county well census
+    // and the campus dewatering wellfield, and both of those are this one README's datasets. The
+    // `catalogIds` list is closed by design (as everywhere in this registry): a peer that pulls
+    // its own county census adds that id here rather than inheriting Allen County's.
+    repo: "ohio-waterwells/README.md",
+    slug: "ohio-waterwells",
+    title: "Ohio water-well-log census (Ohio DNR)",
+    blurb:
+      "The R.C. 1521.05 contractor well logs — the county well census and the campus construction-dewatering wellfield behind the groundwater screens.",
+    catalogIds: ["ohio-waterwells-allen", "lima-campus-dewatering"],
+  },
+  {
     repo: "hydrology/wbd/README.md",
     slug: "wbd",
     title: "USGS watershed boundaries (WBD)",

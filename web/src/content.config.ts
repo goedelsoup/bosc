@@ -123,7 +123,10 @@ const narrative = defineCollection({
 // dataset's slug (from `lib/reference.ts`), so the route + the rehype rewriter agree.
 const reference = defineCollection({
   loader: glob({
-    pattern: ["{echo,allen-gis,lima-gis,rsei,gleif,economics}/README.md", "hydrology/wbd/README.md"],
+    pattern: [
+      "{echo,allen-gis,lima-gis,rsei,gleif,economics,eia,ohio-waterwells}/README.md",
+      "hydrology/wbd/README.md",
+    ],
     base: "../data/reference",
     generateId: ({ entry }) => REFERENCE.find((r) => r.repo === entry)?.slug ?? entry,
   }),
