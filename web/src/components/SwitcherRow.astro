@@ -1,15 +1,18 @@
 ---
 /**
- * One row in the grouped network switcher (#307, design "Site Selector"). Extracted so the
- * State and Basin groupings render the same row. Carries the build-phase pill, the facility
- * lifecycle stage, the tracking issue, and (when restricted) a lock — a locked row routes to
- * its request-access page rather than the build.
+ * One row in the site switcher (design "Site Selector"). Two implementations of this row used
+ * to ship in every document behind a `localStorage` flag; this is the one that won (#1893).
+ *
+ * A row carries TWO clocks, which is the whole point of it: `acc` is what opens on Watermark
+ * (the build phase — a page you can read, a preview, or a request-access lock), and `fac` is the
+ * campus's own lifecycle stage on the ground. They move independently — a site can be under
+ * construction with nothing but a watch page here, or fully readable while the campus is still
+ * an investigation — so the row never collapses them into one status.
  */
-import { manifestOrNull } from "@watermark/core/bundle";
 import {
   FACILITY_STATUS_META,
   type NetworkSite,
-  SITE_STATUS_META,
+  type SiteStatus,
   facilityStatus,
   siteBadge,
 } from "@watermark/core/sites";
@@ -22,17 +25,15 @@ interface Props {
 const { site: s, activeSlug } = Astro.props;
 const isActive = activeSlug !== null && s.slug === activeSlug;
 const locked = Boolean(s.locked);
-// Locked overrides the build-phase pill (lock is about access, not phase).
-const status = locked ? { label: "Locked", cls: "is-locked" } : SITE_STATUS_META[s.status];
 
-// The impact-study badge (the missing-impact-study epic, peers polish): a selectable site
-// whose facility domain carries evidence has a study with a project in it — worth a marker
-// in the directory. Read via manifestOrNull (most registry sites have no bundle; never throw
-// in the switcher), and never shown for a baseline-only dossier (facility `absent`).
-const facDomain = manifestOrNull(s.slug)?.readiness?.domains.facility ?? "absent";
-const hasStudy = s.selectable && !locked && facDomain !== "absent";
+const ACCESS_META: Record<SiteStatus, { label: string; cls: string }> = {
+  live: { label: "Open", cls: "switcher-acc-open" },
+  building: { label: "Draft", cls: "switcher-acc-draft" },
+  queued: { label: "Queued", cls: "switcher-acc-queued" },
+  tracking: { label: "Watching", cls: "switcher-acc-watching" },
+};
+const acc = ACCESS_META[s.status];
 
-// The facility lifecycle stage — a separate clock from the build phase (the dot + short label).
 const fac = facilityStatus(s.slug);
 const facMeta = FACILITY_STATUS_META[fac];
 const FAC_SHORT: Record<string, string> = {
@@ -44,55 +45,46 @@ const FAC_SHORT: Record<string, string> = {
 ---
 
 <a
-  class:list={["switcher-row", { "is-active": isActive, "is-soon": !s.selectable, "is-locked": locked }]}
+  class:list={["switcher-row", { "is-active": isActive, "is-locked": locked }]}
   href={withBase(s.href)}
   aria-current={isActive ? "page" : undefined}
+  title={locked ? `${s.place} — restricted` : `${s.place} — ${acc.label}`}
+  data-place={s.place}
 >
   <span class:list={["switcher-badge", { "has-codename": Boolean(s.codename) }]}>{siteBadge(s)}</span>
   <span class="switcher-body">
     <span class="switcher-place">
       {s.codename && <span class="switcher-codename">{s.codename}</span>}
-      {
-        locked && (
-          <svg class="switcher-lock" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="locked" role="img">
-            <rect x="5" y="11" width="14" height="9" rx="1" />
-            <path d="M8 11 V7.5 A4 4 0 0 1 16 7.5 V11" />
-          </svg>
-        )
-      }
-      {s.place}
+      <span class="switcher-placename">{s.place}</span>
     </span>
     <span class="switcher-basin">{s.basin}</span>
   </span>
   <span class="switcher-meta">
-    <span class:list={["switcher-status", status.cls]}>{status.label}</span>
-    <span class="switcher-submeta">
+    {locked ? (
+      <span class="switcher-acc switcher-acc-locked">
+        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="9" rx="1"/>
+          <path d="M8 11 V7.5 A4 4 0 0 1 16 7.5 V11"/>
+        </svg>
+        Request access
+      </span>
+    ) : (
+      <span class:list={["switcher-acc", acc.cls]}>
+        {acc.label}<span aria-hidden="true" class="switcher-acc-arrow">→</span>
+      </span>
+    )}
+    <span class="switcher-campus">
       <span class="switcher-facility" style={`color:${facMeta.color}`}>
         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="4" y="4.5" width="16" height="6.5" rx="1.4"></rect>
-          <rect x="4" y="13" width="16" height="6.5" rx="1.4"></rect>
-          <line x1="7" y1="7.75" x2="7.2" y2="7.75"></line>
-          <line x1="7" y1="16.25" x2="7.2" y2="16.25"></line>
+          <rect x="4" y="4.5" width="16" height="6.5" rx="1.4"/>
+          <rect x="4" y="13" width="16" height="6.5" rx="1.4"/>
+          <line x1="7" y1="7.75" x2="7.2" y2="7.75"/>
+          <line x1="7" y1="16.25" x2="7.2" y2="16.25"/>
         </svg>
         {FAC_SHORT[fac]}
       </span>
-      {hasStudy && <span class="switcher-study" title="This site's impact study is readable">study</span>}
       {s.issue && <span class="switcher-issue">#{s.issue}</span>}
     </span>
   </span>
-  <span class="switcher-check" aria-hidden="true">{isActive ? "✓" : ""}</span>
+  {isActive && <span class="switcher-check" aria-hidden="true">✓</span>}
 </a>
-
-<style>
-  /* The study marker — quiet mono chip; forest only because a readable study is a live signal. */
-  .switcher-study {
-    font-family: var(--bosc-mono);
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: var(--bosc-forest);
-    border: 1px solid var(--bosc-rule);
-    padding: 0 5px;
-  }
-</style>

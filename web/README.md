@@ -179,7 +179,12 @@ TOC rail, and the search index).
   Troy-Piqua ([#1872](https://github.com/watermark-directory/the-watermark-directory/issues/1872));
   the rest route to a coming-soon page (`/network/<slug>`). Only Lima is a *built* site at its
   own root, though — a selectable peer renders under `/network/<slug>`, with its locked domains
-  gated by its manifest's readiness block, not by a hand-kept list.
+  gated by its manifest's readiness block, not by a hand-kept list. The panel is **one
+  implementation over one grouping** (basin) since
+  [#1893](https://github.com/watermark-directory/the-watermark-directory/issues/1893) — two
+  panels behind a `localStorage` flag, each rendering the registry twice for a State/Basin
+  pivot, put four copies of every site in the chrome of 4,078 pages. The facets, sorts and
+  full listing live at `/network`; `check-routes.mjs` guard 7 holds the chrome to one copy.
 - **Cross-cutting pages are network-global** at the root, shared across every site:
   `/about`, `/about-me`, `/wiki/*`, `/ask`, `/search`, `/network/*`, and the `/api/*` functions.
   (Mechanically, a root page renders the **reference bundle** — outside `/network/<site>/` the

@@ -2,7 +2,6 @@
 import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
 import SwitcherRow from "./SwitcherRow.astro";
-import SwitcherRowV2 from "./SwitcherRowV2.astro";
 import AuthShell from "@watermark/viz/islands/AuthShell.tsx";
 import {
   comingSoonSiteTabs,
@@ -63,13 +62,17 @@ const chipPlace = current ? current.place : "All sites";
 const chipCodename = current?.codename ?? null;
 const herePhase = current ? SITE_STATUS_META[current.status] : null;
 
-// The grouped selector (#307/#308): the same whole-registry panel, pivoted by State or Basin
-// (default Basin, design "Site Selector"). No-JS — radio inputs + :checked.
-const stateGroups = groupSites("state");
+// The site selector (#307/#308, design "Site Selector") — the whole registry, grouped by basin.
+//
+// ONE panel, one grouping (#1893). Two complete implementations used to render here — v1 and v2,
+// both in every document, with CSS showing whichever `localStorage('site-selector-v2')` picked —
+// and each of them rendered all 38 sites TWICE so a no-JS radio could pivot between a State and a
+// Basin lens. Four copies of the registry in the chrome of 4,078 pages. The registry belongs to
+// one place now: `/network` (#1888) is the canonical listing and carries the facets and the sorts.
+// What survives here is what a switcher is for — jumping to a site you already know.
 const basinGroups = groupSites("basin");
 const hereSlug = current?.slug ?? null;
 const totalSites = SITES.length;
-const stateCount = stateGroups.length;
 const basinCount = basinGroups.length;
 const lockedCount = SITES.filter((s) => s.locked).length;
 // What a reader can actually ENTER — the registry's `selectable`, not "everything minus the
@@ -77,7 +80,6 @@ const lockedCount = SITES.filter((s) => s.locked).length;
 // switcher, the home, and `/network` now all count the same way; the index is where the full
 // listing lives, and this panel is the jump affordance over it.
 const openCount = SITES.filter((s) => s.selectable).length;
-const watchCount = totalSites - openCount;
 const indexHref = withBase("/network");
 
 // Auth chip — only rendered when the PUBLIC_ build vars are set (kill switch mirrors submit/ask).
@@ -118,42 +120,37 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
       <span class="chip-caret" aria-hidden="true">▾</span>
     </summary>
     <div class="switcher-menu">
-      <input type="radio" name="switcher-groupby" id="gb-basin" class="gb-radio" checked />
-      <input type="radio" name="switcher-groupby" id="gb-state" class="gb-radio" />
       <div class="switcher-head">
-        <span class="switcher-head-l">
+        <div class="switcher-head-row">
           <span class="switcher-title">Switch site</span>
-          <span class="switcher-count"
-            >{totalSites} sites · <span class="sw-scope sw-scope-basin">{basinCount} basins</span><span
-              class="sw-scope sw-scope-state">{stateCount} states</span
-            ></span
-          >
-        </span>
-        <span class="switcher-groupby">
-          <span class="gb-k">Group by</span>
-          <label for="gb-state" class="gb-btn gb-state">State</label>
-          <label for="gb-basin" class="gb-btn gb-basin">Basin</label>
-        </span>
+          <span class="switcher-count">{totalSites} sites · {basinCount} basins</span>
+          <span class="switcher-stats">
+            <span class="switcher-open">{openCount} open</span>
+            {lockedCount > 0 && (
+              <span class="switcher-restricted">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="5" y="11" width="14" height="9" rx="1"/>
+                  <path d="M8 11 V7.5 A4 4 0 0 1 16 7.5 V11"/>
+                </svg>
+                {lockedCount} restricted
+              </span>
+            )}
+          </span>
+          <label class="switcher-filter" for="switcher-filter">
+            <span class="switcher-filter-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="6.5"/>
+                <line x1="16" y1="16" x2="21" y2="21"/>
+              </svg>
+            </span>
+            <input type="text" id="switcher-filter" placeholder="Filter by place…" aria-label="Filter sites by place" autocomplete="off" spellcheck="false" />
+          </label>
+        </div>
+        <p class="switcher-blurb">
+          Each <b>site</b> is one Watermark investigation. The <b>page</b> color says what opens; the <b>campus</b> line is the build on the ground — two different clocks.
+        </p>
       </div>
-      <div class="switcher-groups by-state">
-        {
-          stateGroups.map((g) => (
-            <div class="switcher-group">
-              <div class="switcher-grouphead">
-                {g.tag && <span class="switcher-grouptag">{g.tag}</span>}
-                <span class="switcher-grouplabel">{g.label}</span>
-                <span class="switcher-groupcount">{g.sites.length}</span>
-              </div>
-              <div class="switcher-grouprows">
-                {g.sites.map((s) => (
-                  <SwitcherRow site={s} activeSlug={hereSlug} />
-                ))}
-              </div>
-            </div>
-          ))
-        }
-      </div>
-      <div class="switcher-groups by-basin">
+      <div class="switcher-scroll">
         {
           basinGroups.map((g) => (
             <>
@@ -181,145 +178,32 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
         }
       </div>
       <div class="switcher-foot">
-        <span class="switcher-foot-note">
-          Each site is a section of the Watermark platform — pivoted by <span class="sw-scope sw-scope-basin"
-            >basin</span
-          ><span class="sw-scope sw-scope-state">state</span>. <b>{openCount} open</b>; the other {watchCount}
-          route to their coming-soon / watch page. <a class="switcher-index" href={indexHref}
-            >The full index →</a
-          >
-        </span>
-        <span class="switcher-legend" aria-hidden="true">
-          <span class="leg leg-live">Live</span>
-          <span class="leg leg-building">Building</span>
-          <span class="leg leg-queued">Queued</span>
-          <span class="leg leg-tracking">Tracking</span>
-          <span class="leg leg-locked">
-            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="5" y="11" width="14" height="9" rx="1"></rect>
-              <path d="M8 11 V7.5 A4 4 0 0 1 16 7.5 V11"></path>
-            </svg>Locked
-          </span>
-        </span>
-      </div>
-    </div>
-
-    <!-- V2 Site Selector — controlled by localStorage('site-selector-v2'='1'). Both panels
-         are rendered; CSS hides the inactive one so no redeploy is needed to flip the flag. -->
-    <div class="switcher-menu switcher-menu-v2">
-      <input type="radio" name="sw2-groupby" id="gb-v2-basin" class="gb-radio" checked />
-      <input type="radio" name="sw2-groupby" id="gb-v2-state" class="gb-radio" />
-      <div class="v2-head">
-        <div class="v2-head-row1">
-          <span class="v2-head-title">Switch site</span>
-          <span class="v2-head-count">
-            {totalSites} sites · <span class="sw-v2-scope sw-v2-scope-basin">{basinCount} basins</span><span class="sw-v2-scope sw-v2-scope-state">{stateCount} states</span>
-          </span>
-          <span class="v2-head-stats">
-            <span class="v2-head-open">{openCount} open</span>
-            {lockedCount > 0 && (
-              <span class="v2-head-locked">
-                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <rect x="5" y="11" width="14" height="9" rx="1"/>
-                  <path d="M8 11 V7.5 A4 4 0 0 1 16 7.5 V11"/>
-                </svg>
-                {lockedCount} restricted
-              </span>
-            )}
-          </span>
-          <label class="v2-filter" for="sw-v2-filter">
-            <span class="v2-filter-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="6.5"/>
-                <line x1="16" y1="16" x2="21" y2="21"/>
-              </svg>
-            </span>
-            <input type="text" id="sw-v2-filter" placeholder="Filter by place…" autocomplete="off" spellcheck="false" />
-          </label>
-          <span class="v2-groupby-k">Group by</span>
-          <span class="v2-toggle">
-            <label for="gb-v2-state" class="gb-btn gb-v2-state">State</label>
-            <label for="gb-v2-basin" class="gb-btn gb-v2-basin">Basin</label>
-          </span>
-        </div>
-        <p class="v2-blurb">
-          Each <b>site</b> is one Watermark investigation. The <b>page</b> color says what opens; the <b>campus</b> line is the build on the ground — two different clocks.
-        </p>
-      </div>
-      <div class="v2-scroll">
-        <div class="v2-groups by-v2-state">
-          {
-            stateGroups.map((g) => (
-              <div class="v2-group">
-                <div class="v2-grouphead">
-                  {g.tag && <span class="v2-grouptag">{g.tag}</span>}
-                  <span class="v2-grouplabel">{g.label}</span>
-                  <span class="v2-groupcount">{g.sites.length}</span>
-                </div>
-                <div class="v2-grouprows">
-                  {g.sites.map((s) => (
-                    <SwitcherRowV2 site={s} activeSlug={hereSlug} />
-                  ))}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-        <div class="v2-groups by-v2-basin">
-          {
-            basinGroups.map((g) => (
-              <>
-                {g.showRegion && (
-                  <div class="v2-region">
-                    <span class="v2-region-tag">{g.regionTag}</span>
-                    <span class="v2-region-label">{g.regionLabel}</span>
-                    <span class="v2-region-count">{g.regionCount} sites</span>
-                  </div>
-                )}
-                <div class="v2-group">
-                  <div class="v2-grouphead">
-                    {g.tag && <span class="v2-grouptag">{g.tag}</span>}
-                    <span class="v2-grouplabel">{g.label}</span>
-                    <span class="v2-groupcount">{g.sites.length}</span>
-                  </div>
-                  <div class="v2-grouprows">
-                    {g.sites.map((s) => (
-                      <SwitcherRowV2 site={s} activeSlug={hereSlug} />
-                    ))}
-                  </div>
-                </div>
-              </>
-            ))
-          }
-        </div>
-      </div>
-      <div class="v2-foot">
-        <div class="v2-foot-col">
-          <span class="v2-foot-label">The page — what opens on Watermark</span>
-          <span class="v2-foot-legend">
-            <span class="v2-fl-item v2-fl-open">Open · Draft<span class="v2-fl-arrow">→</span><span class="v2-fl-note">full record</span></span>
-            <span class="v2-fl-item v2-fl-queued">Queued · Watching<span class="v2-fl-arrow">→</span><span class="v2-fl-note">preview page</span></span>
-            <span class="v2-fl-item v2-fl-locked">
+        <div class="switcher-foot-col">
+          <span class="switcher-foot-label">The page — what opens on Watermark</span>
+          <span class="switcher-foot-legend">
+            <span class="switcher-fl-item switcher-fl-open">Open · Draft<span class="switcher-fl-arrow">→</span><span class="switcher-fl-note">full record</span></span>
+            <span class="switcher-fl-item switcher-fl-queued">Queued · Watching<span class="switcher-fl-arrow">→</span><span class="switcher-fl-note">preview page</span></span>
+            <span class="switcher-fl-item switcher-fl-locked">
               <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="5" y="11" width="14" height="9" rx="1"/>
                 <path d="M8 11 V7.5 A4 4 0 0 1 16 7.5 V11"/>
               </svg>
-              Restricted<span class="v2-fl-note">request access</span>
+              Restricted<span class="switcher-fl-note">request access</span>
             </span>
           </span>
         </div>
-        <div class="v2-foot-col">
-          <span class="v2-foot-label">The campus — the build on the ground</span>
-          <span class="v2-foot-legend">
-            <span class="v2-fl-campus v2-fl-inv">Investigating</span>
-            <span class="v2-fl-campus v2-fl-confirmed">Confirmed</span>
-            <span class="v2-fl-campus v2-fl-construction">Under construction</span>
-            <span class="v2-fl-campus v2-fl-operational">Operational</span>
+        <div class="switcher-foot-col">
+          <span class="switcher-foot-label">The campus — the build on the ground</span>
+          <span class="switcher-foot-legend">
+            <span class="switcher-fl-campus switcher-fl-inv">Investigating</span>
+            <span class="switcher-fl-campus switcher-fl-confirmed">Confirmed</span>
+            <span class="switcher-fl-campus switcher-fl-construction">Under construction</span>
+            <span class="switcher-fl-campus switcher-fl-operational">Operational</span>
           </span>
         </div>
         {/* The panel is a jump affordance, not the network's only listing (#1888) — the canonical,
-            linkable, filterable index of all {totalSites} sites is `/network`. */}
-        <a class="v2-foot-index" href={indexHref}>All {totalSites} sites — the network index →</a>
+            linkable, filterable, sortable index of all {totalSites} sites is `/network`. */}
+        <a class="switcher-foot-index" href={indexHref}>All {totalSites} sites — the network index →</a>
       </div>
     </div>
   </details>
@@ -581,14 +465,6 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
 </header>
 
 <script is:inline>
-  // Runtime flag: localStorage.setItem('site-selector-v2','1') + reload to enable v2.
-  // localStorage.removeItem('site-selector-v2') + reload to revert.
-  (function () {
-    if (localStorage.getItem("site-selector-v2") === "1") {
-      document.documentElement.setAttribute("data-ssv2", "");
-    }
-  })();
-
   // Chrome dropdowns (#1319): native <details> don't know about one another, so opening
   // one leaves an already-open sibling open. Progressive enhancement over the no-JS baseline:
   // close every other open dropdown when one opens, and close open ones on outside-click / Escape.
@@ -634,16 +510,38 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
     });
   })();
 
-  // V2 place filter — filters .switcher-row-v2 elements by place name.
-  var filterInput = document.getElementById("sw-v2-filter");
-  if (filterInput) {
-    filterInput.addEventListener("input", function () {
-      var q = filterInput.value.toLowerCase().trim();
-      document.querySelectorAll(".switcher-row-v2").forEach(function (row) {
-        var place = row.querySelector(".v2-placename");
-        var text = place ? place.textContent.toLowerCase() : "";
-        row.hidden = q !== "" && !text.includes(q);
+  // The switcher's place filter — progressive enhancement over the no-JS panel (which lists the
+  // whole registry, grouped by basin). A group whose every row is filtered out is hidden with its
+  // rows, and so is a region header that ends up introducing nothing: leaving empty basin headings
+  // behind reads as "no site here matches" when the truth is that the basin has no match at all.
+  (function () {
+    var input = document.getElementById("switcher-filter");
+    var scroll = document.querySelector(".switcher-scroll");
+    if (!input || !scroll) return;
+    input.addEventListener("input", function () {
+      var q = input.value.toLowerCase().trim();
+      scroll.querySelectorAll(".switcher-group").forEach(function (group) {
+        var shown = 0;
+        group.querySelectorAll(".switcher-row").forEach(function (row) {
+          var hit = q === "" || (row.dataset.place || "").toLowerCase().includes(q);
+          row.hidden = !hit;
+          if (hit) shown++;
+        });
+        group.hidden = shown === 0;
       });
+      // A region header introduces the groups that follow it, up to the next region header.
+      var region = null;
+      var regionHasRows = false;
+      Array.prototype.forEach.call(scroll.children, function (el) {
+        if (el.classList.contains("switcher-region")) {
+          if (region) region.hidden = !regionHasRows;
+          region = el;
+          regionHasRows = false;
+        } else if (el.classList.contains("switcher-group") && !el.hidden) {
+          regionHasRows = true;
+        }
+      });
+      if (region) region.hidden = !regionHasRows;
     });
-  }
+  })();
 </script>
