@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { fmtRanged, hasRange } from "./format";
+import { fmtCount, fmtPct, fmtRanged, fmtUsd, hasRange } from "./format";
 
 describe("hasRange", () => {
   it("is false with no bounds", () => {
@@ -36,5 +36,32 @@ describe("fmtRanged (#760)", () => {
 
   it("honors the decimals argument", () => {
     expect(fmtRanged({ value: 1.234, low: 1.1, high: 1.368, unit: "MGD" }, 2)).toBe("1.23 ± ~0.13 MGD");
+  });
+});
+
+describe("the provenanced formatters (#1918)", () => {
+  it("renders a count, whole and grouped", () => {
+    expect(fmtCount({ value: 9452.4 })).toBe("9,452");
+    expect(fmtCount({ value: 0 })).toBe("0");
+  });
+
+  it("renders whole dollars", () => {
+    expect(fmtUsd({ value: 60348 })).toBe("$60,348");
+    expect(fmtUsd({ value: 0 })).toBe("$0");
+  });
+
+  it("renders a percentage at two places by default", () => {
+    expect(fmtPct({ value: 3.4123 })).toBe("3.41%");
+    expect(fmtPct({ value: 3.4123 }, 1)).toBe("3.4%");
+  });
+
+  it("keeps an absent measurement absent — the gap never becomes a zero", () => {
+    // The combined household energy cost is the call site that read `$0` before #1918.
+    expect(fmtUsd({ value: null })).toBe("—");
+    expect(fmtCount({ value: null })).toBe("—");
+    expect(fmtPct({ value: null })).toBe("—");
+    expect(fmtUsd(null)).toBe("—");
+    expect(fmtCount(undefined)).toBe("—");
+    expect(fmtPct(undefined)).toBe("—");
   });
 });
