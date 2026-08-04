@@ -23,6 +23,15 @@
 # Violations below are data with citations, not a gotcha. The quarter that came back clean is
 # recorded as such, and the fact that no formal enforcement action has ever issued is recorded at
 # the same weight as the 30 months of unmet reporting milestones.
+#
+# AND THE MEASURED RECORD CUTS AGAINST THIS FILE'S OWN EARLIER READING. The 2026-08-04 pull of the
+# effluent chart (issue 1860) replaced two ceilings with measurements, and one of them reversed.
+# The permit would allow 2,295 kg of phosphorus across the critical season, 2.30x the TMDL's
+# individual allocation — but the plant discharged 693, 663 and 821 kg in 2023, 2024 and 2025, all
+# UNDER the 1,000 kg allocated to it. Both figures stay. The ceiling explains why the permit defers
+# to a general permit and carries a reopener; the measurement is the answer the ceiling could not
+# reach, and it is recorded here at full weight because a watch that only ever confirms its own
+# suspicion is not a watch.
 
 meta:
   subject: >-
@@ -32,15 +41,15 @@ meta:
     2026-07-01, and the Maumee TMDL phosphorus allocation it defers to a general permit
   kind: water-watch
   site: van-wert
-  captured_for: issue 1406 (epic 1267, readiness(van-wert))
+  captured_for: issue 1406 (epic 1267, readiness(van-wert)); effluent record added by issue 1860
   extracted_at: '2026-08-01'
-  checked_on: '2026-08-01'
-  previous_check: '2026-07-10'      # the discovery-sweep research recorded in the issue body
+  checked_on: '2026-08-04'
+  previous_check: '2026-08-01'      # the 1406 pass; before that, the 2026-07-10 discovery sweep
   federal_extract_dates:
     ICIS-NPDES: '2026-07-24'
     SDWIS: '2026-07-09'
   method: >-
-    Four routes, run independently and recorded separately. (1) The controlling Ohio EPA
+    Five routes, run independently and recorded separately. (1) The controlling Ohio EPA
     instruments — the 2PD00006*WD modification package and its draft public notice — pulled from
     the Ohio EPA DAM on 2026-08-01 and transcribed page-by-page from their embedded text layers
     (data/documents/oepa/van-wert/filename-map.yaml; extractions under
@@ -50,14 +59,49 @@ meta:
     index — all read 2026-08-01 against the ICIS-NPDES and SDWIS extract dates above. (3) USGS
     NLDI / NHDPlus v2, snapped 2026-08-01, to establish that the intake, the overflows and the
     outfall are on one flowline and in what order. (4) The City's own Utilities publications for
-    the source-water description. Each federal figure is stamped with the system extract date it
-    was read against, because a quarter that reads clean today may only be a quarter whose DMRs
+    the source-water description. (5) EPA ECHO eff_rest_services.get_effluent_chart for OH0027910,
+    read 2026-08-04 — the plant's own reported DMR record for total phosphorus (00665), CSO
+    occurrence (74062), CSO volume (74063) and effluent flow (50050), sixteen requests, one per
+    (calendar year × parameter code). Each federal figure is stamped with the system extract date
+    it was read against, because a quarter that reads clean today may only be a quarter whose DMRs
     have not landed.
+  effluent_chart_note: >-
+    The effluent-chart service refused this permit entirely on 2026-08-01 (read timeouts on a
+    three-year window, a 502 Proxy Error on retry, and a year-by-year loop abandoned after
+    repeated timeouts), which is why the 1406 pass left the measured load and the CSO volumes
+    `[open]`. It answered normally on 2026-08-04 — 3.2 s for a one-year, one-parameter request,
+    with one HTTP 429 in sixteen calls that cleared on the connector's own backoff. The failure
+    was transient and the year-per-request discipline is kept regardless, because it is what the
+    2026-08-01 log recommended and it keeps each committed response reviewable.
 
-# ── What changed since the 2026-07-10 research ────────────────────────────────
-# Recorded first because a standing watch is worth having only if it says what moved. Three of
-# these correct the issue body's own premises against the primary instruments.
+# ── What changed, newest first ────────────────────────────────────────────────
+# Recorded first because a standing watch is worth having only if it says what moved. The first
+# two entries are the 2026-08-04 pass (issue 1860); the rest are the 2026-08-01 pass (issue 1406),
+# three of which correct the 1406 issue body's own premises against the primary instruments.
 delta_since_previous_check:
+- item: The effluent chart answered, and the measured phosphorus load inverts the ceiling reading.
+  tag: '[verified]'
+  checked_on: '2026-08-04'
+  detail: >-
+    ECHO's eff_rest_services.get_effluent_chart, which refused this permit across every window on
+    2026-08-01, returned normally on 2026-08-04. The plant's own reported March-July loading is
+    692.7 kg (2023), 662.9 kg (2024) and 821.1 kg (2025) against the Maumee TMDL's 1,000 kg
+    individual allocation — 0.69×, 0.66× and 0.82×. This file's existing headroom figure, 2.30×,
+    described what the PERMIT would allow across the season, not what the plant discharged. Both
+    are kept: the ceiling comparison is why Part II.AE defers to the general permit and carries a
+    reopener, and the measured load is the answer to the question the ceiling could not reach.
+    See `total_phosphorus.measured_load`.
+- item: The CSO baseline exists now, and the plant's flow record shows routine primary bypass.
+  tag: '[verified]'
+  checked_on: '2026-08-04'
+  detail: >-
+    Twenty-three reported overflow-months across the five CSOs, 2023-01 to 2026-06, with per-outfall
+    occurrence counts and volumes in Mgal — the pre-construction baseline the 24-month PCCM period
+    (2027-03 → 2029-03) will be measured against. 2026 is already at eleven outfall-events through
+    June, more than all of 2025 or 2024. Pulled alongside it, outfall 001's reported flow shows a
+    daily maximum above the 5 MGD primary-clarifier bypass threshold in 22 of 42 months and above
+    the permit's 8.0 MGD peak hydraulic capacity in five. See `combined_sewer_overflows.volumes`
+    and `wastewater_permit.reported_flow`.
 - item: The *WD modification is in the corpus, and the DAM slot that served the *VD now serves it.
   tag: '[verified]'
   detail: >-
@@ -268,6 +312,69 @@ wastewater_permit:
     running above 5 MGD is a plant with its primary treatment bypassed, on a permit whose average
     design flow is 4.0 MGD and whose peak hydraulic capacity is 8.0.
 
+  reported_flow:
+    tag: '[verified]'
+    source: EPA ECHO eff_rest_services.get_effluent_chart, p_id OH0027910, parameter_code 50050, read 2026-08-04
+    what: Outfall 001 Effluent Gross, monthly-average flow (StatisticalBaseCode MK), MGD, 2023-01 through 2026-06.
+    why_here: >-
+      Pulled alongside the phosphorus record (issue 1860) as the denominator that makes the load
+      series readable. It also gives the `out_of_service_note` above its first measured test.
+    statistics_reported: >-
+      Two rows per month, both in MGD — a monthly average (MK, Quantity1) and a daily maximum (DD,
+      Quantity2). Neither carries a numeric permit limit; flow at this outfall is report-only, so
+      nothing below is a limit exceedance and none of it is described as one.
+    annual_mean_mgd: {2023: 2.774, 2024: 2.662, 2025: 2.43, 2026: 2.914}
+    critical_season_mean_mgd: {2023: 3.116, 2024: 3.091, 2025: 3.048, 2026: 3.527}
+    monthly_average_extremes:
+      lowest: {'2025-10': 1.389, '2023-09': 1.487, '2026-01': 1.548, '2024-10': 1.585}
+      highest: {'2024-04': 5.983, '2023-03': 5.622, '2026-04': 5.059, '2025-04': 4.369}
+    daily_maximum_mgd:   # [verified] verbatim, StatisticalBaseCode DD
+      '2023': {Jan: 7.613, Feb: 8.073, Mar: 9.048, Apr: 6.938, May: 3.862, Jun: 4.27, Jul: 20.92, Aug: 4.496, Sep: 2.823, Oct: 5.502, Nov: 4.246, Dec: 4.353}
+      '2024': {Jan: 7.954, Feb: 5.068, Mar: 7.533, Apr: 9.216, May: 5.352, Jun: 3.595, Jul: 4.31, Aug: 3.849, Sep: 3.971, Oct: 2.622, Nov: 3.308, Dec: 7.251}
+      '2025': {Jan: 7.244, Feb: 5.346, Mar: 6.782, Apr: 9.544, May: 7.213, Jun: 3.537, Jul: 5.517, Aug: 4.879, Sep: 2.422, Oct: 2.161, Nov: 2.389, Dec: 3.293}
+      '2026': {Jan: 2.309, Feb: 2.864, Mar: 5.864, Apr: 7.94, May: 7.013, Jun: 6.658}
+    against_the_plant_as_described:
+      tag: '[inference]'
+      primary_bypass_months: 22 of the 42 reported months carried a daily maximum above 5 MGD
+      by_year: {2023: 6 of 12, 2024: 6 of 12, 2025: 6 of 12, 2026: 4 of 6}
+      monthly_average_above_5_mgd: ['2023-03', '2024-04', '2026-04']
+      monthly_average_above_design_flow_4_mgd: ['2023-02', '2023-03', '2024-01', '2024-04', '2025-04', '2026-04']
+      above_peak_hydraulic_capacity_8_mgd:
+        '2023-02': 8.073
+        '2023-03': 9.048
+        '2023-07': 20.92
+        '2024-04': 9.216
+        '2025-04': 9.544
+      reading: >-
+        The fact sheet says flows above 5 MGD are bypassed around the primary clarifiers because the
+        roughing trickling filters and peak-flow primary tanks are out of service. The reported
+        daily-maximum flow crossed 5 MGD in 22 of the 42 months on record — six of twelve in each
+        full year and four of the first six months of 2026. So the bypass is not an exceptional
+        event; on this record it is a routine feature of more than half the months, and of every
+        wet season. Five months went past the permit's own 8.0 MGD PEAK HYDRAULIC CAPACITY. Three
+        months averaged above 5 MGD for the whole month, and six averaged above the 4.0 MGD design
+        flow. None of this is a violation — flow is report-only at this outfall and the bypass is
+        described in the fact sheet as existing practice. That is exactly what makes it worth
+        recording: a plant is documented running past its primary treatment in most wet months, in
+        the permittee's own numbers, and no condition in the modified permit is addressed to it.
+        The CSO construction schedule the *WD put in force is aimed at the collection system's
+        overflows, not at the plant's out-of-service primary units.
+      the_outlier:
+        tag: '[verified]'
+        value: 20.92 MGD daily maximum, July 2023, in a month averaging 2.957 MGD
+        note: >-
+          Recorded verbatim and flagged rather than used. It is 2.2× the next-highest daily maximum
+          in the series (9.544) and 2.6× the permit's stated peak hydraulic capacity, in a month
+          whose average is unremarkable and in which one CSO (Keplar 010) reported a single
+          overflow. A single extreme storm day and a reporting error look the same in this record,
+          and nothing captured here distinguishes them. No figure in this file depends on it.
+      caveat: >-
+        A daily maximum above 5 MGD establishes that at least one day in the month crossed the
+        bypass threshold, not how many did. The DMR carries no daily series, so the number of
+        bypass DAYS — and the volume that passed the primary clarifiers — is `[open]`. The
+        instruments that would carry it are the plant's own operating records and the O&M Report,
+        which is one of the three schedule obligations recorded unachieved since 2024-02-01.
+
 # ── The CSO construction schedule the modification put in force ───────────────
 cso_schedule:
   tag: '[verified]'
@@ -343,13 +450,128 @@ combined_sewer_overflows:
       and the notification plan behind this table dates to 2018-08-07. Instrument to pull: the
       City's CSO Public Notification Plan itself.
   volumes:
-    tag: '[open]'
-    detail: >-
-      Reported overflow occurrence and volume per CSO are in the DMR record and are NOT
-      transcribed here. Pull: ECHO eff_rest_services.get_effluent_chart for OH0027910, parameter
-      codes 74062 and 74063, by outfall. The attempt on 2026-08-01 failed — ECHO's effluent-chart
-      service returned read timeouts and a 502 across a three-year and a one-year window. Recorded
-      as unattempted-successfully, not as absent.
+    tag: '[verified]'
+    source: EPA ECHO eff_rest_services.get_effluent_chart, p_id OH0027910, parameter codes 74062 and 74063, read 2026-08-04
+    regenerate: >-
+      One request per (year, parameter code) — see `total_phosphorus.measured_load.regenerate`;
+      substitute parameter_code=74062 (occurrence) or 74063 (volume). 74062 is carried by all five
+      CSOs plus the SSO reporting station 300; 74063 by the five CSOs only.
+    purpose: >-
+      This is the PRE-CONSTRUCTION baseline. The 24-month post-construction monitoring period the
+      *WD modification schedules (2027-03 → 2029-03, `cso_schedule`) will be measured against what
+      the system did before it, and this is that record as the permittee reported it.
+
+    units_trap:
+      tag: '[verified]'
+      detail: >-
+        Read both codes by ECHO's `LimitUnitDesc`, never by its `StdUnitDesc`, and never by
+        `DMRValueStdUnits`. Occurrence (74062) is reported in **occur/mo** — a monthly COUNT — which
+        is why the MO AVG and DAILY MX rows carry the identical number every month; ECHO's standard
+        unit rescales it to occur/d (2 occur/mo → 0.0658 occur/d), arithmetically correct and
+        useless to read. Volume (74063) is reported in **Mgal**, and here ECHO's standardization is
+        not merely awkward, it is WRONG: it DIVIDES by a million where it should multiply, so a
+        reported 1.656 Mgal — 1,656,000 gallons — is published as `DMRValueStdUnits` 0.00000166
+        "gal", an error of 1e12. Confirmed as an ECHO-wide defect rather than a Van Wert one by
+        spot-checking Lima WWTP OH0026069 (0.26 Mgal → 0.00000026 gal, same year, same code). Every
+        volume below is the Mgal figure the permittee reported.
+
+    reported_overflow_months:   # [verified] verbatim; every month either code carries a value. All other months are NODI "C" (No Discharge).
+    - {outfall: '004', location: Wall Street, period: 2023-02, occurrences: 3, vol_mo_avg_mgal: 0.251, vol_daily_max_mgal: 0.496}
+    - {outfall: '004', location: Wall Street, period: 2023-03, occurrences: 2, vol_mo_avg_mgal: 0.374, vol_daily_max_mgal: 0.657}
+    - {outfall: '004', location: Wall Street, period: 2024-04, occurrences: 2, vol_mo_avg_mgal: 0.139, vol_daily_max_mgal: 0.624}
+    - {outfall: '004', location: Wall Street, period: 2025-04, occurrences: 1, vol_mo_avg_mgal: 1.656, vol_daily_max_mgal: 2.512}
+    - {outfall: '004', location: Wall Street, period: 2026-04, occurrences: 3, vol_mo_avg_mgal: 0.4831, vol_daily_max_mgal: 1.14}
+    - {outfall: '004', location: Wall Street, period: 2026-05, occurrences: 1, vol_mo_avg_mgal: 0.142, vol_daily_max_mgal: 0.277}
+    - {outfall: '004', location: Wall Street, period: 2026-06, occurrences: 1, vol_mo_avg_mgal: 0.496, vol_daily_max_mgal: 1.475}
+    - {outfall: '005', location: First & Monroe, period: 2023-02, occurrences: 3, vol_mo_avg_mgal: 0.011, vol_daily_max_mgal: 0.023}
+    - {outfall: '005', location: First & Monroe, period: 2025-04, occurrences: 2, vol_mo_avg_mgal: 0.144, vol_daily_max_mgal: 0.295}
+    - {outfall: '007', location: Main Street, period: 2023-02, occurrences: 1, vol_mo_avg_mgal: 0.07, vol_daily_max_mgal: 0.07}
+    - {outfall: '007', location: Main Street, period: 2024-04, occurrences: 2, vol_mo_avg_mgal: 0.328, vol_daily_max_mgal: 0.515}
+    - {outfall: '007', location: Main Street, period: 2025-04, occurrences: 1, vol_mo_avg_mgal: 0.167, vol_daily_max_mgal: 0.226}
+    - {outfall: '007', location: Main Street, period: 2026-04, occurrences: 1, vol_mo_avg_mgal: null, vol_daily_max_mgal: null,
+       nodi: 'E — Failed to Sample/Required Analysis Not Conducted'}
+    - {outfall: '009', location: Central, period: 2023-03, occurrences: 1, vol_mo_avg_mgal: 0.042, vol_daily_max_mgal: 0.042}
+    - {outfall: '010', location: Keplar, period: 2023-02, occurrences: 3, vol_mo_avg_mgal: 0.159, vol_daily_max_mgal: 0.269}
+    - {outfall: '010', location: Keplar, period: 2023-03, occurrences: 2, vol_mo_avg_mgal: 0.162, vol_daily_max_mgal: 0.327}
+    - {outfall: '010', location: Keplar, period: 2023-07, occurrences: 1, vol_mo_avg_mgal: 0.116, vol_daily_max_mgal: 0.116}
+    - {outfall: '010', location: Keplar, period: 2024-01, occurrences: 2, vol_mo_avg_mgal: 0.048, vol_daily_max_mgal: 0.087}
+    - {outfall: '010', location: Keplar, period: 2024-04, occurrences: 2, vol_mo_avg_mgal: 0.366, vol_daily_max_mgal: 0.561}
+    - {outfall: '010', location: Keplar, period: 2025-04, occurrences: 2, vol_mo_avg_mgal: 0.459, vol_daily_max_mgal: 0.706}
+    - {outfall: '010', location: Keplar, period: 2026-04, occurrences: 3, vol_mo_avg_mgal: 0.211, vol_daily_max_mgal: 0.499}
+    - {outfall: '010', location: Keplar, period: 2026-05, occurrences: 1, vol_mo_avg_mgal: 0.019, vol_daily_max_mgal: 0.019}
+    - {outfall: '010', location: Keplar, period: 2026-06, occurrences: 1, vol_mo_avg_mgal: 0.0455, vol_daily_max_mgal: 0.085}
+
+    occurrences_by_outfall_and_year:   # [verified] sum of the monthly occur/mo counts above
+      '004': {2023: 5, 2024: 2, 2025: 1, 2026: 5}
+      '005': {2023: 3, 2024: 0, 2025: 2, 2026: 0}
+      '007': {2023: 1, 2024: 2, 2025: 1, 2026: 1}
+      '009': {2023: 1, 2024: 0, 2025: 0, 2026: 0}
+      '010': {2023: 6, 2024: 4, 2025: 2, 2026: 5}
+      system_outfall_events: {2023: 16, 2024: 8, 2025: 6, 2026: 11}
+      worst_single_outfall: {2023: 6, 2024: 4, 2025: 2, 2026: 5}
+      note: >-
+        2026 is SIX MONTHS (January-June). Eleven outfall-events through June already exceed all of
+        2025 and all of 2024. An outfall-event is one overflow at one outfall; a single storm that
+        opens three weirs counts three. The DMR does not report storm events, so the number of
+        distinct wet-weather events behind these counts is `[open]`.
+
+    sso_station_300:
+      tag: '[verified]'
+      detail: >-
+        Station 2PD00006300 carries the occurrence parameter (74062) for all 42 months and reports
+        NODI "C — No Discharge" in every one of them. It carries no volume parameter at all. So the
+        record shows no reported sanitary sewer overflow in the window — a reported absence from a
+        permittee with three CSO reporting obligations unmet since 2024, which is worth stating
+        plainly rather than reading as a clean bill.
+
+    volume_totals:
+      tag: '[inference]'
+      what_is_derivable: >-
+        A LOWER BOUND only. The DMR reports a monthly-average and a daily-maximum overflow volume;
+        it does not report a monthly TOTAL, and the total is not recoverable from the two. The
+        obvious reconstruction — monthly average × occurrences — fails against the record: Wall
+        Street reported ONE occurrence in May 2026 with a 0.142 Mgal average and a 0.277 Mgal daily
+        maximum, which a single-event month cannot produce. So no season or annual total is stated.
+      floor_arithmetic: >-
+        A month's total is at least that month's reported daily maximum, so summing the daily maxima
+        gives a valid floor on the year.
+      floor_mgal: {2023: 2.0, 2024: 1.787, 2025: 3.739, 2026: 3.495}
+      reading: >-
+        At least 2.0 / 1.79 / 3.74 million gallons of combined sewage reached Town Creek in 2023,
+        2024 and 2025, and at least 3.50 MG in the first half of 2026 alone. Against a creek whose
+        own record puts a dry year's whole yield at 180 MG, the floor for 2025 is about 2% of that
+        year — but the floor is a floor, and the true figure is unbounded above by anything in this
+        record.
+      still_open: >-
+        The monthly TOTAL overflow volume per outfall. The instrument that carries it is the City's
+        CSO Event Report — which is one of the three permit-schedule obligations recorded "unachieved
+        and not reported" continuously since 2024-01-01 (`noncompliance.permit_schedule_violations`).
+        The report that would close this gap is the report that is not being filed.
+
+    against_the_ltcp_goal:
+      tag: '[open]'
+      why_not_a_verdict: >-
+        The 1999 LTCP's goal is "four CSO events or less per TYPICAL year" (`cso_schedule.history`),
+        and a typical year is a modeled design-precipitation year, not a calendar year. A count of
+        DMR-reported overflows in 2023 or 2025 is therefore NOT the test the goal sets, and this
+        file does not claim it is. Two further ambiguities the instrument does not resolve: whether
+        the four-event goal is per outfall or system-wide, and how a storm opening several weirs is
+        counted. What IS established, and by the state's own hand, is that the goal was not attained
+        — the 2022 LTCP Completion Evaluation Report says so, and the *WD modification exists
+        because of it. The counts above are the reported record, not a re-adjudication of it.
+      to_resolve: >-
+        The 2022 LTCP Completion Evaluation Report and the typical-year precipitation record it was
+        run against; the 2020 PCCM Plan due in revised form 2026-10-01 (event code 1299), which
+        defines how occurrence and volume will be measured across the 24-month monitoring period.
+
+    a_gap_the_record_names_itself:
+      tag: '[verified]'
+      detail: >-
+        Main Street (007) reported ONE overflow in April 2026 and reported its volume as NODI "E —
+        Failed to Sample/Required Analysis Not Conducted". The overflow is on the record; its
+        volume is not, because it was not measured. That is one of the twenty-three reported
+        overflow-months in this table, and it falls four months before the construction milestone
+        whose whole purpose is to reduce what this table counts.
 
 # ── Phosphorus and the Maumee TMDL ────────────────────────────────────────────
 total_phosphorus:
@@ -394,13 +616,122 @@ total_phosphorus:
       of 0.5 mg/L — half the permit's own 1.0 mg/L limit — or to submit evidence that local limits
       are not appropriate. Three categorical industrial users discharge 0.176 MGD into this plant.
   measured_load:
-    tag: '[open]'
-    detail: >-
-      What the plant actually discharged in a critical season is not established. ECHO's DFR
-      records TP exceedances in two quarters (13% of 2023-Q3 monthly averages, 30% of 2025-Q3 —
-      see `noncompliance`), but the loads themselves need the effluent chart, which would not
-      respond on 2026-08-01. Pull: eff_rest_services.get_effluent_chart, p_id OH0027910,
-      parameter_code 00665, one year per request.
+    tag: '[verified]'
+    source: EPA ECHO eff_rest_services.get_effluent_chart, p_id OH0027910, parameter_code 00665, read 2026-08-04
+    regenerate: >-
+      One request per (year, parameter code). ECHO accepts exactly ONE parameter_code — a
+      comma-separated list silently returns nothing — and the service refused wider windows on
+      2026-08-01, so the year is the unit of pull:
+      curl -s "https://echodata.epa.gov/echo/eff_rest_services.get_effluent_chart?output=JSON&p_id=OH0027910&start_date=01/01/2025&end_date=12/31/2025&parameter_code=00665"
+    coverage: >-
+      Outfall 001 Effluent Gross, complete calendar months 2023-01 through 2026-06 — 42 monthly
+      periods, no gap. The March-July critical season is therefore complete for 2023, 2024 and
+      2025 and four-fifths complete for 2026 (July had not been reported at the read date).
+    what_echo_reports: >-
+      Four monthly rows per period, two statistics × two limit families. The load rows are
+      Quantity1/Quantity2 in kg/d against the permit's 15 and 23 kg/day limits; the concentration
+      rows are Concentration2/Concentration3 in mg/L against 1.0 and 1.5 mg/L. The monthly-average
+      LOADING row (StatisticalBaseCode MK, kg/d) is the one the seasonal arithmetic uses, because
+      it is the only reported figure denominated the same way the TMDL allocation is.
+
+    monthly_average_load_kg_per_day:   # [verified] verbatim, outfall 001, StatisticalBaseCode MK, Quantity1, limit 15 kg/d
+      '2023': {Jan: 5.1, Feb: 3.9, Mar: 6.6, Apr: 4.3, May: 4.2, Jun: 3.6, Jul: 3.9, Aug: 5.1, Sep: 6.63, Oct: 3.7, Nov: 4.0, Dec: 4.2}
+      '2024': {Jan: 4.7, Feb: 4.7, Mar: 3.6, Apr: 6.2, May: 5.2, Jun: 3.91, Jul: 2.8, Aug: 3.2, Sep: 4.1, Oct: 4.3, Nov: 5.5, Dec: 3.5}
+      '2025': {Jan: 4.9, Feb: 3.6, Mar: 6.2, Apr: 4.8, May: 5.8, Jun: 4.9, Jul: 5.1, Aug: 4.2, Sep: 6.38, Oct: 3.95, Nov: 3.7, Dec: 2.6}
+      '2026': {Jan: 2.3, Feb: 2.6, Mar: 2.6, Apr: 5.5, May: 3.7, Jun: 5.3}
+    monthly_average_concentration_mg_l:   # [verified] verbatim, same rows, Concentration2, limit 1.0 mg/L
+      '2023': {Jan: 0.42, Feb: 0.35, Mar: 0.36, Apr: 0.5, May: 0.43, Jun: 0.54, Jul: 0.56, Aug: 0.55, Sep: 1.13, Oct: 0.58, Nov: 0.42, Dec: 0.55}
+      '2024': {Jan: 0.58, Feb: 0.36, Mar: 0.33, Apr: 0.33, May: 0.43, Jun: 0.53, Jul: 0.43, Aug: 0.5, Sep: 0.56, Oct: 0.69, Nov: 0.63, Dec: 0.34}
+      '2025': {Jan: 0.39, Feb: 0.33, Mar: 0.37, Apr: 0.34, May: 0.35, Jun: 0.57, Jul: 0.83, Aug: 0.7, Sep: 1.3, Oct: 0.73, Nov: 0.72, Dec: 0.53}
+      '2026': {Jan: 0.4, Feb: 0.37, Mar: 0.35, Apr: 0.44, May: 0.41, Jun: 0.39}
+
+    critical_season_load:
+      tag: '[inference]'
+      method: >-
+        Monthly-average loading (kg/day, verbatim above) × the calendar days in that month, summed
+        over March-July. This is how a seasonal mass load is built from a monthly-average DMR
+        series, and it is an INFERENCE for one specific reason: the permittee's monthly average is
+        computed over the days it sampled, and extending it across every day of the month assumes
+        the sampled days represent the unsampled ones. Nothing else here is derived.
+      arithmetic:
+        '2023': 6.6×31 + 4.3×30 + 4.2×31 + 3.6×30 + 3.9×31 = 204.6 + 129.0 + 130.2 + 108.0 + 120.9
+        '2024': 3.6×31 + 6.2×30 + 5.2×31 + 3.91×30 + 2.8×31 = 111.6 + 186.0 + 161.2 + 117.3 + 86.8
+        '2025': 6.2×31 + 4.8×30 + 5.8×31 + 4.9×30 + 5.1×31 = 192.2 + 144.0 + 179.8 + 147.0 + 158.1
+        '2026': 2.6×31 + 5.5×30 + 3.7×31 + 5.3×30 = 80.6 + 165.0 + 114.7 + 159.0 (March-June only)
+      seasons:
+      - {season: '2023', months: 5, load_kg: 692.7, wla_kg: 1000, ratio: 0.693, complete: true}
+      - {season: '2024', months: 5, load_kg: 662.9, wla_kg: 1000, ratio: 0.663, complete: true}
+      - {season: '2025', months: 5, load_kg: 821.1, wla_kg: 1000, ratio: 0.821, complete: true}
+      - {season: '2026', months: 4, load_kg: 519.3, wla_kg: 1000, ratio: null, complete: false,
+         note: July not reported at the 2026-08-04 read; no ratio is stated for a partial season.}
+
+    the_finding:
+      tag: '[inference]'
+      headline: >-
+        The measured critical-season load is UNDER the allocation in all three complete seasons —
+        0.69×, 0.66× and 0.82× of the 1,000 kg individual WLA. The ceiling comparison this file
+        already carried (2.30×) turns out to describe the permit, not the plant.
+      reading: >-
+        This inverts the premise the pull was made to test. What the record shows is a plant
+        discharging roughly a third of what its own permit would allow it to — the worst month in
+        forty-two is 6.63 kg/day against a 15 kg/day monthly-average limit, 44% of the limit — and
+        staying inside the TMDL's individual allocation without any allocation-denominated limit in
+        its permit compelling it to. Part II.AE's deferral to the general permit and its reopener
+        are unexercised headroom, not a live gap. That is a finding about THIS plant and does not
+        travel: it says nothing about the other Maumee dischargers, nothing about nonpoint load,
+        and nothing about whether 1,000 kg was the right allocation.
+      but_the_margin_is_narrowing: >-
+        0.693, 0.663, 0.821 across the three complete seasons — not a trend on three points with a
+        dip in the middle, but 2025 is the highest of them and 24% above 2024, and it is the season
+        closest to the allocation. Two more seasons decide whether that is a direction or a wet
+        spring; the margin, not the current verdict, is the thing to re-check.
+      what_2026_would_take:
+        tag: '[inference]'
+        arithmetic: 1,000 kg - 519.3 kg (Mar-Jun) = 480.7 kg needed in July; 15 kg/day × 31 days = 465 kg
+        reading: >-
+          For the 2026 critical season to reach the allocation, July alone would have to carry
+          480.7 kg — more than the 465 kg the permit's own 15 kg/day monthly-average loading limit
+          allows for a 31-day month, and more than three times the largest July in the record
+          (158.1 kg, 2025). So 2026 cannot reach 1,000 kg without simultaneously violating the
+          individual permit's loading limit. Bounded, not projected — July's actual figure is still
+          `[open]` and is the single value to pull on the next pass.
+
+    exceedances_pinned:
+      tag: '[verified]'
+      detail: >-
+        The chart pins to a MONTH the two quarters the DFR reports as TP exceedances (see
+        `noncompliance.effluent_exceedances`), and both fall OUTSIDE the critical season.
+      rows:
+      - {period: 2023-09, concentration_mg_l: 1.13, limit_mg_l: 1.0, exceedance_pct: 13,
+         load_kg_day: 6.63, load_limit_kg_day: 15, violation: 'E90 DMR, Limited - Numeric Violation'}
+      - {period: 2025-09, concentration_mg_l: 1.3, limit_mg_l: 1.0, exceedance_pct: 30,
+         load_kg_day: 6.38, load_limit_kg_day: 15, violation: 'E90 DMR, Limited - Numeric Violation'}
+      also_weekly: 2025-09 weekly maximum 1.95 mg/L against the 1.5 mg/L limit, the same +30%, same E90 code.
+      what_it_means:
+        tag: '[inference]'
+        detail: >-
+          Both exceedances are CONCENTRATION exceedances in September, and September sits at the
+          bottom of the flow record in both years — the lowest month of 2023 at 1.487 MGD, and the
+          second-lowest of 2025 at 1.438 behind October's 1.389, against a 4.0 MGD average design
+          flow (see `wastewater_permit.reported_flow`). The loading side
+          never exceeded: 6.63 and 6.38 kg/day against a 15 kg/day limit. Neither exceedance is in
+          the March-July window the TMDL allocation governs, so neither bears on the WLA
+          comparison above. What the pair does show is that the concentration limit binds when the
+          creek and the plant are both at their driest — the same months the reach has least
+          assimilative capacity.
+
+    caveats: >-
+      Three, and they all point the same way. (1) The load is the permittee's own self-monitored
+      DMR figure, not an independent measurement, and this permittee's record carries 28 missing
+      DMRs in 2025 and three CSO reporting obligations continuously unmet since 2024 — the
+      phosphorus series happens to be complete, but it comes from a reporter whose other
+      obligations are not. (2) The season-total step assumes the sampled days represent the
+      unsampled ones (see `critical_season_load.method`). (3) A cross-check computing load from the
+      reported concentration and the reported flow (mg/L × MGD × 3.785) reproduces the reported
+      kg/day to a median ratio of 0.94 across 42 months but scatters 0.52 to 1.48, exactly as it
+      should — the true load is the mean of daily concentration × flow products, not the product of
+      two monthly means. The reported kg/day is used directly and was never back-computed; the
+      cross-check confirms the unit chain and nothing more.
 
 mercury_variance:
   tag: '[verified]'
@@ -455,6 +786,12 @@ noncompliance:
   - {parameter_code: '61427', parameter: Acute toxicity — Pimephales promelas, outfall: '001', basis: non-monthly, quarters: {2024-Q3: 10%}}
   - {parameter_code: '61426', parameter: Chronic toxicity — Ceriodaphnia dubia, outfall: '001', basis: monthly, quarters: {2024-Q1: 10%, 2024-Q3: 100%, 2025-Q3: 40%}}
   - {parameter_code: '61942', parameter: pH minimum, outfall: '001', basis: limit violation, quarters: {2024-Q2: LIMIT VIOLATION, 2024-Q3: LIMIT VIOLATION}}
+  effluent_exceedances_note: >-
+    The list above is the DFR's own quarterly summary, transcribed as ECHO presents it. The
+    effluent chart pulled 2026-08-04 pins the two PHOSPHORUS quarters to a month — both are
+    September, 2023 and 2025, and both are concentration-only with the loading well inside its
+    limit. See `total_phosphorus.measured_load.exceedances_pinned`. The other parameters have not
+    been pulled at month resolution.
   permit_schedule_violations:   # CWAPSCompliance — the continuing half of the record
   - schedule_event: CSO Event Report
     violation: Schedule Event unachieved and not reported
@@ -544,9 +881,18 @@ instruments_to_pull:
 - item: The Drinking Water Source Protection delineation for PWS OH8100611.
   why: Pins the raw-water intake location and river mile — the one geometry this file leaves open.
   route: Ohio EPA Division of Drinking and Ground Waters.
-- item: ECHO effluent chart for OH0027910 — parameters 00665 (TP) and 74062/74063 (CSO occurrence and volume).
-  why: Turns the TMDL headroom inference and the CSO record from ceilings into measured loads.
-  route: eff_rest_services.get_effluent_chart, one year per request (the service 502'd on wider windows 2026-08-01).
+- item: The City's CSO Event Reports — the monthly TOTAL overflow volume per outfall.
+  why: >-
+    The DMR reports a monthly-average and a daily-maximum overflow volume and no total, so this
+    file can state only a floor (`combined_sewer_overflows.volumes.volume_totals`). The report that
+    carries the total is the same CSO Event Report recorded "unachieved and not reported"
+    continuously since 2024-01-01 — the gap and the reporting violation are the same object.
+  route: Ohio EPA NWDO file review; the City of Van Wert Safety-Service Director.
+- item: The July 2026 phosphorus DMR — the last month of the 2026 critical season.
+  why: >-
+    2026 stands at 519.3 kg through June. July closes the fourth season and tests the upward trend
+    across 2023-2025 (0.69× → 0.66× → 0.82× of the allocation).
+  route: eff_rest_services.get_effluent_chart, p_id OH0027910, parameter_code 00665, 2026 window; re-run after the August DMR lands.
 - item: OHG8P0006 and OH0135569 — the two water-plant NPDES instruments.
   why: Two more permitted discharges on the same reach, neither in the corpus.
   route: Ohio EPA DAM.
@@ -560,6 +906,19 @@ sources:
 - {kind: primary, id: 2PD00006*VD, path: data/documents/oepa/van-wert/2PD00006.pdf, extraction: data/extracted/oepa/van-wert/2PD00006.npdes.yaml}
 - {kind: primary, id: 2PD00006*VD fact sheet, path: data/documents/oepa/van-wert/2PD00006.fs.pdf, extraction: data/extracted/oepa/van-wert/2PD00006.fs.npdes.yaml}
 - {kind: federal, system: EPA ECHO / ICIS-NPDES, service: dfr_rest_services.get_dfr, ids: [OH0027910, OH8100611, OH0135569], read: '2026-08-01', extract: '2026-07-24'}
+- kind: federal
+  system: EPA ECHO / ICIS-NPDES
+  service: eff_rest_services.get_effluent_chart
+  ids: [OH0027910]
+  parameter_codes: ['00665', '74062', '74063', '50050']
+  windows: ['2023-01-01..2023-12-31', '2024-01-01..2024-12-31', '2025-01-01..2025-12-31', '2026-01-01..2026-12-31']
+  requests: 16
+  read: '2026-08-04'
+  note: >-
+    One request per (year × parameter code); ECHO accepts exactly ONE parameter_code per call. The
+    response carries no data-extract stamp of its own, so only the read date is asserted. Reported
+    coverage runs 2023-01 through 2026-06. Cached under data/cache/hydrology/echo_dmr/ (git-ignored,
+    regenerable from the `regenerate` lines in each block).
 - {kind: federal, system: EPA ECHO / SDWIS, service: sdw_rest_services.get_systems, query: 'p_co=Van Wert&p_st=OH', read: '2026-08-01', extract: '2026-07-09'}
 - {kind: federal, system: USGS NLDI / NHDPlus v2, service: linked-data/comid/position + navigation, read: '2026-08-01'}
 - {kind: reference, publisher: City of Van Wert Utilities, url: 'https://vanwert.org/water-treatment/', read: '2026-08-01'}
