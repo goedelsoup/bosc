@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   citeCorpusPath,
   citeDataset,
+  citeSpecsInNote,
+  citedSourcesInNote,
   citeDocument,
   citeGroups,
   citeRecord,
@@ -152,6 +154,49 @@ describe("citedSourcesIn", () => {
 
   it("resolves nothing on a site that holds none of the cited sources", () => {
     expect(citedSourcesIn(`data/extracted/${LIMA_PERMIT}`, "fort-wayne")).toEqual([]);
+  });
+});
+
+describe("citeSpecsInNote", () => {
+  it("reads the identity attribute, mapping `dataset` onto the reference kind", () => {
+    expect(citeSpecsInNote('<Cite record="permits/x.yaml">a</Cite>')).toEqual([
+      { kind: "record", key: "permits/x.yaml" },
+    ]);
+    expect(citeSpecsInNote('<Cite document="oepa/x.pdf">a</Cite>')).toEqual([
+      { kind: "document", key: "oepa/x.pdf" },
+    ]);
+    // `dataset` is the authoring spelling; `reference` is the resolver's kind. The rename
+    // happens HERE and nowhere else, so the annex's three bands stay one kind each.
+    expect(citeSpecsInNote('<Cite dataset="eia">a</Cite>')).toEqual([{ kind: "reference", key: "eia" }]);
+  });
+
+  it("parses an opening tag wrapped across lines", () => {
+    // Load-bearing: an 80-column note wraps long rels, and only the `s` flag on the tag regex
+    // lets the attribute list span a newline. Several Lima notes are authored this way.
+    const body = '<Cite\n  document="grid/aep-lyka-2026/Lyka_ProjectFactsheet_V2.pdf">the\nfactsheet</Cite>';
+    expect(citeSpecsInNote(body)).toEqual([
+      { kind: "document", key: "grid/aep-lyka-2026/Lyka_ProjectFactsheet_V2.pdf" },
+    ]);
+  });
+
+  it("ignores the non-identity attributes and dedupes repeat citations", () => {
+    const body = '<Cite dataset="eia" basis="input">a</Cite> and <Cite basis="input" dataset="eia">b</Cite>';
+    expect(citeSpecsInNote(body)).toEqual([{ kind: "reference", key: "eia" }]);
+  });
+
+  it("finds nothing in prose that only mentions the component", () => {
+    expect(citeSpecsInNote('Wrap the phrase in a Cite tag. <Citation record="x">no</Citation>')).toEqual([]);
+  });
+});
+
+describe("citedSourcesInNote", () => {
+  it("resolves a note's authored citations and drops the unresolvable", () => {
+    const body = `<Cite record="${LIMA_PERMIT}">a</Cite> <Cite record="permits/nope.yaml">b</Cite>`;
+    expect(citedSourcesInNote(body, "lima").map((s) => s.key)).toEqual([LIMA_PERMIT]);
+  });
+
+  it("resolves per site — a Lima note's rels are not a peer's", () => {
+    expect(citedSourcesInNote(`<Cite record="${LIMA_PERMIT}">a</Cite>`, "fort-wayne")).toEqual([]);
   });
 });
 

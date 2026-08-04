@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { hasFeed, loadFeed, manifestOrNull } from "./bundle";
+import { docPermalink, documentId } from "./documentId";
 import { isRoutableDoc } from "./docRouting";
 import { slugify, type DocumentCollectionItem, type RecordItem } from "./feeds";
 import { facetAvailable } from "./readiness";
@@ -118,6 +119,10 @@ describe(`study chapter evidence — every committed bundle (${bundled.length} s
             c.entries.filter(isRoutableDoc),
           )
         : [];
+    // The rel says the document is CATALOGUED; the permalink is what the reader clicks. Derive
+    // it here from `documentId` — the same handle `/doc/[id].astro` keys its paths on — so a
+    // malformed href can't pass this gate by riding a valid rel.
+    const documentHrefs = new Set(documents.map((d) => docPermalink(documentId(d.rel))));
     const datasetHrefs = new Set(
       (facetAvailable(slug, "reference") ? scopedReference(slug) : []).map(
         (d) => `/site/reference/${d.slug}`,
@@ -131,12 +136,15 @@ describe(`study chapter evidence — every committed bundle (${bundled.length} s
         expect(group.count).toBeGreaterThan(0);
       }
       for (const source of evidence.sources) {
-        if (source.kind === "record") expect(recordHrefs, `${slug}/${def.id}`).toContain(source.href);
-        else
+        if (source.kind === "record") {
+          expect(recordHrefs, `${slug}/${def.id}`).toContain(source.href);
+        } else {
           expect(
             documents.map((d) => d.rel),
-            `${slug}/${def.id}`,
+            `${slug}/${def.id}: uncatalogued rel`,
           ).toContain(source.key);
+          expect(documentHrefs, `${slug}/${def.id}: unroutable permalink`).toContain(source.href);
+        }
       }
       for (const dataset of evidence.datasets) {
         expect(datasetHrefs, `${slug}/${def.id}`).toContain(dataset.href);

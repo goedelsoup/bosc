@@ -37,8 +37,10 @@ const plural = (n: number, one: string): string => `${n} ${one}${n === 1 ? "" : 
         The record behind this chapter
       </h2>
       <p class="chrec-lede">
-        Every figure above is checkable. These are the sources it was read from — the same pages
-        the record screens serve, not a second copy.
+        What this chapter stands on: the records it reads, the inputs its modeled figures rest
+        on, and the reference data behind its baselines — the same pages the record screens
+        serve, not a second copy. A figure the record does not support stays{" "}
+        <code>[open]</code> and links nothing.
       </p>
 
       {sources.length > 0 && (
@@ -112,6 +114,10 @@ const plural = (n: number, one: string): string => `${n} ${one}${n === 1 ? "" : 
     line-height: 1.55;
     color: #3a4036;
     margin: 0.45rem 0 0;
+  }
+  .chrec-lede code {
+    font-family: var(--bosc-mono);
+    font-size: 0.78em;
   }
   .chrec-band {
     margin-top: 1rem;
