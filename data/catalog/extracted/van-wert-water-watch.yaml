@@ -22,7 +22,15 @@ producer:
     2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09, and USGS NLDI /
     NHDPlus v2 (linked-data/comid/position plus upstream/downstream navigation) snapped 2026-08-01
     to establish that the intake, the five CSOs and the outfall share one flowline and in what
-    order.
+    order. Issue 1860 added the fifth route: EPA ECHO eff_rest_services.get_effluent_chart for
+    OH0027910, read 2026-08-04 — the permittee's own DMR record for total phosphorus (00665), CSO
+    occurrence (74062), CSO volume (74063) and effluent flow (50050), sixteen requests, one per
+    (calendar year x parameter code) because ECHO accepts exactly one parameter_code per call.
+    Reported coverage 2023-01 through 2026-06, no gap in the phosphorus or flow series. The
+    effluent-chart service had refused this permit outright on 2026-08-01 (read timeouts and a 502
+    across three-year and one-year windows); it answered normally on 2026-08-04, and the raw
+    responses cache under data/cache/hydrology/echo_dmr/ with the exact curl in each block's
+    `regenerate` key.
 license: public record / public domain
 access_tier: public
 site_scope: site:van-wert
@@ -104,6 +112,30 @@ notes: >-
   (the water plant's general-permit discharge) and OH0135569 (an individual permit at the water
   plant address carrying a CSO area flag). Seven named instruments to pull are itemized in the
   digest's own `instruments_to_pull` block, led by whether construction actually began on
-  2026-08-01 and where the raw-water intake physically is. The ECHO effluent chart for parameters
-  00665, 74062 and 74063 was ATTEMPTED and failed (read timeouts and a 502 across three-year and
-  one-year windows on 2026-08-01) — recorded as unattempted-successfully, not as absent.
+  2026-08-01 and where the raw-water intake physically is. (11) ISSUE 1860 PULLED THE EFFLUENT
+  CHART THAT REFUSED ON 2026-08-01, AND THE MEASURED LOAD INVERTS ITEM (5). The plant's own
+  reported March-July phosphorus loading is 692.7 kg (2023), 662.9 kg (2024) and 821.1 kg (2025)
+  against the TMDL's 1,000 kg individual allocation — 0.69x, 0.66x and 0.82x, all UNDER it, with
+  the worst month in forty-two at 6.63 kg/day against a 15 kg/day limit. The 2.30x figure in item
+  (5) describes what the PERMIT would allow across the season, not what the plant discharged; both
+  are kept, because the ceiling is why Part II.AE defers to the general permit and the measured
+  load is the answer the ceiling cannot reach. The trend is up (0.69 to 0.66 to 0.82) and 2026
+  stands at 519.3 kg through June, which cannot reach 1,000 kg without July also breaching the
+  permit's own loading limit. Both DFR-reported TP exceedance quarters pin to SEPTEMBER (2023 and
+  2025) — outside the March-July critical season, concentration-only, in the two lowest-flow
+  months on record. (12) THE CSO PRE-CONSTRUCTION BASELINE NOW EXISTS: 23 reported overflow-months
+  across the five outfalls, 2023-01 to 2026-06, with per-outfall counts (16 / 8 / 6 outfall-events
+  in 2023 / 2024 / 2025 and ELEVEN in the first six months of 2026) and volumes in Mgal. Only a
+  FLOOR on volume is derivable — the DMR reports a monthly average and a daily maximum but no
+  monthly total, and the report that carries the total is the same CSO Event Report unfiled since
+  2024. No verdict is offered against the LTCP's four-events goal, because a "typical year" is a
+  modeled design year and not a calendar one. (13) A UNIT TRAP WORTH CARRYING NETWORK-WIDE: ECHO's
+  `DMRValueStdUnits` for parameter 74063 is wrong by 1e12 (it divides by a million where it should
+  multiply — 1.656 Mgal published as 0.00000166 "gal"), confirmed on Lima OH0026069 as well as
+  here; read `LimitUnitDesc`. 74062 is reported in occur/mo, a monthly count, which ECHO rescales
+  to a meaningless occur/d. (14) THE PLANT RUNS PAST ITS PRIMARY TREATMENT IN MOST WET MONTHS.
+  Outfall 001's reported daily-maximum flow crossed the 5 MGD primary-clarifier bypass threshold
+  the fact sheet describes in 22 of 42 months, and the permit's own 8.0 MGD peak hydraulic capacity
+  in five. Not a violation — flow is report-only and the bypass is described as existing practice —
+  which is the point: nothing in the *WD modification is addressed to it, the schedule it created
+  being aimed at the collection system instead.

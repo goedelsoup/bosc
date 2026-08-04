@@ -52,6 +52,16 @@ FLOW_PARAM = "50050"  # "Flow, in conduit or thru treatment plant" (the effluent
 # "Overflow volume" — ICIS 74063 covers BOTH sanitary (SSO) and combined (CSO) sewer overflows;
 # the code does not distinguish them, so a count of features carrying it is "overflow outfalls",
 # not specifically CSO (WS-25 / #1625).
+#
+# ⚠ ECHO's standardization of THIS code is broken (#1860). A permittee reports overflow volume in
+# `LimitUnitDesc` "Mgal", and ECHO's `DMRValueStdUnits` *divides* by a million where it should
+# multiply: a reported 1.656 Mgal (1,656,000 gal) is published as 0.00000166 "gal", off by 1e12.
+# Confirmed on Van Wert WWTP OH0027910 and Lima WWTP OH0026069, so it is an ECHO-wide defect rather
+# than one permit's record. Nothing here reads the magnitude — `summarize_discharge` uses this code
+# only to COUNT overflow outfalls — but a caller that needs a volume must convert from
+# `DmrRow.limit_unit` and must never use `std_value`. The sibling occurrence code 74062 has the
+# milder version of the same trap: reported in "occur/mo" (a monthly COUNT, which is why its MO AVG
+# and DAILY MX rows carry the identical number), rescaled by ECHO to a meaningless "occur/d".
 OVERFLOW_PARAM = "74063"
 
 # Effluent **temperature** — the thermal-discharge screen's observation (#1718, epic #1715 P3).

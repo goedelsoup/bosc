@@ -65,6 +65,22 @@ GIS, FEMA NFHL, ORC, LSC). Defers to the root [`CLAUDE.md`](../../../../CLAUDE.m
   a permit with no numeric limit at all is `monitor_only` — a cited absence, not a clean bill.
   An `Upstream/Downstream Monitoring` location is an **in-stream** (receiving-water) reading,
   categorically different from an effluent one, and is never averaged in with one.
+- **ECHO's own standardized DMR value is not trustworthy for every parameter — read
+  `LimitUnitDesc`** (`echo_dmr.py`, #1860). `DmrRow` carries both the reported value (whose
+  `DMRUnitDesc` is often null, because the permittee reports in the limit's unit) and ECHO's
+  `DMRValueStdUnits`/`StdUnitDesc`. For flow (50050) and phosphorus (00665) the standardization is
+  sound and `_flow_mgd` rightly prefers it. For **overflow volume (74063) it is wrong by 1e12**:
+  ECHO *divides* by a million where it should multiply, publishing a reported `1.656 Mgal`
+  (1,656,000 gal) as `0.00000166 gal`. Confirmed on two permits in different counties — Van Wert
+  WWTP OH0027910 and Lima WWTP OH0026069 — so it is an ECHO-wide defect, not one permit's record.
+  For **overflow occurrence (74062)** the standardization is arithmetically right but changes the
+  quantity's meaning: the permittee reports `occur/mo` (a monthly COUNT — which is why the MO AVG
+  and DAILY MX rows carry the identical number), and ECHO rescales it to `occur/d`
+  (2 occur/mo -> 0.0658 occur/d). Nothing in this package reads either magnitude today —
+  `summarize_discharge` uses 74063 only to COUNT overflow outfalls, never to size them — so the
+  defect corrupts nothing yet; a caller that needs a volume must convert from `limit_unit`
+  (`Mgal`) and must not touch `std_value`.
+
 - **`fetch_effluent_chart(parameter_code=...)` narrows the pull server-side.** A whole-permit
   chart for a major industrial permit is enormous (the Lima Refinery's three-year chart is
   ~19k DMR rows / 22 MB) — unreviewable as a committed fixture. ECHO accepts exactly **one**
