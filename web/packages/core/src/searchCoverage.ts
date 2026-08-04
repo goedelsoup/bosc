@@ -102,7 +102,7 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
     label: "A non-selectable site's own pages",
     verdict: "gap",
     note:
-      "Search is sharded per SELECTABLE site, and a site can publish pages before it is " +
+      "#1907. Search is sharded per SELECTABLE site, and a site can publish pages before it is " +
       "selectable — Findlay's `flagpole` story is eight routes of real, reachable prose today, " +
       "because story ROUTE emission gates on story registration, not on switchability (#1466). " +
       "So those pages exist, are linked from that site's home, and cannot be searched. Closing " +
@@ -115,7 +115,7 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
     label: "Pages the nav model doesn't carry",
     verdict: "gap",
     note:
-      "Real per-site pages reachable only from inside another page — the enclave and groundwater " +
+      "#1908. Real per-site pages reachable only from inside another page — the enclave and groundwater " +
       "reads, the record's how-to-read primer, the per-site submit form. Everything else at this " +
       "level is indexed by walking `siteTabs()`, on the rule that search reaches whatever the " +
       "chrome navigates to; these are the routes that rule exposes as missing FROM THE NAV. " +
@@ -125,14 +125,14 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
     pattern: "^/(about/(data|sustainability|catalog|contributing)|privacy|network/connect)/$",
     label: "Network pages the nav model doesn't carry",
     verdict: "gap",
-    note: "The same finding at the root: real pages, linked from body copy but not from the nav model.",
+    note: "#1908, the same finding at the root: real pages, linked from body copy but not from the nav model.",
   },
   {
     pattern: "^/wiki/entities/[^/]+/$",
     label: "Peer-only wiki entities",
     verdict: "gap",
     note:
-      "The wiki builds once from the reference site's bundle (`getStaticPaths` in `pages/wiki/**` " +
+      "#1906. The wiki builds once from the reference site's bundle (`getStaticPaths` in `pages/wiki/**` " +
       "runs outside `runWithSite`), so an entity appearing only in a peer's `entities` feed — " +
       "Fort Wayne carries two, DANA LIGHT AXLE PRODUCTS and project-zodiac-campus — has no page " +
       "anywhere to point a result at. This is the edge `taxonomy.ts` documents; the fix is to " +
