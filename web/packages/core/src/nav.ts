@@ -703,6 +703,21 @@ export interface NavSurface {
   links: { label: string; href: string }[];
 }
 
+/** EVERY destination a tab offers, which is not the same set as `navItemLinks`. That one answers
+ *  "what does the phone sheet show", and the sheet deliberately stops short of the mega's
+ *  per-chapter links. A surface has to be counted by what a reader can actually reach from it, so
+ *  the mega contributes its tiles, its spine head AND the spine's chapters — otherwise a chapter
+ *  that later picked up a footer link and a home tile would sit on three surfaces with the ceiling
+ *  test reporting two. */
+export function navItemDestinations(item: NavItem): { label: string; href: string }[] {
+  if (item.kind !== "mega") return navItemLinks(item);
+  return [
+    ...item.mega.tiles.map((t) => ({ label: t.label, href: t.href })),
+    { label: item.mega.spine.title, href: item.mega.spine.href },
+    ...item.mega.spine.items.map((i) => ({ label: i.label, href: i.href })),
+  ];
+}
+
 /** The site home's promoted door — the impact study, the site's primary artifact (#1795). The
  *  home template renders this band; it's declared here so it is counted with the chrome rather
  *  than being invisible to the rule that governs the chrome. */
@@ -715,11 +730,15 @@ export function siteHomePromotions(): { label: string; href: string }[] {
 export function navSurfaces(hypotheses: HypothesisItem[] = []): NavSurface[] {
   return [
     { id: "site-home", label: "The site home's promoted door", links: siteHomePromotions() },
-    { id: "header-site", label: "Header — site tier", links: siteTabs().flatMap(navItemLinks) },
+    {
+      id: "header-site",
+      label: "Header — site tier",
+      links: siteTabs().flatMap(navItemDestinations),
+    },
     {
       id: "header-network",
       label: "Header — network tier",
-      links: networkTabs(hypotheses).flatMap(navItemLinks),
+      links: networkTabs(hypotheses).flatMap(navItemDestinations),
     },
     {
       id: "platform",

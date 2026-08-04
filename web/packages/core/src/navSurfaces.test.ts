@@ -12,7 +12,7 @@
 // surface; a tab and its own dropdown are one surface. In-page contextual cross-links are not
 // surfaces at all — they are where a demoted destination goes.
 import { describe, expect, it } from "vitest";
-import { navSurfaces, siteTabs, type NavChild, type NavItem } from "./nav";
+import { navItemDestinations, navItemLinks, navSurfaces, siteTabs, type NavChild, type NavItem } from "./nav";
 import { activeSite } from "./bundle";
 import { siteBase } from "./routes";
 
@@ -68,6 +68,42 @@ describe("navigation surfaces — the nav-diet ceiling (#1893)", () => {
     expect(tabs.filter((t) => t.kind === "link" && t.href === spine)).toEqual([]);
     // …and story routes still light a tab, or the bar would go blank on every chapter.
     expect(mega!.match).toContain("story");
+  });
+
+  it("a surface is counted by every destination the mega opens, not by what the sheet shows", () => {
+    // These two flatteners answer different questions and must not collapse into one. The sheet
+    // (`navItemLinks`) stops at the spine's head on purpose — a phone gets no mega, and its deep
+    // chapter list belongs to the desktop menu. The ceiling counts what a reader can REACH, so it
+    // has to include those chapters. Asserted on a synthetic mega because the reference site's
+    // story is `comingSoon` (#1526), which leaves the real spine with no chapters at all — so
+    // going through `siteTabs()` here would prove nothing today and quietly start to matter the
+    // day a story surfaces.
+    const mega: NavItem = {
+      kind: "mega",
+      label: "The site",
+      section: "home",
+      mega: {
+        tiles: [{ label: "Overview", href: "/s", blurb: "", icon: "home" }],
+        spine: {
+          title: "The story",
+          href: "/s/stories/x",
+          count: "2 chapters",
+          blurb: "",
+          tocHref: "/s/stories/x/contents",
+          items: [
+            { label: "One", href: "/s/stories/x/one" },
+            { label: "Two", href: "/s/stories/x/two" },
+          ],
+        },
+      },
+    };
+    expect(navItemLinks(mega).map((l) => l.href)).toEqual(["/s", "/s/stories/x"]);
+    expect(navItemDestinations(mega).map((l) => l.href)).toEqual([
+      "/s",
+      "/s/stories/x",
+      "/s/stories/x/one",
+      "/s/stories/x/two",
+    ]);
   });
 });
 

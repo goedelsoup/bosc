@@ -508,8 +508,8 @@ export function buildSiteSearchIndex(slug: string): SearchDoc[] {
       push({
         title: "Economics — localized baseline",
         url: at("/economy/economics-baseline"),
-        // Economic ground, so it's filed under the economy section even though the route still
-        // lives under /environment/ (#1323).
+        // Economic ground, filed under the economy section — and since #1893 the route agrees
+        // (it lived under /environment/ from #1323 until then).
         section: getSection("economy").label,
         text: blob("BLS QCEW Census employment population baseline", eb.area_name, eb.note),
         kind: "Dataset",
