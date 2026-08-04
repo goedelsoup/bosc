@@ -95,7 +95,7 @@ const doors: Door[] = [
   {
     id: "baseline",
     kind: "Baseline data",
-    href: withSite("/environment/economics-baseline"),
+    href: withSite("/economy/economics-baseline"),
     count: sectorCount ? String(sectorCount) : "—",
     title: "Localized labor baseline",
     desc: `What ${area}'s economy actually is — employment by NAICS sector with each sector's location quotient, and population. BLS QCEW + US Census, every figure connector-sourced.`,
@@ -190,7 +190,7 @@ const doors: Door[] = [
       ]
         .filter(Boolean)
         .join(" ")}
-      href={withSite("/environment/economics-baseline")}
+      href={withSite("/economy/economics-baseline")}
       cta="Open the baseline"
     >
       <p class="hublede-say">

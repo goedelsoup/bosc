@@ -507,7 +507,7 @@ export function buildSiteSearchIndex(slug: string): SearchDoc[] {
       const eb = loadFeed<EconomicBaseline>("economics-baseline");
       push({
         title: "Economics — localized baseline",
-        url: at("/environment/economics-baseline"),
+        url: at("/economy/economics-baseline"),
         // Economic ground, so it's filed under the economy section even though the route still
         // lives under /environment/ (#1323).
         section: getSection("economy").label,

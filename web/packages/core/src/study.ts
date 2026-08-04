@@ -464,7 +464,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       missingRecord: "the county employment baseline — not yet assembled for this site.",
       producer: "BLS QCEW and Census ACS — public series; this gap closes on the next export",
     },
-    references: [{ label: "Localized labor baseline", path: "/environment/economics-baseline" }],
+    references: [{ label: "Localized labor baseline", path: "/economy/economics-baseline" }],
     // The baseline is entirely public federal series; the dataset page IS its provenance. A site
     // with WARN closure/layoff notices on its own record shows those beside it.
     recordGroups: ["labor"],
