@@ -386,13 +386,19 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   ];
 }
 
-/** Site-tier left tabs — shown inside a site. A 5-tab bar (the missing-impact-study epic's
- *  promotion pass): The site · **The impact study** · The story · **Reference** · The record.
- *  The study — the site's primary artifact — rides second, right after the mega; the old
- *  "The environment" / "The economy" dropdowns merge into ONE Reference dropdown, reframed
- *  as the data behind the study's chapters (the demotion is nav + framing; every URL is
- *  unchanged). Reports stay a "The site" mega tile (and light that tab), cross-linked from
- *  the Reference dropdown and the chapters' annex footers. */
+/** Site-tier left tabs — shown inside a site. A 4-tab bar (the nav diet, #1893):
+ *  The site · **The impact study** · **Reference** · The record.
+ *
+ *  The study — the site's primary artifact — rides second, right after the mega. The old
+ *  "The environment" / "The economy" dropdowns merge into ONE Reference dropdown, reframed as
+ *  the data behind the study's chapters, and every leaf in it now sits under the route prefix
+ *  its section names (#1893): the labor baseline moved to `/economy/economics-baseline`, and the
+ *  three long-form economy reports left the menu for the economy hub and the Reports index, which
+ *  is where a report is found. Reports stay a "The site" mega tile (and light that tab).
+ *
+ *  The standalone "The story" tab is gone: the mega's spine IS the story — its head links the
+ *  story root and it lists every chapter — so the tab beside it was the same destination twice in
+ *  one bar. Story routes still light "The site" (see the mega's `match`). */
 export function siteTabs(): NavItem[] {
   const { base, storyRoot, story } = siteRoots();
   const chapters = story?.chapters ?? [];
@@ -434,6 +440,11 @@ export function siteTabs(): NavItem[] {
           blurb: "Discharge heat vs the temperature criterion",
         },
       ];
+  // The economy half carries the economy's own DATASET pages and nothing else (#1893). It used to
+  // trail three `/reports/*` long-forms and a `/docs/` essay under an "Economy" heading — four
+  // leaves whose route prefix disagreed with the section they were filed in, and four destinations
+  // already reachable from the economy hub, the Reports index, and the study's annex footers. A
+  // report is found at Reports; this menu says what data is behind the study's economy chapters.
   const economyChildren: NavChild[] = economyLocked
     ? [{ label: "The economy", href: `${base}/economy/`, blurb: "Locked — awaiting a source" }]
     : [
@@ -448,22 +459,6 @@ export function siteTabs(): NavItem[] {
           blurb: "BLS QCEW · Census employment",
         },
         { label: "The grid backdrop", href: `${base}/economy/grid`, blurb: "Whose grid, cited" },
-        {
-          label: "End use & workloads",
-          href: `${base}/reports/end-use-and-workloads`,
-          blurb: "Where the campus load goes",
-        },
-        {
-          label: "The load & the grid",
-          href: `${base}/reports/the-load-and-the-grid`,
-          blurb: "The load report",
-        },
-        {
-          label: "The economic ledger",
-          href: `${base}/reports/the-economic-ledger`,
-          blurb: "The public balance sheet",
-        },
-        { label: "Demand & public benefits", href: "/docs/economics", blurb: "The prose companion" },
       ];
 
   return [
@@ -539,7 +534,6 @@ export function siteTabs(): NavItem[] {
         ]),
       ],
     },
-    { kind: "link", label: "The story", section: "story", href: storyRoot, locked: storyLocked },
     environmentLocked && economyLocked
       ? {
           // Both halves locked (a stub-tier peer): the merged tab collapses to the same
@@ -616,27 +610,22 @@ export function navItemActive(item: NavItem, active: SectionId): boolean {
   return item.match?.includes(active) ?? false;
 }
 
-/** The flattened primary links a tab contributes to the footer row / mobile sheet. For the mega,
- *  that's just the two tiles — environment/economy are their own dropdown tabs now (#1307), each
- *  contributing its own children; the story spine's deep chapter links stay desktop-mega-only. */
+/** The flattened primary links a tab contributes to the mobile sheet. For the mega that's its
+ *  tiles PLUS the story spine's head — the spine replaced the standalone "The story" tab (#1893),
+ *  and a phone reader gets no mega, so without the head the story would be reachable from the
+ *  desktop bar and the footer but not from the sheet. The spine's per-chapter links stay
+ *  desktop-mega-only; environment/economy contribute their own children as the Reference dropdown. */
 export function navItemLinks(item: NavItem): { label: string; href: string }[] {
   if (item.kind === "link") return [{ label: item.label, href: item.href }];
-  if (item.kind === "mega") return item.mega.tiles.map((t) => ({ label: t.label, href: t.href }));
+  if (item.kind === "mega") {
+    return [
+      ...item.mega.tiles.map((t) => ({ label: t.label, href: t.href })),
+      { label: item.mega.spine.title, href: item.mega.spine.href },
+    ];
+  }
   return item.children
     .filter((c): c is { label: string; href: string; blurb?: string } => !("divider" in c))
     .map((c) => ({ label: c.label, href: c.href }));
-}
-
-/** Flat primary-nav links for the footer row — both tiers + platform. A dropdown / mega tab
- *  contributes its children / tiles (so the footer still reaches Overview / Open leads / story). */
-export function navLinks(): { label: string; href: string }[] {
-  return [
-    ...siteTabs().flatMap(navItemLinks),
-    { label: "Directory", href: "/" },
-    { label: "Research", href: "/research/hypotheses" },
-    { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
-    ...platformLinks().map((t) => ({ label: t.label, href: t.href })),
-  ];
 }
 
 export interface FooterGroup {
@@ -655,7 +644,10 @@ export function footerGroups(): FooterGroup[] {
       heading: "The investigation",
       links: [
         { label: "Overview", href: base },
-        { label: "The impact study", href: `${base}/study/` },
+        // NOT the impact study (#1893). It reached readers from four places at once — the home's
+        // full-width promotion, its own tab, that tab's chapter dropdown, and here — and a thing
+        // linked from everywhere is emphasized nowhere. Its two surfaces are the ones that say
+        // "primary artifact": the home band and the tab. See `navSurfaces`.
         { label: "Open leads", href: `${base}/leads` },
         { label: "The environment", href: `${base}/environment/` },
         { label: "The economy", href: `${base}/economy/` },
@@ -685,5 +677,60 @@ export function footerGroups(): FooterGroup[] {
         { label: "Privacy", href: "/privacy" },
       ],
     },
+  ];
+}
+
+// --- The navigation surfaces, and the ceiling on them (#1893) ---------------
+//
+// The nav diet's standing rule: **no destination appears in more than two navigation surfaces.**
+// Before it, the impact study was reachable from four at once and Reports from four; neither was
+// wrong on its own, and together they meant the nav had no hierarchy — everything one click from
+// everywhere, which emphasizes nothing. `navSurfaces.test.ts` is the enforcement.
+//
+// A SURFACE is a distinct standing affordance a reader can use from a page, not a rendering of
+// one. The desktop tab bar and the phone sheet render the SAME models (`siteTabs`,
+// `networkTabs`, `platformLinks`), so they are one surface each, and a tab and its own dropdown
+// are one surface — the dropdown is how that tab is opened, not a second route to the thing.
+// Deliberately NOT counted: the `Watermark.` wordmark (the logo, a constant escape hatch, not a
+// nav item), and in-page contextual cross-links (a hub tile, a chapter's annex footer, a "see
+// also"). Those are the demotion this rule pushes work INTO — a destination that loses a nav
+// surface keeps its contextual links.
+
+/** One standing navigation affordance and every destination it offers. */
+export interface NavSurface {
+  id: "site-home" | "header-site" | "header-network" | "platform" | "footer";
+  label: string;
+  links: { label: string; href: string }[];
+}
+
+/** The site home's promoted door — the impact study, the site's primary artifact (#1795). The
+ *  home template renders this band; it's declared here so it is counted with the chrome rather
+ *  than being invisible to the rule that governs the chrome. */
+export function siteHomePromotions(): { label: string; href: string }[] {
+  const { base } = siteRoots();
+  return [{ label: "Read the impact study", href: `${base}/study/` }];
+}
+
+/** Every navigation surface for the active site, flattened. The ceiling is asserted over this. */
+export function navSurfaces(hypotheses: HypothesisItem[] = []): NavSurface[] {
+  return [
+    { id: "site-home", label: "The site home's promoted door", links: siteHomePromotions() },
+    { id: "header-site", label: "Header — site tier", links: siteTabs().flatMap(navItemLinks) },
+    {
+      id: "header-network",
+      label: "Header — network tier",
+      links: networkTabs(hypotheses).flatMap(navItemLinks),
+    },
+    {
+      id: "platform",
+      label: "Header — platform cluster",
+      links: [
+        ...platformLinks().map((p) => ({ label: p.label, href: p.href })),
+        { label: SUBMIT_LINK.label, href: SUBMIT_LINK.href },
+        { label: "Ask the corpus", href: "/ask" },
+        { label: "Search", href: "/search" },
+      ],
+    },
+    { id: "footer", label: "Footer", links: footerGroups().flatMap((g) => g.links) },
   ];
 }
