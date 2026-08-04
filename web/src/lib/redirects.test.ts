@@ -31,7 +31,16 @@ function shadows(rule: string, path: string): boolean {
   return rule === path;
 }
 
-/** Top-level static routes, from the page files themselves — `foo.astro` and `foo/index.astro`. */
+/**
+ * Top-level static routes, from the page files themselves — `foo.astro`, `foo/index.astro`, and
+ * the static endpoints (`foo.json.ts`).
+ *
+ * The endpoints matter as much as the pages and are easier to lose: a shadowed `.json` doesn't
+ * render a wrong page, it makes a `fetch` 301 away and a feature silently do nothing. Search is now
+ * exactly that shape (#1890) — the index ships as `/search-index.json` and one shard per site — so
+ * a rule capturing it would leave a search box that finds nothing, in production only, with every
+ * local check green.
+ */
 function staticRoutes(): string[] {
   const routes: string[] = [];
   const walk = (dir: string, prefix: string): void => {
@@ -41,11 +50,24 @@ function staticRoutes(): string[] {
       if (entry.isDirectory()) walk(path, `${prefix}/${entry.name}`);
       else if (entry.name === "index.astro") routes.push(prefix || "/");
       else if (entry.name.endsWith(".astro")) routes.push(`${prefix}/${entry.name.replace(/\.astro$/, "")}`);
+      else if (entry.name.endsWith(".ts")) routes.push(`${prefix}/${entry.name.replace(/\.ts$/, "")}`);
     }
   };
   walk("src/pages", "");
   return routes;
 }
+
+/**
+ * Routes under a dynamic segment that the crawl above can't enumerate, but that must not be
+ * shadowed. Kept short and specific — a hand-maintained list is only defensible for the cases the
+ * file walk genuinely cannot see.
+ */
+const DYNAMIC_ROUTES = [
+  // One search shard per selectable site (#1890). `/network/:site/docs` and
+  // `/network/:site/watershed` are real rules one segment away from this one.
+  "/network/american-sugar-creek-allen-co/search-index.json",
+  "/network/fort-wayne/search-index.json",
+];
 
 describe("public/_redirects", () => {
   it("does not shadow /network — the site index is a real page, not a redirect", () => {
@@ -55,11 +77,14 @@ describe("public/_redirects", () => {
     expect(shadowing, `these rules capture /network: ${JSON.stringify(shadowing)}`).toEqual([]);
   });
 
-  it("does not shadow any static page route", () => {
-    const routes = staticRoutes();
+  it("does not shadow any static page route, or any static endpoint", () => {
+    const routes = [...staticRoutes(), ...DYNAMIC_ROUTES];
     // Guard against a vacuous pass — an empty crawl would make this test assert nothing.
     expect(routes.length).toBeGreaterThan(20);
     expect(routes).toContain("/network");
+    // …and specifically that the crawl reached the endpoints, not just the pages.
+    expect(routes).toContain("/search-index.json");
+    expect(routes).toContain("/search-coverage.json");
     const collisions = routes.flatMap((route) =>
       RULES.filter(([from]) => shadows(from, route)).map(([from, to]) => `${from} -> ${to} shadows ${route}`),
     );

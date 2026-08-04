@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { withSite, withStory } from "@watermark/core/site";
+import { withBase, withSite, withStory } from "@watermark/core/site";
 
 // The portal goes live only when the Turnstile site key is present at build time (set in
 // the host/CI env once the endpoint is bootstrapped — docs/ask-api.md). Until then,
@@ -31,6 +31,12 @@ const EXAMPLES = [
       extracted corpus</strong>, with citations back to the source. If the record is
       silent, the answer says so — it never guesses. Treat answers as a <strong>guide to
       the record</strong>, not a verdict; follow the citations and verify.
+    </p>
+    <p class="ask-crossref">
+      Looking for something you can name — a document, a permit number, a person, a parcel?
+      <a href={withBase("/search")}>Search</a> matches titles and record fields directly, and
+      reaches every source document by name. Ask is for questions the record answers across
+      several sources at once.
     </p>
 
     {
@@ -104,7 +110,8 @@ const EXAMPLES = [
           <p class="callout-title">Ask isn't live yet</p>
           <p>
             The question endpoint isn't enabled in this build. In the meantime you can
-            explore the record directly — browse <a href={withSite("/site/")}>the corpus</a>,
+            explore the record directly — <a href={withBase("/search")}>search</a> it by name,
+            browse <a href={withSite("/site/")}>the corpus</a>,
             walk <a href={withSite("/timeline")}>the timeline</a>, or
             <a href={withStory()}>start the story</a>. The question box will
             appear here once the endpoint is live.

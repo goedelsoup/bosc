@@ -2,16 +2,22 @@
 /**
  * The full-page search results (#308) — the topbar dropdown's "see all N results" target.
  * A network-global route at the root (like /ask, /wiki), since the index spans the whole
- * record. The grouped record rows are rendered client-side from /search-index.json by
+ * record. The grouped record rows are rendered client-side from the index shards by
  * search-page.ts (shared engine); with JS off it degrades to the input + browse links,
  * exactly like /ask (a client index can't search without JS).
+ *
+ * This page owns the scope CHOICE (#1890). The header box states its scope and moves on; here a
+ * reader who arrived from a site can widen to the whole network and back, and the choice rides in
+ * the URL (`?site=&scope=`) so a shared link searches what the sender was looking at.
  */
 import Base from "../layouts/Base.astro";
+import { searchShardRefs } from "@watermark/core/search";
 import { withBase, withSite } from "@watermark/core/site";
 
 const q = Astro.url.searchParams.get("q") ?? "";
 const base = import.meta.env.BASE_URL || "/";
 const indexUrl = withBase("/search-index.json");
+const shards = searchShardRefs().map((s) => ({ ...s, url: withBase(s.path) }));
 ---
 
 <Base
@@ -23,9 +29,9 @@ const indexUrl = withBase("/search-index.json");
     <div class="submit-eyebrow">Search</div>
     <h1>Search the record</h1>
     <p class="section-lead">
-      One box over the whole corpus — records, documents, entities, concepts, the timeline,
-      and the essays. Results group by section and show each row's kind and evidence before
-      you click. The same index powers the topbar search.
+      One box over the whole corpus — every source document, the records drawn from them, the
+      entities, the concepts, the timeline, and the essays. Results group by section and show each
+      row's kind and evidence before you click. The same index powers the topbar search.
     </p>
 
     <form id="search-page-form" class="search-page-form" method="get" action={withBase("/search")} role="search">
@@ -41,9 +47,12 @@ const indexUrl = withBase("/search-index.json");
         aria-label="Search the corpus"
         data-index={indexUrl}
         data-base={base}
+        data-shards={JSON.stringify(shards)}
       />
       <button type="submit" class="btn">Search</button>
     </form>
+
+    <div id="search-page-scope" class="search-page-scope"></div>
 
     <noscript>
       <div class="callout callout-warning">

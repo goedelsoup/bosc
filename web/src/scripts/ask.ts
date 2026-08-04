@@ -72,6 +72,17 @@ if (form && input && statusEl && answerEl && sourcesEl) {
     });
   }
 
+  // The hand-off from search (#1890): a reader whose search came back thin arrives here with
+  // their words in `?q=`. Seed the box but do NOT auto-submit — an ask costs a model call and
+  // spends the caller's Turnstile token, and the words that failed as a lexical search are often
+  // worth rephrasing as a question first. `/ask` is a static page, so this can only happen client
+  // side; `Astro.url.searchParams` is empty at build time.
+  const handoff = new URLSearchParams(window.location.search).get("q");
+  if (handoff && !input.value) {
+    input.value = handoff.slice(0, 1000);
+    input.focus();
+  }
+
   const showEmpty = (): void => {
     // Announce the outcome in the live status region too — the answer area isn't a live
     // region, so a screen reader that heard "Searching…" needs this to learn it resolved.

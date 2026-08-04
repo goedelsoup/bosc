@@ -15,6 +15,7 @@ import {
   type SectionId,
 } from "@watermark/core/nav";
 import { getHypotheses } from "@watermark/core/bundle";
+import { searchShardRefs } from "@watermark/core/search";
 import { withBase } from "@watermark/core/site";
 import { currentSiteForPath, groupSites, SITE_STATUS_META, SITES, siteForPath } from "@watermark/core/sites";
 
@@ -24,6 +25,16 @@ interface Props {
 const { active } = Astro.props;
 const searchIndexUrl = withBase("/search-index.json");
 const base = import.meta.env.BASE_URL || "/";
+
+// Search scope (#1890). The box loads the network-global shard plus the shard of whichever site
+// the reader is standing on, and says which. Off a site (the wiki, /about, the directory) there is
+// no site shard to add, so it searches the network — every selectable site's record — and says
+// that instead. `searchShards` is the same list the full /search page uses.
+//
+// Scope keys off `here` (the BUILT-site resolver), not `current`: a coming-soon peer sets the chip
+// and the tab tier but ships no shard, so naming it as the scope would promise a record that isn't
+// there. Those pages search the network, which is the honest answer.
+const searchShards = searchShardRefs().map((s) => ({ ...s, url: withBase(s.path) }));
 
 // The two-tier chrome (design "Global Chrome"). The active tier is resolved from the
 // route: inside a site (`here !== null`) → SITE tabs + the site chip; at the network
@@ -558,6 +569,9 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
         spellcheck="false"
         data-index={searchIndexUrl}
         data-base={base}
+        data-shards={JSON.stringify(searchShards)}
+        data-site={here?.slug ?? ""}
+        data-site-label={here?.place ?? ""}
       />
       <kbd class="search-kbd" aria-hidden="true">⌘K</kbd>
       <div id="bosc-search-results" class="search-results" hidden></div>

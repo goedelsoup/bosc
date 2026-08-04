@@ -30,6 +30,24 @@ export const INTERACTIVE_REPORTS: ReportEntry[] = [
   { slug: "the-load-and-the-grid", label: "The load and the grid" },
 ];
 
+/**
+ * Companion pages that stand on their own — a `/reports/<slug>` route with **no docs essay behind
+ * it**, so they can't live in {@link INTERACTIVE_REPORTS} without breaking what that list means
+ * (`hasInteractive` answers "does this ESSAY have a companion", and is what decides whether the
+ * reports index renders the companion link beside an essay).
+ *
+ * Split out for #1890: the search index needs every report ROUTE, and asking the essay registry
+ * for it silently missed these two — the capstone and the cost scenario, which are among the most
+ * substantial pages a site builds.
+ */
+export const STANDALONE_REPORTS: ReportEntry[] = [
+  { slug: "public-balance-sheet", label: "The public balance sheet" },
+  { slug: "opc-scenario", label: "Opinion-of-probable-cost scenario" },
+];
+
+/** Every `/reports/<slug>` companion route a selectable site builds, essay-backed or not. */
+export const REPORT_PAGES: ReportEntry[] = [...INTERACTIVE_REPORTS, ...STANDALONE_REPORTS];
+
 const BY_SLUG = new Map(INTERACTIVE_REPORTS.map((r) => [r.slug, r]));
 
 /** The companion page URL for a report slug on a given site (deploy base included). */
