@@ -28,10 +28,11 @@ const MAX_DEPTH_BELOW_SITE_ROOT = 6;
  * Budget for a document-layer page's OWN content, measured above the shared site chrome.
  *
  * Not a total-page budget. The issue asked for "no index.html over ~250 KB", which no page in
- * this build meets and none can until #1893: every `/network/**` page carries ~206 KB of chrome
- * before its first row, ~189 KB of it the topbar site switcher (two implementations × two
- * groupings of all registered sites). Measuring above the floor isolates what this phase
- * actually governs, and the guard tightens on its own the moment the chrome shrinks.
+ * this build met: every `/network/**` page carried ~206 KB of chrome before its first row, ~189 KB
+ * of it the topbar site switcher — two implementations of the panel, each rendering all registered
+ * sites twice so a CSS pivot could show one grouping. #1893 deleted three of those four copies.
+ * Measuring above the floor still isolates what this phase governs, and keeps the guard honest
+ * about page content when the chrome moves again; guard 7 below is what holds the chrome itself.
  *
  * Current worst is ~168 KB (the sanitary production's listing pages, 150 rows of long
  * as-received folder trails), so this leaves modest headroom and will catch a regression like
@@ -357,6 +358,69 @@ function checkSearchCoverage() {
   }
 }
 checkSearchCoverage();
+
+// -------------------------------------- 7. one site switcher, one copy of the registry (#1893)
+//
+// The acceptance criterion of the nav diet: "exactly one site-switcher implementation in the built
+// HTML". It has to be asserted against `dist/` because the failure was invisible in the source —
+// two panels were rendered deliberately, with CSS and a `localStorage` flag choosing between them
+// at runtime, so both were correct-looking code and both shipped on all 4,078 pages.
+//
+// Two things are counted, because the duplication had two independent axes and killing one would
+// have left the other: how many PANELS a page carries, and how many times the registry is rendered
+// INSIDE one. A panel used to hold every site twice — once per State/Basin lens — so "one panel"
+// alone would still have allowed 76 rows for 38 sites. Rows carry `data-place`, so the second
+// question is answerable without knowing the registry: a page renders the network once when its
+// row count equals its distinct-place count.
+{
+  const PANEL = /<div class="switcher-menu"/g;
+  const ROW = /class="switcher-row[ "]/g;
+  const PLACE = /data-place="([^"]*)"/g;
+  // The retired flag and its dead panel. A page that still names any of these is one where the
+  // deletion was reverted or half-applied.
+  const RETIRED = ["switcher-menu-v2", "switcher-row-v2", "site-selector-v2", "data-ssv2"];
+
+  const wrongPanelCount = [];
+  const duplicated = [];
+  const retired = [];
+  let rowsPerPage = 0;
+  let chromed = 0;
+  for (const { file, route } of all) {
+    const html = readFileSync(file, "utf-8");
+    // `/pre-launch` deliberately bypasses `Base.astro` and ships no chrome at all — no topbar,
+    // so no switcher to count. Keyed off the topbar rather than a route list so a future
+    // chrome-less page is exempt by being chrome-less, not by being remembered here.
+    if (!html.includes('class="topbar')) continue;
+    chromed++;
+    const panels = (html.match(PANEL) ?? []).length;
+    if (panels !== 1) wrongPanelCount.push(`/${route} — ${panels} panel(s)`);
+    const rows = (html.match(ROW) ?? []).length;
+    const places = new Set([...html.matchAll(PLACE)].map((m) => m[1]));
+    if (rows !== places.size) duplicated.push(`/${route} — ${rows} rows for ${places.size} sites`);
+    rowsPerPage = Math.max(rowsPerPage, rows);
+    const found = RETIRED.filter((token) => html.includes(token));
+    if (found.length > 0) retired.push(`/${route} — ${found.join(", ")}`);
+  }
+  const report = (list, what) => {
+    if (list.length === 0) return;
+    failures.push(
+      `${list.length} page(s) ${what}:\n` +
+        list
+          .slice(0, 5)
+          .map((r) => `      ${r}`)
+          .join("\n"),
+    );
+  };
+  report(wrongPanelCount, "without exactly one site-switcher panel");
+  report(duplicated, "rendering the site registry more than once in the switcher");
+  report(retired, "still carrying the retired v2-switcher flag");
+  // A build with no chrome at all would pass every assertion above by having nothing to check.
+  if (chromed === 0) failures.push("no built page carries the topbar — the chrome assertions are vacuous");
+  console.log(
+    `check-routes: one switcher panel on ${chromed.toLocaleString("en-US")} chromed pages · ` +
+      `${rowsPerPage} site rows each`,
+  );
+}
 
 if (failures.length === 0) {
   console.log(`check-routes: OK — ${all.length.toLocaleString("en-US")} routes within budget.`);
