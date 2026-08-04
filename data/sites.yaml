@@ -14,7 +14,7 @@
 #   basin_label  receiving-water / sub-basin display string (TypeScript `basin` field)
 #   basin_major  the MAJOR river basin this site groups under (kebab slug: maumee, great-miami,
 #                scioto, …) — a different granularity from `basin_label`, and the grouping axis
-#                for the basin lens / the water-lens scorecard / the two continental divides.
+#                for the basin lens / the H1 scorecard / the two continental divides.
 #                Authoritative here (#1863): it back-stops the Python `SiteProfile.basin` literal
 #                (`watermark sites check` fails on disagreement) and reaches the frontend registry
 #                so `groupSites("basin")` derives its placement instead of keeping a parallel copy.
