@@ -1,12 +1,26 @@
 ---
 /**
  * The network directory — the "Directory" tab (network tier). The lighter overview
- * (design "Directory - Home"): a hero, the network-at-a-glance ledger, the three
- * hypotheses in brief, the "start here" doors, and a featured slice of the network.
- * The full hypothesis scorecard lives at /research/hypotheses (the "Research" tab).
+ * (design "Directory - Home"): a hero, the network-at-a-glance ledger, the five LENSES,
+ * the open questions, the "start here" doors, and a featured slice of the network.
+ *
+ * ## Why the lenses lead (#1916, epic #1911 phase 4)
+ *
+ * The front door used to be the three hypotheses — three cards, all linking to the same
+ * scorecard, under a hero whose primary CTA was "Explore the hypotheses". That asks a
+ * first-time reader to adjudicate a causal thesis about a national build-out before they
+ * have seen a single figure. Somebody who arrived because a data center is going up in
+ * their county wants to know what it takes, what it costs, and who decided.
+ *
+ * So the lens band is the first section below the hero, in the buildout's own causal order,
+ * and the hypotheses sit below it reframed as what they are: **the open questions**. The
+ * demotion is POSITIONAL, not a downgrade — they keep their H1/H2/H3 numbering and their
+ * reference/emerging status, every one is still one click from here, and the scorecard is
+ * still linked from the band head. A question asked second is not a question retracted.
  *
  * Real data only — sites from `bosc.sites` (mirrored in lib/sites), the hypothesis config
- * from lib/directory + the bundle feeds. Figures are counts or a dash, never invented.
+ * from lib/directory + the bundle feeds, the lens counts measured across every registered
+ * site's own manifest. Figures are counts or a dash, never invented.
  */
 import Base from "../layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
@@ -18,12 +32,16 @@ import {
   TIER_PILL,
 } from "@watermark/core/directory";
 import type { HypothesisItem } from "@watermark/core/feeds";
+import { LENS_ORDER, LENSES } from "@watermark/core/lenses";
+import { lensNetworkCounts, type LensResolvers } from "@watermark/core/lensView";
+import { lensStatus } from "@watermark/core/readiness";
 import { withBase, withSite, siteUrl } from "@watermark/core/site";
 import {
   groupSites,
   networkRollup,
   SITE_STATUS_META,
   SITES,
+  siteFeedCount,
   siteRollup,
   type SiteStatus,
 } from "@watermark/core/sites";
@@ -74,10 +92,36 @@ const stats = [
   { n: num(net.records), l: "Records" },
 ];
 
-// The three hypotheses, in brief — config + status only (the scorecard does the scoring).
+// The three open questions, in brief — config + status only (the scorecard does the scoring).
+// Headed by the hypothesis's own `question` once the feed carries one (#1917); until then the
+// `claim` stands in, which is the same sentence in the indicative. Read off the feed rather than
+// version-gated, so the copy sharpens the moment the contract does and not a release later.
 const hypItems = hasFeed("hypotheses") ? loadFeed<HypothesisItem[]>("hypotheses") : [];
 const hypByKey = new Map(hypItems.map((h) => [h.id, h]));
-const hyps = HYPOTHESIS_ORDER.map((key) => hypothesisConfig(key, hypByKey.get(key)));
+const hyps = HYPOTHESIS_ORDER.map((key) => {
+  const cfg = hypothesisConfig(key, hypByKey.get(key));
+  const asked = (hypByKey.get(key) as { question?: string } | undefined)?.question;
+  return { ...cfg, asked: asked ?? cfg.claim };
+});
+
+// The five lenses, with how much of the network each one actually reaches (#1914's measurement,
+// read here for the card line). Every figure is a count of sites whose OWN export carries the
+// lens — never a score, and a lens nothing has been measured for shows a dash rather than a zero.
+const lensResolvers = (id: (typeof LENS_ORDER)[number]): LensResolvers => ({
+  tierOf: (slug) => siteRollup(slug).tier,
+  statusOf: (slug) => lensStatus(slug, id),
+  countOf: siteFeedCount,
+});
+const lenses = LENS_ORDER.map((id) => {
+  const n = lensNetworkCounts(SITES, lensResolvers(id));
+  return {
+    ...LENSES[id],
+    onRecord: n["on-record"],
+    // A dash, not "0 sites": the number is only meaningful against sites that have been exported
+    // at all, and every site unexported would mean nothing was measured, not that nothing is there.
+    count: n["on-record"] + n.unrecorded === 0 ? "—" : `${n["on-record"]} of ${SITES.length} sites`,
+  };
+});
 
 // The "start here" doors.
 const doors = [
@@ -142,7 +186,7 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
           water, and power. Provenance-first, and built in the open.
         </p>
         <div class="dirh-cta">
-          <a class="dirh-btn dirh-btn--solid" href={withBase("/research/hypotheses")}>Explore the hypotheses →</a>
+          <a class="dirh-btn dirh-btn--solid" href={withBase("/lens/")}>Read a buildout five ways →</a>
           <a class="dirh-btn dirh-btn--ghost" href={withSite()}>See the reference build →</a>
         </div>
       </div>
@@ -204,11 +248,32 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
       </div>
     </section>
 
-    <!-- hypotheses -->
+    <!-- the five lenses — the front door (#1916) -->
     <section class="dirh-sec">
       <div class="dirh-sec-head">
-        <h2 class="dirh-sec-title">Read the network three ways</h2>
-        <span class="dirh-sec-sub">— one map, three hypotheses.</span>
+        <h2 class="dirh-sec-title">Five ways to read a buildout</h2>
+        <span class="dirh-sec-sub">— what it takes, what it costs, and who decided.</span>
+        <a class="dirh-sec-link" href={withBase("/lens/")}>All five lenses →</a>
+      </div>
+      <div class="dirh-lenses">
+        {
+          lenses.map((l) => (
+            <a class="dirh-lens" href={withBase(`/lens/${l.id}`)} style={`--mark:${l.accent.mark}`}>
+              <span class="dirh-lens-n">{l.number}</span>
+              <span class="dirh-lens-name">{l.name}</span>
+              <span class="dirh-lens-q">{l.question}</span>
+              <span class="dirh-lens-count">{l.count}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- the open questions (the hypotheses, demoted positionally — not downgraded) -->
+    <section class="dirh-sec">
+      <div class="dirh-sec-head">
+        <h2 class="dirh-sec-title">The open questions</h2>
+        <span class="dirh-sec-sub">— why the build-out is happening here at all.</span>
         <a class="dirh-sec-link" href={withBase("/research/hypotheses")}>Open the scorecard →</a>
       </div>
       <div class="dirh-hyps">
@@ -216,18 +281,22 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
           hyps.map((h) => {
             const live = h.statusKind === "live";
             return (
-              <a class="dirh-hyp" href={withBase("/research/hypotheses")}>
+              <a class="dirh-hyp" href={withBase(`/research/hypotheses?h=${h.key}`)}>
                 <span class="dirh-hyp-top">
                   <span class="dirh-hyp-n" style={`color:${h.accent};border-color:${h.accent}`}>{h.n}</span>
                   <span class:list={["dirh-hyp-status", { "is-live": live }]}>{h.status}</span>
                 </span>
                 <span class="dirh-hyp-name">{h.name}</span>
-                <span class="dirh-hyp-claim">{h.claim}</span>
+                <span class="dirh-hyp-claim">{h.asked}</span>
               </a>
             );
           })
         }
       </div>
+      <p class="dirh-hyps-note">
+        Unlike a lens, a hypothesis has a verdict to reach — each is under test, scored against every
+        site, and none is settled. A lens describes; these argue.
+      </p>
     </section>
 
     <!-- start here -->
@@ -479,7 +548,60 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
     color: var(--bosc-forest);
   }
 
-  /* hypotheses */
+  /* the five lenses — the front door. One accent each, taken from the forest DATA ramp
+     (`--data-1` … `--data-5`): it encodes position in the causal chain and nothing else. No
+     evidence fill, because a lens declares no evidentiary weight of its own (#1913). */
+  .dirh-lenses {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .dirh-lens {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--bosc-rule);
+    border-top: 3px solid var(--mark);
+    padding: 0.9rem 1.2rem 0.25rem;
+    text-decoration: none;
+    color: var(--bosc-ink);
+  }
+  .dirh-lens:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .dirh-lens:hover .dirh-lens-name,
+  .dirh-lens:focus-visible .dirh-lens-name {
+    text-decoration: underline;
+  }
+  .dirh-lens-n {
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--bosc-faint);
+  }
+  .dirh-lens-name {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-top: 0.35rem;
+  }
+  .dirh-lens-q {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--bosc-muted);
+    line-height: 1.45;
+    margin-top: 0.3rem;
+  }
+  .dirh-lens-count {
+    display: block;
+    margin-top: auto;
+    padding-top: 0.8rem;
+    font-family: var(--bosc-mono);
+    font-size: 0.68rem;
+    color: var(--bosc-faint);
+  }
+
+  /* the open questions (the hypotheses) */
   .dirh-hyps {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -529,6 +651,13 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
     color: var(--bosc-muted);
     line-height: 1.45;
     margin-top: 0.3rem;
+  }
+  .dirh-hyps-note {
+    margin: 1.1rem 0 0;
+    max-width: 46rem;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--bosc-faint);
   }
 
   /* doors */
@@ -649,17 +778,35 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
     text-transform: uppercase;
   }
 
+  /* Five across is one column too many before the phone breakpoint — the lens band alone gets an
+     intermediate stop so its question lines don't reflow to four words a row on a laptop. */
+  @media (max-width: 1080px) {
+    .dirh-lenses {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .dirh-lens:nth-child(odd) {
+      border-left: 0;
+      padding-left: 0;
+    }
+  }
+
   @media (max-width: 820px) {
+    .dirh-lenses,
     .dirh-hyps,
     .dirh-doors {
       grid-template-columns: 1fr;
     }
+    .dirh-lens,
     .dirh-hyp,
     .dirh-door {
       border-left: 0;
       padding-left: 0;
       padding-top: 1.1rem;
       border-top: 1px solid var(--bosc-rule);
+    }
+    /* …except the lens band, whose top border is its accent — the one mark it carries. */
+    .dirh-lens {
+      border-top: 3px solid var(--mark);
     }
     .dirh-hyp:first-child,
     .dirh-door:first-child {
