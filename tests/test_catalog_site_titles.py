@@ -45,16 +45,30 @@ def test_slug_scoped_titles_are_parameterized() -> None:
 
 @pytest.mark.parametrize("slug", sorted(SITES))
 def test_slug_scoped_title_names_only_its_own_county(slug: str) -> None:
-    """A slug-scoped title, resolved for a site, names that site's county and no other site's."""
+    """A slug-scoped title, resolved for a site, names that site's own scope and no other site's.
+
+    "Its own scope" is whatever the template asks for. Every template was county-keyed when this
+    guard was written, but a slug-scoped dataset is not always county-level: the EIA consumer
+    series is per-STATE data held per-site (#1905), so labelling it with a county would be a fresh
+    misattribution rather than a fix. The anti-leak half below is unchanged and unweakened — no
+    materialized title may ever contain another site's county.
+    """
     own = _COUNTY_BY_SLUG[slug]
     own_county = own.partition(",")[0].strip()  # "Allen County" from "Allen County, OH"
+    own_state = own.partition(",")[2].strip() or SITES[slug].eia_state
     for entry in _SLUG_SCOPED:
         if not entry.title_template:
             continue
         title = site_title(entry, slug)
-        assert own_county in title, (
-            f"{entry.id}@{slug} title {title!r} drops its own county {own!r}"
-        )
+        # Assert on the axis the template actually resolves — `{county…}` vs `{state}`.
+        if "{county" in entry.title_template:
+            assert own_county in title, (
+                f"{entry.id}@{slug} title {title!r} drops its own county {own!r}"
+            )
+        elif "{state}" in entry.title_template:
+            assert own_state in title, (
+                f"{entry.id}@{slug} title {title!r} drops its own state {own_state!r}"
+            )
         for other_slug, other_county in _COUNTY_BY_SLUG.items():
             if other_county == own:
                 continue  # same county+state (none today) — not a cross-site leak

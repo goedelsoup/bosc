@@ -1,12 +1,13 @@
 id: eia-consumer-energy
-title: Ohio Consumer Energy-Cost Baseline (EIA API v2)
+title: State Consumer Energy-Cost Baseline (EIA API v2)
+title_template: '{state} Consumer Energy-Cost Baseline (EIA API v2)'
 scope: reference
 status: reviewed
 producer:
   kind: connector
   command: eia
   connector_ref: watermark.economics.energy
-  source: U.S. EIA — API v2 seriesid route (OH residential electricity/gas price, total retail sales)
+  source: U.S. EIA — API v2 seriesid route (state residential electricity/gas price, total retail sales)
   external_url: https://www.eia.gov/opendata/
 license: U.S. Government work (public domain)
 access_tier: keyed

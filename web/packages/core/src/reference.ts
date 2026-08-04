@@ -240,6 +240,10 @@ function instancesDir(dataset: ReferenceDataset): string {
  * The sites with a committed instance note for a dataset — `data/reference/<set>/instances/
  * <slug>.md`, the file that carries what THIS site's copy of the data turned out to say. Sorted,
  * so the derived content keys are stable. Build-only.
+ *
+ * A filename here IS a site slug, so a `README.md` explaining the directory would read as a site
+ * called "README". Skipped by name, the same way `bosc.catalog.backfill._SKIP_NAMES` skips it one
+ * tree over — prose about the notes is not one of the notes.
  */
 export function instanceSites(datasetSlug: string): string[] {
   const dataset = refBySlug.get(datasetSlug);
@@ -247,7 +251,7 @@ export function instanceSites(datasetSlug: string): string[] {
   const dir = instancesDir(dataset);
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
-    .filter((f) => f.endsWith(".md"))
+    .filter((f) => f.endsWith(".md") && f !== "README.md")
     .map((f) => f.slice(0, -3))
     .sort();
 }
