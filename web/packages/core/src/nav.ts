@@ -19,6 +19,7 @@
 
 import { activeSite } from "./bundle";
 import type { HypothesisItem } from "./feeds";
+import { LENS_ORDER, LENSES } from "./lenses";
 import { sectionStatus } from "./readiness";
 import { siteBase, storyBase } from "./routes";
 import type { NetworkSite } from "./sites";
@@ -43,6 +44,7 @@ export type SectionId =
   | "ask"
   | "search"
   | "directory"
+  | "lens"
   | "research"
   | "submit"
   | "connect";
@@ -258,6 +260,21 @@ export function sections(): Section[] {
       toc: [],
     },
     {
+      // The lens axis (#1914, epic #1911) — the network read five standing ways. The peer of
+      // `research` and deliberately NOT a child of it: the hypotheses ask *why* the buildout is
+      // happening and reach for a verdict; a lens asks *what it does* to a place and reaches for
+      // none. Filing one under the other would blur exactly the distinction the epic opens by
+      // drawing. Its TOC is the five lenses, which is also what makes each `/lens/<id>` page
+      // searchable (`search.ts` walks the nav model).
+      id: "lens",
+      label: "Lenses",
+      tab: "Lenses",
+      href: "/lens/",
+      blurb:
+        "Five standing ways to read a buildout — the land it takes, the power it pulls, what it draws from the ground and air, what it costs the public, and how the decision was made.",
+      toc: LENS_ORDER.map((id) => ({ label: LENSES[id].name, anchor: id })),
+    },
+    {
       // The network's research layer — the boom-origin hypotheses + the MCP playground.
       id: "research",
       label: "Research",
@@ -349,6 +366,24 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   ];
   return [
     { kind: "link", label: "Directory", section: "directory", href: "/" },
+    {
+      // Lenses ride BEFORE Research (#1914): "what does this buildout do to my county" is the
+      // first question most readers actually arrive with, and the hypotheses — a causal thesis to
+      // adjudicate — are the second. This is the network tier's only lens surface, so `/lens/*`
+      // sits well inside the nav-diet ceiling; #1916 gives the home page the other one.
+      kind: "dropdown",
+      label: "Lenses",
+      section: "lens",
+      children: [
+        { label: "All five lenses", href: "/lens/", blurb: "The network, read five standing ways" },
+        { divider: true as const },
+        ...LENS_ORDER.map((id) => ({
+          label: `${LENSES[id].number} · ${LENSES[id].name}`,
+          href: `/lens/${id}`,
+          blurb: LENSES[id].question,
+        })),
+      ],
+    },
     {
       kind: "dropdown",
       label: "Research",

@@ -31,6 +31,7 @@
  * distinguishable at a glance.
  */
 
+import { LENS_ORDER, LENSES } from "./lenses";
 import { currentSiteForPath } from "./sites";
 
 /** One step in a trail. The last crumb — the current page — carries no `href`. */
@@ -243,6 +244,10 @@ const ROOT: TrailNode = {
       slash: true,
       children: { [PARAM]: { label: humanize, fromTitle: true, rest: true } },
     },
+    // The five lens landings (#1914). The leaf label is the lens's own name out of the model, not
+    // a humanized slug — so `disclosure` reads "Disclosure" by declaration, and a sixth lens
+    // arrives with a crumb already written rather than with one nobody remembered to add.
+    lens: { label: "Lenses", slash: true, children: { [PARAM]: { label: lensLabel } } },
     "locked-preview": { label: "Site Locked — preview" },
     methodology: { label: "Methodology", children: { [PARAM]: { label: humanize, fromTitle: true } } },
     network: {
@@ -302,6 +307,12 @@ const ROOT: TrailNode = {
 /** A site segment's crumb: its registered place, or the raw id for a slug not in the registry. */
 function siteLabel(segment: string): string {
   return currentSiteForPath(`/network/${segment}`)?.place ?? humanize(segment);
+}
+
+/** A lens's crumb — its declared name (#1914), so the trail can't drift from the model. */
+function lensLabel(segment: string): string {
+  const lens = LENS_ORDER.find((id) => id === segment);
+  return lens ? LENSES[lens].name : humanize(segment);
 }
 
 export interface TrailOptions {

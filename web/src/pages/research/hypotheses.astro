@@ -202,10 +202,10 @@ const statusSwatch = (kind: "live" | "new") =>
 
                   {h.view.groups.map((g) => (
                     <div class="dir-group">
-                      {g.divide && (
+                      {g.banner && (
                         <div class="dir-divide" style={`color:${acc}`}>
-                          <span class="dir-divide-l">{g.divide.label}</span>
-                          <span class="dir-divide-n">{g.divide.note}</span>
+                          <span class="dir-divide-l">{g.banner.label}</span>
+                          <span class="dir-divide-n">{g.banner.note}</span>
                         </div>
                       )}
                       <div class="dir-grouphead">

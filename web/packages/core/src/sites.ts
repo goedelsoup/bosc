@@ -440,6 +440,21 @@ export function siteRollup(slug: string): SiteRollup {
   return rollup;
 }
 
+/**
+ * One feed's manifest row count for a site — the feed-level peer of {@link siteRollup}, with the
+ * same `manifestOrNull` seam and the same null-vs-zero discipline (#1914 needs it across all 38
+ * registered sites at once, where `readiness`'s private `feedCount` would throw on the ~12 that
+ * have no committed bundle).
+ *
+ * `0` means the export ran and the bundle carries no rows on that feed — a **measurement**.
+ * `null` means no bundle is committed, so nothing was measured. Never collapse one into the other.
+ */
+export function siteFeedCount(slug: string, feed: string): number | null {
+  const manifest = manifestOrNull(slug);
+  if (!manifest) return null;
+  return manifest.feeds.find((f) => f.name === feed)?.count ?? 0;
+}
+
 /** The whole network's assembled record, summed over every registered site (#1861) — what the home
  *  ledger reads to answer "how much record has the network actually assembled". A site with no
  *  committed bundle contributes to `unbuilt` and to no tier, so the sums stay measured-only. */

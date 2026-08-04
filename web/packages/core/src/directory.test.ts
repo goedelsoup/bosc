@@ -136,8 +136,8 @@ describe("directory hypotheses — one network, read three ways (#308)", () => {
     const total = v.groups.reduce((n, g) => n + g.rows.length, 0);
     expect(total).toBe(SITES.length);
     // Exactly two groups open a divide banner (Lake Erie, Ohio River), in drainage order.
-    const divides = v.groups.filter((g) => g.divide).map((g) => g.divide?.label);
-    expect(divides).toEqual(["Lake Erie drainage", "Ohio River drainage"]);
+    const banners = v.groups.filter((g) => g.banner).map((g) => g.banner?.label);
+    expect(banners).toEqual(["Lake Erie drainage", "Ohio River drainage"]);
     // Lake Erie drains first: Maumee leads, the Ohio-River basins follow.
     expect(v.groups.map((g) => g.label)).toEqual([
       "Maumee",
