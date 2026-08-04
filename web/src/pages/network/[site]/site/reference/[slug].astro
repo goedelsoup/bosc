@@ -1,9 +1,9 @@
 ---
-import { withSitePaths } from "@watermark/core/sites";
+import { siteForSlug, withSitePaths } from "@watermark/core/sites";
 import { getCollection, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
 import { isAvailable } from "@watermark/core/readiness";
-import { refBySlug, scopedReference } from "@watermark/core/reference";
+import { refBySlug, referenceForSite, type SiteReferenceEntry } from "@watermark/core/reference";
 import { withSite } from "@watermark/core/site";
 
 export async function getStaticPaths() {
@@ -12,18 +12,55 @@ export async function getStaticPaths() {
   // Per-site (#1260): emit a dataset route for a site only when it OWNS that dataset (catalog
   // `site_scope`, resolved in the callback's `runWithSite` bundle scope) and its `record` domain
   // is active — so a sibling site can't open Lima's zoning / parcels / WBD by URL.
+  //
+  // `referenceForSite` (#1905) resolves the same set PLUS what the page needs to say whose words
+  // and whose bytes these are: the README's declared scope, this site's own catalog rows, and its
+  // instance note if it has one. Carried on props so the render never re-reads the bundle outside
+  // its own site scope.
   return withSitePaths((slug) => {
     if (!isAvailable(slug, "record")) return [];
-    const scoped = new Set(scopedReference(slug).map((d) => d.slug));
+    const scoped = new Map<string, SiteReferenceEntry>(
+      referenceForSite(slug).map((e) => [e.dataset.slug, e]),
+    );
     return entries
       .filter((entry) => scoped.has(entry.id))
-      .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+      .map((entry) => ({
+        params: { slug: entry.id },
+        props: { entry, view: scoped.get(entry.id) as SiteReferenceEntry },
+      }));
   });
 }
 
-const { entry } = Astro.props;
+const { entry, view, slug: siteSlug } = Astro.props;
 const dataset = refBySlug.get(entry.id)!;
 const { Content } = await render(entry);
+
+// This site's own instance note (#1905) — what ITS copy of the data turned out to say. Absent on
+// most sites, and never filled in from another's: the README carries only what is true wherever
+// the connector points, so an absent note means this site has published no findings here yet.
+const noteEntry = view.note
+  ? (await getCollection("referenceNotes")).find((e) => e.id === view.note)
+  : undefined;
+const Note = noteEntry ? (await render(noteEntry)).Content : null;
+
+const site = siteForSlug(siteSlug);
+// What the declaration means for the reader standing here. `network` prose is the dataset and its
+// method, held over this site's own data; `basin:` is one artifact pulled per basin and shared;
+// `site:` documents this site by construction (and only it owns the catalog entry behind the route).
+const { scope, scopeNote } = view.prose;
+const basinName = (s: string): string =>
+  s
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+const scopeLabel = scope.startsWith("basin:")
+  ? `Shared across the ${basinName(scope.slice("basin:".length))} basin`
+  : scope.startsWith("site:")
+    ? `Documents ${site?.place ?? scope.slice("site:".length)}'s own instance`
+    : "The dataset and its method";
+const holding = site ? [site.place, site.county].filter(Boolean).join(" · ") : null;
+const files = view.instances.flatMap((i) => i.files);
+const commands = [...new Set(view.instances.map((i) => i.command).filter((c): c is string => !!c))];
 ---
 
 <Base title={dataset.title} section="site" description={dataset.blurb}>
@@ -32,6 +69,41 @@ const { Content } = await render(entry);
       <a href={withSite("/site/")}>← The record</a> ·
       <a href={withSite("/site/reference/")}>All reference data</a>
     </p>
+
+    <aside class="refscope">
+      <div class="refscope-head">
+        <span class="refscope-kind">{scopeLabel}</span>
+        {holding && <span class="refscope-site">{holding}</span>}
+      </div>
+      <p class="refscope-note">{scopeNote}</p>
+      {
+        files.length > 0 && (
+          <div class="refscope-files">
+            <span class="refscope-label">
+              {scope === "network" ? "This site reads" : "Committed here"}
+            </span>
+            <ul class="refscope-list">
+              {files.map((f) => (
+                <li>data/{f}</li>
+              ))}
+            </ul>
+            {commands.length > 0 && (
+              <p class="refscope-regen">Regenerate: {commands.map((c) => `watermark ${c}`).join(" · ")}</p>
+            )}
+          </div>
+        )
+      }
+    </aside>
+
     <Content />
+
+    {
+      Note && noteEntry && (
+        <section class="refinstance">
+          <h2>{noteEntry.data.title}</h2>
+          <Note />
+        </section>
+      )
+    }
   </article>
 </Base>

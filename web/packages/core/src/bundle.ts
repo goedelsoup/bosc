@@ -45,6 +45,16 @@ function findFrontendRoot(start: string): string {
 const FRONTEND_ROOT = findFrontendRoot(HERE);
 
 /**
+ * A repo-root-relative path, resolved against this checkout — the anchor the committed-bundle
+ * fallbacks already use, exported so the other build-time readers of AS-IS repo sources
+ * (`reference.ts`'s README front matter) locate `data/` the same way instead of counting `..`s
+ * of their own. Build-only, like everything else in this module.
+ */
+export function repoPath(...parts: string[]): string {
+  return resolve(FRONTEND_ROOT, "..", ...parts);
+}
+
+/**
  * The active network site (#724/#739) — an ambient context so every `loadFeed`/`hasFeed` reads
  * the right site's bundle without threading a slug through the ~12 feed libs and ~40 pages. The
  * middleware (`src/middleware.ts`) resolves the slug from the request path and wraps the page

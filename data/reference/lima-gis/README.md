@@ -1,3 +1,10 @@
+---
+scope: site:lima
+scope_note: >-
+  The City of Lima's zoning service is the reference build's own municipality by construction, so
+  its catalog entry belongs to that site alone and no peer renders this page.
+---
+
 # City of Lima, Ohio GIS — zoning
 
 Zoning attributes pulled from the **City of Lima GIS** public ArcGIS REST server.

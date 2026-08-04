@@ -1,3 +1,11 @@
+---
+scope: basin:maumee
+scope_note: >-
+  One NPDES inventory is pulled per basin and shared by every site that drains it, so this page
+  documents the Maumee fileset for the Maumee sites reading it. The Lima-keyed columns it
+  describes are fields of that shared basin file, not claims about the reading site.
+---
+
 # Network NPDES inventories (EPA ECHO)
 
 Verified inventories of CWA-permitted facilities per watershed basin, pulled from

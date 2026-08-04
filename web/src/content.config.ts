@@ -118,17 +118,61 @@ const narrative = defineCollection({
   }),
 });
 
+// The published reference sets, as one glob fragment — the README and its per-site instance
+// notes must always be loaded from the SAME set, or a note could exist with no page to render it.
+const REFERENCE_SETS = "{echo,allen-gis,lima-gis,rsei,gleif,economics,eia,ohio-waterwells}";
+
 // The `reference` collection (Pages cutover Gap C, #104): the authoritative
 // external datasets' READMEs under `data/reference/`, read AS-IS. `id` is each
 // dataset's slug (from `lib/reference.ts`), so the route + the rehype rewriter agree.
 const reference = defineCollection({
   loader: glob({
-    pattern: [
-      "{echo,allen-gis,lima-gis,rsei,gleif,economics,eia,ohio-waterwells}/README.md",
-      "hydrology/wbd/README.md",
-    ],
+    pattern: [`${REFERENCE_SETS}/README.md`, "hydrology/wbd/README.md"],
     base: "../data/reference",
     generateId: ({ entry }) => REFERENCE.find((r) => r.repo === entry)?.slug ?? entry,
+  }),
+  // Every published README declares WHOSE PROSE IT IS (#1905). Validated here so a missing or
+  // malformed declaration fails the build rather than defaulting — an undeclared README reads as
+  // network-general to the routing layer, which is exactly how one county's documentation ended
+  // up under every peer. `referenceProse` in @watermark/core throws on the same condition for the
+  // Node-side readers (the guards) that never see astro:content.
+  schema: z.object({
+    scope: z
+      .string()
+      .regex(
+        /^(network|basin:[a-z0-9-]+|site:[a-z0-9-]+)$/,
+        "scope must be `network`, `basin:<name>` or `site:<slug>`",
+      ),
+    /** Why that scope — rendered to the reader as the page's scope banner. */
+    scope_note: z.string().min(1),
+  }),
+});
+
+// The `referenceNotes` collection (#1905): a dataset's PER-SITE instance note —
+// `data/reference/<set>/instances/<slug>.md`, carrying what that site's copy of the data turned
+// out to say (the findings, the county, the corridor) after the README kept only what is true
+// wherever the connector points. `id` is `<dataset>/<site>`, matching `instanceNoteId`.
+//
+// A site without a note is the normal case: it renders the network prose over its own data. The
+// note is additive and never inherited — that is the whole point of moving the prose out.
+const referenceNotes = defineCollection({
+  loader: glob({
+    pattern: [`${REFERENCE_SETS}/instances/*.md`, "hydrology/wbd/instances/*.md"],
+    base: "../data/reference",
+    generateId: ({ entry }) => {
+      // `<set…>/instances/<site>.md` → `<datasetSlug>/<site>`; the set may nest (hydrology/wbd).
+      const [dir, file] = entry.split("/instances/");
+      const dataset = REFERENCE.find((r) => r.repo === `${dir}/README.md`);
+      return `${dataset?.slug ?? dir}/${file.replace(/\.md$/, "")}`;
+    },
+  }),
+  // `site` restates the owning slug the file PATH already encodes, exactly as the study
+  // collection's `chapter` does: the runtime resolves a note by its path-derived id, so a
+  // misnamed file would become silently dead content. The one consumer is the guard in
+  // `@watermark/core`'s `reference.test.ts`, which checks the two against each other.
+  schema: z.object({
+    site: z.string().min(1),
+    title: z.string().min(1),
   }),
 });
 
@@ -152,4 +196,4 @@ const legal = defineCollection({
   }),
 });
 
-export const collections = { narrative, reference, legal, stories, study };
+export const collections = { narrative, reference, referenceNotes, legal, stories, study };

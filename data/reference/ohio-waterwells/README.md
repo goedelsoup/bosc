@@ -1,3 +1,11 @@
+---
+scope: site:lima
+scope_note: >-
+  The committed censuses are Allen County's well census and the Lima campus dewatering wellfield,
+  both owned by the reference build alone. The R.C. 1521.05 source and the pull method are
+  statewide: a peer that pulls its own county's census registers it and gets its own page.
+---
+
 # Ohio water-well-log census (Ohio DNR, Division of Water Resources)
 
 Per-county censuses of logged water wells, pulled from the **Ohio DNR, Division of

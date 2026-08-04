@@ -55,6 +55,12 @@ BACKFILL_SCOPES: tuple[Scope, ...] = ("reference", "extracted")
 # Files that are not datasets: prose, generator scripts, and OS/VCS noise.
 _SKIP_NAMES = {"README.md", "ONBOARDING.md", ".gitignore", ".gitattributes", ".DS_Store"}
 _SKIP_SUFFIXES = {".py"}
+# A collection's per-site instance notes (`<collection>/instances/<slug>.md`, #1905) — the
+# continuation of its README, carrying what one site's copy of the data turned out to say after
+# the README kept only what is true wherever the connector points. Prose about a dataset, like
+# the README beside it, so the catalog no more registers it than it registers the README.
+# Narrow on purpose: only markdown, and only directly under a dir named `instances`.
+_NOTES_DIR = "instances"
 
 _MEDIA_TYPES: dict[str, str] = {
     ".yaml": "application/x-yaml",
@@ -114,7 +120,9 @@ _PRODUCER_HINTS: dict[str, _ProducerHint] = {
 
 
 def _is_data_file(path: Path) -> bool:
-    return path.is_file() and path.name not in _SKIP_NAMES and path.suffix not in _SKIP_SUFFIXES
+    if not path.is_file() or path.name in _SKIP_NAMES or path.suffix in _SKIP_SUFFIXES:
+        return False
+    return not (path.suffix == ".md" and path.parent.name == _NOTES_DIR)
 
 
 def _media_type(suffix: str) -> str:

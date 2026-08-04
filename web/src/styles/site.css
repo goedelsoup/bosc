@@ -1050,6 +1050,26 @@ a { color: var(--bosc-link); }
 .callout-title { font-weight: 700; margin: 0 0 0.4rem; }
 .callout > :last-child { margin-bottom: 0; }
 
+/* The reference-page scope frame (#1905) — what a dataset's documentation covers, and whose
+   bytes it is being read over. Deliberately hairline-only: it frames the prose rather than
+   asserting anything, so like `.hublede--absent` it does NOT spend the forest signal. Square,
+   flat, mono for the labels and every path. */
+.refscope { border: 1px solid var(--bosc-rule); background: var(--bosc-surface); padding: var(--sp-3) var(--sp-4); margin: 1.2rem 0 1.6rem; }
+.refscope-head { display: flex; align-items: baseline; gap: var(--sp-3); flex-wrap: wrap; justify-content: space-between; }
+.refscope-kind { font-family: var(--bosc-mono); font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase; color: var(--bosc-muted); }
+.refscope-site { font-family: var(--bosc-mono); font-size: var(--fs-micro); color: var(--bosc-faint); }
+.refscope-note { font-size: var(--fs-meta); line-height: 1.55; color: var(--bosc-ink); margin: 0.55rem 0 0; max-width: 46rem; }
+.refscope-files { margin-top: 0.8rem; border-top: 1px solid var(--bosc-rule); padding-top: 0.6rem; }
+.refscope-label { font-family: var(--bosc-mono); font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase; color: var(--bosc-muted); }
+.refscope-list { list-style: none; margin: 0.35rem 0 0; padding: 0; }
+.refscope-list li { font-family: var(--bosc-mono); font-size: var(--fs-caption); line-height: 1.7; color: var(--bosc-ink); overflow-wrap: anywhere; }
+.refscope-regen { font-family: var(--bosc-mono); font-size: var(--fs-caption); color: var(--bosc-faint); margin: 0.5rem 0 0; }
+
+/* A site's own instance note, below the dataset documentation — the findings that belong to
+   THIS site's copy. Separated by a rule so the seam between "the method" and "what it said
+   here" is visible rather than implied. */
+.refinstance { margin-top: 2rem; border-top: 2px solid var(--bosc-rule); padding-top: var(--sp-4); }
+
 /* Callout kit — four, no more (design "Narrative & Docs"):
    note (forest) · inference (amber) · open (gray) · key takeaway (green). */
 .callout--note { border-left-color: var(--bosc-forest); background: var(--td-tint); }

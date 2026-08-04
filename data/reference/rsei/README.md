@@ -1,8 +1,17 @@
-# Allen County RSEI toxic-release inventory (EPA RSEI Public Data Set)
+---
+scope: network
+scope_note: >-
+  What RSEI is, which archive it comes from, and how one county's inventory is reduced out of
+  it — all true wherever the connector is pointed. The county, the facility list and every
+  finding are the reading site's own, and each site's findings are written up beside this file
+  under instances/.
+---
 
-Per-facility **Risk-Screening Environmental Indicators (RSEI)** results for **Allen
-County, OH (FIPS 39003)**, reduced from EPA's RSEI Public Data Set. Every figure here
-was summed from RSEI rows — nothing is fabricated, inferred, or estimated by BOSC.
+# RSEI toxic-release inventory (EPA RSEI Public Data Set)
+
+Per-facility **Risk-Screening Environmental Indicators (RSEI)** results for **the reading
+site's own county**, reduced from EPA's RSEI Public Data Set. Every figure in a committed
+inventory was summed from RSEI rows — nothing is fabricated, inferred, or estimated by BOSC.
 Regenerate with `watermark rsei`.
 
 ## What RSEI is
@@ -40,12 +49,12 @@ which is a *modeling vintage*, not a per-county truncation; mixing vintages acro
 sites would silently corrupt the cross-site comparison the network is for. So the
 inventories are re-pulled as a set, never one site at a time. A site whose
 `last_year` is still below 2022 after this pull is reporting its county's real record
-(e.g. Adams County stops at **2018**, when Killen Station closed) — not a gap.
+(the West Union site stops at **2018**, when Killen Station closed) — not a gap.
 
 ## How the inventory is built
 
 RSEI is a relational dump. `watermark rsei` joins five tables and keeps only the rows that
-roll up to a county-39003 facility:
+roll up to a facility in the site's own county (its profile's `rsei_fips`):
 
 ```
 elements   (ReleaseNumber)   -> Score, CScore, NCScore, Hazard, Population
@@ -66,12 +75,13 @@ elements   (ReleaseNumber)   -> Score, CScore, NCScore, Hazard, Population
 
 ## Files
 
-- `inventory.yaml` — provenance `meta` block + the 49 facilities, ranked by Score,
+- `inventory.yaml` — provenance `meta` block + the county's facilities, ranked by Score,
   each with cumulative Score/Cancer/Non-cancer/Hazard/pounds, a per-year series, a
-  by-media pounds breakdown, and the top contributing chemicals.
+  by-media pounds breakdown, and the top contributing chemicals. The reference build keeps
+  the un-slugged path; every other site's copy is `reference/rsei/<slug>/inventory.yaml`.
 - `toxic-discharge-screen.yaml` — the **toxic-load × assimilative-capacity screen**
-  (`watermark toxics`): the 13 facilities that release toxics **to water**, placed on their
-  receiving stream and read against the cited 7Q10 (see below).
+  (`watermark toxics`): the subset of those facilities that release toxics **to water**,
+  placed on their receiving stream and read against the cited 7Q10 (see below).
 
 ## Toxic-discharge screen (`toxic-discharge-screen.yaml`)
 
@@ -82,27 +92,25 @@ with water-media releases — using only committed artifacts (RSEI × ECHO × th
 
 - **Receiving water** is resolved on a ladder, never invented: ① a coordinate match to
   an EPA [ECHO](../echo/README.md) facility carrying a cited receiving water
-  (`source: connector`); ② else membership in the **Ottawa River industrial corridor at
-  Lima**, a coordinate-cluster *inference* (`source: assumption`, flagged `*` in the
-  CLI); ③ else left null and reported `uncharacterized`.
+  (`source: connector`); ② else membership in **the site's own industrial receiving-water
+  corridor** — the active profile's `toxic_corridor_bbox` / `receiving_water_name`, a
+  coordinate-cluster *inference* (`source: assumption`, flagged `*` in the CLI); ③ else
+  left null and reported `uncharacterized`.
 - **Screening concentration** is a coarse `derived` order-of-magnitude value — annual
   reported water pounds, fully mixed at the receiving stream's 7Q10, no decay/mixing
   zone. It is a **screen**, not a permit determination or a measured concentration.
 - **Flag bands** key on that concentration (the water pathway), *not* the total RSEI
   Score (which can be air-driven): `critical` ≥ 1 mg/L, `elevated` ≥ 0.01 mg/L.
 
-The finding: the county's three largest water dischargers — **INEOS Nitriles, Lima
-Refining, PCS Nitrogen** — cluster on the **Ottawa River at Lima**, whose cited 7Q10 is
-**0.2 cfs (1Q10 = 0)**. Their releases screen at ~51 / 131 / 263 mg/L at design low
-flow: the largest toxic load meets the smallest assimilative capacity. Only Lima
-Refining's receiving water is independently ECHO-cited (`OH0002623 → Ottawa River`);
-the other two are corridor inferences.
+What the screen *finds* is per-site, and is reported in that site's instance note — a
+receiving stream with no assimilative capacity is a finding about one river, not about
+RSEI.
 
 ## Caveats / gaps
 
 - A facility with reported **pounds but a zero Score** released only non-modeled
-  media/chemicals in the modeled years — that is faithful to the data, not a gap
-  (9 of 49 Allen County facilities).
+  media/chemicals in the modeled years — that is faithful to the data, not a gap, and
+  every county inventory carries some.
 - RSEI covers **TRI reporters only**. Small/unpermitted sources and non-TRI chemicals
   are out of scope by construction.
 - The Score reflects the *modeling vintage* and population layer of `v2.3.12`; absolute
@@ -110,20 +118,23 @@ the other two are corridor inferences.
 - The bulk archive (`RSEIv2312_Public_Release_Data.zip` ~447 MB; `elements` ~1.2 GB
   unzipped) is **not** committed — it caches under the git-ignored `data/cache/rsei/`
   and tables are streamed straight out of the zip. Only this curated YAML is committed.
+- v2.3.12 no longer carries a facility `NPDESPermit`, so receiving-water joins to an
+  [ECHO NPDES inventory](../echo/README.md) go through coordinate matches rather than a
+  permit key.
 
-## Corridor relevance
+## Per-site instances
 
-- **U.S. ARMY JSMC / GENERAL DYNAMICS LAND SYSTEMS** is Allen County's **#4** RSEI Score
-  (~3.05 M, 98% cancer-driven, mostly nickel compounds), independently corroborating
-  the GDLS-at-JSMC reading in the [defense-contractor scan](../allen-gis/README.md).
-- The per-facility **water** pounds bucket ties into the
-  [hydrology](../../../docs/HYDROLOGY.md) thread and the toxic-discharge screen above.
-  (v2.3.12 no longer carries a facility `NPDESPermit`; receiving-water joins to the
-  [Maumee NPDES inventory](../echo/README.md) now go through ECHO coordinate matches.)
+The findings — which facilities dominate a county's Score, what the water bucket screens
+at, which corridor entities the parents resolve to — belong to the site whose county was
+reduced, and live beside this file under `instances/`:
+
+- [Lima's instance](instances/lima.md)
 
 <!-- catalog:begin (generated by `watermark catalog render`; do not edit inside) -->
 
 **Cataloged datasets** — generated from `data/catalog/reference/`; run `watermark catalog render --apply` after editing an entry.
+
+A `{…}` placeholder in a title resolves to the site reading it — a slug-scoped dataset holds each site's own copy, so its title names each site's own county.
 
 ### `rsei` — RSEI Toxic-Discharge Water Screen
 
@@ -135,7 +146,7 @@ Regenerate: `watermark rsei`
 | --- | --- | --- |
 | `reference/rsei/toxic-discharge-screen.yaml` | application/x-yaml | no |
 
-### `rsei-inventory` — Allen County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)
+### `rsei-inventory` — {county_state} RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)
 
 Source: EPA RSEI Public Data Set v2.3.12 (EPA gaftp Public Release Data), version v2312 · License: U.S. Government work (public domain) · Access: public · Site scope: slug-scoped · Refresh: on-demand
 

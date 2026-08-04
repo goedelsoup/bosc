@@ -1,3 +1,11 @@
+---
+scope: site:lima
+scope_note: >-
+  The committed HUC boundaries frame the reference build's own campus AOI, so the catalog entry
+  belongs to that site alone and no peer renders this page. The WBD itself is national — a peer
+  pulls the HUCs framing its own AOI.
+---
+
 # `wbd/` — USGS Watershed Boundary Dataset (HUC boundaries)
 
 Authoritative Hydrologic Unit (HU) polygon boundaries framing the data-center
