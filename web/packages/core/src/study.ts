@@ -36,6 +36,14 @@
  * NOT client-safe (imports the node bundle loader) — pages render these plain objects.
  */
 import { hasFeed, loadFeed, loadManifest } from "./bundle";
+import {
+  citeDataset,
+  citedSourcesIn,
+  citedSourcesInNote,
+  citeGroups,
+  type CitedGroup,
+  type CitedSource,
+} from "./cite";
 import type { CoolingModel, EconomicBaseline, FacilityItem, ProvenancedValue, ScenarioResult } from "./feeds";
 import { fmtMult, fmtRanged, round } from "./format";
 import { buildDemandPressure, buildGridBackdrop } from "./gridBackdrop";
@@ -164,6 +172,22 @@ export interface StudyChapterDef {
   gap: StudyGapFinding;
   /** Reference-annex links (rendered in the chapter footer, feed-guarded). */
   references: readonly StudyReference[];
+  /**
+   * The record groups this chapter's screen reads (#1885) — the "the record behind this chapter"
+   * band. Declared as the contractor-agnostic group ids (`RECORD_GROUP_LABELS`), which are
+   * site-generic: `citeGroups` resolves each against the site's OWN records feed and drops the
+   * ones it has no rows in, so a chapter offers a peer the groups that peer actually holds and
+   * never a door onto an empty index. Never a per-site rel — those are derived (below) or
+   * authored in the site's own MDX note.
+   */
+  recordGroups?: readonly string[];
+  /**
+   * Published reference datasets the chapter's screen rests on (#1885) — slugs in `REFERENCE`,
+   * guarded per site by `scopedReference`. This is where a connector-grounded `[verified]` figure
+   * gets its destination: the labor baseline is BLS QCEW, the grid backdrop is EIA-861/930, and
+   * before this each of those rendered a `[verified]` tag with nothing behind it.
+   */
+  datasets?: readonly string[];
   /** Content probe run when the required feeds ARE present — returns the partial-status
    *  reasons (empty ⇒ `data`). Reads the same primitives readiness reads. */
   probe?: (slug: string, facility: FacilityItem | null) => string[];
@@ -267,6 +291,7 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       missingRecord: "—",
     },
     references: [{ label: "Methodology", path: "/methodology" }],
+    // Front matter about the study itself — it screens nothing, so it cites nothing.
     derive: () => ({ status: "data", reasons: [] }),
   },
   {
@@ -286,6 +311,9 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       { label: "Timeline", path: "/timeline", requiresFeed: "timeline" },
       { label: "End use & workloads", path: "/reports/end-use-and-workloads" },
     ],
+    // The project's own instruments: what it applied for, who applied, and what it bought.
+    recordGroups: ["permits-epa", "permits-idem", "permits-sos", "deeds", "land-assembly", "plans"],
+    datasets: ["gleif"],
     probe: (slug) =>
       facilityState(slug) === "live"
         ? []
@@ -311,6 +339,9 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       { label: "Hydrology", path: "/environment/hydrology" },
       { label: "Seasonal withdrawal", path: "/environment/seasonal", requiresFeed: "water-seasonal-field" },
     ],
+    // The design low flows this chapter screens against are read off the receiving water's own
+    // permit fact sheets — the NPDES file IS the citation for the floor.
+    recordGroups: ["permits-npdes"],
     probe: (slug, facility) =>
       coolingUndisclosed(slug, facility)
         ? [
@@ -336,6 +367,10 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       { label: "Hydrology", path: "/environment/hydrology" },
       { label: "RSEI / toxics", path: "/environment/rsei", requiresFeed: "rsei" },
     ],
+    // The corridor's other dischargers (ECHO's basin inventory + their own permits and orders),
+    // and the county release record the chapter reads the arrival against.
+    recordGroups: ["permits-npdes", "enforcement"],
+    datasets: ["echo", "rsei"],
   },
   {
     id: "heat",
@@ -350,6 +385,10 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       producer: "the NPDES application's thermal load sheet, or the permit's §316(a) demonstration",
     },
     references: [{ label: "Thermal / §316(a)", path: "/environment/thermal", requiresFeed: "thermal" }],
+    // The corridor's reported effluent temperatures come off the permits themselves, and the set
+    // of dischargers screened on the reach is the ECHO basin inventory's.
+    recordGroups: ["permits-npdes"],
+    datasets: ["echo"],
     notApplicable: needsProject,
   },
   {
@@ -366,6 +405,9 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       producer: "state well logs, a dewatering permit, and the contractor's discharge records",
     },
     references: [{ label: "Groundwater", path: "/environment/groundwater" }],
+    // Both screens stand on the DNR well logs — the county census and the campus dewatering
+    // wellfield are two datasets of one published README.
+    datasets: ["ohio-waterwells"],
     notApplicable: needsProject,
   },
   {
@@ -385,6 +427,9 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       { label: "Water flow", path: "/environment/flow", requiresFeed: "reach-network" },
       { label: "Watershed map", path: "/environment/map" },
     ],
+    // The impervious acreage and the outfall come from the construction stormwater coverage and
+    // the site plan set.
+    recordGroups: ["permits-npdes", "plans"],
     notApplicable: needsProject,
   },
   {
@@ -403,6 +448,8 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       { label: "Air dispersion", path: "/environment/air", requiresFeed: "air-dispersion" },
       { label: "Imagery", path: "/environment/imagery" },
     ],
+    // The emission caps, the engine count, and every runtime band come off the air permit file.
+    recordGroups: ["permits-epa", "permits-idem"],
     notApplicable: needsProject,
   },
   // --- Part III · The economy ---
@@ -418,6 +465,10 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       producer: "BLS QCEW and Census ACS — public series; this gap closes on the next export",
     },
     references: [{ label: "Localized labor baseline", path: "/environment/economics-baseline" }],
+    // The baseline is entirely public federal series; the dataset page IS its provenance. A site
+    // with WARN closure/layoff notices on its own record shows those beside it.
+    recordGroups: ["labor"],
+    datasets: ["economics"],
   },
   {
     id: "power",
@@ -436,6 +487,8 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       { label: "The grid backdrop", path: "/economy/grid", requiresFeed: "grid" },
       { label: "The load & the grid", path: "/reports/the-load-and-the-grid" },
     ],
+    // The serving utility, the balancing authority, and all three denominators are EIA-861/930.
+    datasets: ["eia"],
     probe: (slug, facility) => {
       if (facility === null)
         return ["no disclosed campus load to size against the grid — the backdrop stands on its own"];
@@ -459,6 +512,10 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       producer: "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
     },
     references: [],
+    // The public money that IS on the record — the loans and awards. The abatement instrument
+    // itself is this chapter's named gap, so it is cited where a site's own note names it and
+    // never scaffolded here.
+    recordGroups: ["finance"],
     notApplicable: needsProject,
     // Curated-only, gap-first by design: no fiscal feed exists, and none is fabricated.
     derive: () => ({ status: "gap", reasons: ["no fiscal instrument is on the record"] }),
@@ -895,6 +952,88 @@ const COMPOSERS: Record<string, (slug: string, facility: FacilityItem | null) =>
     return { stats: [], gaps: [], caveats };
   },
 };
+
+// --- the record behind a chapter (#1885) -----------------------------------------------------
+
+/**
+ * The evidence a chapter can actually hand a reader — "the record behind this chapter".
+ *
+ * Three bands, in the order the annex renders them. Every entry is a destination this site
+ * really builds; `cite.ts` drops anything it can't resolve, so an empty band means the record
+ * genuinely isn't here, not that the link broke.
+ */
+export interface StudyChapterEvidence {
+  /** Record-group indexes with rows on this site (the declared `recordGroups`). */
+  groups: CitedGroup[];
+  /** Leaf records/documents the chapter's own feeds name in their citations — derived, not
+   *  curated, so a peer's chapter cites the peer's sources with no per-site list to maintain. */
+  sources: CitedSource[];
+  /** Published reference datasets the site owns (the declared `datasets`). */
+  datasets: CitedSource[];
+}
+
+/** Whether a chapter offers a reader any resolving evidence link at all. */
+export function hasChapterEvidence(evidence: StudyChapterEvidence): boolean {
+  return evidence.groups.length + evidence.sources.length + evidence.datasets.length > 0;
+}
+
+/**
+ * Resolve a chapter's evidence for a site (#1885).
+ *
+ * **Why this is not on `StudyChapterModel`.** The model is byte-locked to the Python projector
+ * by the parity gate (`study.parity.test.ts` — the shipped `impact-study` row must equal the TS
+ * derivation exactly), so adding a field here would silently invalidate every committed bundle
+ * until all 26 are re-exported. Evidence is also a different axis from a verdict: it is a join
+ * over feeds the chapter sections already read raw, at render, in the same `runWithSite` scope.
+ * Folding it into the feed is a clean follow-up — mirror it in `watermark.site.impact_study`,
+ * bump the contract, re-export — and this function is deliberately shaped as that future row.
+ *
+ * The `na` chapters (project-dependent, no project disclosed) resolve to nothing: there is no
+ * screen, so there is no record behind it, and offering the site's record groups anyway would
+ * dress an empty chapter in someone else's evidence.
+ */
+export function studyChapterEvidence(
+  chapterId: string,
+  slug: string,
+  opts: {
+    facilityKey?: string;
+    /** The site's MDX note for this chapter, raw. Its authored `<Cite>`s join the annex so
+     *  the block lists everything the page links, not just the machine-derived half. */
+    noteBody?: string;
+  } = {},
+): StudyChapterEvidence {
+  const { facilityKey, noteBody } = opts;
+  const def = studyChapter(chapterId);
+  const empty: StudyChapterEvidence = { groups: [], sources: [], datasets: [] };
+  if (chapterAvailability(def, slug, facilityKey).status === "na") return empty;
+
+  // Two source axes, deduped into one list. AUTHORED first (a human named it in the prose, so
+  // it is the most specific thing the chapter cites), then DERIVED: the citations of exactly
+  // the feeds this chapter declares it reads — never the whole bundle, so an air permit can't
+  // surface under the labor baseline. A feed absent from the bundle contributes nothing.
+  const sources = new Map<string, CitedSource>();
+  // Declared datasets first; an authored `<Cite dataset>` joins this band rather than the leaf
+  // list, so the annex's three bands stay one kind each however the citation was written.
+  const datasets = new Map<string, CitedSource>();
+  const add = (source: CitedSource): void => {
+    const bucket = source.kind === "reference" ? datasets : sources;
+    bucket.set(`${source.kind}:${source.key}`, source);
+  };
+  for (const declared of def.datasets ?? []) {
+    const dataset = citeDataset(declared, slug);
+    if (dataset) add(dataset);
+  }
+  for (const source of noteBody ? citedSourcesInNote(noteBody, slug) : []) add(source);
+  for (const feed of [...def.requiredFeeds, ...(def.optionalFeeds ?? [])]) {
+    if (!hasFeed(feed, slug)) continue;
+    for (const source of citedSourcesIn(loadFeed<unknown>(feed, slug), slug)) add(source);
+  }
+  return {
+    groups: citeGroups(def.recordGroups ?? [], slug),
+    sources: [...sources.values()],
+    datasets: [...datasets.values()],
+  };
+}
 
 // --- TOC / hrefs / rollups -------------------------------------------------------------------
 

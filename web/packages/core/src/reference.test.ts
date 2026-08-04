@@ -24,6 +24,8 @@ describe("scopedReference", () => {
       "rsei",
       "gleif",
       "economics",
+      "eia",
+      "ohio-waterwells",
       "wbd",
     ]);
   });
@@ -31,11 +33,14 @@ describe("scopedReference", () => {
   it("a sibling site sees only the datasets it owns — never Lima's `lima-legacy` set", () => {
     const fw = scopedReference("fort-wayne").map((d) => d.slug);
     // Its own / shared datasets surface: the Maumee ECHO inventory (shared basin), its own RSEI +
-    // economics baseline (slug-scoped), and the GLEIF resolution (basin-shared).
-    expect(fw).toEqual(["echo", "rsei", "gleif", "economics"]);
+    // economics baseline (slug-scoped), the GLEIF resolution (basin-shared), and the EIA grid /
+    // consumer series every site's backdrop floor is keyed to (#1885).
+    expect(fw).toEqual(["echo", "rsei", "gleif", "economics", "eia"]);
     // The reference build's Lima/Allen-County-only datasets (all `lima-legacy`) must NOT leak.
     expect(fw).not.toContain("allen-gis");
     expect(fw).not.toContain("lima-gis");
     expect(fw).not.toContain("wbd");
+    // Allen County's well census is `site:lima`, so the groundwater dataset stays home too.
+    expect(fw).not.toContain("ohio-waterwells");
   });
 });

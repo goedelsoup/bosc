@@ -1,0 +1,122 @@
+---
+/**
+ * The citation primitive (#1885) — the one way a study chapter links a claim to the record.
+ *
+ * Wrap the phrase the prose already uses and name the source by its corpus identity:
+ *
+ *   <Cite record="permits/4132514.epa.yaml">the final air permit</Cite>
+ *   <Cite document="grid/pjm-202c-2026/doe-order-202-26-33.pdf">Order 202-26-33</Cite>
+ *   <Cite dataset="eia">EIA-861</Cite>
+ *
+ * Never a hand-written `href`: `@watermark/core/cite` resolves the identity against the ACTIVE
+ * site's own feeds, exactly as the record and document screens do, so a citation can only ever
+ * point at a page this build really emits.
+ *
+ * **An unresolvable citation fails the build.** That is the point. A note that names a record
+ * this site doesn't hold is a fabricated citation, and the study's whole claim is that every
+ * figure is checkable — so it dies here, naming the site and the identifier, rather than
+ * shipping as bare text nobody notices. A source that is genuinely absent gets no `<Cite>` at
+ * all: the figure keeps its `[open]` tag and links nothing.
+ *
+ * `basis="input"` is the `[inference]` case. A modeled figure was not READ from the source it
+ * rests on, so the marker says `input` and the tooltip says so too — the reader is never told a
+ * derivation was a reading.
+ */
+import {
+  citeDataset,
+  citeDocument,
+  citeRecord,
+  type CiteBasis,
+  type CitedSource,
+} from "@watermark/core/cite";
+import { activeSite } from "@watermark/core/bundle";
+import { withSite } from "@watermark/core/site";
+
+interface Props {
+  /** A `data/extracted/` rel — resolves to `/site/records/<group>/<id>`. */
+  record?: string;
+  /** A `data/documents/` rel — resolves to the document's permalink, `/doc/<handle>/`. */
+  document?: string;
+  /** A published reference-dataset slug — resolves to `/site/reference/<slug>`. */
+  dataset?: string;
+  /** Whether the figure was READ from this source or MODELED from it. */
+  basis?: CiteBasis;
+  /** Resolve against a named site instead of the ambient one (the shells never need this). */
+  slug?: string;
+}
+const { record, document: doc, dataset, basis = "read", slug } = Astro.props as Props;
+
+const named = [
+  ["record", record],
+  ["document", doc],
+  ["dataset", dataset],
+].filter(([, value]) => value !== undefined) as [string, string][];
+if (named.length !== 1) {
+  throw new Error(
+    `<Cite> takes exactly one of record / document / dataset — got ${named.length ? named.map(([k]) => k).join(" + ") : "none"}.`,
+  );
+}
+
+const [kind, key] = named[0];
+const site = slug ?? activeSite();
+let source: CitedSource | null = null;
+if (record !== undefined) source = citeRecord(record, slug);
+else if (doc !== undefined) source = citeDocument(doc, slug);
+else source = citeDataset(dataset as string, slug);
+
+if (source === null) {
+  throw new Error(
+    `<Cite ${kind}="${key}"> does not resolve on site "${site}". A citation must name a source ` +
+      `this site actually holds — a record rel in its \`records\` feed, a routable rel in its ` +
+      `\`documents\` feed, or a reference dataset it owns. If the source is genuinely not on ` +
+      `this record, drop the <Cite> and let the figure keep its [open] tag.`,
+  );
+}
+
+// `read` names the destination; `input` says the figure was derived FROM it, not read off it.
+const tip =
+  basis === "input"
+    ? `An input to this modeled figure — ${source.label} (${source.detail}). Not a reading of the number itself.`
+    : `${source.label} — ${source.detail}`;
+const MARKERS: Record<CitedSource["kind"], string> = {
+  record: "rec",
+  document: "doc",
+  reference: "ref",
+};
+const marker = basis === "input" ? "input" : MARKERS[source.kind];
+---
+
+<a class="cite" href={withSite(source.href)} title={tip} data-cite={source.kind}
+  ><slot>{source.label}</slot><sup class="cite-mark">{marker}</sup></a
+>
+
+<style>
+  /* A citation is a link, so it spends the one forest signal — no second accent, no evidence
+     color (the evidence palette encodes evidence, and a citation is a destination, not a
+     verdict). The marker is the documentary register: mono, faint, and small enough that a
+     paragraph of cited prose still reads as prose. */
+  .cite {
+    color: var(--bosc-forest);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--bosc-forest) 35%, transparent);
+  }
+  .cite:hover {
+    border-bottom-color: var(--bosc-forest);
+  }
+  .cite-mark {
+    font-family: var(--bosc-mono);
+    font-size: 0.6em;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    margin-left: 2px;
+    /* `sup` raises by default; pin the line-height so a cited phrase never opens up its line. */
+    line-height: 0;
+    vertical-align: super;
+  }
+  .cite:hover .cite-mark {
+    color: var(--bosc-forest);
+  }
+</style>
