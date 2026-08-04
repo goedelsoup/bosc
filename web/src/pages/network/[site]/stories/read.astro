@@ -34,12 +34,6 @@ const atomsUrl = withSite("/stories-atoms.json");
   description={`A reader-authored curated walkthrough of the ${site.place} record.`}
 >
   <div class="story-page">
-    <nav class="story-crumb" aria-label="Breadcrumb">
-      <a href={withSite()}>The record</a>
-      <span aria-hidden="true">/</span>
-      <a href={withSite("/stories/mine")}>Stories</a>
-    </nav>
-
     {
       enabled ? (
         <StoryReader client:only="react" atomsUrl={atomsUrl} />
@@ -58,24 +52,5 @@ const atomsUrl = withSite("/stories-atoms.json");
     max-width: 960px;
     margin: 0 auto;
     padding: 36px 32px 120px;
-  }
-  .story-crumb {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--ink-faint);
-    margin-bottom: 22px;
-  }
-  .story-crumb a {
-    color: var(--ink-muted);
-    text-decoration: none;
-  }
-  .story-crumb a:hover {
-    color: var(--forest);
-  }
-  .story-crumb span {
-    color: var(--ink-ghost);
   }
 </style>

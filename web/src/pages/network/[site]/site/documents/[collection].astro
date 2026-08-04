@@ -49,13 +49,12 @@ const pages = pageCount(listed.length, DOCS_PER_PAGE);
 const rows = pageSlice(listed, 1, DOCS_PER_PAGE);
 ---
 
-<Base title={`${collection.title} — documents`} section="site">
+<Base
+  title={`${collection.title} — documents`}
+  section="site"
+  trailLabels={{ [collection.slug]: collection.title }}
+>
   <article class="prose">
-    <p class="rec-crumb">
-      <a href={withSite("/site/documents/")}>Documents</a>
-      <span aria-hidden="true">→</span>
-      <span class="rec-crumb-here">{collection.title}</span>
-    </p>
     <h1>{collection.title}</h1>
     <p class="section-lead">
       {summary.count.toLocaleString("en-US")} documents · {formatBytes(summary.bytes)} · catalogued

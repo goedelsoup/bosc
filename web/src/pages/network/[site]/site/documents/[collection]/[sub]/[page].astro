@@ -21,7 +21,6 @@ import {
 } from "@watermark/core/docBrowse";
 import type { DocumentCollectionItem, DocumentEntry } from "@watermark/core/feeds";
 import { facetAvailable } from "@watermark/core/readiness";
-import { withSite } from "@watermark/core/site";
 
 export function getStaticPaths() {
   return withSitePaths((slug: string) => {
@@ -67,17 +66,12 @@ const rows = pageSlice(entries, page, DOCS_PER_PAGE);
 const folders = folderFacets(entries);
 ---
 
-<Base title={`${containerSlug} page ${page} — ${collectionTitle}`} section="site">
+<Base
+  title={`${containerSlug} page ${page} — ${collectionTitle}`}
+  section="site"
+  trailLabels={{ [collectionSlug]: collectionTitle, [containerSlug]: containerSlug }}
+>
   <article class="prose">
-    <p class="rec-crumb">
-      <a href={withSite("/site/documents/")}>Documents</a>
-      <span aria-hidden="true">→</span>
-      <a href={withSite(`/site/documents/${collectionSlug}/`)}>{collectionTitle}</a>
-      <span aria-hidden="true">→</span>
-      <a href={withSite(`${base}/`)}>{containerSlug}</a>
-      <span aria-hidden="true">→</span>
-      <span class="rec-crumb-here">page {page}</span>
-    </p>
     <h1 class="docpage-title docpage-title--mono">{containerSlug}</h1>
     <p class="section-lead">
       Page {page} of {pages} · {entries.length.toLocaleString("en-US")} documents as received under

@@ -16,14 +16,15 @@
 import { withSitePaths } from "@watermark/core/sites";
 import Base from "~/layouts/Base.astro";
 import DocViewer from "~/components/DocViewer.astro";
-import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import SiblingNav from "~/components/SiblingNav.astro";
+import { activeSite, hasFeed, loadFeed } from "@watermark/core/bundle";
 import { collectionLayout, containerOf, folderPathOf, summarizeCollections } from "@watermark/core/docBrowse";
 import { isRoutableDoc } from "@watermark/core/docRouting";
 import { documentId } from "@watermark/core/documentId";
 import { docAccess } from "@watermark/core/docView";
 import { type DocumentCollectionItem, type DocumentEntry, formatBytes } from "@watermark/core/feeds";
 import { facetAvailable } from "@watermark/core/readiness";
-import { withSite } from "@watermark/core/site";
+import { siteBase } from "@watermark/core/routes";
 
 type DocProps = {
   entry: DocumentEntry;
@@ -32,6 +33,9 @@ type DocProps = {
   containerSlug: string | null;
   /** Whether this document's container is itself a route — see `containerHref` below. */
   containerRouted: boolean;
+  /** Neighbours in the listing this file appears in — see the sibling walk below. */
+  prev: { id: string; name: string } | null;
+  next: { id: string; name: string } | null;
 };
 
 export function getStaticPaths() {
@@ -42,20 +46,39 @@ export function getStaticPaths() {
     return feed.flatMap((collection) => {
       const summary = summaries.get(collection.slug);
       const routesContainers = summary !== undefined && collectionLayout(summary) === "containers";
-      return collection.entries.filter(isRoutableDoc).map((entry) => ({
-        params: { id: documentId(entry.rel) },
-        props: {
-          entry,
-          collectionTitle: collection.title,
-          collectionSlug: collection.slug,
-          containerSlug: containerOf(entry.rel),
-          containerRouted: routesContainers,
-        } satisfies DocProps,
-      }));
+      const routable = collection.entries.filter(isRoutableDoc);
+      // Sibling walk (#1889): a permalink was a dead end — the only way to the adjacent file was
+      // back up to the listing and down again, which on a 1,619-file production is a real cost.
+      // Neighbours are taken WITHIN THE CONTAINER the listing pages actually paginate, in feed
+      // order, so "next" here is the row below there rather than a second, disagreeing sequence.
+      const byContainer = new Map<string, DocumentEntry[]>();
+      for (const e of routable) {
+        const key = containerOf(e.rel) ?? "";
+        const bucket = byContainer.get(key);
+        if (bucket) bucket.push(e);
+        else byContainer.set(key, [e]);
+      }
+      return routable.map((entry) => {
+        const siblings = byContainer.get(containerOf(entry.rel) ?? "") as DocumentEntry[];
+        const at = siblings.indexOf(entry);
+        const ref = (e: DocumentEntry | undefined) => (e ? { id: documentId(e.rel), name: e.name } : null);
+        return {
+          params: { id: documentId(entry.rel) },
+          props: {
+            entry,
+            collectionTitle: collection.title,
+            collectionSlug: collection.slug,
+            containerSlug: containerOf(entry.rel),
+            containerRouted: routesContainers,
+            prev: ref(siblings[at - 1]),
+            next: ref(siblings[at + 1]),
+          } satisfies DocProps,
+        };
+      });
     });
   });
 }
-const { entry, collectionTitle, collectionSlug, containerSlug, containerRouted } =
+const { entry, collectionTitle, collectionSlug, containerSlug, containerRouted, prev, next } =
   Astro.props as unknown as DocProps;
 
 const access = docAccess(entry);
@@ -66,37 +89,43 @@ const accessChip = {
 }[access];
 
 const folder = folderPathOf(entry.rel);
-// The container earns a breadcrumb LINK only where it is actually a route — a collection big
-// enough to break its productions out. In a flat collection the container is a real directory in
-// the corpus but has no landing (the collection lists its files directly), so it renders as plain
-// text. Linking it unconditionally produced 21 broken links; either way the folder trail below
-// still records where the file sits.
+
+// The permalink is flat by design, so the trail has to be told where the file sits: the two
+// levels the URL drops are exactly the ones a reader needs to climb back to (#1889). Trail hrefs
+// are pre-deploy-base (`Breadcrumb` applies it), so this is the raw peer of `withSite`.
+const sitePath = (path: string): string => `${siteBase(activeSite())}${path}`;
+// A container earns a LINK only where it is actually a route — a collection big enough to break
+// its productions out. In a flat collection the container is a real directory in the corpus with
+// no landing of its own, so it renders as plain text; linking it unconditionally produced 21
+// broken links. Either way the folder trail below still records where the file sits.
 const containerHref =
-  containerSlug && containerRouted ? withSite(`/site/documents/${collectionSlug}/${containerSlug}/`) : null;
+  containerSlug && containerRouted
+    ? sitePath(`/site/documents/${collectionSlug}/${containerSlug}/`)
+    : undefined;
+const trailInsert = [
+  { label: "Documents", href: sitePath("/site/documents/") },
+  { label: collectionTitle, href: sitePath(`/site/documents/${collectionSlug}/`) },
+  ...(containerSlug ? [{ label: containerSlug, href: containerHref }] : []),
+];
+
+// The sibling rail's "within" points at whichever listing actually holds this file — the
+// container landing where the collection breaks its productions out, the collection landing
+// where it doesn't.
+const docPath = (id: string): string => sitePath(`/doc/${id}/`);
+const prevSib = prev ? { label: prev.name, href: docPath(prev.id) } : undefined;
+const nextSib = next ? { label: next.name, href: docPath(next.id) } : undefined;
+const listingHref = containerHref ?? sitePath(`/site/documents/${collectionSlug}/`);
+const listingLabel = containerHref ? (containerSlug as string) : collectionTitle;
 ---
 
-<Base title={entry.name} section="site">
+<Base
+  title={entry.name}
+  section="site"
+  trailInsert={trailInsert}
+  prevHref={prevSib?.href}
+  nextHref={nextSib?.href}
+>
   <article class="docpage">
-    <p class="rec-crumb">
-      <a href={withSite("/site/documents/")}>Documents</a>
-      <span aria-hidden="true">→</span>
-      <a href={withSite(`/site/documents/${collectionSlug}/`)}>{collectionTitle}</a>
-      {
-        containerSlug && (
-          <>
-            <span aria-hidden="true">→</span>
-            {containerHref ? (
-              <a href={containerHref}>{containerSlug}</a>
-            ) : (
-              <span class="rec-crumb-plain">{containerSlug}</span>
-            )}
-          </>
-        )
-      }
-      <span aria-hidden="true">→</span>
-      <span class="rec-crumb-here">{entry.name}</span>
-    </p>
-
     <h1 class="docpage-title">{entry.name}</h1>
 
     <p class="docpage-meta">
@@ -138,5 +167,7 @@ const containerHref =
         change when the page does.
       </p>
     </section>
+
+    <SiblingNav prev={prevSib} next={nextSib} within={{ label: listingLabel, href: listingHref }} />
   </article>
 </Base>

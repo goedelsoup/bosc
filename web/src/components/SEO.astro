@@ -10,9 +10,12 @@
  * and in CI it's undefined, so those tags are omitted and the share image falls
  * back to a base-relative path; everything lights up once `SITE_URL` is wired.
  *
- * Optional `breadcrumbs` emits a second BreadcrumbList block when provided.
- * Page templates pass root-absolute paths; this component prefixes the deploy origin.
+ * `breadcrumbs` emits a second BreadcrumbList block. Since #1889 it is the route-derived trail
+ * `Base.astro` also renders visibly, so the structured data and the on-page wayfinding cannot
+ * disagree. Hrefs arrive root-absolute and pre-deploy-base; this component applies the base and
+ * the deploy origin.
  */
+import type { Crumb } from "@watermark/core/trail";
 import { SITE_NAME, SITE_TAGLINE, withBase } from "@watermark/core/site";
 
 const GITHUB_URL = "https://github.com/watermark-directory/the-watermark-directory";
@@ -26,8 +29,8 @@ interface Props {
   type?: "website" | "article";
   /** Keep this route out of search indexes (internal galleries, previews, leftovers). */
   noindex?: boolean;
-  /** Breadcrumb trail for this page. Hrefs are root-absolute paths (withBase-prefixed). */
-  breadcrumbs?: { label: string; href: string }[];
+  /** Breadcrumb trail for this page — root-absolute, pre-deploy-base hrefs. */
+  breadcrumbs?: Crumb[];
 }
 const {
   title,
@@ -68,6 +71,9 @@ const jsonLd = site
     }
   : null;
 
+// `item` is omitted where the crumb has no page — the current location (whose URL is the
+// canonical above) and any namespace segment with no landing. schema.org allows a ListItem
+// with only a `name`, and a fabricated URL there would be worse than an absent one.
 const breadcrumbLd =
   site && breadcrumbs && breadcrumbs.length > 0
     ? {
@@ -77,7 +83,7 @@ const breadcrumbLd =
           "@type": "ListItem",
           position: i + 1,
           name: crumb.label,
-          item: new URL(crumb.href, site).href,
+          ...(crumb.href ? { item: new URL(withBase(crumb.href), site).href } : {}),
         })),
       }
     : null;
