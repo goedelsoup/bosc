@@ -19,6 +19,7 @@ import {
   pageSlice,
   summarizeCollections,
 } from "@watermark/core/docBrowse";
+import { countExtracted, extractionSummary, siteExtractions } from "@watermark/core/docExtraction";
 import type { DocumentCollectionItem, DocumentEntry } from "@watermark/core/feeds";
 import { facetAvailable } from "@watermark/core/readiness";
 
@@ -64,6 +65,8 @@ const base = `/site/documents/${collectionSlug}/${containerSlug}`;
 const pages = pageCount(entries.length, DOCS_PER_PAGE);
 const rows = pageSlice(entries, page, DOCS_PER_PAGE);
 const folders = folderFacets(entries);
+// Scoped to the whole production, not this page of it — the facet below filters the same set.
+const extracted = countExtracted(entries, siteExtractions());
 ---
 
 <Base
@@ -74,7 +77,9 @@ const folders = folderFacets(entries);
   <article class="prose">
     <h1 class="docpage-title docpage-title--mono">{containerSlug}</h1>
     <p class="section-lead">
-      Page {page} of {pages} · {entries.length.toLocaleString("en-US")} documents as received under
+      Page {page} of {pages} · {entries.length.toLocaleString("en-US")} documents ·{" "}
+      <span class="doccat-extracted-count">{extractionSummary(extracted, entries.length)}</span> · as
+      received under
       <code>data/documents/{collectionSlug}/{containerSlug}/</code>
     </p>
   </article>

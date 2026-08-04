@@ -12,6 +12,7 @@ import Base from "~/layouts/Base.astro";
 import SectionLocked from "~/components/SectionLocked.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import { collectionLayout, summarizeCollections } from "@watermark/core/docBrowse";
+import { countExtracted, extractionSummary, siteExtractions } from "@watermark/core/docExtraction";
 import { formatBytes, type DocumentCollectionItem } from "@watermark/core/feeds";
 import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
 import { withSite } from "@watermark/core/site";
@@ -28,6 +29,36 @@ const collections = summarizeCollections(feed);
 const totalDocuments = collections.reduce((n, c) => n + c.count, 0);
 const totalBytes = collections.reduce((n, c) => n + c.bytes, 0);
 const totalNonRoutable = collections.reduce((n, c) => n + c.nonRoutableCount, 0);
+
+// Extraction status per collection (#1898) — the facet's whole-corpus view, and the one number on
+// this page that describes the INVESTIGATION rather than the files. It is not a uniform rate: on
+// Lima it runs 74% on `permits` and 0% on the 995-document `commissioners` production, so the
+// per-card figure is what makes the front door honest about where the record has been read.
+const extractions = siteExtractions();
+const extractedBy = new Map<string, number>(
+  feed.map((collection) => [collection.slug, countExtracted(collection.entries, extractions)]),
+);
+const totalExtracted = [...extractedBy.values()].reduce((n, v) => n + v, 0);
+const unread = totalDocuments - totalExtracted;
+
+// Three shapes, because the ratio's ends are real states a peer site is actually in and the
+// middle sentence lies at both of them: "the other 0 are catalogued" implies a remainder that
+// doesn't exist, "0 of 10 have been read … the other 10" says the same thing twice, and "1 of
+// them have" is simply wrong. Fort Wayne sits at the zero end and Troy-Piqua at the other, so
+// this is not a hypothetical robustness exercise. The follow-on sentence moves too: pointing at
+// a filter is useless where the facet suppresses itself for want of a second state.
+const n = (v: number): string => v.toLocaleString("en-US");
+const extractionLede =
+  totalExtracted === 0
+    ? "None of them has been read into a structured record yet — the catalogue is held, not read. " +
+      "Each collection below states its own count, so the gap is visible where it falls."
+    : unread === 0
+      ? `All ${n(totalDocuments)} have been read into a structured record, and each collection ` +
+        "below states its own count."
+      : `${n(totalExtracted)} of them ${totalExtracted === 1 ? "has" : "have"} been read into a ` +
+        `structured record; the other ${n(unread)} are catalogued and downloadable, but not read. ` +
+        "Each collection below states its own share, every listing can be filtered down to the " +
+        "documents that have one, and each of those links straight to the record read from it.";
 ---
 
 <Base title="Documents catalog" section="site">
@@ -48,6 +79,7 @@ const totalNonRoutable = collections.reduce((n, c) => n + c.nonRoutableCount, 0)
           chain-of-custody evidence; as-received filenames are preserved verbatim, and each
           document's page records the path it arrived on.
         </p>
+        <p class="section-lead">{extractionLede}</p>
       )
     }
   </article>
@@ -65,6 +97,9 @@ const totalNonRoutable = collections.reduce((n, c) => n + c.nonRoutableCount, 0)
                 <span class="doccoll-n">{collection.count.toLocaleString("en-US")}</span>
                 <span class="doccoll-unit">{collection.count === 1 ? "document" : "documents"}</span>
                 <span class="doccoll-bytes">{formatBytes(collection.bytes)}</span>
+                <span class="doccoll-bytes doccat-extracted-count">
+                  {extractionSummary(extractedBy.get(collection.slug) ?? 0, collection.count)}
+                </span>
               </p>
               {collection.description && <p class="doccoll-desc">{collection.description}</p>}
               {collectionLayout(collection) === "containers" && (

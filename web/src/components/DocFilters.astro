@@ -6,11 +6,13 @@
 // `catalog.json` and re-renders matching rows across every page — so a facet on a 7-page
 // production means what it says.
 //
-// The facets are the ones the documents feed already carries: type (`render_class`), access
-// (published / dev-only / LFS pointer), and the as-received folder trail. Date is deliberately
-// absent: the feed has no date field, and parsing one out of file and folder names would be an
-// inference presented as a filter.
+// The facets are the ones the bundle already carries: type (`render_class`), access
+// (published / dev-only / LFS pointer), the as-received folder trail, and extraction status
+// (#1898 — the `records` feed's `source_doc_rel` join, which needs no feed field of its own).
+// Date is deliberately absent: the feed has no date field, and parsing one out of file and folder
+// names would be an inference presented as a filter.
 import { folderFacets } from "@watermark/core/docBrowse";
+import { countExtracted, extractionStatusesIn, siteExtractions } from "@watermark/core/docExtraction";
 import { docAccess } from "@watermark/core/docView";
 import type { DocumentEntry } from "@watermark/core/feeds";
 import { withSite } from "@watermark/core/site";
@@ -28,6 +30,18 @@ const { entries, collection, container = null, looseOnly = false } = Astro.props
 const types = [...new Set(entries.map((e) => e.render_class))].sort((a, b) => a.localeCompare(b));
 const accesses = [...new Set(entries.map((e) => docAccess(e)))].sort();
 const folders = folderFacets(entries);
+
+// Extraction is offered only where the listing holds BOTH states — on `commissioners` (995 files,
+// none extracted) a select whose every option selects everything is dead controls, and the
+// landing's "0 of 995 extracted" count already says the true thing. Counts ride in the labels
+// because the whole point of the facet is the ratio.
+const extractions = siteExtractions();
+const extracted = countExtracted(entries, extractions);
+const extractionStatuses = extractionStatusesIn(entries, extractions);
+const EXTRACTION_LABEL = {
+  extracted: `Extracted (${extracted.toLocaleString("en-US")})`,
+  catalogued: `Catalogued only (${(entries.length - extracted).toLocaleString("en-US")})`,
+} as const;
 
 const ACCESS_LABEL = { published: "published", "dev-only": "dev-only", absent: "LFS pointer" } as const;
 ---
@@ -62,6 +76,19 @@ const ACCESS_LABEL = { published: "published", "dev-only": "dev-only", absent: "
       {accesses.map((a) => <option value={a}>{ACCESS_LABEL[a]}</option>)}
     </select>
   </label>
+  {
+    extractionStatuses.length > 1 && (
+      <label class="doccat-filter">
+        <span>Extraction</span>
+        <select data-filter="extraction">
+          <option value="">All</option>
+          {extractionStatuses.map((s) => (
+            <option value={s}>{EXTRACTION_LABEL[s]}</option>
+          ))}
+        </select>
+      </label>
+    )
+  }
   {
     folders.length > 0 && (
       <label class="doccat-filter doccat-filter--folder">

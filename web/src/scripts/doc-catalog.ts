@@ -9,20 +9,15 @@
 // renders matches across the WHOLE listing — scoped to this page's collection/container. The
 // fetch is lazy so a reader who never filters never pays for it, and everything degrades to the
 // SSR page plus its pager with JS off.
-import { compareDocs, type DocFilters, matchesDoc } from "@watermark/core/docCatalog";
+import {
+  type CatalogRow,
+  compareDocs,
+  type DocFilters,
+  inCatalogScope,
+  matchesCatalogRow,
+  matchesDoc,
+} from "@watermark/core/docCatalog";
 import { documentId } from "@watermark/core/documentId";
-
-/** A row of the compact catalog asset; see `catalog.json.ts` for the field encoding. */
-interface CatalogRow {
-  n: string;
-  c: string;
-  k: string;
-  f: string;
-  t: string;
-  a: string;
-  s: number;
-  x: string;
-}
 
 const ACCESS_CHIP: Record<string, { cls: string; label: string }> = {
   published: { cls: "dchip--present", label: "● published" },
@@ -46,14 +41,20 @@ if (tools && table) {
   const count = tools.querySelector<HTMLElement>(".doccat-count");
   const empty = document.querySelector<HTMLElement>(".doccat-empty");
   const pager = document.querySelector<HTMLElement>(".docpager");
-  const showFolder = (table.tHead?.rows[0].cells.length ?? 0) > 4;
+  // Ask the header which column it is, rather than counting columns: a count-based test
+  // ("more than four cells") silently inverts the moment a column is added anywhere in the
+  // table, which is exactly what #1898's extraction column did to it.
+  const headers = Array.from(table.tHead?.rows[0].cells ?? []);
+  const showFolder = headers.some((cell) => cell.dataset.sort === "folder");
 
   const catalogUrl = tools.dataset.catalog ?? "";
-  const scopeCollection = tools.dataset.collection ?? "";
-  const scopeContainer = tools.dataset.container ?? "";
-  // `loose` scopes to files with no container — the "outside a production" table, which must not
-  // silently widen to the whole collection when filtered.
-  const scopeLoose = tools.dataset.loose === "true";
+  // `looseOnly` scopes to files with no container — the "outside a production" table, which must
+  // not silently widen to the whole collection when filtered.
+  const scope = {
+    collection: tools.dataset.collection ?? "",
+    container: tools.dataset.container ?? "",
+    looseOnly: tools.dataset.loose === "true",
+  };
 
   // The toolbar is inert without JS, so it ships hidden — reveal it now.
   tools.hidden = false;
@@ -68,11 +69,7 @@ if (tools && table) {
     loading = fetch(catalogUrl)
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
       .then((data: { rows: CatalogRow[] }) => {
-        listing = data.rows.filter((row) => {
-          if (row.c !== scopeCollection) return false;
-          if (scopeContainer !== "") return row.k === scopeContainer;
-          return scopeLoose ? row.k === "" : true;
-        });
+        listing = data.rows.filter((row) => inCatalogScope(row, scope));
         return listing;
       })
       .catch(() => {
@@ -105,6 +102,9 @@ if (tools && table) {
 
   /** The document's permalink — the handle is derived, so no lookup table rides along. */
   const pagePath = (rel: string): string => `${table.dataset.docBase ?? ""}${documentId(rel)}/`;
+
+  /** The record screen for a row's single extraction (#1898); `r` is stored base-relative. */
+  const recordPath = (row: CatalogRow): string => `${table.dataset.recBase ?? ""}${row.r ?? ""}`;
 
   const renderRow = (row: CatalogRow): HTMLTableRowElement => {
     const rel = relOf(row);
@@ -150,6 +150,23 @@ if (tools && table) {
     accessChip.textContent = chip.label;
     access.appendChild(accessChip);
     tr.appendChild(access);
+
+    // Extraction (#1898) — mirrors DocTable.astro: a chip linking to the record, or a bare dash.
+    // With more than one record the chip lands on the document's page, which lists them all,
+    // rather than picking one of them and calling it the extraction.
+    const extraction = document.createElement("td");
+    if (row.e) {
+      extraction.className = "doccat-extraction";
+      const chipLink = document.createElement("a");
+      chipLink.className = "dchip dchip--extracted";
+      chipLink.textContent = row.e === 1 ? "extracted" : `extracted · ${row.e} records`;
+      chipLink.href = row.r ? recordPath(row) : pagePath(rel);
+      extraction.appendChild(chipLink);
+    } else {
+      extraction.className = "doccat-none";
+      extraction.textContent = "—";
+    }
+    tr.appendChild(extraction);
 
     return tr;
   };
@@ -207,15 +224,7 @@ if (tools && table) {
       return;
     }
 
-    const q = query.trim().toLowerCase();
-    const matches = rows.filter((row) => {
-      if (q && !row.n.toLowerCase().includes(q)) return false;
-      if (filters.type && row.t !== filters.type) return false;
-      if (filters.access && row.a !== filters.access) return false;
-      // A folder facet includes its descendants — selecting a branch selects the subtree.
-      if (folder && row.f !== folder && !row.f.startsWith(`${folder}/`)) return false;
-      return true;
-    });
+    const matches = rows.filter((row) => matchesCatalogRow(row, query, filters, folder));
 
     tbody.replaceChildren(...matches.map(renderRow));
     // Filtering spans the whole listing, so the page's pager no longer describes what's shown.
@@ -229,9 +238,7 @@ if (tools && table) {
     if (!key) return;
     const numeric = header.hasAttribute("data-numeric");
     const dir = header.getAttribute("aria-sort") === "ascending" ? "descending" : "ascending";
-    for (const cell of Array.from(table.tHead?.rows[0].cells ?? [])) {
-      cell.setAttribute("aria-sort", "none");
-    }
+    for (const cell of headers) cell.setAttribute("aria-sort", "none");
     header.setAttribute("aria-sort", dir);
     const sign = dir === "ascending" ? 1 : -1;
     const rows = Array.from(tbody.rows);
@@ -241,7 +248,7 @@ if (tools && table) {
 
   search?.addEventListener("input", () => void apply());
   for (const select of selects) select.addEventListener("change", () => void apply());
-  for (const header of Array.from(table.tHead?.rows[0].cells ?? [])) {
+  for (const header of headers) {
     if (!header.dataset.sort) continue;
     header.classList.add("doccat-sortable");
     header.addEventListener("click", () => sortBy(header));

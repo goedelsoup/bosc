@@ -1,6 +1,8 @@
 import type { APIRoute } from "astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { CatalogRow } from "@watermark/core/docCatalog";
 import { containerOf, folderPathOf } from "@watermark/core/docBrowse";
+import { RECORD_ROUTE_BASE, siteExtractions } from "@watermark/core/docExtraction";
 import { nonRoutableReason } from "@watermark/core/docRouting";
 import { docAccess } from "@watermark/core/docView";
 import type { DocumentCollectionItem } from "@watermark/core/feeds";
@@ -18,19 +20,9 @@ import { withSitePaths } from "@watermark/core/sites";
 // whole point of the phase is to get that payload off the HTML critical path. Without JS the
 // landings still render their SSR page and pager, so this is pure progressive enhancement.
 //
-// Fields are single-character to keep the asset small, and `rel` is NOT stored — it is exactly
-// `c/[k/][f/]n`, so the client reconstructs it and the corpus's long as-received paths aren't
-// paid for twice.
-interface CatalogRow {
-  n: string; // file name, as received
-  c: string; // collection slug
-  k: string; // container slug ("" when the file sits directly in the collection)
-  f: string; // folder trail below the container ("" when none)
-  t: string; // render_class
-  a: string; // docAccess: published | dev-only | absent
-  s: number; // size in bytes
-  x: string; // non-routable reason ("" when the file gets a page)
-}
+// The row's compact field encoding — and the predicates that read it back — are declared once in
+// `@watermark/core/docCatalog`, so this writer and `scripts/doc-catalog.ts` cannot come to
+// disagree about what a field means.
 
 export function getStaticPaths() {
   return withSitePaths((slug: string) => (facetAvailable(slug, "documents") ? [{ params: {} }] : []));
@@ -38,9 +30,11 @@ export function getStaticPaths() {
 
 export const GET: APIRoute = () => {
   const rows: CatalogRow[] = [];
+  const extractions = siteExtractions();
   if (hasFeed("documents")) {
     for (const collection of loadFeed<DocumentCollectionItem[]>("documents")) {
       for (const entry of collection.entries) {
+        const refs = extractions.get(entry.rel);
         rows.push({
           n: entry.name,
           c: collection.slug,
@@ -50,6 +44,10 @@ export const GET: APIRoute = () => {
           a: docAccess(entry),
           s: entry.size_bytes,
           x: nonRoutableReason(entry) ?? "",
+          // The record screen minus the `RECORD_ROUTE_BASE` the client re-applies from the table's
+          // `data-rec-base` — sliced off the ref's own href so the two can't mint different routes.
+          ...(refs?.length ? { e: refs.length } : {}),
+          ...(refs?.length === 1 ? { r: refs[0].href.slice(RECORD_ROUTE_BASE.length) } : {}),
         });
       }
     }
