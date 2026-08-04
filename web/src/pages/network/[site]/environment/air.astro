@@ -1,7 +1,6 @@
 ---
 import { selectableSitePaths, siteForSlug } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
-import BackLink from "~/components/BackLink.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
 import DispersionMap from "@watermark/viz/islands/DispersionMap.tsx";
 import Base from "~/layouts/Base.astro";
@@ -9,7 +8,7 @@ import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { DispersionField } from "@watermark/core/feeds";
 import { isReferenceSite } from "@watermark/core/readiness";
-import { withBase, withSite } from "@watermark/core/site";
+import { withBase } from "@watermark/core/site";
 
 // The air-dispersion field view (#1234, epic #1237): the deck.gl FieldLayer island over the
 // gridded AERMOD screening surface, plus the always-rendered peak-concentration table that is the
@@ -54,7 +53,6 @@ const mapSrc = withBase("/feeds/air/dispersion.json");
 
 <Base title="Air dispersion" section="environment">
   <article class="prose">
-    <BackLink href={withSite("/environment/")} label="The environment" />
     <h1>Air dispersion</h1>
     <StudyAnnexBanner chapters={["air"]} />
     <p class="section-lead">

@@ -1,11 +1,9 @@
 ---
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
-import BackLink from "~/components/BackLink.astro";
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { EnclaveFeed } from "@watermark/core/feeds";
-import { withSite } from "@watermark/core/site";
 
 // The federal-enclave read (#1664). A base is invisible to the county-scoped instruments the rest
 // of the site is built on — off the tax rolls, and reporting toxics from whichever county it is
@@ -21,7 +19,6 @@ const toxics = enclave?.toxics;
 
 <Base title="The federal enclave" section="environment">
   <article class="prose">
-    <BackLink href={withSite("/environment/")} label="The environment" />
     <h1>The federal enclave</h1>
     {
       enclave == null ? (

@@ -2,7 +2,6 @@
 import { withSitePaths } from "@watermark/core/sites";
 import type { GetStaticPaths } from "astro";
 import Base from "~/layouts/Base.astro";
-import BackLink from "~/components/BackLink.astro";
 import Provenance from "~/components/Provenance.astro";
 import ProfileHeader from "~/components/ProfileHeader.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
@@ -65,7 +64,6 @@ const profileToc = sections.length >= 2 ? sections : [];
 ---
 
 <Base title={place.name} section="site" toc={profileToc}>
-  <BackLink href={withSite("/site/places/")} label="Places & parcels" prose />
   <div id="overview"><ProfileHeader profile={header} /></div>
 
   <article class="prose">

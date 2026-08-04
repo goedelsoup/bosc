@@ -1,7 +1,6 @@
 ---
 import { selectableSitePaths, siteForSlug } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
-import BackLink from "~/components/BackLink.astro";
 import CorridorMap from "@watermark/viz/islands/CorridorMap.tsx";
 import Base from "~/layouts/Base.astro";
 import { mergedGeo } from "@watermark/viz/geo";
@@ -38,7 +37,6 @@ const mapSrc = withBase("/feeds/geo/corridor-map.geojson");
 
 <Base title="Watershed & corridor map" section="environment">
   <article class="prose">
-    <BackLink href={withSite("/environment/")} label="The environment" />
     <h1>Watershed &amp; corridor map</h1>
     <p class="section-lead">
       {boundaryLead} and the
