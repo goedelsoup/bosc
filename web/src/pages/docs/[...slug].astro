@@ -9,7 +9,6 @@
 import { getCollection, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
 import { bySlug } from "@watermark/core/narrative";
-import { withBase } from "@watermark/core/site";
 
 export async function getStaticPaths() {
   // Only the curated narrative set (lib/narrative.ts) is published; the glob may
@@ -23,8 +22,6 @@ const doc = bySlug.get(entry.id)!;
 const { Content, headings } = await render(entry);
 // The rail is this essay's own headings (Astro slugs each one as an `id`).
 const toc = headings.filter((h) => h.depth === 2).map((h) => ({ anchor: h.slug, label: h.text }));
-
-const docsHref = withBase("/docs/");
 
 const articleLd = Astro.site
   ? {
@@ -42,7 +39,6 @@ const articleLd = Astro.site
 <Base title={doc.title} section="docs" description={doc.blurb} toc={toc} ogType="article">
   {articleLd && <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(articleLd)} />}
   <article class="prose">
-    <p><a href={docsHref}>← All docs</a></p>
     <Content />
   </article>
 </Base>
