@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { hasFeed, loadFeed } from "./bundle";
 import { LEGAL, scopedLegal } from "./legal";
 import { RECORD_FACETS, type RecordFacet, facetAvailable, facetStatus, sectionStatus } from "./readiness";
-import { scopedReference } from "./reference";
+import { referenceContentKey } from "./reference";
 import { SITES } from "./sites";
 
 // The standing guard for #1886, run against the committed `sites/` bundles.
@@ -37,7 +37,11 @@ function contentKey(slug: string, facet: RecordFacet): string {
     case "legal":
       return JSON.stringify(scopedLegal(slug).map((d) => d.slug));
     case "reference":
-      return JSON.stringify(scopedReference(slug).map((d) => d.slug));
+      // Not the dataset SLUG list (#1905). That key was why this facet's collision could never
+      // be written out of: two sites owning the same datasets keyed identically no matter what
+      // their pages said. `referenceContentKey` is what actually renders — each README's declared
+      // prose scope, the site's OWN resolved file paths, and its instance note.
+      return referenceContentKey(slug);
   }
 }
 
@@ -85,25 +89,20 @@ describe("the record-facet declaration", () => {
 });
 
 /**
- * The one collision this guard admits today, named rather than exempted — the same disease as the
- * legal facet, found by this test in a facet #1886 does not scope.
+ * No deviations. The list is kept — and kept EMPTY — because it is the honest place for a
+ * collision that is understood but not yet fixed, and emptying it was the acceptance bar for the
+ * one entry it ever held (#1905).
  *
- * `/site/reference/` renders each dataset's committed README from `data/reference/`, and there is
- * exactly ONE README per dataset: Lima's. Two of the three a Great-Miami peer owns are catalog
- * entries marked `slug-scoped` — `rsei-inventory` and `economics-baseline` — meaning the DATASET is
- * genuinely per-site (Python materializes each site's own title off `title_template`, and each
- * site's `rsei`/`economics-baseline` feed carries its own county). The README is not: it is written
- * about **Allen County, OH (FIPS 39003)**, so Urbana and Troy-Piqua serve identical, Lima-worded
- * documentation of their own datasets, and by the same token Fort Wayne's `/site/reference/rsei`
- * describes an Ohio county under an Indiana watershed point.
- *
- * It is deliberately NOT fixed here. The fix is a data-tier and editorial call — per-site READMEs,
- * or a judgment per dataset about which prose is genuinely basin/network-scoped (`echo`'s
- * Maumee-basin inventory) versus which documents Lima's instance (`rsei`, `economics`, and
- * `gleif`'s corridor watchlist) — not a gating change, and #1886 scopes the gates. Listed here so
- * the property stays enforced for everything else and any NEW collision still fails the build.
+ * That entry was `/site/reference/ — urbana and troy-piqua serve identical content`. Every
+ * published dataset's README was written about **Allen County, OH (FIPS 39003)** while the
+ * DATASETS behind them were genuinely per-site (`rsei-inventory` / `economics-baseline` are
+ * `slug-scoped` — each site materializes its own title and its own county's data). The scoping was
+ * never wrong; the words were. #1905 split each README into what is true wherever the connector
+ * points and what one site's copy turned out to say (`data/reference/<set>/instances/<slug>.md`),
+ * and made each README declare whose prose it is in front matter. Adding a row back here means a
+ * facet is serving borrowed content again — write the prose instead.
  */
-const KNOWN_DEVIATIONS = ["/site/reference/ — urbana and troy-piqua serve identical content"];
+const KNOWN_DEVIATIONS: string[] = [];
 
 describe("no two sites serve the same content at the same facet route", () => {
   it("holds across every selectable site, unless the facet is declared network-global", () => {

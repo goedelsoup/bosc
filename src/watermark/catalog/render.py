@@ -48,7 +48,23 @@ def render_block(entries: list[CatalogEntry]) -> str:
         "**Cataloged datasets** — generated from `data/catalog/reference/`; "
         "run `watermark catalog render --apply` after editing an entry.",
     ]
+    # Only say it where a placeholder actually appears, so the 30-odd collections with no
+    # templated entry don't grow a line that explains nothing about them.
+    if any(e.title_template for e in entries):
+        lines += [
+            "",
+            "A `{…}` placeholder in a title resolves to the site reading it — a slug-scoped "
+            "dataset holds each site's own copy, so its title names each site's own county.",
+        ]
     for entry in sorted(entries, key=lambda e: e.id):
+        # A slug-scoped entry's `title` is a Lima literal ("Allen County, OH RSEI …"); the real
+        # per-site title is materialized from `title_template` at export (`catalog.sites.site_title`).
+        # This block is spliced into ONE README that every owning site renders, so baking the literal
+        # put Allen County, OH under every peer — the same leak #1905 fixed in the prose around it.
+        # The template is the honest rendering here: it shows that the title resolves per site, and
+        # names no county. Bundles are untouched — `site_title` never falls back to `title` for a
+        # registered site.
+        title = entry.title_template or entry.title
         meta = (
             f"Source: {entry.producer.source} · License: {entry.license or 'unspecified'} · "
             f"Access: {entry.access_tier} · Site scope: {entry.site_scope} · "
@@ -58,7 +74,7 @@ def render_block(entries: list[CatalogEntry]) -> str:
             meta += f" (ttl {entry.refresh.ttl_days}d)"
         if entry.refresh.last_refreshed:
             meta += f", last {entry.refresh.last_refreshed}"
-        lines += ["", f"### `{entry.id}` — {entry.title}", "", meta]
+        lines += ["", f"### `{entry.id}` — {title}", "", meta]
         if entry.producer.command:
             lines += ["", f"Regenerate: `watermark {entry.producer.command}`"]
         if entry.storage:

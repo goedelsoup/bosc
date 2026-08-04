@@ -8,9 +8,23 @@
  * between reference pages resolve to their new `/network/american-sugar-creek-allen-co/site/reference/<slug>` routes.
  *
  * The READMEs are read AS-IS — source is never moved or edited.
+ *
+ * Each published README **declares whose prose it is** in its front matter (#1905). Before that,
+ * there was exactly one README per dataset — Lima's — and every peer rendered it verbatim, so
+ * Urbana and Troy-Piqua served byte-identical Allen-County-OH documentation of their own,
+ * different datasets and `/network/fort-wayne/site/reference/rsei` described an Ohio county under
+ * an Indiana watershed point. The dataset scoping was never the problem (`scopedReference` has
+ * resolved the right datasets through the catalog seam since #1260) — the *words* were. So the
+ * prose is split: the README carries what is true wherever the connector points, and what a
+ * particular site's copy turned out to say lives in `data/reference/<set>/instances/<slug>.md`.
+ * {@link referenceForSite} is what a page renders — the scope declaration, the site's OWN catalog
+ * rows, and that site's instance note if it has one.
  */
-import { hasFeed, loadFeed } from "./bundle";
+import { hasFeed, loadFeed, repoPath } from "./bundle";
 import type { CatalogItem } from "./feeds";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { parse as parseYaml } from "yaml";
+import { catalogFreshness, type CatalogFreshness } from "./feeds";
 
 export interface ReferenceDataset {
   /** Path under `data/reference/` (the README). */
@@ -54,8 +68,11 @@ export const REFERENCE: ReferenceDataset[] = [
   {
     repo: "rsei/README.md",
     slug: "rsei",
+    // Blurbs render on EVERY owning site's reference index, so a Lima literal here is the same
+    // borrowed context #1905 fixed in the READMEs — one line up. Each site's county is named by
+    // its own catalog title and its own data, never by this registry.
     title: "RSEI toxic-release inventory (EPA)",
-    blurb: "The EPA RSEI Public Data Set reduced to Allen County's toxic-release facilities.",
+    blurb: "The EPA RSEI Public Data Set reduced to this site's county toxic-release facilities.",
     catalogIds: ["rsei-inventory"],
   },
   {
@@ -69,7 +86,7 @@ export const REFERENCE: ReferenceDataset[] = [
     repo: "economics/README.md",
     slug: "economics",
     title: "Economic baseline (BLS QCEW / Census)",
-    blurb: "Allen County employment (BLS QCEW) and population (Census ACS) — the localized baseline.",
+    blurb: "The site county's employment (BLS QCEW) and population (Census ACS) — the localized baseline.",
     catalogIds: ["economics-baseline"],
   },
   {
@@ -138,4 +155,207 @@ function ownedCatalogIds(slug: string): Set<string> {
 export function scopedReference(slug: string): ReferenceDataset[] {
   const owned = ownedCatalogIds(slug);
   return REFERENCE.filter((d) => d.catalogIds.some((id) => owned.has(id)));
+}
+
+// --- the prose scope declaration (#1905) -------------------------------------------------
+
+/**
+ * Whose words a README is, declared in its own front matter:
+ *
+ *  - `network`      — true wherever the connector is pointed (source, method, caveats). It may
+ *                     name no site's county as *the* county; the reading site's own figures come
+ *                     from its own copy of the data.
+ *  - `basin:<name>` — one artifact pulled per basin and shared by every site draining it. Naming
+ *                     the basin's own places is honest here: the file itself is the basin's.
+ *  - `site:<slug>`  — documents that site's instance by construction (a county parcel layer, a
+ *                     city zoning service). Only that site owns the catalog entry, so only that
+ *                     site renders it.
+ *
+ * The vocabulary deliberately mirrors the catalog's `site_scope`, but it is a SEPARATE decision:
+ * `site_scope` says which sites own the *dataset*, this says who the *prose* is about. The whole
+ * bug was the two silently disagreeing — a `slug-scoped` dataset (every site gets its own copy)
+ * documented by prose about one county.
+ */
+export type ReferenceScope = "network" | `basin:${string}` | `site:${string}`;
+
+export interface ReferenceProse {
+  scope: ReferenceScope;
+  /** The declared reason, rendered to the reader as the page's scope banner. */
+  scopeNote: string;
+}
+
+const SCOPE_RE = /^(network|basin:[a-z0-9-]+|site:[a-z0-9-]+)$/;
+
+/** Parse a leading `---` YAML front-matter block, or null when the file has none. */
+function frontMatter(path: string): Record<string, unknown> | null {
+  if (!existsSync(path)) return null;
+  const text = readFileSync(path, "utf8");
+  if (!text.startsWith("---\n")) return null;
+  const end = text.indexOf("\n---", 3);
+  if (end < 0) return null;
+  const parsed: unknown = parseYaml(text.slice(4, end + 1));
+  return parsed && typeof parsed === "object" ? (parsed as Record<string, unknown>) : null;
+}
+
+const proseCache = new Map<string, ReferenceProse>();
+
+/**
+ * A published dataset's declared prose scope, read from its README front matter.
+ *
+ * **Throws** on a published README with no (or a malformed) declaration, rather than assuming a
+ * default. A silent default is exactly how the bug got in: the un-declared README read as
+ * network-general to the routing layer while being written about one county. Build-only.
+ */
+export function referenceProse(datasetSlug: string): ReferenceProse {
+  const cached = proseCache.get(datasetSlug);
+  if (cached) return cached;
+  const dataset = refBySlug.get(datasetSlug);
+  if (!dataset) throw new Error(`Unknown reference dataset "${datasetSlug}".`);
+  const fm = frontMatter(repoPath("data", "reference", dataset.repo));
+  const scope = fm?.scope;
+  const note = fm?.scope_note;
+  if (typeof scope !== "string" || !SCOPE_RE.test(scope)) {
+    throw new Error(
+      `data/reference/${dataset.repo} declares no valid \`scope\` front matter. ` +
+        `Expected one of: network | basin:<name> | site:<slug> (#1905).`,
+    );
+  }
+  if (typeof note !== "string" || note.trim().length === 0) {
+    throw new Error(
+      `data/reference/${dataset.repo} declares \`scope: ${scope}\` with no \`scope_note\`. ` +
+        `The reason is the point — it is what the page shows the reader (#1905).`,
+    );
+  }
+  const prose: ReferenceProse = { scope: scope as ReferenceScope, scopeNote: note.trim() };
+  proseCache.set(datasetSlug, prose);
+  return prose;
+}
+
+/** The directory holding a dataset's per-site instance notes (sibling of its README). */
+function instancesDir(dataset: ReferenceDataset): string {
+  return repoPath("data", "reference", dataset.repo.replace(/README\.md$/, "instances"));
+}
+
+/**
+ * The sites with a committed instance note for a dataset — `data/reference/<set>/instances/
+ * <slug>.md`, the file that carries what THIS site's copy of the data turned out to say. Sorted,
+ * so the derived content keys are stable. Build-only.
+ */
+export function instanceSites(datasetSlug: string): string[] {
+  const dataset = refBySlug.get(datasetSlug);
+  if (!dataset) return [];
+  const dir = instancesDir(dataset);
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => f.slice(0, -3))
+    .sort();
+}
+
+/**
+ * The content-collection id of `site`'s instance note for a dataset, or null when it has none.
+ * A site without a note is the normal case and renders the network prose plus its own data —
+ * an absent note is never filled from another site's.
+ */
+export function instanceNoteId(datasetSlug: string, site: string): string | null {
+  return instanceSites(datasetSlug).includes(site) ? `${datasetSlug}/${site}` : null;
+}
+
+/** One catalog row behind a dataset, resolved for the site reading it. */
+export interface DatasetInstance {
+  id: string;
+  /** The site's own storage paths — `{site}` resolved, so the path names the reading site. */
+  files: string[];
+  command: string | null;
+  cadence: string;
+  lastRefreshed: string | null;
+  freshness: CatalogFreshness;
+}
+
+/**
+ * A catalog entry's storage paths as they resolve FOR a site — the TS peer of
+ * `bosc.catalog.sites._resolved_relpaths`. A `slug-scoped` entry's `{site}` template is the
+ * site's own copy; the reference build is the one site that keeps an un-slugged peer where the
+ * entry carries one (the `lima-legacy` reference convention), and falls back to its own template
+ * expansion where it doesn't. Everything else uses the un-templated paths verbatim.
+ *
+ * This is what makes the block genuinely per-site with no new plumbing: Urbana is told it reads
+ * `reference/rsei/urbana/inventory.yaml`, Troy-Piqua `reference/rsei/troy-piqua/inventory.yaml`.
+ *
+ * Filtered to what is actually committed for the site, because some templated paths are optional
+ * by construction — `reference/rsei/{site}/enclave.yaml` exists only where the site's facility is
+ * a federal installation (#1664). Naming a file a site does not have would be the same borrowed
+ * context this whole seam exists to stop, one level down.
+ */
+function resolvedFiles(row: CatalogItem, slug: string, isReferenceBuild: boolean): string[] {
+  const paths = row.storage.map((s) => s.relpath);
+  const resolve = (): string[] => {
+    if (row.site_scope !== "slug-scoped") return paths.filter((p) => !p.includes("{site}"));
+    const templated = paths.filter((p) => p.includes("{site}")).map((p) => p.replaceAll("{site}", slug));
+    if (!isReferenceBuild) return templated;
+    const peers = paths.filter((p) => !p.includes("{site}"));
+    return peers.length > 0 ? peers : templated;
+  };
+  return resolve().filter((p) => existsSync(repoPath("data", p)));
+}
+
+/** What `/site/reference/<slug>` renders for one site: the declaration, its data, its note. */
+export interface SiteReferenceEntry {
+  dataset: ReferenceDataset;
+  prose: ReferenceProse;
+  /** The site's OWN catalog rows behind this README (already scoped by the bundle feed). */
+  instances: DatasetInstance[];
+  /** This site's instance-note collection id, or null when it has none. */
+  note: string | null;
+}
+
+/**
+ * The reference section as one site reads it — {@link scopedReference} joined to each dataset's
+ * declared prose scope, that site's own catalog rows, and its instance note.
+ *
+ * The reference build is identified by owning an un-slugged peer path rather than by a hardcoded
+ * slug: `lima-legacy` is a storage convention, and the site axis forbids re-baking the slug here.
+ */
+export function referenceForSite(slug: string): SiteReferenceEntry[] {
+  const rows = hasFeed("catalog", slug)
+    ? new Map(loadFeed<CatalogItem[]>("catalog", slug).map((c) => [c.id, c]))
+    : new Map<string, CatalogItem>();
+  // A site owning a `lima-legacy` entry IS the reference build — the un-slugged files are its own.
+  const isReferenceBuild = [...rows.values()].some((c) => c.site_scope === "lima-legacy");
+  return scopedReference(slug).map((dataset) => ({
+    dataset,
+    prose: referenceProse(dataset.slug),
+    instances: dataset.catalogIds
+      .map((id) => rows.get(id))
+      .filter((row): row is CatalogItem => row !== undefined)
+      .map((row) => ({
+        id: row.id,
+        files: resolvedFiles(row, slug, isReferenceBuild),
+        command: row.command ?? null,
+        cadence: row.cadence,
+        lastRefreshed: row.last_refreshed ?? null,
+        freshness: catalogFreshness(row.observed),
+      })),
+    note: instanceNoteId(dataset.slug, slug),
+  }));
+}
+
+/**
+ * The reference facet's content identity for a site — what the facet guard compares.
+ *
+ * The old key was the list of dataset SLUGS, which is why the collision it reported could never
+ * be fixed by writing better prose: two sites owning the same datasets keyed identically no
+ * matter what those pages said. This key is what actually renders — the declared scope, the
+ * site's own resolved file paths, and its instance note — so two sites collide only when they
+ * genuinely serve the same words about the same bytes.
+ */
+export function referenceContentKey(slug: string): string {
+  return JSON.stringify(
+    referenceForSite(slug).map((e) => [
+      e.dataset.slug,
+      e.prose.scope,
+      e.note ?? "",
+      e.instances.map((i) => i.files),
+    ]),
+  );
 }

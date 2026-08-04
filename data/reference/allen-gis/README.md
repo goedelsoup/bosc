@@ -1,3 +1,11 @@
+---
+scope: site:lima
+scope_note: >-
+  Allen County's CAMA parcel layer is the reference build's own county by construction, so its
+  catalog entry belongs to that site alone and no peer renders this page. A peer documents its
+  own county's parcel source in that county's dataset folder.
+---
+
 # Allen County, Ohio GIS — parcels (CAMA)
 
 Parcel / real-estate attributes pulled from the **Allen County GIS** public ArcGIS
