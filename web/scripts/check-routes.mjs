@@ -176,23 +176,31 @@ const all = routes();
 // The BreadcrumbList JSON-LD half is asserted only when the build has a deploy origin. The
 // structured-data blocks all key off `Astro.site`, which is set from `SITE_URL` in the Pages
 // workflow and is undefined locally and in CI — so requiring it unconditionally would fail every
-// offline build. `hasOrigin` reads that off the emitted canonical link rather than the
+// offline build. `sawCanonical` reads that off the emitted canonical link rather than the
 // environment, so the guard turns itself on in exactly the builds that can satisfy it.
 {
-  // Every page emits the canonical when `Astro.site` is set, so one sample settles it.
-  const hasOrigin = all.length > 0 && readFileSync(all[0].file, "utf-8").includes('<link rel="canonical"');
+  // Whether the build has an origin is decided from the WHOLE pass, not from a sample. Sampling
+  // one page looks safe — `SEO.astro` emits the canonical for every page it renders — but
+  // `/pre-launch` deliberately bypasses `Base.astro` entirely and so emits none, and `routes()`
+  // walks `readdirSync` unsorted. A sample that happened to land on it would silently disarm the
+  // whole BreadcrumbList assertion in a production build, which is the one place it has to hold.
+  // So candidates are collected unconditionally in the single pass and reported only if an origin
+  // turned up anywhere — one read per file either way, and no dependence on directory order.
+  let sawCanonical = false;
   const missingTrail = [];
-  const missingLd = [];
+  const ldCandidates = [];
   let trailed = 0;
   for (const { file, route } of all) {
-    if (TRAILLESS_ROUTES.has(route)) continue;
     const html = readFileSync(file, "utf-8");
+    if (!sawCanonical && html.includes('<link rel="canonical"')) sawCanonical = true;
+    if (TRAILLESS_ROUTES.has(route)) continue;
     if (!html.includes('<nav class="trail"')) missingTrail.push(`/${route}`);
     else {
       trailed++;
-      if (hasOrigin && !html.includes('"BreadcrumbList"')) missingLd.push(`/${route}`);
+      if (!html.includes('"BreadcrumbList"')) ldCandidates.push(`/${route}`);
     }
   }
+  const missingLd = sawCanonical ? ldCandidates : [];
   const report = (list, what) => {
     if (list.length === 0) return;
     failures.push(
@@ -207,7 +215,7 @@ const all = routes();
   report(missingLd, "with a visible trail but no BreadcrumbList JSON-LD");
   console.log(
     `check-routes: ${trailed.toLocaleString("en-US")} routes carry a breadcrumb trail · ` +
-      `BreadcrumbList ${hasOrigin ? "asserted" : "skipped (no SITE_URL in this build)"}`,
+      `BreadcrumbList ${sawCanonical ? "asserted" : "skipped (no SITE_URL in this build)"}`,
   );
 }
 
