@@ -81,8 +81,13 @@ if (input && out) {
       out.innerHTML = '<p class="search-page-hint">Type at least two characters to search the record.</p>';
       return;
     }
-    void load(scope).then((docs) => {
-      if (input.value.trim() !== q) return;
+    // Capture the scope this run is for. Toggling scope re-runs immediately, and the two loads
+    // resolve in whatever order they finish — a cached shard set resolves in a microtask while a
+    // cold one waits on the network — so without this the *previous* scope's results can land last
+    // and overwrite the ones the reader just asked for.
+    const at = scope;
+    void load(at).then((docs) => {
+      if (input.value.trim() !== q || scope !== at) return;
       const { hits, terms } = rank(docs, q, home?.slug ?? null);
       const ask = hits.length <= THIN_RESULTS ? renderAskHandoff(q, base, hits.length) : "";
       if (!hits.length) {
@@ -90,7 +95,7 @@ if (input && out) {
         return;
       }
       // Label rows by site only when the results can span more than one.
-      const names = scope === "network" ? siteNames : undefined;
+      const names = at === "network" ? siteNames : undefined;
       out.innerHTML =
         `<p class="search-page-count">${hits.length} result${hits.length === 1 ? "" : "s"} for “${esc(q)}”</p>` +
         renderGroups(hits, terms, base, names) +

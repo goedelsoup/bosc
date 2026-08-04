@@ -355,9 +355,15 @@ export function buildSiteSearchIndex(slug: string): SearchDoc[] {
     // This site's section landings, each gated on its own readiness. A locked section renders the
     // lock + the ask, so it is not a destination; `sections()` is read inside `runWithSite`, so the
     // hrefs are already this site's.
+    //
+    // Their URLs are remembered because a few record facets share a route with a section — the
+    // `timeline` facet's route IS the timeline section's landing — and two rows for one destination
+    // is a duplicate in the reader's result list, not two results.
+    const sectionUrls = new Set<string>();
     for (const s of sections()) {
       if (!s.href.startsWith(`${base}/`) && s.href !== base) continue;
       if (sectionLocked(slug, s.id)) continue;
+      sectionUrls.add(s.href);
       push({ title: s.label, url: s.href, section: s.label, text: s.blurb, kind: "Section" });
       for (const t of s.toc) {
         push({
@@ -511,8 +517,15 @@ export function buildSiteSearchIndex(slug: string): SearchDoc[] {
     }
 
     // The record facets' own landings — the door to each leaf, gated the same way the leaf is.
+    //
+    // Skipped where the section walk above already claimed the route: `timeline`'s facet route is
+    // the timeline section's landing, so emitting both listed one page twice in every result set
+    // that matched it. The section row wins because it carries the section's blurb. (If the section
+    // is locked but the facet is open, the section row was never pushed and the facet supplies the
+    // destination — which is why this checks the URL rather than special-casing the facet.)
     for (const facet of Object.keys(RECORD_FACETS) as RecordFacet[]) {
       if (!facetAvailable(slug, facet)) continue;
+      if (sectionUrls.has(at(RECORD_FACETS[facet].route))) continue;
       const d = RECORD_FACETS[facet];
       push({
         title: d.label,

@@ -29,6 +29,10 @@
  * to stop.
  */
 
+import { siteBase } from "./routes";
+import { searchShardRefs } from "./search";
+import { SITES } from "./sites";
+
 /** How a family of built routes relates to the search index. */
 export type CoverageVerdict = "not-content" | "represented" | "gap";
 
@@ -44,6 +48,18 @@ export interface CoverageFamily {
   /** Why. For `represented`, name the indexed row that reaches this content. */
   note: string;
 }
+
+/**
+ * The `/network/<id>` segments that DO ship a search shard, as a regex alternation.
+ *
+ * Derived from the registry through `siteBase`, never written out: the URL id differs from the
+ * registry slug for the reference site (`lima` → `american-sugar-creek-allen-co`), and promoting a
+ * site to `selectable` must not leave a hardcoded list behind describing the network as it was.
+ * "Add a site by registering a profile; never re-hardcode a Lima/Allen-County value."
+ */
+const SHARDED_SITE_IDS = SITES.filter((s) => s.selectable)
+  .map((s) => siteBase(s.slug).replace("/network/", ""))
+  .join("|");
 
 export const COVERAGE_FAMILIES: CoverageFamily[] = [
   {
@@ -98,7 +114,7 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
     note: "Search finding itself is noise in every result set that contains the word.",
   },
   {
-    pattern: "^/network/(?!american-sugar-creek-allen-co|fort-wayne|urbana|troy-piqua)[^/]+/",
+    pattern: `^/network/(?!${SHARDED_SITE_IDS})[^/]+/`,
     label: "A non-selectable site's own pages",
     verdict: "gap",
     note:
@@ -172,6 +188,13 @@ export interface CoverageDeclaration {
   families: CoverageFamily[];
   floor: number;
   shardGzipBudget: number;
+  /**
+   * Every shard the build is expected to emit, root-absolute. The post-build guard compares what
+   * it finds against this exact set rather than counting: a shard that silently stops emitting for
+   * one site leaves the others in place, so "at least two exist" would have passed while that
+   * site's record became unsearchable — the very failure #1890 fixed.
+   */
+  shards: string[];
 }
 
 /** The declaration, as emitted to `/search-coverage.json` for the post-build guard. */
@@ -180,5 +203,6 @@ export function searchCoverage(): CoverageDeclaration {
     families: COVERAGE_FAMILIES,
     floor: COVERAGE_FLOOR,
     shardGzipBudget: SHARD_GZIP_BUDGET,
+    shards: ["/search-index.json", ...searchShardRefs().map((r) => r.path)],
   };
 }

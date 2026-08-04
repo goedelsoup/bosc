@@ -2,6 +2,7 @@
 // (searchEngine.ts) so the dropdown and the full /search page never drift. Reads config off
 // the input's data attributes (set server-side): data-index, data-base, data-shards, data-site.
 import {
+  esc,
   makeIndexLoader,
   rank,
   renderAskHandoff,
@@ -40,9 +41,12 @@ if (box && panel) {
     return `${base}/search?${p.toString()}`;
   };
 
+  // `homeLabel` is a registry `place`, not reader input — but it lands in innerHTML, and every
+  // other data-derived string on this path goes through `esc`. The exception is the thing that
+  // rots.
   const scopeNote =
     scope === "site"
-      ? `Searching <strong>${homeLabel}</strong> and the network`
+      ? `Searching <strong>${esc(homeLabel)}</strong> and the network`
       : `Searching <strong>the whole network</strong> · ${shards.length} sites`;
 
   const load = makeIndexLoader(indexUrl, shards, homeSlug);
