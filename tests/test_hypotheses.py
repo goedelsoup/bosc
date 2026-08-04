@@ -1,6 +1,7 @@
 """Tests for the boom-origin hypothesis axis (the third axis: site x hypothesis).
 
-The registry is ported from ``web/packages/core/src/directory.ts`` (LENSES + LENS_DATA); the
+The registry is ported from ``web/packages/core/src/directory.ts`` (HYPOTHESIS_VIEW + the
+formerly-hardcoded cell table); the
 port-parity test below is the zero-drift contract — if a cell's signal/group/field was
 mistranscribed when it moved into ``data/hypotheses/``, this fails before the frontend
 cutover (Phase 2) can render the wrong thing.
@@ -23,7 +24,7 @@ from watermark.hypotheses import (
     load_assessments,
 )
 
-# The canonical LENS_DATA cells (signal/group + the per-hypothesis fields), transcribed
+# The canonical pre-feed cells (signal/group + the per-hypothesis fields), transcribed
 # from directory.ts. The committed YAML store must reproduce these exactly.
 _EXPECTED = {
     ("defense", "lima"): (
@@ -134,8 +135,8 @@ def test_hypothesis_fields_and_groups() -> None:
     assert HYPOTHESES["water"].groups == ("coercion",)
 
 
-def test_committed_store_loads_and_matches_lens_data() -> None:
-    """Port-parity: the committed cells reproduce directory.ts LENS_DATA exactly."""
+def test_committed_store_loads_and_matches_ported_cells() -> None:
+    """Port-parity: the committed cells reproduce the ported directory.ts table exactly."""
     cells = {(c.hypothesis, c.site): c for c in load_assessments()}
     assert set(cells) == set(_EXPECTED)
     for key, (signal, group, fields) in _EXPECTED.items():
@@ -171,7 +172,7 @@ def test_committed_store_lint_has_no_hard_findings() -> None:
 
 
 def test_non_open_cell_requires_a_citation() -> None:
-    """Every verified/inference cell carries provenance — the upgrade over LENS_DATA."""
+    """Every verified/inference cell carries provenance — the upgrade over the hardcoded table."""
     for c in load_assessments():
         if c.tag != "open":
             assert c.citations, (c.hypothesis, c.site)
@@ -288,7 +289,7 @@ def test_hypothesis_model_rejects_extra() -> None:
 def test_defense_capture_sub_thesis_is_expressible_under_h2() -> None:
     """The economic-capture reading belongs to H2, not only to H3 (#1663, ME-D).
 
-    Before this, "defense distorts the local economy" had no H2 vocabulary — the lens exposed
+    Before this, "defense distorts the local economy" had no H2 vocabulary — H2 exposed
     only `nexus`/`linkage`, so capture had to be filed under H3 surveillance, whose `capital`
     field is about private operators and public subsidy. The lint enforces the field set, so a
     capture cell would have been rejected outright.

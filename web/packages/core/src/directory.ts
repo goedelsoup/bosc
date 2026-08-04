@@ -1,5 +1,5 @@
 /**
- * The directory's three-lens model (#308 "Directory" dictate) — one network, read three ways.
+ * The directory's three-hypothesis model (#308 "Directory" dictate) — one network, read three ways.
  *
  * The /research/hypotheses index reorganizes the SAME registry (`SITES`, every site) around one
  * of three hypotheses — never a subset, and never a count written out in prose, which goes stale
@@ -33,10 +33,10 @@ import {
   type SiteStatus,
 } from "./sites";
 
-export type DirLens = "water" | "defense" | "surveillance";
+export type HypothesisId = "water" | "defense" | "surveillance";
 
-/** Display order of the lens cards / panes (water is the default, live thesis). */
-export const LENS_ORDER: readonly DirLens[] = ["water", "defense", "surveillance"];
+/** Display order of the hypothesis cards / panes (water is the default, live thesis). */
+export const HYPOTHESIS_ORDER: readonly HypothesisId[] = ["water", "defense", "surveillance"];
 
 /** The strength of a per-site signal under H2/H3 — inference until a nexus is documented. */
 export type Signal = "anchor" | "strong" | "moderate" | "watch";
@@ -160,9 +160,9 @@ const SURV0: SurvFact = { operator: "—", capital: "—", signal: "watch", grou
  * The per-site H2/H3 reading, indexed by slug — now built from the `hypothesis-assessments`
  * bundle feed (#308), no longer hardcoded here. Absent slugs inherit DEF0/SURV0 ("not yet
  * assessed"). Every committed cell is a real, on-the-record fact or an explicitly-tagged
- * inference, and now carries a Citation in the feed (the provenance LENS_DATA lacked).
+ * inference, and now carries a Citation in the feed (the provenance the hardcoded table lacked).
  */
-export type LensData = Record<string, { def?: DefFact; surv?: SurvFact }>;
+export type AssessmentIndex = Record<string, { def?: DefFact; surv?: SurvFact }>;
 
 const asSignal = (s: string | null | undefined): Signal =>
   s === "anchor" || s === "strong" || s === "moderate" ? s : "watch";
@@ -174,9 +174,9 @@ const asDefGroup = (g: string | null | undefined): DefGroup =>
 const asSurvGroup = (g: string | null | undefined): SurvGroup =>
   g === "onrecord" || g === "subsidy" ? g : "watch";
 
-/** Fold the `hypothesis-assessments` feed into the per-site def/surv index the lenses read. */
-export function indexAssessments(cells: readonly HypothesisAssessmentItem[]): LensData {
-  const data: LensData = {};
+/** Fold the `hypothesis-assessments` feed into the per-site def/surv index the hypotheses read. */
+export function indexAssessments(cells: readonly HypothesisAssessmentItem[]): AssessmentIndex {
+  const data: AssessmentIndex = {};
   for (const c of cells) {
     const entry = data[c.site] ?? {};
     data[c.site] = entry;
@@ -204,19 +204,19 @@ export function indexAssessments(cells: readonly HypothesisAssessmentItem[]): Le
 }
 
 /** A site's defense + surveillance reading, defaulting to "not yet assessed". */
-export function lensDatum(slug: string, data: LensData): { def: DefFact; surv: SurvFact } {
+export function assessmentFor(slug: string, data: AssessmentIndex): { def: DefFact; surv: SurvFact } {
   const d = data[slug];
   return { def: d?.def ?? DEF0, surv: d?.surv ?? SURV0 };
 }
 
-// --- The two continental divides (water lens grouping) ------------------------------------------
+// --- The two continental divides (H1 grouping) --------------------------------------------------
 // Basins nest under the divide they drain to — the water thesis's organizing fact. Both the
 // divides and their basin membership now come from the one `./placement` table each basin is a row
-// in (#1863), so adding a basin can't leave it grouped in the selector but missing from this lens.
+// in (#1863), so adding a basin can't leave it grouped in the selector but missing from H1.
 
-// --- Lens configuration (cards, framing, columns) ----------------------------------------------
-export interface LensConfig {
-  key: DirLens;
+// --- Hypothesis configuration (cards, framing, columns) -----------------------------------------
+export interface HypothesisConfig {
+  key: HypothesisId;
   /** Hypothesis tag, H1/H2/H3. */
   n: string;
   name: string;
@@ -236,7 +236,7 @@ export interface LensConfig {
   fr: readonly string[];
 }
 
-export const LENSES: Record<DirLens, LensConfig> = {
+export const HYPOTHESIS_VIEW: Record<HypothesisId, HypothesisConfig> = {
   water: {
     key: "water",
     n: "H1",
@@ -321,25 +321,25 @@ export const LENSES: Record<DirLens, LensConfig> = {
   },
 };
 
-/** The lens-card count line: the water lens counts the network; H2/H3 count assessment progress. */
-export function lensCount(lens: DirLens, data: LensData): string {
-  if (lens === "water") return `${SITES.length} sites · ${groupSites("basin").length} basins`;
+/** The hypothesis-card count line: H1 counts the network; H2/H3 count assessment progress. */
+export function hypothesisCount(id: HypothesisId, data: AssessmentIndex): string {
+  if (id === "water") return `${SITES.length} sites · ${groupSites("basin").length} basins`;
   const assessed = SITES.filter((s) =>
-    lens === "defense"
-      ? lensDatum(s.slug, data).def.group !== "watch"
-      : lensDatum(s.slug, data).surv.group !== "watch",
+    id === "defense"
+      ? assessmentFor(s.slug, data).def.group !== "watch"
+      : assessmentFor(s.slug, data).surv.group !== "watch",
   ).length;
   return `${assessed} assessed · ${SITES.length - assessed} to review`;
 }
 
-/** Merge a lens's static presentation config with its content from the `hypotheses` feed (#308):
- *  name/claim/blurb/status now come from bosc.hypotheses, not hardcoded. The LENSES content is the
- *  offline fallback for a bundle that predates the hypotheses feed. */
-export function lensConfig(lens: DirLens, hyp?: HypothesisItem): LensConfig {
-  if (!hyp) return LENSES[lens];
+/** Merge a hypothesis's static presentation config with its content from the `hypotheses` feed
+ *  (#308): name/claim/blurb/status now come from bosc.hypotheses, not hardcoded. The
+ *  HYPOTHESIS_VIEW content is the offline fallback for a bundle predating the hypotheses feed. */
+export function hypothesisConfig(id: HypothesisId, hyp?: HypothesisItem): HypothesisConfig {
+  if (!hyp) return HYPOTHESIS_VIEW[id];
   const reference = hyp.status === "reference";
   return {
-    ...LENSES[lens],
+    ...HYPOTHESIS_VIEW[id],
     name: hyp.name,
     claim: hyp.claim,
     blurb: hyp.thesis,
@@ -385,15 +385,15 @@ export interface Group {
   abbr: string;
   label: string;
   count: number;
-  /** Set on the first basin group of a divide (water lens) — the divide banner above it. */
+  /** Set on the first basin group of a divide (H1) — the divide banner above it. */
   divide?: { label: string; note: string };
   rows: Row[];
   /** A not-yet-assessed site under H2/H3. It routes like a row (#1862) — "not assessed under
    *  this thesis" is a statement about the thesis, not a reason to strand the site. */
   chips: { place: string; dot: string; href: string }[];
 }
-export interface LensView {
-  key: DirLens;
+export interface HypothesisView {
+  key: HypothesisId;
   axisTitle: string;
   axisGroups: AxisGroup[];
   cols: { label: string; align: "left" | "right" }[];
@@ -425,28 +425,28 @@ const pillCell = (s: Swatch): Cell => ({ kind: "pill", pill: s });
 const facPill = (status: FacilityStatus): Cell => pillCell(FACILITY_STATUS_META[status]);
 
 /**
- * Build a lens's full view model: the scorecard column spec, the grouped rows (or chip groups),
- * and the framing-panel axis chips.
+ * Build a hypothesis's full view model: the scorecard column spec, the grouped rows (or chip
+ * groups), and the framing-panel axis chips.
  *
  * Two bundle-backed lookups are threaded in as resolvers so this builder stays pure (no bundle
  * read) and a unit test can stub both: `facilityStatusOf` resolves the facility lifecycle stage
  * (#1628), and `rollupOf` resolves the site's own documents/records/tier (#1861 — it replaces the
  * Lima-only hardcoded counts this used to take). The page passes `facilityStatus` / `siteRollup`.
  */
-export function buildLens(
-  lens: DirLens,
+export function buildHypothesisView(
+  id: HypothesisId,
   rollupOf: (slug: string) => SiteRollup,
-  data: LensData,
+  data: AssessmentIndex,
   facilityStatusOf: (slug: string) => FacilityStatus,
-): LensView {
-  const cfg = LENSES[lens];
+): HypothesisView {
+  const cfg = HYPOTHESIS_VIEW[id];
   const cols = cfg.cols.map((c) => ({ label: c.label, align: c.align ?? ("left" as const) }));
   const gridCols = cfg.fr.join(" ");
 
   const groups: Group[] = [];
   const axisGroups: AxisGroup[] = [];
 
-  if (lens === "water") {
+  if (id === "water") {
     const byBasin = new Map(groupSites("basin").map((g) => [g.label, g]));
     for (const d of DIVIDES) {
       // The banner opens the first basin of the divide that actually RENDERS, not the first one
@@ -496,15 +496,15 @@ export function buildLens(
           .filter((c) => c.count > 0),
       })),
     );
-    return { key: lens, axisTitle: cfg.axisTitle, axisGroups, cols, gridCols, groups };
+    return { key: id, axisTitle: cfg.axisTitle, axisGroups, cols, gridCols, groups };
   }
 
   // Defense / surveillance: group by thesis category, with a "not yet assessed" chip tail.
-  const isDef = lens === "defense";
+  const isDef = id === "defense";
   const grpKey = (s: NetworkSite): string =>
-    isDef ? lensDatum(s.slug, data).def.group : lensDatum(s.slug, data).surv.group;
+    isDef ? assessmentFor(s.slug, data).def.group : assessmentFor(s.slug, data).surv.group;
   const rowFor = (s: NetworkSite): Row => {
-    const dat = lensDatum(s.slug, data);
+    const dat = assessmentFor(s.slug, data);
     const defTag = dat.def.sub_thesis ? ` · [${dat.def.sub_thesis}]` : "";
     const survTag = dat.surv.sub_thesis ? ` · [${dat.surv.sub_thesis}]` : "";
     // The capture cell reads as "<what the money does> · <the figure it rests on>" so the
@@ -574,5 +574,5 @@ export function buildLens(
     ],
   });
 
-  return { key: lens, axisTitle: cfg.axisTitle, axisGroups, cols, gridCols, groups };
+  return { key: id, axisTitle: cfg.axisTitle, axisGroups, cols, gridCols, groups };
 }

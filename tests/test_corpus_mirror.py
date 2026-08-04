@@ -262,7 +262,7 @@ def test_thin_site_is_still_connected(tmp_path: Path) -> None:
     )
     write_mirror(mirror, corpus)
     assert validate_mirror(corpus) == []
-    # minimum viable graph: the site anchor + 3 hypothesis lenses + 1 concept
+    # minimum viable graph: the site anchor + 3 hypothesis nodes + 1 concept
     assert mirror.counts_by_class() == {"concept": 1, "artifact": 1, "hypothesis": 3}
 
 

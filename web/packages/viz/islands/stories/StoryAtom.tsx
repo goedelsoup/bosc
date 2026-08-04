@@ -474,7 +474,7 @@ function TeardownCard({ atom }: { atom: HydratedAtom }) {
   );
 }
 
-// chapter — a new composition mirroring the Hypotheses lens card, scaled down.
+// chapter — a new composition mirroring the Hypotheses page's card, scaled down.
 function ChapterCard({ atom }: { atom: HydratedAtom }) {
   const c = atom.chapter;
   if (!c) return <CompactCard atom={atom} />;

@@ -336,7 +336,9 @@ export type NavItem =
  *  Hypotheses come from the live feed so the dropdown labels stay in sync without hardcoding. */
 export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   const researchChildren: NavChild[] = [
-    ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
+    // `?h=` is the canonical deep-link param (#1912). The page still honors the pre-#1912
+    // `?lens=` spelling for links already shared, but nothing emits it any more.
+    ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?h=${h.id}` })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
     // Basin views (design "Chrome": Research ▾ → Basin views) — Maumee is the one built today;
     // the other eight basins join here as their /basin pages land.

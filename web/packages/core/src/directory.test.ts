@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
-  buildLens,
+  buildHypothesisView,
   featuredSites,
   indexAssessments,
-  LENS_ORDER,
-  lensConfig,
-  lensCount,
-  lensDatum,
+  HYPOTHESIS_ORDER,
+  hypothesisConfig,
+  hypothesisCount,
+  assessmentFor,
   TIER_DEPTH_ORDER,
   TIER_PILL,
 } from "./directory";
@@ -14,7 +14,7 @@ import type { FacilityStatus, HypothesisAssessmentItem, HypothesisItem } from ".
 import { SITE_BASE } from "./routes";
 import { SITES, type SiteRollup } from "./sites";
 
-// Pure stubs for buildLens's two bundle-backed lookups — the real page passes `facilityStatus`
+// Pure stubs for buildHypothesisView's two bundle-backed lookups — the real page passes `facilityStatus`
 // (#1628) and `siteRollup` (#1861); these keep the unit test offline (no bundle). The rollup stub
 // covers the four cases the renderer must distinguish: the reference build, a worked `case`, a
 // built-but-empty site (real zeros), and a registered site with no bundle at all (nulls).
@@ -30,7 +30,7 @@ const NO_BUNDLE: SiteRollup = { documents: null, records: null, tier: null };
 const ROLLUP = (slug: string): SiteRollup => ROLLUPS[slug] ?? NO_BUNDLE;
 
 // The committed (site x hypothesis) cells, as they arrive from the `hypothesis-assessments`
-// feed. Mirrors data/hypotheses/**; the Python port-parity test guards these against LENS_DATA.
+// feed. Mirrors data/hypotheses/**; the Python port-parity test guards these against the Python registry.
 const CELLS: HypothesisAssessmentItem[] = [
   {
     site: "lima",
@@ -125,13 +125,13 @@ const CELLS: HypothesisAssessmentItem[] = [
 ];
 const DATA = indexAssessments(CELLS);
 
-describe("directory lenses — one network, read three ways (#308)", () => {
-  it("orders the lenses water → defense → surveillance (water is the live default)", () => {
-    expect(LENS_ORDER).toEqual(["water", "defense", "surveillance"]);
+describe("directory hypotheses — one network, read three ways (#308)", () => {
+  it("orders the hypotheses water → defense → surveillance (water is the live default)", () => {
+    expect(HYPOTHESIS_ORDER).toEqual(["water", "defense", "surveillance"]);
   });
 
-  it("water lens groups all sites by basin, nested under the two divides", () => {
-    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
+  it("H1 groups all sites by basin, nested under the two divides", () => {
+    const v = buildHypothesisView("water", ROLLUP, DATA, FAC_STATUS);
     expect(v.groups).toHaveLength(11); // eleven basins
     const total = v.groups.reduce((n, g) => n + g.rows.length, 0);
     expect(total).toBe(SITES.length);
@@ -154,8 +154,8 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     ]);
   });
 
-  it("water lens rolls each site's OWN bundle counts up per row, not Lima's alone (#1861)", () => {
-    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
+  it("H1 rolls each site's OWN bundle counts up per row, not Lima's alone (#1861)", () => {
+    const v = buildHypothesisView("water", ROLLUP, DATA, FAC_STATUS);
     const rows = v.groups.flatMap((g) => g.rows);
     const row = (slug: string) => rows.find((r) => r.slug === slug);
     // cols: site, watershed, phase, tier, documents, records, facility
@@ -175,7 +175,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("distinguishes a measured zero from an unmeasured dash — the two are different claims", () => {
-    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
+    const v = buildHypothesisView("water", ROLLUP, DATA, FAC_STATUS);
     const rows = v.groups.flatMap((g) => g.rows);
     // Built, but its export carries nothing: a real 0, rendered un-muted — a measurement.
     const sandusky = rows.find((r) => r.slug === "sandusky");
@@ -191,7 +191,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("surfaces readiness.tier as its own pill — and withholds it where no export produced one", () => {
-    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
+    const v = buildHypothesisView("water", ROLLUP, DATA, FAC_STATUS);
     const rows = v.groups.flatMap((g) => g.rows);
     const tier = (slug: string) => rows.find((r) => r.slug === slug)?.cells[3];
     expect(tier("lima")?.pill).toEqual(TIER_PILL.reference);
@@ -206,7 +206,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("routes every row to the site it names — the directory's click-through (#1862)", () => {
-    const v = buildLens("water", ROLLUP, DATA, FAC_STATUS);
+    const v = buildHypothesisView("water", ROLLUP, DATA, FAC_STATUS);
     const rows = v.groups.flatMap((g) => g.rows);
     const href = (slug: string) => rows.find((r) => r.slug === slug)?.href;
     // Lima is the one site whose URL id isn't its slug — it must land on the re-rooted base,
@@ -226,8 +226,8 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("routes the not-yet-assessed chips too — H2/H3 leave no site unreachable (#1862)", () => {
-    for (const lens of ["defense", "surveillance"] as const) {
-      const v = buildLens(lens, ROLLUP, DATA, FAC_STATUS);
+    for (const id of ["defense", "surveillance"] as const) {
+      const v = buildHypothesisView(id, ROLLUP, DATA, FAC_STATUS);
       const dests = [
         ...v.groups.flatMap((g) => g.rows).map((r) => r.href),
         ...v.groups.flatMap((g) => g.chips).map((c) => c.href),
@@ -238,8 +238,8 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     }
   });
 
-  it("defense lens groups assessed sites and sweeps the rest into a 'not yet assessed' chip tail", () => {
-    const v = buildLens("defense", ROLLUP, DATA, FAC_STATUS);
+  it("H2 groups assessed sites and sweeps the rest into a 'not yet assessed' chip tail", () => {
+    const v = buildHypothesisView("defense", ROLLUP, DATA, FAC_STATUS);
     const rowGroups = v.groups.filter((g) => g.kind === "rows");
     const chipGroups = v.groups.filter((g) => g.kind === "chips");
     expect(rowGroups.map((g) => [g.abbr, g.count])).toEqual([
@@ -254,8 +254,8 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     expect(covered).toBe(SITES.length);
   });
 
-  it("surveillance lens splits on-record from signal-only, with the rest in the chip tail", () => {
-    const v = buildLens("surveillance", ROLLUP, DATA, FAC_STATUS);
+  it("H3 splits on-record from signal-only, with the rest in the chip tail", () => {
+    const v = buildHypothesisView("surveillance", ROLLUP, DATA, FAC_STATUS);
     const rowGroups = v.groups.filter((g) => g.kind === "rows");
     expect(rowGroups.map((g) => [g.abbr, g.count])).toEqual([
       ["OPR", 2], // Lima, New Albany
@@ -265,26 +265,26 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     expect(chips?.count).toBe(SITES.length - 4);
   });
 
-  it("counts assessment progress in the lens-card line, and the network in the water line", () => {
-    expect(lensCount("water", DATA)).toBe(`${SITES.length} sites · 11 basins`);
-    expect(lensCount("defense", DATA)).toBe(`6 assessed · ${SITES.length - 6} to review`);
-    expect(lensCount("surveillance", DATA)).toBe(`4 assessed · ${SITES.length - 4} to review`);
+  it("counts assessment progress in the hypothesis-card line, and the network in the water line", () => {
+    expect(hypothesisCount("water", DATA)).toBe(`${SITES.length} sites · 11 basins`);
+    expect(hypothesisCount("defense", DATA)).toBe(`6 assessed · ${SITES.length - 6} to review`);
+    expect(hypothesisCount("surveillance", DATA)).toBe(`4 assessed · ${SITES.length - 4} to review`);
   });
 
   it("defaults an unassessed site to 'watch' under both theses — a dash, not a verdict", () => {
-    const d = lensDatum("toledo", DATA);
+    const d = assessmentFor("toledo", DATA);
     expect(d.def.group).toBe("watch");
     expect(d.def.nexus).toBe("—");
     expect(d.surv.group).toBe("watch");
     // Lima is the worked anchor under both.
-    expect(lensDatum("lima", DATA).def.signal).toBe("anchor");
-    expect(lensDatum("lima", DATA).surv.group).toBe("onrecord");
+    expect(assessmentFor("lima", DATA).def.signal).toBe("anchor");
+    expect(assessmentFor("lima", DATA).surv.group).toBe("onrecord");
   });
 
   it("an empty feed leaves every site unassessed (graceful, no crash)", () => {
     const empty = indexAssessments([]);
-    expect(lensDatum("lima", empty).def.group).toBe("watch");
-    expect(lensCount("defense", empty)).toBe(`0 assessed · ${SITES.length} to review`);
+    expect(assessmentFor("lima", empty).def.group).toBe("watch");
+    expect(hypothesisCount("defense", empty)).toBe(`0 assessed · ${SITES.length} to review`);
   });
 
   it("sub_thesis flows through indexAssessments and renders as a bracketed suffix (#905)", () => {
@@ -302,14 +302,14 @@ describe("directory lenses — one network, read three ways (#308)", () => {
       },
     ];
     const data = indexAssessments(cellsWithTag);
-    expect(lensDatum("lima", data).surv.sub_thesis).toBe("capture");
+    expect(assessmentFor("lima", data).surv.sub_thesis).toBe("capture");
     // The scorecard row appends · [capture] to the operator cell.
-    const v = buildLens("surveillance", ROLLUP, data, FAC_STATUS);
+    const v = buildHypothesisView("surveillance", ROLLUP, data, FAC_STATUS);
     const limaRow = v.groups.flatMap((g) => g.rows).find((r) => r.slug === "lima");
     expect(limaRow?.cells[1].text).toBe("Project BOSC · [capture]");
   });
 
-  it("lensConfig sources name/claim/blurb/status from the hypotheses feed (not hardcoded)", () => {
+  it("hypothesisConfig sources name/claim/blurb/status from the hypotheses feed (not hardcoded)", () => {
     const hyp: HypothesisItem = {
       id: "defense",
       number: "H2",
@@ -323,7 +323,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
       related_docs: [],
       predicted_evidence: [],
     };
-    const cfg = lensConfig("defense", hyp);
+    const cfg = hypothesisConfig("defense", hyp);
     expect(cfg.name).toBe("FEED NAME");
     expect(cfg.claim).toBe("FEED CLAIM");
     expect(cfg.blurb).toBe("FEED THESIS");
@@ -332,7 +332,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     // Presentation (accent, columns) stays local to the frontend.
     expect(cfg.accent).toBe("#16201a");
     // Falls back to the built-in config when the feed lacks the hypothesis.
-    expect(lensConfig("defense").name).toBe("Defense & Federal Enclave");
+    expect(hypothesisConfig("defense").name).toBe("Defense & Federal Enclave");
   });
 });
 

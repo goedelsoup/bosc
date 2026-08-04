@@ -243,7 +243,7 @@ export function buildNetworkSearchIndex(): SearchDoc[] {
   }
 
   // Every destination the network chrome navigates to: /about/*, /methodology, /basin, the
-  // research lenses, Connect. Hand-authored pages with no feed behind them, and unreachable by
+  // research hypotheses, Connect. Hand-authored pages with no feed behind them, and unreachable by
   // search until now.
   const seen = new Set(docs.map((d) => d.url));
   for (const dest of navDestinations([...networkTabs(), ...platformLinks().map(toNavLink)])) {

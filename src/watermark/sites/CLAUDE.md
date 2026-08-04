@@ -12,7 +12,7 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   in `web/packages/core/src/readiness.ts`. Change a site's identity in **`data/sites.yaml`**, not in
   two places — the profile back-fills identity from it (below).
 - **A site's placement (`state` + `basin_major`) is YAML identity, and the frontend derives it**
-  (#1863). Both are the grouping axes of the selector's two lenses and the water-lens scorecard;
+  (#1863). Both are the grouping axes of the selector's two lenses and the H1 scorecard;
   they used to live in a hand-maintained `PLACEMENT` table in `sites.ts` parallel to this registry,
   so registering a site here without editing that table silently dropped it from all three.
   `basin_major` is the one identity field the profile *also* keeps a literal of — `SiteProfile.basin`,

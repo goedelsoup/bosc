@@ -76,7 +76,7 @@ export interface NetworkSite {
   basin: string;
   /**
    * The MAJOR river basin this site groups under, as its `basin_major` registry slug (#1863) —
-   * the coarser peer of {@link basin} above, and the axis `groupSites("basin")` and the water-lens
+   * the coarser peer of {@link basin} above, and the axis `groupSites("basin")` and the H1
    * scorecard pivot on. Its display label, code, region, and divide live in `./placement`; only
    * the slug is per-site. Authoritative in `data/sites.yaml`, where it also back-stops the Python
    * `SiteProfile.basin` literal — so the grouping can't drift from the basin the site's receiving
@@ -415,7 +415,7 @@ const SITE_TIERS: ReadonlySet<SiteTier> = new Set(["stub", "backdrop", "case", "
 const NO_BUNDLE: SiteRollup = { documents: null, records: null, tier: null };
 
 // `documents` is the one figure that needs the feed body rather than the manifest index, and
-// Lima's is ~1.8 MB — memoize per slug so the three lens builds plus the home ledger parse it
+// Lima's is ~1.8 MB — memoize per slug so the three hypothesis builds plus the home ledger parse it
 // once per build instead of once per read. (`manifestOrNull` already caches its own side.)
 const rollups = new Map<string, SiteRollup>();
 
@@ -515,7 +515,7 @@ export function facilityStageIndex(status: FacilityStatus): number {
 
 /** A site's resolved placement, or a named throw. Unlike a thin peer's missing feed, an unplaced
  *  slug is a `data/sites.yaml` authoring error — it must fail loudly rather than drop the site
- *  out of the lens. `placementViolations(SITES)` enumerates every such gap at once (#1863). */
+ *  out of the grouping. `placementViolations(SITES)` enumerates every such gap at once (#1863). */
 function placementOf(site: NetworkSite): { stateName: string; basin: MajorBasin } {
   const stateName = STATE_NAMES[site.state];
   const basin = basinForSlug(site.basinMajor);
@@ -593,7 +593,7 @@ export function storyComingSoon(slug: string, codename: string): boolean {
  * hardcoding "Lima, Ohio" (#741). Resolved from the registry's two-letter `state` (#1863).
  *
  * Empty string for an unknown slug or an unrecognized code — a dateline is prose, so a gap here
- * reads as "Lima" rather than breaking the page. The lens builders, which would silently *drop*
+ * reads as "Lima" rather than breaking the page. The grouping builders, which would silently *drop*
  * the site instead, throw on the same gap; `placementViolations` is the guard for both.
  */
 export function siteState(slug: string): string {

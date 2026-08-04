@@ -32,7 +32,7 @@ def _build_registry_json() -> str:
                 # The major grouping basin (#1863) — the coarser peer of `basin` above. The
                 # frontend derives its (state, basin) placement from these two fields instead of
                 # keeping a parallel `PLACEMENT` table, so a site registered here can no longer be
-                # silently dropped from the selector lenses and the water-lens scorecard.
+                # silently dropped from the selector lenses and the H1 scorecard.
                 "basin_major": entry.basin_major,
                 "state": entry.state,
                 # The county the site's records are filed in (#1691) — the ask-index stamps it

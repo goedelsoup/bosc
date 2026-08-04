@@ -4,7 +4,7 @@ The reference thesis: hyperscale compute lands where it can pull power and water
 data center's intake, discharge, and downstream effects are basin facts. Lima is the
 live, fully-assembled reference.
 
-The **directory lens** is rendered from the site registry (`watermark.sites.SITES`) + the
+The **directory hypothesis** is rendered from the site registry (`watermark.sites.SITES`) + the
 basin network (`watermark.network`), grouped by drainage — two divides, nine basins. The
 primary "assessment" is the assembled hydrology itself.
 

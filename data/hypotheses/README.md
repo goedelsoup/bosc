@@ -1,7 +1,7 @@
 # `data/hypotheses/` — the (site × hypothesis) evidence store
 
-This is the committed, reviewed assessment store for the boom-origin **hypotheses**
-(the directory "lenses"). It is the backend peer of the frontend directory: the same
+This is the committed, reviewed assessment store for the boom-origin **hypotheses**.
+It is the backend peer of the frontend directory: the same
 cells the `/directory` page renders, now carried as data with provenance.
 
 - Layout: `data/hypotheses/<hypothesis-id>/<site-slug>.yaml`, one **evidence cell** per
@@ -34,5 +34,5 @@ cells the `/directory` page renders, now carried as data with provenance.
   proposes, it never promotes).
 - Lint before committing: `watermark hypotheses check`.
 
-`water/` (H1) carries no cells: the reference lens is rendered from the site registry +
+`water/` (H1) carries no cells: the reference hypothesis is rendered from the site registry +
 basin network (by drainage), not from per-site assessment cells.

@@ -4,7 +4,7 @@
   "type": "array",
   "items": {
     "additionalProperties": false,
-    "description": "One reading of the boom — the content of a directory lens (frozen reference value).\n\nPresentation (accent palette, grid fractions, column labels) is the frontend's; this\nholds the substance: the claim, the thesis, the taxonomy a cell is scored against, and\n:attr:`predicted_evidence` — what would confirm or strengthen it, which scaffolds the\n``hypothesis-assessment`` research recipe's prompt.",
+    "description": "One reading of the boom — the content of a directory hypothesis (frozen reference value).\n\nPresentation (accent palette, grid fractions, column labels) is the frontend's; this\nholds the substance: the claim, the thesis, the taxonomy a cell is scored against, and\n:attr:`predicted_evidence` — what would confirm or strengthen it, which scaffolds the\n``hypothesis-assessment`` research recipe's prompt.",
     "properties": {
       "id": {
         "title": "Id",

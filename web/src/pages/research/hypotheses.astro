@@ -1,19 +1,25 @@
 ---
 /**
- * The network directory (#304; route /research/hypotheses) — reimagined as a three-lens index (#308
- * "Directory" dictate): one network, read three ways. Every registered site reorganizes around
- * one of three hypotheses — H1 Water & Coercion (the live reference thesis), H2 Defense & Federal
- * Enclave, H3 Consumer Surveillance. The lens switch is no-JS (radio + :checked),
- * so the page reads with JavaScript off, like every Watermark page.
+ * The network directory (#304; route /research/hypotheses) — reimagined as a three-hypothesis
+ * index (#308 "Directory" dictate): one network, read three ways. Every registered site
+ * reorganizes around one of three hypotheses — H1 Water & Coercion (the live reference thesis),
+ * H2 Defense & Federal Enclave, H3 Consumer Surveillance. The hypothesis switch is no-JS
+ * (radio + :checked), so the page reads with JavaScript off, like every Watermark page.
  *
  * Discipline (see `lib/directory.ts`): H2/H3 are hypotheses under test. A site carries a
  * defense/surveillance entry only with a real, on-the-record fact; inference is labeled; the
- * rest are "Not yet assessed". The water lens's tier + doc/record counts are rolled up per row
+ * rest are "Not yet assessed". H1's tier + doc/record counts are rolled up per row
  * from each site's OWN exported bundle (#1861) — real, or a dash where no bundle is committed.
  */
 import Base from "~/layouts/Base.astro";
 import { getHypotheses, hasFeed, loadFeed } from "@watermark/core/bundle";
-import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount } from "@watermark/core/directory";
+import {
+  buildHypothesisView,
+  HYPOTHESIS_ORDER,
+  hypothesisConfig,
+  hypothesisCount,
+  indexAssessments,
+} from "@watermark/core/directory";
 import type { HypothesisAssessmentItem } from "@watermark/core/feeds";
 import { withBase } from "@watermark/core/site";
 import { facilityStatus, siteRollup } from "@watermark/core/sites";
@@ -26,12 +32,12 @@ const hypByKey = new Map(hypItems.map((h) => [h.id, h]));
 const cells = hasFeed("hypothesis-assessments")
   ? loadFeed<HypothesisAssessmentItem[]>("hypothesis-assessments")
   : [];
-const lensData = indexAssessments(cells);
+const assessments = indexAssessments(cells);
 
-const lenses = LENS_ORDER.map((key) => ({
-  cfg: lensConfig(key, hypByKey.get(key)),
-  view: buildLens(key, siteRollup, lensData, facilityStatus),
-  count: lensCount(key, lensData),
+const hyps = HYPOTHESIS_ORDER.map((key) => ({
+  cfg: hypothesisConfig(key, hypByKey.get(key)),
+  view: buildHypothesisView(key, siteRollup, assessments, facilityStatus),
+  count: hypothesisCount(key, assessments),
 }));
 
 const statusSwatch = (kind: "live" | "new") =>
@@ -51,98 +57,103 @@ const statusSwatch = (kind: "live" | "new") =>
       <div class="dir-eyebrow">Watermark · directory · the three hypotheses</div>
       <h1>One network, three hypotheses</h1>
       <p class="dir-lead">
-        The platform-level index now holds <b>{lenses[0].count}</b>. The watershed lens — where
+        The platform-level index now holds <b>{hyps[0].count}</b>. The watershed lens — where
         compute meets water and power — is the live reference build (Lima / BOSC). Two further theses are opening
         alongside it: <b>defense &amp; federal-enclave</b> analysis, and <b>corporate &amp; economic surveillance</b>.
         The directory reads the same network through whichever lens you pick.
       </p>
     </div>
 
-    <div class="dir-lenswrap">
+    <div class="dir-hypwrap">
       {
-        lenses.map((l) => (
+        hyps.map((h) => (
           <input
             type="radio"
-            name="dir-lens"
-            id={`lens-${l.cfg.key}`}
-            class="dir-lens-input"
-            checked={l.cfg.key === LENS_ORDER[0]}
-            aria-label={`${l.cfg.n} — ${l.cfg.name}`}
+            name="dir-hyp"
+            id={`hyp-${h.cfg.key}`}
+            class="dir-hyp-input"
+            checked={h.cfg.key === HYPOTHESIS_ORDER[0]}
+            aria-label={`${h.cfg.n} — ${h.cfg.name}`}
           />
         ))
       }
 
       {/*
-        Progressive enhancement (#1302): honor `?lens=<id>` deep links. The no-JS
+        Progressive enhancement (#1302): honor `?h=<id>` deep links. The no-JS
         radio + :checked switch above still drives selection on its own — here we
         only tick the matching radio on load, before the panes are parsed, so
-        /research/hypotheses?lens=defense opens on that lens. An unknown/absent
+        /research/hypotheses?h=defense opens on that hypothesis. An unknown/absent
         value leaves the default (water) checked. The `id`s already equal the
-        lens keys, so no mapping is needed.
+        hypothesis keys, so no mapping is needed.
+
+        `?lens=<id>` is the pre-#1912 spelling of the same param. It is a public,
+        shared deep link and keeps working indefinitely — `h` is only the canonical
+        form we emit. Read with `||`, not `??`, so an empty `?h=` still falls back.
       */}
       <script is:inline>
         (() => {
-          const lens = new URLSearchParams(location.search).get("lens");
-          if (!lens) return;
-          const radio = document.getElementById("lens-" + lens);
-          if (radio instanceof HTMLInputElement && radio.name === "dir-lens") {
+          const params = new URLSearchParams(location.search);
+          const id = params.get("h") || params.get("lens");
+          if (!id) return;
+          const radio = document.getElementById("hyp-" + id);
+          if (radio instanceof HTMLInputElement && radio.name === "dir-hyp") {
             radio.checked = true;
           }
         })();
       </script>
 
-      <div class="dir-lens-cards">
+      <div class="dir-hyp-cards">
         {
-          lenses.map((l) => {
-            const sw = statusSwatch(l.cfg.statusKind);
+          hyps.map((h) => {
+            const sw = statusSwatch(h.cfg.statusKind);
             return (
               <label
-                for={`lens-${l.cfg.key}`}
-                class:list={["dir-lcard", `lc-${l.cfg.key}`]}
-                style={`--acc:${l.cfg.accent};--accbg:${l.cfg.accentBg}`}
+                for={`hyp-${h.cfg.key}`}
+                class:list={["dir-hcard", `hc-${h.cfg.key}`]}
+                style={`--acc:${h.cfg.accent};--accbg:${h.cfg.accentBg}`}
               >
-                <span class="dir-lcard-top">
-                  <span class="dir-lcard-n" style={`background:${l.cfg.accent}`}>{l.cfg.n}</span>
-                  <span class="dir-lcard-status" style={`color:${sw.color};background:${sw.bg}`}>
+                <span class="dir-hcard-top">
+                  <span class="dir-hcard-n" style={`background:${h.cfg.accent}`}>{h.cfg.n}</span>
+                  <span class="dir-hcard-status" style={`color:${sw.color};background:${sw.bg}`}>
                     <span class="dot" style={`background:${sw.dot}`} />
-                    {l.cfg.status}
+                    {h.cfg.status}
                   </span>
-                  <span class="dir-lcard-check" style={`color:${l.cfg.accent}`}>✓</span>
+                  <span class="dir-hcard-check" style={`color:${h.cfg.accent}`}>✓</span>
                 </span>
-                <span class="dir-lcard-name">{l.cfg.name}</span>
-                <span class="dir-lcard-claim">{l.cfg.claim}</span>
-                <span class="dir-lcard-count">{l.count}</span>
+                <span class="dir-hcard-name">{h.cfg.name}</span>
+                <span class="dir-hcard-claim">{h.cfg.claim}</span>
+                <span class="dir-hcard-count">{h.count}</span>
               </label>
             );
           })
         }
       </div>
 
-      <p class="dir-lens-note">
+      <p class="dir-hyp-note">
         Not mutually exclusive — a single site can sit in all three. <b>Lima (BOSC)</b> is the worked example under each.
       </p>
 
       {
-        lenses.map((l) => {
-          const acc = l.cfg.accent;
-          const sw = statusSwatch(l.cfg.statusKind);
+        hyps.map((h) => {
+          const acc = h.cfg.accent;
+          const sw = statusSwatch(h.cfg.statusKind);
           return (
-            <div class:list={["dir-pane", `pane-${l.cfg.key}`]}>
-              {/* Lens framing */}
-              <div class="dir-frame" style={`background:${l.cfg.accentBg};border-color:${l.cfg.accentBd}`}>
+            <div class:list={["dir-pane", `pane-${h.cfg.key}`]}>
+              {/* Hypothesis framing */}
+              <div class="dir-frame" style={`background:${h.cfg.accentBg};border-color:${h.cfg.accentBd}`}>
                 <div class="dir-frame-l">
                   <div class="dir-frame-tags">
                     <span class="dir-frame-name" style={`color:${acc}`}>
-                      {l.cfg.n} · {l.cfg.name}
+                      {h.cfg.n} · {h.cfg.name}
                     </span>
                     <span class="dir-frame-status" style={`color:${sw.color};background:${sw.bg}`}>
                       <span class="dot" style={`background:${sw.dot}`} />
-                      {l.cfg.status}
+                      {h.cfg.status}
                     </span>
                   </div>
-                  <div class="dir-frame-claim">{l.cfg.claim}</div>
-                  <p class="dir-frame-blurb">{l.cfg.blurb}</p>
-                  {l.cfg.key === "water" && (
+                  <div class="dir-frame-claim">{h.cfg.claim}</div>
+                  <p class="dir-frame-blurb">{h.cfg.blurb}</p>
+                  {h.cfg.key === "water" && (
                     <a class="dir-frame-link" href={withBase("/basin")}>
                       Open the basin view — every site against the drainage ›
                     </a>
@@ -150,13 +161,13 @@ const statusSwatch = (kind: "live" | "new") =>
                   {/* This scorecard is a PROJECTION of the hypothesis (#1892): the canonical
                       record of the reading is its wiki node — definition, evidence matrix, and
                       the concepts, entities, and open questions it bears on. */}
-                  <a class="dir-frame-link" href={hypothesisHref(l.cfg.key)}>
-                    Read {l.cfg.n} as a wiki node — definition, related concepts, open questions ›
+                  <a class="dir-frame-link" href={hypothesisHref(h.cfg.key)}>
+                    Read {h.cfg.n} as a wiki node — definition, related concepts, open questions ›
                   </a>
                 </div>
                 <div class="dir-frame-r">
-                  <div class="dir-axis-title">{l.view.axisTitle}</div>
-                  {l.view.axisGroups.map((ag) => (
+                  <div class="dir-axis-title">{h.view.axisTitle}</div>
+                  {h.view.axisGroups.map((ag) => (
                     <div class="dir-axis-group">
                       {ag.label && <div class="dir-axis-label">{ag.label}</div>}
                       <div class="dir-axis-chips">
@@ -177,19 +188,19 @@ const statusSwatch = (kind: "live" | "new") =>
                 <div class="dir-score-head">
                   <div>
                     <div class="dir-score-eyebrow" style={`color:${acc}`}>Cross-site scorecard</div>
-                    <h2 class="dir-score-title">{l.cfg.scoreTitle}</h2>
+                    <h2 class="dir-score-title">{h.cfg.scoreTitle}</h2>
                   </div>
-                  <span class="dir-score-note">{l.cfg.scoreNote}</span>
+                  <span class="dir-score-note">{h.cfg.scoreNote}</span>
                 </div>
 
                 <div class="dir-table">
-                  <div class="dir-trow dir-thead" style={`grid-template-columns:${l.view.gridCols}`}>
-                    {l.view.cols.map((c) => (
+                  <div class="dir-trow dir-thead" style={`grid-template-columns:${h.view.gridCols}`}>
+                    {h.view.cols.map((c) => (
                       <span class:list={["dir-th", { "is-right": c.align === "right" }]}>{c.label}</span>
                     ))}
                   </div>
 
-                  {l.view.groups.map((g) => (
+                  {h.view.groups.map((g) => (
                     <div class="dir-group">
                       {g.divide && (
                         <div class="dir-divide" style={`color:${acc}`}>
@@ -207,7 +218,7 @@ const statusSwatch = (kind: "live" | "new") =>
                           <a
                             class:list={["dir-trow", "dir-drow", { "is-live": r.live }]}
                             href={withBase(r.href)}
-                            style={`grid-template-columns:${l.view.gridCols}`}
+                            style={`grid-template-columns:${h.view.gridCols}`}
                           >
                             {r.cells.map((c) =>
                               c.kind === "site" ? (
@@ -245,7 +256,7 @@ const statusSwatch = (kind: "live" | "new") =>
                     </div>
                   ))}
 
-                  <div class="dir-foot">{l.cfg.footNote}</div>
+                  <div class="dir-foot">{h.cfg.footNote}</div>
                 </div>
               </div>
             </div>
@@ -282,8 +293,8 @@ const statusSwatch = (kind: "live" | "new") =>
     margin: 0;
   }
 
-  /* The no-JS lens switch: radios drive the active card + the visible pane. */
-  .dir-lens-input {
+  /* The no-JS hypothesis switch: radios drive the active card + the visible pane. */
+  .dir-hyp-input {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -294,13 +305,13 @@ const statusSwatch = (kind: "live" | "new") =>
     white-space: nowrap;
     border: 0;
   }
-  .dir-lens-cards {
+  .dir-hyp-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.8rem;
     margin-top: 1.6rem;
   }
-  .dir-lcard {
+  .dir-hcard {
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -313,15 +324,15 @@ const statusSwatch = (kind: "live" | "new") =>
       border-color 0.12s ease,
       box-shadow 0.12s ease;
   }
-  .dir-lcard:hover {
+  .dir-hcard:hover {
     border-color: #8c9389;
   }
-  .dir-lcard-top {
+  .dir-hcard-top {
     display: flex;
     align-items: center;
     gap: 0.55rem;
   }
-  .dir-lcard-n {
+  .dir-hcard-n {
     font-size: 0.68rem;
     font-weight: 800;
     font-family: var(--bosc-mono);
@@ -329,7 +340,7 @@ const statusSwatch = (kind: "live" | "new") =>
     border-radius: 6px;
     padding: 2px 8px;
   }
-  .dir-lcard-status,
+  .dir-hcard-status,
   .dir-frame-status {
     display: inline-flex;
     align-items: center;
@@ -339,31 +350,31 @@ const statusSwatch = (kind: "live" | "new") =>
     border-radius: 999px;
     padding: 2px 9px;
   }
-  .dir-lcard-status .dot,
+  .dir-hcard-status .dot,
   .dir-frame-status .dot {
     width: 5px;
     height: 5px;
     border-radius: 50%;
   }
-  .dir-lcard-check {
+  .dir-hcard-check {
     margin-left: auto;
     font-weight: 800;
     font-size: 0.88rem;
     display: none;
   }
-  .dir-lcard-name {
+  .dir-hcard-name {
     font-size: 1.05rem;
     font-weight: 800;
     letter-spacing: -0.01em;
     margin-top: 0.7rem;
   }
-  .dir-lcard-claim {
+  .dir-hcard-claim {
     font-size: 0.82rem;
     color: var(--bosc-muted);
     line-height: 1.45;
     margin-top: 0.25rem;
   }
-  .dir-lcard-count {
+  .dir-hcard-count {
     margin-top: 0.7rem;
     padding-top: 0.6rem;
     border-top: 1px solid #ece8dc;
@@ -371,7 +382,7 @@ const statusSwatch = (kind: "live" | "new") =>
     color: #8c9389;
     font-family: var(--bosc-mono);
   }
-  .dir-lens-note {
+  .dir-hyp-note {
     font-size: 0.79rem;
     color: #8c9389;
     line-height: 1.5;
@@ -379,21 +390,21 @@ const statusSwatch = (kind: "live" | "new") =>
   }
 
   /* Active card + visible pane, driven by the matching radio. */
-  #lens-water:checked ~ .dir-lens-cards .lc-water,
-  #lens-defense:checked ~ .dir-lens-cards .lc-defense,
-  #lens-surveillance:checked ~ .dir-lens-cards .lc-surveillance {
+  #hyp-water:checked ~ .dir-hyp-cards .hc-water,
+  #hyp-defense:checked ~ .dir-hyp-cards .hc-defense,
+  #hyp-surveillance:checked ~ .dir-hyp-cards .hc-surveillance {
     border-color: var(--acc);
     background: var(--accbg);
     box-shadow: 0 8px 22px rgba(20, 24, 40, 0.12);
   }
-  #lens-water:checked ~ .dir-lens-cards .lc-water .dir-lcard-check,
-  #lens-defense:checked ~ .dir-lens-cards .lc-defense .dir-lcard-check,
-  #lens-surveillance:checked ~ .dir-lens-cards .lc-surveillance .dir-lcard-check {
+  #hyp-water:checked ~ .dir-hyp-cards .hc-water .dir-hcard-check,
+  #hyp-defense:checked ~ .dir-hyp-cards .hc-defense .dir-hcard-check,
+  #hyp-surveillance:checked ~ .dir-hyp-cards .hc-surveillance .dir-hcard-check {
     display: inline;
   }
-  #lens-water:focus-visible ~ .dir-lens-cards .lc-water,
-  #lens-defense:focus-visible ~ .dir-lens-cards .lc-defense,
-  #lens-surveillance:focus-visible ~ .dir-lens-cards .lc-surveillance {
+  #hyp-water:focus-visible ~ .dir-hyp-cards .hc-water,
+  #hyp-defense:focus-visible ~ .dir-hyp-cards .hc-defense,
+  #hyp-surveillance:focus-visible ~ .dir-hyp-cards .hc-surveillance {
     outline: 2px solid var(--acc);
     outline-offset: 2px;
   }
@@ -401,13 +412,13 @@ const statusSwatch = (kind: "live" | "new") =>
   .dir-pane {
     display: none;
   }
-  #lens-water:checked ~ .pane-water,
-  #lens-defense:checked ~ .pane-defense,
-  #lens-surveillance:checked ~ .pane-surveillance {
+  #hyp-water:checked ~ .pane-water,
+  #hyp-defense:checked ~ .pane-defense,
+  #hyp-surveillance:checked ~ .pane-surveillance {
     display: block;
   }
 
-  /* Lens framing */
+  /* Hypothesis framing */
   .dir-frame {
     margin-top: 1.3rem;
     border: 1px solid #dcd8cc;
@@ -717,7 +728,7 @@ const statusSwatch = (kind: "live" | "new") =>
   }
 
   @media (max-width: 760px) {
-    .dir-lens-cards {
+    .dir-hyp-cards {
       grid-template-columns: 1fr;
     }
     .dir-score-note {
@@ -727,7 +738,7 @@ const statusSwatch = (kind: "live" | "new") =>
     .dir-table {
       overflow-x: auto;
     }
-    /* Sized for the widest lens — water, at seven columns since the tier joined it (#1861). */
+    /* Sized for the widest hypothesis — water, at seven columns since the tier joined it (#1861). */
     .dir-trow {
       min-width: 720px;
     }

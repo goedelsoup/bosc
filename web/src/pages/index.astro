@@ -3,17 +3,17 @@
  * The network directory — the "Directory" tab (network tier). The lighter overview
  * (design "Directory - Home"): a hero, the network-at-a-glance ledger, the three
  * hypotheses in brief, the "start here" doors, and a featured slice of the network.
- * The full lens scorecard lives at /research/hypotheses (the "Research" tab).
+ * The full hypothesis scorecard lives at /research/hypotheses (the "Research" tab).
  *
- * Real data only — sites from `bosc.sites` (mirrored in lib/sites), the lens config
+ * Real data only — sites from `bosc.sites` (mirrored in lib/sites), the hypothesis config
  * from lib/directory + the bundle feeds. Figures are counts or a dash, never invented.
  */
 import Base from "../layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import {
   featuredSites,
-  LENS_ORDER,
-  lensConfig,
+  HYPOTHESIS_ORDER,
+  hypothesisConfig,
   TIER_DEPTH_ORDER,
   TIER_PILL,
 } from "@watermark/core/directory";
@@ -77,7 +77,7 @@ const stats = [
 // The three hypotheses, in brief — config + status only (the scorecard does the scoring).
 const hypItems = hasFeed("hypotheses") ? loadFeed<HypothesisItem[]>("hypotheses") : [];
 const hypByKey = new Map(hypItems.map((h) => [h.id, h]));
-const lenses = LENS_ORDER.map((key) => lensConfig(key, hypByKey.get(key)));
+const hyps = HYPOTHESIS_ORDER.map((key) => hypothesisConfig(key, hypByKey.get(key)));
 
 // The "start here" doors.
 const doors = [
@@ -204,25 +204,25 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
       </div>
     </section>
 
-    <!-- lenses -->
+    <!-- hypotheses -->
     <section class="dirh-sec">
       <div class="dirh-sec-head">
         <h2 class="dirh-sec-title">Read the network three ways</h2>
         <span class="dirh-sec-sub">— one map, three hypotheses.</span>
         <a class="dirh-sec-link" href={withBase("/research/hypotheses")}>Open the scorecard →</a>
       </div>
-      <div class="dirh-lenses">
+      <div class="dirh-hyps">
         {
-          lenses.map((l) => {
-            const live = l.statusKind === "live";
+          hyps.map((h) => {
+            const live = h.statusKind === "live";
             return (
-              <a class="dirh-lens" href={withBase("/research/hypotheses")}>
-                <span class="dirh-lens-top">
-                  <span class="dirh-lens-n" style={`color:${l.accent};border-color:${l.accent}`}>{l.n}</span>
-                  <span class:list={["dirh-lens-status", { "is-live": live }]}>{l.status}</span>
+              <a class="dirh-hyp" href={withBase("/research/hypotheses")}>
+                <span class="dirh-hyp-top">
+                  <span class="dirh-hyp-n" style={`color:${h.accent};border-color:${h.accent}`}>{h.n}</span>
+                  <span class:list={["dirh-hyp-status", { "is-live": live }]}>{h.status}</span>
                 </span>
-                <span class="dirh-lens-name">{l.name}</span>
-                <span class="dirh-lens-claim">{l.claim}</span>
+                <span class="dirh-hyp-name">{h.name}</span>
+                <span class="dirh-hyp-claim">{h.claim}</span>
               </a>
             );
           })
@@ -479,51 +479,51 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
     color: var(--bosc-forest);
   }
 
-  /* lenses */
-  .dirh-lenses {
+  /* hypotheses */
+  .dirh-hyps {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
-  .dirh-lens {
+  .dirh-hyp {
     border-left: 1px solid var(--bosc-rule);
     padding: 0.25rem 1.4rem;
     text-decoration: none;
     color: var(--bosc-ink);
   }
-  .dirh-lens:first-child {
+  .dirh-hyp:first-child {
     border-left: 0;
     padding-left: 0;
   }
-  .dirh-lens-top {
+  .dirh-hyp-top {
     display: flex;
     align-items: center;
     gap: 0.6rem;
   }
-  .dirh-lens-n {
+  .dirh-hyp-n {
     font-family: var(--bosc-mono);
     font-size: 0.72rem;
     font-weight: 600;
     border: 1px solid currentColor;
     padding: 1px 7px;
   }
-  .dirh-lens-status {
+  .dirh-hyp-status {
     font-family: var(--bosc-mono);
     font-size: 0.62rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--bosc-faint);
   }
-  .dirh-lens-status.is-live {
+  .dirh-hyp-status.is-live {
     color: var(--bosc-forest);
   }
-  .dirh-lens-name {
+  .dirh-hyp-name {
     display: block;
     font-size: 1.05rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     margin-top: 0.8rem;
   }
-  .dirh-lens-claim {
+  .dirh-hyp-claim {
     display: block;
     font-size: 0.82rem;
     color: var(--bosc-muted);
@@ -650,18 +650,18 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
   }
 
   @media (max-width: 820px) {
-    .dirh-lenses,
+    .dirh-hyps,
     .dirh-doors {
       grid-template-columns: 1fr;
     }
-    .dirh-lens,
+    .dirh-hyp,
     .dirh-door {
       border-left: 0;
       padding-left: 0;
       padding-top: 1.1rem;
       border-top: 1px solid var(--bosc-rule);
     }
-    .dirh-lens:first-child,
+    .dirh-hyp:first-child,
     .dirh-door:first-child {
       border-top: 0;
       padding-top: 0.25rem;

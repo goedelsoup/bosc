@@ -370,7 +370,7 @@ def test_profile_basin_agrees_with_yaml_major_basin() -> None:
 def test_every_registry_entry_carries_its_placement() -> None:
     """#1863: every frontend registry entry is placeable — a state and a major basin.
 
-    The frontend derives `groupSites`' two lenses from these fields instead of a hand-maintained
+    The frontend derives `groupSites`' two grouping axes from these fields instead of a hand-maintained
     parallel table, so an entry missing either would be the silent-drop this replaced. The
     *vocabulary* check (is this basin slug one the frontend knows?) lives in
     `web/packages/core/src/placement.test.ts`; this end holds that the values are all emitted.

@@ -13,7 +13,7 @@ The corpus already holds its **unanswered** parts as first-class data, but acros
   label vocabulary (`watermark.site.gh_leads`).
 - **the hypothesis matrix** — the `(site × hypothesis)` evidence cells
   (`data/hypotheses/<hid>/<site>.yaml`, `watermark.hypotheses`), where an `[open]`-tagged cell
-  is a documented gap: no nexus yet for this site under that boom-origin lens.
+  is a documented gap: no nexus yet for this site under that boom-origin hypothesis.
 - **`[open]` claims** — the tag vocabulary itself (`docs/investigative-method`), which the two
   stores above carry structurally (a lead's `tag`, a cell's `tag`).
 
@@ -30,7 +30,7 @@ already-assembled feeds and aggregates their still-open rows into one flat, prov
 
 ```text
 open-questions  ←  leads (tag == "open")  +  hypothesis-assessments (tag == "open")
-                   (labelled via the hypotheses feed's lens rows)
+                   (labelled via the hypotheses feed's rows)
 ```
 
 The `[open]`-tag filter is the whole model: an `[inference]`-tagged lead is a *labeled reading*,
@@ -41,11 +41,11 @@ not a gap, so it is excluded — exactly as `render_open_questions` excludes it 
 |---|---|---|
 | `id` | the lead id (`OEPA-2DP00130`) | `hyp:<hid>:<site>` (`hyp:water:lima`) |
 | `origin` | `"lead"` | `"hypothesis"` |
-| `question` | the lead `title` | `Open thread — <lens> @ <site>` |
+| `question` | the lead `title` | `Open thread — <hypothesis> @ <site>` |
 | `detail` | the lead `detail`, one line | synthesized (`No documented nexus yet …`) |
 | `source` | the lead `source` (the real citation) | `data/hypotheses/<hid>/<site>.yaml` |
 | `kind` / `status` / `issue` | carried from the lead (`lead:kind:*` / `lead:status:*`) | `null` |
-| `hypothesis` / `hypothesis_label` / `signal` | `null` | the lens id / label / cell signal |
+| `hypothesis` / `hypothesis_label` / `signal` | `null` | the hypothesis id / label / cell signal |
 
 Every row carries **provenance** (the issue's Done): a lead names where the gap is recorded; an
 open cell has no `Citation` by rule (only an `open` cell may have none), so its `source` points

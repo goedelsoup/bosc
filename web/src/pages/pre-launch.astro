@@ -23,7 +23,7 @@ const stats = [
   { n: "01", l: "Live reference" },
   { n: "03", l: "Hypotheses" },
 ];
-const lenses = [
+const hyps = [
   {
     n: "H1",
     name: "Water & Coercion",
@@ -139,18 +139,18 @@ const repoHref = "https://github.com/watermark-directory/the-watermark-directory
             <h2 class="pl-h2">The shape of what's coming</h2>
             <span class="pl-coming-sub">— one map, three hypotheses. Sealed until launch.</span>
           </div>
-          <div class="pl-lenses">
-            {lenses.map((L) => (
-              <div class="pl-lens">
-                <div class="pl-lens-top">
-                  <span class="pl-lens-n" style={`color:${L.accent}; border-color:${L.accent}`}>{L.n}</span>
-                  <span class="pl-lens-status">
+          <div class="pl-hyps">
+            {hyps.map((H) => (
+              <div class="pl-hyp">
+                <div class="pl-hyp-top">
+                  <span class="pl-hyp-n" style={`color:${H.accent}; border-color:${H.accent}`}>{H.n}</span>
+                  <span class="pl-hyp-status">
                     <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1"></rect><path d="M8 11 V7.5 A4 4 0 0 1 16 7.5 V11"></path></svg>
-                    {L.status}
+                    {H.status}
                   </span>
                 </div>
-                <div class="pl-lens-name">{L.name}</div>
-                <div class="pl-lens-claim">{L.claim}</div>
+                <div class="pl-hyp-name">{H.name}</div>
+                <div class="pl-hyp-claim">{H.claim}</div>
               </div>
             ))}
           </div>
@@ -240,14 +240,14 @@ const repoHref = "https://github.com/watermark-directory/the-watermark-directory
       .pl-coming-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
       .pl-h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.7px; margin: 0; }
       .pl-coming-sub { font-size: 0.9rem; color: var(--bosc-faint); }
-      .pl-lenses { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--bosc-ink); }
-      .pl-lens { padding: 22px 22px 24px; }
-      .pl-lens + .pl-lens { border-left: 1px solid var(--bosc-rule); }
-      .pl-lens-top { display: flex; align-items: center; gap: 10px; }
-      .pl-lens-n { font-family: var(--bosc-mono); font-size: 0.74rem; font-weight: 600; border: 1px solid; padding: 1px 8px; }
-      .pl-lens-status { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font-family: var(--bosc-mono); font-size: 0.62rem; letter-spacing: 0.8px; text-transform: uppercase; color: var(--bosc-faint); }
-      .pl-lens-name { font-size: 1.18rem; font-weight: 800; letter-spacing: -0.4px; margin-top: 15px; }
-      .pl-lens-claim { font-size: 0.86rem; color: var(--bosc-muted); line-height: 1.5; margin-top: 7px; }
+      .pl-hyps { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--bosc-ink); }
+      .pl-hyp { padding: 22px 22px 24px; }
+      .pl-hyp + .pl-hyp { border-left: 1px solid var(--bosc-rule); }
+      .pl-hyp-top { display: flex; align-items: center; gap: 10px; }
+      .pl-hyp-n { font-family: var(--bosc-mono); font-size: 0.74rem; font-weight: 600; border: 1px solid; padding: 1px 8px; }
+      .pl-hyp-status { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font-family: var(--bosc-mono); font-size: 0.62rem; letter-spacing: 0.8px; text-transform: uppercase; color: var(--bosc-faint); }
+      .pl-hyp-name { font-size: 1.18rem; font-weight: 800; letter-spacing: -0.4px; margin-top: 15px; }
+      .pl-hyp-claim { font-size: 0.86rem; color: var(--bosc-muted); line-height: 1.5; margin-top: 7px; }
       /* how (page canvas) */
       .pl-how { background: var(--bosc-page); color: var(--bosc-ink); border-top: 1px solid var(--bosc-rule); }
       .pl-how .pl-section { padding-top: 50px; padding-bottom: 46px; }
@@ -276,8 +276,8 @@ const repoHref = "https://github.com/watermark-directory/the-watermark-directory
       .pl-ea-link:hover { color: #bcd2c4; }
       @media (max-width: 720px) {
         .pl-h1 { font-size: 2.3rem; letter-spacing: -1.2px; }
-        .pl-lenses, .pl-principles { grid-template-columns: 1fr; }
-        .pl-lens + .pl-lens { border-left: 0; border-top: 1px solid var(--bosc-rule); }
+        .pl-hyps, .pl-principles { grid-template-columns: 1fr; }
+        .pl-hyp + .pl-hyp { border-left: 0; border-top: 1px solid var(--bosc-rule); }
       }
     </style>
   </body>
