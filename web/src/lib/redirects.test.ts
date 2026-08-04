@@ -98,5 +98,26 @@ describe("public/_redirects", () => {
     // `/site/concepts/` routes must keep resolving, at their canonical.
     expect(RULES).toContainEqual(["/network/:site/site/concepts", "/wiki/concepts/", "301"]);
     expect(RULES).toContainEqual(["/network/:site/site/concepts/*", "/wiki/concepts/:splat", "301"]);
+    // The labor baseline moved out of `/environment/` into `/economy/` (#1893). It's cited from
+    // the study's labor chapter, from the economy hub, and from `/ask` answers built before the
+    // move, so the old address must still resolve.
+    expect(RULES).toContainEqual([
+      "/network/:site/environment/economics-baseline",
+      "/network/:site/economy/economics-baseline",
+      "301",
+    ]);
+  });
+
+  it("chains the older watershed rule onto the baseline's new home, in that order", () => {
+    // `/watershed/*` predates the environment rename and rewrites onto `/environment/:splat`, so
+    // `<site>/watershed/economics-baseline` reaches the page only by hopping through the rule
+    // above. Cloudflare evaluates top-down and a 301 is followed by the client, so the chain works
+    // — but only while the watershed rule comes FIRST. Reversed, the specific rule would never see
+    // the request and the oldest deployed link to this dataset would 301 to a 404.
+    const at = (from: string): number => RULES.findIndex(([f]) => f === from);
+    expect(at("/network/:site/watershed/*")).toBeGreaterThanOrEqual(0);
+    expect(at("/network/:site/watershed/*")).toBeLessThan(
+      at("/network/:site/environment/economics-baseline"),
+    );
   });
 });

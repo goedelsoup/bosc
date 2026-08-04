@@ -54,6 +54,13 @@
 /network/:site/watershed        /network/:site/environment                                     301
 /network/:site/watershed/*      /network/:site/environment/:splat                              301
 
+# The localized labor baseline moved from `<site>/environment/` to `<site>/economy/` (#1893 — the
+# Reference menu filed it under Economy, the page declares `section="economy"`, and only its URL
+# still said environment). It is cited from the study's labor chapter and from `/ask` answers that
+# predate the move, so the old address has to keep resolving. Ordered AFTER the `watershed` rules
+# above so the even-older `<site>/watershed/economics-baseline` chains through this one.
+/network/:site/environment/economics-baseline   /network/:site/economy/economics-baseline        301
+
 # The dev component showcases moved out of the per-site record tree to a network-global
 # `/showcase/*` root (#1333) — they're illustrative design previews, not per-site data.
 /network/:site/site/chart-showcase      /showcase/charts                                       301

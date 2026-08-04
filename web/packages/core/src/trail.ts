@@ -135,14 +135,18 @@ const SITE_CHILDREN: Record<string, TrailNode> = {
   economy: {
     label: "The economy",
     slash: true,
-    children: { grid: { label: "The grid backdrop" } },
+    children: {
+      // Re-homed from `/environment/` (#1893): a labor baseline filed under the environment was
+      // the one leaf whose route prefix contradicted the section its own page declares.
+      "economics-baseline": { label: "Localized labor baseline" },
+      grid: { label: "The grid backdrop" },
+    },
   },
   environment: {
     label: "The environment",
     slash: true,
     children: {
       air: { label: "Air dispersion" },
-      "economics-baseline": { label: "Localized labor baseline" },
       enclave: { label: "The federal enclave" },
       flow: { label: "Water flow" },
       groundwater: { label: "Groundwater" },

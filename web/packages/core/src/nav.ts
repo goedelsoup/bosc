@@ -444,7 +444,7 @@ export function siteTabs(): NavItem[] {
         },
         {
           label: "Localized labor baseline",
-          href: `${base}/environment/economics-baseline`,
+          href: `${base}/economy/economics-baseline`,
           blurb: "BLS QCEW · Census employment",
         },
         { label: "The grid backdrop", href: `${base}/economy/grid`, blurb: "Whose grid, cited" },
