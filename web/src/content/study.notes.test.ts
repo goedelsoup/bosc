@@ -47,8 +47,9 @@ interface Note {
   chapter: string;
   frontmatterChapter: string;
   body: string;
-  /** The body with its line breaks intact — what the `<Cite>` scanner reads. */
-  raw: string;
+  /** The body with its line breaks intact — what the `<Cite>` scanner reads. Distinct from the
+   *  whole-file read below, which still carries the frontmatter block. */
+  rawBody: string;
 }
 
 function walk(dir: string, rel = ""): string[] {
@@ -74,7 +75,7 @@ const notes: Note[] = walk(ROOT).map((rel) => {
     // to match a claim that the source happens to line-wrap, and must never be satisfied by
     // a date or a slug in the frontmatter block.
     body: rest.join("---").replace(/\s+/g, " ").trim(),
-    raw: rest.join("---"),
+    rawBody: rest.join("---"),
   };
 });
 
@@ -127,7 +128,7 @@ describe(`study notes — wiring (${notes.length} notes)`, () => {
 describe("study notes — authored citations resolve", () => {
   it.each(notes.map((n) => n.id))("%s — every <Cite> names a source this site holds", (id) => {
     const n = note(id);
-    const unresolved = citeSpecsInNote(n.raw)
+    const unresolved = citeSpecsInNote(n.rawBody)
       .filter((spec) => resolveCiteSpec(spec, n.site) === null)
       .map((spec) => `${spec.kind}="${spec.key}"`);
     expect(unresolved, `${id}: <Cite> targets absent from site "${n.site}"`).toEqual([]);
@@ -135,7 +136,7 @@ describe("study notes — authored citations resolve", () => {
 
   it("all thirteen Lima chapters link into the record", () => {
     const bare = LIMA_NOTES.filter((id) => id !== "lima/_cover").filter(
-      (id) => citeSpecsInNote(note(id).raw).length === 0,
+      (id) => citeSpecsInNote(note(id).rawBody).length === 0,
     );
     expect(bare, "Lima study chapters citing nothing").toEqual([]);
   });

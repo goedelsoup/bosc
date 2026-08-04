@@ -57,6 +57,13 @@ if (named.length !== 1) {
   );
 }
 
+// MDX props bypass the TS enum, so a typo'd `basis="imput"` would silently render as a reading
+// of a source the figure was only modeled from. Every other failure in this component is loud;
+// this one has to be too.
+if (basis !== "read" && basis !== "input") {
+  throw new Error(`<Cite basis="${basis}"> is not a citation basis — use "read" or "input".`);
+}
+
 const [kind, key] = named[0];
 const site = slug ?? activeSite();
 let source: CitedSource | null = null;
