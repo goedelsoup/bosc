@@ -178,17 +178,13 @@ def _receiving_live(*, settings: Settings, live: bool) -> ProvenancedValue | Non
     flow = next(
         (r for r in readings if r.parameter_cd == DISCHARGE_CFS and r.value is not None), None
     )
-    if flow is None or flow.value is None:
+    if flow is None:
         return None
-    # A provisional ("P") real-time reading is unreviewed and subject to revision; tag it
-    # low-confidence so it never enters the scenario as an authoritative flow (#1602).
-    return ProvenancedValue.from_connector(
-        flow.value,
-        "cfs",
-        citation=f"NWIS {flow.site_no} ({flow.name})",
-        asof=flow.datetime,
-        confidence="low" if flow.provisional else "high",
-    )
+    # Dated and down-weighted by the reading itself: a provisional ("P") real-time reading
+    # is unreviewed and subject to revision (#1602), and a reading replayed past the IV
+    # service's freshness window is not the current flow (#1621) — so neither enters the
+    # scenario as an authoritative live flow.
+    return flow.as_provenanced("cfs")
 
 
 def diff(baseline: ScenarioResult, scenario: ScenarioResult) -> ScenarioDiff:

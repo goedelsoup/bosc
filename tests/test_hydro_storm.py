@@ -23,6 +23,23 @@ def test_design_storm_from_fixture(hydro_settings: Settings) -> None:
     assert "Atlas-14" in (storm.depth.citation or "")
 
 
+def test_design_storm_is_dated_and_rated_by_how_it_was_served(hydro_settings: Settings) -> None:
+    """A replayed committed fixture may not read as a fresh HDSC pull (WS-21, #1621).
+
+    A published precipitation-frequency estimate carries no observation timestamp of its
+    own, so the retrieval time *is* the depth's date — and the depth used to carry no date
+    at all. Under the offline fixtures this test runs on, the recorded pull is months old,
+    which is past the connector's freshness window: still ``connector``-sourced (a fixture
+    is a recorded live pull, not a fabrication) but no longer entitled to full confidence.
+    """
+    storm = noaa_atlas14.design_storm(
+        lat=40.797, lon=-84.123, return_period_yr=25, settings=hydro_settings
+    )
+    assert storm.depth.asof is not None
+    assert storm.depth.source == "connector" and storm.depth.verified is True
+    assert storm.depth.confidence == "medium"
+
+
 def test_design_storm_return_period_monotonic(hydro_settings: Settings) -> None:
     d10 = noaa_atlas14.design_storm(
         lat=40.797, lon=-84.123, return_period_yr=10, settings=hydro_settings

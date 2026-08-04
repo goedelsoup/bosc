@@ -28,7 +28,8 @@ hsg:
     dual group B/D. SSURGO dominant HSG B/D (B/D 52%, B 39%, C 3%, C/D 3%, D 3%) over
     31 footprint grid points — USDA NRCS SSURGO via Soil Data Access (SDA) Tabular
     REST
-  confidence: high
+  confidence: medium
+  asof: '2026-06-10T16:34:53.937064+00:00'
 hsg_drainage:
   group: B/D
   dual: true
@@ -43,7 +44,8 @@ hsg_drainage:
       the dual group B/D. SSURGO dominant HSG B/D (B/D 52%, B 39%, C 3%, C/D 3%, D
       3%) over 31 footprint grid points — USDA NRCS SSURGO via Soil Data Access (SDA)
       Tabular REST
-    confidence: high
+    confidence: medium
+    asof: '2026-06-10T16:34:53.937064+00:00'
   post_hsg:
     value: 4.0
     unit: hsg_code
@@ -52,7 +54,8 @@ hsg_drainage:
       of the dual group B/D. SSURGO dominant HSG B/D (B/D 52%, B 39%, C 3%, C/D 3%,
       D 3%) over 31 footprint grid points — USDA NRCS SSURGO via Soil Data Access
       (SDA) Tabular REST
-    confidence: high
+    confidence: medium
+    asof: '2026-06-10T16:34:53.937064+00:00'
   basis: 'USDA NRCS, National Engineering Handbook Part 630 Ch. 7 ''Hydrologic Soil
     Groups'' / TR-55 Ch. 2: a dual group (A/D, B/D, C/D) is assigned only to a soil
     that is group D in its natural condition and that can be drained. The first letter

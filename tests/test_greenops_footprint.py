@@ -372,13 +372,13 @@ def test_basis_is_stamped_from_the_fetch_path(tmp_path: Path) -> None:
 
     params = {"connector": "demo", "report": "x"}
     # First call has no cache and is not offline → a live fetch, which is `measured`.
-    payload, origin = cached_get_traced("demo", params, fetch, cache_dir=tmp_path)
+    payload, trace = cached_get_traced("demo", params, fetch, cache_dir=tmp_path)
     assert payload == {"ok": "yes"}
-    assert basis_for_origin(origin) == "measured"
+    assert basis_for_origin(trace.origin) == "measured"
     # Second call is served by the entry that write left behind — still real usage.
-    _, origin = cached_get_traced("demo", params, fetch, cache_dir=tmp_path)
-    assert origin == "cache"
-    assert basis_for_origin(origin) == "measured"
+    _, trace = cached_get_traced("demo", params, fetch, cache_dir=tmp_path)
+    assert trace.origin == "cache"
+    assert basis_for_origin(trace.origin) == "measured"
     assert calls == ["live"]  # the fetch really only ran once
 
     # A committed fixture, replayed offline, is a sample.
@@ -386,7 +386,7 @@ def test_basis_is_stamped_from_the_fetch_path(tmp_path: Path) -> None:
     key = next(p for p in (tmp_path / "demo").glob("*.json"))
     (fixtures / "demo").mkdir(parents=True)
     (fixtures / "demo" / key.name).write_text(key.read_text(encoding="utf-8"), encoding="utf-8")
-    _, origin = cached_get_traced(
+    _, trace = cached_get_traced(
         "demo",
         params,
         fetch,
@@ -394,8 +394,8 @@ def test_basis_is_stamped_from_the_fetch_path(tmp_path: Path) -> None:
         offline=True,
         fixtures_dir=fixtures,
     )
-    assert origin == "fixture"
-    assert basis_for_origin(origin) == "illustrative"
+    assert trace.origin == "fixture"
+    assert basis_for_origin(trace.origin) == "illustrative"
 
 
 def test_headline_figures_are_within_their_declared_basis_bounds(repo_settings: Settings) -> None:

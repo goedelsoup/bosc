@@ -332,17 +332,10 @@ def _abstraction_node(settings: Settings, warnings: list[str]) -> WaterBalanceNo
             (r for r in readings if r.parameter_cd == DISCHARGE_CFS and r.value is not None),
             None,
         )
-        if flow is not None and flow.value is not None:
-            # A real-time IV reading NWIS flags provisional ("P") is unreviewed and subject
-            # to revision — down-weight it so the balance never treats it as authoritative
-            # as an approved value (#1602).
-            inflow = ProvenancedValue.from_connector(
-                flow.value,
-                "cfs",
-                citation=f"NWIS {flow.site_no} ({flow.name})",
-                asof=flow.datetime,
-                confidence="low" if flow.provisional else "high",
-            )
+        if flow is not None:
+            # Dated and down-weighted by the reading itself: provisional ("P") readings are
+            # unreviewed (#1602) and a fixture replay is not the current flow (#1621).
+            inflow = flow.as_provenanced("cfs")
     except Exception as exc:
         warnings.append(
             f"live {prof.abstraction_river or 'river'} streamflow unavailable: {type(exc).__name__}"

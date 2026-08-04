@@ -10,6 +10,16 @@ Neutral, subsystem-agnostic connector plumbing. Defers to the root
 - **Resolution order:** fresh on-disk cache → committed fixture (offline) → live
   fetch (cached). An offline miss raises `offline_error` naming the exact key to
   record — so a fixture gap is actionable, never a silent empty.
+- **`cached_get_traced` also says *when* the payload was retrieved** (`CacheTrace`, WS-21 #1621).
+  `fetched_at` is written into every cache/fixture record but used to stop here, so a connector
+  had no way to date the value it built — an offline replay of a months-old fixture was tagged
+  exactly like a live pull. The trace carries `origin` + `fetched_at` + the `ttl_hours` that
+  governed the resolution, and `.stale` is `age > ttl`. Two rules that keep it honest: an
+  **undated** fixture is stale (absence of a time can't establish currency), and the yardstick
+  is the connector's **own declared TTL** — NWIS's instantaneous-values service says one hour,
+  the slow-moving default a week — so widening a quantity's currency is a reviewable one-line
+  claim, not a per-call-site judgement. `live` and `cache` are fresh by construction (only a
+  within-TTL entry is served), so `.stale` picks out exactly the replayed fixture.
 - **Offline errors are subsystem-specific.** `OfflineError` is the neutral base;
   each subsystem may pass a subclass so callers can catch precisely:
   `HydroOfflineError` (`watermark.hydrology.connectors`), `ImageryOfflineError`

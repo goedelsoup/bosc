@@ -176,12 +176,29 @@ def test_dominant_hsg_offline_miss_raises(hydro_settings: Settings, tmp_path: Pa
         ssurgo.dominant_hsg(fp, settings=hydro_settings)
 
 
+def test_survey_is_dated_by_the_pull_and_flags_a_replay(hydro_settings: Settings) -> None:
+    """SDA stamps no edition on its response, so the pull date is the rating's only date.
+
+    Which is exactly why an undated replay could pass for a fresh read of the current
+    SSURGO edition (WS-21, #1621). Under the offline fixtures the recorded pull is months
+    old — past the connector's freshness window — so the survey says so.
+    """
+    survey = ssurgo.dominant_hsg(PARCELS, settings=hydro_settings)
+    assert survey.retrieved_at is not None
+    assert survey.replayed is True
+
+
 def test_storm_uses_connector_sourced_hsg(hydro_settings: Settings) -> None:
     # live=True + offline fixtures: HSG comes from SSURGO (connector), not the assumption.
     runoff, _ = run_storm(return_period_yr=25, settings=hydro_settings, live=True)
     assert runoff.hsg.source == "connector"
     assert "SSURGO" in (runoff.hsg.citation or "")
     assert runoff.hsg.value == pytest.approx(2.0)  # HSG B -> code 2 (A=1..D=4)
+    # WS-21: sourced from a replayed fixture, so it is dated with the survey's own pull time
+    # and one step off full confidence — a recorded pull, not a read of the current edition.
+    assert runoff.hsg.asof == ssurgo.dominant_hsg(PARCELS, settings=hydro_settings).retrieved_at
+    assert runoff.hsg.asof is not None
+    assert runoff.hsg.confidence == "medium"
 
 
 def test_storm_hsg_falls_back_to_assumption(

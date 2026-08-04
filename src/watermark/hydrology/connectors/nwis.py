@@ -28,8 +28,10 @@ import httpx
 from pydantic import BaseModel, ConfigDict, model_validator
 
 from watermark.config import Settings, get_settings
-from watermark.hydrology.connectors._cache import cached_get
+from watermark.connectors import CacheTrace
+from watermark.hydrology.connectors._cache import cached_get_traced, confidence_for
 from watermark.hydrology.model import ProvenancedValue
+from watermark.provenance import Confidence
 
 DISCHARGE_CFS = "00060"
 GAGE_HEIGHT_FT = "00065"
@@ -64,11 +66,53 @@ class NwisReading(BaseModel):
     qualifiers: list[str] = []
     lat: float | None = None
     lon: float | None = None
+    # How this reading reached us (WS-21, #1621). The IV service is "right now" data, so a
+    # replay of a months-old committed fixture is the case that most needs to stay legible:
+    # `datetime` (NWIS's own observation stamp) already dates the reading, and `replayed`
+    # says the value was served past the one-hour currency the IV service declares, so a
+    # consumer can down-weight it. Defaults suit a hand-built reading: undated, not replayed.
+    retrieved_at: str | None = None
+    replayed: bool = False
 
     @property
     def provisional(self) -> bool:
         """True when the reported value is NWIS provisional (``P`` — subject to revision)."""
         return PROVISIONAL_CODE in self.qualifiers
+
+    @property
+    def asof(self) -> str | None:
+        """The instant this reading is true for: NWIS's observation stamp, else retrieval.
+
+        A reading NWIS returns without a ``dateTime`` (an empty series) has no observation
+        time of its own, and falling back to when we pulled it is the honest remainder —
+        better than ``None``, which reads as "undated" and so, downstream, as "current".
+        """
+        return self.datetime or self.retrieved_at
+
+    def as_provenanced(self, unit: str) -> ProvenancedValue | None:
+        """This reading as a dated, confidence-rated ``connector`` value (``None`` if no value).
+
+        The one place the live gage reading's two down-weightings are applied, because both
+        consumers of it — the water balance and the scenario engine — owe both: a
+        provisional ``P`` reading is unreviewed and subject to revision (#1602), and a
+        reading replayed past the IV service's own freshness window is not the current flow
+        however "live" its source tag reads (WS-21, #1621). They compose downward, so a
+        reading that is both lands at ``low`` rather than one cancelling the other.
+
+        ``unit`` is stated by the caller rather than taken from :attr:`unit`: NWIS labels
+        discharge ``ft3/s`` and the balance speaks ``cfs``, and silently adopting the
+        service's spelling would put an unconverted label on the value.
+        """
+        if self.value is None:
+            return None
+        base: Confidence = "low" if self.provisional else "high"
+        return ProvenancedValue.from_connector(
+            self.value,
+            unit,
+            citation=f"NWIS {self.site_no} ({self.name})",
+            asof=self.asof,
+            confidence=confidence_for(base, replayed=self.replayed),
+        )
 
 
 class InstantaneousSeries(BaseModel):
@@ -180,12 +224,14 @@ def _nwis_request(
     query: dict[str, Any],
     *,
     ttl_hours: int | None = None,
-) -> dict[str, Any]:
+) -> tuple[dict[str, Any], CacheTrace]:
     """Perform (or replay from cache) one NWIS request against ``service`` (``iv``/``dv``).
 
     ``ttl_hours`` overrides the subsystem default so the "right now" IV service can
     carry a short freshness window (see :attr:`Settings.nwis_iv_cache_ttl_hours`); the
-    ``dv`` historical service inherits the slow-moving hydro default.
+    ``dv`` historical service inherits the slow-moving hydro default. Returns the payload
+    with its :class:`CacheTrace`, so a caller can date what it builds and tell a live pull
+    from a replayed fixture (WS-21, #1621).
     """
 
     def fetch() -> Any:
@@ -195,19 +241,19 @@ def _nwis_request(
         return resp.json()
 
     # Namespace the cache key by service so iv and dv requests never collide.
-    return cast(
-        "dict[str, Any]",
-        cached_get(
-            "nwis", {"_service": service, **query}, fetch, settings=settings, ttl_hours=ttl_hours
-        ),
+    payload, trace = cached_get_traced(
+        "nwis", {"_service": service, **query}, fetch, settings=settings, ttl_hours=ttl_hours
     )
+    return cast("dict[str, Any]", payload), trace
 
 
-def _iv_request(settings: Settings, params: dict[str, Any]) -> dict[str, Any]:
-    """Perform (or replay from cache) one NWIS IV request, return parsed JSON.
+def _iv_request(settings: Settings, params: dict[str, Any]) -> tuple[dict[str, Any], CacheTrace]:
+    """Perform (or replay from cache) one NWIS IV request, return parsed JSON + its trace.
 
     The IV service is "right now" data, so it caches under a short TTL
-    (``nwis_iv_cache_ttl_hours``) rather than the week-long hydro default.
+    (``nwis_iv_cache_ttl_hours``) rather than the week-long hydro default — which also
+    makes the trace's staleness verdict sharp here: an IV payload replayed more than an
+    hour after it was recorded is, by the service's own standard, no longer current.
     """
     return _nwis_request(
         settings,
@@ -306,7 +352,7 @@ def fetch_streamflow(
     else:
         params["sites"] = ",".join(settings.nwis_sites)
 
-    payload = _iv_request(settings, params)
+    payload, trace = _iv_request(settings, params)
     readings: list[NwisReading] = []
     for ts in _time_series(payload):
         site_no, name, lat, lon, parameter_cd, unit = _site_info(ts)
@@ -323,6 +369,8 @@ def fetch_streamflow(
                 qualifiers=last[2],
                 lat=lat,
                 lon=lon,
+                retrieved_at=trace.fetched_at,
+                replayed=trace.stale,
             )
         )
     return readings
@@ -338,22 +386,28 @@ def observed_min_discharge(
 
     A *derived* cross-check on the low-flow condition — NOT the regulatory 7Q10.
     Returns ``None`` if the site reports no discharge data.
+
+    Dated by the observation the minimum was read from, not by the call (WS-21, #1621):
+    "the lowest flow in the last 7 days" is a claim about a *window*, and replaying a
+    committed fixture months later left it undated and so reading as the current trough.
     """
     settings = settings or get_settings()
     params = {"sites": site_no, "parameterCd": DISCHARGE_CFS, "period": f"P{days}D"}
-    payload = _iv_request(settings, params)
-    values: list[float] = []
+    payload, trace = _iv_request(settings, params)
+    readings: list[tuple[str, float]] = []
     for ts in _time_series(payload):
         _, _, _, _, parameter_cd, _ = _site_info(ts)
         if parameter_cd == DISCHARGE_CFS:
-            values.extend(v for _, v, _ in _series(ts))
-    if not values:
+            readings.extend((t, v) for t, v, _ in _series(ts))
+    if not readings:
         return None
+    asof, minimum = min(readings, key=lambda tv: tv[1])
     return ProvenancedValue.derived(
-        min(values),
+        minimum,
         "cfs",
         citation=f"NWIS {site_no} min instantaneous discharge over P{days}D (not 7Q10)",
-        confidence="low",
+        asof=asof or trace.fetched_at,
+        confidence=confidence_for("low", replayed=trace.stale),
     )
 
 
@@ -375,7 +429,7 @@ def observed_water_temperature(
     """
     settings = settings or get_settings()
     params = {"sites": site_no, "parameterCd": WATER_TEMP_C, "period": f"P{days}D"}
-    payload = _iv_request(settings, params)
+    payload, trace = _iv_request(settings, params)
     readings: list[tuple[str, float]] = []
     for ts in _time_series(payload):
         _, _, _, _, parameter_cd, _ = _site_info(ts)
@@ -388,8 +442,8 @@ def observed_water_temperature(
         peak,
         "degC",
         citation=f"NWIS {site_no} peak instantaneous water temperature (00010) over P{days}D",
-        asof=asof,
-        confidence="medium",
+        asof=asof or trace.fetched_at,
+        confidence=confidence_for("medium", replayed=trace.stale),
     )
 
 
@@ -408,9 +462,14 @@ def fetch_instantaneous_series(
     points are dropped at parse time (:func:`_series`). Same short-TTL IV caching
     as :func:`fetch_streamflow` — a window ending "today" keeps growing, so a stale
     replay would silently truncate the event record.
+
+    The trace is discarded rather than carried (unlike :func:`fetch_streamflow`): every
+    point here already carries NWIS's own observation timestamp over an *explicit*
+    date window, so a value reduced from this series dates itself off the record it was
+    read from and cannot pass a replay off as current (WS-21, #1621).
     """
     settings = settings or get_settings()
-    payload = _iv_request(
+    payload, _ = _iv_request(
         settings,
         {
             "sites": site_no,
@@ -466,7 +525,9 @@ def fetch_daily_discharge(
         "startDT": start_date,
         "endDT": end_date,
     }
-    payload = _nwis_request(settings, "dv", query)
+    # Trace discarded for the same reason as :func:`fetch_instantaneous_series`: an
+    # explicit-window daily record dates every point itself (WS-21, #1621).
+    payload, _ = _nwis_request(settings, "dv", query)
     for ts in _time_series(payload):
         resolved_site, name, lat, lon, parameter_cd, unit = _site_info(ts)
         if parameter_cd != DISCHARGE_CFS:

@@ -43,7 +43,7 @@ from pydantic import BaseModel, ConfigDict
 from watermark.config import Settings, get_settings
 from watermark.hsg import DrainageCondition, is_dual_hsg, resolve_hsg
 from watermark.hydrology import geo
-from watermark.hydrology.connectors._cache import cached_get
+from watermark.hydrology.connectors._cache import cached_get_traced
 from watermark.logging import get_logger
 
 log = get_logger(__name__)
@@ -77,6 +77,12 @@ class SoilHsgSurvey(BaseModel):
     distribution: list[HsgShare]
     n_points: int
     source: str = "USDA NRCS SSURGO via Soil Data Access (SDA) Tabular REST"
+    # How this survey reached us (WS-21, #1621). SDA answers from the current SSURGO
+    # edition and stamps no version on the response, so the pull date is the only date the
+    # rating has — which is exactly why an undated replay of a committed fixture could pass
+    # for a fresh survey. Defaults suit a hand-built survey: undated, not replayed.
+    retrieved_at: str | None = None
+    replayed: bool = False
 
     @property
     def dominant_is_dual(self) -> bool:
@@ -231,7 +237,8 @@ def dominant_hsg(
 
     # Cache/fixture key is the deterministic point grid (the SQL is derived from it).
     params = {"points": [list(p) for p in points]}
-    payload = cast("dict[str, Any]", cached_get(_CONNECTOR, params, fetch, settings=settings))
+    raw, trace = cached_get_traced(_CONNECTOR, params, fetch, settings=settings)
+    payload = cast("dict[str, Any]", raw)
 
     table = payload.get("Table") if isinstance(payload, dict) else None
     if not isinstance(table, list) or not table:
@@ -250,7 +257,13 @@ def dominant_hsg(
 
     ordered = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
     distribution = [HsgShare(hsg=h, points=c, fraction=round(c / n, 3)) for h, c in ordered]
-    survey = SoilHsgSurvey(dominant_hsg=distribution[0].hsg, distribution=distribution, n_points=n)
+    survey = SoilHsgSurvey(
+        dominant_hsg=distribution[0].hsg,
+        distribution=distribution,
+        n_points=n,
+        retrieved_at=trace.fetched_at,
+        replayed=trace.stale,
+    )
     log.info(
         "ssurgo.survey",
         dominant=survey.dominant_hsg,

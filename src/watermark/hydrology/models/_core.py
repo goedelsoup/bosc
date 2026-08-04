@@ -213,6 +213,7 @@ class ProvenancedValue(BaseModel):
         citation: str,
         *,
         confidence: Literal["high", "medium", "low"] = "medium",
+        asof: str | None = None,
         low: float | None = None,
         high: float | None = None,
         plus_minus: float | None = None,
@@ -222,7 +223,9 @@ class ProvenancedValue(BaseModel):
 
         Takes an optional range (see the class docstring): a derived estimate whose
         method carries uncertainty (e.g. a raster-segmented area ±20%) is the natural
-        home of the range shape.
+        home of the range shape. ``asof`` dates a derivation whose *inputs* are dated —
+        a statistic reduced from a live gauge window is only true as of that window, and
+        omitting the date was how a replayed fixture read as current (WS-21, #1621).
         """
         lo, hi = _resolve_bounds(value, low, high, plus_minus, rel_uncertainty)
         return cls(
@@ -231,6 +234,7 @@ class ProvenancedValue(BaseModel):
             source="derived",
             citation=citation,
             confidence=confidence,
+            asof=asof,
             low=lo,
             high=hi,
         )

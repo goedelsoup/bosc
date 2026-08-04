@@ -25,6 +25,23 @@ GIS, FEMA NFHL, ORC, LSC). Defers to the root [`CLAUDE.md`](../../../../CLAUDE.m
   fetch.** So tests never hit the network. A fresh connector/key needs a committed
   fixture under [`tests/fixtures/hydrology/<connector>/<key>.json`](../../../../tests/fixtures/hydrology/);
   an offline miss raises `HydroOfflineError` naming the exact key to record.
+- **A replayed fixture is a *dated* reading, not a current one** (WS-21, #1621). A connector
+  that mints a `ProvenancedValue` calls `_cache.cached_get_traced` (not `cached_get`) and uses
+  the returned `CacheTrace` twice: `asof` gets the payload's own **observation** timestamp where
+  it has one (NWIS's `dateTime`, the trough/peak the statistic was read from) and falls back to
+  `trace.fetched_at`; `confidence` goes through `_cache.confidence_for`, which steps down one
+  rung when the trace is stale. A committed fixture is a **recorded live pull**, so `source`
+  stays `connector` and the value stays `[verified]` — it really did come off the service. What
+  it may not claim is currency, and the two levers that say so are the date and the confidence.
+  The degradation is a single **monotone** step (`watermark.provenance.degrade`), so it composes
+  with a connector's own down-weighting instead of fighting it: an NWIS reading that is both
+  provisional (#1602) and replayed stays at the `low` floor rather than bouncing. A connector
+  reading an **explicit date window** (`fetch_instantaneous_series`, `fetch_daily_discharge`)
+  discards the trace on purpose — every point is already dated by NWIS, so nothing it feeds can
+  read as current. Where the payload carries no observation time at all (a NOAA Atlas-14 depth
+  table, an SSURGO/SDA rating: published editions that stamp no version on the response) the
+  **pull date is the value's only date**, which is exactly why an undated replay used to pass
+  for a fresh read.
 - **Select API columns/fields by name, never by index** (ECHO by **ObjectName**;
   same discipline for the GIS/portal connectors). Column order is not stable.
 - **Never fabricate or backfill.** A `null` from the API stays `null`; a derived
