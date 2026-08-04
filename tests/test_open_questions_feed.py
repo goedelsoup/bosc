@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from watermark.site.open_questions import (
-    _lens_labels,
+    _hypothesis_labels,
     _project_hypothesis_cells,
     _project_leads,
     build_open_questions,
@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 
 _CV = "1.51.0"
 
-# A hypotheses feed's lens rows (id → number/name), as they appear in an assembled bundle.
+# A hypotheses feed's rows (id → number/name), as they appear in an assembled bundle.
 _HYPS = [
     {"id": "water", "number": "H1", "name": "Water & Coercion"},
     {"id": "surveillance", "number": "H3", "name": "Consumer Surveillance"},
@@ -90,7 +90,7 @@ def test_hypothesis_cells_open_only_with_provenance_and_label() -> None:
         _cell("water", "lima", "open", fields={"wwtp": "American Bath"}),
         _cell("water", "lima", "verified"),  # a documented cell — not an open thread
     ]
-    qs = _project_hypothesis_cells(rows, _lens_labels(_HYPS))
+    qs = _project_hypothesis_cells(rows, _hypothesis_labels(_HYPS))
     assert len(qs) == 1
     q = qs[0]
     assert q.id == "hyp:water:lima"
@@ -103,8 +103,8 @@ def test_hypothesis_cells_open_only_with_provenance_and_label() -> None:
     assert "American Bath" in q.detail and "No documented nexus yet" in q.detail
 
 
-def test_lens_label_falls_back_to_id_when_unknown() -> None:
-    qs = _project_hypothesis_cells([_cell("mystery", "lima", "open")], _lens_labels(_HYPS))
+def test_hypothesis_label_falls_back_to_id_when_unknown() -> None:
+    qs = _project_hypothesis_cells([_cell("mystery", "lima", "open")], _hypothesis_labels(_HYPS))
     assert qs[0].hypothesis_label == "mystery"
     assert qs[0].question == "Open thread — mystery @ lima"
 
@@ -159,7 +159,7 @@ def test_both_origins_resolve_with_their_own_fields(lima_bundle: Path) -> None:
     leads = [q for q in questions if q["origin"] == "lead"]
     hyps = [q for q in questions if q["origin"] == "hypothesis"]
     assert leads and hyps  # Lima carries both an open board and open matrix threads
-    # a lead question surfaces the lead:status vocabulary; a hypothesis question a lens label
+    # a lead question surfaces the lead:status vocabulary; a hypothesis question its label
     assert all(q["status"] is not None for q in leads)
     assert all(q["hypothesis_label"] and q["source"].startswith("data/hypotheses/") for q in hyps)
     # no [inference] leads leaked in (the tag filter held over the real board)

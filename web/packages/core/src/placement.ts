@@ -11,7 +11,7 @@
  * Before this, a site's state lived ONLY in a hand-maintained `PLACEMENT` table in `sites.ts`,
  * parallel to the YAML registry, and its major basin was a second copy of the profile's cited
  * `basin`. Registering a site in the YAML without also adding it there silently dropped it from
- * both selector lenses and the water-lens scorecard. Placement is now *derived* from the registry
+ * both selector lenses and the H1 scorecard. Placement is now *derived* from the registry
  * and an unknown basin/state is a named throw — see {@link placementViolations}.
  *
  * Adding a basin is one row in {@link BASINS}. Its two orderings both derive from that one array:
@@ -43,7 +43,7 @@ export interface Region {
 export interface MajorBasin {
   /** Registry key — the `basin_major` slug in `data/sites.yaml` (and `SiteProfile.basin`). */
   slug: string;
-  /** Display label — the basin group heading, and the key the water lens groups by. */
+  /** Display label — the basin group heading, and the key H1 groups by. */
   label: string;
   /** Three-letter code shown beside the heading. */
   abbr: string;
@@ -51,7 +51,7 @@ export interface MajorBasin {
   divide: DivideKey;
 }
 
-/** The two divides, in drainage order — the water lens's top-level banner sequence. */
+/** The two divides, in drainage order — H1's top-level banner sequence. */
 export const DIVIDES: readonly Divide[] = [
   { key: "erie", label: "Lake Erie drainage", note: "north — into Lake Erie" },
   { key: "ohio", label: "Ohio River drainage", note: "south — into the Ohio & Mississippi" },
@@ -110,7 +110,7 @@ export function basinForSlug(slug: string): MajorBasin | undefined {
   return BY_SLUG.get(slug);
 }
 
-/** The basins of one divide, in {@link BASINS} order — the water lens's per-divide sequence. */
+/** The basins of one divide, in {@link BASINS} order — H1's per-divide sequence. */
 export function basinsOfDivide(divide: DivideKey): MajorBasin[] {
   return BASINS.filter((b) => b.divide === divide);
 }

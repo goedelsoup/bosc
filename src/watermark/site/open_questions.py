@@ -13,7 +13,8 @@ ship. It reads two already-assembled feeds:
   question; an ``[inference]``-tagged lead is a *labeled reading*, not a gap, so it is excluded.
 * ``hypothesis-assessments`` — the ``(site x hypothesis)`` evidence matrix
   (`watermark.hypotheses`). Every ``[open]``-tagged cell is a documented gap: no nexus yet for this
-  site under that boom-origin lens. The ``hypotheses`` feed supplies each lens's human label.
+  site under that boom-origin hypothesis. The ``hypotheses`` feed supplies each hypothesis's
+  human label.
 
 This ports yidam's ``open-questions`` model faithfully: a node is open when it carries the
 ``[open]`` tag (``claim_tag == "open"``), the exact rule
@@ -65,9 +66,9 @@ def _project_leads(rows: Sequence[Mapping[str, Any]]) -> list[OpenQuestionItem]:
 
 def _project_hypothesis_cells(
     rows: Sequence[Mapping[str, Any]],
-    lens_labels: Mapping[str, str],
+    labels_by_id: Mapping[str, str],
 ) -> list[OpenQuestionItem]:
-    """Every ``[open]``-tagged matrix cell → an open thread under its boom-origin lens.
+    """Every ``[open]``-tagged matrix cell → an open thread under its boom-origin hypothesis.
 
     Provenance is the cell's committed matrix file (`data/hypotheses/<hid>/<site>.yaml`) — an
     open cell carries no ``Citation`` by rule (only an ``open`` cell may have none), so its
@@ -79,7 +80,7 @@ def _project_hypothesis_cells(
             continue
         hid = str(cell.get("hypothesis") or "")
         site = str(cell.get("site") or "")
-        label = lens_labels.get(hid, hid)
+        label = labels_by_id.get(hid, hid)
         fields = cell.get("fields") or {}
         detail = f"No documented nexus yet for {site} under {label}."
         if fields:
@@ -99,8 +100,8 @@ def _project_hypothesis_cells(
     return items
 
 
-def _lens_labels(hypotheses: Sequence[Mapping[str, Any]]) -> dict[str, str]:
-    """Map a hypothesis id → its human lens label ("H1 Water & Coercion") from the feed rows."""
+def _hypothesis_labels(hypotheses: Sequence[Mapping[str, Any]]) -> dict[str, str]:
+    """Map a hypothesis id → its human label ("H1 Water & Coercion") from the feed rows."""
     labels: dict[str, str] = {}
     for hyp in hypotheses:
         hid = str(hyp.get("id") or "")
@@ -118,7 +119,7 @@ def build_open_questions(payloads_by_feed: Mapping[str, Any]) -> list[OpenQuesti
     ``payloads_by_feed`` maps a feed name to its parsed payload (a list of row dicts for a
     collection feed) — the just-assembled feeds, so no corpus re-load. Leads come first (the
     concrete, sourced board), then the hypothesis-matrix threads (ordered by the ``hypotheses``
-    feed's lens order); the result is a stable, deduped-by-``id`` list.
+    feed's hypothesis order); the result is a stable, deduped-by-``id`` list.
     """
     leads = payloads_by_feed.get("leads")
     cells = payloads_by_feed.get("hypothesis-assessments")
@@ -128,8 +129,8 @@ def build_open_questions(payloads_by_feed: Mapping[str, Any]) -> list[OpenQuesti
     if isinstance(leads, Sequence):
         collected.extend(_project_leads(leads))
     if isinstance(cells, Sequence):
-        lens_labels = _lens_labels(hypotheses if isinstance(hypotheses, Sequence) else [])
-        collected.extend(_project_hypothesis_cells(cells, lens_labels))
+        labels_by_id = _hypothesis_labels(hypotheses if isinstance(hypotheses, Sequence) else [])
+        collected.extend(_project_hypothesis_cells(cells, labels_by_id))
 
     # Dedup on the stable id (a lead id can't collide with a `hyp:` id; belt-and-suspenders).
     questions: list[OpenQuestionItem] = []

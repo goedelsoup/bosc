@@ -639,7 +639,7 @@ class Settings(BaseSettings):
         """Reviewed (site x hypothesis) evidence cells — the boom-origin assessment
         store (``<hypothesis-id>/<site-slug>.yaml``, each carrying evidentiary tags +
         citations). Hand-authored or promoted from a research run; committed. The
-        backend peer of the frontend directory lens (watermark.hypotheses)."""
+        backend peer of the frontend directory hypotheses (watermark.hypotheses)."""
         return self.data_dir / "hypotheses"
 
     @property

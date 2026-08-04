@@ -48,9 +48,9 @@ from watermark.sites import (
 #   `media_type`/`render_class` (#275), `RecordItem` gains the `source_doc_*` join (#276).
 # 1.3.0: `DocumentItem` gains `published` — the default-deny public allowlist flag (#280).
 # 1.4.0: adds the `network` object feed — the cross-site basin synthesis (watermark.network; #308/#323).
-# 1.5.0: adds the `hypotheses` + `hypothesis-assessments` feeds — the boom-origin lenses and their
+# 1.5.0: adds the `hypotheses` + `hypothesis-assessments` feeds — the boom-origin hypotheses and their
 #   (site x hypothesis) evidence cells (watermark.hypotheses; #308). The directory reads these instead of
-#   the formerly-hardcoded LENSES/LENS_DATA, so each cell now ships with a Citation.
+#   the formerly-hardcoded frontend tables, so each cell now ships with a Citation.
 # 1.6.0: adds the `catalog` feed — the published data catalog (watermark.catalog projected to
 #   CatalogItem + the reconcile observed snapshot; epic #631 Phase 3 / #659).
 # 1.6.1: the manifest gains `site` — the network-site slug a bundle is for, so it self-identifies
@@ -1189,7 +1189,7 @@ class OpenQuestionItem(BaseModel):
     extraction: it aggregates every still-open thread the bundle already ships — the `[open]`-tagged
     rows of the `leads` feed (the per-site board, wired to the `lead:kind:question` /
     `lead:status:unanswered` label vocabulary) and the `[open]`-tagged cells of the
-    `hypothesis-assessments` matrix (a documented gap under a boom-origin lens) — into one flat,
+    `hypothesis-assessments` matrix (a documented gap under a boom-origin hypothesis) — into one flat,
     provenanced list. It ports yidam's `open-questions` model: a node is open when it carries the
     `[open]` tag (`claim_tag == "open"`), so an `[inference]`-tagged lead (a labeled reading, not a
     gap) is deliberately excluded, exactly as `render_open_questions` excludes it.
@@ -1212,8 +1212,8 @@ class OpenQuestionItem(BaseModel):
     status: LeadStatus | None = None
     issue: int | None = None  # a linked tracking issue, when the lead names one
     # hypothesis-derived context (present when origin == "hypothesis").
-    hypothesis: str | None = None  # the lens id ("water" | "defense" | "surveillance")
-    hypothesis_label: str | None = None  # the human lens label, e.g. "H1 Water & Coercion"
+    hypothesis: str | None = None  # the hypothesis id ("water" | "defense" | "surveillance")
+    hypothesis_label: str | None = None  # the human hypothesis label, e.g. "H1 Water & Coercion"
     signal: str | None = None  # the cell's signal strength ("anchor"|"strong"|"moderate"|"watch")
 
 

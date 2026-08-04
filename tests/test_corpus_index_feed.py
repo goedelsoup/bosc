@@ -181,7 +181,7 @@ def test_feed_always_emitted_at_contract_version(lima_bundle: Path) -> None:
     manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["contract_version"] == _CV
     nodes = _corpus_index(lima_bundle)
-    assert len(nodes) > 0  # the mirror is never empty (site anchor + hypothesis lenses)
+    assert len(nodes) > 0  # the mirror is never empty (site anchor + hypothesis nodes)
 
 
 def test_every_node_carries_kind_and_degree(lima_bundle: Path) -> None:
@@ -202,7 +202,7 @@ def test_every_node_carries_kind_and_degree(lima_bundle: Path) -> None:
         assert n["links_out"] >= 0 and n["links_in"] >= 0
         assert n["lines"] > 0
         assert n["label"]
-    # the spine is present: the site anchor + the three hypothesis lenses.
+    # the spine is present: the site anchor + the three hypotheses.
     assert any(n["kind"] == "site" for n in nodes)
     assert sum(n["kind"] == "hypothesis" for n in nodes) == 3
 

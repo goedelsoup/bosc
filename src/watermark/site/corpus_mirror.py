@@ -26,7 +26,7 @@ kind         projected from
 ``relation`` the entity-graph edges (:class:`~watermark.site.feeds.RelationshipEdge`)
 ``artifact`` the site anchor + resolved entities + profiled people
 ``question`` the per-site leads board + the ``[open]``-tagged hypothesis claims
-``hypothesis`` the network's boom-origin lenses (:data:`watermark.hypotheses.HYPOTHESES`)
+``hypothesis`` the network's boom-origin readings (:data:`watermark.hypotheses.HYPOTHESES`)
 ===========  ==================================================================
 
 **Two hard yidam rules this module must satisfy** (its ``graph-check`` gate, replicated in
@@ -83,7 +83,7 @@ _CLASS_DESC: dict[str, str] = {
     "relation": "A directed, document-traceable relationship between two entities.",
     "artifact": "A resolved entity, party, profiled person, or the site anchor.",
     "question": "An open lead or an [open]-tagged claim under investigation.",
-    "hypothesis": "A network-wide reading of the data-center boom (a directory lens).",
+    "hypothesis": "A network-wide reading of the data-center boom (a directory hypothesis).",
 }
 
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
@@ -287,7 +287,7 @@ def project_mirror(
 
     # -- phase 2: build nodes with links pointing at the names assigned above.
 
-    # site anchor (artifact) — the hub. Links to every hypothesis lens.
+    # site anchor (artifact) — the hub. Links to every hypothesis.
     nodes.append(
         MirrorNode(
             "artifact",
@@ -302,7 +302,7 @@ def project_mirror(
         )
     )
 
-    # hypothesis lenses (network-shared). Link back to the site + out to any open thread.
+    # hypotheses (network-shared). Link back to the site + out to any open thread.
     for hid, hyp in hypotheses.items():
         open_links = (
             [MirrorLink(f"../question/{open_name[hid]}.yml", "open-thread")]
@@ -465,10 +465,10 @@ def project_mirror(
             )
         )
 
-    # [open] claims — the open-tagged hypothesis cells. Link to the lens they hang under.
+    # [open] claims — the open-tagged hypothesis cells. Link to the hypothesis they hang under.
     for cell in open_claims:
-        lens_hyp = hypotheses.get(cell.hypothesis)
-        lens = f"{lens_hyp.number} {lens_hyp.name}" if lens_hyp else cell.hypothesis
+        cell_hyp = hypotheses.get(cell.hypothesis)
+        label = f"{cell_hyp.number} {cell_hyp.name}" if cell_hyp else cell.hypothesis
         if cell.hypothesis in hyp_name:
             links = [MirrorLink(f"../hypothesis/{hyp_name[cell.hypothesis]}.yml", "open-under")]
         else:
@@ -477,9 +477,9 @@ def project_mirror(
             MirrorNode(
                 "question",
                 open_name[cell.hypothesis],
-                label=f"Open thread — {lens} @ {site}",
+                label=f"Open thread — {label} @ {site}",
                 description=_oneline(
-                    f"No documented nexus yet for {site} under {lens}."
+                    f"No documented nexus yet for {site} under {label}."
                     + (f" Fields: {cell.fields}." if cell.fields else "")
                 ),
                 meta={

@@ -241,7 +241,7 @@ describe("hypothesisRelatedNodes — a reading's nodes (#1570)", () => {
     expect(related.entities.some((t) => t.label === "Acme Gravel")).toBe(false);
   });
 
-  it("resolves a reading's cell-named entity to the defense lens", async () => {
+  it("resolves a reading's cell-named entity to the defense hypothesis", async () => {
     const { bundle, wiki } = await load(makeBundle("lima", feeds));
     const related = bundle.runWithSite("lima", () => wiki.hypothesisRelatedNodes(HYPS[1], CELLS));
     expect(related.entities.map((t) => t.label)).toEqual(["Wright-Patterson AFB"]);
@@ -271,7 +271,7 @@ describe("hypothesisRelatedNodes — a reading's nodes (#1570)", () => {
 });
 
 describe("hypothesisHref", () => {
-  it("builds the wiki node-page url for a lens id", async () => {
+  it("builds the wiki node-page url for a hypothesis id", async () => {
     const { wiki } = await load(makeBundle("lima", { hypotheses: HYPS }));
     expect(wiki.hypothesisHref("water")).toBe("/wiki/hypotheses/water/");
     expect(wiki.hypothesisHref("defense")).toBe("/wiki/hypotheses/defense/");

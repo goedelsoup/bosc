@@ -244,7 +244,7 @@ def test_serves_the_real_lima_mirror_end_to_end() -> None:
 
     anchor = yidam_tools.find_node(mirror, "artifact/site-lima")
     assert anchor is not None and anchor.label
-    # The site anchor links out to the network hypothesis lenses (the always-present spine).
+    # The site anchor links out to the network hypothesis nodes (the always-present spine).
     assert any("hypothesis/" in link.target for link in anchor.links)
 
     # A keyword query returns real, readable hits.

@@ -2,7 +2,7 @@
 
 BOSC asks one question across a network of watershed-point sites: *what explains the
 data-center boom?* The platform holds several competing readings of that question — the
-**hypotheses** (the frontend calls each a "lens"):
+**hypotheses**:
 
 * **H1 Water & Coercion** — compute lands where it can pull power and water; the CWA
   discharge backstop structurally compels municipal acceptance. The reference thesis,
@@ -69,7 +69,7 @@ HypothesisStatus = Literal["reference", "emerging"]
 
 
 class Citation(BaseModel):
-    """Where a cell's facts came from — the provenance the old LENS_DATA lacked.
+    """Where a cell's facts came from — the provenance the old hardcoded table lacked.
 
     Field-compatible with :class:`watermark.site.feeds.Citation` so a cell exports to the
     content bundle without translation. ``source_kind`` says what kind of artifact backs
@@ -93,7 +93,7 @@ class Citation(BaseModel):
 
 
 class Hypothesis(BaseModel):
-    """One reading of the boom — the content of a directory lens (frozen reference value).
+    """One reading of the boom — the content of a directory hypothesis (frozen reference value).
 
     Presentation (accent palette, grid fractions, column labels) is the frontend's; this
     holds the substance: the claim, the thesis, the taxonomy a cell is scored against, and
@@ -103,7 +103,7 @@ class Hypothesis(BaseModel):
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
-    id: str  # "water" | "defense" | "surveillance" — matches the frontend DirLens key
+    id: str  # "water" | "defense" | "surveillance" — matches the frontend HypothesisId key
     number: str  # "H1" | "H2" | "H3"
     name: str
     claim: str
@@ -141,7 +141,7 @@ class HypothesisAssessment(BaseModel):
     citations: list[Citation] = Field(default_factory=list)
 
 
-# --- the registry (ported from web/packages/core/src/directory.ts LENSES) -----------------------
+# --- the registry (ported from web/packages/core/src/directory.ts HYPOTHESIS_VIEW) --------------
 HYPOTHESES: dict[str, Hypothesis] = {
     "water": Hypothesis(
         id="water",
@@ -161,8 +161,8 @@ HYPOTHESES: dict[str, Hypothesis] = {
             "non-negotiable."
         ),
         status="reference",
-        # H1 is rendered from the site registry + network (by drainage), not from cells
-        # for the water lens. Cells are enabled for the coercion sub-thesis (#903) so
+        # H1 is rendered from the site registry + network (by drainage), not from cells.
+        # Cells are enabled for the coercion sub-thesis (#903) so
         # per-site WWTP lean-flow evidence can be committed and tracked.
         groups=("coercion",),
         fields=("wwtp", "gap"),

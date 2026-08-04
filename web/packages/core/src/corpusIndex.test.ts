@@ -19,7 +19,7 @@ describe("corpus-index feed + helpers", () => {
     }
   });
 
-  it("carries the corpus spine — the site anchor + the three hypothesis lenses", () => {
+  it("carries the corpus spine — the site anchor + the three hypotheses", () => {
     expect(NODES.some((n) => n.kind === "site")).toBe(true);
     expect(NODES.filter((n) => n.kind === "hypothesis")).toHaveLength(3);
   });

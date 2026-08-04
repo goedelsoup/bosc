@@ -2,9 +2,9 @@
 /**
  * A hypothesis node page (`/wiki/hypotheses/<id>`, issue #1570, epic #1560 workstream B) — one
  * boom-origin reading of the data-center build-out, surfaced as a first-class, cross-linked wiki
- * node. The three lenses (H1 Water & Coercion, H2 Defense & Federal Enclave, H3 Consumer
+ * node. The three hypotheses (H1 Water & Coercion, H2 Defense & Federal Enclave, H3 Consumer
  * Surveillance) are network-global: this page reads the same `hypotheses` + `hypothesis-assessments`
- * feeds the `/research/hypotheses` scorecard does, but presents one lens as a knowledge-graph node —
+ * feeds the `/research/hypotheses` scorecard does, but presents one as a knowledge-graph node —
  * its reading, the evidence matrix committed under it, what would confirm it, and the concepts,
  * entities, and open questions it bears on (derived from prose by `hypothesisRelatedNodes`, never a
  * hand-kept edge list). The hypothesis matrix is a network-global-host surface (`is_reference_site`),
@@ -32,7 +32,7 @@ const { hyp } = Astro.props;
 const allCells = hasFeed("hypothesis-assessments")
   ? loadFeed<HypothesisAssessmentItem[]>("hypothesis-assessments")
   : [];
-// The matrix column for this lens, loudest signal first (anchor → watch), then by place.
+// The matrix column for this hypothesis, loudest signal first (anchor → watch), then by place.
 const SIGNAL_RANK: Record<string, number> = { anchor: 0, strong: 1, moderate: 2, watch: 3 };
 const cells = allCells
   .filter((c) => c.hypothesis === hyp.id)
@@ -89,7 +89,7 @@ const toc = [
       <p class="section-lead">{hyp.thesis}</p>
       <p class="hyp-cross">
         See the same lens as a cross-site scorecard on the
-        <a href={`${withBase("/research/hypotheses")}?lens=${hyp.id}`}>network directory →</a>
+        <a href={`${withBase("/research/hypotheses")}?h=${hyp.id}`}>network directory →</a>
       </p>
     </div>
 
@@ -225,7 +225,7 @@ const toc = [
                 <a href={`${withBase("/wiki/open-questions/")}#${openQuestionAnchor(q.id)}`}>
                   {q.question}
                 </a>
-                {q.hypothesis_label && <span class="hyp-oq-lens"> · {q.hypothesis_label}</span>}
+                {q.hypothesis_label && <span class="hyp-oq-label"> · {q.hypothesis_label}</span>}
               </li>
             ))}
           </ul>
@@ -463,7 +463,7 @@ const toc = [
     font-size: var(--fs-meta);
     line-height: 1.5;
   }
-  .hyp-oq-lens {
+  .hyp-oq-label {
     font-family: var(--bosc-mono);
     font-size: var(--fs-nano);
     color: var(--bosc-faint);

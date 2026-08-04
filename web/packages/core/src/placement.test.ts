@@ -25,7 +25,7 @@ describe("the major-basin table — one row per basin (#1863)", () => {
   });
 
   // The guard the issue asks for by name: a basin the selector groups by but no divide claims
-  // would render in the switcher and vanish from the water lens. Structurally impossible now —
+  // would render in the switcher and vanish from H1. Structurally impossible now —
   // `divide` is a required field on the row — but the coverage is what actually matters, so
   // assert it rather than the type.
   it("every basin belongs to exactly one divide, and the divides cover the table", () => {

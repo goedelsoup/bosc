@@ -935,7 +935,7 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # no longer inherit Lima's loop, and a geometry-grade table (no catchments) supports
         # the reach-network map without fabricating an all-zero routed feed (#1364).
         ("routed-hydrograph", None, lambda: build_routed_hydrograph(settings=settings)),
-        # The boom-origin hypotheses (directory lenses) + their (site x hypothesis) evidence
+        # The boom-origin hypotheses + their (site x hypothesis) evidence
         # cells (#308) — each cell carries a Citation, so the directory shows provenance.
         ("hypotheses", Hypothesis, lambda: list(HYPOTHESES.values())),
         (
@@ -1135,7 +1135,7 @@ def _corpus_index_feed(mirror: Mirror, settings: Settings) -> _Feed:
 
     Unlike `facts`/`open-questions` (post-passes over the assembled feeds), this projects the
     just-built `Mirror` (`build_mirror` re-reads the committed corpus, offline). Always emitted:
-    every site's mirror has at least the site anchor + hypothesis lenses, so the schema set stays
+    every site's mirror has at least the site anchor + hypothesis nodes, so the schema set stays
     stable and `hasFeed("corpus-index")` is always true (the node map is never empty). Freshness is
     resolved from git here because the frontend build can run neither git nor Python.
     """

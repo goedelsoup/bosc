@@ -1788,8 +1788,8 @@ export interface SeasonalField {
   note: string;
 }
 
-// --- boom-origin hypotheses (the directory lenses) + their evidence cells (#308) ----------
-/** One reading of the boom — content of a directory lens (`bosc.hypotheses.Hypothesis`). */
+// --- boom-origin hypotheses + their evidence cells (#308) --------------------------------
+/** One reading of the boom — content of a directory hypothesis (`bosc.hypotheses.Hypothesis`). */
 export interface HypothesisItem {
   id: string; // "water" | "defense" | "surveillance"
   number: string; // "H1" | "H2" | "H3"
@@ -1846,8 +1846,8 @@ export interface OpenQuestionItem {
   status?: import("./leads").LeadStatus | null;
   issue?: number | null;
   // hypothesis-derived context (present when origin === "hypothesis").
-  hypothesis?: string | null; // the lens id ("water" | "defense" | "surveillance")
-  hypothesis_label?: string | null; // the human lens label, e.g. "H1 Water & Coercion"
+  hypothesis?: string | null; // the hypothesis id ("water" | "defense" | "surveillance")
+  hypothesis_label?: string | null; // the human hypothesis label, e.g. "H1 Water & Coercion"
   signal?: string | null; // the cell's signal strength ("anchor"|"strong"|"moderate"|"watch")
 }
 

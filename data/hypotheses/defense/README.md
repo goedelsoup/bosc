@@ -14,7 +14,7 @@ the boom remains inferred. Sites without a cell are *not yet assessed* — not c
 
 ## The capture sub-thesis
 
-Added at ME-D (issue 1663). The lens used to be able to say only *where* the federal base
+Added at ME-D (issue 1663). H2 used to be able to say only *where* the federal base
 is, never *what its money does* — so "defense distorts the local economy" had to be filed
 under H3 surveillance, whose `capital` field is about private operators and public subsidy,
 not about federal payroll and prime awards. `capture` / `federal_flow` give the defense

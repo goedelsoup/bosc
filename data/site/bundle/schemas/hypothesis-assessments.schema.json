@@ -98,7 +98,7 @@
   "$defs": {
     "Citation": {
       "additionalProperties": false,
-      "description": "Where a cell's facts came from — the provenance the old LENS_DATA lacked.\n\nField-compatible with :class:`watermark.site.feeds.Citation` so a cell exports to the\ncontent bundle without translation. ``source_kind`` says what kind of artifact backs\nthe fact; ``verified`` is derived (a record or a live gauge), so a consumer never\nrecomputes it. An inferred connection uses ``source_kind='assumption'``.",
+      "description": "Where a cell's facts came from — the provenance the old hardcoded table lacked.\n\nField-compatible with :class:`watermark.site.feeds.Citation` so a cell exports to the\ncontent bundle without translation. ``source_kind`` says what kind of artifact backs\nthe fact; ``verified`` is derived (a record or a live gauge), so a consumer never\nrecomputes it. An inferred connection uses ``source_kind='assumption'``.",
       "properties": {
         "source": {
           "anyOf": [

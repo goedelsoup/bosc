@@ -257,7 +257,7 @@ describe("grouped selector — State / Basin lenses (#307/#308)", () => {
 
   it("an unplaced site is a named throw, never a silently dropped row", () => {
     // What the old hand-maintained PLACEMENT table did instead: `continue`. A slug registered in
-    // data/sites.yaml but absent there vanished from both lenses AND the water-lens scorecard,
+    // data/sites.yaml but absent there vanished from both lenses AND the H1 scorecard,
     // and nothing named it. Registry placement is repo-authoring data — it fails the build.
     const stray = { ...SITES[0], slug: "kokosing-falls", basinMajor: "kokosing" };
     for (const by of ["state", "basin"] as const) {

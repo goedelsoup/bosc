@@ -1312,7 +1312,7 @@ def _assert_corpus_feeds_lima_free(slug: str, bundle_dir: Path) -> None:
     collection) plus any non-derivable ``corpus_relpaths`` — **never** the reference build's whole
     tree (only Lima resolves to ``include=None``).
 
-    The basin-/network-shared lenses (``network``, ``concepts``, the ``hypotheses`` *definitions*)
+    The basin-/network-shared feeds (``network``, ``concepts``, the ``hypotheses`` *definitions*)
     are cross-site by design. ``catalog`` and ``hypothesis-assessments`` are narrowed separately
     (:func:`test_sibling_bundle_narrows_cross_site_feeds`); the residual Fort-Wayne-specific
     ``catalog`` rows are the #778 taxonomy gap and out of scope for this corpus guard.
