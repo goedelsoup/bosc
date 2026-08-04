@@ -4,9 +4,10 @@
  * record, and that record's resolved parent chain. Every value is pulled from a committed
  * feed; nothing is fabricated (the epic's standing rule).
  */
-import { hasFeed, loadFeed } from "./bundle";
+import { hasFeed, loadFeed, manifestOrNull, runWithSite } from "./bundle";
 import type { EntityNode, LeiInventory, LeiRecord, LeiRef, RelationshipEdge } from "./feeds";
 import { entityHref } from "./entityLinks";
+import { networkEntities, WIKI_CANONICAL } from "./networkEntities";
 
 /**
  * The graph degree of an entity — the same count a yidam `corpus-index` reports for a node,
@@ -46,13 +47,24 @@ export function entityDegree(
 /**
  * The GLEIF registry record for an entity, joined by **exact LEI code** against the `lei`
  * feed (the feed itself is pinned by ID — no fuzzy name match — so the join is 1:1 and
- * authoritative). Returns null when the entity carries no LEI, the build ships no `lei` feed,
- * or the code isn't in the committed inventory.
+ * authoritative). Returns null when the entity carries no LEI, the inventory isn't shipped,
+ * or the code isn't in it.
+ *
+ * Read from the **canonical wiki build** (#1906): a corporate register is one register, not a
+ * per-site reading, and only that bundle ships the `lei` feed. Before the wiki widened past one
+ * bundle this happened to be the ambient site; now that the page can render a party carried only
+ * by a peer, the coupling has to be stated or a peer-only entity's LEI would silently stop
+ * resolving.
  */
 export function entityLei(entity: Pick<EntityNode, "lei">): LeiRecord | null {
-  if (!entity.lei || !hasFeed("lei")) return null;
-  const inv = loadFeed<LeiInventory>("lei");
-  return inv.records.find((r) => r.lei === entity.lei) ?? null;
+  if (!entity.lei) return null;
+  return runWithSite(WIKI_CANONICAL, () => {
+    // `manifestOrNull` before `hasFeed`: naming the canonical build must not make a build that
+    // doesn't ship it (a thin fixture, a peer-only export) throw where it used to degrade.
+    if (!manifestOrNull() || !hasFeed("lei")) return null;
+    const inv = loadFeed<LeiInventory>("lei");
+    return inv.records.find((r) => r.lei === entity.lei) ?? null;
+  });
 }
 
 /** A resolved GLEIF parent — its `{lei, name}` plus an entity-page href when the parent's LEI
@@ -68,12 +80,15 @@ export interface LeiParent {
  * Resolve a GLEIF parent reference to a linkable target: its name is authoritative from the
  * registry, and if the parent's LEI matches an entity node's `lei` (and that entity has a
  * page), we attach the href so the corporate chain is navigable. Returns null for a missing ref.
+ *
+ * The lookup runs over the **network** graph (#1906), not one site's feed: a parent whose only
+ * appearance is at a peer watershed point now has a page, and matching it against the reference
+ * bundle alone would drop the link precisely where the corporate chain crosses sites — which is
+ * the cross-site view the entity graph exists for.
  */
 export function leiParent(ref: LeiRef | null | undefined): LeiParent | null {
   if (!ref) return null;
-  const owner = hasFeed("entities")
-    ? loadFeed<EntityNode[]>("entities").find((e) => e.lei && e.lei === ref.lei)
-    : undefined;
+  const owner = networkEntities().find((e) => e.node.lei && e.node.lei === ref.lei);
   const href = owner ? entityHref(owner.key) : undefined;
   return { lei: ref.lei, name: ref.name, href };
 }

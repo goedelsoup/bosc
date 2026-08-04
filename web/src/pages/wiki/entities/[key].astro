@@ -1,44 +1,75 @@
 ---
+/**
+ * One party in the network's entity graph (#1906).
+ *
+ * The page is network-global by declaration (`taxonomy.ts`) and, since #1906, by construction: its
+ * paths and every rail on it come from `networkEntities()`, the union across every selectable
+ * site's bundle, with the merge rule stated in that module. Before it, `getStaticPaths` here ran
+ * outside `runWithSite` and silently rendered the reference bundle alone, so a party carried only
+ * by a peer had no page anywhere — the cross-site view being the whole reason the graph is
+ * network-global.
+ *
+ * A party on more than one watershed point shows **all** of them: the sites rail below the
+ * neighborhood carries each site's own reading — its role tallies, its sources, its edges — and any
+ * field two sites read differently is printed as a disagreement rather than resolved out of sight.
+ */
 import type { GetStaticPaths } from "astro";
 import Base from "~/layouts/Base.astro";
 import ProfileHeader from "~/components/ProfileHeader.astro";
-import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import { slugify, type EntityNode, type PersonItem, type RelationshipEdge } from "@watermark/core/feeds";
+import { slugify } from "@watermark/core/feeds";
 import type { ProfileAttr, ProfileHeaderData, ProfileRel } from "@watermark/core/profile";
 import type { FigureStatData } from "@watermark/core/viz";
 import { entityHref } from "@watermark/core/entityLinks";
-import { withBase, withSite } from "@watermark/core/site";
-import { hypothesisBacklinks, openQuestionBacklinks, relatedConcepts } from "@watermark/core/wiki";
+import {
+  entityBacklinks,
+  entityProfiles,
+  networkEdgesFor,
+  networkEntities,
+  networkEntityLabels,
+  type NetworkEdge,
+} from "@watermark/core/networkEntities";
+import { siteHref, withBase } from "@watermark/core/site";
+import { siteForSlug } from "@watermark/core/sites";
 import { entityDegree, entityLei, leiAddress, leiParent } from "@watermark/core/entityEnrich";
 
 export const getStaticPaths = (() => {
-  const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
-  const rels = hasFeed("relationships") ? loadFeed<RelationshipEdge[]>("relationships") : [];
-  const people = hasFeed("people") ? loadFeed<PersonItem[]>("people") : [];
-  const display: Record<string, string> = Object.fromEntries(entities.map((e) => [e.key, e.display]));
-  return entities.map((entity) => ({
-    params: { key: slugify(entity.key) },
-    props: {
-      entity,
-      outgoing: rels.filter((r) => r.src === entity.key),
-      incoming: rels.filter((r) => r.dst === entity.key),
-      profiles: people.filter((p) => p.entity_key === entity.key),
-      display,
-    },
+  const display = networkEntityLabels();
+  return networkEntities().map((entity) => ({
+    params: { key: entity.slug },
+    props: { entity, ...networkEdgesFor(entity.key), profiles: entityProfiles(entity.key), display },
   }));
 }) satisfies GetStaticPaths;
 
-const { entity, outgoing, incoming, profiles, display } = Astro.props;
+const { entity: merged, outgoing, incoming, profiles, display } = Astro.props;
+const entity = merged.node;
 const label = (key: string): string => display[key] ?? key;
 
-const roleTotal = Object.values(entity.roles ?? {}).reduce((a, b) => a + b, 0);
+/** A registry slug as a reader knows it — the place name, never the slug. */
+const placeOf = (slug: string): string => siteForSlug(slug)?.place ?? slug;
+// Comma-joined, not the usual middot: a registry place can carry its own separator
+// ("Troy · Piqua" is one watershed point), and a middot list would read as five sites, not four.
+const places = merged.sites.map(placeOf).join(", ");
+const multiSite = merged.sites.length > 1;
+
+// Edges flatten for the counts and the neighborhood list; the sites behind each are kept so a
+// cross-site party's list says which record asserts which edge.
+const outEdges = outgoing.map((e: NetworkEdge) => e.edge);
+const inEdges = incoming.map((e: NetworkEdge) => e.edge);
+
 const topRole = Object.entries(entity.roles ?? {}).sort((a, b) => b[1] - a[1])[0];
 
 // Graph degree — the same count a yidam `corpus-index` reports for this node, read off the
-// `relationships` edge set the page already partitioned into outgoing/incoming (#1572).
-const degree = entityDegree(entity.key, outgoing, incoming);
+// `relationships` edge set the page already partitioned into outgoing/incoming (#1572), now over
+// the unioned edge set so a cross-site party's degree isn't one site's slice of it.
+const degree = entityDegree(entity.key, outEdges, inEdges);
 
 const stats: FigureStatData[] = [];
+stats.push({
+  label: "Watershed points",
+  value: String(merged.sites.length),
+  evidence: "verified",
+  sub: places,
+});
 if (degree.total)
   stats.push({
     label: "Graph degree",
@@ -48,10 +79,14 @@ if (degree.total)
   });
 if (entity.parcels.length)
   stats.push({ label: "Parcels", value: String(entity.parcels.length), evidence: "verified" });
-if (roleTotal)
+// Role counts are per-site tallies and are NOT additive (the merge rule's point 6 — one
+// network-global reference source is read into every site's graph, so a sum would multiply one
+// appearance by the number of watershed points). A single-site party prints its own total; a
+// cross-site one prints no network figure at all and shows the tallies per site below.
+if (!multiSite && merged.readings[0].roleTotal)
   stats.push({
     label: "Record roles",
-    value: String(roleTotal),
+    value: String(merged.readings[0].roleTotal),
     evidence: "verified",
     sub: topRole ? `${topRole[0].replace(/_/g, " ")}` : undefined,
   });
@@ -72,7 +107,7 @@ if (entity.signals?.length)
 if (entity.lei) attrs.push({ label: "LEI", value: entity.lei, tag: "verified" });
 if (entity.uei) attrs.push({ label: "UEI", value: entity.uei, tag: "verified" });
 
-const rels: ProfileRel[] = outgoing
+const rels: ProfileRel[] = outEdges
   .slice(0, 5)
   .map((r) => ({ kind: r.rel, label: label(r.dst), href: entityHref(r.dst) }));
 
@@ -99,26 +134,30 @@ const directParent = leiParent(gleif?.direct_parent);
 const ultimateParent = leiParent(gleif?.ultimate_parent);
 const gleifAddress = leiAddress(gleif?.legal_address);
 
-// Concepts that name this entity in their prose — the glossary terms it cross-links to (#1572).
-const concepts = relatedConcepts([entity.display, ...entity.variants]);
-
-// Open questions that raise this entity — the backlink peer of `[[wiki links]]` over the
-// prose-only `open-questions` feed (#1569).
-const openQuestions = openQuestionBacklinks([entity.display, ...entity.variants]);
-// The boom-origin hypotheses this entity bears on — the reverse of the hypothesis node's
-// "Entities it bears on" rail (#1570).
-const hypotheses = hypothesisBacklinks([entity.display, ...entity.variants]);
+// The prose-matched rails — glossary terms that name this party, the boom-origin readings it bears
+// on (#1570), and the still-open threads that raise it (#1569). Each is resolved against the build
+// that publishes the page it points at, not against whatever bundle happened to be ambient; the
+// three scopes differ, and the rule is stated in `networkEntities.entityBacklinks`.
+const { concepts, hypotheses, openQuestions } = entityBacklinks(merged);
 
 const profileToc = [
   { anchor: "overview", label: "Identity" },
   ...(gleif ? [{ anchor: "registry", label: "Registry" }] : []),
   { anchor: "neighborhood", label: "Relationships" },
+  ...(multiSite ? [{ anchor: "watershed-points", label: "Watershed points" }] : []),
   ...(concepts.length ? [{ anchor: "related-concepts", label: "Related concepts" }] : []),
   ...(entity.sources.length ? [{ anchor: "sources", label: "Sources" }] : []),
   ...(profiles.length ? [{ anchor: "backlinks", label: "Backlinks" }] : []),
   ...(hypotheses.length ? [{ anchor: "hypotheses", label: "Hypotheses" }] : []),
   ...(openQuestions.length ? [{ anchor: "open-questions", label: "Open questions" }] : []),
 ];
+
+/** A role tally as a reader-facing phrase: `parcel owner ×3`. */
+const roleLine = (roles: Record<string, number>): string =>
+  Object.entries(roles)
+    .sort((a, b) => b[1] - a[1])
+    .map(([role, n]) => `${role.replace(/_/g, " ")} ×${n}`)
+    .join(", ");
 ---
 
 <Base title={entity.display} section="wiki" toc={profileToc}>
@@ -204,23 +243,25 @@ const profileToc = [
         <p class="stub-note">No recorded relationships for this entity.</p>
       ) : (
         <ul class="neighborhood">
-          {outgoing.map((r) => {
+          {outgoing.map(({ edge: r, sites }) => {
             const h = entityHref(r.dst);
             return (
               <li>
                 <span class="rel-arrow">{r.rel} →</span>{" "}
                 {h ? <a href={h}>{label(r.dst)}</a> : <span>{label(r.dst)}</span>}
                 {r.source && <span class="card-meta"> ({r.source})</span>}
+                {multiSite && <span class="card-meta"> — {sites.map(placeOf).join(", ")}</span>}
               </li>
             );
           })}
-          {incoming.map((r) => {
+          {incoming.map(({ edge: r, sites }) => {
             const h = entityHref(r.src);
             return (
               <li>
                 {h ? <a href={h}>{label(r.src)}</a> : <span>{label(r.src)}</span>}{" "}
                 <span class="rel-arrow">→ {r.rel}</span>
                 {r.source && <span class="card-meta"> ({r.source})</span>}
+                {multiSite && <span class="card-meta"> — {sites.map(placeOf).join(", ")}</span>}
               </li>
             );
           })}
@@ -232,6 +273,65 @@ const profileToc = [
         View this neighborhood in the interactive graph →
       </a>
     </p>
+
+    {
+      /* A party on more than one watershed point: every site's own reading, kept whole. The
+         cross-site view is why the entity graph is network-global at all — "the same operator,
+         counsel, or shell surfaces at more than one watershed point" (`taxonomy.ts`) — and until
+         #1906 the build could only see it when the reference site happened to be one of them. */
+      multiSite && (
+        <section id="watershed-points">
+          <h2>Watershed points</h2>
+          <p class="card-meta">
+            This party is on the record at {merged.sites.length} sites. Each row is that site's own
+            reading of it. Role tallies count appearances in that site's record and are deliberately
+            not added together — one network-global reference source is read into every site's
+            graph, so a sum would report the same appearance once per watershed point.
+          </p>
+          <ul class="neighborhood">
+            {merged.readings.map((r) => (
+              <li>
+                <a href={siteHref(r.site, "")}>{placeOf(r.site)}</a>
+                {r.site === merged.sites[0] && <span class="card-meta"> (primary reading)</span>}
+                <span class="card-meta">
+                  {" "}
+                  — {r.node.kind}
+                  {r.node.classification ? ` · ${r.node.classification}` : ""}
+                  {r.roleTotal ? ` · ${roleLine(r.roles)}` : ""}
+                  {r.node.sources.length
+                    ? ` · ${r.node.sources.length} source${r.node.sources.length === 1 ? "" : "s"}`
+                    : ""}
+                </span>
+              </li>
+            ))}
+          </ul>
+          {merged.disagreements.length > 0 && (
+            <>
+              <h3>Where the sites differ</h3>
+              <p class="card-meta">
+                Fields two sites read differently. The headline above shows the first — the primary
+                reading — and the others are printed here rather than dropped: an entity page that
+                silently discarded one site's reading of a party would be the same failure the
+                merge exists to prevent.
+              </p>
+              <ul class="neighborhood">
+                {merged.disagreements.map((d) => (
+                  <li>
+                    <code>{d.field}</code>:{" "}
+                    {d.readings.map((r, i) => (
+                      <>
+                        {i > 0 && <span class="card-meta"> · </span>}
+                        {r.value} <span class="card-meta">({placeOf(r.site)})</span>
+                      </>
+                    ))}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </section>
+      )
+    }
 
     {
       concepts.length > 0 && (
@@ -267,10 +367,13 @@ const profileToc = [
         <div class="backlinks">
           <h2 id="backlinks">Backlinks</h2>
           <ul class="neighborhood">
-            {profiles.map((p) => (
+            {profiles.map(({ site, person }) => (
               <li>
-                {/* The per-site canonical view of this person (#1892) — this entity is the spine. */}
-                Profile (site record): <a href={`${withSite("/site/people/")}${p.slug}/`}>{p.name}</a>
+                {/* The per-site canonical view of this person (#1892) — this entity is the spine.
+                    The href is the CURATING site's, not the ambient one: a profile is one site's
+                    record of an individual, and this page is network-global. */}
+                Profile ({placeOf(site)} record):{" "}
+                <a href={`${siteHref(site, "/site/people/")}${person.slug}/`}>{person.name}</a>
               </li>
             ))}
           </ul>
@@ -304,7 +407,11 @@ const profileToc = [
           <ul class="neighborhood">
             {openQuestions.map((q) => (
               <li>
+                {/* A peer's thread is deep-linked to the board that renders it — that site's own
+                    leads board — rather than to the wiki board, which carries the canonical
+                    build's rows and the network matrix's cells. */}
                 <a href={q.url}>{q.question}</a>
+                {multiSite && <span class="card-meta"> — {placeOf(q.site)}</span>}
               </li>
             ))}
           </ul>

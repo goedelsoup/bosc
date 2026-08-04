@@ -199,6 +199,12 @@ TOC rail, and the search index).
   scorecard is its declared *projection*, linked both ways). **People are per-site** —
   `/network/<site>/site/people/`, profiles curated from that site's own record, with the wiki
   entity as the canonical spine; there is deliberately no `/wiki/people/`.
+  The **entity** pages are the one wiki noun that reads more than the reference bundle
+  ([#1906](https://github.com/watermark-directory/the-watermark-directory/issues/1906)): they are
+  minted from [`networkEntities.ts`](packages/core/src/networkEntities.ts), the union across every
+  selectable site, whose module docstring states the merge rule. Before it, a party carried only by
+  a peer had no page anywhere — and the cross-site view is the whole reason the graph is
+  network-global. The glossary and the curated inventories genuinely do build once, and say so.
 - **Positional wayfinding is derived from the route**
   ([#1889](https://github.com/watermark-directory/the-watermark-directory/issues/1889), declared in
   [`trail.ts`](packages/core/src/trail.ts)): `Base.astro` resolves a breadcrumb trail from
