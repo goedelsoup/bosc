@@ -36,7 +36,7 @@ live under [`web/packages/*`](packages/), except the Functions, which stay physi
 
 | Package | Path | Contains | Depends on |
 |---|---|---|---|
-| `@watermark/core` | [`packages/core`](packages/core) | runtime-agnostic domain logic — feeds, catalog, sdm, storyCompile, revalidate, mcpTools, readiness, evidence, dilution, sites, nav, narrative, rehype-doc-links, … (no DOM, no React) | — |
+| `@watermark/core` | [`packages/core`](packages/core) | runtime-agnostic domain logic — feeds, catalog, sdm, storyCompile, revalidate, mcpTools, readiness, evidence, dilution, sites, nav, trail, narrative, rehype-doc-links, … (no DOM, no React) | — |
 | `@watermark/charts` | [`packages/charts`](packages/charts) | the hand-rolled SVG chart library (`charts.ts`) — pure geometry/scale builders | core |
 | `@watermark/viz` | [`packages/viz`](packages/viz) | the React + WebGL island cluster (deck.gl/MapLibre maps, the d3-force graph, the PDF viewer) + their layer/data models | core |
 | `@watermark/functions` | [`functions`](functions/) | the Cloudflare Pages Functions (Workers runtime) — `/api/submit`, `/api/ask`, `/api/doc`, MCP, Stories/AUTH; route/store tests under [`functions/_test`](functions/_test) | core |
@@ -194,6 +194,17 @@ TOC rail, and the search index).
   scorecard is its declared *projection*, linked both ways). **People are per-site** —
   `/network/<site>/site/people/`, profiles curated from that site's own record, with the wiki
   entity as the canonical spine; there is deliberately no `/wiki/people/`.
+- **Positional wayfinding is derived from the route**
+  ([#1889](https://github.com/watermark-directory/the-watermark-directory/issues/1889), declared in
+  [`trail.ts`](packages/core/src/trail.ts)): `Base.astro` resolves a breadcrumb trail from
+  `Astro.url.pathname` for **every** page and renders it once — a template can't forget one, and
+  the visible trail and the `BreadcrumbList` JSON-LD are the same object. `ROOT` is an explicit
+  tree over URL segments, because a segment's label is editorial (`site` → "The record", `rsei` →
+  "RSEI / toxics") and a humanizer would get it wrong; `trailCoverage.test.ts` fails if a page
+  template's route isn't in it, and `check-routes.mjs` proves the HTML shipped. A page contributes
+  only what the URL can't know — `trailLeaf` / `trailLabels` / `trailInsert`. The trail's parent
+  crumb *is* the "up" affordance, so a leaf that used to open with its own `← Parent` back-link
+  no longer does.
 
 The four header tabs (the reconciled IA, design dictate 02 / [#307](https://github.com/watermark-directory/the-watermark-directory/issues/307)):
 

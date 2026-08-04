@@ -1,9 +1,9 @@
-// Route-shape budgets for the built site (#1887, epic #1884 phase 3).
+// Route-shape budgets for the built site (#1887 phase 3, extended by #1889 phase 5).
 //
-// `check-links.mjs` proves every emitted href resolves. This asserts the things that phase 3
+// `check-links.mjs` proves every emitted href resolves. This asserts the things those phases
 // bought and that nothing later should quietly give back: routes stay shallow, the corpus's
-// machine exhaust stays out of the URL space, listing pages stay bounded, and every document
-// that has a page still has exactly one.
+// machine exhaust stays out of the URL space, listing pages stay bounded, every page tells a
+// reader where it sits, and every document that has a page still has exactly one.
 //
 // Reads only `dist/` — no bundle resolution, and deliberately no second implementation of
 // `documentId`. The handle→page mapping is already proved end-to-end by `check-links.mjs`
@@ -48,6 +48,17 @@ const DOC_CONTENT_BUDGET = 200 * 1024;
 const OS_ARTIFACT_SEGMENT = /^(thumbs\.db|\.ds_store|desktop\.ini)$/i;
 const SIDECAR_DIR_SEGMENT = /_files$/;
 const INLINE_IMAGE_SEGMENT = /^image[0-9a-f]{4,}\.(?:png|jpe?g|gif|bmp)$/i;
+
+/**
+ * Routes that legitimately ship without a breadcrumb trail (#1889).
+ *
+ * Two, and both for the same reason — there is nothing above them. `/` IS the root of the URL
+ * space, so its trail would be a link to itself; `/pre-launch` is the standalone pre-go-live
+ * landing, deliberately outside `Base.astro` and the whole data nav (see its own header comment).
+ * Anything else with no trail is a page a reader can land on from search or a citation with no
+ * way to tell where they are, which is the condition this phase exists to remove.
+ */
+const TRAILLESS_ROUTES = new Set(["", "pre-launch"]);
 
 if (!existsSync(DIST)) {
   console.error(`check-routes: no ${DIST}/ — run \`astro build\` first.`);
@@ -155,7 +166,52 @@ const all = routes();
   );
 }
 
-// ------------------------------- 4. one page per routable document, and no orphans
+// -------------------------------------------- 4. every page carries a breadcrumb trail
+//
+// The acceptance criterion of #1889, proved against the build rather than the source: three of
+// ninety-nine templates used to render a trail, and the rest left a deep-landing reader — from
+// search, from `/ask`, from a study citation — with the browser back button as their only way up.
+// `trailCoverage.test.ts` proves each template's route is DECLARED; this proves the HTML shipped.
+//
+// The BreadcrumbList JSON-LD half is asserted only when the build has a deploy origin. The
+// structured-data blocks all key off `Astro.site`, which is set from `SITE_URL` in the Pages
+// workflow and is undefined locally and in CI — so requiring it unconditionally would fail every
+// offline build. `hasOrigin` reads that off the emitted canonical link rather than the
+// environment, so the guard turns itself on in exactly the builds that can satisfy it.
+{
+  // Every page emits the canonical when `Astro.site` is set, so one sample settles it.
+  const hasOrigin = all.length > 0 && readFileSync(all[0].file, "utf-8").includes('<link rel="canonical"');
+  const missingTrail = [];
+  const missingLd = [];
+  let trailed = 0;
+  for (const { file, route } of all) {
+    if (TRAILLESS_ROUTES.has(route)) continue;
+    const html = readFileSync(file, "utf-8");
+    if (!html.includes('<nav class="trail"')) missingTrail.push(`/${route}`);
+    else {
+      trailed++;
+      if (hasOrigin && !html.includes('"BreadcrumbList"')) missingLd.push(`/${route}`);
+    }
+  }
+  const report = (list, what) => {
+    if (list.length === 0) return;
+    failures.push(
+      `${list.length} route(s) ${what}:\n` +
+        list
+          .slice(0, 5)
+          .map((r) => `      ${r}`)
+          .join("\n"),
+    );
+  };
+  report(missingTrail, "with no breadcrumb trail");
+  report(missingLd, "with a visible trail but no BreadcrumbList JSON-LD");
+  console.log(
+    `check-routes: ${trailed.toLocaleString("en-US")} routes carry a breadcrumb trail · ` +
+      `BreadcrumbList ${hasOrigin ? "asserted" : "skipped (no SITE_URL in this build)"}`,
+  );
+}
+
+// ------------------------------- 5. one page per routable document, and no orphans
 //
 // The strongest invariant the build can assert about the handle scheme without recomputing it:
 // a site's catalog says how many of its files are routable, and exactly that many permalink
