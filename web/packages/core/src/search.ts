@@ -46,7 +46,6 @@ import {
   type DefenseContractors,
   type DocumentCollectionItem,
   type EconomicBaseline,
-  type EntityNode,
   type ExhibitItem,
   type LeiInventory,
   type MeetingItem,
@@ -60,12 +59,13 @@ import { scopedLegal } from "./legal";
 import { DOMAINS } from "./methodology";
 import { getSection, networkTabs, platformLinks, sections, siteTabs, type NavItem } from "./nav";
 import { NARRATIVE } from "./narrative";
+import { networkEntities } from "./networkEntities";
 import { facetAvailable, RECORD_FACETS, sectionStatus, type RecordFacet } from "./readiness";
 import { scopedReference } from "./reference";
 import { REPORT_PAGES } from "./reports";
 import { groupLabel } from "./records";
 import { LIMA_SLUG, siteBase } from "./routes";
-import { SITES, siteBadge, siteState } from "./sites";
+import { SITES, siteBadge, siteForSlug, siteState } from "./sites";
 import { STUDY_CHAPTERS, studyHref } from "./study";
 import { NETWORK_NOUNS } from "./taxonomy";
 import type { TagKind } from "./teardown";
@@ -147,14 +147,13 @@ function navDestinations(items: NavItem[]): { label: string; href: string; blurb
  * Content that exists **once** for the whole network: the root sections, the site directory, the
  * long-form prose, and the wiki nouns `taxonomy.ts` declares network-global.
  *
- * A note on where the wiki rows come from. The canonical wiki build renders **Lima's** bundle —
- * `getStaticPaths` in `pages/wiki/**` runs outside `runWithSite`, so `activeSite()` is Lima — and
- * this index has to point at pages that exist. It therefore reads Lima's feeds *explicitly*, with
- * the coupling named rather than inherited from an ambient default. The consequence is real and
- * recorded in `searchCoverage.ts`: a peer's entity that never reaches Lima's feed has no wiki page
- * to be found on, so it is not indexed. That is a taxonomy gap (the edge `taxonomy.ts` documents),
- * not a search one — the fix is to widen the wiki build, and inventing a URL here would only
- * produce a 404 with a good snippet.
+ * A note on where the wiki rows come from. This index has to point at pages that exist, so it reads
+ * from the same place each page is minted from, explicitly — never from an ambient default.
+ * **Entities** come from the network union (`networkEntities`, #1906), which is what closed the
+ * gap this comment used to describe: the wiki once built from the reference bundle alone, so a
+ * party carried only by a peer had no page to be found on and was deliberately left unindexed
+ * rather than given a URL that would 404 with a good snippet. The **glossary** and the curated
+ * inventories still read the canonical build, because those pages genuinely build once.
  */
 export function buildNetworkSearchIndex(): SearchDoc[] {
   const docs: SearchDoc[] = [];
@@ -267,24 +266,37 @@ function toNavLink(l: { label: string; section: string; href: string }): NavItem
   return { kind: "link", label: l.label, section: l.section as NavItem["section"], href: l.href };
 }
 
-/** The wiki nouns + the curated-entity pages, all of them network-global routes off Lima's bundle. */
+/**
+ * The wiki nouns + the curated-entity pages — network-global routes.
+ *
+ * The entity rows come from the **network union** (`networkEntities`, #1906), the same reader the
+ * pages are minted from, so every party that has a page is findable and nothing is minted for one
+ * that doesn't. The rest still read the canonical build explicitly: the glossary and the curated
+ * inventories (`lei`, `candidates`, `defense-contractors`) are single-bundle pages by design.
+ */
 function wikiRows(): SearchDoc[] {
+  const docs: SearchDoc[] = [];
+  const WIKI = "Wiki";
+
+  for (const e of networkEntities()) {
+    docs.push({
+      title: e.node.display,
+      url: `/wiki/entities/${e.slug}/`,
+      section: WIKI,
+      // The places are in the row's text so "Fort Wayne Dana" finds the party the peer carries —
+      // the cross-site view is the reason the graph is network-global.
+      text: blob(
+        e.node.kind,
+        e.node.classification,
+        ...e.node.variants,
+        ...Object.keys(e.node.roles ?? {}),
+        ...e.sites.map((s) => siteForSlug(s)?.place ?? s),
+      ),
+      kind: "Entity",
+    });
+  }
+
   return runWithSite(LIMA_SLUG, () => {
-    const docs: SearchDoc[] = [];
-    const WIKI = "Wiki";
-
-    if (hasFeed("entities")) {
-      for (const e of loadFeed<EntityNode[]>("entities")) {
-        docs.push({
-          title: e.display,
-          url: `/wiki/entities/${slugify(e.key)}/`,
-          section: WIKI,
-          text: blob(e.kind, e.classification, ...e.variants, ...Object.keys(e.roles ?? {})),
-          kind: "Entity",
-        });
-      }
-    }
-
     if (hasFeed("concepts")) {
       for (const c of loadFeed<ConceptItem[]>("concepts")) {
         docs.push({

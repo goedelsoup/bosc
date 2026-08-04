@@ -10,10 +10,11 @@ import { describe, expect, it } from "vitest";
 import { hasFeed, loadFeed, runWithSite } from "./bundle";
 import { isRoutableDoc } from "./docRouting";
 import { isDocumentId } from "./documentId";
-import type { DocumentCollectionItem } from "./feeds";
+import { slugify, type DocumentCollectionItem, type EntityNode } from "./feeds";
 import { sections } from "./nav";
 import { facetAvailable } from "./readiness";
-import { siteBase } from "./routes";
+import { networkEntities } from "./networkEntities";
+import { LIMA_SLUG, siteBase } from "./routes";
 import { buildNetworkSearchIndex, buildSiteSearchIndex, searchShardRefs, type SearchDoc } from "./search";
 import { SITES } from "./sites";
 
@@ -103,6 +104,21 @@ describe("the network-global shard", () => {
     for (const d of docs.filter((d) => d.kind === "Entity" || d.kind === "Concept")) {
       expect(d.url.startsWith("/wiki/")).toBe(true);
     }
+  });
+
+  it("indexes every party the network publishes a page for, including a peer-only one (#1906)", () => {
+    // The gap `searchCoverage.ts` used to declare, closed and now guarded: a party carried only by
+    // a peer's `entities` feed has a page since the wiki widened past one bundle, so it must be
+    // findable — and nothing may be indexed that has no page, which was the reason it was left out
+    // rather than given a URL that would 404 with a good snippet.
+    const indexed = new Set(docs.filter((d) => d.kind === "Entity").map((d) => d.url));
+    const published = new Set(networkEntities().map((e) => `/wiki/entities/${e.slug}/`));
+    expect(indexed).toEqual(published);
+    // …and the union really does reach past the canonical build, or this asserts nothing.
+    const canonical = new Set(
+      runWithSite(LIMA_SLUG, () => loadFeed<EntityNode[]>("entities")).map((e) => slugify(e.key)),
+    );
+    expect(networkEntities().some((e) => !canonical.has(e.slug))).toBe(true);
   });
 
   it("is deterministic across runs", () => {

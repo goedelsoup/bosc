@@ -143,35 +143,35 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
     verdict: "gap",
     note: "#1908, the same finding at the root: real pages, linked from body copy but not from the nav model.",
   },
-  {
-    pattern: "^/wiki/entities/[^/]+/$",
-    label: "Peer-only wiki entities",
-    verdict: "gap",
-    note:
-      "#1906. The wiki builds once from the reference site's bundle (`getStaticPaths` in `pages/wiki/**` " +
-      "runs outside `runWithSite`), so an entity appearing only in a peer's `entities` feed — " +
-      "Fort Wayne carries two, DANA LIGHT AXLE PRODUCTS and project-zodiac-campus — has no page " +
-      "anywhere to point a result at. This is the edge `taxonomy.ts` documents; the fix is to " +
-      "widen the wiki build, not to mint a URL here that would 404 with a good snippet. Entities " +
-      "that DO reach the canonical build are indexed and match this pattern too, so the family's " +
-      "own coverage is what shows the gap closing.",
-  },
 ];
 
 /**
  * The fraction of content routes that must carry a search row.
  *
- * **98%, against 98.4% measured** — 3,787 of 3,848 content routes, up from 13%. The ~60-route
- * shortfall is exactly the four `gap` families above, still in the denominator where they belong,
- * so the floor cannot reach 1.0 until they are closed. Raise it when they are; that is the point of
- * leaving them visible rather than reclassifying them.
+ * **98.1%, against 98.2% measured** — 3,782 of 3,853 content routes, up from 13%.
+ *
+ * A note on what closing #1906 bought, because the arithmetic is instructive. The `Peer-only wiki
+ * entities` family was declared a `gap` on the theory that it "holds the measured number down until
+ * it's fixed". It did not, and could not: the entities it named had **no route at all**, so they
+ * were missing from the numerator and the denominator alike, and every entity route that did exist
+ * was already indexed. Widening the wiki to the network union (`networkEntities`) added five routes
+ * and five rows — it moved the fraction by two thousandths of a point. What it actually changed is
+ * the record: five parties that existed in the graph and nowhere in the site now have a page, and
+ * the family is gone rather than standing as a permanent asterisk. **A `gap` family can only
+ * depress the number when the content it names is routed but unindexed** — worth remembering before
+ * the next one is written down.
+ *
+ * The remaining shortfall is the three surviving `gap` families (#1907, #1908) plus the routes no
+ * family has declared yet — the reports/exhibits/legal/people landings on the peers promoted since
+ * #1890, and the wiki's own hypothesis and open-questions pages. Those are the ones a raise is
+ * really waiting on.
  *
  * The margin is deliberately thin. A new page family that nobody indexes will breach this, which is
  * the intended pressure: adding routes should force a choice between indexing them and writing down
  * why not, and a floor with comfortable headroom would let coverage rot back toward 13% one page at
  * a time — which is precisely how it got there.
  */
-export const COVERAGE_FLOOR = 0.98;
+export const COVERAGE_FLOOR = 0.981;
 
 /**
  * A ceiling on the largest emitted shard, gzipped, in bytes.

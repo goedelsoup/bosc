@@ -30,6 +30,16 @@ describe("the coverage declaration", () => {
     expect(COVERAGE_FAMILIES.some((f) => f.verdict === "gap")).toBe(true);
   });
 
+  it("no longer declares the peer-only entity gap — the wiki builds from the network (#1906)", () => {
+    // The family was retired by widening the build, not by reclassifying it. A family reappearing
+    // over `/wiki/entities/` would mean the union had regressed to one bundle, and the coverage
+    // declaration is exactly where that admission would be written down — so it's asserted here.
+    const claimed = COVERAGE_FAMILIES.filter((f) =>
+      new RegExp(f.pattern).test("/wiki/entities/general-dynamics/"),
+    );
+    expect(claimed.map((f) => f.label)).toEqual([]);
+  });
+
   it("holds the floor high enough to mean something", () => {
     // 13% was the finding. A floor that admits it would be no floor at all.
     expect(COVERAGE_FLOOR).toBeGreaterThan(0.9);
