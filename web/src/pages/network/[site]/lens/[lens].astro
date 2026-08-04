@@ -1,0 +1,207 @@
+---
+/**
+ * A lens landing on one site (#1915, epic #1911 phase 3) — `/network/<site>/lens/<id>`.
+ *
+ * The site-tier peer of `/lens/<id>`: that one reads the whole network on one dimension, this one
+ * reads one site through it. Five of these replace the two section hubs the `Reference ▾` dropdown
+ * used to carry, and `/environment/` + `/economy/` now 301 here (their readings survive verbatim as
+ * `EnvironmentHub` / `EconomyHub`).
+ *
+ * **No leaf URL moved.** Every `/environment/*` and `/economy/*` facet keeps its address; this page
+ * gathers them. That is what kept phase 3 affordable — the alternative touches ~92 route strings,
+ * 15 pages' `section=` declarations, and the readiness tests.
+ *
+ * Gating composes rather than replaces: `lensStatus()` (#1913) reads the same `ReadinessSection`s
+ * and activation domains everything else does, so a thin peer gets the coherent lock and the ask,
+ * not an empty page. Individual doors gate on their own declared feeds (`LensFacet.requires` /
+ * `facet`), so the landing never advertises a door onto a lock.
+ */
+import type { GetStaticPaths } from "astro";
+import Base from "~/layouts/Base.astro";
+import SectionLocked from "~/components/SectionLocked.astro";
+import EconomyHub from "~/components/lens/EconomyHub.astro";
+import EnvironmentHub from "~/components/lens/EnvironmentHub.astro";
+import LensLede from "~/components/lens/LensLede.astro";
+import { hasFeed } from "@watermark/core/bundle";
+import { LENS_ORDER, LENSES, type LensFacet, type LensId } from "@watermark/core/lenses";
+import { facetAvailable, lensStatus } from "@watermark/core/readiness";
+import { withBase, withSite } from "@watermark/core/site";
+import { siteForSlug, withSitePaths } from "@watermark/core/sites";
+
+export const getStaticPaths = (() =>
+  withSitePaths(LENS_ORDER.map((lens) => ({ params: { lens } })))) satisfies GetStaticPaths;
+
+const { slug } = Astro.props as { slug: string };
+const id = Astro.params.lens as LensId;
+const lens = LENSES[id];
+const site = siteForSlug(slug);
+const locked = lensStatus(slug, id) === "locked";
+
+/** Whether this site puts anything behind a door. Record facets carry their own declared gate; the
+ *  rest name the feeds that open them, exactly as the retired hubs did inline. */
+const offered = (f: LensFacet): boolean => {
+  if (f.facet) return facetAvailable(slug, f.facet);
+  if (f.requires) return f.requires.some((feed) => hasFeed(feed, slug));
+  return true;
+};
+const doors = lens.facets.filter(offered);
+// Named, not silently dropped: a reader should be able to see which of this lens's doors are still
+// waiting on a source rather than infer the lens is thinner here than it is.
+const awaited = lens.facets.filter((f) => !offered(f));
+const others = LENS_ORDER.filter((k) => k !== id).map((k) => LENSES[k]);
+---
+
+<Base
+  title={`${lens.name} — ${site?.place ?? "the site"}`}
+  section="lens"
+  rail={false}
+  description={`${lens.question} — read against ${site?.place ?? "this site"}'s own record.`}
+>
+  <div class="hub" style={`--mark:${lens.accent.mark}`}>
+    <div class="hub-head">
+      <div>
+        <div class="hub-eyebrow">
+          Lens {lens.number} of {LENS_ORDER.length}
+        </div>
+        <h1>{lens.name}</h1>
+        <p class="hub-lead">{lens.question}</p>
+      </div>
+      <span class="hub-count">{site?.basin}</span>
+    </div>
+
+    {
+      locked ? (
+        <SectionLocked
+          section={lens.lockSection}
+          label={lens.name}
+          holds={lens.blurb}
+          note={`This lens opens when ${site?.place ?? "the site"}'s record carries it. Nothing here is borrowed from another site.`}
+        />
+      ) : (
+        <Fragment>
+          {/* The two lenses that inherit a retired section hub keep its reading verbatim; the
+              other three lead with what the record carries here (#1891's rule — no hub is a
+              heading plus a door grid). */}
+          {id === "environment" ? (
+            <EnvironmentHub slug={slug} />
+          ) : id === "economy" ? (
+            <EconomyHub slug={slug} />
+          ) : (
+            <LensLede slug={slug} id={id} />
+          )}
+
+          <p class="lens-blurb">{lens.blurb}</p>
+
+          <div class="hub-grid">
+            {doors.map((f) => (
+              <a class="hub-door" id={f.facet ?? f.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")} href={withSite(f.route)}>
+                <div class="hub-door-top">
+                  <span class="hub-door-kind">{lens.name}</span>
+                </div>
+                <div class="hub-door-title">{f.label}</div>
+                <div class="hub-door-desc">{f.blurb}</div>
+                <div class="hub-door-foot">
+                  <span class="hub-door-browse">Open</span>
+                  <span class="hub-door-arrow" aria-hidden="true">›</span>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          {awaited.length > 0 && (
+            <p class="lens-awaited">
+              Still awaiting a source here: {awaited.map((f) => f.label).join(" · ")}. Each opens the
+              moment {site?.place ?? "this site"}'s own record carries it — none is filled in from
+              another site's.
+            </p>
+          )}
+        </Fragment>
+      )
+    }
+
+    <nav class="lens-more" aria-label="The other lenses">
+      <span class="lens-more-l">Other lenses on {site?.place ?? "this site"}</span>
+      {
+        others.map((o) => (
+          <a class="lens-more-a" href={withSite(`/lens/${o.id}`)} style={`--mark:${o.accent.mark}`}>
+            <span class="lens-more-n">{o.number}</span>
+            {o.name}
+          </a>
+        ))
+      }
+      <a class="lens-more-net" href={withBase(`/lens/${id}`)}>
+        Every site on the {lens.name} lens ›
+      </a>
+    </nav>
+  </div>
+</Base>
+
+<style>
+  /* The `.hub-*` grammar is the retired section hubs', shared from site.css — this page inherits
+     it wholesale so a lens landing and the hub it replaced read identically. */
+  .hub-head h1 {
+    border-bottom: 3px solid var(--mark);
+    display: inline-block;
+    padding-bottom: 0.15rem;
+  }
+  .lens-blurb {
+    max-width: 46rem;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--bosc-muted);
+    margin: 1.3rem 0 0;
+  }
+  .lens-awaited {
+    margin: 1rem 0 0;
+    max-width: 46rem;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--bosc-faint);
+  }
+  .lens-more {
+    margin-top: 2.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bosc-rule);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .lens-more-l {
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+    font-weight: 700;
+    margin-right: 0.3rem;
+  }
+  .lens-more-a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: inherit;
+    text-decoration: none;
+    background: var(--bosc-bg);
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--mark);
+    padding: 4px 11px;
+  }
+  .lens-more-a:hover,
+  .lens-more-a:focus-visible {
+    border-color: var(--bosc-muted);
+    border-left-color: var(--mark);
+    text-decoration: underline;
+  }
+  .lens-more-n {
+    font-family: var(--bosc-mono);
+    font-size: 0.68rem;
+    color: var(--bosc-faint);
+  }
+  .lens-more-net {
+    margin-left: auto;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+</style>

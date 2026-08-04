@@ -1,0 +1,614 @@
+---
+/**
+ * One lens over the whole network (#1914, epic #1911 phase 2) — `/lens/<id>`.
+ *
+ * The same registry, the same table grammar as `/research/hypotheses` (`@watermark/core/scorecard`),
+ * a different dimension. What differs is what the page is ALLOWED to say: a hypothesis row can read
+ * "not yet assessed under this thesis", which is an evidentiary position; a lens row cannot,
+ * because a lens has no verdict to withhold. A site with nothing here reads "not on the record
+ * here" — about the corpus, never about the place — and a site with no bundle at all reads "no
+ * bundle committed yet", which is a different claim again and is never collapsed into the first.
+ *
+ * Every figure in the table is a row count from that site's own exported bundle. Nothing on this
+ * page ranks, scores, or rates a site, and there is no shape in `lensView.ts` that could.
+ */
+import type { GetStaticPaths } from "astro";
+import Base from "~/layouts/Base.astro";
+import { LENS_ORDER, LENSES, type LensId } from "@watermark/core/lenses";
+import {
+  buildLensView,
+  lensFootNote,
+  LENS_METRICS,
+  type LensResolvers,
+  lensNetworkCounts,
+} from "@watermark/core/lensView";
+import { lensStatus } from "@watermark/core/readiness";
+import { siteBase } from "@watermark/core/routes";
+import { TAIL_META } from "@watermark/core/scorecard";
+import { withBase } from "@watermark/core/site";
+import { SITES, siteFeedCount, siteRollup } from "@watermark/core/sites";
+
+export const getStaticPaths = (() => LENS_ORDER.map((id) => ({ params: { id } }))) satisfies GetStaticPaths;
+
+const id = Astro.params.id as LensId;
+const lens = LENSES[id];
+
+// The three bundle-backed lookups, threaded into the pure builder. `statusOf` is only ever reached
+// for a site whose `tierOf` returned a tier, so an unexported site never hits `loadManifest`.
+const resolvers: LensResolvers = {
+  tierOf: (slug) => siteRollup(slug).tier,
+  statusOf: (slug) => lensStatus(slug, id),
+  countOf: siteFeedCount,
+};
+
+const view = buildLensView(id, SITES, resolvers);
+const counts = lensNetworkCounts(SITES, resolvers);
+const others = LENS_ORDER.filter((k) => k !== id).map((k) => LENSES[k]);
+// The facets are ROUTES under `/network/<site>` — shown against the reference build, which is the
+// one site where every one of them is open. They are the same leaves the site's own chrome carries.
+const referenceBase = siteBase("lima");
+---
+
+<Base
+  title={`${lens.name} — the network on one lens`}
+  section="lens"
+  rail={false}
+  description={`${lens.question} — every registered watershed point in the Watermark network read on the ${lens.name.toLowerCase()} dimension, measured from each site's own exported record. A lens describes; it never reaches a verdict.`}
+>
+  <div class="ln" style={`--mark:${lens.accent.mark}`}>
+    <div class="ln-head">
+      <div class="ln-eyebrow">
+        <a href={withBase("/lens/")}>Lenses</a> · {lens.number} of {LENS_ORDER.length}
+      </div>
+      <h1>{lens.name}</h1>
+      <p class="ln-q">{lens.question}</p>
+    </div>
+
+    <div class="ln-frame">
+      <div class="ln-frame-l">
+        <p class="ln-blurb">{lens.blurb}</p>
+        <p class="ln-note">
+          A lens is a standing view, not a thesis: it has no verdict to reach, so nothing below scores or
+          ranks a site. Every column counts rows in that site's own exported bundle.
+        </p>
+      </div>
+      <div class="ln-frame-r">
+        <div class="ln-axis-title">{view.axisTitle}</div>
+        {
+          view.axisGroups.map((ag) => (
+            <div class="ln-axis-chips">
+              {ag.chips.map((ch) => (
+                <span class="ln-achip">
+                  {ch.name}
+                  <span class="ln-achip-n">{ch.count}</span>
+                </span>
+              ))}
+            </div>
+          ))
+        }
+        <div class="ln-feeds">
+          <span class="ln-feeds-l">Reads</span>
+          {lens.feeds.map((f) => <code class="ln-feed">{f}</code>)}
+        </div>
+      </div>
+    </div>
+
+    {/* What this lens gathers on a site — existing leaf routes, never new destinations (#1911). */}
+    <section class="ln-sec">
+      <h2 class="ln-h2">What this lens gathers on a site</h2>
+      <p class="ln-sub">
+        {lens.facets.length} existing {lens.facets.length === 1 ? "page" : "pages"} under every site, shown
+        here against the reference build. A lens is a view over these routes, not a new store — the URLs
+        are unchanged, and each still gates on its own section's readiness.
+      </p>
+      <ul class="ln-facets">
+        {
+          lens.facets.map((f) => (
+            <li>
+              <a href={withBase(`${referenceBase}${f.route}`)}>{f.label}</a>
+              <span class="ln-facet-b">{f.blurb}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {/* Cross-site scorecard — the shared grammar, rendered exactly as /research/hypotheses does. */}
+    <section class="ln-sec">
+      <div class="ln-score-head">
+        <div>
+          <div class="ln-score-eyebrow">Cross-site scorecard</div>
+          <h2 class="ln-h2">Every site, on this dimension</h2>
+        </div>
+        <span class="ln-score-note">
+          {counts["on-record"]} of {SITES.length} registered sites carry a record on this lens. The rest
+          are named below rather than omitted.
+        </span>
+      </div>
+
+      <div class="ln-table">
+        <div class="ln-trow ln-thead" style={`grid-template-columns:${view.gridCols}`}>
+          {view.cols.map((c) => <span class:list={["ln-th", { "is-right": c.align === "right" }]}>{c.label}</span>)}
+        </div>
+
+        {
+          view.groups.map((g) => (
+            <div class="ln-group">
+              <div class="ln-grouphead">
+                <span class="ln-group-abbr">{g.abbr}</span>
+                <span class="ln-group-label">{g.label}</span>
+                <span class="ln-group-count">{g.count}</span>
+              </div>
+              {g.kind === "rows" ? (
+                g.rows.map((r) => (
+                  <a
+                    class:list={["ln-trow", "ln-drow", { "is-live": r.live }]}
+                    href={withBase(r.href)}
+                    style={`grid-template-columns:${view.gridCols}`}
+                  >
+                    {r.cells.map((c) =>
+                      c.kind === "site" ? (
+                        <span class="ln-cell-site">
+                          <span class="ln-badge" style={`background:${c.badgeBg};color:${c.badgeColor}`}>
+                            {c.badge}
+                          </span>
+                          <span class="ln-place">{c.place}</span>
+                        </span>
+                      ) : c.kind === "num" ? (
+                        <span class:list={["ln-cell-num", { "is-muted": c.muted }]}>{c.text}</span>
+                      ) : c.kind === "pill" && c.pill ? (
+                        <span>
+                          <span class="ln-pill" style={`color:${c.pill.color};background:${c.pill.bg}`}>
+                            <span class="dot" style={`background:${c.pill.dot}`} />
+                            {c.pill.label}
+                          </span>
+                        </span>
+                      ) : (
+                        <span class:list={["ln-cell-text", { "is-muted": c.muted }]}>{c.text}</span>
+                      ),
+                    )}
+                  </a>
+                ))
+              ) : (
+                <div class="ln-chipwrap">
+                  {/* The tail's claim is DECLARED by the primitive (`TAIL_META`), never re-typed
+                      here — it is the one place the lens and hypothesis surfaces differ, and a
+                      template that paraphrased it would be how the distinction gets lost. */}
+                  {g.claim && <p class="ln-chip-note">{TAIL_META[g.claim].note}</p>}
+                  <div class="ln-chips">
+                    {g.chips.map((ch) => (
+                      <a class="ln-chip" href={withBase(ch.href)}>
+                        <span class="dot" style={`background:${ch.dot}`} />
+                        {ch.place}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))
+        }
+
+        <div class="ln-foot">{lensFootNote(id)}</div>
+      </div>
+      <p class="ln-metrics">
+        Columns: {LENS_METRICS[id].map((m) => m.label).join(" · ")}.
+      </p>
+    </section>
+
+    <nav class="ln-more" aria-label="The other lenses">
+      <span class="ln-more-l">The other lenses</span>
+      {
+        others.map((o) => (
+          <a class="ln-more-a" href={withBase(`/lens/${o.id}`)} style={`--mark:${o.accent.mark}`}>
+            <span class="ln-more-n">{o.number}</span>
+            {o.name}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</Base>
+
+<style>
+  .ln {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .ln-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bosc-forest);
+    font-weight: 700;
+  }
+  .ln-eyebrow a {
+    color: inherit;
+  }
+  .ln-head h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0.3rem 0 0.3rem;
+    border-bottom: 3px solid var(--mark);
+    display: inline-block;
+    padding-bottom: 0.15rem;
+  }
+  .ln-q {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0.45rem 0 0;
+    max-width: 44rem;
+  }
+  .ln-frame {
+    display: flex;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    margin-top: 1.3rem;
+    padding: 1.1rem 1.2rem;
+    background: var(--bosc-bg);
+    border: 1px solid var(--bosc-rule);
+  }
+  .ln-frame-l {
+    flex: 1 1 380px;
+    min-width: 300px;
+  }
+  .ln-frame-r {
+    flex: 1 1 280px;
+    min-width: 260px;
+  }
+  .ln-blurb {
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--bosc-ink);
+    margin: 0;
+    max-width: 38rem;
+  }
+  .ln-note {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--bosc-faint);
+    margin: 0.7rem 0 0;
+    max-width: 38rem;
+  }
+  .ln-axis-title,
+  .ln-feeds-l {
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+    font-weight: 700;
+  }
+  .ln-axis-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+  }
+  .ln-achip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--bosc-ink);
+    background: var(--bosc-surface);
+    border: 1px solid var(--bosc-rule);
+    padding: 3px 9px;
+  }
+  .ln-achip-n {
+    font-size: 0.68rem;
+    color: var(--bosc-faint);
+    font-family: var(--bosc-mono);
+  }
+  .ln-feeds {
+    margin-top: 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .ln-feed {
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    color: var(--bosc-muted);
+    background: var(--bosc-surface);
+    border: 1px solid var(--bosc-rule);
+    padding: 1px 6px;
+  }
+  .ln-sec {
+    margin-top: 2rem;
+  }
+  .ln-h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0.25rem 0 0;
+  }
+  .ln-sub {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    margin: 0.5rem 0 0;
+    max-width: 52rem;
+  }
+  .ln-facets {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  }
+  .ln-facets li {
+    border-left: 2px solid var(--mark);
+    padding-left: 0.7rem;
+  }
+  .ln-facets a {
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+  .ln-facet-b {
+    display: block;
+    font-size: 0.76rem;
+    line-height: 1.45;
+    color: var(--bosc-faint);
+    margin-top: 0.1rem;
+  }
+  .ln-score-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .ln-score-eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--bosc-forest);
+  }
+  .ln-score-note {
+    font-size: 0.78rem;
+    color: var(--bosc-faint);
+    max-width: 26rem;
+    text-align: right;
+  }
+  .ln-table {
+    border: 1px solid var(--bosc-rule);
+    overflow: hidden;
+  }
+  .ln-trow {
+    display: grid;
+    column-gap: 1rem;
+    align-items: center;
+  }
+  .ln-thead {
+    background: var(--bosc-surface);
+    border-bottom: 1px solid var(--bosc-rule);
+    padding: 0.7rem 1.1rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+    font-weight: 700;
+  }
+  .ln-th.is-right {
+    text-align: right;
+  }
+  .ln-grouphead {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 1.1rem;
+    background: var(--bosc-surface);
+    border-bottom: 1px solid var(--bosc-rule);
+  }
+  .ln-group-abbr {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    background: var(--bone-band);
+    border: 1px solid var(--line-2);
+    padding: 2px 7px;
+    font-family: var(--bosc-mono);
+    color: var(--bosc-muted);
+  }
+  .ln-group-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+  }
+  .ln-group-count {
+    margin-left: auto;
+    font-size: 0.68rem;
+    color: var(--bosc-faint);
+    font-family: var(--bosc-mono);
+  }
+  /* Each row is a link to the site it names (#1862) — the row IS the click target. */
+  .ln-drow {
+    padding: 0.65rem 1.1rem;
+    border-bottom: 1px solid var(--line-faint);
+    background: var(--bosc-bg);
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.12s ease;
+  }
+  .ln-drow.is-live {
+    background: #eef1e8;
+  }
+  .ln-drow:hover,
+  .ln-drow:focus-visible {
+    background: var(--forest-tint);
+  }
+  .ln-drow:hover .ln-place {
+    text-decoration: underline;
+  }
+  .ln-cell-site {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 0;
+  }
+  .ln-badge {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.58rem;
+    font-weight: 800;
+    font-family: var(--bosc-mono);
+  }
+  .ln-place {
+    font-size: 0.86rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ln-cell-text {
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--bosc-muted);
+    text-align: right;
+  }
+  .ln-cell-text.is-muted {
+    color: var(--bosc-faint);
+  }
+  /* The watershed-point column is prose, not a figure — left-aligned, unlike the metric columns. */
+  .ln-drow > .ln-cell-text:nth-child(2) {
+    text-align: left;
+  }
+  .ln-cell-num {
+    text-align: right;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: var(--bosc-mono);
+    color: var(--bosc-ink);
+  }
+  .ln-cell-num.is-muted {
+    color: var(--line-2);
+  }
+  .ln-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 9px;
+  }
+  .ln-pill .dot {
+    width: 5px;
+    height: 5px;
+  }
+  .ln-chipwrap {
+    padding: 0.75rem 1.1rem 0.95rem;
+    border-bottom: 1px solid var(--line-faint);
+  }
+  .ln-chip-note {
+    font-size: 0.76rem;
+    line-height: 1.5;
+    color: var(--bosc-faint);
+    margin: 0 0 0.55rem;
+    max-width: 44rem;
+  }
+  .ln-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .ln-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.74rem;
+    color: var(--bosc-muted);
+    background: var(--bosc-surface);
+    border: 1px solid var(--bosc-rule);
+    padding: 4px 11px;
+    text-decoration: none;
+    transition: border-color 0.12s ease;
+  }
+  .ln-chip:hover,
+  .ln-chip:focus-visible {
+    border-color: var(--bosc-faint);
+    text-decoration: underline;
+  }
+  .ln-chip .dot {
+    width: 6px;
+    height: 6px;
+  }
+  .ln-foot {
+    padding: 0.7rem 1.1rem;
+    background: var(--bosc-surface);
+    font-size: 0.75rem;
+    color: var(--bosc-faint);
+    line-height: 1.45;
+  }
+  .ln-metrics {
+    font-size: 0.74rem;
+    color: var(--bosc-faint);
+    margin: 0.55rem 0 0;
+    font-family: var(--bosc-mono);
+  }
+  .ln-more {
+    margin-top: 2.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bosc-rule);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .ln-more-l {
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+    font-weight: 700;
+    margin-right: 0.3rem;
+  }
+  .ln-more-a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: inherit;
+    text-decoration: none;
+    background: var(--bosc-bg);
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--mark);
+    padding: 4px 11px;
+  }
+  .ln-more-a:hover,
+  .ln-more-a:focus-visible {
+    border-color: var(--bosc-muted);
+    border-left-color: var(--mark);
+    text-decoration: underline;
+  }
+  .ln-more-n {
+    font-family: var(--bosc-mono);
+    font-size: 0.68rem;
+    color: var(--bosc-faint);
+  }
+
+  @media (max-width: 760px) {
+    .ln-score-note {
+      text-align: left;
+    }
+    .ln-table {
+      overflow-x: auto;
+    }
+    .ln-trow {
+      min-width: 680px;
+    }
+  }
+</style>

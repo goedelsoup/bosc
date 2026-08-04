@@ -296,7 +296,7 @@ function hypothesisHaystack(h: HypothesisItem, cells: readonly HypothesisAssessm
     .filter((c) => c.hypothesis === h.id)
     .map((c) => `${Object.values(c.fields).join(" ")} ${c.citations.map((ci) => ci.note ?? "").join(" ")}`)
     .join(" ");
-  return ` ${norm(`${h.claim} ${h.thesis} ${h.predicted_evidence.join(" ")} ${cellText}`)} `;
+  return ` ${norm(`${h.question ?? ""} ${h.claim} ${h.thesis} ${h.predicted_evidence.join(" ")} ${cellText}`)} `;
 }
 
 /** The committed evidence cells for the active build, or `[]` — shared by both link directions. */

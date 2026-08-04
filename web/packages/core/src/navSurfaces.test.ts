@@ -12,7 +12,8 @@
 // surface; a tab and its own dropdown are one surface. In-page contextual cross-links are not
 // surfaces at all — they are where a demoted destination goes.
 import { describe, expect, it } from "vitest";
-import { navItemDestinations, navItemLinks, navSurfaces, siteTabs, type NavChild, type NavItem } from "./nav";
+import { LENS_ORDER } from "./lenses";
+import { navItemDestinations, navItemLinks, navSurfaces, siteTabs, type NavItem } from "./nav";
 import { activeSite } from "./bundle";
 import { siteBase } from "./routes";
 
@@ -107,38 +108,57 @@ describe("navigation surfaces — the nav-diet ceiling (#1893)", () => {
   });
 });
 
-describe("the Reference dropdown — route prefix and menu section agree (#1893)", () => {
-  /** The Reference dropdown's leaves, split at the divider into its environment and economy
-   *  halves. Returns null on a peer whose both halves are locked (the tab collapses to a marker). */
-  function referenceHalves(): { environment: NavChild[]; economy: NavChild[] } | null {
-    const tab = siteTabs().find((t) => t.section === "environment");
-    expect(tab, "the site-tier bar lost its Reference tab").toBeDefined();
-    if (tab!.kind !== "dropdown") return null;
-    const i = tab!.children.findIndex((c) => "divider" in c);
-    expect(i, "the merged dropdown lost the divider between its halves").toBeGreaterThan(0);
-    return { environment: tab!.children.slice(0, i), economy: tab!.children.slice(i + 1) };
+describe("the Lenses dropdown — route prefix and menu section agree (#1893, inherited by #1915)", () => {
+  // #1893 asked that "route prefix and menu section agree for every leaf in the Reference
+  // dropdown". #1915 supersedes the clause rather than re-implementing it: the Reference dropdown
+  // could not satisfy it — it listed `/environment/map` and `/environment/imagery` under a menu
+  // section that no longer named them — and the lens tab IS the reconciliation. Its children are
+  // five landings under one prefix, so the criterion holds by construction instead of by audit.
+  //
+  // The facet leaves are still reachable, from the landing bodies. That is deliberate and it is
+  // what makes the agreement real rather than definitional: an in-page contextual cross-link is
+  // not a nav surface (this suite's own rule), so no menu section claims them.
+  function lensTab(): Extract<NavItem, { kind: "dropdown" }> {
+    const tab = siteTabs().find((t) => t.section === "lens");
+    expect(tab, "the site-tier bar lost its Lenses tab").toBeDefined();
+    expect(tab!.kind, "the Lenses tab must stay a dropdown — its children are the five lenses").toBe(
+      "dropdown",
+    );
+    return tab as Extract<NavItem, { kind: "dropdown" }>;
   }
 
-  it("every leaf sits under the prefix of the half it is filed in", () => {
-    const halves = referenceHalves();
-    expect(halves).not.toBeNull();
-    const base = siteBase(activeSite());
-    const hrefs = (children: NavChild[]): string[] =>
-      children.filter((c): c is { label: string; href: string } => !("divider" in c)).map((c) => c.href);
+  function children(): { label: string; href: string }[] {
+    return lensTab().children.filter((c): c is { label: string; href: string } => !("divider" in c));
+  }
 
-    // The finding: `/environment/economics-baseline` was a LABOR baseline listed under Economy,
-    // and three `/reports/*` long-forms sat under it too. The IA and the routes disagreed.
-    for (const href of hrefs(halves!.environment)) {
-      expect(href, `${href} is filed under Environment`).toMatch(new RegExp(`^${base}/environment(/|$)`));
-    }
-    for (const href of hrefs(halves!.economy)) {
-      expect(href, `${href} is filed under Economy`).toMatch(new RegExp(`^${base}/economy(/|$)`));
+  it("carries the five lenses and nothing else", () => {
+    const kids = children();
+    expect(kids).toHaveLength(LENS_ORDER.length);
+    expect(kids.map((c) => c.href)).toEqual(LENS_ORDER.map((id) => `${siteBase(activeSite())}/lens/${id}`));
+  });
+
+  it("every leaf sits under the prefix the menu section names", () => {
+    // The criterion itself. The old dropdown needed a per-half regex because its two halves had
+    // two prefixes; one tab with one prefix is what retires that shape.
+    const base = siteBase(activeSite());
+    for (const c of children()) {
+      expect(c.href, `${c.href} is filed under Lenses`).toMatch(new RegExp(`^${base}/lens/`));
     }
   });
 
-  it("the labor baseline is at its economy address", () => {
-    const halves = referenceHalves();
-    const economy = halves!.economy.filter((c): c is { label: string; href: string } => !("divider" in c));
-    expect(economy.map((c) => c.href)).toContain(`${siteBase(activeSite())}/economy/economics-baseline`);
+  it("advertises no facet leaf — those are reached from the landing, not the menu", () => {
+    // The regression the merged Reference dropdown was: nine `/environment/*` leaves in a menu,
+    // several of which a locked section would have pointed straight at a lock.
+    for (const c of children()) {
+      expect(c.href).not.toMatch(/\/(environment|economy)\//);
+    }
+  });
+
+  it("still lights on the surviving section routes", () => {
+    // No leaf URL moved, so `/environment/hydrology` and `/economy/grid` are live routes whose
+    // pages declare the sections they always did. Without `match` the bar would go blank on them.
+    const tab = lensTab();
+    expect(tab.match).toContain("environment");
+    expect(tab.match).toContain("economy");
   });
 });

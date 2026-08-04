@@ -19,34 +19,53 @@
  * Pure (no bundle read) so it unit-tests offline: the page loads the `hypotheses` +
  * `hypothesis-assessments` feeds and passes the folded assessment data in, and threads the
  * bundle-backed `siteRollup` / `facilityStatus` lookups as resolvers.
+ *
+ * The scorecard's row/cell/group **grammar** lives in `./scorecard` (#1914) — this module and the
+ * lens pages render the same network two ways and must look like the same table. What stays here
+ * is what is specific to a thesis: the three hypotheses' framing, their column specs, the basin
+ * pivot, and {@link SIGNAL_META}. That last one is deliberate: a signal is a **verdict**, so
+ * keeping it out of the shared primitive is what stops a lens surface from reaching for it.
  */
 import type { SiteTier } from "./bundle";
 import type { FacilityStatus, HypothesisAssessmentItem, HypothesisItem } from "./feeds";
 import { basinsOfDivide, DIVIDES } from "./placement";
 import {
-  FACILITY_STATUS_META,
-  groupSites,
-  type NetworkSite,
-  SITES,
-  siteBadge,
-  type SiteRollup,
-  type SiteStatus,
-} from "./sites";
+  type AxisGroup,
+  type Cell,
+  columnHeads,
+  type ColumnSpec,
+  figure,
+  type Group,
+  numCell,
+  PHASE_PILL,
+  pillCell,
+  type Row,
+  type ScorecardView,
+  siteCell,
+  type Swatch,
+  TAIL_META,
+  TIER_DEPTH_ORDER,
+  textCell,
+  TIER_PILL,
+} from "./scorecard";
+import { FACILITY_STATUS_META, groupSites, type NetworkSite, SITES, type SiteRollup } from "./sites";
+
+// The shared scorecard grammar, re-exported from the module its consumers already import — the
+// hypotheses page and the network index reach for these by way of `directory`, and the lift is an
+// internal reorganization, not a change to what this module offers.
+export type { AxisGroup, Cell, CellKind, ColumnSpec, Group, Row, ScorecardView, Swatch } from "./scorecard";
+export { PHASE_PILL, TIER_ABBR, TIER_DEPTH_ORDER, TIER_PILL } from "./scorecard";
 
 export type HypothesisId = "water" | "defense" | "surveillance";
 
 /** Display order of the hypothesis cards / panes (water is the default, live thesis). */
 export const HYPOTHESIS_ORDER: readonly HypothesisId[] = ["water", "defense", "surveillance"];
 
-/** The strength of a per-site signal under H2/H3 — inference until a nexus is documented. */
+/** The strength of a per-site signal under H2/H3 — inference until a nexus is documented.
+ *
+ *  A **verdict** vocabulary, and the reason it stays in this module rather than moving to the
+ *  shared `./scorecard` grammar with the rest of the pill swatches: a lens never carries one. */
 export type Signal = "anchor" | "strong" | "moderate" | "watch";
-
-interface Swatch {
-  label: string;
-  color: string;
-  bg: string;
-  dot: string;
-}
 
 export const SIGNAL_META: Record<Signal, Swatch> = {
   anchor: { label: "Anchor case", color: "#1f6f4a", bg: "#e4ece4", dot: "#1f6f4a" },
@@ -54,31 +73,6 @@ export const SIGNAL_META: Record<Signal, Swatch> = {
   moderate: { label: "Moderate", color: "#566159", bg: "#e8e4d8", dot: "#8c9389" },
   watch: { label: "Under investigation", color: "#8c9389", bg: "#faf8f1", dot: "#cdc8b8" },
 };
-
-/** Build-phase pill swatches (the hex peer of `SITE_STATUS_META`'s CSS classes — the directory
- *  renders pills inline, like the facility pill, rather than through the switcher's class set). */
-export const PHASE_PILL: Record<SiteStatus, Swatch> = {
-  live: { label: "Live", color: "#1f6f4a", bg: "#e4ece4", dot: "#1f6f4a" },
-  building: { label: "Building", color: "#1f6f4a", bg: "#e4ece4", dot: "#1f6f4a" },
-  queued: { label: "Queued", color: "#9a6a14", bg: "#efe6d0", dot: "#9a6a14" },
-  tracking: { label: "Tracking", color: "#566159", bg: "#e8e4d8", dot: "#8c9389" },
-};
-
-/** Readiness-tier pill swatches (#1861) — the manifest `readiness.tier`, a THIRD clock beside the
- *  build phase (our progress on the website) and the facility status (the plant in the ground).
- *  This one is neither: it is how much record the site's own export has actually assembled, and
- *  unlike the other two it is computed at every export rather than hand-maintained. */
-export const TIER_PILL: Record<SiteTier, Swatch> = {
-  reference: { label: "Reference", color: "#1f6f4a", bg: "#e4ece4", dot: "#1f6f4a" },
-  case: { label: "Case", color: "#1f6f4a", bg: "#e4ece4", dot: "#3f8a63" },
-  backdrop: { label: "Backdrop", color: "#566159", bg: "#e8e4d8", dot: "#8c9389" },
-  stub: { label: "Stub", color: "#8c9389", bg: "#faf8f1", dot: "#cdc8b8" },
-};
-
-/** The readiness tiers deepest-first — the one place that order is written down, so the home
- *  ledger's tier bar and {@link featuredSites}'s ranking can't drift apart (or from the tier
- *  vocabulary) the way two hand-kept literals would. */
-export const TIER_DEPTH_ORDER: readonly SiteTier[] = ["reference", "case", "backdrop", "stub"];
 
 /**
  * The home page's "Across the network" slice: the `limit` sites whose OWN export has assembled
@@ -226,13 +220,21 @@ export interface HypothesisConfig {
   /** "Reference build" (live) or "Emerging hypothesis" (new). */
   status: string;
   statusKind: "live" | "new";
+  /**
+   * The question the hypothesis asks (#1917). Falls back to {@link claim} on a bundle exported
+   * before contract 1.52.0 — the same sentence in the indicative, which is the honest degrade
+   * and not a blank. `claim` itself survives as the CANDIDATE ANSWER under test.
+   */
+  question: string;
   claim: string;
   blurb: string;
   axisTitle: string;
   scoreTitle: string;
   scoreNote: string;
   footNote: string;
-  cols: readonly { label: string; align?: "right" }[];
+  /** The scorecard's column headers, in the shared `ColumnSpec` shape. */
+  cols: readonly ColumnSpec[];
+  /** The matching CSS grid track list, one entry per column. */
   fr: readonly string[];
 }
 
@@ -246,6 +248,7 @@ export const HYPOTHESIS_VIEW: Record<HypothesisId, HypothesisConfig> = {
     accentBd: "#bcd2c4",
     status: "Reference build",
     statusKind: "live",
+    question: "Is a town's acceptance compelled by its own Clean Water Act exposure?",
     claim: "Where discharge becomes leverage.",
     blurb:
       "The original thesis: hyperscale compute lands where it can pull power and water, and a data center's intake, discharge, and downstream effects are basin facts. Sites nest by drainage — two divides, eleven basins. Lima is the live, fully-assembled reference. A coercion sub-thesis (#903): in municipalities with declining populations, the receiving WWTP may be running lean on influent — below the biological-treatment minimum that keeps it in NPDES compliance. A datacenter's high-volume, consistent discharge provides the flow buffer the plant needs, structurally compelling municipal acceptance. The Clean Water Act is the backstop that makes the need non-negotiable.",
@@ -275,6 +278,8 @@ export const HYPOTHESIS_VIEW: Record<HypothesisId, HypothesisConfig> = {
     accentBd: "#cdc8b8",
     status: "Emerging hypothesis",
     statusKind: "new",
+    question:
+      "Does the federal footprint — land, clearance, payroll, prime awards — determine where the compute lands?",
     claim: "Where the build-out meets federal land and the defense base.",
     blurb:
       "A second reading: the same map tracks arsenals, air bases, federal research and the CHIPS build — enclaves where federal jurisdiction, clearance, and defense supply chains concentrate. Newly opened; most sites are not yet assessed, and a federal nexus is a signal, not a verdict. A capture sub-thesis (#1663): the enclave is not only geography, it is an economic structure — federal payroll and prime-award obligations concentrated in one county, land held by the United States and off the local tax rolls, and the abatement / PILOT instruments layered around it. Whether the defense base distorts the local economy the datacenter lands in, or merely sits beside it.",
@@ -302,6 +307,7 @@ export const HYPOTHESIS_VIEW: Record<HypothesisId, HypothesisConfig> = {
     accentBd: "#cdc8b8",
     status: "Emerging hypothesis",
     statusKind: "new",
+    question: "What is the compute for, and is the public subsidizing surveillance of itself?",
     claim: "What the compute is for, who it watches, and who's paying.",
     blurb:
       "A third reading: the operators behind shell LLCs, the public-subsidy stack that pulls them in, and the capital and data flows the facilities sit on. The consumer-surveillance thesis — opening now, mostly under investigation, with Lima's abatement on record. An end-use sub-thesis (#904): these facilities are infrastructure nodes in a consumer surveillance apparatus — behavioral tracking, financial-transaction processing, or similar mass-scale surveillance of individual consumer activity, financed in part by the public subsidies the same communities provide.",
@@ -341,6 +347,9 @@ export function hypothesisConfig(id: HypothesisId, hyp?: HypothesisItem): Hypoth
   return {
     ...HYPOTHESIS_VIEW[id],
     name: hyp.name,
+    // A pre-1.52 bundle carries no `question`; the hardcoded fallback above stands in, and if a
+    // future hypothesis is registered without one the `claim` does — never an empty heading.
+    question: hyp.question || HYPOTHESIS_VIEW[id].question || hyp.claim,
     claim: hyp.claim,
     blurb: hyp.thesis,
     status: reference ? "Reference build" : "Emerging hypothesis",
@@ -349,78 +358,11 @@ export function hypothesisConfig(id: HypothesisId, hyp?: HypothesisItem): Hypoth
 }
 
 // --- The rendered view model -------------------------------------------------------------------
-export interface AxisGroup {
-  label?: string;
-  chips: { name: string; count: number }[];
-}
-export type CellKind = "site" | "text" | "num" | "pill";
-export interface Cell {
-  kind: CellKind;
-  // site
-  badge?: string;
-  place?: string;
-  badgeBg?: string;
-  badgeColor?: string;
-  // text / num
-  text?: string;
-  muted?: boolean;
-  // pill
-  pill?: Swatch;
-}
-export interface Row {
-  slug: string;
-  /**
-   * Where the row goes: the site's OWN page (#1862). The registry href — Lima → `SITE_BASE`,
-   * every other site → `/network/<slug>` — carried through **without** the deploy base, which
-   * the page applies at render with `withBase`, exactly as the switcher does. Every registered
-   * site has a real destination (`[site].astro` renders the non-selectable ones), so a `queued`
-   * or `tracking` row lands on its watch page rather than a dead end.
-   */
-  href: string;
-  live: boolean;
-  cells: Cell[];
-}
-export interface Group {
-  kind: "rows" | "chips";
-  abbr: string;
-  label: string;
-  count: number;
-  /** Set on the first basin group of a divide (H1) — the divide banner above it. */
-  divide?: { label: string; note: string };
-  rows: Row[];
-  /** A not-yet-assessed site under H2/H3. It routes like a row (#1862) — "not assessed under
-   *  this thesis" is a statement about the thesis, not a reason to strand the site. */
-  chips: { place: string; dot: string; href: string }[];
-}
-export interface HypothesisView {
+// The grammar (Cell / Row / Group / AxisGroup and the cell constructors) is `./scorecard`'s, shared
+// with the lens pages. A hypothesis view is that shape plus the key of the thesis it reads.
+export interface HypothesisView extends ScorecardView {
   key: HypothesisId;
-  axisTitle: string;
-  axisGroups: AxisGroup[];
-  cols: { label: string; align: "left" | "right" }[];
-  gridCols: string;
-  groups: Group[];
 }
-
-const siteCell = (s: NetworkSite): Cell => {
-  const live = s.status === "live";
-  const codename = Boolean(s.codename);
-  return {
-    kind: "site",
-    badge: siteBadge(s),
-    place: s.place,
-    badgeBg: live ? "#1f6f4a" : codename ? "#ece8dc" : "#e8e4d8",
-    badgeColor: live ? "#f5f2ea" : codename ? "#1f6f4a" : "#566159",
-  };
-};
-const textCell = (t: string, muted = false): Cell => {
-  const empty = !t || t === "—";
-  return { kind: "text", text: t || "—", muted: muted || empty };
-};
-const numCell = (t: string): Cell => ({ kind: "num", text: t, muted: t === "—" });
-/** A rolled-up figure for the scorecard: thousands-separated, or "—" when nothing was measured
- *  (`null` = no committed bundle). A real 0 renders as "0" — it is a measurement, not a gap. */
-const figure = (n: number | null): string => (n === null ? "—" : n.toLocaleString("en-US"));
-const pillCell = (s: Swatch): Cell => ({ kind: "pill", pill: s });
 
 const facPill = (status: FacilityStatus): Cell => pillCell(FACILITY_STATUS_META[status]);
 
@@ -440,7 +382,7 @@ export function buildHypothesisView(
   facilityStatusOf: (slug: string) => FacilityStatus,
 ): HypothesisView {
   const cfg = HYPOTHESIS_VIEW[id];
-  const cols = cfg.cols.map((c) => ({ label: c.label, align: c.align ?? ("left" as const) }));
+  const cols = columnHeads(cfg.cols);
   const gridCols = cfg.fr.join(" ");
 
   const groups: Group[] = [];
@@ -482,7 +424,7 @@ export function buildHypothesisView(
           chips: [],
         };
         if (openBanner) {
-          g.divide = { label: d.label, note: d.note };
+          g.banner = { label: d.label, note: d.note };
           openBanner = false;
         }
         groups.push(g);
@@ -558,7 +500,10 @@ export function buildHypothesisView(
     groups.push({
       kind: "chips",
       abbr: "—",
-      label: "Not yet assessed under this thesis",
+      // `unassessed` is the claim only a HYPOTHESIS may make — the thesis has a verdict to reach
+      // here and has not reached it. The lens surfaces get `unrecorded` instead (`./scorecard`).
+      label: TAIL_META.unassessed.label,
+      claim: "unassessed",
       count: watch.length,
       rows: [],
       chips: watch.map((s) => ({ place: s.place, dot: PHASE_PILL[s.status].dot, href: s.href })),

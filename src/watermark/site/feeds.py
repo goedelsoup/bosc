@@ -559,7 +559,17 @@ from watermark.sites import (
 #     Valid only alongside a cited municipal supply `route` (a model validator enforces it).
 #   Existing rows are unchanged and stay valid; a pre-1.51 schema rejects the new key — MINOR,
 #   back-compatible for data, schema refresh required.
-CONTRACT_VERSION = "1.51.0"
+# 1.52.0: a hypothesis states its QUESTION (#1917, epic #1911 phase 5). One additive field on
+#   `watermark.hypotheses.Hypothesis`, carried straight into the `hypotheses` feed:
+#   * `question` — the question the hypothesis exists to answer, in the interrogative. `claim`
+#     survives unchanged as the CANDIDATE ANSWER under test and `predicted_evidence` as its
+#     answer key; before this the registry held an answer key with no stated question, and every
+#     surface presented three assertions where the honest object is three open questions.
+#     Required (a hypothesis cannot be constructed without one) and lint-enforced non-empty and
+#     interrogative by `watermark hypotheses check`, so a claim cannot creep back into the slot.
+#   Existing rows gain a key; a pre-1.52 schema rejects it — MINOR, back-compatible for data,
+#   schema refresh required.
+CONTRACT_VERSION = "1.52.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

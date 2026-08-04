@@ -125,6 +125,54 @@ const CELLS: HypothesisAssessmentItem[] = [
 ];
 const DATA = indexAssessments(CELLS);
 
+describe("a hypothesis states its question (#1917)", () => {
+  // The offline fallback and the feed must agree on what each hypothesis ASKS. `question` arrived
+  // at contract 1.52.0; a bundle exported before it carries none, and the frontend builds against
+  // whatever `web/sites/` holds — so the degrade has to land on something true, not a blank.
+  const feedRow = (over: Partial<HypothesisItem> = {}): HypothesisItem => ({
+    id: "water",
+    number: "H1",
+    name: "Water & Coercion",
+    claim: "Where discharge becomes leverage.",
+    thesis: "…",
+    status: "reference",
+    signals: [],
+    groups: [],
+    fields: [],
+    related_docs: [],
+    predicted_evidence: [],
+    ...over,
+  });
+
+  it("asks a question in every offline fallback, and never repeats the claim", () => {
+    for (const id of HYPOTHESIS_ORDER) {
+      const cfg = hypothesisConfig(id);
+      expect(cfg.question.endsWith("?"), `${id}: ${cfg.question}`).toBe(true);
+      expect(cfg.question).not.toBe(cfg.claim);
+    }
+  });
+
+  it("prefers the feed's question over the hardcoded one", () => {
+    const cfg = hypothesisConfig("water", feedRow({ question: "Does the record say so?" }));
+    expect(cfg.question).toBe("Does the record say so?");
+  });
+
+  it("falls back to the hardcoded question on a pre-1.52 bundle", () => {
+    // Not to a blank heading: the fallback is the same sentence the exporter would have sent.
+    const cfg = hypothesisConfig("water", feedRow());
+    expect(cfg.question).toBe(hypothesisConfig("water").question);
+    expect(cfg.question.endsWith("?")).toBe(true);
+  });
+
+  it("falls back to the CLAIM for a hypothesis this module has never heard of", () => {
+    // The last resort, and the reason the chain is `feed || hardcoded || claim`: a hypothesis
+    // registered in Python but not yet mirrored here still gets a heading with words in it.
+    const cfg = hypothesisConfig("water", feedRow({ claim: "A new candidate answer." }));
+    expect(cfg.claim).toBe("A new candidate answer.");
+    expect(cfg.question.length).toBeGreaterThan(0);
+  });
+});
+
 describe("directory hypotheses — one network, read three ways (#308)", () => {
   it("orders the hypotheses water → defense → surveillance (water is the live default)", () => {
     expect(HYPOTHESIS_ORDER).toEqual(["water", "defense", "surveillance"]);
@@ -136,8 +184,8 @@ describe("directory hypotheses — one network, read three ways (#308)", () => {
     const total = v.groups.reduce((n, g) => n + g.rows.length, 0);
     expect(total).toBe(SITES.length);
     // Exactly two groups open a divide banner (Lake Erie, Ohio River), in drainage order.
-    const divides = v.groups.filter((g) => g.divide).map((g) => g.divide?.label);
-    expect(divides).toEqual(["Lake Erie drainage", "Ohio River drainage"]);
+    const banners = v.groups.filter((g) => g.banner).map((g) => g.banner?.label);
+    expect(banners).toEqual(["Lake Erie drainage", "Ohio River drainage"]);
     // Lake Erie drains first: Maumee leads, the Ohio-River basins follow.
     expect(v.groups.map((g) => g.label)).toEqual([
       "Maumee",

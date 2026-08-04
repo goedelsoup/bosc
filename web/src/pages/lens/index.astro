@@ -1,0 +1,212 @@
+---
+/**
+ * The lens index (#1914, epic #1911 phase 2) — the five standing ways to read a buildout, and how
+ * much of the network each one currently reaches.
+ *
+ * The peer of `/research/hypotheses`, over the other axis. The hypotheses ask *why* the buildout is
+ * happening and reach for a verdict; a lens asks *what it does* to a place and reaches for none —
+ * so nothing on this page ranks, scores, or rates a site. The count line under each card measures
+ * the RECORD ("12 on the record · 26 to assemble"), never the place.
+ */
+import Base from "~/layouts/Base.astro";
+import { LENS_ORDER, LENSES } from "@watermark/core/lenses";
+import { lensCount, lensNetworkCounts, type LensResolvers } from "@watermark/core/lensView";
+import { lensStatus } from "@watermark/core/readiness";
+import { withBase } from "@watermark/core/site";
+import { SITES, siteFeedCount, siteRollup } from "@watermark/core/sites";
+
+/** The bundle-backed lookups, threaded into the pure builders (`lensView.ts` reads no bundle). */
+const resolvers = (id: (typeof LENS_ORDER)[number]): LensResolvers => ({
+  tierOf: (slug) => siteRollup(slug).tier,
+  statusOf: (slug) => lensStatus(slug, id),
+  countOf: siteFeedCount,
+});
+
+const lenses = LENS_ORDER.map((id) => {
+  const r = resolvers(id);
+  return { lens: LENSES[id], count: lensCount(SITES, r), n: lensNetworkCounts(SITES, r) };
+});
+---
+
+<Base
+  title="Five ways to read a buildout"
+  section="lens"
+  rail={false}
+  description="Five standing lenses over the Watermark network — the land a data-center buildout takes, the power it pulls, what it draws from and puts into the ground, water and air, what it cost the public, and how the decision was made. Each reads every registered watershed point on one dimension. A lens describes; it never reaches a verdict."
+>
+  <div class="lx">
+    <div class="lx-head">
+      <div class="lx-eyebrow">Watermark · the network · five lenses</div>
+      <h1>Five ways to read a buildout</h1>
+      <p class="lx-lead">
+        The directory asks one question — <i>what explains the data-center boom?</i> — and answers it with
+        three competing <a href={withBase("/research/hypotheses")}>hypotheses</a>. That is not the first
+        question most readers arrive with. Somebody standing in front of a buildout in their own county
+        wants to know what it takes, what it costs, and who decided.
+      </p>
+      <p class="lx-lead">
+        These five lenses are that second axis, in the order the buildout itself runs: it takes
+        <b>land</b>, pulls <b>power</b>, consumes <b>water and air</b>, extracts <b>money</b>, through a
+        <b>decision</b> the public did not see. A hypothesis has a verdict to reach. <b>A lens never does</b> —
+        it is a standing view over the record, and where the record is thin it says so rather than filling in.
+      </p>
+    </div>
+
+    <ol class="lx-cards">
+      {
+        lenses.map(({ lens, count, n }) => (
+          <li class="lx-card" style={`--mark:${lens.accent.mark}`}>
+            <a class="lx-card-a" href={withBase(`/lens/${lens.id}`)}>
+              <span class="lx-card-top">
+                <span class="lx-n">{lens.number}</span>
+                <span class="lx-name">{lens.name}</span>
+              </span>
+              <span class="lx-q">{lens.question}</span>
+              <span class="lx-blurb">{lens.blurb}</span>
+              <span class="lx-meta">
+                <span class="lx-count">{count}</span>
+                <span class="lx-facets">
+                  {lens.facets.length} {lens.facets.length === 1 ? "page" : "pages"} per site
+                </span>
+              </span>
+              {/* The record's own shape, stated rather than scored: a lens with nothing on the
+                  record at a site says so, and that is a fact about the corpus, not the place. */}
+              {n.unrecorded + n.unmeasured > 0 && (
+                <span class="lx-gap">
+                  {n.unrecorded} not on the record yet · {n.unmeasured} with no bundle committed
+                </span>
+              )}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="lx-foot">
+      Counts are read from each site's own exported bundle at build time and move on their own with the
+      record — a site enters a lens when a source lands and leaves it when one dries up. “Not on the
+      record here” is a statement about the corpus; it is never a finding about a place, and it is never
+      the same claim as “no bundle committed”, which means nothing has been measured at all.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .lx {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .lx-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bosc-forest);
+    font-weight: 700;
+  }
+  .lx-head h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0.3rem 0 0.6rem;
+  }
+  .lx-lead {
+    max-width: 58rem;
+    font-size: 0.97rem;
+    line-height: 1.6;
+    color: var(--bosc-muted);
+    margin: 0 0 0.7rem;
+  }
+  .lx-cards {
+    list-style: none;
+    margin: 1.8rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  }
+  .lx-card {
+    display: flex;
+  }
+  /* The card's only accent is a rule in the lens's position on the forest DATA ramp. No evidence
+     fill: the `--ev-*` grammar says how well a figure is sourced, and a lens declares no weight. */
+  .lx-card-a {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: var(--bosc-bg);
+    border: 1px solid var(--bosc-rule);
+    border-top: 3px solid var(--mark);
+    padding: 1rem 1.05rem 0.9rem;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.12s ease;
+  }
+  .lx-card-a:hover,
+  .lx-card-a:focus-visible {
+    border-color: var(--bosc-muted);
+    border-top-color: var(--mark);
+  }
+  .lx-card-a:hover .lx-name {
+    text-decoration: underline;
+  }
+  .lx-card-top {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+  .lx-n {
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--bosc-faint);
+  }
+  .lx-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .lx-q {
+    display: block;
+    margin-top: 0.45rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--bosc-ink);
+  }
+  .lx-blurb {
+    display: block;
+    margin-top: 0.45rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--bosc-muted);
+  }
+  .lx-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-top: 0.9rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--bosc-rule);
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    color: var(--bosc-muted);
+  }
+  .lx-facets {
+    color: var(--bosc-faint);
+    white-space: nowrap;
+  }
+  .lx-gap {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: var(--bosc-mono);
+    font-size: 0.68rem;
+    color: var(--bosc-faint);
+  }
+  .lx-foot {
+    margin: 1.6rem 0 0;
+    max-width: 58rem;
+    font-size: 0.79rem;
+    line-height: 1.55;
+    color: var(--bosc-faint);
+  }
+</style>

@@ -143,15 +143,18 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
   },
   ...heldStoryInteriors(),
   {
-    pattern: "^/network/[^/]+/(environment/(enclave|groundwater)|site/records/how-to-read|submit)/$",
+    pattern: "^/network/[^/]+/(site/records/how-to-read|submit)/$",
     label: "Pages the nav model doesn't carry",
     verdict: "gap",
     note:
-      "#1908. Real per-site pages reachable only from inside another page — the enclave and groundwater " +
-      "reads, the record's how-to-read primer, the per-site submit form. Everything else at this " +
-      "level is indexed by walking `siteTabs()`, on the rule that search reaches whatever the " +
-      "chrome navigates to; these are the routes that rule exposes as missing FROM THE NAV. " +
-      "Hardcoding them here would hide a wayfinding bug (#1893's territory) behind a search fix.",
+      "#1908. Real per-site pages reachable only from inside another page — the record's " +
+      "how-to-read primer and the per-site submit form. Everything else at this level is indexed " +
+      "by walking `siteTabs()`, on the rule that search reaches whatever the chrome navigates to; " +
+      "these are the routes that rule exposes as missing FROM THE NAV. Hardcoding them here would " +
+      "hide a wayfinding bug behind a search fix. The enclave and groundwater reads LEFT this " +
+      "family at #1915: they are lens facets now (Land and Environment), so a landing navigates to " +
+      "them and the same rule reaches them — the gap closed by fixing the wayfinding, which is " +
+      "what declaring it rather than indexing around it was for.",
   },
   {
     pattern: "^/(about/(data|sustainability|catalog|contributing)|privacy|network/connect)/$",
@@ -164,27 +167,37 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
 /**
  * The fraction of content routes that must carry a search row.
  *
- * **98.4%, against 98.5% measured** — 3,784 of 3,842 content routes, up from 13%.
+ * **98.8%, against 99.0% measured** — 3,823 of 3,860 content routes, up from 13% before #1890.
  *
- * What closing #1907 bought is the counter-example to the #1906 note below, and worth the
- * arithmetic. That family named eight routes that were **routed and unindexed** — Findlay's held
- * `flagpole` walk — so it really was holding the number down, and closing it moved the fraction a
- * third of a point: two story roots became rows, and eleven interior routes left the denominator as
- * `represented`. Eleven, not seven, because the fix keyed off what a story *publishes* rather than
- * off `selectable`, and the same rule reached Fort Wayne's held `project-zodiac` — five routes on a
- * SELECTABLE site that were missing for exactly the same reason. That the fix landed on a site the
- * issue never mentioned is the evidence that `selectable` was never the axis.
+ * Three closures moved it since, and their arithmetic is worth keeping side by side, because it is
+ * three different kinds of arithmetic.
  *
- * A note on what closing #1906 bought, because the arithmetic is instructive. The `Peer-only wiki
- * entities` family was declared a `gap` on the theory that it "holds the measured number down until
- * it's fixed". It did not, and could not: the entities it named had **no route at all**, so they
- * were missing from the numerator and the denominator alike, and every entity route that did exist
- * was already indexed. Widening the wiki to the network union (`networkEntities`) added five routes
- * and five rows — it moved the fraction by two thousandths of a point. What it actually changed is
- * the record: five parties that existed in the graph and nowhere in the site now have a page, and
- * the family is gone rather than standing as a permanent asterisk. **A `gap` family can only
- * depress the number when the content it names is routed but unindexed** — worth remembering before
- * the next one is written down.
+ * What closing **#1907** bought is the counter-example to the #1906 note below. That family named
+ * eight routes that were **routed and unindexed** — Findlay's held `flagpole` walk — so it really
+ * was holding the number down, and closing it moved the fraction a third of a point: two story
+ * roots became rows, and eleven interior routes left the denominator as `represented`. Eleven, not
+ * seven, because the fix keyed off what a story *publishes* rather than off `selectable`, and the
+ * same rule reached Fort Wayne's held `project-zodiac` — five routes on a SELECTABLE site that were
+ * missing for exactly the same reason. That the fix landed on a site the issue never mentioned is
+ * the evidence that `selectable` was never the axis.
+ *
+ * What closing **#1906** bought is instructive in the other direction. The `Peer-only wiki entities`
+ * family was declared a `gap` on the theory that it "holds the measured number down until it's
+ * fixed". It did not, and could not: the entities it named had **no route at all**, so they were
+ * missing from the numerator and the denominator alike, and every entity route that did exist was
+ * already indexed. Widening the wiki to the network union (`networkEntities`) added five routes and
+ * five rows — it moved the fraction by two thousandths of a point. What it actually changed is the
+ * record: five parties that existed in the graph and nowhere in the site now have a page, and the
+ * family is gone rather than standing as a permanent asterisk. **A `gap` family can only depress
+ * the number when the content it names is routed but unindexed** — worth remembering before the
+ * next one is written down.
+ *
+ * **#1915** is the third shape, and the one this module was really designed for: the enclave and
+ * groundwater reads left the "pages the nav model doesn't carry" family by **being carried**. They
+ * were routed and unindexed (so, like #1907, genuinely depressing), but nothing was indexed to fix
+ * it — the lens landings navigate to them now, and the standing rule ("search reaches whatever the
+ * chrome navigates to") reached them on its own. The gap closed by fixing the wayfinding, which is
+ * exactly what declaring it rather than indexing around it was for.
  *
  * The remaining shortfall is the two surviving `gap` families (#1908) plus the routes no family has
  * declared yet — the reports/exhibits/legal/people landings on the peers promoted since #1890, and
@@ -196,7 +209,7 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
  * why not, and a floor with comfortable headroom would let coverage rot back toward 13% one page at
  * a time — which is precisely how it got there.
  */
-export const COVERAGE_FLOOR = 0.984;
+export const COVERAGE_FLOOR = 0.988;
 
 /**
  * A ceiling on the largest emitted shard, gzipped, in bytes.

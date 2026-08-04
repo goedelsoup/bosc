@@ -101,10 +101,16 @@ notes: >-
   `(site × hypothesis)` matrix — into one flat, provenanced list, porting yidam's `open-questions`
   model (open ⇔ the `[open]` tag). Like `facts`, it's a `catalog-index`-style post-pass projection
   (`watermark.site.open_questions`) over the just-assembled `leads` + `hypothesis-assessments`
-  (+ `hypotheses` for the hypothesis labels) feeds, so it reads only feeds already produced above
+  (+ `hypotheses` for the hypothesis labels and, from contract 1.52.0, each hypothesis's root
+  `question`) feeds, so it reads only feeds already produced above
   and adds no new committed upstream; a lead names its own `source`, and an open matrix cell (which
   carries no citation by rule) traces to its committed `data/hypotheses/<hid>/<site>.yaml` file.
   Skipped for a site with no open threads.
+  The `hypotheses` feed gains a `question` (#1917, contract 1.52.0) — the question each hypothesis
+  exists to answer, in the interrogative. `claim` survives unchanged as the CANDIDATE ANSWER under
+  test and `predicted_evidence` as its answer key; the registry previously held an answer key with
+  no stated question, and each `open-questions` thread now carries the root question its cell hangs
+  under. Additive on an existing feed, no new committed upstream.
   The `documents` feed gains version / duplicate-cluster metadata (#1590, contract 1.27.1) —
   `duplicate_cluster` / `canonical_document_id` / `version` / `supersedes` — projected onto the
   catalogued source files by `watermark.site.docversions` from the curated custody manifest

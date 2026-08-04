@@ -31,6 +31,7 @@
  * distinguishable at a glance.
  */
 
+import { LENS_ORDER, LENSES } from "./lenses";
 import { currentSiteForPath } from "./sites";
 
 /** One step in a trail. The last crumb — the current page — carries no `href`. */
@@ -70,6 +71,16 @@ interface TrailNode {
   fromTitle?: boolean;
   /** Consume every remaining segment into this one crumb (Astro's `[...rest]` routes). */
   rest?: boolean;
+  /**
+   * This segment's LANDING lives at a different address than its own path (#1915). Given the
+   * accumulated href for the segment, returns where its crumb should point.
+   *
+   * Two users, both the same shape: `/environment/` and `/economy/` retired into their lens
+   * landings and 301 there, but their LEAVES kept their addresses. So the crumb still has to name
+   * the section a reader is standing in, while linking somewhere that exists — which is exactly
+   * the case `unlinked` would over-solve by dropping the "up" affordance altogether.
+   */
+  landing?: (href: string) => string;
   children?: Record<string, TrailNode>;
 }
 
@@ -135,6 +146,8 @@ const SITE_CHILDREN: Record<string, TrailNode> = {
   economy: {
     label: "The economy",
     slash: true,
+    // Its landing is the Economy lens now (#1915); the leaves below kept their `/economy/` prefix.
+    landing: (href) => href.replace(/\/economy$/, "/lens/economy"),
     children: {
       // Re-homed from `/environment/` (#1893): a labor baseline filed under the environment was
       // the one leaf whose route prefix contradicted the section its own page declares.
@@ -145,6 +158,10 @@ const SITE_CHILDREN: Record<string, TrailNode> = {
   environment: {
     label: "The environment",
     slash: true,
+    // Its landing is the Environment lens now (#1915). NOTE the leaves do not all belong to that
+    // lens — map, imagery, and enclave are the LAND lens's — but a crumb names where a reader is
+    // in the URL tree, not which reading brought them, so the section stays their ancestor.
+    landing: (href) => href.replace(/\/environment$/, "/lens/environment"),
     children: {
       air: { label: "Air dispersion" },
       enclave: { label: "The federal enclave" },
@@ -159,6 +176,14 @@ const SITE_CHILDREN: Record<string, TrailNode> = {
     },
   },
   leads: { label: "Open leads" },
+  // The five per-site lens landings (#1915). `/environment/` and `/economy/` 301 into two of them;
+  // the leaf routes under those prefixes did NOT move, so their nodes above are untouched.
+  //
+  // `unlinked` because there is no per-site lens INDEX: the site-tier tab's children are the five
+  // landings themselves (that is the #1893 prefix/section agreement this issue inherited), so the
+  // segment is a namespace. The whole-network index at the root `/lens/` is a different scope and
+  // would be a misleading "up" from inside a site.
+  lens: { label: "Lenses", unlinked: true, children: { [PARAM]: { label: lensLabel } } },
   reports: {
     label: "Reports",
     slash: true,
@@ -243,6 +268,10 @@ const ROOT: TrailNode = {
       slash: true,
       children: { [PARAM]: { label: humanize, fromTitle: true, rest: true } },
     },
+    // The five lens landings (#1914). The leaf label is the lens's own name out of the model, not
+    // a humanized slug — so `disclosure` reads "Disclosure" by declaration, and a sixth lens
+    // arrives with a crumb already written rather than with one nobody remembered to add.
+    lens: { label: "Lenses", slash: true, children: { [PARAM]: { label: lensLabel } } },
     "locked-preview": { label: "Site Locked — preview" },
     methodology: { label: "Methodology", children: { [PARAM]: { label: humanize, fromTitle: true } } },
     network: {
@@ -302,6 +331,12 @@ const ROOT: TrailNode = {
 /** A site segment's crumb: its registered place, or the raw id for a slug not in the registry. */
 function siteLabel(segment: string): string {
   return currentSiteForPath(`/network/${segment}`)?.place ?? humanize(segment);
+}
+
+/** A lens's crumb — its declared name (#1914), so the trail can't drift from the model. */
+function lensLabel(segment: string): string {
+  const lens = LENS_ORDER.find((id) => id === segment);
+  return lens ? LENSES[lens].name : humanize(segment);
 }
 
 export interface TrailOptions {
@@ -379,7 +414,11 @@ export function trailFor(pathname: string, opts: TrailOptions = {}): Crumb[] {
       crumbs.push({ label });
       break;
     }
-    crumbs.push(child.unlinked ? { label } : { label, href: child.slash ? `${href}/` : href });
+    if (child.unlinked) {
+      crumbs.push({ label });
+      continue;
+    }
+    crumbs.push({ label, href: child.landing ? child.landing(href) : child.slash ? `${href}/` : href });
   }
 
   return crumbs;

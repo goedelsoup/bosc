@@ -21,6 +21,7 @@ from watermark.hypotheses import (
     assessments_for,
     get_hypothesis,
     lint_assessments,
+    lint_hypotheses,
     load_assessments,
 )
 
@@ -163,6 +164,47 @@ def test_assessments_for_filters_by_hypothesis() -> None:
         "fort-wayne",
     }
     assert {c.site for c in assessments_for("water")} == {"lima"}
+
+
+# --- the question a hypothesis exists to answer (#1917, epic #1911 phase 5) -----------------
+def test_every_hypothesis_states_its_question() -> None:
+    """The field is required at the type level, so the real risk is a claim wearing a '?'.
+
+    A hypothesis carried a `claim` (a phrase), a `thesis` (a paragraph), and
+    `predicted_evidence` (an answer key) — but never the question those answer. Every surface
+    now leads with it, so an empty or declarative one would put an assertion back where the
+    directory promises an open question.
+    """
+    for hyp in HYPOTHESES.values():
+        q = hyp.question.strip()
+        assert q, hyp.id
+        assert q.endswith("?"), f"{hyp.id}: {q!r} is not interrogative"
+        # The question is asked; the claim answers it. They must not be the same sentence.
+        assert q != hyp.claim.strip(), hyp.id
+    assert lint_hypotheses() == []
+
+
+def test_lint_rejects_a_missing_or_declarative_question() -> None:
+    """The lint is what stops the slot silently reverting to a claim."""
+    base = HYPOTHESES["water"]
+    for bad in ("", "   ", "Where discharge becomes leverage."):
+        broken = base.model_copy(update={"question": bad})
+        findings = _lint_over({**HYPOTHESES, "water": broken})
+        assert [f.kind for f in findings] == [
+            "missing-question" if not bad.strip() else "unasked-question"
+        ], bad
+
+
+def _lint_over(registry: dict[str, Hypothesis]) -> list:
+    """Run `lint_hypotheses` against a substituted registry (it reads the module global)."""
+    import watermark.hypotheses as mod
+
+    original = mod.HYPOTHESES
+    mod.HYPOTHESES = registry
+    try:
+        return mod.lint_hypotheses()
+    finally:
+        mod.HYPOTHESES = original
 
 
 def test_committed_store_lint_has_no_hard_findings() -> None:

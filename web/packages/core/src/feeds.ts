@@ -1794,6 +1794,16 @@ export interface HypothesisItem {
   id: string; // "water" | "defense" | "surveillance"
   number: string; // "H1" | "H2" | "H3"
   name: string;
+  /**
+   * The question the hypothesis exists to answer (contract 1.52.0, #1917) — interrogative, and
+   * what every surface leads with. `claim` is the CANDIDATE ANSWER under test and
+   * `predicted_evidence` its answer key; the three are not interchangeable.
+   *
+   * Optional here, and required in the Python model, on purpose: a bundle exported before 1.52.0
+   * carries no `question`, and the frontend builds against whatever is committed. Consumers fall
+   * back to `claim` — the same sentence in the indicative — rather than rendering a blank.
+   */
+  question?: string;
   claim: string;
   thesis: string;
   status: "reference" | "emerging";

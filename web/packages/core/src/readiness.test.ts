@@ -2,12 +2,15 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
+import { LENS_ORDER, type LensId } from "./lenses";
 import {
   domainPresent,
   facilityLoadAvailable,
   facilityState,
   isAvailable,
   isReferenceSite,
+  lensAvailable,
+  lensStatus,
   lockedSections,
   SECTION_META,
   type ReadinessSection,
@@ -154,6 +157,82 @@ describe("facility-domain gating", () => {
     expect(facilityState("xenia")).toBe("absent");
     expect(domainPresent("xenia", "facility")).toBe(false);
     expect(facilityLoadAvailable("xenia")).toBe(false);
+  });
+});
+
+// --- the lens band (#1913, epic #1911) ----------------------------------------------------
+// `lensStatus` composes the two gates above; the model it reads is pure and lives in
+// `lenses.ts` (tested there, offline). What matters here is that the composition is driven by
+// each site's OWN manifest block — never by a reference-site shortcut.
+describe("lensStatus (#1913)", () => {
+  // This block re-imports the module under a synthetic bundle dir for its last case, so it
+  // restores the suite's dir the same way the two blocks below do (captured at collection time,
+  // before any test has run).
+  const originalBundleDir = process.env.WATERMARK_BUNDLE_DIR;
+  afterEach(() => {
+    if (originalBundleDir === undefined) delete process.env.WATERMARK_BUNDLE_DIR;
+    else process.env.WATERMARK_BUNDLE_DIR = originalBundleDir;
+    vi.resetModules();
+  });
+
+  const statuses = (slug: string): Record<LensId, string> =>
+    Object.fromEntries(LENS_ORDER.map((id) => [id, lensStatus(slug, id)])) as Record<LensId, string>;
+
+  it("opens all five on the reference build", () => {
+    for (const id of LENS_ORDER) expect(lensStatus("lima", id), id).toBe("available");
+  });
+
+  it("opens all five on a reference-TIER peer that is not the reference SITE", () => {
+    // The acceptance's real check. Findlay's manifest reports every domain live, so its five
+    // lenses open exactly as Lima's do — and `isReferenceSite` is false for it. If the gate had
+    // a reference-site backdoor, this site would be the one it failed on.
+    expect(isReferenceSite("findlay")).toBe(false);
+    expect(siteTier("findlay")).toBe("reference");
+    for (const id of LENS_ORDER) expect(lensStatus("findlay", id), id).toBe("available");
+    expect(statuses("findlay")).toEqual(statuses("lima"));
+  });
+
+  it("locks all five on a stub-tier peer", () => {
+    // Coshocton: registered, committed bundle, every domain absent. Nothing is scaffolded for it.
+    expect(siteTier("coshocton")).toBe("stub");
+    for (const id of LENS_ORDER) expect(lensStatus("coshocton", id), id).toBe("locked");
+  });
+
+  it("opens the lenses a partial peer has the domains for, and only those", () => {
+    // Mansfield is the clean mid-tier read: places live (a committed footprint) and the backdrop
+    // floor pulled, but no record and no disclosed facility. So Land opens off `places`, the two
+    // floor lenses open off the backdrop — and Power and Disclosure lock, each on its own domain.
+    expect(statuses("mansfield")).toEqual({
+      land: "available",
+      power: "locked",
+      environment: "available",
+      economy: "available",
+      disclosure: "locked",
+    });
+    // Power's lock here is the FACILITY half, not the section half: the economy section is open.
+    expect(sectionStatus("mansfield", "economy")).toBe("available");
+    expect(domainPresent("mansfield", "facility")).toBe(false);
+  });
+
+  it("opens Power on a screening-only facility — the lens gates on presence, not depth", () => {
+    // Urbana's facility is `seeded` (a floor-area [inference] load, MW still [open]). That is
+    // enough for "whose grid carries it" to be a question worth asking; whether the LOAD READ may
+    // render as grounded output stays the narrower `facilityLoadAvailable` gate (#1630), which the
+    // lens deliberately does not duplicate.
+    expect(facilityState("urbana")).toBe("seeded");
+    expect(lensAvailable("urbana", "power")).toBe(true);
+    expect(facilityLoadAvailable("urbana")).toBe(false);
+  });
+
+  it("inherits the environment section's cooling lock rather than routing around it (#1057)", async () => {
+    // A lens is a view over a gate, so it can never be more open than the gate. An undisclosed
+    // cooling method locks the environment section; the Environment lens must lock with it.
+    const root = makePeerBundle("cooling-peer", [scenarioRow("unknown", false)]);
+    const r = await loadReadiness(root);
+    expect(r.sectionStatus("cooling-peer", "environment")).toBe("locked");
+    expect(r.lensStatus("cooling-peer", "environment")).toBe("locked");
+    // The floor is otherwise live, so Economy — same domain, different section — stays open.
+    expect(r.lensStatus("cooling-peer", "economy")).toBe("available");
   });
 });
 

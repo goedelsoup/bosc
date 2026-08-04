@@ -19,7 +19,8 @@
 
 import { activeSite } from "./bundle";
 import type { HypothesisItem } from "./feeds";
-import { sectionStatus } from "./readiness";
+import { LENS_ORDER, LENSES } from "./lenses";
+import { lensStatus, sectionStatus } from "./readiness";
 import { siteBase, storyBase } from "./routes";
 import type { NetworkSite } from "./sites";
 import { STUDY_CHAPTERS, STUDY_PARTS } from "./study";
@@ -43,6 +44,7 @@ export type SectionId =
   | "ask"
   | "search"
   | "directory"
+  | "lens"
   | "research"
   | "submit"
   | "connect";
@@ -178,7 +180,9 @@ export function sections(): Section[] {
       id: "environment",
       label: "The environment",
       tab: "Environment",
-      href: `${base}/environment/`,
+      // The section survives as the GATE (`ReadinessSection`) and as the `section=` 15 leaf pages
+      // declare; its landing is the Environment lens now (#1915), and `/environment/` 301s there.
+      href: `${base}/lens/environment`,
       blurb: "Hydrology dashboards, the watershed map, imagery before/during/after, and RSEI toxics.",
       toc: [
         { label: "Hydrology", anchor: "hydrology" },
@@ -197,7 +201,8 @@ export function sections(): Section[] {
       id: "economy",
       label: "The economy",
       tab: "Economy",
-      href: `${base}/economy/`,
+      // Same as `environment` above: the gate stays, the landing is the Economy lens (#1915).
+      href: `${base}/lens/economy`,
       blurb:
         "The local economic ground — labor baseline, the grid/load backdrop, end-use & workloads, and the cost of opacity.",
       toc: [],
@@ -258,12 +263,28 @@ export function sections(): Section[] {
       toc: [],
     },
     {
+      // The lens axis (#1914, epic #1911) — the network read five standing ways. The peer of
+      // `research` and deliberately NOT a child of it: the hypotheses ask *why* the buildout is
+      // happening and reach for a verdict; a lens asks *what it does* to a place and reaches for
+      // none. Filing one under the other would blur exactly the distinction the epic opens by
+      // drawing. Its TOC is the five lenses, which is also what makes each `/lens/<id>` page
+      // searchable (`search.ts` walks the nav model).
+      id: "lens",
+      label: "Lenses",
+      tab: "Lenses",
+      href: "/lens/",
+      blurb:
+        "Five standing ways to read a buildout — the land it takes, the power it pulls, what it draws from the ground and air, what it costs the public, and how the decision was made.",
+      toc: LENS_ORDER.map((id) => ({ label: LENSES[id].name, anchor: id })),
+    },
+    {
       // The network's research layer — the boom-origin hypotheses + the MCP playground.
       id: "research",
       label: "Research",
       tab: "Research",
       href: "/research/hypotheses",
-      blurb: "Read the network three ways — the boom-origin hypotheses, scored against each site.",
+      blurb:
+        "The three open questions about why the build-out is happening where it is — each with a candidate answer under test, scored against every site.",
       toc: [],
     },
     {
@@ -337,8 +358,13 @@ export type NavItem =
 export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   const researchChildren: NavChild[] = [
     // `?h=` is the canonical deep-link param (#1912). The page still honors the pre-#1912
-    // `?lens=` spelling for links already shared, but nothing emits it any more.
-    ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?h=${h.id}` })),
+    // `?lens=` spelling for links already shared, but nothing emits it any more. The blurb is the
+    // hypothesis's own question (#1917), falling back to its claim on a pre-1.52 bundle.
+    ...hypotheses.map((h) => ({
+      label: h.name,
+      href: `/research/hypotheses?h=${h.id}`,
+      blurb: h.question || h.claim,
+    })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
     // Basin views (design "Chrome": Research ▾ → Basin views) — Maumee is the one built today;
     // the other eight basins join here as their /basin pages land.
@@ -349,6 +375,24 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   ];
   return [
     { kind: "link", label: "Directory", section: "directory", href: "/" },
+    {
+      // Lenses ride BEFORE Research (#1914): "what does this buildout do to my county" is the
+      // first question most readers actually arrive with, and the hypotheses — a causal thesis to
+      // adjudicate — are the second. This is the network tier's only lens surface, so `/lens/*`
+      // sits well inside the nav-diet ceiling; #1916 gives the home page the other one.
+      kind: "dropdown",
+      label: "Lenses",
+      section: "lens",
+      children: [
+        { label: "All five lenses", href: "/lens/", blurb: "The network, read five standing ways" },
+        { divider: true as const },
+        ...LENS_ORDER.map((id) => ({
+          label: `${LENSES[id].number} · ${LENSES[id].name}`,
+          href: `/lens/${id}`,
+          blurb: LENSES[id].question,
+        })),
+      ],
+    },
     {
       kind: "dropdown",
       label: "Research",
@@ -388,80 +432,61 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   ];
 }
 
-/** Site-tier left tabs — shown inside a site. A 4-tab bar (the nav diet, #1893):
- *  The site · **The impact study** · **Reference** · The record.
+/**
+ * Site-tier left tabs — shown inside a site. A 4-tab bar (the nav diet, #1893, retained):
+ * The site · **The impact study** · **Lenses** · The record.
  *
- *  The study — the site's primary artifact — rides second, right after the mega. The old
- *  "The environment" / "The economy" dropdowns merge into ONE Reference dropdown, reframed as
- *  the data behind the study's chapters, and every leaf in it now sits under the route prefix
- *  its section names (#1893): the labor baseline moved to `/economy/economics-baseline`, and the
- *  three long-form economy reports left the menu for the economy hub and the Reports index, which
- *  is where a report is found. Reports stay a "The site" mega tile (and light that tab).
+ * ## Why lenses are a primary tab beside the study (#1915)
  *
- *  The standalone "The story" tab is gone: the mega's spine IS the story — its head links the
- *  story root and it lists every chapter — so the tab beside it was the same destination twice in
- *  one bar. Story routes still light "The site" (see the mega's `match`). */
+ * #1884 deliberately DEMOTED environment/economy into "Reference — the data behind the study's
+ * chapters", because the impact study is the site's declared primary artifact. Promoting lenses
+ * back to a primary tab partly reverses that reasoning, so the resolution is written down here
+ * rather than left in a commit message:
+ *
+ * > The **study** is the *read* door — narrative, linear, verdict-bearing.
+ * > The **lenses** are the *explore* door — dimensional, cross-site, never verdict-bearing.
+ * > Different audiences; both first-class.
+ *
+ * A reader who wants the argument takes the study. A reader who arrived asking "what does this do
+ * to my county's water" takes a lens, and can then carry that same question across every other
+ * site in the network (`/lens/<id>`, #1914) — which the study, being one site's argument, cannot
+ * do. Neither is the other's table of contents.
+ *
+ * The dropdown carries **five landings and nothing else**. That is what satisfies the criterion
+ * this issue inherited from #1893 — "route prefix and menu section agree for every leaf reachable
+ * from the tab" — which the old Reference dropdown could not, because it listed `/environment/map`
+ * and `/environment/imagery` under a menu section that no longer named them. Those leaves are
+ * reached from the Land landing instead: an in-page cross-link is not a nav surface (#1893), so
+ * the prefix/section agreement holds and no URL had to move.
+ *
+ * The study — the site's primary artifact — still rides second, right after the mega. The
+ * standalone "The story" tab is gone: the mega's spine IS the story — its head links the story
+ * root and it lists every chapter — so the tab beside it was the same destination twice in one
+ * bar. Story routes still light "The site" (see the mega's `match`).
+ */
 export function siteTabs(): NavItem[] {
   const { base, storyRoot, story } = siteRoots();
   const chapters = story?.chapters ?? [];
   // Per-site readiness (#781/#1220): on a thinner peer some of these destinations aren't on the
-  // record yet. `sectionStatus` reads the bundle's domain-activation block, so Lima's menu is
-  // unchanged (every domain live) without any reference-site special-case. A locked theme collapses
-  // to its landing link (which renders the coherent lock page) inside the Reference dropdown —
-  // the merged dropdown must never advertise facet links that render locks. The study tab has
-  // NO locked variant: an absent record is a chapter's own content, never a lock.
+  // record yet. `lensStatus` composes the same domain-activation block `sectionStatus` reads, so
+  // Lima's menu is unchanged (every domain live) without any reference-site special-case. A locked
+  // lens still LINKS — its landing renders the coherent lock and the ask, which is a real
+  // destination — but the dropdown marks it, so available vs awaiting-a-source is legible in the
+  // menu itself rather than only after a click. The study tab has NO locked variant: an absent
+  // record is a chapter's own content, never a lock.
   const slug = activeSite();
   const storyLocked = sectionStatus(slug, "story") === "locked";
-  const environmentLocked = sectionStatus(slug, "environment") === "locked";
-  const economyLocked = sectionStatus(slug, "economy") === "locked";
 
-  // The environment/economy halves of the Reference dropdown — each collapsing to its landing
-  // link when its section is locked (the landing page renders the lock + the ask).
-  const environmentChildren: NavChild[] = environmentLocked
-    ? [{ label: "The environment", href: `${base}/environment/`, blurb: "Locked — awaiting a source" }]
-    : [
-        {
-          label: "The environment",
-          href: `${base}/environment/`,
-          blurb: "The data behind Part II — section overview",
-        },
-        { label: "Hydrology", href: `${base}/environment/hydrology`, blurb: "Low-flow dilution vs the 7Q10" },
-        { label: "Watershed map", href: `${base}/environment/map`, blurb: "Typed GeoJSON on deck.gl" },
-        { label: "Imagery", href: `${base}/environment/imagery`, blurb: "Dated aerials — before / after" },
-        { label: "RSEI / toxics", href: `${base}/environment/rsei`, blurb: "EPA toxic-release inventory" },
-        { label: "Air dispersion", href: `${base}/environment/air`, blurb: "AERMOD screening field" },
-        {
-          label: "Seasonal withdrawal",
-          href: `${base}/environment/seasonal`,
-          blurb: "Month-by-month climograph",
-        },
-        { label: "Water flow", href: `${base}/environment/flow`, blurb: "Animated reach-network flow" },
-        {
-          label: "Thermal / §316(a)",
-          href: `${base}/environment/thermal`,
-          blurb: "Discharge heat vs the temperature criterion",
-        },
-      ];
-  // The economy half carries the economy's own DATASET pages and nothing else (#1893). It used to
-  // trail three `/reports/*` long-forms and a `/docs/` essay under an "Economy" heading — four
-  // leaves whose route prefix disagreed with the section they were filed in, and four destinations
-  // already reachable from the economy hub, the Reports index, and the study's annex footers. A
-  // report is found at Reports; this menu says what data is behind the study's economy chapters.
-  const economyChildren: NavChild[] = economyLocked
-    ? [{ label: "The economy", href: `${base}/economy/`, blurb: "Locked — awaiting a source" }]
-    : [
-        {
-          label: "The economy",
-          href: `${base}/economy/`,
-          blurb: "The data behind Part III — section overview",
-        },
-        {
-          label: "Localized labor baseline",
-          href: `${base}/economy/economics-baseline`,
-          blurb: "BLS QCEW · Census employment",
-        },
-        { label: "The grid backdrop", href: `${base}/economy/grid`, blurb: "Whose grid, cited" },
-      ];
+  // Five landings and nothing else — see the docstring on why no facet leaf appears here.
+  const lensChildren: NavChild[] = LENS_ORDER.map((id) => {
+    const lens = LENSES[id];
+    const locked = lensStatus(slug, id) === "locked";
+    return {
+      label: `${lens.number} · ${lens.name}`,
+      href: `${base}/lens/${id}`,
+      blurb: locked ? "Awaiting a source on this site" : lens.question,
+    };
+  });
 
   return [
     {
@@ -536,27 +561,18 @@ export function siteTabs(): NavItem[] {
         ]),
       ],
     },
-    environmentLocked && economyLocked
-      ? {
-          // Both halves locked (a stub-tier peer): the merged tab collapses to the same
-          // non-navigable locked marker the separate tabs used to show.
-          kind: "link",
-          label: "Reference",
-          section: "environment",
-          href: `${base}/environment/`,
-          locked: true,
-        }
-      : {
-          // The Reference dropdown — the old environment + economy trees, reframed as the
-          // study's data annex ("the data behind the chapters"). Facets stay standalone leaf
-          // routes (#1323) at their unchanged URLs; a locked half collapses to its landing
-          // link (which renders the lock + the ask), never advertising facet links onto locks.
-          kind: "dropdown",
-          label: "Reference",
-          section: "environment",
-          match: ["economy"],
-          children: [...environmentChildren, { divider: true }, ...economyChildren],
-        },
+    {
+      // Lenses — the explore door. Never collapses to a locked marker the way the old Reference
+      // tab did on a stub peer: each landing is a real page even when locked, and its own lock
+      // states what would open it, which is more useful than a non-navigable tab. `match` keeps
+      // the surviving `/environment/*` and `/economy/*` LEAF routes lighting this tab, since the
+      // sections those pages still declare are the ones their lenses gather.
+      kind: "dropdown",
+      label: "Lenses",
+      section: "lens",
+      match: ["environment", "economy"],
+      children: lensChildren,
+    },
     { kind: "link", label: "The record", section: "site", href: `${base}/site/`, match: ["timeline"] },
   ];
 }
@@ -616,7 +632,7 @@ export function navItemActive(item: NavItem, active: SectionId): boolean {
  *  tiles PLUS the story spine's head — the spine replaced the standalone "The story" tab (#1893),
  *  and a phone reader gets no mega, so without the head the story would be reachable from the
  *  desktop bar and the footer but not from the sheet. The spine's per-chapter links stay
- *  desktop-mega-only; environment/economy contribute their own children as the Reference dropdown. */
+ *  desktop-mega-only; the Lenses dropdown contributes its five landings. */
 export function navItemLinks(item: NavItem): { label: string; href: string }[] {
   if (item.kind === "link") return [{ label: item.label, href: item.href }];
   if (item.kind === "mega") {
@@ -651,8 +667,8 @@ export function footerGroups(): FooterGroup[] {
         // linked from everywhere is emphasized nowhere. Its two surfaces are the ones that say
         // "primary artifact": the home band and the tab. See `navSurfaces`.
         { label: "Open leads", href: `${base}/leads` },
-        { label: "The environment", href: `${base}/environment/` },
-        { label: "The economy", href: `${base}/economy/` },
+        { label: "The environment", href: `${base}/lens/environment` },
+        { label: "The economy", href: `${base}/lens/economy` },
         // Only a site that surfaces a *readable* story gets a story link — a site without one (or
         // whose walk is hidden/#1256 or coming-soon/#1526) shows none rather than leaking into
         // Lima's story.
