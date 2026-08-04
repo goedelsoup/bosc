@@ -101,10 +101,10 @@ notes: >-
   `(site × hypothesis)` matrix — into one flat, provenanced list, porting yidam's `open-questions`
   model (open ⇔ the `[open]` tag). Like `facts`, it's a `catalog-index`-style post-pass projection
   (`watermark.site.open_questions`) over the just-assembled `leads` + `hypothesis-assessments`
-  (+ `hypotheses` for lens labels) feeds, so it reads only feeds already produced above and adds no
-  new committed upstream; a lead names its own `source`, and an open matrix cell (which carries no
-  citation by rule) traces to its committed `data/hypotheses/<hid>/<site>.yaml` file. Skipped for a
-  site with no open threads.
+  (+ `hypotheses` for the hypothesis labels) feeds, so it reads only feeds already produced above
+  and adds no new committed upstream; a lead names its own `source`, and an open matrix cell (which
+  carries no citation by rule) traces to its committed `data/hypotheses/<hid>/<site>.yaml` file.
+  Skipped for a site with no open threads.
   The `documents` feed gains version / duplicate-cluster metadata (#1590, contract 1.27.1) —
   `duplicate_cluster` / `canonical_document_id` / `version` / `supersedes` — projected onto the
   catalogued source files by `watermark.site.docversions` from the curated custody manifest
