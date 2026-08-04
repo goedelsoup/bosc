@@ -14,6 +14,7 @@
 // Run after `astro build`:  node scripts/check-routes.mjs  (pnpm run check:routes)
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { gzipSync } from "node:zlib";
 import { join, relative } from "node:path";
 
 // Overridable so the negative cases can be exercised against a synthetic tree — a budget guard
@@ -257,6 +258,94 @@ function checkPermalinkCoverage() {
   }
 }
 checkPermalinkCoverage();
+
+// ------------------------------------------------ 6. search coverage (#1890)
+//
+// "Search coverage is a stated, tested fraction of content routes, not an accident." Before #1890
+// the index held 531 rows against 4,078 routes — 13% — and nothing measured it, so nothing said so.
+//
+// The statement lives in `packages/core/src/searchCoverage.ts` and ships as `/search-coverage.json`;
+// this reads it out of the build rather than keeping a second copy, for the same reason this file
+// doesn't reimplement `documentId`. Content routes are the built routes minus the families declared
+// `not-content` or `represented`; a family declared `gap` stays in the denominator on purpose, so a
+// known miss lowers the number instead of being defined away.
+function checkSearchCoverage() {
+  const declPath = join(DIST, "search-coverage.json");
+  if (!existsSync(declPath)) {
+    failures.push("no search-coverage.json in the build — the coverage declaration didn't emit");
+    return;
+  }
+  const { families, floor, shardGzipBudget } = JSON.parse(readFileSync(declPath, "utf-8"));
+
+  // Every shard: the network-global one at the root, plus one per selectable site.
+  const shardPaths = [join(DIST, "search-index.json")];
+  const networkDir = join(DIST, "network");
+  if (existsSync(networkDir)) {
+    for (const entry of readdirSync(networkDir)) {
+      const p = join(networkDir, entry, "search-index.json");
+      if (existsSync(p)) shardPaths.push(p);
+    }
+  }
+  if (shardPaths.length < 2) {
+    failures.push("no per-site search shard in the build — search would be reference-site-only again");
+    return;
+  }
+
+  const indexed = new Set();
+  let rows = 0;
+  for (const p of shardPaths) {
+    const raw = readFileSync(p);
+    const shard = JSON.parse(raw.toString("utf-8"));
+    if (shard.length === 0) {
+      failures.push(`${relative(DIST, p)} is empty — every built site must ship a non-empty index`);
+    }
+    rows += shard.length;
+    // A row's URL may carry an anchor (a section's TOC entry, an exhibit); the route is the part
+    // before it. Normalized with a trailing slash to match `routes()`.
+    for (const d of shard) {
+      const path = d.url.split("#")[0].split("?")[0];
+      indexed.add(path.endsWith("/") ? path : `${path}/`);
+    }
+    const gz = gzipSync(raw).length;
+    if (gz > shardGzipBudget) {
+      failures.push(
+        `${relative(DIST, p)} is ${(gz / 1024).toFixed(0)} KB gzipped, over the ` +
+          `${(shardGzipBudget / 1024).toFixed(0)} KB shard budget — a reader who typed two ` +
+          "characters pays for this",
+      );
+    }
+  }
+
+  // A `gap` family stays in the denominator — that is what makes it a gap rather than an excuse.
+  const excluded = families.filter((f) => f.verdict !== "gap").map((f) => new RegExp(f.pattern));
+  const content = all.map(({ route }) => (route === "" ? "/" : `/${route}/`));
+  const denominator = content.filter((r) => !excluded.some((re) => re.test(r)));
+  const covered = denominator.filter((r) => indexed.has(r));
+  const fraction = covered.length / denominator.length;
+
+  if (fraction < floor) {
+    const missed = denominator.filter((r) => !indexed.has(r));
+    failures.push(
+      `search covers ${(fraction * 100).toFixed(1)}% of ${denominator.length.toLocaleString("en-US")} ` +
+        `content routes, under the declared ${(floor * 100).toFixed(0)}% floor. ` +
+        `${missed.length.toLocaleString("en-US")} uncovered — index them, or declare the family in ` +
+        "packages/core/src/searchCoverage.ts with a reason:\n" +
+        missed
+          .slice(0, 8)
+          .map((r) => `      ${r}`)
+          .join("\n"),
+    );
+  } else {
+    const gaps = families.filter((f) => f.verdict === "gap").length;
+    console.log(
+      `check-routes: search covers ${(fraction * 100).toFixed(1)}% of ` +
+        `${denominator.length.toLocaleString("en-US")} content routes · ` +
+        `${rows.toLocaleString("en-US")} rows across ${shardPaths.length} shards · ` +
+        `${gaps} declared gap${gaps === 1 ? "" : "s"}`,
+    );
+  }
+}
+checkSearchCoverage();
 
 if (failures.length === 0) {
   console.log(`check-routes: OK — ${all.length.toLocaleString("en-US")} routes within budget.`);

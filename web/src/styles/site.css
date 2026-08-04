@@ -1001,6 +1001,95 @@ html[data-ssv2] .site-switcher > .switcher-menu:not(.switcher-menu-v2) { display
   margin-bottom: 0.8rem;
 }
 
+/* ---- Search scope + cross-references (#1890) ----
+   The index is sharded per site, so every surface has to say what it is searching: a reader who
+   gets no matches must be able to tell "not in this record" from "not in the one you're looking
+   at". The dropdown states it; the results page lets you change it. */
+.search-scope {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bosc-surface);
+  border-bottom: 1px solid var(--bosc-rule);
+  font-family: var(--bosc-mono, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: var(--fs-nano);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bosc-muted);
+}
+.search-scope strong { color: var(--bosc-ink); font-weight: 600; }
+/* A result's watershed point — rendered only under network scope, where rows can span sites. */
+.search-row-site {
+  flex: none;
+  font-family: var(--bosc-mono, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: var(--fs-nano);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--bosc-muted);
+  border: 1px solid var(--bosc-rule);
+  padding: 0 0.35em;
+}
+.search-page-scope {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: -0.6rem 0 1.2rem;
+  font-size: var(--fs-caption);
+  color: var(--bosc-muted);
+}
+.search-scope-label {
+  font-family: var(--bosc-mono, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: var(--fs-nano);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.search-scope-opts { display: flex; gap: -1px; }
+.search-scope-opt {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--bosc-rule);
+  background: transparent;
+  font: inherit;
+  font-size: var(--fs-caption);
+  color: var(--bosc-muted);
+  cursor: pointer;
+}
+.search-scope-opt + .search-scope-opt { margin-left: -1px; }
+.search-scope-opt:hover { background: var(--bosc-surface); color: var(--bosc-ink); }
+.search-scope-opt.is-on {
+  background: var(--bosc-forest);
+  border-color: var(--bosc-forest);
+  color: var(--bosc-bg);
+}
+.search-scope-opt:focus-visible { outline: 2px solid var(--bosc-forest); outline-offset: 1px; }
+/* The hand-off to /ask — offered when search comes back thin, because lexical title matching and
+   passage retrieval fail on different queries. */
+.search-ask {
+  display: block;
+  padding: var(--sp-2) var(--sp-3);
+  border-top: 1px solid var(--bosc-rule);
+  background: var(--td-tint);
+  text-decoration: none;
+  color: var(--bosc-ink);
+}
+.search-ask:hover { background: var(--bosc-surface); }
+.search-ask-kind {
+  display: block;
+  font-family: var(--bosc-mono, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: var(--fs-nano);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--bosc-forest);
+}
+.search-ask-lede { display: block; font-size: var(--fs-meta); color: var(--bosc-muted); line-height: 1.4; }
+.search-ask-q { display: block; margin-top: 0.2rem; font-weight: 600; color: var(--bosc-link); }
+.search-page-results .search-ask,
+.search-page-hint + .search-ask {
+  border: 1px solid var(--bosc-rule);
+  border-radius: 8px;
+}
+
 /* ---- Two-column layout: section TOC rail + content ---- */
 .layout {
   display: grid;
@@ -2090,6 +2179,16 @@ a.card:hover { border-color: var(--bosc-forest); background: var(--bosc-surface)
 .seg-row input:checked + label { background: var(--bosc-forest); color: var(--bosc-bg); font-weight: 600; }
 .seg-row input:focus-visible + label { outline: 2px solid var(--bosc-forest); outline-offset: 2px; }
 .submit-note { margin: 0.4rem 0 0; font-size: var(--fs-meta); line-height: 1.55; color: var(--bosc-muted); }
+/* Ask → search (#1890): the two retrieval systems fail on different queries, so each names the
+   other rather than leaving a reader at a dead end on its own terms. */
+.ask-crossref {
+  margin: 0 0 1.4rem;
+  padding-left: var(--sp-3);
+  border-left: 2px solid var(--bosc-rule);
+  font-size: var(--fs-meta);
+  line-height: 1.55;
+  color: var(--bosc-muted);
+}
 
 /* ---- Ask the corpus (/ask, Epic #207) ---- */
 .ask-card { gap: var(--sp-3); padding: var(--sp-5) var(--sp-5) var(--sp-5); background: var(--bosc-bg); border: 1px solid var(--bosc-rule); border-radius: 14px; box-shadow: 0 2px 7px rgba(20, 24, 40, 0.06); }
