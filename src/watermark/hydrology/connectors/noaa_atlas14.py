@@ -22,7 +22,8 @@ from typing import Any
 import httpx
 
 from watermark.config import Settings, get_settings
-from watermark.hydrology.connectors._cache import cached_get
+from watermark.connectors import CacheTrace
+from watermark.hydrology.connectors._cache import cached_get_traced, confidence_for
 from watermark.hydrology.model import DesignStorm, ProvenancedValue
 
 # Column order (return periods, years) and row order (durations) of the quantiles grid.
@@ -84,7 +85,9 @@ def _validate_grid(grid: list[list[float]]) -> list[list[float]]:
     return grid
 
 
-def _fetch_quantiles(settings: Settings, lat: float, lon: float) -> list[list[float]]:
+def _fetch_quantiles(
+    settings: Settings, lat: float, lon: float
+) -> tuple[list[list[float]], CacheTrace]:
     params: dict[str, str | float] = {
         "lat": round(lat, 4),
         "lon": round(lon, 4),
@@ -107,8 +110,8 @@ def _fetch_quantiles(settings: Settings, lat: float, lon: float) -> list[list[fl
         grid = ast.literal_eval(match.group(1))
         return [[float(v) for v in row] for row in grid]
 
-    payload = cached_get("noaa_atlas14", params, fetch, settings=settings)
-    return _validate_grid([[float(v) for v in row] for row in payload])
+    payload, trace = cached_get_traced("noaa_atlas14", params, fetch, settings=settings)
+    return _validate_grid([[float(v) for v in row] for row in payload]), trace
 
 
 def precip_frequency_grid(
@@ -116,7 +119,7 @@ def precip_frequency_grid(
 ) -> dict[str, dict[int, float]]:
     """The full Atlas-14 depth (in) table for a point: ``{duration: {return_period: depth}}``."""
     settings = settings or get_settings()
-    grid = _fetch_quantiles(settings, lat, lon)
+    grid, _ = _fetch_quantiles(settings, lat, lon)
     return {
         dur: {rp: grid[r][c] for c, rp in enumerate(_RETURN_PERIODS)}
         for r, dur in enumerate(_DURATIONS)
@@ -131,14 +134,21 @@ def design_storm(
     duration: str = "24-hr",
     settings: Settings | None = None,
 ) -> DesignStorm:
-    """Return one design storm (depth in inches) for a point, from NOAA Atlas-14."""
+    """Return one design storm (depth in inches) for a point, from NOAA Atlas-14.
+
+    Unlike a gage reading, a published precipitation-frequency estimate carries no
+    observation timestamp of its own — the volume it came from is the only edition there
+    is — so the retrieval time *is* the depth's date, and it is what ``asof`` records
+    (WS-21, #1621). The depth was previously undated entirely, which left a replayed
+    committed fixture indistinguishable from a fresh HDSC pull.
+    """
     settings = settings or get_settings()
     if return_period_yr not in _RETURN_PERIODS:
         raise ValueError(f"return period must be one of {_RETURN_PERIODS}")
     if duration not in _DURATIONS:
         raise ValueError(f"unknown duration {duration!r}")
 
-    grid = _fetch_quantiles(settings, lat, lon)
+    grid, trace = _fetch_quantiles(settings, lat, lon)
     row = _DURATIONS.index(duration)
     col = _RETURN_PERIODS.index(return_period_yr)
     depth = grid[row][col]
@@ -149,5 +159,7 @@ def design_storm(
             depth,
             "in",
             citation=f"NOAA Atlas-14 PDS {duration} {return_period_yr}-yr @ {lat:.3f},{lon:.3f}",
+            asof=trace.fetched_at,
+            confidence=confidence_for(replayed=trace.stale),
         ),
     )

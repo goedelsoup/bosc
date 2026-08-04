@@ -9,6 +9,7 @@ from __future__ import annotations
 import pytest
 
 from watermark.hydrology.model import ProvenancedValue
+from watermark.provenance import degrade
 
 
 def test_scalar_value_has_no_range() -> None:
@@ -107,3 +108,21 @@ def test_range_survives_round_trip() -> None:
     v = ProvenancedValue.derived(226.0, "acre", citation="x", rel_uncertainty=0.2)
     again = ProvenancedValue.model_validate(v.model_dump())
     assert again.low == v.low and again.high == v.high
+
+
+def test_degrade_steps_down_once_and_floors_at_low() -> None:
+    """One monotone step, so it composes with a caller's own down-weighting (WS-21, #1621).
+
+    Never upgrades, and never wraps around — applying it to an already-``low`` figure, or
+    twice, has to stay safe, because callers stack it on top of their own rules.
+    """
+    assert degrade("high") == "medium"
+    assert degrade("medium") == "low"
+    assert degrade("low") == "low"
+    assert degrade(degrade(degrade("high"))) == "low"
+
+
+def test_derived_takes_an_asof() -> None:
+    """A derivation over dated inputs is only true as of that window (WS-21, #1621)."""
+    v = ProvenancedValue.derived(4.5, "cfs", citation="NWIS min P7D", asof="2026-06-03T00:00:00Z")
+    assert v.asof == "2026-06-03T00:00:00Z"

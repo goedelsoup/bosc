@@ -36,7 +36,7 @@ def greenops_cached_get(
     ``key_params`` must exclude every credential — a secret may neither vary the cache key
     nor land in a committed fixture — and ``fetch`` is invoked only on the live path.
     """
-    payload, origin = cached_get_traced(
+    payload, trace = cached_get_traced(
         connector,
         key_params,
         fetch,
@@ -46,4 +46,4 @@ def greenops_cached_get(
         ttl_hours=settings.greenops_cache_ttl_hours,
         offline_error=GreenopsOfflineError,
     )
-    return cast("dict[str, Any]", payload), basis_for_origin(origin)
+    return cast("dict[str, Any]", payload), basis_for_origin(trace.origin)

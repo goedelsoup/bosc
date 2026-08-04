@@ -23,6 +23,7 @@ from __future__ import annotations
 import hashlib
 import json
 from collections.abc import Callable
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Literal
@@ -40,6 +41,51 @@ committed offline fixture; ``live`` — a fresh fetch. Callers that must disting
 #1643) read this via :func:`cached_get_traced`; everyone else uses :func:`cached_get`
 and never sees it.
 """
+
+
+@dataclass(frozen=True, slots=True)
+class CacheTrace:
+    """How a payload reached the caller: which rung served it, and *when it was retrieved*.
+
+    The retrieval time is recorded in every cache/fixture record but used to stop at this
+    module's edge, so a connector had no way to date the value it built (WS-21, #1621). A
+    committed fixture is a **recorded live pull** — evidentially it is a connector reading
+    taken at :attr:`fetched_at`, not a fabrication — but replaying one months later and
+    tagging the result as though it were current is a real provenance defect, sharpest for
+    a "right now" quantity like instantaneous streamflow. Surfacing the retrieval time is
+    what lets a connector date the reading honestly instead.
+
+    :attr:`ttl_hours` is the freshness window that governed *this* resolution — the
+    connector's own declaration of how long its payload may be served as current (NWIS's
+    instantaneous-values service declares one hour; the slow-moving default is a week).
+    Reusing it as the staleness yardstick is deliberate: it keeps :attr:`stale` an
+    invariant of the connector's stated currency rather than a per-call-site judgement
+    that can be forgotten. A connector whose quantity really does stay current longer
+    should say so by widening its TTL, where the claim is reviewable.
+    """
+
+    origin: CacheOrigin
+    fetched_at: str | None
+    """ISO-8601 retrieval time. ``None`` only for a fixture recorded before the convention."""
+    ttl_hours: int
+
+    @property
+    def age_hours(self) -> float | None:
+        """Hours since the payload was retrieved; ``None`` when it carries no usable time."""
+        return _age_hours(self.fetched_at)
+
+    @property
+    def stale(self) -> bool:
+        """True when the payload is older than the window its connector calls current.
+
+        A ``live`` fetch and the ``cache`` entry it wrote are fresh by construction (only a
+        within-TTL cache entry is served at all), so in practice this selects exactly the
+        replayed ``fixture`` rung — and an *undated* fixture is stale by default: absence of
+        a retrieval time cannot establish currency.
+        """
+        age = self.age_hours
+        return age is None or age > self.ttl_hours
+
 
 # The single source of truth for the cache freshness window. Subsystems whose
 # settings expose a ``*_cache_ttl_hours`` knob default it to this; the others
@@ -65,13 +111,27 @@ def _now() -> datetime:
     return datetime.now(UTC)
 
 
-def _is_fresh(fetched_at: str, ttl_hours: int) -> bool:
+def _age_hours(fetched_at: str | None) -> float | None:
+    """Hours since an ISO-8601 retrieval stamp, or ``None`` if it is absent/unparseable.
+
+    A stamp with no UTC offset is read as UTC rather than raising: every writer here emits
+    an aware timestamp, but a hand-recorded fixture may not, and a naive one used to blow up
+    the subtraction with ``TypeError`` (which :func:`_is_fresh` did not catch).
+    """
+    if not fetched_at:
+        return None
     try:
         ts = datetime.fromisoformat(fetched_at)
     except ValueError:
-        return False
-    age_h = (_now() - ts).total_seconds() / 3600.0
-    return age_h <= ttl_hours
+        return None
+    if ts.tzinfo is None:
+        ts = ts.replace(tzinfo=UTC)
+    return (_now() - ts).total_seconds() / 3600.0
+
+
+def _is_fresh(fetched_at: str, ttl_hours: int) -> bool:
+    age_h = _age_hours(fetched_at)
+    return age_h is not None and age_h <= ttl_hours
 
 
 def cached_get(
@@ -114,21 +174,21 @@ def cached_get_traced(
     fixtures_dir: Path | None = None,
     ttl_hours: int = DEFAULT_CACHE_TTL_HOURS,
     offline_error: type[OfflineError] = OfflineError,
-) -> tuple[Any, CacheOrigin]:
-    """:func:`cached_get`, additionally reporting *which rung* served the payload.
+) -> tuple[Any, CacheTrace]:
+    """:func:`cached_get`, additionally reporting *how* the payload was resolved.
 
     Identical resolution and side effects — this is the implementation :func:`cached_get`
-    delegates to — but returns ``(payload, origin)`` so a caller can tell a replayed
-    committed **fixture** (a sample) from a real **live** pull or its **cache** entry.
-    Only a caller that publishes that distinction should need it; see
-    :data:`CacheOrigin`.
+    delegates to — but returns ``(payload, trace)`` so a caller can tell a replayed
+    committed **fixture** from a real **live** pull or its **cache** entry, and can read
+    the payload's own retrieval time. Only a caller that publishes that distinction
+    should need it; see :class:`CacheTrace`.
     """
     key = cache_key(params)
     path = _cache_path(cache_dir, connector, key)
 
     cached = _read(path)
     if cached is not None and _is_fresh(cached.get("fetched_at", ""), ttl_hours):
-        return cached["payload"], "cache"
+        return cached["payload"], CacheTrace("cache", cached.get("fetched_at"), ttl_hours)
 
     if offline:
         # Resolution order (per the subsystem CLAUDE.md): fresh cache → committed
@@ -139,7 +199,9 @@ def cached_get_traced(
         if fixtures_dir is not None:
             fixture = _read(fixtures_dir / connector / f"{key}.json")
             if fixture is not None:
-                return fixture["payload"], "fixture"
+                return fixture["payload"], CacheTrace(
+                    "fixture", fixture.get("fetched_at"), ttl_hours
+                )
         if cached is not None:
             log.info("connector.cache.stale_offline", connector=connector, key=key)
         raise offline_error(
@@ -149,8 +211,9 @@ def cached_get_traced(
 
     log.info("connector.fetch", connector=connector, key=key)
     payload = fetch()
-    _write(path, {"params": params, "fetched_at": _now().isoformat(), "payload": payload})
-    return payload, "live"
+    fetched_at = _now().isoformat()
+    _write(path, {"params": params, "fetched_at": fetched_at, "payload": payload})
+    return payload, CacheTrace("live", fetched_at, ttl_hours)
 
 
 def _read(path: Path) -> dict[str, Any] | None:

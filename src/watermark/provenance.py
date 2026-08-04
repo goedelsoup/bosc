@@ -37,6 +37,23 @@ def as_confidence(value: object) -> Confidence:
     raise ValueError(f"invalid confidence {value!r}; expected one of high|medium|low")
 
 
+# The confidence ladder, walked downward. `low` is the floor — there is no rung below
+# "stated, don't build on it", and a degradation must never wrap around to `high`.
+_ONE_STEP_DOWN: dict[Confidence, Confidence] = {"high": "medium", "medium": "low", "low": "low"}
+
+
+def degrade(confidence: Confidence) -> Confidence:
+    """One step down the confidence ladder; ``low`` is the floor.
+
+    For a value whose *grounding* is intact but whose claim is weakened by something the
+    caller has established — a connector reading replayed from a recording older than its
+    freshness window (WS-21, #1621), say. A single monotone step is the point: it composes
+    with a caller's own down-weighting instead of overriding it, and it can never upgrade a
+    value, so applying it twice (or to an already-``low`` figure) is safe.
+    """
+    return _ONE_STEP_DOWN[confidence]
+
+
 def source_is_verified(source_kind: SourceKind) -> bool:
     """True for a value grounded in a record or a live gauge (the ``[verified]`` tag).
 

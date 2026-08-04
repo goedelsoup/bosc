@@ -35,7 +35,7 @@ import yaml
 from watermark.config import Settings, get_settings
 from watermark.hsg import DUAL_HSG_RULE, DrainageCondition, hsg_code, is_dual_hsg, resolve_hsg
 from watermark.hydrology import geo, network
-from watermark.hydrology.connectors._cache import HydroOfflineError
+from watermark.hydrology.connectors._cache import HydroOfflineError, confidence_for
 from watermark.hydrology.connectors.noaa_atlas14 import design_storm
 from watermark.hydrology.connectors.ssurgo import SsurgoError, dominant_hsg
 from watermark.hydrology.lowflow import low_flow_context, low_flow_for
@@ -296,6 +296,11 @@ def _resolve_hsg(footprint_path: Path, *, settings: Settings, live: bool) -> Hsg
                     f"SSURGO dominant HSG {group} ({shares}) over "
                     f"{survey.n_points} footprint grid points — {survey.source}"
                 ),
+                # SDA stamps no edition on its response, so the pull date is the rating's
+                # only date, and a survey replayed from a committed fixture is a recording
+                # rather than a fresh read of the current edition (WS-21, #1621).
+                asof=survey.retrieved_at,
+                confidence=confidence_for(replayed=survey.replayed),
             )
         except (HydroOfflineError, SsurgoError) as exc:
             log.info("hydro.storm.hsg_fallback", error=str(exc).splitlines()[0])
