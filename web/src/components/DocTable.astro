@@ -8,6 +8,7 @@
 // link — they are simply not links to a page. Hiding them would understate what the custodian
 // produced.
 import { folderPathOf } from "@watermark/core/docBrowse";
+import { extractionMark, RECORD_ROUTE_BASE, siteExtractions } from "@watermark/core/docExtraction";
 import { nonRoutableReason } from "@watermark/core/docRouting";
 import { docPermalinkForRel } from "@watermark/core/documentId";
 import { docAccess, docApiUrl } from "@watermark/core/docView";
@@ -34,22 +35,30 @@ const NON_ROUTABLE_LABEL = {
 } as const;
 
 // The client filter re-renders rows from `catalog.json` and needs the same site-prefixed
-// permalink base this SSR pass uses.
+// permalink bases this SSR pass uses — the document handle base, and the record base its
+// extraction chips link through (#1898).
 const docBase = withSite("/doc/");
+const recBase = withSite(RECORD_ROUTE_BASE);
 
 // Rows carry no `data-folder`: on a deep production the trail runs ~200 bytes, and the row
 // already prints it in its own cell — which the no-catalog fallback in `doc-catalog.ts` reads
 // instead. Duplicating it would put the corpus's longest strings on every page three times.
+//
+// `data-extraction` IS carried, unlike the folder: it is a fixed 9-or-10-character word rather
+// than the corpus's longest string, and without it the column can't be sorted and the offline
+// fallback can't filter on it.
+const extractions = siteExtractions();
 const rows = entries.map((entry) => ({
   entry,
   folder: folderPathOf(entry.rel).join(" / "),
   access: docAccess(entry),
   excluded: nonRoutableReason(entry),
+  extraction: extractionMark(entry.rel, extractions.get(entry.rel)),
 }));
 ---
 
 <div class="dtable doccat">
-  <table data-doc-base={docBase}>
+  <table data-doc-base={docBase} data-rec-base={recBase}>
     <thead>
       <tr>
         <th data-sort="name" aria-sort="none">File</th>
@@ -57,16 +66,18 @@ const rows = entries.map((entry) => ({
         <th data-sort="type" aria-sort="none">Type</th>
         <th class="num" data-sort="size" data-numeric aria-sort="none">Size</th>
         <th data-sort="access" aria-sort="none">Access</th>
+        <th data-sort="extraction" aria-sort="none">Extraction</th>
       </tr>
     </thead>
     <tbody>
       {
-        rows.map(({ entry, folder, access, excluded }) => (
+        rows.map(({ entry, folder, access, excluded, extraction }) => (
           <tr
             data-name={entry.name.toLowerCase()}
             data-type={entry.render_class}
             data-access={access}
             data-size={entry.size_bytes}
+            data-extraction={extraction.status}
           >
             <td class="file">
               {excluded ? (
@@ -86,6 +97,19 @@ const rows = entries.map((entry) => ({
             <td>
               <span class={`dchip ${ACCESS_CHIP[access].cls}`}>{ACCESS_CHIP[access].label}</span>
             </td>
+            {/* A catalogued-only file gets a bare dash, not a chip: 3,195 of Lima's 3,247 rows
+                are in that state, so chipping every one of them would spend the column's ink —
+                and ~40 bytes a row on the longest listings — on the negative. The dashes ARE the
+                finding; the chips are the exceptions. */}
+            {extraction.href ? (
+              <td class="doccat-extraction">
+                <a class="dchip dchip--extracted" href={withSite(extraction.href)}>
+                  {extraction.label}
+                </a>
+              </td>
+            ) : (
+              <td class="doccat-none">—</td>
+            )}
           </tr>
         ))
       }

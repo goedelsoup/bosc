@@ -21,6 +21,7 @@ import {
   pageSlice,
   summarizeCollections,
 } from "@watermark/core/docBrowse";
+import { countExtracted, extractionSummary, siteExtractions } from "@watermark/core/docExtraction";
 import { formatBytes, type DocumentCollectionItem, type DocumentEntry } from "@watermark/core/feeds";
 import { facetAvailable } from "@watermark/core/readiness";
 import { withSite } from "@watermark/core/site";
@@ -47,6 +48,11 @@ const base = `/site/documents/${collection.slug}`;
 const listed: DocumentEntry[] = layout === "flat" ? collection.entries : entriesFor(collection, null);
 const pages = pageCount(listed.length, DOCS_PER_PAGE);
 const rows = pageSlice(listed, 1, DOCS_PER_PAGE);
+
+// The extraction ratio (#1898) is stated for the WHOLE collection, not the loose files a
+// containers-layout landing happens to table — the reader is standing on `legal`, and "8 of
+// 1,732 extracted" is the answer to the question they're asking here.
+const extracted = countExtracted(collection.entries, siteExtractions());
 ---
 
 <Base
@@ -57,8 +63,9 @@ const rows = pageSlice(listed, 1, DOCS_PER_PAGE);
   <article class="prose">
     <h1>{collection.title}</h1>
     <p class="section-lead">
-      {summary.count.toLocaleString("en-US")} documents · {formatBytes(summary.bytes)} · catalogued
-      from <code>data/documents/{collection.slug}/</code>
+      {summary.count.toLocaleString("en-US")} documents · {formatBytes(summary.bytes)} · <span
+        class="doccat-extracted-count">{extractionSummary(extracted, summary.count)}</span
+      > · catalogued from <code>data/documents/{collection.slug}/</code>
     </p>
     {collection.description && <p class="doccoll-desc">{collection.description}</p>}
   </article>

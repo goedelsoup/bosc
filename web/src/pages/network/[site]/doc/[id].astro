@@ -19,12 +19,15 @@ import DocViewer from "~/components/DocViewer.astro";
 import SiblingNav from "~/components/SiblingNav.astro";
 import { activeSite, hasFeed, loadFeed } from "@watermark/core/bundle";
 import { collectionLayout, containerOf, folderPathOf, summarizeCollections } from "@watermark/core/docBrowse";
+import { siteExtractions } from "@watermark/core/docExtraction";
 import { isRoutableDoc } from "@watermark/core/docRouting";
 import { documentId } from "@watermark/core/documentId";
 import { docAccess } from "@watermark/core/docView";
 import { type DocumentCollectionItem, type DocumentEntry, formatBytes } from "@watermark/core/feeds";
 import { facetAvailable } from "@watermark/core/readiness";
+import { groupLabel } from "@watermark/core/records";
 import { siteBase } from "@watermark/core/routes";
+import { withSite } from "@watermark/core/site";
 
 type DocProps = {
   entry: DocumentEntry;
@@ -90,6 +93,12 @@ const accessChip = {
 
 const folder = folderPathOf(entry.rel);
 
+// Extraction (#1898): the records read from this document, via the `records` feed's
+// `source_doc_rel` join. The reverse direction — a record naming its source — already existed;
+// this is the one that was missing, and it is the difference between "we hold this file" and
+// "we have read this file".
+const records = siteExtractions().get(entry.rel) ?? [];
+
 // The permalink is flat by design, so the trail has to be told where the file sits: the two
 // levels the URL drops are exactly the ones a reader needs to climb back to (#1889). Trail hrefs
 // are pre-deploy-base (`Breadcrumb` applies it), so this is the raw peer of `withSite`.
@@ -131,6 +140,15 @@ const listingLabel = containerHref ? (containerSlug as string) : collectionTitle
     <p class="docpage-meta">
       <span class="dchip dchip--type">{entry.render_class}</span>
       <span class={`dchip ${accessChip.cls}`}>{accessChip.label}</span>
+      {
+        records.length > 0 ? (
+          <a class="dchip dchip--extracted" href="#extraction">
+            extracted
+          </a>
+        ) : (
+          <span class="dchip dchip--lfs">not extracted</span>
+        )
+      }
       <span class="docpage-dim">{entry.media_type}</span>
       <span class="docpage-dim">{formatBytes(entry.size_bytes)}</span>
     </p>
@@ -145,6 +163,37 @@ const listingLabel = containerHref ? (containerSlug as string) : collectionTitle
     }
 
     <DocViewer entry={entry} />
+
+    <section class="docpage-extraction" id="extraction">
+      <h2 class="docpage-custody-head">What has been read from it</h2>
+      {
+        records.length > 0 ? (
+          <>
+            <p class="docpage-prov">
+              {records.length === 1
+                ? "This document has been through the extract stage. The structured record read from it:"
+                : `This document has been through the extract stage. The ${records.length} structured records read from it:`}
+            </p>
+            <ul class="docpage-records">
+              {records.map((record) => (
+                <li>
+                  <a href={withSite(record.href)}>{record.title}</a>
+                  <span class="docpage-dim">{groupLabel(record.group)}</span>
+                  <code>data/extracted/{record.rel}</code>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <p class="docpage-prov">
+            <strong>Catalogued, not yet extracted.</strong> The file is held, served and citable,
+            but nothing has been read out of it into a structured record — so nothing on this site
+            asserts anything sourced to it. That is a statement about our reading of the corpus, not
+            about the document: it may be routine, or it may be the one nobody has opened yet.
+          </p>
+        )
+      }
+    </section>
 
     <section class="docpage-custody">
       <h2 class="docpage-custody-head">Where this came from</h2>

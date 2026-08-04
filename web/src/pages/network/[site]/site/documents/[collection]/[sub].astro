@@ -28,6 +28,7 @@ import {
   pageSlice,
   summarizeCollections,
 } from "@watermark/core/docBrowse";
+import { countExtracted, extractionSummary, siteExtractions } from "@watermark/core/docExtraction";
 import { formatBytes, type DocumentCollectionItem, type DocumentEntry } from "@watermark/core/feeds";
 import { facetAvailable } from "@watermark/core/readiness";
 
@@ -87,6 +88,9 @@ const rows = pageSlice(entries, page, DOCS_PER_PAGE);
 const folders = folderFacets(entries);
 const bytes = entries.reduce((n, e) => n + e.size_bytes, 0);
 const heading = isContainer ? (containerSlug as string) : `${collectionTitle} — page ${page}`;
+// Scoped to `entries` — the production for a container landing, the whole collection for a
+// page-N of a flat one. Either way it describes exactly what this landing's facet filters.
+const extracted = countExtracted(entries, siteExtractions());
 
 // The trail's collection crumb wants the collection's title, and a container crumb its
 // as-received directory name verbatim — neither is derivable from the slug (#1889).
@@ -106,8 +110,9 @@ const trailLabels: Record<string, string> = {
     {
       isContainer ? (
         <p class="section-lead">
-          {entries.length.toLocaleString("en-US")} documents · {formatBytes(bytes)} · as received
-          under{" "}
+          {entries.length.toLocaleString("en-US")} documents · {formatBytes(bytes)} ·{" "}
+          <span class="doccat-extracted-count">{extractionSummary(extracted, entries.length)}</span> ·
+          as received under{" "}
           <code>
             data/documents/{collectionSlug}/{containerSlug}/
           </code>
@@ -115,7 +120,8 @@ const trailLabels: Record<string, string> = {
       ) : (
         <p class="section-lead">
           Page {page} of {pages} · {entries.length.toLocaleString("en-US")} documents in{" "}
-          {collectionTitle}
+          {collectionTitle} ·{" "}
+          <span class="doccat-extracted-count">{extractionSummary(extracted, entries.length)}</span>
         </p>
       )
     }
