@@ -26,6 +26,13 @@
 /directory/*            /network/:splat                                                         301
 /directory              /                                                                      301
 
+# The two section hubs became lens landings (#1915, epic #1911). Their LEAVES did not move — every
+# /environment/<facet> and /economy/<facet> keeps its address — so these rules carry NO `/*`: a
+# splat here would fire before the real leaf pages and 301 the whole section away. `:site` matches
+# exactly one segment, and the trailing slash is what the retired `index.astro` routes emitted.
+/network/:site/environment/   /network/:site/lens/environment                                  301
+/network/:site/economy/       /network/:site/lens/economy                                      301
+
 # /bosc -> /network/<id>, and the story moved to /stories/project-bosc (chapters flattened).
 /bosc/start             /network/american-sugar-creek-allen-co/stories/project-bosc            301
 /bosc/intro             /network/american-sugar-creek-allen-co/stories/project-bosc            301

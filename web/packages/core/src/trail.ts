@@ -71,6 +71,16 @@ interface TrailNode {
   fromTitle?: boolean;
   /** Consume every remaining segment into this one crumb (Astro's `[...rest]` routes). */
   rest?: boolean;
+  /**
+   * This segment's LANDING lives at a different address than its own path (#1915). Given the
+   * accumulated href for the segment, returns where its crumb should point.
+   *
+   * Two users, both the same shape: `/environment/` and `/economy/` retired into their lens
+   * landings and 301 there, but their LEAVES kept their addresses. So the crumb still has to name
+   * the section a reader is standing in, while linking somewhere that exists — which is exactly
+   * the case `unlinked` would over-solve by dropping the "up" affordance altogether.
+   */
+  landing?: (href: string) => string;
   children?: Record<string, TrailNode>;
 }
 
@@ -136,6 +146,8 @@ const SITE_CHILDREN: Record<string, TrailNode> = {
   economy: {
     label: "The economy",
     slash: true,
+    // Its landing is the Economy lens now (#1915); the leaves below kept their `/economy/` prefix.
+    landing: (href) => href.replace(/\/economy$/, "/lens/economy"),
     children: {
       // Re-homed from `/environment/` (#1893): a labor baseline filed under the environment was
       // the one leaf whose route prefix contradicted the section its own page declares.
@@ -146,6 +158,10 @@ const SITE_CHILDREN: Record<string, TrailNode> = {
   environment: {
     label: "The environment",
     slash: true,
+    // Its landing is the Environment lens now (#1915). NOTE the leaves do not all belong to that
+    // lens — map, imagery, and enclave are the LAND lens's — but a crumb names where a reader is
+    // in the URL tree, not which reading brought them, so the section stays their ancestor.
+    landing: (href) => href.replace(/\/environment$/, "/lens/environment"),
     children: {
       air: { label: "Air dispersion" },
       enclave: { label: "The federal enclave" },
@@ -160,6 +176,14 @@ const SITE_CHILDREN: Record<string, TrailNode> = {
     },
   },
   leads: { label: "Open leads" },
+  // The five per-site lens landings (#1915). `/environment/` and `/economy/` 301 into two of them;
+  // the leaf routes under those prefixes did NOT move, so their nodes above are untouched.
+  //
+  // `unlinked` because there is no per-site lens INDEX: the site-tier tab's children are the five
+  // landings themselves (that is the #1893 prefix/section agreement this issue inherited), so the
+  // segment is a namespace. The whole-network index at the root `/lens/` is a different scope and
+  // would be a misleading "up" from inside a site.
+  lens: { label: "Lenses", unlinked: true, children: { [PARAM]: { label: lensLabel } } },
   reports: {
     label: "Reports",
     slash: true,
@@ -390,7 +414,11 @@ export function trailFor(pathname: string, opts: TrailOptions = {}): Crumb[] {
       crumbs.push({ label });
       break;
     }
-    crumbs.push(child.unlinked ? { label } : { label, href: child.slash ? `${href}/` : href });
+    if (child.unlinked) {
+      crumbs.push({ label });
+      continue;
+    }
+    crumbs.push({ label, href: child.landing ? child.landing(href) : child.slash ? `${href}/` : href });
   }
 
   return crumbs;

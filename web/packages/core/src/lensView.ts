@@ -207,6 +207,39 @@ function metricCell(slug: string, metric: LensMetric, r: LensResolvers): Cell {
   return total > 0 ? textCell("on file") : textCell("—", true);
 }
 
+/** One lens metric read for a single site — the site-tier peer of a scorecard column (#1915). */
+export interface LensMetricReading {
+  label: string;
+  gloss: string;
+  kind: LensMetric["kind"];
+  /** The rendered figure: a count, "on file", or "—" where nothing was measured. */
+  text: string;
+  /** Whether the site actually committed anything here — what a lede leads with, or declines to. */
+  present: boolean;
+}
+
+/**
+ * What this lens's record consists of on one site — the same measurement the network scorecard
+ * makes, for a single row.
+ *
+ * The site-tier lens landings lead with this because it is the only thing a lens can honestly say
+ * about a site before its own reading exists: *how much of this dimension the record carries here*.
+ * It is a statement about the corpus, cited by construction (manifest row counts), and it reaches
+ * no verdict — which is the whole constraint (#1911).
+ */
+export function lensMetricReadings(
+  id: LensId,
+  slug: string,
+  countOf: LensResolvers["countOf"],
+): LensMetricReading[] {
+  const r: LensResolvers = { tierOf: () => null, statusOf: () => "locked", countOf };
+  return LENS_METRICS[id].map((m) => {
+    const cell = metricCell(slug, m, r);
+    const text = cell.text ?? "—";
+    return { label: m.label, gloss: m.gloss, kind: m.kind, text, present: text !== "—" && text !== "0" };
+  });
+}
+
 /** The lens table's columns: the site, its build phase, then one column per declared metric. */
 function lensColumns(metrics: readonly LensMetric[]): { cols: readonly ColumnSpec[]; fr: string[] } {
   return {

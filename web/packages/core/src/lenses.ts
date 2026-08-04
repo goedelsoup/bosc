@@ -98,6 +98,16 @@ export interface LensFacet {
    * `RECORD_FACETS` so the two can't drift.
    */
   facet?: RecordFacet;
+  /**
+   * Feeds that gate whether the lens landing OFFERS this door at all (#1915): the door is shown
+   * when the site's bundle carries **any** of them. Omitted where the leaf is unconditional —
+   * either it renders its own honest absence (hydrology, RSEI, the labor baseline) or a
+   * {@link facet} declaration already carries the gate.
+   *
+   * This is a *door* gate, not a page gate: the leaf route itself is unchanged and still handles
+   * its own empty state. What it prevents is the landing advertising a door onto a lock.
+   */
+  requires?: readonly string[];
 }
 
 /** A lens's mark on the forest data ramp. No evidence-palette fill — see the module docstring. */
@@ -120,6 +130,13 @@ export interface Lens {
   feeds: readonly string[];
   /** The readiness SECTIONS whose gate this lens inherits (composed by `sectionStatus`). */
   sections: readonly ReadinessSection[];
+  /**
+   * Whose lock copy the lens borrows when it is locked on a site (#1915) — the peer of
+   * `FacetDeclaration.section`. A lens has no `SECTION_META` of its own because it is a view, not
+   * a gate; the heading still reads the LENS's name, so the borrowed part is only the "what lands
+   * here once we have sources" line.
+   */
+  lockSection: ReadinessSection;
   /** The activation DOMAINS that must carry evidence here (composed by `domainPresent`). */
   domains: readonly Domain[];
   /** The existing leaf routes this lens gathers. */
@@ -137,6 +154,7 @@ export const LENSES: Record<LensId, Lens> = {
       "A campus is first a land transaction. The parcels, the assemblage, and the footprint on the ground — who held the land before, what it was zoned for, and how the pieces were put together. Deeds, plats, and dated aerials are where an assemblage becomes legible after the fact.",
     feeds: ["places", "geo", "enclave"],
     sections: [],
+    lockSection: "places",
     domains: ["places"],
     facets: [
       {
@@ -154,11 +172,13 @@ export const LENSES: Record<LensId, Lens> = {
         label: "Imagery",
         route: "/environment/imagery",
         blurb: "Dated aerials — the ground before and after",
+        requires: ["geo/imagery"],
       },
       {
         label: "Federal enclave",
         route: "/environment/enclave",
         blurb: "Land held by the United States and off the county tax rolls (the DoD MIRTA register)",
+        requires: ["enclave"],
       },
     ],
     accent: { mark: "#1f6f4a", token: "--data-1" },
@@ -172,17 +192,20 @@ export const LENSES: Record<LensId, Lens> = {
       "Load sits upstream of both the environmental draw and the fiscal trade — the megawatts decide the water, and the transmission decides the bill. The balancing authority, the interconnection, the fuel mix behind the load, and what households on the same grid already pay.",
     feeds: ["grid", "consumer-energy", "energy-burden", "facility"],
     sections: ["economy"],
+    lockSection: "economy",
     domains: ["facility"],
     facets: [
       {
         label: "The grid backdrop",
         route: "/economy/grid",
         blurb: "Whose grid, cited — the balancing authority, the queue, and the fuel mix",
+        requires: ["grid"],
       },
       {
         label: "Consumer energy & burden",
         route: "/economy/economics-baseline#consumer-energy",
         blurb: "What households on this grid already pay, before the campus is added",
+        requires: ["consumer-energy", "energy-burden"],
       },
     ],
     accent: { mark: "#3f8a63", token: "--data-2" },
@@ -198,6 +221,9 @@ export const LENSES: Record<LensId, Lens> = {
       "hydrology-scenarios",
       "drawdown",
       "dewatering",
+      // Both halves of the flow read: the reach geometry the particles advect along, and the
+      // routed peak that sets their density and speed.
+      "reach-network",
       "routed-hydrograph",
       "water-seasonal-field",
       "thermal",
@@ -206,6 +232,7 @@ export const LENSES: Record<LensId, Lens> = {
       "greenops",
     ],
     sections: ["environment"],
+    lockSection: "environment",
     domains: [],
     facets: [
       {
@@ -217,24 +244,33 @@ export const LENSES: Record<LensId, Lens> = {
         label: "Groundwater",
         route: "/environment/groundwater",
         blurb: "Well drawdown and construction dewatering",
+        requires: ["drawdown", "dewatering"],
       },
       {
         label: "Seasonal withdrawal",
         route: "/environment/seasonal",
         blurb: "Month-by-month climograph — the summer window, not the annual average",
+        requires: ["water-seasonal-field"],
       },
       {
         label: "Water flow",
         route: "/environment/flow",
         blurb: "Animated reach-network flow through the routed hydrograph",
+        requires: ["reach-network"],
       },
       {
         label: "Thermal / §316(a)",
         route: "/environment/thermal",
         blurb: "Discharge heat against the temperature criterion",
+        requires: ["thermal"],
       },
       { label: "RSEI / toxics", route: "/environment/rsei", blurb: "EPA toxic-release inventory" },
-      { label: "Air dispersion", route: "/environment/air", blurb: "AERMOD screening field" },
+      {
+        label: "Air dispersion",
+        route: "/environment/air",
+        blurb: "AERMOD screening field",
+        requires: ["air-dispersion-field"],
+      },
     ],
     accent: { mark: "#5fa07f", token: "--data-3" },
   },
@@ -247,6 +283,7 @@ export const LENSES: Record<LensId, Lens> = {
       "Both sides of the ledger, each cited to the instrument that created it: the abatement and the PILOT on one side, and on the other the local employment baseline the jobs claim has to be measured against.",
     feeds: ["economics-baseline", "greenops"],
     sections: ["economy"],
+    lockSection: "economy",
     domains: [],
     facets: [
       {
@@ -266,6 +303,7 @@ export const LENSES: Record<LensId, Lens> = {
       "The documents, the meetings, the filings, and the records requests behind them — the decision's paper trail, and the gaps in it named as gaps. An absent record is a finding, not a blank.",
     feeds: ["documents", "records", "meetings", "exhibits", "people", "timeline"],
     sections: [],
+    lockSection: "record",
     domains: ["record"],
     facets: [
       {

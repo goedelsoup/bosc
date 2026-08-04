@@ -127,15 +127,18 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
       "about indexing, so it is named here rather than guessed at.",
   },
   {
-    pattern: "^/network/[^/]+/(environment/(enclave|groundwater)|site/records/how-to-read|submit)/$",
+    pattern: "^/network/[^/]+/(site/records/how-to-read|submit)/$",
     label: "Pages the nav model doesn't carry",
     verdict: "gap",
     note:
-      "#1908. Real per-site pages reachable only from inside another page — the enclave and groundwater " +
-      "reads, the record's how-to-read primer, the per-site submit form. Everything else at this " +
-      "level is indexed by walking `siteTabs()`, on the rule that search reaches whatever the " +
-      "chrome navigates to; these are the routes that rule exposes as missing FROM THE NAV. " +
-      "Hardcoding them here would hide a wayfinding bug (#1893's territory) behind a search fix.",
+      "#1908. Real per-site pages reachable only from inside another page — the record's " +
+      "how-to-read primer and the per-site submit form. Everything else at this level is indexed " +
+      "by walking `siteTabs()`, on the rule that search reaches whatever the chrome navigates to; " +
+      "these are the routes that rule exposes as missing FROM THE NAV. Hardcoding them here would " +
+      "hide a wayfinding bug behind a search fix. The enclave and groundwater reads LEFT this " +
+      "family at #1915: they are lens facets now (Land and Environment), so a landing navigates to " +
+      "them and the same rule reaches them — the gap closed by fixing the wayfinding, which is " +
+      "what declaring it rather than indexing around it was for.",
   },
   {
     pattern: "^/(about/(data|sustainability|catalog|contributing)|privacy|network/connect)/$",
@@ -161,17 +164,19 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
 /**
  * The fraction of content routes that must carry a search row.
  *
- * **98%, against 98.4% measured** — 3,787 of 3,848 content routes, up from 13%. The ~60-route
- * shortfall is exactly the four `gap` families above, still in the denominator where they belong,
- * so the floor cannot reach 1.0 until they are closed. Raise it when they are; that is the point of
- * leaving them visible rather than reclassifying them.
+ * **98.5%, against 98.7% measured** — up from 98.2% at #1890 and from 13% before it. The remaining
+ * shortfall is exactly the `gap` families above, still in the denominator where they belong, so the
+ * floor cannot reach 1.0 until they are closed. Raise it when they are; that is the point of leaving
+ * them visible rather than reclassifying them, and #1915 is the first time it has paid — the enclave
+ * and groundwater reads left the "nav model doesn't carry them" family by being CARRIED (they are
+ * lens facets now), not by being re-declared.
  *
  * The margin is deliberately thin. A new page family that nobody indexes will breach this, which is
  * the intended pressure: adding routes should force a choice between indexing them and writing down
  * why not, and a floor with comfortable headroom would let coverage rot back toward 13% one page at
  * a time — which is precisely how it got there.
  */
-export const COVERAGE_FLOOR = 0.98;
+export const COVERAGE_FLOOR = 0.985;
 
 /**
  * A ceiling on the largest emitted shard, gzipped, in bytes.

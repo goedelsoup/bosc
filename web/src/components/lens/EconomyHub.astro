@@ -1,0 +1,184 @@
+---
+/**
+ * The **Economy** lens's hub body (#1915) — lifted verbatim out of the retired
+ * `/network/<site>/economy/` index, whose route now 301s to `/lens/economy`.
+ *
+ * The same lift as `EnvironmentHub.astro`: the head and the door grid belong to the lens landing
+ * now. What stays is the ground-measured lede — the QCEW/Census labor baseline and the cited grid
+ * service chain, both on the BACKDROP floor and keyed to the place rather than to a disclosed
+ * campus, so a facility-less peer still gets a real read here.
+ */
+import FigureStat from "~/components/FigureStat.astro";
+import HubLede from "~/components/HubLede.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { EconomicBaseline } from "@watermark/core/feeds";
+import { buildGridBackdrop } from "@watermark/core/gridBackdrop";
+import { sectorEmployment, topSectors } from "@watermark/core/hubLede";
+import { facilityLoadAvailable } from "@watermark/core/readiness";
+import { withBase, withSite } from "@watermark/core/site";
+import type { FigureStatData } from "@watermark/core/viz";
+import { activeStory, chapterHref } from "@watermark/core/walk";
+
+const { slug } = Astro.props as { slug: string };
+const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
+const area = eb?.area_name ?? "the corridor";
+const jobs = sectorEmployment(eb);
+const sectorCount = eb?.latest.sectors?.length ?? 0;
+const num = (n: number): string => n.toLocaleString("en-US");
+
+// The lede (#1891): the section named its two baselines on cards and showed neither. A site
+// missing BOTH feeds gets the honest absence; nothing is borrowed.
+const grid = buildGridBackdrop(slug);
+// Ranked by location quotient, not headcount: the LQ is what says the economy is *concentrated*
+// in a sector rather than merely large. Sectors whose LQ the feed omits drop out.
+const concentrated = topSectors(eb, 3);
+const utilityGwh = grid?.denominators.find((d) => d.key === "utility") ?? null;
+const ledeFigures: FigureStatData[] = [
+  ...(jobs != null
+    ? [
+        {
+          label: "Covered jobs",
+          value: num(Math.round(jobs)),
+          evidence: "verified" as const,
+          sub: `${sectorCount} NAICS sectors · ${eb?.latest.year}`,
+        },
+      ]
+    : []),
+  ...(eb?.latest.avg_annual_pay?.value != null
+    ? [
+        {
+          label: "Average annual pay",
+          value: `$${num(Math.round(eb.latest.avg_annual_pay.value))}`,
+          evidence: "verified" as const,
+          sub: "BLS QCEW · all ownerships",
+        },
+      ]
+    : []),
+  ...(utilityGwh
+    ? [
+        {
+          label: "Utility retail sales",
+          value: num(Math.round(utilityGwh.gwh)),
+          unit: "GWh/yr",
+          evidence: "verified" as const,
+          sub: grid?.utilityName ?? "EIA-861",
+        },
+      ]
+    : []),
+];
+
+// The three destinations the retired economy hub doored to that are NOT lens facets, kept as
+// in-page cross-links rather than lost with the hub (#1893: a contextual cross-link is not a nav
+// surface, which is exactly what makes it the right home for a demoted destination).
+//
+//  - End-use & workloads is facility-gated (#1630): it renders only where the facility is `live`
+//    — an instrument-grounded load, not a screening [inference] — so a `live → seeded` regression
+//    drops it rather than presenting a screening bracket as a settled campus load.
+//  - The cost-of-opacity chapter is THIS site's own (#1256), present only when its surfaced story
+//    actually carries one, so it never leaks into Lima's.
+const story = activeStory();
+const costChapter = story?.chapters.find((c) => c.slug === "cost");
+const related: { label: string; href: string; note: string }[] = [
+  ...(facilityLoadAvailable(slug)
+    ? [
+        {
+          label: "End-use & workloads",
+          href: withSite("/reports/end-use-and-workloads"),
+          note: "where the campus load actually goes",
+        },
+      ]
+    : []),
+  ...(story && costChapter
+    ? [
+        {
+          label: "The cost of opacity",
+          href: chapterHref(story, costChapter.slug),
+          note: "the deal as the public can see it — a chapter of the story",
+        },
+      ]
+    : []),
+  {
+    label: "Demand & public benefits",
+    href: withBase("/docs/economics"),
+    note: "the prose companion — the method behind the figures",
+  },
+];
+---
+
+<HubLede
+  label="The ground, measured"
+  absent={eb || grid
+    ? null
+    : `${area} has neither a labor baseline nor a grid profile in its bundle yet, so this lens can't state what the deal would land on — and it won't state another county's. Both are connector-pulled from public series (BLS QCEW, US Census, EIA-861); they land the first time this site is exported with its FIPS and its serving utility resolved.`}
+  cite={[
+    eb && `Employment, pay, and location quotients: BLS QCEW + US Census, ${eb.latest.year}.`,
+    // The DENOMINATOR's own citation (EIA-861), not `chain[0].cite` — a chain row's citation is
+    // the document that identifies the utility, which on Lima is a paragraph of testimony.
+    utilityGwh && `Retail sales: ${utilityGwh.cite}.`,
+  ]
+    .filter(Boolean)
+    .join(" ")}
+  href={withSite("/economy/economics-baseline")}
+  cta="Open the baseline"
+>
+  <p class="hublede-say">
+    {jobs != null ? (
+      <Fragment><span class="num">{num(Math.round(jobs))}</span> covered jobs across <span class="num">{sectorCount}</span> sectors in {area}</Fragment>
+    ) : (
+      <Fragment>{area}'s labor baseline is not in the bundle yet</Fragment>
+    )}{grid && (
+      <Fragment>, on <strong>{grid.utilityName}</strong>'s wires inside {grid.baName}</Fragment>
+    )}. That's the denominator every megawatt and every job claim gets read against.
+  </p>
+  {
+    concentrated.length > 0 && (
+      <div class="hublede-chips">
+        {concentrated.map((s) => (
+          <span class="hublede-chip">
+            {s.sector_name} <span class="hublede-chip-n">{s.location_quotient?.value?.toFixed(1)}× LQ</span>
+          </span>
+        ))}
+      </div>
+    )
+  }
+  {
+    ledeFigures.length > 0 && (
+      <div class="hublede-figures">
+        {ledeFigures.map((s) => (
+          <FigureStat stat={s} size="sm" />
+        ))}
+      </div>
+    )
+  }
+</HubLede>
+
+<p class="econ-related">
+  <span class="econ-related-l">Also on this ground</span>
+  {
+    related.map((r, i) => (
+      <Fragment>
+        {i > 0 && <span class="econ-related-sep"> · </span>}
+        <a href={r.href}>{r.label}</a>
+        <span class="econ-related-n"> — {r.note}</span>
+      </Fragment>
+    ))
+  }
+</p>
+
+<style>
+  .econ-related {
+    margin: 1rem 0 0;
+    max-width: 52rem;
+    font-size: 0.79rem;
+    line-height: 1.6;
+    color: var(--bosc-faint);
+  }
+  .econ-related-l {
+    display: block;
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+</style>

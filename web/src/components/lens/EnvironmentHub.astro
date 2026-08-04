@@ -1,0 +1,107 @@
+---
+/**
+ * The **Environment** lens's hub body (#1915) — the water reading lifted verbatim out of the
+ * retired `/network/<site>/environment/` index, whose route now 301s to `/lens/environment`.
+ *
+ * Only the wrapper moved. The `<Base>`, the head, and the door grid belong to the lens landing
+ * now — the doors are built there from `lenses.ts`'s declared facets rather than from a second
+ * hand-kept array, since `LensFacet.requires` carries exactly the feed conditions this page used
+ * to apply inline. What stays is the reading that was always this section's own.
+ */
+import FigureStat from "~/components/FigureStat.astro";
+import HubLede from "~/components/HubLede.astro";
+import { buildDilution, dilutionMultiple } from "@watermark/core/dilution";
+import { fmtMult } from "@watermark/core/format";
+import { withSite } from "@watermark/core/site";
+import { siteForSlug } from "@watermark/core/sites";
+import type { FigureStatData } from "@watermark/core/viz";
+
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug);
+
+// The lede (#1891). The 7Q10 used to be a decoration in the corner of the head — "Ottawa River ·
+// 7Q10 ≈ 0.2 cfs", a string gated to the reference build because it was Lima's number written
+// out. It's the whole thesis of the section, so it leads the page now, and every figure comes
+// from THIS site's `hydrology-scenarios` feed via `buildDilution` — including the river's name
+// (#1891 added `receivingWater`). A site whose feed carries no buildout scenario reads
+// `fromFeed: false` and gets the honest absence; nothing here falls back to Lima's floors.
+const dil = buildDilution();
+const annual = dil.floors.find((f) => f.key === "annual") ?? null;
+const river = dil.receivingWater;
+// The multiple is only meaningful against a floor the feed actually cites — and `dilutionMultiple`
+// returns Infinity on a zero floor (the river is gone), which is a real reading but not a figure.
+const multiple = annual && annual.cfs > 0 ? dilutionMultiple(dil.drawAtBuildoutCfs, annual.cfs) : null;
+const cfs = (n: number): string => (n >= 10 ? n.toFixed(0) : n.toFixed(n < 1 ? 2 : 1));
+
+const ledeFigures: FigureStatData[] = [
+  ...(dil.ottawaLiveCfs != null
+    ? [
+        {
+          label: "Flow today",
+          value: cfs(dil.ottawaLiveCfs),
+          unit: "cfs",
+          evidence: "verified" as const,
+          sub: "USGS gage",
+        },
+      ]
+    : []),
+  ...(annual
+    ? [
+        {
+          label: "Design low flow",
+          value: cfs(annual.cfs),
+          unit: "cfs",
+          evidence: "verified" as const,
+          sub: annual.label,
+        },
+      ]
+    : []),
+  ...(dil.drawAtBuildoutCfs > 0
+    ? [
+        {
+          label: "Buildout draw",
+          value: cfs(dil.drawAtBuildoutCfs),
+          unit: "cfs",
+          evidence: "inference" as const,
+          basis: "modeled" as const,
+          sub: `${dil.maxCoolingMgd} MGD cooling`,
+        },
+      ]
+    : []),
+  ...(dil.discharge.effluentPct > 0
+    ? [
+        {
+          label: "Effluent share",
+          value: String(dil.discharge.effluentPct),
+          unit: "%",
+          evidence: "verified" as const,
+          sub: "at design low flow",
+        },
+      ]
+    : []),
+];
+---
+
+<HubLede
+  label="The reading right now"
+  absent={dil.fromFeed
+    ? null
+    : `No buildout cooling scenario has been run for ${site?.place ?? "this site"} yet, so this lens has no dilution reading of its own — and it will not borrow the reference build's river. The doors below open what the site's bundle does carry; the water screen turns on when a cited design low flow and a disclosed cooling demand land.`}
+  cite={`Every figure from this site's hydrology-scenarios feed — the cited design low flows${dil.ottawaLiveCfs != null ? ", the USGS gage" : ""}, and the modeled buildout draw. ${dil.discharge.cite}.`}
+  href={withSite("/environment/hydrology")}
+  cta="Open the water screen"
+>
+  <p class="hublede-say">
+    {river ?? "The receiving water"} runs at
+    <span class="num">{annual ? ` ${cfs(annual.cfs)} cfs` : " a low flow the record has not cited"}</span>
+    {annual && " when the drought design condition bites"} — and the campus's modeled buildout
+    draw of <span class="num">{cfs(dil.drawAtBuildoutCfs)} cfs</span>
+    {multiple !== null && (
+      <Fragment> is <strong>{fmtMult(multiple)} the whole river</strong> at that floor</Fragment>
+    )}. Downstream it is already
+    <span class="num"> {dil.discharge.effluentPct}%</span> treated effluent.
+  </p>
+  <div class="hublede-figures">
+    {ledeFigures.map((s) => <FigureStat stat={s} size="sm" />)}
+  </div>
+</HubLede>

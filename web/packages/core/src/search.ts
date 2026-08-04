@@ -58,6 +58,7 @@ import {
 import { blob } from "./format";
 import { scopedLegal } from "./legal";
 import { DOMAINS } from "./methodology";
+import { LENS_ORDER, LENSES } from "./lenses";
 import { getSection, networkTabs, platformLinks, sections, siteTabs, type NavItem } from "./nav";
 import { NARRATIVE } from "./narrative";
 import { facetAvailable, RECORD_FACETS, sectionStatus, type RecordFacet } from "./readiness";
@@ -564,21 +565,30 @@ export function buildSiteSearchIndex(slug: string): SearchDoc[] {
       }
     }
 
-    // Everything else the site chrome navigates to: the environment and economy themes, the
-    // reports' companion pages, the story's chapters. Hand-authored routes with no feed behind
-    // them — see `navDestinations`. Read inside `runWithSite`, so `siteTabs()` is already this
-    // site's, and already collapsed to a landing link wherever a section is locked.
+    // Everything else the site chrome navigates to: the five lens landings, the reports' companion
+    // pages, the story's chapters. Hand-authored routes with no feed behind them — see
+    // `navDestinations`. Read inside `runWithSite`, so `siteTabs()` is already this site's.
     const seen = new Set(docs.map((d) => d.url));
-    for (const dest of navDestinations(siteTabs())) {
-      if (!dest.href.startsWith(`${base}/`) || seen.has(dest.href)) continue;
-      seen.add(dest.href);
-      push({
-        title: dest.label,
-        url: dest.href,
-        section: getSection("site").label,
-        text: blob(dest.blurb),
-        kind: "Page",
-      });
+    const push_ = (label: string, href: string, text: string): void => {
+      if (!href.startsWith(`${base}/`) || seen.has(href)) return;
+      seen.add(href);
+      push({ title: label, url: href, section: getSection("site").label, text: blob(text), kind: "Page" });
+    };
+    for (const dest of navDestinations(siteTabs())) push_(dest.label, dest.href, dest.blurb ?? "");
+
+    // The lens FACETS (#1915). These twelve `/environment/*` and `/economy/*` leaves used to reach
+    // the index through the Reference dropdown that listed them; the Lenses tab carries five
+    // landings instead, and the leaves are reached from the landing bodies. The standing rule is
+    // "if the chrome navigates a reader somewhere, search can find it" — a landing is chrome, so
+    // reading the lens model here is the same move as reading the nav model above, not an
+    // exception to it. Anchored facets (`…#consumer-energy`) resolve to their page, which is
+    // already indexed under its own label, so `seen` drops them.
+    for (const id of LENS_ORDER) {
+      const lens = LENSES[id];
+      for (const f of lens.facets) {
+        if (f.route.includes("#")) continue;
+        push_(f.label, `${base}${f.route}`, `${f.blurb} ${lens.name} ${lens.question}`);
+      }
     }
 
     return docs;

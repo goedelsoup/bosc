@@ -11,6 +11,7 @@ import {
   LENS_METRICS,
   lensCount,
   lensFootNote,
+  lensMetricReadings,
   lensNetworkCounts,
   type LensResolvers,
   lensSiteState,
@@ -158,6 +159,32 @@ describe("measured zero vs unmeasured dash", () => {
     expect(metrics("ref").map((c) => c.text)).toEqual(["on file", "on file"]);
     expect(metrics("worked").map((c) => c.text)).toEqual(["—", "—"]);
     for (const c of [...metrics("ref"), ...metrics("worked")]) expect(c.pill).toBeUndefined();
+  });
+});
+
+describe("lensMetricReadings — the same measurement, for one site (#1915)", () => {
+  const countOf = (slug: string, feed: string) => (TIERS[slug] === null ? null : (COUNTS[slug]?.[feed] ?? 0));
+
+  it("reports each declared metric with its gloss and its figure", () => {
+    const r = lensMetricReadings("disclosure", "ref", countOf);
+    expect(r.map((x) => x.label)).toEqual(LENS_METRICS.disclosure.map((m) => m.label));
+    expect(r.map((x) => x.text)).toEqual(["3", "3", "3"]);
+    expect(r.every((x) => x.present)).toBe(true);
+    for (const x of r) expect(x.gloss.length).toBeGreaterThan(0);
+  });
+
+  it("treats a measured zero as measured but not as carried", () => {
+    // The distinction a site-tier lede rests on: `worked` exported and carries none, so the figure
+    // is a real 0 (never a dash), and the lede must not claim the lens is answered here.
+    const r = lensMetricReadings("disclosure", "worked", countOf);
+    expect(r.map((x) => x.text)).toEqual(["0", "0", "0"]);
+    expect(r.every((x) => x.present)).toBe(false);
+  });
+
+  it("dashes an unexported site rather than zeroing it", () => {
+    const r = lensMetricReadings("disclosure", "unbuilt", countOf);
+    expect(r.map((x) => x.text)).toEqual(["—", "—", "—"]);
+    expect(r.every((x) => x.present)).toBe(false);
   });
 });
 

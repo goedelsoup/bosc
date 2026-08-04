@@ -1,0 +1,94 @@
+---
+/**
+ * The lede for a lens landing that inherits no section hub (#1915) — Land, Power, Disclosure.
+ *
+ * #1891's standing rule is that no hub may be a heading plus a door grid: a reader who clicks in
+ * must get information, not signposts. Environment and Economy satisfy it with the readings their
+ * retired section hubs already carried (the dilution screen, the labor/grid baseline). The other
+ * three lenses have no synthesized per-site reading yet — and inventing one would be exactly the
+ * fabrication this project refuses — so what they lead with is the honest thing a lens CAN say:
+ * **how much of this dimension the record carries here**, measured from the site's own manifest
+ * and set against the rest of the network.
+ *
+ * That is a statement about the corpus, cited by construction, and it reaches no verdict. When the
+ * next real reading for one of these lenses exists, it belongs above this, not instead of it.
+ */
+import FigureStat from "~/components/FigureStat.astro";
+import HubLede from "~/components/HubLede.astro";
+import { LENSES, type LensId } from "@watermark/core/lenses";
+import { lensMetricReadings, type LensResolvers, lensNetworkCounts } from "@watermark/core/lensView";
+import { lensStatus } from "@watermark/core/readiness";
+import { withBase } from "@watermark/core/site";
+import { SITES, siteFeedCount, siteForSlug, siteRollup } from "@watermark/core/sites";
+import type { FigureStatData } from "@watermark/core/viz";
+
+interface Props {
+  slug: string;
+  id: LensId;
+}
+const { slug, id } = Astro.props as Props;
+const lens = LENSES[id];
+const site = siteForSlug(slug);
+
+const readings = lensMetricReadings(id, slug, siteFeedCount);
+const carried = readings.filter((r) => r.present);
+
+const resolvers: LensResolvers = {
+  tierOf: (s) => siteRollup(s).tier,
+  statusOf: (s) => lensStatus(s, id),
+  countOf: siteFeedCount,
+};
+const counts = lensNetworkCounts(SITES, resolvers);
+
+// Every measurement is shown, including a real 0 — a measured zero is a finding about the record
+// and is never collapsed into the dash that means "nothing was exported here" (#1861).
+const figures: FigureStatData[] = readings
+  .filter((r) => r.kind === "count" && r.text !== "—")
+  .map((r) => ({
+    label: r.label,
+    value: r.text,
+    evidence: "verified" as const,
+    sub: "rows in this site's bundle",
+  }));
+// Presence metrics both ways: what is on file, and what is not. Showing only the hits would make
+// an empty lens look like a short one.
+const presence = readings.filter((r) => r.kind === "presence");
+---
+
+<HubLede
+  label="What the record carries here"
+  absent={carried.length === 0
+    ? `Nothing on this dimension has been exported for ${site?.place ?? "this site"} yet, so this lens has no reading of its own — and it will not borrow another site's. The doors below open what the bundle does carry; each of ${lens.feeds.join(", ")} turns this on when it lands.`
+    : null}
+  cite={`Row counts read from ${site?.place ?? "this site"}'s own exported bundle manifest at build time — ${readings.map((r) => `${r.label.toLowerCase()}: ${r.gloss}`).join("; ")}.`}
+  href={withBase(`/lens/${id}`)}
+  cta={`See every site on the ${lens.name} lens`}
+>
+  <p class="hublede-say">
+    {lens.question} On {site?.place ?? "this site"} the record answers on
+    <span class="num"> {carried.length}</span> of this lens's <span class="num">{readings.length}</span>
+    {readings.length === 1 ? " measure" : " measures"} — the figures below. Across the network,
+    <span class="num"> {counts["on-record"]}</span> of {SITES.length} sites carry this lens at all,
+    which is a measure of the corpus and not of the places.
+  </p>
+  {
+    figures.length > 0 && (
+      <div class="hublede-figures">
+        {figures.map((s) => (
+          <FigureStat stat={s} size="sm" />
+        ))}
+      </div>
+    )
+  }
+  {
+    presence.length > 0 && (
+      <div class="hublede-chips">
+        {presence.map((r) => (
+          <span class="hublede-chip">
+            {r.label} <span class="hublede-chip-n">{r.present ? "on file" : "not on the record here"}</span>
+          </span>
+        ))}
+      </div>
+    )
+  }
+</HubLede>

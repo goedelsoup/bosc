@@ -125,6 +125,29 @@ describe("the facets a lens gathers", () => {
     }
   });
 
+  it("gates a door with one rule, never two (#1915)", () => {
+    // `facet` and `requires` are alternative gates — a record facet's availability already folds in
+    // its feed check (`facetStatus`), so a leaf carrying both would be asking twice and could
+    // disagree with itself. The landing's `offered()` reads them in that order and would silently
+    // ignore the second.
+    for (const f of allFacets) {
+      expect(f.facet !== undefined && f.requires !== undefined, `${f.lens} · ${f.label}`).toBe(false);
+      if (f.requires) expect(f.requires.length, `${f.lens} · ${f.label}`).toBeGreaterThan(0);
+    }
+  });
+
+  it("requires only feeds the lens declares", () => {
+    // Same rule the network scorecard's columns hold: a door may not turn on a feed the lens does
+    // not say it reads. `geo/imagery` is the one prefixed name, and `geo` is what land declares.
+    for (const f of allFacets) {
+      const declared = new Set(LENSES[f.lens].feeds);
+      for (const feed of f.requires ?? []) {
+        const root = feed.split("/")[0];
+        expect(declared.has(feed) || declared.has(root), `${f.lens} · ${f.label} → ${feed}`).toBe(true);
+      }
+    }
+  });
+
   it("leaves the long-form reports at Reports (#1893)", () => {
     // #1893 pulled `/reports/*` out of the Reference dropdown because a destination linked from
     // everywhere is emphasized nowhere. The lens layer must not quietly put them back.

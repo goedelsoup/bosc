@@ -36,13 +36,14 @@ function pageFiles(): string[] {
  *  reports hub's older register. Both are "a grid of cards that go somewhere else". */
 const GRID_MARKERS = ['class="hub-grid"', 'class="doors"'];
 
-/** The hubs the audit named (#1891). Asserted present so a route move can't hollow the crawl. */
+/** The hubs the audit named (#1891). Asserted present so a route move can't hollow the crawl.
+ *  The environment and economy entries are the LENS LANDING that inherited them (#1915): both
+ *  section hubs retired into `/lens/<id>`, carrying their ledes with them as components. */
 const NAMED_HUBS = [
   "src/pages/docs/index.astro",
   "src/pages/wiki/index.astro",
   "src/pages/network/[site]/site/index.astro",
-  "src/pages/network/[site]/economy/index.astro",
-  "src/pages/network/[site]/environment/index.astro",
+  "src/pages/network/[site]/lens/[lens].astro",
   "src/pages/network/[site]/reports/index.astro",
 ];
 
@@ -53,6 +54,34 @@ interface Hub {
   lede: number;
 }
 
+/**
+ * Where a template's lede is, following ONE level of local component import (#1915).
+ *
+ * The rule is about the page a reader gets, not about which file the markup was typed in. The
+ * lens landing renders one of three lede components by id — the two that inherited the retired
+ * section hubs, plus the record-shape lede the other three lead with — so a literal-substring
+ * scan would call a page bare that ships a lede on every one of its five routes. Resolving the
+ * import keeps the guard on the rendered shape; it still fails a page whose imports carry none.
+ */
+function ledeOffset(src: string): number {
+  const own = src.indexOf("<HubLede");
+  if (own >= 0) return own;
+  let earliest = -1;
+  for (const m of src.matchAll(/^import (\w+) from "~\/(components\/[^"]+\.astro)";$/gm)) {
+    const [, name, rel] = m;
+    let componentSrc: string;
+    try {
+      componentSrc = readFileSync(join("src", rel), "utf8");
+    } catch {
+      continue;
+    }
+    if (!componentSrc.includes("<HubLede")) continue;
+    const used = src.indexOf(`<${name}`, src.indexOf("---", 3));
+    if (used >= 0 && (earliest < 0 || used < earliest)) earliest = used;
+  }
+  return earliest;
+}
+
 function hubs(): Hub[] {
   return pageFiles()
     .map((file) => {
@@ -60,7 +89,7 @@ function hubs(): Hub[] {
       const grid = GRID_MARKERS.map((m) => src.indexOf(m))
         .filter((i) => i >= 0)
         .sort((a, b) => a - b)[0];
-      return grid === undefined ? null : { file, grid, lede: src.indexOf("<HubLede") };
+      return grid === undefined ? null : { file, grid, lede: ledeOffset(src) };
     })
     .filter((h): h is Hub => h !== null);
 }
