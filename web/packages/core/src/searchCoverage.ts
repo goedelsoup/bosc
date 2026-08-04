@@ -29,9 +29,9 @@
  * to stop.
  */
 
-import { siteBase } from "./routes";
+import { storyBase } from "./routes";
 import { searchShardRefs } from "./search";
-import { SITES } from "./sites";
+import { comingSoonStories, SITES } from "./sites";
 
 /** How a family of built routes relates to the search index. */
 export type CoverageVerdict = "not-content" | "represented" | "gap";
@@ -50,16 +50,44 @@ export interface CoverageFamily {
 }
 
 /**
- * The `/network/<id>` segments that DO ship a search shard, as a regex alternation.
+ * The **interior** routes of every held story — its table of contents and its chapters — as one
+ * `represented` family (#1907).
  *
- * Derived from the registry through `siteBase`, never written out: the URL id differs from the
- * registry slug for the reference site (`lima` → `american-sugar-creek-allen-co`), and promoting a
- * site to `selectable` must not leave a hardcoded list behind describing the network as it was.
- * "Add a site by registering a profile; never re-hardcode a Lima/Allen-County value."
+ * A held story (`comingSoon`, #1526) serves the identical `StoryComingSoon` interstitial at every
+ * one of its routes: the on-ramp, `contents`, and each chapter. Search indexes it once, at the
+ * story root (`storyRows` in `search.ts`), and the rest of its routes hold nothing that row doesn't
+ * reach — which is what `represented` means. Indexing all eight of Findlay's would put eight
+ * near-identical "coming soon" results in one result set.
+ *
+ * Derived from the registry rather than written out, for the reason `searchShardRefs()` is: the
+ * story root differs from the slug for the reference site (`lima` → `american-sugar-creek-allen-co`),
+ * and a story that goes readable must stop being represented here on the same edit that makes its
+ * chapters real prose — not whenever someone remembers this list. Returns NO family when nothing is
+ * held, because an empty alternation (`^(?:)/[^/]+/$`) would quietly exclude every two-segment route
+ * in the build.
+ *
+ * A `hidden` story (#1256) is deliberately not covered: it publishes routes and advertises nothing,
+ * so its chapters would surface as undeclared misses and the build would say so. That is the right
+ * failure — "reachable by direct URL, just not advertised" is a decision about what the network
+ * advertises, and it belongs in this file, written down, rather than pre-guessed here.
  */
-const SHARDED_SITE_IDS = SITES.filter((s) => s.selectable)
-  .map((s) => siteBase(s.slug).replace("/network/", ""))
-  .join("|");
+function heldStoryInteriors(): CoverageFamily[] {
+  const roots = SITES.flatMap((s) => comingSoonStories(s.slug).map((ref) => storyBase(s.slug, ref.codename)));
+  if (roots.length === 0) return [];
+  return [
+    {
+      pattern: `^(?:${roots.join("|")})/[^/]+/$`,
+      label: "A held story's interior routes",
+      verdict: "represented",
+      note:
+        "#1907. A `comingSoon` story serves ONE interstitial — title, dek, 'nothing in the walk " +
+        "is readable yet' — at every route it emits, so its contents page and its chapters hold " +
+        "nothing their story root doesn't. That root IS indexed, as `<title> — coming soon` " +
+        "(`storyRows`, kind `Story`), which is where a reader searching the walk's name lands. " +
+        "The chapters return to the denominator on the edit that makes them readable.",
+    },
+  ];
+}
 
 export const COVERAGE_FAMILIES: CoverageFamily[] = [
   {
@@ -113,19 +141,7 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
     verdict: "not-content",
     note: "Search finding itself is noise in every result set that contains the word.",
   },
-  {
-    pattern: `^/network/(?!${SHARDED_SITE_IDS})[^/]+/`,
-    label: "A non-selectable site's own pages",
-    verdict: "gap",
-    note:
-      "#1907. Search is sharded per SELECTABLE site, and a site can publish pages before it is " +
-      "selectable — Findlay's `flagpole` story is eight routes of real, reachable prose today, " +
-      "because story ROUTE emission gates on story registration, not on switchability (#1466). " +
-      "So those pages exist, are linked from that site's home, and cannot be searched. Closing " +
-      "this means either shipping a shard for every route-emitting site or folding their few " +
-      "pages into the network shard; both are decisions about what the network advertises, not " +
-      "about indexing, so it is named here rather than guessed at.",
-  },
+  ...heldStoryInteriors(),
   {
     pattern: "^/network/[^/]+/(environment/(enclave|groundwater)|site/records/how-to-read|submit)/$",
     label: "Pages the nav model doesn't carry",
@@ -148,7 +164,16 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
 /**
  * The fraction of content routes that must carry a search row.
  *
- * **98.1%, against 98.2% measured** — 3,782 of 3,853 content routes, up from 13%.
+ * **98.4%, against 98.5% measured** — 3,784 of 3,842 content routes, up from 13%.
+ *
+ * What closing #1907 bought is the counter-example to the #1906 note below, and worth the
+ * arithmetic. That family named eight routes that were **routed and unindexed** — Findlay's held
+ * `flagpole` walk — so it really was holding the number down, and closing it moved the fraction a
+ * third of a point: two story roots became rows, and eleven interior routes left the denominator as
+ * `represented`. Eleven, not seven, because the fix keyed off what a story *publishes* rather than
+ * off `selectable`, and the same rule reached Fort Wayne's held `project-zodiac` — five routes on a
+ * SELECTABLE site that were missing for exactly the same reason. That the fix landed on a site the
+ * issue never mentioned is the evidence that `selectable` was never the axis.
  *
  * A note on what closing #1906 bought, because the arithmetic is instructive. The `Peer-only wiki
  * entities` family was declared a `gap` on the theory that it "holds the measured number down until
@@ -161,17 +186,17 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
  * depress the number when the content it names is routed but unindexed** — worth remembering before
  * the next one is written down.
  *
- * The remaining shortfall is the three surviving `gap` families (#1907, #1908) plus the routes no
- * family has declared yet — the reports/exhibits/legal/people landings on the peers promoted since
- * #1890, and the wiki's own hypothesis and open-questions pages. Those are the ones a raise is
- * really waiting on.
+ * The remaining shortfall is the two surviving `gap` families (#1908) plus the routes no family has
+ * declared yet — the reports/exhibits/legal/people landings on the peers promoted since #1890, and
+ * the wiki's own hypothesis and open-questions pages. Those are the ones a raise is really waiting
+ * on.
  *
  * The margin is deliberately thin. A new page family that nobody indexes will breach this, which is
  * the intended pressure: adding routes should force a choice between indexing them and writing down
  * why not, and a floor with comfortable headroom would let coverage rot back toward 13% one page at
  * a time — which is precisely how it got there.
  */
-export const COVERAGE_FLOOR = 0.981;
+export const COVERAGE_FLOOR = 0.984;
 
 /**
  * A ceiling on the largest emitted shard, gzipped, in bytes.

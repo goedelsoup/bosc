@@ -16,13 +16,16 @@ import { facetAvailable } from "./readiness";
 import { networkEntities } from "./networkEntities";
 import { LIMA_SLUG, siteBase } from "./routes";
 import { buildNetworkSearchIndex, buildSiteSearchIndex, searchShardRefs, type SearchDoc } from "./search";
-import { SITES } from "./sites";
+import { comingSoonStories, SITES } from "./sites";
+import { storyFor } from "./walk";
 
 const SELECTABLE = SITES.filter((s) => s.selectable).map((s) => s.slug);
+/** Every site that ships a shard — the selectable ones plus any peer publishing a walk (#1907). */
+const SHARDED = searchShardRefs().map((r) => r.slug);
 
 /** Every row of every shard, as the client sees it under network scope. */
 function wholeIndex(): SearchDoc[] {
-  return [...buildNetworkSearchIndex(), ...SELECTABLE.flatMap((slug) => buildSiteSearchIndex(slug))];
+  return [...buildNetworkSearchIndex(), ...SHARDED.flatMap((slug) => buildSiteSearchIndex(slug))];
 }
 
 function wellFormed(docs: SearchDoc[]): void {
@@ -127,11 +130,11 @@ describe("the network-global shard", () => {
 });
 
 describe("each site's own shard", () => {
-  it("ships a non-empty index for every selectable site", () => {
+  it("ships a non-empty index for every site that ships a shard", () => {
     // The acceptance criterion. Before #1890 there was one index built with no site argument, so
     // three of the four selectable sites shipped nothing of their own at all.
-    expect(SELECTABLE.length).toBeGreaterThan(1);
-    for (const slug of SELECTABLE) {
+    expect(SHARDED.length).toBeGreaterThan(1);
+    for (const slug of SHARDED) {
       const docs = buildSiteSearchIndex(slug);
       expect(docs.length, `"${slug}" ships an empty search index`).toBeGreaterThan(0);
       wellFormed(docs);
@@ -139,7 +142,7 @@ describe("each site's own shard", () => {
   });
 
   it("attributes every row to its own site, and roots every URL in that site's base", () => {
-    for (const slug of SELECTABLE) {
+    for (const slug of SHARDED) {
       const base = siteBase(slug);
       for (const d of buildSiteSearchIndex(slug)) {
         expect(d.site, `${slug}: row "${d.title}" carries no site`).toBe(slug);
@@ -161,7 +164,7 @@ describe("each site's own shard", () => {
     // on everything EXCEPT those — rather than on a list of "landing" kinds — means a NEW kind that
     // accidentally duplicates a destination fails here instead of being quietly exempt.
     const SHARED_DESTINATION = new Set(["Timeline", "Meeting"]);
-    for (const slug of SELECTABLE) {
+    for (const slug of SHARDED) {
       const seen = new Map<string, string>();
       const dupes: string[] = [];
       for (const d of buildSiteSearchIndex(slug)) {
@@ -179,7 +182,7 @@ describe("each site's own shard", () => {
     // points at them. A search result is a claim that this record is this site's.
     const owner = new Map<string, string>();
     const collisions: string[] = [];
-    for (const slug of SELECTABLE) {
+    for (const slug of SHARDED) {
       for (const d of buildSiteSearchIndex(slug)) {
         const first = owner.get(d.url);
         if (first === undefined) owner.set(d.url, slug);
@@ -203,7 +206,7 @@ describe("each site's own shard", () => {
       Document: "documents",
       Collection: "documents",
     };
-    for (const slug of SELECTABLE) {
+    for (const slug of SHARDED) {
       for (const d of buildSiteSearchIndex(slug)) {
         const facet = KIND_FACET[d.kind];
         if (!facet) continue;
@@ -233,7 +236,7 @@ describe("each site's own shard", () => {
   });
 
   it("is deterministic across runs", () => {
-    for (const slug of SELECTABLE) {
+    for (const slug of SHARDED) {
       expect(buildSiteSearchIndex(slug)).toEqual(buildSiteSearchIndex(slug));
     }
   });
@@ -295,9 +298,14 @@ describe("the document layer (#1890 over #1887)", () => {
 });
 
 describe("the shard manifest the client reads", () => {
-  it("names exactly the selectable sites, each at its own base", () => {
+  it("names exactly the sites with rows of their own, each at its own base", () => {
+    // The invariant #1907 turns on: the advertised list and the sites that actually have something
+    // to say are the SAME set. A site advertised without rows is a fetch of an empty file (and a
+    // `check-routes` failure); a site with rows and no ref is content nothing can reach — which is
+    // exactly what sharding on `selectable` did to Findlay.
     const refs = searchShardRefs();
-    expect(refs.map((r) => r.slug).sort()).toEqual([...SELECTABLE].sort());
+    const withRows = SITES.filter((s) => buildSiteSearchIndex(s.slug).length > 0).map((s) => s.slug);
+    expect(refs.map((r) => r.slug).sort()).toEqual([...withRows].sort());
     for (const r of refs) {
       expect(r.path).toBe(`${siteBase(r.slug)}/search-index.json`);
       expect(r.label.length).toBeGreaterThan(0);
@@ -307,8 +315,78 @@ describe("the shard manifest the client reads", () => {
   it("is what a site promoted to selectable gets for free", () => {
     // The list is derived from the registry, so promotion makes a site searchable with no edit
     // here — the failure mode being guarded against is a hand-maintained list that silently omits
-    // the newest site.
-    expect(searchShardRefs().length).toBe(SITES.filter((s) => s.selectable).length);
+    // the newest site. Every selectable site is in it; the peers publishing a walk are the extras.
+    for (const slug of SELECTABLE) expect(SHARDED).toContain(slug);
+    expect(SHARDED.length).toBeGreaterThanOrEqual(SELECTABLE.length);
+  });
+
+  it("reaches past `selectable` — a peer that publishes a walk ships one too (#1907)", () => {
+    // The finding. Route emission gates on story REGISTRATION, not switchability (#1466), so a peer
+    // can publish pages while not being selectable; Findlay does. Asserted as a property of the
+    // registry, not as "findlay", so promoting it doesn't quietly make this vacuous.
+    const peers = SITES.filter((s) => !s.selectable && comingSoonStories(s.slug).length > 0);
+    expect(peers.length, "no non-selectable site publishes a walk — this asserts nothing").toBeGreaterThan(0);
+    for (const p of peers) expect(SHARDED).toContain(p.slug);
+  });
+});
+
+describe("a peer's shard (#1907)", () => {
+  const peers = SITES.filter((s) => !s.selectable && SHARDED.includes(s.slug));
+
+  it("holds its stories and nothing else — no row for a page it doesn't build", () => {
+    // Every `network/[site]/…` route but the story's comes from `selectableSitePaths`, so a peer's
+    // record, timeline, documents and study are not built. Its BUNDLE may carry all of them — the
+    // peers are exported like any other site — so this is the assertion that a bundle is not a page.
+    expect(peers.length).toBeGreaterThan(0);
+    for (const site of peers) {
+      const rows = buildSiteSearchIndex(site.slug);
+      expect(rows.length).toBeGreaterThan(0);
+      for (const d of rows) {
+        expect(
+          d.url.startsWith(`${siteBase(site.slug)}/stories/`),
+          `${site.slug}: "${d.kind}" row "${d.title}" points at an unbuilt route → ${d.url}`,
+        ).toBe(true);
+      }
+      // …and the record really is in that bundle, or the assertion above is about nothing.
+      expect(runWithSite(site.slug, () => hasFeed("records"))).toBe(true);
+    }
+  });
+});
+
+describe("a held story (#1907)", () => {
+  it("is indexed exactly once, at its own root, wherever one is held", () => {
+    // A `comingSoon` story serves the SAME interstitial at every route it emits — the on-ramp, the
+    // contents, each chapter — so eight rows would be eight near-identical results promising prose
+    // that is deliberately held. One row, at the root; `searchCoverage.ts` declares the rest
+    // `represented` by it. Held on a selectable site (Fort Wayne) and on a peer (Findlay) alike.
+    const held = SITES.flatMap((s) => comingSoonStories(s.slug).map((ref) => ({ site: s, ref })));
+    expect(held.length).toBeGreaterThan(0);
+    for (const { site, ref } of held) {
+      const root = `${siteBase(site.slug)}/stories/${ref.codename}/`;
+      const rows = buildSiteSearchIndex(site.slug).filter((d) => d.url.startsWith(root));
+      expect(
+        rows.map((d) => d.url),
+        `${site.slug}/${ref.codename}`,
+      ).toEqual([root]);
+      // Titled the way the page titles itself, so the row promises the notice, not the narrative.
+      expect(rows[0].title).toBe(`${ref.title} — coming soon`);
+      expect(rows[0].site).toBe(site.slug);
+    }
+  });
+
+  it("leaks no chapter prose into the index", () => {
+    // #1529's guarantee, carried into search: the content is held, so the only thing a row may
+    // carry is the title and dek the teaser already advertises.
+    for (const site of SITES) {
+      for (const ref of comingSoonStories(site.slug)) {
+        const story = storyFor(site.slug, ref.codename);
+        expect(story, `${site.slug}/${ref.codename} has no chapters to guard against`).toBeDefined();
+        const root = `${siteBase(site.slug)}/stories/${ref.codename}/`;
+        const urls = new Set(buildSiteSearchIndex(site.slug).map((d) => d.url));
+        for (const c of story!.chapters) expect(urls.has(`${root}${c.slug}/`)).toBe(false);
+        expect(urls.has(`${root}contents/`)).toBe(false);
+      }
+    }
   });
 });
 

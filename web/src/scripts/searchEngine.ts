@@ -18,7 +18,7 @@ export interface SearchDoc {
   site?: string;
 }
 
-/** One selectable site's shard, as the server hands it to the client. */
+/** One shard-shipping site's shard, as the server hands it to the client. */
 export interface SiteShard {
   slug: string;
   /** Display name — the registry `place`, as the switcher chip shows it. */
@@ -58,7 +58,8 @@ function loadShard(url: string): Promise<SearchDoc[]> {
  * the fetch/cache/fallback behavior never drifts.
  *
  * `networkUrl` is always loaded. Under `site` scope the current site's shard joins it; under
- * `network` scope every selectable site's does. Each shard is fetched at most once and the merged
+ * `network` scope every shard in the list does — which since #1907 includes a peer that
+ * publishes a held walk but no site interior. Each shard is fetched at most once and the merged
  * result per scope is memoized, so toggling scope back and forth costs nothing after the first pass
  * and the big shard — the reference build's, ~3,200 documents and ~114 KB gzipped — is never
  * re-fetched. That memoization is the reason the scope control on /search can be a toggle rather

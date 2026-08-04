@@ -20,6 +20,10 @@
  *    people, exhibits, legal, and reference. Loaded alongside the network shard when the reader is
  *    standing on that site, and all of them together when they ask for network scope.
  *
+ * Which sites get a shard is **route emission, not switchability** (#1907) — see
+ * {@link searchShardRefs}. Sharding on `selectable` was the accident that left Findlay's held
+ * `flagpole` walk unfindable from anywhere, including from Findlay.
+ *
  * Two rules the split exists to enforce, both of them #1886's finding carried into a new surface:
  *
  *  1. **A site's shard is gated by `facetAvailable`.** A locked facet renders a lock page, so
@@ -64,8 +68,8 @@ import { facetAvailable, RECORD_FACETS, sectionStatus, type RecordFacet } from "
 import { scopedReference } from "./reference";
 import { REPORT_PAGES } from "./reports";
 import { groupLabel } from "./records";
-import { LIMA_SLUG, siteBase } from "./routes";
-import { SITES, siteBadge, siteForSlug, siteState } from "./sites";
+import { LIMA_SLUG, siteBase, storyBase } from "./routes";
+import { comingSoonStories, SITES, siteBadge, siteForSlug, siteState, type NetworkSite } from "./sites";
 import { STUDY_CHAPTERS, studyHref } from "./study";
 import { NETWORK_NOUNS } from "./taxonomy";
 import type { TagKind } from "./teardown";
@@ -90,7 +94,7 @@ export interface SearchDoc {
   site?: string;
 }
 
-/** One selectable site's shard, as a page hands it to the client matcher. */
+/** One shard-shipping site's shard, as a page hands it to the client matcher. */
 export interface SearchShardRef {
   slug: string;
   label: string;
@@ -99,12 +103,34 @@ export interface SearchShardRef {
 }
 
 /**
- * Where each selectable site's shard lives. The chrome (`Header.astro`) and the full results page
- * both hand this to the client so the two can't disagree about what "the network" contains, and so
- * a site promoted to `selectable` becomes searchable with no edit here.
+ * Whether a site puts rows of its own on the network — the axis {@link searchShardRefs} shards on.
+ *
+ * **Route emission, not switchability** (#1907). `selectable` gates the site interior:
+ * `selectableSitePaths` is the path source for every `network/[site]/…` route but the story's, so
+ * a peer's record, timeline, documents and study genuinely do not exist and indexing them would
+ * mint rows for pages the build never wrote. The story is the exception: its routes emit on story
+ * REGISTRATION (#1466), so a peer can publish a walk it cannot yet be switched into — which
+ * Findlay's `flagpole` does. Sharding on `selectable` made those routes reachable from the site's
+ * own home and findable from nowhere; sharding on what a site actually publishes fixes it, and
+ * keeps the list derived so promotion still costs no edit here.
+ *
+ * A **held** story is the only kind a peer can publish today, and `storyRows` is what it earns.
+ * A peer that un-holds a walk without being promoted publishes real prose this predicate does not
+ * claim; that is a deliberate loud failure, not a silent one — `check-routes.mjs` reports the
+ * chapters as uncovered content routes and points at `searchCoverage.ts`, which is where the next
+ * decision about what the network advertises belongs.
+ */
+function shipsOwnRows(site: NetworkSite): boolean {
+  return site.selectable || comingSoonStories(site.slug).length > 0;
+}
+
+/**
+ * Where each shard-shipping site's shard lives. The chrome (`Header.astro`) and the full results
+ * page both hand this to the client so the two can't disagree about what "the network" contains,
+ * and so a site promoted to `selectable` becomes searchable with no edit here.
  */
 export function searchShardRefs(): SearchShardRef[] {
-  return SITES.filter((s) => s.selectable).map((s) => ({
+  return SITES.filter(shipsOwnRows).map((s) => ({
     slug: s.slug,
     label: s.place,
     path: `${siteBase(s.slug)}/search-index.json`,
@@ -347,6 +373,38 @@ function wikiRows(): SearchDoc[] {
 // --- The per-site shard ----------------------------------------------------
 
 /**
+ * A site's **held** stories, one row each (#1907).
+ *
+ * A held story (`comingSoon`, #1526) is *advertised, not readable*: its site home renders a teaser
+ * and every one of its routes — the on-ramp, the table of contents, each chapter — serves the same
+ * `StoryComingSoon` interstitial. Title, dek, "nothing in the walk is readable yet."
+ *
+ * So it earns exactly **one** row, at the story's own root, titled the way the page titles itself.
+ * Eight rows for eight copies of one notice would be eight near-identical results, each promising
+ * chapter prose that is deliberately held; the contents and chapter routes are declared
+ * `represented` by this row in `searchCoverage.ts`, which is the verdict for content a reader
+ * reaches through a row that IS indexed.
+ *
+ * The other two story states need nothing here. A **readable** story's chapters are separate
+ * destinations and the nav spine already reaches them (`navDestinations(siteTabs())`, below). A
+ * **`hidden`** one (#1256) is "reachable by direct URL, just not advertised" — precisely what a
+ * search row would undo.
+ */
+function storyRows(site: NetworkSite): SearchDoc[] {
+  const held = comingSoonStories(site.slug);
+  if (held.length === 0) return [];
+  const section = getSection("story").label;
+  return held.map((ref) => ({
+    title: `${ref.title} — coming soon`,
+    url: `${storyBase(site.slug, ref.codename)}/`,
+    section,
+    text: blob("the story, a guided walk, coming soon — held while it is finished", ref.dek),
+    kind: "Story",
+    site: site.slug,
+  }));
+}
+
+/**
  * One site's own searchable rows. Every URL is rooted at `siteBase(slug)`, every facet is gated by
  * `facetAvailable`, and every row carries `site: slug`.
  *
@@ -356,11 +414,19 @@ function wikiRows(): SearchDoc[] {
 export function buildSiteSearchIndex(slug: string): SearchDoc[] {
   return runWithSite(slug, () => {
     const base = siteBase(slug);
-    const docs: SearchDoc[] = [];
+    const site = siteForSlug(slug);
+    const docs: SearchDoc[] = site ? storyRows(site) : [];
     const at = (path: string): string => `${base}${path}`;
     const push = (d: Omit<SearchDoc, "site">): void => {
       docs.push({ ...d, site: slug });
     };
+
+    // A peer's shard stops at its stories, because that is all a peer publishes (#1907). Every
+    // other `network/[site]/…` route — the record, the timeline, the documents, the study, the
+    // reports — comes from `selectableSitePaths`, so for a non-selectable site none of it is
+    // built. Everything below reads the site's BUNDLE, which a thin peer may well have; a bundle
+    // is not a page, and a row for a page that doesn't exist is a search result that 404s.
+    if (!site?.selectable) return docs;
 
     const RECORD = "The record";
 

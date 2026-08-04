@@ -279,7 +279,8 @@ function checkSearchCoverage() {
   const { families, floor, shardGzipBudget, shards } = JSON.parse(readFileSync(declPath, "utf-8"));
 
   // Every shard the declaration says this build owes: the network-global one at the root, plus one
-  // per selectable site. Compared as a SET, not a count — one site's shard silently ceasing to
+  // per site that publishes rows of its own — the selectable sites and, since #1907, any peer
+  // publishing a held walk. Compared as a SET, not a count — one site's shard silently ceasing to
   // emit leaves the others in place, so "at least two exist" would pass while that site's record
   // went unsearchable, which is exactly the state #1890 fixed.
   const missing = shards.filter((s) => !existsSync(join(DIST, s.replace(/^\//, ""))));
