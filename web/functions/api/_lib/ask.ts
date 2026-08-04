@@ -18,6 +18,11 @@ export interface AskCitation {
   /** Root-absolute deep link (pre-base) to the page this source lives on. */
   url: string;
   source?: string | null;
+  /** The `data/documents` rel of the source document this unit joined to (`AskUnit.doc_rel`),
+   * when it has one. Carried so the citation UI can resolve the document's own permalink rather
+   * than the group page the unit lives on — `source` cannot do that job (#1890): it is as often
+   * an extracted-yaml path, and no unit's ever carries the `data/documents/` prefix. */
+  doc_rel?: string | null;
   page?: number | null;
   source_kind?: string | null;
   /** Derived evidence flag (record/connector-grounded) for the source badge (#213). */
@@ -107,6 +112,7 @@ function toCitation(hit: Hit, marker: number): AskCitation {
     title: u.title,
     url: u.url,
     source: u.source ?? null,
+    doc_rel: u.doc_rel ?? null,
     page: u.page ?? null,
     source_kind: u.source_kind ?? null,
     verified: u.verified ?? false,

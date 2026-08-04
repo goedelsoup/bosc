@@ -86,8 +86,11 @@ apply. This is the surface described by the discovery files
       "id": "records:aedg/roundabouts.summary.opc.yaml",
       "feed": "records",
       "title": "Roundabouts OPC — summary",
-      "url": "/site/records/opc/",                  // root-absolute deep link (pre-base)
-      "source": "data/documents/aedg/PRR-01-bundle.ocr.pdf",
+      // Root-absolute deep link (pre-deploy-base) to the page the unit lives on. Site-rooted:
+      // the index stamps it with `siteUrl()`. Wiki units are `/wiki/…` and name no site.
+      "url": "/network/american-sugar-creek-allen-co/site/records/opc/",
+      "source": "aedg/roundabouts.summary.opc.yaml",  // the artifact read — often extracted YAML
+      "doc_rel": "aedg/PRR-01-bundle.ocr.pdf",        // the source document, when one joins
       "page": 318,
       "source_kind": "document",
       "verified": true
@@ -99,10 +102,14 @@ apply. This is the surface described by the discovery files
 }
 ```
 
-The `/ask` page resolves each citation's `url` (prefixed with the site base) to the
-matching record/timeline/entity/document page, so every cited claim links back to a
-verifiable page. Markers the model emits that don't resolve to a returned citation are
-**flagged in the UI, not silently dropped**.
+The `/ask` page resolves each citation to a page so every cited claim links back to
+something verifiable (`citationHref`, `@watermark/core/askRender`). A citation carrying a
+`doc_rel` — the source document itself — goes to that document's permalink,
+`<site>/doc/<id>/`, where the site comes from the citation's own `url` and the handle is
+derived from the rel; anything else goes to `url`, the page the unit lives on. Both are
+then prefixed with the **deploy** base (`BASE_URL`, `/` unless `BASE_PATH` is set), which
+is not the site segment. Markers the model emits that don't resolve to a returned citation
+are **flagged in the UI, not silently dropped**.
 
 ### Response — SSE (`Accept: text/event-stream`)
 
