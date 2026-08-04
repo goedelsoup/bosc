@@ -96,9 +96,23 @@ class Hypothesis(BaseModel):
     """One reading of the boom — the content of a directory hypothesis (frozen reference value).
 
     Presentation (accent palette, grid fractions, column labels) is the frontend's; this
-    holds the substance: the claim, the thesis, the taxonomy a cell is scored against, and
+    holds the substance: the **question** it exists to answer, the claim that is the
+    candidate answer, the thesis, the taxonomy a cell is scored against, and
     :attr:`predicted_evidence` — what would confirm or strengthen it, which scaffolds the
     ``hypothesis-assessment`` research recipe's prompt.
+
+    The three read as one object and are not interchangeable (#1917):
+
+    * :attr:`question` — what is being asked. Interrogative, and the only one of the three
+      that is not an assertion. It is what the surfaces lead with, because three questions
+      is what this registry honestly is and three claims is what it used to look like.
+    * :attr:`claim` — the **candidate answer** under test. Never a finding: a hypothesis is
+      confirmable or refutable by construction, which is exactly what separates it from a
+      :mod:`lens <watermark.site.feeds>` (epic #1911), a standing view that never carries a
+      verdict at all.
+    * :attr:`predicted_evidence` — the **answer key**. It already listed what would confirm
+      or refute each thesis; before the question existed it was an answer key with no stated
+      question, which is the structural half of what this field fixes.
     """
 
     model_config = ConfigDict(extra="forbid", frozen=True)
@@ -106,6 +120,9 @@ class Hypothesis(BaseModel):
     id: str  # "water" | "defense" | "surveillance" — matches the frontend HypothesisId key
     number: str  # "H1" | "H2" | "H3"
     name: str
+    # The question the hypothesis exists to answer. Required content, not optional prose —
+    # `lint_hypotheses` fails a registered hypothesis that leaves it blank or drops the mark.
+    question: str
     claim: str
     thesis: str
     status: HypothesisStatus
@@ -147,6 +164,7 @@ HYPOTHESES: dict[str, Hypothesis] = {
         id="water",
         number="H1",
         name="Water & Coercion",
+        question=("Is a town's acceptance compelled by its own Clean Water Act exposure?"),
         claim="Where discharge becomes leverage.",
         thesis=(
             "The original thesis: hyperscale compute lands where it can pull power and "
@@ -183,6 +201,10 @@ HYPOTHESES: dict[str, Hypothesis] = {
         id="defense",
         number="H2",
         name="Defense & Federal Enclave",
+        question=(
+            "Does the federal footprint — land, clearance, payroll, prime awards — "
+            "determine where the compute lands?"
+        ),
         claim="Where the build-out meets federal land and the defense base.",
         thesis=(
             "A second reading: the same map tracks arsenals, air bases, federal research "
@@ -222,6 +244,7 @@ HYPOTHESES: dict[str, Hypothesis] = {
         id="surveillance",
         number="H3",
         name="Consumer Surveillance",
+        question=("What is the compute for, and is the public subsidizing surveillance of itself?"),
         claim="What the compute is for, who it watches, and who's paying.",
         thesis=(
             "A third reading: the operators behind shell LLCs, the public-subsidy stack "
@@ -293,6 +316,48 @@ class AssessmentFinding(BaseModel):
         "unknown-hypothesis", "bad-group", "bad-field", "missing-citation", "untracked-site"
     ]
     detail: str
+
+
+class HypothesisFinding(BaseModel):
+    """A problem with a REGISTERED hypothesis itself, as opposed to one of its cells."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    hypothesis: str
+    kind: Literal["missing-question", "unasked-question"]
+    detail: str
+
+
+def lint_hypotheses() -> list[HypothesisFinding]:
+    """Validate the registry's own content (#1917).
+
+    :attr:`Hypothesis.question` is required at the type level, so a hypothesis cannot be
+    constructed without one — but it can be constructed with an empty string, or with a
+    sentence that is not a question at all, and either would put an assertion where every
+    surface now promises an open question. That is the failure this catches: the field
+    exists to stop the directory presenting three claims as though they were settled, and a
+    declarative "question" would restore exactly the framing #1911 opened by removing.
+    """
+    findings: list[HypothesisFinding] = []
+    for hyp in HYPOTHESES.values():
+        q = hyp.question.strip()
+        if not q:
+            findings.append(
+                HypothesisFinding(
+                    hypothesis=hyp.id,
+                    kind="missing-question",
+                    detail="every hypothesis must state the question it exists to answer",
+                )
+            )
+        elif not q.endswith("?"):
+            findings.append(
+                HypothesisFinding(
+                    hypothesis=hyp.id,
+                    kind="unasked-question",
+                    detail=f"{q!r} is not interrogative — a claim in the question's place",
+                )
+            )
+    return findings
 
 
 def lint_assessments(*, settings: Settings | None = None) -> list[AssessmentFinding]:

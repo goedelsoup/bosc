@@ -67,12 +67,18 @@ def _project_leads(rows: Sequence[Mapping[str, Any]]) -> list[OpenQuestionItem]:
 def _project_hypothesis_cells(
     rows: Sequence[Mapping[str, Any]],
     labels_by_id: Mapping[str, str],
+    questions_by_id: Mapping[str, str],
 ) -> list[OpenQuestionItem]:
     """Every ``[open]``-tagged matrix cell → an open thread under its boom-origin hypothesis.
 
     Provenance is the cell's committed matrix file (`data/hypotheses/<hid>/<site>.yaml`) — an
     open cell carries no ``Citation`` by rule (only an ``open`` cell may have none), so its
     ``source`` is *where the gap is recorded*, not a fabricated citation.
+
+    Each thread now states the hypothesis's ROOT question (#1917). That was the structural half
+    of the finding: this projection has always turned ``[open]`` cells into question threads
+    hanging under a hypothesis that never said what it was asking, so a reader met "Open thread —
+    H2 Defense & Federal Enclave @ Xenia" with no way to know what an answer would even be about.
     """
     items: list[OpenQuestionItem] = []
     for cell in rows:
@@ -83,6 +89,9 @@ def _project_hypothesis_cells(
         label = labels_by_id.get(hid, hid)
         fields = cell.get("fields") or {}
         detail = f"No documented nexus yet for {site} under {label}."
+        root = questions_by_id.get(hid, "").strip()
+        if root:
+            detail += f" The hypothesis asks: {root}"
         if fields:
             detail += " Fields: " + ", ".join(f"{k}={v}" for k, v in fields.items()) + "."
         items.append(
@@ -113,6 +122,18 @@ def _hypothesis_labels(hypotheses: Sequence[Mapping[str, Any]]) -> dict[str, str
     return labels
 
 
+def _hypothesis_questions(hypotheses: Sequence[Mapping[str, Any]]) -> dict[str, str]:
+    """Map a hypothesis id → its root question (#1917). Absent on a pre-1.52 bundle, which is
+    why every consumer treats it as optional rather than assuming the key is there."""
+    out: dict[str, str] = {}
+    for hyp in hypotheses:
+        hid = str(hyp.get("id") or "")
+        q = str(hyp.get("question") or "").strip()
+        if hid and q:
+            out[hid] = q
+    return out
+
+
 def build_open_questions(payloads_by_feed: Mapping[str, Any]) -> list[OpenQuestionItem]:
     """Project the assembled ``leads`` + ``hypothesis-assessments`` feeds into open questions.
 
@@ -129,8 +150,10 @@ def build_open_questions(payloads_by_feed: Mapping[str, Any]) -> list[OpenQuesti
     if isinstance(leads, Sequence):
         collected.extend(_project_leads(leads))
     if isinstance(cells, Sequence):
-        labels_by_id = _hypothesis_labels(hypotheses if isinstance(hypotheses, Sequence) else [])
-        collected.extend(_project_hypothesis_cells(cells, labels_by_id))
+        rows = hypotheses if isinstance(hypotheses, Sequence) else []
+        collected.extend(
+            _project_hypothesis_cells(cells, _hypothesis_labels(rows), _hypothesis_questions(rows))
+        )
 
     # Dedup on the stable id (a lead id can't collide with a `hyp:` id; belt-and-suspenders).
     questions: list[OpenQuestionItem] = []

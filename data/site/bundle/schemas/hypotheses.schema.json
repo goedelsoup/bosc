@@ -4,7 +4,7 @@
   "type": "array",
   "items": {
     "additionalProperties": false,
-    "description": "One reading of the boom — the content of a directory hypothesis (frozen reference value).\n\nPresentation (accent palette, grid fractions, column labels) is the frontend's; this\nholds the substance: the claim, the thesis, the taxonomy a cell is scored against, and\n:attr:`predicted_evidence` — what would confirm or strengthen it, which scaffolds the\n``hypothesis-assessment`` research recipe's prompt.",
+    "description": "One reading of the boom — the content of a directory hypothesis (frozen reference value).\n\nPresentation (accent palette, grid fractions, column labels) is the frontend's; this\nholds the substance: the **question** it exists to answer, the claim that is the\ncandidate answer, the thesis, the taxonomy a cell is scored against, and\n:attr:`predicted_evidence` — what would confirm or strengthen it, which scaffolds the\n``hypothesis-assessment`` research recipe's prompt.\n\nThe three read as one object and are not interchangeable (#1917):\n\n* :attr:`question` — what is being asked. Interrogative, and the only one of the three\n  that is not an assertion. It is what the surfaces lead with, because three questions\n  is what this registry honestly is and three claims is what it used to look like.\n* :attr:`claim` — the **candidate answer** under test. Never a finding: a hypothesis is\n  confirmable or refutable by construction, which is exactly what separates it from a\n  :mod:`lens <watermark.site.feeds>` (epic #1911), a standing view that never carries a\n  verdict at all.\n* :attr:`predicted_evidence` — the **answer key**. It already listed what would confirm\n  or refute each thesis; before the question existed it was an answer key with no stated\n  question, which is the structural half of what this field fixes.",
     "properties": {
       "id": {
         "title": "Id",
@@ -16,6 +16,10 @@
       },
       "name": {
         "title": "Name",
+        "type": "string"
+      },
+      "question": {
+        "title": "Question",
         "type": "string"
       },
       "claim": {
@@ -90,6 +94,7 @@
       "id",
       "number",
       "name",
+      "question",
       "claim",
       "thesis",
       "status"

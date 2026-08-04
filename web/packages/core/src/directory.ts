@@ -220,6 +220,12 @@ export interface HypothesisConfig {
   /** "Reference build" (live) or "Emerging hypothesis" (new). */
   status: string;
   statusKind: "live" | "new";
+  /**
+   * The question the hypothesis asks (#1917). Falls back to {@link claim} on a bundle exported
+   * before contract 1.52.0 — the same sentence in the indicative, which is the honest degrade
+   * and not a blank. `claim` itself survives as the CANDIDATE ANSWER under test.
+   */
+  question: string;
   claim: string;
   blurb: string;
   axisTitle: string;
@@ -242,6 +248,7 @@ export const HYPOTHESIS_VIEW: Record<HypothesisId, HypothesisConfig> = {
     accentBd: "#bcd2c4",
     status: "Reference build",
     statusKind: "live",
+    question: "Is a town's acceptance compelled by its own Clean Water Act exposure?",
     claim: "Where discharge becomes leverage.",
     blurb:
       "The original thesis: hyperscale compute lands where it can pull power and water, and a data center's intake, discharge, and downstream effects are basin facts. Sites nest by drainage — two divides, eleven basins. Lima is the live, fully-assembled reference. A coercion sub-thesis (#903): in municipalities with declining populations, the receiving WWTP may be running lean on influent — below the biological-treatment minimum that keeps it in NPDES compliance. A datacenter's high-volume, consistent discharge provides the flow buffer the plant needs, structurally compelling municipal acceptance. The Clean Water Act is the backstop that makes the need non-negotiable.",
@@ -271,6 +278,8 @@ export const HYPOTHESIS_VIEW: Record<HypothesisId, HypothesisConfig> = {
     accentBd: "#cdc8b8",
     status: "Emerging hypothesis",
     statusKind: "new",
+    question:
+      "Does the federal footprint — land, clearance, payroll, prime awards — determine where the compute lands?",
     claim: "Where the build-out meets federal land and the defense base.",
     blurb:
       "A second reading: the same map tracks arsenals, air bases, federal research and the CHIPS build — enclaves where federal jurisdiction, clearance, and defense supply chains concentrate. Newly opened; most sites are not yet assessed, and a federal nexus is a signal, not a verdict. A capture sub-thesis (#1663): the enclave is not only geography, it is an economic structure — federal payroll and prime-award obligations concentrated in one county, land held by the United States and off the local tax rolls, and the abatement / PILOT instruments layered around it. Whether the defense base distorts the local economy the datacenter lands in, or merely sits beside it.",
@@ -298,6 +307,7 @@ export const HYPOTHESIS_VIEW: Record<HypothesisId, HypothesisConfig> = {
     accentBd: "#cdc8b8",
     status: "Emerging hypothesis",
     statusKind: "new",
+    question: "What is the compute for, and is the public subsidizing surveillance of itself?",
     claim: "What the compute is for, who it watches, and who's paying.",
     blurb:
       "A third reading: the operators behind shell LLCs, the public-subsidy stack that pulls them in, and the capital and data flows the facilities sit on. The consumer-surveillance thesis — opening now, mostly under investigation, with Lima's abatement on record. An end-use sub-thesis (#904): these facilities are infrastructure nodes in a consumer surveillance apparatus — behavioral tracking, financial-transaction processing, or similar mass-scale surveillance of individual consumer activity, financed in part by the public subsidies the same communities provide.",
@@ -337,6 +347,9 @@ export function hypothesisConfig(id: HypothesisId, hyp?: HypothesisItem): Hypoth
   return {
     ...HYPOTHESIS_VIEW[id],
     name: hyp.name,
+    // A pre-1.52 bundle carries no `question`; the hardcoded fallback above stands in, and if a
+    // future hypothesis is registered without one the `claim` does — never an empty heading.
+    question: hyp.question || HYPOTHESIS_VIEW[id].question || hyp.claim,
     claim: hyp.claim,
     blurb: hyp.thesis,
     status: reference ? "Reference build" : "Emerging hypothesis",

@@ -71,7 +71,7 @@ const toc = [
   title={`${hyp.number} · ${hyp.name}`}
   section="wiki"
   trailLeaf={hyp.name}
-  description={`${hyp.claim} — the ${hyp.number} reading of the data-center build-out, its evidence matrix, and the concepts, entities, and open questions it bears on.`}
+  description={`${hyp.question ?? hyp.claim} — the ${hyp.number} reading of the data-center build-out, its evidence matrix, and the concepts, entities, and open questions it bears on.`}
   toc={toc}
 >
   <div class="hyp">
@@ -86,9 +86,12 @@ const toc = [
         </span>
         <span class="hyp-claim">{hyp.claim}</span>
       </div>
+      {/* The question the node exists to answer (#1917); the chip above is the candidate answer
+          under test, and the thesis below is the argument for it. */}
+      {hyp.question && <p class="hyp-question">{hyp.question}</p>}
       <p class="section-lead">{hyp.thesis}</p>
       <p class="hyp-cross">
-        See the same lens as a cross-site scorecard on the
+        See the same question as a cross-site scorecard on the
         <a href={`${withBase("/research/hypotheses")}?h=${hyp.id}`}>network directory →</a>
       </p>
     </div>
@@ -285,6 +288,14 @@ const toc = [
   }
   .hyp-status.is-ref .hyp-status-dot {
     background: var(--bosc-forest);
+  }
+  .hyp-question {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    margin: 0.7rem 0 0;
+    max-width: 40rem;
   }
   .hyp-claim {
     font-weight: 600;

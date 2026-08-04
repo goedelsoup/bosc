@@ -16,6 +16,7 @@ from typing import Any
 
 from watermark.site.open_questions import (
     _hypothesis_labels,
+    _hypothesis_questions,
     _project_hypothesis_cells,
     _project_leads,
     build_open_questions,
@@ -23,13 +24,26 @@ from watermark.site.open_questions import (
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.51.0"
+_CV = "1.52.0"
 
-# A hypotheses feed's rows (id → number/name), as they appear in an assembled bundle.
+# A hypotheses feed's rows (id → number/name/question), as they appear in an assembled bundle.
+# `question` arrived at contract 1.52.0 (#1917); `_HYPS_PRE_152` is the same feed without it,
+# which is what a bundle exported before the bump still carries.
 _HYPS = [
-    {"id": "water", "number": "H1", "name": "Water & Coercion"},
-    {"id": "surveillance", "number": "H3", "name": "Consumer Surveillance"},
+    {
+        "id": "water",
+        "number": "H1",
+        "name": "Water & Coercion",
+        "question": "Is a town's acceptance compelled by its own Clean Water Act exposure?",
+    },
+    {
+        "id": "surveillance",
+        "number": "H3",
+        "name": "Consumer Surveillance",
+        "question": "What for?",
+    },
 ]
+_HYPS_PRE_152 = [{k: v for k, v in h.items() if k != "question"} for h in _HYPS]
 
 
 def _lead(id_: str, tag: str, **extra: Any) -> dict[str, Any]:
@@ -90,7 +104,7 @@ def test_hypothesis_cells_open_only_with_provenance_and_label() -> None:
         _cell("water", "lima", "open", fields={"wwtp": "American Bath"}),
         _cell("water", "lima", "verified"),  # a documented cell — not an open thread
     ]
-    qs = _project_hypothesis_cells(rows, _hypothesis_labels(_HYPS))
+    qs = _project_hypothesis_cells(rows, _hypothesis_labels(_HYPS), _hypothesis_questions(_HYPS))
     assert len(qs) == 1
     q = qs[0]
     assert q.id == "hyp:water:lima"
@@ -101,12 +115,35 @@ def test_hypothesis_cells_open_only_with_provenance_and_label() -> None:
     # provenance = the committed matrix file, never a fabricated citation (open cells have none)
     assert q.source == "data/hypotheses/water/lima.yaml"
     assert "American Bath" in q.detail and "No documented nexus yet" in q.detail
+    # The thread states the hypothesis's ROOT question (#1917) — before it, this projection turned
+    # cells into question threads under a hypothesis that never said what it was asking.
+    assert "The hypothesis asks: Is a town's acceptance compelled" in q.detail
 
 
 def test_hypothesis_label_falls_back_to_id_when_unknown() -> None:
-    qs = _project_hypothesis_cells([_cell("mystery", "lima", "open")], _hypothesis_labels(_HYPS))
+    qs = _project_hypothesis_cells(
+        [_cell("mystery", "lima", "open")], _hypothesis_labels(_HYPS), _hypothesis_questions(_HYPS)
+    )
     assert qs[0].hypothesis_label == "mystery"
     assert qs[0].question == "Open thread — mystery @ lima"
+    # No root question for an unregistered hypothesis — the detail simply omits the line rather
+    # than printing "The hypothesis asks:" with nothing after it.
+    assert "The hypothesis asks" not in qs[0].detail
+
+
+def test_root_question_is_omitted_on_a_pre_1_52_bundle() -> None:
+    """A bundle exported before the field existed still projects, without a blank question.
+
+    The frontend builds against whatever `web/sites/` carries, so the degrade has to be real:
+    the key is absent, not empty, and the thread reads exactly as it did before #1917.
+    """
+    qs = _project_hypothesis_cells(
+        [_cell("water", "lima", "open")],
+        _hypothesis_labels(_HYPS_PRE_152),
+        _hypothesis_questions(_HYPS_PRE_152),
+    )
+    assert qs[0].hypothesis_label == "H1 Water & Coercion"
+    assert "The hypothesis asks" not in qs[0].detail
 
 
 # --- aggregation: ordering, dedup, absent feeds --------------------------------------------

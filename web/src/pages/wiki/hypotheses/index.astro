@@ -59,6 +59,9 @@ const cellCount = (id: string): number => cells.filter((c) => c.hypothesis === i
                     <span class="hyx-n">{n} {n === 1 ? "cell" : "cells"}</span>
                   </div>
                   <div class="hyx-name">{h.name}</div>
+                  {/* The question first (#1917), then the candidate answer under test. A bundle
+                      exported before contract 1.52.0 carries no question and shows the claim alone. */}
+                  {h.question && <div class="hyx-question">{h.question}</div>}
                   <div class="hyx-claim">{h.claim}</div>
                   <div class="hyx-thesis">{h.thesis}</div>
                   <span class="hyx-more">Open the node ›</span>
@@ -161,6 +164,12 @@ const cellCount = (id: string): number => cells.filter((c) => c.hypothesis === i
     font-weight: 700;
     letter-spacing: -0.01em;
     color: var(--bosc-ink);
+  }
+  .hyx-question {
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.35;
+    margin-top: 0.45rem;
   }
   .hyx-claim {
     font-weight: 600;

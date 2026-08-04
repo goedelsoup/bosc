@@ -283,7 +283,8 @@ export function sections(): Section[] {
       label: "Research",
       tab: "Research",
       href: "/research/hypotheses",
-      blurb: "Read the network three ways — the boom-origin hypotheses, scored against each site.",
+      blurb:
+        "The three open questions about why the build-out is happening where it is — each with a candidate answer under test, scored against every site.",
       toc: [],
     },
     {
@@ -357,8 +358,13 @@ export type NavItem =
 export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   const researchChildren: NavChild[] = [
     // `?h=` is the canonical deep-link param (#1912). The page still honors the pre-#1912
-    // `?lens=` spelling for links already shared, but nothing emits it any more.
-    ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?h=${h.id}` })),
+    // `?lens=` spelling for links already shared, but nothing emits it any more. The blurb is the
+    // hypothesis's own question (#1917), falling back to its claim on a pre-1.52 bundle.
+    ...hypotheses.map((h) => ({
+      label: h.name,
+      href: `/research/hypotheses?h=${h.id}`,
+      blurb: h.question || h.claim,
+    })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
     // Basin views (design "Chrome": Research ▾ → Basin views) — Maumee is the one built today;
     // the other eight basins join here as their /basin pages land.

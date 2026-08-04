@@ -55,12 +55,15 @@ const statusSwatch = (kind: "live" | "new") =>
   <div class="dir">
     <div class="dir-head">
       <div class="dir-eyebrow">Watermark · directory · the three hypotheses</div>
-      <h1>One network, three hypotheses</h1>
+      <h1>One network, three open questions</h1>
       <p class="dir-lead">
-        The platform-level index now holds <b>{hyps[0].count}</b>. The watershed lens — where
-        compute meets water and power — is the live reference build (Lima / BOSC). Two further theses are opening
-        alongside it: <b>defense &amp; federal-enclave</b> analysis, and <b>corporate &amp; economic surveillance</b>.
-        The directory reads the same network through whichever lens you pick.
+        The platform-level index now holds <b>{hyps[0].count}</b>. Each hypothesis asks one question
+        about <i>why</i> the build-out is happening where it is, and carries a candidate answer that is
+        under test — never a finding. The watershed thesis, where compute meets water and power, is the
+        live reference build (Lima / BOSC); <b>defense &amp; federal-enclave</b> and <b>consumer
+        surveillance</b> are opening alongside it. For what a build-out <i>does</i> to a place rather
+        than why it is there, the five <a href={withBase("/lens/")}>lenses</a> read the same network
+        descriptively — and reach no verdict at all.
       </p>
     </div>
 
@@ -121,6 +124,8 @@ const statusSwatch = (kind: "live" | "new") =>
                   <span class="dir-hcard-check" style={`color:${h.cfg.accent}`}>✓</span>
                 </span>
                 <span class="dir-hcard-name">{h.cfg.name}</span>
+                {/* The QUESTION heads the card (#1917); the claim is the candidate answer. */}
+                <span class="dir-hcard-q">{h.cfg.question}</span>
                 <span class="dir-hcard-claim">{h.cfg.claim}</span>
                 <span class="dir-hcard-count">{h.count}</span>
               </label>
@@ -151,7 +156,11 @@ const statusSwatch = (kind: "live" | "new") =>
                       {h.cfg.status}
                     </span>
                   </div>
-                  <div class="dir-frame-claim">{h.cfg.claim}</div>
+                  <div class="dir-frame-q">{h.cfg.question}</div>
+                  <div class="dir-frame-claim">
+                    <span class="dir-frame-claim-l">Candidate answer under test</span>
+                    {h.cfg.claim}
+                  </div>
                   <p class="dir-frame-blurb">{h.cfg.blurb}</p>
                   {h.cfg.key === "water" && (
                     <a class="dir-frame-link" href={withBase("/basin")}>
@@ -368,6 +377,12 @@ const statusSwatch = (kind: "live" | "new") =>
     letter-spacing: -0.01em;
     margin-top: 0.7rem;
   }
+  .dir-hcard-q {
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-top: 0.5rem;
+  }
   .dir-hcard-claim {
     font-size: 0.82rem;
     color: var(--bosc-muted);
@@ -448,11 +463,29 @@ const statusSwatch = (kind: "live" | "new") =>
     text-transform: uppercase;
     font-weight: 800;
   }
-  .dir-frame-claim {
+  .dir-frame-q {
     font-size: 1.2rem;
     font-weight: 800;
     letter-spacing: -0.01em;
+    line-height: 1.35;
     margin-top: 0.55rem;
+    max-width: 32rem;
+  }
+  .dir-frame-claim {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--bosc-muted);
+    margin-top: 0.6rem;
+  }
+  .dir-frame-claim-l {
+    display: block;
+    font-family: var(--bosc-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--bosc-faint);
+    margin-bottom: 0.15rem;
   }
   .dir-frame-blurb {
     font-size: 0.84rem;
