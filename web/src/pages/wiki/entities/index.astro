@@ -1,14 +1,25 @@
 ---
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import { slugify, type EntityNode } from "@watermark/core/feeds";
+import { slugify } from "@watermark/core/feeds";
 import { topEntities } from "@watermark/core/hubLede";
+import { networkEntities } from "@watermark/core/networkEntities";
 import { withBase } from "@watermark/core/site";
+import { siteForSlug } from "@watermark/core/sites";
 
-const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
+// The network union, not the ambient bundle (#1906): the index has to list every party that has a
+// page, and since the wiki widened past one bundle that includes the ones only a peer carries.
+const merged = networkEntities();
+const bySite = new Map(merged.map((e) => [e.key, e.sites]));
 // Same ranking the wiki hub's lede leads with — one owner, so the hub's "most named" and this
 // index's first rows can never drift apart (#1891).
-const sorted = topEntities(entities, entities.length);
+const sorted = topEntities(
+  merged.map((e) => e.node),
+  merged.length,
+);
+// Comma-joined: a registry place can carry its own middot ("Troy · Piqua" is one watershed
+// point), so the usual middot list would read as two sites where there is one.
+const placeOf = (slug: string): string => siteForSlug(slug)?.place ?? slug;
+const crossSite = merged.filter((e) => e.sites.length > 1).length;
 ---
 
 <Base title="Entities" section="wiki">
@@ -16,17 +27,23 @@ const sorted = topEntities(entities, entities.length);
     <p><a href={withBase("/wiki/")}>← Wiki</a></p>
     <h1>Entities</h1>
     <p class="section-lead">
-      {entities.length} resolved parties in the entity graph, keyed by canonical
-      name. Each page carries its graph neighborhood, sources, and backlinks.
+      {merged.length} resolved parties in the entity graph, keyed by canonical
+      name — every watershed point's, in one graph. Each page carries its graph
+      neighborhood, sources, and backlinks.{" "}
+      {crossSite > 0 && `${crossSite} of them are on the record at more than one site.`}
     </p>
     <div class="cards">
       {
-        sorted.map((e) => (
-          <a class="card" href={`${withBase("/wiki/entities/")}${slugify(e.key)}/`}>
-            <span class="card-title">{e.display}</span>
-            <span class="card-meta">{e.kind}{e.classification ? ` · ${e.classification}` : ""}</span>
-          </a>
-        ))
+        sorted.map((e) => {
+          const sites = bySite.get(e.key) ?? [];
+          return (
+            <a class="card" href={`${withBase("/wiki/entities/")}${slugify(e.key)}/`}>
+              <span class="card-title">{e.display}</span>
+              <span class="card-meta">{e.kind}{e.classification ? ` · ${e.classification}` : ""}</span>
+              <span class="card-meta">{sites.map(placeOf).join(", ")}</span>
+            </a>
+          );
+        })
       }
     </div>
   </article>

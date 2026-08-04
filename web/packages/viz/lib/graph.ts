@@ -1,7 +1,7 @@
 /**
- * Build-time entity-graph layout (issue #73). Reads the entities + relationships
- * feeds and runs a deterministic d3-force layout, emitting node coordinates so the
- * client island just renders (no layout cost or first-paint jump). d3-force is
+ * Build-time entity-graph layout (issue #73). Reads the network's unioned entities +
+ * relationships (`networkEntities`, #1906) and runs a deterministic d3-force layout, emitting node
+ * coordinates so the client island just renders (no layout cost or first-paint jump). d3-force is
  * deterministic — phyllotaxis seeding + a seeded jiggle — so the build is stable.
  *
  * NOT client-safe (imports the node:fs bundle loader); the island consumes the
@@ -16,8 +16,7 @@ import {
   type SimulationLinkDatum,
   type SimulationNodeDatum,
 } from "d3-force";
-import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import { slugify, type EntityNode, type RelationshipEdge } from "@watermark/core/feeds";
+import { networkEdges, networkEntities } from "@watermark/core/networkEntities";
 
 interface SimNode extends SimulationNodeDatum {
   id: string;
@@ -55,17 +54,24 @@ export interface GraphData {
   edges: GraphEdge[];
 }
 
+/**
+ * The graph is the **network's** (#1906): nodes and edges come from `networkEntities`, the same
+ * union the wiki's entity pages are minted from. Reading the ambient bundle rendered one site's
+ * slice of a graph declared network-global, so a node's "view in graph" link could land on a graph
+ * that didn't contain it — and a party carried only by a peer was invisible in the one
+ * visualization whose point is that parties recur across watershed points.
+ */
 export function buildGraph(): GraphData {
-  const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
-  const rels = hasFeed("relationships") ? loadFeed<RelationshipEdge[]>("relationships") : [];
+  const entities = networkEntities();
+  const rels = networkEdges().map((e) => e.edge);
   const known = new Set(entities.map((e) => e.key));
 
   const nodes: SimNode[] = entities.map((e) => ({
     id: e.key,
-    slug: slugify(e.key),
-    display: e.display,
-    kind: e.kind,
-    relationClass: e.relation_class ?? null,
+    slug: e.slug,
+    display: e.node.display,
+    kind: e.node.kind,
+    relationClass: e.node.relation_class ?? null,
     degree: 0,
   }));
   const byId = new Map(nodes.map((n) => [n.id, n]));

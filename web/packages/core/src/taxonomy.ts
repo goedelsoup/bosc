@@ -59,7 +59,12 @@ export const TAXONOMY: Record<NounKind, NounTaxonomy> = {
       "Resolved parties recur across sites — the same operator, counsel, or shell surfaces at " +
       "more than one watershed point — so the entity graph is the network-global spine. An " +
       "individual's site-curated profile (`people`, per-site) hangs off its entity page, never " +
-      "the other way around.",
+      "the other way around. Network-global is now true by CONSTRUCTION, not just by declaration " +
+      "(#1906): the pages are minted from `networkEntities`, the union across every selectable " +
+      "site, with the merge rule stated there. Until then this build rendered the reference " +
+      "bundle alone — `getStaticPaths` runs outside `runWithSite` — so a party only a peer " +
+      "carried had no page here and, there being deliberately no per-site entity route, none " +
+      "anywhere.",
   },
   concept: {
     kind: "concept",

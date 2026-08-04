@@ -1,13 +1,14 @@
 ---
 import EntityGraph from "@watermark/viz/islands/EntityGraph.tsx";
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import { slugify, type EntityNode } from "@watermark/core/feeds";
+import { networkEntities } from "@watermark/core/networkEntities";
 import { RELATION_CLASSES } from "@watermark/viz/relationClasses";
 import { withBase } from "@watermark/core/site";
 
-// SSR fallback / data view: the entity list the island visualizes.
-const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
+// SSR fallback / data view: the entity list the island visualizes — the same network union
+// `buildGraph` lays out (#1906), so the no-JS list and the island can't disagree about the graph.
+const entities = networkEntities().map((e) => e.node);
 const roleTotal = (e: EntityNode): number => Object.values(e.roles ?? {}).reduce((a, b) => a + b, 0);
 const sorted = [...entities].sort(
   (a, b) => roleTotal(b) - roleTotal(a) || a.display.localeCompare(b.display),

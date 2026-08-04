@@ -2,8 +2,9 @@
 import Base from "~/layouts/Base.astro";
 import HubLede from "~/components/HubLede.astro";
 import { hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
-import { slugify, type EntityNode, type OpenQuestionItem } from "@watermark/core/feeds";
+import { slugify, type OpenQuestionItem } from "@watermark/core/feeds";
 import { roleTotal, topEntities } from "@watermark/core/hubLede";
+import { networkEdges, networkEntities } from "@watermark/core/networkEntities";
 import { withBase } from "@watermark/core/site";
 
 const manifest = loadManifest();
@@ -15,7 +16,12 @@ const num = (n: number): string => n.toLocaleString("en-US");
 // they could already guess from the tab. What they can't guess is WHO the record keeps returning
 // to, and what it still can't answer — so those lead, and the tiles follow. Both come from the
 // feeds the hub already reads for its counts; an empty graph reads as the absence.
-const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
+// Entities and their edges are network-global, so the hub counts the NETWORK's graph (#1906) —
+// the same union the entity index and the interactive graph render. Reading the ambient manifest's
+// `entities` count here would have the hub's door advertise one bundle's slice of a set the page
+// it opens onto lists in full.
+const entities = networkEntities().map((e) => e.node);
+const edgeCount = networkEdges().length;
 const mostLinked = topEntities(entities, 6);
 const questions = hasFeed("open-questions") ? loadFeed<OpenQuestionItem[]>("open-questions") : [];
 const openTop = questions.slice(0, 3);
@@ -38,7 +44,7 @@ const doors: Door[] = [
     id: "entities",
     kind: "Directory",
     href: "/wiki/entities/",
-    count: num(count("entities")),
+    count: num(entities.length),
     title: "Entities",
     desc: "Resolved parties — variants, parcels, identifiers, graph neighborhood, and sources. Individuals with a site-curated profile link from their entity page.",
     note: "who appears",
@@ -47,7 +53,7 @@ const doors: Door[] = [
     id: "graph",
     kind: "Visualization",
     href: "/wiki/graph",
-    count: num(count("relationships")),
+    count: num(edgeCount),
     title: "Entity graph",
     desc: "The interactive force-directed graph of entities and the relationships between them.",
     note: "interactive",
@@ -128,7 +134,7 @@ if (curated.length) {
           entity and concept pages with backlinks and a graph neighborhood.
         </p>
       </div>
-      <span class="hub-count"><span class="dot" aria-hidden="true"></span>{num(count("entities"))} entities · {num(count("relationships"))} edges</span>
+      <span class="hub-count"><span class="dot" aria-hidden="true"></span>{num(entities.length)} entities · {num(edgeCount)} edges</span>
     </div>
 
     <HubLede
@@ -141,8 +147,8 @@ if (curated.length) {
       cta="All entities"
     >
       <p class="hublede-say">
-        <span class="num">{num(count("entities"))}</span> resolved parties, tied by
-        <span class="num"> {num(count("relationships"))}</span> documented relationships. These are
+        <span class="num">{num(entities.length)}</span> resolved parties, tied by
+        <span class="num"> {num(edgeCount)}</span> documented relationships. These are
         the ones the record names most often:
       </p>
       <div class="hublede-chips">
