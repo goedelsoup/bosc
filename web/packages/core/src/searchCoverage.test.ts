@@ -4,7 +4,7 @@
 // declaration it measures against is well-formed and, more to the point, that it can't be gamed
 // into reporting a number it hasn't earned.
 import { describe, expect, it } from "vitest";
-import { siteBase } from "./routes";
+import { LIMA_SLUG, siteBase } from "./routes";
 import { buildSiteSearchIndex, searchShardRefs } from "./search";
 import { COVERAGE_FAMILIES, COVERAGE_FLOOR, searchCoverage, SHARD_GZIP_BUDGET } from "./searchCoverage";
 import { comingSoonStories, SITES, surfacedStories } from "./sites";
@@ -23,11 +23,45 @@ describe("the coverage declaration", () => {
     }
   });
 
-  it("keeps at least one family counted as a gap", () => {
-    // The guard against the failure mode this module exists to prevent: declaring every remaining
-    // miss `not-content` and reporting 100%. If the gaps genuinely close, this test is the place
-    // that should have to change, deliberately, alongside the floor.
-    expect(COVERAGE_FAMILIES.some((f) => f.verdict === "gap")).toBe(true);
+  it("declares no gap it hasn't earned the right to leave open", () => {
+    // This assertion used to read "keeps at least one family counted as a gap", guarding the
+    // failure mode the module exists to prevent: reclassifying every remaining miss `not-content`
+    // and reporting 100%. Its own comment named this edit as the one that should have to change it
+    // — "if the gaps genuinely close, deliberately, alongside the floor" — and #1908 closed the
+    // last two by fixing the wayfinding they described rather than by re-labelling them.
+    //
+    // So the inverted form is now the honest one: **no `gap` is declared**, and a future one is
+    // legitimate only if it arrives with a floor that reflects the misses it admits. The anti-
+    // gaming duty passes to `COVERAGE_FLOOR`, which is measured against the real build and cannot
+    // be satisfied by writing a better note.
+    expect(COVERAGE_FAMILIES.filter((f) => f.verdict === "gap").map((f) => f.label)).toEqual([]);
+  });
+
+  it("no longer declares the nav model's uncarried pages a gap (#1908)", () => {
+    // Retired by fixing what they named, so a family reappearing over any of them would mean the
+    // wayfinding had regressed — which is precisely what this file is for recording.
+    //
+    // Per site: the enclave and groundwater reads left at #1915 (lens facets), and the record's
+    // how-to-read primer is a declared contextual leaf, indexed and linked from every records
+    // index. At the root: `/about/sustainability` joined the About menu, `/network/connect` was
+    // always in the chrome and is now reachable by the index too, and `/about/data` was retired
+    // to `/about/catalog` — the same feed, one address.
+    const closed = [
+      `${siteBase(LIMA_SLUG)}/site/records/how-to-read/`,
+      `${siteBase(LIMA_SLUG)}/environment/groundwater/`,
+      "/about/sustainability/",
+      "/about/catalog/",
+      "/about/contributing/",
+      "/privacy/",
+      "/network/connect/",
+    ];
+    for (const route of closed) {
+      const claimed = COVERAGE_FAMILIES.filter((f) => new RegExp(f.pattern).test(route));
+      expect(
+        claimed.map((f) => f.label),
+        `"${route}" is still declared`,
+      ).toEqual([]);
+    }
   });
 
   it("no longer declares the peer-only entity gap — the wiki builds from the network (#1906)", () => {
@@ -52,8 +86,26 @@ describe("the coverage declaration", () => {
       families: COVERAGE_FAMILIES,
       floor: COVERAGE_FLOOR,
       shardGzipBudget: SHARD_GZIP_BUDGET,
+      contextual: decl.contextual,
       shards: ["/search-index.json", ...searchShardRefs().map((r) => r.path)],
     });
+  });
+
+  it("carries every site's contextual leaves, each with a named carrier (#1908)", () => {
+    // The guard asserts some built page really links each of these, so the set has to arrive
+    // complete: a leaf missing here is a page whose reachability nothing checks, which is the state
+    // this register exists to end. Asserted as a UNION over sites — the submit form is one route per
+    // site and the how-to-read primer is one route the whole network points at, and a declaration
+    // read under a single ambient site would silently drop three of the four submits.
+    const { contextual } = searchCoverage();
+    const submits = contextual.filter((l) => l.href.endsWith("/submit"));
+    expect(submits.length).toBe(SITES.filter((s) => s.selectable).length);
+    expect(contextual.some((l) => l.href.endsWith("/site/records/how-to-read"))).toBe(true);
+    for (const leaf of contextual) {
+      expect(leaf.href.startsWith("/"), leaf.href).toBe(true);
+      expect(leaf.via.length, `${leaf.href}: no carrier named`).toBeGreaterThan(20);
+    }
+    expect(new Set(contextual.map((l) => l.href)).size).toBe(contextual.length);
   });
 
   it("owes a shard for the root and for every site that ships one", () => {

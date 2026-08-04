@@ -22,9 +22,8 @@ import SectionLocked from "~/components/SectionLocked.astro";
 import EconomyHub from "~/components/lens/EconomyHub.astro";
 import EnvironmentHub from "~/components/lens/EnvironmentHub.astro";
 import LensLede from "~/components/lens/LensLede.astro";
-import { hasFeed } from "@watermark/core/bundle";
 import { LENS_ORDER, LENSES, type LensFacet, type LensId } from "@watermark/core/lenses";
-import { facetAvailable, lensStatus } from "@watermark/core/readiness";
+import { facetOffered, lensStatus } from "@watermark/core/readiness";
 import { withBase, withSite } from "@watermark/core/site";
 import { siteForSlug, withSitePaths } from "@watermark/core/sites";
 
@@ -37,13 +36,10 @@ const lens = LENSES[id];
 const site = siteForSlug(slug);
 const locked = lensStatus(slug, id) === "locked";
 
-/** Whether this site puts anything behind a door. Record facets carry their own declared gate; the
- *  rest name the feeds that open them, exactly as the retired hubs did inline. */
-const offered = (f: LensFacet): boolean => {
-  if (f.facet) return facetAvailable(slug, f.facet);
-  if (f.requires) return f.requires.some((feed) => hasFeed(feed, slug));
-  return true;
-};
+/** Whether this site puts anything behind a door — `facetOffered` (#1908). The rule was written
+ *  here inline (#1915) and stayed here, so the leaf ROUTE and the search index never learned it and
+ *  built + indexed nineteen doors this landing was right to withhold. One gate, three consumers. */
+const offered = (f: LensFacet): boolean => facetOffered(slug, f);
 const doors = lens.facets.filter(offered);
 // Named, not silently dropped: a reader should be able to see which of this lens's doors are still
 // waiting on a source rather than infer the lens is thinner here than it is.

@@ -81,6 +81,13 @@
 /network/:site/site/concepts            /wiki/concepts/                                        301
 /network/:site/site/concepts/*          /wiki/concepts/:splat                                  301
 
+# The data catalog had two renderings of ONE feed (#1908). `/about/data` (#659) was the static,
+# JS-off original; `/about/catalog` (#1000) is the interactive successor and the one the About menu
+# carries. Only the successor was ever reachable from the chrome, so the predecessor had become a
+# second address for the same page that a reader could reach only from one line of `/about` body
+# copy — retired here rather than given a nav slot it would have had to earn twice.
+/about/data             /about/catalog                                                         301
+
 # Old network-hub URLs (pre-#402, when the hub was /network). Research is /research/hypotheses.
 # Exact rules only — /network/<slug> is real coming-soon content.
 #

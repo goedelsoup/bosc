@@ -21,7 +21,7 @@ import { activeSite } from "./bundle";
 import type { HypothesisItem } from "./feeds";
 import { LENS_ORDER, LENSES } from "./lenses";
 import { lensStatus, sectionStatus } from "./readiness";
-import { siteBase, storyBase } from "./routes";
+import { LIMA_SLUG, siteBase, storyBase } from "./routes";
 import type { NetworkSite } from "./sites";
 import { STUDY_CHAPTERS, STUDY_PARTS } from "./study";
 import { NETWORK_NOUNS } from "./taxonomy";
@@ -424,6 +424,14 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
         },
         { divider: true as const },
         { label: "Data catalog", href: "/about/catalog", blurb: "Every dataset: source, license, freshness" },
+        // Our own compute footprint (#1076), published to the standard this project holds its
+        // subjects to. It was linked from nothing but its own footer (#1908) — a page that measures
+        // the measurer and cannot be found is an accountability claim nobody can check.
+        {
+          label: "Sustainability",
+          href: "/about/sustainability",
+          blurb: "What running Watermark costs — energy, water, carbon",
+        },
         { divider: true as const },
         { label: "Contributing", href: "/about/contributing" },
         { label: "Privacy", href: "/privacy", blurb: "What we do and don't collect" },
@@ -620,6 +628,76 @@ export const SUBMIT_LINK: { label: string; section: SectionId; href: string } = 
   section: "submit",
   href: "/submit",
 };
+
+/**
+ * A destination the chrome deliberately does NOT carry, reached from another page's body copy.
+ *
+ * #1908's finding was that about twenty built pages were reachable only this way, and its harder
+ * half was that *some of them should be*. "Everything in the nav" is not the goal — #1893 spent a
+ * whole issue proving that a destination linked from everywhere is emphasized nowhere. What was
+ * missing is that the deliberate cases and the forgotten ones looked identical from outside: both
+ * were simply absent from `nav.ts`, so nothing distinguished a decision from an oversight, and the
+ * search index had no stated way to reach either.
+ *
+ * So a contextual leaf is a *declaration*, with the two things that make it one — where a reader
+ * meets it, and why the chrome doesn't carry it. `search.ts` indexes this list (a leaf is real
+ * content; not being in the menu is not a reason to be unfindable), and `check-routes.mjs` asserts
+ * some built page really links each `href`, so "contextual" cannot quietly decay into "orphaned".
+ *
+ * NOT a navigation surface (see the ceiling rule below): an in-page cross-link is precisely the
+ * thing a demoted destination keeps, and counting these would invert #1893's rule into a reason not
+ * to write them down.
+ *
+ * The lens facets are absent on purpose — `lenses.ts` already declares each leaf, its landing and
+ * the gate that offers it, which is the same register kept closer to the model.
+ */
+export interface ContextualLeaf {
+  label: string;
+  href: string;
+  blurb: string;
+  /** Where a reader meets it — the body copy that carries it. */
+  via: string;
+  /** Why the chrome doesn't carry it. */
+  why: string;
+  /**
+   * The already-indexed row that reaches this content, when one does — in which case the leaf earns
+   * no row of its own. Deliberately the same word `searchCoverage.ts` uses, and for the same
+   * reason: "there is nothing to find here" and "you will find this by another name" are different
+   * claims. Four site-rooted copies of one submission form would be three near-identical results.
+   */
+  represented?: string;
+}
+
+/** The declared contextual leaves for the active site. */
+export function contextualLeaves(): ContextualLeaf[] {
+  const { base } = siteRoots();
+  return [
+    {
+      label: "How to read any record",
+      // Lima's, from every site — the page is Lima-only (its teardowns use Lima's own OPC, air and
+      // NPDES records), so this is one route the whole network points at, not one per site.
+      href: `${siteBase(LIMA_SLUG)}/site/records/how-to-read`,
+      blurb: "The five-beat teardown grammar, shown across three genuinely different record types.",
+      via: "the 'New to the record?' line on every site's records index",
+      why:
+        "A primer belongs where a reader first meets a record they can't parse, not in a standing " +
+        "menu. And it is Lima-only: carrying it in the chrome would put a Lima route in every " +
+        "peer's site bar, which is worse wayfinding than the body link it replaces.",
+    },
+    {
+      label: "Submit a correction",
+      href: `${base}/submit`,
+      blurb: "Contribute a document, a name, or a correction against this site's record.",
+      via: "the '✎ Suggest a correction' deep-links on records, people and places, and the ask on every lock and study gap",
+      why:
+        "The standing affordance is the network-tier `/submit` in the platform cluster. This route " +
+        "exists so a correction raised inside a site keeps that site's chrome and carries the " +
+        "`?ref_kind=` of the record being corrected — it is the deep-link target of a specific " +
+        "record, which a menu entry cannot be.",
+      represented: "/submit",
+    },
+  ];
+}
 
 /** Whether `item` is the active header tab for the page's `active` section. A dropdown /
  *  mega parent lights when its section or any descendant section (its `match` list) is active. */

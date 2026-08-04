@@ -5,7 +5,7 @@ import CorridorMap from "@watermark/viz/islands/CorridorMap.tsx";
 import Base from "~/layouts/Base.astro";
 import { mergedGeo } from "@watermark/viz/geo";
 import { layerLabel, layersPresent, type GeoFeature } from "@watermark/viz/geoStyle";
-import { isReferenceSite } from "@watermark/core/readiness";
+import { facetOfferedAt, isReferenceSite } from "@watermark/core/readiness";
 import { withBase, withSite } from "@watermark/core/site";
 
 // The section-lead names Lima's specific parcels/corridor/subwatershed, so it's gated to the
@@ -43,8 +43,16 @@ const mapSrc = withBase("/feeds/geo/corridor-map.geojson");
       RSEI toxic-release overlay (off by default). Pan/zoom, toggle layers, switch
       basemaps (street, Esri aerial, dated 2014/2024 Wayback aerials), and click a
       feature for its record. {features.length} features across {present.length} layers.
-      For the dated before/during/after view, see the
-      <a href={withSite("/environment/imagery")}>imagery slider</a>.
+      {
+        /* Only where the imagery leaf is built (#1908): the Land lens offers that door on a site
+           with a `geo/imagery` feed, and the page no longer exists on one without. */
+        facetOfferedAt(slug, "/environment/imagery") && (
+          <Fragment>
+            {" "}For the dated before/during/after view, see the{" "}
+            <a href={withSite("/environment/imagery")}>imagery slider</a>.
+          </Fragment>
+        )
+      }
     </p>
 
     <div class="deck-surface">

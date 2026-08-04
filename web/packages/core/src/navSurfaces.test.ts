@@ -13,7 +13,14 @@
 // surfaces at all — they are where a demoted destination goes.
 import { describe, expect, it } from "vitest";
 import { LENS_ORDER } from "./lenses";
-import { navItemDestinations, navItemLinks, navSurfaces, siteTabs, type NavItem } from "./nav";
+import {
+  contextualLeaves,
+  navItemDestinations,
+  navItemLinks,
+  navSurfaces,
+  siteTabs,
+  type NavItem,
+} from "./nav";
 import { activeSite } from "./bundle";
 import { siteBase } from "./routes";
 
@@ -160,5 +167,42 @@ describe("the Lenses dropdown — route prefix and menu section agree (#1893, in
     const tab = lensTab();
     expect(tab.match).toContain("environment");
     expect(tab.match).toContain("economy");
+  });
+});
+
+describe("contextual leaves — the declared non-destinations (#1908)", () => {
+  // The other half of "every built page is reachable from the nav model, OR is declared contextual
+  // with the reason recorded in nav.ts". Before this register the two cases were indistinguishable:
+  // a page the chrome deliberately skipped and a page it had forgotten were both simply absent
+  // from `nav.ts`, so nothing marked which was a decision — and search had no stated way to reach
+  // either. What makes the declaration worth anything is that it costs something to write.
+
+  it("says where a reader meets it and why the chrome doesn't carry it", () => {
+    const leaves = contextualLeaves();
+    expect(leaves.length).toBeGreaterThan(0);
+    for (const leaf of leaves) {
+      expect(leaf.href.startsWith("/"), `${leaf.label}: not root-absolute`).toBe(true);
+      expect(leaf.label.length).toBeGreaterThan(0);
+      // A one-word reason is an exemption, not a declaration — the bar `searchCoverage.ts` sets
+      // for its family notes, applied to the same kind of claim.
+      expect(leaf.via.length, `${leaf.label}: no carrier named`).toBeGreaterThan(20);
+      expect(leaf.why.length, `${leaf.label}: reason too thin`).toBeGreaterThan(60);
+    }
+  });
+
+  it("declares nothing the chrome already carries", () => {
+    // The failure mode in the other direction: a destination sitting in a menu AND claiming to be
+    // a contextual leaf, which would let a nav removal pass unnoticed because the leaf covers for
+    // it. Contextual means contextual.
+    const inChrome = new Set(navSurfaces().flatMap((s) => s.links.map((l) => l.href)));
+    for (const leaf of contextualLeaves()) {
+      expect(inChrome.has(leaf.href), `${leaf.label} is in the chrome — drop the declaration`).toBe(false);
+    }
+  });
+
+  it("is not a navigation surface", () => {
+    // #1893's rule is that an in-page cross-link is where a DEMOTED destination goes. Counting
+    // these against the two-surface ceiling would invert it into a reason not to write them down.
+    expect(navSurfaces().map((s) => s.id)).not.toContain("contextual");
   });
 });
