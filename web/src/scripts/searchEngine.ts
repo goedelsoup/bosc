@@ -34,10 +34,18 @@ export const esc = (s: string): string =>
   s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
 /** Fetch + parse one shard. A failure is logged and degrades to no rows, so one missing shard
- *  narrows the results instead of breaking the box. */
+ *  narrows the results instead of breaking the box.
+ *
+ *  The status check is what makes the log useful. `fetch` doesn't reject on 4xx/5xx, so without it
+ *  a missing shard surfaced as a JSON parse error against an error page's HTML — which points at
+ *  the wrong problem. A 404 here almost always means a `_redirects` rule shadowed the shard, and
+ *  that is worth reading in the console rather than deducing. */
 function loadShard(url: string): Promise<SearchDoc[]> {
   return fetch(url)
-    .then((r) => r.json())
+    .then((r) => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    })
     .then((d: SearchDoc[]) => (Array.isArray(d) ? d : []))
     .catch((err: unknown) => {
       console.error(`search: failed to load index ${url}`, err);
@@ -203,7 +211,7 @@ export function renderGroups(
  *
  * Before this, each of the three retrieval systems was a dead end on its own terms: a reader who
  * searched and found nothing had no signal that `/ask` existed, let alone that it might hold the
- * answer. Offered whenever results are thin, not only when they are empty — five weak title
+ * answer. Offered whenever results are thin, not only when they are empty — three weak title
  * matches are a miss too.
  */
 export const THIN_RESULTS = 3;

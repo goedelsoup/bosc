@@ -135,6 +135,29 @@ describe("each site's own shard", () => {
     }
   });
 
+  it("lists each destination once within a shard", () => {
+    // Two rows for one page is a duplicate in the reader's result list, not two results. It caught
+    // a real one: the `timeline` record facet's route IS the timeline section's landing, so every
+    // site with both open listed `/timeline` twice.
+    //
+    // Exempt by design: a Timeline event and a Meeting summary are individually searchable rows
+    // that all land on the one page carrying them (`/timeline`, `/site/legal#meetings`). Asserting
+    // on everything EXCEPT those — rather than on a list of "landing" kinds — means a NEW kind that
+    // accidentally duplicates a destination fails here instead of being quietly exempt.
+    const SHARED_DESTINATION = new Set(["Timeline", "Meeting"]);
+    for (const slug of SELECTABLE) {
+      const seen = new Map<string, string>();
+      const dupes: string[] = [];
+      for (const d of buildSiteSearchIndex(slug)) {
+        if (SHARED_DESTINATION.has(d.kind)) continue;
+        const first = seen.get(d.url);
+        if (first === undefined) seen.set(d.url, `${d.kind}:${d.title}`);
+        else dupes.push(`${slug} ${d.url} — "${first}" and "${d.kind}:${d.title}"`);
+      }
+      expect(dupes).toEqual([]);
+    }
+  });
+
   it("never serves another site's row — no URL appears in two shards (#1886)", () => {
     // The property `facets.test.ts` enforces for the rendered pages, carried into the index that
     // points at them. A search result is a claim that this record is this site's.

@@ -132,12 +132,23 @@ describe("searchEngine.makeIndexLoader — the sharded loader (#1890)", () => {
         url === "/search-index.json"
           ? [doc({ title: "Wiki", kind: "Concept" })]
           : row(url.includes("fort-wayne") ? "fort-wayne" : "lima");
-      return Promise.resolve({ json: () => Promise.resolve(body) } as Response);
+      return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(body) } as Response);
     });
     return seen;
   };
 
-  afterEach(() => vi.unstubAllGlobals());
+  // `vi.unstubAllGlobals()` does NOT undo a `vi.spyOn`, so a console.error mock left by one case
+  // would silence the next one's real failures. Restored explicitly.
+  let quiet: ReturnType<typeof vi.spyOn> | null = null;
+  const silenceErrors = (): void => {
+    quiet = vi.spyOn(console, "error").mockImplementation(() => {});
+  };
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    quiet?.mockRestore();
+    quiet = null;
+  });
 
   it("site scope loads the network shard plus THIS site's, and no other site's", () => {
     const seen = stubFetch();
@@ -179,12 +190,37 @@ describe("searchEngine.makeIndexLoader — the sharded loader (#1890)", () => {
     // A missing shard should narrow the results, not break the box.
     vi.stubGlobal("fetch", (url: string) =>
       url.includes("fort-wayne")
-        ? Promise.reject(new Error("404"))
-        : Promise.resolve({ json: () => Promise.resolve([doc({ title: "ok" })]) } as Response),
+        ? Promise.reject(new Error("network down"))
+        : Promise.resolve({
+            ok: true,
+            status: 200,
+            json: () => Promise.resolve([doc({ title: "ok" })]),
+          } as Response),
     );
-    vi.spyOn(console, "error").mockImplementation(() => {});
+    silenceErrors();
     const load = makeIndexLoader("/search-index.json", SHARDS, "fort-wayne");
     return load("site").then((docs) => expect(docs.map((d) => d.title)).toEqual(["ok"]));
+  });
+
+  it("treats a non-2xx shard as absent rather than parsing the error page", () => {
+    // `fetch` doesn't reject on 404 — the body would be the 404 page's HTML, and `.json()` would
+    // throw somewhere less legible. The likely cause of a 404 here is a `_redirects` rule
+    // shadowing the shard, which is why the status is checked and logged rather than inferred.
+    vi.stubGlobal("fetch", (url: string) =>
+      url.includes("fort-wayne")
+        ? Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve([]) } as Response)
+        : Promise.resolve({
+            ok: true,
+            status: 200,
+            json: () => Promise.resolve([doc({ title: "ok" })]),
+          } as Response),
+    );
+    silenceErrors();
+    const load = makeIndexLoader("/search-index.json", SHARDS, "fort-wayne");
+    return load("site").then((docs) => {
+      expect(docs.map((d) => d.title)).toEqual(["ok"]);
+      expect(quiet).toHaveBeenCalled();
+    });
   });
 
   it("with no current site, site scope still loads the network shard alone", () => {

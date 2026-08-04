@@ -275,21 +275,21 @@ function checkSearchCoverage() {
     failures.push("no search-coverage.json in the build — the coverage declaration didn't emit");
     return;
   }
-  const { families, floor, shardGzipBudget } = JSON.parse(readFileSync(declPath, "utf-8"));
+  const { families, floor, shardGzipBudget, shards } = JSON.parse(readFileSync(declPath, "utf-8"));
 
-  // Every shard: the network-global one at the root, plus one per selectable site.
-  const shardPaths = [join(DIST, "search-index.json")];
-  const networkDir = join(DIST, "network");
-  if (existsSync(networkDir)) {
-    for (const entry of readdirSync(networkDir)) {
-      const p = join(networkDir, entry, "search-index.json");
-      if (existsSync(p)) shardPaths.push(p);
-    }
-  }
-  if (shardPaths.length < 2) {
-    failures.push("no per-site search shard in the build — search would be reference-site-only again");
+  // Every shard the declaration says this build owes: the network-global one at the root, plus one
+  // per selectable site. Compared as a SET, not a count — one site's shard silently ceasing to
+  // emit leaves the others in place, so "at least two exist" would pass while that site's record
+  // went unsearchable, which is exactly the state #1890 fixed.
+  const missing = shards.filter((s) => !existsSync(join(DIST, s.replace(/^\//, ""))));
+  if (missing.length > 0) {
+    failures.push(
+      `${missing.length} declared search shard(s) missing from the build — that site's record is ` +
+        `unsearchable:\n${missing.map((s) => `      ${s}`).join("\n")}`,
+    );
     return;
   }
+  const shardPaths = shards.map((s) => join(DIST, s.replace(/^\//, "")));
 
   const indexed = new Set();
   let rows = 0;
@@ -320,6 +320,17 @@ function checkSearchCoverage() {
   const excluded = families.filter((f) => f.verdict !== "gap").map((f) => new RegExp(f.pattern));
   const content = all.map(({ route }) => (route === "" ? "/" : `/${route}/`));
   const denominator = content.filter((r) => !excluded.some((re) => re.test(r)));
+  // An empty denominator means the exclusions swallowed the build (a `.*` pattern would do it), and
+  // 0/0 is NaN — which compares false against the floor and would report green while asserting
+  // nothing at all. The guard has to fail loudly on the one input that makes it vacuous.
+  if (denominator.length === 0) {
+    failures.push(
+      "search coverage has no content routes to measure — the declared families exclude every " +
+        `built route (${all.length.toLocaleString("en-US")} of them). Check the patterns in ` +
+        "packages/core/src/searchCoverage.ts.",
+    );
+    return;
+  }
   const covered = denominator.filter((r) => indexed.has(r));
   const fraction = covered.length / denominator.length;
 

@@ -4,7 +4,10 @@
 // declaration it measures against is well-formed and, more to the point, that it can't be gamed
 // into reporting a number it hasn't earned.
 import { describe, expect, it } from "vitest";
+import { siteBase } from "./routes";
+import { searchShardRefs } from "./search";
 import { COVERAGE_FAMILIES, COVERAGE_FLOOR, searchCoverage, SHARD_GZIP_BUDGET } from "./searchCoverage";
+import { SITES } from "./sites";
 
 describe("the coverage declaration", () => {
   it("gives every family a compilable pattern, a label, a verdict, and a reason", () => {
@@ -39,7 +42,33 @@ describe("the coverage declaration", () => {
       families: COVERAGE_FAMILIES,
       floor: COVERAGE_FLOOR,
       shardGzipBudget: SHARD_GZIP_BUDGET,
+      shards: ["/search-index.json", ...searchShardRefs().map((r) => r.path)],
     });
+  });
+
+  it("owes a shard for the root and for every selectable site", () => {
+    // The guard compares the build against this set rather than counting, so the set has to be
+    // derived — a hand-written list would go stale the moment a site is promoted.
+    const { shards } = searchCoverage();
+    expect(shards[0]).toBe("/search-index.json");
+    expect(shards.length).toBe(SITES.filter((s) => s.selectable).length + 1);
+    expect(new Set(shards).size).toBe(shards.length);
+  });
+
+  it("excludes exactly the sites that ship a shard from the non-selectable gap", () => {
+    // The pattern is derived through `siteBase`, so the reference site's URL id
+    // (lima → american-sugar-creek-allen-co) has to survive the round trip. A hardcoded list here
+    // would silently reclassify a promoted site's pages as an unsearchable gap.
+    const family = COVERAGE_FAMILIES.find((f) => f.label === "A non-selectable site's own pages");
+    expect(family).toBeDefined();
+    const re = new RegExp(family!.pattern);
+    for (const site of SITES.filter((s) => s.selectable)) {
+      expect(re.test(`${siteBase(site.slug)}/timeline/`), `${site.slug} treated as unsharded`).toBe(false);
+    }
+    // …and a site that ships no shard still matches, or the gap would be invisible.
+    const unsharded = SITES.find((s) => !s.selectable);
+    expect(unsharded).toBeDefined();
+    expect(re.test(`${siteBase(unsharded!.slug)}/stories/x/`)).toBe(true);
   });
 
   it("excludes only what it names — the patterns don't swallow the record", () => {

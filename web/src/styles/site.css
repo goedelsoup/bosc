@@ -1084,10 +1084,11 @@ html[data-ssv2] .site-switcher > .switcher-menu:not(.switcher-menu-v2) { display
 }
 .search-ask-lede { display: block; font-size: var(--fs-meta); color: var(--bosc-muted); line-height: 1.4; }
 .search-ask-q { display: block; margin-top: 0.2rem; font-weight: 600; color: var(--bosc-link); }
+/* Square, per the design system ("square corners everywhere — border-radius: 0"). The rounded
+   .search-group boxes above it are pre-existing drift, not a precedent to match. */
 .search-page-results .search-ask,
 .search-page-hint + .search-ask {
   border: 1px solid var(--bosc-rule);
-  border-radius: 8px;
 }
 
 /* ---- Two-column layout: section TOC rail + content ---- */
