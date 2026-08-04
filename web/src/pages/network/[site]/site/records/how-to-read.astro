@@ -15,7 +15,6 @@ export const getStaticPaths = () => selectableSitePaths().filter((p) => p.props.
  * screen): all three teardowns are SSR'd; the CSS shows the selected one. Fully
  * readable with JS off — every panel is in the DOM.
  */
-import BackLink from "~/components/BackLink.astro";
 import EvidenceLegend from "~/components/EvidenceLegend.astro";
 import RecordTeardown from "~/components/RecordTeardown.astro";
 import Base from "~/layouts/Base.astro";
@@ -30,7 +29,6 @@ import { withSite } from "@watermark/core/site";
   description="The evidence grammar behind every record on the site — source, read, reveal, check, connect — shown across a cost estimate, an air permit, and an NPDES water screen, all read from the published record."
 >
   <div class="hub">
-    <BackLink href={withSite("/site/records/")} label="Records" />
     <div class="hub-head">
       <div>
         <div class="hub-eyebrow">The record · how to read it</div>

@@ -13,12 +13,11 @@
  * claims via the `full-report` slot.
  */
 import Base from "./Base.astro";
-import BackLink from "../components/BackLink.astro";
 import SectionLocked from "../components/SectionLocked.astro";
 import StudyAnnexBanner from "../components/study/StudyAnnexBanner.astro";
 import { activeSite } from "@watermark/core/bundle";
 import { sectionStatus } from "@watermark/core/readiness";
-import { withBase, withSite } from "@watermark/core/site";
+import { withBase } from "@watermark/core/site";
 
 interface Props {
   title: string;
@@ -51,7 +50,6 @@ const headDesc = reportsLocked ? LOCKED_DESC : description;
 <Base title={headTitle} section="reports" description={headDesc}>
   <div class="walk-chapter-page">
     <article class="prose">
-      <BackLink href={withSite("/reports")} label="Reports" />
       <div class="walk-chapter-eyebrow">{reportsLocked ? "Reports" : eyebrow}</div>
       <h1 class="walk-chapter-h1">{reportsLocked ? "Reports" : h1}</h1>
       {!reportsLocked && annexChapters && annexChapters.length > 0 && (

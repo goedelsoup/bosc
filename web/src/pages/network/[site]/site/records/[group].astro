@@ -2,13 +2,11 @@
 import { withSitePaths } from "@watermark/core/sites";
 import type { GetStaticPaths } from "astro";
 import Base from "~/layouts/Base.astro";
-import BackLink from "~/components/BackLink.astro";
 import RecordBlock from "~/components/RecordBlock.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { RecordItem } from "@watermark/core/feeds";
 import { groupLabel, groupsOf } from "@watermark/core/records";
 import { recordToBlock } from "@watermark/core/recordBlock";
-import { withSite } from "@watermark/core/site";
 
 export const getStaticPaths: GetStaticPaths = () =>
   withSitePaths(() => {
@@ -28,9 +26,8 @@ const label = groupLabel(String(group));
 const anchors = records.filter((r) => recordToBlock(r).seenIn).length;
 ---
 
-<Base title={label} section="site">
+<Base title={label} section="site" trailLabels={{ [String(group)]: label }}>
   <article class="prose">
-    <BackLink href={withSite("/site/records/")} label="Records" />
     <h1>{label}</h1>
     <p class="section-lead">
       {records.length} record(s) — open one for its full reading and, where it's a story

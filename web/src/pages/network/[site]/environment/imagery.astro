@@ -1,14 +1,13 @@
 ---
 import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
-import BackLink from "~/components/BackLink.astro";
 import BeforeAfterSlider from "~/components/BeforeAfterSlider.astro";
 import ImagerySlider from "@watermark/viz/islands/ImagerySlider.tsx";
 import Base from "~/layouts/Base.astro";
 import { hasFeed } from "@watermark/core/bundle";
 import type { WaybackRelease } from "@watermark/core/feeds";
 import { loadImagery } from "@watermark/viz/geo";
-import { withBase, withSite } from "@watermark/core/site";
+import { withBase } from "@watermark/core/site";
 
 // Build-time: read the imagery feed so the page server-renders a real
 // before/during/after view (dated Wayback tiles over the AOI centroid) plus the
@@ -50,7 +49,6 @@ const aoiName = siteName.replace(/ — imagery AOI$/, "");
 
 <Base title="Imagery — before / during / after" section="environment">
   <article class="prose">
-    <BackLink href={withSite("/environment/")} label="The environment" />
     <h1>Imagery — before / during / after</h1>
     <p class="section-lead">
       Dated Esri <strong>Wayback</strong> aerials over the {aoiName} AOI:

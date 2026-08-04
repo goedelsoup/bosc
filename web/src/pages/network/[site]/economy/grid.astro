@@ -25,7 +25,6 @@ export const getStaticPaths = selectableSitePaths;
  * and the campus buys at wholesale, not the residential rate the band is applied to. The feed
  * carries those caveats as data and this page renders them — it does not headline the band.
  */
-import BackLink from "~/components/BackLink.astro";
 import Base from "~/layouts/Base.astro";
 import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import SectionLocked from "~/components/SectionLocked.astro";
@@ -53,7 +52,6 @@ const kappaBand =
 
 <Base title="The grid backdrop" section="economy">
   <article class="prose">
-    <BackLink href={withSite("/economy/")} label="The economy" />
     <h1>The grid backdrop</h1>
     <StudyAnnexBanner chapters={["power"]} />
 

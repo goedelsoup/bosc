@@ -1,7 +1,6 @@
 ---
 import { selectableSitePaths, siteForSlug } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
-import BackLink from "~/components/BackLink.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
 import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import SeasonalField from "@watermark/viz/islands/SeasonalField.tsx";
@@ -9,7 +8,7 @@ import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { SeasonalField as SeasonalFieldData } from "@watermark/core/feeds";
 import { isReferenceSite } from "@watermark/core/readiness";
-import { withBase, withSite } from "@watermark/core/site";
+import { withBase } from "@watermark/core/site";
 
 // The seasonal water field view (#1236, epic #1237): the deck.gl FieldLayer island over the seasonal
 // net-atmospheric-withdrawal climograph (`water-seasonal-field` feed), plus the always-rendered
@@ -36,7 +35,6 @@ const mapSrc = withBase("/feeds/water/seasonal.json");
 
 <Base title="Seasonal withdrawal" section="environment">
   <article class="prose">
-    <BackLink href={withSite("/environment/")} label="The environment" />
     <h1>Seasonal withdrawal</h1>
     <StudyAnnexBanner chapters={["water-supply"]} />
     <p class="section-lead">
