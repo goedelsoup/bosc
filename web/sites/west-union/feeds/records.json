@@ -1,1 +1,106 @@
-[]
+[
+  {
+    "rel": "regulatory/west-union/west-union-consent-order-1993.order.yaml",
+    "group": "enforcement",
+    "title": "Consent Order (Adams County C.P. 89-CIV-228)",
+    "confidence": "high",
+    "warnings": [
+      "Article V milestone (c) prints \"August 2, 1993\" with a stray overstrike mark immediately right of the \"2\" — a typewriter correction or scan artifact. The digit \"2\" itself is unambiguous at 600 DPI and no second digit is legible, so the date is recorded as 1993-08-02; verify against the page image before citing the day in a filing.",
+      "Three values on the instrument are HANDWRITTEN, not typed: the day and month in the entry line (\"Entered this 29th day of June, 1993\", p. 7), the resolution number (p. 10) and the resolution date (p. 10). The entry date is corroborated by the clerk's MECHANICAL file stamp and is [verified]; the resolution number and date rest on the handwriting alone.",
+      "The Village Clerk's PRINTED name appears nowhere in the instrument — only a signature on p. 10. It is left null rather than transcribed from the hand. The Mayor's name is printed (p. 8) and is not affected."
+    ],
+    "fields": {
+      "agency": "Ohio Attorney General (Environmental Enforcement Section), for the State of Ohio",
+      "instrument": "Consent Order (Adams County C.P. 89-CIV-228)",
+      "case_no": "89-CIV-228",
+      "respondent": "The Village of West Union, Ohio",
+      "facility": "Village of West Union wastewater treatment plant and sanitary sewer system, Adams County, Ohio. The order does NOT print a plant address or name a receiving water.",
+      "permit_no": "0PC00019*CD",
+      "issued_date": "1993-06-29",
+      "effective_date": "1993-06-29",
+      "penalty_usd": 5000,
+      "stipulated_penalties": "Two schedules (Art. XI), both per day and PER VIOLATION, payable by certified check to \"Treasurer, State of Ohio\" within 10 days of the failure (Art. XI.C). For the CONSTRUCTION milestones, Art. V(a)-(f): $100/day up to 30 days, $200/day for 31-60, $300/day for 60-90, $400/day over 90. For the COMPLIANCE milestone, Art. V(g): $500/day up to 30 days, $750/day for 31-60, $1,000/day over 60 — a 2.5x-to-5x step up from the construction tiers.",
+      "status": "unresolved in corpus — the published bytes are a 1993 snapshot. The court expressly RETAINED jurisdiction to enforce (Art. XII) and the instrument contains no termination provision at all (unlike the 1996 Allen County CWA decree, which conditions termination on 12 consecutive compliant months). Nothing in the corpus shows whether the 1995 milestones were met or whether jurisdiction was ever released.",
+      "summary": "Entered and filed 1993-06-29 in the Adams County Court of Common Pleas (Judge Elmer Spencer) on the State's 1989 complaint, resolving alleged violations of the discharge limitations and monitoring requirements of NPDES permit 0PC00019*CD and of R.C. Chapter 6111. Three injunctions run together: immediate compliance with R.C. Ch. 6111 and the permit (Art. IV.A); Appendix \"A\" interim effluent limits until 1994-10-03 and the permit's final effluent standards after (Art. IV.B/C); and elimination of all sanitary-sewer overflows and bypasses plus completion of the WWTP improvements described in the Facilities Plan submitted to Ohio EPA on 1992-05-26, on a seven-milestone schedule ending 1995-05-01 (Art. V). $5,000 civil penalty, stipulated penalties on every milestone, and reporting to Ohio EPA's Southeast District Office within 7 days of each milestone date.",
+      "obligations": [
+        {
+          "requirement": "Initiation of Project Design Work (Art. V(a))",
+          "deadline": "Completed"
+        },
+        {
+          "requirement": "Submittal of Approvable Plans and Specifications to Ohio EPA (Art. V(b))",
+          "deadline": "1993-05-03"
+        },
+        {
+          "requirement": "Advertisement of Building Bids (Art. V(c))",
+          "deadline": "1993-08-02"
+        },
+        {
+          "requirement": "Execution of Building Contracts (Art. V(d))",
+          "deadline": "1993-11-15"
+        },
+        {
+          "requirement": "Initiation of Construction (Art. V(e))",
+          "deadline": "1994-01-04"
+        },
+        {
+          "requirement": "Completion of construction of sufficient wetstream treatment facilities to ensure compliance with final effluent limits, and to eliminate all bypasses and overflows from the system (Art. V(f))",
+          "deadline": "1995-04-03"
+        },
+        {
+          "requirement": "Attain compliance with final effluent limitations (Art. V(g))",
+          "deadline": "1995-05-01"
+        },
+        {
+          "requirement": "Comply with the Appendix \"A\" interim effluent limitations (Art. IV.B)",
+          "deadline": "1994-10-03"
+        },
+        {
+          "requirement": "Meet the final effluent standards of NPDES 0PC00019*CD (Art. IV.C)",
+          "deadline": "after 1994-10-03"
+        },
+        {
+          "requirement": "Written report to Ohio EPA Southeast District Office, Division of Water Pollution Control, 2195 Front Street, Logan, Ohio 43138, stating whether each milestone was performed (Art. VII)",
+          "deadline": "7 days from each milestone completion date"
+        },
+        {
+          "requirement": "Pay the $5,000 civil penalty by certified check to \"Treasurer, State of Ohio\" (Art. X)",
+          "deadline": "45 days from the court's entry"
+        },
+        {
+          "requirement": "Properly operate and maintain the WWTP and any associated equipment and structures (Art. IV.D)",
+          "deadline": "continuing"
+        },
+        {
+          "requirement": "Provide a copy of the Consent Order to each contractor employed on the work, and require each general contractor to provide a copy to its subcontractors (Art. II)",
+          "deadline": "continuing"
+        }
+      ],
+      "note": "[verified] All figures, dates and codes read from the instrument's own page images. The order is entered \"without trial of any issue of fact or law, and upon consent of the parties\" (p. 1), so the State's characterization of the Village's conduct is an allegation the order RESOLVES, not a finding it makes — see `alleged_violations`. Compliance with the order's terms constitutes full satisfaction of civil liability for all claims alleged in the Complaint (Art. III.B), but does not limit the State as to claims not alleged, including violations occurring after the filing (Art. III.C)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "regulatory/west-union/west-union-consent-order-1993.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "regulatory/west-union/Village-of-West-Union-Consent-Order-1993.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  }
+]

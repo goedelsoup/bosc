@@ -111,8 +111,14 @@ Discover Financial, TJX. Pin individually only on entry to a scenario.
   minimum charges); ends the Central-Ohio connection moratorium. New Albany/Columbus load is the
   documented driver. **OMA appeal to the Ohio Supreme Court (Nov 2025)**; the hyperscalers are
   challengers too. `[verified]`
-- **Ohio EPA Draft Data-Center General NPDES Permit OHD000001** (statewide; cooling / blowdown /
-  generator stormwater) — same instrument cited in the Springfield register; applies here. `[verified]`
+- **Ohio EPA Data-Center General NPDES Permit OHD000001 — WITHDRAWN 2026-07-21:** public-noticed
+  as a draft 2025-10-31 (hearing 2025-12-17, comment closed 2026-01-16), it would have covered
+  cooling water, cooling-tower/boiler blowdown and generator stormwater statewide — the same
+  instrument cited in the Springfield register. Ohio EPA's 2026-07-21 Community Notice declined to
+  finalize it, calling individual NPDES issuance "the most appropriate path forward." It never
+  applied here and now never will: on a direct-discharge path only an **individual** NPDES permit
+  remains, and Intel's process route is the **sanitary sewer** (Columbus WWTP), which files no
+  NPDES permit at all and is disclosed by an **industrial-user / pretreatment permit**. `[verified]`
 - **Data-center sales-tax exemption (ORC §122.175)** statewide cost ~$1.6B/yr (2025); **DeWine paused
   new OTCA exemptions Aug 2025** pending a legislative study. Capture the pause instrument. `[verified]`
 
@@ -184,8 +190,14 @@ reporting. See `data/reference/oepa/cooling-reconciliation.yaml`.
    **highest value** for a cooling-draw scenario. (Ohio EPA eDocument System, Licking Co.)
 2. **Hyperscaler Air PTIs** — Meta (Sidecat) / AWS / Google / QTS generator banks (Ohio EPA reports 30
    DC PTIs statewide — several are these sites).
-3. **Ohio EPA NPDES** — coverage under draft OHD000001; the surface receiving water (South Fork Licking
-   vs Big Walnut); Intel is stormwater-only (sanitary-sewer process route).
+3. **Ohio EPA NPDES — re-aimed (#1883).** There is no OHD000001 coverage to pull: the general
+   permit was withdrawn 2026-07-21 and will never issue. Ask instead for an **individual** NPDES
+   permit or application naming any of the Beech Rd campuses, and — since Intel's process route is
+   the **sanitary sewer**, which carries no NPDES permit at all — the City of Columbus
+   **industrial-user / pretreatment permit and sewer-use agreement** for the Jersey Twp campus,
+   the instrument that would actually disclose cooling blowdown (#1688). Still open alongside it:
+   which surface receiving water any *direct* discharge would reach (South Fork Licking vs Big
+   Walnut); Intel is stormwater-only on the surface side.
 4. **Licking County Recorder deeds + parcels** — the Beech Rd corridor (Meta 1500 Beech / Sidecat; AWS
    2570 Beech + Beech-Miller; Google 1101 Beech & 2565 Harrison / DBT-Data; QTS Beech Rd; Microsoft off
    Beech/Fitzwilliam; Intel Jersey Twp). Franklin County Auditor covers the city-core parcels.

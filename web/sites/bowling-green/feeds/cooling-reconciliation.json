@@ -114,12 +114,12 @@
         "records_sought": [
           "executed water & wastewater service agreement (the instrument text, not a summary)",
           "metered water-service use (actual makeup withdrawal vs the reserved ceiling)",
-          "cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)",
+          "cooling-tower blowdown / low-volume-wastewater discharge record — a facility-own INDIVIDUAL NPDES permit + DMR on a direct-discharge path, or the industrial-user (IU) / pretreatment permit + sewer-use agreement on a sanitary-sewer route (OHD000001 was WITHDRAWN 2026-07-21; no general-permit coverage will ever exist)",
           "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
           "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits",
           "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)"
         ],
-        "holder": "Northwestern Water & Sewer District (the campus's water/sewer provider — the service agreement and the campus meter) AND the City of Bowling Green (the wholesale supplier — the August 2024 wholesale contract whose ceiling was raised to 1.5 MGD, and the WWFRP registrant of record). Neither alone holds both instruments: a request filed only with the City reaches the wholesale contract but not the campus's metered use, and one filed only with the District reaches the reverse; Ohio EPA (NPDES / OHD000001); Ohio EPA / regional air agency (DAPC); SERC / LEPC",
+        "holder": "Northwestern Water & Sewer District (the campus's water/sewer provider — the service agreement and the campus meter) AND the City of Bowling Green (the wholesale supplier — the August 2024 wholesale contract whose ceiling was raised to 1.5 MGD, and the WWFRP registrant of record). Neither alone holds both instruments: a request filed only with the City reaches the wholesale contract but not the campus's metered use, and one filed only with the District reaches the reverse; Ohio EPA (INDIVIDUAL NPDES — OHD000001 withdrawn 2026-07-21, no general permit to seek); Ohio EPA / regional air agency (DAPC); SERC / LEPC",
         "rationale": "A disclosed reservation ceiling (0.6 MGD) is disproportionate to the closed_loop_dry (source=reference) low-water claim and contradicts it — but a reservation is a ceiling, not a metered use, and not a discharge/withdrawal instrument, so it sharpens the standing water lead (#1439) without licensing a re-archetype. Pull the executed instrument + metered use to resolve which framing governs the consumptive screen.",
         "epic_ref": "#1688 (C2); #1439",
         "tag": "[open]"

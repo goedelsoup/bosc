@@ -1,6 +1,6 @@
 {
   "site": "ottawa",
-  "catalog_version": "0815b28aef82a3866384c8bab337d50ec3b0dd3a736d32723375e2a222eb7cc4",
+  "catalog_version": "61f80e0f49a34b20b44a848e04c118b6946466a65b56640ca1d1a929bae6d3bb",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1049,6 +1049,14 @@
       "site": "ottawa",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

@@ -1,6 +1,6 @@
 {
   "site": "piketon",
-  "catalog_version": "d90f6c251bc307e9f7970064115cbae76d8c54f2075e93cba845813c14e9823a",
+  "catalog_version": "734e67829a5887f56ab484cfbb12257ddb4c18e6423d30cc89773f44248619e9",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1001,6 +1001,14 @@
       "site": "piketon",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

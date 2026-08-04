@@ -365,8 +365,12 @@ domain from a documented negative into an investigation:
 1. A **PUCO large-load tariff filing or OPSB certificate** naming a Putnam County point of delivery.
 2. A **PJM queue entry** at 138 kV or above with a new developer name, or any Putnam entry that is
    not solar — checked against the `SubmittedDate` frontier, currently 2025-06-03.
-3. An **OHGC construction-stormwater NOI** for a site over ~50 acres, or coverage under the
-   data-center general permit **OHD000001**.
+3. An **OHGC construction-stormwater NOI** for a site over ~50 acres, or an **individual** NPDES
+   permit or application at a Putnam address. (This tripwire used to read "coverage under the
+   data-center general permit **OHD000001**" — that signal can never fire: Ohio EPA withdrew
+   OHD000001 on 2026-07-21 and no coverage list will ever exist. On a sewer route there would be
+   no NPDES record at all; the Village's **industrial-user / pretreatment permit** is the
+   equivalent tripwire there. #1883.)
 4. An **air PTI/PTIO application** for an emergency-generator bank at any Putnam address.
 5. A **Village or County rezoning, annexation, CRA, TIF or PILOT** touching Highland Industrial Park
    or any of the three other marketed sites — note the Village's zoning code is under an active

@@ -263,7 +263,10 @@ instruments:
   # 2b ────────────────────────────────────────────────────────────────────────
   data_center_general_permit:
     watch_item: 2
-    subject: The draft statewide data-center NPDES general permit OHD000001
+    subject: >-
+      The statewide data-center NPDES general permit OHD000001 — WITHDRAWN 2026-07-21,
+      never finalized (public-noticed as a draft 2025-10-31; hearing 2025-12-17; comment
+      closed 2026-01-16)
     outcome: moot
     tag: '[verified]'
     checked_on: '2026-07-31'

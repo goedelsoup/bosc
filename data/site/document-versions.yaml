@@ -79,9 +79,11 @@ clusters:
         version: fact_sheet
         evidence_note: Permit-writer's fact sheet (2023) — the rationale/basis for the limits, not re-stated in the final.
 
-  # Draft-only lifecycle: Ohio's first statewide General NPDES Permit for Data Center Facilities
-  # (OHD000001) is still in the draft/comment stage — no final permit has issued (drafted 2025-10-31;
-  # public hearing 2025-12-17), so the draft permit BODY is the authoritative member, not a final.
+  # Draft-only lifecycle, now PERMANENTLY so: Ohio's first statewide General NPDES Permit for Data
+  # Center Facilities (OHD000001) never left the draft/comment stage (drafted 2025-10-31; public
+  # hearing 2025-12-17; comment closed 2026-01-16) and Ohio EPA WITHDREW it on 2026-07-21, declining
+  # to finalize it. No final will ever issue, so the draft permit BODY is the authoritative member
+  # for good — this cluster can never gain a `final` member (cf. watermark.hydrology.blowdown.OHD000001).
   # The three artifacts are distinct page sets (31 / 2 / 7 pp.), NOT byte-identical copies, so they
   # collapse to canonical in search_corpus but stay separate in search_passages (their pages differ).
   - id: oepa:OHD000001
@@ -92,8 +94,9 @@ clusters:
         version: draft
         evidence_note: >
           The 31-page draft General NPDES permit body (Permit No. OHD000001) — the substantive
-          proposed limits. Authoritative member: no final has issued (draft out for comment 2025-10-31,
-          public hearing 2025-12-17).
+          proposed limits. Permanently the authoritative member: no final ever issued (draft out for
+          comment 2025-10-31, public hearing 2025-12-17, comment closed 2026-01-16) and Ohio EPA
+          withdrew the permit 2026-07-21.
       - rel: oepa/OHD000001_Draft_PN.pdf
         version: public_notice
         evidence_note: >

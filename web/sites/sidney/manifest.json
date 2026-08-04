@@ -2,9 +2,9 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "1.51.0",
-  "generated_at": "2026-08-02T10:53:33+00:00",
+  "generated_at": "2026-08-04T14:08:11+00:00",
   "feed_count": 31,
-  "row_total": 487,
+  "row_total": 488,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -213,7 +213,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 58
+      "count": 59
     },
     {
       "name": "geo/campus",

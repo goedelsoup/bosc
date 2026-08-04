@@ -1,6 +1,6 @@
 {
   "site": "hamilton-middletown",
-  "catalog_version": "38f19346ebd67782be7cde7426994aa9180d870c1bc9786e0741f27f8420fc3e",
+  "catalog_version": "bed79e463b56859cc7fc0375bb26417b53ba8eb7542e533393825fa61ea5dcec",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1017,6 +1017,14 @@
       "site": "hamilton-middletown",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:hamilton-middletown:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "hamilton-middletown",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

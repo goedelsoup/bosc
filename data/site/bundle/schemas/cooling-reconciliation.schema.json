@@ -140,7 +140,7 @@
       "type": "string"
     },
     "DischargeRoute": {
-      "description": "Where a facility's blowdown goes — i.e. whether A2 can see it at all (B6, #1686).\n\nThe A2 blowdown source is the facility's own NPDES discharge record (ECHO/ICIS DMRs) plus\nOHD000001 coverage. A facility that sends its process water to a **POTW's sanitary sewer**\ndischarges to no water of the state, so it files no DMR: its flow is recorded only on a City\nindustrial-pretreatment / IU permit and sewer-use agreement, which ECHO never carries.",
+      "description": "Where a facility's blowdown goes — i.e. whether A2 can see it at all (B6, #1686).\n\nThe A2 blowdown source is the facility's own NPDES discharge record (ECHO/ICIS DMRs) — and\nsince OHD000001's withdrawal (2026-07-21) only an INDIVIDUAL permit can ever produce one, as\nno general-permit coverage will ever exist. A facility that sends its process water to a\n**POTW's sanitary sewer** discharges to no water of the state, so it files no DMR: its flow is\nrecorded only on a City industrial-pretreatment / IU permit and sewer-use agreement, which\nECHO never carries.",
       "enum": [
         "surface_npdes",
         "sanitary_sewer",

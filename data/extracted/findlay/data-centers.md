@@ -129,10 +129,19 @@ figure. Do not invent one.
   search "One Power," "MARA," "Marathon Digital," Hancock County / Allen Township, 2023–2026.
 - **Construction-stormwater NOI:** `[open]` — a NOI for the 110-ac North Findlay parcel is
   expected but not confirmed. Instrument to pull: OEPA Division of Surface Water CGP NOI.
-- **OHD000001** (the statewide **draft data-center-discharge general permit**; comments closed
-  **2026-01-16**): `[open]` — the docket should be scanned for Findlay-area commenters. Instrument
-  to pull: the OHD000001 comment record.
+- **OHD000001** (the statewide data-center-discharge general permit) is **WITHDRAWN**, not
+  pending: public-noticed as a draft 2025-10-31 (hearing 2025-12-17), comments closed
+  **2026-01-16**, and on **2026-07-21** Ohio EPA published a Community Notice declining to
+  finalize it and calling individual NPDES issuance "the most appropriate path forward."
+  `[verified]` Two consequences here. (1) The **comment record survives the permit** and is still
+  worth pulling — the docket is now the record of *why* the permit died, and it should be scanned
+  for Findlay-area commenters. `[open]` (2) The **discharge ask is re-aimed** (#1883): no coverage
+  list will ever exist, so on a direct-discharge path only an **individual** NPDES permit remains,
+  and a campus blowing down to the City sanitary sewer holds no NPDES permit at all — its
+  disclosing instrument is the City of Findlay's **industrial-user / pretreatment permit and
+  sewer-use agreement** (#1688). Which route MARA takes is not established `[open]`.
   Source (hearing slides): [dam.assets.ohio.gov … OHD_DataCenter_PP-FINAL-PresentationFull-Slides](https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD_DataCenter_PP-FINAL-PresentationFull-Slides-Correct.pdf).
+  Source (withdrawal): `data/documents/oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html`.
 - **Ohio SOS entity registrations:** One Power Co, MARA Holdings, Inc. `[open]` — not pulled.
 
 ## 2 — Watch surface (in-county, no instrument yet)

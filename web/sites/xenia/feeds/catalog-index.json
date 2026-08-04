@@ -1,6 +1,6 @@
 {
   "site": "xenia",
-  "catalog_version": "04f191520db641da0ec97fdcc0b301fced8b755bf435b15bbb83275e00dc566d",
+  "catalog_version": "a721833813388397c2a3496f89410e1738f2856dd13564ef1e6a22d0e740a54b",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1017,6 +1017,14 @@
       "site": "xenia",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

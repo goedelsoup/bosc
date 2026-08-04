@@ -540,8 +540,9 @@ def test_van_wert_b2_disclosed_fill_gap() -> None:
     assert rec.is_control is False  # a real registered site, not a constructed control
     assert rec.claimed_archetype == "closed_loop_dry"
     assert rec.claim_source == "reference"
-    # No A1 withdrawal (Van Wert County not built) + no A2 blowdown (OHD000001 draft) → an [open] gap
-    # that KEEPS the [reference] pin — never silently promoted (the issue's acceptance).
+    # No A1 withdrawal (Van Wert County not built) + no A2 blowdown (OHD000001 withdrawn 2026-07-21,
+    # so the coverage absence is permanent) → an [open] gap that KEEPS the [reference] pin — never
+    # silently promoted (the issue's acceptance).
     assert rec.outcome is cr.ReconcileOutcome.GAP
     assert rec.recommended_archetype is None
     assert rec.recommended_source is None
@@ -659,8 +660,9 @@ def test_reconcile_springfield_b3_disclosed_ceiling_gap() -> None:
     assert rec.is_control is False  # a real registered site, not a constructed control
     assert rec.claimed_archetype == "closed_loop_dry"
     assert rec.claim_source == "reference"
-    # No A1 withdrawal (Clark County not built) + no A2 blowdown (OHD000001 draft) → an [open] gap that
-    # KEEPS the [reference] pin — never silently promoted, and NOT a reservation_conflict (the B3 call).
+    # No A1 withdrawal (Clark County not built) + no A2 blowdown (OHD000001 withdrawn 2026-07-21, so
+    # the coverage absence is permanent) → an [open] gap that KEEPS the [reference] pin — never
+    # silently promoted, and NOT a reservation_conflict (the B3 call).
     assert rec.outcome is cr.ReconcileOutcome.GAP
     assert rec.recommended_archetype is None
     assert rec.recommended_source is None

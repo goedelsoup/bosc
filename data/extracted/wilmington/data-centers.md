@@ -149,8 +149,12 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
   Creek at RM 6.83 (Lytle Creek → Todd Fork → Little Miami); design flow 3.0 MGD, **PTI
   #1543170 expansion to 4.5 MGD**, new limits effective 2026-03-01. `[verified — Ohio EPA
   NPDES fact sheet 1PD00013.fs, 2023-05-19]`
-- **Site process/stormwater discharge:** likely path is the statewide data-center general
-  permit **OHD000001**, still draft (§1.5). `[inference]` Coverage on the record `[open]`.
+- **Site process/stormwater discharge:** the statewide data-center general permit **OHD000001**
+  was the expected path and **no longer exists** (withdrawn 2026-07-21 — §1.5). On a
+  *direct-discharge* path only an **individual** NPDES permit remains; a campus blowing down to
+  the City sanitary sewer holds no NPDES permit at all and is disclosed instead by the City's
+  **industrial-user / pretreatment permit and sewer-use agreement**. `[inference]` Which route
+  this campus takes is not established, and neither instrument has been searched `[open]`.
 
 ### 1.4 — Hydrology screen
 
@@ -174,9 +178,16 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
 - **Air PTI:** Clinton County air permitting runs through the **Southwest Ohio Air Quality
   Agency (SWOAQA)**, not the statewide eSuite index. `[verified]` No site PTI found yet; the
   252-generator bank is the trigger to watch. SWOAQA permit-index pull `[open]`.
-- **NPDES:** statewide data-center general permit **OHD000001** is **draft** — public-noticed
-  2025-10-31, comment period closed **2026-01-16**, under comment evaluation, not final.
-  `[verified — epa.ohio.gov + draft/fact-sheet/public-notice PDFs]`
+- **NPDES:** statewide data-center general permit **OHD000001** is **WITHDRAWN** — public-noticed
+  as a draft 2025-10-31 (hearing 2025-12-17), comment period closed **2026-01-16**, and on
+  **2026-07-21** Ohio EPA published a Community Notice saying it "has decided not to move forward
+  with finalizing the general permit" and that "the individual NPDES permit issuance process is
+  the most appropriate path forward at this time." It will never issue, so the missing
+  cooling-discharge record here is a **permanent** absence, not a pending one — which sharpens
+  the records ask (instrument 5 below) rather than closing it.
+  `[verified — Ohio EPA Community Notice 2026-07-21, in corpus as
+  data/documents/oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html,
+  plus the draft/fact-sheet/public-notice PDFs]`
 - **WWTP compliance:** ECHO SNC/DMR history for OH0028134 unpulled — the ECHO web UI is
   JS-rendered; use the ECHO REST API. `[open]`
 - **SOS registrations:** Amazon Data Services Inc. foreign qualification. `[open]`
@@ -265,7 +276,14 @@ worth tracking but is a separate thread.
    and
    <https://storage.googleapis.com/proudcity/wilmingtonoh/2026/03/ed6d12c5-planning-commission-agenda-2026-03-25-special.pdf>.
 4. **OPSB 25-0871-EL-BLN** docket documents — shared with #1469.
-5. **OHD000001** final permit when issued; any site coverage/individual-permit application.
+5. **The discharge instrument — re-aimed.** OHD000001 was withdrawn 2026-07-21, so there is no
+   final general permit to wait for and no coverage list will ever exist. Ask instead for (a) an
+   **individual** NPDES permit or application naming the Cosler Farm campus (Ohio EPA SWDO /
+   eDocument System), and (b) — because a campus on the City sanitary sewer holds no NPDES permit
+   at all — the City of Wilmington's **industrial-user / pretreatment permit and sewer-use
+   agreement** for the campus, which is the instrument that would actually disclose cooling
+   blowdown (the C2 ask, #1688). Establishing which of the two routes applies is itself the first
+   question.
 6. **Compliance/entity pulls:** ECHO OH0028134 history (REST API); SWOAQA permit index;
    Ohio SOS (Amazon Data Services Inc., Ardent); Clinton County recorder deed; commissioners'
    minutes.
@@ -308,7 +326,10 @@ worth tracking but is a separate thread.
   <https://www.southwestohioair.org/>
 - The "1.5 GW" press analysis of PJM filings (Wilmington ranked by load):
   <https://www.daytondailynews.com/news/proposed-data-center-could-be-one-of-ohios-biggest-power-guzzlers/PIHRA4ZAGJC75OTEGK5EPR3VIY/>
-- OHD000001 (draft + fact sheet + public notice):
+- OHD000001 — **withdrawn 2026-07-21**; Ohio EPA Community Notice (captured in corpus as
+  `data/documents/oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html`):
+  <https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/npdes-general-permits>
+- OHD000001 (draft + fact sheet + public notice — the superseded draft record, preserved):
   <https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/wastewater-discharges-from-data-centers--general-permit>
   · <https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD000001_Draft.pdf>
   · <https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD000001_Draft.fs.pdf>

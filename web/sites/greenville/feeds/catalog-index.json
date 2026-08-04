@@ -1,6 +1,6 @@
 {
   "site": "greenville",
-  "catalog_version": "635467bb2b9eaae234abe3283eaef0022094b78e32954edd3762d43cbd586c5d",
+  "catalog_version": "30b57743e50e1375d451f0ac6efd9da6a73ea691784b9a34cd1b4e4f494e7eb6",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1009,6 +1009,14 @@
       "site": "greenville",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

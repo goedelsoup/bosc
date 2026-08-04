@@ -130,5 +130,11 @@ notes: >-
   never changing the `outcome` and never the sole basis for a re-archetype. The Intel row is a
   constructed openly-evaporative POSITIVE CONTROL the harness must classify `corroborated`, not
   a false `discrepancy` — a calibration vector, not documented Intel data (its corroborators
-  are both constructed-positive). Depends on `oepa-ohd000001-coverage` (the A2 blowdown-coverage
+  are both constructed-positive). **The C2 lead payloads are re-aimed off the dead general permit**
+  (#1883): a `gap`/`route_blind` row's `records_sought` and `holder` used to name "facility-own or
+  OHD000001 coverage" and "Ohio EPA (NPDES / OHD000001)" — a records request pointed at a permit
+  that will never issue. They now name the two instruments that survive the 2026-07-21 withdrawal:
+  an INDIVIDUAL NPDES permit + DMR on a direct-discharge path, and the City's industrial-user (IU)
+  / pretreatment permit + sewer-use agreement on a sanitary-sewer route (a sewer-discharging campus
+  holds no NPDES permit at all). Depends on `oepa-ohd000001-coverage` (the A2 blowdown-coverage
   resolution it reads). See data/reference/oepa/README.md.

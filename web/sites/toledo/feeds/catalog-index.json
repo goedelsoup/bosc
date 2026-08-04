@@ -1,6 +1,6 @@
 {
   "site": "toledo",
-  "catalog_version": "850af60ca1b41f0d549f5f1de63112646afe658ccf2e12016689bded1d6aa6f5",
+  "catalog_version": "10f0ed0971c08139af4213d61efa7bd9d13fe7b31d5410aaebe646c8a0b4ef41",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1041,6 +1041,14 @@
       "site": "toledo",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

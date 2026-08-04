@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "a56a710567442a21c4c6fd4b6e0bac573154abead12ccbcfee745cfac2802d3f",
+  "catalog_version": "d0591bdedb9f63e35082bd970f4a434ffd34876dab4ad03741f17e7fd0c95865",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1692,6 +1692,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:regulatory-west-union",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "regulatory-west-union",
+      "title": "Water-Pollution Enforcement Instruments (Village of West Union)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:rsei",
       "kind": "dataset",
       "site": "lima",
@@ -1809,6 +1817,22 @@
       "site": "lima",
       "local_id": "usgs-published-low-flow",
       "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:van-wert-construction-stormwater",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "van-wert-construction-stormwater",
+      "title": "Van Wert — QTS Campus Construction-Stormwater Coverage 2GC08872*AG (OHC000006) Extractions",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:van-wert-mega-site-instruments",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "van-wert-mega-site-instruments",
+      "title": "Van Wert — Mega Site Primary-Instrument Set (City Ordinances, Public Hearing, Council Minutes)",
       "feed": "catalog"
     },
     {

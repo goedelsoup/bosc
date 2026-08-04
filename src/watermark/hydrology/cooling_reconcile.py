@@ -179,10 +179,12 @@ class SupplyRoute(StrEnum):
 class DischargeRoute(StrEnum):
     """Where a facility's blowdown goes — i.e. whether A2 can see it at all (B6, #1686).
 
-    The A2 blowdown source is the facility's own NPDES discharge record (ECHO/ICIS DMRs) plus
-    OHD000001 coverage. A facility that sends its process water to a **POTW's sanitary sewer**
-    discharges to no water of the state, so it files no DMR: its flow is recorded only on a City
-    industrial-pretreatment / IU permit and sewer-use agreement, which ECHO never carries.
+    The A2 blowdown source is the facility's own NPDES discharge record (ECHO/ICIS DMRs) — and
+    since OHD000001's withdrawal (2026-07-21) only an INDIVIDUAL permit can ever produce one, as
+    no general-permit coverage will ever exist. A facility that sends its process water to a
+    **POTW's sanitary sewer** discharges to no water of the state, so it files no DMR: its flow is
+    recorded only on a City industrial-pretreatment / IU permit and sewer-use agreement, which
+    ECHO never carries.
     """
 
     SURFACE_NPDES = "surface_npdes"  # a facility-own outfall — a DMR exists; A2 reaches it
@@ -781,11 +783,11 @@ def _disclosed_gap_lead(
         "metered water-service use (actual makeup withdrawal vs the disclosed ongoing draw)",
         "executed water & sewer service agreement (the City-approved fill authorization — the "
         "instrument, not a press summary)",
-        "cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)",
+        "cooling-tower blowdown / low-volume-wastewater discharge record — a facility-own INDIVIDUAL NPDES permit + DMR on a direct-discharge path, or the industrial-user (IU) / pretreatment permit + sewer-use agreement on a sanitary-sewer route (OHD000001 was WITHDRAWN 2026-07-21; no general-permit coverage will ever exist)",
     ]
     holders = [
         f"City / municipal water-sewer authority serving {site}",
-        "Ohio EPA (NPDES / OHD000001)",
+        "Ohio EPA (INDIVIDUAL NPDES — OHD000001 withdrawn 2026-07-21, no general permit to seek)",
     ]
     extra_records, extra_holders = _corroborator_asks(corroborators)
     records_sought.extend(extra_records)
@@ -848,13 +850,13 @@ def _disclosed_ceiling_gap_lead(
         "— is the ceiling approached, or does a dry loop sit far below it?)",
         "the closed-loop / direct-liquid mechanical-plumbing permit (the instrument that would "
         "confirm 'not evaporative')",
-        "cooling-tower / low-volume-wastewater blowdown DMR (facility-own or OHD000001 coverage)",
+        "cooling-tower / low-volume-wastewater blowdown discharge record — a facility-own INDIVIDUAL NPDES permit + DMR on a direct-discharge path (OHD000001 was WITHDRAWN 2026-07-21; no general-permit coverage will ever exist)",
         "on-site reservoir / alternate-supply plan (the disclosed municipal-tap-avoidance study)",
         "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
     ]
     holders = [
         f"City / municipal water-sewer authority serving {site}",
-        "Ohio EPA (NPDES / OHD000001; Air PTI)",
+        "Ohio EPA (INDIVIDUAL NPDES — OHD000001 withdrawn 2026-07-21, no general permit to seek; Air PTI)",
     ]
     extra_records, extra_holders = _corroborator_asks(corroborators)
     records_sought.extend(extra_records)
@@ -879,8 +881,10 @@ def _disclosed_ceiling_gap_lead(
             f"approaches the {ceiling_phrase} ceiling or sits far below it — a screening signal only, "
             "not proof of mechanism: evaporative vs. dry is established by an ingested mechanical/"
             "plumbing permit or a facility-own blowdown/discharge record (an on-site reservoir could "
-            f"also supply cooling), not the withdrawal figure alone — plus the blowdown / OHD000001 "
-            f"to complete the account ({issue_ref})."
+            f"also supply cooling), not the withdrawal figure alone — plus the blowdown record to "
+            f"complete the account, which since OHD000001's withdrawal (2026-07-21) means an "
+            f"INDIVIDUAL NPDES permit or the City IU/pretreatment file, never general-permit "
+            f"coverage ({issue_ref})."
         ),
         epic_ref=f"#1688 (C2); {issue_ref}",
         tag="[open]",
@@ -931,7 +935,7 @@ def _route_blind_lead(
         )
     holders = [
         water_holder or f"City / municipal water-sewer utility serving {site}",
-        "Ohio EPA (NPDES / OHD000001)",
+        "Ohio EPA (INDIVIDUAL NPDES — OHD000001 withdrawn 2026-07-21, no general permit to seek)",
     ]
     extra_records, extra_holders = _corroborator_asks(corroborators)
     records_sought.extend(extra_records)
@@ -1004,12 +1008,12 @@ def _reservation_conflict_lead(
     records_sought = [
         "executed water & wastewater service agreement (the instrument text, not a summary)",
         "metered water-service use (actual makeup withdrawal vs the reserved ceiling)",
-        "cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)",
+        "cooling-tower blowdown / low-volume-wastewater discharge record — a facility-own INDIVIDUAL NPDES permit + DMR on a direct-discharge path, or the industrial-user (IU) / pretreatment permit + sewer-use agreement on a sanitary-sewer route (OHD000001 was WITHDRAWN 2026-07-21; no general-permit coverage will ever exist)",
         "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
     ]
     holders = [
         water_holder or f"City / municipal water-sewer authority serving {site}",
-        "Ohio EPA (NPDES / OHD000001)",
+        "Ohio EPA (INDIVIDUAL NPDES — OHD000001 withdrawn 2026-07-21, no general permit to seek)",
     ]
     extra_records, extra_holders = _corroborator_asks(corroborators)
     records_sought.extend(extra_records)

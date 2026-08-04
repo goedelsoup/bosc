@@ -1,6 +1,6 @@
 {
   "site": "troy-piqua",
-  "catalog_version": "02e31cd2f4dc16c786d1f125909e1f4a9f3a226828d053ccd510d44f4f7cc9c5",
+  "catalog_version": "fa083e622460fac6a37a88edc433d29f8b9b6ccc71b3a91bfb16a96ad11ffcf3",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1041,6 +1041,14 @@
       "site": "troy-piqua",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:troy-piqua:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "troy-piqua",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

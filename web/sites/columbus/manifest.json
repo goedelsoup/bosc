@@ -2,9 +2,9 @@
   "site": "columbus",
   "bundle_version": "1.0.0",
   "contract_version": "1.51.0",
-  "generated_at": "2026-08-02T10:41:14+00:00",
+  "generated_at": "2026-08-04T13:58:27+00:00",
   "feed_count": 29,
-  "row_total": 401,
+  "row_total": 402,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 52
+      "count": 53
     },
     {
       "name": "facts",

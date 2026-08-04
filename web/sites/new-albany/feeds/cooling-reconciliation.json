@@ -82,7 +82,7 @@
           "water-service agreement or will-serve letter (the contracted supply the campus draws on)",
           "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)"
         ],
-        "holder": "City of Columbus, Department of Public Utilities (Division of Water + Division of Sewerage and Drainage) — the campus's disclosed municipal supplier AND the POTW receiving its process wastewater (Jackson Pike / Southerly); Ohio EPA (NPDES / OHD000001); SERC / LEPC",
+        "holder": "City of Columbus, Department of Public Utilities (Division of Water + Division of Sewerage and Drainage) — the campus's disclosed municipal supplier AND the POTW receiving its process wastewater (Jackson Pike / Southerly); Ohio EPA (INDIVIDUAL NPDES — OHD000001 withdrawn 2026-07-21, no general permit to seek); SERC / LEPC",
         "rationale": "The evaporative_tower claim (source=reference) cannot be tested against A1/A2 at all: this facility is outside their reach on the side(s) that matter — makeup (purchased municipal supply — outside the A1 withdrawal registry); blowdown (to a POTW sanitary sewer — outside the A2 NPDES/DMR record). Their ~0 is an absence of jurisdiction, not a measurement, so it must never be read as documented ~0 water (which would corroborate a dry claim on nothing). The registry's non-zero series for this facility (0.0435 MGD) is NOT the cooling account — it is a separate, non-cooling withdrawal, recorded as such. Pulling A1/A2 harder cannot resolve it; the record that can is City-held (#485).",
         "epic_ref": "#1688 (C2); #485",
         "tag": "[open]"

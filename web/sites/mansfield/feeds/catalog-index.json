@@ -1,6 +1,6 @@
 {
   "site": "mansfield",
-  "catalog_version": "3cefffa38a0e57a7ef91f03f7d7d3dbf47646c19e27e3736685398d9ca26234b",
+  "catalog_version": "d57f541cce3eebaae340a9960f6431ffead0667c2f45535a438edfc22237388b",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1009,6 +1009,14 @@
       "site": "mansfield",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {
