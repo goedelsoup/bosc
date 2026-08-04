@@ -2,9 +2,9 @@
   "site": "piketon",
   "bundle_version": "1.0.0",
   "contract_version": "1.51.0",
-  "generated_at": "2026-08-02T10:51:02+00:00",
+  "generated_at": "2026-08-04T14:06:20+00:00",
   "feed_count": 24,
-  "row_total": 322,
+  "row_total": 323,
   "readiness": {
     "tier": "stub",
     "domains": {
@@ -159,7 +159,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 52
+      "count": 53
     },
     {
       "name": "facts",

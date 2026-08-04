@@ -1,6 +1,6 @@
 {
   "site": "new-albany",
-  "catalog_version": "5fa2fa73dff6ab773acb49b0252947772a425162c7fc8ead8a5e02189df3c50e",
+  "catalog_version": "fffc6c95c58f75587e9750a8a19247f730efc7064774d634cde3903ace1d662c",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1009,6 +1009,14 @@
       "site": "new-albany",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

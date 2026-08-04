@@ -737,8 +737,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e1f1fb54953a461e61a81284d0b7e3552e645fbe4747d66f3337b9cfcf71bf95",
-      "size_bytes": 252907,
+      "sha256": "5835f6eb30301358f53405ec1dccbc72c2ee528c5e1073230e4bd67ebec57315",
+      "size_bytes": 285019,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -794,8 +794,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9f92b78b8c31f7557304cf5a315d94679b8591bd2fd2d249de7c51f616cb7337",
-      "size_bytes": 20803,
+      "sha256": "3513ec96aa12b058233f3eb29bbb9fe55aef54a30284a4f3ef3c1c0bbf17a029",
+      "size_bytes": 21534,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -851,8 +851,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "60d1600fd2b2c994f59005fdec86a5ebc7cbe4dd229288b9569481ae3401d076",
-      "size_bytes": 29844,
+      "sha256": "6df23f08a8327e3f3fd965902d2066e26d26fe8be8754c7bdbb1f1719d97a092",
+      "size_bytes": 30218,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1012,8 +1012,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e00c59ccb33b5785dc9700c079a03c6934f6191685d58136b800c6b679ee6437",
-      "size_bytes": 23497,
+      "sha256": "c310d357b0f454d25f9cba2397509f567245a5cfd20fd08a0ec888d3aa4cd110",
+      "size_bytes": 48862,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1069,8 +1069,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "384657721d5c2601b1b1665efcd7e0eb86d6aacc096b183d6d4615ae45114e65",
-      "size_bytes": 23561,
+      "sha256": "c309ed627411910a1ec71150648e61e5e01e4d980c5ec208cb62b52045e96d1f",
+      "size_bytes": 25485,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1124,8 +1124,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "f4d6119d3aee723c9c2903ddf8b36030af87c95844783b4aa509d19c9495193d",
-      "size_bytes": 8001,
+      "sha256": "216ad685f3b811c94ebc048ff2bece60a9240ea67be13230cf83b02eaf8e09d5",
+      "size_bytes": 8393,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1177,8 +1177,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "c5651d1f885b1bfb556abf913c5971ac0c94767c8908b54a223c58c236374f68",
-      "size_bytes": 4651,
+      "sha256": "6b7bca5a77a98285a2399f4eaa63e33231fe3b0da4432270f23c068f87555cd9",
+      "size_bytes": 5063,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1716,8 +1716,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "42cfdbd2d2bd89ef88470ae9a0e67df8e6703cc5e40a0929d69c906d7091857b",
-      "size_bytes": 74170,
+      "sha256": "99fea04e845c30c46eb9f8a7be1e8bc5e98b14b260f57d204dc37f0c8f983cab",
+      "size_bytes": 81995,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -4440,6 +4440,57 @@
     }
   },
   {
+    "id": "regulatory-west-union",
+    "title": "Water-Pollution Enforcement Instruments (Village of West Union)",
+    "scope": "extracted",
+    "collection": "regulatory",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio Attorney General, Environmental Enforcement Section — published consent orders (https://www.ohioattorneygeneral.gov/Files/About/Departments-and-Offices/Environmental-Enforcement-Section/Consent-Orders/). Served as flat files with no index, listing endpoint or API, so acquisition is manual and there is no connector to name here; the per-document provenance, source URL and verified sha256 live in data/documents/regulatory/west-union/filename-map.yaml.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43) — filed court instrument, published by the Ohio AG",
+    "access_tier": "public",
+    "site_scope": "site:west-union",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "regulatory",
+      "enforcement",
+      "consent-order",
+      "wastewater",
+      "npdes",
+      "west-union"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/regulatory/west-union/west-union-consent-order-1993.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4cd112b04ecb04b0b8e8fccdd2e47df74dc6603856f1572585a298a6771d7cb8",
+      "size_bytes": 23592,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio Attorney General, Environmental Enforcement Section — published consent orders (https://www.ohioattorneygeneral.gov/Files/About/Departments-and-Offices/Environmental-Enforcement-Section/Consent-Orders/). Served as flat files with no index, listing endpoint or API, so acquisition is manual and there is no connector to name here; the per-document provenance, source URL and verified sha256 live in data/documents/regulatory/west-union/filename-map.yaml.",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "shawnee-township-meetings",
     "title": "Shawnee Township Trustee Meeting Records",
     "scope": "extracted",
@@ -4605,8 +4656,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "0a2d34b092871ecfe58f905a2eacad352483d81000b3d2c550ddc4d2beba69bd",
-      "size_bytes": 45913,
+      "sha256": "8d0ad598b2db9a99865918ce073a10afb1e2496d0e81603337e52369ce017e80",
+      "size_bytes": 46056,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -4783,6 +4834,135 @@
       "confidence": "medium",
       "note": null,
       "verified": true
+    }
+  },
+  {
+    "id": "van-wert-construction-stormwater",
+    "title": "Van Wert — QTS Campus Construction-Stormwater Coverage 2GC08872*AG (OHC000006) Extractions",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Three documents pulled 2026-08-03 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), committed at data/documents/oepa/van-wert/stormwater/ with a filename map: the applicant's Notice of Intent for coverage under NPDES general permit OHC000006 (EPA form 4494, Application ID 288738011, electronically submitted 2026-07-21 and certified under penalty of law by Tamir Mengesha, Project Manager), the site map it attaches (Site_Map_QTS_Van_Wert.pdf), and Ohio EPA's approval letter of 2026-07-30 granting coverage as facility permit 2GC08872*AG. All three carry clean native text layers and were transcribed from them; nothing was OCR'd. The portal serves no Content-Disposition header, so each file is named for the numeric docid that is its as-served identity. Located by entity-name search on \"QTS\", which returns the operator's whole Ohio fleet — 35 documents, of which these three are the only Van Wert rows.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:van-wert",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "van-wert",
+      "van-wert-county",
+      "van-wert-mega-site",
+      "data-center",
+      "qts",
+      "oepa",
+      "npdes",
+      "stormwater",
+      "construction",
+      "permits",
+      "town-creek",
+      "maumee"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/van-wert/2GC08872.noi.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/van-wert/2GC08872.approval.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "60ec7e28123244f37d9de4eb4a03a2c80d72a0fe5fa9349bb46ad557c656eefd",
+      "size_bytes": 9518,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Three documents pulled 2026-08-03 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), committed at data/documents/oepa/van-wert/stormwater/ with a filename map: the applicant's Notice of Intent for coverage under NPDES general permit OHC000006 (EPA form 4494, Application ID 288738011, electronically submitted 2026-07-21 and certified under penalty of law by Tamir Mengesha, Project Manager), the site map it attaches (Site_Map_QTS_Van_Wert.pdf), and Ohio EPA's approval letter of 2026-07-30 granting coverage as facility permit 2GC08872*AG. All three carry clean native text layers and were transcribed from them; nothing was OCR'd. The portal serves no Content-Disposition header, so each file is named for the numeric docid that is its as-served identity. Located by entity-name search on \"QTS\", which returns the operator's whole Ohio fleet — 35 documents, of which these three are the only Van Wert rows.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "van-wert-mega-site-instruments",
+    "title": "Van Wert — Mega Site Primary-Instrument Set (City Ordinances, Public Hearing, Council Minutes)",
+    "scope": "extracted",
+    "collection": "van-wert",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Nine City of Van Wert documents pulled 2026-08-03 from the City's open WordPress upload tree (https://vanwert.org/wp-content/uploads/), committed at data/documents/van-wert/council/ with a filename map: the three emergency ordinances of 2026-05-11 in both posted variants (26-05-028 annexation body + exhibits, 26-05-029 code amendment body + Exhibit A, 26-05-030 conditional zoning body + Exhibits A/B/C), the certified 2026-05-04 statutory public-hearing record (107 pp), and the approved council minutes of 2026-04-27 and 2026-05-11. Seven of the nine carry no text layer at all; the other two (5.11.26.pdf, 5.4.26-Public-Hearing-1.pdf) carry a partial one covering only their typed attachments, their minutes bodies being images. So every figure was read via watermark.civic.indexer.ocr_pdf at 300 DPI with targeted 450/500-DPI re-renders and a 600-DPI render for the handwritten approval stamp, never from a filename or upload path. Located through the site's open WordPress REST media index — the /ordinances/ page is a rolling window of pending items and had already dropped the May 2026 ordinances.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:van-wert",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "van-wert",
+      "van-wert-county",
+      "van-wert-mega-site",
+      "data-center",
+      "qts",
+      "thor-equities",
+      "marsh-foundation",
+      "annexation",
+      "pre-annexation-agreement",
+      "zoning",
+      "conditional-zoning",
+      "emergency-ordinance",
+      "council-minutes",
+      "public-hearing",
+      "aep-ohio",
+      "town-creek",
+      "maumee"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/van-wert/mega-site-instruments.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/mega-site-instruments.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "dcbf7c39bd57d57d9b89d6be496b4d7dd118b3c2c7333c72de4b010e9dc9c17c",
+      "size_bytes": 72066,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Nine City of Van Wert documents pulled 2026-08-03 from the City's open WordPress upload tree (https://vanwert.org/wp-content/uploads/), committed at data/documents/van-wert/council/ with a filename map: the three emergency ordinances of 2026-05-11 in both posted variants (26-05-028 annexation body + exhibits, 26-05-029 code amendment body + Exhibit A, 26-05-030 conditional zoning body + Exhibits A/B/C), the certified 2026-05-04 statutory public-hearing record (107 pp), and the approved council minutes of 2026-04-27 and 2026-05-11. Seven of the nine carry no text layer at all; the other two (5.11.26.pdf, 5.4.26-Public-Hearing-1.pdf) carry a partial one covering only their typed attachments, their minutes bodies being images. So every figure was read via watermark.civic.indexer.ocr_pdf at 300 DPI with targeted 450/500-DPI re-renders and a 600-DPI render for the handwritten approval stamp, never from a filename or upload path. Located through the site's open WordPress REST media index — the /ordinances/ page is a rolling window of pending items and had already dropped the May 2026 ordinances.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -8089,8 +8269,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "f2002062d0084eec4afb2d7667d6d33f54a20d258788571b17a0a5fd6608733e",
-      "size_bytes": 94002,
+      "sha256": "2de30635f80348142a91872fd31ae360fdeb8ef78cb4dcca0f436ee795f5c6df",
+      "size_bytes": 97411,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,

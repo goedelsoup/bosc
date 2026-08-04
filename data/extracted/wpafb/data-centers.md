@@ -77,8 +77,12 @@ confirms nothing sited. Do **not** infer a facility from the DoD-cloud thread in
    transfer dates. (GIS endpoints are `[open]` on the profile — `parcels_url="TODO"`.)
 2. **Ohio SOS business search** — new LLC/shell formations tied to any assembly (the Lima/Piqua
    pattern: a single-purpose shell holding the entitlements). Keep any find a **separate register**.
-3. **Ohio EPA / EPA ECHO** — data-center stormwater coverage under draft general permit
-   **OHD000001**; any new industrial NPDES near the corridor. (ECHO Great-Miami inventory is
+3. **Ohio EPA / EPA ECHO** — **re-aimed (#1883):** not OHD000001, which Ohio EPA withdrew on
+   2026-07-21 and which will never issue. Look instead for **construction-stormwater** coverage
+   under the ordinary construction general permit (master `OHC000000`), an **individual** NPDES
+   permit or application, and any new industrial NPDES near the corridor. A campus on a municipal
+   sewer holds no NPDES permit at all — the host city's **industrial-user / pretreatment permit**
+   is what would disclose cooling discharge there (#1688). (ECHO Great-Miami inventory is
    already committed: `data/reference/echo/great-miami-wwtp.potw.yaml`.)
 4. **AES Ohio (DP&L) large-load / PJM interconnection queue** — a >100 MW tap in the DAY zone is
    the earliest hard signal of a sited campus. `[open]`

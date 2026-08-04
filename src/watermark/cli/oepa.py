@@ -264,9 +264,13 @@ def coverage(
     """Resolve OHD000001 general-permit coverage for the closed-loop cohort (#1678).
 
     For each registered facility disclosing a recirculating/closed cooling archetype, reports
-    whether it can hold coverage under Ohio EPA's draft data-center general permit OHD000001 and
-    whether a facility-own discharge permit is on record. While OHD000001 is draft (not effective),
-    every candidate resolves to ``not_available`` — a [verified] cited absence, itself the finding.
+    whether it can hold coverage under Ohio EPA's data-center general permit OHD000001 and whether
+    a facility-own discharge permit is on record. OHD000001 was WITHDRAWN on 2026-07-21 (it never
+    left draft), so every candidate resolves to ``not_available`` — a [verified] cited absence,
+    itself the finding, and a *permanent* one rather than a pending one: no coverage list will ever
+    exist, so the replacement watch is an INDIVIDUAL NPDES permit (or, for a campus on a POTW
+    sanitary sewer, the City's industrial-user/pretreatment permit, which is not an NPDES record at
+    all). Same gate as the draft branch, categorically different finding.
     """
     from watermark.hydrology import blowdown
 

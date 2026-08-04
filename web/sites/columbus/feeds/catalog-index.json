@@ -1,6 +1,6 @@
 {
   "site": "columbus",
-  "catalog_version": "552ba715f565dc6bd22aacee9743f6594627d0b47154635ed92118a81a6ca6e4",
+  "catalog_version": "9cd9c25b5a1ef29c71410d89855b428105a87331a7cfaa0c3575fa52514a0270",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1001,6 +1001,14 @@
       "site": "columbus",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

@@ -1,6 +1,6 @@
 {
   "site": "springfield",
-  "catalog_version": "425a8e6427bc40c5ee00ed366bc2f205e45aa891644ce285e662a6f7b13c6c3e",
+  "catalog_version": "f138cf31c4de9095202b11034dd6bb631db24a69ed31b6771fa3165dc39413a9",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1009,6 +1009,14 @@
       "site": "springfield",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:springfield:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "springfield",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

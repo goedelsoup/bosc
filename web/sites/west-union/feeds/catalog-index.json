@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "1c5048a70cf6d59dc6c15104573ce972dbe16b39ba4d18b1dd16bdc290fce4f4",
+  "catalog_version": "752e8597a79254f62b8cd53ce8810919db357e6042a09fa1a0010f8ef85da8cb",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -964,6 +964,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:west-union:regulatory-west-union",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "regulatory-west-union",
+      "title": "Water-Pollution Enforcement Instruments (Village of West Union)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:west-union:rsei",
       "kind": "dataset",
       "site": "west-union",
@@ -1004,6 +1012,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:west-union:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:west-union:wqs-criteria",
       "kind": "dataset",
       "site": "west-union",
@@ -1034,6 +1050,14 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "record:west-union:regulatory/west-union/west-union-consent-order-1993.order.yaml",
+      "kind": "record",
+      "site": "west-union",
+      "local_id": "regulatory/west-union/west-union-consent-order-1993.order.yaml",
+      "title": "Consent Order (Adams County C.P. 89-CIV-228)",
+      "feed": "records"
     }
   ]
 }

@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "slug": "regulatory",
+    "title": "Regulatory",
+    "description": "**Collection:** `regulatory/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "regulatory/west-union/Village-of-West-Union-Consent-Order-1993.pdf",
+        "name": "Village-of-West-Union-Consent-Order-1993.pdf",
+        "size_bytes": 294586,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  }
+]

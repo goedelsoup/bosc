@@ -1,6 +1,6 @@
 {
   "site": "fort-wayne",
-  "catalog_version": "f41b5daaf537ea82d828a62a1bbfbafb3df1f2d670befeec0a54322635c66e72",
+  "catalog_version": "2d0a3400e61d13d6bab98f9e0397d8b8961b7ea6518656ca156288f2fe2e43bb",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -945,6 +945,14 @@
       "site": "fort-wayne",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:fort-wayne:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "fort-wayne",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

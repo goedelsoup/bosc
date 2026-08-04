@@ -1,6 +1,6 @@
 {
   "site": "wilmington",
-  "catalog_version": "bc174aeb1e13de83d83ab02ef3317dc4c06f1901d2a652339f56dd72626faa53",
+  "catalog_version": "7eb7e30bddefe2a1f26e5e66ace896a3c9cbbf5a2343006c98c81b75e28517b6",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1025,6 +1025,14 @@
       "site": "wilmington",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

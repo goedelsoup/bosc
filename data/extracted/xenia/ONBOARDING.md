@@ -76,7 +76,9 @@ inventory is run (Greene Co, 20 facilities / 17 scored).
 - **#460 data-center sweep (scaffold DONE; web pass to-run).** Committed and catalogued
   `extracted/xenia/data-centers.md`: the flat-no-activity prior (`[verified]` zero corpus records;
   Info NAICS 51 LQ 0.29 vs. the defense-signature NAICS 54 LQ 2.11), the instruments to pull
-  (Greene Auditor GIS, Ohio SOS, zoning, OEPA/ECHO OHD000001, AES Ohio DAY large-load queue), and
+  (Greene Auditor GIS, Ohio SOS, zoning, OEPA/ECHO — construction stormwater `OHC000000` +
+  individual NPDES, *not* OHD000001, which was withdrawn 2026-07-21 (#1883) — AES Ohio DAY
+  large-load queue), and
   the WPAFB TCE/PFAS plume as the `[open]` contamination overlay on the shared buried-valley
   aquifer. Discipline preserved: the Lima/Allen Bistrozzi graph is **not** bridged onto Xenia.
 

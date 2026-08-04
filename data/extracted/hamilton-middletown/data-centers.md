@@ -125,8 +125,16 @@ on the next pass.
    construction-jobs figure, the $1B investment basis.
 3. **OEPA air PTI** — emergency generator bank PTI(s) for the Project Mila site (SWDO, Butler
    County, entity "Prologis").
-4. **Ohio EPA / EPA ECHO** — current LeSourdsville WRF NPDES permit number (facility ID 1PK00011);
-   any project stormwater coverage under draft general permit OHD000001.
+4. **Ohio EPA / EPA ECHO** — current LeSourdsville WRF NPDES permit number (facility ID 1PK00011).
+   **Re-aimed (#1883):** there is no OHD000001 coverage to look for — Ohio EPA withdrew the
+   data-center general permit on 2026-07-21 and it will never issue. Two instruments replace it:
+   the site's **construction-stormwater** coverage, which runs under the ordinary construction
+   general permit (master `OHC000000`) and is a live, different instrument — search the NOI/permit
+   index for the Trenton Industrial Park parcel; and, for cooling discharge, the **Butler County
+   Sewer Dept. industrial-user / pretreatment permit and sewer-use contract** for the campus,
+   since a facility on the LeSourdsville sewer holds no NPDES permit of its own (the C2 ask,
+   #1688). An **individual** NPDES permit would only appear on a direct-discharge path, which is
+   not this site's disclosed route.
 5. **Duke Energy Ohio interconnect** — the 345-kV Woodsdale circuits (F34564/F34565) filing for
    the disclosed customer load (a public MW/interconnect corroboration of the 250 MW figure).
 6. **Butler County Auditor / OGRIP** — parcel record for the Trenton Industrial Park site:

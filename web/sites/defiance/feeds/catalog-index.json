@@ -1,6 +1,6 @@
 {
   "site": "defiance",
-  "catalog_version": "3c89863cc201db59980f77173b7e93a84873eabfc179e444f96941b62cea80ff",
+  "catalog_version": "15ef505e61836e731d00708d6864e5620e4992aac37a15becd826982336cf6a4",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1025,6 +1025,14 @@
       "site": "defiance",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:defiance:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "defiance",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

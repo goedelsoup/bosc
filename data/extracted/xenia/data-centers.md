@@ -43,9 +43,13 @@ find. Commit a **dated, sourced flat no-activity finding** if the web pass confi
    **separate register**, not bridged to Lima).
 3. **City of Xenia / Beavercreek / Greene County zoning & rezoning dockets** — heavy-industrial
    rezonings 2023–2026. `[open]`
-4. **Ohio EPA / EPA ECHO** — data-center stormwater coverage under draft general permit
-   **OHD000001**; new industrial NPDES on the Little Miami / Massies Creek. (Little-Miami ECHO
-   inventory committed: `data/reference/echo/little-miami-wwtp.potw.yaml`.)
+4. **Ohio EPA / EPA ECHO** — **re-aimed (#1883):** not OHD000001, which Ohio EPA withdrew on
+   2026-07-21 and which will never issue. Look instead for **construction-stormwater** coverage
+   under the ordinary construction general permit (master `OHC000000`) at a Greene County site, an
+   **individual** NPDES permit or application, and any new industrial NPDES on the Little Miami /
+   Massies Creek. On a municipal-sewer route there is no NPDES record at all — the City of Xenia's
+   **industrial-user / pretreatment permit** would be the disclosing instrument (#1688).
+   (Little-Miami ECHO inventory committed: `data/reference/echo/little-miami-wwtp.potw.yaml`.)
 5. **AES Ohio (DP&L) large-load / PJM DAY-zone interconnection queue** — a >100 MW tap is the
    earliest hard signal. `[open]`
 

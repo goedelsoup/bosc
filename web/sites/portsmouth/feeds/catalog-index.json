@@ -1,6 +1,6 @@
 {
   "site": "portsmouth",
-  "catalog_version": "f88361f9800ea4331a330f8c3aff8da17316f21c25437d11990ad61e633504fb",
+  "catalog_version": "e49e6253cc40dfbae5a7daedb15a989cc097f6bbd8c9ac7bda158435bafe9bef",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1009,6 +1009,14 @@
       "site": "portsmouth",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:portsmouth:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "portsmouth",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

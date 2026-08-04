@@ -245,7 +245,10 @@ candidates:
     records_sought:
     - executed water & wastewater service agreement (the instrument text, not a summary)
     - metered water-service use (actual makeup withdrawal vs the reserved ceiling)
-    - cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)
+    - cooling-tower blowdown / low-volume-wastewater discharge record — a facility-own INDIVIDUAL NPDES
+      permit + DMR on a direct-discharge path, or the industrial-user (IU) / pretreatment permit + sewer-use
+      agreement on a sanitary-sewer route (OHD000001 was WITHDRAWN 2026-07-21; no general-permit coverage
+      will ever exist)
     - industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement
     - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
     - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
@@ -253,8 +256,9 @@ candidates:
       and the campus meter) AND the City of Bowling Green (the wholesale supplier — the August 2024 wholesale
       contract whose ceiling was raised to 1.5 MGD, and the WWFRP registrant of record). Neither alone
       holds both instruments: a request filed only with the City reaches the wholesale contract but not
-      the campus''s metered use, and one filed only with the District reaches the reverse; Ohio EPA (NPDES
-      / OHD000001); Ohio EPA / regional air agency (DAPC); SERC / LEPC'
+      the campus''s metered use, and one filed only with the District reaches the reverse; Ohio EPA (INDIVIDUAL
+      NPDES — OHD000001 withdrawn 2026-07-21, no general permit to seek); Ohio EPA / regional air agency
+      (DAPC); SERC / LEPC'
     rationale: A disclosed reservation ceiling (0.6 MGD) is disproportionate to the closed_loop_dry (source=reference)
       low-water claim and contradicts it — but a reservation is a ceiling, not a metered use, and not
       a discharge/withdrawal instrument, so it sharpens the standing water lead (#1439) without licensing
@@ -411,7 +415,8 @@ candidates:
     - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
     holder: City of Columbus, Department of Public Utilities (Division of Water + Division of Sewerage
       and Drainage) — the campus's disclosed municipal supplier AND the POTW receiving its process wastewater
-      (Jackson Pike / Southerly); Ohio EPA (NPDES / OHD000001); SERC / LEPC
+      (Jackson Pike / Southerly); Ohio EPA (INDIVIDUAL NPDES — OHD000001 withdrawn 2026-07-21, no general
+      permit to seek); SERC / LEPC
     rationale: 'The evaporative_tower claim (source=reference) cannot be tested against A1/A2 at all:
       this facility is outside their reach on the side(s) that matter — makeup (purchased municipal supply
       — outside the A1 withdrawal registry); blowdown (to a POTW sanitary sewer — outside the A2 NPDES/DMR
@@ -605,13 +610,16 @@ candidates:
       ceiling approached, or does a dry loop sit far below it?)
     - the closed-loop / direct-liquid mechanical-plumbing permit (the instrument that would confirm 'not
       evaporative')
-    - cooling-tower / low-volume-wastewater blowdown DMR (facility-own or OHD000001 coverage)
+    - cooling-tower / low-volume-wastewater blowdown discharge record — a facility-own INDIVIDUAL NPDES
+      permit + DMR on a direct-discharge path (OHD000001 was WITHDRAWN 2026-07-21; no general-permit coverage
+      will ever exist)
     - on-site reservoir / alternate-supply plan (the disclosed municipal-tap-avoidance study)
     - industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement
     - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
     - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
-    holder: City / municipal water-sewer authority serving springfield; Ohio EPA (NPDES / OHD000001; Air
-      PTI); Ohio EPA / regional air agency (DAPC); SERC / LEPC
+    holder: City / municipal water-sewer authority serving springfield; Ohio EPA (INDIVIDUAL NPDES — OHD000001
+      withdrawn 2026-07-21, no general permit to seek; Air PTI); Ohio EPA / regional air agency (DAPC);
+      SERC / LEPC
     rationale: 'A closed_loop_dry claim (source=reference) disclosed EXPLICITLY ''not evaporative'', with
       a SELF-DISCLOSED permitted municipal-withdrawal ceiling of 0.3 MGD (300,000 gal/day) (an >80degF
       extreme-heat peak, ''near zero'' most of the year) — a permitted PEAK ceiling from the claim''s
@@ -621,7 +629,9 @@ candidates:
       use approaches the 0.3 MGD (300,000 gal/day) ceiling or sits far below it — a screening signal only,
       not proof of mechanism: evaporative vs. dry is established by an ingested mechanical/plumbing permit
       or a facility-own blowdown/discharge record (an on-site reservoir could also supply cooling), not
-      the withdrawal figure alone — plus the blowdown / OHD000001 to complete the account (#1415).'
+      the withdrawal figure alone — plus the blowdown record to complete the account, which since OHD000001''s
+      withdrawal (2026-07-21) means an INDIVIDUAL NPDES permit or the City IU/pretreatment file, never
+      general-permit coverage (#1415).'
     epic_ref: '#1688 (C2); #1415'
     tag: '[open]'
   corroborators:
@@ -786,12 +796,16 @@ candidates:
     records_sought:
     - executed water & wastewater service agreement (the instrument text, not a summary)
     - metered water-service use (actual makeup withdrawal vs the reserved ceiling)
-    - cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)
+    - cooling-tower blowdown / low-volume-wastewater discharge record — a facility-own INDIVIDUAL NPDES
+      permit + DMR on a direct-discharge path, or the industrial-user (IU) / pretreatment permit + sewer-use
+      agreement on a sanitary-sewer route (OHD000001 was WITHDRAWN 2026-07-21; no general-permit coverage
+      will ever exist)
     - industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement
     - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
     - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
-    holder: City / municipal water-sewer authority serving troy-piqua; Ohio EPA (NPDES / OHD000001); Ohio
-      EPA / regional air agency (DAPC); SERC / LEPC
+    holder: City / municipal water-sewer authority serving troy-piqua; Ohio EPA (INDIVIDUAL NPDES — OHD000001
+      withdrawn 2026-07-21, no general permit to seek); Ohio EPA / regional air agency (DAPC); SERC /
+      LEPC
     rationale: A disclosed reservation ceiling (2 MGD) is disproportionate to the closed_loop_dry (source=reference)
       low-water claim and contradicts it — but a reservation is a ceiling, not a metered use, and not
       a discharge/withdrawal instrument, so it sharpens the standing water lead (#1486) without licensing
@@ -995,8 +1009,9 @@ candidates:
     holder: City of Urbana — Water Division (205 S Main St; the metered water-service consumption and
       any will-serve / capacity analysis for the campus) and the City's Industrial Pretreatment Program
       coordinator at the Water Reclamation Facility (the IU permit + sewer-use agreement that would carry
-      cooling blowdown; the program is OEPA-audited annually); Ohio EPA (NPDES / OHD000001); Ohio EPA
-      / regional air agency (DAPC); SERC / LEPC
+      cooling blowdown; the program is OEPA-audited annually); Ohio EPA (INDIVIDUAL NPDES — OHD000001
+      withdrawn 2026-07-21, no general permit to seek); Ohio EPA / regional air agency (DAPC); SERC /
+      LEPC
     rationale: 'The closed_loop_dry claim (source=reference) cannot be tested against A1/A2 at all: this
       facility is outside their reach on the side(s) that matter — makeup (purchased municipal supply
       — outside the A1 withdrawal registry); blowdown (to a POTW sanitary sewer — outside the A2 NPDES/DMR
@@ -1069,7 +1084,17 @@ candidates:
     into a C2 records request (#1688/#1409). Replace with a documented cooling design when an NPDES/mechanical
     instrument lands — which, with OHD000001 withdrawn, means an INDIVIDUAL NPDES permit on the direct-discharge
     path, or the City industrial-pretreatment (IU) permit / sewer-use agreement if it blows down to sewer
-    (#1408).'
+    (#1408). AN NPDES INSTRUMENT DID LAND ON 2026-07-30 AND IT IS NOT THAT ONE. Coverage 2GC08872*AG under
+    general permit OHC000006 is CONSTRUCTION-SITE STORMWATER: it authorizes runoff from 792 ac of land
+    disturbance, expires 2028-04-22, and documents no cooling system, no process discharge and no operating
+    water use whatsoever. It leaves this archetype exactly where it was — the operator''s [reference]
+    claim. Do not let a permit number matching ''NPDES'' upgrade the cooling grade. The fill discrepancy
+    also WIDENED on the City instruments (#1401): the ~660,000 gal ''one-time'' figure (Safety-Service
+    Director, 2026-04-21) sits against 700,000 gal that ''will last 6 to 8 years'' (a County Commissioner)
+    and 5,500 gal (the since-lost FAQ) — and six days after his own press release the same director told
+    Council the City ''would be incapable'' of supplying the fill water. He also said facility water goes
+    to the WWTP ''not ... town creek'', which the WWTP''s own permit contradicts: 2PD00006 discharges
+    to Town Creek (#1406).'
   account:
     archetype: closed_loop_dry
     it_load:
@@ -1091,7 +1116,16 @@ candidates:
         #1327 / Troy-Piqua #1482 / Bowling Green #1435). Replace with the disclosed load when an OEPA
         air PTI, a PJM interconnection filing, or the AEP Ohio load contract (PUCO tariff 24-508-EL-ATA)
         surfaces it; the AEP Ohio Transco Van Wert-Haviland 138 kV LON (OPSB 25-0697-EL-BLN, $45M, in-service
-        Dec 2026) is a [reference] transmission signal whose stated need is generic (#1401).'
+        Dec 2026) is a [reference] transmission signal whose stated need is generic (#1401). TWO COMMITTED
+        INSTRUMENTS NOW DATE THE ABSENCE rather than merely failing to find a source. (1) The air PTI
+        does not exist yet ON THE APPLICANT''S OWN CERTIFICATION: the campus''s construction-stormwater
+        NOI, signed under penalty of law 2026-07-21, answers the Ohio EPA permit-status field ''PTI: YET_TO_APPLY''
+        (data/extracted/oepa/van-wert/2GC08872.noi.npdes.yaml). That converts ''no PTI found'' from an
+        unsuccessful search into a dated, instrument-grade negative — it does NOT promise a filing, and
+        it does not establish that one is required. (2) AEP Ohio addressed Council on the record with
+        ''>30,000 MW'' of early interest against 5,342 MW under signed agreements and stated NO megawatt
+        figure for this campus (#1401). Neither instrument discloses a load, which is exactly why this
+        stays a [reference] bracket.'
       confidence: medium
       asof: null
       low: null
@@ -1169,11 +1203,15 @@ candidates:
     - metered water-service use (actual makeup withdrawal vs the disclosed ongoing draw)
     - executed water & sewer service agreement (the City-approved fill authorization — the instrument,
       not a press summary)
-    - cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)
+    - cooling-tower blowdown / low-volume-wastewater discharge record — a facility-own INDIVIDUAL NPDES
+      permit + DMR on a direct-discharge path, or the industrial-user (IU) / pretreatment permit + sewer-use
+      agreement on a sanitary-sewer route (OHD000001 was WITHDRAWN 2026-07-21; no general-permit coverage
+      will ever exist)
     - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
     - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
-    holder: City / municipal water-sewer authority serving van-wert; Ohio EPA (NPDES / OHD000001); Ohio
-      EPA / regional air agency (DAPC); SERC / LEPC
+    holder: City / municipal water-sewer authority serving van-wert; Ohio EPA (INDIVIDUAL NPDES — OHD000001
+      withdrawn 2026-07-21, no general permit to seek); Ohio EPA / regional air agency (DAPC); SERC /
+      LEPC
     rationale: A closed_loop_dry claim (source=reference) that 'does not consume water once operational',
       with an UNVERIFIED disclosed ongoing draw (0.0018 MGD) consistent with a dry loop at screening scale
       — a single-source self-report, not a metered instrument, so it neither corroborates nor re-archetypes

@@ -37,6 +37,7 @@ notes: >
   Lima Bistrozzi graph; (2) the sited-facility scan — [verified] zero primary records in the corpus,
   county employment mix (Info NAICS 51 LQ 0.90, Prof/Sci/Tech 54 LQ 0.81) argues against an existing
   cluster; expected outcome is a flat no-primary-record finding pending the web pass. Instruments to
-  pull: Montgomery/Greene Auditor GIS, Ohio SOS, OEPA/ECHO (OHD000001), AES Ohio large-load queue,
+  pull: Montgomery/Greene Auditor GIS, Ohio SOS, OEPA/ECHO (construction stormwater OHC000000 +
+  individual NPDES — NOT OHD000001, withdrawn 2026-07-21, #1883), AES Ohio large-load queue,
   zoning dockets, WPAFB federal enclave (separate register). Water hook is groundwater — see
   groundwater-screen.md (#463).

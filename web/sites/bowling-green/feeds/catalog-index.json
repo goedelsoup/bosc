@@ -1,6 +1,6 @@
 {
   "site": "bowling-green",
-  "catalog_version": "42ed7e8b92bb47b0a343e3ecb24d3e611851eb7461aade2aeb7a3419f7660525",
+  "catalog_version": "a86a8b2bb9200e5286f0e012094985bc008b62963de1589b0d18dc19294b2733",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1025,6 +1025,14 @@
       "site": "bowling-green",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bowling-green:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

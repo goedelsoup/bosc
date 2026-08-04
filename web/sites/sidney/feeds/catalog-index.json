@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "3afd615aeac3dbadbf41173c86c6d65419586fe55a3ddaf4a7f6d539998652b1",
+  "catalog_version": "f0ff757a120665056769d5f90c99066d333dffe0eb286dbb1b26cc9b95d472d3",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1041,6 +1041,14 @@
       "site": "sidney",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

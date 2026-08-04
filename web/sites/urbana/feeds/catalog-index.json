@@ -1,6 +1,6 @@
 {
   "site": "urbana",
-  "catalog_version": "87ff530ecbaa470e7110e8b17e70b772749e4b92b515d25ae9adb054fa3f0cc8",
+  "catalog_version": "409199637df2113f7d83875516b2879618b3bb8fe11e0afa581b2d86f43f34fc",
   "contract_version": "1.51.0",
   "atoms": [
     {
@@ -1025,6 +1025,14 @@
       "site": "urbana",
       "local_id": "usaspending",
       "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:usgs-published-low-flow",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "usgs-published-low-flow",
+      "title": "USGS Published Low-Flow Statistics for Ohio Streams (Straub 2001 + SIR 2024-5075)",
       "feed": "catalog"
     },
     {

@@ -117,12 +117,12 @@
         "records_sought": [
           "executed water & wastewater service agreement (the instrument text, not a summary)",
           "metered water-service use (actual makeup withdrawal vs the reserved ceiling)",
-          "cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)",
+          "cooling-tower blowdown / low-volume-wastewater discharge record — a facility-own INDIVIDUAL NPDES permit + DMR on a direct-discharge path, or the industrial-user (IU) / pretreatment permit + sewer-use agreement on a sanitary-sewer route (OHD000001 was WITHDRAWN 2026-07-21; no general-permit coverage will ever exist)",
           "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
           "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits",
           "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)"
         ],
-        "holder": "City / municipal water-sewer authority serving troy-piqua; Ohio EPA (NPDES / OHD000001); Ohio EPA / regional air agency (DAPC); SERC / LEPC",
+        "holder": "City / municipal water-sewer authority serving troy-piqua; Ohio EPA (INDIVIDUAL NPDES — OHD000001 withdrawn 2026-07-21, no general permit to seek); Ohio EPA / regional air agency (DAPC); SERC / LEPC",
         "rationale": "A disclosed reservation ceiling (2 MGD) is disproportionate to the closed_loop_dry (source=reference) low-water claim and contradicts it — but a reservation is a ceiling, not a metered use, and not a discharge/withdrawal instrument, so it sharpens the standing water lead (#1486) without licensing a re-archetype. Pull the executed instrument + metered use to resolve which framing governs the consumptive screen.",
         "epic_ref": "#1688 (C2); #1486",
         "tag": "[open]"

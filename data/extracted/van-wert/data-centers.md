@@ -246,8 +246,9 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
 - **Cooling-cycling reconciliation (B2, #1682):** the A3 harness
   (`watermark cooling-reconcile`) tested the closed-loop-dry claim against the record. With no
   metered makeup (the Ohio DNR withdrawal registry has no Van Wert County pull built) and no
-  facility-own blowdown (OHD000001 is a draft permit, unlinked to the facility by name), the
-  outcome is a **`gap`** — the pin stays `closed_loop_dry` / `[reference]`, **not** upgraded to
+  facility-own blowdown (OHD000001 was withdrawn 2026-07-21 and was never linked to the facility
+  by name, so no coverage record can ever exist under it — a permanent absence, not a pending one),
+  the outcome is a **`gap`** — the pin stays `closed_loop_dry` / `[reference]`, **not** upgraded to
   `document`-grade. The disclosed ~660,000 gal figure is a single-source self-report (not a
   metered instrument, so it cannot corroborate the operator's own claim), and the same number is
   framed both as an *annual* operational draw and a *one-time* initial fill — that fill-vs-annual
@@ -402,12 +403,16 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   WQC and an isolated-wetlands permit while answering **`YET_TO_APPLY`** on the USACE nationwide
   permit — applicant assertions on a form, not agency determinations.
 - **NPDES / operating discharge:** Ohio EPA's draft general NPDES permit for data centers, **OHD000001**
-  (public hearing/comment close Dec 17, 2025 — non-contact cooling water, cooling-tower/boiler
-  blowdown, low-volume wastewater, industrial stormwater), was **WITHDRAWN 2026-07-21** and never
-  took effect. `[verified]` (`data/reference/oepa/ohd000001-coverage.yaml`) It was never linked to
-  the Van Wert facility by name, and with the general permit gone an **individual** NPDES permit
-  is the route any facility discharge would have to take. The 2026-05-04 hearing record still cites
-  it as a live draft — a regulatory premise the record preserves and that has since lapsed.
+  (public hearing 2025-12-17, comment period closed **2026-01-16** — non-contact cooling water,
+  cooling-tower/boiler blowdown, low-volume wastewater, industrial stormwater), was **WITHDRAWN
+  2026-07-21** and never took effect. `[verified]` (`data/reference/oepa/ohd000001-coverage.yaml`)
+  It was never linked to the Van Wert facility by name, and with the general permit gone an
+  **individual** NPDES permit is the only remaining instrument on a *direct-discharge* path — but
+  that path is not established here: a campus routing blowdown to the City WWTP holds no NPDES
+  permit at all and is disclosed instead by the City's **industrial-user / pretreatment permit and
+  sewer-use agreement** (the C2 ask, #1688). Neither has been searched `[open]`. The 2026-05-04
+  hearing record still cites OHD000001 as a live draft — a regulatory premise the record preserves
+  and that has since lapsed.
 
 ### Opposition / litigation
 
@@ -482,7 +487,11 @@ standard as of 2026-07-02. `[open]` — re-sweep on the next pass.
    identical coverage produced one), so the general contractor is `[open]`. The City grading permit
    is the network's trigger for moving the facility from `confirmed` to `construction`, and the
    applicant's filed start date is 2026-08-03.
-4. **Ohio EPA / EPA ECHO** — any facility NPDES coverage / notice-of-intent under OHD000001, and
+4. **Ohio EPA / EPA ECHO** — the facility-discharge half, **re-aimed** (#1883): there is no
+   notice-of-intent to look for, because OHD000001 was withdrawn 2026-07-21 and will never issue.
+   Ask instead for an **individual** NPDES permit or application naming the QTS campus, and — since
+   a campus on the City sanitary sewer holds no NPDES permit at all — the City of Van Wert's
+   **industrial-user / pretreatment permit and sewer-use agreement** for it (#1688). Plus
    a Town Creek / Little Auglaize 7Q10. The **municipal** half of this item is **done** (#1406):
    permit 2PD00006\*WD is committed, the outfall is coordinate-pinned, and the compliance record
    is dated and regenerable in `data/extracted/van-wert/water-watch.yaml`. What that register
@@ -539,8 +548,9 @@ instrument that would move this site's facility domain.
 - VW Independent (timeline): [2026/05/29/data-center-construction-operations-timeline-shared](https://thevwindependent.com/news/2026/05/29/data-center-construction-operations-timeline-shared/)
 - VW Independent (opposition): [2026/06/03/lawmakers-hear-data-center-opposition](https://thevwindependent.com/news/2026/06/03/lawmakers-hear-data-center-opposition/)
 - Thor Equities (GlobeNewswire, land buy): [thor-equities-group-expands-portfolio](https://www.globenewswire.com/news-release/2025/08/19/3135865/0/en/Thor-Equities-Group-Expands-Portfolio-with-Key-Acquisition-in-North-America-s-Leading-Data-Center-Corridor.html)
-- Ohio EPA (data-center general permit): [wastewater-discharges-from-data-centers--general-permit](https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/wastewater-discharges-from-data-centers--general-permit)
-- Bricker (draft NPDES OHD000001): [ohio-epa-issues-draft-general-npdes-permit-for-data-centers](https://www.bricker.com/insights/publications/ohio-epa-issues-draft-general-npdes-permit-for-data-centers)
+- Ohio EPA (data-center general permit — the superseded draft record, preserved): [wastewater-discharges-from-data-centers--general-permit](https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/wastewater-discharges-from-data-centers--general-permit)
+- Ohio EPA Community Notice **withdrawing** OHD000001, 2026-07-21 (in corpus as `data/documents/oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html`): [npdes-general-permits](https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/npdes-general-permits)
+- Bricker (draft NPDES OHD000001, at issuance): [ohio-epa-issues-draft-general-npdes-permit-for-data-centers](https://www.bricker.com/insights/publications/ohio-epa-issues-draft-general-npdes-permit-for-data-centers)
 - City of Van Wert water: [vanwert.org/water-treatment](https://vanwert.org/water-treatment/)
 - Ohio EPA HUC-12 (Lower Town Creek–Lower Little Auglaize): [nps report PDF](https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/nps/Lower%20Town%20Creek-Lower%20Little%20Auglaize%20River_Ver1.0_10-31-2023.pdf)
 - Ohio EPA NPDES 2PD00006 (the DAM slot; now serves the \*WD modification): [2PD00006.pdf](https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00006.pdf)
