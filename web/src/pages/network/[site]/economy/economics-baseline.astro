@@ -7,6 +7,12 @@ import Base from "~/layouts/Base.astro";
 import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { LinePoint } from "@watermark/charts/charts";
+import {
+  employmentChange,
+  rankByEmployment,
+  reconcileEmployment,
+  reportedSeries,
+} from "@watermark/core/econBaseline";
 import type {
   ConsumerEnergyCosts,
   ConsumerEnergyPrice,
@@ -14,6 +20,7 @@ import type {
   EnergyBurden,
   ProvenancedValue,
 } from "@watermark/core/feeds";
+import { fmtCount as num, fmtPct as pctStr, fmtUsd as usd } from "@watermark/core/format";
 import { withBase, withSite } from "@watermark/core/site";
 
 const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
@@ -23,15 +30,8 @@ const ce = hasFeed("consumer-energy") ? loadFeed<ConsumerEnergyCosts>("consumer-
 // Household energy burden (issue #1110) — a fully derived consumer-impact metric; present only
 // where the site's baseline carries median household income, absent (section hidden) otherwise.
 const burden = hasFeed("energy-burden") ? loadFeed<EnergyBurden>("energy-burden") : null;
-const num = (v?: ProvenancedValue | null): string =>
-  v?.value == null ? "—" : Math.round(v.value).toLocaleString("en-US");
-// QCEW pay figures (#1109) and household energy-burden dollars (#1110) — currency prefix.
-const usd = (v?: ProvenancedValue | null): string =>
-  v?.value == null ? "—" : `$${Math.round(v.value).toLocaleString("en-US")}`;
-const pctStr = (v?: ProvenancedValue | null): string => (v?.value == null ? "—" : `${v.value.toFixed(2)}%`);
-// The combined home-energy spend (electricity + gas) behind the combined burden % — the
-// backend-derived value, not a re-sum, so the page and feed agree by construction (#1110).
-const combinedEnergyCost = burden?.combined_annual_cost.value ?? 0;
+// `num` / `usd` / `pctStr` are @watermark/core's shared provenanced formatters: an absent
+// measurement renders "—" and stays absent — no call site here re-floors it to zero (#1918).
 const lq = (v?: ProvenancedValue | null): number | null => (v?.value == null ? null : v.value);
 // A location quotient is the county's employment share over the national share:
 // ≥ 1.25 means the county does much more of that work than the nation (it exports).
@@ -44,29 +44,26 @@ const orientation = (q: number | null): string =>
         ? `${q.toFixed(2)}`
         : `${q.toFixed(2)} · imports`;
 
-const sectors = [...(eb?.latest.sectors ?? [])].sort(
-  (a, b) => (b.annual_avg_employment.value ?? 0) - (a.annual_avg_employment.value ?? 0),
-);
+// Ranked by jobs, with an unreported sector unranked at the tail rather than asserted to zero.
+const sectors = rankByEmployment(eb?.latest.sectors ?? []);
 // Government ownership (QCEW own 1/2/3, #1661) — the federal/state/local slices the private-only
 // sector mix cannot show. Their sum plus the private sectors reconciles the all-ownership total;
 // the small residual is unclassified/suppressed private employment. Kept in own-code order so the
 // federal row (the county's largest single employer at an enclave) leads.
 const government = eb?.latest.government ?? [];
 const federal = government.find((g) => g.ownership === "1") ?? null;
-const sectorJobs = sectors.reduce((s, x) => s + (x.annual_avg_employment.value ?? 0), 0);
-const govJobs = government.reduce((s, g) => s + (g.annual_avg_employment.value ?? 0), 0);
-const totalJobs = eb?.latest.total_employment?.value ?? null;
-const govResidual = totalJobs == null ? null : Math.round(totalJobs - sectorJobs - govJobs);
+// The reconciliation is withheld unless the county total AND every row behind both sums is
+// reported — a residual against a partial sum is arithmetic on a number nobody published (#1918).
+const recon = reconcileEmployment(eb?.latest.total_employment, sectors, government);
 // The unit caveat is promoted from prose to a structured field (#1661); its text already opens
 // with "Economic-unit caveat:" so strip that prefix — the callout title carries it instead.
 const unitCaveat = eb?.unit_caveat?.replace(/^Economic-unit caveat:\s*/, "") ?? null;
 const jobsNum = (n: number): string => Math.round(n).toLocaleString("en-US");
 const trend = eb?.trend ?? [];
 const pop = eb?.population?.points ?? [];
-const first = trend[0];
-const last = trend[trend.length - 1];
-const delta = first && last ? (last.total_employment.value ?? 0) - (first.total_employment.value ?? 0) : 0;
-const pct = first?.total_employment.value ? (delta / first.total_employment.value) * 100 : 0;
+// Measured over the first and last *reported* years (both named in the prose), and three-valued:
+// a series that ends where it started has not shrunk (#1918).
+const change = employmentChange(trend);
 
 // --- trend charts (issue #1125) -----------------------------------------------------------
 // Hand-rolled SVG line charts (indigo encodes data, per @watermark/charts). Thin the year
@@ -87,15 +84,15 @@ function yearLine(
   }));
 }
 
-const empLine = yearLine(
-  trend.map((t) => ({ year: t.year, value: t.total_employment.value ?? 0 })),
-  { stride: 2 },
-);
-const estabTrend = trend.filter((t) => t.establishments?.value != null);
-const estabLine = yearLine(
-  estabTrend.map((t) => ({ year: t.year, value: t.establishments?.value ?? 0 })),
-  { stride: 2 },
-);
+// Only the years actually measured are plotted — a suppressed year would otherwise land on the
+// axis as a real zero, a cliff nobody reported (#1918). The table below carries every year's "—".
+const empTrend = reportedSeries(trend, (t) => t.total_employment);
+const empLine = yearLine(empTrend, { stride: 2 });
+const estabTrend = reportedSeries(trend, (t) => t.establishments);
+const estabLine = yearLine(estabTrend, { stride: 2 });
+// Each chart's end label is the last *plotted* point, so the label and the line agree.
+const endOf = (rows: { value: number }[]): string | undefined =>
+  rows.length > 0 ? jobsNum(rows[rows.length - 1].value) : undefined;
 
 // One EIA series → a windowed line + a units-carrying end label.
 function energyLine(s: ConsumerEnergyPrice | undefined): LinePoint[] {
@@ -173,7 +170,7 @@ const energyCharts = [
                     data={empLine}
                     kicker="Line · covered employment"
                     title="Total covered employment"
-                    endLabel={num(last?.total_employment)}
+                    endLabel={endOf(empTrend)}
                     evidence="verified"
                     source="BLS QCEW annual averages"
                   />
@@ -182,7 +179,7 @@ const energyCharts = [
                       data={estabLine}
                       kicker="Line · establishments"
                       title="Establishments"
-                      endLabel={num(estabTrend[estabTrend.length - 1]?.establishments)}
+                      endLabel={endOf(estabTrend)}
                       evidence="verified"
                       source="BLS QCEW annual averages"
                     />
@@ -197,11 +194,18 @@ const energyCharts = [
                   ))}
                 </tbody>
               </table>
-              {trend.length >= 2 && (
+              {change && (
                 <p>
-                  Total covered employment <strong>{delta > 0 ? "grew" : "shrank"} {Math.abs(pct).toFixed(1)}%</strong>{" "}
-                  ({num(first.total_employment)} → {num(last.total_employment)}) between {first.year} and
-                  {" "}{last.year} — the labor base the campus's ~50 promised jobs join.
+                  Total covered employment{" "}
+                  <strong>
+                    {change.direction === "unchanged"
+                      ? "was unchanged"
+                      : change.pct == null
+                        ? change.direction
+                        : `${change.direction} ${Math.abs(change.pct).toFixed(1)}%`}
+                  </strong>{" "}
+                  ({jobsNum(change.first.value)} → {jobsNum(change.last.value)}) between {change.first.year} and
+                  {" "}{change.last.year} — the labor base the campus's ~50 promised jobs join.
                 </p>
               )}
             </>
@@ -266,12 +270,24 @@ const energyCharts = [
                   ))}
                 </tbody>
               </table>
-              {totalJobs != null && (
+              {recon.kind === "reconciled" ? (
                 <p>
-                  Private sectors (<strong>{jobsNum(sectorJobs)}</strong>) + government
-                  (<strong>{jobsNum(govJobs)}</strong>) reconcile to the <strong>{jobsNum(totalJobs)}</strong>{" "}
-                  all-ownership total{govResidual ? <> — the {jobsNum(Math.abs(govResidual))}-job residual is
+                  Private sectors (<strong>{jobsNum(recon.sectorJobs)}</strong>) + government
+                  (<strong>{jobsNum(recon.govJobs)}</strong>) reconcile to the{" "}
+                  <strong>{jobsNum(recon.totalJobs)}</strong> all-ownership total
+                  {recon.residual ? <> — the {jobsNum(Math.abs(recon.residual))}-job residual is
                   unclassified or suppressed private employment</> : null}.
+                </p>
+              ) : recon.missing > 0 ? (
+                <p class="card-meta">
+                  Employment is not reported for {recon.missing}{" "}
+                  {recon.missing === 1 ? "row" : "rows"} above, so the private + government sum is a
+                  floor rather than a total and no residual against the all-ownership figure is shown.
+                </p>
+              ) : (
+                <p class="card-meta">
+                  The county's all-ownership employment total is not reported, so the private +
+                  government sum has nothing to reconcile against.
                 </p>
               )}
             </>
@@ -339,7 +355,7 @@ const energyCharts = [
               </tr>
               <tr>
                 <td><strong>Combined</strong></td>
-                <td><strong>${Math.round(combinedEnergyCost).toLocaleString("en-US")}</strong></td>
+                <td><strong>{usd(burden.combined_annual_cost)}</strong></td>
                 <td><strong>{pctStr(burden.combined_burden_pct)}</strong></td>
               </tr>
             </tbody>

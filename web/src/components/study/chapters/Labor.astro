@@ -10,6 +10,7 @@
  * [verified] — the study never computes a jobs multiplier (no ingredient; none fabricated).
  */
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { rankByEmployment, sumEmployment } from "@watermark/core/econBaseline";
 import type { EconomicBaseline, ProvenancedValue } from "@watermark/core/feeds";
 import { withSite } from "@watermark/core/site";
 import type { StudyChapterDef, StudyChapterModel } from "@watermark/core/study";
@@ -37,11 +38,17 @@ const orientation = (v?: ProvenancedValue | null): string => {
   return q >= 1.25 ? `${q.toFixed(2)} · exports` : q >= 1.0 ? q.toFixed(2) : `${q.toFixed(2)} · imports`;
 };
 
-const sectors = [...(eb?.latest.sectors ?? [])]
-  .sort((a, b) => (b.annual_avg_employment.value ?? 0) - (a.annual_avg_employment.value ?? 0))
-  .slice(0, 5);
+// "Largest" is a ranking claim, so only reported sectors can make it — a QCEW-suppressed sector
+// is unranked, never a zero-jobs sector sorted to the tail (#1918).
+const sectors = rankByEmployment(
+  (eb?.latest.sectors ?? []).filter((s) => s.annual_avg_employment?.value != null),
+).slice(0, 5);
 const government = eb?.latest.government ?? [];
-const govJobs = government.reduce((s, g) => s + (g.annual_avg_employment.value ?? 0), 0);
+// A sum over slices that aren't all reported is a floor, and says so rather than reading as a total.
+const gov = sumEmployment(government);
+const govSlices = gov.complete
+  ? `${government.length} ownership ${government.length === 1 ? "slice" : "slices"}`
+  : `${gov.reported} of ${government.length} reported ownership slices`;
 const pop = eb?.population?.points ?? [];
 const latestPop = pop.length > 0 ? pop[pop.length - 1] : null;
 
@@ -119,10 +126,10 @@ if (eb?.median_household_income?.value != null) {
         </>
       )}
 
-      {govJobs > 0 && (
+      {gov.total > 0 && (
         <p class="lab-gov">
-          Government employment adds ~{Math.round(govJobs).toLocaleString("en-US")} jobs across{" "}
-          {government.length} ownership {government.length === 1 ? "slice" : "slices"} (QCEW
+          Government employment adds {gov.complete ? "~" : "at least ~"}
+          {Math.round(gov.total).toLocaleString("en-US")} jobs across {govSlices} (QCEW
           federal/state/local) — the slice a private-only sector mix cannot show.
         </p>
       )}

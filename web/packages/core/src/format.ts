@@ -58,6 +58,26 @@ export function fmtRanged(pv: Ranged, decimals = 0): string {
   return `${v} (${lo}–${hi}${unit})`;
 }
 
+/** The one field these formatters read — anything `ProvenancedValue`-shaped satisfies it. */
+export interface Measured {
+  value: number | null;
+}
+
+/** A whole-number count (`"9,452"`), or `"—"` when the measurement is absent (#1918). */
+export function fmtCount(v?: Measured | null): string {
+  return v?.value == null ? "—" : Math.round(v.value).toLocaleString("en-US");
+}
+
+/** Whole dollars (`"$60,348"`), or `"—"` when the measurement is absent (#1918). */
+export function fmtUsd(v?: Measured | null): string {
+  return v?.value == null ? "—" : `$${Math.round(v.value).toLocaleString("en-US")}`;
+}
+
+/** A percentage (`"3.41%"`), or `"—"` when the measurement is absent (#1918). */
+export function fmtPct(v?: Measured | null, decimals = 2): string {
+  return v?.value == null ? "—" : `${v.value.toFixed(decimals)}%`;
+}
+
 const HTML_ESCAPES: Record<string, string> = {
   "&": "&amp;",
   "<": "&lt;",
