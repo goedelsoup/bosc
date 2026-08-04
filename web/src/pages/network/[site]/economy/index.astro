@@ -8,9 +8,14 @@ export const getStaticPaths = selectableSitePaths;
  * economics prose companion. A hub like the environment hub; doors point to real routes.
  */
 import Base from "~/layouts/Base.astro";
+import FigureStat from "~/components/FigureStat.astro";
+import HubLede from "~/components/HubLede.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { EconomicBaseline } from "@watermark/core/feeds";
+import { buildGridBackdrop } from "@watermark/core/gridBackdrop";
+import { sectorEmployment, topSectors } from "@watermark/core/hubLede";
 import { facilityLoadAvailable } from "@watermark/core/readiness";
+import type { FigureStatData } from "@watermark/core/viz";
 import { withBase, withSite } from "@watermark/core/site";
 import { activeStory, chapterHref } from "@watermark/core/walk";
 
@@ -30,9 +35,52 @@ const story = activeStory();
 const costChapter = story?.chapters.find((c) => c.slug === "cost");
 const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
 const area = eb?.area_name ?? "the corridor";
-const jobs = eb?.latest.sectors?.reduce((sum, s) => sum + (s.annual_avg_employment.value ?? 0), 0) ?? null;
+const jobs = sectorEmployment(eb);
 const sectorCount = eb?.latest.sectors?.length ?? 0;
 const num = (n: number): string => n.toLocaleString("en-US");
+
+// The lede (#1891): the section named its two baselines on cards and showed neither. Both are
+// on the BACKDROP floor — the QCEW/Census labor baseline and the cited grid service chain are
+// keyed to the place, not to a disclosed campus — so a facility-less peer still gets a real
+// read here. A site missing BOTH feeds gets the honest absence; nothing is borrowed.
+const grid = buildGridBackdrop(slug);
+// Ranked by location quotient, not headcount: the LQ is what says the economy is *concentrated*
+// in a sector rather than merely large. Sectors whose LQ the feed omits drop out.
+const concentrated = topSectors(eb, 3);
+const utilityGwh = grid?.denominators.find((d) => d.key === "utility") ?? null;
+const ledeFigures: FigureStatData[] = [
+  ...(jobs != null
+    ? [
+        {
+          label: "Covered jobs",
+          value: num(Math.round(jobs)),
+          evidence: "verified" as const,
+          sub: `${sectorCount} NAICS sectors · ${eb?.latest.year}`,
+        },
+      ]
+    : []),
+  ...(eb?.latest.avg_annual_pay?.value != null
+    ? [
+        {
+          label: "Average annual pay",
+          value: `$${num(Math.round(eb.latest.avg_annual_pay.value))}`,
+          evidence: "verified" as const,
+          sub: "BLS QCEW · all ownerships",
+        },
+      ]
+    : []),
+  ...(utilityGwh
+    ? [
+        {
+          label: "Utility retail sales",
+          value: num(Math.round(utilityGwh.gwh)),
+          unit: "GWh/yr",
+          evidence: "verified" as const,
+          sub: grid?.utilityName ?? "EIA-861",
+        },
+      ]
+    : []),
+];
 
 interface Door {
   id: string;
@@ -128,6 +176,54 @@ const doors: Door[] = [
         {jobs ? `${area} · ${num(Math.round(jobs))} jobs` : area}
       </span>
     </div>
+
+    <HubLede
+      label="The ground, measured"
+      absent={eb || grid
+        ? null
+        : `${area} has neither a labor baseline nor a grid profile in its bundle yet, so this hub can't state what the deal would land on — and it won't state another county's. Both are connector-pulled from public series (BLS QCEW, US Census, EIA-861); they land the first time this site is exported with its FIPS and its serving utility resolved.`}
+      cite={[
+        eb && `Employment, pay, and location quotients: BLS QCEW + US Census, ${eb.latest.year}.`,
+        // The DENOMINATOR's own citation (EIA-861), not `chain[0].cite` — a chain row's citation is
+        // the document that identifies the utility, which on Lima is a paragraph of testimony.
+        utilityGwh && `Retail sales: ${utilityGwh.cite}.`,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      href={withSite("/environment/economics-baseline")}
+      cta="Open the baseline"
+    >
+      <p class="hublede-say">
+        {jobs != null ? (
+          <Fragment><span class="num">{num(Math.round(jobs))}</span> covered jobs across <span class="num">{sectorCount}</span> sectors in {area}</Fragment>
+        ) : (
+          <Fragment>{area}'s labor baseline is not in the bundle yet</Fragment>
+        )}{grid && (
+          <Fragment>, on <strong>{grid.utilityName}</strong>'s wires inside {grid.baName}</Fragment>
+        )}. That's the denominator every megawatt and every job claim gets read against.
+      </p>
+      {
+        concentrated.length > 0 && (
+          <div class="hublede-chips">
+            {concentrated.map((s) => (
+              <span class="hublede-chip">
+                {s.sector_name} <span class="hublede-chip-n">{s.location_quotient?.value?.toFixed(1)}× LQ</span>
+              </span>
+            ))}
+          </div>
+        )
+      }
+      {
+        ledeFigures.length > 0 && (
+          <div class="hublede-figures">
+            {ledeFigures.map((s) => (
+              <FigureStat stat={s} size="sm" />
+            ))}
+          </div>
+        )
+      }
+    </HubLede>
+
     <div class="hub-grid">
       {
         doors.map((d) => (

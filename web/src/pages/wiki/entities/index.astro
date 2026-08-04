@@ -2,13 +2,13 @@
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import { slugify, type EntityNode } from "@watermark/core/feeds";
+import { topEntities } from "@watermark/core/hubLede";
 import { withBase } from "@watermark/core/site";
 
 const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
-const roleTotal = (e: EntityNode): number => Object.values(e.roles ?? {}).reduce((a, b) => a + b, 0);
-const sorted = [...entities].sort(
-  (a, b) => roleTotal(b) - roleTotal(a) || a.display.localeCompare(b.display),
-);
+// Same ranking the wiki hub's lede leads with — one owner, so the hub's "most named" and this
+// index's first rows can never drift apart (#1891).
+const sorted = topEntities(entities, entities.length);
 ---
 
 <Base title="Entities" section="wiki">

@@ -2825,6 +2825,66 @@ a.walk-dot:hover { opacity: 0.82; }
 .hub-door-note { font-size: var(--fs-caption); color: var(--td-faint); }
 .hub-door-arrow { margin-left: auto; color: var(--bosc-forest); font-size: var(--fs-body); }
 
+/* ---------------------------------------------------------------------------
+   The hub lede (#1891) — the above-the-fold reading each section hub leads with,
+   between the head and the door grid. Swiss 03 proper: square, hairline-bounded,
+   one forest structural rail; figures in mono, language in Archivo. Declared
+   GLOBAL rather than scoped to HubLede.astro because the reading itself is
+   slotted from the calling page, which Astro scopes to the caller.
+   --------------------------------------------------------------------------- */
+.hublede {
+  border: 1px solid var(--bosc-rule);
+  border-left: 4px solid var(--bosc-forest);
+  background: var(--bosc-bg);
+  padding: var(--sp-4) var(--sp-5);
+  margin-top: 1.2rem;
+}
+/* An absent reading is a finding, not a failure — but it doesn't spend the signal. */
+.hublede--absent { border-left-color: var(--bosc-rule); }
+.hublede-head { display: flex; align-items: baseline; gap: var(--sp-3); flex-wrap: wrap; }
+.hublede-label { font-family: var(--bosc-mono); font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase; color: var(--bosc-muted); }
+.hublede-go { margin-left: auto; font-family: var(--bosc-mono); font-size: var(--fs-caption); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--bosc-ink); text-decoration: none; }
+.hublede-go:hover { color: var(--bosc-forest); text-decoration: underline; }
+.hublede-absent { font-size: var(--fs-meta); line-height: 1.55; color: var(--bosc-muted); margin: 0.6rem 0 0; max-width: 44rem; }
+.hublede-cite { font-family: var(--bosc-mono); font-size: var(--fs-micro); line-height: 1.5; color: var(--bosc-faint); margin: 0.9rem 0 0; }
+
+/* The sentence — what the section says, in one line, before any door. */
+.hublede-say { font-size: var(--fs-lg); line-height: 1.45; color: var(--bosc-ink); margin: 0.55rem 0 0; max-width: 46rem; text-wrap: pretty; }
+.hublede-say strong { font-weight: 700; }
+.hublede-say .num { font-family: var(--bosc-mono); font-weight: 600; letter-spacing: -0.01em; }
+
+/* A row of figures, hairline-separated (the ledger treatment). The cells are `FigureStat`
+   `sm` — the site's one figure treatment, evidence dot included; this only lays them out. */
+.hublede-figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); margin-top: 1rem; }
+.hublede-figures > * { border-left: 1px solid var(--bosc-rule); padding: 0 var(--sp-4); }
+.hublede-figures > :first-child { border-left: 0; padding-left: 0; }
+
+/* Real items — recent events, top entities, open questions. */
+.hublede-list { list-style: none; margin: 0.9rem 0 0; padding: 0; }
+.hublede-item { display: flex; align-items: baseline; gap: var(--sp-3); padding: var(--sp-2) 0; border-top: 1px solid var(--bosc-rule); }
+.hublede-item:first-child { border-top: 0; padding-top: 0; }
+.hublede-item-k { font-family: var(--bosc-mono); font-size: var(--fs-caption); color: var(--bosc-faint); flex: 0 0 auto; }
+.hublede-item-b { min-width: 0; flex: 1 1 auto; }
+/* Clamped at two lines: a timeline title can be a paragraph (the commissioners' minutes carry
+   the whole motion), and a preview that runs longer than the doors it sits above is no longer
+   a lede. The full text is one click away, on the surface that owns it. */
+.hublede-item-t { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; font-size: var(--fs-meta); font-weight: 600; line-height: 1.4; }
+a.hublede-item-t { color: var(--bosc-ink); text-decoration: none; }
+a.hublede-item-t:hover { color: var(--bosc-forest); text-decoration: underline; }
+.hublede-item-m { display: block; font-size: var(--fs-caption); color: var(--bosc-muted); line-height: 1.45; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Tallies — the sectors, roles, or agencies behind the count. */
+.hublede-chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: 0.9rem; }
+.hublede-chip { font-family: var(--bosc-mono); font-size: var(--fs-caption); border: 1px solid var(--bosc-rule); padding: 2px 8px; color: var(--bosc-muted); text-decoration: none; }
+a.hublede-chip:hover { border-color: var(--bosc-forest); color: var(--bosc-forest); }
+.hublede-chip-n { color: var(--bosc-ink); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .hublede { padding: var(--sp-4); }
+  .hublede-figures > * { border-left: 0; border-top: 1px solid var(--bosc-rule); padding: var(--sp-3) 0 0; }
+  .hublede-figures > :first-child { border-top: 0; padding-top: 0; }
+}
+
 /* ===========================================================================
    P1 — Figure / Stat (design "Figure Stat"): one figure treatment. lg tile
    (dashboard / hub) and sm strip (profile). grounded→verified, modeled→inference.

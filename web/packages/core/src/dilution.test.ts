@@ -65,6 +65,7 @@ const BUILDOUT = {
   receiving_summer_30q10: pv(1.6),
   receiving_1q10: pv(0),
   receiving_live: pv(36.3),
+  receiving_water_name: "Ottawa River",
   campus_routed_discharge: pv(3.87),
   balance: pv(0),
   assimilative: [
@@ -111,6 +112,9 @@ describe("buildDilution — feed-sourced (no fork)", () => {
     expect(data.floors.find((f) => f.key === "annual")?.cfs).toBe(0.2);
     expect(data.floors.find((f) => f.key === "summer")?.cfs).toBe(1.6);
     expect(data.floors.find((f) => f.key === "driest")?.cfs).toBe(0);
+    // The receiving water's NAME travels with its floors (#1891) so a hub can caption its own
+    // river; the environment hub used to hardcode "Ottawa River" behind a reference-site check.
+    expect(data.receivingWater).toBe("Ottawa River");
   });
 
   it("locks (no Lima fallback) when the feed carries no buildout scenario", async () => {
@@ -120,6 +124,7 @@ describe("buildDilution — feed-sourced (no fork)", () => {
     expect(data.fromFeed).toBe(false);
     expect(data.maxCoolingMgd).toBe(0);
     expect(data.floors).toHaveLength(0);
+    expect(data.receivingWater).toBeNull();
     expect(data.discharge.rows).toHaveLength(0);
     expect(data.discharge.campusFm2Cfs).toBe(0);
     expect(data.discharge.effluentPct).toBe(0);

@@ -1,0 +1,54 @@
+---
+/**
+ * The hub lede (#1891, epic #1884 phase 7) — the one shared above-the-fold slot every section
+ * hub leads with, so a hub answers a click with what the section SAYS before it offers its doors.
+ *
+ * Before this, ten pages were a heading plus a grid of `hub-door` cards: title, blurb, count.
+ * The environment hub printed "Ottawa River · 7Q10 ≈ 0.2 cfs" in the corner as decoration and
+ * then eight cards — that number is the site's entire thesis, rendered as a caption. The door
+ * grid stays; it just sits below a real read now.
+ *
+ * **The absence contract.** `absent` is not an error state — it's the honest answer for a peer
+ * whose bundle doesn't carry the reading yet (#1220). When it's set, the slot is NOT rendered:
+ * there is no partial lede, and nothing falls back to the reference build's figures. Callers
+ * derive it from their own feed (`hasFeed` / `fromFeed` / an empty list), never from `slug`.
+ *
+ * The slotted markup is styled by the `.hublede-*` classes in `site.css` (global, not scoped):
+ * Astro's scoped styles key off the component that WRITES the element, so a class declared here
+ * would never reach the caller's slot content. The vocabulary is small on purpose —
+ * `-say` (the sentence), `-figures`/`-fig` (mono figures), `-list`/`-item` (real items),
+ * `-chips`/`-chip` (tallies).
+ */
+interface Props {
+  /** Mono eyebrow naming the reading — "The reading right now", "On the record". */
+  label: string;
+  /**
+   * The honest-absence line: what this site's bundle does not carry, in the site's own voice.
+   * Set ⇒ the slot and the citation are dropped and this renders instead.
+   */
+  absent?: string | null;
+  /** Provenance under the reading — where these figures come from. Dropped when `absent`. */
+  cite?: string | null;
+  /** Deep link into the surface that owns the reading (rendered with `cta`). */
+  href?: string | null;
+  cta?: string | null;
+}
+const { label, absent = null, cite = null, href = null, cta = null } = Astro.props;
+---
+
+<section class:list={["hublede", absent && "hublede--absent"]}>
+  <div class="hublede-head">
+    <span class="hublede-label">{label}</span>
+    {href && cta && <a class="hublede-go" href={href}>{cta} →</a>}
+  </div>
+  {
+    absent ? (
+      <p class="hublede-absent">{absent}</p>
+    ) : (
+      <>
+        <slot />
+        {cite && <p class="hublede-cite">{cite}</p>}
+      </>
+    )
+  }
+</section>

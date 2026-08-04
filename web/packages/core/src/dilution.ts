@@ -78,6 +78,10 @@ export interface DilutionData {
   drawAtBuildoutCfs: number;
   /** The Ottawa's live USGS flow, cfs (context — the dashboard re-runs on it). */
   ottawaLiveCfs: number | null;
+  /** The receiving water the floors are read against, named by the feed (`receiving_water_name`)
+   *  — null where the scenario doesn't name one, so a hub captions its own river or nothing at
+   *  all rather than inheriting Lima's (#1891). */
+  receivingWater: string | null;
   /** Receiving-stream low-flow floors: annual + the seasonal pinch (cited). */
   floors: DilutionFloor[];
   /** The discharge story — what the campus discharges into (the river is effluent). */
@@ -94,6 +98,7 @@ const LOCKED: DilutionData = {
   cfsPerCoolingMgd: 0,
   drawAtBuildoutCfs: 0,
   ottawaLiveCfs: null,
+  receivingWater: null,
   floors: [],
   discharge: { wwtpCfs: 0, naturalCfs: 0, campusFm2Cfs: 0, effluentPct: 0, rows: [], cite: "" },
   fromFeed: false,
@@ -121,6 +126,7 @@ export function buildDilution(): DilutionData {
   const consumptiveFraction = buildout.scenario.consumptive_fraction.value ?? 0;
   const drawAtBuildoutCfs = buildout.consumptive_loss.value ?? 0;
   const ottawaLiveCfs = buildout.receiving_live?.value ?? null;
+  const receivingWater = buildout.receiving_water_name ?? null;
   const cfsPerCoolingMgd = maxCoolingMgd > 0 ? drawAtBuildoutCfs / maxCoolingMgd : 0;
 
   // The cited low-flow floors: annual 7Q10 + the two seasonal floors, all from the feed (#1633).
@@ -178,6 +184,7 @@ export function buildDilution(): DilutionData {
     cfsPerCoolingMgd,
     drawAtBuildoutCfs,
     ottawaLiveCfs,
+    receivingWater,
     floors,
     discharge,
     fromFeed: true,

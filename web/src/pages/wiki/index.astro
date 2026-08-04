@@ -1,12 +1,24 @@
 ---
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadManifest } from "@watermark/core/bundle";
+import HubLede from "~/components/HubLede.astro";
+import { hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
+import { slugify, type EntityNode, type OpenQuestionItem } from "@watermark/core/feeds";
+import { roleTotal, topEntities } from "@watermark/core/hubLede";
 import { withBase } from "@watermark/core/site";
 
 const manifest = loadManifest();
 const byName = new Map(manifest.feeds.map((f) => [f.name, f]));
 const count = (n: string): number => byName.get(n)?.count ?? 0;
 const num = (n: number): string => n.toLocaleString("en-US");
+
+// The lede (#1891): four category tiles told a reader the wiki has entities and concepts, which
+// they could already guess from the tab. What they can't guess is WHO the record keeps returning
+// to, and what it still can't answer — so those lead, and the tiles follow. Both come from the
+// feeds the hub already reads for its counts; an empty graph reads as the absence.
+const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
+const mostLinked = topEntities(entities, 6);
+const questions = hasFeed("open-questions") ? loadFeed<OpenQuestionItem[]>("open-questions") : [];
+const openTop = questions.slice(0, 3);
 
 interface Door {
   id: string;
@@ -118,6 +130,49 @@ if (curated.length) {
       </div>
       <span class="hub-count"><span class="dot" aria-hidden="true"></span>{num(count("entities"))} entities · {num(count("relationships"))} edges</span>
     </div>
+
+    <HubLede
+      label="Who the record keeps returning to"
+      absent={mostLinked.length === 0
+        ? "No entity graph has been resolved for this build yet, so there is no one to lead with. The graph is a projection of the record — it fills in as documents are read, and it stays empty rather than showing another build's parties."
+        : null}
+      cite="Ranked by how many roles each party holds across the record — the same order the entity index uses. Open questions are the [open]-tagged leads and hypothesis cells, aggregated."
+      href={withBase("/wiki/entities/")}
+      cta="All entities"
+    >
+      <p class="hublede-say">
+        <span class="num">{num(count("entities"))}</span> resolved parties, tied by
+        <span class="num"> {num(count("relationships"))}</span> documented relationships. These are
+        the ones the record names most often:
+      </p>
+      <div class="hublede-chips">
+        {
+          mostLinked.map((e) => (
+            <a class="hublede-chip" href={`${withBase("/wiki/entities/")}${slugify(e.key)}/`}>
+              {e.display} <span class="hublede-chip-n">{roleTotal(e)}</span>
+            </a>
+          ))
+        }
+      </div>
+      {
+        openTop.length > 0 && (
+          <ul class="hublede-list">
+            {openTop.map((q) => (
+              <li class="hublede-item">
+                <span class="hublede-item-k">[open]</span>
+                <span class="hublede-item-b">
+                  <a class="hublede-item-t" href={withBase("/wiki/open-questions/")}>
+                    {q.question}
+                  </a>
+                  <span class="hublede-item-m">{q.source}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </HubLede>
+
     <div class="hub-grid">
       {
         doors.map((d) => (
