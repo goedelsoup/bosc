@@ -551,6 +551,14 @@ a { color: var(--bosc-link); }
 .switcher-row:hover { background: var(--td-tint); }
 .switcher-row.is-active { background: var(--td-tint); border-left-color: var(--bosc-forest); }
 .switcher-row.is-locked { background: #efe6e4; border-left-color: #7a2230; }
+/* The place filter hides by setting `el.hidden`, and `[hidden]` is a USER-AGENT rule — any author
+   `display` beats it, however low its specificity. Both the row and the region header declare
+   `display: flex`, so without this the filter would set the attribute on every non-match and
+   change nothing on screen. The group is covered too: it declares no display today, so the UA
+   rule works there by luck, and the first person to give it one would break it silently. */
+.switcher-row[hidden],
+.switcher-region[hidden],
+.switcher-group[hidden] { display: none; }
 .switcher-badge {
   flex: 0 0 auto; width: 30px; height: 30px;
   display: flex; align-items: center; justify-content: center;
@@ -1778,7 +1786,10 @@ a.card:hover { border-color: var(--bosc-forest); background: var(--bosc-surface)
     max-height: none;
     border: 0;
     border-radius: 0;
-    box-shadow: none;
+    /* `!important` because the desktop rule needs its own to survive the global flatten
+       (`*{box-shadow:none !important}`, top of file) — and a media query adds no weight, so a
+       plain declaration here would lose to it and leave a shadow on a full-screen panel. */
+    box-shadow: none !important;
     padding: 0;
   }
   .switcher-scroll {
