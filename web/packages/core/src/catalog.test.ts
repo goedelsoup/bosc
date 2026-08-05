@@ -88,7 +88,7 @@ function makeBundle(atoms: object[], version = "abc123"): string {
   const manifest = {
     site: "lima",
     bundle_version: "test",
-    contract_version: "1.10.0",
+    contract_version: "2.0.0",
     generated_at: "2026-01-01T00:00:00Z",
     feed_count: 1,
     row_total: 1,
@@ -97,7 +97,7 @@ function makeBundle(atoms: object[], version = "abc123"): string {
   writeFileSync(join(dir, "manifest.json"), JSON.stringify(manifest));
   writeFileSync(
     join(dir, "catalog-index.json"),
-    JSON.stringify({ site: "lima", catalog_version: version, contract_version: "1.10.0", atoms }),
+    JSON.stringify({ site: "lima", catalog_version: version, contract_version: "2.0.0", atoms }),
   );
   return dir;
 }
@@ -164,7 +164,7 @@ describe("loadCatalog", () => {
       JSON.stringify({
         site: "lima",
         bundle_version: "test",
-        contract_version: "1.10.0",
+        contract_version: "2.0.0",
         generated_at: "2026-01-01T00:00:00Z",
         feed_count: 0,
         row_total: 0,

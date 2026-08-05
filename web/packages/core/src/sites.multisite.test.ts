@@ -61,9 +61,13 @@ describe("multi-site chrome parity (#746)", () => {
     expect(siteForPathIn(SITES, "/network/fort-wayne")?.slug).toBe("fort-wayne");
   });
 
-  it("each selectable site resolves its OWN story (#733 made this real)", () => {
+  it("Lima resolves the network's one surviving walk, and no peer resolves another (#1971)", () => {
+    // This asserted that a SECOND site resolved its own walk — the #733 payoff, when a per-site
+    // walk was the model. Epic #1968 retired that: the three peer walks were absorbed into their
+    // impact studies (#1970), and Lima's is kept as the method demo rather than as a template.
+    // The multi-site machinery it proved is unchanged — `storyFor` is still per-site keyed; there
+    // is simply only one walk to key, and a peer resolving one again would be the regression.
     const lima = storyFor("lima", "project-bosc");
-    const fw = storyFor("fort-wayne", "project-zodiac");
     expect(lima?.chapters.map((c) => c.slug)).toEqual([
       "who",
       "assembly",
@@ -72,8 +76,9 @@ describe("multi-site chrome parity (#746)", () => {
       "cost",
       "opacity",
     ]);
-    expect(fw?.chapters.map((c) => c.slug)).toEqual(["who", "power", "water"]);
-    expect(lima?.codename).not.toBe(fw?.codename);
+    expect(storyFor("fort-wayne", "project-zodiac")).toBeUndefined();
+    expect(storyFor("findlay", "flagpole")).toBeUndefined();
+    expect(storyFor("bowling-green", "project-accordion")).toBeUndefined();
   });
 
   it("the switcher's current state reacts to a coming-soon site, where the tab tier does not (#793)", () => {

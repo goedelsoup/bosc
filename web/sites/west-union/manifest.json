@@ -1,8 +1,8 @@
 {
   "site": "west-union",
   "bundle_version": "1.0.0",
-  "contract_version": "1.55.0",
-  "generated_at": "2026-08-05T21:04:38+00:00",
+  "contract_version": "2.0.0",
+  "generated_at": "2026-08-05T22:18:56+00:00",
   "feed_count": 28,
   "row_total": 397,
   "readiness": {
@@ -12,7 +12,7 @@
       "facility": "absent",
       "places": "absent",
       "record": "seeded",
-      "story": "absent"
+      "inquiry": "seeded"
     }
   },
   "facility": null,
