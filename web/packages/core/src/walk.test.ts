@@ -114,43 +114,25 @@ describe("Story model", () => {
     }
   });
 
-  it("surfaces a second site's story from the collection, not just Lima (#733)", () => {
-    // The flip's payoff: a non-Lima story registers + resolves with no hand-edit to this module.
-    const fw = storyFor("fort-wayne", "project-zodiac");
-    expect(fw, "Fort Wayne's project-zodiac story must resolve from the collection").toBeDefined();
-    expect(fw?.title).toBe("Project Zodiac");
-    expect(fw?.chapters.map((c) => c.slug)).toEqual(["who", "power", "water"]);
-    expect(fw?.chapters.every((c) => c.live)).toBe(true);
-  });
-
-  it("resolves Findlay's flagpole walk in reading order (#1466)", () => {
-    const fin = storyFor("findlay", "flagpole");
-    expect(fin, "Findlay's flagpole story must resolve from the collection").toBeDefined();
-    expect(fin?.title).toBe("Flagpole");
-    // Ordered cause → consequence, so no chapter leans on a figure a later one establishes: the
-    // disclosed load, then the tariff it would sit under, then the ground it sits on, then the
-    // river's denominator, then the load reconstruction that denominator's permit governs, then
-    // what the river has already cost.
-    expect(fin?.chapters.map((c) => c.slug)).toEqual([
-      "who",
-      "power",
-      "ground",
-      "water",
-      "phosphorus",
-      "flood",
-    ]);
-    expect(fin?.chapters.map((c) => c.step)).toEqual([1, 2, 3, 4, 5, 6]);
-    expect(fin?.chapters.every((c) => c.live)).toBe(true);
-    // Record → chapter backlinks invert from the chapters' own anchorRecordRels.
-    expect(storyAnchorFor(fin!, "oepa/findlay/2PD00008.fs.npdes.yaml")?.slug).toBe("water");
-    expect(storyAnchorFor(fin!, "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml")?.slug).toBe("phosphorus");
+  it("the absorbed walks no longer resolve — the collection is Lima's alone (#1971)", () => {
+    // #1970 moved Fort Wayne's, Findlay's and Bowling Green's chapters into their impact studies
+    // and #1971 retired their registry entries. Both halves must go together: a registered
+    // codename whose MDX is gone fails the resolution guard above, and orphan MDX under a
+    // codename nothing registers is dead content. This pins the pair.
+    for (const [slug, codename] of [
+      ["fort-wayne", "project-zodiac"],
+      ["findlay", "flagpole"],
+      ["bowling-green", "project-accordion"],
+    ] as const) {
+      expect(storyFor(slug, codename), `${slug}/${codename} must no longer resolve`).toBeUndefined();
+    }
   });
 });
 
-describe("story surface resolution — Lima readable, Fort Wayne coming-soon (#1526)", () => {
-  it("surfaces Lima's readable walk while holding Fort Wayne's from every readable surface", () => {
-    // Lima's MDX content, the WALK_* guard, and its metadata resolve — and its record is finished, so
-    // the walk now *surfaces* (readable): included in surfacedStories, excluded from comingSoon.
+describe("story surface resolution — Lima is the only walk (#1526/#1971)", () => {
+  it("surfaces Lima's readable walk, and nothing else registers one", () => {
+    // Lima's MDX content, the WALK_* guard, and its metadata resolve — and its record is finished,
+    // so the walk *surfaces* (readable): included in surfacedStories, excluded from comingSoon.
     const story = storyFor("lima", "project-bosc");
     expect(story?.title).toBe("Project BOSC");
     expect(WALK_CHAPTERS.length).toBe(WALK_TOTAL);
@@ -158,19 +140,19 @@ describe("story surface resolution — Lima readable, Fort Wayne coming-soon (#1
     expect(surfacedStories("lima").map((s) => s.codename)).toEqual(["project-bosc"]);
     expect(comingSoonStories("lima")).toHaveLength(0);
     expect(storyComingSoon("lima", "project-bosc")).toBe(false);
-    // Fort Wayne's walk stays `comingSoon`, so it never *surfaces* (readable). The teaser-vs-held
-    // distinction is explicit: surfaced excludes it, comingSoon includes it.
-    expect(siteSurfacesStory("fort-wayne", "project-zodiac")).toBe(false);
-    expect(surfacedStories("fort-wayne")).toHaveLength(0);
-    expect(comingSoonStories("fort-wayne").map((s) => s.codename)).toEqual(["project-zodiac"]);
-    expect(storyComingSoon("fort-wayne", "project-zodiac")).toBe(true);
-    // Findlay's flagpole is held on the same terms (#1466) — so the readiness `story` FACET stays
-    // locked for it even though its manifest `story` DOMAIN is live. The two measure different
-    // things: the domain measures whether a walk exists over the record, the facet whether it reads.
-    expect(siteSurfacesStory("findlay", "flagpole")).toBe(false);
-    expect(surfacedStories("findlay")).toHaveLength(0);
-    expect(comingSoonStories("findlay").map((s) => s.codename)).toEqual(["flagpole"]);
-    expect(storyComingSoon("findlay", "flagpole")).toBe(true);
+    // The three absorbed walks surface nothing on either axis. They are not `comingSoon` (held
+    // content waiting to publish) — their prose HAS published, as study notes, and the walk is
+    // gone. Asserting both emptinesses is what keeps "absorbed" from decaying back into "held".
+    for (const [slug, codename] of [
+      ["fort-wayne", "project-zodiac"],
+      ["findlay", "flagpole"],
+      ["bowling-green", "project-accordion"],
+    ] as const) {
+      expect(siteSurfacesStory(slug, codename)).toBe(false);
+      expect(surfacedStories(slug)).toHaveLength(0);
+      expect(comingSoonStories(slug)).toHaveLength(0);
+      expect(storyComingSoon(slug, codename)).toBe(false);
+    }
   });
 
   it("resolves Lima's ambient readable story + backlinks, but none for a held or story-less site", () => {

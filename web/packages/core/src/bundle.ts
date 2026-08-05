@@ -117,7 +117,10 @@ export interface Readiness {
     facility: DomainState;
     places: DomainState;
     record: DomainState;
-    story: DomainState;
+    /** `story` until #1971 (epic #1968) — renamed because the signal changed, not the label:
+     *  the old domain asked "did a human author a walk over this record," `inquiry` asks whether
+     *  the site's own `impact-study` verdicts ANSWER. It is reported, and never gates the tier. */
+    inquiry: DomainState;
   };
 }
 
@@ -184,8 +187,14 @@ const cachedManifests = new Map<string, Manifest>();
  * major in `bosc.site.feeds`), so we fail the build fast with a clear message
  * rather than render against an incompatible shape. Bump when adapting the
  * frontend to a new contract major.
+ *
+ * **2 since #1971** (epic #1968): `readiness.domains.story` was renamed to `inquiry` and
+ * repredicated. A renamed required manifest field is breaking by definition — a reader keyed on
+ * `story` now hits a missing key — and no compatibility alias is offered, because an alias would
+ * preserve under a new name exactly the domain the epic removed. This guard is the mechanism that
+ * turns "I forgot to re-export" into a build failure instead of a silently locked section.
  */
-export const EXPECTED_CONTRACT_MAJOR = 1;
+export const EXPECTED_CONTRACT_MAJOR = 2;
 
 /** Parse and return a site's bundle manifest (cached per slug for the build). */
 export function loadManifest(slug: string = activeSite()): Manifest {

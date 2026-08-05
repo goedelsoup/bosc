@@ -21,8 +21,33 @@ domain        live when                                         signal
 **facility**  ``SiteProfile.facility`` instrument-grounded      profile facility grounding
 **places**    committed campus **or** enclave geometry          ``geo/campus``/``geo/enclave``
 **record**    extracted corpus over threshold                   records+documents+entities
-**story**     a registered story + a leads feed                 ``STORY_SLUGS`` + leads
+**inquiry**   the study ANSWERS, over a record that exists      ``impact-study`` verdicts
 ============  ================================================  =========================
+
+``inquiry`` was called ``story`` until #1971 (epic #1968), and the rename is the point rather than
+cosmetic. Its predicate was ``slug in STORY_SLUGS and leads`` — a hand-maintained Python mirror of a
+TypeScript overlay of MDX directories. **It was the only domain whose signal was "did a human author
+prose."** It measured editorial output, it gated the tier, and so it made a walk the price of a
+site's fifth domain: van-wert carried three merged investigations and read ``absent``, while findlay
+read ``live`` for a walk that was ``comingSoon`` and could not be opened.
+
+It now measures whether the site's own study **answers**, from the ``impact-study`` verdicts that
+same export just computed — data the way every other domain is data. ``STORY_SLUGS`` is deleted;
+the leads feed keeps its own facet signal and is no longer ANDed in.
+
+Two conditions, and the second is what makes it about the record:
+
+* a substantive count — chapters reading ``data`` or ``partial``, and
+* **record-backed** — at least one of the two corpus-keyed chapters (``assembly`` / ``governance``,
+  #1969) is itself substantive.
+
+The second exists because the count alone is not a record signal. Nine of the fifteen chapters
+derive from connector pulls, the facility profile and the grid backdrop, so springfield (zero
+records) out-scored several worked corpora on count alone before #1969 landed the two chapters that
+read the corpus. Requiring one of those to be substantive is what keeps a floor-only pull from
+reading as an answered study.
+
+**It no longer gates the tier** (see :func:`site_tier`).
 
 Facility is graded on **documentary depth** (#1630), not on one economics feed: a facility whose
 load is grounded in a primary instrument (an air permit, or a filed disclosure) or whose cooling is
@@ -44,7 +69,7 @@ from watermark.sites import SiteProfile
 
 # --- Vocabulary -----------------------------------------------------------------------------
 State = Literal["absent", "seeded", "live"]
-Domain = Literal["backdrop", "facility", "places", "record", "story"]
+Domain = Literal["backdrop", "facility", "places", "record", "inquiry"]
 Tier = Literal["stub", "backdrop", "case", "reference"]
 
 DOMAINS: tuple[Domain, ...] = get_args(Domain)
@@ -126,21 +151,27 @@ RECORD_SEED_FEEDS: tuple[str, ...] = (RECORD_LIVE_FEED, DOCUMENTS_FEED)
 # ``absent``. Two extracted items is the "real worked corpus" bar (a lone stray extraction seeds).
 RECORD_LIVE_THRESHOLD = 2
 
-# The leads feed — the open-questions / source-solicitation board for the site.
+# The leads feed — the open-questions / source-solicitation board for the site. It keeps its own
+# facet signal in the frontend and is deliberately NOT part of any domain predicate (#1971): ANDing
+# it into the old ``story`` domain is what let a site reach a higher tier by committing a YAML file.
 LEADS_FEED = "leads"
-# Sites with a registered story (the guided walk). The peer of the ``STORIES`` overlay in
-# ``web/packages/core/src/sites.ts`` — stories are a TypeScript-only overlay (#1027), so this small
-# mirror is kept in sync by convention + test, the same way ``is_reference_site`` mirrors
-# ``isReferenceSite``. A ``[[network-baseline-domain-activation]]`` follow-up may lift both to
-# ``data/sites.yaml``.
-#
-# **Registration, not readability.** This set mirrors the overlay's KEYS — a story counts here the
-# moment a site registers one, whether it is readable, ``hidden`` (#1256) or ``comingSoon`` (#1526).
-# That is deliberate and it is where the two peers legitimately diverge: readiness measures the
-# *evidence* (a walk exists over this record), while the frontend's story facet gates on
-# ``surfacedStories`` and so stays locked until the walk is actually readable. Fort Wayne and Findlay
-# are both held (``comingSoon``) and both belong here.
-STORY_SLUGS: frozenset[str] = frozenset({"lima", "fort-wayne", "findlay", "bowling-green"})
+
+# --- The ``inquiry`` signal (#1971) ----------------------------------------------------------
+# Study chapter verdicts that count as the study having said something. ``gap`` is content — the
+# study renders the absence AS a finding and never locks — but it is not an answer, and ``na`` is
+# the watch state for a site with no disclosed project.
+SUBSTANTIVE_STATUSES: frozenset[str] = frozenset({"data", "partial"})
+# The two corpus-keyed chapters (#1969) — the only ones whose verdict is screened against the
+# site's OWN extracted records rather than a connector pull or the facility profile.
+RECORD_KEYED_CHAPTERS: tuple[str, ...] = ("assembly", "governance")
+# Substantive chapters needed for ``live``. Eight of fifteen is the bar that separates a worked
+# corpus from a thin one on the committed cohort (van-wert 9, ottawa 7) — deliberately a plain
+# count, because a RATIO would flatter a facility-less site: its project-dependent chapters read
+# ``na`` and drop out of the denominator, so the hardest chapters would stop counting against it.
+INQUIRY_LIVE_THRESHOLD = 8
+# Substantive chapters needed for ``seeded`` without any record-keyed chapter — a floor-only site
+# whose study still reports a real labor baseline and grid backdrop has said *something*.
+INQUIRY_SEED_THRESHOLD = 5
 
 # Every manifest feed name this module keys a domain on — the single enumerable coupling to the
 # exporter's feed spec (``watermark.site.export``). ``export.py`` shares these very constants for
@@ -210,59 +241,98 @@ def _record_state(feed_counts: Mapping[str, int]) -> State:
     return "seeded" if seeded else "absent"
 
 
-def _story_state(profile: SiteProfile, feed_counts: Mapping[str, int]) -> State:
-    has_story = profile.slug in STORY_SLUGS
-    has_leads = _count(feed_counts, LEADS_FEED) > 0
-    if has_story and has_leads:
+def _inquiry_state(study_statuses: Mapping[str, str] | None) -> State:
+    """Whether this site's own study **answers** — ``impact-study`` verdicts, not authored prose.
+
+    ``study_statuses`` maps a chapter id to its verdict. ``None`` means the caller had no study to
+    read (a bundle predating the feed, or a synthetic fixture), which degrades to ``absent`` rather
+    than guessing — the same "let it lock and ask for the source" rule the rest of this module runs.
+    """
+    if not study_statuses:
+        return "absent"
+    substantive = sum(1 for s in study_statuses.values() if s in SUBSTANTIVE_STATUSES)
+    # Record-backed: the study says something the site's OWN extracted corpus grounds. Without
+    # this, a site with zero records rides connector-derived chapters to a respectable count.
+    record_backed = any(
+        study_statuses.get(c) in SUBSTANTIVE_STATUSES for c in RECORD_KEYED_CHAPTERS
+    )
+    if record_backed and substantive >= INQUIRY_LIVE_THRESHOLD:
         return "live"
-    # A registered story without leads, or leads without a story — one signal, not both.
-    return "seeded" if (has_story or has_leads) else "absent"
+    if record_backed or substantive >= INQUIRY_SEED_THRESHOLD:
+        return "seeded"
+    return "absent"
 
 
-def domain_states(profile: SiteProfile, feed_counts: Mapping[str, int]) -> dict[Domain, State]:
+def domain_states(
+    profile: SiteProfile,
+    feed_counts: Mapping[str, int],
+    study_statuses: Mapping[str, str] | None = None,
+) -> dict[Domain, State]:
     """Each domain's ``absent|seeded|live`` state for a site, from its profile + feed counts.
 
     ``feed_counts`` maps a manifest feed name to its row count (as the manifest's ``feeds[]``
-    carry). Pure and deterministic per ``(profile, counts)`` — the same inputs the frontend
-    reads back out of ``manifest.readiness``.
+    carry). Pure and deterministic per ``(profile, counts, study_statuses)`` — the same inputs the
+    frontend reads back out of ``manifest.readiness``.
+
+    ``study_statuses`` is optional **on purpose, and the default is load-bearing.** The exporter
+    builds the ``impact-study`` feed by calling back into this function for the FACILITY state (the
+    `project` chapter's probe reads it), so a mandatory study argument would close a cycle. It does
+    not actually close, because ``inquiry`` is the only domain that reads the study and ``facility``
+    reads the profile alone — so the exporter calls this once without a study to build the feed, and
+    once with it to write the manifest block.
     """
     return {
         "backdrop": _backdrop_state(feed_counts),
         "facility": _facility_state(profile),
         "places": _places_state(feed_counts),
         "record": _record_state(feed_counts),
-        "story": _story_state(profile, feed_counts),
+        "inquiry": _inquiry_state(study_statuses),
     }
 
 
-def site_tier(states: Mapping[Domain, State]) -> Tier:
-    """Derive the site tier from its domain vector.
+# The domains the TIER is derived from (#1971). ``inquiry`` is reported beside them and never
+# gates: the tier measures **the record a site has**, not how much of it has been written up. While
+# the old ``story`` domain sat in this vector it was the terminal blocker on every site — so a tier
+# moved when someone committed a leads YAML and registered an unreadable walk, and did NOT move for
+# three merged investigations. A domain whose signal is derived FROM the other four (inquiry reads
+# study verdicts, which read the feeds) would also double-count them if it gated.
+TIER_DOMAINS: tuple[Domain, ...] = ("backdrop", "facility", "places", "record")
 
-    * ``reference`` — every domain live (a reference-grade site; Lima today). This is the
-      **readiness** tier and is distinct from ``is_reference_site`` (the network-global-host
-      *role* — routed-hydrograph, hypothesis matrix, catalog, concepts), which is not a
-      readiness backdoor.
-    * ``case`` — the floor is live and at least one above-floor domain is live (Fort Wayne:
-      facility+places+record; Urbana: places+record).
-    * ``backdrop`` — the floor is live but nothing above it is (the 17 one-export-from-real
-      sites).
+
+def site_tier(states: Mapping[Domain, State]) -> Tier:
+    """Derive the site tier from its record-bearing domain vector (``TIER_DOMAINS``).
+
+    * ``reference`` — every record-bearing domain live. This is the **readiness** tier and is
+      distinct from ``is_reference_site`` (the network-global-host *role* — routed-hydrograph,
+      hypothesis matrix, catalog, concepts), which is not a readiness backdoor.
+    * ``case`` — the floor is live and at least one above-floor domain is live (Urbana:
+      places+record).
+    * ``backdrop`` — the floor is live but nothing above it is.
     * ``stub`` — not even the floor is live (profile only, ~zero data).
+
+    ``inquiry`` is deliberately absent from every branch below. Dropping it promotes exactly two
+    sites on the committed cohort — fort-wayne and wpafb, both already carrying all four
+    record-bearing domains live — and demotes none.
     """
-    if all(states[d] == "live" for d in DOMAINS):
+    if all(states[d] == "live" for d in TIER_DOMAINS):
         return "reference"
     if states["backdrop"] != "live":
         return "stub"
-    above_floor = [d for d in DOMAINS if d != "backdrop"]
+    above_floor = [d for d in TIER_DOMAINS if d != "backdrop"]
     if any(states[d] == "live" for d in above_floor):
         return "case"
     return "backdrop"
 
 
-def compute_readiness(profile: SiteProfile, feed_counts: Mapping[str, int]) -> dict[str, object]:
+def compute_readiness(
+    profile: SiteProfile,
+    feed_counts: Mapping[str, int],
+    study_statuses: Mapping[str, str] | None = None,
+) -> dict[str, object]:
     """The full readiness block: per-domain states + the derived tier.
 
     The shape #1222 writes into ``manifest.json`` and #1223 reads: ``{"domains": {...},
     "tier": ...}``.
     """
-    states = domain_states(profile, feed_counts)
+    states = domain_states(profile, feed_counts, study_statuses)
     return {"domains": dict(states), "tier": site_tier(states)}

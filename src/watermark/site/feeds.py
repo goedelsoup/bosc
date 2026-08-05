@@ -618,7 +618,30 @@ from watermark.sites import (
 #   (the Lima story), and Mansfield carries a governance record with no facility at all, so a
 #   project gate would read the corpus's first documented REFUSAL as "nothing to say here".
 #   MINOR, back-compatible: additive rows, no schema refresh.
-CONTRACT_VERSION = "1.55.0"
+# 2.0.0: the readiness block's fifth domain is renamed `story` -> `inquiry` and its predicate is
+#   replaced (#1971, epic #1968). **MAJOR — this is a breaking rename of a manifest field**, not an
+#   additive change: `manifest.readiness.domains.story` is GONE, and a reader keyed on it now hits a
+#   missing key rather than a stale value. That is deliberate. A compatibility alias would preserve
+#   exactly the thing the epic exists to remove — a domain whose signal is authored prose — under a
+#   name that no longer describes it.
+#   The old predicate was `slug in STORY_SLUGS and leads > 0`: a hand-maintained Python mirror of a
+#   TypeScript overlay of MDX directories, and the ONLY domain whose signal was "did a human write
+#   prose." It also gated the tier, so it was the terminal blocker on every site — van-wert read
+#   `absent` while carrying three merged investigations, and findlay read `live` for a walk that was
+#   `comingSoon` and could not be opened. #1457 proposed flipping fort-wayne to `reference` by
+#   committing a leads YAML.
+#   `inquiry` reads the site's own `impact-study` verdicts — whether the study ANSWERS — under two
+#   conditions: a substantive count (>= 8 of 15 chapters at `data`/`partial`) AND at least one of
+#   the two corpus-keyed chapters (`assembly`/`governance`, 1.55.0) substantive. The second is what
+#   makes it a record signal: nine of the fifteen chapters derive from connector pulls, the facility
+#   profile and the grid backdrop, so a count alone lets a site with zero records out-score a worked
+#   corpus.
+#   `STORY_SLUGS` is deleted and the `leads` feed is no longer ANDed into any domain — it keeps its
+#   own frontend facet signal.
+#   The TIER drops to the four record-bearing domains (`backdrop`/`facility`/`places`/`record`);
+#   `inquiry` is reported and never gates. On the committed cohort that PROMOTES two sites —
+#   fort-wayne and wpafb, both already carrying all four live — and demotes none.
+CONTRACT_VERSION = "2.0.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -2041,7 +2064,11 @@ class DomainReadiness(BaseModel):
     facility: State
     places: State
     record: State
-    story: State
+    # `story` until #1971 (epic #1968). The rename is the point: the old domain's signal was
+    # "did a human author a walk over this record," which is why it read `absent` for a site with
+    # three merged investigations and `live` for a walk nobody could open. `inquiry` reads the
+    # site's own `impact-study` verdicts instead — whether the study ANSWERS.
+    inquiry: State
 
 
 class SiteReadiness(BaseModel):

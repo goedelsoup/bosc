@@ -1120,6 +1120,9 @@ def _impact_study_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
         elif feed.kind == "object":
             payloads_by_feed[feed.name] = json.loads(feed.payload)
     feed_counts = {feed.name: feed.count for feed in feeds}
+    # Called WITHOUT study statuses on purpose: only `facility` is read here, and it derives from
+    # the profile alone, so this does not close a cycle against `inquiry` (#1971 — see
+    # `readiness.domain_states`). The manifest block is computed later with the rows below in hand.
     states = domain_states(active_profile(settings), feed_counts)
     rows = build_impact_study(
         payloads_by_feed,
@@ -1128,6 +1131,23 @@ def _impact_study_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
         facility_domain=states["facility"],
     )
     return _collection_feed("impact-study", ImpactStudyItem, rows)
+
+
+def _study_statuses(feeds: Sequence[_Feed]) -> dict[str, str]:
+    """The chapter → verdict map the ``inquiry`` domain reads (#1971).
+
+    Read back off the just-built ``impact-study`` feed rather than recomputed, so the manifest's
+    ``inquiry`` state and the shipped verdicts are the SAME numbers by construction and cannot
+    drift apart. An absent feed yields ``{}``, which `_inquiry_state` degrades to ``absent``.
+    """
+    feed = next((f for f in feeds if f.name == "impact-study"), None)
+    if feed is None:
+        return {}
+    return {
+        row["chapter"]: row["model"]["status"]
+        for row in _collection_rows(feed)
+        if row.get("model", {}).get("status")
+    }
 
 
 def _corpus_index_feed(mirror: Mirror, settings: Settings) -> _Feed:
@@ -1371,8 +1391,11 @@ def export_bundle(
     # source lands and falls when one dries up, without re-running onboard. The frontend reads
     # this block instead of re-deriving section gating (watermark.site.readiness is the SSOT).
     feed_counts = {r.name: r.count for r in refs}
+    # `inquiry` (#1971) reads the study's own verdicts — the domain measures whether this site's
+    # study ANSWERS, not whether anyone wrote a walk over it. Read off the feed built above so the
+    # block and the shipped rows can never disagree.
     readiness = SiteReadiness.model_validate(
-        compute_readiness(active_profile(settings), feed_counts)
+        compute_readiness(active_profile(settings), feed_counts, _study_statuses(feeds))
     )
     # The compact facility block (#1628) — the primary campus's status + count, the per-slug source
     # the frontend badge reads. Absent for a facility-less site (the reader defaults to investigation).

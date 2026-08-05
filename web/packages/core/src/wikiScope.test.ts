@@ -19,7 +19,7 @@ function concept(slug: string, title: string, aliases: string[] = []): ConceptIt
 function manifestWith(concepts: ConceptItem[]): object {
   return {
     bundle_version: "test",
-    contract_version: "1.4",
+    contract_version: "2.0.0",
     generated_at: "2026-01-01T00:00:00Z",
     feed_count: 1,
     row_total: concepts.length,

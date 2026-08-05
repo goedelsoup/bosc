@@ -14,8 +14,10 @@ import pytest
 from watermark.site.readiness import (
     BACKDROP_FLOOR_FEEDS,
     DOMAINS,
+    INQUIRY_LIVE_THRESHOLD,
+    INQUIRY_SEED_THRESHOLD,
+    RECORD_KEYED_CHAPTERS,
     RECORD_LIVE_THRESHOLD,
-    STORY_SLUGS,
     compute_readiness,
     domain_states,
     site_tier,
@@ -135,38 +137,107 @@ def test_record_excludes_network_global_boilerplate() -> None:
     assert domain_states(prof, counts)["record"] == "absent"
 
 
-# --- story ----------------------------------------------------------------------------------
-def test_story_states() -> None:
-    lima = SITES["lima"]
-    assert "lima" in STORY_SLUGS
-    assert domain_states(lima, _counts(leads=14))["story"] == "live"
-    # Registered story, no leads → seeded (Fort Wayne today).
-    fw = SITES["fort-wayne"]
-    assert "fort-wayne" in STORY_SLUGS
-    assert domain_states(fw, _counts())["story"] == "seeded"
-    # Both signals → live, even though the walk is HELD (#1466). Findlay registers the ``flagpole``
-    # story as ``comingSoon`` in the ``sites.ts`` overlay because the site is not yet ``selectable``.
-    # ``STORY_SLUGS`` mirrors the overlay's KEYS, not its readable subset, so the domain is live on
-    # the evidence (a walk exists over this record) while the frontend's ``story`` facet — which
-    # gates on ``surfacedStories`` — stays locked. That divergence is the design, not a drift.
-    findlay = SITES["findlay"]
-    assert "findlay" in STORY_SLUGS
-    assert domain_states(findlay, _counts(leads=44))["story"] == "live"
-    # And it is genuinely two-signal: drop the leads board and it falls back to seeded.
-    assert domain_states(findlay, _counts())["story"] == "seeded"
-    # Bowling Green joined on both signals at once in #1441 — the ``project-accordion`` walk in the
-    # overlay and the site's own leads board — and is the same held-walk shape as Findlay: the
-    # DOMAIN is live on the evidence while the frontend facet stays locked on ``comingSoon``.
-    bg = SITES["bowling-green"]
-    assert "bowling-green" in STORY_SLUGS
-    assert domain_states(bg, _counts(leads=18))["story"] == "live"
-    assert domain_states(bg, _counts())["story"] == "seeded"
-    # Leads only, no registered story → seeded (Urbana's record/leads case).
-    urbana = SITES["urbana"]
-    assert "urbana" not in STORY_SLUGS
-    assert domain_states(urbana, _counts(leads=2))["story"] == "seeded"
-    # Neither → absent.
-    assert domain_states(urbana, _counts())["story"] == "absent"
+# --- inquiry (#1971) ------------------------------------------------------------------------
+def _study(substantive: int, *, record_backed: bool) -> dict[str, str]:
+    """A synthetic chapter → verdict map with ``substantive`` answered chapters.
+
+    The record-keyed pair (``assembly``/``governance``) is answered or gapped explicitly, and any
+    remaining substantive count is padded with connector-shaped chapter ids — which is exactly the
+    shape the predicate has to tell apart.
+    """
+    out: dict[str, str] = {}
+    remaining = substantive
+    for chapter in RECORD_KEYED_CHAPTERS:
+        if record_backed and remaining > 0:
+            out[chapter], remaining = "partial", remaining - 1
+        else:
+            out[chapter] = "gap"
+    padding = [
+        "method",
+        "labor",
+        "missing",
+        "project",
+        "power",
+        "discharge",
+        "balance",
+        "air",
+        "heat",
+        "groundwater",
+        "stormwater",
+        "water-supply",
+        "fiscal",
+    ]
+    for chapter in padding:
+        out[chapter] = "data" if remaining > 0 else "gap"
+        remaining -= 1 if remaining > 0 else 0
+    return out
+
+
+def test_inquiry_needs_the_study_to_answer_over_a_record_that_exists() -> None:
+    """``live`` takes BOTH a substantive count and a record-keyed chapter that answered."""
+    prof = SITES["van-wert"]
+    live = _study(INQUIRY_LIVE_THRESHOLD, record_backed=True)
+    assert domain_states(prof, _counts(), live)["inquiry"] == "live"
+    # Same count, but nothing the site's OWN corpus grounds → seeded, never live. This is the
+    # springfield case the whole rename exists for: nine of the fifteen chapters derive from
+    # connector pulls and the facility profile, so a site with zero records can post a respectable
+    # count without its record having said anything.
+    assert (
+        domain_states(prof, _counts(), _study(INQUIRY_LIVE_THRESHOLD, record_backed=False))[
+            "inquiry"
+        ]
+        == "seeded"
+    )
+    # Record-backed but thin → seeded.
+    assert domain_states(prof, _counts(), _study(2, record_backed=True))["inquiry"] == "seeded"
+    # One under the live bar, record-backed → still seeded (the threshold is a real boundary).
+    assert (
+        domain_states(prof, _counts(), _study(INQUIRY_LIVE_THRESHOLD - 1, record_backed=True))[
+            "inquiry"
+        ]
+        == "seeded"
+    )
+
+
+def test_inquiry_is_absent_without_a_study_at_all() -> None:
+    """No study to read degrades to ``absent`` — it never guesses from the other domains."""
+    prof = SITES["lima"]
+    assert domain_states(prof, _counts(leads=14), None)["inquiry"] == "absent"
+    assert domain_states(prof, _counts(leads=14), {})["inquiry"] == "absent"
+    # A study that answers nothing is absent too, however many chapters it ships.
+    assert domain_states(prof, _counts(), _study(0, record_backed=False))["inquiry"] == "absent"
+    # …and below the seed bar with no record-keyed answer stays absent.
+    assert (
+        domain_states(prof, _counts(), _study(INQUIRY_SEED_THRESHOLD - 1, record_backed=False))[
+            "inquiry"
+        ]
+        == "absent"
+    )
+
+
+def test_inquiry_no_longer_reads_leads_or_authored_prose() -> None:
+    """The two signals the retired ``story`` domain ran on are both inert now (#1971).
+
+    This is the regression pin on the finding: a site could reach a higher tier by committing a
+    leads YAML and registering an unreadable walk, and could not move it with a worked corpus.
+    """
+    prof = SITES["lima"]
+    study = _study(INQUIRY_LIVE_THRESHOLD, record_backed=True)
+    assert domain_states(prof, _counts(leads=0), study)["inquiry"] == "live"
+    assert domain_states(prof, _counts(leads=99), study)["inquiry"] == "live"
+    # And leads alone buy nothing at all.
+    assert domain_states(prof, _counts(leads=99), {})["inquiry"] == "absent"
+
+
+def test_inquiry_never_gates_the_tier() -> None:
+    """The tier reads the four record-bearing domains; ``inquiry`` is reported beside them."""
+    prof = SITES["fort-wayne"]
+    counts = _counts(**{"geo/campus": 1, "records": 9, "documents": 4})
+    answered = compute_readiness(prof, counts, _study(INQUIRY_LIVE_THRESHOLD, record_backed=True))
+    silent = compute_readiness(prof, counts, None)
+    assert answered["tier"] == silent["tier"], "inquiry must not move the tier"
+    assert answered["domains"]["inquiry"] == "live"  # type: ignore[index]
+    assert silent["domains"]["inquiry"] == "absent"  # type: ignore[index]
 
 
 # --- the five canonical tiers ---------------------------------------------------------------
@@ -178,21 +249,25 @@ def test_tier_reference_lima() -> None:
         documents=2,
         leads=14,
     )
-    states = domain_states(lima, counts)
+    states = domain_states(lima, counts, _study(INQUIRY_LIVE_THRESHOLD, record_backed=True))
     assert all(states[d] == "live" for d in DOMAINS), states
     assert site_tier(states) == "reference"
+    # And the tier does not depend on that study: `reference` is the four record-bearing domains.
+    assert site_tier(domain_states(lima, counts)) == "reference"
 
 
-def test_tier_case_fort_wayne() -> None:
-    # facility + places + record live; story seeded (no leads) → case.
+def test_tier_reference_fort_wayne_after_dropping_the_story_gate() -> None:
+    # Fort Wayne is one of the two sites #1971 PROMOTES, and it reads as the honest new value
+    # rather than a loosened assertion: all four record-bearing domains are live, and the only
+    # thing that had been holding it at `case` was the retired `story` domain — which it could
+    # have cleared by committing a leads YAML (#1457 was literally that issue).
     fw = SITES["fort-wayne"]
     counts = _counts(**{"economics-demand-pressure": 1, "geo/campus": 11}, records=3, documents=1)
     states = domain_states(fw, counts)
     assert states["facility"] == "live"
     assert states["places"] == "live"
     assert states["record"] == "live"
-    assert states["story"] == "seeded"
-    assert site_tier(states) == "case"
+    assert site_tier(states) == "reference"
 
 
 def test_tier_case_via_record_only() -> None:
@@ -208,7 +283,8 @@ def test_tier_case_urbana() -> None:
     # live, geo/campus) and its scoped Highland55 / OEPA document corpus (record live). The
     # disclosed Urbana Technology Hub facility is SCREENING-only ([inference] floor-area load, MW
     # [open]) → facility `seeded`, not live (#1630) — its demand-pressure feed no longer floats it.
-    # Story seeded on leads. Places + record live over the floor still ⇒ `case`.
+    # Places + record live over the floor still ⇒ `case`. `inquiry` is not passed here and so reads
+    # `absent` (#1971) — the tier must not care either way, which is the point.
     urbana = SITES["urbana"]
     states = domain_states(
         urbana,
@@ -221,27 +297,27 @@ def test_tier_case_urbana() -> None:
     assert (
         states["facility"] == "seeded"
     )  # screening-only, distinguished from permit-grounded (#1630)
-    assert states["story"] == "seeded"
+    assert states["inquiry"] == "absent"
     assert site_tier(states) == "case"
 
 
 def test_tier_backdrop_leads_only() -> None:
     # The floor-plus-a-leads-board-only shape: no facility, no structured corpus, no committed
-    # parcels. record/places/facility absent, story seeded (leads) does NOT elevate to case, so the
-    # tier is `backdrop`. (Springfield was this shape pre-#1412, before its 5C/Vultr facility was
-    # pinned; Xenia carries it now — facility-less, corpus-less.)
+    # parcels. record/places/facility absent, so the tier is `backdrop`. A leads board buys NOTHING
+    # now (#1971): it fed the retired `story` domain, and a site could once ride it to a higher
+    # tier. (Springfield was this shape pre-#1412; Xenia carries it now.)
     xenia = SITES["xenia"]
     assert xenia.facility is None
     states = domain_states(xenia, _counts(leads=2))
     assert states["record"] == "absent"
     assert states["places"] == "absent"
     assert states["facility"] == "absent"
-    assert states["story"] == "seeded"
+    assert states["inquiry"] == "absent", "a leads board is not an answered study"
     assert site_tier(states) == "backdrop"
 
 
 def test_tier_backdrop_staged() -> None:
-    # Floor on disk, nothing above → backdrop. Uses xenia (facility=None, not in STORY_SLUGS) —
+    # Floor on disk, nothing above → backdrop. Uses xenia (facility=None) —
     # Findlay now carries a disclosed SiteFacility (#1459), so it is a Case site, not a backdrop one.
     prof = SITES["xenia"]
     states = domain_states(prof, _counts())

@@ -325,24 +325,36 @@ describe("the shard manifest the client reads", () => {
     expect(SHARDED.length).toBeGreaterThanOrEqual(SELECTABLE.length);
   });
 
-  it("reaches past `selectable` — a peer that publishes a walk ships one too (#1907)", () => {
-    // The finding. Route emission gates on story REGISTRATION, not switchability (#1466), so a peer
-    // can publish pages while not being selectable; Findlay does. Asserted as a property of the
-    // registry, not as "findlay", so promoting it doesn't quietly make this vacuous.
-    const peers = SITES.filter((s) => !s.selectable && comingSoonStories(s.slug).length > 0);
-    expect(peers.length, "no non-selectable site publishes a walk — this asserts nothing").toBeGreaterThan(0);
+  it("still reaches past `selectable` for any peer that publishes a walk (#1907/#1971)", () => {
+    // The #1907 finding was Findlay: walk routes emit on REGISTRATION, not switchability (#1466),
+    // so a non-selectable peer published eight pages nothing could search. Epic #1968 removed the
+    // INSTANCE — the three peer walks were absorbed into their studies (#1970) and only Lima, a
+    // selectable site, registers one — but not the MECHANISM, which is still registration-gated.
+    //
+    // So this asserts the invariant rather than the old instance: any peer that registers a walk
+    // must be sharded. It is vacuously true today and would bind the moment a peer registers one
+    // again, which is exactly when the hazard returns.
+    const peers = SITES.filter((s) => !s.selectable && (s.stories ?? []).length > 0);
     for (const p of peers) expect(SHARDED).toContain(p.slug);
+    // …and today the shard set really is the selectable set plus nothing, which is the state the
+    // line above is guarding. Asserted so "no peers" can't silently become "peers, unsharded".
+    expect(peers).toEqual([]);
+    expect([...SHARDED].sort()).toEqual([...SELECTABLE].sort());
   });
 });
 
-describe("a peer's shard (#1907)", () => {
+describe("a peer's shard (#1907/#1971)", () => {
   const peers = SITES.filter((s) => !s.selectable && SHARDED.includes(s.slug));
 
-  it("holds its stories and nothing else — no row for a page it doesn't build", () => {
-    // Every `network/[site]/…` route but the story's comes from `selectableSitePaths`, so a peer's
-    // record, timeline, documents and study are not built. Its BUNDLE may carry all of them — the
-    // peers are exported like any other site — so this is the assertion that a bundle is not a page.
-    expect(peers.length).toBeGreaterThan(0);
+  it("indexes only routes the peer actually builds — a bundle is not a page", () => {
+    // The original assertion ("holds its stories and nothing else") named the only thing a peer
+    // could publish while non-selectable: its walk. No peer registers one now, so the shard set is
+    // the selectable set and this loop is empty — but the property it protects is unchanged and
+    // still the right one, so it stays: whatever a peer ships rows for must be a route it builds.
+    //
+    // The distinction that made #1907 worth a test survives even with no peers: a peer's BUNDLE
+    // carries records, timeline, documents and a study — it is exported like any other site — and
+    // none of those becomes a page until the site is selectable.
     for (const site of peers) {
       const rows = buildSiteSearchIndex(site.slug);
       expect(rows.length).toBeGreaterThan(0);
@@ -352,20 +364,26 @@ describe("a peer's shard (#1907)", () => {
           `${site.slug}: "${d.kind}" row "${d.title}" points at an unbuilt route → ${d.url}`,
         ).toBe(true);
       }
-      // …and the record really is in that bundle, or the assertion above is about nothing.
       expect(runWithSite(site.slug, () => hasFeed("records"))).toBe(true);
     }
+    expect(peers).toEqual([]);
   });
 });
 
-describe("a held story (#1907)", () => {
+describe("a held story (#1907/#1971)", () => {
   it("is indexed exactly once, at its own root, wherever one is held", () => {
-    // A `comingSoon` story serves the SAME interstitial at every route it emits — the on-ramp, the
+    // A `comingSoon` walk serves the SAME interstitial at every route it emits — the on-ramp, the
     // contents, each chapter — so eight rows would be eight near-identical results promising prose
     // that is deliberately held. One row, at the root; `searchCoverage.ts` declares the rest
-    // `represented` by it. Held on a selectable site (Fort Wayne) and on a peer (Findlay) alike.
+    // `represented` by it.
+    //
+    // NOTHING IS HELD TODAY (#1971): the three `comingSoon` walks were absorbed into their impact
+    // studies rather than eventually published, so this loop is empty. The `comingSoon` mechanism
+    // survives in `sites.ts` for the next walk that needs holding, and this binds again the moment
+    // one does — so it is kept rather than deleted, with the emptiness asserted below so it cannot
+    // rot into a test that silently checks nothing.
     const held = SITES.flatMap((s) => comingSoonStories(s.slug).map((ref) => ({ site: s, ref })));
-    expect(held.length).toBeGreaterThan(0);
+    expect(held).toEqual([]);
     for (const { site, ref } of held) {
       const root = `${siteBase(site.slug)}/stories/${ref.codename}/`;
       const rows = buildSiteSearchIndex(site.slug).filter((d) => d.url.startsWith(root));
