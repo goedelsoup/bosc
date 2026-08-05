@@ -27,6 +27,36 @@
     "description": "**Collection:** `grid/` · immutable source evidence",
     "entries": [
       {
+        "rel": "grid/bowling-green/TE-2026-Electric-Service.pdf",
+        "name": "TE-2026-Electric-Service.pdf",
+        "size_bytes": 8586625,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "grid/bowling-green/eei-large-load-projects-and-tariffs-july-2026.pdf",
+        "name": "eei-large-load-projects-and-tariffs-july-2026.pdf",
+        "size_bytes": 410434,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
         "rel": "grid/bowling-green/power-siting-board-ohio-020326.pdf",
         "name": "power-siting-board-ohio-020326.pdf",
         "size_bytes": 2523708,

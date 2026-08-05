@@ -1,6 +1,6 @@
 {
   "site": "bowling-green",
-  "catalog_version": "a86a8b2bb9200e5286f0e012094985bc008b62963de1589b0d18dc19294b2733",
+  "catalog_version": "d8a4846a6262b98a4aa226409772cbb868ae0d45816cbec875caa31400462c0e",
   "contract_version": "1.52.0",
   "atoms": [
     {
@@ -636,6 +636,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:bowling-green:bowling-green-grid",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "bowling-green-grid",
+      "title": "Bowling Green — Grid Posture (two grids, the Toledo Edison sheets, the pending FirstEnergy DCT, the muni island)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:bowling-green:bowling-green-water-watch",
       "kind": "dataset",
       "site": "bowling-green",
@@ -688,7 +696,7 @@
       "kind": "dataset",
       "site": "bowling-green",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -696,7 +704,7 @@
       "kind": "dataset",
       "site": "bowling-green",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

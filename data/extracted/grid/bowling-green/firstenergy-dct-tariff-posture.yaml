@@ -1,0 +1,460 @@
+# The tariff landscape governing a large load in Wood County — and what governs today,
+# which is not the tariff everyone is arguing about.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Ohio's data-centre tariff fight is an AEP story. Bowling Green is not in AEP's zone.
+# The tariff that would reach a Wood County load is FirstEnergy's, it was filed in June
+# 2026, it has not been approved, and until it is, a 180 MW load in Toledo Edison's
+# territory would contract on terms that are the near-opposite of the ones in the
+# headlines: sixty per cent of expected peak on a two-year term, not eighty-five per
+# cent on a twelve-year one.
+#
+# Source bytes: data/documents/grid/bowling-green/ (see that dir's filename-map.yaml).
+
+meta:
+  subject: >-
+    The retail-tariff posture over a Wood County large load — the pending FirstEnergy
+    Schedule DCT (PUCO 26-0697-EL-ATA), the AEP Schedule DCT precedent and its appeal,
+    and the Toledo Edison sheets that actually govern in the meantime
+  kind: tariff-posture
+  site: bowling-green
+  captured_for: issue 1440 (epic 1433, readiness(bowling-green) — serving utility + grid posture)
+  extracted_at: '2026-08-05'
+  method: >-
+    The in-force terms are read verbatim off Toledo Edison's own filed tariff book,
+    committed here. The pending tariff's docket number is taken from a trade-association
+    compilation, also committed, because the docket itself is access-blocked; its terms
+    are taken from trade-press reporting and are tagged accordingly and NOT dressed up as
+    a sheet read. The distinction is deliberate — the AEP Schedule DCT was read off the
+    filed sheets for Findlay (#1464) and this one could not be, and the difference in
+    confidence is carried in the tags rather than smoothed over.
+  sources:
+    primary:
+      - file: data/documents/grid/bowling-green/TE-2026-Electric-Service.pdf   # Toledo Edison P.U.C.O. No. 8, 168 pp
+    secondary:
+      - file: data/documents/grid/bowling-green/eei-large-load-projects-and-tariffs-july-2026.pdf   # EEI, 2026-07-17 — the docket number
+      - url: http://www.energychoicematters.com/stories/20260615y.html   # EnergyChoiceMatters, 2026-06-15 — the proposed terms
+      - url: https://www.rtoinsider.com/132361-ohio-puc-orders-separate-firstenergy-tariff-for-data-centers/   # RTO Insider, 2026-05-16 — paywalled beyond the headline
+  reuses: >-
+    data/extracted/grid/findlay/aep-dct-tariff-posture.yaml (#1464) is the verbatim read
+    of AEP Ohio's Schedule DCT off P.U.C.O. No. 22, Original Sheet Nos. 223-1..223-7. It
+    is not duplicated here. What is recorded here is the AEP tariff's status AS PRECEDENT
+    for a FirstEnergy-zone load, and the Findlay file remains the citation for its terms.
+
+# ── What is actually in force in Wood County today ────────────────────────────
+in_force:
+  the_negative_first:
+    tag: '[verified]'
+    statement: >-
+      THERE IS NO SCHEDULE DCT AT TOLEDO EDISON AND NO DATA-CENTRE SCHEDULE OF ANY KIND.
+      A full-text scan of all 168 pages of the company's filed tariff book — Table of
+      Contents effective 2026-07-01 — for "DCT" or "data center" returns zero hits, and
+      neither term appears in the schedule list or the 45-rider list. The rate schedules
+      are four: Rate GS (secondary), Rate GP (primary), Rate GSU (subtransmission) and
+      Rate GT (transmission).
+    source: data/documents/grid/bowling-green/TE-2026-Electric-Service.pdf, 0-based PDF pages 1-3 (Sheet 1, Table of Contents) and full-text scan
+    why_it_matters: >-
+      This is what makes the pending case load-bearing rather than academic. It is also
+      the fact that separates Bowling Green from the Ohio data-centre-tariff story as it
+      is usually told: the 85%-for-12-years terms that dominate coverage are AEP's, they
+      were never in force here, and nothing has replaced them here yet.
+
+  rate_gt:
+    tag: '[verified]'
+    schedule: GENERAL SERVICE - TRANSMISSION (RATE "GT")
+    sheet: Sheet 23, 1st Revised, Pages 1-3 of 3, effective 2026-03-01, filed pursuant to Orders dated 2025-11-19 and 2026-02-18 in Case No. 24-0468-EL-AIR
+    source: data/documents/grid/bowling-green/TE-2026-Electric-Service.pdf, 0-based PDF pages 37-39
+    availability: >-
+      "Available to general service installations requiring Transmission Service.
+      Transmission Service is defined in the Company's Electric Service Regulations.
+      Choice of voltage shall be at the option of the Company."
+    terms:
+      - id: GT-CONTRACT-DEMAND-60-PERCENT
+        quote: >-
+          "The Contract Demand shall be 60% of the customer's expected, typical monthly
+          peak load."
+        why_it_matters: >-
+          THIS IS THE NUMBER TO PUT BESIDE THE 85%. Schedule DCT's minimum billing demand
+          is the higher of 85% of Contract Capacity or actual usage; Rate GT's Contract
+          Demand — the floor its billing demand cannot fall below — is SIXTY per cent of
+          expected peak. A large load taking transmission service in Toledo Edison's
+          territory today therefore commits to a demand floor a third lower than the AEP
+          data-centre floor, on a customer-supplied estimate of its own expected peak.
+          That gap is the practical content of the pending case for Wood County.
+      - id: GT-BILLING-DEMAND
+        quote: >-
+          "The billing demand for the month shall be the greatest of: 1. Measured Demand,
+          being the highest thirty (30) minute integrated kVA. 2. 100.0 kVA 3. The
+          Contract Demand"
+      - id: GT-TERM-TWO-YEARS
+        quote: >-
+          "Electric service hereunder shall be furnished in accordance with a written
+          contract, which by its term shall be in full force and effect for a minimum
+          period of two years and shall continue in force thereafter from year to year
+          unless either party shall give to the other not less than 60 days notice in
+          writing prior to the expiration date of any said yearly periods that the
+          contract shall be terminated at the expiration date of said yearly period."
+        why_it_matters: >-
+          Two years and out on 60 days' notice, against Schedule DCT's ramp-plus-eight
+          years and an exit fee. There is no exit fee anywhere in Rate GT.
+      - id: GT-REOPENER
+        quote: >-
+          "If the customer's capacity or service requirements substantially increase, the
+          Company, at its sole and exclusive judgement, may at any time require the
+          customer to enter into a new contract for electric service."
+        why_it_matters: >-
+          The utility's only unilateral lever in the current book, and it is a discretionary
+          one with no stated standard, no threshold and no timetable. A tariff that gives
+          the company "sole and exclusive judgement" to reopen is a weaker instrument than
+          one that defines New Load quantitatively, which is what Schedule DCT does.
+      - id: GT-RATE
+        quote: >-
+          Distribution Charges — Service Charge: $450.00; Capacity Charge: For Each kVA of
+          billing demand $0.1253. Transformer Charge (existing Company-owned
+          transformation only): 13 cents per kVA of Measured Demand.
+        note: >-
+          Distribution charges only. Generation and transmission arrive through the riders
+          summarised on Tariff Sheet 80, and in a restructured state a large customer's
+          generation is typically a CRES contract, not a tariff rate. Do not read $0.1253
+          per kVA as the cost of service to a data centre.
+
+  electric_service_regulations_II_G:
+    tag: '[verified]'
+    title: Large Capacity Arrangements
+    sheet: Sheet 4, 2nd Revised Page 3 of 23, effective 2026-03-01, Case No. 24-0468-EL-AIR
+    source: data/documents/grid/bowling-green/TE-2026-Electric-Service.pdf, 0-based PDF page 7
+    quote: >-
+      "Existing customers who seek to substantially (by at least 500 kW) increase or
+      decrease (including the effects of the addition of onsite generation) their existing
+      capacity requirements and new customers who seek to purchase substantial capacity
+      (at least 500 kW) from the Company shall negotiate agreements with the Company
+      containing equitable arrangements both as to the term of the contract and other
+      terms and conditions requiring special consideration, in recognition that serving
+      such increases in capacity may require changes in area facilities or rearrangement
+      of facilities owned by the Company and/or the customer. These arrangements may be
+      subject to the approval of The Public Utilities Commission of Ohio."
+    why_it_matters:
+      tag: '[inference]'
+      statement: >-
+        THIS IS THE SHEET THAT REACHES A BEHIND-THE-METER CAMPUS, AND IT IS ALREADY IN
+        FORCE. The parenthetical is the whole point: a capacity change counts under §II.G
+        "including the effects of the addition of onsite generation". A customer whose
+        requirement from the utility falls by 500 kW or more BECAUSE it built its own plant
+        is inside the clause exactly as a customer whose requirement rises is. The Apollo
+        posture is a 350 MW addition of onsite generation beside a campus in this
+        territory; whether §II.G has been invoked, and whether any resulting arrangement
+        went to the Commission, is [open] and is the most concrete thing to ask for. See
+        open_leads/SECTION-II-G-ARRANGEMENT.
+      caution: >-
+        The clause speaks of an EXISTING customer decreasing its requirement. A greenfield
+        campus that was never a customer arrives instead as a "new customer... who seek[s]
+        to purchase substantial capacity", and if its purchase is standby-only the 500 kW
+        test may or may not be met. Both readings are available on the text and neither is
+        asserted.
+
+  other_relevant_sheets:
+    tag: '[verified]'
+    entries:
+      - 'Sheet 70 — Cogeneration and Small Power Producer, effective 2017-08-03'
+      - 'Sheet 76 — Interconnection Tariff, effective 2016-05-06'
+      - 'Sheet 130 — Commercial High Load Factor Experimental TOU, effective 2026-06-01'
+      - 'Sheet 111 / 113 — Experimental Real Time Pricing / Experimental Critical Peak Pricing, both effective 2026-06-01'
+    note: >-
+      Listed because a behind-the-meter generator interconnecting at distribution voltage,
+      or a high-load-factor customer, would touch these rather than Rate GT alone. None of
+      them was read in full in this pass — only the Table of Contents entries. Do not cite
+      their terms from this file.
+
+# ── The pending tariff ────────────────────────────────────────────────────────
+pending_tariff:
+  id: FIRSTENERGY-SCHEDULE-DCT
+  docket:
+    tag: '[reference]'
+    value: PUCO Case No. 26-0697-EL-ATA
+    quote: >-
+      "26-0697-EL-ATA: In June 2026, FirstEnergy subsidiaries Ohio Edison Company,
+      Cleveland Electric Illuminating Company and Toledo Edison Company jointly filed a
+      proposal for a new Data Center Tariff (DCT)."
+    source: >-
+      data/documents/grid/bowling-green/eei-large-load-projects-and-tariffs-july-2026.pdf,
+      0-based PDF page 13 (printed page 14), "Ohio" entry
+    why_reference_not_verified: >-
+      The Edison Electric Institute is the investor-owned utilities' trade association and
+      describes its own list as compiled "from public sources and announcements". The
+      filing itself was NOT obtained — see blocked_routes/PUCO-DIS — so the number is
+      corroborated by an interested but well-placed compiler and is not confirmed against
+      the docket. It answers the issue's "docket number [open]" as far as a secondary
+      source can, and no further. THE FIRST THING TO DO WITH BROWSER ACCESS IS CONFIRM
+      THIS NUMBER.
+  status:
+    tag: '[reference]'
+    value: filed, pending — no order located as of 2026-08-05
+    detail: >-
+      RTO Insider reported on 2026-05-16 under the headline "Ohio PUC Orders Separate
+      FirstEnergy Tariff for Data Centers" that "The Ohio Public Utilities Commission has
+      directed FirstEnergy to carve out a tariff exclusively for data centers"; the article
+      body is paywalled and only the headline, byline (Sean Reilly), date and that one
+      sentence were read. EnergyChoiceMatters reported the compliance filing on 2026-06-15.
+      Which PUCO case carried the May 2026 directive was NOT established — the ordering
+      docket and the tariff docket need not be the same, and 26-0697-EL-ATA is the latter.
+      See open_leads/ORDERING-DOCKET.
+  proposed_terms:
+    tag: '[reference]'
+    read_from: >-
+      EnergyChoiceMatters, 2026-06-15 — trade press quoting the filing, NOT the filed
+      sheets. Every term below is therefore one remove from the instrument. Contrast the
+      AEP Schedule DCT terms in data/extracted/grid/findlay/aep-dct-tariff-posture.yaml,
+      which were read off P.U.C.O. No. 22 itself. DO NOT CITE THESE AS TARIFF TEXT.
+    entries:
+      - id: FE-DCT-CRES-REQUIREMENT
+        term: >-
+          "Customers receiving service under this Schedule shall select competitive
+          service from a CRES Provider."
+        significance: >-
+          THE TERM WITH NO AEP ANALOGUE, AND THE ONE THAT MATTERS MOST STRUCTURALLY. It
+          would push data-centre generation supply entirely out of the standard service
+          offer and into the competitive market. FirstEnergy's Ohio utilities are
+          wires-only; requiring a CRES contract keeps a hyperscale load off the SSO
+          entirely, which is a different mechanism from AEP's, where the protection runs
+          through minimum billing demand rather than through supplier choice.
+      - id: FE-DCT-MINIMUM-BILLING-DEMAND
+        term: >-
+          A minimum billing demand of the higher of 85% of contract capacity or actual
+          usage, applied to all retail charges for the customer's service voltage,
+          including distribution and transmission.
+        significance: >-
+          Numerically the AEP figure. Against Rate GT's 60% Contract Demand, this is the
+          concrete change the case would make in Wood County.
+      - id: FE-DCT-CONTRACT-CAPACITY
+        term: >-
+          The utility and the customer would agree on an amount of monthly peak load
+          requirements for each month ("Contract Capacity"), with service subject to
+          suspension, on Commission approval, if the customer exceeds Contract Capacity by
+          more than 1,000 kW.
+      - id: FE-DCT-BEHIND-THE-METER
+        term: >-
+          Equipment required to "instantaneously curtail load equal to or greater than the
+          behind-the-meter generation output".
+        significance:
+          tag: '[inference]'
+          statement: >-
+            THE TERM THAT WOULD REACH THIS SITE IF ANY WOULD. It is materially the same
+            obligation AEP's sheets impose on a customer electing to net BTM output against
+            Contract Capacity (Findlay #1464, sheets 223-6/223-7). Whether it binds a campus
+            that takes NO tariff service at all — Apollo is barred from the PJM
+            Transmission System by Condition 15, so there may be no Contract Capacity to
+            net against — is exactly the question, and it is [open]. A tariff reaches a
+            customer through a service relationship; the whole design of this campus is to
+            not have one.
+      - id: FE-DCT-DEFINITION
+        term: >-
+          A data center defined as "a centralized facility used primarily or exclusively
+          for electronic information services such as the management, storage, processing,
+          and dissemination of electronic data and information through the use of computer
+          systems, servers, networking equipment, and related components."
+        note: >-
+          No cryptocurrency-mining carve-out was reported, and AEP's separate "Mobile Data
+          Center" definition — which names crypto mining outright and carries a sworn
+          foreign-adversary attestation (Findlay #1464) — has no reported FirstEnergy
+          analogue. Absence in a press summary is not absence from the filing.
+      - id: FE-DCT-OTHER
+        term: >-
+          Collateral requirements for new load; the cost to construct incremental
+          transmission and distribution facilities; exit fees.
+        note: No amounts, percentages or terms were reported for any of these three.
+
+# ── The precedent, and its appeal ─────────────────────────────────────────────
+precedent:
+  aep_schedule_dct:
+    tag: '[verified]'
+    case: PUCO Case No. 24-508-EL-ATA (rendered 24-0508-EL-ATA by PUCO and by EEI; both forms are accepted and neither is an error — AEP's own tariff sheets print 24-508-EL-ATA)
+    statement: >-
+      The Commission's order of 2025-07-09 adopting a settlement produced Schedule DCT at
+      P.U.C.O. No. 22, Original Sheet Nos. 223-1..223-7, effective 2025-07-23 — the
+      85%-of-Contract-Capacity minimum, the four-year ramp plus eight-year term, and the
+      36-month exit fee. Terms are transcribed off the sheets themselves at
+      data/extracted/grid/findlay/aep-dct-tariff-posture.yaml (#1464) and are not repeated
+      here.
+    relevance_to_bowling_green:
+      tag: '[verified]'
+      statement: >-
+        NONE, DIRECTLY, AND THAT IS THE POINT. Schedule DCT is Ohio Power Company's
+        tariff. Bowling Green is in the FirstEnergy / PJM ATSI zone — Toledo Edison's
+        territory by its own Definition of Territory sheet — so no Wood County load has
+        ever been subject to it. It is precedent, template and political weather, not law
+        here.
+  ohio_supreme_court_appeal:
+    tag: '[verified/open]'
+    case: Supreme Court of Ohio, Case No. 2025-1458 — In the Matter of the Application of Ohio Power Company for New Tariffs Related to Data Centers and Mobile Data Centers
+    appellant: The Ohio Manufacturers' Association Energy Group
+    statement: >-
+      OMA appealed the 2025-07-09 order in November 2025 on grounds including undue
+      discrimination and equal protection, sufficiency of the evidence, and the
+      specificity of the Commission's reasoning under R.C. 4903.09. The Office of the Ohio
+      Consumers' Counsel filed a merit brief as intervening appellee on 2026-03-24. Full
+      procedural detail is at data/extracted/grid/findlay/aep-dct-tariff-posture.yaml.
+    disposition:
+      tag: '[open]'
+      checked_on: '2026-08-05'
+      statement: >-
+        NO DECISION LOCATED, AND NO ORAL ARGUMENT DATE LOCATED. The case remains pending.
+        Findlay's #1464 recorded the same state on 2026-07-31; five weeks later nothing has
+        changed. DO NOT WRITE THAT THE TARIFF WAS UPHELD OR VACATED. If it is vacated the
+        AEP template that FirstEnergy's filing is built on loses its footing mid-case,
+        which is why this is a Bowling Green watch and not merely a Findlay one.
+      how_it_was_checked: see blocked_routes/OHIO-SUPREME-COURT-ECMS
+
+# ── Other instruments in the column ───────────────────────────────────────────
+adjacent:
+  amp_posture:
+    tag: '[reference]'
+    statement: >-
+      American Municipal Power — the City of Bowling Green's own wholesale supplier —
+      DECLINED TO JOIN the AEP settlement. AMP General Counsel Lisa McAlister said AMP
+      supported the settlement's stranded-transmission-cost protections but did not sign
+      "in order to preserve the right to ensure that funds collected by AEP Ohio are
+      properly attributed to transmission customers that contribute to the infrastructure
+      caused by the data centers."
+    source: >-
+      American Public Power Association, "Utility, Other Parties in Ohio Reach Agreement on
+      How to Address Data Center Power Needs", 2024-10-24, publicpower.org — i.e. AMP's
+      position is recorded at the SETTLEMENT stage (October 2024), nine months before the
+      Commission adopted it (2025-07-09). Whether AMP's posture changed between the
+      stipulation and the order is [open]; the trade body reporting it is public power's
+      own, which makes it well-placed on AMP and interested on the merits.
+    why_it_matters: >-
+      Bowling Green's supplier is, on the record, a party in interest against how Ohio
+      allocates data-centre-driven transmission cost — while the largest data-centre load
+      in its own city's county is being built. That is not a conflict of interest, but it
+      is the reason the muni's institutional position on this question is already written
+      down somewhere, and it is worth finding.
+  ferc_grid_growth_ohio:
+    tag: '[reference]'
+    statement: >-
+      AMP and consumer advocates for Ohio and Maryland filed at FERC on 2026-03-27
+      protesting the rates proposed for GRID GROWTH OHIO — an AEP/FirstEnergy transmission
+      venture of approximately $1.1 billion in 765 kV and 345 kV lines, driven by data
+      centre development, in service 2032, with roughly 60% of costs reported as borne by
+      Ohio ratepayers. Grid Growth Ohio sought a 10.8% return on equity; AMP argued that
+      "Grid Growth's own filing indicates that following the Commission's preferred
+      approach for establishing base return on equity produces a return on equity of
+      10.66%." Advocates argued the proposal lacked ratepayer protections and worked "an
+      impermissible transfer of risk onto ratepayers."
+    source: Utility Dive, 2026-03-30
+    docket:
+      tag: '[open]'
+      statement: >-
+        THE FERC DOCKET NUMBER WAS NOT ESTABLISHED. The reporting does not give one. This
+        is a gap worth closing because FERC eLibrary is a scriptable, unblocked route —
+        unlike PUCO DIS and unlike the Ohio Supreme Court's docket — and this repo already
+        carries a FERC layer (watermark.grid.ferc, data/reference/ferc/). See
+        open_leads/GRID-GROWTH-DOCKET.
+      why_it_matters: >-
+        FirstEnergy is a co-venturer, so this is transmission cost landing in the ATSI
+        zone that contains Bowling Green — the one channel through which a data-centre
+        build elsewhere in Ohio reaches a Wood County bill regardless of who serves whom.
+  hb_706:
+    tag: '[reference]'
+    statement: >-
+      Ohio HB 706 (statewide data-centre contracting terms) was recorded as in committee
+      in this issue's 2026-07-10 research.
+    freshness_warning: >-
+      NOT RE-CHECKED IN THIS PASS. Carried forward unrefreshed and explicitly not asserted
+      as current. Anyone citing it must re-verify against the General Assembly's status
+      page first.
+
+# ── Routes that are blocked, not empty ────────────────────────────────────────
+blocked_routes:
+  - id: PUCO-DIS
+    tag: '[verified]'
+    route: PUCO/OPSB Docketing Information System — https://dis.puc.state.oh.us/
+    status: access-blocked to automated retrieval
+    checked: '2026-08-05'
+    evidence: >-
+      Two probes, both against the AEP data-centre case record. A plain request returned a
+      244-byte page reading "The requested URL was rejected. Please consult with your
+      administrator," with support ID 5914278294328952967. The same request carrying a
+      full desktop browser User-Agent returned the identical page with support ID
+      5914278294329917958. This is the third independent confirmation in this repo, after
+      Findlay #1464 (2026-07-31) and Bowling Green #1437 (2026-08-01), and the behaviour
+      is unchanged.
+    consequence: >-
+      NOT OBTAINED: the FirstEnergy DCT application in 26-0697-EL-ATA and its proposed
+      tariff sheets, the May 2026 PUCO entry directing the filing, the procedural schedule,
+      any intervenor filings, and the AEP Schedule DCT compliance history. Every proposed
+      term recorded above is trade-press reporting for exactly this reason, and the docket
+      number itself rests on a trade-association compilation. NO INFERENCE IS DRAWN FROM
+      THIS DOCKET'S SILENCE.
+    what_would_resolve_it:
+      - a browser-session capture of case 26-0697-EL-ATA
+      - a public-records request to the PUCO under R.C. 149.43
+      - FirstEnergy's own filing, if the company posts it to its Ohio tariff library
+  - id: OHIO-SUPREME-COURT-ECMS
+    tag: '[verified]'
+    route: Supreme Court of Ohio, Clerk's electronic case management system — https://www.supremecourt.ohio.gov/Clerk/ecms/#/caseinfo/2025/1458
+    status: not machine-readable — client-rendered, no discoverable data endpoint
+    checked: '2026-08-05'
+    evidence: >-
+      The case-info URL is a fragment route into a single-page application; fetching it
+      returns a shell whose only content is the heading "Public Docket". Four candidate
+      JSON endpoints under /Clerk/ecms/api/ were probed and all four returned IIS 404. The
+      application bundle (scripts/dist/site.min.js, 230,544 bytes) contains the docket
+      field names — case.CaseNumber, case.Status, docket.dateFiled, decision.disposesCase
+      — but no absolute API host, so the service could not be located from the client.
+    consequence: >-
+      The docket for 2025-1458 was NOT read, so "no decision located" above rests on the
+      absence of press reporting of one, not on the court's own record. That is a weaker
+      negative than it looks and is tagged [open] rather than [verified] for that reason.
+      NOTE THE ASYMMETRY: individual filings ARE reachable when their document IDs are
+      known — the OCC merit brief was read for Findlay #1464 at
+      supremecourt.ohio.gov/pdf_viewer/pdf_viewer.aspx?pdf=1000491.pdf&subdirectory=2025-1458\DocketItems.
+      It is the docket LISTING, not the documents, that is closed.
+    what_would_resolve_it:
+      - a browser-session capture of the public docket
+      - the court's opinion announcements / weekly case summaries, which are static pages
+      - enumeration of DocketItems PDF ids under the 2025-1458 subdirectory
+
+open_leads:
+  - id: FE-DCT-SHEETS
+    statement: >-
+      Obtain the proposed FirstEnergy Schedule DCT sheets themselves and re-read every
+      term above off the instrument — minimum billing demand, Contract Capacity, the CRES
+      requirement, the behind-the-meter curtailment obligation, collateral, exit fees, and
+      any threshold MW. The Findlay #1464 precedent is the standard: a tariff posture in
+      this repo is read off the filed sheets or it is labelled as not having been.
+  - id: ORDERING-DOCKET
+    statement: >-
+      Identify the PUCO case in which the Commission directed the FirstEnergy Ohio
+      utilities to file a data-centre tariff (reported 2026-05-16). It is not necessarily
+      26-0697-EL-ATA, which is the resulting tariff application. Candidate: one of the
+      FirstEnergy proceedings settled in December 2025 and approved in 2026, or the
+      distribution rate case 24-0468-EL-AIR under which the current sheets are filed.
+  - id: SECTION-II-G-ARRANGEMENT
+    statement: >-
+      Whether Electric Service Regulations §II.G ("Large Capacity Arrangements", at least
+      500 kW, expressly reaching capacity changes caused by "the addition of onsite
+      generation") has been invoked for the Meta/Liames campus, and whether any resulting
+      arrangement was submitted to the Commission. This is the one in-force sheet that
+      plausibly reaches a behind-the-meter campus, and a Commission-approved special
+      arrangement would be a public filing.
+  - id: GRID-GROWTH-DOCKET
+    statement: >-
+      Pin the FERC docket number for the Grid Growth Ohio rate filing and the 2026-03-27
+      protests, and pull AMP's protest. FERC eLibrary is scriptable and this repo has a
+      FERC layer; of the four regulatory forums in this file it is the only one that is
+      not blocked, which makes it the cheapest to close.
+  - id: FE-DCT-VS-BTM
+    statement: >-
+      The doctrinal question this site poses to the whole tariff debate: can a
+      data-centre tariff reach a campus that takes no tariff service? Schedule DCT-type
+      instruments bind through a service relationship and a Contract Capacity. Apollo's
+      certificate forbids the PJM transmission interconnection (Condition 15) and requires
+      Board approval before any export (Condition 16). If the answer is no, then Ohio's
+      HB 15 self-generation pathway is not merely an alternative to the tariff — it is an
+      exit from it, and Bowling Green is the fleet's clearest instance. Nothing here
+      asserts that; it is the question to put to the filing when the sheets are in hand.

@@ -1,0 +1,139 @@
+id: bowling-green-grid
+title: Bowling Green — Grid Posture (two grids, the Toledo Edison sheets, the pending FirstEnergy DCT, the muni island)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Two newly captured documents plus three unblocked machine routes. DOCUMENTS: The Toledo
+    Edison Company's whole filed retail tariff, P.U.C.O. No. 8, Schedule of Rates for
+    Electric Service (168 pp, Table of Contents effective 2026-07-01, most sheets filed
+    pursuant to Orders dated 2025-11-19 and 2026-02-18 in Case No. 24-0468-EL-AIR),
+    retrieved 2026-08-05 from FirstEnergy's own Ohio tariff library; and the Edison
+    Electric Institute's "Large Load Projects and Tariffs (July 2026)" compilation (16 pp,
+    self-dated "Updated July 17, 2026"), held for the one fact it carries that no primary
+    route would yield — the docket number of the pending FirstEnergy data-center tariff.
+    Both committed under data/documents/grid/bowling-green/ with sha256s in that dir's
+    filename-map.yaml. MACHINE ROUTES: EIA Form 860M (Preliminary Monthly Electric
+    Generator Inventory, June 2026 edition, sha256 47d28a1e…3072) read programmatically for
+    every generator in Wood County across its Operating, Planned, Retired and Canceled
+    sheets, and searched whole-workbook for the Apollo project; the City of Bowling Green's
+    own ArcGIS server (gis.bgohio.org, PublicData/UtilitiesWithZoning) queried for its
+    electric-distribution, substation, municipal-boundary and current-zoning layers; and the
+    Wood County Auditor's Vision/CAMA parcel service for the geometry those queries run
+    against. Three regulatory forums were probed and recorded as blocked or limited rather
+    than empty — PUCO DIS, the Ohio Supreme Court's docket, and the PJM queue.
+license: Public record (a filed retail tariff, a federal statistical dataset, two public GIS services) plus one trade-association compilation
+access_tier: public
+site_scope: site:bowling-green
+storage:
+- relpath: extracted/grid/bowling-green/serving-utility.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/grid/bowling-green/firstenergy-dct-tariff-posture.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/grid/bowling-green/bgmu-portfolio.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/grid/bowling-green/wood-county-generation-census.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+provenance: document
+tags:
+- grid
+- serving-utility
+- tariff
+- data-center-tariff
+- schedule-dct
+- puco
+- firstenergy
+- toledo-edison
+- ohio-edison
+- cleveland-electric-illuminating
+- municipal-utility
+- american-municipal-power
+- amp
+- behind-the-meter
+- pjm
+- atsi
+- eia-860m
+- generation-inventory
+- wind
+- solar
+- battery-storage
+- combustion-turbine
+- ferc
+- gis
+- access-blocked
+- bowling-green
+- wood-county
+- meta
+- oppidan
+notes: >-
+  Issue #1440 (under epic #1433) — the serving-utility and grid-posture side of Bowling
+  Green's facility story. Four structured records, none of which is a `RecordItem` genre:
+  like the Findlay grid set (#1464) and the Lima "Lyka" record (#1476), a tariff posture, a
+  utility portfolio and a generator census are carried as corpus extractions rather than as
+  a new RecordGroup, so this set does not move the site's `record` domain. No contract bump.
+  No readiness movement — and one deliberate omission behind that: the site-level
+  `leads.yaml` was NOT created here, because creating one would flip the `story` domain from
+  `absent` to `seeded` as a side effect of a grid issue. The open threads live in each
+  record's own `open_leads` block instead, following the precedent #1437 set in this same
+  epic, and the leads feed belongs to the story sub-issue #1441 where it can land beside a
+  registered story.
+  WHAT IT ESTABLISHES. (1) BOWLING GREEN IS TWO GRIDS AND THE PROFILE NOW SAYS SO PER LOAD.
+  The Meta/Liames campus is in Toledo Edison territory — and that is no longer a press
+  claim: Toledo Edison's own Original Sheet 3, DEFINITION OF TERRITORY, effective 2026-03-01,
+  names Wood County among the ten counties of "Company's Territory". The caveat travels with
+  it: a county is not a parcel, and the sheet itself points to PUCO's county maps for
+  city-and-township detail. The Oppidan colocation building inside the city resolves the
+  other way and the issue's `[open]` closes to a high-confidence inference — the CITY'S OWN
+  electric-distribution GIS carries five overhead features crossing the parcel, the city's
+  own zoning layer covers it as IE under annexation ordinances 8597 and 8824, and the BG
+  utilities director described it on the record as "a steady electric customer for the city."
+  A commercial tracker's unsourced "Hancock-wood Electric COOP INC" attribution is recorded
+  and NOT adopted — and not dismissed either, since a co-op's certified territory does not
+  vanish on annexation. (2) THE DOCKET NUMBER THE ISSUE ASKED FOR IS PINNED: PUCO
+  26-0697-EL-ATA, the FirstEnergy Ohio utilities' joint Data Center Tariff filing of June
+  2026 — [reference], off EEI, because PUCO DIS refuses automated retrieval (probed again
+  2026-08-05, 244-byte "Request Rejected", both support IDs recorded). (3) THE MORE USEFUL
+  FINDING IS WHAT GOVERNS IN THE MEANTIME, AND NOBODY HAD READ IT. There is no Schedule DCT
+  in Toledo Edison's book — a full-text scan of all 168 pages for "DCT" or "data center"
+  returns nothing — so a large Wood County load today contracts under Rate GT, whose
+  Contract Demand is "60% of the customer's expected, typical monthly peak load" on a
+  two-year term with no exit fee. Put that beside Schedule DCT's 85% for twelve years and
+  the practical content of the pending case becomes a number rather than a controversy. The
+  sheet that actually reaches a behind-the-meter campus is Electric Service Regulations
+  §II.G, "Large Capacity Arrangements", already in force, which counts a capacity change at
+  500 kW "including the effects of the addition of onsite generation" and may put the
+  resulting arrangement before the Commission. (4) THE WIND REPOWER WATCH CLOSES AS A
+  RETIREMENT. All four 1.8 MW turbines of Ohio's first commercial wind farm sit on EIA-860M's
+  Retired sheet with a retirement month of MARCH 2025; the replacement is 10-12 MW of solar
+  on two sites, authorised by the Board of Public Utilities on 2026-03-23, to operate
+  "behind the meter for the city" — the municipal utility reaching for the same structure as
+  the hyperscaler, three orders of magnitude down. (5) THE 20-MW-NOT-125-MW CORRECTION IS
+  NOW FEDERAL, not [reference]: EIA carries exactly one solar generator at Bowling Green,
+  20 MW, in service January 2017. Two further corrections fall out of the same census —
+  Juliet Energy is 50 MW nameplate, not "~62-65 MW AC", and was due in service July 2026
+  rather than merely "in construction"; and the AMP combustion turbines the issue mentioned
+  without a number are 81.5 MW across two plants. (6) THE ABSENCE THAT MAY BE THE MOST
+  IMPORTANT ROW IN THE FILE: Apollo — 350 MW net, certified, air-permitted, under
+  construction — APPEARS NOWHERE IN EIA-860M, in any state, on any sheet. Two readings are
+  offered and neither is asserted: a plant barred by its own certificate from interconnecting
+  to the PJM Transmission System may be out of Form 860's scope entirely, or it may be a
+  reporting lag. If the first is right, the behind-the-meter pathway makes large generation
+  statistically invisible to the federal inventory, which would apply to every HB 15
+  self-power project in Ohio and not just this one. It is written down because it is
+  testable against a later edition. (7) THE DEMAND-PRESSURE COORDINATION IS RESOLVED BY
+  LABELLING, NOT BY EDITING A KNOB. `eia861_utility_number` stays 2054: it is the SITE's
+  utility, and re-pointing it at Toledo Edison to flatter one facility's denominator would
+  falsify the backdrop for the city's own 14,850 customers and for the energy-burden and
+  consumer-energy feeds. The profile's `serving_utility_citation` — the one hand-authored
+  string that reaches the connector-generated grid profile — now carries the per-load split,
+  and a per-FACILITY serving-utility denominator is recorded as a model follow-up. THE
+  HEADROOM NUMBER STAYS OPEN, as the issue instructed: no published Bowling Green peak load
+  or firm-capacity figure was located, so "the muni could never serve 180 MW" remains an
+  inference from portfolio size with its arithmetic shown, and is never written as a finding.
