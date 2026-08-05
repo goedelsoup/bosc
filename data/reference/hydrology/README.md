@@ -143,7 +143,7 @@ Regenerate: `watermark reaches --write`
 | `reference/hydrology/fort-wayne/reaches.yaml` | application/x-yaml | no |
 | `reference/hydrology/reaches/fort-wayne.geojson` | application/geo+json | no |
 
-### `hydrology-swmm` — Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)
+### `hydrology-swmm` — Tier-1 EPA SWMM5 Input Decks (Pre / As-Permitted / Full-Buildout / Detention / Sanitary)
 
 Source: BOSC-generated EPA SWMM5 (.inp) model decks over the campus parcels + Atlas-14 design storm · License: BOSC work product (derived model decks; EPA SWMM engine is public-domain) · Access: public · Site scope: lima-legacy · Refresh: on-demand
 
@@ -151,7 +151,9 @@ Regenerate: `watermark tier1 --write`
 
 | file | type | lfs |
 | --- | --- | --- |
+| `reference/hydrology/swmm/tier1-detention-full-buildout.inp` | application/octet-stream | no |
 | `reference/hydrology/swmm/tier1-detention.inp` | application/octet-stream | no |
+| `reference/hydrology/swmm/tier1-full-buildout.inp` | application/octet-stream | no |
 | `reference/hydrology/swmm/tier1-post.inp` | application/octet-stream | no |
 | `reference/hydrology/swmm/tier1-pre.inp` | application/octet-stream | no |
 | `reference/hydrology/swmm/tier1-sanitary.inp` | application/octet-stream | no |

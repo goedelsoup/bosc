@@ -278,25 +278,29 @@ In the **MAY-OCT** window the draw is **3x** the cited summer 30Q10 (1.6 cfs) �
 storm for two questions Tier-0 only approximates: the **detention volume** that
 holds the post-development peak to the pre-development rate, and the **sanitary
 wet-weather surcharge** (dry-weather base + RDII) against each plant's documented
-wet-weather headroom. Hydraulic routing parameters (imperviousness, RDII, basin
-geometry) are assumptions; the footprint, storm, and plant design flows stay
+wet-weather headroom. Hydraulic routing parameters (RDII, basin geometry) are
+assumptions; the footprint, its declared impervious acreage — which drives the
+as-permitted case's imperviousness — the storm, and the plant design flows stay
 document/connector-sourced.
 
 
-The committed run (`pyswmm 2.1.0`, 25-yr 4.25-in storm; mass-balance continuity error 0.00%) `[inference: derived]` sizes the detention the corridor needs. Paving the footprint takes the design-storm peak from **215 cfs** (cropland) to **579 cfs** (impervious); holding the release back to the pre-development rate (216 cfs) takes a **42 ac-ft** basin (13.6 ac, 5.49-ft bottom orifice). The four input decks are committed under `data/reference/hydrology/swmm/` so anyone can re-run them in EPA SWMM.
+The committed run (`pyswmm 2.1.0`, 25-yr 4.25-in storm; mass-balance continuity error 0.00%) `[inference: derived]` sizes the detention the corridor needs. Paving the footprint **as permitted** takes the design-storm peak from **169 cfs** (cropland) to **436 cfs** — 33.9% impervious, the declared permanently-impervious acreage; holding the release back to the pre-development rate (168 cfs) takes a **20 ac-ft** basin (13.6 ac, 9.28-ft bottom orifice). Every input deck is committed under `data/reference/hydrology/swmm/` so anyone can re-run them in EPA SWMM.
+
+
+Built out — the whole parcel at the blanket 90% impervious assumption, the Tier-0 screen's `full_buildout` bound rather than the permitted project — the same storm peaks at **657 cfs** and the basin holding it to the pre-development rate grows to **45 ac-ft** (4.76-ft orifice). The two are separate readings of separate projects `[inference: derived]`; the as-permitted one is what the SW1225 application describes.
 
 
 The campus's storm-driven sanitary peak does not stay on site — it rides the forcemains to the treatment plants. It is judged only against the plants that actually receive it:
 
 
-> Campus sanitary routing: FM-1 → American Bath WWTP + American II WWTP; FM-2 → City of Lima WWTP. Receives campus flow but peak hydraulic capacity not cited (campus share not quantified): American Bath WWTP, City of Lima WWTP. Excluded — no campus routing (FM-3 theorized): Shawnee II.
+> Campus sanitary routing: FM-1 → American Bath WWTP + American II WWTP; FM-2 → City of Lima WWTP. Receives campus flow but peak hydraulic capacity not cited (campus share not quantified): American Bath WWTP, City of Lima WWTP. Excluded — no campus routing: Shawnee II.
 
 
 | plant (forcemain) | wet-weather peak | documented headroom | result |
 |---|--:|--:|---|
-| American II (FM-1) | 16.9 MGD | 2.4 MGD (peak 3.6 - avg 1.2) | ❌ exceeds (-14.5) |
+| American II (FM-1) | 18.6 MGD | 2.4 MGD (peak 3.6 - avg 1.2) | ❌ exceeds (-16.2) |
 
-That **16.9 MGD** is the campus's *total* wet-weather sanitary peak; it splits across FM-1 (the small American Bath / American II plants) and FM-2 (the City of Lima sewer). The corpus does not quantify the split, so it is not apportioned — but the total alone is several times even American II's whole wet-weather headroom (2.4 MGD), so the small FM-1 plants cannot absorb their share. The RDII rate is an uncalibrated screening assumption — but the direction is robust, and it lands on the regulatory fact below.
+That **18.6 MGD** is the campus's *total* wet-weather sanitary peak; it splits across FM-1 (the small American Bath / American II plants) and FM-2 (the City of Lima sewer). The corpus does not quantify the split, so it is not apportioned — but the total alone is several times even American II's whole wet-weather headroom (2.4 MGD), so the small FM-1 plants cannot absorb their share. The RDII rate is an uncalibrated screening assumption — but the direction is robust, and it lands on the regulatory fact below.
 
 
 **The surcharge lands on a system with no headroom to give.** Permitted

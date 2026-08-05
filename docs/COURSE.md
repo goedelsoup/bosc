@@ -350,8 +350,10 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    runs the real EPA SWMM5 engine (`watermark.hydrology.swmm`, via pyswmm) for two questions
    Tier-0 only approximated. **Detention sizing:** bisect a basin's bottom-orifice
    diameter until the released post-development peak matches the pre-development peak —
-   for the 25-yr storm, SWMM finds **post 579 vs pre 215 cfs**, held by a **~42 ac-ft**
-   basin. **Sanitary wet-weather surcharge:** dry-weather base + RDII gives a **~16.9 MGD**
+   for the 25-yr storm, SWMM finds the **as-permitted** footprint (imperviousness driven by
+   the declared impervious acreage, WS-14 / #1614) at **post 436 vs pre 169 cfs**, held by a
+   **~20 ac-ft** basin, with the blanket-paved **full-buildout bound** a separate deck at
+   **657 cfs / ~45 ac-ft**. **Sanitary wet-weather surcharge:** dry-weather base + RDII gives a **~18.6 MGD**
    storm peak that **exceeds both** documented plant peak capacities (American II 3.6,
    Shawnee II 12.6 MGD) — i.e. SSO risk, tying to the 1996 consent decree. The engine is a
    native extension that may not load (it gets `Killed: 9` under macOS hardened runtime on

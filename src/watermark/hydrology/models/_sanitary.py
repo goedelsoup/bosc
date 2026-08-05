@@ -49,16 +49,34 @@ class StormPlanInventory(BaseModel):
 
 
 class DetentionDesign(BaseModel):
-    """Tier-1 (SWMM) detention sizing: the basin that holds post-dev peak to pre-dev."""
+    """Tier-1 (SWMM) detention sizing: the basin that holds post-dev peak to pre-dev.
+
+    The **as-permitted** case is the primary one — its imperviousness is driven by the
+    committed :class:`SiteFootprint`'s declared permanently-impervious acreage, so the basin
+    reported here is the one the permitted footprint needs (WS-14 / #1614). The blanket
+    near-impervious deck survives alongside it as the explicitly-labeled **full-buildout
+    bound** — the peer of the Tier-0 screen's ``full_buildout_peak_cfs``, not a second reading
+    of the same project. The bound fields are optional so pre-#1614 committed artifacts load.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
     pre_peak_cfs: float
-    post_peak_cfs: float  # undetained post-development
+    post_peak_cfs: float  # undetained post-development, as-permitted footprint
     controlled_peak_cfs: float  # released through the sized orifice
     orifice_diam_ft: float
     required_storage_acft: float
     basin_area_acres: float
+    # The as-permitted subcatchment imperviousness actually modeled, and where it came from.
+    post_imperv_pct: float | None = None
+    post_imperv_basis: str = ""
+    # The blanket near-impervious upper bound (whole parcel paved), sized against the same
+    # pre-development peak — what the corridor would need if the parcel were built out.
+    full_buildout_imperv_pct: float | None = None
+    full_buildout_peak_cfs: float | None = None
+    full_buildout_controlled_peak_cfs: float | None = None
+    full_buildout_orifice_diam_ft: float | None = None
+    full_buildout_storage_acft: float | None = None
     tier: Literal["tier1-swmm"] = "tier1-swmm"
 
 
