@@ -1,14 +1,14 @@
 ---
 /**
- * Story · StoryChapters — a provided story-component (#724/#732). The ordered chapter list, used
+ * Walk · StoryChapters — a provided story-component (#724/#732). The ordered chapter list, used
  * on the story home (compact) and the table of contents (full, with go-arrows). Driven by the
- * `Story` model, so it lists whatever chapters a site's story registers. Reuses the existing
+ * `Walk` model, so it lists whatever chapters a site's story registers. Reuses the existing
  * `.walk-chapters` site styles (no scoped CSS → safe to import in MDX with no chunk leak).
  */
-import { type Story, chapterHref } from "@watermark/core/walk";
+import { type Walk, chapterHref } from "@watermark/core/walk";
 
 interface Props {
-  story: Story;
+  story: Walk;
   /** `compact` = the home on-ramp list; `full` = the table of contents (adds the go-arrow). */
   variant?: "compact" | "full";
 }

@@ -1,5 +1,5 @@
 // Ambient shim for the one Astro coupling in @watermark/core: `stories.ts` lazily
-// `await import("astro:content")` inside `loadStories()` — a build-time-only path (the
+// `await import("astro:content")` inside `loadWalks()` — a build-time-only path (the
 // Astro/MDX render context supplies the real virtual module; vitest and the Workers
 // runtime never call it). Declaring the minimal surface here lets the package type-check
 // standalone (DOM-free, no astro/client ambient types) without leaking a real astro

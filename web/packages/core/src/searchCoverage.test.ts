@@ -4,10 +4,10 @@
 // declaration it measures against is well-formed and, more to the point, that it can't be gamed
 // into reporting a number it hasn't earned.
 import { describe, expect, it } from "vitest";
-import { LIMA_SLUG, siteBase } from "./routes";
+import { LIMA_SLUG, siteBase, walkBase } from "./routes";
 import { buildSiteSearchIndex, searchShardRefs } from "./search";
 import { COVERAGE_FAMILIES, COVERAGE_FLOOR, searchCoverage, SHARD_GZIP_BUDGET } from "./searchCoverage";
-import { comingSoonStories, SITES, surfacedStories } from "./sites";
+import { comingSoonWalks, SITES, surfacedWalks } from "./sites";
 
 describe("the coverage declaration", () => {
   it("gives every family a compilable pattern, a label, a verdict, and a reason", () => {
@@ -129,7 +129,7 @@ describe("the coverage declaration", () => {
     // peer ever registers a walk again, the first assertion below starts binding on it too.
     for (const site of SITES.filter((s) => !s.selectable && (s.stories ?? []).length > 0)) {
       const ref = (site.stories ?? [])[0];
-      const peerRoot = `${siteBase(site.slug)}/stories/${ref.codename}/`;
+      const peerRoot = `${walkBase(site.slug, ref.codename)}/`;
       expect(COVERAGE_FAMILIES.filter((f) => new RegExp(f.pattern).test(peerRoot))).toEqual([]);
       expect(buildSiteSearchIndex(site.slug).map((d) => d.url)).toContain(peerRoot);
     }
@@ -137,10 +137,10 @@ describe("the coverage declaration", () => {
     // separate indexed destinations and the "one row at the root" shape of a held walk does not
     // apply. What carries over unchanged is the half that matters: no coverage family may excuse a
     // walk route, and its interior really is in the index rather than declared away.
-    const walk = SITES.flatMap((s) => surfacedStories(s.slug).map((ref) => ({ s, ref })));
+    const walk = SITES.flatMap((s) => surfacedWalks(s.slug).map((ref) => ({ s, ref })));
     expect(walk.length, "no walk is registered at all — this asserts nothing").toBeGreaterThan(0);
     for (const { s: site, ref } of walk) {
-      const root = `${siteBase(site.slug)}/stories/${ref.codename}/`;
+      const root = `${walkBase(site.slug, ref.codename)}/`;
       expect(COVERAGE_FAMILIES.filter((f) => new RegExp(f.pattern).test(root)).map((f) => f.label)).toEqual(
         [],
       );
@@ -163,10 +163,10 @@ describe("the coverage declaration", () => {
     // eventually published. The loop is empty and the emptiness is asserted, so this cannot rot
     // into a test that quietly checks nothing — and the readable half below still binds on Lima,
     // which is where the "chapters are separate destinations" half of the property lives anyway.
-    const held = SITES.flatMap((s) => comingSoonStories(s.slug).map((ref) => ({ s, ref })));
+    const held = SITES.flatMap((s) => comingSoonWalks(s.slug).map((ref) => ({ s, ref })));
     expect(held).toEqual([]);
     for (const { s, ref } of held) {
-      const root = `${siteBase(s.slug)}/stories/${ref.codename}/`;
+      const root = `${walkBase(s.slug, ref.codename)}/`;
       const claims = (route: string) =>
         COVERAGE_FAMILIES.filter((f) => new RegExp(f.pattern).test(route)).map((f) => f.label);
       expect(claims(`${root}contents/`), `${s.slug}: contents still excused`).toEqual([]);
@@ -175,7 +175,7 @@ describe("the coverage declaration", () => {
       expect(buildSiteSearchIndex(s.slug).map((d) => d.url)).toContain(root);
     }
     // A readable story's chapters are separate destinations and must not be excused either.
-    const readable = SITES.flatMap((s) => surfacedStories(s.slug).map((ref) => ({ s, ref })));
+    const readable = SITES.flatMap((s) => surfacedWalks(s.slug).map((ref) => ({ s, ref })));
     expect(readable.length).toBeGreaterThan(0);
     for (const { s, ref } of readable) {
       const chapter = `${siteBase(s.slug)}/stories/${ref.codename}/water/`;

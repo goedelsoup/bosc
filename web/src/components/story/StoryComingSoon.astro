@@ -1,6 +1,6 @@
 ---
 /**
- * Story · StoryComingSoon — the coming-soon interstitial served at the story routes (#1526/#1529)
+ * Walk · StoryComingSoon — the coming-soon interstitial served at the story routes (#1526/#1529)
  * for a `comingSoon` story. The routes keep emitting their URLs (so links resolve, not 404) but
  * render THIS — the story's title + dek + a coming-soon affordance — instead of the narrative, so
  * no chapter prose, table of contents, or doc-by-doc walk is reachable by direct URL while the
@@ -15,7 +15,7 @@ import { withBase } from "@watermark/core/site";
 import { siteForSlug } from "@watermark/core/sites";
 
 interface Props {
-  /** Story display title, e.g. "Project BOSC". */
+  /** Walk display title, e.g. "Project BOSC". */
   title: string;
   /** The story's one-line dek. */
   dek: string;

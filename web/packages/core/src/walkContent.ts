@@ -1,22 +1,22 @@
 /**
- * Derive the per-site `Story` model (`./walk`) from the `stories` MDX content collection
- * (#724/#730). One MDX file per chapter under `src/content/stories/<site>/<codename>/<slug>.mdx`;
+ * Derive the per-site `Walk` model (`./walk`) from the `stories` MDX content collection
+ * (#724/#730). One MDX file per chapter under `src/content/walk/<site>/<codename>/<slug>.mdx`;
  * the frontmatter is the chapter spine, the body is the prose (rendered in #732).
  *
- * `buildStory` is a pure function (no `astro:content`), so it's unit-testable and the spine
- * derivation is verified against the canonical Lima story. `loadStories` is the **async**
- * build-time wrapper (lazy `astro:content`) used where a render path already awaits; `buildAllStories`
- * is the **sync** source the `walk.STORIES` const is built from (#733) — it reads the same chapter
+ * `buildWalk` is a pure function (no `astro:content`), so it's unit-testable and the spine
+ * derivation is verified against the canonical Lima story. `loadWalks` is the **async**
+ * build-time wrapper (lazy `astro:content`) used where a render path already awaits; `buildAllWalks`
+ * is the **sync** source the `walk.WALKS` const is built from (#733) — it reads the same chapter
  * frontmatter via `import.meta.glob('?raw')`, which is plugin-free (so it works in the Astro build
  * AND in vitest, which has no MDX transform). The MDX *bodies* are still rendered by `astro:content`;
  * this reads only the frontmatter spine.
  */
 import { parse as parseYaml } from "yaml";
 import { SITES } from "./sites";
-import type { Chapter, Story, WalkAnchor } from "./walk";
+import type { Chapter, Walk, WalkAnchor } from "./walk";
 
 /** A chapter's parsed frontmatter — the TS mirror of `STORY_CHAPTER_SCHEMA` (content.config.ts). */
-export interface StoryChapterSpine {
+export interface WalkChapterSpine {
   step: number;
   slug: string;
   title: string;
@@ -29,23 +29,23 @@ export interface StoryChapterSpine {
   studySection?: string;
 }
 
-/** Story-level metadata not carried per chapter — supplied by the registry (`StoryRef`). */
-export interface StoryMeta {
+/** Walk-level metadata not carried per chapter — supplied by the registry (`WalkRef`). */
+export interface WalkMeta {
   title: string;
   dek: string;
 }
 
 /**
- * Assemble a `Story` from its chapter spines: order by step, map to `Chapter`s, and invert
+ * Assemble a `Walk` from its chapter spines: order by step, map to `Chapter`s, and invert
  * each chapter's `anchorRecordRels` into the record→chapter backlink map (`ch` = zero-padded
  * step, `label` = chapter title) — exactly the shape the record block reads.
  */
-export function buildStory(
+export function buildWalk(
   site: string,
   codename: string,
-  meta: StoryMeta,
-  spines: readonly StoryChapterSpine[],
-): Story {
+  meta: WalkMeta,
+  spines: readonly WalkChapterSpine[],
+): Walk {
   const ordered = [...spines].sort((a, b) => a.step - b.step);
   const chapters: Chapter[] = ordered.map((c) => ({
     step: c.step,
@@ -64,7 +64,7 @@ export function buildStory(
   }
   // Site-owned (editorial) story — the `site` special case of the owner axis (#1092). Inlined
   // rather than importing `siteOwner` from `./walk` to keep this module free of a runtime cycle
-  // (walk.ts imports `buildAllStories` from here).
+  // (walk.ts imports `buildAllWalks` from here).
   return {
     owner: { kind: "site", id: site },
     site,
@@ -77,20 +77,20 @@ export function buildStory(
 }
 
 /** The registry metadata for a (site, codename), or a codename-titled fallback. */
-function storyMetaFor(site: string, codename: string): StoryMeta {
+function storyMetaFor(site: string, codename: string): WalkMeta {
   const ref = SITES.find((s) => s.slug === site)?.stories?.find((r) => r.codename === codename);
   return { title: ref?.title ?? codename, dek: ref?.dek ?? "" };
 }
 
 /**
- * Read every story from the `stories` collection and group its chapters into `Story`s, keyed by
+ * Read every story from the `stories` collection and group its chapters into `Walk`s, keyed by
  * the `<site>/<codename>` prefix of each entry's id. Build-time only (Astro/MDX context).
  */
-export async function loadStories(): Promise<Story[]> {
+export async function loadWalks(): Promise<Walk[]> {
   const { getCollection } = await import("astro:content");
-  const entries = await getCollection("stories");
+  const entries = await getCollection("walk");
 
-  const groups = new Map<string, { site: string; codename: string; spines: StoryChapterSpine[] }>();
+  const groups = new Map<string, { site: string; codename: string; spines: WalkChapterSpine[] }>();
   for (const entry of entries) {
     // Skip the story home (`_home.mdx`) and any non-chapter entry — chapters carry a numeric step.
     if (typeof (entry.data as { step?: unknown }).step !== "number") continue;
@@ -102,19 +102,19 @@ export async function loadStories(): Promise<Story[]> {
       group = { site, codename, spines: [] };
       groups.set(key, group);
     }
-    group.spines.push(entry.data as StoryChapterSpine);
+    group.spines.push(entry.data as WalkChapterSpine);
   }
 
   return [...groups.values()].map((g) =>
-    buildStory(g.site, g.codename, storyMetaFor(g.site, g.codename), g.spines),
+    buildWalk(g.site, g.codename, storyMetaFor(g.site, g.codename), g.spines),
   );
 }
 
-// ── The sync source of `walk.STORIES` (#733) ─────────────────────────────────
+// ── The sync source of `walk.WALKS` (#733) ─────────────────────────────────
 // Read every chapter's frontmatter at build, plugin-free: `?raw` gives the file text (no MDX
 // transform needed, so this resolves the same in vitest as in the Astro build), and we parse the
 // YAML frontmatter ourselves. Build-only — `walk.ts` has no client consumers (like `bundle.ts`).
-const STORY_RAW = import.meta.glob("../../../src/content/stories/**/*.mdx", {
+const WALK_RAW = import.meta.glob("../../../src/content/walk/**/*.mdx", {
   eager: true,
   query: "?raw",
   import: "default",
@@ -129,21 +129,21 @@ function frontmatterOf(raw: string): Record<string, unknown> {
 /** Recover `[site, codename, slug]` from a `…/stories/<site>/<codename>/<slug>.mdx` path. */
 function pathParts(path: string): [string, string] | null {
   const parts = path.split("/");
-  const i = parts.lastIndexOf("stories");
+  const i = parts.lastIndexOf("walk");
   const site = parts[i + 1];
   const codename = parts[i + 2];
   return i >= 0 && site && codename ? [site, codename] : null;
 }
 
 /**
- * Every registered `Story`, built synchronously from the `stories` collection frontmatter — the
- * source of `walk.STORIES` (#733). `_home.mdx` and any non-chapter entry (no numeric `step`) are
- * skipped; chapters group by `<site>/<codename>` and `buildStory` assembles each, with title/dek
+ * Every registered `Walk`, built synchronously from the `stories` collection frontmatter — the
+ * source of `walk.WALKS` (#733). `_home.mdx` and any non-chapter entry (no numeric `step`) are
+ * skipped; chapters group by `<site>/<codename>` and `buildWalk` assembles each, with title/dek
  * from the site registry (`storyMetaFor`).
  */
-export function buildAllStories(): Story[] {
-  const groups = new Map<string, { site: string; codename: string; spines: StoryChapterSpine[] }>();
-  for (const [path, raw] of Object.entries(STORY_RAW)) {
+export function buildAllWalks(): Walk[] {
+  const groups = new Map<string, { site: string; codename: string; spines: WalkChapterSpine[] }>();
+  for (const [path, raw] of Object.entries(WALK_RAW)) {
     const fm = frontmatterOf(raw);
     if (typeof fm.step !== "number") continue; // skip _home + any non-chapter entry
     const ids = pathParts(path);
@@ -168,6 +168,6 @@ export function buildAllStories(): Story[] {
     });
   }
   return [...groups.values()].map((g) =>
-    buildStory(g.site, g.codename, storyMetaFor(g.site, g.codename), g.spines),
+    buildWalk(g.site, g.codename, storyMetaFor(g.site, g.codename), g.spines),
   );
 }

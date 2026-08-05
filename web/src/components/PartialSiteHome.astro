@@ -30,9 +30,9 @@ import { withBase, withSite, withStory } from "@watermark/core/site";
 import {
   FACILITY_STATUS_META,
   type NetworkSite,
-  comingSoonStories,
+  comingSoonWalks,
   facilityStatus,
-  surfacedStories,
+  surfacedWalks,
 } from "@watermark/core/sites";
 
 interface Props {
@@ -48,8 +48,8 @@ const count = (name: string): number => manifest.feeds.find((f) => f.name === na
 // The hero + story card key off the *surfaced* (readable) story — a not-readable one drops the
 // readable CTA. A `comingSoon` walk (#1526) is still *advertised*: its title/dek ground the hero and
 // a visible teaser stands in for the readable card. `hidden` (#1256) stays fully silent.
-const story = surfacedStories(slug)[0];
-const comingSoonStory = comingSoonStories(slug)[0];
+const story = surfacedWalks(slug)[0];
+const comingSoonStory = comingSoonWalks(slug)[0];
 // The hero grounds in whichever story the site registers (readable or held) — never invented prose.
 const heroStory = story ?? comingSoonStory;
 const fac = FACILITY_STATUS_META[facilityStatus(slug)];
