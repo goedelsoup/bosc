@@ -1,6 +1,8 @@
 ---
-import { selectableSitePaths } from "@watermark/core/sites";
-export const getStaticPaths = selectableSitePaths;
+import { openSectionPaths } from "@watermark/core/readiness";
+// Only where the section is open (#1894): a locked peer built this route to render the identical
+// generic "Reports" lock, seven times over. Its index still builds and still carries that lock.
+export const getStaticPaths = () => openSectionPaths("reports");
 /**
  * OPC scenario explorer — the interactive companion to the Cost chapter, and the native
  * successor to the retired marimo `opc_scenario.py` notebook (the evaluation lives at

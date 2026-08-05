@@ -1,0 +1,33 @@
+---
+/**
+ * The component galleries, one route (#1894) — dev-only. The registry, the gate and the reasoning
+ * live in `~/lib/showcase`, which `getStaticPaths` must import rather than close over: Astro hoists
+ * `getStaticPaths` out of this component, so a frontmatter `const` is not in scope when it runs.
+ *
+ * The URLs are unchanged (`/showcase/charts` · `/showcase/icons` · `/showcase/teardown`), so the
+ * trail declaration (`trail.ts`) and anyone's dev bookmark still resolve.
+ */
+import BackLink from "~/components/BackLink.astro";
+import ChartSet from "~/components/showcase/ChartSet.astro";
+import IconSet from "~/components/showcase/IconSet.astro";
+import TeardownSet from "~/components/showcase/TeardownSet.astro";
+import Base from "~/layouts/Base.astro";
+import type { Gallery } from "~/lib/showcase";
+import { showcaseGalleryPaths } from "~/lib/showcase";
+import { withSite } from "@watermark/core/site";
+
+export const getStaticPaths = showcaseGalleryPaths;
+
+const { gallery, title, kicker, h1 } = Astro.props as Gallery;
+---
+
+<Base title={`${title} — component preview`} section="site" noindex>
+  <div class="td-showcase">
+    <BackLink href={withSite("/site/")} label="The record" />
+    <div class="td-showcase-kicker">{kicker}</div>
+    <h1>{h1}</h1>
+    {gallery === "charts" && <ChartSet />}
+    {gallery === "icons" && <IconSet />}
+    {gallery === "teardown" && <TeardownSet />}
+  </div>
+</Base>

@@ -101,25 +101,55 @@ if (hasFeed("corpus-index")) {
     note: "the whole corpus",
   });
 }
-const curated: string[] = [];
-if (hasFeed("candidates")) curated.push("candidates");
-if (hasFeed("defense-contractors")) curated.push("defense-contractors");
-if (hasFeed("lei")) curated.push("LEIs");
-if (curated.length) {
-  const href = hasFeed("candidates")
-    ? "/wiki/candidates"
-    : hasFeed("lei")
-      ? "/wiki/lei"
-      : "/wiki/defense-contractors";
-  doors.push({
-    id: "curated",
-    kind: "Curated lists",
-    href,
-    count: String(curated.length),
-    title: "Curated inventories",
-    desc: "Hand-curated lists alongside the corpus graph — leads to verify, not classifications.",
-    note: curated.join(" · "),
-  });
+// The curated inventories — one door each (#1894).
+//
+// They used to share a single "Curated inventories" door whose href was the first feed present, in
+// a fixed candidates → LEIs → defense-contractors order, with the other two named only in the
+// door's footnote. So the door's count said "3" and opened exactly one of them, and
+// `/wiki/defense-contractors` — three tables of prime contractors, prime-owned parcels and
+// Army-controlled land — was linked from nowhere in the build. A door that stands for three
+// destinations is a door for one of them.
+//
+// They are also not one category: a candidate-site scan, an LEI register and a defense-industry
+// parcel scan are different lists that happen to share a provenance caveat. Each carries its own
+// count, which is what a hub door is for.
+const CURATED: { feed: string; door: Omit<Door, "count"> }[] = [
+  {
+    feed: "candidates",
+    door: {
+      id: "candidates",
+      kind: "Curated list",
+      href: "/wiki/candidates",
+      title: "Candidate sites",
+      desc: "Sites screened from open imagery and public filings against the build-out pattern — leads to verify, never a finding.",
+      note: "screened, not confirmed",
+    },
+  },
+  {
+    feed: "lei",
+    door: {
+      id: "lei",
+      kind: "Curated list",
+      href: "/wiki/lei",
+      title: "Legal-entity identifiers",
+      desc: "GLEIF registrations for the corridor's parties — the registered name, jurisdiction and status behind a trade name.",
+      note: "who a party legally is",
+    },
+  },
+  {
+    feed: "defense-contractors",
+    door: {
+      id: "defense-contractors",
+      kind: "Curated list",
+      href: "/wiki/defense-contractors",
+      title: "Defense contractors",
+      desc: "Major DoD primes matched against corridor parties and county parcels — a pattern match is a lead to verify, not a verdict.",
+      note: "leads, not verdicts",
+    },
+  },
+];
+for (const { feed, door } of CURATED) {
+  if (hasFeed(feed)) doors.push({ ...door, count: num(count(feed)) });
 }
 ---
 

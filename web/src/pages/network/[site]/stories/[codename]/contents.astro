@@ -8,7 +8,6 @@
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import StoryChapters from "~/components/story/StoryChapters.astro";
-import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
 import { siteBase } from "@watermark/core/routes";
 import { siteHref } from "@watermark/core/site";
@@ -21,6 +20,12 @@ export async function getStaticPaths() {
   for (const site of storyHostSites()) {
     const siteId = siteBase(site.slug).replace("/network/", "");
     for (const ref of site.stories ?? []) {
+      // A held story publishes its ROOT and nothing below it (#1894). It used to emit this page and
+      // every chapter too, each rendering the same interstitial — eleven routes across Findlay and
+      // Fort Wayne that no page linked and no search row pointed at, on the reasoning that a URL
+      // that resolves beats a 404. Nothing was resolving them. The root carries the interstitial,
+      // is in the nav and is indexed; the interior returns on the edit that makes the prose real.
+      if (storyComingSoon(site.slug, ref.codename)) continue;
       const literal = fileURLToPath(
         new URL(`../../../${siteId}/stories/${ref.codename}/contents.astro`, import.meta.url),
       );
@@ -37,48 +42,37 @@ export async function getStaticPaths() {
 const { slug, codename } = Astro.props as { slug: string; codename: string };
 const story = storyFor(slug, codename) as Story;
 const firstSlug = story.chapters[0]?.slug ?? "";
-// A `comingSoon` story (#1526) holds its content: the table of contents serves the interstitial
-// (no chapter list, no chapter links), not the readable index (#1529).
-const held = storyComingSoon(slug, codename);
 // The codename segment is a URL key; the trail wants the story's name (#1889).
 const trailLabels = { [codename]: story.title };
 ---
 
-{
-  held ? (
-    <Base title={`${story.title} — coming soon`} section="story" description={story.dek} trailLabels={trailLabels}>
-      <StoryComingSoon title={story.title} dek={story.dek} slug={slug} />
-    </Base>
-  ) : (
-    <Base
-      title="The story"
-      section="story"
-      description="The narrative spine over the BOSC record: six chapters that tell the story and teach you to read the documents."
-      trailLabels={trailLabels}
-    >
-      <div class="walk-onramp">
-        <p><a href={storyHomeHref(story)}>← Start here</a></p>
-        <div class="walk-kicker">Watermark · story</div>
-        <h1>The story, chapter by chapter</h1>
-        <p class="walk-onramp-lead">
-          Six chapters, ordered cause → consequence. Each advances the story and
-          teaches one record-reading skill, anchored to a real document you can open
-          and check. Follow it straight through, or drop into any chapter and peel off
-          into the library when something catches your eye.
-        </p>
+<Base
+  title="The story"
+  section="story"
+  description="The narrative spine over the BOSC record: six chapters that tell the story and teach you to read the documents."
+  trailLabels={trailLabels}
+>
+  <div class="walk-onramp">
+    <p><a href={storyHomeHref(story)}>← Start here</a></p>
+    <div class="walk-kicker">Watermark · story</div>
+    <h1>The story, chapter by chapter</h1>
+    <p class="walk-onramp-lead">
+      Six chapters, ordered cause → consequence. Each advances the story and
+      teaches one record-reading skill, anchored to a real document you can open
+      and check. Follow it straight through, or drop into any chapter and peel off
+      into the library when something catches your eye.
+    </p>
 
-        <StoryChapters story={story} variant="full" />
+    <StoryChapters story={story} variant="full" />
 
-        <p class="stub-note">
-          All six chapters are live, end to end — each teaches one record-reading
-          skill through the Record Teardown pattern, in cause → consequence order.
-        </p>
+    <p class="stub-note">
+      All six chapters are live, end to end — each teaches one record-reading
+      skill through the Record Teardown pattern, in cause → consequence order.
+    </p>
 
-        <div class="walk-cta">
-          <a class="btn" href={chapterHref(story, firstSlug)}>Start the story →</a>
-          <a class="walk-cta-secondary" href={siteHref(slug, "/site/")}>or browse the archive</a>
-        </div>
-      </div>
-    </Base>
-  )
-}
+    <div class="walk-cta">
+      <a class="btn" href={chapterHref(story, firstSlug)}>Start the story →</a>
+      <a class="walk-cta-secondary" href={siteHref(slug, "/site/")}>or browse the archive</a>
+    </div>
+  </div>
+</Base>

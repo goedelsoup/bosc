@@ -1,40 +1,33 @@
 ---
-import { selectableSitePaths } from "@watermark/core/sites";
-export const getStaticPaths = selectableSitePaths;
+import { availableFacetPaths } from "@watermark/core/readiness";
+// Scoped to THIS site's corpus (#1886). The curated legal set is read straight out of
+// `data/extracted/` with no bundle feed to scope it, so before that gate every selectable peer
+// served all fifteen of Lima's Allen-County-OH pages — a Fort Wayne (Indiana) route rendering an
+// Ohio legislative hearing. #1894 moved the gate from the render to the ROUTE: a site with none of
+// its own no longer builds the page. The lock it used to render was linked from no door (the record
+// index drops it) and named by no search row, so it asked nobody for anything; the ask lives on the
+// record index's needs board, where a reader actually is.
+export const getStaticPaths = () => availableFacetPaths("legal");
 import { getCollection } from "astro:content";
 import Provenance from "~/components/Provenance.astro";
-import SectionLocked from "~/components/SectionLocked.astro";
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { MeetingItem } from "@watermark/core/feeds";
 import { LEGAL_GROUPS, legalBySlug, scopedLegal } from "@watermark/core/legal";
-import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
 import { withBase, withSite } from "@watermark/core/site";
 
-// Scoped to THIS site's corpus (#1886). The curated legal set is read straight out of
-// `data/extracted/` with no bundle feed to scope it, so before this gate every selectable peer
-// served all fifteen of Lima's Allen-County-OH pages — a Fort Wayne (Indiana) route rendering an
-// Ohio legislative hearing. A site with none of its own gets the lock and the ask.
 const { slug } = Astro.props as { slug: string };
-const locked = !facetAvailable(slug, "legal");
-const facet = RECORD_FACETS.legal;
 
 const meetings = hasFeed("meetings") ? loadFeed<MeetingItem[]>("meetings") : [];
 const sorted = [...meetings].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
 
 // Only show docs whose source is present in this checkout.
 const present = new Set((await getCollection("legal")).map((e) => e.id));
-const docs = locked ? [] : scopedLegal(slug).filter((d) => present.has(d.slug) && legalBySlug.has(d.slug));
+const docs = scopedLegal(slug).filter((d) => present.has(d.slug) && legalBySlug.has(d.slug));
 const groups = LEGAL_GROUPS.filter((g) => docs.some((d) => d.group === g));
 ---
 
 <Base title="Legal history" section="site">
-  {locked ? (
-    <article class="prose">
-      <h1>Legal history</h1>
-      <SectionLocked section={facet.section} label={facet.label} />
-    </article>
-  ) : (
   <article class="prose">
     <h1>Legal history</h1>
     <p class="section-lead">
@@ -109,5 +102,4 @@ const groups = LEGAL_GROUPS.filter((g) => docs.some((d) => d.group === g));
       ))
     }
   </article>
-  )}
 </Base>

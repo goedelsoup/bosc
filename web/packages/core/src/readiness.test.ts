@@ -4,7 +4,9 @@ import { join } from "node:path";
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import { LENS_ORDER, type LensId } from "./lenses";
 import {
+  availableFacetPaths,
   domainPresent,
+  facetAvailable,
   facilityLoadAvailable,
   facilityState,
   isAvailable,
@@ -12,13 +14,18 @@ import {
   lensAvailable,
   lensStatus,
   lockedSections,
+  openSectionPaths,
+  RECORD_FACETS,
+  type RecordFacet,
   SECTION_META,
   type ReadinessSection,
   sectionStatus,
   siteDomainStates,
   siteReadiness,
+  siteRouteOffered,
   siteTier,
 } from "./readiness";
+import { selectableSitePaths } from "./sites";
 
 // Pinned against the committed full-vs-partial fixture pair: `sites/lima` (the live
 // reference build, every feed) vs `sites/fort-wayne` (a real partial peer — the Project
@@ -409,5 +416,92 @@ describe("a Backdrop-staged peer (floor data only)", () => {
     const r = await loadReadiness(root);
     expect(r.siteTier("legacy")).toBe("stub");
     expect(r.sectionStatus("legacy", "environment")).toBe("locked");
+  });
+});
+
+// --- the route half of the gate (#1894, epic #1884 phase 10) ------------------
+//
+// #1908 made `facetOffered` one gate with three consumers — the landing that draws the door, the
+// route that emits the leaf, the walk that indexes it — and deliberately stopped short of the
+// record facets and the reports section, whose pages kept building everywhere and rendering a lock.
+// Measured against `dist/`, those locks were linked from no door and named by no search row: 17
+// unreachable pages. These are the two gates that closed that, plus the link-side predicate that
+// keeps a hand-written cross-link from outliving the page it points at.
+
+describe("availableFacetPaths (#1894)", () => {
+  it("emits a facet's route only where the facet actually opens", () => {
+    for (const facet of Object.keys(RECORD_FACETS) as RecordFacet[]) {
+      const emitted = availableFacetPaths(facet).map((p) => p.props.slug);
+      const open = selectableSitePaths()
+        .map((p) => p.props.slug)
+        .filter((slug) => facetAvailable(slug, facet));
+      expect(emitted, `${facet}: route set disagrees with the door's gate`).toEqual(open);
+    }
+  });
+
+  it("still emits the reference build, which opens every facet", () => {
+    for (const facet of Object.keys(RECORD_FACETS) as RecordFacet[]) {
+      expect(
+        availableFacetPaths(facet).map((p) => p.props.slug),
+        facet,
+      ).toContain("lima");
+    }
+  });
+
+  it("withholds at least one facet from at least one peer — otherwise this asserts nothing", () => {
+    // Fort Wayne carries the Zodiac campus and no timeline / people / exhibits. If the fixtures ever
+    // fill in so completely that no facet is withheld anywhere, the assertions above go vacuous and
+    // this is the line that says so.
+    const withheld = (Object.keys(RECORD_FACETS) as RecordFacet[]).filter(
+      (f) => availableFacetPaths(f).length < selectableSitePaths().length,
+    );
+    expect(withheld.length).toBeGreaterThan(0);
+  });
+});
+
+describe("openSectionPaths (#1894)", () => {
+  it("emits a section's interior pages only where the section is open", () => {
+    const emitted = openSectionPaths("reports").map((p) => p.props.slug);
+    expect(emitted).toContain("lima");
+    for (const slug of emitted) expect(isAvailable(slug, "reports"), slug).toBe(true);
+  });
+
+  it("locks the reports section on a peer — the seven companions used to render one lock each", () => {
+    const locked = selectableSitePaths()
+      .map((p) => p.props.slug)
+      .filter((slug) => !isAvailable(slug, "reports"));
+    expect(locked.length, "no peer locks reports — this asserts nothing").toBeGreaterThan(0);
+    const emitted = new Set(openSectionPaths("reports").map((p) => p.props.slug));
+    for (const slug of locked) expect(emitted.has(slug), slug).toBe(false);
+  });
+});
+
+describe("siteRouteOffered (#1894)", () => {
+  it("answers for a report companion the way the section gate does", () => {
+    for (const { props } of selectableSitePaths()) {
+      expect(siteRouteOffered(props.slug, "/reports/the-load-and-the-grid"), props.slug).toBe(
+        isAvailable(props.slug, "reports"),
+      );
+    }
+  });
+
+  it("answers for a record facet the way the facet gate does, trailing slash or not", () => {
+    for (const { props } of selectableSitePaths()) {
+      const want = facetAvailable(props.slug, "people");
+      expect(siteRouteOffered(props.slug, "/site/people/"), props.slug).toBe(want);
+      expect(siteRouteOffered(props.slug, "/site/people"), props.slug).toBe(want);
+    }
+  });
+
+  it("defaults open for a route no gate claims", () => {
+    // A study reference may point at `/methodology`; a caller must be able to ask about any path
+    // without special-casing. This is the ONE place that defaults open.
+    expect(siteRouteOffered("fort-wayne", "/methodology")).toBe(true);
+    expect(siteRouteOffered("fort-wayne", "/site/")).toBe(true);
+  });
+
+  it("ignores a fragment or query on the way in", () => {
+    expect(siteRouteOffered("lima", "/reports/the-load-and-the-grid#chain")).toBe(true);
+    expect(siteRouteOffered("lima", "/site/people/?q=x")).toBe(true);
   });
 });

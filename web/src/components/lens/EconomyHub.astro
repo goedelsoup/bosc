@@ -14,7 +14,7 @@ import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { EconomicBaseline } from "@watermark/core/feeds";
 import { buildGridBackdrop } from "@watermark/core/gridBackdrop";
 import { sectorEmployment, topSectors } from "@watermark/core/hubLede";
-import { facilityLoadAvailable } from "@watermark/core/readiness";
+import { facilityLoadAvailable, siteRouteOffered } from "@watermark/core/readiness";
 import { withBase, withSite } from "@watermark/core/site";
 import type { FigureStatData } from "@watermark/core/viz";
 import { activeStory, chapterHref } from "@watermark/core/walk";
@@ -79,7 +79,9 @@ const ledeFigures: FigureStatData[] = [
 const story = activeStory();
 const costChapter = story?.chapters.find((c) => c.slug === "cost");
 const related: { label: string; href: string; note: string }[] = [
-  ...(facilityLoadAvailable(slug)
+  // Two gates: the site has to have a load worth reading, AND it has to build the companion at all
+  // — a peer whose `reports` section is locked no longer does (#1894).
+  ...(facilityLoadAvailable(slug) && siteRouteOffered(slug, "/reports/end-use-and-workloads")
     ? [
         {
           label: "End-use & workloads",

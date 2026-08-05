@@ -7,7 +7,7 @@
  */
 import { hasFeed } from "@watermark/core/bundle";
 import { isGlobalRoute } from "@watermark/core/rehype-doc-links";
-import { facetOfferedAt } from "@watermark/core/readiness";
+import { siteRouteOffered } from "@watermark/core/readiness";
 import type { StudyReference } from "@watermark/core/study";
 import { withBase, withSite } from "@watermark/core/site";
 
@@ -17,12 +17,13 @@ interface Props {
 }
 const { references, slug } = Astro.props as Props;
 // Two gates, because a reference can point at two kinds of thing. `requiresFeed` is the annex's own
-// declaration, for a target that isn't a lens leaf. `facetOfferedAt` asks the LENS declaration about
-// one that is (#1908) — the groundwater annex named no feed of its own and pointed at a page that
-// only exists where a drawdown or dewatering feed does, which was harmless only while that page
-// built everywhere and said "nothing modeled here yet".
+// declaration, for a target that isn't gated elsewhere. `siteRouteOffered` asks the target's OWN
+// declaration whether this site builds it (#1908, widened by #1894) — the groundwater annex named no
+// feed of its own and pointed at a lens leaf that only exists where a drawdown or dewatering feed
+// does; four chapters point at a `/reports/` companion that a locked peer no longer builds. Both
+// were harmless only while those pages built everywhere and rendered a lock.
 const offered = references.filter(
-  (r) => (!r.requiresFeed || hasFeed(r.requiresFeed, slug)) && facetOfferedAt(slug, r.path),
+  (r) => (!r.requiresFeed || hasFeed(r.requiresFeed, slug)) && siteRouteOffered(slug, r.path),
 );
 // Network-global sections keep their root paths — the shared GLOBAL_ROUTE vocabulary
 // (`rehype-doc-links`), so this list and the doc-link rewriter can never drift.

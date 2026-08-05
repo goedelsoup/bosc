@@ -272,7 +272,6 @@ const ROOT: TrailNode = {
     // a humanized slug — so `disclosure` reads "Disclosure" by declaration, and a sixth lens
     // arrives with a crumb already written rather than with one nobody remembered to add.
     lens: { label: "Lenses", slash: true, children: { [PARAM]: { label: lensLabel } } },
-    "locked-preview": { label: "Site Locked — preview" },
     methodology: { label: "Methodology", children: { [PARAM]: { label: humanize, fromTitle: true } } },
     network: {
       label: "All sites",
@@ -288,14 +287,16 @@ const ROOT: TrailNode = {
     privacy: { label: "Privacy" },
     research: { label: "Research", children: { hypotheses: { label: "The three hypotheses" } } },
     search: { label: "Search" },
+    // Dev-only since #1894 — `pages/showcase/[gallery].astro` emits nothing in a production build.
+    // The declaration stays because the routes are still SERVED by `astro dev`, where the trail is
+    // rendered by `Base.astro` exactly as it is anywhere else. One PARAM child rather than three
+    // literals because the three galleries are now one dynamic route (a static page always emits;
+    // `getStaticPaths` is the only place one can decline to), and `trailDeclared` matches the route
+    // PATTERN `/showcase/*`, which no enumeration of concrete slugs can satisfy.
     showcase: {
       label: "Component previews",
       unlinked: true,
-      children: {
-        charts: { label: "Chart set" },
-        icons: { label: "Icon set" },
-        teardown: { label: "Record Teardown" },
-      },
+      children: { [PARAM]: { label: galleryLabel } },
     },
     submit: { label: "Submit a tip or correction" },
     wiki: {
@@ -337,6 +338,16 @@ function siteLabel(segment: string): string {
 function lensLabel(segment: string): string {
   const lens = LENS_ORDER.find((id) => id === segment);
   return lens ? LENSES[lens].name : humanize(segment);
+}
+
+/** A component gallery's crumb (dev-only routes, #1894) — the board's name, not its URL slug. */
+const GALLERY_LABELS: Record<string, string> = {
+  charts: "Chart set",
+  icons: "Icon set",
+  teardown: "Record Teardown",
+};
+function galleryLabel(segment: string): string {
+  return GALLERY_LABELS[segment] ?? humanize(segment);
 }
 
 export interface TrailOptions {

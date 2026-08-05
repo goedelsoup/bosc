@@ -132,28 +132,30 @@ describe("the coverage declaration", () => {
     expect(buildSiteSearchIndex(peer!.slug).map((d) => d.url)).toContain(root);
   });
 
-  it("represents a held story's interior by the row that IS indexed", () => {
-    // The `represented` contract: the note names the row, and the routes it excuses are exactly the
-    // ones that render the same interstitial. Derived from the registry, so a story going readable
-    // returns its chapters to the denominator on that edit rather than on a later cleanup.
-    const family = COVERAGE_FAMILIES.find((f) => f.label === "A held story's interior routes");
-    expect(family).toBeDefined();
-    expect(family!.verdict).toBe("represented");
-    const re = new RegExp(family!.pattern);
+  it("no longer excuses a held story's interior — the routes are gone, not declared (#1894)", () => {
+    // This was a `represented` family: a `comingSoon` story served the identical interstitial at its
+    // contents page and every chapter, so indexing eight near-identical "coming soon" rows would
+    // have been worse than indexing one. True — and the family was excusing eleven routes that no
+    // page linked either, which makes them orphans rather than represented content. #1894 stopped
+    // building them. What must hold now is that nothing excuses them back into existence, and that
+    // the story ROOT — the row a reader searching the walk's name lands on — is still indexed.
     const held = SITES.flatMap((s) => comingSoonStories(s.slug).map((ref) => ({ s, ref })));
-    expect(held.length).toBeGreaterThan(0);
+    expect(held.length, "no story is held — this asserts nothing").toBeGreaterThan(0);
     for (const { s, ref } of held) {
       const root = `${siteBase(s.slug)}/stories/${ref.codename}/`;
-      expect(re.test(`${root}contents/`), `${s.slug}: contents not represented`).toBe(true);
-      expect(re.test(`${root}water/`), `${s.slug}: a chapter not represented`).toBe(true);
-      // The root itself is a real row, so it must stay in the denominator and be counted covered.
-      expect(re.test(root), `${s.slug}: the story root excused instead of indexed`).toBe(false);
+      const claims = (route: string) =>
+        COVERAGE_FAMILIES.filter((f) => new RegExp(f.pattern).test(route)).map((f) => f.label);
+      expect(claims(`${root}contents/`), `${s.slug}: contents still excused`).toEqual([]);
+      expect(claims(`${root}water/`), `${s.slug}: a chapter still excused`).toEqual([]);
+      expect(claims(root), `${s.slug}: the story root excused instead of indexed`).toEqual([]);
+      expect(buildSiteSearchIndex(s.slug).map((d) => d.url)).toContain(root);
     }
-    // A readable story's chapters are separate destinations and must NOT be excused.
+    // A readable story's chapters are separate destinations and must not be excused either.
     const readable = SITES.flatMap((s) => surfacedStories(s.slug).map((ref) => ({ s, ref })));
     expect(readable.length).toBeGreaterThan(0);
     for (const { s, ref } of readable) {
-      expect(re.test(`${siteBase(s.slug)}/stories/${ref.codename}/water/`)).toBe(false);
+      const chapter = `${siteBase(s.slug)}/stories/${ref.codename}/water/`;
+      expect(COVERAGE_FAMILIES.filter((f) => new RegExp(f.pattern).test(chapter))).toEqual([]);
     }
   });
 

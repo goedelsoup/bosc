@@ -30,7 +30,7 @@ import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import SectionLocked from "~/components/SectionLocked.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
 import { buildDemandPressure, buildGridBackdrop } from "@watermark/core/gridBackdrop";
-import { facilityLoadAvailable } from "@watermark/core/readiness";
+import { facilityLoadAvailable, siteRouteOffered } from "@watermark/core/readiness";
 import type { ProvenancedValue } from "@watermark/core/feeds";
 import { withBase, withSite } from "@watermark/core/site";
 
@@ -39,6 +39,11 @@ const backdrop = buildGridBackdrop(slug);
 // Facility-gated twice over: the feed is absent without a disclosed campus, and a screening-only
 // facility withholds the load read entirely (#1630) rather than presenting a bracket as settled.
 const pressure = facilityLoadAvailable(slug) ? buildDemandPressure(slug) : null;
+// The companion report is a `reports`-section page, and a peer whose section is locked no longer
+// builds it (#1894) — so the sentence that points at it is offered on the same terms the page is.
+const loadReport = siteRouteOffered(slug, "/reports/the-load-and-the-grid")
+  ? withSite("/reports/the-load-and-the-grid")
+  : null;
 
 const num = (v?: ProvenancedValue | null, digits = 0): string =>
   v?.value == null ? "—" : v.value.toLocaleString("en-US", { maximumFractionDigits: digits });
@@ -162,9 +167,12 @@ const kappaBand =
             The disclosed campus draws <strong>~{Math.round(backdrop.campus.loadMw)} MW</strong>,
             which at a {backdrop.campus.loadFactor} load factor is
             <strong> ~{gwh(backdrop.campus.annualGwh)} GWh/yr</strong> — the numerator of every
-            share in the table above. That draw is itself an <code>[inference]</code>; the
-            <a href={withSite("/reports/the-load-and-the-grid")}> load report</a> walks the chain
-            that produces it.
+            share in the table above. That draw is itself an <code>[inference]</code>.
+            {loadReport && (
+              <Fragment>
+                {" "}The <a href={loadReport}>load report</a> walks the chain that produces it.
+              </Fragment>
+            )}
           </p>
         )}
 

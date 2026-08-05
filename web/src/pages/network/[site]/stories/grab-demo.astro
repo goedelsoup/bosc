@@ -4,14 +4,17 @@
  * (a record, a timeline event, a figure) into a Story-in-progress while reading ordinary site
  * content, and the persistent non-modal tray it drops into. This is the integration reference for
  * wiring grab pins onto real content pages; it renders sample content so the affordance and its
- * states are legible in one place. Always available (no live data), so it isn't gated.
+ * states are legible in one place. It needs no live data — but it demonstrates an affordance that
+ * does not exist while Stories is dark, so it emits with the other three tools (`storyToolPaths`),
+ * not on its own terms (#1894).
  */
 import Base from "~/layouts/Base.astro";
 import StoryGrab from "@watermark/viz/islands/stories/StoryGrab.tsx";
 import { withSite } from "@watermark/core/site";
-import { activeSite, selectableSitePaths, siteForSlug } from "@watermark/core/sites";
+import { activeSite, siteForSlug } from "@watermark/core/sites";
+import { storyToolPaths } from "@watermark/core/storiesFlag";
 
-export const getStaticPaths = selectableSitePaths;
+export const getStaticPaths = storyToolPaths;
 
 const { slug } = Astro.props as { slug: string };
 const site = siteForSlug(slug) ?? activeSite();

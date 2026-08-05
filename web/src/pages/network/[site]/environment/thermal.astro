@@ -1,5 +1,5 @@
 ---
-import { offeredFacetPaths } from "@watermark/core/readiness";
+import { offeredFacetPaths, siteRouteOffered } from "@watermark/core/readiness";
 // Built only where the Environment/Land landing offers this door (#1908): the leaf route,
 // the door and the search row share ONE gate (`lenses.ts` declares it, `facetOffered` reads
 // it), so this page can no longer exist on a site whose landing correctly withholds it.
@@ -29,8 +29,14 @@ import { CHRONIC_FLOW_LABEL, buildThermal, flowAt, warmestMixedC } from "@waterm
 
 // Every derivation lives in `@watermark/core/thermal` (and is unit-tested there); this file is the
 // render. `null` for a site whose bundle carries no screen — it never borrows the reference site's.
+const { slug } = Astro.props as { slug: string };
 const t = buildThermal();
 const meta = t?.meta ?? null;
+// The chemistry companion is a `reports`-section page; a peer whose section is locked no longer
+// builds it (#1894), so the clause pointing at it is offered on the same terms the page is.
+const toxicsReport = siteRouteOffered(slug, "/reports/toxics-and-the-corridor")
+  ? withSite("/reports/toxics-and-the-corridor")
+  : null;
 // The lead paragraph renders before the feed gate, so it needs a river name that reads generically
 // rather than naming another site's water.
 const river = t?.river ?? "the receiving water";
@@ -512,8 +518,12 @@ const pctOf = (f: number | null | undefined): string =>
       t && (
         <p class="card-meta cross-link">
           The volume side of the same cooling load is on the{" "}
-          <a href={withSite("/environment/hydrology")}>water balance</a> page; the chemistry side is
-          in <a href={withSite("/reports/toxics-and-the-corridor")}>toxics and the corridor</a>.
+          <a href={withSite("/environment/hydrology")}>water balance</a> page
+          {toxicsReport ? (
+            <Fragment>
+              ; the chemistry side is in <a href={toxicsReport}>toxics and the corridor</a>
+            </Fragment>
+          ) : null}.
           Source: <code>{meta?.source}</code>
         </p>
       )

@@ -13,7 +13,7 @@
 #  - NO rule for `/`: it's the real directory hub now (served statically).
 #  - NO `/submit` / `/research` / `/network/*` broad rules: those are real pages now.
 #  - `/walk/crops/*` is a 200 passthrough BEFORE `/walk/*` (teardown crops live at public/walk/crops).
-#  - the per-directory sub-paths (hypotheses/basin/locked-preview) come BEFORE the `/directory/*`
+#  - the per-directory sub-paths (hypotheses/basin) come BEFORE the `/directory/*`
 #    catch-all that maps the old coming-soon URLs onto /network/<slug>.
 
 # Teardown crops — serve as-is before any /walk redirect.
@@ -22,7 +22,6 @@
 # The old /directory tree → its new homes. Specific sub-paths first, then the coming-soon catch-all.
 /directory/hypotheses   /research/hypotheses                                                   301
 /directory/basin        /basin                                                                 301
-/directory/locked-preview  /locked-preview                                                     301
 /directory/*            /network/:splat                                                         301
 /directory              /                                                                      301
 
@@ -68,11 +67,10 @@
 # above so the even-older `<site>/watershed/economics-baseline` chains through this one.
 /network/:site/environment/economics-baseline   /network/:site/economy/economics-baseline        301
 
-# The dev component showcases moved out of the per-site record tree to a network-global
-# `/showcase/*` root (#1333) — they're illustrative design previews, not per-site data.
-/network/:site/site/chart-showcase      /showcase/charts                                       301
-/network/:site/site/icon-showcase       /showcase/icons                                        301
-/network/:site/site/teardown-showcase   /showcase/teardown                                     301
+# The dev component showcases used to live in the per-site record tree, then at a network-global
+# `/showcase/*` root (#1333). #1894 made them a DEV surface — they build in `astro dev` and are
+# absent from the deployed artifact — so the three rules that pointed at them are gone too: a 301
+# onto a route production doesn't serve is a slower 404, not a kindness.
 
 # The per-site glossary collapsed into the network-global wiki (#1892 — one taxonomy per noun):
 # 75 of its 77 entries were byte-identical at every watershed point, so the concept pages build

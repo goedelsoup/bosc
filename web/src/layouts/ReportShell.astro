@@ -13,10 +13,7 @@
  * claims via the `full-report` slot.
  */
 import Base from "./Base.astro";
-import SectionLocked from "../components/SectionLocked.astro";
 import StudyAnnexBanner from "../components/study/StudyAnnexBanner.astro";
-import { activeSite } from "@watermark/core/bundle";
-import { sectionStatus } from "@watermark/core/readiness";
 import { withBase } from "@watermark/core/site";
 
 interface Props {
@@ -33,32 +30,24 @@ interface Props {
 }
 const { title, description, eyebrow, h1, fullReportHref, annexChapters } = Astro.props;
 
-// The companion reports are the network-global Lima analysis — Lima's, today. Gate them at the
-// shell so all seven lock together for a thinner peer (the reports index already does, #787/#781):
-// a peer's report routes still resolve (the mega-menu links straight to them) but show the lock +
-// a contribute CTA instead of borrowing Lima's read. The reference build renders normally.
-const reportsLocked = sectionStatus(activeSite(), "reports") === "locked";
-
-// When locked, the page's own (Lima-authored) title / eyebrow / h1 / description would still leak
-// through the chrome + <head> meta — so swap them for generic Reports copy; the lock body carries
-// the real message.
-const LOCKED_DESC = "Long-form analysis built over the corpus — available once the corpus supports it.";
-const headTitle = reportsLocked ? "Reports" : title;
-const headDesc = reportsLocked ? LOCKED_DESC : description;
+// This shell used to hold the section gate itself: on a thinner peer all seven companions rendered
+// the lock, with their Lima-authored title / eyebrow / h1 / description swapped for generic
+// "Reports" copy so the analysis didn't leak through the chrome and the <head> meta. The gate moved
+// UP to the route (#1894, `openSectionPaths("reports")`) — a locked peer no longer builds these
+// pages at all, so a shell branch for the locked case is unreachable by construction. The lock
+// itself is unchanged and still shown, once, on the `/reports/` index that the site bar links.
 ---
 
-<Base title={headTitle} section="reports" description={headDesc}>
+<Base title={title} section="reports" description={description}>
   <div class="walk-chapter-page">
     <article class="prose">
-      <div class="walk-chapter-eyebrow">{reportsLocked ? "Reports" : eyebrow}</div>
-      <h1 class="walk-chapter-h1">{reportsLocked ? "Reports" : h1}</h1>
-      {!reportsLocked && annexChapters && annexChapters.length > 0 && (
-        <StudyAnnexBanner chapters={annexChapters} />
-      )}
-      {reportsLocked ? <SectionLocked section="reports" /> : <slot name="lead" />}
+      <div class="walk-chapter-eyebrow">{eyebrow}</div>
+      <h1 class="walk-chapter-h1">{h1}</h1>
+      {annexChapters && annexChapters.length > 0 && <StudyAnnexBanner chapters={annexChapters} />}
+      <slot name="lead" />
     </article>
-    {reportsLocked ? null : <slot />}
-    {!reportsLocked && fullReportHref && (
+    <slot />
+    {fullReportHref && (
       <article class="prose">
         <p>
           This is the short, interactive version. The full report walks every claim to its

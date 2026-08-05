@@ -446,6 +446,69 @@ export function facetAvailable(slug: string, facet: RecordFacet): boolean {
   return facetStatus(slug, facet) === "available";
 }
 
+/**
+ * `getStaticPaths` for a record facet: the selectable sites where the facet actually opens.
+ *
+ * #1908 gave the lens facets this treatment and deliberately stopped short of the record facets,
+ * on the reasoning that "their locks are real destinations with a real ask on them". Measured
+ * against the build (#1894), they were not destinations at all. `site/index.astro` drops a locked
+ * facet's door (#1886) and `search.ts` skips its row (#1908) — so the page it left standing was
+ * reachable from no link and findable by no query, on every peer, forever. A lock nobody can arrive
+ * at makes no ask; it is a 404 with a nicer body.
+ *
+ * The ask itself is not lost, which is what makes this safe: the record index renders the locked
+ * facets as its needs board, in place, beside the doors that did open. That is a better ask than a
+ * separate page anyway — it is where the reader already is.
+ *
+ * Same three-consumer shape as {@link facetOffered}, one band down: the door, the row and now the
+ * route all read `facetAvailable`, so a facet cannot open in one and stay shut in the others.
+ */
+export function availableFacetPaths(
+  facet: RecordFacet,
+): Array<{ params: { site: string }; props: { slug: string } }> {
+  return selectableSitePaths().filter((p) => facetAvailable(p.props.slug, facet));
+}
+
+/**
+ * `getStaticPaths` for a page inside a gated section — today the seven `/reports/<slug>` companions.
+ *
+ * The reports were the same defect as the record facets above, one band up and louder: seven routes
+ * per site, each rendering the IDENTICAL lock, because `ReportShell` swapped its Lima-authored
+ * title, eyebrow and body for generic "Reports" copy whenever the section was locked. Twenty-eight
+ * built pages across the four selectable sites said one thing, and twelve of them were reachable
+ * from nowhere. The section's own index still builds on every site and still carries the lock and
+ * the contribute CTA — it is in the site bar, so a reader can actually get to it.
+ */
+export function openSectionPaths(
+  section: ReadinessSection,
+): Array<{ params: { site: string }; props: { slug: string } }> {
+  return selectableSitePaths().filter((p) => isAvailable(p.props.slug, section));
+}
+
+/**
+ * Does this site actually BUILD the site-relative route `path`? The link-side peer of the three
+ * `getStaticPaths` gates above (#1894).
+ *
+ * {@link facetOfferedAt} answered this for the lens leaves and is subsumed here. Once a route stops
+ * building everywhere, every hand-written cross-link into it becomes a potential 404 — the study's
+ * reference annex, the grid page's "the load report walks the chain", the economy hub's tiles. They
+ * were all correct while the page existed on every site and rendered a lock, which is exactly why
+ * the lock pages were load-bearing, and exactly what made them unfindable orphans.
+ *
+ * Defaults OPEN for any route no gate claims, so a caller can ask this of an arbitrary path (a
+ * study reference may point at `/methodology`) without special-casing. Three families are claimed:
+ * a `/reports/<slug>` companion, a record facet, and a lens facet.
+ */
+export function siteRouteOffered(slug: string, path: string): boolean {
+  const bare = path.split("#")[0].split("?")[0];
+  if (/^\/reports\/[^/]+\/?$/.test(bare)) return isAvailable(slug, "reports");
+  const facet = (Object.keys(RECORD_FACETS) as RecordFacet[]).find(
+    (f) => RECORD_FACETS[f].route.replace(/\/$/, "") === bare.replace(/\/$/, ""),
+  );
+  if (facet) return facetAvailable(slug, facet);
+  return facetOfferedAt(slug, bare);
+}
+
 // --- the lens band: a composition over the two gates above (#1913, epic #1911) -------------
 //
 // **Lens is a nav/landing concept; section stays the gating concept**, and the two are allowed to
