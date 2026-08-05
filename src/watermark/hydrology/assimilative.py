@@ -35,6 +35,20 @@ from watermark.logging import get_logger
 log = get_logger(__name__)
 
 
+def _q(value: float) -> str:
+    """Format a cfs figure (or a dilution ratio) without rounding it out of existence.
+
+    Two decimals everywhere they hold the number — every value in this screen used to be one
+    — widening to two significant figures only below 0.01, where two decimals retain at most
+    one significant digit and usually none. Wilmington's Lytle Creek is why (#886): its cited
+    7Q10 is 0.0068 cfs and its chronic dilution 0.0015:1, which ``:.2f`` renders as "0.01 cfs"
+    (a 47% overstatement) and "0.00:1" — a ratio of literally zero, which reads as a missing
+    measurement rather than the network's most effluent-dominated reach. An exact 0.0 keeps
+    "0.00": the Ottawa's cited 1Q10 really is zero, and that is a finding, not a rounding.
+    """
+    return f"{value:.2g}" if value and abs(value) < 0.01 else f"{value:.2f}"
+
+
 def dilution_flag(
     ratio: float,
     *,
@@ -133,12 +147,12 @@ def check_assimilative(
         eff_ratio: float | None = None
         eff_flag: Flag | None = None
         detail = (
-            f"{water} 7Q10 {q7.value:.2f} cfs vs discharge {discharge.value:.2f} cfs "
-            f"-> {ratio:.2f}:1 chronic dilution ({flag})"
+            f"{water} 7Q10 {_q(q7.value)} cfs vs discharge {_q(discharge.value)} cfs "
+            f"-> {_q(ratio)}:1 chronic dilution ({flag})"
         )
         if acute_ratio is not None and acute_low_flow is not None:
             detail += (
-                f"; acute 1Q10 {acute_low_flow.value:.2f} cfs -> {acute_ratio:.2f}:1 ({acute_flag})"
+                f"; acute 1Q10 {_q(acute_low_flow.value)} cfs -> {_q(acute_ratio)}:1 ({acute_flag})"
             )
         if credited > 0.0 and others:
             upstream_returns = ProvenancedValue.derived(
@@ -155,8 +169,8 @@ def check_assimilative(
             eff_ratio = (q7.value + credited) / discharge.value if discharge.value else 0.0
             eff_flag = dilution_flag(eff_ratio)
             detail += (
-                f"; effluent-credited {q7.value:.2f}+{credited:.2f} cfs -> "
-                f"{eff_ratio:.2f}:1 ({eff_flag})"
+                f"; effluent-credited {_q(q7.value)}+{_q(credited)} cfs -> "
+                f"{_q(eff_ratio)}:1 ({eff_flag})"
             )
 
         checks.append(

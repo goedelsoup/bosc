@@ -150,6 +150,11 @@ def load_acute_low_flows(*, settings: Settings | None = None) -> dict[str, Prove
     the acute dilution ratio is simply not computed for it. A cited 1Q10 of exactly 0 cfs (the
     Ottawa mainstem, which stops at design low flow) is kept — it is the honest "zero acute
     assimilative capacity" signal, not a missing value.
+
+    The 1Q10 inherits its stream entry's own ``source`` and ``confidence``. It used to be
+    hardcoded ``document``, which was harmless while every entry was a fact-sheet transcription
+    and became a provenance lie the moment the table admitted its first ``source: derived``
+    entry (Wilmington's Lytle Creek, the verified-negative exception — #886).
     """
     settings = settings or get_settings()
     path = _reference_path(settings)
@@ -165,11 +170,13 @@ def load_acute_low_flows(*, settings: Settings | None = None) -> dict[str, Prove
         if one is None:
             continue
         cite = entry.get("citation")
+        source = str(entry.get("source", "document"))
+        label = "1Q10 (acute design flow)" if source == "document" else "1Q10 (acute, DERIVED)"
         out[_normalize(str(name))] = ProvenancedValue(
             value=float(one),
             unit="cfs",
-            source="document",
-            citation=f"1Q10 (acute design flow) — {cite}" if cite else "cited 1Q10",
+            source=source,
+            citation=f"{label} — {cite}" if cite else label,
             confidence=str(entry.get("confidence", "high")),
         )
     return out
@@ -191,15 +198,27 @@ def low_flow_context(receiving_water: str, *, settings: Settings | None = None) 
 
 
 def _seasonal_value(
-    raw: Any, label: str, stream_citation: str | None, note: str | None
+    raw: Any,
+    label: str,
+    stream_citation: str | None,
+    note: str | None,
+    *,
+    source: str = "document",
+    confidence: str = "high",
 ) -> ProvenancedValue | None:
-    """Wrap one cited seasonal design low flow as a provenanced value (``None`` if absent)."""
+    """Wrap one cited seasonal design low flow as a provenanced value (``None`` if absent).
+
+    ``source``/``confidence`` come from the stream's own entry rather than being assumed
+    ``document``/``high`` — the same provenance fix as :func:`load_acute_low_flows` (#886).
+    """
     if raw is None:
         return None
     cite = f"{label} — {stream_citation}" if stream_citation else label
     if note:
         cite = f"{cite} ({note})"
-    return ProvenancedValue.from_document(float(raw), "cfs", citation=cite, confidence="high")
+    return ProvenancedValue(
+        value=float(raw), unit="cfs", source=source, citation=cite, confidence=confidence
+    )
 
 
 def seasonal_low_flows(
@@ -226,7 +245,13 @@ def seasonal_low_flows(
             return None, None
         cite = entry.get("citation")
         note = ctx.get("note")
-        summer = _seasonal_value(ctx.get("thirty_q10_summer_cfs"), "summer 30Q10", cite, note)
-        one = _seasonal_value(ctx.get("one_q10_cfs"), "driest-day 1Q10", cite, note)
+        prov = {
+            "source": str(entry.get("source", "document")),
+            "confidence": str(entry.get("confidence", "high")),
+        }
+        summer = _seasonal_value(
+            ctx.get("thirty_q10_summer_cfs"), "summer 30Q10", cite, note, **prov
+        )
+        one = _seasonal_value(ctx.get("one_q10_cfs"), "driest-day 1Q10", cite, note, **prov)
         return summer, one
     return None, None

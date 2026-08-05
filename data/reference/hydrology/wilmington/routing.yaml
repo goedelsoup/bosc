@@ -1,0 +1,31 @@
+# Discharge routing for the Wilmington, OH watershed point (#886).
+#
+# One plant, one outfall, one receiving stream. The purpose of this file is narrow but
+# load-bearing: it supplies the STRUCTURED `design_flow_mgd` that
+# `watermark.hydrology.balance` reads as the numerator of the assimilative screen (WS-22,
+# issue 1622). Without it the balance falls back to a regex over the watch-items summary
+# prose — which here reads "3.0 MGD (expanding to 4.5 MGD ...)", i.e. TWO MGD tokens — and
+# takes the first one while logging `hydro.design_flow.regex_fallback` and warning about an
+# "expansion". That was tolerable while Lytle Creek had no cited low flow and the screen
+# produced nothing; once the reach carries a 7Q10 (#886) the design flow becomes the
+# numerator of a real dilution finding, and a load-bearing number must not be sourced by
+# regex over prose.
+#
+# No `bosc_routing` block: the BOSC forcemains are a Lima-loop object and a sibling site
+# never inherits them (#829).
+#
+# WHICH design flow. The committed value is the CURRENT permitted average design flow,
+# 3.0 MGD. The PTI #1543170 expansion to 4.5 MGD (new limits effective 2026-03-01) is
+# recorded in the citation but is deliberately NOT the modelled value: the expanded plant
+# is not built, and the screen's job is to characterise the discharge on record. The
+# expansion changes the finding by almost nothing anyway — 99.85% effluent becomes 99.90%
+# — because on a 0.0068 cfs reach there was never any dilution to lose. See
+# data/extracted/wilmington/low-flow-screen.md §2.6.
+
+wwtp_receiving:
+  wilmington-wwtp:
+    receiving_water: Lytle Creek
+    design_flow_mgd: 3.0  # permitted average design flow (current; 4.5 after PTI #1543170)
+    status: confirmed
+    confidence: high
+    citation: "Ohio EPA NPDES fact sheet 1PD00013.fs (2023-05-19) for NPDES OH0028134 / 1PD00013*QD, City of Wilmington WWTP — outfall 001 to Lytle Creek at RM 6.83 (475 S Nelson Ave); average daily design flow 3.0 MGD, peak hydraulic 6.25 MGD; PTI #1543170 expands these to 4.5 / 9.0 MGD with limits effective 2026-03-01. Source data/documents/oepa/wilmington/1PD00013.fs.pdf; structured read data/extracted/oepa/wilmington/1PD00013.fs.npdes.yaml. [verified]"

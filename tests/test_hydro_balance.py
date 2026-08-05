@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
+
 import pytest
 
 from watermark.config import Settings
@@ -24,8 +26,43 @@ def test_cited_low_flows_load(hydro_settings: Settings) -> None:
     assert flows["pike run"].value == pytest.approx(0.03)
     # Both are read straight from Ohio EPA fact sheets — document-sourced and cited.
     for pv in flows.values():
-        assert pv.source == "document"
         assert pv.citation
+        assert pv.source in {"document", "derived"}
+
+
+def test_derived_low_flow_entries_disclose_their_weakness(hydro_settings: Settings) -> None:
+    """The verified-negative exception must stay narrow and self-disclosing (#886).
+
+    ``low-flow-7q10.yaml`` is the cited regulatory table, and it admits a ``source: derived``
+    entry only where the fact sheet demonstrably states no design low flow at all. That
+    exception is worth exactly as much as its disclosure, so an entry taking it must not be
+    able to pass as a cited one: it carries ``confidence: low`` and says in its own citation
+    that it is derived. Wilmington's Lytle Creek is the case; if a second reach ever takes the
+    exception, this holds it to the same bar rather than letting the precedent widen quietly.
+    """
+    flows = lowflow.load_low_flows(settings=hydro_settings)
+    derived = {name: pv for name, pv in flows.items() if pv.source != "document"}
+    assert set(derived) == {"lytle creek"}, (
+        "a new source: derived entry appeared in the CITED low-flow table — that is allowed "
+        "only under the verified-negative exception documented in that file's header; add it "
+        "here deliberately, never by widening this assertion to make a test pass"
+    )
+    for name, pv in derived.items():
+        assert pv.confidence == "low", f"{name}: a derived design low flow is not high-confidence"
+        assert pv.citation and "DERIVED" in pv.citation, (
+            f"{name}: the citation must say it is derived, so it can never be quoted as cited"
+        )
+
+    # The acute peer reads the same entry's provenance rather than relabelling it `document`.
+    acute = lowflow.load_acute_low_flows(settings=hydro_settings)
+    assert acute["lytle creek"].source == "derived"
+    assert acute["lytle creek"].confidence == "low"
+
+    # The seasonal peer too. Lytle Creek carries no summer 30Q10 — only the ANNUAL 30Q10 was
+    # derived — so the summer floor must be absent rather than silently filled from it.
+    summer, one_q10 = lowflow.seasonal_low_flows("Lytle Creek", settings=hydro_settings)
+    assert summer is None
+    assert one_q10 is not None and one_q10.source == "derived"
 
 
 def test_low_flow_lookup_normalizes_river_mile(hydro_settings: Settings) -> None:
@@ -379,3 +416,44 @@ def test_check_skips_uncited_receiving_water(hydro_settings: Settings) -> None:
     checks = check_assimilative(balance, flows)
     assert "Ottawa River" not in {c.receiving_water for c in checks}
     assert assimilative_findings(checks)  # the tributary checks still produced findings
+
+
+def test_wilmington_reach_is_screened_end_to_end(
+    hydro_settings_for: Callable[[str], Settings],
+) -> None:
+    """Wilmington's balance produces a real assimilative check, not "no cited 7Q10" (#886).
+
+    The acceptance shape of that issue: the receiving water is named, the design flow comes
+    from the STRUCTURED routing table rather than a regex over watch-items prose, and the
+    screen actually divides. The numbers pin the finding — at design low flow the reach below
+    outfall 001 *is* the effluent, ~0.0015:1 dilution.
+    """
+    settings = hydro_settings_for("wilmington")
+    balance = build_water_balance(settings=settings, live=False)
+    plants = balance.by_role("wwtp")
+    assert len(plants) == 1
+    wwtp = plants[0]
+    assert wwtp.node.receiving_water == "Lytle Creek"
+    assert wwtp.return_flow is not None
+    # 3.0 MGD from routing.yaml's structured design_flow_mgd. If this ever reads as a regex
+    # fallback the citation loses the fact-sheet reference and the balance warns about an
+    # "expansion" (the summary prose carries both 3.0 and 4.5 MGD).
+    assert wwtp.return_flow.value == pytest.approx(4.6417, abs=1e-3)
+    assert "1PD00013" in (wwtp.return_flow.citation or "")
+    assert not [w for w in balance.warnings if "expansion" in w]
+
+    checks = check_assimilative(
+        balance,
+        lowflow.load_low_flows(settings=settings),
+        lowflow.load_acute_low_flows(settings=settings),
+    )
+    assert len(checks) == 1
+    check = checks[0]
+    assert check.design_low_flow.value == pytest.approx(0.0068)
+    assert check.design_low_flow.source == "derived"  # never presented as fact-sheet cited
+    assert check.dilution_ratio == pytest.approx(0.00146, abs=1e-4)
+    assert check.flag == "violation"
+    # The finding must survive rendering: at this magnitude two decimals round the 7Q10 up by
+    # 47% and the ratio to a flat "0.00:1", which reads as no measurement at all.
+    assert "0.0068 cfs" in check.detail
+    assert "0.0015:1" in check.detail

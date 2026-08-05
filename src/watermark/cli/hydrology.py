@@ -962,15 +962,33 @@ def scenario(
     rw = delta.receiving_water_name or "receiving water"
     q7 = delta.receiving_7q10_cfs
     live_flow = build.receiving_live.value if build.receiving_live else None
+    # "on the {rw} supply" was wrong wherever a site's supply and its receiving water are not
+    # the same waterbody (#886). Wilmington's are not: the campus draws contracted storage from
+    # Caesar Creek Lake and sewers to Lytle Creek, and the low-flow screen forbids mixing those
+    # two threads. The loss is a BASIN loss — which is what the table column already calls it —
+    # and the receiving water is named on its own line below, where it belongs.
     console.print(
         f"\n[bold red]Buildout adds {delta.consumptive_increase_cfs:,.2f} cfs[/] of net "
-        f"consumptive draw on the {rw} supply."
+        "consumptive basin loss."
     )
-    if delta.multiple_of_7q10 is not None:
+    q7_pv = build.receiving_7q10
+    if delta.multiple_of_7q10 is not None and q7_pv is not None:
+        tag = "cited" if q7_pv.source == "document" else q7_pv.source
         console.print(
-            f"That is [bold]{delta.multiple_of_7q10:g}x[/] the {rw}'s cited 7Q10 "
-            f"low flow ({q7:g} cfs)"
-            + (f"; live flow now {live_flow:,.0f} cfs." if live_flow else ".")
+            f"That is [bold]{delta.multiple_of_7q10:g}x[/] the {rw}'s {tag} 7Q10 "
+            f"low flow ({q7:g} cfs)."
+        )
+    elif q7_pv is None:
+        console.print(
+            f"[dim]No committed 7Q10 for {rw} — the draw is reported unscaled rather than "
+            "screened against a denominator that does not exist.[/]"
+        )
+    # The live reading is attributed to its GAGE, not to the receiving water — on a site whose
+    # nearest active gage is on another river (Wilmington), "{rw} live flow" would contradict
+    # the screen it sits beside. The citation carries the caveat in that case (#886).
+    if live_flow is not None and build.receiving_live is not None:
+        console.print(
+            f"[dim]Live gage flow {live_flow:,.0f} cfs — {build.receiving_live.citation}[/]"
         )
     # Seasonal screen: the draw against the regulatory summer-season design low flow (the cited
     # permit window, #1624). The basis rides along so a hybrid facility's draw is month-varying.
@@ -986,10 +1004,19 @@ def scenario(
             f"({sw.summer_30q10_cfs:g} cfs), vs {sw.annual_multiple:g}x the annual 7Q10. "
             f"The absolute floor is 1Q10 = {sw.one_q10_cfs:g} cfs — no flow to draw against."
         )
+    # Read the low flow's OWN provenance rather than asserting the Lima shape: on Wilmington's
+    # Lytle Creek the fact sheet states no design low flow at all, so the committed value is a
+    # disclosed derivation, and claiming it came from a fact sheet would be a citation to a
+    # document that does not say it (#886).
+    if q7_pv is None:
+        low_flow_basis = f"no 7Q10 is committed for {rw}"
+    elif q7_pv.source == "document":
+        low_flow_basis = f"{rw} 7Q10 is cited from the NPDES permit fact sheet"
+    else:
+        low_flow_basis = f"{rw} 7Q10 is {q7_pv.source} (not fact-sheet cited) — see its citation"
     console.print(
         f"\n[dim]Cooling basis derived per the site facility's cooling archetype (see "
-        f"provenance tags); {rw} 7Q10 is cited from the NPDES permit fact sheet. "
-        f"Tier-0 screening.[/]"
+        f"provenance tags); {low_flow_basis}. Tier-0 screening.[/]"
     )
     if write:
         for r in (base, build):

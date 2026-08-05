@@ -1,7 +1,12 @@
 # Wilmington Low-Flow Screen — Two Water Threads, One Effluent-Dominated Reach
 
 The **defining Wilmington receiving-water problem** (#516 / #886 / #1472). Status **as of
-2026-08-01**; supersedes the 2026-07-03 version of this document.
+2026-08-05**; supersedes the 2026-07-03 version of this document.
+
+**2026-08-05 (#886):** the §2.5 outfall-reach statistic stopped being a manual characterization and
+became a **committed screening denominator** — `hydrology_balance` and `hydrology_scenario` now
+both return real results for this site instead of "no cited 7Q10". Nothing in §1–§2 changed; the
+numbers below were independently re-derived from NWIS and reproduce exactly. See **§3.3**.
 
 **What changed, in one line:** the prior version of this screen was built on the premise that Todd
 Fork is *ungaged*, and therefore had to be bracketed by the Little Miami mainstem gages at Milford
@@ -347,11 +352,33 @@ change, not a data pull, and is out of scope for #1472.
 
 ### 3.3 — Where the Todd Fork statistic *does* live
 
-Not in the profile, and not (yet) in the committed basin screen. The §2.5 table is a **manual
-receiving-water characterization** — this document is its home, and the register's §1.3 water hook
-points here. That is the same status the prior version of this screen assigned to its DAR result;
-what changed is that the number is now anchored on the receiving stream instead of on a mainstem
-15× its size, and the drainage areas it multiplies are pulled and cited rather than `[open]`.
+Not in the profile — see §3.1, and that has not changed. But since **#886** it is no longer only a
+manual characterization: the **outfall-reach** value is **committed as a screening denominator**.
+
+`data/reference/hydrology/low-flow-7q10.yaml` now carries a `lytle creek` entry —
+**0.0068 cfs, `source: derived`, `confidence: low`** — admitted under a narrow exception that
+issue added to that file's header, for the case where a fact sheet has been read end to end and
+**demonstrably states no design low flow at all** (§2.7 item 1). The vintage objection #1472
+deferred on is answered by **disclosure rather than omission**: the citation names the 1952–1974
+record period, so no reader can mistake it for a current statistic, and `confidence: low` is
+carried for exactly that reason. The alternative was not derived-vs-cited, it was
+derived-vs-nothing — and on this reach "nothing" renders as *unscreened*, which reads as an
+absence of risk on the most effluent-dominated reach in the network.
+
+What that turned on:
+
+- `hydrology_balance(site=wilmington)` now returns a real check instead of "no cited 7Q10" —
+  `Lytle Creek 7Q10 0.0068 cfs vs discharge 4.64 cfs -> 0.0015:1 chronic dilution (violation);
+  acute 1Q10 0.0045 cfs -> 0.00097:1 (violation)`.
+- `hydrology_scenario(site=wilmington)` runs too, and puts the campus on the same scale: the
+  buildout's **2.30 cfs** net consumptive basin loss is **338.6×** this 7Q10.
+- The WWTP's design flow moved from a regex over watch-items prose to a structured, fact-sheet-cited
+  `design_flow_mgd` in `data/reference/hydrology/wilmington/routing.yaml` — a number that is now the
+  numerator of a real finding should not be parsed out of a sentence.
+
+**Still not wired, deliberately:** Todd Fork itself. `mainstem-gages.yaml` is unchanged, `03244000`
+stays out of it, and Todd Fork dischargers other than Wilmington remain `no_7q10`. The committed
+key is the **9.0 mi² outfall reach**, not the 219 mi² gage, and the two are a factor of 24 apart.
 
 ---
 
@@ -395,7 +422,8 @@ City is the route. Until it lands this stays `[open]` — never an invented figu
 | 6 | Ohio EPA **anti-degradation / scenic-river in-stream minimum** → the `passby_*` knobs | B |
 | 7 | Koltun **regional DAR exponent `b`** for Ohio low flows (not load-bearing here — §2.5) | B |
 | 8 | ECHO **DMR/SNC history** for OH0028134 — actual discharged flow vs the 3.0/4.5 MGD design | B |
-| 9 | Whether Todd Fork should enter the **committed basin screen** — deferred; the 1952–74 record's vintage collides with the `asof` discipline (#1644), so it stays a manual characterization | B |
+| 9 | ~~Whether Todd Fork should enter the **committed basin screen**~~ — **RESOLVED (#886)**, but narrowly: the **outfall reach** (`lytle creek`, 0.0068 cfs) is committed as a `source: derived` denominator with the record period disclosed (§3.3). Todd Fork itself is still out, and its dischargers other than Wilmington stay `no_7q10` | B |
+| 10 | The **summer 30Q10** for this reach. The committed entry carries the *annual* 30Q10 only, so the seasonal-pinch screen does not run for Wilmington — a season-specific LP3 on the 1952–74 record would produce one, and nobody has computed it | B |
 
 ---
 
@@ -425,8 +453,12 @@ City is the route. Until it lands this stays `[open]` — never an invented figu
 
 **In-repo**
 
+- `data/reference/hydrology/low-flow-7q10.yaml` — the committed `lytle creek` screening
+  denominator (#886, §3.3) and the verified-negative exception in its header
+- `data/reference/hydrology/wilmington/routing.yaml` — the structured, fact-sheet-cited
+  `design_flow_mgd` the balance reads as the discharge numerator
 - `data/reference/hydrology/mainstem-gages.yaml` — curated basin gage table
 - `data/reference/hydrology/low-flow-7q10.derived.yaml` — derived LP3 7Q10s (Todd Fork
-  deliberately absent; §5 item 9)
+  deliberately absent; §3.3)
 - `data/extracted/wilmington/data-centers.md` — the superseding register (§1.3 water hook)
 - `src/watermark/sites/_profiles.py` — the `wilmington` `SiteProfile`
