@@ -7,7 +7,7 @@ import { intEnv } from "./env";
 import { json, requireEnabled } from "./http";
 import { type Hyperdrive, hyperdrivePg } from "./pg";
 import { type KVLike, checkRateLimit } from "./ratelimit";
-import type { PgLike, WalkOwner, WalkRef, StoryRow, StoryStatus } from "./storiesStore";
+import type { PgLike, ContentOwner, WalkRef, StoryRow, StoryStatus } from "./storiesStore";
 
 export interface StoriesEnv extends AuthEnv {
   /** Kill switch (feature flag). Absent/≠"true" → 503, feature ships dark. */
@@ -80,7 +80,7 @@ export async function guardStories(
   request: Request,
   env: StoriesEnv,
 ): Promise<
-  { ok: true; owner: WalkOwner; db: PgLike; ctx: AuthContext } | { ok: false; response: Response }
+  { ok: true; owner: ContentOwner; db: PgLike; ctx: AuthContext } | { ok: false; response: Response }
 > {
   const disabled = requireEnabled(env.STORIES_ENABLED, () => json(503, { error: "stories not enabled" }));
   if (disabled) return { ok: false, response: disabled };
