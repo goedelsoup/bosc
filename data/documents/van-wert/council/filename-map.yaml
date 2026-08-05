@@ -249,3 +249,114 @@ documents:
       - "A presentation by Charles Koch, landowner's agent, before public comment"
       - "Ord. 26-05-031 — a $700,000 supplemental appropriation from the sewer fund, passed the same night as an emergency, to cover a CSO project bid of $2.1M against a $1.85M estimate (sole bid)"
       - "Safety-Service Director Fleming: 'an agreement has been made with AEP on a 10 year contract', moving toward a signed lease agreement for the City"
+
+  # ── Second retrieval: 2026-08-05, issue 1407 ────────────────────────────────
+  # The incentive / water-service sweep. Same route as the first pass (the open WordPress REST
+  # media index; the /ordinances/ page remains a rolling window). These four cover the council
+  # record from the 2026-05-11 Mega Site vote forward — May 27, June 8 and July 13 — plus the one
+  # ordinance in that window that touches the campus's water question. Every one is an image-only
+  # scan with a zero-character text layer; each quotation drawn from them was read at 300 DPI and
+  # re-read at 450 DPI before being written down.
+  #
+  # NOT COMMITTED from this window, checked and excluded on purpose: 26-05-032 (supplemental
+  # appropriation, CSO project), 25-06-028 / 26-06-033 (the 2027 tax budget, posted three times
+  # and misnumbered "25-06-033" in its own header), 26-06-035 (Butterfly Meadows Solar Project
+  # lease on city parcel 08-011900.0000 — an energy instrument, not an incentive one, flagged for
+  # the grid line of work), 26-07-036 (tree commission repeal), 26-07-037 (door-to-door sales),
+  # 26-07-038 (handicap parking space), 26-07-039 (annexation of 49.682 ac including an Ohio Power
+  # parcel — explained on the record as a sanitary equalization basin near John Brown Rd/SR 30,
+  # not the Mega Site), 26-07-040 (smoking prohibition), 7.13.26-Public-Hearing.pdf (2027 tax
+  # budget hearing, 6:15-6:17 pm) and 6.8.26-Meeting-as-Whole.pdf (junk & rubbish ordinances).
+  #
+  # THE GAP IN THIS SET IS THE 2026-06-22 MEETING. The media index carries an attachment record
+  # for "6.22.26" uploaded 2026-07-14 at /wp-content/uploads/2026/07/6.22.26.pdf, and that URL —
+  # plus three path variants — returns 404. The attachment row outlived the file. It is the only
+  # council meeting between the well motion and the incentive report whose minutes could not be
+  # read; a records request to the Clerk of Council is the route.
+
+  - filename: 5.27.26.pdf
+    canonical: van-wert-council-minutes-2026-05-27-approved.pdf
+    type: council-minutes-approved
+    date: "2026-05-27"
+    content_verified: ocr        # body p.0: "MINUTES OF THE VAN WERT CITY COUNCIL / May 27, 2026"
+    approved: "2026-06-08"       # printed p.5: "Approved on: June 8, 2026"
+    pages: 6
+    bytes: 2430572
+    sha256: "50b6ab83c976a82b04cb9d44bcd6e4ba2c7fad6037c215ff7ce16a05765634b8"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/06/5.27.26.pdf"
+    source_last_modified: "2026-06-09T07:07:49Z"
+    text_layer: false
+    carries:
+      - "THE AEP FRANCHISE TERM CUT: 'Fleming supplied the updated AEP Lease Agreement to council which took the lease from 50 years down to 10 years' — Ord. 26-02-010 untabled and its term amended 50 → 10 on the same motion, then second advisory reading as amended (p. 3)"
+      - "THE TRANSMISSION LINE, DISCLAIMED: AEP's Haviland-to-city-substation upgrade, 'planning … for about 3 years', a '135-kilovolt' line down Dutch John Road 'to help Industrial Park along with the city's electrical backbone' — and 'Fleming reiterated this project was not related to the Data Center' (p. 1)"
+      - "The $474,500 AEP-to-Go-Green dirt-removal payment passing through the City, and the supplemental appropriation prepared for it (Ord. 26-05-032)"
+      - "Economic Development committee: NO REPORT (p. 2)"
+
+  - filename: 6.8.26.pdf
+    canonical: van-wert-council-minutes-2026-06-08-approved.pdf
+    type: council-minutes-approved
+    date: "2026-06-08"
+    content_verified: ocr        # body p.0: "MINUTES OF THE VAN WERT CITY COUNCIL / June 8, 2026"
+    approved: "2026-06-22"       # printed p.3: "Approved on: June 22, 2026"
+    pages: 4
+    bytes: 1692179
+    sha256: "35f415873cbac854f47357f5601f0c352a4a4884fe54fca524e9b7d3d7e59512"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/06/6.8.26.pdf"
+    source_last_modified: "2026-06-23T07:43:23Z"
+    text_layer: false
+    carries:
+      - "THE OHIO POWER FRANCHISE PASSED — Ord. 26-02-010, third and final reading, 'All concurred; Ordinance passed', styled 'AN EXTENSION OF THE AGREEMENT SET OUT IN VAN WERT ORDINANCE NUMBER 5270-75 PASSED OCTOBER 15, 1975' (p. 3)"
+      - "THE WELL MOTION AND ITS STATED REASON: Block proposed 'prohibiting any new wells be drilled within city limits; existing wells … grandfathered in', and 'Council agreed this may be necessary to more clearly define an existing ordinance in which it is not clear if INDUSTRIAL AREAS are covered'; motion for the law director to prepare it carried (p. 1)"
+      - "QTS's own community meeting announced twice — Vantage Career Center, Thursday [2026-06-11], 5:00-6:30, 'station' style (pp. 0, 1)"
+      - "Executive session 7:44-8:12 p.m. 'for the purpose of a property transaction to discuss the sale or lease of real property owned by the city'; no action taken after (p. 3). WHAT PROPERTY IS [open] — it is NOT asserted to be the campus"
+      - "Economic Development committee: no incentive item"
+
+  - filename: 26-06-034-DRAFT.pdf
+    canonical: van-wert-ord-26-06-034-private-wells-draft.pdf
+    type: ordinance-body-as-introduced
+    ordinance: "26-06-034"
+    date: null                   # the document prints an unfilled "Passed: ____ 2026"
+    filename_date_unverified: "2026-06"
+    content_verified: ocr        # p.0: "ORDINANCE Number: 26-06-034 Committee: JUDICIARY AND ANNEXATION"
+    pages: 2
+    bytes: 219070
+    sha256: "4db9d9aed8aa911147c3ea0dce190b41a22f75a1f37712ec98e69ed8dbc57b51"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/06/26-06-034-DRAFT.pdf"
+    source_last_modified: "2026-06-22T11:32:49Z"
+    text_layer: false
+    carries:
+      - "Title: 'AN ORDINANCE ADOPTING SECTION 150.41 PRIVATE WELLS TO THE CITY OF VAN WERT CODE OF ORDINANCES', resting on the City's ZONING authority"
+      - "EXHIBIT A IN FULL (p. 1): 'No new private wells shall be a permitted use within the City of Van Wert through all zoning classifications. All new private wells shall be a conditional use in all zoning classifications.'"
+    notes: >
+      THE DRAFT PROHIBITS NOTHING. Council moved for a prohibition (2026-06-08) and the public
+      discussion (2026-07-13) turned on grandfathering and a closed-loop-geothermal exception; the
+      drafted Exhibit A instead makes new private wells a CONDITIONAL use in every zoning
+      classification — a discretionary approval — and carries neither a grandfather clause nor a
+      geothermal exception in its own text. Introduced and given first reading advisory
+      2026-07-13; not passed as of this retrieval. Unsigned, like every Van Wert ordinance PDF in
+      this collection.
+
+  - filename: 7.13.26.pdf
+    canonical: van-wert-council-minutes-2026-07-13-approved.pdf
+    type: council-minutes-approved
+    date: "2026-07-13"
+    content_verified: ocr        # body p.0: "MINUTES OF THE VAN WERT CITY COUNCIL / July 13, 2026"
+    approved: "2026-07-27"       # printed p.6: "Approved on: July 27, 2026"
+    pages: 12
+    bytes: 4838609
+    sha256: "a29341a89c7b36ea1d24c2afb737d0d4c8dbced99154ba6d4b2d8b7a5eb2a71b"
+    source_url: "https://vanwert.org/wp-content/uploads/2026/07/7.13.26.pdf"
+    source_last_modified: "2026-07-28T13:42:21Z"
+    text_layer: false
+    signed: true                 # p.7 carries wet-ink Clerk and Council-President signatures above a TYPED "Approved on: July 27, 2026" — verified visually at 300 DPI, not read from OCR alone
+    structure:
+      - "pp. 0-7 — the minutes (images); the signature/approval page is p. 7"
+      - "pp. 8-11 — attachments: the Frothingham Street traffic-speed survey and the Fox Road walking-path donor list"
+    carries:
+      - "THE INCENTIVE STATEMENT — Economic Development committee: 'he reported the Brent Stevens is concluding incentives and development agreements for the data center and hopes to have those done by the next council meeting' (p. 3). Brent Stevens is VWAED's Executive Director. This is the dated statement that the agreements did NOT exist on 2026-07-13"
+      - "Ord. 26-06-034 (private wells) introduced and given first reading advisory (p. 6)"
+      - "Law Director Hatcher on the well draft, and Fleming in agreement 'with an exception with a closed loop geothermal system'; Hatcher to a resident: 'all parties within city limits would be prohibited' (p. 2)"
+      - "Ord. 26-06-035 (Butterfly Meadows Solar lease) passed on second and final reading as an emergency (p. 5)"
+      - "The 26-07-039 annexation explained as a sanitary equalization basin at John Brown Rd/SR 30 connecting to Vision Park — an annexation 'discussed last fall' (p. 2)"
+      - "THM water project: EPA report complete, construction estimated at $2,700,000 with ~$400,000 of gate replacement and diver work; Fleming authorised to advertise, bid and award as an emergency (p. 1)"
+      - "Public comment against the campus on nuclear-energy and water-treatment grounds (pp. 2-4)"

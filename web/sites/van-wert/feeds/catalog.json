@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "35b5cdbfec2eb29879c6454b915239e67f04796b3894a569bbe46d5c8e4dcbab",
-      "size_bytes": 304873,
+      "sha256": "d9517f6572a6bafd9f99dc93c53cebc0d853d9700cc31383ed37364530c5c821",
+      "size_bytes": 335938,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -168,8 +168,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "c310d357b0f454d25f9cba2397509f567245a5cfd20fd08a0ec888d3aa4cd110",
-      "size_bytes": 48862,
+      "sha256": "24359279611b3934e87216d72f8c527f1cc97f3763f20d0f98e2c678239834cb",
+      "size_bytes": 79927,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -524,6 +524,72 @@
     }
   },
   {
+    "id": "van-wert-incentive-water-instruments",
+    "title": "Van Wert — Mega Site Incentive and Water-Service Instruments, Searched to a Dated Negative",
+    "scope": "extracted",
+    "collection": "van-wert",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Five independent routes run 2026-08-05 for issue 1407. (1) THE CITY — the open WordPress REST media index at vanwert.org (298 attachments enumerated), which is the archive behind the rolling /ordinances/ window; every council minute and ordinance uploaded since the 2026-05-11 Mega Site vote was downloaded and read, and four were committed to data/documents/van-wert/council/ (the approved minutes of 2026-05-27, 2026-06-08 and 2026-07-13, plus the private-well ordinance 26-06-034). All are image-only scans with a zero-character text layer, so every quotation was read via watermark.civic.indexer.ocr_pdf at 300 DPI and re-read at 450 DPI before being written down; the 2026-07-13 approval page was verified VISUALLY (typed \"Approved on: July 27, 2026\" over wet-ink signatures). (2) THE COUNTY — the Board of Commissioners' published 2026 agenda index, one page carrying all 63 meeting dates from 2026-01-01 to 2026-08-06, captured to data/documents/van-wert/county/. (3) THE SCHOOL DISTRICT — Lincolnview Local's BoardDocs portal (go.boarddocs.com/oh/lls), meeting list and full agendas read by POST without auth for all twelve 2026 meetings. (4) THE STATE — the Ohio Tax Credit Authority's minutes for 2026-06-01 and 2026-06-29 pulled from the Ohio DAM and committed to data/documents/odd/tca/, the committed ODD tax-incentive export (data/reference/odd/tax_incentives.csv, pulled 2026-06-28) queried directly, and the Governor's 2026-05-27 pause notice captured to data/documents/odd/. (5) THE OPERATOR — a raw capture of q.com/data-centers/van-wert to data/documents/van-wert/operator/.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:van-wert",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-05",
+    "tags": [
+      "van-wert",
+      "van-wert-county",
+      "van-wert-mega-site",
+      "data-center",
+      "qts",
+      "incentives",
+      "enterprise-zone",
+      "development-agreement",
+      "tax-exemption",
+      "ohio-tax-credit-authority",
+      "water-service",
+      "private-wells",
+      "council-minutes",
+      "county-commissioners",
+      "lincolnview",
+      "aep-ohio"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/van-wert/incentive-water-instruments.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/incentive-water-instruments.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "c4a11520b517299acedfa8f004c6710be8b65f05b33eff472481ddeb9b852c84",
+      "size_bytes": 68019,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Five independent routes run 2026-08-05 for issue 1407. (1) THE CITY — the open WordPress REST media index at vanwert.org (298 attachments enumerated), which is the archive behind the rolling /ordinances/ window; every council minute and ordinance uploaded since the 2026-05-11 Mega Site vote was downloaded and read, and four were committed to data/documents/van-wert/council/ (the approved minutes of 2026-05-27, 2026-06-08 and 2026-07-13, plus the private-well ordinance 26-06-034). All are image-only scans with a zero-character text layer, so every quotation was read via watermark.civic.indexer.ocr_pdf at 300 DPI and re-read at 450 DPI before being written down; the 2026-07-13 approval page was verified VISUALLY (typed \"Approved on: July 27, 2026\" over wet-ink signatures). (2) THE COUNTY — the Board of Commissioners' published 2026 agenda index, one page carrying all 63 meeting dates from 2026-01-01 to 2026-08-06, captured to data/documents/van-wert/county/. (3) THE SCHOOL DISTRICT — Lincolnview Local's BoardDocs portal (go.boarddocs.com/oh/lls), meeting list and full agendas read by POST without auth for all twelve 2026 meetings. (4) THE STATE — the Ohio Tax Credit Authority's minutes for 2026-06-01 and 2026-06-29 pulled from the Ohio DAM and committed to data/documents/odd/tca/, the committed ODD tax-incentive export (data/reference/odd/tax_incentives.csv, pulled 2026-06-28) queried directly, and the Governor's 2026-05-27 pause notice captured to data/documents/odd/. (5) THE OPERATOR — a raw capture of q.com/data-centers/van-wert to data/documents/van-wert/operator/.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "van-wert-mega-site-instruments",
     "title": "Van Wert — Mega Site Primary-Instrument Set (City Ordinances, Public Hearing, Council Minutes)",
     "scope": "extracted",
@@ -573,8 +639,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "dcbf7c39bd57d57d9b89d6be496b4d7dd118b3c2c7333c72de4b010e9dc9c17c",
-      "size_bytes": 72066,
+      "sha256": "cebe5cc3620ef2fcf1c522bbb2a2fc4fdac06784d69917b3c3865d7bf9f7021b",
+      "size_bytes": 74520,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -582,6 +648,69 @@
     },
     "citation": {
       "source": "Nine City of Van Wert documents pulled 2026-08-03 from the City's open WordPress upload tree (https://vanwert.org/wp-content/uploads/), committed at data/documents/van-wert/council/ with a filename map: the three emergency ordinances of 2026-05-11 in both posted variants (26-05-028 annexation body + exhibits, 26-05-029 code amendment body + Exhibit A, 26-05-030 conditional zoning body + Exhibits A/B/C), the certified 2026-05-04 statutory public-hearing record (107 pp), and the approved council minutes of 2026-04-27 and 2026-05-11. Seven of the nine carry no text layer at all; the other two (5.11.26.pdf, 5.4.26-Public-Hearing-1.pdf) carry a partial one covering only their typed attachments, their minutes bodies being images. So every figure was read via watermark.civic.indexer.ocr_pdf at 300 DPI with targeted 450/500-DPI re-renders and a 600-DPI render for the handwritten approval stamp, never from a filename or upload path. Located through the site's open WordPress REST media index — the /ordinances/ page is a rolling window of pending items and had already dropped the May 2026 ordinances.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "van-wert-regulatory-watch",
+    "title": "Van Wert — Standing Pre-Construction Watch (air PTI, OPSB, 401/404, ballot threads, ECHO, PJM)",
+    "scope": "extracted",
+    "collection": "van-wert",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Seven routes, run 2026-08-05 and recorded separately. (1) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), scripted, by Entity Name (\"QTS\", 35 documents statewide), by County x Program (VAN WERT x AIR PERMIT, 328 documents, newest 2026-08-04; VAN WERT x 401 WETLANDS, 4 documents; VAN WERT x NPDES) and by Secondary ID (2GC08872, 3 documents). That NPDES sweep surfaced two previously unheld documents — the Van Wert WWTP's NPDES Permit Compliance Schedule Update of 2026-07-28 and its twelve-month influent/effluent attachment, both now carried under data/documents/oepa/van-wert/ as edoc-4208904.pdf and edoc-4208905.pdf. (2) EPA ECHO dfr_rest_services.get_dfr for OH0027910, read 2026-08-05 against ICIS-NPDES extract 2026-07-31. (3) EPA Envirofacts ICIS_PERMIT, PERMIT_NAME/CONTAINING/QTS (31 rows, of which 3 are Ohio — all Licking/Franklin, none the Van Wert coverage, recorded as a propagation-lag hazard rather than a negative). (4) AEP Ohio Transmission's own project site, which serves the Letter of Notification and public notice for OPSB Case No. 26-0729-EL-BLN that the docketing system will not; the notice is committed under data/documents/grid/van-wert/ and the 88.7 MB LON is sha256-pinned and read rather than carried. (5) A direct probe of dis.puc.state.oh.us for 25-0697-EL-BLN, recorded as an access failure. (6) PJM's published Expedited Interconnection Track and BYONG rules. (7) Local and statewide press for the two ballot threads, which is the only public account of the Van Wert County Board of Elections certification of 2026-07-27 and is carried as [reference].",
+    "external_url": null,
+    "license": "Public record (state environmental permits, an OPSB siting filing, agency notices) plus cited press",
+    "access_tier": "public",
+    "site_scope": "site:van-wert",
+    "cadence": "monthly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "regulatory-watch",
+      "npdes",
+      "stormwater",
+      "air-permit",
+      "permit-to-install",
+      "opsb",
+      "transmission",
+      "pjm",
+      "ballot",
+      "data-center",
+      "qts",
+      "van-wert",
+      "van-wert-county"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/van-wert/regulatory-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/grid/van-wert/van-wert-haviland-138kv.project.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "813d6c9b47596c7471624d066802df4621b5556725d2ff9986e388883c9e1049",
+      "size_bytes": 67605,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Seven routes, run 2026-08-05 and recorded separately. (1) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), scripted, by Entity Name (\"QTS\", 35 documents statewide), by County x Program (VAN WERT x AIR PERMIT, 328 documents, newest 2026-08-04; VAN WERT x 401 WETLANDS, 4 documents; VAN WERT x NPDES) and by Secondary ID (2GC08872, 3 documents). That NPDES sweep surfaced two previously unheld documents — the Van Wert WWTP's NPDES Permit Compliance Schedule Update of 2026-07-28 and its twelve-month influent/effluent attachment, both now carried under data/documents/oepa/van-wert/ as edoc-4208904.pdf and edoc-4208905.pdf. (2) EPA ECHO dfr_rest_services.get_dfr for OH0027910, read 2026-08-05 against ICIS-NPDES extract 2026-07-31. (3) EPA Envirofacts ICIS_PERMIT, PERMIT_NAME/CONTAINING/QTS (31 rows, of which 3 are Ohio — all Licking/Franklin, none the Van Wert coverage, recorded as a propagation-lag hazard rather than a negative). (4) AEP Ohio Transmission's own project site, which serves the Letter of Notification and public notice for OPSB Case No. 26-0729-EL-BLN that the docketing system will not; the notice is committed under data/documents/grid/van-wert/ and the 88.7 MB LON is sha256-pinned and read rather than carried. (5) A direct probe of dis.puc.state.oh.us for 25-0697-EL-BLN, recorded as an access failure. (6) PJM's published Expedited Interconnection Track and BYONG rules. (7) Local and statewide press for the two ballot threads, which is the only public account of the Van Wert County Board of Elections certification of 2026-07-27 and is carried as [reference].",
       "source_kind": "reference",
       "page": null,
       "pages": null,
@@ -644,8 +773,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9755b33f09693cf6f2a85c65102c20d024b70a9af510e93e60a581ec2f9a7b47",
-      "size_bytes": 93253,
+      "sha256": "1351b4cda41358b754e8d4bb4caae07165685c4f420053f8332c740756e263df",
+      "size_bytes": 95802,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -2438,7 +2567,7 @@
   },
   {
     "id": "odd-tca-minutes",
-    "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+    "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
     "scope": "reference",
     "collection": "odd",
     "status": "reviewed",
@@ -2452,7 +2581,7 @@
     "site_scope": "state:OH",
     "cadence": "on-demand",
     "ttl_days": null,
-    "last_refreshed": "2026-06-29",
+    "last_refreshed": "2026-08-05",
     "tags": [
       "odd",
       "tca",
@@ -2483,14 +2612,24 @@
         "relpath": "documents/odd/tca/Meeting_Minutes_TCA_3.30.2026.pdf",
         "media_type": "application/pdf",
         "lfs": true
+      },
+      {
+        "relpath": "documents/odd/tca/TCA_Meeting_Minutes_6.1.2026.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/odd/tca/Meeting_Minutes_TCA_6.29.2026.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "648ed41712af089ef2eab13fad98ee7ac109eccc7b39887a2249de2948d85b42",
-      "size_bytes": 790174,
+      "sha256": "b0a63ca19ddcb264175bbbd47438a7e77012316a0fe4c1700a0e45a2b6f1725d",
+      "size_bytes": 1188175,
       "lfs_materialized": true,
-      "file_count": 4,
+      "file_count": 6,
       "stale": false,
       "asof": null
     },

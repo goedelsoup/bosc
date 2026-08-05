@@ -1,5 +1,5 @@
 id: odd-tca-minutes
-title: Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)
+title: Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)
 scope: reference
 status: reviewed
 producer:
@@ -22,9 +22,15 @@ storage:
   - relpath: documents/odd/tca/Meeting_Minutes_TCA_3.30.2026.pdf
     media_type: application/pdf
     lfs: true
+  - relpath: documents/odd/tca/TCA_Meeting_Minutes_6.1.2026.pdf
+    media_type: application/pdf
+    lfs: true
+  - relpath: documents/odd/tca/Meeting_Minutes_TCA_6.29.2026.pdf
+    media_type: application/pdf
+    lfs: true
 refresh:
   cadence: on-demand
-  last_refreshed: '2026-06-29'
+  last_refreshed: '2026-08-05'
 provenance: reference
 tags:
   - odd
@@ -45,4 +51,23 @@ notes: >-
   Also March 2026: Vertiv Corporation new 10-yr JCTC in Ironton (520 jobs) plus Westerville
   extension. January 2025: Anduril Industries/Arsenal-1 (Pickaway Co.) 30-yr JCTC,
   4,008 jobs, $530M annual payroll — the largest single JCTC term in this batch.
+  ADDED 2026-08-05 (issue 1407), the two meetings that bracket the Governor's 2026-05-27 pause of
+  new data-center tax exemptions. (3) 2026-06-01 — COLOGIX, INC granted a DATA CENTER TAX
+  EXEMPTION of 50 percent for 10 years for Orange Township (Delaware Co.) and the City of
+  Johnstown (Licking Co.), 90 FTE / $10,000,000 new payroll / $5,185,126 retained, term
+  2026-01-01 to 2035-12-31, vote 3-0 with Garczyk and Kelly abstaining. That is FIVE DAYS AFTER
+  the pause was announced, which is consistent only if the pause is read as written — it applies
+  to NEW requests. (4) 2026-06-29 — the first meeting wholly under the pause: seven new projects
+  and ZERO data-center exemptions. A Van Wert item appears on it and is NOT the QTS campus:
+  "Van Wert Forward II", under Transformational Mixed-Use Development, for which the Authority
+  engaged the University of Cincinnati Economics Center as third-party analyst — the same name the
+  committed ODD export carries as an Ohio Historic Preservation Tax Credit approved 2022-06-22.
+  NO application, award or agenda item naming Van Wert, QTS, QTS Realty Trust Inc. or QTS Van Wert
+  LLC appears in the four 2026 minutes read for issue 1407 — 2026-03-30, 2026-04-27, 2026-06-01 and
+  2026-06-29. The 2026-04-27 minute was read from the DAM and not committed (it carries no
+  data-center item at all); it is cited by URL and read date in that extraction. The 2026-07-27 minutes are not yet published (the
+  Authority approves minutes at the FOLLOWING meeting). Route note: these PDFs live on the Ohio
+  DAM, the same open unauthenticated route as the Ohio EPA permits, under two alternating filename
+  patterns — .../business/stateincentives/TCA_Meeting_Minutes_<M.D.YYYY>.pdf and
+  .../about/taxcreditminutes/Meeting_Minutes_TCA_<M.D.YYYY>.pdf. Probe both.
   See data/documents/odd/tca/README.md.

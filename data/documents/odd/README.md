@@ -1,7 +1,11 @@
 # Ohio Department of Development (ODD) — reference documents
 
 Source documents from the Ohio Department of Development providing statewide economic
-development context. Both are public-record publications, not litigation evidence.
+development context, plus the Governor's directive that governs what the Department's Tax Credit
+Authority may consider. All are public-record publications, not litigation evidence.
+
+`tca/` holds the Ohio Tax Credit Authority's meeting minutes — see
+[`tca/README.md`](tca/README.md).
 
 ## Documents
 
@@ -34,3 +38,20 @@ Relevant to Allen County:
 
 Contains the Needs Assessment (NA-05 and following sections), the population change
 and MHI maps, and the five-year strategic plan and goals.
+
+### `2026-05-27-governor-dewine-announces-pause-of-data-center-tax-exemption.governor-ohio-gov.html`
+
+**Governor DeWine announces pause of data center tax exemption**, 2026-05-27 — captured
+2026-08-05 for #1407. Raw response bytes from
+`governor.ohio.gov/media/news-and-media/governor-dewine-announces-pause-of-data-center-tax-exemption`.
+
+The Governor "directed the chair of the Ohio Tax Credit Authority to pause consideration of any
+new data center tax exemption requests while the Ohio General Assembly's Joint Data Center
+Committee studies the growth of data centers in Ohio."
+
+Filed here rather than under a site because it is a statewide policy act, not a Van Wert record.
+It is the instrument behind the state half of the Van Wert incentive negative
+([`data/extracted/van-wert/incentive-water-instruments.yaml`](../../extracted/van-wert/incentive-water-instruments.yaml)):
+the pause is dated **two days before** the 2026-05-29 public announcement of the QTS Van Wert
+campus — a sequence, not a cause, and no causal reading is offered. See `tca/README.md` for how
+the Authority actually behaved either side of it.

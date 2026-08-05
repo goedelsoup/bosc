@@ -2,9 +2,9 @@
   "site": "van-wert",
   "bundle_version": "1.0.0",
   "contract_version": "1.53.0",
-  "generated_at": "2026-08-05T14:00:45+00:00",
-  "feed_count": 32,
-  "row_total": 465,
+  "generated_at": "2026-08-05T18:58:30+00:00",
+  "feed_count": 34,
+  "row_total": 708,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 3
     },
     {
       "name": "exhibits",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 61
+      "count": 63
     },
     {
       "name": "geo/campus",
@@ -246,6 +246,14 @@
       "schema": "schemas/impact-study.schema.json",
       "kind": "collection",
       "count": 13
+    },
+    {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 240
     },
     {
       "name": "catalog-index",
@@ -276,6 +284,14 @@
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }

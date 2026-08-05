@@ -1,0 +1,37 @@
+meta:
+  subject: >
+    Canonical filename map for van-wert/county/ — the Van Wert County Board of Commissioners'
+    published record, captured for #1407.
+  note: >
+    `.html` under data/documents/** is `-text` in .gitattributes: raw response bytes, never
+    reformatted. The county publishes AGENDAS ONLY — no journal entries, resolutions or votes are
+    reachable by this route, so nothing here evidences a county ACTION.
+  retrieved: "2026-08-05"
+  route_note: >
+    /commissioners/ returns 403 and /commissioners/minutes returns 404. The working index is
+    /government/county_commissioners/<year>_agendas.php — one page per year holding every meeting
+    date and its agenda, so a single GET captures the whole year. Sibling pages exist back to 2018.
+
+documents:
+  - filename: 2026-08-05-board-of-commissioners-2026-agendas.vanwertcountyohio-gov.html
+    canonical: van-wert-county-commissioners-2026-agendas-2026-08-05.html
+    type: county-agenda-index
+    publisher: Van Wert County, Ohio — Board of County Commissioners
+    url: "https://www.vanwertcountyohio.gov/government/county_commissioners/2026_agendas.php"
+    captured: "2026-08-05"
+    content_verified: text-layer   # the page's own dated headings; 63 meeting dates parsed from it
+    covers: "2026-01-01 .. 2026-08-06"
+    meeting_dates: 63
+    bytes: 164758
+    sha256: "bf65e4027e307070dced3490a3643faf185df4320186c22e6fa28efebdb81b14"
+    request: "GET, no auth, desktop User-Agent, redirects followed"
+    carries:
+      - "THE NEGATIVE: zero 2026 entries mention an enterprise zone, an abatement, a CRA, tax increment financing, or QTS by name"
+      - "2026-01-29 — teleconference with Dan Baker, CCAO, 'Re: General data center information'"
+      - "2026-02-12 — 'Brent Stevens, Executive Director, Van Wert Area Economic Development Corporation Re: Megasite End User Options' — 3.5 months before the end user was publicly named"
+      - "2026-03-10 — 'Chuck Koch, Attorney, Koch & White Law Re: Annexation' — the date Ord. 26-05-028 recites for the BOC resolution granting the petition, corroborated for the first time from the county's own record"
+      - "2026-04-20 — Special Session, 'Bus Trip to New Albany, OH Re: Data centers (Commissioner Owens and Commissioner Lichtensteiger)'"
+      - "2026-07-16 — 'Bill Evans, Trustee, Ridge Township Re: Mendon Road'"
+      - "2026-07-28 — 'Ridge Township Trustees, Van Wert County Engineer's Office, and Van Wert City Representatives Re: Mendon Road and surrounding area expectations'"
+      - "2026-08-04 — a second 'Chuck Koch … Re: Annexation'; the agenda does not say which annexation and no identification is made"
+      - "Butterfly Meadows Solar Project before the Board in August 2026 (Union Township trustees 2026-08-04; County Prosecutor 2026-08-06)"

@@ -1,0 +1,42 @@
+meta:
+  subject: >
+    Canonical filename map for van-wert/operator/ — captured web evidence published by QTS Data
+    Centers about the Van Wert campus (#1407). Not a public record: the operator's own page, held
+    so that what it asserted, and when, is fixed.
+  note: >
+    `.html` under data/documents/** is `-text` in .gitattributes: these are the raw response
+    bytes, never reformatted. `content_verified` records how the capture DATE was established —
+    here it is the capture itself (the page carries no publication or revision date of its own),
+    which is why the filename leads with the capture date rather than a document date.
+  retrieved: "2026-08-05"
+  route_note: >
+    q.com is WordPress and server-rendered, so a plain GET preserves the full text. This is the
+    opposite of the city-launched vanwertohiodatacenter.com microsite, which was a client-rendered
+    Next.js app whose FAQ prose the Internet Archive never captured (#1401) and which now
+    301-redirects to this page. Capture a JS-rendered municipal microsite while it is live or lose
+    it.
+
+documents:
+  - filename: 2026-08-05-qts-van-wert-project-faq.q-com.html
+    canonical: qts-van-wert-project-page-and-faq-2026-08-05.html
+    type: operator-disclosure-page
+    publisher: QTS Data Centers
+    url: "https://q.com/data-centers/van-wert/"
+    captured: "2026-08-05"
+    content_verified: capture      # the page prints no date of its own; only the capture is dated
+    document_date: null
+    bytes: 420005
+    sha256: "ceec8455197a80eb47a8eff8d83a6e02189b54e548d13f50ee8003af6c7cbc92"
+    request: "GET, no auth, desktop User-Agent, redirects followed"
+    text_layer: true
+    carries:
+      - "WATER: 'The City of Van Wert has approved our water usage and we're currently in discussions to identify the best solutions to support the initial fill. QTS has no intentions of utilizing the aquifer to support the initial fill.'"
+      - "WATER: 'The analysis completed by QTS and City engineering indicates that there is adequate capacity in the existing system to support the proposed development' — the first named work product behind the capacity claim"
+      - "WATER: NO fill volume — 'The total initial charging volume can vary widely based on a variety of factors including power capacity and facility design. Since we're still early in the planning stage for this development, it's hard to predict the exact amount of water needed.'"
+      - "WATER: 'The closed-loop system that cools the data hall uses only water' — against the City Safety-Service Director's sealed 'water and glycol' loop (2026-04-21)"
+      - "WATER: ongoing municipal use 'about what 4 households use a month', for bathrooms, kitchens, irrigation and humidification"
+      - "ENERGY: 'we don't disclose specific power capacity for security and confidentiality reasons'; 'the local grid has confirmed it can reliably support the site'; 'QTS will pay for all project energy infrastructure and there will be no cost impact to existing AEP Ohio customers'"
+      - "SITE: 'We expect to build seven data center buildings across approximately 902 acres', with an initial site plan 'for concept only'"
+      - "ECONOMY: 'up to $10 billion'; 'more than 1,500 construction jobs during the 5-6 year building phase'; 'up to 200 full-time QTS positions'; 'millions in local tax revenue annually' — and NO '$200 million over 20 years'"
+      - "THE BOILERPLATE DEFECT: the economy answer promises support for 'services and community programs throughout RICHMOND COUNTY' — Augusta, Georgia, not Van Wert County, Ohio"
+      - "A PAST EVENT STILL ADVERTISED AS UPCOMING: 'Van Wert Community Event, June 11 | 5:00-6:30 p.m., Vantage Career Center' — the meeting Council announced on 2026-06-08"

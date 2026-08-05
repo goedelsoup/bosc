@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-05T17:17:02.767108+00:00'
+reconciled_at: '2026-08-05T18:56:34.399270+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -212,8 +212,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: 20aafc5b076aab4a8bbc58b025e2a51b4177cb963db3f4851481575c9b571abc
-    size_bytes: 319507
+    sha256: d9517f6572a6bafd9f99dc93c53cebc0d853d9700cc31383ed37364530c5c821
+    size_bytes: 335938
     lfs_materialized: true
     file_count: 13
     missing: []
@@ -262,8 +262,8 @@ entries:
     site_scope: site:troy-piqua
   data-centers-van-wert:
     exists: true
-    sha256: 7199bb7148ce4aef603e562049e21c4c654f86ea270c93241a50b23b35fdd30b
-    size_bytes: 63496
+    sha256: 24359279611b3934e87216d72f8c527f1cc97f3763f20d0f98e2c678239834cb
+    size_bytes: 79927
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -1042,10 +1042,10 @@ entries:
     site_scope: state:OH
   odd-tca-minutes:
     exists: true
-    sha256: 648ed41712af089ef2eab13fad98ee7ac109eccc7b39887a2249de2948d85b42
-    size_bytes: 790174
+    sha256: b0a63ca19ddcb264175bbbd47438a7e77012316a0fe4c1700a0e45a2b6f1725d
+    size_bytes: 1188175
     lfs_materialized: true
-    file_count: 4
+    file_count: 6
     missing: []
     asof: null
     stale: false
@@ -1494,6 +1494,16 @@ entries:
     exists: true
     sha256: 60ec7e28123244f37d9de4eb4a03a2c80d72a0fe5fa9349bb46ad557c656eefd
     size_bytes: 9518
+    lfs_materialized: true
+    file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:van-wert
+  van-wert-incentive-water-instruments:
+    exists: true
+    sha256: c4a11520b517299acedfa8f004c6710be8b65f05b33eff472481ddeb9b852c84
+    size_bytes: 68019
     lfs_materialized: true
     file_count: 2
     missing: []
