@@ -1,0 +1,50 @@
+doc_id: 2PD00013-5d0c79af
+source_path: data/documents/oepa/defiance/2PD00013.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Ohio EPA Permit No.: 2PD00013*VD \nApplication No: OH0024899\
+  \ \nAction Date: January 17, 2024 \nEffective Date: March 1, 2024 \nExpiration Date:\
+  \ February 28, 2029 \nOhio Environmental Protection Agency \nAuthorization to Discharge\
+  \ Under the \nNational Pollutant Discharge Elimination System \nIn compliance with\
+  \ the provisions of the Federal Water Pollution Control Act, as amended (33 U.S.C.\
+  \ \n1251 et. seq., hereinafter referred to as the \"Act\"), and the Ohio Water Pollution\
+  \ Control Act (Ohio \nRevised Code Section 6111), \nCity of Defiance \nis authorized\
+  \ by the Ohio Environmental Protection Agency, hereina"
+permit:
+  confidence: high
+  warnings:
+  - No public notice number, public notice date, or comment period end date found
+    in the document.
+  - Outfall 2PD00013050 is referenced in notes as a bypass station but not formally
+    listed as a permitted outfall with its own limitations table.
+  - Permit action inferred as 'renewal' based on context (existing permit number with
+    version designation); not explicitly stated as renewal in the text.
+  facility_name: Defiance Water Pollution Control WWTP
+  permit_no: 2PD00013*VD
+  permit_action: renewal
+  applicant: City of Defiance
+  application_no: OH0024899
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 26273 State Route 281 East, Defiance, Ohio, Defiance County
+  discharge_address: null
+  receiving_water: Maumee River at River Mile 62.05 (and its associated tributaries)
+  stream_network: null
+  outfalls:
+  - 2PD00013001
+  - 2PD00013602
+  - 2PD00013006
+  - 2PD00013017
+  - 2PD00013027
+  - 2PD00013050
+  note: null

@@ -1,0 +1,77 @@
+id: defiance-wwtp-record
+title: Defiance — NPDES 2PD00013 Permit Set + the Two Enforcement Actions (Extractions)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Two routes. (1) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), scripted, searched
+    by Entity Name "DEFIANCE WWTP" — 1,097 documents, 950 of them under Secondary ID 2PD00013 —
+    from which six were fetched on 2026-08-05 and committed under data/documents/oepa/defiance/
+    (see that directory's filename-map.yaml; the portal sends no Content-Disposition, so the docid
+    is the as-served identity and is recorded beside every file). The permit:/ blocks are
+    `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1
+    image); everything after them is a reviewed augmentation transcribed page-by-page from each
+    PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans.
+    (2) EPA ECHO's CWA services for the enforcement record — dfr_rest_services.get_dfr for FRS
+    110000544082 and case_rest_services.get_case_report for case 05-2024-0328 — read 2026-08-05
+    against the ICIS-NPDES system extract of 2026-07-31.
+license: public record / public domain
+access_tier: public
+site_scope: site:defiance
+storage:
+- relpath: extracted/oepa/defiance/2PD00013.fs.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/defiance/2PD00013.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/defiance/wwtp-enforcement.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- npdes
+- oepa
+- defiance
+- defiance-county
+- maumee-river
+- 7q10
+- dilution
+- enforcement
+- consent-order
+- cso
+- sso
+- tmdl
+- phosphorus
+- ohp000001
+notes: >-
+  Issue 392 (legacy sub of epic 1264; #1444 tracks the wider record domain). The fact sheet is the
+  anchor: outfall 2PD00013001 to the Maumee River at RIVER MILE 62.05, HUC 04100009-02-01, Ohio EPA
+  river code 04-001, Table 15 annual 7Q10 of 94.1 cfs (basis USGS 04183500 + 04191500 + 04185000)
+  against a 9.2834 cfs (6.0 MGD) average design flow — 10.14:1 at the outfall. Those values
+  populate _DEFIANCE.plant_receiving and the cited reach entry
+  `maumee river (defiance wpc outfall, rm 62.05)` in data/reference/hydrology/low-flow-7q10.yaml.
+  THREE CAVEATS TO CARRY. (1) The cited 94.1 cfs is 32% BELOW the derived 139.24 cfs the corpus
+  holds for this reach (#391, LP3 at gage 04192500) because the permit sums the three arms ABOVE
+  Defiance (drainage 4857 mi²) where the gage sits BELOW the confluence (5545 mi²) — a
+  methodological difference, not a disagreement about the river. (2) ECHO's ICIS-NPDES total design
+  flow for OH0024899 is 12 MGD and matches none of the three capacities the permit prints (6.0
+  average / 8.0 peak secondary / 14.0 peak primary + disinfection); the correction is documented in
+  data/extracted/defiance/ONBOARDING.md and deliberately NOT hand-applied to the regenerated ECHO
+  inventory. Because of it the low-flow entry is deliberately left UNBOUND to `permits:` — binding
+  it would pair a permit-cited numerator with a contradicted ECHO denominator under a
+  "cited AT THIS OUTFALL" label — so `watermark basin-screen` still reports the derived 6.15:1 for
+  Defiance, honestly labelled. Add the binding in the same commit that reconciles the design flow.
+  (3) The enforcement record is NOT what the two ECHO integers suggest: the formal action is a
+  FEDERAL CWA 309(a) administrative order (EPA R5 case 05-2024-0328, issued 2024-07-26, closed
+  2026-05-06, Final Order No Penalty, $21,801 compliance-action cost, remedy scored at 35,602 lb/yr
+  ammonia) over four DMR-level violations, and the informal action is a STATE NOV/ROV of 2026-04-21
+  over the Kingsbury force-main break; the largest instrument on the plant — the State of Ohio
+  Second Amended Consent Order 10-CB-40433, $40.7M of CSO control by 2043 — predates ECHO's
+  2021-08-01 window and appears in neither count. Neither action is a receiving-water failure.
+  Open threads are listed in the artifacts' own `open_questions` blocks (the AOC's text, the three
+  Judicial Order filings behind the SACO, the SSO volume, and two unread 2026 Director's
+  Authorizations).

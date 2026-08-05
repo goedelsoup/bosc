@@ -1,0 +1,347 @@
+# Defiance (Defiance County, OH) — the two enforcement actions ECHO counts against the Defiance
+# WWTP (NPDES OH0024899 / Ohio EPA 2PD00013), characterized.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page) or in a machine-readable
+#                 federal system of record, read on a dated pull
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, reasoning shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# WHY THIS FILE EXISTS. Issue #392 recorded that ECHO showed `informal_enf_count: 1` and
+# `formal_enf_count: 1` for OH0024899 with `compliance_status: null`, and that both actions were
+# uncharacterized — "a documented analytical gap that undermines the clean 'dilution headroom =
+# compliance' thesis." Two integers are not a finding. What follows is what each of those two
+# integers actually is: what instrument, issued by whom, on what date, over what conduct, on what
+# terms, and whether it is closed.
+#
+# THE HEADLINE. The two actions have nothing to do with dilution and everything to do with the
+# plant and its sewers. The formal action is a FEDERAL administrative order over four DMR-level
+# permit violations (chlorine, an unrepresentative sample, a numeric effluent violation, and a
+# failure to submit DMRs) whose remedy is scored as an ammonia reduction; the informal action is a
+# STATE letter over sanitary sewer overflows caused by a broken force main. A river with ten-to-one
+# low-flow headroom does not stop a plant from bulking, and does not stop a pipe from cracking. The
+# gap #392 named is real: dilution headroom never was the variable these actions turn on.
+
+meta:
+  subject: >-
+    The one informal and one formal enforcement action ECHO counts for Defiance WWTP
+    (NPDES OH0024899), characterized by type, date, conduct, terms and resolution status
+  kind: enforcement-characterization
+  site: defiance
+  npdes_id: OH0024899
+  ohio_epa_permit: 2PD00013
+  frs_registry_id: '110000544082'
+  captured_for: issue 392 (epic 1264, readiness(defiance))
+  extracted_at: '2026-08-05'
+  checked_on: '2026-08-05'
+  method: >-
+    Two independent routes, recorded separately. (1) EPA ECHO's CWA services —
+    dfr_rest_services.get_dfr for FRS 110000544082 and case_rest_services.get_case_report for case
+    05-2024-0328 — read 2026-08-05 against the ICIS-NPDES extract of 2026-07-31. (2) Ohio EPA's
+    eDocument public portal (edocpub.epa.ohio.gov), scripted, by Entity Name "DEFIANCE WWTP":
+    1,097 documents, of which 950 carry Secondary ID 2PD00013. The portal's NPDES doc-type
+    histogram for this facility is the negative that scopes the search: 2 NOV, 3 ROV/RTC, 7 DFFO,
+    3 Judicial Order, 22 Inspection or Compliance Review, 37 Director's Authorization, 30 Permit,
+    764 Report, 58 Plan, 20 Monitoring or Sampling, 1 Technical Assistance. The state document
+    behind the informal action was retrieved and is committed; the federal order's own text was
+    not (see `open_questions`).
+  echo_window: >-
+    ECHO's CWA enforcement counts cover 2021-08-01 to 2026-03-31 (the 5-year window it reports for
+    this facility). Anything older than 2021-08-01 — including the state consent order that
+    actually governs this plant's CSO program — is NOT in those two integers.
+
+# ── What ECHO says, verbatim, before any interpretation ───────────────────────────────────────
+echo_summary:
+  tag: '[verified]'
+  read_on: '2026-08-05'
+  source: >-
+    EPA ECHO dfr_rest_services.get_dfr?p_id=110000544082, EnforcementComplianceSummaries /
+    InspectionEnforcementSummary / Notices / FormalActions / CaseFormalActions blocks;
+    ICIS-NPDES system extract date 2026-07-31
+  statute: CWA
+  inspections: 5
+  last_inspection: '2025-12-12'   # Pretreatment - Audit, State lead
+  current_status: Violation Identified
+  quarters_in_noncompliance: 12
+  quarters_in_significant_noncompliance: 4
+  informal_actions: 1
+  formal_actions: 1
+  total_penalties: $0
+  current_snc: 'No'   # ComplianceSummary block, as of 2026-03-31
+  note: >-
+    12 of 12 reported quarters in noncompliance and 4 in significant noncompliance, with $0 in
+    penalties, is the shape of this record: continuous technical noncompliance, no monetary
+    enforcement. `compliance_status: null` in our committed ECHO inventory
+    (data/reference/echo/maumee-wwtp.potw.yaml) is a null in ECHO's facility-search column, not a
+    statement that the facility is compliant — the DFR block above says "Violation Identified."
+
+# ── The FORMAL action ──────────────────────────────────────────────────────────────────────────
+formal_action:
+  tag: '[verified]'
+  what: EPA Region 5 administrative order for compliance (CWA §309(a))
+  case_number: 05-2024-0328
+  case_name: Defiance WWTP_AOC
+  activity_id: '3604047791'
+  case_type: Administrative - Formal
+  enforcement_type: CWA 309A AO For Compliance
+  lead_agency: EPA        # FEDERAL, not Ohio EPA
+  law_and_sections: 'CWA 301/402: NPDES Permit Violations'
+  case_summary_verbatim: AOC to address and correct NPDES permit violations.
+  issued: '2024-07-26'         # "Final Order Issued"
+  data_entered: '2024-07-30'
+  closed: '2026-05-06'         # "NPDES Closed" and "Enforcement Action Closed" on the same date
+  case_status: Closed
+  enforcement_outcome: Final Order No Penalty
+  federal_penalty: $0
+  state_local_penalty: $0
+  penalty_collected: $0
+  supplemental_environmental_project_cost: $0
+  cost_recovery: $0
+  compliance_action_cost: $21,801
+  defendant: Defiance WWTP (named in settlement; not named in a complaint — no complaint was filed)
+  source: >-
+    EPA ECHO case_rest_services.get_case_report?p_id=05-2024-0328 and the CaseFormalActions block
+    of dfr_rest_services.get_dfr?p_id=110000544082, both read 2026-08-05; public case report at
+    https://echo.epa.gov/enforcement-case-report?id=05-2024-0328
+
+  # The four violations the order was issued over. This is the answer to "over what conduct" —
+  # and it is the part that matters for the thesis, because none of them is a dilution failure.
+  underlying_violations:
+    tag: '[verified]'
+    count: 4
+    source: >-
+      EnforcementConclusions[0].EnfConNPDESViolations of the ECHO case report (enforcement
+      conclusion 3600481394); full list downloadable at
+      https://echodata.epa.gov/echo/case_rest_services.npdesvioenfconcl_download?p_enf_concl_id=3600481394
+    items:
+    - date: '2020-05-31'
+      type: Effluent (E90)
+      description: >-
+        Monitoring Period End Date 05/31/2020, Permitted Feature - Limit Set 001-A, Parameter
+        Chlorine, total residual, Monitoring Location Effluent Gross, DMR Value Type Concentration
+    - date: '2023-03-07'
+      type: Other (C0014)
+      description: Monitoring Violations - Invalid/Unrepresentative Sample
+    - date: '2023-03-07'
+      type: Other (A0012)
+      description: Effluent Violations - Numeric effluent violation
+    - date: '2023-03-07'
+      type: Other (E0012)
+      description: Reporting Violations - Failure to Submit DMRs
+
+  # What the order was expected to buy, in pollutant terms. EPA scores an administrative order's
+  # complying action; here the score is dominated by ammonia.
+  estimated_pollutant_reductions:
+    tag: '[verified]'
+    complying_action: NPDES Discharge Change (Reduction of Ongoing Releases)
+    metric: Estimated Water Pollutants Reduced, Treated, or Eliminated (pounds)
+    media: Water (navigable/surface)
+    items:
+    - pollutant: Ammonia
+      annual_amount_lb: 35602
+    - pollutant: BOD, carbonaceous [5 day, 20 C]
+      annual_amount_lb: 1826
+    - pollutant: Phosphorus
+      annual_amount_lb: 1035
+
+  compliance_schedule:
+    tag: '[verified]'
+    schedule_id: '3600074447'
+    event: Achieve Final Compliance With All Obligations Under This order
+    due: '2025-12-31'
+    achieved: '2026-03-04'
+    recorded_violation:
+      npdes_violation_id: C40
+      description: Schedule Event unachieved and not reported
+      rnc_category: '1'
+      first_reported_quarter_value: '2025-12-31'
+      cleared_quarter_value: '2026-03-04'
+      source: CWACSCompliance block of the DFR
+    note: >-
+      The order's single milestone was missed. Final compliance was due 2025-12-31, ECHO recorded
+      it as "unachieved and not reported" for that quarter, and it was achieved 2026-03-04 — 63
+      days late. The action then closed 2026-05-06 with no penalty. Both facts are true at once and
+      the order matters: a reader who sees only "Closed / Final Order No Penalty" would not know
+      the deadline was blown, and a reader who sees only the C40 violation would not know it
+      cleared.
+
+  reading:
+    tag: '[inference]'
+    reasoning: >-
+      The order's underlying violations are a chlorine exceedance in May 2020 and a same-day
+      cluster of three March 2023 findings (an unrepresentative sample, a numeric effluent
+      violation, a DMR failure). The fact sheet, written between those dates, names the cause of
+      the plant's dominant violation class outright: "A plant upset due to a filamentous bulking
+      event occurred in mid-2022, resulting 21 effluent limit violations of several parameters.
+      Numerous other ammonia limit violations occurred but a specific or common cause has not been
+      identified" — 49 of 92 five-year violations were ammonia
+      (data/extracted/oepa/defiance/2PD00013.fs.npdes.yaml, printed pp. 9 and 22). EPA scores the
+      order's remedy at 35,602 lb/yr of ammonia, an order of magnitude above the CBOD and
+      phosphorus lines. The order is therefore best read as a treatment-performance and
+      reporting-discipline action on a plant whose secondary process was failing, not as a
+      receiving-water action.
+    what_it_does_not_show: >-
+      Nothing in the order, its violations, or its scored remedy references the receiving water's
+      assimilative capacity, the 7Q10, or a wasteload allocation. Do not describe this action as
+      "a formal enforcement action despite dilution headroom" as if the headroom were the
+      surprising part — the two are unrelated, which is itself the point #392 was chasing.
+
+# ── The INFORMAL action ────────────────────────────────────────────────────────────────────────
+informal_action:
+  tag: '[verified]'
+  what: Ohio EPA Notice of Violation / Resolution of Violation (one letter, doing both)
+  echo_action_type: Base Program - Letter of Violation/ Warning Letter
+  echo_enforcement_identifier: OH-I00108252
+  lead_agency: State      # Ohio EPA Northwest District Office
+  official_flag: 'Y'
+  notice_date: '2026-04-21'
+  document: data/documents/oepa/defiance/2PD00013.nov-rov-2026-04-21.pdf
+  author: Lori Komorowski, P.E., Environmental Engineer II, Compliance and Enforcement, Ohio EPA DSW, Northwest District Office
+  addressee: Mayor & Council, City of Defiance
+  source: >-
+    Notices block of dfr_rest_services.get_dfr?p_id=110000544082 (read 2026-08-05) for the ECHO
+    identity; the letter itself from the Ohio EPA eDocument portal, docids 4089456 (indexed "NOV")
+    and 4089457 (indexed "ROV or RTC") — byte-identical downloads, sha256 04aee5e8…, so one file
+    is committed and both docids are recorded in the collection's filename-map.yaml.
+
+  violation:
+    citation_as_stated: ORC 6111.04(C), ORC 6111.07(A), Part I.B of the permit, and Part II Item I of the permit
+    description_verbatim: >-
+      "Sanitary sewer overflows (SSOs) occurred from March 31, 2026, through April 10, 2026. The
+      effected water bodies were Preston Run, the Maumee River, and the Auglaize River."
+    receiving_waters:
+    - Preston Run
+    - Maumee River
+    - Auglaize River
+
+  timeline:
+    force_main_break_notified: '2026-03-31'   # Tuesday; the City notified Ohio EPA
+    repair_blocked_until: '2026-04-09'        # Preston Run stage height rose; the break stayed flooded
+    repair_completed: '2026-04-10'            # Friday
+    five_day_notification_submitted: '2026-04-15'
+    letter_issued: '2026-04-21'
+  asset: Kingsbury force main
+  resolution_status: Resolved
+  resolution_verbatim: >-
+    "On April 15, 2026, Ohio EPA received the City of Defiance's response which stated that the
+    Kingsbury force main had been repaired and all SSOs associated with the force main break had
+    ceased. Pictures of the break and repair were provided ... Therefore, this violation has been
+    resolved."
+  penalty_reserved_verbatim: >-
+    "Please note that this does not preclude the Director from seeking administrative or civil
+    penalties pursuant to Ohio Revised Code section 6111.09 for the violation noted above."
+  echo_violation_coding:
+    npdes_violation_id: '3687690674'
+    description: WW CSO - Dry weather overflow
+    agency: State
+    quarter_value: '2026-04-21'
+    source: CWASECompliance block of the DFR
+    note: >-
+      ECHO codes this event as a CSO dry-weather overflow. The letter itself calls it a sanitary
+      sewer overflow from a force-main break. Both descriptions are recorded as their own sources
+      state them; neither is corrected against the other.
+
+  reading:
+    tag: '[inference]'
+    reasoning: >-
+      The Kingsbury force main is not incidental to this site's record. The IWIP the state consent
+      order required proposes to "increase the capacity of the Kingsbury pump station to take
+      advantage of the existing infrastructure at Defiance WPC"
+      (data/extracted/oepa/defiance/2PD00013.fs.npdes.yaml, printed p. 8) — so the asset that
+      failed in March 2026 is one of the assets the 2043 CSO control program is built around. The
+      cause of the eleven-day discharge was also hydrologic, not operational: the letter states the
+      repair could not be performed until April 9 because Preston Run's stage height kept the break
+      flooded. A wet-weather system, in a wet spring, on a river with ample low-flow dilution.
+    what_it_does_not_show: >-
+      Neither the letter nor ECHO quantifies the SSO volume. Do not assert a load. `[open]`.
+
+# ── The instrument that is NOT in either integer, and is the largest of the three ──────────────
+not_counted_by_echo:
+  tag: '[verified]'
+  instrument: State of Ohio Second Amended Consent Order (SACO), Case No. 10-CB-40433
+  filed: '2020-02-28'
+  requires: Integrated Watershed Improvement Plan (Long-Term Control Plan + No Feasible Alternatives analysis)
+  program: control CSOs to six overflow events per typical year, $40.7M, complete by 2043
+  citation: >-
+    data/documents/oepa/defiance/2PD00013.fs.pdf, printed p. 8; structured at
+    data/extracted/oepa/defiance/2PD00013.fs.npdes.yaml (`consent_order`)
+  why_it_matters: >-
+    It predates ECHO's 2021-08-01 enforcement window, so it appears in NEITHER of the two counts
+    #392 asked about — yet it is the largest and longest-running enforcement instrument on this
+    plant, and it is a state judicial order, a different animal from the federal administrative
+    order above. Reading "1 informal + 1 formal" as the plant's enforcement history would miss a
+    $40.7M, 23-year consent decree. The eDoc portal also carries three Judicial Order filings on
+    2PD00013 (2010-03-02, 2010-12-29, 2012-12-20) that are presumably this case's own docket;
+    they were not retrieved under this issue.
+
+inspections:
+  tag: '[verified]'
+  source: ComplianceHistory block of dfr_rest_services.get_dfr?p_id=110000544082, read 2026-08-05
+  window: 2021-08-01..2026-03-31
+  items:
+  - date: '2025-12-12'
+    type: Pretreatment - Audit
+    lead: State
+    snc_flag: 'N'
+  - date: '2024-01-30'
+    type: Biosolids - Evaluation
+    lead: State
+    snc_flag: 'N'
+  - date: '2024-01-30'
+    type: Base Program - Evaluation
+    lead: State
+    snc_flag: 'N'
+  - date: '2022-11-30'
+    type: Base Program - Evaluation
+    lead: EPA
+    snc_flag: 'N'
+  - date: '2021-12-10'
+    type: Pretreatment - Audit
+    lead: State
+    snc_flag: 'N'
+  note: >-
+    No inspection in the window carries an SNC finding, and none is dated near either enforcement
+    action. The 2022-11-30 EPA-lead Base Program Evaluation is the only federal inspection and
+    sits between the two clusters of violations the 2024 AOC was issued over.
+
+what_this_settles_for_the_thesis:
+  tag: '[inference]'
+  claim_under_test: >-
+    The corpus's Defiance thesis is that this plant is the clean control for Lima — same basin,
+    comparable size, the only variable being the receiving water — and that its "tight but not
+    violating" dilution is what a mainstem discharge looks like
+    (docs/bigger-picture.md §2, data/extracted/defiance/ONBOARDING.md).
+  finding: >-
+    The two enforcement actions do not threaten that thesis, and they do not support a stronger
+    version of it either. They are orthogonal to it. The formal action is about a failing secondary
+    process and unfiled DMRs; the informal action is about a cracked force main in a flooded
+    creek bed. Neither is a receiving-water failure, and neither would have been prevented by more
+    dilution or caused by less. What the pair DOES establish is that "well-diluted" and
+    "compliant" are independent properties of a plant — which is the honest form of the point
+    #392's rationale was reaching for, and a narrower claim than "dilution headroom = compliance"
+    being undermined.
+  care: >-
+    12 quarters in noncompliance and 4 in significant noncompliance is a worse standing record than
+    the phrase "tight but not violating" suggests to a reader. The dilution screen measures one
+    thing (design-flow assimilative capacity at the outfall) and the compliance record measures
+    another. Do not let the first stand in for the second in prose.
+
+open_questions:
+- >-
+  The text of EPA Region 5 AOC 05-2024-0328 is not in the corpus. ECHO exposes the case's
+  structured record but no document; the Ohio EPA eDocument portal carries state instruments, not
+  federal ones, and the DFR's CAEDDocuments list for this facility is empty. A FOIA request to EPA
+  Region 5, or the ECHO enforcement case report page, would be the route. `[open]`
+- >-
+  The three Judicial Order documents on 2PD00013 (docids 51767, 3862641, 3944039; dated
+  2010-03-02, 2010-12-29, 2012-12-20) would date the original and first-amended consent orders
+  behind Case No. 10-CB-40433. Not retrieved. `[open]`
+- >-
+  The SSO volume discharged to Preston Run, the Maumee and the Auglaize between 2026-03-31 and
+  2026-04-10 is not stated in the NOV/ROV. The City's SSO 5-Day Notification of 2026-04-15 would
+  carry it; it was not located in the portal under this issue. `[open]`
+- >-
+  Two Director's Authorizations on 2PD00013 postdate this pass (docids 4182152 of 2026-07-07 and
+  4207138 of 2026-07-28) and are unread. They are the newest NPDES documents on the facility.
+  `[open]`

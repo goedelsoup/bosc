@@ -1,1 +1,106 @@
-[]
+[
+  {
+    "rel": "oepa/defiance/2PD00013.fs.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Defiance Water Pollution Control (WPC)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "facility_name": "City of Defiance Water Pollution Control (WPC)",
+      "permit_no": "2PD00013*VD",
+      "permit_action": "renewal",
+      "applicant": "City of Defiance, 631 Perry Street, Defiance, OH 43512",
+      "application_no": "OH0024899",
+      "public_notice_no": "191309",
+      "public_notice_date": "2023-11-01",
+      "comment_period_end": "2023-11-30",
+      "facility_address": "Defiance Water Pollution Control, 26273 State Route 281 East, Defiance, OH 43512, Defiance County",
+      "discharge_address": null,
+      "receiving_water": "Maumee River",
+      "stream_network": "Maumee River to Lake Erie",
+      "outfalls": [
+        "001",
+        "050",
+        "051",
+        "602",
+        "801",
+        "901"
+      ],
+      "note": "Facility address is also the discharge address (no separate discharge address). Outfalls 001 (primary), 050 (CSO-related bypass), 051 (primary bypass, monitoring proposed to be removed), 602 (internal monitoring station for TBELs), 801 (upstream monitoring), and 901 (downstream monitoring) are referenced in the fact sheet. Eight additional CSO outfalls with flow meters are mentioned but not individually identified."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/defiance/2PD00013.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/defiance/2PD00013.fs.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/defiance/2PD00013.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Defiance Water Pollution Control WWTP",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number, public notice date, or comment period end date found in the document.",
+      "Outfall 2PD00013050 is referenced in notes as a bypass station but not formally listed as a permitted outfall with its own limitations table.",
+      "Permit action inferred as 'renewal' based on context (existing permit number with version designation); not explicitly stated as renewal in the text."
+    ],
+    "fields": {
+      "facility_name": "Defiance Water Pollution Control WWTP",
+      "permit_no": "2PD00013*VD",
+      "permit_action": "renewal",
+      "applicant": "City of Defiance",
+      "application_no": "OH0024899",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "26273 State Route 281 East, Defiance, Ohio, Defiance County",
+      "discharge_address": null,
+      "receiving_water": "Maumee River at River Mile 62.05 (and its associated tributaries)",
+      "stream_network": null,
+      "outfalls": [
+        "2PD00013001",
+        "2PD00013602",
+        "2PD00013006",
+        "2PD00013017",
+        "2PD00013027",
+        "2PD00013050"
+      ],
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/defiance/2PD00013.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/defiance/2PD00013.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  }
+]
