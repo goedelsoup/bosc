@@ -1,0 +1,326 @@
+# Who serves what, at Bowling Green — the per-load serving-utility determination.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Bowling Green is the network's only TWO-GRID site, and the site profile has until now
+# carried ONE serving utility for the whole point: the City of Bowling Green municipal
+# electric system (EIA-861 #2054). That is correct for the city and wrong for the campus,
+# and the profile's own citation said so and deferred the fix here (#1440).
+#
+# This file separates the loads. Three of them sit within four miles of each other and
+# not one of them is served the same way as another.
+
+meta:
+  subject: >-
+    The serving utility of each material electric load at the Bowling Green watershed
+    point — the Meta/Liames campus in Middleton Township, the Oppidan colocation
+    building inside the city, and the city's own retail system — read against The Toledo
+    Edison Company's filed retail tariff, the City of Bowling Green's own electric
+    distribution GIS, and the Apollo certificate's interconnection prohibitions
+  kind: serving-utility-determination
+  site: bowling-green
+  captured_for: issue 1440 (epic 1433, readiness(bowling-green) — serving utility + grid posture)
+  extracted_at: '2026-08-05'
+  method: >-
+    Four routes, none of them a press summary. (1) The Toledo Edison Company's whole
+    filed tariff book, P.U.C.O. No. 8, captured from the utility's own tariff library and
+    committed at data/documents/grid/bowling-green/TE-2026-Electric-Service.pdf — read
+    for its Definition of Territory, its Electric Service Regulations and its
+    transmission-service schedule. (2) The City of Bowling Green's own ArcGIS server
+    (gis.bgohio.org), queried for its electric-distribution, substation, municipal-boundary
+    and current-zoning layers against the Wood County Auditor's parcel geometry for the
+    colocation site — the municipal utility's own operational record of where its plant
+    is. (3) The Apollo Power Generation Facility certificate conditions, already
+    transcribed at data/extracted/grid/bowling-green/apollo-power-generation-facility.yaml
+    (#1437). (4) EIA-861 2024, already committed as the site's grid profile.
+  sources:
+    primary:
+      - file: data/documents/grid/bowling-green/TE-2026-Electric-Service.pdf   # P.U.C.O. No. 8, 168 pp
+      - file: data/documents/grid/bowling-green/power-siting-board-ohio-020326.pdf   # OPSB Staff Report, 25-0973-EL-BLN
+      - service: https://gis.bgohio.org/arcgis/rest/services/PublicData/UtilitiesWithZoning/MapServer   # City of Bowling Green electric + zoning layers (queried 2026-08-05)
+      - service: https://wcohiogis.woodcountyohio.gov/server/rest/services/Services_for_Web_Apps/Vision_Parcels/MapServer/0   # Wood County Auditor Vision/CAMA parcels
+    secondary:
+      - url: https://bgindependentmedia.org/bg-has-its-own-much-smaller-less-energy-guzzling-data-center-being-built-in-woodbridge-business-park/   # BG Independent, 2026-02-10 (read 2026-08-05; not committed)
+      - url: https://datacenters.atmeta.com/2025/04/hello-bowling-green/   # Meta, "Hello, Bowling Green", 2025-04-09
+      - url: https://www.interconnection.fyi/data-center/project/oppidan-bowling-green-data-center-2957d20c   # third-party tracker — contradicted below
+
+# ── The instrument nobody had gone and read ───────────────────────────────────
+the_territory_is_in_the_tariff:
+  tag: '[verified]'
+  statement: >-
+    Toledo Edison's own filed tariff names Wood County. Original Sheet 3, DEFINITION OF
+    TERRITORY, Page 1 of 1, effective 2026-03-01, filed pursuant to Orders dated
+    2025-11-19 and 2026-02-18 in Case No. 24-0468-EL-AIR: "The term 'Company's Territory'
+    shall be deemed to mean and include the territory served by the Company's
+    distribution system in Defiance, Fulton, Henry, Lucas, Ottawa, Putnam, Sandusky,
+    Seneca, Williams and Wood Counties."
+  source: 'data/documents/grid/bowling-green/TE-2026-Electric-Service.pdf, 0-based PDF page 4 (Original Sheet 3)'
+  why_it_matters: >-
+    Until now the "the Meta campus is on Toledo Edison, not the muni" claim in this repo
+    rested entirely on Meta's own blog post and on press reporting of it. It now rests on
+    a tariff sheet filed with the Commission. That is a real upgrade in kind, and it is
+    also a LIMITED one — see the caveat below. It matters because everything downstream
+    of the serving utility differs between the two: the rate schedule, the regulator
+    (PUCO versus municipal home rule), the RTO cost allocation, and whether the pending
+    FirstEnergy data-center tariff can reach the load at all.
+  the_caveat_that_must_travel_with_it:
+    tag: '[inference]'
+    statement: >-
+      A COUNTY IS NOT A PARCEL. The tariff establishes that Toledo Edison's certified
+      distribution territory includes territory in Wood County; it does not establish
+      that any particular Middleton Township parcel is inside it, and the sheet itself
+      says so by pointing the reader elsewhere: "Further information concerning specific
+      cities and townships can be found at the PUCO website:
+      http://www.puc.state.oh.us/pucogis/newcntymaps/elcnty.html". Wood County demonstrably
+      contains at least three electric suppliers — Toledo Edison, the City of Bowling
+      Green's municipal system, and Hancock-Wood Electric Cooperative. The
+      parcel-level certified-territory read is [open]; see open_leads/TERRITORY-MAP.
+
+# ── Load 1 — the Meta/Liames campus, Middleton Township ───────────────────────
+loads:
+  - id: META-LIAMES-CAMPUS
+    load: >-
+      Bowling Green Data Center ("Project Accordion") — Meta Platforms, land/nominee
+      entity Liames, LLC; Middleton Township, SR-582 between SR-25 and I-75; 715,000 sq ft
+      initial phase; disclosed ~180 MW at peak
+    interconnecting_utility:
+      tag: '[verified/reference]'
+      value: The Toledo Edison Company (FirstEnergy) — PJM, ATSI zone
+      basis: >-
+        [verified] Wood County is inside Toledo Edison's tariffed territory (above), and
+        the site is adjacent the FirstEnergy Mercer Rd substation. [reference] Meta's own
+        announcement names Toledo Edison and commits the company to funding "network
+        upgrades, substations, transmission lines". No interconnection agreement, service
+        contract or PUCO filing naming this customer has been located — see
+        open_leads/META-SERVICE-AGREEMENT.
+    but_the_energy_does_not_come_from_there:
+      tag: '[verified]'
+      statement: >-
+        The campus is designed to be served BEHIND THE METER by the Apollo Power
+        Generation Facility (350 MW net gas + 119.5 MW / 239 MWh BESS, Will-Power OH LLC,
+        OPSB 25-0973-EL-BLN, approved 2026-02-03), and the certificate makes that
+        posture binding rather than merely intended. Condition 15 bars any physical or
+        electrical interconnection with the PJM Transmission System under OATT Part IV or
+        Part VI. Condition 16 requires both a PJM new service request and supplemental
+        Board approval before any export.
+      source: data/extracted/grid/bowling-green/apollo-power-generation-facility.yaml (#1437)
+      consequence: >-
+        The campus's modelled GRID draw is ~0 and its serving-utility relationship is
+        therefore a standby/backup relationship of unknown size, not a supply one. What
+        Toledo Edison actually sells this customer is [open] and could be anything from a
+        full-requirements backup contract to nothing at all. THIS IS THE SINGLE MOST
+        LOAD-BEARING UNKNOWN AT THIS SITE and it is the reason the demand-pressure feed is
+        labelled a counterfactual (see economics_demand_pressure_coordination below).
+    what_would_govern_if_it_were_grid-served:
+      tag: '[verified]'
+      statement: >-
+        Not Schedule DCT — there is no Schedule DCT at Toledo Edison (see
+        firstenergy-dct-tariff-posture.yaml). Two sheets in the current book would:
+        Rate GT (General Service - Transmission) and Electric Service Regulations §II.G.
+      see: data/extracted/grid/bowling-green/firstenergy-dct-tariff-posture.yaml
+
+  # ── Load 2 — the Oppidan colocation building, inside the city ───────────────
+  - id: OPPIDAN-COLO
+    load: >-
+      Oppidan-developed colocation data center, Woodbridge Business Park, City of Bowling
+      Green — 61,554 sq ft on a ~12-acre parcel; ~6 MW average, ~8 MW peak; end user not
+      disclosed to the city; completion projected April 2026
+    serving_utility:
+      tag: '[inference]'
+      value: City of Bowling Green municipal electric (EIA-861 utility #2054)
+      confidence: high
+      basis: >-
+        Three independent signals, no single instrument. (1) [verified] The City of
+        Bowling Green's OWN electric-distribution GIS carries five overhead
+        electric-distribution features crossing the parcel: layer "Electric Overhead" of
+        gis.bgohio.org PublicData/UtilitiesWithZoning/MapServer, queried 2026-08-05
+        against the Wood County Auditor's polygon for parcel B07-511-210000002003, returned
+        n=5 (all SubtypeCD 7); the Electric Underground, SupportStructure and Substations
+        layers returned n=0 on the parcel itself. A municipal utility maps its own plant;
+        it does not map a cooperative's. (2) [verified] The parcel is inside the city and
+        city-zoned: the same server's Current Zoning layer returns two "IE - Innovation and
+        Employment Zone" polygons over it, carrying annexation ordinances 8597 and 8824.
+        (3) [reference] BG Utilities and Infrastructure Director Brian O'Connell, quoted
+        2026-02-10, said the facility "should be a steady electric customer for the city,
+        unlike other plants that operate on shifts rather than round the clock," and sized
+        it against two existing CITY customers — "less than the Magna plant also located in
+        Woodbridge Business Park, and very similar to the Southwestern Container plant also
+        in the city."
+      why_not_verified: >-
+        None of the three is a service agreement, a rate-schedule assignment or a Board of
+        Public Utilities action on this customer. The issue that opened this thread named
+        the right instrument — BPU minutes — and that instrument has not been read. The
+        city's meeting records were not reachable in this pass; see
+        open_leads/BPU-MINUTES. Until one is read, this is a well-corroborated inference.
+    a_third_party_says_otherwise_and_is_recorded_not_adopted:
+      tag: '[reference]'
+      statement: >-
+        interconnection.fyi's "OPPIDAN BOWLING GREEN DATA CENTER" record names the grid
+        operator as "Hancock-wood Electric COOP INC" and gives the address as 2371
+        Woodstream Drive with capacity "< 10 MW", application and approval "2025", status
+        "Proposed". The page states no source for the utility attribution and paywalls its
+        permit fields.
+      how_it_is_treated: >-
+        RECORDED, NOT ADOPTED, AND NOT DISMISSED EITHER. Hancock-Wood Electric Cooperative
+        is a real Wood County supplier and Ohio's certified-territory scheme does not
+        automatically transfer a co-op's territory to a municipality on annexation, so a
+        co-op serving a parcel inside city limits is not absurd on its face. But an
+        unsourced field on a commercial tracker does not outweigh the city's own plant
+        records plus the city utility director on the record, and the tracker's own
+        metadata is stale in a way that shows it is not tracking this building closely
+        (it still reads "Proposed" for a building the city expected to finish in April
+        2026). The conflict is a lead, not a finding.
+    the_parcel_this_was_run_against:
+      tag: '[verified]'
+      statement: >-
+        Wood County Auditor parcel B07-511-210000002003 — 11.80 ac deeded, conveyed to
+        CLOP BOWLING GREEN OH LLC on 2025-02-03, situs 2371 WOODSTREAM in the ~2025-07 CAMA
+        snapshot, no improvement value yet on the rolls. The GIS queries above were run
+        against this polygon (centroid 41.38279 / -83.596488).
+      already_established_do_not_relitigate: >-
+        #1436 identified CLOP BOWLING GREEN OH LLC as the Oppidan special-purpose entity
+        from its owner mailing address — 400 Water St Suite 200, Excelsior MN 55331, which
+        is Oppidan Investment Company's own headquarters — and reconciled the two street
+        numbers in circulation: the CAMA situs is 2371 Woodstream, the building address is
+        2501 Woodstream Dr. See data/extracted/bowling-green/data-centers.md §2. Both facts
+        are carried there and are NOT re-derived or downgraded here; interconnection.fyi's
+        2371 is simply the situs.
+      one_trap_worth_repeating: >-
+        A residential Woodstream Drive also exists in Wood County, in tax district Q61.
+        Querying the parcel layer on street name alone returns 42 rows, of which 39 are
+        that street. Filter on district B07 or on the parcel id.
+    scale_note:
+      tag: '[inference]'
+      statement: >-
+        ~6 MW average / ~8 MW peak is a scale a municipal system of this size can serve.
+        Against EIA-861 2024 retail sales of 518.2 GWh, 6 MW at a data centre's near-flat
+        load factor is on the order of 47 GWh/yr, or roughly 9% of the city's annual
+        retail sales — material, but an order of magnitude away from the campus. Arithmetic
+        shown: 6 MW x 8,760 h x 0.9 = 47.3 GWh; 47.3 / 518.2 = 9.1%.
+
+  # ── Load 3 — the city's own retail system ──────────────────────────────────
+  - id: CITY-RETAIL
+    load: The City of Bowling Green's own retail electric customers
+    serving_utility:
+      tag: '[verified]'
+      value: >-
+        City of Bowling Green municipal electric — EIA-861 2024 utility #2054, Municipal
+        ownership, BA = PJM, an American Municipal Power member; retail rates set under
+        Ohio home rule, not PUC rate-regulated
+      source: >-
+        EIA-861 2024 Service_Territory / Sales_Ult_Cust via the committed grid profile,
+        data/reference/eia/bowling-green/grid-profile.yaml (#1434)
+    generation_posture: see data/extracted/grid/bowling-green/bgmu-portfolio.yaml
+
+# ── What the campus would face on the muni, and why it never will ────────────
+the_muni_could_not_serve_the_campus:
+  tag: '[inference]'
+  statement: >-
+    The campus's modelled facility draw of 238.5 MW (180 MW IT x PUE 1.325) is roughly
+    2.9 times ALL of the AMP-owned generating capacity physically sited in the City of
+    Bowling Green after the 2025 wind retirement (81.5 MW of combustion turbines + 20 MW
+    of solar + a 12 MW battery = 113.5 MW nameplate), and its annual consumption of
+    ~1,880 GWh is ~3.6 times the city's entire 2024 retail sales of 518.2 GWh.
+  arithmetic: 238.5 / 113.5 = 2.10x on nameplate incl. solar and storage; 238.5 / 81.5 = 2.93x on dispatchable CT nameplate; 1880.3 / 518.2 = 3.63x on annual energy
+  why_this_is_an_inference_and_stays_one: >-
+    Three reasons, each of which would independently prevent this from being a finding.
+    (1) THE UNITS IN TOWN ARE NOT THE CITY'S POWER SUPPLY. They are American Municipal
+    Power's, and Bowling Green buys from AMP's pooled portfolio — hydro entitlements on
+    the Ohio River, Prairie State, market purchases — not from the machines inside its
+    limits. A city's supply is a contractual share, not a map. (2) NO PUBLISHED PEAK LOAD
+    OR HEADROOM FIGURE FOR THE BOWLING GREEN SYSTEM WAS LOCATED, so the actual margin is
+    unquantified — see open_leads/BGMU-PEAK-LOAD. (3) The comparison is against a
+    disclosed design CEILING (~180 MW peak), not a metered load.
+    What the arithmetic does support is the ORDER OF MAGNITUDE, and that is all it is used
+    for: this campus is a different class of load from anything the municipal system has
+    ever served, which is consistent with — but does not by itself explain — the
+    behind-the-meter posture.
+
+# ── The coordination the issue asked for ──────────────────────────────────────
+economics_demand_pressure_coordination:
+  tag: '[inference]'
+  finding: >-
+    The `economics-demand-pressure` feed's Bowling Green figures are a GRID-SERVED
+    COUNTERFACTUAL and must be read as one. They answer "what would this load do to a
+    utility that served it," not "what this load does to the utility that serves it,"
+    because on the record as it stands no utility serves it: Apollo does, behind the
+    fence, under a certificate that forbids the transmission interconnection through
+    which grid service would arrive.
+  the_denominator_problem_named_in_the_profile: >-
+    The committed grid profile computes share_of_utility_pct = 362.86% against the CITY's
+    518.2 GWh, and its own citation already flags this as a magnitude comparison rather
+    than a serving-utility ratio. That flag is now discharged: the correct utility
+    denominator for the campus is FirstEnergy/Toledo Edison, not the Bowling Green muni,
+    and Toledo Edison's retail sales are a different and much larger number.
+  what_was_deliberately_not_done: >-
+    THE PROFILE'S `eia861_utility_number` WAS NOT CHANGED, and it should not be. The knob
+    is the SITE's serving utility — the watershed point is the City of Bowling Green, whose
+    utility is #2054 — and re-pointing it at Toledo Edison to flatter one facility's
+    denominator would falsify the backdrop for the city's own 14,850 customers and for the
+    energy-burden and consumer-energy feeds that key on them. A per-FACILITY serving-utility
+    denominator is a model change (a facility-level utility field feeding
+    `GridLoadShare`), not a knob edit, and it is recorded as a follow-up rather than
+    smuggled in here. See open_leads/PER-FACILITY-DENOMINATOR.
+  what_was_done_instead: >-
+    The profile's `serving_utility_citation` — the one hand-authored string that reaches
+    the generated grid profile (GridProfile is extra="forbid" and connector-written; see
+    the #1464 mechanism note) — now states the split explicitly, so every regenerated
+    grid-profile.yaml carries the two-grid caveat with the number it qualifies.
+
+open_leads:
+  - id: BPU-MINUTES
+    statement: >-
+      Read the City of Bowling Green Board of Public Utilities minutes for the Oppidan /
+      Woodbridge Business Park service arrangement, and for any large-load or data-centre
+      service policy. This is the instrument the issue named and it is still unread. The
+      same minute series would carry the 2026-03-23 solar authorization recorded in
+      bgmu-portfolio.yaml, so one retrieval settles two questions.
+  - id: TERRITORY-MAP
+    statement: >-
+      Pull the PUCO certified-electric-supplier territory map for Wood County
+      (puc.state.oh.us/pucogis/newcntymaps/elcnty.html, cited by Toledo Edison's own
+      tariff sheet) and resolve, at parcel level, the boundary between Toledo Edison, the
+      City of Bowling Green municipal system and Hancock-Wood Electric Cooperative — for
+      the Middleton Township campus and for the Woodbridge Business Park colocation site.
+      This is the single retrieval that would convert two inferences in this file into
+      findings.
+  - id: META-SERVICE-AGREEMENT
+    statement: >-
+      Whether Toledo Edison and Meta/Liames have any service agreement at all, and of what
+      kind — full-requirements backup, standby, or none. Nothing has surfaced. Note the
+      shape of the negative: Apollo's Condition 15 forbids the transmission
+      interconnection, so an agreement would most likely appear as a distribution-level
+      standby arrangement or under Electric Service Regulations §II.G, neither of which is
+      necessarily a public filing. Absence here is weak evidence of anything.
+  - id: PER-FACILITY-DENOMINATOR
+    statement: >-
+      Model follow-up (not a Bowling Green fact): `GridLoadShare` computes
+      share_of_utility_pct against the SITE profile's single EIA-861 utility. At a two-grid
+      site that denominator is wrong for at least one facility. Wanted: a per-facility
+      serving-utility attribution that the grid model can read, so a campus outside the
+      site's own muni is compared against the utility that would actually serve it.
+      Bowling Green is the first site in the fleet where this bites; Van Wert and Sidney
+      should be checked for the same shape.
+  - id: BGMU-PEAK-LOAD
+    statement: >-
+      The City of Bowling Green electric system's annual peak demand and its firm supply
+      position. No published figure was located, and the issue predicted as much. Candidate
+      routes not yet run: the city's Annual Comprehensive Financial Report statistical
+      section, the BPU's own annual report, and AMP's member load data. Until one lands,
+      "the muni has no headroom for a hyperscale campus" stays an inference from portfolio
+      size and is never written as a finding.
+  - id: OPPIDAN-END-USER
+    statement: >-
+      Who the Oppidan building's end user is — the city said on 2026-02-10 that it did not
+      know. This bears on the serving-utility question because the customer of record on the
+      city's books may be the developer, the operator or the tenant, and only one of those
+      appears in BPU minutes. Note that the Ohio Secretary of State business search is
+      access-blocked to automated retrieval (HTTP 403 challenge page — recorded at
+      data/extracted/bowling-green/power-watch.yaml, blocked_routes/OHIO-SOS), so the
+      corporate route is closed; and note the standing instruction in
+      data/extracted/bowling-green/data-centers.md that the unconfirmed "Amazon blue"
+      exterior stripe must not be reported as an Amazon attribution.

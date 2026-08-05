@@ -64,9 +64,12 @@ Meta (Middleton Twp) and Oppidan (city proper) — are **distinct projects**; do
 - **Power draw (MW):** **up to ~180 MW at peak**. `[reference]` — OPSB filings reported via press
   (BG Independent, DCD); not an air-permit or interconnection instrument disclosure of the data
   center's own load, so the official/interconnection MW stays `[open]`. Grid interconnect =
-  **Toledo Edison / ATSI**; but the campus is designed **self-powered behind the meter** by the
+  **Toledo Edison / ATSI** — Wood County is named in that company's own **filed tariff**
+  (§3a); but the campus is designed **self-powered behind the meter** by the
   **Apollo** plant (**350 MW gas + ~120 MW BESS**, see §3). The **350-vs-180 MW oversizing** (~2x)
-  is a **Phase-2 signal**, consistent with the 2026-01-07 Phase-2 letter.
+  is a **Phase-2 signal**, consistent with the 2026-01-07 Phase-2 letter. What Toledo Edison
+  actually **sells** this customer — full-requirements backup, standby, or nothing — is `[open]`
+  and is the largest single unknown on the power side.
 - **Cooling / water:** the company describes **closed-loop, liquid-cooled with dry coolers —
   "no operational water"**, with domestic / cleaning / fire use only. `[reference]` — a **company
   claim**, not yet confirmed by an instrument (NPDES / the negotiated water agreement). This is in
@@ -126,8 +129,19 @@ average); `cooling_model` records the company's **closed-loop dry** claim as `[r
 - **Building:** **61,554 sq ft / ~12 ac**. `[reference]` — note a competing figure of **98,695
   sq ft** appears in the vendor/engineering trade record. `[reference]` The two are not
   reconciled and neither is an instrument; the city building permit is the pull. `[open]`
-- **Power:** **6 MW avg / 8 MW peak**, on **city (BGMU-implied) power**. `[reference]` — the muni
-  serving assumption is `[open]` (BGMU-implied, not instrument-confirmed).
+- **Power:** **6 MW avg / 8 MW peak**, on **city power**. `[reference]` for the MW (BG Utilities
+  and Infrastructure Director Brian O'Connell, 2026-02-10). The muni serving assumption is
+  **no longer `[open]`** — #1440 upgraded it to a high-confidence `[inference]`: the **City's own
+  electric-distribution GIS** carries **five overhead electric features crossing the parcel**
+  (`gis.bgohio.org` `PublicData/UtilitiesWithZoning`, layer *Electric Overhead*, queried
+  2026-08-05 against the CAMA polygon), the parcel is **city-zoned `IE - Innovation and
+  Employment Zone`** under annexation ordinances **8597** and **8824**, and O'Connell described
+  it on the record as "a steady electric customer for the city," sized against two existing
+  **city** customers (Magna, Southwestern Container). A commercial tracker
+  (interconnection.fyi) attributes it instead to **Hancock-Wood Electric Cooperative** with no
+  stated source — recorded and **not adopted**, and not dismissed either, since a co-op's
+  certified territory does not vanish on annexation. The instrument remains the **BPU minutes**.
+  See `data/extracted/grid/bowling-green/serving-utility.yaml`.
 - **End user:** **undisclosed**; an "Amazon blue" exterior stripe is **unconfirmed** and must not
   be reported as an Amazon attribution. `[open]`
 - **Completion:** **~April 2026**. Water use characterized as **"negligible"**. `[reference]`
@@ -168,7 +182,52 @@ pointer; the transcriptions are canonical.
   `[verified]`.
 - **Scope note:** the Apollo gensets are a **separate OPSB-permitted power facility**, not the data
   center's own emergency gensets, so `SiteFacility.genset_count` / `genset_mw` stay `None` on
-  `_BOWLING_GREEN`. Grid posture vs the FirstEnergy data-center tariff remains **#1440**.
+  `_BOWLING_GREEN`.
+- **Not in the federal generator inventory.** Apollo appears **nowhere in EIA-860M** (June 2026
+  edition) — not in Wood County, not in any state, on any sheet. Two readings, neither asserted:
+  a plant its own certificate bars from the PJM Transmission System may be outside Form 860's
+  scope, or it may be a reporting lag. If the first holds, the behind-the-meter pathway makes
+  350 MW statistically invisible to the inventory every fleet-level count runs off. Testable
+  against a later edition — `data/extracted/grid/bowling-green/wood-county-generation-census.yaml`.
+
+## 3a — Grid posture and serving utility (#1440)
+
+Full records at `data/extracted/grid/bowling-green/` (catalog `bowling-green-grid`). The load-bearing
+points, so this file is not the place they get re-derived:
+
+- **Two grids.** The Meta campus is in **Toledo Edison** territory and this is now **tariff-grounded**,
+  not press-sourced: Toledo Edison's own filed **P.U.C.O. No. 8, Original Sheet 3, Definition of
+  Territory** (effective 2026-03-01) names **Wood County** among the ten counties of "Company's
+  Territory." `[verified]` — but a county is not a parcel, and the sheet itself points to PUCO's
+  county maps for township detail, so the parcel-level read stays `[open]`.
+- **There is no Schedule DCT at Toledo Edison.** A full-text scan of all 168 pages returns no "DCT"
+  and no "data center." `[verified]` The FirstEnergy DCT is **filed and pending** — **PUCO
+  26-0697-EL-ATA**, joint filing of Ohio Edison / Cleveland Electric Illuminating / Toledo Edison,
+  June 2026. `[reference]` (EEI compilation; PUCO DIS refuses automated retrieval, re-probed
+  2026-08-05).
+- **What governs in the meantime** is **Rate GT**, whose Contract Demand is **"60% of the customer's
+  expected, typical monthly peak load"** on a **two-year** term with **no exit fee** — put that
+  beside Schedule DCT's **85% for twelve years** and the pending case has a number, not just a
+  controversy. The sheet that reaches a *behind-the-meter* campus is **Electric Service Regulations
+  §II.G**, already in force, which counts a 500 kW capacity change **"including the effects of the
+  addition of onsite generation."** `[verified]`
+- **The muni island, corrected against EIA-860M (June 2026):** the four **1.8 MW** wind turbines
+  (7.2 MW, Ohio's first commercial wind farm) were **retired March 2025** — the repower watch closes
+  as a **retirement**, with **10–12 MW of replacement solar** authorized by the **Board of Public
+  Utilities on 2026-03-23** to run **"behind the meter for the city."** The solar facility is
+  **20 MW, COD January 2017** — the **20-not-125 MW** correction is now `[verified]` federally.
+  AMP's combustion turbines in the city are **81.5 MW** across two plants, and a **12 MW battery**
+  has been operating since **May 2023** that no prior record here mentions.
+- **Juliet Energy is 50 MW nameplate**, not "~62–65 MW AC," and was due in service **July 2026**.
+  `[verified]` **Troy Energy** is **4 × 198.9 = 795.6 MW** of existing simple-cycle CTs with **no
+  planned addition in the federal inventory**; the combined-cycle conversion is a **PJM queue
+  position, not a planned generator**, and its queue id / POI / in-service year were **not**
+  corroborated. `[open]` — note the route: PJM's **interconnection queue is not in Data Miner
+  2** (queried with a valid key; none of its 119 feeds is a queue), so the pull is the
+  planning-page PDFs, not the API.
+- **The headroom number stays `[open]`**, as the issue instructed. No published Bowling Green peak
+  load or firm-capacity figure exists. "The muni could never serve 180 MW" is an **inference** from
+  portfolio size with its arithmetic shown — never a finding.
 
 ## 4 — The land-use track: three rezonings, one of them contested (#1436)
 

@@ -2,9 +2,9 @@
   "site": "bowling-green",
   "bundle_version": "1.0.0",
   "contract_version": "1.52.0",
-  "generated_at": "2026-08-04T16:32:16+00:00",
+  "generated_at": "2026-08-05T10:58:48+00:00",
   "feed_count": 33,
-  "row_total": 520,
+  "row_total": 521,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -229,7 +229,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 56
+      "count": 57
     },
     {
       "name": "geo/campus",

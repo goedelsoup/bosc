@@ -1,0 +1,447 @@
+# Every generator in Wood County, Ohio, as the federal inventory has them — plus the
+# one that is being built there and is not in it.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# The issue that opened this thread listed the county's power column from press and
+# developer sources: four wind turbines of unstated current status, a 20 MW solar field
+# "not the ~125 MW sometimes conflated", AMP combustion turbines of unstated size, a
+# Troy Energy conversion, and a Juliet Energy solar project at "~62-65 MW AC". This file
+# replaces all of that with one federal record that carries every generator ≥1 MW in the
+# county with its nameplate, its technology, its operating date and, where it applies,
+# its retirement date. Four of the five entries change.
+
+meta:
+  subject: >-
+    The complete Wood County, Ohio generator census from EIA Form 860M (Preliminary
+    Monthly Electric Generator Inventory), June 2026 edition — operating, planned and
+    retired — read against the county's press-sourced power column, and the absence from
+    it of the 350 MW Apollo plant
+  kind: generation-census
+  site: bowling-green
+  captured_for: issue 1440 (epic 1433, readiness(bowling-green) — serving utility + grid posture)
+  extracted_at: '2026-08-05'
+  method: >-
+    Programmatic read of the four generator sheets (Operating, Planned, Retired, Canceled
+    or Postponed) of the June 2026 EIA-860M workbook, filtered to Plant State = OH and
+    County = Wood, every field transcribed as published. A second pass searched the whole
+    workbook — all sheets, all states — for "Apollo", "Will-Power", "Liames" and
+    "Middleton" to test whether the Wood County filter had missed the Apollo plant. It had
+    not; see the_absence_of_apollo below.
+  source:
+    file: june_generator2026.xlsx
+    title: EIA Form 860M, Preliminary Monthly Electric Generator Inventory, June 2026
+    publisher: U.S. Energy Information Administration
+    url: https://www.eia.gov/electricity/data/eia860m/xls/june_generator2026.xlsx
+    sha256: 47d28a1e5599135b619d249971f35f03fef8a5b3062c2d66c436b55e8f8c3072
+    bytes: 13860880
+    retrieved: '2026-08-05'
+    committed: false
+    why_not_committed: >-
+      A 13.9 MB national monthly workbook is the wrong shape for this corpus: it is not a
+      Bowling Green document, it is superseded every month, and only twenty of its ~28,000
+      rows are in scope. The bytes are pinned by sha256 above so the transcription below is
+      auditable, and the CURRENT-edition URL is recorded knowing it rolls over — the June
+      edition's durable location is EIA's eia860m archive. If this becomes a recurring pull
+      it should become a connector rather than a committed blob; see
+      open_leads/EIA-860M-CONNECTOR.
+
+# ── Operating ─────────────────────────────────────────────────────────────────
+operating:
+  tag: '[verified]'
+  as_of: 2026-06 (EIA-860M June 2026 edition)
+  note: >-
+    All twelve rows carry Balancing Authority Code = PJM. Nameplate is the workbook's
+    "Nameplate Capacity (MW)" column. Coordinates are EIA's, to the precision published.
+  generators:
+    - plant_id: 7783
+      plant_name: Bowling Green Peaking
+      entity_id: 40577
+      entity_name: American Mun Power-Ohio, Inc
+      generator_id: '1'
+      nameplate_mw: 32
+      technology: Natural Gas Fired Combustion Turbine
+      energy_source: NG
+      operating: 2000-06
+      latitude: 41.3884
+      longitude: -83.6402
+    - plant_id: 55262
+      plant_name: Bowling Green Generating Station
+      entity_id: 40577
+      entity_name: American Mun Power-Ohio, Inc
+      generator_id: CT1
+      nameplate_mw: 33
+      technology: Natural Gas Fired Combustion Turbine
+      energy_source: NG
+      operating: 2000-06
+      latitude: 41.397369
+      longitude: -83.64124
+    - plant_id: 55262
+      plant_name: Bowling Green Generating Station
+      entity_id: 40577
+      entity_name: American Mun Power-Ohio, Inc
+      generator_id: CT2
+      nameplate_mw: 16.5
+      technology: Natural Gas Fired Combustion Turbine
+      energy_source: NG
+      operating: 2000-06
+      latitude: 41.397369
+      longitude: -83.64124
+    - plant_id: 55348
+      plant_name: Troy Energy LLC
+      entity_id: 56533
+      entity_name: Troy Energy LLC
+      generator_id: '1'
+      nameplate_mw: 198.9
+      technology: Natural Gas Fired Combustion Turbine
+      energy_source: NG
+      operating: 2002-06
+      latitude: 41.47724
+      longitude: -83.45983
+    - plant_id: 55348
+      plant_name: Troy Energy LLC
+      generator_id: '2'
+      nameplate_mw: 198.9
+      technology: Natural Gas Fired Combustion Turbine
+      operating: 2002-06
+    - plant_id: 55348
+      plant_name: Troy Energy LLC
+      generator_id: '3'
+      nameplate_mw: 198.9
+      technology: Natural Gas Fired Combustion Turbine
+      operating: 2002-06
+    - plant_id: 55348
+      plant_name: Troy Energy LLC
+      generator_id: '4'
+      nameplate_mw: 198.9
+      technology: Natural Gas Fired Combustion Turbine
+      operating: 2002-06
+    - plant_id: 60622
+      plant_name: DG AMP Solar Bowling Green
+      entity_id: 60370
+      entity_name: DG AMP Solar, LLC
+      generator_id: AMPBG
+      nameplate_mw: 20
+      technology: Solar Photovoltaic
+      energy_source: SUN
+      operating: 2017-01
+      latitude: 41.396
+      longitude: -83.582
+    - plant_id: 65951
+      plant_name: Bowling Green Energy Storage Project
+      entity_id: 65129
+      entity_name: VESI 21 LLC
+      generator_id: BG1
+      nameplate_mw: 12
+      technology: Batteries
+      energy_source: MWH
+      operating: 2023-05
+      latitude: 41.382589
+      longitude: -83.61123
+    - plant_id: 66069
+      plant_name: IGS PCW1
+      entity_id: 60281
+      entity_name: Altus Power America Management, LLC
+      generator_id: '462'
+      nameplate_mw: 3.1
+      technology: Solar Photovoltaic
+      operating: 2023-07
+      latitude: 41.548503
+      longitude: -83.57865
+    - plant_id: 66140
+      plant_name: PNA Rossford Solar Array
+      entity_id: 60571
+      entity_name: Onsite Partners, LLC
+      generator_id: PNA01
+      nameplate_mw: 1.4
+      technology: Solar Photovoltaic
+      operating: 2022-07
+      latitude: 41.614879
+      longitude: -83.55724
+    - plant_id: 70208
+      plant_name: PCC Solar Array
+      entity_id: 67300
+      entity_name: Onsite Partners Projectco, LLC
+      generator_id: PENCC
+      nameplate_mw: 1
+      technology: Solar Photovoltaic
+      operating: 2020-08
+      latitude: 41.579674
+      longitude: -83.57152
+  totals:
+    tag: '[inference]'
+    county_operating_nameplate_mw: 916.6
+    arithmetic: 32 + 33 + 16.5 + (198.9 x 4 = 795.6) + 20 + 12 + 3.1 + 1.4 + 1.0 = 916.6
+    amp_owned_in_city_mw: 81.5
+    amp_owned_in_city_arithmetic: 32 (Bowling Green Peaking) + 33 (CT1) + 16.5 (CT2) = 81.5 MW of AMP combustion turbines
+    caution: >-
+      A county nameplate total is a geography, not a supply. Troy Energy is a merchant
+      plant selling into PJM; the AMP units belong to American Municipal Power and serve
+      AMP's members generally, not Bowling Green specifically; the three small solar arrays
+      are third-party distributed generation behind other people's meters. NOTHING in this
+      total is Bowling Green's power supply. See bgmu-portfolio.yaml.
+
+# ── Planned ───────────────────────────────────────────────────────────────────
+planned:
+  tag: '[verified]'
+  generators:
+    - plant_id: 68938
+      plant_name: Juliet Energy Project, LLC
+      entity_id: 62842
+      entity_name: Lightsource Renewable Energy Asset Management, LLC
+      generator_id: OHJE1
+      nameplate_mw: 50
+      technology: Solar Photovoltaic
+      energy_source: SUN
+      planned_operation: 2026-07
+      status: (V) Under construction, more than 50 percent complete
+      latitude: 41.343803
+      longitude: -83.81598
+  corrections_to_the_issue_body:
+    - id: JULIET-IS-50-MW-NOT-62-TO-65
+      tag: '[verified]'
+      was: 'Juliet Energy solar (Lightsource bp, OPSB 20-1760-EL-BGN), ~62-65 MW AC'
+      now: >-
+        EIA-860M carries nameplate 50 MW. The "~62-65 MW AC" of the issue body is not
+        EIA's figure. The likely reconciliation is that 62-65 is DC panel capacity or the
+        OPSB-certified maximum and 50 is the AC nameplate actually installed, but that is
+        an [inference] and the OPSB certificate was not read in this pass. WHAT MUST NOT
+        HAPPEN IS THE PAIR BEING QUOTED AS ALTERNATIVES: cite 50 MW as EIA nameplate, or
+        cite the certificate figure as certified capacity, and say which.
+    - id: JULIET-IS-NEARLY-BUILT
+      tag: '[verified]'
+      was: 'construction from Jan 2025'
+      now: >-
+        Planned operation 2026-07, status "(V) Under construction, more than 50 percent
+        complete" as of the June 2026 edition — i.e. it was due in service the month after
+        the census was struck. Whether it energised is [open]; the July or later edition
+        would move it to the Operating sheet.
+      note: >-
+        Location 41.3438/-83.8160 is Milton/Weston Township, ~10 miles west-southwest of
+        the city — consistent with the issue body's "Weston/Milton Twps".
+
+# ── Retired ───────────────────────────────────────────────────────────────────
+retired:
+  tag: '[verified]'
+  generators:
+    - plant_id: 56226
+      plant_name: Bowling Green Wind
+      entity_id: 40577
+      entity_name: American Mun Power-Ohio, Inc
+      generator_id: '1'
+      nameplate_mw: 1.8
+      technology: Onshore Wind Turbine
+      energy_source: WND
+      operating: 2004-12
+      retired: 2025-03
+      latitude: 41.3786
+      longitude: -83.7383
+    - plant_id: 56226
+      generator_id: '2'
+      nameplate_mw: 1.8
+      technology: Onshore Wind Turbine
+      operating: 2003-11
+      retired: 2025-03
+    - plant_id: 56226
+      generator_id: '3'
+      nameplate_mw: 1.8
+      technology: Onshore Wind Turbine
+      operating: 2003-11
+      retired: 2025-03
+    - plant_id: 56226
+      generator_id: '4'
+      nameplate_mw: 1.8
+      technology: Onshore Wind Turbine
+      operating: 2004-11
+      retired: 2025-03
+    - plant_id: 7575
+      plant_name: Bowling Green
+      entity_id: 40577
+      entity_name: American Mun Power-Ohio, Inc
+      generator_id: '1'
+      nameplate_mw: 1.6
+      technology: Petroleum Liquids
+      energy_source: DFO
+      operating: 1993-10
+      retired: 2018-06
+      latitude: 41.3822
+      longitude: -83.6113
+    - plant_id: 7575
+      generator_id: '2'
+      nameplate_mw: 7.2
+      technology: Petroleum Liquids
+      energy_source: DFO
+      operating: 1995-08
+      retired: 2018-08
+  the_watch_that_closes:
+    id: BGMU-WIND-REPOWER
+    tag: '[verified]'
+    statement: >-
+      THE WIND REPOWER WATCH RESOLVES, AND IT RESOLVES AS A RETIREMENT. The issue registered
+      "BGMU wind repower decision" as a watch and recorded the post-2024 status as [open].
+      All four turbines — 4 x 1.8 MW = 7.2 MW, Ohio's first commercial wind farm, in service
+      November 2003 (units 2 and 3), November 2004 (unit 4) and December 2004 (unit 1) — are
+      carried on EIA's RETIRED sheet with a retirement date of MARCH 2025. There was no
+      repower. The replacement is solar; see bgmu-portfolio.yaml.
+    why_this_is_the_good_kind_of_answer: >-
+      A federal inventory row with a retirement month is a far better instrument than the
+      trade-press "aging, costly, under study" framing the watch was opened on, and it dates
+      the event to the month. Note also that the county lost its only wind generation and
+      its only remaining petroleum-fired generation in the same decade: the AMP diesel units
+      at plant 7575 went in mid-2018, at 41.3822/-83.6113 — coordinates within ~150 m of the
+      12 MW battery that started up at the same site in May 2023.
+
+# ── The generator that is not there ───────────────────────────────────────────
+the_absence_of_apollo:
+  tag: '[verified]'
+  finding: >-
+    THE APOLLO POWER GENERATION FACILITY DOES NOT APPEAR IN EIA-860M AT ALL. Not in Wood
+    County, not anywhere: a whole-workbook search across all four sheets and all states for
+    "Apollo", "Will-Power", "Liames" and "Middleton" returns no Ohio row for this project.
+    The only "Apollo" hits are Apollo Energy Corp's Hawaii wind farms and a 2.5 MW
+    Massachusetts solar array. This is a 350 MW net / 491 MW gross gas plant with an OPSB
+    certificate (25-0973-EL-BLN, approved 2026-02-03), a final Ohio EPA permit to install
+    (P0139272, issued 2026-06-02) and an in-service schedule its applicant put at mid-2027.
+  two_readings_and_neither_is_asserted:
+    - id: OUT-OF-SCOPE
+      reading: >-
+        Form EIA-860 collects from generators connected to the local or regional electric
+        power grid. Apollo's certificate FORBIDS that connection: Condition 15 bars any
+        physical or electrical interconnection with the PJM Transmission System under OATT
+        Part IV or Part VI, and Condition 16 requires a PJM new service request plus
+        supplemental Board approval before any export. A plant built to serve exactly one
+        customer behind the fence may simply not be a reporting entity.
+    - id: REPORTING-LAG
+      reading: >-
+        EIA-860M is a preliminary monthly inventory that picks projects up as respondents
+        report them; a plant that has not yet begun construction reporting can be absent for
+        ordinary administrative reasons and appear later.
+  why_it_is_recorded_anyway:
+    tag: '[inference]'
+    statement: >-
+      IF THE FIRST READING IS RIGHT, THE BEHIND-THE-METER POSTURE MAKES A LARGE PLANT
+      STATISTICALLY INVISIBLE. Every fleet-level count that runs off the federal generator
+      inventory — state capacity additions, PJM's own generation picture, carbon and
+      capacity-factor work, this repo's own greenops layer — would omit 350 MW of new gas in
+      Wood County while capturing a 1 MW rooftop array in Perrysburg. That is a structural
+      observation about a measurement system, not a claim about EIA or about Will-Power, and
+      it is exactly the kind of thing the self-power pathway produces. It is written down
+      here because it is checkable: if Apollo appears in a later edition, reading one is
+      wrong and this note should be struck.
+    how_to_test_it: see open_leads/APOLLO-IN-EIA
+
+# ── Troy Energy ───────────────────────────────────────────────────────────────
+troy_energy_conversion:
+  id: TROY-ENERGY-AH1-711
+  tag: '[reference]'
+  what_the_federal_record_shows:
+    tag: '[verified]'
+    statement: >-
+      Troy Energy LLC, plant 55348, Luckey area (41.47724/-83.45983): four simple-cycle gas
+      combustion turbines of 198.9 MW each, 795.6 MW total, all in service June 2002, all
+      "(OP) Operating", none carrying a planned retirement year. NOTHING IS PLANNED THERE.
+      The Planned sheet's only Wood County row is Juliet Energy; there is no Troy Energy
+      steam-cycle addition in the June 2026 federal inventory.
+  what_the_issue_carried:
+    statement: >-
+      "Troy Energy CC conversion (LS Power) — PJM queue AH1-711, ~408 MW winter addition at
+      the existing Luckey peaker, POI Lemoyne 345 kV, in-service 2030".
+    corroboration_found: >-
+      LS Power announced in March 2025 that it had applied to add approximately 700 MW of
+      new generation across PJM under the RELIABILITY RESOURCE INITIATIVE, including
+      converting two peaking facilities — Troy Energy among them — to base-load combined
+      cycle by adding a steam cycle. Trade reporting puts the Troy addition at roughly 600
+      MW. NEITHER the queue position AH1-711, NOR the Lemoyne 345 kV point of
+      interconnection, NOR the 2030 in-service year, NOR the ~408 MW winter figure was
+      corroborated in this pass.
+  the_honest_reading:
+    tag: '[inference]'
+    statement: >-
+      A PJM QUEUE POSITION IS NOT A PLANNED GENERATOR. The absence from EIA's Planned sheet
+      is consistent with a project that has an interconnection request and no construction
+      commitment, and it should not be read as the conversion having been cancelled — LS
+      Power has cancelled a Troy expansion once before, in 2019 over the nuclear-subsidy
+      legislation, so the distinction matters here more than most places. The three
+      capacity figures now in circulation — ~408 MW winter, ~600 MW added, ~700 MW across
+      LS Power's whole RRI application — are not interchangeable and describe different
+      things; do not average them or pick one.
+  watch: >-
+    REGISTERED AND UNCLOSED. The route to close it is PJM's own queue, which was not
+    reachable — see blocked_routes/PJM-QUEUE.
+
+# ── Routes that are limited, not empty ────────────────────────────────────────
+blocked_routes:
+  - id: PJM-QUEUE
+    tag: '[verified]'
+    route: PJM new service request queue / serial service request status
+    status: >-
+      not a machine-readable product — the queue is NOT in Data Miner 2, and the public
+      queue browser is client-rendered
+    checked: '2026-08-05'
+    evidence: >-
+      THE OBVIOUS FIX WAS TRIED AND IS NOT THE FIX. Data Miner 2 was queried WITH a valid
+      subscription key (settings.pjm_api_key / WATERMARK_PJM_API_KEY, sent as
+      Ocp-Apim-Subscription-Key exactly as watermark.grid.lmp does): the authenticated feed
+      catalogue at api.pjm.com/api/v1/ returns 119 datasets and NONE of them is an
+      interconnection queue. They are market and operations feeds — LMP, ancillary services,
+      generation by fuel, outages, wind and solar output. Four guessed feed names
+      (serial_service_requests, new_service_requests, gen_queue, queue_status) each returned
+      HTTP 404 with the key attached. Separately, PJM's public queue browser
+      (pjm.com/planning/service-requests/services-request-status) renders client-side and
+      exposes no download link in its served HTML, and three legacy spreadsheet paths under
+      pjm.com/pub/planning/ answered with permanent redirects to the site shell.
+    consequence: >-
+      The queue position AH1-711 was NEITHER CONFIRMED NOR REFUTED, and nothing is inferred
+      from its not having been checked. Note what kind of negative this is: not a credential
+      problem and not a bot block, but a PRODUCT boundary — PJM publishes market data through
+      an API and planning data through a web application, and the interconnection queue is on
+      the planning side. Anyone who assumes a PJM key opens the queue will lose an afternoon;
+      it does not.
+    what_would_resolve_it:
+      - a browser-session capture of the queue browser filtered to the ATSI zone
+      - PJM's periodic queue reports and Reliability Resource Initiative postings, which are published as static PDFs on the planning pages
+      - the interconnection agreement itself, if one is executed and filed at FERC
+
+open_leads:
+  - id: APOLLO-IN-EIA
+    statement: >-
+      Re-run this census against a later EIA-860M edition and record whether Apollo appears.
+      If it does, the "behind-the-meter plants are invisible to the federal inventory"
+      reading is wrong and must be struck. If it is still absent once the plant is in service
+      (the applicant's schedule is ~150 MW around July 2027, the remainder around August
+      2027), the reading is strongly supported and becomes a finding worth its own write-up —
+      it would apply to every HB 15 self-power project in Ohio, not just this one.
+  - id: EIA-860M-CONNECTOR
+    statement: >-
+      Model follow-up: there is no EIA-860 connector in this repo. The grid layer pulls
+      EIA-861 (retail sales, service territory) and EIA-930 (BA demand) but never the
+      generator inventory, so every per-site generation fact in the fleet is hand-sourced
+      from press. A `fn(county_fips, settings) -> pydantic` over EIA-860M would give every
+      site its generator census for free and would make claims like "the muni's whole fleet
+      is 81.5 MW" connector-sourced instead of transcribed. Bowling Green, Findlay and
+      Sandusky all have hand-built versions of the same thing.
+  - id: JULIET-ENERGIZED
+    statement: >-
+      Whether Juliet Energy Project (50 MW, planned 2026-07) actually entered service, and
+      reconcile its 50 MW EIA nameplate against the OPSB-certified capacity in
+      20-1760-EL-BGN. The OPSB certificate was not read.
+  - id: VESI-21
+    statement: >-
+      Who VESI 21 LLC is and what the 12 MW / Bowling Green Energy Storage Project battery
+      does — merchant PJM asset, an AMP-contracted resource, or a city asset. It sits at the
+      coordinates of AMP's retired diesel plant (7575), which suggests reuse of a municipal
+      site and therefore a municipal relationship, but that is [inference] from a coordinate
+      pair and nothing more. It is absent from the city's own renewable-energy page and from
+      the issue body alike, so nobody has looked at it.
+  - id: TROY-ENERGY-QUEUE
+    statement: >-
+      Confirm or refute PJM queue position AH1-711, the Lemoyne 345 kV point of
+      interconnection, the ~408 MW winter addition and the 2030 in-service year for the Troy
+      Energy combined-cycle conversion, and reconcile them against LS Power's own ~600 MW
+      statement. NOT via Data Miner 2 — the queue is not one of its 119 feeds, tested with a
+      key (see blocked_routes/PJM-QUEUE). The route is PJM's planning pages: the Reliability
+      Resource Initiative postings and the periodic queue reports, both static PDFs.

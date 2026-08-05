@@ -1,0 +1,292 @@
+# The muni island — the City of Bowling Green's electric portfolio and its AMP posture.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Bowling Green built Ohio's first commercial wind farm in 2003 and retired it in March
+# 2025. It owns no generation of its own; it holds entitlements through American Municipal
+# Power, and AMP owns the machines inside its limits. Every number below has to be read
+# against that structure or it will be read wrong: a map of generators in a city is not
+# that city's power supply.
+
+meta:
+  subject: >-
+    The City of Bowling Green municipal electric system's generation portfolio — the
+    retired wind farm, the 20 MW solar facility, the AMP combustion turbines and hydro
+    entitlements, the replacement solar fields authorised in March 2026 — and American
+    Municipal Power's regulatory posture on data-centre cost allocation
+  kind: utility-portfolio
+  site: bowling-green
+  captured_for: issue 1440 (epic 1433, readiness(bowling-green) — serving utility + grid posture)
+  extracted_at: '2026-08-05'
+  method: >-
+    Nameplates, technologies, operating dates and retirement dates come from EIA Form 860M
+    (June 2026), transcribed at
+    data/extracted/grid/bowling-green/wood-county-generation-census.yaml and cited from
+    there rather than re-transcribed. Portfolio SHARES, entitlement percentages and the
+    utility's own account of itself come from the City of Bowling Green's own published
+    pages and are tagged [reference] — self-published by the utility is still
+    self-published. Board of Public Utilities actions come from local press reporting of
+    meetings whose minutes were not read.
+  sources:
+    primary:
+      - dataset: EIA Form 860M, June 2026 (sha256 47d28a1e…3072) — see wood-county-generation-census.yaml
+      - dataset: EIA Form 861, 2024 — via data/reference/eia/bowling-green/grid-profile.yaml
+    self_published:
+      - url: https://www.bgohio.gov/299/Renewable-Energy   # the city's own Renewable Energy page (read 2026-08-05)
+      - url: https://www.amppartners.org/news/member-spotlight/bowling-green-ohio/   # AMP member spotlight
+    secondary:
+      - url: https://bgindependentmedia.org/bg-moves-ahead-on-new-solar-fields-to-replace-power-from-retired-wind-turbines/   # BG Independent, 2026-03-23
+      - url: https://www.publicpower.org/periodical/article/utility-other-parties-ohio-reach-agreement-how-address-data-center-power-needs   # APPA, 2024-10-24 — AMP's settlement posture
+      - url: https://www.utilitydive.com/news/amp-ratepayer-advocates-ferc-aep-firstenergy-transmission/816060/   # Utility Dive, 2026-03-30 — AMP at FERC
+
+# ── What the utility is ───────────────────────────────────────────────────────
+the_utility:
+  tag: '[verified]'
+  name: City of Bowling Green — municipal electric system
+  eia861_utility_number: 2054
+  ownership: Municipal
+  balancing_authority: PJM
+  retail_sales_2024_gwh: 518.2
+  customers_2024: 14850
+  regulator: >-
+    Ohio municipal electric systems set their own retail rates under home rule; they are
+    not PUC rate-regulated. The Board of Public Utilities is the governing body.
+  source: data/reference/eia/bowling-green/grid-profile.yaml (EIA-861 2024, resolved in #1434)
+  disambiguation_trap:
+    tag: '[verified]'
+    statement: >-
+      EIA-861 #2054 is BOWLING GREEN, OHIO. The Bowling Green, KENTUCKY municipal utility is
+      #2056 and sits in SERC/TVA, not PJM. The two are adjacent in the same file. Most
+      search results for "Bowling Green data center" are the Kentucky city. Always check the
+      BA code and the state before using a Bowling Green row.
+
+# ── The structure that governs every number below ─────────────────────────────
+the_amp_relationship:
+  tag: '[reference]'
+  statement: >-
+    Bowling Green is one of American Municipal Power's member communities — the city's own
+    page says "one of 135 municipal members". It buys wholesale power from AMP's pooled
+    portfolio: hydroelectric entitlements on the Ohio River, combustion turbines, market
+    purchases and, historically, coal. AMP — not the city — is the EIA-registered owner of
+    every generator inside the city limits (entity 40577, "American Mun Power-Ohio, Inc").
+  the_reading_error_to_avoid:
+    tag: '[inference]'
+    statement: >-
+      A GENERATOR IN THE CITY IS NOT THE CITY'S GENERATOR, AND THE CITY'S SUPPLY IS NOT IN
+      THE CITY. AMP's units at Bowling Green serve AMP's members generally; the city's
+      claim on them is a contractual share of unstated size. Conversely the ~35% of the
+      city's energy that its own page attributes to hydro comes from six run-of-river plants
+      on the Ohio River, 200 miles away, that appear nowhere in a Wood County census. The
+      city's actual resource stack is a schedule in an AMP power-sales contract, and THAT
+      DOCUMENT IS NOT IN HAND. Every share figure below is the utility's own summary of it.
+
+# ── The portfolio ─────────────────────────────────────────────────────────────
+portfolio:
+  wind:
+    id: BOWLING-GREEN-WIND
+    status: RETIRED
+    tag: '[verified]'
+    nameplate_mw: 7.2
+    detail: >-
+      Four turbines of 1.8 MW (EIA plant 56226, owner AMP), in service November 2003 (units
+      2 and 3), November 2004 (unit 4) and December 2004 (unit 1), at 41.3786/-83.7383 west
+      of the city near the Wood County landfill. ALL FOUR RETIRED MARCH 2025.
+    source: EIA-860M June 2026, Retired sheet — see wood-county-generation-census.yaml
+    the_city_says: >-
+      [reference] "Ohio's first commercial wind farm… The site featured four utility-scale
+      wind turbines that began producing electricity in 2003"; "all four turbines were
+      officially retired in 2025 due to the end of their operational life and are
+      anticipated to be removed in 2026." (bgohio.gov/299/Renewable-Energy)
+    the_share_conflict:
+      tag: '[open]'
+      statement: >-
+        Three different figures for Bowling Green's share of the 7.2 MW are in circulation
+        and none is sourced to an instrument: 3.6 MW (two turbines) from an older city page;
+        "4.1 MW" as the city's share reported in secondary summaries; and "approximately 4 MW
+        of wind capacity prior to their retirement" (BG Independent, 2026-03-23). They are
+        close enough to be the same fact told three ways and far enough apart to matter.
+        DO NOT PICK ONE. The instrument is the OMEGA JV6 participation schedule, which is
+        not in hand. Note that the 7.2 MW PLANT figure is not in dispute — only the city's
+        entitlement to it is.
+  solar_operating:
+    id: BOWLING-GREEN-SOLAR-FACILITY
+    status: OPERATING
+    tag: '[verified]'
+    nameplate_mw: 20
+    detail: >-
+      EIA plant 60622, "DG AMP Solar Bowling Green", owner DG AMP Solar, LLC (entity 60370),
+      generator AMPBG, 20 MW nameplate, in service JANUARY 2017, at 41.396/-83.582 east of
+      the city.
+    source: EIA-860M June 2026, Operating sheet
+    the_city_says: >-
+      [reference] a "165-acre solar generating facility" of "up to 20.0-megawatts (MW)" with
+      "more than 85,000 solar panels", producing the equivalent of ~3,000 homes and
+      accounting for "up to 3.5% of Bowling Green's annual power supply".
+      (bgohio.gov/299/Renewable-Energy)
+    the_correction_preserved:
+      id: TWENTY-NOT-ONE-HUNDRED-TWENTY-FIVE
+      tag: '[verified]'
+      statement: >-
+        THE BOWLING GREEN SOLAR FACILITY IS 20 MW, NOT ~125 MW, AND THE FEDERAL INVENTORY
+        NOW SAYS SO. The ~125 MW figure that circulates is a conflation with AMP's Solar
+        Phase II programme, a multi-site build across many member communities of which
+        Bowling Green's array is one piece. EIA-860M carries exactly one solar generator at
+        Bowling Green and its nameplate is 20 MW. This correction was carried as [reference]
+        from #1433's discovery research; it is now [verified] against a federal record and
+        must not regress.
+    the_arithmetic_that_does_not_close:
+      tag: '[open]'
+      statement: >-
+        "Up to 3.5% of Bowling Green's annual power supply" does not reconcile with 20 MW
+        against the city's EIA-861 2024 retail sales of 518.2 GWh. A 20 MW array at a
+        northwest-Ohio capacity factor of ~18% yields ~31.5 GWh/yr, which is 6.1% of 518.2
+        GWh, not 3.5%; to make 3.5% true the denominator would have to be ~900 GWh or the
+        city's entitlement would have to be roughly half the array. BOTH ARE PLAUSIBLE AND
+        NEITHER IS ESTABLISHED — the city may be quoting total power SUPPLY (including
+        losses and wholesale purchases) rather than retail sales, or Bowling Green may take
+        only part of an array that AMP built at Bowling Green. Arithmetic shown so the next
+        reader can close it: 20 x 8760 x 0.18 = 31,536 MWh; 31,536 / 518,200 = 6.1%. This is
+        recorded as a tension, not resolved, and NEITHER percentage should be quoted as the
+        city's solar share until the entitlement is known.
+  amp_combustion_turbines:
+    id: AMP-CT-FLEET-AT-BOWLING-GREEN
+    status: OPERATING
+    tag: '[verified]'
+    nameplate_mw: 81.5
+    detail: >-
+      Two AMP plants inside the city, three units, all in service June 2000: "Bowling Green
+      Peaking" (EIA plant 7783, unit 1, 32 MW, 41.3884/-83.6402) and "Bowling Green
+      Generating Station" (EIA plant 55262, CT1 33 MW + CT2 16.5 MW, 41.397369/-83.64124).
+      All natural-gas-fired combustion turbines.
+    source: EIA-860M June 2026, Operating sheet
+    note: >-
+      THE ISSUE BODY SAID "AMP CTs sited in BG" WITH NO NUMBER; the number is 81.5 MW across
+      two plants, and it is now the largest block of dispatchable capacity in the city by a
+      wide margin. Peakers, not baseload — see the_muni_could_not_serve_the_campus in
+      serving-utility.yaml for what may and may not be concluded from that.
+  battery:
+    id: BOWLING-GREEN-ENERGY-STORAGE-PROJECT
+    status: OPERATING
+    tag: '[verified]'
+    nameplate_mw: 12
+    detail: >-
+      EIA plant 65951, owner VESI 21 LLC (entity 65129), generator BG1, 12 MW, batteries, in
+      service MAY 2023, at 41.382589/-83.61123 — within ~150 m of the coordinates of AMP's
+      diesel plant 7575, retired in 2018.
+    source: EIA-860M June 2026, Operating sheet
+    note: >-
+      NOT IN THE ISSUE BODY, NOT ON THE CITY'S RENEWABLE ENERGY PAGE, AND NOT PREVIOUSLY IN
+      THIS REPO. A 12 MW battery has been operating at Bowling Green for three years and
+      nobody has written it down. Its relationship to the municipal system is [open]; the
+      site reuse is suggestive and is not evidence. See
+      wood-county-generation-census.yaml open_leads/VESI-21.
+  hydro_entitlement:
+    id: AMP-OHIO-RIVER-HYDRO
+    tag: '[reference]'
+    statement: >-
+      The city's own page: "Six run-of-the-river hydroelectric facilities located on the
+      Ohio River. The earliest facility began production in 1999 and five more came online
+      between 2016 and 2017", and Bowling Green expects to receive "up to 35% of its energy
+      from a hydroelectric facility" in a typical year.
+    caution: >-
+      An entitlement share, self-reported, with "up to" doing real work. Not verified against
+      any AMP schedule or EIA record, and the six plants are outside this site's geography
+      entirely. Quote it as the utility's own characterisation or not at all.
+  overall_renewable_share:
+    tag: '[reference]'
+    statement: '"For 2021, over 40% of the total energy used by the City was produced by renewable resources." (bgohio.gov/299/Renewable-Energy)'
+    caution: >-
+      A 2021 figure on a page that also describes a 2025 retirement — the page mixes
+      vintages. With the wind farm gone the 2021 number cannot describe 2026, and the city
+      has not published a post-retirement figure. DO NOT PRESENT IT AS CURRENT.
+
+# ── What replaces the wind ────────────────────────────────────────────────────
+replacement_solar:
+  id: BG-BEHIND-THE-METER-SOLAR-2027
+  tag: '[reference]'
+  statement: >-
+    On Monday 2026-03-23 the Bowling Green Board of Public Utilities "voted to authorize the
+    utilities director to lease land and select a solar development partner for the project
+    which will operate BEHIND THE METER for the city." Two fields totalling roughly 80 acres
+    and a combined 10-12 MW: 50-60 acres southwest of the Newton Road dead end at I-75 (on
+    BGSU land) and 20 acres at the southeast corner of Devil's Hole Road and I-75 (on
+    Principle Business Enterprises land). Eitri Foundry was selected as preferred partner.
+    Cost "expected to range between 5 cents and 7 cents per kilowatt hour". Construction in
+    the fourth quarter of 2026, in service spring 2027.
+  source: BG Independent, 2026-03-23 — reporting a public meeting whose minutes were not read
+  why_it_belongs_in_a_grid_posture_file:
+    tag: '[inference]'
+    statement: >-
+      BECAUSE THE CITY IS DOING THE SAME THING META IS DOING, THREE ORDERS OF MAGNITUDE
+      DOWN. "Behind the meter for the city" is the same posture as Apollo behind the fence
+      for the campus: build your own generation and take yourself off somebody else's tariff
+      for that increment. That the municipal utility and the hyperscaler independently
+      reached for the same structure in the same county in the same eighteen months is worth
+      recording; it is not evidence that either influenced the other and nothing here says
+      it is.
+  cross_check_note: >-
+    The wind farm was ~4 MW to the city; the replacement is 10-12 MW. The city is replacing
+    a retired resource with two-and-a-half to three times its capacity — but solar and wind
+    have different capacity factors, so this is not an energy comparison and must not be
+    written as one.
+  watch: >-
+    Q4 2026 construction start and spring 2027 in-service. The lease and the Eitri Foundry
+    agreement are BPU documents and should be requestable; see
+    serving-utility.yaml open_leads/BPU-MINUTES.
+
+# ── AMP's posture on the fight this site is inside ────────────────────────────
+amp_regulatory_posture:
+  declined_the_aep_settlement:
+    tag: '[reference]'
+    statement: >-
+      AMP DID NOT SIGN the AEP Ohio data-centre settlement. General Counsel Lisa McAlister
+      said AMP supported its stranded-transmission-cost protections but stayed out "in order
+      to preserve the right to ensure that funds collected by AEP Ohio are properly
+      attributed to transmission customers that contribute to the infrastructure caused by
+      the data centers."
+    source: American Public Power Association, 2024-10-24
+  at_ferc_against_grid_growth_ohio:
+    tag: '[reference]'
+    statement: >-
+      On 2026-03-27 AMP and consumer advocates for Ohio and Maryland protested the rates
+      proposed for Grid Growth Ohio — an AEP/FirstEnergy 765 kV and 345 kV venture of ~$1.1
+      billion, data-centre-driven, in service 2032, ~60% of costs reported as falling on Ohio
+      ratepayers. Grid Growth sought a 10.8% return on equity; AMP argued its own filing
+      supported 10.66% under the Commission's preferred approach.
+    source: Utility Dive, 2026-03-30
+    docket: '[open] — see firstenergy-dct-tariff-posture.yaml open_leads/GRID-GROWTH-DOCKET'
+  what_this_means_here:
+    tag: '[inference]'
+    statement: >-
+      Bowling Green's wholesale supplier is an active adversary in the proceedings that
+      decide who pays for data-centre-driven transmission in Ohio — including one venture in
+      which FirstEnergy, the utility whose territory contains the Meta campus, is a
+      co-owner. The city is thus on both sides of the same question at once: its supplier is
+      litigating against the cost allocation, while the load driving the cost is being built
+      six miles from its water plant by a customer it does not serve. THIS IS A STRUCTURAL
+      OBSERVATION, NOT AN ALLEGATION — no source connects AMP's FERC posture to the Meta
+      campus, and none is implied.
+
+# ── The number that stays open, and why that is the right answer ──────────────
+headroom:
+  tag: '[open]'
+  statement: >-
+    NO PUBLISHED PEAK LOAD, FIRM CAPACITY OR HEADROOM FIGURE FOR THE BOWLING GREEN ELECTRIC
+    SYSTEM WAS LOCATED. The issue predicted this and instructed that it be left open; it is
+    left open. What can be said is bounded and is said in
+    serving-utility.yaml/the_muni_could_not_serve_the_campus: the city's whole in-limits
+    nameplate after the wind retirement is 113.5 MW (81.5 CT + 20 solar + 12 battery), none
+    of which is the city's own, against a campus facility draw of 238.5 MW.
+  routes_not_yet_run:
+    - the City of Bowling Green Annual Comprehensive Financial Report, statistical section — a municipal ACFR normally publishes an electric-fund schedule carrying peak demand
+    - the Board of Public Utilities' own annual report
+    - AMP member load data, if published
+    - the AMP power-sales contract schedule, which would give the entitlement percentages every share figure in this file depends on
+  do_not: >-
+    Do not derive a peak from 518.2 GWh and an assumed load factor and present it as the
+    city's peak. Do not treat 113.5 MW of AMP-owned in-limits nameplate as the municipal
+    system's capacity. Both are available arithmetic and both would be inventions.

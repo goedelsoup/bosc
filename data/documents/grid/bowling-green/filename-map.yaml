@@ -1,25 +1,37 @@
-# Capture / alias manifest — Bowling Green (Wood County) power instrument, issue #1437.
+# Capture / alias manifest — Bowling Green (Wood County) power and grid instruments,
+# issues #1437 (the Apollo siting record) and #1440 (serving utility + grid posture).
 #
-# One document: the OPSB Staff Report of Investigation in the Apollo Power
-# Generation Facility siting case. Raw bytes are never edited and the file keeps
-# the name the server served it under.
+# Three documents. Raw bytes are never edited and a file keeps the name the server
+# served it under, where the server gave one.
 #
-# The `content_verified` date is read from the file's OWN text layer (the docket
-# caption and the DIS electronic-filing stamp on its last page), never from the
-# URL, the fetch time, or outside knowledge.
+# The `content_verified` date is read from each file's OWN text layer (a docket
+# caption, a DIS filing stamp, a tariff sheet's effective date, a compilation's own
+# "Updated" line), never from the URL, the fetch time, or outside knowledge.
 #
-# evidence: native_text = PDF text layer (pdftotext -layout) confirms the identity
-#           + date quoted below.
+# evidence: native_text = PDF text layer (pdftotext -layout / pypdf) confirms the
+#           identity + date quoted below.
 meta:
   subject: >-
-    The Apollo Power Generation Facility siting instrument — OPSB Case No.
-    25-0973-EL-BLN, Will-Power OH, LLC, Middleton Township, Wood County: the Staff
-    Report of Investigation carrying the project description and the 34 recommended
-    conditions (issue #1437, epic #1433)
+    The Wood County power and grid instruments — (1) the Apollo Power Generation
+    Facility siting record, OPSB Case No. 25-0973-EL-BLN, Will-Power OH, LLC,
+    Middleton Township (issue #1437); (2) The Toledo Edison Company's filed retail
+    tariff P.U.C.O. No. 8, which is what actually governs a large load in Wood
+    County today and which names Wood County in its own definition of territory;
+    and (3) the EEI large-load compilation that carries the pending FirstEnergy
+    Data Center Tariff docket number (issue #1440). Both under epic #1433.
   collection: grid/bowling-green/
-  captured_by: issue #1437 (epic #1433, readiness(bowling-green) — the power instrument)
-  generated_at: '2026-08-01'
-  policy: non-destructive — as-served bytes, as-served filename.
+  captured_by: >-
+    issues #1437 (the power instrument) and #1440 (serving utility + grid posture),
+    epic #1433, readiness(bowling-green)
+  generated_at: '2026-08-05'
+  policy: non-destructive — as-served bytes, as-served filename where one was served.
+
+  served_filename_exception: >-
+    The EEI compilation is served from a CMS path with no filename and no extension
+    (…/Issues%20and%20Policy/List%20of%20Large%20Customer%20Projects%20and%20Tariffs),
+    so there is no as-served name to keep. It is filed under a descriptive name that
+    carries its own edition, and the URL it was served from is recorded below. That
+    is the stated exception to the as-served-filename rule, not a silent rename.
 
   case_number_warning: >-
     THE CASE NUMBER IN ISSUE #1437 IS WRONG AND SO IS OPSB'S OWN PRESS RELEASE.
@@ -83,3 +95,74 @@ documents:
       approval entry is a SEPARATE docket item and is NOT in this file; it was not
       retrievable (see meta.retrieval_warning), so nothing here is cited as the
       Board's order.
+
+  - filename: TE-2026-Electric-Service.pdf
+    canonical: toledo-edison-puco-no-8-schedule-of-rates-2026-07-01.pdf
+    title: >-
+      The Toledo Edison Company, Toledo, Ohio — P.U.C.O. No. 8, SCHEDULE OF RATES FOR
+      ELECTRIC SERVICE (the company's whole filed retail tariff book: Definition of
+      Territory, Electric Service Regulations, the four General Service schedules,
+      street/traffic lighting, miscellaneous charges, other service and 45 riders)
+    issuer: The Toledo Edison Company (FirstEnergy), issued by Torrence L. Hinton, President
+    case_number: 24-0468-EL-AIR   # the distribution rate case most sheets are filed under; SSO sheets cite 14-1297-EL-SSO
+    source_url: https://www.firstenergycorp.com/content/dam/customer/Customer%20Choice/Files/Ohio/tariffs/TE-2026-Electric-Service.pdf
+    served_by: FirstEnergy Corp. (the utility's own tariff library, firstenergycorp.com/customer_choice/ohio_/ohio_tariffs.html)
+    sha256: 5a9c6a43fdff0fcdc3b0272a2cfbc93a3cbc2039c8606180d0a82441d48117e1
+    bytes: 8586625
+    content_type: application/pdf
+    pages: 168
+    fetched_at: '2026-08-05'
+    content_verified: '2026-07-01'   # Table of Contents, Sheet 1, 164th Revised Page 1 of 3: "Effective: July 1, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      WHY A TOLEDO EDISON TARIFF IS A BOWLING GREEN DOCUMENT. Original Sheet 3,
+      DEFINITION OF TERRITORY, effective 2026-03-01, states that "Company's Territory"
+      "shall be deemed to mean and include the territory served by the Company's
+      distribution system in Defiance, Fulton, Henry, Lucas, Ottawa, Putnam, Sandusky,
+      Seneca, Williams and Wood Counties." WOOD COUNTY IS NAMED IN THE UTILITY'S OWN
+      FILED TARIFF. That is the instrument behind the otherwise press-sourced claim
+      that the Meta campus in Middleton Township sits in Toledo Edison / PJM ATSI
+      territory rather than on the Bowling Green municipal system.
+      THE BOOK ALSO CARRIES A VERIFIED NEGATIVE: there is no Schedule DCT and no
+      data-center schedule anywhere in it. A full-text scan of all 168 pages for "DCT"
+      or "data center" returns nothing. The FirstEnergy Data Center Tariff is FILED AND
+      PENDING (PUCO 26-0697-EL-ATA, June 2026), not effective, and this book is the
+      proof of what governs in the meantime — Rate GT plus Electric Service Regulations
+      §II.G. Read as pages, 0-based: Table of Contents 1-3, Definition of Territory 4,
+      Electric Service Regulations 5-27 (§II.G "Large Capacity Arrangements" on page 7),
+      Rate GS 29-31, Rate GP 32-34, Rate GSU 35-36, Rate GT 37-39.
+      Sheets carry different effective dates and different revision numbers; cite the
+      sheet and its own stamp, never the compilation date, for any single term.
+
+  - filename: eei-large-load-projects-and-tariffs-july-2026.pdf
+    canonical: eei-large-load-projects-and-tariffs-2026-07-17.pdf
+    title: Large Load Projects and Tariffs (July 2026) — Edison Electric Institute
+    issuer: Edison Electric Institute (EEI)
+    case_number: null
+    source_url: https://www.eei.org/-/media/Project/EEI/Documents/Issues%20and%20Policy/List%20of%20Large%20Customer%20Projects%20and%20Tariffs
+    served_by: EEI (no filename or extension in the served path — see meta.served_filename_exception)
+    sha256: 1321631386fe7ecca088d851cd7b29927ffeb3f6f8e204a64f9c1bda6bca2072
+    bytes: 410434
+    content_type: application/pdf
+    pages: 16
+    fetched_at: '2026-08-05'
+    content_verified: '2026-07-17'   # page 1: "Updated July 17, 2026"; title: "Large Load Projects and Tariffs (July 2026)"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      A TRADE ASSOCIATION'S COMPILATION, HELD FOR ONE FACT AND TAGGED [reference], NOT
+      [verified]. It is the only located source that states the docket number of the
+      pending FirstEnergy data-center tariff, which issue #1440 asks to pin. Ohio entry,
+      0-based page 13 (printed page 14), verbatim: "26-0697-EL-ATA: In June 2026,
+      FirstEnergy subsidiaries Ohio Edison Company, Cleveland Electric Illuminating
+      Company and Toledo Edison Company jointly filed a proposal for a new Data Center
+      Tariff (DCT)." The bytes are held because the source is a ROLLING document at a
+      stable, edition-less URL — the next edition overwrites it, and a citation to the
+      live URL would decay into an unverifiable claim. EEI is the investor-owned
+      utilities' own association, self-describing the list as compiled "from public
+      sources and announcements"; the underlying PUCO filing was NOT obtained (DIS is
+      access-blocked — see the sibling extractions), so the number is corroborated but
+      not confirmed against the docket. Same page renders AEP Ohio's case as
+      24-0508-EL-ATA with the leading zero, where AEP's own tariff sheets print
+      24-508-EL-ATA; PUCO accepts both and neither rendering is an error.
