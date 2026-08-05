@@ -1,0 +1,200 @@
+[
+  {
+    "id": "WATER-50K-VS-600K",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Meta's announced water figure and the district's design commitment differ by twelve times",
+    "detail": "Two figures for the same campus. Meta's own announced operational use is ~50,000 gpd; the Northwestern Water and Sewer District's linked design commitment is ~600,000 gpd. #1439 recorded both, preferred neither, and left the conflict open by instruction. #1685 then showed why it cannot be closed from the environmental record at all — the campus BUYS finished water, so the ODNR withdrawal registry (which meters withdrawals from waters of the state) and the NPDES record (which covers discharges to them) are both structurally blind to it. The two documents that would settle it are held by two different bodies — the service agreement and the campus meter are the District's, the wholesale contract is the City's — and neither body holds both. Meta's 2026-01-07 letter to the Middleton Township trustees adds a third characterization and no number at all, saying operational water use is \"anticipated to be less than what approximately two full-service restaurants use annually\". Note the arithmetic trap flagged in #1685 — the City PWS's own 2024 reported returns of 220.84 MG is ~0.605 MGD, a decade-old backwash series that is NOT the disputed 600,000 gpd.",
+    "source": "data/extracted/bowling-green/water-watch.yaml · data/reference/oepa/cooling-reconciliation.yaml · data/documents/bowling-green/middleton-township/Meta-Middleton-Township-Letter-010726.pdf",
+    "issue": 1439,
+    "note": "OWED RECORD — the NWWSD service agreement and the City wholesale contract, requested separately."
+  },
+  {
+    "id": "APOLLO-NO-HEARINGS",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Why was a 350 MW power plant certified with no public hearings?",
+    "detail": "OPSB case 25-0973-EL-BLN was filed 2025-11-05 and approved 2026-02-03 by automatic approval under accelerated Letter-of-Notification review. BLN is the letter-of-notification track, which is the whole point — it does not hold adjudicatory hearings. What is open is the record BEHIND that route, and it is open because it is access-blocked, not because it is empty. The Staff Report of Investigation is captured (from a broadcaster's mirror); the application, the ODNR review letter of 2025-11-03, the data-request responses, the public comments and the Board's own approval entry could not be retrieved, because dis.puc.state.oh.us serves an F5 JavaScript bot-challenge to automated requests. The Staff Report says only \"Several public comments\"; the \"14 opposition comments\" figure in circulation is press, and must not be conflated with the 42 comments answered in the Ohio EPA air permit months later.",
+    "source": "data/extracted/bowling-green/power-watch.yaml · data/extracted/grid/bowling-green/apollo-power-generation-facility.yaml",
+    "issue": 1437,
+    "note": "ACCESS-BLOCKED, not empty — nothing is inferred from what PUCO DIS would not serve."
+  },
+  {
+    "id": "APOLLO-GAS-SUPPLY",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Where does Apollo's gas come from, and under which unfiled lateral cases?",
+    "detail": "The Apollo Power Generation Facility's own siting record names two 16-inch natural-gas laterals as separate filings still to be made. Neither has been located on a docket. TC Energy / Columbia Gas infrastructure is adjacent to the site but is NOT established as the supplier — #1437 corrected that reading. The construction-stormwater record shows an APOLLO NORTH PIPELINE permit (OHGC19094) under the Ohio CGP master, which establishes that a north lateral is being built, not who supplies it or under what certificate.",
+    "source": "data/extracted/bowling-green/power-watch.yaml",
+    "issue": 1437,
+    "note": null
+  },
+  {
+    "id": "PHASE-2-EVIDENCE",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "The campus is designed for at least five buildings, and only two are on a schedule",
+    "detail": "RESTATED ON THE INSTRUMENTS, because the evidence usually cited for this — \"Meta's 2026-01-07 Phase-2 letter\" — does not say it. That letter is a community-impact letter and contains no Phase-2 announcement. What does support a Phase 2 is older and firmer. The Middleton Township trustees' minutes of 2025-01-15 record the applicant's own build sequence, including verbatim \"The second data center is scheduled for completion April/May 2027\". The A. Schaller Limited Partnership rezoning application says construction parking moves \"once construction of building five starts\" — against a 715,000 sq ft \"initial phase\". And the Apollo plant is certified at 350 MW net against a disclosed campus peak of ~180 MW, roughly twice the load it was built to serve. Buildings three through five have no schedule, no site plan in the corpus, and no disclosed load.",
+    "source": "data/extracted/bowling-green/middleton-township/project-accordion-township-record.md · data/extracted/bowling-green/data-centers.md · data/extracted/grid/bowling-green/apollo-power-generation-facility.yaml",
+    "issue": 1438,
+    "note": null
+  },
+  {
+    "id": "MIDDLETON-REFERENDUM",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "The referendum window on the thirteen-parcel rezoning closed on or about 2026-08-06",
+    "detail": "The Middleton Township trustees approved the rezoning of thirteen parcels on 2026-07-07, opening a 30-day R.C. 519.12 referendum window. A petition drive needing 971 valid signatures for the November 2026 ballot was circulating as of 2026-07-18, organizers targeting ~1,300 to absorb rejections. Whether a petition was filed with the Wood County Board of Elections, and whether it was certified, is unknown — the window closed one day after this capture. There is also an unresolved conflict about the threshold itself. At the 2026-01-07 meeting the township's assistant prosecuting attorney is recorded saying \"the latest laws require signatures of 35% of the voting population in the last gubernatorial race\"; R.C. 519.12 as this repo has understood it sets eight per cent. 35, 8 and 971 are three numbers that do not reconcile without reading the statute, which this issue did not do.",
+    "source": "data/extracted/bowling-green/record-watch.yaml · data/documents/bowling-green/middleton-township/07072026_specialrezoning.pdf",
+    "issue": 1436,
+    "note": "time-sensitive — the outcome is checkable at the Wood County Board of Elections now."
+  },
+  {
+    "id": "OPPIDAN-END-USER",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Who is the end user of the Oppidan colocation building in the city?",
+    "detail": "Oppidan Investment Company's 61,554 sq ft building at 2501 Woodstream Dr sits in the City of Bowling Green, 4.83 miles from the Meta campus, on a parcel conveyed to CLOP BOWLING GREEN OH LLC for $1,105,000 on 2025-02-03. Its tenant is undisclosed. An \"Amazon blue\" exterior stripe has been remarked on and is NOT an attribution; it must not be reported as one. A second unreconciled figure exists for the building itself — 98,695 sq ft in the vendor and engineering trade record against 61,554 in press — and neither is an instrument. The city building permit is the pull.",
+    "source": "data/extracted/bowling-green/data-centers.md · data/reference/bowling-green/parcel-assemblage.geojson",
+    "issue": 1438,
+    "note": null
+  },
+  {
+    "id": "LIAMES-BENEFICIAL-OWNERSHIP",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Liames, LLC's organizers, statutory agent and formation date are unread",
+    "detail": "Liames LLC is the entity on every deed, on the CRA agreement authorized by Wood County Resolution 23-01249, on the 2026 rezoning application, and as customer of record on OPSB 25-0973-EL-BLN. Eight of its twelve parcels are billed to 1 META WAY, MENLO PARK — Meta's own headquarters, in the tax record — and four to 52 E GAY ST, COLUMBUS. A tax-billing address is not ownership of the LLC. The Ohio Secretary of State business search returns HTTP 403 to automated retrieval, re-probed 2026-08-05, so the registration is unread and the Meta attribution rests on Meta's own 2025-04-09 announcement and its 2026-01-07 letter to the trustees rather than on a corporate filing.",
+    "source": "data/extracted/bowling-green/record-watch.yaml · data/extracted/bowling-green/land-assembly.yaml",
+    "issue": 1438,
+    "note": "ACCESS-BLOCKED — businesssearch.ohiosos.gov refuses scripted retrieval."
+  },
+  {
+    "id": "DEED-CHAIN-GRANTORS",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Who sold the 775 acres, and when did the first deed record?",
+    "detail": "The committed land-assembly register is compiled from the Wood County auditor's CAMA layer, which keeps only the LAST conveyance per parcel — so it names every grantee and no grantor, and the two 2025-04-09 quitclaim consolidations that carry 519 of the 775 acres erased eleven predecessor tracts' prices. Press puts the first Liames deed at 2023-09-05; the earliest conveyance surviving in the CAMA is 2023-11-14. The $6,921,460 of surviving consideration is a floor on a fraction of the assembly and must never be presented as what the land cost. The Recorder's electronic index runs from 1980 and would close all of it, but its public search is an Angular single-page application with no server-rendered search and no discoverable API, so it was not retrievable by script.",
+    "source": "data/extracted/bowling-green/land-assembly.yaml",
+    "issue": 1438,
+    "note": "OWED RECORD — the Wood County Recorder's chronological index, in person or via a records request."
+  },
+  {
+    "id": "THIRTEEN-PARCEL-OWNERSHIP",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Five of the thirteen rezoned parcels stood in other names in the county's own layer",
+    "detail": "Liames LLC applied to rezone thirteen parcels totalling 31.82 acres; in the Wood County auditor's parcel layer, five of them — 10.45 acres — stand in three other names: an individual owner served as SIMON JAY (1.01 ac, owner-occupied — the tax mailing address is the situs), Pine Apartments Ltd, and the P&J Thayer Family Limited Partnership (three parcels). Applicant's counsel told the trustees the parcels are \"owned by Liames, LLC\" and that the structures on them have been razed. The layer's own maximum sale date is 2025-07-25 with zero rows after it, so it cannot see a transfer in the eleven months before the application was docketed — which makes this a vintage gap and not necessarily a discrepancy. Two readings survive and neither is adopted: the five transferred after the snapshot, or the application ran over land Liames does not hold of record, which R.C. 519.12 permits.",
+    "source": "data/extracted/bowling-green/middleton-township/2026-07-07-liames-rezoning.resolution.yaml · data/extracted/bowling-green/land-assembly.yaml",
+    "issue": 1438,
+    "note": null
+  },
+  {
+    "id": "CRA-AGREEMENT-COVENANTS",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "The executed CRA agreement and the three school compensation agreements are unread",
+    "detail": "Wood County Resolution 23-01249 (2023-09-28) authorizes a 75% / 15-year Community Reinvestment Area agreement with Liames LLC, and the record made in support of it states 50 full-time jobs and a $4,000,000 annual payroll — half the \"at least 100 operational jobs\" Meta itself now states. Whether the smaller figure became a covenant, what clawbacks exist, and when the exemption commences all live in the executed agreement, which is not published. Three school bodies had already approved compensation agreements before the county acted — Eastwood Local Schools, Otsego Local Schools and Penta Career Center — and the journal gives one figure for the districts plural, \"approximately $1 million annually\", which is genuinely ambiguous between per-district and aggregate. The follow-on TIF the county's economic-development director described as coming \"at a later date that would follow the 15-year tax abatement\" has not been located either.",
+    "source": "data/extracted/bowling-green/commissioners/2023-09-28-liames-cra.resolution.yaml",
+    "issue": 1438,
+    "note": "OWED RECORD — R.C. 149.43 to the Wood County Commissioners and to each school district."
+  },
+  {
+    "id": "ABBOTT-TIMELINE-SLIP",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Abbott's $536M nutrition plant is committed and has not broken ground",
+    "detail": "Announced 2022-12-15 with the Governor and JobsOhio, supported by a City of Bowling Green CRA and PILOT, a JCTC award and a $500k roadwork grant, and by a City Council TIF ordinance passed in November 2023 — a separate instrument from the Liames CRA one month earlier, and not to be conflated with it. As of November 2025 the city described the commitment as unchanged with the project in design and engineering and no revised timeline. Do not write it as under construction. A 2024-11-13 Board of Zoning Appeals agenda shows the project still seeking fence and landscaping variances at Nims Road and North Main Street.",
+    "source": "data/extracted/bowling-green/data-centers.md · City of Bowling Green Agenda Center (agendas of 2024-11-13 and 2026-04-01)",
+    "issue": 1438,
+    "note": null
+  },
+  {
+    "id": "DROUGHT-TOLEDO-INTERCONNECT",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "A city that wholesales water to its neighbours is studying how to buy some from Toledo",
+    "detail": "Bowling Green drinks the Maumee at the Waterville intake and has built its municipal identity on staying out of Toledo's regional system while wholesaling water outward. After the November 2025 flash drought it began studying an emergency interconnection with Toledo — while committing new industrial supply to the campus through the Northwestern Water and Sewer District. The drinking-water record itself is clean and must be narrated as such (PWS OH8700311 — no SDWA violation, lead 90th percentile 0 mg/L over five rounds, and the 2025 consumer confidence report reports no violation), so the stress is supply expansion under drought, not tap quality. The interconnection study itself is not in the corpus.",
+    "source": "data/extracted/bowling-green/water-watch.yaml",
+    "issue": 1439,
+    "note": null
+  },
+  {
+    "id": "CITY-ELECTRIC-EASEMENT-582",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Why was the municipal utility pursuing an electric easement at the campus corner?",
+    "detail": "Middleton Township trustees' minutes, 2025-01-15, record that \"a right-of-way easement is being pursued by the City of Bowling Green for electric lines at St. Rt. 25 and 582\" — the campus corner, six miles outside the city limits and in Toledo Edison's tariffed territory. #1440 established that Toledo Edison's own filed tariff names Wood County, that the campus is designed behind the meter, and that Apollo's certificate bars it from the PJM transmission system. A municipal electric utility taking easements at that intersection fits none of those readings cleanly. It may be unrelated to the campus entirely. The instrument is the Board of Public Utilities' minutes, which have not been read.",
+    "source": "data/documents/bowling-green/middleton-township/01152025.pdf",
+    "issue": 1440,
+    "note": null
+  },
+  {
+    "id": "TOWNSHIP-MORATORIUM-WAVE",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Seven townships have adopted data-center moratoriums and none of the resolutions is in the corpus",
+    "detail": "Freedom, Henry, Lake, Liberty, Plain, Portage and Weston are reported to have adopted moratoriums, with eight more discussing and Troy and Webster reported as zoning-blocked — all of it press. What is verified is narrower and comes from Middleton Township's own 2026-01-07 minutes, where the chairman read a letter from Wood County Prosecutor Paul Dobson stating his office was \"currently researching the requirements\" for a township moratorium, and the assistant prosecuting attorney explained that a moratorium \"typically can be based on damaged infrastructure\". The City of Bowling Green itself has adopted none. Nine plausible township hostnames were probed and eight do not resolve; these townships have no common publication platform. The single request that would cover all of them is the county prosecutor's opinion.",
+    "source": "data/extracted/bowling-green/record-watch.yaml · data/documents/bowling-green/middleton-township/01072026.pdf",
+    "issue": 1438,
+    "note": "Disambiguation — most \"Bowling Green data center moratorium\" results online are Bowling Green, KENTUCKY (Warren County). Clear that trap on every search."
+  },
+  {
+    "id": "CAMPUS-BACKUP-GENSETS",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "The data center has its own backup generators and no permit for them is in the corpus",
+    "detail": "Meta's 2026-01-07 letter says the campus \"runs its backup generators as minimally as possible ... and in compliance within our air permits\" and that Meta is \"working to fuel all on site generators with renewable diesel fuel\". These are distinct from the Apollo plant, which is a separately certified and separately permitted facility (OPSB 25-0973-EL-BLN, Ohio EPA PTI P0139272) belonging to Will-Power OH, LLC. Their count, rating and permit are unknown, which is why SiteFacility.genset_count and genset_mw are null rather than estimated. At peer sites in this fleet a data center's own genset bank is hundreds of megawatts and is the site's largest air instrument.",
+    "source": "data/documents/bowling-green/middleton-township/Meta-Middleton-Township-Letter-010726.pdf · data/extracted/bowling-green/record-watch.yaml",
+    "issue": 1438,
+    "note": null
+  },
+  {
+    "id": "CONSTRUCTION-DEWATERING",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "A resident raised campus dewatering at the rezoning hearing and the applicant had no answer",
+    "detail": "At the 2026-07-07 hearing a Perrysburg Township resident \"discussed the ODNR dewatering process\"; the minutes then record that applicant's counsel \"noted he was not familiar with the dewatering concept\". No dewatering record for this campus is in the corpus — not an ODNR registration, not a pumping test, not a monitoring record. What IS on the Ohio withdrawal register in the campus's own HUC-12 is a 0.27 MGD surface intake registered 2026-03-26 by \"Apollo Power Generation Facility - TEMP\", with no annual report yet — which is the power plant's, not the data center's. This repo has a worked drawdown methodology from another site and no inputs to apply it to here.",
+    "source": "data/documents/bowling-green/middleton-township/07072026_specialrezoning.pdf · data/reference/ohio-water-withdrawal/wood.yaml",
+    "issue": 1438,
+    "note": null
+  },
+  {
+    "id": "FIRSTENERGY-INFRASTRUCTURE-SPEND",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "A behind-the-meter campus says it is paying for transmission lines",
+    "detail": "Meta's letter to the trustees states that \"through our partnership with First Energy, Meta will pay for millions of dollars in new energy infrastructure investments — network upgrades, utility substations, and transmission lines — that will directly benefit our data center and add resiliency to the electrical grid surrounding Township\". Read that against what the instruments say. Apollo's certificate Condition 15 bars any physical or electrical interconnection with the PJM transmission system and Condition 16 requires a PJM new-service request plus supplemental Board approval before any export. Toledo Edison's filed tariff names Wood County among its territory and contains no data-center schedule, so what governs a large load there today is Rate GT, whose contract demand is 60% of expected peak on a two-year term — against the 85% for twelve years proposed in the pending FirstEnergy Data Center Tariff, PUCO 26-0697-EL-ATA. What Toledo Edison actually sells this customer — full requirements, standby, backup, or nothing — is the largest single unknown on the power side, and this sentence is the first company-side evidence that the answer is not \"nothing\".",
+    "source": "data/documents/bowling-green/middleton-township/Meta-Middleton-Township-Letter-010726.pdf · data/extracted/grid/bowling-green/serving-utility.yaml · data/extracted/grid/bowling-green/firstenergy-dct-tariff-posture.yaml",
+    "issue": 1440,
+    "note": null
+  },
+  {
+    "id": "WCPC-TALLIES",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Both county planning commission tallies on the 2026 rezonings are press, not record",
+    "detail": "The Wood County Planning Commission recommended the Liames thirteen-parcel application on 2026-06-02 and the Schaller 39.265-acre application on 2026-07-07, both reported 6-2. The commission's agendas are captured and are the source for the applications themselves; its minutes for those two meetings were not published at capture time, so the tallies remain secondary. The Middleton Township trustees' minutes verify only that the county voted \"in favor\", without a number.",
+    "source": "data/extracted/bowling-green/planning-commission/2026-liames-and-schaller-rezoning-applications.resolution.yaml",
+    "issue": 1438,
+    "note": null
+  }
+]

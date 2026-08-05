@@ -1,0 +1,98 @@
+# Middleton Township Trustees, 2023-05-03 — ~44 acres, A-1 Agricultural to M-1 Industrial,
+# Busch family. Issue #1438, epic #1433.
+#
+# The second seller-name rezoning, six weeks after the Getz 80 acres and four months before the
+# first Liames deed. The source file is MISNAMED at the township — `05032022-...` for a 2023
+# meeting; see the collection's filename-map. Tags per CLAUDE.md.
+
+as_of: '2026-08-05'
+site: bowling-green
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1438'
+epic: 'watermark-directory/the-watermark-directory#1433'
+
+source:
+  instrument: township-trustees-minutes
+  file: data/documents/bowling-green/middleton-township/05032022-special_buschrezone.pdf
+  sha256: 4bd2153f025d5dc24d8f85cf94b58d393095d3b8457190b0a617e69f619f6f0a
+  content_verified: text-layer
+pages_read: [0]
+
+resolution:
+  instrument: >-
+    Middleton Township Trustees — rezoning of approximately 44 acres from A-1 Agricultural to
+    M-1 Industrial, owned by the Busch family, 2023-05-03
+  body: Board of Trustees, Middleton Township, Wood County, Ohio
+  body_kind: township_trustees
+  subject_matter: zoning
+  statute: R.C. 519.12                       # [inference]
+  meeting_date: '2023-05-03'
+  meeting_kind: special
+  convened: '17:45'
+  adjourned: '17:50'
+  outcome: approved
+
+  date_discrepancy:
+    tag: '[verified]'
+    filename_says: '2022-05-03'
+    document_says: '2023-05-03'
+    resolution: >-
+      The document's own heading reads "Wednesday, May 3, 2023". May 3 fell on a Wednesday in
+      2023 and on a Tuesday in 2022. The minutes recite Wood County Planning Commission approval
+      on 2023-03-07 and Middleton Township Zoning Commission approval on 2023-04-12, both after
+      the filename's year. The township filed the PDF in its 2023/08 upload directory. The
+      content-verified date is 2023-05-03 and the file is NOT renamed.
+
+  vote:
+    motion: >-
+      "to approve the rezoning request for approximately 44 acres from A-1 Agricultural to M-1
+      Industrial, owned by the Busch family"
+    motion_moved_by: Donald E. Cromley
+    motion_seconded_by: Michael Moulton
+    roll_call:
+      - trustee: Donald E. Cromley
+        vote: 'YES'
+      - trustee: Michael Moulton
+        vote: 'YES'
+      - trustee: Fred E. Vetter
+        vote: abstain
+    tally: 2-0-1
+
+  applicant:
+    property_owner: Busch family
+    parcels: null                              # [open] — no parcel number in these minutes
+    acres_approx: 44
+
+  recommendations:
+    - body: Wood County Planning Commission
+      date: '2023-03-07'
+      recommendation: approve
+      note: '[verified] "voted unanimously to approve"'
+    - body: Middleton Township Zoning Commission
+      date: '2023-04-12'
+      recommendation: approve
+      note: '[verified] "approved the rezoning by unanimous vote"'
+
+  disclosures:
+    - id: VETTER-ABSTENTION
+      tag: '[verified]'
+      statement: >-
+        Trustee Fred E. Vetter abstained. He abstained again on the 2024-11-20 Victoria Busch
+        rezoning of ~91 acres, and did not abstain on the 2026-07-07 Liames rezoning, where he
+        voted NO on the motion to adopt the zoning commission's denial.
+      note: >-
+        RECORDED AS A PATTERN IN THE ROLL CALLS, NOT AS A FINDING. The minutes state no reason
+        for either abstention and this corpus supplies none. An abstention on both Busch matters
+        and participation on the Liames matter is a fact about the record; any interest that
+        would explain it is [open] and would be established by an Ohio Ethics Commission
+        disclosure or a deed, neither of which is in the corpus.
+    - id: ALSO-PRESENT
+      tag: '[verified]'
+      statement: >-
+        "Also, in attendance was Rex Huffman and Ross Fought." Huffman appears again at the
+        2024-11-20 rezonings as the Wood County Port Authority's representative FOR the private
+        sellers, and in the county journal of 2023-09-28 as Northwestern Water & Sewer District
+        legal counsel. Fought is the resident who objected to the CRA abatement before both the
+        county and the township that autumn.
+
+  confidence: high

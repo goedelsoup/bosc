@@ -1,7 +1,7 @@
 {
   "site": "wilmington",
   "catalog_version": "7eb7e30bddefe2a1f26e5e66ace896a3c9cbbf5a2343006c98c81b75e28517b6",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:wilmington:7q10",
@@ -688,7 +688,7 @@
       "kind": "dataset",
       "site": "wilmington",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "wilmington",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

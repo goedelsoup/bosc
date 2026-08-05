@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-05T12:11:48.362624+00:00'
+reconciled_at: '2026-08-05T14:04:32.358702+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -140,6 +140,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:bowling-green
+  bowling-green-record:
+    exists: true
+    sha256: eb74690c5b905e3af00f524473016f280193b097461315a9bd3ccd363e87ea80
+    size_bytes: 125331
+    lfs_materialized: true
+    file_count: 10
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:bowling-green
   bowling-green-water-watch:
     exists: true
     sha256: 097c42fc89a3617cf57a9ecb6294ad513b4701cd72b7be10d3feb1777b85b061
@@ -202,8 +212,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: 3024f595002042779e79d4536da4f47357b18315f2a30dfc542485f077cf0811
-    size_bytes: 290878
+    sha256: 35b5cdbfec2eb29879c6454b915239e67f04796b3894a569bbe46d5c8e4dcbab
+    size_bytes: 304873
     lfs_materialized: true
     file_count: 13
     missing: []

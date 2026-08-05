@@ -1,7 +1,7 @@
 {
   "site": "toledo",
   "catalog_version": "10f0ed0971c08139af4213d61efa7bd9d13fe7b31d5410aaebe646c8a0b4ef41",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:toledo:7q10",
@@ -688,7 +688,7 @@
       "kind": "dataset",
       "site": "toledo",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "toledo",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

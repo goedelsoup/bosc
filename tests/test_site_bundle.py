@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
 # The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
 # the fresh-export assertions below pin it so a bump lands here in one place.
-_CV = "1.52.0"
+_CV = "1.53.0"
 # The per-site offline bundles (#727): a full `watermark export` per registered site, the
 # committed input the Astro build reads with no Python step (`web/sites/<slug>/`).
 COMMITTED_BUNDLES = REPO_ROOT / "web" / "sites"
@@ -1094,10 +1094,18 @@ def test_bowling_green_exports_at_case_tier_on_committed_assembly_geometry(
     competitor's colo 4.83 miles away in another jurisdiction. A reader who sums the acreage of
     this feed gets a number that describes no thing.
 
-    What did NOT move is equally the point. ``facility`` stays ``seeded``: the #1630 downgrade
-    holds, because the campus IT load is still the disclosed ~180 MW peak carried as
-    ``[reference]``, and committing land does not ground a load. ``story`` stays absent. A future
-    change that floats either off geometry alone fails here.
+    ``story`` then went absent -> live in #1441, on both of its signals at once: the site's own
+    curated leads board (``data/site/bowling-green/leads.yaml``) and the ``project-accordion`` walk
+    registered in ``STORY_SLUGS`` + the ``sites.ts`` overlay. Like Findlay's, the walk is
+    ``comingSoon``, so the frontend's story FACET stays locked while the DOMAIN reads live —
+    readiness measures the evidence, the facet measures readability.
+
+    What did NOT move is the point that survives. ``facility`` stays ``seeded``: the #1630
+    downgrade holds, because the campus IT load is still the disclosed ~180 MW peak carried as
+    ``[reference]``, and neither committing land nor ingesting a governance record grounds a load.
+    That single ``seeded`` is the whole reason the tier is ``case`` and not ``reference`` with four
+    of five domains live — a future change that floats it off geometry, off a records feed, or off
+    a registered story fails here.
     """
     bundle = site_bundle("bowling-green")
     manifest = _manifest(bundle)
@@ -1108,8 +1116,38 @@ def test_bowling_green_exports_at_case_tier_on_committed_assembly_geometry(
     assert domains["backdrop"] == "live"
     assert domains["facility"] == "seeded"  # ~180 MW peak is [reference], not an instrument (#1630)
     assert domains["places"] == "live"  # committed land-assembly geometry (#1436)
-    assert domains["record"] == "live"  # the 2PD00009 water instruments (#1439)
-    assert domains["story"] == "absent"
+    assert domains["record"] == "live"  # the 2PD00009 water instruments (#1439) + the #1438 ingest
+    assert domains["story"] == "live"  # registered walk + the site's own leads board (#1441)
+
+    # The #1438 governance ingest, asserted by genre rather than by count alone: seven acts of a
+    # local legislative body (a county CRA resolution, four township roll calls, a township
+    # resolution of support, a county planning-commission docket) and one compiled conveyance
+    # chain, alongside the pre-existing permit reads. `local-legislation` is the genre this issue
+    # added (contract 1.53.0); if it ever stops classifying, these records fall out of the feed
+    # silently and the record domain drops back toward its threshold.
+    records = _rows(bundle, _feeds_by_name(bundle)["records"])
+    by_group: dict[str, int] = {}
+    for r in records:
+        by_group[r["group"]] = by_group.get(r["group"], 0) + 1
+    assert by_group == {
+        "land-assembly": 1,
+        "local-legislation": 7,
+        "permits-epa": 3,
+        "permits-npdes": 2,
+    }, f"unexpected bowling-green record genres: {by_group}"
+    # The instrument that inverts the press account of the 2026-07-07 vote must be in the feed and
+    # must still carry its roll call — this is the single most correction-bearing record on the site.
+    hearing = next(
+        r
+        for r in records
+        if r["rel"] == "bowling-green/middleton-township/2026-07-07-liames-rezoning.resolution.yaml"
+    )
+    roll = {v["trustee"]: v["vote"] for v in hearing["fields"]["vote"]["roll_call"]}
+    assert roll == {"Michael Moulton": "NO", "Melissa S. Petrea": "YES", "Fred E. Vetter": "NO"}
+    assert len(hearing["fields"]["parcels"]["list"]) == 13
+    assert round(sum(p["acres"] for p in hearing["fields"]["parcels"]["list"]), 3) == 31.820, (
+        "the thirteen deeded acreages must still reconcile to the county's own 31.82"
+    )
 
     ref = _feeds_by_name(bundle)["geo/campus"]
     features = json.loads((bundle / ref["path"]).read_text(encoding="utf-8"))["features"]

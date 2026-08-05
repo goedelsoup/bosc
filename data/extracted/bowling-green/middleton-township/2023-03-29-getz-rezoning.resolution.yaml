@@ -1,0 +1,94 @@
+# Middleton Township Trustees, 2023-03-29 — ~80 acres, A-1 Agricultural to M-1 Industrial,
+# owner Tim Getz. Issue #1438, epic #1433.
+#
+# The FIRST of the campus-area rezonings, and the reason a search of this township's record for
+# "Liames" before September 2023 returns nothing: the land that became the Meta campus was
+# rezoned in the SELLERS' names, one landowner at a time, before the buyer's name appears on any
+# township application. Tags per CLAUDE.md: [verified] = printed in these minutes.
+
+as_of: '2026-08-05'
+site: bowling-green
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1438'
+epic: 'watermark-directory/the-watermark-directory#1433'
+
+source:
+  instrument: township-trustees-minutes
+  file: data/documents/bowling-green/middleton-township/03292023_special_getzrezone.pdf
+  sha256: e1db703f7f0701ca520288737b0889f4b8783be0eb8efbe565d7b4c20d437629
+  content_verified: text-layer
+pages_read: [0]
+
+resolution:
+  instrument: >-
+    Middleton Township Trustees — rezoning of approximately 80 acres from A-1 Agricultural to
+    M-1 Industrial, applicant Tim Getz, 2023-03-29
+  body: Board of Trustees, Middleton Township, Wood County, Ohio
+  body_kind: township_trustees
+  subject_matter: zoning
+  statute: R.C. 519.12                       # [inference] — the recommendation sequence recited
+  meeting_date: '2023-03-29'
+  meeting_kind: special
+  convened: '19:00'
+  adjourned: '19:04'
+  outcome: approved
+
+  vote:
+    motion: >-
+      "to approve rezoning approximately 80 acres in Middleton Township from A-1 Agricultural
+      zoning classification to an M-1 Industrial zoning classification"
+    motion_moved_by: Donald E. Cromley
+    motion_seconded_by: Fred E. Vetter
+    roll_call:
+      - trustee: Donald E. Cromley
+        vote: 'YES'
+      - trustee: Michael Moulton
+        vote: 'YES'
+      - trustee: Fred E. Vetter
+        vote: 'YES'
+    tally: 3-0
+
+  applicant:
+    property_owner: Tim Getz
+    spoke_for_owner: Brian McMahon, Danberry Realtors
+    parcels: null                              # [open] — the minutes name no parcel number;
+                                               # "The full property description will be available
+                                               # on file at the township office and the Wood
+                                               # County Recorders' Office." [verified]
+    acres_approx: 80
+
+  recommendations:
+    - body: Wood County Planning Commission
+      date: '2023-02-07'
+      recommendation: approve
+    - body: Middleton Township Zoning Commission
+      date: '2023-03-14'
+      recommendation: approve
+
+  disclosures:
+    - id: MERCER-ROAD-ACCESS-2023
+      tag: '[verified]'
+      statement_verbatim: >-
+        "He noted that by utilizing the acreage in question the concerns about road access onto
+        Mercer Road could have less impact."
+      note: >-
+        The stated rationale is a site-access problem on Mercer Road — six months before the
+        first Liames deed (2023-09-05) and two and a half years before the applicant's counsel
+        told the trustees, at the 2026-07-07 hearing, that "Mercer Road is not being utilized for
+        this project." The record does not say who raised the access concern or on whose behalf,
+        and no inference is drawn about coordination; what is [verified] is that a Mercer Road
+        access constraint was already shaping this township's zoning map in March 2023.
+
+  linkage:
+    tag: '[open]'
+    note: >-
+      WHETHER THIS 80 ACRES IS INSIDE THE LIAMES ASSEMBLAGE IS NOT ESTABLISHED. The minutes name
+      no parcel, and the committed parcel layer records only the LAST conveyance per parcel, so a
+      2023 Getz-to-Liames transfer would have been overwritten by the 2025-04-09 consolidation
+      quitclaims. What is [verified] independently: by 2024-03-20 the township's own zoning
+      inspector described Liames LLC as "property owners of the recently rezoned parcels between
+      St. Rt. 582, St. Rt. 25 and Mercer Road," and by 2023-09-20 the CRA application covered
+      "the rezoned properties within the CRA boundaries." The Wood County Recorder is the
+      instrument that would close it; see record-watch.yaml → WOOD-COUNTY-RECORDER.
+
+  confidence: high

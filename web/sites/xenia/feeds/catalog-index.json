@@ -1,7 +1,7 @@
 {
   "site": "xenia",
   "catalog_version": "a721833813388397c2a3496f89410e1738f2856dd13564ef1e6a22d0e740a54b",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:xenia:7q10",
@@ -688,7 +688,7 @@
       "kind": "dataset",
       "site": "xenia",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "xenia",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

@@ -1,7 +1,7 @@
 {
   "site": "portsmouth",
   "catalog_version": "e49e6253cc40dfbae5a7daedb15a989cc097f6bbd8c9ac7bda158435bafe9bef",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:portsmouth:7q10",
@@ -672,7 +672,7 @@
       "kind": "dataset",
       "site": "portsmouth",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -680,7 +680,7 @@
       "kind": "dataset",
       "site": "portsmouth",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

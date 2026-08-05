@@ -753,6 +753,46 @@
     "source_doc_published": false
   },
   {
+    "rel": "legal/prr-mandamus/school-district-notice-resolution.notice.yaml",
+    "group": "local-legislation",
+    "title": "Authorizing notice to the Elida Local School District and Apollo Career Center that the Commissioners seek to enter a CRA Agreement with Bistrozzi, LLC and will consider the same agreement on July 10, 2025 or thereafter.",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "number": "494-25",
+      "date": "2025-06-24",
+      "body": "Allen County Board of County Commissioners",
+      "title": "Authorizing notice to the Elida Local School District and Apollo Career Center that the Commissioners seek to enter a CRA Agreement with Bistrozzi, LLC and will consider the same agreement on July 10, 2025 or thereafter.",
+      "moved_by": "Noonan",
+      "seconded_by": "Seibert",
+      "vote": {
+        "Noonan": "yes",
+        "Winegardner": "yes",
+        "Seibert": "yes"
+      },
+      "clerk": "Brittany N. Woods",
+      "statutes": [
+        "R.C. 3735.671(A)(1) — 45-day certification of the agreement to the boards of education",
+        "R.C. 3735.671(A)(2) — board-approval not required if school compensation >= 25% of foregone taxes",
+        "R.C. 5709.83(A) — 14-day notice + copy of the proposed agreement to the districts"
+      ],
+      "served_by": "Cindy Leis of Allen Economic Development Group (AEDG), plus certified + ordinary mail"
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/school-district-notice-resolution.notice.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
     "rel": "aedg/roundabouts.detail.opc.yaml",
     "group": "opc",
     "title": "roundabouts.detail.opc",
@@ -3185,7 +3225,7 @@
   {
     "rel": "regulatory/ohc000006-construction-stormwater-gp.yaml",
     "group": "permits-npdes",
-    "title": "ohc000006-construction-stormwater-gp",
+    "title": "General Permit Authorization for Stormwater Discharges Associated with Construction Activity under the NPDES",
     "confidence": null,
     "warnings": [],
     "fields": {

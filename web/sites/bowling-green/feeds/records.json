@@ -1,5 +1,1254 @@
 [
   {
+    "rel": "bowling-green/land-assembly.yaml",
+    "group": "land-assembly",
+    "title": "Meta \"Bowling Green Data Center\" / \"Project Accordion\" — SR-582 between SR-25 and I-75, Middleton Township, adjacent the FirstEnergy Mercer Road substation",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "as_of": "2026-08-05",
+      "site": "bowling-green",
+      "strengthens": [
+        "record",
+        "places"
+      ],
+      "issue": "watermark-directory/the-watermark-directory#1438",
+      "epic": "watermark-directory/the-watermark-directory#1433",
+      "county": "Wood County, OH (FIPS 39173)",
+      "assembly": "Meta \"Bowling Green Data Center\" / \"Project Accordion\" — SR-582 between SR-25 and I-75, Middleton Township, adjacent the FirstEnergy Mercer Road substation",
+      "source": {
+        "instrument": "county-auditor-cama",
+        "layer": "Services_for_Web_Apps/Vision_Parcels MapServer layer 0 (auditor CAMA join)",
+        "url": "https://wcohiogis.woodcountyohio.gov/server/rest/services/Services_for_Web_Apps/Vision_Parcels/MapServer/0",
+        "fields_used": [
+          "Name",
+          "Owner_Name",
+          "Deeded_Name",
+          "Land_Acres",
+          "Sale_Date",
+          "Transfer_Price",
+          "Qualified",
+          "Instrument_Code",
+          "Conveyance__",
+          "Deed_Number",
+          "District",
+          "Street_Number",
+          "Street_Name",
+          "Primary_Use",
+          "Legal_Description"
+        ],
+        "pulled": "2026-08-05",
+        "committed_as": "data/reference/bowling-green/parcel-assemblage.geojson",
+        "layer_vintage": {
+          "tag": "[verified]",
+          "max_sale_date": "2025-07-25",
+          "rows": 73839,
+          "rows_after_max": 0,
+          "note": "PROBED FROM THE DATA, because the server publishes no `editingInfo`. A max-of-Sale_Date statistic over all 73,839 rows returns 2025-07-25 and a count of rows transferring after that date returns zero — the same two numbers #1436 recorded, unchanged a year later. EVERY NEGATIVE IN THIS FILE IS THEREFORE A STATEMENT ABOUT JULY 2025, not about the pull date. A conveyance recorded after 2025-07-25 is invisible here and its absence means nothing."
+        }
+      },
+      "conveyances": [
+        {
+          "id": "middleton-160",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "grantor": null,
+          "parcels": [
+            "611300000001000"
+          ],
+          "parcel_id_auditor": "J36-611-300000001000",
+          "acres": 160.0,
+          "consideration_usd": 0,
+          "conveyance_date": "2023-11-14",
+          "instrument_code": "QC",
+          "conveyance_number": "0",
+          "deed_number": "1588",
+          "valid_sale": "U",
+          "situs": "12279 MIDDLETON",
+          "legal_description": "NE",
+          "notes": "The earliest conveyance surviving in the CAMA for this assembly, and a $0 quitclaim. Paired with `middleton-74` on the same day."
+        },
+        {
+          "id": "middleton-74",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "grantor": null,
+          "parcels": [
+            "611300000002000"
+          ],
+          "parcel_id_auditor": "J36-611-300000002000",
+          "acres": 74.65,
+          "consideration_usd": 2923960,
+          "conveyance_date": "2023-11-14",
+          "instrument_code": "LW",
+          "conveyance_number": "1750",
+          "deed_number": null,
+          "valid_sale": "Q",
+          "situs": "12499 MIDDLETON",
+          "legal_description": "ENW LESS N280' W442' LESS 1.66A PT & L",
+          "notes": "The largest single arms-length consideration in the register and the only one before 2024. $2,923,960 / 74.65 ac = $39,169/ac. [inference] on the rate."
+        },
+        {
+          "id": "mercer-322",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "grantor": null,
+          "parcels": [
+            "611190000003500"
+          ],
+          "parcel_id_auditor": "J36-611-190000003500",
+          "acres": 322.5,
+          "consideration_usd": 0,
+          "conveyance_date": "2025-04-09",
+          "instrument_code": "QC",
+          "conveyance_number": "0",
+          "deed_number": "0519",
+          "valid_sale": "Q",
+          "situs": "0 MERCER",
+          "legal_description": "322.50A PT COM NECOR NE",
+          "notes": "A CONSOLIDATION, NOT A PURCHASE. #1436 established that this parcel and `dixie-196` are 2025-04-09 consolidations of eleven predecessor tracts, quitclaimed at $0 — and that the consolidation ERASED those eleven tracts' purchase prices from the CAMA. The date is the same day as Meta's public announcement."
+        },
+        {
+          "id": "dixie-196",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "grantor": null,
+          "parcels": [
+            "611190000029510"
+          ],
+          "parcel_id_auditor": "J34-611-190000029510",
+          "acres": 196.5,
+          "consideration_usd": 0,
+          "conveyance_date": "2025-04-09",
+          "instrument_code": "QC",
+          "conveyance_number": "0",
+          "deed_number": "0520",
+          "valid_sale": "Q",
+          "situs": "0 DIXIE",
+          "legal_description": "196.50A PT COM 757.74' W SECOR SW",
+          "notes": "The second of the two 2025-04-09 consolidations. Legacy CAMA id J34-02506-00."
+        },
+        {
+          "id": "mercer-7-52",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "parcels": [
+            "611190000037000"
+          ],
+          "parcel_id_auditor": "J36-611-190000037000",
+          "acres": 7.52,
+          "consideration_usd": 650000,
+          "conveyance_date": "2024-11-22",
+          "instrument_code": "WD",
+          "conveyance_number": "1937",
+          "valid_sale": "U",
+          "situs": "21443 MERCER",
+          "notes": "One of the thirteen parcels rezoned 2026-07-07."
+        },
+        {
+          "id": "dixie-1-59",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "parcels": [
+            "611190000008000"
+          ],
+          "parcel_id_auditor": "J34-611-190000008000",
+          "acres": 1.59,
+          "consideration_usd": 450000,
+          "conveyance_date": "2024-09-04",
+          "instrument_code": "WD",
+          "conveyance_number": "1424",
+          "valid_sale": "U",
+          "situs": "21698 DIXIE",
+          "notes": "One of the thirteen parcels rezoned 2026-07-07."
+        },
+        {
+          "id": "middleton-2-00",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "parcels": [
+            "611190000034000"
+          ],
+          "parcel_id_auditor": "J36-611-190000034000",
+          "acres": 2.0,
+          "consideration_usd": 615000,
+          "conveyance_date": "2025-05-01",
+          "instrument_code": "WD",
+          "conveyance_number": "0617",
+          "valid_sale": "U",
+          "situs": "12018 MIDDLETON",
+          "notes": "One of the thirteen parcels rezoned 2026-07-07."
+        },
+        {
+          "id": "dixie-0-50",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "parcels": [
+            "611190000025000"
+          ],
+          "parcel_id_auditor": "J34-611-190000025000",
+          "acres": 0.5,
+          "consideration_usd": 315000,
+          "conveyance_date": "2025-05-02",
+          "instrument_code": "LW",
+          "conveyance_number": "0627",
+          "valid_sale": "U",
+          "situs": "21186 DIXIE",
+          "notes": "One of the thirteen parcels rezoned 2026-07-07. $630,000/ac — the highest rate in the register by an order of magnitude, and the smallest parcel. [inference] on the rate."
+        },
+        {
+          "id": "mercer-1-53",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "parcels": [
+            "611190000035000"
+          ],
+          "parcel_id_auditor": "J36-611-190000035000",
+          "acres": 1.53,
+          "consideration_usd": 472500,
+          "conveyance_date": "2025-05-23",
+          "instrument_code": "WD",
+          "conveyance_number": "0778",
+          "valid_sale": "U",
+          "situs": "21067 MERCER",
+          "notes": "One of the thirteen parcels rezoned 2026-07-07."
+        },
+        {
+          "id": "dixie-1-01",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "parcels": [
+            "611190000009000"
+          ],
+          "parcel_id_auditor": "J34-611-190000009000",
+          "acres": 1.01,
+          "consideration_usd": 475000,
+          "conveyance_date": "2025-05-27",
+          "instrument_code": "WD",
+          "conveyance_number": "0782",
+          "valid_sale": "U",
+          "situs": "21630 DIXIE",
+          "notes": "One of the thirteen parcels rezoned 2026-07-07."
+        },
+        {
+          "id": "middleton-3-89",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "parcels": [
+            "611190000033000"
+          ],
+          "parcel_id_auditor": "J36-611-190000033000",
+          "acres": 3.89,
+          "consideration_usd": 450000,
+          "conveyance_date": "2025-07-15",
+          "instrument_code": "WD",
+          "conveyance_number": "1131",
+          "valid_sale": "U",
+          "situs": "12090 MIDDLETON",
+          "notes": "One of the thirteen parcels rezoned 2026-07-07."
+        },
+        {
+          "id": "mercer-3-33",
+          "grantee": "LIAMES LLC",
+          "grantee_tag": "verified",
+          "parcels": [
+            "611190000036001"
+          ],
+          "parcel_id_auditor": "J36-611-190000036001",
+          "acres": 3.33,
+          "consideration_usd": 570000,
+          "conveyance_date": "2025-07-21",
+          "instrument_code": "LW",
+          "conveyance_number": "1170",
+          "valid_sale": "U",
+          "situs": "21123 MERCER",
+          "notes": "The LATEST conveyance in the register, and it is four days before the CAMA layer's own maximum Sale_Date. The assembly may well have continued; this layer cannot see it."
+        }
+      ],
+      "totals": {
+        "parcels": 12,
+        "deeded_acres": 775.02,
+        "planar_acres": 774.878,
+        "consideration_sum_usd": 6921460,
+        "consideration_is_a_floor": {
+          "tag": "[verified]",
+          "note": "NEVER PRESENT $6,921,460 AS WHAT THE ASSEMBLY COST. The CAMA keeps only the last conveyance per parcel, and the two 2025-04-09 consolidations that carry 519 of the 775 acres are $0 quitclaims which erased eleven predecessor tracts' purchase prices. The sum is a floor on a fraction. The register's own press figure — >$800M investment — is a different quantity again (land plus buildings plus equipment) and the two must never be compared."
+        },
+        "first_deed_date": {
+          "cama_earliest": "2023-11-14",
+          "press_earliest": "2023-09-05",
+          "tag": "[reference]",
+          "note": "THE REGISTER CARRIES \"Deeds recorded from 2023-09-05\" AND THE CAMA DOES NOT CORROBORATE IT. The earliest surviving conveyance here is 2023-11-14. That is not a contradiction: a September 2023 deed into a tract later folded into the 2025-04-09 consolidation would have been overwritten. The 2023-09-05 date stays [reference] and the discrepancy is recorded rather than reconciled, because the recorder's chronological index is the only thing that can settle it."
+        }
+      },
+      "rezoned_2026_07_07": {
+        "application": "2026041",
+        "acres_total": 31.82,
+        "in_liames_name": 8,
+        "in_liames_name_acres": 21.37,
+        "not_in_liames_name": 5,
+        "not_in_liames_name_acres": 10.45,
+        "others_of_record": [
+          {
+            "deeded_name": "SIMON JAY",
+            "parcel": "611190000010000",
+            "acres": 1.01,
+            "last_conveyance": "2020-02-18",
+            "consideration_usd": 0,
+            "instrument_code": "LW",
+            "situs": "21600 DIXIE",
+            "mailing": "21600 N DIXIE HWY, BOWLING GREEN OH",
+            "note": "Owner-occupied of record — the tax mailing address IS the situs. The only one of the five that reads as a residence rather than a holding entity."
+          },
+          {
+            "deeded_name": "PINE APARTMENTS LTD",
+            "parcel": "611190000022000",
+            "acres": 2.05,
+            "last_conveyance": "2001-12-13",
+            "consideration_usd": 0,
+            "primary_use": "401",
+            "situs": "21332 DIXIE",
+            "mailing": "121 E WOOSTER ST, BOWLING GREEN OH",
+            "note": "CAMA use class 401 — the only non-511 parcel among the thirteen. The register's description of \"former homes and a strip of motel rooms, since razed\" is [reference] press; this row is the only instrument-side signal of a multi-unit residential use among them, and it does not confirm the motel."
+          },
+          {
+            "deeded_name": "P&J THAYER FAMILY LIMITED PARTNERSH",
+            "parcel": "611190000026000",
+            "acres": 1.0,
+            "last_conveyance": "2004-10-15",
+            "consideration_usd": 147500,
+            "situs": "21154 DIXIE",
+            "mailing": "18039 N DIXIE HWY, BOWLING GREEN OH"
+          },
+          {
+            "deeded_name": "P&J THAYER FAMILY LTD",
+            "parcel": "611190000027000",
+            "acres": 2.0,
+            "last_conveyance": "2003-10-22",
+            "consideration_usd": 355000,
+            "situs": "21108 DIXIE",
+            "mailing": "18039 N DIXIE HWY, BOWLING GREEN OH",
+            "note": "One conveyance, two parcels — the $355,000 covers this and 611190000028000 together."
+          },
+          {
+            "deeded_name": "P&J THAYER FAMILY LTD",
+            "parcel": "611190000028000",
+            "acres": 4.39,
+            "last_conveyance": "2003-10-22",
+            "consideration_usd": 355000,
+            "primary_use": "599",
+            "situs": "13090 MIDDLETON",
+            "mailing": "18039 N DIXIE HWY, BOWLING GREEN OH"
+          }
+        ],
+        "finding": {
+          "tag": "[verified]",
+          "statement": "Liames LLC applied to rezone thirteen parcels of which five, carrying 10.45 of the 31.82 acres, stood in three other names in the county's parcel layer — a family partnership with three of them, an apartment company, and an owner-occupier.",
+          "and_the_caveat": "AS OF ~2025-07-25, WHICH IS ELEVEN MONTHS BEFORE THE APPLICATION WAS DOCKETED. Applicant's counsel told the trustees the parcels are \"owned by Liames, LLC\" and that the structures on them \"have been razed.\" Two readings survive and NEITHER is adopted: (a) the five transferred after the CAMA snapshot, which is entirely ordinary and would make counsel's statement correct; (b) the application ran over land Liames did not hold of record, which R.C. 519.12 permits. This corpus previously carried the five as unnamed and the gap as \"the CAMA layer's ~2025-07 vintage, not a research gap\"; that reading survives, and the five are now named. The Wood County Recorder's chronological index closes it. [open]"
+        },
+        "name_collision_warning": "P&J THAYER FAMILY LTD and P&J THAYER FAMILY LIMITED PARTNERSHIP are served as two distinct `Deeded_Name` strings for what is almost certainly one partnership; they are carried separately because the layer serves them separately. Separately, #1436 flagged a LIMES family (Dale Limes LLC, Limes Real Estate Holdings LLC) holding several hundred acres on Devils Hole Road — one letter from LIAMES. Add to that list the Middleton Township FISCAL OFFICER, whose name is Laurie L. Limes and who signs every set of minutes in this collection. Three same-sounding names in one township record; no relationship among them is asserted, and the reason to write this down is that a name-match search WILL conflate them."
+      },
+      "neighbours": [
+        {
+          "parcel": "611190000006000",
+          "deeded_name": "A SCHALLER LIMITED PARTNERSHIP",
+          "acres": 64.55,
+          "last_conveyance": "1999-12-23",
+          "role": "rezoning_pending",
+          "note": "Under contract to Liames LLC for construction parking; 39.265 of the 64.55 acres before the Wood County Planning Commission on 2026-07-07, township action pending. A holding unmoved since 1999 selling into the construction phase."
+        },
+        {
+          "parcel": "611200000011000",
+          "deeded_name": "JJJ FAMILY PROPERTIES LLC",
+          "acres": 79.07,
+          "last_conveyance": "2008-12-22",
+          "role": "apollo_permit_situs",
+          "note": "The situs of record for the Apollo Power Generation Facility permits. Will-Power OH, LLC owns NO land in Wood County (#1436) and Apollo's 146.84-acre project area reconciles to no parcel group — the plant sits on land it does not own of record, which is itself [open]."
+        },
+        {
+          "parcel": "511210000002003",
+          "deeded_name": "CLOP BOWLING GREEN OH LLC",
+          "acres": 11.8,
+          "last_conveyance": "2025-02-03",
+          "consideration_usd": 1105000,
+          "role": "oppidan_colo",
+          "note": "The Oppidan colocation site, 4.83 mi from the campus, in the City of Bowling Green. A SEPARATE PROJECT — see the register's standing warning against conflating the two."
+        }
+      ],
+      "limitations": [
+        "NO RECORDER INSTRUMENT WAS READ. Every row here is the auditor's transfer record, not a deed. Grantors, recorder instrument numbers, deed book/page and the full chronological chain are all [open]. The Wood County Recorder publishes an electronic index from 1980 (Fidlar AVA, https://ohwood.fidlar.com/OHWood/AvaWeb/); it is an Angular single-page application that serves no server-rendered search and exposes no discoverable API path, so it was NOT retrievable by script. That is a per-source negative, not an absence — see record-watch.yaml → WOOD-COUNTY-RECORDER.",
+        "THE CAMA KEEPS ONLY THE LAST CONVEYANCE PER PARCEL. Everything before it is gone from this source by construction. The two consolidations erased eleven tracts' prices.",
+        "THE LAYER'S VINTAGE IS ~2025-07-25 and has not advanced in a year. Nothing here is a statement about 2026.",
+        "LIAMES, LLC'S OWN REGISTRATION IS [open]. The Ohio Secretary of State business search returns HTTP 403 to automated retrieval (re-probed 2026-08-05), so the entity's organizers, agent and formation date are unread. The register's caution stands: a tax-billing address at 1 META WAY is not ownership of the LLC, and the Meta attribution rests on Meta's own 2025-04-09 announcement and its 2026-01-07 letter to the trustees, not on a corporate filing."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "bowling-green/land-assembly.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "bowling-green/commissioners/2023-09-28-liames-cra.resolution.yaml",
+    "group": "local-legislation",
+    "title": "Wood County Commissioners Resolution 23-01249 — Authorize Community Reinvestment Area Agreement between Liames LLC and Wood County, Ohio, 2023-09-28",
+    "confidence": "medium",
+    "warnings": [
+      "OCR source, no text layer. Resolution number and title are cross-checked against the printed listing; free prose is as OCRed.",
+      "Every dollar and job figure here is a statement MADE at the meeting, not a term of the executed agreement. The agreement, the CRA boundary and the three school compensation agreements are all [open].",
+      "\"approximately 300-400 square feet\" is carried verbatim and is not plausible on its face. Do not cite it as a building size."
+    ],
+    "fields": {
+      "instrument": "Wood County Commissioners Resolution 23-01249 — Authorize Community Reinvestment Area Agreement between Liames LLC and Wood County, Ohio, 2023-09-28",
+      "resolution_no": "23-01249",
+      "body": "Board of County Commissioners, Wood County, Ohio",
+      "body_kind": "county_commissioners",
+      "subject_matter": "tax_incentive",
+      "statute": "R.C. 3735.65-3735.70",
+      "adopted": "2023-09-28",
+      "journalled_in": "Resolution 23-01253 (2023-10-03), \"In the matter of approval of prior meeting minutes from the regular session held on September 28, 2023.\"                        # [verified]",
+      "title_verbatim": "AUTHORIZE COMMUNITY REINVESTMENT AREA AGREEMENT BETWEEN LIAMES LLC AND WOOD COUNTY, OHIO",
+      "outcome": "approved",
+      "vote": {
+        "motion": "approve resolution 23-01249 (the CRA agreement with Liames LLC)",
+        "motion_moved_by": "Doris I. Herringshaw",
+        "motion_seconded_by": "Theodore H. Bowlus",
+        "presiding": "Craig LaHote",
+        "roll_call_recorded": false,
+        "tally_verbatim": "All voted aye and the motion carried.",
+        "note": "The item was PULLED from the consent listing at the start of the day (\"with the exception of resolutions 23-01249 (Community Reinvestment Area Agreement) and 23-01250 ... which will be held until later in the day's session\") and taken up as a separate 10:15 a.m. session, concluding 10:28 a.m. — thirteen minutes. [verified]"
+      },
+      "beneficiary": {
+        "name": "Liames, LLC",
+        "described_as": "\"Liames LLC plans to construct one or more data center buildings on property located at State Route 582 and Mercer Road in Middleton Township.\"                # [verified] as said",
+        "note": "THE END USE IS ON A PUBLIC RECORD ON 2023-09-28. That is nineteen months before the 2025-04-09 Meta announcement and three days after the first Liames deed was recorded. The NDA concealed the OPERATOR; it did not conceal that the land would become data centers, nor the location, nor the scale. Nothing in this journal names Meta."
+      },
+      "terms": {
+        "exemption_pct": 75,
+        "term_years": 15,
+        "tax_type": "real property",
+        "executed_agreement": null,
+        "cra_boundary": null
+      },
+      "school_compensation": {
+        "statement_verbatim": "\"He noted that Eastwood and Otsego Local Schools, as well as Penta Career Center, have already approved agreements accepting the terms of a tax abatement for the company. The local school districts are estimated to receive approximately $1 million annually.\"",
+        "parties": [
+          "Eastwood Local Schools",
+          "Otsego Local Schools",
+          "Penta Career Center"
+        ],
+        "annual_estimate_usd": 1000000,
+        "annual_estimate_tag": "[reference]",
+        "ISSUE_BODY_CORRECTION": "ISSUE #1438 SAYS \"~$900k-1M/yr EACH\". The journal says \"The local school districts are estimated to receive approximately $1 million annually\" — one figure, for the districts plural. Whether that is per district or in aggregate is genuinely ambiguous on the face of the sentence, and it is left ambiguous here rather than resolved in either direction; the compensation agreements themselves are the instrument and they are [open]. Note also that the journal names THREE parties — the issue names two. Penta Career Center is a joint vocational school district and was omitted from the register until now.",
+        "agreements": null,
+        "sequencing_note": "[verified] All three school bodies had ALREADY approved before the county acted. The township passed its own resolution of support eight days earlier (2023-09-20). The county resolution is the last signature on a chain, not the first."
+      },
+      "representations": [
+        {
+          "id": "JOBS-AND-PAYROLL",
+          "statement_verbatim": "\"The new data centers will create 50 full-time jobs resulting in an estimated $4,000,000 annual payroll.\"",
+          "speaker": "Wade Gottschalk, Wood County Economic Development executive director",
+          "tag": "[reference]",
+          "note": "THIS IS HALF THE JOB COUNT NOW IN CIRCULATION. Meta's own 2026-01-07 letter to the Middleton Township trustees says \"at least 100 operational jobs,\" and the register carries ~100 permanent at an average in the mid-$80,000s. The abatement was granted against a representation of 50. $4,000,000 / 50 = $80,000 average, which is consistent with the later per-job figure — so what changed is the headcount, not the wage. [inference] on the arithmetic; the reason for the change is [open], and note the two figures were made by different parties at a two-and-a-half-year interval, so this is not necessarily a revision of the same estimate."
+        },
+        {
+          "id": "LOW-IMPACT",
+          "statement_verbatim": "\"Mr. Gottschalk stated the new facilities will be low impact for the area and will not create truck traffic.\"",
+          "speaker": "Wade Gottschalk",
+          "tag": "[reference]"
+        },
+        {
+          "id": "BUILDING-SIZE",
+          "statement_verbatim": "\"Commissioner Bowlus asked about the size of the buildings. Mr. Knezevic stated the buildings will be approximately 300-400 square feet.\"",
+          "speaker": "Chris Knezevic, Vorys (for the applicant)",
+          "tag": "[reference]",
+          "note": "CARRIED VERBATIM AND FLAGGED, NOT CORRECTED. As printed this is three orders of magnitude below the 715,000 sq ft initial phase Meta later disclosed, and it is not plausible on its face — an omitted \"thousand\" in the minutes is the obvious reading, and 300,000-400,000 sq ft per building against a 715,000 sq ft two-building initial phase would reconcile almost exactly. It is left as the record has it because this corpus does not silently repair a public body's minutes, and because the transcription is OCR: the possibility that the printed page says something else is real and is why this is [reference] with the quote attached. [inference] on the reconciliation, [open] on what the page actually says."
+        },
+        {
+          "id": "EXPANSION-POTENTIAL",
+          "statement_verbatim": "\"Commissioner Bowlus asked if the number of employees could increase. Mr. Knezevic stated he is not certain but there is potential for further expansion.\"",
+          "speaker": "Chris Knezevic",
+          "tag": "[reference]"
+        }
+      ],
+      "tif": {
+        "status": "contemplated_not_adopted",
+        "statement_verbatim": "\"Mr. Gottschalk mentioned that a Tax Increment Financing agreement is also to be considered at a later date that would follow the 15-year tax abatement.\"",
+        "note": "ISSUE #1438 LISTS \"the follow-on TIF\" AS AN INSTRUMENT TO PULL, WHICH PRESUPPOSES IT EXISTS. As of 2023-09-28 it was a future item, described as FOLLOWING the fifteen-year abatement — i.e. from roughly 2039. No Wood County TIF for this project was located. That negative is weak and is stated as such: the county's static minutes tree stops at 2024-05-30 and the CivicEngage Agenda Center that succeeded it does not index the commissioners' minutes full-text (a search for \"tax increment\" across all its categories returns nothing, and so does a search for \"Meta\"). See record-watch.yaml → WOOD-COUNTY-TIF. [open] NOT TO BE CONFUSED WITH THE ABBOTT TIF: the City of Bowling Green's own community action plan states \"City Council passed an ordinance with a TIF agreement for Abbott Industries in November 2023\" — a different party, a different body, a different project, one month apart."
+      },
+      "public_comment": [
+        {
+          "speaker": "Ross Fought",
+          "status": "A township resident. He appears in the county journal's attendance recital alongside staff, which reads as if he were an official; the Middleton Township minutes of 2023-10-04 settle it — \"Resident Ross Fought shared his concerns over the tax abatement that was provided to Liames, LLC\". [verified]",
+          "position": "against",
+          "statement_summary": "Lives west of the proposed site; not against economic development or this project in particular, but \"concerned with the tax abatement\" — that \"giving away property tax revenue is concerning,\" that \"property taxes are going up and Wood County property owners will be paying their share while a new company has their taxes abated for 15 years,\" that the county \"has numerous assets available to bring businesses without having to offer tax abatements,\" and that \"Wood County is doing well and there is no need to give away the county coffers.\"",
+          "note": "The only public comment recorded on this item, and it was opposed. He raised the same objection to the township six days later. Recorded because the completeness of a public record's comment section is itself evidence."
+        }
+      ],
+      "appearances": {
+        "commissioners": [
+          "Doris I. Herringshaw",
+          "Theodore H. Bowlus",
+          "Craig LaHote"
+        ],
+        "county_administrator": "Carri Stanley",
+        "assistant_administrator": "Dan Scherger",
+        "clerk_of_the_board": "Sandy Long",
+        "economic_development": "Wade Gottschalk (Wood County Economic Development, executive director)",
+        "applicant_counsel": "Chris Knezevic, Vorys",
+        "also_present": [
+          "Rex Huffman",
+          "Jerry Greiner"
+        ]
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "bowling-green/commissioners/2023-09-28-liames-cra.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "bowling-green/commissioners/10032023.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "bowling-green/middleton-township/2023-03-29-getz-rezoning.resolution.yaml",
+    "group": "local-legislation",
+    "title": "Middleton Township Trustees — rezoning of approximately 80 acres from A-1 Agricultural to M-1 Industrial, applicant Tim Getz, 2023-03-29",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "instrument": "Middleton Township Trustees — rezoning of approximately 80 acres from A-1 Agricultural to M-1 Industrial, applicant Tim Getz, 2023-03-29",
+      "body": "Board of Trustees, Middleton Township, Wood County, Ohio",
+      "body_kind": "township_trustees",
+      "subject_matter": "zoning",
+      "statute": "R.C. 519.12",
+      "meeting_date": "2023-03-29",
+      "meeting_kind": "special",
+      "convened": "19:00",
+      "adjourned": "19:04",
+      "outcome": "approved",
+      "vote": {
+        "motion": "\"to approve rezoning approximately 80 acres in Middleton Township from A-1 Agricultural zoning classification to an M-1 Industrial zoning classification\"",
+        "motion_moved_by": "Donald E. Cromley",
+        "motion_seconded_by": "Fred E. Vetter",
+        "roll_call": [
+          {
+            "trustee": "Donald E. Cromley",
+            "vote": "YES"
+          },
+          {
+            "trustee": "Michael Moulton",
+            "vote": "YES"
+          },
+          {
+            "trustee": "Fred E. Vetter",
+            "vote": "YES"
+          }
+        ],
+        "tally": "3-0"
+      },
+      "applicant": {
+        "property_owner": "Tim Getz",
+        "spoke_for_owner": "Brian McMahon, Danberry Realtors",
+        "parcels": null,
+        "acres_approx": 80
+      },
+      "recommendations": [
+        {
+          "body": "Wood County Planning Commission",
+          "date": "2023-02-07",
+          "recommendation": "approve"
+        },
+        {
+          "body": "Middleton Township Zoning Commission",
+          "date": "2023-03-14",
+          "recommendation": "approve"
+        }
+      ],
+      "disclosures": [
+        {
+          "id": "MERCER-ROAD-ACCESS-2023",
+          "tag": "[verified]",
+          "statement_verbatim": "\"He noted that by utilizing the acreage in question the concerns about road access onto Mercer Road could have less impact.\"",
+          "note": "The stated rationale is a site-access problem on Mercer Road — six months before the first Liames deed (2023-09-05) and two and a half years before the applicant's counsel told the trustees, at the 2026-07-07 hearing, that \"Mercer Road is not being utilized for this project.\" The record does not say who raised the access concern or on whose behalf, and no inference is drawn about coordination; what is [verified] is that a Mercer Road access constraint was already shaping this township's zoning map in March 2023."
+        }
+      ],
+      "linkage": {
+        "tag": "[open]",
+        "note": "WHETHER THIS 80 ACRES IS INSIDE THE LIAMES ASSEMBLAGE IS NOT ESTABLISHED. The minutes name no parcel, and the committed parcel layer records only the LAST conveyance per parcel, so a 2023 Getz-to-Liames transfer would have been overwritten by the 2025-04-09 consolidation quitclaims. What is [verified] independently: by 2024-03-20 the township's own zoning inspector described Liames LLC as \"property owners of the recently rezoned parcels between St. Rt. 582, St. Rt. 25 and Mercer Road,\" and by 2023-09-20 the CRA application covered \"the rezoned properties within the CRA boundaries.\" The Wood County Recorder is the instrument that would close it; see record-watch.yaml → WOOD-COUNTY-RECORDER."
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "bowling-green/middleton-township/2023-03-29-getz-rezoning.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "bowling-green/middleton-township/03292023_special_getzrezone.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "bowling-green/middleton-township/2023-05-03-busch-rezoning.resolution.yaml",
+    "group": "local-legislation",
+    "title": "Middleton Township Trustees — rezoning of approximately 44 acres from A-1 Agricultural to M-1 Industrial, owned by the Busch family, 2023-05-03",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "instrument": "Middleton Township Trustees — rezoning of approximately 44 acres from A-1 Agricultural to M-1 Industrial, owned by the Busch family, 2023-05-03",
+      "body": "Board of Trustees, Middleton Township, Wood County, Ohio",
+      "body_kind": "township_trustees",
+      "subject_matter": "zoning",
+      "statute": "R.C. 519.12",
+      "meeting_date": "2023-05-03",
+      "meeting_kind": "special",
+      "convened": "17:45",
+      "adjourned": "17:50",
+      "outcome": "approved",
+      "date_discrepancy": {
+        "tag": "[verified]",
+        "filename_says": "2022-05-03",
+        "document_says": "2023-05-03",
+        "resolution": "The document's own heading reads \"Wednesday, May 3, 2023\". May 3 fell on a Wednesday in 2023 and on a Tuesday in 2022. The minutes recite Wood County Planning Commission approval on 2023-03-07 and Middleton Township Zoning Commission approval on 2023-04-12, both after the filename's year. The township filed the PDF in its 2023/08 upload directory. The content-verified date is 2023-05-03 and the file is NOT renamed."
+      },
+      "vote": {
+        "motion": "\"to approve the rezoning request for approximately 44 acres from A-1 Agricultural to M-1 Industrial, owned by the Busch family\"",
+        "motion_moved_by": "Donald E. Cromley",
+        "motion_seconded_by": "Michael Moulton",
+        "roll_call": [
+          {
+            "trustee": "Donald E. Cromley",
+            "vote": "YES"
+          },
+          {
+            "trustee": "Michael Moulton",
+            "vote": "YES"
+          },
+          {
+            "trustee": "Fred E. Vetter",
+            "vote": "abstain"
+          }
+        ],
+        "tally": "2-0-1"
+      },
+      "applicant": {
+        "property_owner": "Busch family",
+        "parcels": null,
+        "acres_approx": 44
+      },
+      "recommendations": [
+        {
+          "body": "Wood County Planning Commission",
+          "date": "2023-03-07",
+          "recommendation": "approve",
+          "note": "[verified] \"voted unanimously to approve\""
+        },
+        {
+          "body": "Middleton Township Zoning Commission",
+          "date": "2023-04-12",
+          "recommendation": "approve",
+          "note": "[verified] \"approved the rezoning by unanimous vote\""
+        }
+      ],
+      "disclosures": [
+        {
+          "id": "VETTER-ABSTENTION",
+          "tag": "[verified]",
+          "statement": "Trustee Fred E. Vetter abstained. He abstained again on the 2024-11-20 Victoria Busch rezoning of ~91 acres, and did not abstain on the 2026-07-07 Liames rezoning, where he voted NO on the motion to adopt the zoning commission's denial.",
+          "note": "RECORDED AS A PATTERN IN THE ROLL CALLS, NOT AS A FINDING. The minutes state no reason for either abstention and this corpus supplies none. An abstention on both Busch matters and participation on the Liames matter is a fact about the record; any interest that would explain it is [open] and would be established by an Ohio Ethics Commission disclosure or a deed, neither of which is in the corpus."
+        },
+        {
+          "id": "ALSO-PRESENT",
+          "tag": "[verified]",
+          "statement": "\"Also, in attendance was Rex Huffman and Ross Fought.\" Huffman appears again at the 2024-11-20 rezonings as the Wood County Port Authority's representative FOR the private sellers, and in the county journal of 2023-09-28 as Northwestern Water & Sewer District legal counsel. Fought is the resident who objected to the CRA abatement before both the county and the township that autumn."
+        }
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "bowling-green/middleton-township/2023-05-03-busch-rezoning.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "bowling-green/middleton-township/05032022-special_buschrezone.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "bowling-green/middleton-township/2023-09-20-cra-support.resolution.yaml",
+    "group": "local-legislation",
+    "title": "Middleton Township Trustees — statement of support for the Liames LLC Community Reinvestment Area application to the Wood County Commissioners, 2023-09-20",
+    "confidence": "high",
+    "warnings": [
+      "Every figure here is a statement made by a promoter at a public meeting. The minutes verify that it was said. They do not verify the investment total, and no agreement in the corpus states it."
+    ],
+    "fields": {
+      "instrument": "Middleton Township Trustees — statement of support for the Liames LLC Community Reinvestment Area application to the Wood County Commissioners, 2023-09-20",
+      "body": "Board of Trustees, Middleton Township, Wood County, Ohio",
+      "body_kind": "township_trustees",
+      "subject_matter": "tax_incentive",
+      "meeting_date": "2023-09-20",
+      "meeting_kind": "regular",
+      "outcome": "approved",
+      "vote": {
+        "motion_verbatim": "\"to state their support of the Community Reinvestment Area Application as provided to the Wood County Commissioners for a 75% tax abatement for 15 years, with the school districts being awarded in full, as applied for by Liames LLC for a data center\"",
+        "motion_moved_by": "Michael Moulton",
+        "motion_seconded_by": "Donald E. Cromley",
+        "roll_call_recorded": false,
+        "tally_verbatim": "Motion approved."
+      },
+      "disclosures": [
+        {
+          "id": "END-USE-DISCLOSED-2023",
+          "tag": "[verified]",
+          "statement_verbatim": "\"[The] Community Reinvestment Area (CRA) application that will be presented to the Wood County Commissioners on September 28. The application provides a 75% tax abatement for 15 years and was applied for by Liames LLC for a Data Center on the rezoned properties within the CRA boundaries. Mr. Gottschalk noted it is a $750M investment in the township for a data center by a Fortune 200 company.\"",
+          "speaker": "Wade Gottschalk, Wood County Economic Development executive director",
+          "note": "THREE THINGS ARE ESTABLISHED HERE THAT THE REGISTER PREVIOUSLY CARRIED AS PRESS. (1) The end use — \"a Data Center\" — is stated on a township agenda on 2023-09-20. (2) The $750M figure, which the register carries as a \"[reference] pro-forma / DCD framing,\" is the county's own economic-development director speaking at a public meeting; that it was SAID is [verified], the figure itself remains a projection and stays [reference], but its provenance is now a public body's minutes rather than trade press. (3) The properties were ALREADY REZONED by 2023-09-20 — \"on the rezoned properties within the CRA boundaries\" — which is the township's own confirmation that the seller-name rezonings of March and May 2023 preceded the assembly's public phase. Note also \"Fortune 200 company\": the county knew the counterparty's scale and did not name it. Meta was Fortune 200 in 2023; so were roughly two hundred others, and no identification is made from this line."
+        },
+        {
+          "id": "SCHOOL-SEQUENCE",
+          "tag": "[verified]",
+          "statement_verbatim": "\"Eastwood School Board met with regard to the funding to the schools and approved their support. Otsego School Board meets soon to review the data as well as Penta Vocational Center.\"",
+          "note": "Establishes the order: Eastwood first, Otsego and Penta still to come, all three before the county's 2023-09-28 vote. \"Penta Vocational Center\" here and \"Penta Career Center\" in the county journal are the same body under two renderings; both are carried."
+        },
+        {
+          "id": "SCHOOLS-MADE-WHOLE",
+          "tag": "[verified]",
+          "statement": "The township's motion conditions its support on \"the school districts being awarded in full\" — a schools-made-whole framing in the township's own words. What \"in full\" means in the executed compensation agreements is [open]."
+        }
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "bowling-green/middleton-township/2023-09-20-cra-support.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "bowling-green/middleton-township/09202023.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "bowling-green/middleton-township/2024-2025-adjacent-rezonings.resolution.yaml",
+    "group": "local-legislation",
+    "title": "Middleton Township Trustees — campus-adjacent rezoning matters, 2024-11-20 and 2025-09-09 (one approved, three withdrawn)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "instrument": "Middleton Township Trustees — campus-adjacent rezoning matters, 2024-11-20 and 2025-09-09 (one approved, three withdrawn)",
+      "body": "Board of Trustees, Middleton Township, Wood County, Ohio",
+      "body_kind": "township_trustees",
+      "subject_matter": "zoning",
+      "statute": "R.C. 519.12",
+      "outcome": "mixed",
+      "matters": [
+        {
+          "id": "BUSCH-91AC-2024",
+          "meeting_date": "2024-11-20",
+          "convened": "19:30",
+          "adjourned": "19:35",
+          "applicant": "Victoria Busch",
+          "represented_by": "\"Rex Hoffman, Wood County Port Authority and representative for Victoria Busch\" [verified] — note the county journal of 2023-09-28 renders the surname \"Huffman\"; both spellings are carried and neither is corrected.",
+          "acres_approx": 91,
+          "parcels": [
+            "J36-611-290000008000",
+            "J36-611-290000007000"
+          ],
+          "from_zoning": "A-1 Agricultural",
+          "to_zoning": "M-1 Light Industrial",
+          "outcome": "approved",
+          "vote": {
+            "motion_moved_by": "Michael Moulton",
+            "motion_seconded_by": "Donald E. Cromley",
+            "roll_call": [
+              {
+                "trustee": "Donald E. Cromley",
+                "vote": "YES"
+              },
+              {
+                "trustee": "Michael Moulton",
+                "vote": "YES"
+              },
+              {
+                "trustee": "Fred E. Vetter",
+                "vote": "abstain"
+              }
+            ],
+            "tally": "2-0-1"
+          },
+          "recommendations": [
+            {
+              "body": "Wood County Planning Commission",
+              "recommendation": "approve"
+            },
+            {
+              "body": "Middleton Township Zoning Commission",
+              "recommendation": "approve"
+            }
+          ],
+          "disclosure": {
+            "tag": "[verified]",
+            "statement_verbatim": "\"Rex Hoffman, Wood County Port Authority and representative for Victoria Busch stated no buyers are known for the property.\"",
+            "note": "NINETY-ONE ACRES REZONED TO LIGHT INDUSTRIAL WITH NO BUYER ON THE RECORD, brought by a public port authority acting for a private seller. Recorded as stated. Whether a buyer later appeared is [open] — neither parcel is in the committed data/reference/bowling-green/parcel-assemblage.geojson, which carries only the twelve Liames parcels plus the Schaller, Apollo-situs and Oppidan tracts."
+          }
+        },
+        {
+          "id": "SDT1-68AC-2024",
+          "meeting_date": "2024-11-20",
+          "convened": "19:00",
+          "adjourned": "19:20",
+          "applicant": "SDT1 Properties, LLC",
+          "applicant_name_variants": [
+            "SDT1 Properties, LLC",
+            "STD1"
+          ],
+          "applicant_name_note": "BOTH SPELLINGS APPEAR ON THE SAME PAGE — \"SDT1 Properties, LLC\" in the legal-notice recital and \"representative for STD1\" in the appearance line; the township's own filename says STD1. The registered name is [open] and the Ohio Secretary of State search that would settle it is access-blocked (see record-watch.yaml). Neither is corrected.",
+          "represented_by": "Rex Hoffman, Wood County Port Authority",
+          "acres_approx": 68,
+          "parcels": [
+            "J36-611-200000016500",
+            "J36-611-200000015000",
+            "J36-611-200401010000",
+            "J36-611-200401011000",
+            "J36-611-200401012000"
+          ],
+          "from_zoning": "A-1 Agricultural",
+          "to_zoning": "M-1 Light Industrial",
+          "outcome": "withdrawn",
+          "outcome_detail": "[verified] \"Rex Hoffman, Wood County Port Authority and representative for STD1 stated the application for rezoning is being withdrawn.\" The county planning commission had recommended approval; the township zoning commission had not. \"The Trustees took no action.\" Withdrawn AT the hearing, after both recommendation bodies had ruled.",
+          "location_note": "[verified] from the 2024-08-21 minutes, when the application was first reported: \"approximately 67 acres on multiple parcels on St. Rt. 582 east of Interstate 75.\" The acreage is given as ~67 there and ~68 in the legal notice three months later."
+        },
+        {
+          "id": "ECKEL-SPECK-2025",
+          "meeting_date": "2025-09-09",
+          "convened": "19:05",
+          "adjourned": "19:08",
+          "applicants": [
+            {
+              "name": "Eckel Trustees",
+              "acres_approx": 75
+            },
+            {
+              "name": "Speck Trustee",
+              "acres_approx": 37
+            }
+          ],
+          "from_zoning": "A-1 Agricultural",
+          "to_zoning": "M-1 Light Industrial",
+          "parcels": null,
+          "outcome": "withdrawn",
+          "outcome_detail": "[verified] The zoning inspector \"provided the Trustees with two separate letters from the property owners who have requested rezoning ... Each letter stated intent to withdraw the rezoning request effective Monday, September 8, 2025\" — the day before the hearing. The legal notice had been published in the Sentinel-Tribune on 2025-08-27. The trustees moved to accept the withdrawals; the meeting ran three minutes.",
+          "note": "These are the two applications the 2026-01-07 minutes describe as \"pulled by the applicants and to date have not been resubmitted to the zoning commission.\" Why they were pulled is [open] — the letters are not published and the minutes give no reason."
+        }
+      ],
+      "aggregate": {
+        "tag": "[inference]",
+        "statement": "91 + 68 + 75 + 37 = 271 acres of A-1 land brought toward M-1 by four separate landowners around this campus between August 2024 and September 2025, of which 91 were rezoned and 180 were withdrawn before a vote. Arithmetic on [verified] figures; the figures are the minutes' own approximations (\"approximately\"), so the total is approximate too.",
+        "do_not_read_as": "NOT a Meta land assembly. None of these four applicants is Liames, none of the named parcels is in the committed assemblage, and the only one with a stated buyer position said there was none. What the pattern establishes is a market forming around a disclosed campus, which is a different and weaker claim than assembly — and it is the weaker claim this corpus makes."
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "bowling-green/middleton-township/2024-2025-adjacent-rezonings.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "bowling-green/middleton-township/11202024_special_rezone_Busch.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "bowling-green/middleton-township/2026-07-07-liames-rezoning.resolution.yaml",
+    "group": "local-legislation",
+    "title": "Middleton Township Trustees — action on Application 2026041 (Liames, LLC), rezoning thirteen parcels in Section 19 to M-1 Light Industrial, 2026-07-07",
+    "confidence": "high",
+    "warnings": [
+      "The tally recorded here (1-2 against a denial recommendation) is the inverse of the tally in circulation (2-1 in favour). Cite this record, not the press number.",
+      "`cama_deeded_name` on the five non-Liames parcels is a ~2025-07-25 snapshot, not a statement about who owned them at the 2026-07-07 hearing.",
+      "The R.C. 519.12 referendum window on this action closed on or about 2026-08-06 and its outcome was NOT captured. See record-watch.yaml → MIDDLETON-REFERENDUM."
+    ],
+    "fields": {
+      "instrument": "Middleton Township Trustees — action on Application 2026041 (Liames, LLC), rezoning thirteen parcels in Section 19 to M-1 Light Industrial, 2026-07-07",
+      "body": "Board of Trustees, Middleton Township, Wood County, Ohio",
+      "body_kind": "township_trustees",
+      "subject_matter": "zoning",
+      "statute": "R.C. 519.12",
+      "meeting_date": "2026-07-07",
+      "meeting_kind": "special",
+      "convened": "18:30",
+      "adjourned": "19:18",
+      "application_no": "2026041",
+      "legal_notice": "Published in the Sentinel-Tribune, 2026-06-20, and read into the record by the Fiscal Officer.                                                                 # [verified]",
+      "outcome": "approved",
+      "outcome_note": "[verified] — the minutes state it in terms: \"It is noted the application was approved for rezoning. The application will be filed with the Wood County Recorder and also sent to the Wood County Planning Commission.\"",
+      "vote": {
+        "motion": "\"to approve the recommendation of the Middleton Township Zoning Commission for the purpose of rezoning thirteen (13) parcels to M-1 based on the details noted in the application\"",
+        "motion_moved_by": "Michael Moulton",
+        "motion_seconded_by": "Melissa S. Petrea",
+        "the_recommendation_being_approved": "deny",
+        "roll_call": [
+          {
+            "trustee": "Michael Moulton",
+            "vote": "NO"
+          },
+          {
+            "trustee": "Melissa S. Petrea",
+            "vote": "YES"
+          },
+          {
+            "trustee": "Fred E. Vetter",
+            "vote": "NO"
+          }
+        ],
+        "tally": "1-2",
+        "effect": "[verified] The motion was to ADOPT the zoning commission's recommendation, and that recommendation was to DENY. It failed 1-2, and the minutes record the rezoning as approved.",
+        "press_discrepancy": "SECONDARY REPORTING HAS THIS BACKWARDS AND SO DID THIS REPO. The register carried \"trustees granted it anyway, 2-1 ... Mike Moulton and Fred Vetter in favor, Melissa Petrea against\" [reference]. On the face of the minutes the vote is 1-2, and the single YES is PETREA — the trustee reported as the dissenter. Both accounts agree on the outcome and on who was on which side of it; they disagree on the direction of the question. A reader given only the press number would state the tally, the majority and the dissenter's name wrongly while stating the result rightly. The minutes are the record. WHY THIS READING AND NOT THE OBVIOUS ONE. The motion text can be read a second way — \"approve the recommendation ... for the purpose of rezoning\" as simply \"approve the rezoning\" — but that reading does not survive its own roll call: 1-2 would then have DEFEATED the rezoning, and the next sentence of the same minutes says it was approved. Only the reading above is self-consistent with the outcome the minutes state. What is NOT resolved is WHY the question was put that way: a deliberate procedural device, an error at the meeting, or a clerical error in the minutes are all live, the minutes give no reason, and none is asserted. The Wood County Recorder's copy of the filed rezoning would corroborate the outcome but not the framing. [open]"
+      },
+      "parcels": {
+        "printed_as": "The minutes print the auditor's full dashed form (J34-/J36- district prefix + 3-digit map + 12 digits). The committed parcel layer stores the 15-digit remainder — see the deed_id_regex caveat on WOOD_PARCEL_SCHEMA — so both forms are carried.",
+        "from_zoning": [
+          "R-4 Residential",
+          "A-1 Agricultural"
+        ],
+        "to_zoning": "M-1 Light Industrial",
+        "stated_purpose": "\"construction logistics\" — the applicant's own words, as recited by the Wood County Planning Commission's 2026-06-02 agenda; at the hearing counsel framed it as creating \"a contiguous M1 zoning for the parcels owned by Liames, LLC\".      # [verified]",
+        "list": [
+          {
+            "auditor_id": "J34-611-190000008000",
+            "parcel_id": "611190000008000",
+            "acres": 1.59,
+            "cama_deeded_name": "LIAMES LLC"
+          },
+          {
+            "auditor_id": "J34-611-190000009000",
+            "parcel_id": "611190000009000",
+            "acres": 1.01,
+            "cama_deeded_name": "LIAMES LLC"
+          },
+          {
+            "auditor_id": "J34-611-190000010000",
+            "parcel_id": "611190000010000",
+            "acres": 1.01,
+            "cama_deeded_name": "SIMON JAY"
+          },
+          {
+            "auditor_id": "J34-611-190000022000",
+            "parcel_id": "611190000022000",
+            "acres": 2.05,
+            "cama_deeded_name": "PINE APARTMENTS LTD"
+          },
+          {
+            "auditor_id": "J34-611-190000025000",
+            "parcel_id": "611190000025000",
+            "acres": 0.5,
+            "cama_deeded_name": "LIAMES LLC"
+          },
+          {
+            "auditor_id": "J34-611-190000026000",
+            "parcel_id": "611190000026000",
+            "acres": 1.0,
+            "cama_deeded_name": "P&J THAYER FAMILY LIMITED PARTNERSH"
+          },
+          {
+            "auditor_id": "J34-611-190000027000",
+            "parcel_id": "611190000027000",
+            "acres": 2.0,
+            "cama_deeded_name": "P&J THAYER FAMILY LTD"
+          },
+          {
+            "auditor_id": "J34-611-190000028000",
+            "parcel_id": "611190000028000",
+            "acres": 4.39,
+            "cama_deeded_name": "P&J THAYER FAMILY LTD"
+          },
+          {
+            "auditor_id": "J36-611-190000033000",
+            "parcel_id": "611190000033000",
+            "acres": 3.89,
+            "cama_deeded_name": "LIAMES LLC"
+          },
+          {
+            "auditor_id": "J36-611-190000034000",
+            "parcel_id": "611190000034000",
+            "acres": 2.0,
+            "cama_deeded_name": "LIAMES LLC"
+          },
+          {
+            "auditor_id": "J36-611-190000036001",
+            "parcel_id": "611190000036001",
+            "acres": 3.33,
+            "cama_deeded_name": "LIAMES LLC"
+          },
+          {
+            "auditor_id": "J36-611-190000035000",
+            "parcel_id": "611190000035000",
+            "acres": 1.53,
+            "cama_deeded_name": "LIAMES LLC"
+          },
+          {
+            "auditor_id": "J36-611-190000037000",
+            "parcel_id": "611190000037000",
+            "acres": 7.52,
+            "cama_deeded_name": "LIAMES LLC"
+          }
+        ],
+        "acreage_reconciliation": "[verified] The thirteen deeded acreages sum to 31.820 — the Wood County Planning Commission's \"approximately 31.82 acres\" to the hundredth. The 31.82 figure had been carried as press [reference]; it is now a measurement against the auditor's own layer. The eight Liames-name parcels carry 21.37 ac and the other five 10.45 ac.",
+        "ownership_caveat": "FIVE OF THE THIRTEEN DO NOT STAND IN LIAMES' NAME IN THE COUNTY'S PARCEL LAYER, AND THAT IS A STATEMENT ABOUT JULY 2025, NOT ABOUT THE HEARING. The `cama_deeded_name` above is from a live query of Wood County's Vision_Parcels layer on 2026-08-05, which returned the same 73,839 rows and the same maximum Sale_Date of 2025-07-25 that #1436 recorded — zero rows transfer after that date, so the layer has not been refreshed in more than a year and any transfer after 2025-07-25 is invisible to it. Applicant's counsel told the trustees the parcels are \"owned by Liames, LLC\" and that \"structures on the properties have been razed.\" Two readings survive and neither is adopted: the five transferred after the snapshot, or Liames applied over land it does not hold of record (which R.C. 519.12 permits — an application is not limited to owners). The Wood County Recorder is the instrument that settles it, and it is logged as a blocked route in record-watch.yaml. What IS established is the identity of the five: an individual owner served as SIMON JAY (1.01 ac, owner-occupied — the tax mailing address IS the situs, which is what identifies it as a residence rather than a holding entity; the layer serves an individual's name without saying which token is the surname, so it is carried as served and never re-ordered), Pine Apartments Ltd (2.05 ac at 21332 Dixie, CAMA use class 401), and the P&J Thayer Family Limited Partnership (three parcels, 7.39 ac). The register previously carried these five as [open]."
+      },
+      "recommendations": [
+        {
+          "body": "Wood County Planning Commission",
+          "date": "2026-06-02",
+          "recommendation": "approve",
+          "note": "[verified] as recited by the zoning inspector in these minutes (\"voted on June 2, 2026, in favor of the rezoning request\"). The 6-2 tally is [reference] press; the Planning Commission's own minutes for 2026-06-02 were not published at capture time. Its AGENDA is captured at data/documents/bowling-green/planning-commission/."
+        },
+        {
+          "body": "Middleton Township Zoning Commission",
+          "date": "2026-06-10",
+          "recommendation": "deny",
+          "note": "[verified] \"the Middleton Township Zoning Commission (MTZC) voted on June 10, 2026, to deny the request.\" The 0-4 tally the register carries is [reference] press."
+        }
+      ],
+      "appearances": {
+        "applicant_engineer": "Barge Design Solutions",
+        "applicant_counsel": {
+          "name": "Chris Ingram, Esq.",
+          "firm": "Vorys",
+          "note": "The same firm that appeared for the applicant before the county commissioners on the CRA in September 2023, where the minutes name \"Chris Knezevic of Vorys\". Two different lawyers, one firm, across three years and two boards — [verified] on each name separately; no claim is made that they are the same person."
+        },
+        "township_counsel": {
+          "name": "Julie Dannon, Esq.",
+          "firm": "Brosius, Johnson & Griggs",
+          "note": "THE MINUTES SPELL HER NAME TWO WAYS ON THE SAME PAGE — \"Julie Dannon, Esq.\" in the attendance recital and \"Julie Donnan, Esq.\" / \"Ms. Donnan\" in the review section. Both are carried verbatim; neither is corrected, because the record does not say which is right."
+        },
+        "township_zoning_inspector": "Kip McDowell",
+        "fiscal_officer": "Laurie L. Limes"
+      },
+      "public_comment": {
+        "format": "Three minutes per speaker, questions gathered and answered together. [verified]",
+        "township_residents": [
+          {
+            "name": "Patricia Fugee",
+            "of": "Dowling Road",
+            "concern": "the concrete plant, future use of the properties if rezoned, buffering for Dowling Road"
+          },
+          {
+            "name": "Tim Hainen",
+            "of": "Devils Hole Road",
+            "concern": "that the rezoning is unnecessary and \"would set a precedent to allow M-1 next to residential and for future development south of St. Rt. 582\""
+          }
+        ],
+        "non_township_residents": [
+          {
+            "name": "Leatra Harper",
+            "representing": "Fresh Water Accountability",
+            "concern": "\"the companies do not know what they are doing with the land and the complex does not need to get any bigger\"; stated the group is fundraising and \"plans to employer [sic] lawyers to help assist with their efforts to stop the growth\"",
+            "note": "THE REGISTER CARRIES A \"Leslie Harper\" AS THE REFERENDUM DRIVE'S COORDINATOR, sourced to press [reference]. The primary record here says Leatra Harper, of Fresh Water Accountability. That is a likely identification of the same person and it is NOT made here — the two names are recorded side by side and the identity stays [open], because nothing in the corpus links the speaker at this hearing to the petition organizer."
+          },
+          {
+            "name": "Chris Coultrip",
+            "of": "Thompson Road, Perrysburg Township",
+            "concern": "limiting the megawatts; the ODNR dewatering process"
+          },
+          {
+            "name": "John Zanfardino",
+            "of": "Cambridge Boulevard, Bowling Green",
+            "concern": "the 'devastation' of the development; that trustees should vote with citizen sentiment"
+          },
+          {
+            "name": "Beth Cole",
+            "of": "Dowling Road",
+            "concern": "opposition to future development; stated the concrete plant sits on A-1 land"
+          },
+          {
+            "name": "Kathy deAlmeida",
+            "of": "Lyn Road, Bowling Green",
+            "concern": "acreage owned and buffer zones; that the parcels could be zoned to keep a parklike setting"
+          }
+        ]
+      },
+      "disclosures": [
+        {
+          "id": "ADDITIONAL-NW-PARCEL",
+          "tag": "[verified]",
+          "statement": "Applicant's counsel \"informed the Board that an additional parcel is currently being reviewed by the Wood County Planning Commission for rezoning from A-1 to M-1 that is located at the northwest corner of the complex.\"",
+          "reads_on": "The A. Schaller Limited Partnership 39.265-acre application, docketed by the county for the SAME EVENING (WCPC agenda item 4.b, 2026-07-07). The two boards were sitting on the two halves of this assembly at the same hour."
+        },
+        {
+          "id": "MERCER-ROAD-NOT-USED",
+          "tag": "[verified]",
+          "statement": "An exhibit shown at the hearing \"shows constraints on St. Rt. 25, noting retention ponds in place, development standards in place due to the M-1 zoning and noted that MERCER ROAD IS NOT BEING UTILIZED FOR THIS PROJECT.\"",
+          "reads_on": "The 2023-03-29 Getz rezoning was argued on the ground that using that acreage would mean \"the concerns about road access onto Mercer Road could have less impact.\" Three years apart, the same road, the same answer."
+        },
+        {
+          "id": "PETREA-PARCELS-NOT-IN-PLAN",
+          "tag": "[verified]",
+          "statement": "\"Mrs. Petrea also stated the initial plans for the data center complex do not include the parcels under review.\"",
+          "reads_on": "A trustee's characterization, not a company statement — but it is consistent with the applicant's own stated purpose (\"construction logistics\") and with the register's reading that these thirteen are a fringe, not campus core."
+        },
+        {
+          "id": "DEWATERING-UNFAMILIAR",
+          "tag": "[verified]",
+          "statement": "A resident raised \"the ODNR dewatering process\"; the minutes record that \"Mr. Ingram noted he was not familiar with the dewatering concept.\"",
+          "reads_on": "Construction dewatering is an ODNR/Ohio EPA matter that this repo tracks at other sites. No dewatering instrument for this campus is in the corpus. [open]"
+        },
+        {
+          "id": "ODOT-CONTROLS-ENTRANCES",
+          "tag": "[verified]",
+          "statement": "Trustee Vetter stated \"that ODOT, not the township has control over the design or location of the entrances and new entrances may be needed to help with the traffic flow\"."
+        },
+        {
+          "id": "FIRSTENERGY-ENFORCEMENT",
+          "tag": "[verified]",
+          "statement": "\"Discussion was held with regard to the FirstEnergy power facility and the continued work by the township to enforce the township zoning regulations.\"",
+          "reads_on": "A township enforcement posture toward a FirstEnergy facility, unresolved in these minutes. Note the register's separate finding that the FirstEnergy/ATSI transmission tract (72.43 ac, 22105 Mercer Rd) shares a 0.0 m boundary with the assembly. What the \"continued work\" is, and whether it is the substation or something else, is [open]."
+        }
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "bowling-green/middleton-township/2026-07-07-liames-rezoning.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "bowling-green/middleton-township/07072026_specialrezoning.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "bowling-green/planning-commission/2026-liames-and-schaller-rezoning-applications.resolution.yaml",
+    "group": "local-legislation",
+    "title": "Wood County Planning Commission — the Liames LLC thirteen-parcel and A. Schaller Limited Partnership rezoning applications, Middleton Township Section 19, 2026",
+    "confidence": "high",
+    "warnings": [
+      "Both 6-2 tallies are press, not instrument. The Wood County Planning Commission's own minutes for 2026-06-02 and 2026-07-07 are the pull; see record-watch.yaml → WCPC-MINUTES."
+    ],
+    "fields": {
+      "instrument": "Wood County Planning Commission — the Liames LLC thirteen-parcel and A. Schaller Limited Partnership rezoning applications, Middleton Township Section 19, 2026",
+      "body": "Wood County Planning Commission",
+      "body_kind": "county_planning_commission",
+      "subject_matter": "zoning",
+      "statute": "R.C. 519.12",
+      "outcome": "recommended",
+      "what_this_is_and_is_not": "AN AGENDA IS THE APPLICATION AS DOCKETED, NOT THE VOTE. The commission's own minutes for 2026-06-02 and 2026-07-07 were not published at capture time, so the tallies below come from elsewhere and are graded accordingly. What the agenda itself [verified]s is the applicant, the parcel count, the acreage, the from/to classifications, the stated purpose and the location — every one of which the register previously carried from press.",
+      "matters": [
+        {
+          "id": "LIAMES-THIRTEEN",
+          "agenda_date": "2026-06-02",
+          "agenda_item": "6.b",
+          "agenda_note": "The agenda was reissued — its own title line reads \"AGENDA - UPDATED WITH ATTACHED MAP (5/26/2026 4:05 P.M.)\". The map is pages 1-2 of the PDF and is the county's own drawing of the thirteen parcels \"outlined in red\"; it is why this three-page file is 18 MB.",
+          "applicant": "Liames LLC",
+          "parcel_count": 13,
+          "acres_stated": 31.82,
+          "from_zoning": [
+            "R-4 Residential",
+            "A-1 Agricultural"
+          ],
+          "to_zoning": "M-1 Industrial",
+          "location": "Section 19, Middleton Township",
+          "stated_purpose": "construction logistics",
+          "text_verbatim": "\"Liames LLC has submitted an application to rezone thirteen parcels totaling approximately 31.82 acres in Section 19 of Middleton Township from an R-4 Residential and A-1 Agricultural zoning classification to an M-1 Industrial zoning classification. Applicant has stated that the rezoning is for 'construction logistics.' All parcels are located north of State Route 582. See attached map with parcels to be rezoned outlined in red.\"",
+          "recommendation": "approve",
+          "recommendation_tally": "6-2",
+          "recommendation_tally_tag": "[reference]",
+          "recommendation_tally_note": "The 6-2 is press (BG Independent News / Sentinel-Tribune, via the register). The township trustees' 2026-07-07 minutes [verified] only that the WCPC \"voted on June 2, 2026, in favor of the rezoning request\", without a tally. The commission's own minutes would close it and were not published at capture.",
+          "corrections": [
+            {
+              "was": "\"approximately 31.82 ac\" carried as a press [reference] figure in data/extracted/bowling-green/data-centers.md.",
+              "now": "[verified] — it is the county's own docketed figure, and it reconciles to the hundredth against the sum of the thirteen parcels' deeded acreage in the Wood County auditor CAMA (31.820). A press number became a measurement."
+            },
+            {
+              "was": "\"eight on the east side of SR-25 and five on the west side of Mercer Rd\" — [reference] press, and flagged in the register as uncheckable because the record named only eight of the thirteen.",
+              "now": "The county says \"All parcels are located north of State Route 582.\" That is compatible with the press split but it is not the same statement, and it is the one the instrument makes. The east/west split remains [reference] and is now checkable against the thirteen situs addresses recorded in the township rezoning extraction (Dixie, Middleton and Mercer frontages) — a check this issue does not perform, because it needs the parcel geometry, not the address strings. [open]"
+            }
+          ]
+        },
+        {
+          "id": "SCHALLER-39AC",
+          "agenda_date": "2026-07-07",
+          "agenda_item": "4.b",
+          "applicant": "A. Schaller Limited Partnership",
+          "parcel_count": 1,
+          "acres_stated": 39.265,
+          "from_zoning": "A-1 Agricultural",
+          "to_zoning": "M-1 Industrial",
+          "location": "Section 19, Middleton Township — north of SR-582, east side of SR-25",
+          "stated_purpose": "construction parking",
+          "buyer_of_record": "Liames LLC (in contract to purchase)",
+          "text_verbatim": "\"A. Schaller Limited Partnership has submitted an application to rezone a 39.265 acre parcel of land in Section 19 of Middleton Township from an A-1 Agricultural zoning classification to an M-1 Industrial zoning classification. The application states that the applicant is in contract with Liames LLC to sell the subject parcel and that Liames LLC intends to use the parcel for construction parking. The parcel is located north of State Route 582 on the east side of State Route 25.\"",
+          "recommendation": "approve",
+          "recommendation_tally": "6-2",
+          "recommendation_tally_tag": "[reference]",
+          "township_action": "pending",
+          "township_action_note": "[verified] — at the trustees' hearing the same evening, applicant's counsel \"informed the Board that an additional parcel is currently being reviewed by the Wood County Planning Commission for rezoning from A-1 to M-1 that is located at the northwest corner of the complex.\" Two boards, two halves of one assembly, one evening. No township vote on the Schaller parcel is in the corpus. [open]",
+          "acreage_vs_parcel": {
+            "tag": "[verified]",
+            "note": "THE COUNTY REZONES A PART, NOT THE PARCEL. The auditor CAMA carries the Schaller holding (611190000006000, J34-611-190000006000) at 64.55 DEEDED acres; the application is over 39.265 of them. #1436 identified the part as the parcel's 39.621-acre eastern portion — an [inference] there, and it stays [inference]; the agenda names no part."
+          },
+          "seller_note": "This is the same A. Schaller Limited Partnership already carried in data/reference/bowling-green/parcel-assemblage.geojson with parcel_role `rezoning_pending`, whose last recorded conveyance is 1999-12-23. A family partnership holding since the last century, selling into the campus's construction phase."
+        }
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "bowling-green/planning-commission/2026-liames-and-schaller-rezoning-applications.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "bowling-green/planning-commission/June 2 2026 WOOD COUNTY PLANNING COMMISSION REGULARLY SCHEDULED MEETING AGENDA updated 5-26-2026 at 405pm.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "oepa/bowling-green/P0139272.completeness.yaml",
     "group": "permits-epa",
     "title": "Apollo Power Generation Facility",

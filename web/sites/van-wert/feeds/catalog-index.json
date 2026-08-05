@@ -1,7 +1,7 @@
 {
   "site": "van-wert",
   "catalog_version": "b11014a085743e51d2d3e5618bb0aff0071e2df30739c5c08b569da77e70b239",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:van-wert:7q10",
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "van-wert",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -704,7 +704,7 @@
       "kind": "dataset",
       "site": "van-wert",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

@@ -2,7 +2,8 @@
 
 Discover-and-pin register for the Bowling Green watershed point — the **Portage River · Maumee
 divide** (drinks the Maumee at the Waterville intake, discharges to the North Branch Portage).
-Status **as of 2026-07-10 (#1435)**. Tags are BOSC evidentiary discipline: `[verified]` =
+Status **as of 2026-08-05** (opened #1435 2026-07-10; §3 #1437, §3a #1440, §4 #1436 + #1438,
+§5 #1438). Tags are BOSC evidentiary discipline: `[verified]` =
 on-record in a government/primary source (often two+), `[reported]` = credible secondary /
 investigative journalism, not officially confirmed, `[reference]` = authoritative-but-secondary
 dataset/claim, `[inference]` = grounded reasoning, `[open]` = genuinely unsourced. Most of the
@@ -57,7 +58,14 @@ Meta (Middleton Twp) and Oppidan (city proper) — are **distinct projects**; do
   they are part of the **thirteen parcels / 31.82 ac the trustees rezoned to M-1 by 2–1 on
   2026-07-07**, and **no published Wood County layer carries that change** — see §4.
 - **Building program:** **715,000 sq ft** initial phase + **~1,700 parking spaces**. `[verified]`
-  Source: Meta. **Phase 2 signaled** in Meta's **2026-01-07** letter to the township trustees.
+  Source: Meta. **At least two data-center buildings are on the township's own record** (#1438):
+  the zoning inspector reported the Barge Design Solutions site-plan review to the trustees on
+  **2025-01-15** with a build sequence — warehouses by April 2026, administration building by
+  October 2026, "the data center completed by the end of 2026," and verbatim "**The second data
+  center is scheduled for completion April/May 2027**." `[verified]` as the township's record of
+  the applicant's schedule. **This corrects a claim this file previously carried:** the
+  2026-01-07 Meta letter is **not** a Phase-2 letter and contains no Phase-2 announcement — see
+  §5.
 - **Investment:** **>$800M**. `[verified]` (Meta) · an earlier Liames pro-forma put it at **$240M
   land + $510M buildings (~$750M)**. `[reference]` (pro-forma / DCD "$750M campus" framing).
 - **Jobs:** **~100 permanent** (avg ~mid-$80k) / **>1,000 peak construction**. `[verified]` (Meta).
@@ -105,9 +113,12 @@ Meta (Middleton Twp) and Oppidan (city proper) — are **distinct projects**; do
   #2056), and both instruments are Ohio-statutory, so **neither can return a Kentucky record**. The
   KY collision reaches only the press-sourced ~50k / ~600k figures — which is exactly where it has
   to be watched.
-- **Timeline:** deeds **2023-09-05** → reveal **2025-04-09** → **ground 2025** → **target ops
-  2027**; **Phase 2 signaled** in Meta's **2026-01-07** letter (PDF on the township site).
-  `[verified]` (letter PDF).
+- **Timeline:** deeds **2023-09-05** `[reference]` (the auditor CAMA's earliest surviving Liames
+  conveyance is **2023-11-14**, and the discrepancy is recorded, not reconciled — see
+  [`land-assembly.yaml`](land-assembly.yaml)) → reveal **2025-04-09** → **ground 2025** → **target
+  ops 2027**. The codename reaches the township record far earlier: **2023-07-19**, an executive
+  session "for the purpose of hearing a presentation by **Project Accordion personnel**" under
+  R.C. 121.22(G)(8). `[verified]`
 
 This is what the `SiteFacility` on `_BOWLING_GREEN` is pinned from (site-plan-grounded, #1327
 Urbana precedent): the disclosed type / 715,000 sq ft / >$800M are populated `[verified]`; the IT
@@ -240,45 +251,165 @@ points, so this file is not the place they get re-derived:
   load or firm-capacity figure exists. "The muni could never serve 180 MW" is an **inference** from
   portfolio size with its arithmetic shown — never a finding.
 
-## 4 — The land-use track: three rezonings, one of them contested (#1436)
+## 4 — The land-use track: the rezonings, and the one whose roll call was reported backwards (#1436 / #1438)
 
-The assembly is still moving, and the township's own bodies do not agree with its trustees. Dates
-and tallies here are `[verified]` from the Sentinel-Tribune and BG Independent News reports of the
-meetings; the resolutions themselves are `[open]`.
+The assembly is still moving, and the township's own bodies do not agree with its trustees.
+**#1438 replaced the press account of this section with the bodies' own minutes**, and the
+substitution changed several things — most sharply the 2026-07-07 roll call. The instruments are
+committed under `data/documents/bowling-green/{middleton-township,commissioners,planning-commission}/`
+and read in the sibling `*.resolution.yaml` files.
 
-- **The 13 parcels / 31.82 ac** (former homes and a strip of motel rooms, since razed), **R-4
-  Residential and A-1 Agricultural → M-1 Industrial**, applicant Liames LLC, stated purpose
-  "construction logistics" and consistent zoning across the holding. Their positions —
-  north of SR-582, **eight on the east side of SR-25 and five on the west side of Mercer Rd** —
-  are `[reference]` **press** (BG Independent News, 2026-06-03 and 2026-07-08), *not* a parcel
-  schedule: the record names only eight of the thirteen, so that 8/5 split cannot be checked
-  against the CAMA and the five unnamed parcels stay `[open]`. The application's own parcel
-  schedule at the county planning commission is the instrument:
-  - Wood County Planning Commission **recommended, 6–2, 2026-06-02**
-  - Middleton Township Zoning Commission **REJECTED it, 2026-06-10**
-  - Middleton Township Trustees **granted it anyway, 2–1, 2026-07-07** — Mike Moulton and Fred
-    Vetter in favor, Melissa Petrea against
+- **The 13 parcels / 31.82 ac**, **R-4 Residential and A-1 Agricultural → M-1 Industrial**,
+  applicant Liames LLC, stated purpose "construction logistics" — **now instrument-grounded**,
+  where this entry previously rested on press. The county's own docket (WCPC agenda 2026-06-02,
+  item 6.b) states the parcel count, the **31.82 acres**, and that "**all parcels are located
+  north of State Route 582**", with a map attaching the thirteen outlined in red; the township's
+  legal notice, printed in the trustees' 2026-07-07 minutes, **names all thirteen parcel
+  numbers**, and their deeded acreages sum to **31.820** against the county's "approximately
+  31.82" — a press figure became a measurement. The **eight-east-of-SR-25 / five-west-of-Mercer**
+  split stays `[reference]` press (BG Independent News, 2026-06-03 and 2026-07-08) and is not the
+  statement the county makes. Full read:
+  [`middleton-township/2026-07-07-liames-rezoning.resolution.yaml`](middleton-township/2026-07-07-liames-rezoning.resolution.yaml).
+  - Wood County Planning Commission **recommended, 2026-06-02** — the **6–2** tally is
+    `[reference]` press; the commission's own minutes were unpublished at capture. `[open]`
+  - Middleton Township Zoning Commission **voted to deny, 2026-06-10**. `[verified]`
+  - Middleton Township Trustees **approved the rezoning on 2026-07-07 — but not on the vote the
+    press reported.** The motion was "**to approve the recommendation of the Middleton Township
+    Zoning Commission**," and that recommendation was to **deny**. Roll call: **Moulton NO,
+    Petrea YES, Vetter NO** — **1–2** — after which the minutes state "It is noted the
+    application was approved for rezoning." `[verified]` Same outcome; inverted tally, inverted
+    majority, and the single YES is the trustee reported as the dissenter. Cite the minutes,
+    never the press number.
   - **R.C. 519.12 referendum window: 30 days, closing ~2026-08-06.** A petition drive needing
     **971 valid signatures** for the **November 2026** ballot was circulating as of **2026-07-18**
-    (organizers targeting ~1,300 to absorb rejections; Leslie Harper coordinating). `[reference]`
-    — The Blade via thecooldown.com. **As of 2026-08-01 the window is still open and the outcome
-    is `[open]`.** Watch: whether a petition is filed with the Wood County Board of Elections by
-    ~2026-08-06, and its certification.
-  - The record shows **8 of the 13** parcels (21.37 ac) in Liames' name; the press reports all
-    thirteen as already Meta-owned. The gap is the CAMA layer's ~2025-07 vintage, not a research
-    gap. `[open]`
+    (organizers targeting ~1,300 to absorb rejections). `[reference]` — The Blade via
+    thecooldown.com. **The outcome is `[open]`**; watch the Wood County Board of Elections. Two
+    name cautions. Press names the coordinator "Leslie Harper"; the primary record of the
+    2026-07-07 hearing names **Leatra Harper of Fresh Water Accountability** as a speaker — a
+    likely but **unmade** identification. And township counsel is recorded on 2026-01-07 stating
+    the threshold is "**35%** of the voting population in the last gubernatorial race," which
+    reconciles with neither R.C. 519.12's eight per cent nor with 971 signatures. All three
+    numbers recorded; none adopted. `[open]`
+  - **Eight of the thirteen stand in Liames' name in the CAMA (21.37 ac); the other five (10.45
+    ac) stand in three others** — an individual owner served as `SIMON JAY` (1.01 ac,
+    owner-occupied: the tax mailing address is the situs, and the layer serves an
+    individual's name without saying which token is the surname, so it is carried as
+    served and never re-ordered), Pine
+    Apartments Ltd (2.05 ac), and the **P&J Thayer Family Limited Partnership** (three parcels,
+    7.39 ac). The five were `[open]` before #1438 and are now named. The vintage caveat is
+    unchanged and re-verified 2026-08-05: **73,839 rows, maximum Sale_Date 2025-07-25, zero rows
+    after it** — the layer cannot see a transfer in the eleven months before the application was
+    docketed. Applicant's counsel told the trustees the parcels are "owned by Liames, LLC."
+    Either they transferred after the snapshot, or the application ran over land Liames does not
+    hold of record, which R.C. 519.12 permits. Neither reading is adopted. `[open]`
+- **The land was rezoned in the SELLERS' names before Liames appeared on any application.** A
+  search of this township's minutes for "Liames" returns nothing before 2023-09-20 — yet the CRA
+  application of that date already covered "the **rezoned** properties within the CRA
+  boundaries", and by 2024-03-20 the zoning inspector describes Liames as owning "the recently
+  rezoned parcels between St. Rt. 582, St. Rt. 25 and Mercer Road". The two 2023 campus-area
+  rezonings are docketed as **Tim Getz, ~80 ac** (approved 3–0, 2023-03-29) and the **Busch
+  family, ~44 ac** (approved 2–0 with trustee Vetter abstaining, 2023-05-03). `[verified]`
+  Whether either tract is inside the assemblage is `[open]` — the minutes name no parcels and the
+  CAMA keeps only the last conveyance. **This is a search hazard, not a finding of concealment:**
+  a landowner rezoning his own land is ordinary, and it is why a name-keyed sweep misses the
+  first eighteen months of a project like this one.
+- **Four more landowners brought ~271 ac toward M-1 around the campus, and three withdrew.**
+  NWWSD ~20 ac (approved 2024-06-18); SDT1 Properties LLC ~68 ac (**withdrawn at the hearing**,
+  2024-11-20); Victoria Busch ~91 ac (approved 2–0, Vetter abstaining, 2024-11-20, the seller's
+  representative stating "**no buyers are known** for the property"); Eckel ~75 ac and Speck ~37
+  ac (**both withdrawn** by letter the day before the 2025-09-09 hearing). `[verified]` Three of
+  the four were represented by the **Wood County Port Authority**. This is a market forming
+  around a disclosed campus, **not** a Meta assembly — none of these applicants is Liames and
+  none of the named parcels is in the committed assemblage.
 - **A. Schaller Limited Partnership, 39.265 ac** of parcel `611190000006000` (64.55 ac total),
   **A-1 → M-1**, for **Liames construction parking**, with Liames **in contract to purchase**:
   county planning commission **recommended 6–2 on 2026-07-07**; **township action pending**.
   The application describes moving construction parking "from the southwest corner to the
   northwest corner of the campus **once construction of building five starts**" — a
-  **five-or-more-building** campus against a 715,000 sq ft "initial phase", and a Phase-2 signal
-  independent of the 2026-01-07 trustees letter. `[verified]`
+  **five-or-more-building** campus against a 715,000 sq ft "initial phase". `[verified]` The
+  county's own 2026-07-07 agenda confirms the applicant, the acreage, the Liames purchase
+  contract and the construction-parking use; note it rezones a 39.265-ac **part** of a 64.55-ac
+  deeded parcel, and which part is `[inference]` (#1436), not `[verified]`.
 - **Devils Hole Rd, ~112 ac**, ag → light-industrial, township zoning commission voted against
-  recommending. `[reference]` — **not resolved by #1436**: no such request appears in the
-  2026-06 / 2026-07 meeting coverage and the parcel is unidentified. Beware the neighbouring
-  **LIMES** family holdings there (Dale Limes LLC, Limes Real Estate Holdings LLC, Limes Galen
-  E) — one letter from **LIAMES**, and several hundred acres of it. `[open]`
+  recommending. `[reference]` — **searched properly by #1438 and NOT FOUND.** All 115 Middleton
+  Township minutes published for 2023–2026 were swept; the rezoning matters they record are Getz
+  ~80 ac, Busch ~44 ac, NWWSD ~20 ac, SDT1 ~68 ac, Victoria Busch ~91 ac, Eckel ~75 ac, Speck
+  ~37 ac and the Liames thirteen. No ~112-acre Devils Hole matter appears. It may be another
+  township, mis-sized, or a zoning-commission-only item that never reached the trustees. Beware
+  the neighbouring **LIMES** family holdings there (Dale Limes LLC, Limes Real Estate Holdings
+  LLC, Limes Galen E) — one letter from **LIAMES**, several hundred acres of it, and the
+  township's own **fiscal officer is Laurie L. Limes**, who signs every set of these minutes.
+  `[open]`
+- **The issue's "2023 rezoning resolutions (279 + 402 ac)" are NOT corroborated** by the
+  township's own record — the two 2023 campus-area rezonings are 80 and 44 acres, 124 between
+  them. The 279/402 figures may describe deeded tracts rather than rezoned acreage, or may be a
+  conflation. The Wood County Planning Commission's 2023 docket would settle it. `[open]`
+
+## 5 — The governance record (#1438)
+
+**Worked in #1438.** Fourteen instruments from three public bodies are captured under
+`data/documents/bowling-green/` and transcribed in `data/extracted/bowling-green/`; standing
+watches and blocked routes live in [`record-watch.yaml`](record-watch.yaml), the conveyance chain
+in [`land-assembly.yaml`](land-assembly.yaml), and the chronology in
+[`middleton-township/project-accordion-township-record.md`](middleton-township/project-accordion-township-record.md).
+The load-bearing points, so this file is not where they get re-derived:
+
+- **The end use was public on 2023-09-20, the operator on 2025-04-09.** Wood County's
+  economic-development director told the Middleton Township trustees the CRA application was
+  "applied for by **Liames LLC for a data center**" and described "**a $750M investment in the
+  township for a data center by a Fortune 200 company**"; the county journal of 2023-09-28 says
+  "Liames LLC plans to construct **one or more data center buildings** on property located at
+  State Route 582 and Mercer Road." `[verified]` **The NDA concealed the operator, not the use.**
+  The codename itself surfaces earlier still — 2023-07-19, an executive session with "Project
+  Accordion personnel."
+- **The abatement is Wood County Commissioners Resolution `23-01249`**, 2023-09-28, title
+  verbatim "AUTHORIZE COMMUNITY REINVESTMENT AREA AGREEMENT BETWEEN LIAMES LLC AND WOOD COUNTY,
+  OHIO" — **75% for 15 years**, adopted unanimously after being pulled off the consent listing
+  for a thirteen-minute separate session. `[verified]` It was moved on a representation of **50
+  full-time jobs and a $4,000,000 annual payroll** — half the "at least 100 operational jobs"
+  Meta itself now states, at a consistent ~$80,000 average. `[reference]` as to the figures; the
+  executed agreement is `[open]`.
+- **Three school parties, not two.** Eastwood Local Schools, Otsego Local Schools **and Penta
+  Career Center** had all approved compensation agreements *before* the county acted, and the
+  township conditioned its support on "the school districts being awarded in full." The journal
+  gives one figure — "The local school districts are estimated to receive approximately $1
+  million annually" — which is genuinely ambiguous between per-district and aggregate and is left
+  so. The agreements are `[open]`.
+- **The TIF was contemplated, not adopted.** On 2023-09-28 economic development said a Tax
+  Increment Financing agreement "is also to be considered **at a later date that would follow the
+  15-year tax abatement**" — i.e. around 2039. No Wood County TIF for this project was located,
+  and that negative is weak: the county's static minutes tree stops at 2024-05-30 and its
+  CivicEngage successor does not full-text index the commissioners' minutes. `[open]`
+  **Do not confuse it with the Abbott TIF** — the City of Bowling Green passed a TIF ordinance
+  for Abbott in **November 2023**, a different party, body and project.
+- **Meta funded offsite water and sewer.** Township counsel told the 2026-01-07 meeting that Meta
+  paid for "the water tower at the Northwestern Water and Sewer District site" and **"$13M
+  donated to the sewer line installation"**; Meta's own letter says it funded "the design and
+  construction of a 2-million gallon elevated storage tank" and "water distribution and sewer
+  conveyance upgrade projects along Middleton Pike." `[verified]` as said / `[reference]` as
+  audited.
+- **The ponds are retention, not cooling.** Asked directly on 2026-01-07, township counsel
+  "confirmed their purpose for retention only." `[verified]` as said. This **corroborates** the
+  closed-loop dry-cooler pin without upgrading it — a public official's answer is not an
+  engineering record, and B5's `reservation_conflict` outcome (§1) is unchanged.
+- **The campus has its own backup generators.** Meta's letter says it "runs its **backup
+  generators** as minimally as possible … in compliance within our air permits" and is "working
+  to fuel **all on site generators** with renewable diesel." `[reference]` `genset_count` /
+  `genset_mw` stay `None` on `_BOWLING_GREEN` — the letter gives no count and no rating — but
+  their emptiness is now a missing **figure**, not a possibly-absent **thing**. The data
+  center's own air permit is `[open]`.
+- **Two routes are blocked and their negatives mean nothing.** The **Wood County Recorder**
+  (Fidlar AVA) is an Angular single-page application with no server-rendered search and no
+  discoverable API — so every grantor, every recorder instrument number and the 2023-09-05
+  first-deed date are unread. The **Ohio Secretary of State** business search returns HTTP 403,
+  re-probed 2026-08-05 — so Liames LLC's organizers and statutory agent are unread, and the Meta
+  attribution rests on Meta's own announcement and letter, not on a corporate filing.
+- **Nothing here bridges Allen County.** No entity, parcel or relationship in this ingest
+  cross-references the Lima/Bistrozzi graph. ⚠️ Note separately that Bowling Green's committed
+  `entities` feed already carries two Allen-County defense nodes (GENERAL DYNAMICS, GENERAL
+  DYNAMICS LAND SYSTEMS) sourced to the network-global GLEIF reference file — pre-existing on
+  main, not introduced here, and logged in `record-watch.yaml` → `graph_hygiene` so no reader
+  takes them for a Wood County defense presence.
 
 ## Instruments to pull (record / water sub-issues #1438 / #1439)
 
@@ -288,10 +419,23 @@ meetings; the resolutions themselves are `[open]`.
   the comments and the Board's approval entry could **not** be pulled — `dis.puc.state.oh.us`
   serves an F5 JavaScript bot-challenge to automated retrieval. **Access-blocked, not empty**; see
   `power-watch.yaml` → `blocked_routes`.
-- **Meta → Middleton Township trustees letter, 2026-01-07** (PDF on the township site) — the Phase-2
-  signal. `[verified]`.
-- **Liames, LLC** deed chain (Wood County Recorder/Auditor) from 2023-09-05 — the land assembly.
-  `[open]` primary records.
+- ~~**Meta → Middleton Township trustees letter, 2026-01-07** (PDF on the township site) — the
+  Phase-2 signal.~~ **Done (#1438), and the characterization was wrong.** The letter is captured
+  and read (`middleton-township/Meta-Middleton-Township-Letter-010726.pdf`). It is a three-page
+  community-impact letter on water, energy, air quality, construction, jobs and grants, and it
+  **contains no Phase-2 announcement** — the word does not appear. It is nonetheless the primary
+  source for the closed-loop dry-cooler claim, for "no ground water will be used," for the
+  2-million-gallon tank, for JE Dunn as general contractor, for 847 MW of Ohio renewables, and —
+  against the profile — for the campus having backup generators of its own. ⚠️ **Its own dateline
+  reads "January 7, 2025" and is wrong by a year**; content-verified to 2026-01-07 and not
+  renamed.
+- **Liames, LLC** deed chain (Wood County Recorder) from 2023-09-05 — **partly done (#1438).** The
+  grantee side is committed at [`land-assembly.yaml`](land-assembly.yaml): twelve parcels,
+  775.020 deeded acres, twelve dated conveyances with instrument codes and considerations,
+  compiled from the county **auditor's** CAMA. The **grantors, the recorder instrument numbers
+  and everything before the last conveyance per parcel are `[open]`** — the CAMA keeps only the
+  latest transfer, the 2025-04-09 consolidations erased eleven tracts' prices, and the Recorder's
+  own index is access-blocked. **Never read the surviving $6,921,460 as what the assembly cost.**
 - **NWWSD water agreement / BG–Meta wholesale water** (contract ceiling 1.5 MGD, Aug 2024; the
   conflicting ~50k vs ~600k GPD figures) — reconcile against the "no operational water" cooling
   claim. `[open]` → **#1439**, sharpened by **#1685**: the reconciliation established that no
@@ -304,6 +448,26 @@ meetings; the resolutions themselves are `[open]`.
   P0139272 issued **2026-06-02** and is committed under `data/documents/oepa/bowling-green/air/`.
   Title V is due within twelve months of commencing operation (~mid-2028). `[open]` → **#1437**
   watch `APOLLO-TITLE-V`.
+
+## Governance-record sources (captured 2026-08-05, #1438)
+
+The bytes are committed; these are the routes they were served from, for a later re-pull.
+
+- Middleton Township minutes — <https://www.middletontownship.com/meeting_minutes/> and
+  <https://www.middletontownship.com/minutes-archive-2/> (115 files published for 2023-2026;
+  all swept, eleven committed)
+- Wood County Commissioners, legacy static minutes tree —
+  <https://www.co.wood.oh.us/Commissioners/minutes/default.html> (**2023 complete, stops
+  2024-05-30**; the file is named for the APPROVAL date, not the session date)
+- Wood County Agenda Center (Planning Commission; Commissioners after May 2024) —
+  <https://woodcountyohio.gov/AgendaCenter> (**its full-text index does not cover the
+  commissioners' minutes** — a search for "Liames" there does not return the CRA journal)
+- Wood County auditor CAMA, Vision_Parcels layer 0 —
+  `https://wcohiogis.woodcountyohio.gov/server/rest/services/Services_for_Web_Apps/Vision_Parcels/MapServer/0`
+  (73,839 rows, max Sale_Date **2025-07-25**, unchanged since #1436)
+- Wood County Recorder (Fidlar AVA) — <https://ohwood.fidlar.com/OHWood/AvaWeb/> — **not
+  retrievable by script**; Ohio Secretary of State — <https://businesssearch.ohiosos.gov/> —
+  **HTTP 403**
 
 ## Sources (live, 2026-07-10)
 

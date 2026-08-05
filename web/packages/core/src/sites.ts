@@ -142,6 +142,16 @@ export interface NetworkSite {
 // for the Fort Wayne campus, recovered from a permit caption; Findlay has no cloak to lift (host
 // and customer are both named in SEC filings), so nothing in that story may imply One Power or MARA
 // ever used this word.
+//
+// ⚠️ "Project Accordion" IS a developer codename, like Zodiac and unlike Flagpole — Meta's own
+// NDA-era name for the Bowling Green campus, and it is in a public record: the Middleton Township
+// trustees went into executive session on 2023-07-19 "for the purpose of hearing a presentation by
+// Project Accordion personnel" (data/documents/bowling-green/middleton-township/07192023.pdf).
+// Bowling Green is `comingSoon` for Findlay's reason and one of its own (#1441): the site is not
+// `selectable`, and its `facility` domain reads `seeded` rather than `live` because the campus's
+// ~180 MW is a disclosed [reference] figure with no instrument behind it (#1630). The record it
+// would walk is real — the CRA resolution, the seller-name rezonings, the contested 2026 roll call
+// — so the story is advertised rather than hidden.
 const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
   lima: [
     {
@@ -163,6 +173,14 @@ const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
       codename: "flagpole",
       title: "Flagpole",
       dek: "Flagpole — Findlay impounds the Blanchard, augments it, discharges into it, and floods from it, and a 150 MW load arrived above town before any government had a rule for it.",
+      comingSoon: true,
+    },
+  ],
+  "bowling-green": [
+    {
+      codename: "project-accordion",
+      title: "Project Accordion",
+      dek: "Project Accordion — a data center was on Wood County's public record nineteen months before its operator's name was; read the resolutions that made it.",
       comingSoon: true,
     },
   ],

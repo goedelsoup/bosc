@@ -1,7 +1,7 @@
 {
   "site": "ottawa",
   "catalog_version": "61f80e0f49a34b20b44a848e04c118b6946466a65b56640ca1d1a929bae6d3bb",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:ottawa:7q10",
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -704,7 +704,7 @@
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

@@ -312,7 +312,18 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       { label: "End use & workloads", path: "/reports/end-use-and-workloads" },
     ],
     // The project's own instruments: what it applied for, who applied, and what it bought.
-    recordGroups: ["permits-epa", "permits-idem", "permits-sos", "deeds", "land-assembly", "plans"],
+    // `local-legislation` (#1438) is the fourth kind and was missing until Bowling Green's record
+    // arrived almost entirely in that form — a rezoning roll call IS "what it applied for", and at
+    // a township-scale site it is often the only instrument that names the applicant at all.
+    recordGroups: [
+      "permits-epa",
+      "permits-idem",
+      "permits-sos",
+      "deeds",
+      "land-assembly",
+      "local-legislation",
+      "plans",
+    ],
     datasets: ["gleif"],
     probe: (slug) =>
       facilityState(slug) === "live"
@@ -512,10 +523,13 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       producer: "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
     },
     references: [],
-    // The public money that IS on the record — the loans and awards. The abatement instrument
-    // itself is this chapter's named gap, so it is cited where a site's own note names it and
-    // never scaffolded here.
-    recordGroups: ["finance"],
+    // The public money that IS on the record — the loans and awards, plus (#1438) the legislative
+    // ACT that granted the trade where one has been read: Wood County's Resolution 23-01249
+    // authorizing a 75%/15-year CRA exemption is exactly this chapter's subject. Note what that
+    // does and does not close — the resolution AUTHORIZES an agreement it does not contain, so the
+    // executed agreement, the school compensation agreements and the auditor's abatement report
+    // stay this chapter's named gap and are never scaffolded from the authorization.
+    recordGroups: ["finance", "local-legislation"],
     notApplicable: needsProject,
     // Curated-only, gap-first by design: no fiscal feed exists, and none is fabricated.
     derive: () => ({ status: "gap", reasons: ["no fiscal instrument is on the record"] }),

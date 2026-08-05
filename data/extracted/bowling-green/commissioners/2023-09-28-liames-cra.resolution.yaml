@@ -1,0 +1,222 @@
+# Wood County Commissioners, 2023-09-28 — Resolution 23-01249, "AUTHORIZE COMMUNITY
+# REINVESTMENT AREA AGREEMENT BETWEEN LIAMES LLC AND WOOD COUNTY, OHIO". The 75% / 15-year
+# real-property tax exemption on the Meta campus. Issue #1438, epic #1433.
+#
+# TAG VOCABULARY (per CLAUDE.md / evidentiary-discipline):
+#   [verified]  — printed in the county's own approved journal.
+#   [reference] — a statement MADE at the meeting by a party or a promoter, journalled
+#                 accurately but not adjudicated by the Board. The minutes verify that it was
+#                 SAID; they do not verify that it is so.
+#   [inference] — reasoned from [verified] facts, labelled, arithmetic shown.
+#   [open]      — not established by any captured source.
+#
+# READ THE PROVENANCE SPLIT CAREFULLY. Almost every figure below was spoken by the county's
+# economic-development director or by the applicant's counsel at a public meeting. That the
+# words were said is [verified]; the figures themselves are the applicant's representations
+# and stay [reference] until the executed CRA agreement or a school compensation agreement
+# states them. The one exception is the resolution's own title and number, which are printed
+# on the county's resolution listing.
+
+as_of: '2026-08-05'
+site: bowling-green
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1438'
+epic: 'watermark-directory/the-watermark-directory#1433'
+
+source:
+  instrument: county-commissioners-journal
+  file: data/documents/bowling-green/commissioners/10032023.pdf
+  sha256: 2eef46dea0fe97c751c77dcf689409456288ca1c079555af8c9f0cf19a05e16c
+  content_verified: ocr
+  ocr_note: >-
+    NO TEXT LAYER — a Canon copier scan; `pdftotext` returns five bytes for seven pages. Read
+    from a 300 DPI render OCRed with tesseract --psm 6. Resolution numbers were cross-checked
+    against the printed resolution listing on page 3 as well as the narrative on pages 0-1, so
+    23-01249 is carried at high confidence; free prose is transcribed as OCRed and any figure
+    below that matters is quoted rather than paraphrased.
+pages_read: [0, 1, 2, 3]
+
+resolution:
+  instrument: >-
+    Wood County Commissioners Resolution 23-01249 — Authorize Community Reinvestment Area
+    Agreement between Liames LLC and Wood County, Ohio, 2023-09-28
+  resolution_no: '23-01249'                  # [verified] — printed listing, p3
+  body: Board of County Commissioners, Wood County, Ohio
+  body_kind: county_commissioners
+  subject_matter: tax_incentive
+  statute: R.C. 3735.65-3735.70              # [inference] — the Ohio Community Reinvestment Area
+                                             # statute; the section is not printed in the journal.
+  adopted: '2023-09-28'                      # [verified]
+  journalled_in: >-
+    Resolution 23-01253 (2023-10-03), "In the matter of approval of prior meeting minutes from
+    the regular session held on September 28, 2023."                        # [verified]
+  title_verbatim: >-
+    AUTHORIZE COMMUNITY REINVESTMENT AREA AGREEMENT BETWEEN LIAMES LLC AND WOOD COUNTY, OHIO
+  outcome: approved
+
+  vote:
+    motion: approve resolution 23-01249 (the CRA agreement with Liames LLC)
+    motion_moved_by: Doris I. Herringshaw
+    motion_seconded_by: Theodore H. Bowlus
+    presiding: Craig LaHote
+    roll_call_recorded: false
+    tally_verbatim: All voted aye and the motion carried.       # [verified]
+    note: >-
+      The item was PULLED from the consent listing at the start of the day ("with the exception
+      of resolutions 23-01249 (Community Reinvestment Area Agreement) and 23-01250 ... which
+      will be held until later in the day's session") and taken up as a separate 10:15 a.m.
+      session, concluding 10:28 a.m. — thirteen minutes. [verified]
+
+  beneficiary:
+    name: Liames, LLC
+    described_as: >-
+      "Liames LLC plans to construct one or more data center buildings on property located at
+      State Route 582 and Mercer Road in Middleton Township."                # [verified] as said
+    note: >-
+      THE END USE IS ON A PUBLIC RECORD ON 2023-09-28. That is nineteen months before the
+      2025-04-09 Meta announcement and three days after the first Liames deed was recorded.
+      The NDA concealed the OPERATOR; it did not conceal that the land would become data
+      centers, nor the location, nor the scale. Nothing in this journal names Meta.
+
+  terms:
+    exemption_pct: 75                        # [verified] as requested and granted: "Liames LLC is
+                                             # requesting a 75% tax abatement for 15 years"
+    term_years: 15                           # [verified]
+    tax_type: real property                  # [inference] — a CRA exemption under R.C. 3735.67
+                                             # abates real-property improvement value; the journal
+                                             # says only "tax abatement".
+    executed_agreement: null                 # [open] — the resolution AUTHORIZES an agreement
+                                             # that is not published on the county site.
+    cra_boundary: null                       # [open] — the CRA's legal description was not
+                                             # located; the township's 2023-09-20 minutes refer to
+                                             # "the rezoned properties within the CRA boundaries".
+
+  school_compensation:
+    statement_verbatim: >-
+      "He noted that Eastwood and Otsego Local Schools, as well as Penta Career Center, have
+      already approved agreements accepting the terms of a tax abatement for the company. The
+      local school districts are estimated to receive approximately $1 million annually."
+    parties:
+      - Eastwood Local Schools
+      - Otsego Local Schools
+      - Penta Career Center
+    annual_estimate_usd: 1000000
+    annual_estimate_tag: '[reference]'
+    ISSUE_BODY_CORRECTION: >-
+      ISSUE #1438 SAYS "~$900k-1M/yr EACH". The journal says "The local school districts are
+      estimated to receive approximately $1 million annually" — one figure, for the districts
+      plural. Whether that is per district or in aggregate is genuinely ambiguous on the face of
+      the sentence, and it is left ambiguous here rather than resolved in either direction; the
+      compensation agreements themselves are the instrument and they are [open]. Note also that
+      the journal names THREE parties — the issue names two. Penta Career Center is a joint
+      vocational school district and was omitted from the register until now.
+    agreements: null                          # [open] — three separate agreements, none captured
+    sequencing_note: >-
+      [verified] All three school bodies had ALREADY approved before the county acted. The
+      township passed its own resolution of support eight days earlier (2023-09-20). The county
+      resolution is the last signature on a chain, not the first.
+
+  representations:
+    # Made at the meeting; journalled accurately. [reference] as to their content.
+    - id: JOBS-AND-PAYROLL
+      statement_verbatim: >-
+        "The new data centers will create 50 full-time jobs resulting in an estimated $4,000,000
+        annual payroll."
+      speaker: Wade Gottschalk, Wood County Economic Development executive director
+      tag: '[reference]'
+      note: >-
+        THIS IS HALF THE JOB COUNT NOW IN CIRCULATION. Meta's own 2026-01-07 letter to the
+        Middleton Township trustees says "at least 100 operational jobs," and the register carries
+        ~100 permanent at an average in the mid-$80,000s. The abatement was granted against a
+        representation of 50. $4,000,000 / 50 = $80,000 average, which is consistent with the
+        later per-job figure — so what changed is the headcount, not the wage. [inference] on the
+        arithmetic; the reason for the change is [open], and note the two figures were made by
+        different parties at a two-and-a-half-year interval, so this is not necessarily a
+        revision of the same estimate.
+    - id: LOW-IMPACT
+      statement_verbatim: >-
+        "Mr. Gottschalk stated the new facilities will be low impact for the area and will not
+        create truck traffic."
+      speaker: Wade Gottschalk
+      tag: '[reference]'
+    - id: BUILDING-SIZE
+      statement_verbatim: >-
+        "Commissioner Bowlus asked about the size of the buildings. Mr. Knezevic stated the
+        buildings will be approximately 300-400 square feet."
+      speaker: Chris Knezevic, Vorys (for the applicant)
+      tag: '[reference]'
+      note: >-
+        CARRIED VERBATIM AND FLAGGED, NOT CORRECTED. As printed this is three orders of magnitude
+        below the 715,000 sq ft initial phase Meta later disclosed, and it is not plausible on its
+        face — an omitted "thousand" in the minutes is the obvious reading, and 300,000-400,000
+        sq ft per building against a 715,000 sq ft two-building initial phase would reconcile
+        almost exactly. It is left as the record has it because this corpus does not silently
+        repair a public body's minutes, and because the transcription is OCR: the possibility
+        that the printed page says something else is real and is why this is [reference] with the
+        quote attached. [inference] on the reconciliation, [open] on what the page actually says.
+    - id: EXPANSION-POTENTIAL
+      statement_verbatim: >-
+        "Commissioner Bowlus asked if the number of employees could increase. Mr. Knezevic stated
+        he is not certain but there is potential for further expansion."
+      speaker: Chris Knezevic
+      tag: '[reference]'
+
+  tif:
+    status: contemplated_not_adopted
+    statement_verbatim: >-
+      "Mr. Gottschalk mentioned that a Tax Increment Financing agreement is also to be considered
+      at a later date that would follow the 15-year tax abatement."
+    note: >-
+      ISSUE #1438 LISTS "the follow-on TIF" AS AN INSTRUMENT TO PULL, WHICH PRESUPPOSES IT EXISTS.
+      As of 2023-09-28 it was a future item, described as FOLLOWING the fifteen-year abatement —
+      i.e. from roughly 2039. No Wood County TIF for this project was located. That negative is
+      weak and is stated as such: the county's static minutes tree stops at 2024-05-30 and the
+      CivicEngage Agenda Center that succeeded it does not index the commissioners' minutes
+      full-text (a search for "tax increment" across all its categories returns nothing, and so
+      does a search for "Meta"). See record-watch.yaml → WOOD-COUNTY-TIF. [open]
+      NOT TO BE CONFUSED WITH THE ABBOTT TIF: the City of Bowling Green's own community action
+      plan states "City Council passed an ordinance with a TIF agreement for Abbott Industries in
+      November 2023" — a different party, a different body, a different project, one month apart.
+
+  public_comment:
+    - speaker: Ross Fought
+      status: >-
+        A township resident. He appears in the county journal's attendance recital alongside
+        staff, which reads as if he were an official; the Middleton Township minutes of
+        2023-10-04 settle it — "Resident Ross Fought shared his concerns over the tax abatement
+        that was provided to Liames, LLC". [verified]
+      position: against
+      statement_summary: >-
+        Lives west of the proposed site; not against economic development or this project in
+        particular, but "concerned with the tax abatement" — that "giving away property tax
+        revenue is concerning," that "property taxes are going up and Wood County property owners
+        will be paying their share while a new company has their taxes abated for 15 years," that
+        the county "has numerous assets available to bring businesses without having to offer tax
+        abatements," and that "Wood County is doing well and there is no need to give away the
+        county coffers."
+      note: >-
+        The only public comment recorded on this item, and it was opposed. He raised the same
+        objection to the township six days later. Recorded because the completeness of a public
+        record's comment section is itself evidence.
+
+  appearances:
+    commissioners: [Doris I. Herringshaw, Theodore H. Bowlus, Craig LaHote]
+    county_administrator: Carri Stanley
+    assistant_administrator: Dan Scherger
+    clerk_of_the_board: Sandy Long
+    economic_development: Wade Gottschalk (Wood County Economic Development, executive director)
+    applicant_counsel: Chris Knezevic, Vorys
+    also_present: [Rex Huffman, Jerry Greiner]
+
+  confidence: medium
+  warnings:
+    - >-
+      OCR source, no text layer. Resolution number and title are cross-checked against the
+      printed listing; free prose is as OCRed.
+    - >-
+      Every dollar and job figure here is a statement MADE at the meeting, not a term of the
+      executed agreement. The agreement, the CRA boundary and the three school compensation
+      agreements are all [open].
+    - >-
+      "approximately 300-400 square feet" is carried verbatim and is not plausible on its face.
+      Do not cite it as a building size.

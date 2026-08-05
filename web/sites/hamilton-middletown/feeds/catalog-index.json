@@ -1,7 +1,7 @@
 {
   "site": "hamilton-middletown",
   "catalog_version": "bed79e463b56859cc7fc0375bb26417b53ba8eb7542e533393825fa61ea5dcec",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:hamilton-middletown:7q10",
@@ -688,7 +688,7 @@
       "kind": "dataset",
       "site": "hamilton-middletown",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "hamilton-middletown",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

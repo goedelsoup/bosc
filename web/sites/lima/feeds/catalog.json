@@ -517,6 +517,125 @@
     }
   },
   {
+    "id": "bowling-green-record",
+    "title": "Bowling Green — the governance record (CRA Resolution 23-01249, the seller-name rezonings, the contested 2026 roll call, the Liames land assembly)",
+    "scope": "extracted",
+    "collection": "bowling-green",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Fourteen primary documents from three public bodies, plus one live parcel-layer query and two blocked routes recorded as per-source negatives. TOWNSHIP: eleven files from Middleton Township's own minutes publication — the 2023-07-19 \"Project Accordion\" executive session, the 2023-09-20 CRA support resolution, the Getz (2023-03-29) and Busch (2023-05-03) seller-name rezonings, the 2025-01-15 site-plan review that puts a two-building construction schedule on the record, the 2024-11-20 Busch and SDT1 matters, the 2025-09-09 Eckel/Speck withdrawals, the 2026-01-07 meeting at which Meta's letter was read, that letter itself, and the 2026-07-07 R.C. 519.12 hearing on Application 2026041. All were located by sweeping the whole publication — 115 files for 2023-2026 downloaded and grepped, fifteen naming Liames or Project Accordion — so the negatives in this set rest on a stated search rather than on assumption. COUNTY COMMISSIONERS: the journal of the 2023-09-28 regular session, carrying Resolution 23-01249 and the record made in support of it, from the county's legacy static minutes tree (which publishes 2023 in full and stops at 2024-05-30). It has NO text layer — a Canon copier scan, read at 300 DPI with tesseract, with the resolution number cross-checked against the printed listing page. COUNTY PLANNING COMMISSION: the agendas of 2026-06-02 (with its attached parcel map) and 2026-07-07, from the CivicEngage Agenda Center, whose Content-Disposition headers supplied the served filenames the URLs lack. PARCEL LAYER: the Wood County auditor's Vision_Parcels MapServer layer 0, queried live on 2026-08-05 for the thirteen rezoned parcels and for the whole Liames holding, and re-probed for its own vintage (73,839 rows, max Sale_Date 2025-07-25, zero rows after it — unchanged since #1436). All document bytes are committed under data/documents/bowling-green/{middleton-township, commissioners,planning-commission}/ with sha256s in each directory's filename-map.yaml.",
+    "external_url": null,
+    "license": "Public record (Ohio township, county commissioners' and county planning commission minutes and agendas; a county auditor GIS service) plus one company letter published by a public body",
+    "access_tier": "public",
+    "site_scope": "site:bowling-green",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "record",
+      "local-legislation",
+      "land-assembly",
+      "zoning",
+      "rezoning",
+      "referendum",
+      "community-reinvestment-area",
+      "cra",
+      "tax-abatement",
+      "tax-increment-financing",
+      "school-compensation",
+      "county-commissioners",
+      "township-trustees",
+      "planning-commission",
+      "minutes",
+      "resolution",
+      "ocr",
+      "parcel",
+      "cama",
+      "county-auditor",
+      "access-blocked",
+      "ohio-secretary-of-state",
+      "county-recorder",
+      "bowling-green",
+      "wood-county",
+      "middleton-township",
+      "meta",
+      "liames",
+      "project-accordion"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/bowling-green/middleton-township/2023-03-29-getz-rezoning.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/middleton-township/2023-05-03-busch-rezoning.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/middleton-township/2023-09-20-cra-support.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/middleton-township/2024-2025-adjacent-rezonings.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/middleton-township/2026-07-07-liames-rezoning.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/middleton-township/project-accordion-township-record.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/commissioners/2023-09-28-liames-cra.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/planning-commission/2026-liames-and-schaller-rezoning-applications.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/land-assembly.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/bowling-green/record-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "47c988e18505c2a91a9898062d3ebe574ca78e47d89d3479b487e6b9ebfc726f",
+      "size_bytes": 124710,
+      "lfs_materialized": true,
+      "file_count": 10,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Fourteen primary documents from three public bodies, plus one live parcel-layer query and two blocked routes recorded as per-source negatives. TOWNSHIP: eleven files from Middleton Township's own minutes publication — the 2023-07-19 \"Project Accordion\" executive session, the 2023-09-20 CRA support resolution, the Getz (2023-03-29) and Busch (2023-05-03) seller-name rezonings, the 2025-01-15 site-plan review that puts a two-building construction schedule on the record, the 2024-11-20 Busch and SDT1 matters, the 2025-09-09 Eckel/Speck withdrawals, the 2026-01-07 meeting at which Meta's letter was read, that letter itself, and the 2026-07-07 R.C. 519.12 hearing on Application 2026041. All were located by sweeping the whole publication — 115 files for 2023-2026 downloaded and grepped, fifteen naming Liames or Project Accordion — so the negatives in this set rest on a stated search rather than on assumption. COUNTY COMMISSIONERS: the journal of the 2023-09-28 regular session, carrying Resolution 23-01249 and the record made in support of it, from the county's legacy static minutes tree (which publishes 2023 in full and stops at 2024-05-30). It has NO text layer — a Canon copier scan, read at 300 DPI with tesseract, with the resolution number cross-checked against the printed listing page. COUNTY PLANNING COMMISSION: the agendas of 2026-06-02 (with its attached parcel map) and 2026-07-07, from the CivicEngage Agenda Center, whose Content-Disposition headers supplied the served filenames the URLs lack. PARCEL LAYER: the Wood County auditor's Vision_Parcels MapServer layer 0, queried live on 2026-08-05 for the thirteen rezoned parcels and for the whole Liames holding, and re-probed for its own vintage (73,839 rows, max Sale_Date 2025-07-25, zero rows after it — unchanged since #1436). All document bytes are committed under data/documents/bowling-green/{middleton-township, commissioners,planning-commission}/ with sha256s in each directory's filename-map.yaml.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "bowling-green-water-watch",
     "title": "Bowling Green — Standing Water Watch + NPDES 2PD00009 / PWS OH8700311 Instrument Set (Extractions)",
     "scope": "extracted",
@@ -826,8 +945,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "3024f595002042779e79d4536da4f47357b18315f2a30dfc542485f077cf0811",
-      "size_bytes": 290878,
+      "sha256": "35b5cdbfec2eb29879c6454b915239e67f04796b3894a569bbe46d5c8e4dcbab",
+      "size_bytes": 304873,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,

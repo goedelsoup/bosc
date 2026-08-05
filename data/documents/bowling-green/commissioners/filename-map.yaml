@@ -1,0 +1,84 @@
+# Capture / alias manifest — Board of County Commissioners, Wood County, Ohio,
+# issue #1438 (the record domain), epic #1433 readiness(bowling-green).
+#
+# One document: the journal of the 2023-09-28 regular session, in which the Board
+# authorized the Community Reinvestment Area agreement with Liames, LLC.
+#
+# Raw bytes are never edited and the file keeps the name the county's server served it
+# under. That name is the date of the meeting at which the minutes were APPROVED
+# (2023-10-03), not the date of the session they record (2023-09-28) — the county's
+# convention throughout this tree, and a trap worth naming rather than renaming around.
+#
+# evidence: ocr = this file has NO TEXT LAYER. It is a Canon iR-ADV C7565 III copier
+#           scan; `pdftotext` returns five bytes for seven pages. Identity and dates
+#           below were read from a 300 DPI render OCRed with tesseract (--psm 6), which
+#           is what `evidence: ocr` means everywhere in this corpus: the date is
+#           content-verified, but from pixels, so figures transcribed from it are graded
+#           accordingly in the extraction and the resolution NUMBERS were checked against
+#           the printed listing page as well as the narrative.
+meta:
+  subject: >-
+    Resolution 23-01249 (2023-09-28) — "AUTHORIZE COMMUNITY REINVESTMENT AREA AGREEMENT
+    BETWEEN LIAMES LLC AND WOOD COUNTY, OHIO", the 75% / 15-year real-property tax exemption
+    on the Meta campus, together with the on-the-record presentation that supported it and
+    the only public comment made against it.
+  collection: bowling-green/commissioners/
+  captured_by: issue #1438 (the record domain), epic #1433, readiness(bowling-green)
+  generated_at: '2026-08-05'
+  policy: non-destructive — as-served bytes, as-served filename.
+  served_from: >-
+    https://www.co.wood.oh.us/Commissioners/minutes/default.html — the county's legacy
+    static minutes tree, /minutes/<yyyy>/<Month>/<MMDDYYYY>.pdf. Plain HTML index, no
+    challenge. NOTE THE COVERAGE CLIFF: this tree publishes 2023 in full but STOPS at
+    2024-05-30. Sessions after that moved to the CivicEngage Agenda Center at
+    https://woodcountyohio.gov/AgendaCenter (category "Board of County Commissioners"),
+    whose full-text search is thinner — a query for "Liames" there returns only two
+    Planning Commission agendas and nothing from the commissioners' own minutes. Any
+    negative about a post-May-2024 county action must therefore be stated against the
+    Agenda Center, not against this tree; see the standing watch in
+    data/extracted/bowling-green/record-watch.yaml.
+
+  filename_convention_warning: >-
+    THE FILENAME IS THE APPROVAL DATE, NOT THE SESSION DATE. Wood County publishes each
+    session's minutes inside the packet of the NEXT session, which is where they are read
+    and approved. `10032023.pdf` is the packet of the 2023-10-03 meeting and its body is
+    Resolution 23-01253, "In the matter of approval of prior meeting minutes from the
+    regular session held on September 28, 2023." The CRA resolution is 23-01249, adopted
+    2023-09-28. A reader who takes `09282023.pdf` for the 9/28 session gets the 9/26
+    session instead — that file was checked first and does not contain the CRA item. Both
+    dates are recorded below so neither can be lost.
+
+documents:
+  - filename: 10032023.pdf
+    canonical: wood-county-commissioners-journal-2023-09-28-resolution-23-01249-liames-cra.pdf
+    title: >-
+      Board of County Commissioners, Wood County, Ohio — Resolution No. 23-01253 approving
+      the minutes of the regular session held 2023-09-28, with the resolution listing for
+      that session (23-01241 through 23-01252, including 23-01249, the Liames LLC Community
+      Reinvestment Area agreement)
+    issuer: Board of County Commissioners, Wood County, Ohio
+    resolution_numbers: ['23-01253', '23-01249']   # the approving resolution; the CRA resolution it journals
+    source_url: https://www.co.wood.oh.us/Commissioners/minutes/2023/October/10032023.pdf
+    served_by: Wood County, Ohio (the county's own legacy commissioners site)
+    sha256: 2eef46dea0fe97c751c77dcf689409456288ca1c079555af8c9f0cf19a05e16c
+    bytes: 421228
+    content_type: application/pdf
+    pages: 7
+    fetched_at: '2026-08-05'
+    content_verified: '2023-09-28'   # the session recorded; approved and published 2023-10-03
+    evidence: ocr
+    status: downloaded
+    note: >-
+      Page layout, 0-based: p0 the approving resolution and the opening of the 9/28 session;
+      p1 the Community Reinvestment Area item in full, 10:15 a.m. to 10:28 a.m.; p2 the open
+      forum, adjournment and the commissioners' signature block; p3 the printed resolution
+      listing for 9/28/2023, where 23-01249 appears verbatim as "AUTHORIZE COMMUNITY
+      REINVESTMENT AREA AGREEMENT BETWEEN LIAMES LLC AND WOOD COUNTY, OHIO"; p4-p5 a
+      Northwestern Water & Sewer District annual-report attachment belonging to a different
+      item; p6 the attendance roster.
+      THE CRA AGREEMENT ITSELF IS NOT IN THIS FILE. What is captured is the Board's
+      authorization and the record made in support of it — the resolution AUTHORIZES an
+      agreement that is executed separately and is not published on the county site. The
+      executed agreement, the CRA's legal description and boundary, and the three school
+      compensation agreements are all still [open]; the route is a records request, and it
+      is logged as such rather than left to read as absence.

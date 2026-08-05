@@ -9,6 +9,7 @@ export const RECORD_GROUP_LABELS: Record<string, string> = {
   labor: "Labor — WARN closure & layoff notices",
   "land-assembly": "Land assembly — conveyance chains",
   litigation: "Litigation — filed court instruments",
+  "local-legislation": "Local legislation — county, township & municipal resolutions",
   "permits-epa": "Permits — Ohio EPA / USACE",
   "permits-idem": "Permits — IDEM (Indiana)",
   "permits-npdes": "Permits — NPDES",

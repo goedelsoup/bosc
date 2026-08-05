@@ -57,6 +57,16 @@ _BLOCK_TO_GROUP: dict[str, str] = {
     # unclaimed on purpose: claiming `notice` here would reclassify a mechanic's-lien filing as a
     # workforce instrument, which is precisely the misfiling this taxonomy exists to prevent.
     "layoff_notice": "labor",
+    # An act of a LOCAL legislative body, journalled in its own minutes (#1438). Bowling Green's
+    # record arrives almost entirely in this form: a county commissioners' resolution authorizing
+    # a 75%/15-year tax exemption, a township trustees' roll call on an R.C. 519.12 rezoning, a
+    # county planning commission's recommendation on the same application one step upstream. The
+    # discriminator is the ACT, not its subject — a rezoning and a tax abatement are the same kind
+    # of instrument voted by different boards — and the subject is carried in the payload's own
+    # `subject_matter`. No existing group fits: `plans` is a plan document, `finance` (`award:`)
+    # is a grant or contract award, and filing a land-use vote under either would present a
+    # zoning act as something it is not.
+    "resolution": "local-legislation",
 }
 # OPC estimates are whole-document (summary/detail/page) — no single block key.
 _OPC_KEYS = frozenset({"estimate", "sub_estimates", "estimate_template"})
@@ -139,6 +149,13 @@ def _record_title(rec: _Record) -> str:
         "subject",
         "permit_number",
         "assembly",  # land-assembly registers (#1724)
+        # Last resort before the filename (#1438). A `resolution:` block names itself with the
+        # legislative body's own caption — "Authorizing notice to the Elida Local School
+        # District…" — and a general permit with its own long-form title does the same; neither
+        # carries any of the identifier fields above. It sits at the END on purpose: every record
+        # that already resolves to a specific identifier keeps it, so this can only ever replace a
+        # filename stem, never a real title.
+        "title",
     ):
         val = payload.get(key)
         if isinstance(val, str) and val.strip():

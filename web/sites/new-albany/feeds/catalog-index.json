@@ -1,7 +1,7 @@
 {
   "site": "new-albany",
   "catalog_version": "fffc6c95c58f75587e9750a8a19247f730efc7064774d634cde3903ace1d662c",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:new-albany:7q10",
@@ -672,7 +672,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -680,7 +680,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {
