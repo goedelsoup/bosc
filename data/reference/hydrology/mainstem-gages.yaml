@@ -10,11 +10,21 @@ meta:
     (watermark derive-low-flows -> low-flow-7q10.derived.yaml), NOT a derived output.
   discipline: >-
     aliases are the exact ECHO receiving_water surface forms (lowercased, comma-split)
-    that mean a DIRECT discharge to this mainstem — not a tributary "via"/"to" it. The
-    derived table is a single shared file keyed by receiving-water name across basins;
-    names don't collide between the Maumee and Great Miami, so one merged lookup is safe.
-    A gage with <20 climatic years or a non-positive/NaN 7Q10 is omitted at derivation
-    (never a committed unreliable denominator).
+    that mean a DIRECT discharge to this mainstem — not a tributary "via"/"to" it. Registering
+    an alias is the only reviewed way to say two surface forms are one water, which is why the
+    screen refuses a compound receiving_water whose forms do not ALL resolve to one entry: an
+    unregistered second form is a second water, and a permit that lists two waters does not say
+    which one carries its flow (watermark.hydrology.basin._match_low_flow, #1120). The derived
+    table is a single shared file keyed by receiving-water name across basins; a name that means
+    one river network-wide (Maumee, Great Miami) can be served everywhere, but a name that means
+    a different REACH in each basin cannot — such an entry declares `basins:` and is served only
+    to those basins' inventories (see the Ohio River entry). A gage with <20 climatic years or a
+    non-positive/NaN 7Q10 is omitted at derivation (never a committed unreliable denominator).
+  note_propagation: >-
+    A gage entry's `note` is copied verbatim into the emitted low-flow-7q10.derived.yaml entry
+    alongside the cited blocks below (#1120). The screen reads the derived file, never this one,
+    so a reservation stated only here would never reach anyone the number reaches. Write a note
+    for the reader of the ratio, not for the maintainer of the table.
   cited_annotations: >-
     A gage entry may carry three OPTIONAL cited blocks (#1458), copied verbatim into the emitted
     low-flow-7q10.derived.yaml entry by `watermark derive-low-flows` so a screening denominator is
@@ -295,48 +305,61 @@ mainstems:
       03237295 Peebles) are trivial/short-record and are omitted rather than proxied. Non-colliding
       aliases only: a bare "brush creek" would capture ECHO's unrelated Maumee-basin "BRUSH CREEK"
       receiving water (a different stream) and misroute it to this southern-Ohio gage. The
-      05090201 pull (#1120) proved that guard load-bearing: it returned a Campbell County KY
-      "BRUSH CRK" ~90 river miles west, which a bare alias would have screened against this gage.
-      NB: no facility in the committed 05090201 inventory names Ohio Brush Creek as its receiving
-      water at all — including the West Union WWTP itself, whose ECHO receiving_water is null and
-      whose documented receiver (Beasley Fork) is ungaged. This entry is therefore a denominator
-      standing ready, not one in use; see data/reference/echo/README.md (#1120).
+      05090201 pull (#1120) proved that guard load-bearing a second time: it returned a Campbell
+      County KY "BRUSH CRK" (KYG400099, 38.9486 N 84.3678 W) nearly a degree of longitude west of
+      this gage (38.8037 N 83.4210 W, NWIS site record) and on the far side of the Ohio, which a
+      bare alias would have screened against it. NB: no facility in the committed 05090201
+      inventory names Ohio Brush Creek as its receiving water at all — including the West Union
+      WWTP itself, whose ECHO receiving_water is null and whose documented receiver (Beasley
+      Fork) is ungaged. This entry is therefore a denominator standing ready, not one in use;
+      see data/reference/echo/README.md (#1120).
 
   # --- The Ohio River mainstem (the direct-to-Ohio branch) ---------------------
   # Added #1120 with the Ohio Brush Creek basin. This is the first entry in this table for the
   # Ohio River itself rather than one of its tributary networks: HUC-8 05090201 is a two-bank
-  # Ohio River corridor unit, and 6 of its 23 POTWs name the Ohio River outright — including the
-  # largest plant ECHO can place at all (Maysville STP, 3.4 MGD; the basin's two largest POTWs,
-  # Eastern Regional 4.0 and Nine Mile Creek 3.0, are among the 13 with no receiving water).
-  # With no entry here every one of the six read `no_7q10`, which reports a river of ~60,000 mi²
-  # as unscreenable in the same breath as an ungaged farm ditch.
+  # Ohio River corridor unit, and 5 of its 23 POTWs name the Ohio River and nothing else —
+  # including the largest plant ECHO can place at all (Maysville STP, 3.4 MGD; the basin's two
+  # largest POTWs, Eastern Regional 4.0 and Nine Mile Creek 3.0, are among the 13 with no
+  # receiving water). With no entry here every one of the five read `no_7q10`, which reports a
+  # river gaged at 62,000 mi² as unscreenable in the same breath as an ungaged farm ditch.
+  # `basins:` is what keeps that from becoming a licence: see the note.
   Ohio River:
     gage: "03216600"
     aliases: [ohio river, ohio rv]
+    basins: [ohio-brush-creek]
     note: >-
-      Ohio River at Greenup Dam near Greenup KY (03216600, DA 62,000 mi², daily discharge
-      1968-10-01 to present — 44 complete climatic years inside the 1980-2024 derivation window).
-      CHOSEN FOR BEING CONSERVATIVE, not for being close. Greenup Dam (Ohio RM 341) sits at the
-      UPSTREAM end of 05090201's ~150-mile river frontage, which runs west to Ninemile Creek at
-      the Cincinnati metro edge (~RM 470, DA ~76,000 mi²). Every facility in the unit is therefore
-      at or below this gage, so the gage's drainage area UNDER-states theirs by up to ~20% — a
-      smaller denominator, a smaller dilution ratio, and a screen that cannot overstate dilution.
-      The downstream alternative (03277200 Markland Dam, DA 83,170 mi², a record that covers the
-      window just as well) would invert that and overstate dilution for all six — every facility
-      in the unit is ABOVE Markland. Maysville (03238000), the gage physically
-      inside the reach, has no daily discharge after 1980-10-26 and cannot support an LP3 fit in
-      the modern window. Two things a reader is owed. (1) This mainstem is
-      NAVIGATION-REGULATED — the gage is at a US Army Corps lock and dam, as its own name says,
-      and Meldahl and Markland sit below it. `regulation` is left UNSET because this table's rule
-      (see meta.cited_annotations) is that the block carries a cited third-party classification
-      quoting its instrument, and no such published judgment for this gage has been read into the
-      corpus; per meta.cited_annotations_gap an unannotated gage means "not yet read against the
-      published record", never "unregulated". Read this denominator as regulated in fact and
-      unannotated on the record. (2) One gage stands for the whole frontage, so a dilution ratio
-      here is a magnitude check — is this discharge one part in a hundred or one in a hundred
-      thousand — and never a reach-specific assimilative finding. The aliases are deliberately
-      tight: "ut / ohio river" and "ohio river / ut" are UNNAMED TRIBUTARIES of the Ohio, not the
-      Ohio, and `_match_low_flow`'s primary-form rule correctly declines to match them.
+      Ohio River at Greenup Dam near Greenup KY (03216600, drainage area 62,000 mi² per the USGS
+      site record; daily discharge 1968-10-01 to present — 44 complete climatic years inside the
+      1980-2024 derivation window). CHOSEN FOR BEING CONSERVATIVE, not for being close. The gage
+      sits at 38.6467 N, 82.8604 W (NWIS site record), which is EAST of — upstream of — every one
+      of the 261 facilities in the committed 05090201 inventory: the easternmost of them is at
+      83.0368 W. Each therefore lies below this gage on a river that only gains drainage area
+      downstream, so the denominator UNDER-states what their own reach carries, giving a smaller
+      dilution ratio and a screen that cannot overstate dilution. The downstream alternative
+      (03277200 Markland Dam, a record that covers the window just as well) would invert that:
+      every facility in the unit is above Markland, so its larger drainage area would overstate
+      dilution for all of them. Maysville (03238000), the gage physically inside the reach, has no
+      daily discharge after 1980-10-26 and cannot support an LP3 fit in the modern window. Three
+      things a reader is owed. (1) This mainstem is NAVIGATION-REGULATED — the gage is at a US
+      Army Corps lock and dam, as its own name says, and Meldahl and Markland sit below it.
+      `regulation` is left UNSET because this table's rule (see meta.cited_annotations) is that
+      the block carries a cited third-party classification quoting its instrument, and no such
+      published judgment for this gage has been read into the corpus; per
+      meta.cited_annotations_gap an unannotated gage means "not yet read against the published
+      record", never "unregulated". Read this denominator as regulated in fact and unannotated on
+      the record. (2) One gage stands for the whole of the unit's river frontage, so a dilution
+      ratio here is a magnitude check — is this discharge one part in a hundred or one in a
+      hundred thousand — and never a reach-specific assimilative finding. (3) The conservatism
+      argument above is GEOGRAPHIC, and it holds only for the HUC-8 whose frontage lies below
+      this gage. "OHIO RIVER" is a receiving water in every Ohio tributary basin's inventory —
+      the Muskingum and Mahoning basins reach the Ohio hundreds of river miles upstream of
+      Greenup, where the river carries a fraction of the drainage area gaged here — so serving
+      this denominator on the bare name network-wide would commit exactly the overstatement the
+      gage was chosen to avoid. `basins: [ohio-brush-creek]` is that restriction, and it is also
+      what leaves room for a second, differently positioned Ohio River gage to be registered for
+      another basin later without the two colliding on the same alias. Aliases stay tight for the
+      same reason: "ut / ohio river" and "ohio river / ut" are UNNAMED TRIBUTARIES of the Ohio,
+      not the Ohio, and neither surface form is registered here, so neither matches.
 
   # --- Greenville (Darke Co.) receiving waters --------------------------------
   # Greenville Creek is the primary at-site gage (Bradford gage 03264000, DA 193 mi²); Stillwater

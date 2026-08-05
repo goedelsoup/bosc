@@ -112,27 +112,25 @@ SCIOTO_HUC8S: dict[str, str] = {
 # ⚠️ THIS HUC-8 IS NOT A WATERSHED, and the slug is a part naming a whole in a way no other
 # registered basin's is. `maumee` covers the St. Joseph, St. Marys, Tiffin, Auglaize and
 # Blanchard because those are all Maumee *drainage* — one river's tree. 05090201 is a WBD
-# **two-bank Ohio River corridor unit**: 67 HUC-12s and 5,439 km² running ~150 river miles
-# from Ninemile Creek at the Cincinnati metro edge (Campbell Co KY / Clermont Co OH) east to
-# Kinniconick Creek (Lewis Co KY), spanning BOTH banks and therefore both states. Ohio Brush
-# Creek proper is 16 of those 67 HUC-12s (HUC-10s ...0103/04/05, incl. Beasley Fork
-# 050902010505, West Union's own receiver); Whiteoak Creek is 7 more, and Eagle, Straight,
-# Twelvemile, Tenmile, Fourmile, Bracken, Cabin and Kinniconick Creeks account for the rest.
-# Every one of them reaches the Ohio on its own — they are SIBLINGS of Ohio Brush Creek, not
-# its headwaters. The observed pull bears this out: 168 of 261 facilities are Kentucky
-# permits, and Campbell County KY alone supplies 111.
+# cataloging unit spanning BOTH banks of the Ohio River, and the pull says so on its own:
+# facilities come back in Kentucky counties and Ohio ones, which face each other across the
+# river. Several separate creeks reach the Ohio inside it; each is a SIBLING of Ohio Brush
+# Creek, not a headwater of it. (The unit's HUC-12 composition and area are not in the corpus
+# — no WBD extract for 05090201 is committed — so no figure for either is asserted anywhere
+# this connector writes.)
 #
 # A HUC-8 is the finest unit ECHO's `p_huc` query accepts, so all of it comes with the pull
 # and belongs in the inventory. What none of it may do is borrow Ohio Brush Creek's low flow.
-# `basin._match_low_flow` is the guard — it keys the mainstem lookup on the PRIMARY
-# receiving-water name, so only a receiver that names Ohio Brush Creek matches its gage — and
-# `mainstem-gages.yaml` deliberately withholds a bare "brush creek" alias for the same reason
-# (this pull contains a Campbell County KY "BRUSH CRK" that such an alias would have
-# misrouted 90 river miles to the West Union gage). The slug is retained because it names the
-# NETWORK's basin group, which is the site's own drainage: it is what `SiteProfile.basin`,
-# `data/sites.yaml`'s `basin_major` and the frontend `placement.ts` row already carry. The
-# caveats on the Basin below carry the discrepancy into the emitted file, so a reader of the
-# inventory is never left to infer the scope from the filename.
+# `basin._match_low_flow` is the guard — a discharger is screened only where its ECHO
+# receiving water names one gaged water and nothing else, so only a receiver that names Ohio
+# Brush Creek matches its gage — and `mainstem-gages.yaml` deliberately withholds a bare
+# "brush creek" alias for the same reason (this pull contains a Campbell County KY "BRUSH CRK"
+# on the far side of the river that such an alias would have misrouted to the West Union
+# gage). The slug is retained because it names the NETWORK's basin group, which is the site's
+# own drainage: it is what `SiteProfile.basin`, `data/sites.yaml`'s `basin_major` and the
+# frontend `placement.ts` row already carry. The caveats on the Basin below carry the
+# discrepancy into the emitted file, so a reader of the inventory is never left to infer the
+# scope from the filename.
 OHIO_BRUSH_CREEK_HUC8S: dict[str, str] = {
     "05090201": "Ohio Brush-Whiteoak",
 }
@@ -146,6 +144,16 @@ class Basin:
     optional sub-region flagged on each record (the Maumee's Lima reach) — empty for a
     basin with no such flag. Adding a basin is a registry entry here, never a new code
     path, keeping the connector basin-agnostic per the repo's site axis.
+
+    ``caveats`` are stamped verbatim into every file this basin emits, on every pull, by
+    :func:`_facilities_doc`. Two rules follow from that. **No observed counts**: a figure typed
+    here is frozen at the pull that suggested it, and the next quarterly refresh republishes it
+    as if current — dated headline counts belong in ``data/reference/echo/README.md``, under the
+    pull date that produced them. **Nothing scoped to one emitted file**: the same tuple is
+    written into the all-NPDES inventory and the POTW subset, so a caveat quantifying one of them
+    is a false statement in the other (the curated-correction block beside it is scoped to the
+    rows a file actually holds; caveats are not). State the standing properties of the basin and
+    the discipline the screen applies to it, both of which survive a re-pull.
     """
 
     slug: str
@@ -211,46 +219,52 @@ OHIO_BRUSH_CREEK = Basin(
         "Ohio Brush Creek — 1 HUC-8 subbasin (05090201 Ohio Brush-Whiteoak), subregion 0509 "
         "(direct to the Ohio River)"
     ),
-    subject="Ohio Brush Creek-watershed NPDES wastewater dischargers",
+    subject="Ohio Brush Creek-basin NPDES wastewater dischargers",
     file_stem="ohio-brush-creek-wwtp",
     caveats=(
-        "SCOPE IS WIDER THAN THE NAME. HUC-8 05090201 'Ohio Brush-Whiteoak' is a two-bank Ohio "
-        "River corridor unit, not one watershed: 67 HUC-12s running ~150 river miles from "
-        "Ninemile Creek at the Cincinnati metro edge east to Kinniconick Creek. Ohio Brush Creek "
-        "proper is 16 of those 67; Whiteoak Creek is 7 more. The rest (Eagle, Straight, "
-        "Twelvemile, Tenmile, Fourmile, Bracken, Cabin, Kinniconick) are SIBLING direct-to-Ohio "
-        "drainages — a discharger on one is neither upstream nor downstream of one on Ohio Brush "
+        "SCOPE IS WIDER THAN THE NAME. HUC-8 05090201 'Ohio Brush-Whiteoak' is a WBD cataloging "
+        "unit spanning BOTH banks of the Ohio River, not one watershed — read each row's county: "
+        "they fall on the Kentucky bank and the Ohio bank alike. Several separate creeks reach "
+        "the Ohio inside it, and each is a SIBLING of Ohio Brush Creek rather than a headwater "
+        "of it: a discharger on one is neither upstream nor downstream of one on Ohio Brush "
         "Creek, and must never borrow its 7Q10. Only a receiving water naming Ohio Brush Creek "
         "matches that gage; a bare 'Brush Creek' does not (this pull holds a Campbell County KY "
-        "'BRUSH CRK' ~90 river miles away).",
-        "The unit spans BOTH banks, so it is majority-Kentucky: 168 of 261 facilities carry KY "
-        "permits (Campbell 111, Lewis 22, Mason 22, Bracken 11, Pendleton 2) against 93 Ohio ones "
-        "(Clermont 20, Brown 15, Adams 11, Scioto 3, Highland 1, and 43 for which ECHO returned "
-        "no county at all). Cross-check Ohio EPA for the Ohio side and Kentucky DOW for the "
-        "Kentucky side; neither agency's list is reflected here beyond what ECHO federalizes.",
-        "receiving_water is null for 118 of 261 rows, and for every Adams County POTW that is "
-        "not on the Ohio River mainstem — Peebles, Seaman, West Union (OH0028088) and "
-        "Winchester. So the four plants nearest the network's watershed point are exactly the "
-        "ones ECHO cannot place. The assimilative screen keys on that field, so an unnamed "
+        "'BRUSH CRK' on the far side of the river).",
+        "Because the unit spans both banks it is majority-Kentucky, and completeness therefore "
+        "needs BOTH agencies: cross-check Ohio EPA for the Ohio side and Kentucky DOW for the "
+        "Kentucky side. Neither agency's list is reflected here beyond what ECHO federalizes. "
+        "ECHO also returns no county at all for part of the pull, so a county tally taken off "
+        "this file under-counts rather than resolving to zero.",
+        "Where receiving_water is null the row is unscreenable — including for every Adams "
+        "County POTW that is not on the Ohio River mainstem (Peebles, Seaman, West Union "
+        "OH0028088, Winchester), so the plants nearest the network's watershed point are exactly "
+        "the ones ECHO cannot place. The assimilative screen keys on that field, so an unnamed "
         "receiver reports as unmatched, never as unaffected. The gap closes only through cited "
         "entries in the curated receiving-water overlay, never by inference from a facility's "
         "name or county.",
+        "A row whose receiving_water names TWO different waters is refused too, not resolved to "
+        "the larger one: ECHO's field is a permit-level aggregate over every outfall, so "
+        "'OHIO RIVER, TWELVE MILE CREEK' does not say which water carries the design flow. Those "
+        "rows report no_7q10 alongside the ungaged ones.",
         "Whiteoak, Eagle, Straight and Beasley Fork are ungaged for a defensible low-flow "
         "statistic (no NWIS daily-discharge record meeting the 20-climatic-year floor), so their "
         "dischargers stay unscreened rather than screening against a proxy.",
+        "The Ohio River denominator these files' screened rows use is USGS 03216600 at Greenup "
+        "Dam, upstream of every facility here and scoped in mainstem-gages.yaml to this basin "
+        "alone — it is not a valid Ohio River 7Q10 for a basin that meets the river elsewhere.",
     ),
 )
 BASINS: dict[str, Basin] = {
     b.slug: b for b in (MAUMEE, GREAT_MIAMI, LITTLE_MIAMI, SCIOTO, OHIO_BRUSH_CREEK)
 }
 
-# Merged HUC-8 -> name map for the per-HUC fetch display label (any registered basin).
+# Merged HUC-8 -> name map for the per-HUC fetch display label, DERIVED from the registry so
+# registering a basin cannot leave it behind. A hand-maintained second copy failed silently:
+# `fetch_huc_facilities` falls back to `_HUC8_NAMES.get(huc8, huc8)`, so an omitted subbasin
+# would write the raw HUC code into the committed huc-counts.yaml `name:` field rather than
+# raise. Adding a basin is one registry entry (`BASINS`), never two.
 _HUC8_NAMES: dict[str, str] = {
-    **MAUMEE_HUC8S,
-    **GREAT_MIAMI_HUC8S,
-    **LITTLE_MIAMI_HUC8S,
-    **SCIOTO_HUC8S,
-    **OHIO_BRUSH_CREEK_HUC8S,
+    huc8: name for b in BASINS.values() for huc8, name in b.huc8s.items()
 }
 
 # Result columns to request, selected *by ObjectName* against the verified

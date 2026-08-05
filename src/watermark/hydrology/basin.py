@@ -9,12 +9,13 @@ USGS-gaged mainstems via log-Pearson III (:mod:`watermark.hydrology.lowflow_freq
 
 Discipline (omit, don't guess): a discharger is screened only when its ECHO
 ``receiving_water`` names a gaged **mainstem directly** — an exact surface-form match in
-the curated alias set. A POTW on an ungaged tributary/ditch, or with no receiving water
-in ECHO, is reported "no 7Q10" and left unscreened. It is never screened against a
-*downstream* river's larger 7Q10 (that would overstate dilution into a false "ok");
-including a tributary needs that tributary's own gage or fact sheet. The derived 7Q10 is
-the value **at the gage**, a screening proxy for the discharge reach (which differs by
-drainage-area ratio) — hence ``confidence: medium``.
+the curated alias set, and *only* that water (a permit whose ECHO record names two
+different waters is refused outright; see :func:`_match_low_flow`). A POTW on an ungaged
+tributary/ditch, or with no receiving water in ECHO, is reported "no 7Q10" and left
+unscreened. It is never screened against a *downstream* river's larger 7Q10 (that would
+overstate dilution into a false "ok"); including a tributary needs that tributary's own
+gage or fact sheet. The derived 7Q10 is the value **at the gage**, a screening proxy for
+the discharge reach (which differs by drainage-area ratio) — hence ``confidence: medium``.
 """
 
 from __future__ import annotations
@@ -129,6 +130,15 @@ class MainstemGage(BaseModel):
 
     gage: str
     aliases: list[str] = Field(min_length=1)  # a gage with no alias could never be matched
+    # Basin slugs this gage may serve as a denominator for. Empty (the default) means
+    # unrestricted, which is right for a tributary mainstem whose name occurs in exactly one
+    # basin's inventory. A gage is scoped when its *conservatism argument* is scoped: the Ohio
+    # River at Greenup is a defensible denominator for the HUC-8 whose frontage sits below it
+    # and for no other, yet "OHIO RIVER" is a receiving-water name that recurs in every Ohio
+    # tributary basin's inventory (#1120). Scoping is also what lets a second, differently
+    # positioned Ohio River gage be registered later for another basin without the two
+    # colliding on the same alias.
+    basins: list[str] = Field(default_factory=list)
     note: str | None = None
     # Cited annotations (#1458). Optional per gage: absent means "not yet read against the
     # published record", which is honest, not a default of "unregulated".
@@ -214,7 +224,7 @@ def _norm(name: str) -> str:
 
 
 def _cited_annotations(spec: MainstemGage) -> dict[str, Any]:
-    """The cited `published` / `regulation` / `cross_check_gages` overlay for one derived entry.
+    """The curated `note` / `published` / `regulation` / `cross_check_gages` overlay for an entry.
 
     Copied verbatim out of the curated ``mainstem-gages.yaml`` into the emitted derived entry, so
     the committed derived file carries the published counterweight beside every screening number
@@ -223,6 +233,12 @@ def _cited_annotations(spec: MainstemGage) -> dict[str, Any]:
     measuring natural low flow, so its LP3 fit drops from ``medium`` to ``low`` and says why in
     its own citation. This is the seam where a reference-table edit — not a code edit — changes
     how much weight a screening denominator carries.
+
+    ``note`` travels the same road for the same reason (#1120): a gage's note is where the
+    curated table states why *this* gage and not a nearer one, and what the choice costs — the
+    reservations a reader is owed before quoting the ratio. The screen reads the derived file,
+    not the curated table, so a note left behind in the input never reaches anyone the number
+    reaches.
     """
     out: dict[str, Any] = {}
     if spec.regulation is not None and spec.regulation.status == "regulated":
@@ -237,6 +253,8 @@ def _cited_annotations(spec: MainstemGage) -> dict[str, Any]:
         out["regulation"] = spec.regulation.model_dump(exclude_none=True)
     if spec.cross_check_gages:
         out["cross_check_gages"] = [g.model_dump(exclude_none=True) for g in spec.cross_check_gages]
+    if spec.note is not None:
+        out["note"] = spec.note
     return out
 
 
@@ -290,6 +308,9 @@ def derive_basin_low_flows(
             "period": f"{lff.period_start}..{lff.period_end}",
             "complete_years": lff.complete_years,
             "aliases": spec.aliases,
+            # Emitted beside the aliases it restricts, so the committed derived file states the
+            # restriction rather than leaving it in an input the screen never reads.
+            **({"basins": list(spec.basins)} if spec.basins else {}),
             "citation": (
                 f"LP3 7Q10 from USGS {spec.gage} ({lff.site_name}), "
                 f"{lff.complete_years} climatic years {lff.period_start[:4]}-{lff.period_end[:4]} "
@@ -419,15 +440,25 @@ def write_derived_low_flows(
                 "7Q10, never this one. Regenerate with `watermark derive-low-flows`."
             ),
             "cited_annotations": (
-                "An entry's `published` / `regulation` / `cross_check_gages` blocks (and the "
-                "`confidence_reason` a regulated gage carries) are NOT derived — they are copied "
-                "verbatim from the curated data/reference/hydrology/mainstem-gages.yaml so a "
-                "screening denominator is never read without the published statistic beside it "
-                "(#1458). Edit them THERE, not here; this file is regenerated. `regulation.status: "
-                "regulated` is what demotes an entry's confidence to `low` — the gage is measuring "
-                "managed flow (storage releases, diversions, upstream effluent), not the stream's "
-                "own assimilative capacity, and where the gage sits BELOW the outfall being "
-                "screened it is partly measuring that discharge itself."
+                "An entry's `note` / `published` / `regulation` / `cross_check_gages` blocks (and "
+                "the `confidence_reason` a regulated gage carries) are NOT derived — they are "
+                "copied verbatim from the curated data/reference/hydrology/mainstem-gages.yaml so "
+                "a screening denominator is never read without the published statistic, or the "
+                "reservations on the gage choice, beside it (#1458, #1120). Edit them THERE, not "
+                "here; this file is regenerated. `regulation.status: regulated` is what demotes "
+                "an entry's confidence to `low` — the gage is measuring managed flow (storage "
+                "releases, diversions, upstream effluent), not the stream's own assimilative "
+                "capacity, and where the gage sits BELOW the outfall being screened it is partly "
+                "measuring that discharge itself."
+            ),
+            "basin_scope": (
+                "An entry may carry `basins` (also copied from mainstem-gages.yaml): the basin "
+                "slugs whose POTW inventories this denominator may serve. Absent means "
+                "unrestricted, which is right for a name that means one river network-wide. It is "
+                "set where the gage's conservatism argument is geographic and therefore local — "
+                "'Ohio River' is a receiving water in every Ohio tributary basin's inventory, at "
+                "reaches hundreds of river miles apart, so one gage keyed to the bare name would "
+                "overstate dilution everywhere but the basin it was chosen for (#1120)."
             ),
         },
         "streams": merged,
@@ -440,15 +471,31 @@ def write_derived_low_flows(
 
 
 def load_derived_low_flows(*, settings: Settings | None = None) -> dict[str, ProvenancedValue]:
-    """Return ``{normalized alias -> derived 7Q10 ProvenancedValue}`` (or ``{}`` if absent)."""
+    """Return ``{normalized alias -> derived 7Q10 ProvenancedValue}`` (or ``{}`` if absent).
+
+    The derived table is one shared file across every basin, which is safe for a name that
+    means one river ("Maumee River" occurs in no Great Miami inventory). It is **not** safe for
+    a name that means a different reach of the same river in each basin: an entry may therefore
+    declare ``basins``, and one that does is served only to a site whose ``SiteProfile.basin``
+    is in that list (#1120). The Ohio River is the case that forced it — every Ohio tributary
+    basin has dischargers that name it, at reaches hundreds of river miles and tens of thousands
+    of square miles apart, so a single gage keyed to the bare name would be a right answer for
+    one basin and an overstated denominator for the rest.
+    """
+    from watermark.sites import active_profile
+
     settings = settings or get_settings()
     path = _derived_path(settings)
     if not path.is_file():
         return {}
+    active_basin = active_profile(settings).basin
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     out: dict[str, ProvenancedValue] = {}
     for name, entry in (data.get("streams") or {}).items():
         if not isinstance(entry, dict) or entry.get("seven_q10_cfs") is None:
+            continue
+        scope = entry.get("basins") or []
+        if scope and active_basin not in scope:
             continue
         pv = ProvenancedValue(
             value=float(entry["seven_q10_cfs"]),
@@ -514,16 +561,36 @@ def _load_dischargers(settings: Settings) -> list[dict[str, Any]]:
 def _match_low_flow(
     receiving_water: str, lookup: dict[str, ProvenancedValue]
 ) -> ProvenancedValue | None:
-    """A cited/derived 7Q10 iff the PRIMARY receiver names the mainstem exactly.
+    """A cited/derived 7Q10 iff the receiving water names ONE gaged water and nothing else.
 
-    Only the first comma-separated surface form (the primary receiving water) is matched:
-    a compound like ``"Baldwin Ditch, Maumee River"`` discharges to the *ditch*, so it
-    must not borrow the downstream Maumee's far larger 7Q10 (that would overstate
-    dilution). Typo/synonym duplicates of one mainstem ("Auglaize River, Auglaze River")
-    still match on their primary form.
+    ECHO's ``CWPStateWaterBodyName`` is a permit-level aggregate: a multi-outfall permit lists
+    every water body it discharges to, comma-separated, in an order that carries no meaning. So
+    a compound does not say which of the named waters carries the design flow, and the screen
+    cannot know — ``"Ohio River, Twelve Mile Creek"`` (New Richmond WWTP, 1.1 MGD) is a 62,000
+    mi² river and a creek, and there is nothing in ECHO that says which one the plant's flow
+    enters. The rule is therefore: split on commas and require **every** surface form to resolve
+    to the same denominator; anything else is unmatched (``no_7q10``) — unscreenable, never
+    unaffected.
+
+    Reading only the first form, as this did before #1120, made the guard an artifact of list
+    order: ``"Baldwin Ditch, Maumee River"`` was correctly refused only because the small water
+    happened to be listed first, and the same permit written the other way round would have been
+    credited with the Maumee's far larger 7Q10 — an overstated dilution reported as ``ok``.
+
+    A compound that names ONE water twice ("Auglaize River, Auglaze River"; "Ohio River, Ohio
+    RV") still matches, because the duplicate spelling is a registered alias of that gage. That
+    is what the alias list in ``mainstem-gages.yaml`` is for and the only reviewed way to say
+    two surface forms are one water — so an unregistered second form is, by construction, a
+    second water.
     """
-    primary = receiving_water.split(",")[0]
-    return lookup.get(_norm(primary))
+    forms = [f for f in (_norm(part) for part in receiving_water.split(",")) if f]
+    if not forms:
+        return None
+    hits = [lookup.get(f) for f in forms]
+    first = hits[0]
+    if first is None or any(hit != first for hit in hits[1:]):
+        return None
+    return first
 
 
 def load_dischargers(*, settings: Settings | None = None) -> list[dict[str, Any]]:

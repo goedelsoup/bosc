@@ -158,7 +158,15 @@ HUC-8s → **286 facilities** after FRS dedup, **81 POTW**. The **City of Spring
 (OH0027481, 25 MGD, → Mad River) is present, but ECHO carries no receiving-water value for
 it, so the basin-screen reports it unscreened rather than guess — the same gap the Maumee's
 curated overlay closes for Lima WWTP, and a candidate for a Great Miami overlay of its own
-once its receiving water is document-cited. Files: `great-miami-wwtp.all-npdes.yaml`,
+once its receiving water is document-cited. The **Hamilton WRF** (OH0025445, 32 MGD, the
+basin's largest POTW) is a second such candidate for a different reason: ECHO gives it
+`GREAT MIAMI RIVER, TWO MILE CREEK`, two different waters, and since #1120 a compound
+receiving water is refused rather than resolved to the larger of the two — so it reports
+`no_7q10`. The Little Miami's Lower East Fork Regional WWTP (OH0049379) and Yellow Springs
+WWTP (OH0028215) are in the same position. A document-cited overlay entry naming the outfall's
+actual water is what moves any of them back into the screened set.
+
+Files: `great-miami-wwtp.all-npdes.yaml`,
 `great-miami-wwtp.potw.yaml`, `great-miami-wwtp.huc-counts.yaml`. Those counts are from an
 earlier pull; the Maumee refresh (#1698) did not re-pull this basin.
 
@@ -174,14 +182,22 @@ method and field shape as the others, no Lima-specific flags:
 
 **Read the scope before reading the file.** Unlike every other basin here, this one's slug
 is a part naming a whole. `maumee` covers seven subbasins because they are all one river's
-tree; 05090201 is a WBD **two-bank Ohio River corridor unit** — 67 HUC-12s and 5,439 km²
-running roughly 150 river miles from Ninemile Creek at the Cincinnati metro edge east to
-Kinniconick Creek, spanning both banks and therefore both states. Ohio Brush Creek proper is
-16 of those 67 HUC-12s (including Beasley Fork, `050902010505`, West Union's own receiver);
-Whiteoak Creek is 7 more; Eagle, Straight, Twelvemile, Tenmile, Fourmile, Bracken and Cabin
-Creeks account for most of the rest. Every one of them reaches the Ohio on its own, so they
-are **siblings** of Ohio Brush Creek, not its headwaters — a discharger on one is neither
+tree; 05090201 is a WBD cataloging unit spanning **both banks of the Ohio River**, and the
+pull says so without any outside dataset: its rows land in Kentucky counties (Campbell,
+Pendleton, Bracken, Mason, Lewis) and Ohio ones (Clermont, Brown, Adams, Highland, Scioto),
+which face each other across the river. Several separate creeks reach the Ohio inside the
+unit — West Union's own receiver, Beasley Fork, drains to Ohio Brush Creek, while Whiteoak,
+Twelve Mile, Four Mile and the rest reach the river independently. Each is therefore a
+**sibling** of Ohio Brush Creek, not one of its headwaters: a discharger on one is neither
 upstream nor downstream of a discharger on another.
+
+> **No HUC-12 count or area is stated here.** The unit's WBD composition (how many HUC-12s
+> it holds, how many of them are Ohio Brush Creek, its area) is not in the corpus — no WBD
+> extract for 05090201 is committed, and `watermark wbd` has only ever been run for Lima's
+> campus HUCs. Those figures were asserted in an earlier draft of this file and of the
+> connector's caveats without a source behind them; they have been removed rather than
+> given a citation they never had. Pulling the WBD HU12 sublayer for 05090201 would make
+> them citable and is open work.
 
 **Last pull (2026-08-05):** 273 active-permit rows in the one HUC-8 → **261 facilities**
 after FRS dedup, **23 POTW** (17.87 MGD of design flow, present for 22 of 23). The
@@ -193,14 +209,25 @@ what ECHO federalizes is reflected here.
 
 ### What screens, and what does not
 
-`receiving_water` is null for **118 of the 261** rows, and for 13 of the 23 POTWs. The
-assimilative screen (`watermark --site west-union basin-screen`) reports:
+`receiving_water` is null for **118 of the 261** rows in that pull, and for 13 of the 23
+POTWs. The assimilative screen (`watermark --site west-union basin-screen`) reports:
 
 | outcome | POTWs | why |
 |---|---|---|
-| screened | 6 | name the Ohio River; dilution 1,799:1 (Maysville STP) to 95,570:1, all `ok` |
+| screened | 5 | name the Ohio River and nothing else; dilution 1,799:1 (Maysville STP) to 95,570:1, all `ok` |
 | no receiving water | 13 | ECHO carries no `CWPStateWaterBodyName` |
-| no 7Q10 | 4 | named receiver, but an ungaged tributary (Bear Creek, Town Run, Grog Branch, Twelve Mile Creek) |
+| no 7Q10 | 5 | a named receiver the screen cannot use — see below |
+
+The five `no 7Q10` rows are three different failures, and conflating them would misread all
+three. **Three are ungaged tributaries**: Felicity WWTP → Bear Creek, Georgetown WWTP → Town
+Run, Lewis County SD #1 → Grog Branch. **One is not a water body at all**: Western Mason
+County Sanitation District reads `DOWNING DRIVE, MAYSVILLE STP` — a street address and the
+name of the plant it sends flow to, i.e. a sewer connection, which is why it also has no
+design flow of its own. **One names two different waters**: New Richmond WWTP (OH0021156,
+1.1 MGD) reads `OHIO RIVER, TWELVE MILE CREEK`, and ECHO's field is a permit-level aggregate
+over every outfall, so nothing in it says which water carries the design flow. The screen
+refuses that row rather than crediting it with the larger of the two — at the Ohio's 9,464
+cfs it would have published a 5,560:1 `ok` for a plant that may discharge to the creek.
 
 Two consequences worth stating plainly rather than leaving to be inferred:
 
@@ -218,12 +245,19 @@ Two consequences worth stating plainly rather than leaving to be inferred:
    `no_receiving_water` to `no_7q10`, not into the screened set. Both halves are open work;
    neither is closed by inference.
 
-The screened six exist because #1120 added the **Ohio River** mainstem to
+The screened five exist because #1120 added the **Ohio River** mainstem to
 `data/reference/hydrology/mainstem-gages.yaml` — USGS 03216600 at Greenup Dam, chosen as the
-*upstream-end* gage so its drainage area understates every facility's and the screen cannot
-overstate dilution. That entry's note records what a reader is owed about it: the mainstem is
-navigation-regulated in fact and unannotated on the record, and one gage across 150 river
-miles makes a dilution ratio a magnitude check rather than a reach-specific finding.
+*upstream-end* gage: it sits east of every facility in the pull, on a river that only gains
+drainage area downstream, so its 62,000 mi² understates what each facility's own reach
+carries and the screen cannot overstate dilution. That entry's note — copied into
+`low-flow-7q10.derived.yaml`, the file the screen actually reads — records what a reader is
+owed about it: the mainstem is navigation-regulated in fact and unannotated on the record,
+and one gage standing for the unit's whole river frontage makes a dilution ratio a magnitude
+check rather than a reach-specific finding. The entry is **scoped to this basin**
+(`basins: [ohio-brush-creek]`), because that conservatism argument is geographic: the
+Muskingum and Mahoning basins meet the Ohio hundreds of river miles above Greenup, where the
+river carries a fraction of the drainage area gaged here, so serving this denominator on the
+bare name `OHIO RIVER` network-wide would commit exactly the overstatement it avoids.
 
 Files: `ohio-brush-creek-wwtp.all-npdes.yaml`, `ohio-brush-creek-wwtp.potw.yaml`,
 `ohio-brush-creek-wwtp.huc-counts.yaml`. There is no curated receiving-water overlay for this
