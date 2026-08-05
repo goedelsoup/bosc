@@ -463,17 +463,28 @@ async def stormwater_runoff(_args: dict[str, Any]) -> dict[str, Any]:
 @tool(
     "hydrology_scenario",
     "Baseline vs data-center-buildout scenario: the campus cooling consumptive draw "
-    "(an assumption knob) compared against the cited Ottawa River 7Q10 low flow. Shows "
-    "how a data center stresses an already low-flow river.",
+    "(an assumption knob) compared against the active site's receiving-water 7Q10 low "
+    "flow. Shows how a data center stresses an already low-flow river.",
     {},
 )
 @traced_tool
 async def hydrology_scenario(_args: dict[str, Any]) -> dict[str, Any]:
-    if (note := _reference_only("hydrology_scenario")) is not None:
-        return note
+    from watermark.hydrology.balance import has_site_watch_items
     from watermark.pipeline import hydrology as hydro_stage
 
-    base, build, delta = hydro_stage.run_scenarios()
+    settings = get_settings()
+    # Per-site (#886), on the same predicate as `hydrology_balance`: the scenario is already
+    # site-parameterized end to end (the facility's cooling archetype via `derive_cooling_basis`,
+    # the receiving water and its low flow via the site profile), so the only thing the old
+    # blanket Lima gate bought was silence. What it must NOT do is serve Lima's WWTP graph for a
+    # site that has none — hence the same committed-watch-items test the balance uses, since the
+    # scenario builds the balance to place the campus node.
+    if not _is_corpus_home(settings) and not has_site_watch_items(settings):
+        note = _reference_only("hydrology_scenario")
+        if note is not None:
+            return note
+
+    base, build, delta = hydro_stage.run_scenarios(settings=settings)
     lines = [
         f"baseline: consumptive draw {base.consumptive_loss.value:.2f} cfs",
         f"buildout: cooling {build.scenario.cooling_demand.value:g} MGD x "
@@ -482,15 +493,29 @@ async def hydrology_scenario(_args: dict[str, Any]) -> dict[str, Any]:
         f"net new consumptive draw: {delta.consumptive_increase_cfs:.2f} cfs",
     ]
     rw = delta.receiving_water_name or "receiving water"
-    if delta.multiple_of_7q10 is not None:
+    q7 = build.receiving_7q10
+    if delta.multiple_of_7q10 is not None and q7 is not None:
         lines.append(
-            f"= {delta.multiple_of_7q10:g}x the {rw} 7Q10 ({delta.receiving_7q10_cfs:g} cfs, cited)"
+            f"= {delta.multiple_of_7q10:g}x the {rw} 7Q10 "
+            f"({delta.receiving_7q10_cfs:g} cfs, {q7.source})"
+        )
+    elif q7 is None:
+        lines.append(
+            f"(no committed 7Q10 for {rw} — the draw is reported unscaled rather than "
+            "screened against a denominator that does not exist)"
         )
     if build.receiving_live is not None:
-        lines.append(f"{rw} live flow: {build.receiving_live.value:.0f} cfs")
-    lines.append(
-        f"\n(Cooling knobs are assumptions; {rw} 7Q10 is document-cited. Tier-0 screening.)"
-    )
+        # Labelled by the GAGE, not by the receiving water — they are not always the same
+        # waterbody, and the citation carries the caveat where they are not (#886).
+        lines.append(
+            f"live gage flow: {build.receiving_live.value:.0f} cfs "
+            f"({build.receiving_live.citation})"
+        )
+    # Never assert the low flow is document-cited: it is document-cited on most reaches and
+    # DERIVED on Wilmington's, where the fact sheet states none at all (#886). Read the value's
+    # own provenance instead of describing Lima's.
+    basis = f"{rw} 7Q10 is {q7.source}-sourced" if q7 is not None else f"{rw} 7Q10 is uncommitted"
+    lines.append(f"\n(Cooling knobs are assumptions; {basis}. Tier-0 screening.)")
     return _scoped("\n".join(lines))
 
 

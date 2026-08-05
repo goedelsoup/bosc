@@ -247,11 +247,18 @@ mainstems:
       their drainage area (that would badly overstate dilution). Todd Fork is not unmeasured,
       though: the discontinued 03244000 (near Roachester, DA 219 mi²) holds 21 complete climatic
       years of daily discharge 1952-1974, giving an LP3 7Q10 of 0.1654 cfs — DAR-transferred to
-      0.0597 cfs just below the Lytle Creek confluence, i.e. the Wilmington WWTP's reach is ~99%
-      effluent at design low flow. That statistic is a MANUAL receiving-water characterization in
-      data/extracted/wilmington/low-flow-screen.md and is deliberately NOT wired in here: a
-      1952-1974 record as a present-day screen denominator collides with the asof vintage
-      discipline (#1644).
+      0.0597 cfs just below the Lytle Creek confluence and 0.0068 cfs at the outfall itself, i.e.
+      the Wilmington WWTP's reach is ~99.9% effluent at design low flow.
+      RESOLVED (#886): that statistic is no longer only a manual characterization. The
+      OUTFALL-REACH value is committed as the `lytle creek` entry in low-flow-7q10.yaml — a
+      `source: derived`, `confidence: low` entry admitted under that file's verified-negative
+      exception (Ohio EPA computed no low flow for this reach at all), with the 1952-1974 record
+      period stated in its citation so the asof vintage discipline (#1644) is satisfied by
+      DISCLOSURE rather than by omission. Nothing changes HERE: this table drives the derived
+      at-gage mainstem proxies, and 03244000 is still absent from it — its record predates the
+      1980 derivation window, and a 219 mi² at-gage value is not the 9.0 mi² outfall reach. Todd
+      Fork itself remains no_7q10 in the basin screen; only Lytle Creek at the outfall is keyed.
+      Full method: data/extracted/wilmington/low-flow-screen.md §2.3-2.6.
   Little Miami River near Oldtown:
     gage: "03240000"
     aliases: [little miami river near oldtown, little miami r near oldtown]

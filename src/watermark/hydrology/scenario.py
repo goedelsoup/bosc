@@ -26,6 +26,7 @@ from watermark.hydrology.balance import (
 from watermark.hydrology.connectors.nwis import DISCHARGE_CFS, fetch_streamflow
 from watermark.hydrology.cooling import derive_cooling_basis
 from watermark.hydrology.lowflow import (
+    _normalize,
     low_flow_context,
     low_flow_for,
     seasonal_low_flows,
@@ -168,10 +169,9 @@ def evaluate(
 def _receiving_live(*, settings: Settings, live: bool) -> ProvenancedValue | None:
     if not live:
         return None
+    profile = active_profile(settings)
     try:
-        readings = fetch_streamflow(
-            sites=[active_profile(settings).abstraction_gage], settings=settings
-        )
+        readings = fetch_streamflow(sites=[profile.abstraction_gage], settings=settings)
     except Exception as exc:
         log.info("hydro.scenario.no_live", error=type(exc).__name__)
         return None
@@ -184,7 +184,29 @@ def _receiving_live(*, settings: Settings, live: bool) -> ProvenancedValue | Non
     # is unreviewed and subject to revision (#1602), and a reading replayed past the IV
     # service's freshness window is not the current flow (#1621) — so neither enters the
     # scenario as an authoritative live flow.
-    return flow.as_provenanced("cfs")
+    pv = flow.as_provenanced("cfs")
+    if pv is None:
+        return None
+
+    # A site's abstraction gage is not always ON its receiving water, and where it is not, this
+    # reading is a DIFFERENT waterbody's flow (#886). Wilmington is the case: its receiving water
+    # is Lytle Creek (DA 9.0 mi², 7Q10 0.0068 cfs) but the nearest ACTIVE discharge gage is the
+    # Little Miami at Milford, DA 1,203 mi² — 133x the drainage area, reading hundreds of cfs.
+    # Presented as "Lytle Creek live flow" that is not context, it is a contradiction of the
+    # screen sitting three lines above it. The value is real and stays; what it measures is
+    # stated on it, so no consumer can attribute it to the receiving water by default.
+    water = _normalize(profile.receiving_water_name or "")
+    if water and water not in (flow.name or "").lower():
+        pv = pv.model_copy(
+            update={
+                "citation": (
+                    f"{pv.citation} — NOT a reading of {profile.receiving_water_name}: this "
+                    "site's nearest active discharge gage is on a different waterbody, so treat "
+                    "this as regional context only, never as the receiving reach's own flow"
+                )
+            }
+        )
+    return pv
 
 
 def diff(baseline: ScenarioResult, scenario: ScenarioResult) -> ScenarioDiff:

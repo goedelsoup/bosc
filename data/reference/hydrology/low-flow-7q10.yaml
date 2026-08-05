@@ -2,10 +2,26 @@
 #
 # The 7Q10 — the lowest 7-day average streamflow expected once in 10 years — is the
 # design low flow Ohio EPA uses to set chronic water-quality-based effluent limits
-# (the denominator of assimilative capacity). Every value here is read directly from
-# an Ohio EPA NPDES fact sheet in our own corpus (data/documents/oepa/*) and tagged
+# (the denominator of assimilative capacity). Almost every value here is read directly
+# from an Ohio EPA NPDES fact sheet in our own corpus (data/documents/oepa/*) and tagged
 # `source: document`. Streams we cannot yet cite are OMITTED, not guessed — the
 # assimilative check reports them as "no cited 7Q10" rather than invent a number.
+#
+# ── The one narrow exception: a VERIFIED NEGATIVE (#886) ─────────────────────────────────────
+# An entry may carry `source: derived` — and every consumer must read `source`, never assume
+# `document` — when, and only when, ALL of the following hold:
+#   1. The governing fact sheet has been read end to end and demonstrably states NO design low
+#      flow for the reach. That negative is itself evidence and must be cited on the entry. It is
+#      not "we haven't pulled it yet"; an unpulled fact sheet leaves the stream OMITTED as before.
+#   2. The value is derived from a real gaged record on the SAME stream system by a stated method
+#      (LP3 + drainage-area-ratio transfer), with the record's own period named in the citation —
+#      so a reader can never mistake a half-century-old record for a current statistic (#1644).
+#   3. `confidence: low`, and the entry is keyed to the OUTFALL REACH, not the river.
+# Wilmington's `lytle creek` is the case this was written for: Ohio EPA regulated that plant on
+# BADCT and a TMDL rather than on assimilative capacity, and never computed a low flow at all. The
+# choice there is not derived-vs-cited, it is derived-vs-nothing — and "nothing" silently reads as
+# "unscreened" on a reach that is 99.9% effluent. Prefer omission over invention; prefer a
+# disclosed derivation over a silence that reads as an absence of risk.
 #
 # Key insight these numbers carry: the plants on tiny tributaries discharge MORE than
 # the streams' entire 7Q10 low flow — at design low flow the effluent is effectively
@@ -145,3 +161,23 @@ streams:
       design_flow_cfs: 4.6417
       acute_dilution_ratio: 2.2
       note: "The downstream half of the network's only along-one-river control. 37x the Findlay reach's cited 7Q10 — but computed from a DIFFERENT gage over a stated record (04189500 at Glandorf, 1921-1951) where the Findlay fact sheet states its gages but NO period at all, so the pair does not measure downstream gain and must not be read as a longitudinal profile. Ottawa screens TIGHT (1.68:1) on this value and TIGHT on the derived one too, so no finding about this node turns on the choice; see data/reference/network/findlay-ottawa-comparison.yaml."
+
+  # ── Wilmington's reach: the verified-negative exception (#886, see the header) ───────────────
+  # The ONLY `source: derived` entry in this file. Ohio EPA never computed a design low flow here,
+  # so there is nothing to cite and the choice is derived-vs-nothing. Full method, drainage areas
+  # and the two threads: data/extracted/wilmington/low-flow-screen.md.
+  lytle creek:
+    seven_q10_cfs: 0.0068
+    source: derived
+    permits: ["OH0028134", "1PD00013"]
+    citation: "DERIVED, not cited — Ohio EPA fact sheet 1PD00013.fs (2023-05-19) for the City of Wilmington WWTP states NO design low flow, no dilution ratio and no 7Q10 anywhere in its 11 pages [verified — exhaustive read, 2026-08-01]; it discusses assimilative capacity only qualitatively and then sets limits on BADCT plus the 2011 Lower Little Miami TMDL. So this value is a drainage-area-ratio transfer (b = 1.0, same stream system) of a log-Pearson III fit on the ONLY discharge record that exists on this stream: USGS 03244000 (Todd Fork near Roachester OH, DA 219 mi²), 21 complete climatic years, 8,094 days, 1952-09-01..1974-10-29, LP3 7Q10 0.1654 cfs (90% band 0.0809-0.3385) — transferred to Lytle Creek at WWTP outfall 001, DA 9.0 mi² (USGS NLDI upstream-basin polygon, NHDPlus comid 3932402), ratio 9.0/219 = 0.0411. VINTAGE: the record ends in 1974 and no gage on Todd Fork, Lytle Creek or Caesar Creek below the dam has reported discharge since — this is the most recent measurement of this stream that exists, not a current one. Method and re-derivation: watermark.hydrology.lowflow_frequency; full write-up data/extracted/wilmington/low-flow-screen.md §2.3-2.6 (#1472/#886)."
+    confidence: low
+    context:
+      one_q10_cfs: 0.0045
+      thirty_q10_cfs: 0.0287
+      harmonic_mean_cfs: 0.237
+      seven_q10_low_cfs: 0.0033
+      seven_q10_high_cfs: 0.0139
+      design_flow_cfs: 4.6417
+      designated_use: "Warmwater Habitat; General High Quality Water; Agricultural + Industrial Water Supply; Primary Contact Recreation (OAC 3745-1-18) — HUC 05090202-06-03 [verified — fact sheet 1PD00013.fs p.2]"
+      note: "NO summer 30Q10 is carried and that is deliberate: 0.0287 cfs is the ANNUAL 30Q10 from the LP3 fit, and putting an annual value in `thirty_q10_summer_cfs` would make the seasonal screen report a summer design flow nobody computed. `seven_q10_low_cfs`/`_high_cfs` are the transferred 90% confidence band on the LP3 7Q10, carried because at this magnitude the band matters more than the point. The design flow is the CURRENT 3.0 MGD (4.6417 cfs) [verified — fact sheet]; PTI #1543170 expands it to 4.5 MGD (6.9625 cfs) with limits effective 2026-03-01, which takes the reach from 99.85% to 99.90% effluent — the expansion does not change the character of the reach because there was no dilution to lose. The acute picture is the same: (1Q10 0.0045 + 4.6417) / 4.6417 = 1.00:1, i.e. no acute dilution at all — that ratio is OURS, the regulator states none. 12 zero-flow days in the anchor record: Todd Fork stops in drought, so a 7Q10 of 0.0068 cfs on a 9.0 mi² reach is describing a stream that goes dry, not a small number that happens to round low."
