@@ -8,9 +8,9 @@ description: "The Project BOSC story: told through the records, with every figur
 
 import { hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
 import { withBase, withSite } from "@watermark/core/site";
-import { chapterHref, storyContentsHref, storyFor } from "@watermark/core/walk";
+import { chapterHref, walkContentsHref, walkFor } from "@watermark/core/walk";
 
-export const story = storyFor("lima", "project-bosc");
+export const story = walkFor("lima", "project-bosc");
 export const manifest = loadManifest();
 export const count = (name) => manifest.feeds.find((f) => f.name === name)?.count ?? 0;
 export const num = (n) => n.toLocaleString("en-US");
@@ -65,7 +65,7 @@ export const nDocuments = docCollections.reduce((acc, c) => acc + c.entries.leng
 
 <div class="walk-cta">
   <a class="btn" href={chapterHref(story, story.chapters[0].slug)}>Begin the story →</a>
-  <a class="walk-cta-secondary" href={storyContentsHref(story)}>or see the table of contents</a>
+  <a class="walk-cta-secondary" href={walkContentsHref(story)}>or see the table of contents</a>
   <a class="walk-cta-secondary" href={withSite("/site/")}>or browse the archive</a>
 </div>
 

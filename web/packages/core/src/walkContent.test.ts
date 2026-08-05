@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { type StoryChapterSpine, buildStory } from "./stories";
-import { STORIES, siteOwner, storiesOwnedBy, storyFor } from "./walk";
+import { type WalkChapterSpine, buildWalk } from "./walkContent";
+import { WALKS, siteOwner, walksOwnedBy, walkFor } from "./walk";
 
 // The Lima `project-bosc` spine, as authored in the `stories` collection
-// (src/content/stories/lima/project-bosc/*.mdx). `buildStory` must reproduce the canonical
-// hardcoded story (walk.ts `STORIES`) from it — the guard that the MDX migration (#733) is
+// (src/content/walk/lima/project-bosc/*.mdx). `buildWalk` must reproduce the canonical
+// hardcoded story (walk.ts `WALKS`) from it — the guard that the MDX migration (#733) is
 // faithful before the collection becomes the live source.
-const LIMA_SPINE: StoryChapterSpine[] = [
+const LIMA_SPINE: WalkChapterSpine[] = [
   {
     step: 1,
     slug: "who",
@@ -69,11 +69,11 @@ const LIMA_SPINE: StoryChapterSpine[] = [
   },
 ];
 
-describe("buildStory", () => {
+describe("buildWalk", () => {
   it("reproduces the canonical Lima story from its chapter spine", () => {
-    const canonical = storyFor("lima", "project-bosc");
+    const canonical = walkFor("lima", "project-bosc");
     if (!canonical) throw new Error("Lima story must exist in the store");
-    const built = buildStory(
+    const built = buildWalk(
       "lima",
       "project-bosc",
       { title: canonical.title, dek: canonical.dek },
@@ -83,7 +83,7 @@ describe("buildStory", () => {
   });
 
   it("orders chapters by step regardless of input order", () => {
-    const built = buildStory("lima", "project-bosc", { title: "x", dek: "y" }, [
+    const built = buildWalk("lima", "project-bosc", { title: "x", dek: "y" }, [
       LIMA_SPINE[3],
       LIMA_SPINE[0],
       LIMA_SPINE[2],
@@ -92,7 +92,7 @@ describe("buildStory", () => {
   });
 
   it("inverts anchorRecordRels into the record→chapter backlink map", () => {
-    const built = buildStory("lima", "project-bosc", { title: "x", dek: "y" }, LIMA_SPINE);
+    const built = buildWalk("lima", "project-bosc", { title: "x", dek: "y" }, LIMA_SPINE);
     expect(built.anchors["aedg/roundabouts.summary.opc.yaml"]).toEqual({
       ch: "05",
       slug: "cost",
@@ -106,21 +106,21 @@ describe("buildStory", () => {
 
 describe("owner axis (#1092)", () => {
   it("builds a site-owned story whose owner id is the site slug", () => {
-    const built = buildStory("lima", "project-bosc", { title: "x", dek: "y" }, LIMA_SPINE);
+    const built = buildWalk("lima", "project-bosc", { title: "x", dek: "y" }, LIMA_SPINE);
     expect(built.owner).toEqual({ kind: "site", id: "lima" });
     expect(built.owner.id).toBe(built.site);
   });
 
   it("filters stories to a single owner by the (kind, id) pair", () => {
-    const lima = buildStory("lima", "project-bosc", { title: "x", dek: "y" }, LIMA_SPINE);
-    const other = buildStory("fort-wayne", "some-codename", { title: "x", dek: "y" }, LIMA_SPINE);
+    const lima = buildWalk("lima", "project-bosc", { title: "x", dek: "y" }, LIMA_SPINE);
+    const other = buildWalk("fort-wayne", "some-codename", { title: "x", dek: "y" }, LIMA_SPINE);
     const pool = [lima, other];
-    expect(storiesOwnedBy(pool, siteOwner("lima"))).toEqual([lima]);
+    expect(walksOwnedBy(pool, siteOwner("lima"))).toEqual([lima]);
     // A user owner sharing the string "lima" must not match the site-owned story.
-    expect(storiesOwnedBy(pool, { kind: "user", id: "lima" })).toEqual([]);
+    expect(walksOwnedBy(pool, { kind: "user", id: "lima" })).toEqual([]);
   });
 
   it("every editorial story in the collection is site-owned (no behavior change)", () => {
-    for (const s of STORIES) expect(s.owner).toEqual({ kind: "site", id: s.site });
+    for (const s of WALKS) expect(s.owner).toEqual({ kind: "site", id: s.site });
   });
 });

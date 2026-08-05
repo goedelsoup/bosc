@@ -1,8 +1,8 @@
-// GET /api/stories/shared/:shareId — the public, read-only view of a shared Story (#1098).
+// GET /api/stories/shared/:shareId — the public, read-only view of a shared Walk (#1098).
 //
-// The ONLY unauthenticated read path: resolves a *published, un-removed* Story by its unguessable
+// The ONLY unauthenticated read path: resolves a *published, un-removed* Walk by its unguessable
 // share_id and returns the public projection (no owner id, no editable source). A draft, an
-// unpublished, or an admin-removed Story returns 404 — a stale share URL leaks nothing. Still behind
+// unpublished, or an admin-removed Walk returns 404 — a stale share URL leaks nothing. Still behind
 // the STORIES_ENABLED kill switch + needs the STORIES_HYPERDRIVE binding (Lakebase/Postgres).
 
 import { json } from "../../_lib/http";

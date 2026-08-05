@@ -15,7 +15,7 @@ import { NARRATIVE } from "./narrative";
 import { REFERENCE } from "./reference";
 import { LIMA_SLUG } from "./routes";
 import { ALL_TEARDOWNS } from "./teardowns";
-import { STORIES, siteSurfacesStory } from "./walk";
+import { WALKS, siteSurfacesWalk } from "./walk";
 
 /** The wire shape of the `catalog-index` object feed (`bosc.site.feeds.CatalogIndex`, snake_case). */
 interface CatalogIndexFeed {
@@ -53,9 +53,9 @@ export function webOnlyAtoms(site: string): CatalogAtom[] {
   // `comingSoon` (#1526), content retained — is grabbable nowhere, so it drops out of the catalog +
   // atoms. Lima's Project BOSC walk is readable, so its chapters are grabbable; Fort Wayne's Project
   // Zodiac stays `comingSoon`, so it emits no chapter atoms.
-  for (const story of STORIES) {
+  for (const story of WALKS) {
     if (story.site !== site) continue;
-    if (!siteSurfacesStory(story.site, story.codename)) continue;
+    if (!siteSurfacesWalk(story.site, story.codename)) continue;
     for (const ch of story.chapters) {
       atoms.push(atom("chapter", site, `${story.codename}/${ch.slug}`, ch.title, "stories"));
     }

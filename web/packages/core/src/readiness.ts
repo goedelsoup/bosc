@@ -41,7 +41,7 @@ import { LENSES, type LensFacet, type LensId } from "./lenses";
 import { scopedLegal } from "./legal";
 import { scopedReference } from "./reference";
 import { LIMA_SLUG } from "./routes";
-import { selectableSitePaths, surfacedStories } from "./sites";
+import { selectableSitePaths, surfacedWalks } from "./sites";
 
 export type { DomainState, SiteTier } from "./bundle";
 
@@ -244,7 +244,7 @@ function hasEnough(section: ReadinessSection, slug: string): boolean {
       // #1970), so this facet opens there and locks everywhere else — and a peer's narrative now
       // lives in its study, which never locks. Note this is the SECTION `story`, not the readiness
       // domain of that name: that domain is `inquiry` now, and nothing here reads it.
-      return surfacedStories(slug).length > 0;
+      return surfacedWalks(slug).length > 0;
     case "leads":
       // The leads board is feed-driven per site (#796); the reference build also hosts the
       // network-global curated board.

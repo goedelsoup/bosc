@@ -97,7 +97,7 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
   },
   {
     pattern: "^/network/[^/]+/stories/(compose|mine|read|grab-demo)/$",
-    label: "Story composer",
+    label: "Walk composer",
     verdict: "not-content",
     note:
       "The user-authored stories surface (#1090), dark behind `STORIES_ENABLED`. These are tools " +

@@ -1,0 +1,94 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`story spine parity snapshot (#742) > the Lima project-bosc spine is stable (catches shell/spine regressions) 1`] = `
+{
+  "anchors": {
+    "aedg/roundabouts.summary.opc.yaml": {
+      "ch": "05",
+      "label": "What it costs the public",
+      "slug": "cost",
+    },
+    "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml": {
+      "ch": "04",
+      "label": "What it does to the water",
+      "slug": "water",
+    },
+    "permits/4132514.epa.yaml": {
+      "ch": "03",
+      "label": "How big is it — and what won't they tell you?",
+      "slug": "scale",
+    },
+    "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml": {
+      "ch": "01",
+      "label": "Who is actually building this?",
+      "slug": "who",
+    },
+    "recorder/202508130008300.deed.yaml": {
+      "ch": "01",
+      "label": "Who is actually building this?",
+      "slug": "who",
+    },
+  },
+  "chapters": [
+    {
+      "anchor": "The deed chain + the Bistrozzi Delaware shell cluster",
+      "live": true,
+      "skill": "Reading a deed · cross-document entity resolution",
+      "slug": "who",
+      "step": 1,
+      "title": "Who is actually building this?",
+    },
+    {
+      "anchor": "The Port Authority options → Bistrozzi assignment + the blank DTE-100 prices",
+      "live": true,
+      "skill": "Reading an options-to-assignment chain · the confidentiality-first sequence",
+      "slug": "assembly",
+      "step": 2,
+      "title": "How it was assembled & hidden",
+    },
+    {
+      "anchor": "Ohio EPA Air Permit-to-Install P0138965",
+      "live": true,
+      "skill": "Reading an air permit · recognizing a CBI redaction",
+      "slug": "scale",
+      "step": 3,
+      "studySection": "power",
+      "title": "How big is it — and what won't they tell you?",
+    },
+    {
+      "anchor": "NPDES dilution + the cooling-draw screen",
+      "live": true,
+      "skill": "Reading an NPDES permit · the 7Q10 low-flow screen",
+      "slug": "water",
+      "step": 4,
+      "studySection": "water-supply",
+      "title": "What it does to the water",
+    },
+    {
+      "anchor": "Tetra Tech OPC + the Roadwork Development Agreement",
+      "live": true,
+      "skill": "Reading a cost estimate · reading a contract clause",
+      "slug": "cost",
+      "step": 5,
+      "studySection": "balance",
+      "title": "What it costs the public",
+    },
+    {
+      "anchor": "The withholding stack + the mandamus thread",
+      "live": true,
+      "skill": "Reading statutory exemptions",
+      "slug": "opacity",
+      "step": 6,
+      "title": "Why you had to dig for this",
+    },
+  ],
+  "codename": "project-bosc",
+  "dek": "Project BOSC — read the record one document at a time, no prior knowledge.",
+  "owner": {
+    "id": "lima",
+    "kind": "site",
+  },
+  "site": "lima",
+  "title": "Project BOSC",
+}
+`;

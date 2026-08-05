@@ -21,11 +21,11 @@ import { activeSite } from "./bundle";
 import type { HypothesisItem } from "./feeds";
 import { LENS_ORDER, LENSES } from "./lenses";
 import { lensStatus, sectionStatus } from "./readiness";
-import { LIMA_SLUG, siteBase, storyBase } from "./routes";
+import { LIMA_SLUG, siteBase, walkBase } from "./routes";
 import type { NetworkSite } from "./sites";
 import { STUDY_CHAPTERS, STUDY_PARTS } from "./study";
 import { NETWORK_NOUNS } from "./taxonomy";
-import { type Story, activeStory, chapterHref, storyContentsHref } from "./walk";
+import { type Walk, activeWalk, chapterHref, walkContentsHref } from "./walk";
 
 export type SectionId =
   | "home"
@@ -75,10 +75,10 @@ export interface Section {
  *  surfaces no *readable* story (a thin peer, or a site whose walk is `hidden`/#1256 or
  *  `comingSoon`/#1526), `storyRoot` falls back to the site's OWN home, never Lima's story: a
  *  non-story site must not leak into Lima's walk. */
-function siteRoots(): { base: string; storyRoot: string; story: Story | undefined } {
+function siteRoots(): { base: string; storyRoot: string; story: Walk | undefined } {
   const base = siteBase(activeSite());
-  const story = activeStory();
-  const storyRoot = story ? storyBase(story.site, story.codename) : base;
+  const story = activeWalk();
+  const storyRoot = story ? walkBase(story.site, story.codename) : base;
   return { base, storyRoot, story };
 }
 
@@ -121,11 +121,11 @@ export function sections(): Section[] {
       toc: [],
     },
     {
-      // The story (design "Site Home" → "Story home"): the guided walk, hosted under the site at
+      // The story (design "Site Home" → "Walk home"): the guided walk, hosted under the site at
       // its story root so a site can carry multiple stories.
       id: "story",
       label: "The story",
-      tab: "Story",
+      tab: "Walk",
       href: storyRoot,
       blurb: "Project BOSC — read the record one document at a time, no prior knowledge.",
       toc: [],
@@ -470,7 +470,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
  * The study — the site's primary artifact — still rides second, right after the mega. The
  * standalone "The story" tab is gone: the mega's spine IS the story — its head links the story
  * root and it lists every chapter — so the tab beside it was the same destination twice in one
- * bar. Story routes still light "The site" (see the mega's `match`).
+ * bar. Walk routes still light "The site" (see the mega's `match`).
  */
 export function siteTabs(): NavItem[] {
   const { base, storyRoot, story } = siteRoots();
@@ -536,7 +536,7 @@ export function siteTabs(): NavItem[] {
           blurb: "One project, read document by document — it crosses the environment and the economy.",
           // With no surfaced story the locked spine points at the site home (a valid target),
           // never a `${base}/contents` that 404s (#1256): `storyRoot` is the site base in that case.
-          tocHref: story ? storyContentsHref(story) : storyRoot,
+          tocHref: story ? walkContentsHref(story) : storyRoot,
           locked: storyLocked,
           items: chapters.map((c) => ({
             num: String(c.step),

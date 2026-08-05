@@ -40,7 +40,7 @@ export const onRequestPost = async ({ request, env }: RequestContext): Promise<R
   const v = body.value as Record<string, unknown>;
   const action = typeof v.action === "string" ? v.action : "";
 
-  // The revalidation job (#1099) takes no id — it walks every stale-candidate Story.
+  // The revalidation job (#1099) takes no id — it walks every stale-candidate Walk.
   if (action === "revalidate") {
     let catalog: Awaited<ReturnType<typeof loadCatalogAsset>>;
     try {

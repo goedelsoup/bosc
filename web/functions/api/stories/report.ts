@@ -1,4 +1,4 @@
-// POST /api/stories/report — flag a shared Story for admin review (#1098).
+// POST /api/stories/report — flag a shared Walk for admin review (#1098).
 //
 // Public (no auth — anyone reading a shared story can report it), but abuse-guarded: rate-limited
 // per IP, and Turnstile-verified when TURNSTILE_SECRET is configured (skipped when it isn't, since
