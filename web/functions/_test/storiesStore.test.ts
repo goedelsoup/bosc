@@ -5,7 +5,7 @@
 
 import { describe, expect, it } from "vitest";
 import {
-  type WalkOwner,
+  type ContentOwner,
   type StoryWrite,
   createStory,
   deleteStory,
@@ -22,8 +22,8 @@ import {
 import { revalidateAll } from "@watermark/functions/api/_lib/revalidateStories";
 import { fakePg } from "./_routeHarness";
 
-const owner: WalkOwner = { kind: "user", id: "user-1" };
-const other: WalkOwner = { kind: "user", id: "user-2" };
+const owner: ContentOwner = { kind: "user", id: "user-1" };
+const other: ContentOwner = { kind: "user", id: "user-2" };
 const NOW = "2026-07-03T00:00:00.000Z";
 const SHARE = "share-abc";
 
