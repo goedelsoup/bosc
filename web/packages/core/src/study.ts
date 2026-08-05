@@ -44,7 +44,14 @@ import {
   type CitedGroup,
   type CitedSource,
 } from "./cite";
-import type { CoolingModel, EconomicBaseline, FacilityItem, ProvenancedValue, ScenarioResult } from "./feeds";
+import type {
+  CoolingModel,
+  EconomicBaseline,
+  FacilityItem,
+  ProvenancedValue,
+  RecordItem,
+  ScenarioResult,
+} from "./feeds";
 import { fmtMult, fmtRanged, round } from "./format";
 import { buildDemandPressure, buildGridBackdrop } from "./gridBackdrop";
 import { coolingMethodUndisclosed, facilityLoadAvailable, facilityState } from "./readiness";
@@ -262,6 +269,25 @@ const NA_REASON = "No disclosed project — this chapter is computed the day one
 /** The facility-less predicate for project-dependent chapters. */
 const needsProject = (_slug: string, facility: FacilityItem | null): boolean => facility === null;
 
+/**
+ * Rows in the site's OWN records feed carrying any of `groups` — the corpus-keyed primitive the
+ * `assembly` / `governance` chapters screen on (#1969).
+ *
+ * A **raw** feed read on purpose. `citeGroups` is readiness-gated and would be the tempting reuse,
+ * but a status derivation that runs through a gate the Python projector cannot see would break
+ * parity (`study.parity.test.ts`) the first time a site's record facet locked with rows on disk.
+ * Gating belongs to the evidence band; the verdict reads the record.
+ */
+const recordGroupRows = (slug: string, groups: readonly string[]): number =>
+  feedRows(slug, "records") === 0
+    ? 0
+    : loadFeed<RecordItem[]>("records", slug).filter((r) => groups.includes(r.group)).length;
+
+/** The conveyance vocabulary `assembly` screens on. */
+const ASSEMBLY_GROUPS = ["land-assembly", "deeds"] as const;
+/** The decision-path vocabulary `governance` screens on. */
+const GOVERNANCE_GROUPS = ["local-legislation", "litigation"] as const;
+
 // --- the chapter registry ----------------------------------------------------------------
 
 /** The chapters whose screens the balance chapter aggregates (feed-shaped verdicts only —
@@ -329,6 +355,35 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       facilityState(slug) === "live"
         ? []
         : ["the IT load on the record is a screening bracket, not an instrument-grounded figure"],
+  },
+  {
+    id: "assembly",
+    part: "project",
+    title: "Land assembly & the deal",
+    dek: "How the land was put together, by whom, and what the paper trail says about when.",
+    // Corpus-keyed, not facility-keyed (#1969): assembly is screened against the site's OWN
+    // extracted record, and it takes no `notApplicable` — speculative assembly PRECEDES the
+    // announcement, which is the whole shape of the Lima story. A chapter that went `na` for a
+    // facility-less site could never report the assembly that happened before one was disclosed.
+    requiredFeeds: ["records"],
+    gap: {
+      wouldScreen:
+        "how the project's land was assembled — the conveyance chain, the buyers of record, and the dates.",
+      missingRecord:
+        "the recorded deeds and the option or purchase instruments for the campus parcels — none produced into this record.",
+      producer: "the county recorder and auditor — recorded instruments are public records",
+    },
+    references: [
+      { label: "Places & parcels", path: "/site/places", requiresFeed: "geo/campus" },
+      { label: "Timeline", path: "/timeline", requiresFeed: "timeline" },
+    ],
+    recordGroups: [...ASSEMBLY_GROUPS],
+    probe: (slug) =>
+      recordGroupRows(slug, ASSEMBLY_GROUPS) > 0
+        ? []
+        : [
+            "the record carries no conveyance instrument — the land history has not been produced for this site",
+          ],
   },
   // --- Part II · The environment ---
   {
@@ -533,6 +588,37 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     notApplicable: needsProject,
     // Curated-only, gap-first by design: no fiscal feed exists, and none is fabricated.
     derive: () => ({ status: "gap", reasons: ["no fiscal instrument is on the record"] }),
+  },
+  {
+    id: "governance",
+    part: "economy",
+    title: "Governance & the local record",
+    dek: "The ordinances, resolutions, votes, and minutes that approved — or refused — the project.",
+    // Corpus-keyed and deliberately NOT project-dependent (#1969). Mansfield is the corpus's
+    // first documented data-center REFUSAL: it carries a governance record and no facility at
+    // all, and a `needsProject` gate would read that refusal as "nothing to say here" — the
+    // exact framing this study exists to refute.
+    requiredFeeds: ["records"],
+    optionalFeeds: ["meetings"],
+    gap: {
+      wouldScreen:
+        "the public decisions that approved or refused the project — the ordinances, resolutions, roll-call votes, and the minutes that carry them.",
+      missingRecord:
+        "the legislative instruments and meeting minutes of the deciding bodies — none produced into this record.",
+      producer:
+        "the municipal clerk, the township trustees, and the county commissioners — R.C. 149.43 records",
+    },
+    references: [
+      { label: "Timeline", path: "/timeline", requiresFeed: "timeline" },
+      { label: "Open leads", path: "/leads", requiresFeed: "leads" },
+    ],
+    recordGroups: [...GOVERNANCE_GROUPS],
+    probe: (slug) =>
+      recordGroupRows(slug, GOVERNANCE_GROUPS) > 0 || feedRows(slug, "meetings") > 0
+        ? []
+        : [
+            "the record carries no legislative instrument and no minutes — the decision path has not been produced for this site",
+          ],
   },
   {
     id: "balance",
@@ -964,6 +1050,54 @@ const COMPOSERS: Record<string, (slug: string, facility: FacilityItem | null) =>
       );
     }
     return { stats: [], gaps: [], caveats };
+  },
+
+  // The two corpus-keyed composers (#1969). Each counts ONLY rows in the groups its chapter
+  // declares, so a `[verified]` stat exists exactly where `citeGroups` can resolve a destination
+  // for it — the citation invariant (`study.evidence.test.ts`) holds by construction rather than
+  // by a listed exemption.
+  assembly(slug) {
+    const rows = recordGroupRows(slug, ASSEMBLY_GROUPS);
+    if (rows === 0) return EMPTY_COMPOSITION;
+    return {
+      stats: [
+        {
+          label: "Conveyance instruments",
+          value: String(rows),
+          evidence: "verified",
+          basis: "grounded",
+          sub: "recorded deeds and assembly instruments on this site's record",
+        },
+      ],
+      gaps: [],
+      caveats: [
+        "A conveyance chain on the record is what was produced, not what exists — an assembly can run through options, nominees, and unrecorded agreements that no recorder's index will show.",
+      ],
+    };
+  },
+
+  // `meetings` is a STATUS signal for this chapter, never a stat. A minutes count has no
+  // destination in the evidence annex's three bands, so asserting one as `[verified]` would be a
+  // provenance claim the page can't honour — the precise thing `study.evidence.test.ts` forbids.
+  // The site's own meetings surface already carries that count, cited.
+  governance(slug) {
+    const instruments = recordGroupRows(slug, GOVERNANCE_GROUPS);
+    if (instruments === 0) return EMPTY_COMPOSITION;
+    return {
+      stats: [
+        {
+          label: "Legislative instruments",
+          value: String(instruments),
+          evidence: "verified",
+          basis: "grounded",
+          sub: "resolutions, ordinances, and filed court instruments on this site's record",
+        },
+      ],
+      gaps: [],
+      caveats: [
+        "An instrument on the record says what was enacted, not what was decided — the deliberation that produced it lives in minutes and audio that are separate records.",
+      ],
+    };
   },
 };
 

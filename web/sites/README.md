@@ -53,11 +53,17 @@ Notes on what's committed here vs. a raw export:
 - **`ask-embeddings.json` is present but empty** — exported with `--no-embeddings` to keep the
   tree offline and lean (no ~80 MB model download). Hybrid retrieval degrades to BM25-only over
   these committed bundles; the live per-site exports carry the real vectors.
-- **No `passages` / `passage-embeddings` feeds** — the page-level retrieval indexes (#1589) are
-  large (Lima's `passages.ndjson` is ~3.7 MB, LFS-resolved-PDF dependent) and every committed
-  bundle omits them. A raw export always emits both, so the regen step above drops the files
-  **and** their manifest entries; the frontend degrades to declaring-absent (`hasFeed` → `[]`),
-  and if the manifest declared them without the files the static build would `ENOENT`.
+- **No `passages` / `passage-embeddings` feeds — except van-wert.** The page-level retrieval
+  indexes (#1589) are large (Lima's `passages.ndjson` is ~3.7 MB, LFS-resolved-PDF dependent), so
+  a raw export always emits both and the regen step above drops the files **and** their manifest
+  entries; the frontend degrades to declaring-absent (`hasFeed` → `[]`), and if the manifest
+  declared them without the files the static build would `ENOENT`.
+
+  **`van-wert` is a deliberate exception** (#1963 / #1966) and ships its 243-row `passages.ndjson`
+  committed. **Do not run the drop step on it** — a blanket regen loop that applies the snippet to
+  every slug silently deletes committed retrieval evidence, which is how it bit #1969. Its
+  `passage-embeddings.ndjson` is committed too but empty (the `--no-embeddings` artifact), so the
+  manifest declares a 0-count feed against a 0-byte file, which is valid and must stay declared.
 
 ## Drift guard
 

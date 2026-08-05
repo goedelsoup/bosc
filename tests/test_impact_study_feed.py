@@ -29,11 +29,12 @@ from watermark.site.impact_study import (
 )
 from watermark.site.readiness import State
 
-_CV = "1.54.0"
+_CV = "1.55.0"
 
 _CHAPTER_IDS = [
     "method",
     "project",
+    "assembly",
     "water-supply",
     "discharge",
     "heat",
@@ -43,6 +44,7 @@ _CHAPTER_IDS = [
     "labor",
     "power",
     "fiscal",
+    "governance",
     "balance",
     "missing",
 ]
@@ -102,7 +104,7 @@ def _build(
     rows = build_impact_study(
         payloads, site=site, feed_counts=counts, facility_domain=facility_domain
     )
-    assert [r.chapter for r in rows] == _CHAPTER_IDS  # 13 chapters, registry order, always
+    assert [r.chapter for r in rows] == _CHAPTER_IDS  # 15 chapters, registry order, always
     return {r.chapter: r for r in rows}
 
 
@@ -299,7 +301,11 @@ def test_lima_reads_data_dominant_with_fiscal_the_one_gap(lima_bundle: Path) -> 
     rows = _impact_study(lima_bundle)
     statuses = {r["chapter"]: r["model"]["status"] for r in rows}
     assert statuses["fiscal"] == "gap"
-    assert sum(1 for s in statuses.values() if s == "data") == 12
+    # The two corpus-keyed chapters (#1969) read `data` on the reference build: Lima's records
+    # feed carries 6 `deeds` rows and a `local-legislation` row beside 46 meetings.
+    assert statuses["assembly"] == "data"
+    assert statuses["governance"] == "data"
+    assert sum(1 for s in statuses.values() if s == "data") == 14
     # The reference build's rows are facility-keyed to the primary campus.
     assert {r["facility_key"] for r in rows} == {"project-bosc"}
     assert all(r["model"]["facilityKey"] == r["facility_key"] for r in rows)

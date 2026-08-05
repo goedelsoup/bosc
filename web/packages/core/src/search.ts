@@ -631,7 +631,7 @@ export function buildSiteSearchIndex(slug: string): SearchDoc[] {
       });
     }
 
-    // The impact study's chapters. Every selectable site builds all thirteen — a chapter with no
+    // The impact study's chapters. Every selectable site builds all fifteen — a chapter with no
     // data is not a lock, it is the study *naming the gap*, which is the artifact's whole point
     // (`STUDY_CHAPTERS`, the missing-impact-study epic). So all of them are destinations.
     for (const c of STUDY_CHAPTERS) {

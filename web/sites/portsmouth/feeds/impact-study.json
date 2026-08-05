@@ -37,6 +37,22 @@
     }
   },
   {
+    "chapter": "assembly",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "assembly",
+      "facilityKey": null,
+      "status": "partial",
+      "statusReasons": [
+        "the record carries no conveyance instrument — the land history has not been produced for this site"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
     "chapter": "water-supply",
     "facility_key": null,
     "lead_ids": [],
@@ -197,6 +213,22 @@
       "status": "na",
       "statusReasons": [
         "No disclosed project — this chapter is computed the day one is on the record."
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "governance",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "governance",
+      "facilityKey": null,
+      "status": "partial",
+      "statusReasons": [
+        "the record carries no legislative instrument and no minutes — the decision path has not been produced for this site"
       ],
       "stats": [],
       "gaps": [],

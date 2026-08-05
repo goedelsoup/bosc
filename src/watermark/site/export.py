@@ -1107,7 +1107,7 @@ def _impact_study_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
     it re-derives each study chapter's verdict + model from the same sources the frontend's
     TS composers read (`web/packages/core/src/study.ts`), which prefer a shipped row wholesale
     — the parity suite over the committed bundles pins the two derivations equal. ALWAYS
-    emitted (13 rows, one per chapter — a facility-less site's project-dependent chapters are
+    emitted (15 rows, one per chapter — a facility-less site's project-dependent chapters are
     `na` watch states, not skips), so the schema set stays stable and every bundle's study is
     a committed artifact. The facility domain state is computed from the same
     `domain_states` inputs the manifest block gets below, so the shipped probe verdicts and
