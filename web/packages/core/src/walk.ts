@@ -62,15 +62,20 @@ export interface WalkAnchor {
  * storage, or routing). A `site` owner is the editorial case (owner `id` = the network-site slug);
  * a `user` owner is the reader-authored case (owner `id` = the authoring user's id). This file is
  * the **site-owned** implementation — recognized as one special case of the axis, no rename (#1092).
+ *
+ * **Named `ContentOwner`, not `WalkOwner` or `StoryOwner` (#1972).** It is the one type in this
+ * split that genuinely spans BOTH systems: a `site` owner owns an editorial walk, a `user` owner
+ * owns a reader-composed Story, and the Pages Functions type their user-owned rows with it. Naming
+ * it for either half would misdescribe the other.
  */
-export interface WalkOwner {
+export interface ContentOwner {
   kind: "site" | "user";
   /** A `site` owner's `id` is the network-site slug; a `user` owner's `id` is the user id. */
   id: string;
 }
 
 /** The site-owner for a network-site slug — the owner of that site's editorial stories. */
-export function siteOwner(site: string): WalkOwner {
+export function siteOwner(site: string): ContentOwner {
   return { kind: "site", id: site };
 }
 
@@ -79,7 +84,7 @@ export function siteOwner(site: string): WalkOwner {
  * later, featured user-owned ones); an account page lists a user's own. Matches on the `(kind, id)`
  * pair so a site slug and a user id sharing a string can never collide.
  */
-export function walksOwnedBy(stories: readonly Walk[], owner: WalkOwner): Walk[] {
+export function walksOwnedBy(stories: readonly Walk[], owner: ContentOwner): Walk[] {
   return stories.filter((s) => s.owner.kind === owner.kind && s.owner.id === owner.id);
 }
 
@@ -90,7 +95,7 @@ export interface Walk {
    * `{ kind: "site", id: site }`, so `owner.id === site`; the field is the substrate the
    * user-authored path (a DB-sourced `{ kind: "user", id }`) shares without a rename.
    */
-  owner: WalkOwner;
+  owner: ContentOwner;
   /** Registry slug of the site this story belongs to (the `bosc.sites` / map key). */
   site: string;
   /** Walk codename — the URL segment under the site's `stories/` and the store key. */
