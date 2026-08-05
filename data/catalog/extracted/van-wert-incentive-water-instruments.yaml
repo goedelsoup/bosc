@@ -1,0 +1,113 @@
+id: van-wert-incentive-water-instruments
+title: Van Wert — Mega Site Incentive and Water-Service Instruments, Searched to a Dated Negative
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Five independent routes run 2026-08-05 for issue 1407. (1) THE CITY — the open WordPress REST
+    media index at vanwert.org (298 attachments enumerated), which is the archive behind the
+    rolling /ordinances/ window; every council minute and ordinance uploaded since the 2026-05-11
+    Mega Site vote was downloaded and read, and four were committed to
+    data/documents/van-wert/council/ (the approved minutes of 2026-05-27, 2026-06-08 and
+    2026-07-13, plus the private-well ordinance 26-06-034). All are image-only scans with a
+    zero-character text layer, so every quotation was read via watermark.civic.indexer.ocr_pdf at
+    300 DPI and re-read at 450 DPI before being written down; the 2026-07-13 approval page was
+    verified VISUALLY (typed "Approved on: July 27, 2026" over wet-ink signatures). (2) THE COUNTY
+    — the Board of Commissioners' published 2026 agenda index, one page carrying all 63 meeting
+    dates from 2026-01-01 to 2026-08-06, captured to data/documents/van-wert/county/. (3) THE
+    SCHOOL DISTRICT — Lincolnview Local's BoardDocs portal (go.boarddocs.com/oh/lls), meeting list
+    and full agendas read by POST without auth for all twelve 2026 meetings. (4) THE STATE — the
+    Ohio Tax Credit Authority's minutes for 2026-06-01 and 2026-06-29 pulled from the Ohio DAM and
+    committed to data/documents/odd/tca/, the committed ODD tax-incentive export
+    (data/reference/odd/tax_incentives.csv, pulled 2026-06-28) queried directly, and the
+    Governor's 2026-05-27 pause notice captured to data/documents/odd/. (5) THE OPERATOR — a raw
+    capture of q.com/data-centers/van-wert to data/documents/van-wert/operator/.
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:van-wert
+storage:
+- relpath: extracted/van-wert/incentive-water-instruments.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/van-wert/incentive-water-instruments.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-08-05'
+provenance: document
+tags:
+- van-wert
+- van-wert-county
+- van-wert-mega-site
+- data-center
+- qts
+- incentives
+- enterprise-zone
+- development-agreement
+- tax-exemption
+- ohio-tax-credit-authority
+- water-service
+- private-wells
+- council-minutes
+- county-commissioners
+- lincolnview
+- aep-ohio
+notes: >-
+  Issue 1407 (under epic 1267; mirror of Urbana's 1354). THINGS TO CARRY. (1) THERE IS STILL NO
+  EXECUTED INCENTIVE INSTRUMENT AND NO WATER-SERVICE INSTRUMENT, and that is now a DATED negative
+  against five named routes rather than an unfound thing. The sentence that closes the first
+  thread is the City's own, from the approved minutes of 2026-07-13: "he reported the Brent
+  Stevens is concluding incentives and development agreements for the data center and hopes to
+  have those done by the next council meeting" — Brent Stevens being VWAED's Executive Director,
+  the same person who asked Council on 2026-05-04 to approve "the necessary incentives". It is the
+  first primary-source statement that an incentive package EXISTS as a negotiation, who is running
+  it, and when it was expected to close; and it fixes the negative, because one does not
+  "conclude" what is already signed. Type, term, percentage, counterparty and any school revenue
+  share are all [open]. The 2026-07-27 minutes were not published on 2026-08-05 — THAT IS THE
+  HIGHEST-VALUE RE-CHECK ON THIS FILE. (2) THE STATE EXEMPTION IS [open] AND THE PAUSE HELD. No
+  application, award or agenda item naming Van Wert, QTS, QTS Realty Trust Inc. or QTS Van Wert
+  LLC appears in ANY 2026 Ohio Tax Credit Authority minute, and the committed ODD export carries
+  ZERO QTS rows statewide and eight Van Wert County rows whose newest approval is 2022-06-22. The
+  last data-center exemption went to Cologix on 2026-06-01 (50 percent, 10 years, Delaware +
+  Licking counties) — FIVE DAYS AFTER the 2026-05-27 pause, which is consistent only if the pause
+  is read as written, applying to NEW requests. The 2026-06-29 meeting, the first wholly under it,
+  approved seven projects and zero data-center exemptions. A Van Wert item DOES appear there and
+  is NOT this campus — "Van Wert Forward II", a Transformational Mixed-Use Development item that
+  the ODD export carries as a 2022 Historic Preservation credit. Record that explicitly so a
+  keyword sweep for "Van Wert" in the state incentive record does not mistake it for a Mega Site
+  award. (3) THE 660,000-GALLON FIGURE IS THE CITY'S NUMBER, NOT THE OPERATOR'S. QTS's live page
+  declines to state a fill volume at all ("The total initial charging volume can vary widely …
+  it's hard to predict the exact amount of water needed"), while still asserting "The City of Van
+  Wert has approved our water usage" — an act that appears NOWHERE in the City's published record
+  through ordinance 26-07-040 and the 2026-07-13 minutes. The same page names the document that
+  would settle it: "the analysis completed by QTS and City engineering". That is now the
+  priority-1 records request. The page also states the loop "uses only water", against the City
+  Safety-Service Director's sealed "water and glycol" description — both stand, unreconciled.
+  (4) THE PRIVATE-WELL ORDINANCE DOES NOT SAY WHAT COUNCIL SAID IT SAYS. Council moved on
+  2026-06-08 to PROHIBIT new wells (its stated reason: an existing ordinance where "it is not
+  clear if industrial areas are covered"); the drafted Exhibit A of Ord. 26-06-034 instead makes
+  new private wells a CONDITIONAL use in every zoning classification, with no grandfather clause
+  and no geothermal exception in its own text. Introduced 2026-07-13, not passed. Reading it as
+  aimed at the campus is [inference]. (5) TWO REGISTER CORRECTIONS. The City's Safety-Service
+  Director stated on 2026-05-27 that the AEP Haviland-to-Van-Wert line — the one the register
+  associates with OPSB 25-0697-EL-BLN and with $45M/$72M cost figures — has been in planning "for
+  about 3 years" and "was not related to the Data Center"; that does not settle what the LON
+  covers but it is the only primary-source statement in the corpus on the question. And Ordinance
+  26-02-010, the City's franchise extension with Ohio Power (extending a 1975 ordinance), passed
+  2026-06-08 with its term CUT FROM 50 YEARS TO 10 twelve days earlier. (6) THE COUNTY PUBLISHES
+  AGENDAS, NOT JOURNAL ENTRIES — so nothing there evidences an action — but its 2026 index carries
+  zero enterprise-zone/abatement/QTS entries and three dated corroborations no other source had:
+  VWAED briefing the Commissioners on "Megasite End User Options" on 2026-02-12, three and a half
+  months before the end user was named; the petitioners' agent before the Board on 2026-03-10, the
+  date the annexation ordinance recites for the county resolution; and Ridge Township + the County
+  Engineer + the City on "Mendon Road and surrounding area expectations" on 2026-07-28, Mendon
+  Road being the campus's own address. (7) FOUR ROUTE NOTES WORTH REUSING: the Ohio Tax Credit
+  Authority publishes minutes on the Ohio DAM under TWO alternating filename patterns and only
+  after the FOLLOWING meeting approves them; BoardDocs is scriptable without auth
+  (BD-GetMeetingsList / BD-GetAgenda, committee id in the public page HTML) but rate-limits into a
+  CloudFront 403 and its attachment endpoint was not resolved here; a county that publishes only
+  agendas still yields a timeline; and the Van Wert media index can carry an attachment row whose
+  file 404s — the 2026-06-22 council minutes are exactly that, the one meeting in the window that
+  could not be read.

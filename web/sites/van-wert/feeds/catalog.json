@@ -524,6 +524,72 @@
     }
   },
   {
+    "id": "van-wert-incentive-water-instruments",
+    "title": "Van Wert — Mega Site Incentive and Water-Service Instruments, Searched to a Dated Negative",
+    "scope": "extracted",
+    "collection": "van-wert",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Five independent routes run 2026-08-05 for issue 1407. (1) THE CITY — the open WordPress REST media index at vanwert.org (298 attachments enumerated), which is the archive behind the rolling /ordinances/ window; every council minute and ordinance uploaded since the 2026-05-11 Mega Site vote was downloaded and read, and four were committed to data/documents/van-wert/council/ (the approved minutes of 2026-05-27, 2026-06-08 and 2026-07-13, plus the private-well ordinance 26-06-034). All are image-only scans with a zero-character text layer, so every quotation was read via watermark.civic.indexer.ocr_pdf at 300 DPI and re-read at 450 DPI before being written down; the 2026-07-13 approval page was verified VISUALLY (typed \"Approved on: July 27, 2026\" over wet-ink signatures). (2) THE COUNTY — the Board of Commissioners' published 2026 agenda index, one page carrying all 63 meeting dates from 2026-01-01 to 2026-08-06, captured to data/documents/van-wert/county/. (3) THE SCHOOL DISTRICT — Lincolnview Local's BoardDocs portal (go.boarddocs.com/oh/lls), meeting list and full agendas read by POST without auth for all twelve 2026 meetings. (4) THE STATE — the Ohio Tax Credit Authority's minutes for 2026-06-01 and 2026-06-29 pulled from the Ohio DAM and committed to data/documents/odd/tca/, the committed ODD tax-incentive export (data/reference/odd/tax_incentives.csv, pulled 2026-06-28) queried directly, and the Governor's 2026-05-27 pause notice captured to data/documents/odd/. (5) THE OPERATOR — a raw capture of q.com/data-centers/van-wert to data/documents/van-wert/operator/.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:van-wert",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-05",
+    "tags": [
+      "van-wert",
+      "van-wert-county",
+      "van-wert-mega-site",
+      "data-center",
+      "qts",
+      "incentives",
+      "enterprise-zone",
+      "development-agreement",
+      "tax-exemption",
+      "ohio-tax-credit-authority",
+      "water-service",
+      "private-wells",
+      "council-minutes",
+      "county-commissioners",
+      "lincolnview",
+      "aep-ohio"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/van-wert/incentive-water-instruments.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/incentive-water-instruments.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "5da85db7f1cbb8d16228ae47ff218eaf35fee36c9799dcd583d0ed7e6819569e",
+      "size_bytes": 64415,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Five independent routes run 2026-08-05 for issue 1407. (1) THE CITY — the open WordPress REST media index at vanwert.org (298 attachments enumerated), which is the archive behind the rolling /ordinances/ window; every council minute and ordinance uploaded since the 2026-05-11 Mega Site vote was downloaded and read, and four were committed to data/documents/van-wert/council/ (the approved minutes of 2026-05-27, 2026-06-08 and 2026-07-13, plus the private-well ordinance 26-06-034). All are image-only scans with a zero-character text layer, so every quotation was read via watermark.civic.indexer.ocr_pdf at 300 DPI and re-read at 450 DPI before being written down; the 2026-07-13 approval page was verified VISUALLY (typed \"Approved on: July 27, 2026\" over wet-ink signatures). (2) THE COUNTY — the Board of Commissioners' published 2026 agenda index, one page carrying all 63 meeting dates from 2026-01-01 to 2026-08-06, captured to data/documents/van-wert/county/. (3) THE SCHOOL DISTRICT — Lincolnview Local's BoardDocs portal (go.boarddocs.com/oh/lls), meeting list and full agendas read by POST without auth for all twelve 2026 meetings. (4) THE STATE — the Ohio Tax Credit Authority's minutes for 2026-06-01 and 2026-06-29 pulled from the Ohio DAM and committed to data/documents/odd/tca/, the committed ODD tax-incentive export (data/reference/odd/tax_incentives.csv, pulled 2026-06-28) queried directly, and the Governor's 2026-05-27 pause notice captured to data/documents/odd/. (5) THE OPERATOR — a raw capture of q.com/data-centers/van-wert to data/documents/van-wert/operator/.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "van-wert-mega-site-instruments",
     "title": "Van Wert — Mega Site Primary-Instrument Set (City Ordinances, Public Hearing, Council Minutes)",
     "scope": "extracted",
@@ -2438,7 +2504,7 @@
   },
   {
     "id": "odd-tca-minutes",
-    "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+    "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
     "scope": "reference",
     "collection": "odd",
     "status": "reviewed",
@@ -2452,7 +2518,7 @@
     "site_scope": "state:OH",
     "cadence": "on-demand",
     "ttl_days": null,
-    "last_refreshed": "2026-06-29",
+    "last_refreshed": "2026-08-05",
     "tags": [
       "odd",
       "tca",
@@ -2483,14 +2549,24 @@
         "relpath": "documents/odd/tca/Meeting_Minutes_TCA_3.30.2026.pdf",
         "media_type": "application/pdf",
         "lfs": true
+      },
+      {
+        "relpath": "documents/odd/tca/TCA_Meeting_Minutes_6.1.2026.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/odd/tca/Meeting_Minutes_TCA_6.29.2026.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "648ed41712af089ef2eab13fad98ee7ac109eccc7b39887a2249de2948d85b42",
-      "size_bytes": 790174,
+      "sha256": "b0a63ca19ddcb264175bbbd47438a7e77012316a0fe4c1700a0e45a2b6f1725d",
+      "size_bytes": 1188175,
       "lfs_materialized": true,
-      "file_count": 4,
+      "file_count": 6,
       "stale": false,
       "asof": null
     },

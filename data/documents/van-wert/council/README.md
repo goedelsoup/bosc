@@ -38,9 +38,17 @@ are in [`filename-map.yaml`](filename-map.yaml).
 | `26-05-030-draft-ordinance.pdf` | **Ord. 26-05-030** body — the §150.12(C) conditional zoning petition, filed 2026-03-09 |
 | `26-05-030.pdf` | Its Exhibits A/B/C, including **Exhibit C — the entire set of conditions**: a landscape mound, and nothing else |
 | `5.11.26.pdf` | The **passage record** — all three suspended the rules and passed on first and final reading as emergencies, with **no numeric tally recorded** |
+| `5.27.26.pdf` | *(#1407)* The AEP franchise term **cut from 50 years to 10**, and the Safety-Service Director's statement that the Haviland power-line upgrade **"was not related to the Data Center"** |
+| `6.8.26.pdf` | *(#1407)* The **Ohio Power franchise passed** (an extension of a **1975** ordinance), and the motion that ordered a private-well ordinance because it was unclear whether **industrial areas** were covered |
+| `26-06-034-DRAFT.pdf` | *(#1407)* **Ord. 26-06-034** — new §150.41 "Private Wells". Its Exhibit A makes new wells a **conditional** use in every zoning class; it does **not** prohibit them, and contains no grandfather clause or geothermal exception |
+| `7.13.26.pdf` | *(#1407)* **The incentive statement** — VWAED's Executive Director "is concluding incentives and development agreements for the data center and hopes to have those done by the next council meeting" |
 
 ## Custody caveats
 
+0. **The minutes are signed; the ordinances are not.** The approval page of each set of minutes
+   carries wet-ink Clerk and Council-President signatures over a **typed** "Approved on: <date>"
+   (verified visually at 300 DPI on `7.13.26.pdf` p. 7 — never read a Van Wert approval date from
+   OCR alone; see the `5.11.26.pdf` note in `filename-map.yaml` for why).
 1. **No ordinance file here is signed or certified.** All six were uploaded 2026-05-07 17:10 UTC,
    four days before the vote, and each prints an unfilled `Passed this ___ day of ___, 2026`.
    Passage is evidenced by the approved minutes, not by the ordinance PDFs. Certified copies are a
@@ -56,6 +64,24 @@ are in [`filename-map.yaml`](filename-map.yaml).
 4. **The record names two things it does not contain**: the written comments "retained in the
    Clerk's official file" and the hearing's audio/video recording "maintained as part of the
    official record by the Clerk of Council." Both are records requests.
+
+## The second retrieval (2026-08-05, #1407)
+
+Four more documents, same route, covering the council record forward from the Mega Site vote:
+2026-05-27, 2026-06-08 and 2026-07-13, plus the one ordinance in that window that touches the
+campus's water question. The incentive/water-service search they belong to is
+[`data/extracted/van-wert/incentive-water-instruments.yaml`](../../../extracted/van-wert/incentive-water-instruments.yaml).
+
+**The gap in that set is the 2026-06-22 meeting.** The City's own media index carries an
+attachment row for it and the file 404s — the row outlived the upload. It is the one council
+meeting between the well motion and the incentive report whose minutes could not be read.
+
+Excluded on purpose from that window, with reasons in `filename-map.yaml`: the 2027 tax budget
+(`25-06-028` / `26-06-033`), a CSO supplemental appropriation (`26-05-032`), the Butterfly Meadows
+solar lease (`26-06-035` — an energy instrument, flagged for the grid line of work), a
+tree-commission repeal, door-to-door sales, a handicap parking space, a smoking prohibition, and
+the `26-07-039` annexation of 49.682 ac (including an Ohio Power parcel) that the Law Director
+explained on the record as a sanitary equalization basin, not the Mega Site.
 
 ## What is NOT here
 

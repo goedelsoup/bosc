@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "b11014a085743e51d2d3e5618bb0aff0071e2df30739c5c08b569da77e70b239",
+  "catalog_version": "628c6bcd835174d1e415f25001041e8b9831fca068150b1aaada34974131477f",
   "contract_version": "1.53.0",
   "atoms": [
     {
@@ -912,7 +912,7 @@
       "kind": "dataset",
       "site": "van-wert",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {
@@ -1057,6 +1057,14 @@
       "site": "van-wert",
       "local_id": "van-wert-construction-stormwater",
       "title": "Van Wert — QTS Campus Construction-Stormwater Coverage 2GC08872*AG (OHC000006) Extractions",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:van-wert-incentive-water-instruments",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "van-wert-incentive-water-instruments",
+      "title": "Van Wert — Mega Site Incentive and Water-Service Instruments, Searched to a Dated Negative",
       "feed": "catalog"
     },
     {

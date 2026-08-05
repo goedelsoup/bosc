@@ -81,9 +81,9 @@ Source: Ohio Department of Development public transparency portal — direct exp
 | --- | --- | --- |
 | `reference/odd/tax_incentives.csv` | text/csv | no |
 
-### `odd-tca-minutes` — Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)
+### `odd-tca-minutes` — Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)
 
-Source: Ohio Tax Credit Authority public meeting minutes · License: Public records (Ohio state government) · Access: public · Site scope: state:OH · Refresh: on-demand, last 2026-06-29
+Source: Ohio Tax Credit Authority public meeting minutes · License: Public records (Ohio state government) · Access: public · Site scope: state:OH · Refresh: on-demand, last 2026-08-05
 
 | file | type | lfs |
 | --- | --- | --- |
@@ -91,5 +91,7 @@ Source: Ohio Tax Credit Authority public meeting minutes · License: Public reco
 | `documents/odd/tca/Meeting_Minutes_6.2.2025.pdf` | application/pdf | yes |
 | `documents/odd/tca/Meeting_Minutes_TCA_1.28.2026_gyzb8y.pdf` | application/pdf | yes |
 | `documents/odd/tca/Meeting_Minutes_TCA_3.30.2026.pdf` | application/pdf | yes |
+| `documents/odd/tca/TCA_Meeting_Minutes_6.1.2026.pdf` | application/pdf | yes |
+| `documents/odd/tca/Meeting_Minutes_TCA_6.29.2026.pdf` | application/pdf | yes |
 
 <!-- catalog:end -->
