@@ -1,0 +1,115 @@
+---
+chapter: discharge
+live: true
+updated: "2026-08-05"
+---
+
+Every water finding is a fraction. The numerator is what a facility puts in the river; the
+denominator is what the river has to dilute it with. Get the denominator wrong and every number
+downstream of it is wrong by the same factor — which is exactly what happened here.
+
+## There is no dilution
+
+<Cite record="oepa/findlay/2PD00008.fs.npdes.yaml">Table 12 of the fact sheet gives the design low
+flows at the outfall</Cite>: an annual **7Q10 of 0.21 cfs** against the plant's **23.208 cfs**
+average design flow — roughly **110 times** the river's low flow. Ohio EPA does the arithmetic
+itself on page 13:
+
+> Acute Dilution Ratio = (1Q10 + WWTP flow rate) / WWTP flow rate = (0.17 + 23.2) / 23.2 = **1.0**
+
+A ratio of 1.0 is the floor of that calculation. At design flow, below River Mile 56.42, **the
+Blanchard River is the effluent** — and the acute wasteload allocation that follows is expressed as
+30 percent mortality in 100 percent effluent. `[verified]`
+
+## The denominator that was wrong
+
+This network used to screen Findlay against **8.67 cfs**, a statistical fit at USGS gage 04189000,
+which put the effluent at 2.68× the low flow. That number is retired for this reach on two grounds,
+neither arguable: `[verified]`
+
+**The gage sits below the outfall** — about 1.1 miles west-northwest, on a reach the Blanchard runs
+westward, so the flow it measured already contained the discharge it was being used to screen.
+**And the gage is regulated:** the station's own REMARKS record that water is diverted upstream into
+Findlay Reservoir and released for low-flow augmentation. A gage downstream of a municipal
+augmentation scheme measures a *managed* flow, and using it as an assimilative denominator credits
+the discharger with water the city itself is releasing.
+
+Where the Blanchard is genuinely unregulated, USGS publishes a 7Q10 of 0.03 cfs, and 0 cfs for its
+Eagle Creek tributary. The 0.21 cfs Ohio EPA computed at RM 56.42 is consistent with those; the 8.67
+never was. Corrected, the screen reads **0.009:1** — about **41× tighter** than the figure it
+replaced.
+
+Interrogate the gage before using its number. Two questions settle most of it: *is it upstream or
+downstream of the thing I am screening*, and *is the flow it measures regulated by anybody?* Both
+answers were printed in the station's own metadata all along.
+
+## The phosphorus finding that was retracted
+
+The rest of this chapter exists because a finding turned out to be stale, and the way that was
+discovered is worth more than the finding was.
+
+The work on Findlay was commissioned around a clean, damning sentence: *the sewage plant runs over
+its phosphorus allocation every reported year, shielded from consequence by a general-permit
+bubble.* That was a correct reading of the evidence available when it was written. The first thing
+this chapter has to say is that the evidence moved.
+
+## What the TMDL says
+
+<Cite record="findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml">The Maumee Watershed Nutrient TMDL
+assigns Findlay WPCF a spring wasteload allocation of 3.2 metric tons</Cite> of total phosphorus,
+restated as a **3,200 kg Individual Load Limit** by general permit `OHP000001`. Appendix 4's record
+of what the plant discharged runs 2017 through 2021: 4.8, 5.5, 5.3, 5.5 and 5.4 metric tons — over
+the allocation by 50 to 72 percent in every reported year. `[verified]`
+
+Read that table's **columns** before its numbers. Table A4.5 prints seven numeric columns per
+facility and they are `2008 / WLA / 2017 / 2018 / 2019 / 2020 / 2021` — not a left-to-right time
+series. Findlay's row is `4.4 · 3.2 · 4.8 · 5.5 · 5.3 · 5.5 · 5.4`. Read naively, the first two
+numbers look like the start of a trend; they are a 2008 baseline and the allocation itself.
+
+And on this record it was **not a violation of anything.** `OHP000001` Part IV.C.3 makes an
+individual exceedance a violation only when the 39-facility *cumulative* load also breaches its cap.
+In the 2024 spring season the group reported 43,304 kg against a 64,170 kg cap. So long as the
+bubble holds, a plant running half again over its own allocation is compliant by the permit's own
+terms. `[verified]`
+
+## Rebuilding the number
+
+After 2021 the individual record stops — the 2024 Biennial Report publishes only the group total.
+It is still answerable, because the general permit publishes its own load equation
+(`Load = C_M × Q_S × F`) and every input is in the reported effluent record. Reconstructed from the
+DMRs: `[inference]`
+
+| Spring season | Median mg/L | Season volume MG | Derived load kg | Against 3,200 kg |
+|---|---|---|---|---|
+| 2023 | 0.730 | 1,610 | **4,450** | 139% — over |
+| 2024 | 0.400 | 1,820 | **2,756** | 86% — under |
+| 2025 | 0.420 | 1,951 | **3,101** | 97% — too close to call |
+
+The 2023 season — the last spring before the general permit took effect — is consistent with the
+TMDL's 2017–2021 record and comfortably over. **The 2024 season, the first the general permit
+governed, is 1.7 metric tons lower.** The plant is not running at 5.4 MT any more, and the framing
+this site was commissioned on no longer describes it.
+
+What changed is seasonal and visible in the monthly data: before the general permit the two halves
+of the year are indistinguishable; from 2024 onward the plant runs ~0.40 mg/L inside March–July and
+~0.75 mg/L outside it, against a concentration limit of 1.0 mg/L that never changes. The non-spring
+concentration did not rise, so this reads as extra treatment during the season rather than load
+pushed out of it — though the corpus holds no operating record, so the *cause* is inference.
+
+<Callout variant="open">
+  **The 2025 season cannot be called, and it is not called here.** The median that would put 2025
+  exactly at 3,200 kg is 0.4334 mg/L, which falls *between* that season's 0.42 cluster and its 0.48
+  March mean. The permit takes the median of every sample in the season; the eDMR publishes only
+  monthly averages, so this is a median of five monthly means, and a within-month distribution
+  modestly different could put the true median on either side. Compute the break-even: if your data
+  cannot distinguish it from the value you used, the honest output is "not called" — not the number
+  you happen to have got.
+</Callout>
+
+The trend 4,450 → 2,756 → 3,101 kg is not a trend toward safety, and the live question is no longer
+whether the bubble is holding but whether the margin is closing. The authoritative figure —
+parameter 51451, the permittee's own calculated load — is not withheld so much as unreachable: it
+does not appear in this permit's effluent chart at all, and pulling the general permit returns a
+chart with zero DMR rows. **August 20 is the cheapest check on this page:** re-pull the effluent
+chart after the July eDMR is due and look for 51451. If it appears it supersedes every derived
+figure above.

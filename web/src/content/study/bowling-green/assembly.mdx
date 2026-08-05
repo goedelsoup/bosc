@@ -1,0 +1,38 @@
+---
+chapter: assembly
+live: true
+updated: "2026-08-05"
+---
+
+Twelve contiguous parcels in Middleton Township — **775.020 deeded acres**, whose union is a single
+polygon about 1,821 by 2,489 metres — all carry the same owner of record:
+<Cite record="bowling-green/land-assembly.yaml">**LIAMES, LLC**</Cite>. `[verified]`
+
+**Eight of the twelve mail their tax bills to `1 META WAY, MENLO PARK, CA 94025`.** `[verified]`
+That is Meta's own headquarters sitting in a county tax field, independent of any announcement.
+Four of the twelve go somewhere else entirely, to 52 E Gay St, Columbus. A billing address is not
+ownership of the LLC, and the distance between those two statements is the whole discipline of this
+chapter.
+
+## What the layer proves, and the three things it structurally cannot
+
+This register is compiled from the Wood County auditor's CAMA parcel layer, not from a stack of
+deed images — a *compiled register*, not an *instrument read*. Reading it honestly means reading
+its limits first.
+
+1. **It keeps only the last conveyance per parcel**, so every grantor is invisible. The two
+   2025-04-09 quitclaim consolidations carrying 519 of the 775 acres folded in eleven predecessor
+   tracts and erased their purchase prices. The $6,921,460 of surviving consideration is a floor on
+   a fraction — never what the assembly cost.
+2. **It has no `editingInfo`, so it must be dated from the data.** The maximum sale date across all
+   73,839 rows is 2025-07-25, with zero rows after it. Every negative drawn from this layer is a
+   statement about July 2025 and nothing later.
+3. **It serves one row per polygon PART.** Deduping on parcel id drops land; summing the acreage
+   double-counts. Union the geometry, take the acreage once.
+
+<Callout variant="open">
+  Because the register keeps only last conveyances, **who sold it** is still an open question at the
+  end of this chapter. The Ohio Secretary of State's business search refuses automated retrieval, so
+  Liames LLC's organizers and statutory agent are unread, and the Meta attribution rests on Meta's
+  own announcement rather than on a corporate filing.
+</Callout>
