@@ -13,15 +13,19 @@ import RecordTeardown from "~/components/RecordTeardown.astro";
 import { OPC_TEARDOWN, RDA_TEARDOWN } from "@watermark/core/teardowns";
 
 // Literal braces would be parsed as JSX expressions inside markup, so the
-// contract snippet is a plain string.
+// contract snippet is a plain string. It names the REAL props: one `TeardownRecord` (which
+// carries its own citation) and the layout. It used to read `record={ recordId, citation }`,
+// which is a comma expression — valid JS that evaluates to `citation` alone, so the snippet
+// documented a call that would pass the wrong thing.
 const contractSnippet = `<RecordTeardown
-  record={ recordId, citation }
+  record={OPC_TEARDOWN}
   layout="split | scroll | annotated"
 />`;
 ---
 
 <p class="td-showcase-lead">
-  One reusable, data-driven pattern — props are <strong>a record + a citation</strong> — that makes the
+  One reusable, data-driven pattern — props are <strong>a record, which carries its own
+  citation</strong> — that makes the
   <strong>source → structured read → meaning → verify → connect</strong> transformation visible. One
   component, a selectable <code>layout</code> prop, three teaching shapes. Shown on the Tetra Tech Opinion
   of Probable Cost.
@@ -33,8 +37,9 @@ const contractSnippet = `<RecordTeardown
     <h2>The contract</h2>
     <pre>{contractSnippet}</pre>
     <p class="td-note">
-      Authoring a new teardown = pick a record, write three sentences. Same feeds as the library — the data
-      never forks.
+      One <code>TeardownRecord</code> from <code>@watermark/core/teardowns</code> — the citation rides
+      on the record, not beside it — plus the layout. Authoring a new teardown = pick a record, write
+      three sentences. Same feeds as the library — the data never forks.
     </p>
   </div>
   <div class="td-contract-col">

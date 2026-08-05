@@ -460,10 +460,16 @@ describe("availableFacetPaths (#1894)", () => {
 });
 
 describe("openSectionPaths (#1894)", () => {
-  it("emits a section's interior pages only where the section is open", () => {
+  it("emits a section's interior pages at exactly the sites where the section is open", () => {
+    // Set EQUALITY, not "every emitted one is open". The one-directional form passes on a
+    // regression that drops an open site — which is the failure that loses seven real report pages
+    // rather than seven copies of a lock.
     const emitted = openSectionPaths("reports").map((p) => p.props.slug);
+    const open = selectableSitePaths()
+      .map((p) => p.props.slug)
+      .filter((slug) => isAvailable(slug, "reports"));
+    expect(emitted).toEqual(open);
     expect(emitted).toContain("lima");
-    for (const slug of emitted) expect(isAvailable(slug, "reports"), slug).toBe(true);
   });
 
   it("locks the reports section on a peer — the seven companions used to render one lock each", () => {
@@ -501,6 +507,16 @@ describe("siteRouteOffered (#1894)", () => {
   });
 
   it("ignores a fragment or query on the way in", () => {
+    // Asserted on a CLOSED route, which is the only place it can fail. On Lima both are open, so
+    // dropping the strip would leave the path unmatched by every gate, fall through to the
+    // defaults-open branch, and still answer `true` — a test that cannot go red.
+    const shut = selectableSitePaths()
+      .map((p) => p.props.slug)
+      .find((slug) => !isAvailable(slug, "reports") && !facetAvailable(slug, "people"));
+    expect(shut, "no site locks both reports and people — this asserts nothing").toBeDefined();
+    expect(siteRouteOffered(shut as string, "/reports/the-load-and-the-grid#chain")).toBe(false);
+    expect(siteRouteOffered(shut as string, "/site/people/?q=x")).toBe(false);
+    // …and the open answers still come back open, so the strip isn't over-matching.
     expect(siteRouteOffered("lima", "/reports/the-load-and-the-grid#chain")).toBe(true);
     expect(siteRouteOffered("lima", "/site/people/?q=x")).toBe(true);
   });

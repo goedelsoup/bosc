@@ -42,6 +42,13 @@ export async function getStaticPaths() {
 const { slug, codename } = Astro.props as { slug: string; codename: string };
 const story = storyFor(slug, codename) as Story;
 const firstSlug = story.chapters[0]?.slug ?? "";
+// Counted, not written down. This route renders for EVERY registered story on every host site, and
+// the copy used to say "six chapters" and "all six are live" — true of Lima's walk and of nothing
+// guaranteed about the next one. `StoryChapters` renders each chapter's real `live` state right
+// underneath, so a hardcoded claim doesn't just age, it gets contradicted in place.
+const total = story.chapters.length;
+const allLive = total > 0 && story.chapters.every((c) => c.live);
+const drafting = story.chapters.filter((c) => !c.live).length;
 // The codename segment is a URL key; the trail wants the story's name (#1889).
 const trailLabels = { [codename]: story.title };
 ---
@@ -49,7 +56,7 @@ const trailLabels = { [codename]: story.title };
 <Base
   title="The story"
   section="story"
-  description="The narrative spine over the BOSC record: six chapters that tell the story and teach you to read the documents."
+  description={`The narrative spine over this site's record: ${total} chapters that tell the story and teach you to read the documents.`}
   trailLabels={trailLabels}
 >
   <div class="walk-onramp">
@@ -57,7 +64,7 @@ const trailLabels = { [codename]: story.title };
     <div class="walk-kicker">Watermark · story</div>
     <h1>The story, chapter by chapter</h1>
     <p class="walk-onramp-lead">
-      Six chapters, ordered cause → consequence. Each advances the story and
+      {total} chapters, ordered cause → consequence. Each advances the story and
       teaches one record-reading skill, anchored to a real document you can open
       and check. Follow it straight through, or drop into any chapter and peel off
       into the library when something catches your eye.
@@ -66,8 +73,18 @@ const trailLabels = { [codename]: story.title };
     <StoryChapters story={story} variant="full" />
 
     <p class="stub-note">
-      All six chapters are live, end to end — each teaches one record-reading
-      skill through the Record Teardown pattern, in cause → consequence order.
+      {allLive ? (
+        <Fragment>
+          All {total} chapters are live, end to end — each teaches one record-reading
+          skill through the Record Teardown pattern, in cause → consequence order.
+        </Fragment>
+      ) : (
+        <Fragment>
+          {total - drafting} of {total} chapters are live — each teaches one record-reading
+          skill through the Record Teardown pattern, in cause → consequence order. The rest
+          are drafting, and say so above.
+        </Fragment>
+      )}
     </p>
 
     <div class="walk-cta">
