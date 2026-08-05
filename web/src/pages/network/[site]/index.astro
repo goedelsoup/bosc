@@ -3,7 +3,7 @@
  * The site home (design "Site Home" → the Live state). Lima is the live reference build, so the
  * front door renders the design's Live composition: hero + the facility chip + a real open-leads
  * pointer, the two doors (record / the story), the "The story · six chapters" grid, the corpus
- * strip, and the provenance footer. The orientation prose folded into the story home (STORY_BASE).
+ * strip, and the provenance footer. The orientation prose folded into the story home (WALK_BASE).
  * `phase` is a prop on the design; here it's fixed to Live (the other phases need per-site leads /
  * contributor feeds Lima doesn't have — building them would mean fabricating). Real feeds throughout.
  */
@@ -18,7 +18,7 @@ import { NARRATIVE } from "@watermark/core/narrative";
 import { siteHomePromotions } from "@watermark/core/nav";
 import {
   activeSite,
-  comingSoonStories,
+  comingSoonWalks,
   FACILITY_STATUS_META,
   facilityStatus,
   selectableSitePaths,
@@ -27,7 +27,7 @@ import {
 } from "@watermark/core/sites";
 import type { FigureStatData } from "@watermark/core/viz";
 import { studyStatusSummary } from "@watermark/core/study";
-import { activeStory, chapterHref } from "@watermark/core/walk";
+import { activeWalk, chapterHref } from "@watermark/core/walk";
 import { withBase, withSite, withStory } from "@watermark/core/site";
 
 // One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
@@ -49,9 +49,9 @@ const nDocuments = docCollections.reduce((a, c) => a + c.entries.length, 0);
 // The readable guided walk surfaces only when THIS site surfaces a story. Lima's Project BOSC is
 // `comingSoon` (#1526), so `story` is undefined — the readable door + chapter grid drop, and the
 // coming-soon story (title/dek retained) drives a visible teaser in their place instead.
-const story = activeStory();
+const story = activeWalk();
 const nChapters = story?.chapters.length ?? 0;
-const comingSoonStory = comingSoonStories(slug)[0];
+const comingSoonStory = comingSoonWalks(slug)[0];
 const nLeads = count("leads");
 
 // The facility clock (separate from the site-build clock) — the active site's campus lifecycle.

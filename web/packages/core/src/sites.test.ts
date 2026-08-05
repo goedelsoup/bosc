@@ -8,7 +8,7 @@ import {
   ACTIVE_SITE_SLUG,
   activeSite,
   comingSoonSites,
-  comingSoonStories,
+  comingSoonWalks,
   FACILITY_STAGES,
   facilityStageIndex,
   facilityStatus,
@@ -21,11 +21,11 @@ import {
   siteBadge,
   siteForPath,
   siteForSlug,
-  siteRegistersStory,
+  siteRegistersWalk,
   siteRollup,
-  storyComingSoon,
-  storyHostSites,
-  surfacedStories,
+  walkComingSoon,
+  walkHostSites,
+  surfacedWalks,
 } from "./sites";
 
 // `facilityStatus` is bundle-backed (#1628), so the facility-rail assertions below read the
@@ -149,13 +149,13 @@ describe("the surviving walk — one method demo, not a per-site obligation (#19
     // Lima's survives standalone as the network's ONE worked example of reading a record document
     // by document. A new site does not owe the network a walk; that expectation is what #1968
     // retired, and this assertion is where its return would be caught.
-    expect(storyHostSites().map((s) => s.slug)).toEqual(["lima"]);
+    expect(walkHostSites().map((s) => s.slug)).toEqual(["lima"]);
     const lima = siteForSlug("lima")?.stories ?? [];
     expect(lima.map((s) => s.codename)).toEqual(["project-bosc"]);
     expect(lima.every((s) => !s.comingSoon && !s.hidden)).toBe(true);
-    expect(surfacedStories("lima").map((r) => r.codename)).toEqual(["project-bosc"]);
-    expect(comingSoonStories("lima")).toHaveLength(0);
-    expect(storyComingSoon("lima", "project-bosc")).toBe(false);
+    expect(surfacedWalks("lima").map((r) => r.codename)).toEqual(["project-bosc"]);
+    expect(comingSoonWalks("lima")).toHaveLength(0);
+    expect(walkComingSoon("lima", "project-bosc")).toBe(false);
   });
 
   it("the absorbed walks register nothing, on any surface", () => {
@@ -164,24 +164,24 @@ describe("the surviving walk — one method demo, not a per-site obligation (#19
     // precisely the state `walk.test.ts` refuses to resolve.
     for (const slug of ["fort-wayne", "findlay", "bowling-green"]) {
       expect(siteForSlug(slug)?.stories ?? [], `${slug} still registers a walk`).toHaveLength(0);
-      expect(surfacedStories(slug)).toHaveLength(0);
-      expect(comingSoonStories(slug)).toHaveLength(0);
+      expect(surfacedWalks(slug)).toHaveLength(0);
+      expect(comingSoonWalks(slug)).toHaveLength(0);
     }
-    expect(siteRegistersStory("fort-wayne", "project-zodiac")).toBe(false);
-    expect(siteRegistersStory("findlay", "flagpole")).toBe(false);
-    expect(siteRegistersStory("bowling-green", "project-accordion")).toBe(false);
+    expect(siteRegistersWalk("fort-wayne", "project-zodiac")).toBe(false);
+    expect(siteRegistersWalk("findlay", "flagpole")).toBe(false);
+    expect(siteRegistersWalk("bowling-green", "project-accordion")).toBe(false);
   });
 
   it("registration is still a REGISTRY check, and the held/hidden states still exist unused", () => {
     // The `comingSoon` + `hidden` mechanisms survive in code for the next walk that needs holding
     // (#1526/#1527); nothing registers them today, and that is a state, not a deletion.
-    expect(siteRegistersStory("lima", "project-bosc")).toBe(true);
-    expect(siteRegistersStory("urbana", "flagpole")).toBe(false);
-    expect(siteRegistersStory("lima", "nope")).toBe(false);
+    expect(siteRegistersWalk("lima", "project-bosc")).toBe(true);
+    expect(siteRegistersWalk("urbana", "flagpole")).toBe(false);
+    expect(siteRegistersWalk("lima", "nope")).toBe(false);
     expect(SITES.every((s) => (s.stories ?? []).every((r) => !r.hidden && !r.comingSoon))).toBe(true);
     // A site with no registered walk is neither surfaced nor coming-soon (nothing to advertise).
-    expect(surfacedStories("urbana")).toHaveLength(0);
-    expect(storyComingSoon("urbana", "project-bosc")).toBe(false);
+    expect(surfacedWalks("urbana")).toHaveLength(0);
+    expect(walkComingSoon("urbana", "project-bosc")).toBe(false);
   });
 });
 

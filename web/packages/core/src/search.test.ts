@@ -16,8 +16,8 @@ import { facetAvailable } from "./readiness";
 import { networkEntities } from "./networkEntities";
 import { LIMA_SLUG, siteBase } from "./routes";
 import { buildNetworkSearchIndex, buildSiteSearchIndex, searchShardRefs, type SearchDoc } from "./search";
-import { comingSoonStories, SITES } from "./sites";
-import { storyFor } from "./walk";
+import { comingSoonWalks, SITES } from "./sites";
+import { walkFor } from "./walk";
 
 const SELECTABLE = SITES.filter((s) => s.selectable).map((s) => s.slug);
 /** Every site that ships a shard — the selectable ones plus any peer publishing a walk (#1907). */
@@ -382,7 +382,7 @@ describe("a held story (#1907/#1971)", () => {
     // survives in `sites.ts` for the next walk that needs holding, and this binds again the moment
     // one does — so it is kept rather than deleted, with the emptiness asserted below so it cannot
     // rot into a test that silently checks nothing.
-    const held = SITES.flatMap((s) => comingSoonStories(s.slug).map((ref) => ({ site: s, ref })));
+    const held = SITES.flatMap((s) => comingSoonWalks(s.slug).map((ref) => ({ site: s, ref })));
     expect(held).toEqual([]);
     for (const { site, ref } of held) {
       const root = `${siteBase(site.slug)}/stories/${ref.codename}/`;
@@ -401,8 +401,8 @@ describe("a held story (#1907/#1971)", () => {
     // #1529's guarantee, carried into search: the content is held, so the only thing a row may
     // carry is the title and dek the teaser already advertises.
     for (const site of SITES) {
-      for (const ref of comingSoonStories(site.slug)) {
-        const story = storyFor(site.slug, ref.codename);
+      for (const ref of comingSoonWalks(site.slug)) {
+        const story = walkFor(site.slug, ref.codename);
         expect(story, `${site.slug}/${ref.codename} has no chapters to guard against`).toBeDefined();
         const root = `${siteBase(site.slug)}/stories/${ref.codename}/`;
         const urls = new Set(buildSiteSearchIndex(site.slug).map((d) => d.url));

@@ -30,7 +30,7 @@ const REGION = "us-east-2";
 const POOL = "us-east-2_test";
 const CLIENT = "client-123";
 
-// One resolvable atom lives in the stubbed catalog; a Story citing it validates, one citing
+// One resolvable atom lives in the stubbed catalog; a Walk citing it validates, one citing
 // `record:lima:zzz` does not.
 const CATALOG_ATOMS = [
   { handle: "record:lima:a", kind: "record", site: "lima", localId: "a", title: "A deed", feed: "records" },
@@ -93,7 +93,7 @@ const anyCtx = (request: Request, e: Record<string, unknown>, shareId = "") => (
 const validBody = (over: Record<string, unknown> = {}) => ({
   site: "lima",
   slug: "my-story",
-  title: "My Story",
+  title: "My Walk",
   source_format: "dsl",
   source_text: '## Intro\n\n:::atom{handle="record:lima:a"}\n:::\n',
   ...over,
@@ -147,7 +147,7 @@ describe("/api/stories — CRUD lifecycle", () => {
     const detail = (await got.json()) as {
       story: { title: string; refs: { handle: string }[]; sdm: { blocks: unknown[] } };
     };
-    expect(detail.story.title).toBe("My Story");
+    expect(detail.story.title).toBe("My Walk");
     expect(detail.story.refs.map((r) => r.handle)).toEqual(["record:lima:a"]);
     expect(detail.story.sdm.blocks.length).toBeGreaterThan(0);
 
@@ -240,7 +240,7 @@ describe("/api/stories/shared/:shareId — public read (#1098)", () => {
     const pub = await getShared(anyCtx(new Request(`${BASE}/shared/${share_id}`), env(db), share_id));
     expect(pub.status).toBe(200);
     const detail = (await pub.json()) as { story: { title: string; refs: unknown[] } };
-    expect(detail.story.title).toBe("My Story");
+    expect(detail.story.title).toBe("My Walk");
     expect(detail.story.refs.length).toBe(1);
 
     const miss = await getShared(anyCtx(new Request(`${BASE}/shared/nope`), env(db), "nope"));

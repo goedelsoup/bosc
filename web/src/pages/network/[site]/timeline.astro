@@ -5,7 +5,7 @@ import type { TimelineItem } from "@watermark/core/viz";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import { evidenceKind, type TimelineEntry } from "@watermark/core/feeds";
 import { availableFacetPaths } from "@watermark/core/readiness";
-import { activeStoryAnchorFor } from "@watermark/core/walk";
+import { activeWalkAnchorFor } from "@watermark/core/walk";
 import { withStory } from "@watermark/core/site";
 
 // The declared facet gate (#1886) — the `timeline` section already locked in the nav and the needs
@@ -21,7 +21,7 @@ const ordered = [...dated, ...entries.filter((e) => !isDated(e))];
 
 const items: TimelineItem[] = ordered.map((e) => {
   const anchor =
-    activeStoryAnchorFor(e.source) ?? (e.also_sources ?? []).map(activeStoryAnchorFor).find(Boolean);
+    activeWalkAnchorFor(e.source) ?? (e.also_sources ?? []).map(activeWalkAnchorFor).find(Boolean);
   return {
     date: e.date || "",
     kind: e.category.replace(/_/g, " "),

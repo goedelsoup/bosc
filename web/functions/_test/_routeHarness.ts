@@ -232,7 +232,7 @@ export async function mintIdToken(
 }
 
 // ---------------------------------------------------------------------------
-// Fake Postgres for the Story store (Epic #1090 / #1095, Databricks Lakebase)
+// Fake Postgres for the Walk store (Epic #1090 / #1095, Databricks Lakebase)
 // ---------------------------------------------------------------------------
 // An in-memory Postgres backed by pglite (WASM) — real SQL + real transactions, so the store's
 // `begin()` atomicity, FK cascade, and unique-constraint behavior are exercised against the same

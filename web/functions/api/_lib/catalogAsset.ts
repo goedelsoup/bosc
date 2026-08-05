@@ -1,6 +1,6 @@
 // Load the build-time hydrated catalog (`/stories-catalog.json`, emitted by
 // src/pages/stories-catalog.json.ts) as a static asset from the same origin, and build the pure
-// `Catalog` the Story write path resolves handles against (#1093/#1095). Mirrors askIndexLoad: the
+// `Catalog` the Walk write path resolves handles against (#1093/#1095). Mirrors askIndexLoad: the
 // asset is immutable per deploy, so the parsed catalog is cached in module scope (one fetch + parse
 // per isolate). The Worker can't read the bundle off disk, so this is how server-side handle
 // validation gets its catalog at runtime.

@@ -6,17 +6,17 @@
  * current site's URL with no slug threaded through it — the URL peer of the per-site bundle
  * (#739). This module is **build-only** (it reads the `AsyncLocalStorage` active-site through
  * `bundle.ts`); client islands import the pure, slug-parameterized helpers from `./base`
- * instead (`withBase`/`siteHref`/`storyHref`).
+ * instead (`withBase`/`siteHref`/`walkUrl`).
  *
  * The client-safe primitives are re-exported here so the ~70 build-only importers are unchanged.
  */
 import { activeSite } from "./bundle";
-import { siteHref, storyHref } from "./base";
+import { siteHref, walkUrl } from "./base";
 import { DEFAULT_STORY_CODENAME } from "./routes";
 import { SITES } from "./sites";
 
-export { withBase, siteHref, storyHref } from "./base";
-export { SITE_BASE, STORY_BASE, siteBase, siteUrl, storyBase, storyUrl } from "./routes";
+export { withBase, siteHref, walkUrl } from "./base";
+export { SITE_BASE, WALK_BASE, siteBase, siteUrl, walkBase, storyUrl } from "./routes";
 
 export const SITE_NAME = "Watermark";
 export const SITE_TAGLINE = "the public record, by watershed";
@@ -26,7 +26,7 @@ export const SITE_DESCRIPTION =
   "Maumee-watershed hydrology.";
 
 /** The active site's default story codename (its first registered story), for `withStory`. */
-function activeStoryCodename(): string {
+function activeWalkCodename(): string {
   const site = SITES.find((s) => s.slug === activeSite());
   return site?.stories?.[0]?.codename ?? DEFAULT_STORY_CODENAME;
 }
@@ -45,5 +45,5 @@ export function withSite(path = ""): string {
  * `withStory("")` → the story home; `withStory("/water")` → a flattened chapter.
  */
 export function withStory(path = ""): string {
-  return storyHref(activeSite(), activeStoryCodename(), path);
+  return walkUrl(activeSite(), activeWalkCodename(), path);
 }

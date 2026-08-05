@@ -3,11 +3,13 @@ import { glob } from "astro/loaders";
 import { LEGAL } from "@watermark/core/legal";
 import { REFERENCE } from "@watermark/core/reference";
 
-// The `stories` collection (#724/#730): a site's *story* as data — one MDX file per chapter
-// under `src/content/stories/<site>/<codename>/<slug>.mdx`. The frontmatter is the chapter
+// The `walk` collection (#724/#730, renamed from `stories` by #1972): a site's guided WALK as
+// data — one MDX file per chapter under `src/content/walk/<site>/<codename>/<slug>.mdx`. The
+// reader-composed **Walk** (#1090) is a different system and keeps the noun; this is the
+// project-authored teaching artifact, and only Lima has one (#1971). The frontmatter is the chapter
 // SPINE (validated below); the MDX body is the prose, which imports the provided story
-// components (#731). `id` is `<site>/<codename>/<slug>`, so `loadStories` (src/lib/stories.ts)
-// recovers the site + codename from the path and groups chapters into a `Story` (src/lib/walk.ts).
+// components (#731). `id` is `<site>/<codename>/<slug>`, so `loadWalks` (src/lib/stories.ts)
+// recovers the site + codename from the path and groups chapters into a `Walk` (src/lib/walk.ts).
 export const STORY_CHAPTER_SCHEMA = z.object({
   /** 1-based reading position within the story. */
   step: z.number().int().positive(),
@@ -47,19 +49,19 @@ export const STORY_HOME_SCHEMA = z.object({
   description: z.string().optional(),
 });
 
-const stories = defineCollection({
+const walk = defineCollection({
   loader: glob({
     pattern: "**/*.{md,mdx}",
-    base: "./src/content/stories",
+    base: "./src/content/walk",
     generateId: ({ entry }) => entry.replace(/\.(md|mdx)$/, ""),
   }),
   // A chapter, or the story home (`_home.mdx`). Chapters carry a numeric `step`; the home a
-  // `kind: home`. `loadStories` / the chapter route key off `step` to tell them apart.
+  // `kind: home`. `loadWalks` / the chapter route key off `step` to tell them apart.
   schema: z.union([STORY_CHAPTER_SCHEMA, STORY_HOME_SCHEMA]),
 });
 
 // The `study` collection (the missing-impact-study epic, PR6): OPTIONAL per-site narrative
-// slotted into an impact-study chapter. Unlike `stories`, the study's spine is the registry
+// slotted into an impact-study chapter. Unlike `walk`, the study's spine is the registry
 // (`@watermark/core/study`), NOT the MDX — a note enriches a chapter; it never creates one.
 // Files live at `src/content/study/<site>/<chapter>.mdx`; a facility-scoped note at
 // `<site>/<facility-key>/<chapter>.mdx` wins when that facility's study is being read (the
@@ -199,4 +201,4 @@ const legal = defineCollection({
   }),
 });
 
-export const collections = { narrative, reference, referenceNotes, legal, stories, study };
+export const collections = { narrative, reference, referenceNotes, legal, walk, study };

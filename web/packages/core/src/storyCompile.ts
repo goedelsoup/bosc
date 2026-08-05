@@ -16,7 +16,7 @@
  *
  * Borrowing Nextra's compile-once-store-run-many: this is the **write-time** step (authenticated,
  * rate-limited); the public read path only renders the pre-validated SDM. The compiler is **pure**
- * (source + catalog → SDM or author-facing errors), like `buildStory`.
+ * (source + catalog → SDM or author-facing errors), like `buildWalk`.
  */
 import remarkDirective from "remark-directive";
 import remarkMdx from "remark-mdx";

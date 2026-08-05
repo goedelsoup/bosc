@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { RECORD_FACETS, SECTION_META } from "./readiness";
-import { SITE_BASE, STORY_BASE } from "./routes";
+import { SITE_BASE, WALK_BASE } from "./routes";
 import { type Crumb, trailDeclared, trailFor } from "./trail";
 
 /** `Directory › A › B` — the shape assertions read against, so a diff shows the whole trail. */
@@ -67,7 +67,7 @@ describe("trailFor", () => {
     );
     // The codename segment is a URL key, not a title — the story page names it via `labels`.
     expect(
-      render(trailFor(`${STORY_BASE}/water`, { leaf: "Water", labels: { "project-bosc": "Project BOSC" } })),
+      render(trailFor(`${WALK_BASE}/water`, { leaf: "Water", labels: { "project-bosc": "Project BOSC" } })),
     ).toBe("Directory › Lima › Project BOSC › Water");
   });
 

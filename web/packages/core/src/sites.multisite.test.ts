@@ -9,7 +9,7 @@ import {
   selectablePathsFrom,
   siteForPathIn,
 } from "./sites";
-import { storyFor } from "./walk";
+import { walkFor } from "./walk";
 
 // Multi-site chrome parity (#746, closing #740's Done-when). As of #1872, the live registry
 // has four selectable sites: Lima, Urbana, Fort Wayne, and Troy-Piqua. These tests lock the
@@ -65,9 +65,9 @@ describe("multi-site chrome parity (#746)", () => {
     // This asserted that a SECOND site resolved its own walk — the #733 payoff, when a per-site
     // walk was the model. Epic #1968 retired that: the three peer walks were absorbed into their
     // impact studies (#1970), and Lima's is kept as the method demo rather than as a template.
-    // The multi-site machinery it proved is unchanged — `storyFor` is still per-site keyed; there
+    // The multi-site machinery it proved is unchanged — `walkFor` is still per-site keyed; there
     // is simply only one walk to key, and a peer resolving one again would be the regression.
-    const lima = storyFor("lima", "project-bosc");
+    const lima = walkFor("lima", "project-bosc");
     expect(lima?.chapters.map((c) => c.slug)).toEqual([
       "who",
       "assembly",
@@ -76,9 +76,9 @@ describe("multi-site chrome parity (#746)", () => {
       "cost",
       "opacity",
     ]);
-    expect(storyFor("fort-wayne", "project-zodiac")).toBeUndefined();
-    expect(storyFor("findlay", "flagpole")).toBeUndefined();
-    expect(storyFor("bowling-green", "project-accordion")).toBeUndefined();
+    expect(walkFor("fort-wayne", "project-zodiac")).toBeUndefined();
+    expect(walkFor("findlay", "flagpole")).toBeUndefined();
+    expect(walkFor("bowling-green", "project-accordion")).toBeUndefined();
   });
 
   it("the switcher's current state reacts to a coming-soon site, where the tab tier does not (#793)", () => {

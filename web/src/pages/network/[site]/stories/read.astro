@@ -1,11 +1,11 @@
 ---
 /**
- * The Story reader route (#1097) — hosts the `StoryReader` client island, which renders a lowered
- * `StoryDocument` (owner-agnostic: a reader-authored or a site-authored Story lower to the same SDM
+ * The Walk reader route (#1097) — hosts the `StoryReader` client island, which renders a lowered
+ * `StoryDocument` (owner-agnostic: a reader-authored or a site-authored Walk lower to the same SDM
  * and render identically). The site is pure-static, so this is a single route shell + a client
  * island that reads its target at runtime:
- *   - `?id=<uuid>` — the owner's own Story (fetched from `/api/stories/:id`);
- *   - `?preview=reader|editorial` — a bundled fixture Story, so the design renders full-fidelity with
+ *   - `?id=<uuid>` — the owner's own Walk (fetched from `/api/stories/:id`);
+ *   - `?preview=reader|editorial` — a bundled fixture Walk, so the design renders full-fidelity with
  *     no auth/store (public share links land in #1098).
  *
  * Sits beside the editorial `stories/[codename]/…` routes — a distinct static filename, so it never
@@ -27,7 +27,7 @@ const atomsUrl = withSite("/stories-atoms.json");
 ---
 
 <Base
-  title={`Story — ${site.place}`}
+  title={`Walk — ${site.place}`}
   section="stories"
   rail={false}
   noindex
