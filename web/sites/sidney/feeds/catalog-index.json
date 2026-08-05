@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "f0ff757a120665056769d5f90c99066d333dffe0eb286dbb1b26cc9b95d472d3",
+  "catalog_version": "61ee95d97bc18fa94df6d0896428127a2464bc4bd93043f4b887c11bc10fe43b",
   "contract_version": "1.52.0",
   "atoms": [
     {
@@ -688,7 +688,7 @@
       "kind": "dataset",
       "site": "sidney",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "sidney",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {
@@ -1186,6 +1186,174 @@
       "local_id": "npdes:1PV00037",
       "title": "Hidden Valley Mobile Home Park",
       "feed": "entities"
+    },
+    {
+      "handle": "lead:sidney:AIR-PTI",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "AIR-PTI",
+      "title": "The Ohio EPA air permit-to-install for emergency generators — a verified negative, re-check",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:ANNEX-ZONING",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "ANNEX-ZONING",
+      "title": "The annexation or rezoning ordinance — the City's own GIS cannot close the zoning question",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:AQUIFER-SCOPE",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "AQUIFER-SCOPE",
+      "title": "Is the Sidney well field inside a designated sole-source aquifer, and is the campus upgradient?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:AWS-VS-ADS",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "AWS-VS-ADS",
+      "title": "Resolution 27-26 and the agreement it authorizes name two different Amazon entities",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:COMPANY-NOTICE",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "COMPANY-NOTICE",
+      "title": "Both major agreements give the company five business days to try to stop a records release",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:COOLING-MODEL",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "COOLING-MODEL",
+      "title": "Cycles of concentration back-solve to ≈4.0 — that brackets the cooling model, it does not close it",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:COUNCIL-MINUTES",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "COUNCIL-MINUTES",
+      "title": "Council minutes and meeting audio for the six votes — and why no person may be named yet",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:DEEDS-RECORDER",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "DEEDS-RECORDER",
+      "title": "Three deeds, not one — the recorder still owes grantors, instrument numbers and consideration",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:DPL-SUBSTATION-DEED",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "DPL-SUBSTATION-DEED",
+      "title": "Is OR2329/497 (County → Dayton Power & Light, same day) the campus substation conveyance?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:EXHIBIT-D",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "EXHIBIT-D",
+      "title": "Exhibit D is blacked out edge to edge, with ORC 149.433 written beside it by hand in blue ink",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:FERC-TSA",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "FERC-TSA",
+      "title": "A FERC eLibrary transmission service agreement between AES Ohio and Amazon for this campus",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:GRADING-PLAN",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "GRADING-PLAN",
+      "title": "The grading plan and storm water report recited on the face of the grading permit",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:MW-OPEN",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "MW-OPEN",
+      "title": "Five state permits have issued across this project and not one of them states a load",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:OTCA-SIXTH-AMENDMENT",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "OTCA-SIXTH-AMENDMENT",
+      "title": "The Ohio Tax Credit Authority's Sixth Amendment — half the abatement term rests on it",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:PILOT-14-VS-15",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "PILOT-14-VS-15",
+      "title": "The PILOT schedule runs 14 years in one instrument and 15 in another — neither was reconciled",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:PUCO-25-958",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "PUCO-25-958",
+      "title": "PUCO 25-958-EL-AIR — the AES Ohio stipulation and its data-center tariff sheets",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:RATE-CLASS-BAR",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "RATE-CLASS-BAR",
+      "title": "The City contracted away its power to create a data-center water rate class for ten years",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:RES-69-25",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "RES-69-25",
+      "title": "Pull Resolution 69-25 — the CRA designating legislation is known only through recitals",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:SITE-PLAN",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "SITE-PLAN",
+      "title": "The approved site plan — an administrative approval, so there is no agenda item to watch",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:SIU-PERMIT",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "SIU-PERMIT",
+      "title": "The City's significant-industrial-user permit — the only instrument that meters this campus",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:sidney:SOS-REGISTRATION",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "SOS-REGISTRATION",
+      "title": "Ohio SOS foreign registration for both Amazon entities — a blocked route, not an absence",
+      "feed": "leads"
     },
     {
       "handle": "record:sidney:oepa/sidney/1GC10596.approval.npdes.yaml",

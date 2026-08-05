@@ -987,13 +987,20 @@ def test_sidney_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None
     readiness behaving as the STANDING property it is — it rose because sources landed, twice,
     independently.
 
+    ``story`` moved third, and only halfway, on #1381: the committed per-site leads board
+    (``data/site/sidney/leads.yaml``) ships as the ``leads`` feed, which is ONE of the domain's two
+    signals. Sidney is not in ``STORY_SLUGS`` — registering a walk needs MDX chapters that resolve
+    in the story store (``walk.test.ts`` asserts every ``StoryRef`` does), and that is deferred to
+    its own editorial sub-issue. Leads-only ⇒ ``seeded``, the same shape troy-piqua carries. This is
+    the honest reading and it is the point of pinning it: the board is real evidence of open
+    threads, and it is not a walk.
+
     What did NOT move is equally the point, and pinning it here is what makes this a guard:
     ``facility`` stays ``seeded`` because the #1630 downgrade still holds — AWS discloses no floor
     area and no interconnection figure, so the IT load is an investment-scaled ``[inference]``
     bracket, never a disclosure. Committing land does not ground a load, and neither do permits:
     five state instruments have now issued across this project and not one states a megawatt.
-    ``story`` remains absent. A future change that floats either off geometry or paperwork alone
-    fails here."""
+    A future change that floats either off geometry or paperwork alone fails here."""
     manifest = _manifest(site_bundle("sidney"))
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
@@ -1003,7 +1010,17 @@ def test_sidney_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None
     assert domains["facility"] == "seeded"  # disclosed but screening-only → seeded (#1630)
     assert domains["places"] == "live"  # committed campus geometry (#1379)
     assert domains["record"] == "live"  # WWTP permit + DMR >= RECORD_LIVE_THRESHOLD (#1383)
-    assert domains["story"] == "absent"
+    # Leads board committed (#1381), no registered walk ⇒ one signal of two ⇒ seeded, not live.
+    assert domains["story"] == "seeded"
+
+    # The board is the site's OWN, not Lima's, and it carries the evidence discipline a lead
+    # store owes: every row `[open]` or `[inference]`, never `verified` (#796).
+    leads = _rows(site_bundle("sidney"), _feeds_by_name(site_bundle("sidney"))["leads"])
+    assert len(leads) == 21
+    assert {lead["tag"] for lead in leads} <= {"open", "inference"}
+    # The lead that exists to keep a refuted premise from coming back (#1379 inverted the HSG the
+    # 2026-06 onboarding scaffolding had inferred from a buried-valley aquifer that isn't there).
+    assert "AQUIFER-SCOPE" in {lead["id"] for lead in leads}
 
     # The geometry that activated the domain is the campus parcel itself, not a stub.
     bundle = site_bundle("sidney")
