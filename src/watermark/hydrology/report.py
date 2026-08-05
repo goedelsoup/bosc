@@ -526,18 +526,34 @@ def _render_tier1_swmm(emit: Callable[[str], None], settings: Settings) -> None:
     d = result.detention
     worst_cont = max((abs(dk.continuity_error_pct) for dk in result.decks), default=0.0)
 
+    imperv = (
+        f" — {d.post_imperv_pct:g}% impervious, the declared permanently-impervious acreage"
+        if d.post_imperv_pct is not None
+        else ""
+    )
     emit(
         f"\nThe committed run (`{result.engine}`, {result.storm_return_period_yr}-yr "
         f"{result.design_depth_in:g}-in storm; mass-balance continuity error "
         f"{worst_cont:.2f}%) `[inference: derived]` sizes the detention the corridor needs. "
-        "Paving the footprint takes the design-storm peak from **"
-        f"{d.pre_peak_cfs:,.0f} cfs** (cropland) to **{d.post_peak_cfs:,.0f} cfs** "
-        f"(impervious); holding the release back to the pre-development rate "
+        "Paving the footprint **as permitted** takes the design-storm peak from **"
+        f"{d.pre_peak_cfs:,.0f} cfs** (cropland) to **{d.post_peak_cfs:,.0f} cfs**"
+        f"{imperv}; holding the release back to the pre-development rate "
         f"({d.controlled_peak_cfs:,.0f} cfs) takes a **{d.required_storage_acft:,.0f} ac-ft** "
-        f"basin ({d.basin_area_acres:g} ac, {d.orifice_diam_ft:g}-ft bottom orifice). The four "
-        "input decks are committed under `data/reference/hydrology/swmm/` so anyone can re-run "
+        f"basin ({d.basin_area_acres:g} ac, {d.orifice_diam_ft:g}-ft bottom orifice). Every "
+        "input deck is committed under `data/reference/hydrology/swmm/` so anyone can re-run "
         "them in EPA SWMM.\n"
     )
+    if d.full_buildout_peak_cfs is not None and d.full_buildout_storage_acft is not None:
+        emit(
+            f"\nBuilt out — the whole parcel at the blanket {d.full_buildout_imperv_pct:g}% "
+            "impervious assumption, the Tier-0 screen's `full_buildout` bound rather than the "
+            f"permitted project — the same storm peaks at **{d.full_buildout_peak_cfs:,.0f} "
+            f"cfs** and the basin holding it to the pre-development rate grows to "
+            f"**{d.full_buildout_storage_acft:,.0f} ac-ft** "
+            f"({d.full_buildout_orifice_diam_ft:g}-ft orifice). The two are separate readings "
+            "of separate projects `[inference: derived]`; the as-permitted one is what the "
+            "SW1225 application describes.\n"
+        )
     sur = [
         s for s in result.surcharge if s.headroom_mgd is not None and s.avg_design_flow is not None
     ]
@@ -1041,8 +1057,9 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
         "storm for two questions Tier-0 only approximates: the **detention volume** that\n"
         "holds the post-development peak to the pre-development rate, and the **sanitary\n"
         "wet-weather surcharge** (dry-weather base + RDII) against each plant's documented\n"
-        "wet-weather headroom. Hydraulic routing parameters (imperviousness, RDII, basin\n"
-        "geometry) are assumptions; the footprint, storm, and plant design flows stay\n"
+        "wet-weather headroom. Hydraulic routing parameters (RDII, basin geometry) are\n"
+        "assumptions; the footprint, its declared impervious acreage — which drives the\n"
+        "as-permitted case's imperviousness — the storm, and the plant design flows stay\n"
         "document/connector-sourced.\n"
     )
 

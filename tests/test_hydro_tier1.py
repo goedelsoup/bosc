@@ -91,6 +91,35 @@ def test_stormwater_inp_grounds_slope_and_s_perv() -> None:
     assert next(ln for ln in grounded.splitlines() if ln.startswith("S1 0.015")).split()[4] == "0.1"
 
 
+def test_post_imperv_is_driven_by_the_declared_footprint() -> None:
+    """WS-14 (#1614): the as-permitted post deck's %Imperv is the footprint's declaration."""
+    from watermark.hydrology.stormwater import load_site_footprint
+    from watermark.hydrology.tier1 import _FULL_BUILDOUT_IMPERV, _post_imperv_pct
+
+    settings = Settings(
+        data_dir=Path(__file__).resolve().parents[1] / "data",
+        hydro_offline=True,
+        hydro_fixtures_dir=Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "hydrology",
+    )
+    fp = load_site_footprint(settings)
+    assert fp is not None, "Lima's committed footprint is the input this drives from"
+
+    # 115 of ~340 ac declared permanently impervious -> ~34%, the Tier-0 composite's basis —
+    # NOT the blanket 90% that used to stand in as "the" post-development case.
+    pct, basis = _post_imperv_pct(fp, 339.59)
+    assert pct == pytest.approx(33.86, abs=0.1)
+    assert pct < _FULL_BUILDOUT_IMPERV / 2
+    assert "115" in basis and "document" in basis
+
+    # A declared acreage larger than the measured footprint clamps at 100%, never past it.
+    assert _post_imperv_pct(fp, 50.0)[0] == pytest.approx(100.0)
+
+    # No committed footprint (or a degenerate area) -> the blanket bound, said out loud.
+    for missing_pct, missing_basis in (_post_imperv_pct(None, 339.59), _post_imperv_pct(fp, 0.0)):
+        assert missing_pct == _FULL_BUILDOUT_IMPERV
+        assert "no committed site footprint" in missing_basis
+
+
 def test_pct_slope_from_relief_is_grounded_and_clamped() -> None:
     from watermark.hydrology.tier1 import (
         _MAX_PCT_SLOPE,
@@ -191,9 +220,30 @@ def test_run_tier1_sizes_detention_and_flags_surcharge() -> None:
     assert d.post_peak_cfs > d.pre_peak_cfs
     assert d.controlled_peak_cfs == pytest.approx(d.pre_peak_cfs, rel=0.15)
     assert d.required_storage_acft > 0
-    # The committed-deck capture: four decks with the engine version recorded.
+    # WS-14 (#1614): the sized case is the as-permitted footprint, and the blanket-paved
+    # bound is a separate, larger, explicitly-labeled reading — not the same project twice.
+    assert d.post_imperv_pct is not None and d.post_imperv_pct == pytest.approx(33.9, abs=0.5)
+    assert d.full_buildout_imperv_pct == 90.0
+    assert d.full_buildout_peak_cfs is not None and d.full_buildout_peak_cfs > d.post_peak_cfs
+    assert d.full_buildout_storage_acft is not None
+    assert d.full_buildout_storage_acft > d.required_storage_acft
+    assert d.full_buildout_controlled_peak_cfs == pytest.approx(d.pre_peak_cfs, rel=0.15)
+    # The as-permitted deck carries the footprint-derived %Imperv, the bound carries 90.
+    post_deck = result.deck("post")
+    full_deck = result.deck("full-buildout")
+    assert post_deck is not None and full_deck is not None
+    assert f" {d.post_imperv_pct:.1f} " in post_deck.inp_text
+    assert " 90.0 " in full_deck.inp_text
+    # The committed-deck capture: six decks with the engine version recorded.
     assert result.engine.startswith("pyswmm")
-    assert {d.name for d in result.decks} == {"pre", "post", "detention", "sanitary"}
+    assert {d.name for d in result.decks} == {
+        "pre",
+        "post",
+        "full-buildout",
+        "detention",
+        "detention-full-buildout",
+        "sanitary",
+    }
     assert all(d.inp_text and d.reports_node for d in result.decks)
     # The surcharge is routing-aware: only campus receivers are judged (no Shawnee II).
     assert "Shawnee II" not in {s.plant for s in result.surcharge}

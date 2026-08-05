@@ -1096,14 +1096,23 @@ def tier1(
 
     d = result.detention
     if d is not None:
+        imperv = f" @ {d.post_imperv_pct:g}% imperv" if d.post_imperv_pct is not None else ""
         console.print(
             f"[bold]Stormwater detention[/] (SWMM, {return_period}-yr 24-hr storm)\n"
             f"  pre-development peak  {d.pre_peak_cfs:,.0f} cfs\n"
-            f"  post-development peak {d.post_peak_cfs:,.0f} cfs [dim](undetained)[/]\n"
+            f"  as-permitted peak     {d.post_peak_cfs:,.0f} cfs "
+            f"[dim](undetained{imperv})[/]\n"
             f"  -> a [bold]{d.required_storage_acft:,.0f} ac-ft[/] basin "
             f"({d.basin_area_acres:g} ac, {d.orifice_diam_ft:g} ft orifice) holds the release to "
             f"{d.controlled_peak_cfs:,.0f} cfs"
         )
+        if d.full_buildout_peak_cfs is not None and d.full_buildout_storage_acft is not None:
+            console.print(
+                f"  [dim]full-buildout bound ({d.full_buildout_imperv_pct:g}% imperv over the "
+                f"whole parcel, assumption): {d.full_buildout_peak_cfs:,.0f} cfs -> "
+                f"{d.full_buildout_storage_acft:,.0f} ac-ft "
+                f"({d.full_buildout_orifice_diam_ft:g} ft orifice)[/]"
+            )
         inv = result.inventory
         if inv is not None and not inv.detention_shown:
             console.print(
@@ -1119,7 +1128,8 @@ def tier1(
             console.print(f"[{'green' if f.ok else 'red'}]{f}[/]")
     console.print(
         "\n[dim]Tier-1 EPA SWMM. Footprint/storm/plant design flows document/connector-sourced; "
-        "imperviousness, RDII R, and basin geometry are assumptions.[/]"
+        "the as-permitted imperviousness is driven by the declared impervious acreage, while "
+        "the full-buildout imperviousness, RDII R, and basin geometry are assumptions.[/]"
     )
     if write:
         path = write_tier1(result, settings=get_settings())

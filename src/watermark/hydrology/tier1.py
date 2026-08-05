@@ -5,14 +5,18 @@ answer two questions Tier-0 only approximated:
 
 * **Detention sizing** — bisect the basin's bottom-orifice diameter until the
   released post-development peak matches the pre-development peak (the regulatory
-  "no net increase" rule); report the storage volume that requires.
+  "no net increase" rule); report the storage volume that requires. The sized case is the
+  **as-permitted footprint** — its imperviousness comes from the committed
+  :class:`~watermark.hydrology.model.SiteFootprint`'s declared impervious acreage, the same
+  declaration the Tier-0 screen calibrates to — and the blanket near-impervious deck runs
+  beside it as the labeled **full-buildout bound** (WS-14 / #1614).
 * **Sanitary surcharge** — the storm-driven wet-weather peak (dry-weather base +
   RDII) versus each plant's documented peak hydraulic capacity.
 
 Everything degrades gracefully if the SWMM engine is unavailable.
 
 The engine is version-dependent and may be absent (no pyswmm wheel, or macOS killing
-an ad-hoc-signed bundle). So a successful live run is **committed**: the four input
+an ad-hoc-signed bundle). So a successful live run is **committed**: the input
 decks land as ``.inp`` files under ``data/reference/hydrology/swmm/`` (chain of
 custody — anyone can re-run them in EPA SWMM) and the reviewed result as
 ``tier1-swmm.yaml``. :func:`load_tier1` reads that committed artifact so the dossier
@@ -34,10 +38,11 @@ from watermark.hydrology.model import (
     ProvenancedValue,
     SanitaryBasis,
     SanitarySurcharge,
+    SiteFootprint,
     SwmmDeck,
     Tier1Result,
 )
-from watermark.hydrology.stormwater import _parcels_path
+from watermark.hydrology.stormwater import _parcels_path, load_site_footprint
 from watermark.hydrology.swmm import engine, inp
 from watermark.hydrology.units import cfs_to_mgd
 from watermark.logging import get_logger
@@ -45,9 +50,16 @@ from watermark.sites import active_profile
 
 log = get_logger(__name__)
 
-# Land-cover imperviousness (assumptions): cropland vs near-impervious campus.
+# Pre-development land-cover imperviousness (assumption): cropland.
 _PRE_IMPERV = 5.0
-_POST_IMPERV = 90.0
+# The blanket near-impervious value. This is the **full-buildout bound** — the whole parcel
+# paved — not the as-permitted case (WS-14 / #1614). The as-permitted post deck is driven by
+# the committed footprint's declared impervious acreage (:func:`_post_imperv_pct`); running the
+# blanket value as "the" post-development case put the SWMM escalation at 90 % against the
+# Tier-0 screen's ~34 % ASWCD-declared composite, and sized the committed detention basin
+# against a project the permit does not describe. It survives, relabeled, as the peer of the
+# Tier-0 screen's ``full_buildout_peak_cfs`` / ``post_cn_full_buildout``.
+_FULL_BUILDOUT_IMPERV = 90.0
 # Detention basin footprint as a fraction of the campus, and max depth (assumptions).
 _BASIN_FRAC = 0.04
 _BASIN_DEPTH_FT = 12.0
@@ -80,6 +92,34 @@ def _pct_slope_from_relief(relief_ft: float, area_acres: float) -> float:
     return min(_MAX_PCT_SLOPE, max(_MIN_PCT_SLOPE, 100.0 * relief_ft / flow_len_ft))
 
 
+def _post_imperv_pct(footprint: SiteFootprint | None, area_acres: float) -> tuple[float, str]:
+    """As-permitted post-development subcatchment %imperviousness (WS-14 / #1614).
+
+    Driven by the committed :class:`SiteFootprint`: only ``impervious_acres`` of the parcel is
+    permanently paved, so the SWMM subcatchment's ``%Imperv`` is that acreage over the measured
+    runoff footprint — the same declared split the Tier-0 screen calibrates its post-development
+    cover to (``stormwater._post_cover_parts``), rather than a blanket near-impervious value the
+    permit does not describe. Clamped to the measured area so a declared acreage larger than the
+    footprint can't drive ``%Imperv`` past 100.
+
+    A site with no committed footprint falls back to :data:`_FULL_BUILDOUT_IMPERV` — the two
+    cases then coincide and the run reports one deck's worth of information twice rather than
+    inventing a split acreage. The returned basis string is carried into the artifact so the
+    reported imperviousness names its own grounding.
+    """
+    if footprint is None or area_acres <= 0.0:
+        return (
+            _FULL_BUILDOUT_IMPERV,
+            "blanket near-impervious assumption — no committed site footprint to declare "
+            "an impervious acreage",
+        )
+    imperv = max(0.0, min(footprint.impervious_acres.value, area_acres))
+    return 100.0 * imperv / area_acres, (
+        f"{imperv:.0f} of {area_acres:.0f} ac declared permanently impervious "
+        f"({footprint.impervious_acres.source})"
+    )
+
+
 _SWMM_SUBDIR = "swmm"
 _FILENAME = "tier1-swmm.yaml"
 
@@ -103,6 +143,7 @@ def _size_detention(
     depth: float,
     pre_peak: float,
     *,
+    pct_imperv: float,
     pct_slope: float | None,
     s_perv_store_in: float,
 ) -> tuple[float, float, float, str, float, str, str]:
@@ -111,7 +152,9 @@ def _size_detention(
     Returns ``(diam, release, storage, inp_text, continuity_pct, outfall, storage_node)``
     for the *final* sized deck (rebuilt once after the search so the committed deck is
     internally consistent with the reported numbers). ``pct_slope`` / ``s_perv_store_in`` carry
-    the grounded campus subcatchment geometry through to every sized deck (WS-25 / #1625).
+    the grounded campus subcatchment geometry through to every sized deck (WS-25 / #1625), and
+    ``pct_imperv`` is the case being sized — the as-permitted footprint or the full-buildout
+    bound (WS-14 / #1614), both held to the *same* pre-development peak.
     """
     basin_area = area * _SQFT_PER_ACRE * _BASIN_FRAC
     lo, hi = 0.25, 12.0
@@ -121,7 +164,7 @@ def _size_detention(
         det = inp.DetentionGeom(basin_area, _BASIN_DEPTH_FT, diam)
         text, outfall, _orifice, sto = inp.stormwater_inp(
             area_acres=area,
-            pct_imperv=_POST_IMPERV,
+            pct_imperv=pct_imperv,
             depth_in=depth,
             detention=det,
             pct_slope=pct_slope,
@@ -138,7 +181,7 @@ def _size_detention(
     det = inp.DetentionGeom(basin_area, _BASIN_DEPTH_FT, diam)
     text, outfall, _orifice, sto = inp.stormwater_inp(
         area_acres=area,
-        pct_imperv=_POST_IMPERV,
+        pct_imperv=pct_imperv,
         depth_in=depth,
         detention=det,
         pct_slope=pct_slope,
@@ -290,6 +333,12 @@ def run_tier1(
     )
     campus_s_perv_in = _CAMPUS_S_PERV_IN if inventory is not None else 0.05
 
+    # Drive the post-development imperviousness off the declared footprint (WS-14 / #1614) so
+    # the SWMM escalation models the as-permitted project the Tier-0 screen models, not a
+    # blanket-paved one. The blanket value runs alongside as the labeled full-buildout bound.
+    footprint = load_site_footprint(settings)
+    post_imperv, post_imperv_basis = _post_imperv_pct(footprint, area)
+
     # --- Stormwater detention sizing ---
     pre_text, pre_out, _o, _s = inp.stormwater_inp(
         area_acres=area,
@@ -313,7 +362,7 @@ def run_tier1(
 
     post_text, post_out, _o, _s = inp.stormwater_inp(
         area_acres=area,
-        pct_imperv=_POST_IMPERV,
+        pct_imperv=post_imperv,
         depth_in=depth,
         pct_slope=campus_pct_slope,
         s_perv_store_in=campus_s_perv_in,
@@ -327,12 +376,43 @@ def run_tier1(
             node=post_out,
             peak=post_peak,
             continuity=post_res.continuity_error_pct,
-            note="post-development (impervious), undetained",
+            note=(
+                f"post-development as permitted ({post_imperv:.1f}% impervious — "
+                f"{post_imperv_basis}), undetained"
+            ),
+        )
+    )
+
+    full_text, full_out, _o, _s = inp.stormwater_inp(
+        area_acres=area,
+        pct_imperv=_FULL_BUILDOUT_IMPERV,
+        depth_in=depth,
+        pct_slope=campus_pct_slope,
+        s_perv_store_in=campus_s_perv_in,
+    )
+    full_res = engine.simulate(full_text, nodes=[full_out])
+    full_peak = full_res.node_peak_cfs.get(full_out, 0.0)
+    decks.append(
+        _deck(
+            "full-buildout",
+            full_text,
+            node=full_out,
+            peak=full_peak,
+            continuity=full_res.continuity_error_pct,
+            note=(
+                f"full-buildout bound ({_FULL_BUILDOUT_IMPERV:.0f}% impervious over the whole "
+                "parcel, assumption), undetained"
+            ),
         )
     )
 
     diam, controlled, storage, det_text, det_cont, det_out, _sto = _size_detention(
-        area, depth, pre_peak, pct_slope=campus_pct_slope, s_perv_store_in=campus_s_perv_in
+        area,
+        depth,
+        pre_peak,
+        pct_imperv=post_imperv,
+        pct_slope=campus_pct_slope,
+        s_perv_store_in=campus_s_perv_in,
     )
     decks.append(
         _deck(
@@ -341,7 +421,30 @@ def run_tier1(
             node=det_out,
             peak=controlled,
             continuity=det_cont,
-            note=f"post-development with sized basin (bottom orifice {diam:.2f} ft)",
+            note=(f"post-development as permitted with sized basin (bottom orifice {diam:.2f} ft)"),
+        )
+    )
+
+    # Size the bound too, against the same pre-development peak: the storage the corridor
+    # would need if the parcel were built out. Reported as a bound, never as the permit's.
+    full_diam, full_controlled, full_storage, fdet_text, fdet_cont, fdet_out, _fsto = (
+        _size_detention(
+            area,
+            depth,
+            pre_peak,
+            pct_imperv=_FULL_BUILDOUT_IMPERV,
+            pct_slope=campus_pct_slope,
+            s_perv_store_in=campus_s_perv_in,
+        )
+    )
+    decks.append(
+        _deck(
+            "detention-full-buildout",
+            fdet_text,
+            node=fdet_out,
+            peak=full_controlled,
+            continuity=fdet_cont,
+            note=f"full-buildout bound with sized basin (bottom orifice {full_diam:.2f} ft)",
         )
     )
     detention = DetentionDesign(
@@ -351,6 +454,13 @@ def run_tier1(
         orifice_diam_ft=round(diam, 2),
         required_storage_acft=round(storage, 1),
         basin_area_acres=round(area * _BASIN_FRAC, 1),
+        post_imperv_pct=round(post_imperv, 1),
+        post_imperv_basis=post_imperv_basis,
+        full_buildout_imperv_pct=_FULL_BUILDOUT_IMPERV,
+        full_buildout_peak_cfs=round(full_peak, 1),
+        full_buildout_controlled_peak_cfs=round(full_controlled, 1),
+        full_buildout_orifice_diam_ft=round(full_diam, 2),
+        full_buildout_storage_acft=round(full_storage, 1),
     )
 
     # --- Sanitary wet-weather surcharge ---
@@ -419,7 +529,10 @@ def run_tier1(
         "hydro.tier1",
         pre_peak=detention.pre_peak_cfs,
         post_peak=detention.post_peak_cfs,
+        post_imperv_pct=detention.post_imperv_pct,
+        full_buildout_peak=detention.full_buildout_peak_cfs,
         storage_acft=detention.required_storage_acft,
+        full_buildout_storage_acft=detention.full_buildout_storage_acft,
         wet_peak_mgd=round(wet_peak_mgd, 1),
     )
     return Tier1Result(
@@ -467,8 +580,10 @@ def write_tier1(result: Tier1Result, *, settings: Settings | None = None) -> Pat
             "storm": f"{result.storm_return_period_yr}-yr 24-hr, {result.design_depth_in} in",
             "discipline": (
                 "SWMM-computed (derived). Footprint + storm + plant design flows are "
-                "document/connector-sourced; imperviousness, RDII R, and basin geometry are "
-                "assumptions. The .inp decks are committed for chain of custody."
+                "document/connector-sourced; the as-permitted post-development imperviousness "
+                "is driven by the footprint's declared impervious acreage, while the "
+                "full-buildout imperviousness, RDII R, and basin geometry are assumptions. "
+                "The .inp decks are committed for chain of custody."
             ),
         },
         "tier1": persist.model_dump(mode="json"),
@@ -545,16 +660,39 @@ def tier1_findings(result: Tier1Result) -> list[HydroFinding]:
             if absent and result.inventory is not None
             else "SWMM: "
         )
+        # Name the case: the sized basin is the AS-PERMITTED one (WS-14 / #1614), so the
+        # imperviousness it was sized at rides with the number.
+        as_permitted = (
+            f" (as permitted, {d.post_imperv_pct:g}% impervious)"
+            if d.post_imperv_pct is not None
+            else ""
+        )
         findings.append(
             HydroFinding(
                 "BOSC campus",
                 "detention-sizing",
                 not absent,  # an absent required control is a gap, not an OK
-                f"{frame}post-dev peak {d.post_peak_cfs:.0f} cfs vs pre-dev {d.pre_peak_cfs:.0f} cfs; "
-                f"a {d.required_storage_acft:.0f} ac-ft basin (orifice {d.orifice_diam_ft:.1f} ft) "
-                f"holds release to {d.controlled_peak_cfs:.0f} cfs",
+                f"{frame}post-dev peak {d.post_peak_cfs:.0f} cfs{as_permitted} vs pre-dev "
+                f"{d.pre_peak_cfs:.0f} cfs; a {d.required_storage_acft:.0f} ac-ft basin "
+                f"(orifice {d.orifice_diam_ft:.1f} ft) holds release to "
+                f"{d.controlled_peak_cfs:.0f} cfs",
             )
         )
+        # The blanket-paved bound is a separate, explicitly-labeled reading — the peer of the
+        # Tier-0 screen's full_buildout_peak_cfs, not a second estimate of the same project.
+        if d.full_buildout_peak_cfs is not None and d.full_buildout_storage_acft is not None:
+            findings.append(
+                HydroFinding(
+                    "BOSC campus",
+                    "detention-full-buildout",
+                    True,  # a stated bound, not a pass/fail on the permitted project
+                    f"full-buildout bound ({d.full_buildout_imperv_pct:g}% impervious over the "
+                    f"whole parcel, assumption): peak {d.full_buildout_peak_cfs:.0f} cfs needs "
+                    f"{d.full_buildout_storage_acft:.0f} ac-ft — "
+                    f"{d.full_buildout_storage_acft - d.required_storage_acft:+.0f} ac-ft on the "
+                    "as-permitted basin",
+                )
+            )
     for s in result.surcharge:
         if s.headroom_mgd is not None and s.avg_design_flow is not None:
             pf = f", {s.peaking_factor.value:g}x peaking" if s.peaking_factor else ""

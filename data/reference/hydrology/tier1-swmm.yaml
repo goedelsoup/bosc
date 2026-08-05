@@ -3,17 +3,25 @@ meta:
   engine: pyswmm 2.1.0
   storm: 25-yr 24-hr, 4.25 in
   discipline: SWMM-computed (derived). Footprint + storm + plant design flows are document/connector-sourced;
-    imperviousness, RDII R, and basin geometry are assumptions. The .inp decks are committed for chain
-    of custody.
+    the as-permitted post-development imperviousness is driven by the footprint's declared impervious
+    acreage, while the full-buildout imperviousness, RDII R, and basin geometry are assumptions. The .inp
+    decks are committed for chain of custody.
 tier1:
   available: true
   detention:
     pre_peak_cfs: 168.6
-    post_peak_cfs: 657.1
-    controlled_peak_cfs: 168.6
-    orifice_diam_ft: 4.76
-    required_storage_acft: 44.8
+    post_peak_cfs: 436.2
+    controlled_peak_cfs: 168.5
+    orifice_diam_ft: 9.28
+    required_storage_acft: 19.7
     basin_area_acres: 13.6
+    post_imperv_pct: 33.9
+    post_imperv_basis: 115 of 340 ac declared permanently impervious (document)
+    full_buildout_imperv_pct: 90.0
+    full_buildout_peak_cfs: 657.1
+    full_buildout_controlled_peak_cfs: 168.6
+    full_buildout_orifice_diam_ft: 4.76
+    full_buildout_storage_acft: 44.8
     tier: tier1-swmm
   surcharge:
   - plant: American II
@@ -74,17 +82,32 @@ tier1:
   - name: post
     filename: swmm/tier1-post.inp
     reports_node: OUT1
+    sha256: cc91a1866a9a04ba5cfa92a296c6c3b41c85935e109e210c4b1c72e8f8160343
+    peak_cfs: 436.18
+    continuity_error_pct: 0.0
+    note: post-development as permitted (33.9% impervious — 115 of 340 ac declared permanently impervious
+      (document)), undetained
+  - name: full-buildout
+    filename: swmm/tier1-full-buildout.inp
+    reports_node: OUT1
     sha256: 9a77a92b1d68b3be3ab7fd971955bee0a9a77c949b1e5ff24708050b2a54599f
     peak_cfs: 657.12
     continuity_error_pct: 0.0
-    note: post-development (impervious), undetained
+    note: full-buildout bound (90% impervious over the whole parcel, assumption), undetained
   - name: detention
     filename: swmm/tier1-detention.inp
+    reports_node: OUT1
+    sha256: 35223666877803f7a49cdae82fe658653c10c48dc12f5ffe73797ad9c9c7d3ab
+    peak_cfs: 168.55
+    continuity_error_pct: 0.0
+    note: post-development as permitted with sized basin (bottom orifice 9.28 ft)
+  - name: detention-full-buildout
+    filename: swmm/tier1-detention-full-buildout.inp
     reports_node: OUT1
     sha256: 748604ce92877169e341101a116b6cc23e8b843fb9ab1ac5261d37523b4a4c0b
     peak_cfs: 168.57
     continuity_error_pct: 0.0
-    note: post-development with sized basin (bottom orifice 4.76 ft)
+    note: full-buildout bound with sized basin (bottom orifice 4.76 ft)
   - name: sanitary
     filename: swmm/tier1-sanitary.inp
     reports_node: WWTP
