@@ -1,1 +1,99 @@
-[]
+[
+  {
+    "slug": "oepa",
+    "title": "Ohio EPA",
+    "description": "**Collection:** `oepa/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "oepa/defiance/2PD00013.fs.pdf",
+        "name": "2PD00013.fs.pdf",
+        "size_bytes": 1375127,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/defiance/2PD00013.nov-rov-2026-04-21.pdf",
+        "name": "2PD00013.nov-rov-2026-04-21.pdf",
+        "size_bytes": 331943,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/defiance/2PD00013.pdf",
+        "name": "2PD00013.pdf",
+        "size_bytes": 2217350,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/defiance/2PD00013.rtc.pdf",
+        "name": "2PD00013.rtc.pdf",
+        "size_bytes": 99022,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/defiance/2PD00013.usepa-r5-draft-review.pdf",
+        "name": "2PD00013.usepa-r5-draft-review.pdf",
+        "size_bytes": 328861,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/defiance/2PD00013.usepa-r5-proposed-review.pdf",
+        "name": "2PD00013.usepa-r5-proposed-review.pdf",
+        "size_bytes": 151730,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  }
+]

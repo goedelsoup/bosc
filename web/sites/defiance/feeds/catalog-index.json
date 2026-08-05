@@ -1,6 +1,6 @@
 {
   "site": "defiance",
-  "catalog_version": "15ef505e61836e731d00708d6864e5620e4992aac37a15becd826982336cf6a4",
+  "catalog_version": "7d10645684ab09e5411146a5b66dda18a4d0fafe4484f307e129913c1ab4bbbf",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -660,6 +660,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:defiance:defiance-wwtp-record",
+      "kind": "dataset",
+      "site": "defiance",
+      "local_id": "defiance-wwtp-record",
+      "title": "Defiance — NPDES 2PD00013 Permit Set + the Two Enforcement Actions (Extractions)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:defiance:echo-maumee-npdes",
       "kind": "dataset",
       "site": "defiance",
@@ -1052,6 +1060,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:defiance:CITY OF DEFIANCE",
+      "kind": "entity",
+      "site": "defiance",
+      "local_id": "CITY OF DEFIANCE",
+      "title": "City of Defiance",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:defiance:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "defiance",
@@ -1066,6 +1082,46 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:defiance:MAUMEE RIVER",
+      "kind": "entity",
+      "site": "defiance",
+      "local_id": "MAUMEE RIVER",
+      "title": "Maumee River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:defiance:npdes:2PD00013",
+      "kind": "entity",
+      "site": "defiance",
+      "local_id": "npdes:2PD00013",
+      "title": "Defiance Water Pollution Control WWTP",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:defiance:oepa/defiance/2PD00013.fs.npdes.yaml",
+      "kind": "record",
+      "site": "defiance",
+      "local_id": "oepa/defiance/2PD00013.fs.npdes.yaml",
+      "title": "City of Defiance Water Pollution Control (WPC)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:defiance:oepa/defiance/2PD00013.npdes.yaml",
+      "kind": "record",
+      "site": "defiance",
+      "local_id": "oepa/defiance/2PD00013.npdes.yaml",
+      "title": "Defiance Water Pollution Control WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "timeline:defiance:2PD00013*VD",
+      "kind": "timeline",
+      "site": "defiance",
+      "local_id": "2PD00013*VD",
+      "title": "NPDES 2PD00013*VD (City of Defiance Water Pollution Control (WPC)) — public notice",
+      "feed": "timeline"
     }
   ]
 }

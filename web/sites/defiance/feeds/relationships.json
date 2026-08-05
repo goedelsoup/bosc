@@ -1,5 +1,25 @@
 [
   {
+    "src": "CITY OF DEFIANCE",
+    "rel": "operates",
+    "dst": "npdes:2PD00013",
+    "date": "",
+    "ref": "2PD00013*VD",
+    "source": "oepa/defiance/2PD00013.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PD00013",
+    "rel": "discharges_to",
+    "dst": "MAUMEE RIVER",
+    "date": "",
+    "ref": "2PD00013*VD",
+    "source": "oepa/defiance/2PD00013.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

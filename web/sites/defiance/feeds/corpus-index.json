@@ -1,12 +1,45 @@
 [
   {
+    "id": "artifact/city-of-defiance",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Defiance",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 13,
+    "updated": "2026-08-05"
+  },
+  {
+    "id": "artifact/maumee-river",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Maumee River",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 13,
+    "updated": "2026-08-05"
+  },
+  {
+    "id": "artifact/npdes-2pd00013",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Defiance Water Pollution Control WWTP",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 13,
+    "updated": "2026-08-05"
+  },
+  {
     "id": "artifact/site-defiance",
     "node_class": "artifact",
     "kind": "site",
     "label": "Defiance",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 6,
     "lines": 13,
     "updated": null
   },
@@ -867,5 +900,27 @@
     "links_in": 1,
     "lines": 10,
     "updated": null
+  },
+  {
+    "id": "relation/city-of-defiance--operates--npdes-2pd00013",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF DEFIANCE operates npdes:2PD00013",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": "2026-08-05"
+  },
+  {
+    "id": "relation/npdes-2pd00013--discharges-to--maumee-river",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:2PD00013 discharges_to MAUMEE RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": "2026-08-05"
   }
 ]

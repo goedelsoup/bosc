@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-05T20:43:02.168348+00:00'
+reconciled_at: '2026-08-05T23:31:29.252694+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -320,6 +320,16 @@ entries:
     asof: null
     stale: false
     site_scope: basin-shared
+  defiance-wwtp-record:
+    exists: true
+    sha256: acfc1d40f49eb4082a3f3f0b81d647513b680e6d59929addd1d0de754d2b5dc0
+    size_bytes: 42031
+    lfs_materialized: true
+    file_count: 3
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:defiance
   dewatering-discharge:
     exists: true
     sha256: 151f8de93c9dd192ab48983cf4eec01d0b4aba6aa059777c417afc804b46780f
@@ -652,8 +662,8 @@ entries:
     site_scope: slug-scoped
   hydrology-low-flow-7q10:
     exists: true
-    sha256: 3b7ea0e9872b4d6454cc9767e5be3e4925be726d4849aaa203a124c53ce45336
-    size_bytes: 58295
+    sha256: fc2defacb5524495f76bc79c14eab85e8680014abaa0744cd729ebc35d281dae
+    size_bytes: 62001
     lfs_materialized: true
     file_count: 3
     missing: []

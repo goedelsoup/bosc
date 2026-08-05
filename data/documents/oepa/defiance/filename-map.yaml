@@ -1,0 +1,101 @@
+meta:
+  subject: >-
+    Ohio EPA eDocument portal download manifest — City of Defiance Water Pollution Control
+    (Defiance WPC / "DEFIANCE WWTP"), Ohio EPA NPDES permit 2PD00013 / application OH0024899
+    (issue 392)
+  generated_at: '2026-08-05'
+  source_route: >-
+    https://edocpub.epa.ohio.gov/publicportal/edochome.aspx — the Ohio EPA eDocument public
+    portal, searched by Entity Name "DEFIANCE WWTP" (1,097 documents; 950 carry Secondary ID
+    2PD00013). Each file below is fetched from
+    https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=<docid>.
+  policy: >-
+    non-destructive. The portal sends NO Content-Disposition header, so the server supplies no
+    filename at all and the docid IS the as-served identity. The local names below are therefore
+    assigned by us, and the docid each one came from is recorded beside it — that pairing, not
+    the filename, is the chain of custody. Content-verified dates are read from each document's
+    own embedded text layer (these are digitally generated Ohio EPA PDFs, not scans), never from
+    a filename and never from outside knowledge. No source byte is altered.
+
+documents:
+- filename: 2PD00013.fs.pdf
+  docid: 2705013
+  canonical_name: >-
+    Fact Sheet for NPDES Permit Renewal, Defiance WWTP, 2023 — Ohio EPA Permit No. 2PD00013*VD,
+    Application No. OH0024899, Public Notice No. 191309. 40 pp.
+  content_verified_date: '2023-11-01'   # Public Notice Date printed on the cover page, printed p. 1
+  permit_id: 2PD00013*VD
+  sha256: 64526d6dd72adfd3d89179e0203e25129410d06066d2b4d75d282695fbdc8aa3
+  doc_type: Permit — Intermediate (package PTF235228272)
+  note: >-
+    The document this issue exists to obtain. Carries the permit-cited stream design flows at the
+    outfall (Table 15, printed p. 31: annual 7Q10 94.1 cfs) and the discharge location (printed
+    p. 7: Maumee River at River Mile 62.05).
+
+- filename: 2PD00013.pdf
+  docid: 2705018
+  canonical_name: >-
+    NPDES permit 2PD00013*VD as issued — "Authorization to Discharge Under the National Pollutant
+    Discharge Elimination System", Action Date January 17, 2024, Effective March 1, 2024, Expires
+    February 28, 2029. Includes the permit's own appended copy of the fact sheet. 116 pp.
+  content_verified_date: '2024-01-17'   # "Action Date: January 17, 2024" printed on p. 1
+  permit_id: 2PD00013*VD
+  sha256: 32abcf5ff0818b9fe3192cf21b751ae9273557723eab924c4588e74d2aaee0d2
+  doc_type: Permit — Intermediate (package PTF235228272)
+
+- filename: 2PD00013.rtc.pdf
+  docid: 2705017
+  canonical_name: >-
+    Ohio EPA Division of Surface Water, Response to Comments — Defiance WPC, permit 2PD00013*VD,
+    December 2023. 3 pp.
+  content_verified_date: '2023-12-01'   # "December 2023" running foot; the comment period closed 2023-11-30
+  permit_id: 2PD00013*VD
+  sha256: 31f954ea469b7e3ca68b63b372b69c2a19475b78b54b818cdd4de8d191182a3c
+  doc_type: Permit — Intermediate (package PTF235228272)
+  note: >-
+    States on its own face that "Comments were only received from USEPA Region 5 during the public
+    notice" — the negative that makes the two Region 5 letters below the entire comment record.
+
+- filename: 2PD00013.usepa-r5-draft-review.pdf
+  docid: 2705015
+  canonical_name: >-
+    U.S. EPA Region 5 (Stephen M. Jann, Manager, Permits Branch, Water Division) to Ohio EPA
+    (Ashley Ward, P.E.), "Review of Draft NPDES Permit No. OH0024899, City of Defiance",
+    December 1, 2023 — no objection, with Enclosure A comments. 4 pp.
+  content_verified_date: '2023-12-01'   # letter date printed on p. 1
+  permit_id: 2PD00013*VD
+  sha256: b9b817519bd7f1e4a58560876b56dbcba3a350f92494b15330d2a922dd1cd070
+  doc_type: Permit — Intermediate (package PTF235228272)
+
+- filename: 2PD00013.usepa-r5-proposed-review.pdf
+  docid: 2705014
+  canonical_name: >-
+    U.S. EPA Region 5 (Krista McKim) to Ohio EPA (Walter Ariss), e-mail "OH0024899 City of
+    Defiance", January 12, 2024 — Region 5's review of the PROPOSED permit (a second, later
+    review than the December 1 draft-permit letter above). 1 p.
+  content_verified_date: '2024-01-12'   # "Date: Friday, January 12, 2024" in the e-mail header
+  permit_id: 2PD00013*VD
+  sha256: 8578a5458d9185efd21ade5cbc053f94dea9a8dd4595e452e4195e56a2d37df3
+  doc_type: Permit — Intermediate (package PTF235228272)
+
+- filename: 2PD00013.nov-rov-2026-04-21.pdf
+  docid: 4089456
+  also_served_as_docid: 4089457
+  canonical_name: >-
+    Ohio EPA Northwest District Office (Lori Komorowski, P.E.) to the Mayor & Council, City of
+    Defiance, "Notice of Violation / Resolution of Violation", April 21, 2026 — the Kingsbury
+    force-main break and the March 31 – April 10, 2026 sanitary sewer overflows to Preston Run,
+    the Maumee River and the Auglaize River, with the City's resolution. 4 pp.
+  content_verified_date: '2026-04-21'   # letter date printed on p. 1
+  permit_id: 2PD00013
+  sha256: 04aee5e80261bb849c06158679f5ab77cbcd212e7f904f8cd77e015bbc8c8e8f
+  doc_type: NOV (docid 4089456) and ROV or RTC (docid 4089457)
+  note: >-
+    The portal indexes this ONE letter twice — docid 4089456 under doc type "NOV" and docid
+    4089457 under "ROV or RTC" — because the letter itself is captioned "Notice of Violation /
+    Resolution of Violation" and does both jobs. The two downloads are byte-identical
+    (sha256 04aee5e8…), verified before dropping one, so a single file is committed under the
+    rule that only a checksum-verified byte-identical duplicate may be removed. Both docids are
+    recorded here so either portal reference resolves to this file. This letter IS the informal
+    enforcement action ECHO counts for OH0024899 (EnfIdentifier OH-I00108252) — see
+    data/extracted/defiance/wwtp-enforcement.yaml.

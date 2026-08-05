@@ -1306,8 +1306,33 @@ _DEFIANCE = SiteProfile(
     # (Syn Ind. -84.75). A water-releasing RSEI facility inside the box is inferred to discharge to
     # the Maumee (tagged `assumption`). (lat_min, lat_max, lon_min, lon_max)
     toxic_corridor_bbox=(41.26, 41.31, -84.40, -84.28),
-    # balance (per-WWTP receiving waters pending the site's NPDES fact sheets)
-    plant_receiving={},  # [open] pending Defiance-area WWTP NPDES fact sheets
+    # balance — the receiving water and the at-outfall design low flow are now the permit's own
+    # (#392). Ohio EPA computes the design low flow AT THE OUTFALL from the three arms ABOVE
+    # Defiance (Maumee at Antwerp 04183500 + Tiffin at Stryker 04185000 + Auglaize near Defiance
+    # 04191500 — drainage 2129 + 410 + 2318 = 4857 mi² in that order), NOT from gage 04192500 that
+    # sits below the city with 5545 mi² — which is why the permit's 94.1 cfs is lower than the
+    # 139.24 cfs LP3 value #391 derived at that gage. Both are correct about different sections of
+    # river; only 94.1 cfs is the number the regulator allocates on.
+    plant_receiving={
+        "defiance-wpc": (
+            "Maumee River at River Mile 62.05",
+            "Ohio EPA NPDES fact sheet 2PD00013*VD (data/documents/oepa/defiance/2PD00013.fs.pdf), "
+            "printed p. 7 — outfall 2PD00013001, HUC 04100009-02-01, Ohio EPA river code 04-001, "
+            "Modified Warmwater Habitat + Outstanding State Water; Table 15 (printed p. 31) annual "
+            "7Q10 94.1 cfs / 1Q10 67.2 cfs / harmonic mean 650.5 cfs (USGS 04183500, 04191500, "
+            "04185000), average design flow 6.0 MGD (9.2834 cfs) — 10.14:1 at the outfall, on a "
+            "THREE-WAY shared WLA segment with GM Casting 2IN00004 and GM remediation 2IN00202001 "
+            "(total discharger flow 11.225 cfs, 25% average mixing assumption). Structured read "
+            "data/extracted/oepa/defiance/2PD00013.fs.npdes.yaml",
+        ),
+    },  # [verified: OEPA 2PD00013*VD fact sheet]. Key is the future watch-item id — the convention
+    # is #829's (same phrasing as the Findlay and Ottawa entries above; its title names troy-piqua
+    # but it is where the watch-items.geojson + cited-reach-7Q10 un-gate was settled network-wide).
+    # Defiance's own artifact is tracked by #1445. It has no committed watch-items.geojson yet, so
+    # the routed balance does not read this entry; it is the cited datum of record until that file
+    # lands, and the two must match then.
+    # NB the design flow here (6.0 MGD, printed three times across the permit and fact sheet) is
+    # HALF the 12 MGD ECHO carries for OH0024899 — see data/extracted/defiance/ONBOARDING.md.
     abstraction_gage="04192500",  # [inference] the Maumee-near-Defiance mainstem gage (below the confluence)
     # refill (the water-balance supply model is not yet designed for Defiance)
     supply_gage_primary="TODO",  # [open] refill supply gage — pending the site's water-balance model

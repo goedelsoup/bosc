@@ -132,6 +132,75 @@
     }
   },
   {
+    "id": "defiance-wwtp-record",
+    "title": "Defiance — NPDES 2PD00013 Permit Set + the Two Enforcement Actions (Extractions)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Two routes. (1) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), scripted, searched by Entity Name \"DEFIANCE WWTP\" — 1,097 documents, 950 of them under Secondary ID 2PD00013 — from which six were fetched on 2026-08-05 and committed under data/documents/oepa/defiance/ (see that directory's filename-map.yaml; the portal sends no Content-Disposition, so the docid is the as-served identity and is recorded beside every file). The permit:/ blocks are `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1 image); everything after them is a reviewed augmentation transcribed page-by-page from each PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans. (2) EPA ECHO's CWA services for the enforcement record — dfr_rest_services.get_dfr for FRS 110000544082 and case_rest_services.get_case_report for case 05-2024-0328 — read 2026-08-05 against the ICIS-NPDES system extract of 2026-07-31.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:defiance",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "oepa",
+      "defiance",
+      "defiance-county",
+      "maumee-river",
+      "7q10",
+      "dilution",
+      "enforcement",
+      "consent-order",
+      "cso",
+      "sso",
+      "tmdl",
+      "phosphorus",
+      "ohp000001"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/defiance/2PD00013.fs.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/defiance/2PD00013.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/defiance/wwtp-enforcement.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "e401d871610d16221ee5ca274c1feae63675a26d6cf3d2684adb44a96b8ba86c",
+      "size_bytes": 40751,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Two routes. (1) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), scripted, searched by Entity Name \"DEFIANCE WWTP\" — 1,097 documents, 950 of them under Secondary ID 2PD00013 — from which six were fetched on 2026-08-05 and committed under data/documents/oepa/defiance/ (see that directory's filename-map.yaml; the portal sends no Content-Disposition, so the docid is the as-served identity and is recorded beside every file). The permit:/ blocks are `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1 image); everything after them is a reviewed augmentation transcribed page-by-page from each PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans. (2) EPA ECHO's CWA services for the enforcement record — dfr_rest_services.get_dfr for FRS 110000544082 and case_rest_services.get_case_report for case 05-2024-0328 — read 2026-08-05 against the ICIS-NPDES system extract of 2026-07-31.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "grid",
     "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
     "scope": "extracted",
@@ -1611,6 +1680,11 @@
         "lfs": false
       },
       {
+        "relpath": "reference/hydrology/{site}/routing.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "reference/hydrology/lima/sanitary-basis.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -1648,10 +1722,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4127152c22a82b65664b2d6f8f7d23e15583c5c752ae93abed7122054854257f",
-      "size_bytes": 188102,
+      "sha256": "85a9c582cd4a41739c604431bc6b6ffb5b227792f5bbe8c709e6c99957ea217d",
+      "size_bytes": 190335,
       "lfs_materialized": true,
-      "file_count": 21,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },

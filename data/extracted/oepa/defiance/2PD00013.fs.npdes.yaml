@@ -1,0 +1,396 @@
+# Ohio EPA NPDES fact sheet 2PD00013*VD — City of Defiance Water Pollution Control (WPC),
+# application OH0024899. The instrument issue #392 exists to put in the corpus: it carries the
+# PERMIT-CITED design low flow at the outfall, which is the only legally operative denominator
+# for this discharge and was absent from the record until now.
+#
+# The `permit:` block below is the pipeline's own read (`watermark extract --kind npdes`,
+# text-primary over the first six pages plus the page-1 image). Everything after it is a REVIEWED
+# augmentation transcribed from this PDF's embedded text layer at the pages cited on each block.
+#
+# Method note (the same one that governs the Findlay read, and different from the OCR-scan rule in
+# CLAUDE.md): this is a DIGITALLY GENERATED Ohio EPA PDF, not a scan. Its text layer is the
+# document's own embedded text, not an OCR guess, so the figures below are read from it verbatim
+# rather than re-keyed from a render. Table 15's numerals were spot-checked against the rendered
+# page image.
+doc_id: 2PD00013.fs-cdedfa10
+source_path: data/documents/oepa/defiance/2PD00013.fs.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: " \nFact Sheet for NPDES Permit Renewal, Defiance WWTP, 2023\
+  \ \nPage 1 of 40 \n \nNational Pollutant Discharge Elimination System (NPDES) Permit\
+  \ Program \n \nFACT SHEET \n \nRegarding an NPDES Permit to Discharge to Waters\
+  \ of the State of Ohio \nfor City of Defiance Water Pollution Control (WPC) \n \n\
+  Public Notice No.: 191309 Ohio EPA Permit No.: 2PD00013*VD \nPublic Notice Date:\
+  \ November 1, 2023 Application No.: OH0024899 \nComment Period Ends: November 30,\
+  \ 2023 \n \n \n Name and Address of Facility Where \nName and Address of Applicant:\
+  \ Discharge Occurs:                  \nCity of Defiance Defiance Water Pollut"
+permit:
+  confidence: high
+  warnings: []
+  facility_name: City of Defiance Water Pollution Control (WPC)
+  permit_no: 2PD00013*VD
+  permit_action: renewal
+  applicant: City of Defiance, 631 Perry Street, Defiance, OH 43512
+  application_no: OH0024899
+  public_notice_no: '191309'
+  public_notice_date: '2023-11-01'
+  comment_period_end: '2023-11-30'
+  facility_address: Defiance Water Pollution Control, 26273 State Route 281 East,
+    Defiance, OH 43512, Defiance County
+  discharge_address: null
+  receiving_water: Maumee River
+  stream_network: Maumee River to Lake Erie
+  outfalls:
+  - '001'
+  - '050'
+  - '051'
+  - '602'
+  - '801'
+  - '901'
+  note: Facility address is also the discharge address (no separate discharge address).
+    Outfalls 001 (primary), 050 (CSO-related bypass), 051 (primary bypass, monitoring
+    proposed to be removed), 602 (internal monitoring station for TBELs), 801 (upstream
+    monitoring), and 901 (downstream monitoring) are referenced in the fact sheet.
+    Eight additional CSO outfalls with flow meters are mentioned but not individually
+    identified.
+
+# --- reviewed augmentation (issue 392) --------------------------------------------------------
+# Fields the six-page text-primary read does not reach. Every value is transcribed from the page
+# named in its own `page` key (1-based printed sheet, matching the "Page N of 40" running head).
+
+review:
+  issue: 392
+  reviewed_on: '2026-08-05'
+  method: >-
+    Verbatim transcription from the PDF's embedded text layer (pypdf), page by page. No figure is
+    derived, rounded or carried over from any other document except where a block says so
+    explicitly and names the other instrument. Arithmetic that IS ours is confined to the
+    `dilution:` block and is labelled there.
+  pipeline_block_corrections: >-
+    Two readings in the `permit:` block above are the model's paraphrase, not the document's
+    printed words, and are corrected here rather than edited there (the block is the pipeline's
+    own read of record). (1) `stream_network` prints on the cover page as exactly "Lake Erie"
+    under the heading "Subsequent Stream Network"; the block renders it "Maumee River to Lake
+    Erie". (2) `outfalls` lists 001/050/051/602/801/901, which mixes the one discharge outfall
+    (001) with a bypass station (050), a discontinued bypass station (051), an internal
+    monitoring station (602) and the two instream stations (801 upstream, 901 downstream). The
+    permitted discharge outfall is 001 alone; the facility also holds 27 CSO outfalls listed
+    individually in Table 5 (printed p. 23), of which CSO 040 was eliminated in 2022.
+
+# ── The answer to #392's question 2(a) and 2(b) ───────────────────────────────────────────────
+discharge_location:
+  page: 7
+  quote: "Defiance WPC discharges to Maumee River at River Mile 62.05."
+  receiving_water: Maumee River
+  river_mile: 62.05
+  ohio_epa_river_code: '04-001'
+  hydrologic_unit_code: 04100009-02-01
+  county: Defiance
+  ecoregion: Huron-Erie Lake Plain
+  use_designations:
+  - Modified Warmwater Habitat
+  - Agricultural Water Supply
+  - Industrial Water Supply
+  - Primary Contact Recreation
+  - Outstanding State Water (OSW)
+  note: >-
+    The use designation matters to any later comparison with the network's other cited reaches:
+    this segment is MODIFIED Warmwater Habitat (and Outstanding State Water), where Findlay's
+    Blanchard reach is Warmwater Habitat. Different use, different criteria — the two at-outfall
+    statistics are not interchangeable.
+
+facility_design_flow:
+  page: 7
+  quote: >-
+    "Defiance WPC was constructed in 1956. The average design flow is 6.0 million gallons per day
+    (MGD), the peak hydraulic capacity of the secondary treatment system is 8.0 MGD, and the peak
+    hydraulic capacity of the primary treatment and disinfection systems is 14.0 MGD."
+  average_design_flow_mgd: 6.0
+  peak_secondary_mgd: 8.0
+  peak_primary_and_disinfection_mgd: 14.0
+  population_served: ~19900
+  serves: City of Defiance, Village of Ayersville, and portions of Defiance County
+  corroboration:
+    page: 30
+    document: data/documents/oepa/defiance/2PD00013.pdf
+    quote: >-
+      "The average daily designed flow of the facility's secondary treatment processes is 6.0
+      MGD, with a peak hydraulic capacity of 8.0 MGD." — the ISSUED permit (2PD00013*VD),
+      Part II.H (CSO-Related Bypass), printed p. 30. Table 15 of this fact sheet states the same
+      6.0 MGD a third time, sourced to "NPDES Application Form 2A", converted to 9.2834 cfs.
+
+# ── Table 15, "Instream Conditions and Discharger Flow" (printed p. 31) ────────────────────────
+# The permit-cited design low flows AT THE OUTFALL. Every row's stated basis is the same three
+# USGS gages, which is the methodological fact that explains the whole discrepancy in
+# data/extracted/defiance/ONBOARDING.md: they are the three arms ABOVE Defiance, not the single
+# mainstem gage below it.
+stream_design_flows:
+  page: 31
+  table: 'Table 15. Instream Conditions and Discharger Flow'
+  basis_gages:
+  - '04183500'
+  - '04191500'
+  - '04185000'
+  basis_as_printed: 'USGS 4183500, 4191500, 4185000'
+  one_q10_cfs: 67.2          # annual
+  seven_q10_cfs: 94.1        # annual — the value #392 exists to anchor
+  thirty_q10_summer_cfs: 137.5
+  thirty_q10_winter_cfs: 310.5
+  ninety_q10_cfs: 204        # annual
+  harmonic_mean_cfs: 650.5   # annual
+  mixing_assumption_pct_average: 25
+  mixing_assumption_pct_maximum: 100
+  instream_background:
+    hardness_omz_mg_l: 245     # station 2PD00013901; n=20; 2014-19; median
+    hardness_imz_mg_l: 245
+    ph_summer_su: 8.2          # 75th percentile
+    ph_winter_su: 8.2
+    temperature_summer_c: 26   # 75th percentile
+    temperature_winter_c: 5.5
+  discharger_flows:
+    defiance_wwtp_cfs: 9.2834      # (6.0 MGD) — basis printed as "NPDES Application Form 2A"
+    defiance_wwtp_mgd: 6.0
+    general_motors_cfs: 1.9418     # (1.255 MGD) — 95th percentile of monthly ave. flows, 2018-23
+    general_motors_mgd: 1.255
+    total_discharger_cfs: 11.225   # (7.255 MGD) — "Sum of GM, Defiance WWTP flows"
+    total_discharger_mgd: 7.255
+
+shared_wasteload_allocation:
+  page: 12
+  quote: >-
+    "The WLA for this segment divided loads between the General Motors (GM) Casting Operations
+    (2IN00004), GM's remediation discharge (2IN00202001), and the Defiance WWTP discharge."
+  co_dischargers:
+  - permit: 2IN00004
+    name: General Motors Casting Operations (GM Global Propulsion Systems, Defiance)
+  - permit: 2IN00202001
+    name: GM remediation discharge
+  design_flow_basis: >-
+    Toxics average = annual 7Q10; toxics maximum = annual 1Q10; ammonia average = summer/winter
+    30Q10; wildlife = annual 90Q10; agricultural water supply and human health (nondrinking) =
+    harmonic mean flow (printed p. 12).
+  note: >-
+    This is a THREE-WAY segment. Any assimilative statement that treats 94.1 cfs as the WWTP's
+    own headroom is overstating it: the regulator allocates that flow across the POTW and two
+    General Motors discharges, and the segment's total permitted discharger flow is 11.225 cfs,
+    not the WWTP's 9.2834.
+
+# ── Our arithmetic, kept separate from the transcription above ────────────────────────────────
+dilution:
+  tag: '[inference]'
+  method: >-
+    Plain division of transcribed figures; no modelling. Shown because the corpus's standing
+    Defiance number (~6.2:1) was computed from a DIFFERENT numerator and a DIFFERENT denominator
+    than the permit uses, and the size of the correction is the point of #392.
+  at_outfall_permit_cited: 10.14   # 94.1 / 9.2834 — fact-sheet 7Q10 vs fact-sheet design flow
+  at_outfall_all_dischargers: 8.38 # 94.1 / 11.225 — the segment's three permitted discharges
+  chronic_available_at_25pct_mixing: 2.10  # (0.25 x 94.1) / 11.225 — the mixing assumption applied
+  note: >-
+    `chronic_available_at_25pct_mixing` is NOT a dilution ratio in the basin screen's sense and is
+    not comparable to one. It is what the fact sheet's own 25% average mixing assumption leaves
+    for the chronic WLA, and it is recorded because a reader who takes 10.14:1 as "headroom" will
+    be off by ~5x against the number the regulator actually allocates on.
+
+# ── Compliance record as the regulator stated it in 2023 ───────────────────────────────────────
+# Not the ECHO enforcement counts (those are characterized in
+# data/extracted/defiance/wwtp-enforcement.yaml) — this is the permit writer's own five-year
+# account of what the plant was doing, and it names the cause the enforcement case later paid to fix.
+compliance_history_as_stated:
+  page: 9
+  window: 2018-07..2023-06
+  quote: >-
+    "A plant upset due to a filamentous bulking event occurred in mid-2022, resulting 21 effluent
+    limit violations of several parameters. Numerous other ammonia limit violations occurred but a
+    specific or common cause has not been identified."
+  effluent_violations_table_2:
+    page: 22
+    total: 92
+    by_parameter:
+      chlorine: 10
+      dissolved_oxygen: 10
+      e_coli: 9
+      cbod_5_day: 4
+      ammonia: 49
+      phosphorus: 9
+      total_suspended_solids: 1
+    note: >-
+      Ammonia is 49 of 92 — over half the five-year violation count, all at internal station 602.
+      Table 2's 2018 column is July-December only and its 2023 column is January-June only.
+      The `e_coli: 9` above is Table 2's own row total and CONFLICTS with the 12 this same fact
+      sheet states on printed p. 11 — see `instream_attainment.recreation.e_coli_count_discrepancy`.
+  sanitary_sewer_overflows_table_4:
+    page: 22
+    by_year: {2018: 5, 2019: 0, 2020: 9, 2021: 0, 2022: 0, 2023: 0}
+    note: 2018 is July-December only; 2023 is January-June only.
+  combined_sewer_overflows_table_5:
+    page: 23
+    outfall_count: 27
+    max_occurrences_at_one_outfall_by_year: {2018: 43, 2019: 55, 2020: 36, 2021: 28, 2022: 30}
+    total_volume_mg_by_year: {2018: 68.3, 2019: 120.9, 2020: 60.4, 2021: 40.1, 2022: 46.4}
+    note: CSO 040 was eliminated in 2022.
+  bypass_table_6:
+    page: 24
+    days_by_year: {2018: 23, 2019: 65, 2020: 44, 2021: 50, 2022: 40, 2023: 20}
+    volume_mg_by_year: {2018: 21.9, 2019: 61.6, 2020: 85.9, 2021: 28.4, 2022: 24.6, 2023: 13.2}
+  effluent_flow_table_3:
+    page: 22
+    median_mgd_by_year: {2018: 2.49, 2019: 2.98, 2020: 2.36, 2021: 2.75, 2022: 2.64, 2023: 2.87}
+    p95_mgd_by_year: {2018: 5.96, 2019: 8.91, 2020: 7.71, 2021: 7.23, 2022: 6.94, 2023: 8.81}
+    max_mgd_by_year: {2018: 12.11, 2019: 13.30, 2020: 13.02, 2021: 11.67, 2022: 12.01, 2023: 12.53}
+    infiltration_inflow_mgd: 1.27
+    note: >-
+      Actual median flow runs at ~40-48% of the 6.0 MGD average design flow; the annual MAXIMUM
+      runs 11.7-13.3 MGD, i.e. roughly twice design and close to the 14.0 MGD peak capacity of
+      primary treatment and disinfection. This is a wet-weather plant, and its exceedances are
+      wet-weather-shaped.
+
+consent_order:
+  page: 8
+  quote: >-
+    "Defiance WPC is subject to a State of Ohio Second Amended Consent Order (SACO) Case No.
+    10-CB-40433. The SACO, filed February 28, 2020, required the development of an Integrated
+    Watershed Improvement Plan (IWIP), including a Long-Term Control Plan and a No Feasible
+    Alternatives (NFA) analysis."
+  case_no: 10-CB-40433
+  instrument: State of Ohio Second Amended Consent Order (SACO)
+  filed: '2020-02-28'
+  iwip_submitted: '2022-07-29'
+  iwip_revised: '2023-03-16'
+  cso_control_target: six overflow events per typical year
+  cost: $40.7M
+  completion_year: 2043
+  collection_system: 65% separated sewers, 35% combined
+  nfa_outcome: >-
+    Raise the secondary-treatment bypass threshold from 6.53 MGD to 8.0 MGD, build a 5.0-million-
+    gallon equalization basin, and increase Kingsbury pump station capacity. The IWIP's own
+    Financial Capability Analysis says the projects "will place a high financial burden on the
+    City."
+  note: >-
+    This is a STATE judicial consent order and is separate from the federal administrative order
+    ECHO counts as the formal action (EPA R5 AOC 05-2024-0328, 2024-07-26). Both are on the same
+    plant at the same time; neither is the other. The eDoc portal also holds three older Judicial
+    Order filings on 2PD00013 (2010-03-02, 2010-12-29, 2012-12-20, docids 51767 / 3862641 /
+    3944039) which are `[open]` — not retrieved under this issue.
+
+phosphorus_regime:
+  page: 11
+  tmdl_report: Maumee Watershed Nutrient TMDL, approved by U.S. EPA September 2023
+  individual_wasteload_allocation_kg: 1470
+  wla_season: critical season (March through July)
+  regulated_through: >-
+    Maumee Watershed Total Phosphorus NPDES General Permit (OHP000001), under which Defiance WPC
+    has been granted coverage — the corpus already holds that general permit at
+    data/documents/oepa/OHP000001.pdf.
+  quote: >-
+    "Preliminary modeling of the middle Maumee River shows that Defiance WPC, among several other
+    point sources, contributes to the impairment below the Grand Rapids Dam. Further development
+    of this modeling work may lead to a more restrictive total phosphorus limit for Defiance WPC
+    than is proposed in this permit."
+  note: >-
+    A named, dated, on-the-record statement by the regulator that this plant contributes to a
+    downstream impairment, plus a stated intention to revisit its phosphorus limit. Table 7
+    (printed p. 24) gives the plant's median TP loading by year (3.50-8.08 kg/day). Comparing that
+    to the 1,470 kg seasonal WLA would require a season LOAD, which the fact sheet does not print
+    — the comparison is deliberately not made here.
+
+instream_attainment:
+  page: 10
+  quote: >-
+    "Maumee River is in full attainment of its aquatic life use designations in the vicinity of
+    Defiance WPC, both up- and downstream."
+  impairment_downstream:
+    river_mile: 31.64
+    distance: approximately 30 miles downstream of Defiance WPC
+    cause: nutrients/eutrophication and flow-regime alterations; Grand Rapids Dam impoundment named in the TSD
+    survey: Biological and Water Quality Study of the Maumee and Auglaize River, 2012-13
+  recreation:
+    page: 11
+    quote: >-
+      "Upstream of Defiance WPC, the river is in non-attainment of the primary contact recreation
+      use designation ... While Maumee River is indicated to be in attainment of the recreational
+      use downstream of the facility, Defiance WPC has had 12 E. coli effluent violations in the
+      last five years, as well as persistent CSO discharges."
+    e_coli_count_discrepancy: >-
+      This fact sheet states TWO different E. coli violation counts for the same five-year window
+      and neither is corrected against the other. Printed p. 11 (the quote above) says 12; Table 2
+      on printed p. 22 tabulates the outfall-001 E. coli row as 0 + 6 + 0 + 1 + 2 + 0 = 9, and
+      prints that 9 as its own row total. Both are transcribed as printed —
+      `compliance_history_as_stated.effluent_violations_table_2.by_parameter.e_coli` carries the 9.
+      The likeliest reconciliation is Table 2's own footnotes: its 2018 column is July-December
+      only and its 2023 column is January-June only, so the table covers five years minus two half
+      years, and a true five-year count could pick up the three missing violations in 2018 H1 or
+      2023 H2. That is an `[inference]` about the regulator's arithmetic, not a fact the document
+      states, so the discrepancy is recorded rather than resolved. Cite whichever figure the
+      document you are citing prints, and never present 9 and 12 as measuring the same window.
+
+other_permit_terms:
+  mercury:
+    page: 2
+    variance: general mercury variance (OAC 3745-33-07(D)(10)(a)); permit first covered June 2015
+    proposed_average_monthly_limit_ng_l: 1.3
+  whole_effluent_toxicity:
+    page: 13
+    wla_tua: 1.0
+    wla_tuc: 3.53
+  pretreatment:
+    page: 8
+    categorical_users: 1
+    categorical_flow_mgd: 0.035
+    significant_non_categorical_users: 10
+    significant_non_categorical_flow_mgd: 0.285
+
+public_comment_record:
+  who_commented: >-
+    U.S. EPA Region 5 only. The Response to Comments states it outright: "Comments were only
+    received from USEPA Region 5 during the public notice."
+    (data/documents/oepa/defiance/2PD00013.rtc.pdf, p. 1)
+  usepa_position: >-
+    "Based on our review to date, EPA would not object to issuance of this permit" — U.S. EPA
+    Region 5 Permits Branch to Ohio EPA, 2023-12-01
+    (data/documents/oepa/defiance/2PD00013.usepa-r5-draft-review.pdf, p. 1), with Enclosure A
+    recommendations. Region 5 reviewed the PROPOSED permit again on 2024-01-12
+    (…usepa-r5-proposed-review.pdf).
+  disputed_point: >-
+    On Region 5's recommendation that the fact sheet state the intent to have POTWs set a
+    phosphorus MAHL from a 0.5 mg/L target, Ohio EPA answered: "While we disagree that the GLWQA
+    is an appropriate basis for setting the target concentration at 0.5 mg/L, we agree that
+    expanded discussion in the fact sheet is warranted."
+    (data/documents/oepa/defiance/2PD00013.rtc.pdf, p. 2) — a recorded state/federal disagreement
+    on the basis for the Maumee phosphorus target, not on this permit's limits.
+
+permit_term:
+  permit_no: 2PD00013*VD
+  application_no: OH0024899
+  action_date: '2024-01-17'
+  effective: '2024-03-01'
+  expires: '2029-02-28'
+  citation: >-
+    Printed on p. 1 of the issued permit, data/documents/oepa/defiance/2PD00013.pdf ("Action Date:
+    January 17, 2024 / Effective Date: March 1, 2024 / Expiration Date: February 28, 2029"). The
+    fact sheet itself prints none of these dates — it predates issuance. ECHO independently
+    reports the permit expiring 2029-02-28 with status "Effective" (dfr_rest_services.get_dfr for
+    FRS 110000544082, ICIS-NPDES extract 2026-07-31).
+
+open_questions:
+- >-
+  The three Judicial Order documents on 2PD00013 in the eDoc portal (2010-03-02, 2010-12-29,
+  2012-12-20) are the SACO's own docket and are not retrieved here. They would date the original
+  and first-amended consent orders behind Case No. 10-CB-40433.
+- >-
+  The fact sheet does not print a season total-phosphorus LOAD, so the plant's performance against
+  its 1,470 kg critical-season TMDL wasteload allocation cannot be stated from this document
+  alone. The Maumee Watershed TP general permit (OHP000001) annual reports would answer it.
+- >-
+  ECHO's ICIS-NPDES total design flow for OH0024899 is 12 MGD and matches none of the three
+  capacities this permit prints (6.0 average / 8.0 peak secondary / 14.0 peak primary). See
+  data/extracted/defiance/ONBOARDING.md — the correction is documented, NOT hand-applied to the
+  regenerated ECHO inventory.
