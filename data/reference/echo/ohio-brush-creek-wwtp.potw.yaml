@@ -1,0 +1,506 @@
+meta:
+  subject: Ohio Brush Creek-watershed NPDES wastewater dischargers
+  scope: POTWs only (CWPFacilityTypeIndicator == POTW)
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Ohio Brush Creek — 1 HUC-8 subbasin (05090201 Ohio Brush-Whiteoak), subregion
+    0509 (direct to the Ohio River)
+  huc8s:
+    05090201: Ohio Brush-Whiteoak
+  dedup_key: FRS RegistryID
+  count: 23
+  caveats:
+  - ECHO's CWA facility service has no CWNS column; the POTW flag rests on CWPFacilityTypeIndicator.
+  - Facilities link to HUCs via WATERS (FacDerivedHuc); a permit that didn't geocode
+    can be missed.
+  - design_flow_mgd is null where ECHO returned no value; it is never estimated.
+  - 'SCOPE IS WIDER THAN THE NAME. HUC-8 05090201 ''Ohio Brush-Whiteoak'' is a two-bank
+    Ohio River corridor unit, not one watershed: 67 HUC-12s running ~150 river miles
+    from Ninemile Creek at the Cincinnati metro edge east to Kinniconick Creek. Ohio
+    Brush Creek proper is 16 of those 67; Whiteoak Creek is 7 more. The rest (Eagle,
+    Straight, Twelvemile, Tenmile, Fourmile, Bracken, Cabin, Kinniconick) are SIBLING
+    direct-to-Ohio drainages — a discharger on one is neither upstream nor downstream
+    of one on Ohio Brush Creek, and must never borrow its 7Q10. Only a receiving water
+    naming Ohio Brush Creek matches that gage; a bare ''Brush Creek'' does not (this
+    pull holds a Campbell County KY ''BRUSH CRK'' ~90 river miles away).'
+  - 'The unit spans BOTH banks, so it is majority-Kentucky: 168 of 261 facilities
+    carry KY permits (Campbell 111, Lewis 22, Mason 22, Bracken 11, Pendleton 2) against
+    93 Ohio ones (Clermont 20, Brown 15, Adams 11, Scioto 3, Highland 1, and 43 for
+    which ECHO returned no county at all). Cross-check Ohio EPA for the Ohio side
+    and Kentucky DOW for the Kentucky side; neither agency''s list is reflected here
+    beyond what ECHO federalizes.'
+  - receiving_water is null for 118 of 261 rows, and for every Adams County POTW that
+    is not on the Ohio River mainstem — Peebles, Seaman, West Union (OH0028088) and
+    Winchester. So the four plants nearest the network's watershed point are exactly
+    the ones ECHO cannot place. The assimilative screen keys on that field, so an
+    unnamed receiver reports as unmatched, never as unaffected. The gap closes only
+    through cited entries in the curated receiving-water overlay, never by inference
+    from a facility's name or county.
+  - Whiteoak, Eagle, Straight and Beasley Fork are ungaged for a defensible low-flow
+    statistic (no NWIS daily-discharge record meeting the 20-climatic-year floor),
+    so their dischargers stay unscreened rather than screening against a proxy.
+facilities:
+- frs_registry_id: '110011017522'
+  name: ABERDEEN WWTP
+  npdes_id: OH0023825
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.385
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: BROWN
+  latitude: 38.65549
+  longitude: -83.76394
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009935455'
+  name: BLACK OAK INDUSTRIAL PARK
+  npdes_id: KY0112755
+  npdes_ids_secondary:
+  - KY0092061
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.064
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010207
+  county: LEWIS
+  latitude: 38.59991
+  longitude: -83.27849
+  compliance_status: null
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110013680837'
+  name: EASTERN REGIONAL STP
+  npdes_id: KYL105031
+  npdes_ids_secondary:
+  - KY0105031
+  ownership: POTW
+  facility_type: POTW
+  permit_type: Associated Permit Record
+  design_flow_mgd: 4.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: '051001011305'
+  county: CAMPBELL
+  latitude: 38.94797
+  longitude: -84.37049
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006345268'
+  name: FELICITY WWTP
+  npdes_id: OH0024597
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.25
+  design_flow_missing: false
+  receiving_water: BEAR CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011106
+  county: CLERMONT
+  latitude: 38.83216
+  longitude: -84.10261
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110016752593'
+  name: GARRISON REGIONAL WWTP
+  npdes_id: KY0105422
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.114
+  design_flow_missing: false
+  receiving_water: OHIO RIVER, OHIO RV
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010207
+  county: LEWIS
+  latitude: 38.618278
+  longitude: -83.157722
+  compliance_status: null
+  informal_enf_count: 5
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006700249'
+  name: GEORGETOWN WWTP
+  npdes_id: OH0021300
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.1
+  design_flow_missing: false
+  receiving_water: TOWN RUN
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011003
+  county: BROWN
+  latitude: 38.8523
+  longitude: -83.91
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009933536'
+  name: 'LEWIS COUNTY SD #1'
+  npdes_id: KY0102601
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.25
+  design_flow_missing: false
+  receiving_water: GROG BR, GROG BRANCH
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010602
+  county: LEWIS
+  latitude: 38.55608
+  longitude: -83.57661
+  compliance_status: null
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110008645332'
+  name: MANCHESTER WWTP
+  npdes_id: OH0020842
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010601
+  county: ADAMS
+  latitude: 38.68799
+  longitude: -83.61795
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000761104'
+  name: MAYSVILLE STP
+  npdes_id: KY0020257
+  npdes_ids_secondary:
+  - KYL020257
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.4
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: MASON
+  latitude: 38.68653
+  longitude: -83.78868
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006344704'
+  name: MOSCOW VILLAGE
+  npdes_id: OH0096571
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.024
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011107
+  county: CLERMONT
+  latitude: 38.858242
+  longitude: -84.231525
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110039726204'
+  name: NEW RICHMOND WWTP
+  npdes_id: OH0021156
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.1
+  design_flow_missing: false
+  receiving_water: OHIO RIVER, TWELVE MILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011204
+  county: CLERMONT
+  latitude: 38.960784
+  longitude: -84.288645
+  compliance_status: Effluent - Non-monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064595344'
+  name: NINE MILE CREEK WWTP
+  npdes_id: OH0049361
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: '050600011602'
+  county: CLERMONT
+  latitude: 39.030114
+  longitude: -84.306352
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006276403'
+  name: ODNR - SHAWNEE STATE PARK LODGE & CABINS
+  npdes_id: OH0037885
+  npdes_ids_secondary:
+  - OH0037877
+  - OH0048305
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.04
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010201
+  county: SCIOTO
+  latitude: 38.741355
+  longitude: -83.19685
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006350297'
+  name: RIPLEY SEWAGE TREATMENT PLANT
+  npdes_id: OH0020966
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010804
+  county: BROWN
+  latitude: 38.74046
+  longitude: -83.842885
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110011016836'
+  name: RUSSELLVILLE WWTP
+  npdes_id: OH0048682
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.085
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010701
+  county: BROWN
+  latitude: 38.8723
+  longitude: -83.7832
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009688775'
+  name: SARDINIA WWTP
+  npdes_id: OH0020729
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010902
+  county: BROWN
+  latitude: 39.004
+  longitude: -83.8097
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064260151'
+  name: VANCEBURG STP
+  npdes_id: KY0021512
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.41
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.608333
+  longitude: -83.321389
+  compliance_status: null
+  informal_enf_count: 8
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009822996'
+  name: VILLAGE OF MT. ORAB WWTP
+  npdes_id: OH0026646
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.18
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011001
+  county: BROWN
+  latitude: 38.99321
+  longitude: -83.92009
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110004685047'
+  name: VILLAGE OF PEEBLES WASTEWATER PLANT
+  npdes_id: OH0026964
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.42
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010501
+  county: ADAMS
+  latitude: 38.94724
+  longitude: -83.41558
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009152825'
+  name: VILLAGE OF SEAMAN WASTEWATER TREATMENT PLANT
+  npdes_id: OH0027341
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.18
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010404
+  county: ADAMS
+  latitude: 38.947658
+  longitude: -83.570292
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009822843'
+  name: WEST UNION WWTP
+  npdes_id: OH0028088
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.7
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010505
+  county: ADAMS
+  latitude: 38.7883
+  longitude: -83.54301
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110040608955'
+  name: WESTERN MASON COUNTY SANITATION DISTRICT
+  npdes_id: KYP000081
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: Individual State Issued Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: DOWNING DRIVE, MAYSVILLE STP
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.645682
+  longitude: -83.761365
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006354355'
+  name: WINCHESTER WASTEWATER TREATMENT PLANT
+  npdes_id: OH0028142
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.17
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010402
+  county: ADAMS
+  latitude: 38.93926
+  longitude: -83.64104
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201

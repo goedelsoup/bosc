@@ -18,11 +18,24 @@ Living record for the West Union · Adams Co watershed point (basin: ohio-brush-
 | corridor-ddf | ok | reference/hydrology/west-union/atlas14-corridor-ddf.yaml |
 | ssurgo-hsg | skipped | parcel geometry missing: reference/west-union/parcel-assemblage.geojson |
 | climatology | ok | reference/hydrology/west-union/nasa-power-climatology.yaml |
-| basin-screen | skipped | 0/0 dischargers screened (0 violations, 0 tight) |
+| basin-screen | ok | 6/23 dischargers screened (0 violations, 0 tight) |
 | econ-baseline | ok | reference/economics/west-union/baseline.yaml |
 | rsei | ok | reference/rsei/west-union/inventory.yaml |
 | consumer-energy | error | Client error '403 Forbidden' for url '<https://api.eia.gov/v2/seriesid/ELEC.PRICE.OH-RES.A>' |
 | grid-profile | error | Client error '403 Forbidden' for url '<https://api.eia.gov/v2/electricity/rto/daily-region-data/data?frequency=daily&data%5B0%5D=value&facets%5Brespondent%5D%5B%5D=PJM&facets%5Btype%5D%5B%5D=D&facets%5Btimezone%5D%5B%5D=Eastern&start=2024-01-01&end=2024-12-31&sort%5B0%5D%5Bcolumn%5D=period&sort%5B0%5D%5Bdirection%5D=asc&length=5000>' |
+
+The **basin-screen** row was re-verified on 2026-08-05 after #1120 registered the
+`ohio-brush-creek` basin and committed its ECHO inventory; it moved `skipped 0/0` → `ok 6/23`.
+Every other row is from the last full onboard run (`onboard` writes this file only when it is
+absent, so a human's checkmarks survive a re-run). The two EIA `error` rows both succeeded on the
+2026-08-05 re-run — refreshing their committed outputs is a separate change (a QCEW 2023→2024
+vintage move), so it was deliberately not folded in here.
+
+**What the 6/23 does and does not say.** The six screened POTWs are the ones discharging to the
+**Ohio River mainstem** — none of them is on Ohio Brush Creek, and none is in Adams County except
+Manchester. The West Union WWTP itself is still unscreened, for two independent reasons that are
+both `[open]`: ECHO carries no receiving water for it, and its documented receiver (Beasley Fork)
+is ungaged. See `data/reference/echo/README.md` § Ohio Brush Creek basin.
 
 ## Review gate (blocking)
 

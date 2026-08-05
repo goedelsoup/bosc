@@ -14,12 +14,14 @@ NPDES ID, and value here was returned by the ECHO API — nothing is fabricated 
 inferred. The one exception is a **curated receiving water**, which is never invented
 either: it is a document-cited correction declared in the
 [curated overlay](#curated-receiving-water-the-refresh-path) and always marked as such on
-the row. Three basins are committed today, each with its own
+the row. Four basins are committed today, each with its own
 `<basin>-wwtp.*` fileset: the **Maumee** (`watermark npdes`, the default), the **Great
 Miami** (`watermark npdes --basin great-miami`, the Miami-basin sites — Urbana, Springfield,
-WPAFB, Troy-Piqua, Hamilton-Middletown), and the **Little Miami** (`watermark npdes --basin
+WPAFB, Troy-Piqua, Hamilton-Middletown), the **Little Miami** (`watermark npdes --basin
 little-miami`, the Scenic-River sites Xenia and Wilmington / Todd Fork, a single HUC-8
-`05090202`). One further basin is **registered in the connector but not yet committed**:
+`05090202`), and **Ohio Brush Creek** (`watermark npdes --basin ohio-brush-creek`, the
+direct-to-Ohio-River branch at West Union / Adams County — a single HUC-8 `05090201`; #1120).
+One further basin is **registered in the connector but not yet committed**:
 the **Scioto** (`--basin scioto`, the Columbus / New Albany data-center cluster) — deferred
 on an ECHO 300/hr throttle (HTTP 429). Run `watermark npdes --basin scioto` to write its
 `<basin>-wwtp.*` fileset when ECHO is healthy. Add a basin by registering it in
@@ -160,6 +162,73 @@ once its receiving water is document-cited. Files: `great-miami-wwtp.all-npdes.y
 `great-miami-wwtp.potw.yaml`, `great-miami-wwtp.huc-counts.yaml`. Those counts are from an
 earlier pull; the Maumee refresh (#1698) did not re-pull this basin.
 
+## Ohio Brush Creek basin (`ohio-brush-creek-wwtp.*`, #1120)
+
+The network's first **direct-to-Ohio-River** branch — West Union / Adams County (#1117),
+which drains straight to the Ohio with no Scioto or Miami loop. One HUC-8, same `p_huc`
+method and field shape as the others, no Lima-specific flags:
+
+| HUC-8 | subbasin |
+|-------|----------|
+| 05090201 | Ohio Brush-Whiteoak |
+
+**Read the scope before reading the file.** Unlike every other basin here, this one's slug
+is a part naming a whole. `maumee` covers seven subbasins because they are all one river's
+tree; 05090201 is a WBD **two-bank Ohio River corridor unit** — 67 HUC-12s and 5,439 km²
+running roughly 150 river miles from Ninemile Creek at the Cincinnati metro edge east to
+Kinniconick Creek, spanning both banks and therefore both states. Ohio Brush Creek proper is
+16 of those 67 HUC-12s (including Beasley Fork, `050902010505`, West Union's own receiver);
+Whiteoak Creek is 7 more; Eagle, Straight, Twelvemile, Tenmile, Fourmile, Bracken and Cabin
+Creeks account for most of the rest. Every one of them reaches the Ohio on its own, so they
+are **siblings** of Ohio Brush Creek, not its headwaters — a discharger on one is neither
+upstream nor downstream of a discharger on another.
+
+**Last pull (2026-08-05):** 273 active-permit rows in the one HUC-8 → **261 facilities**
+after FRS dedup, **23 POTW** (17.87 MGD of design flow, present for 22 of 23). The
+two-bank geography makes it **majority-Kentucky**: 168 of the 261 carry KY permits
+(Campbell 111, Lewis 22, Mason 22, Bracken 11, Pendleton 2) against 93 Ohio ones (Clermont
+20, Brown 15, Adams 11, Scioto 3, Highland 1, and 43 for which ECHO returned no county).
+Completeness therefore needs a cross-check against **both** Ohio EPA and Kentucky DOW; only
+what ECHO federalizes is reflected here.
+
+### What screens, and what does not
+
+`receiving_water` is null for **118 of the 261** rows, and for 13 of the 23 POTWs. The
+assimilative screen (`watermark --site west-union basin-screen`) reports:
+
+| outcome | POTWs | why |
+|---|---|---|
+| screened | 6 | name the Ohio River; dilution 1,799:1 (Maysville STP) to 95,570:1, all `ok` |
+| no receiving water | 13 | ECHO carries no `CWPStateWaterBodyName` |
+| no 7Q10 | 4 | named receiver, but an ungaged tributary (Bear Creek, Town Run, Grog Branch, Twelve Mile Creek) |
+
+Two consequences worth stating plainly rather than leaving to be inferred:
+
+1. **No facility in this inventory names Ohio Brush Creek as its receiving water.** The
+   creek's committed 7Q10 (0.50 cfs, USGS 03237500) is a denominator standing ready, not one
+   in use.
+2. **The West Union WWTP (OH0028088, 0.7 MGD) does not screen**, and neither do Peebles,
+   Seaman or Winchester — the four Adams County POTWs off the Ohio River mainstem are
+   exactly the four ECHO leaves blank. The `SiteProfile` attributes West Union's discharge to
+   **Beasley Fork** on the Ohio EPA NPDES service, but that is a live-service reading, not a
+   committed document, so it cannot support a curated-overlay entry (each entry carries the
+   instrument that names the water). The 1993 consent order in the corpus is explicit that it
+   **never names a receiving water**. Closing this needs the Ohio EPA permit for `0PC00019`
+   ingested — and even then Beasley Fork is ungaged, so the plant would move from
+   `no_receiving_water` to `no_7q10`, not into the screened set. Both halves are open work;
+   neither is closed by inference.
+
+The screened six exist because #1120 added the **Ohio River** mainstem to
+`data/reference/hydrology/mainstem-gages.yaml` — USGS 03216600 at Greenup Dam, chosen as the
+*upstream-end* gage so its drainage area understates every facility's and the screen cannot
+overstate dilution. That entry's note records what a reader is owed about it: the mainstem is
+navigation-regulated in fact and unannotated on the record, and one gage across 150 river
+miles makes a dilution ratio a magnitude check rather than a reach-specific finding.
+
+Files: `ohio-brush-creek-wwtp.all-npdes.yaml`, `ohio-brush-creek-wwtp.potw.yaml`,
+`ohio-brush-creek-wwtp.huc-counts.yaml`. There is no curated receiving-water overlay for this
+basin yet.
+
 ## Known gaps & caveats (read before using)
 
 1. **No CWNS ID.** The ECHO CWA facility service has *no* CWNS column, so the
@@ -272,5 +341,17 @@ Source: Hand-authored, document-cited corrections to ECHO's CWPStateWaterBodyNam
 | file | type | lfs |
 | --- | --- | --- |
 | `reference/echo/curation/maumee-wwtp.receiving-water.yaml` | application/x-yaml | no |
+
+### `echo-ohio-brush-creek-wwtp` — Ohio Brush Creek-basin NPDES discharger inventory (EPA ECHO)
+
+Source: EPA ECHO — cwa_rest_services (CWA v2017-10-13) · License: U.S. Government work (public domain) · Access: throttled · Site scope: basin:ohio-brush-creek · Refresh: quarterly (ttl 180d)
+
+Regenerate: `watermark npdes --basin ohio-brush-creek`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/echo/ohio-brush-creek-wwtp.all-npdes.yaml` | application/x-yaml | no |
+| `reference/echo/ohio-brush-creek-wwtp.huc-counts.yaml` | application/x-yaml | no |
+| `reference/echo/ohio-brush-creek-wwtp.potw.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

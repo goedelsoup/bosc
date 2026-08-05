@@ -1,0 +1,15 @@
+meta:
+  subject: Ohio Brush Creek-watershed NPDES inventory — per-HUC counts
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Ohio Brush Creek — 1 HUC-8 subbasin (05090201 Ohio Brush-Whiteoak), subregion
+    0509 (direct to the Ohio River)
+huc_counts:
+- huc8: 05090201
+  name: Ohio Brush-Whiteoak
+  reported_count: 273
+  rows_pulled: 273
+  potw_rows_pulled: 24
+totals:
+  raw: 273
+  deduped: 261
+  potw: 23
