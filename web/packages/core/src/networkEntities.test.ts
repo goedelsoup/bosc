@@ -37,7 +37,7 @@ function manifest(feeds: Record<string, unknown>, slug: string): object {
   return {
     site: slug,
     bundle_version: "test",
-    contract_version: "1.27",
+    contract_version: "2.0.0",
     generated_at: "2026-01-01T00:00:00Z",
     feed_count: entries.length,
     row_total: 0,

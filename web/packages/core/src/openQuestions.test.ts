@@ -23,7 +23,7 @@ function q(
 function manifestWith(rows: OpenQuestionItem[]): object {
   return {
     bundle_version: "test",
-    contract_version: "1.27",
+    contract_version: "2.0.0",
     generated_at: "2026-01-01T00:00:00Z",
     feed_count: 1,
     row_total: rows.length,
@@ -52,7 +52,7 @@ function makeSiteBundles(bySlug: Record<string, OpenQuestionItem[] | null>): str
       ? manifestWith(rows)
       : {
           bundle_version: "test",
-          contract_version: "1.27",
+          contract_version: "2.0.0",
           generated_at: "2026-01-01T00:00:00Z",
           feed_count: 0,
           row_total: 0,

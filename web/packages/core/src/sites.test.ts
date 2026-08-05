@@ -66,10 +66,9 @@ describe("sites registry — the Watermark network (#304)", () => {
     expect(trp?.selectable).toBe(true);
     expect(trp?.status).toBe("live");
     // The promotion rests on domain activation, not on a full taxonomy: troy-piqua carries the
-    // SAME readiness shape as Urbana, which was promoted on it. `facility` and `story` are
-    // deliberate resting states (no PTI exists; STORY_SLUGS registration is a later editorial
-    // call) — if a regen ever drops one of the three `live` domains, the parity claim is gone
-    // and this fails rather than leaving a hollow site in the switcher.
+    // SAME readiness shape as Urbana, which was promoted on it. `facility` is a deliberate resting
+    // state (no PTI exists) — if a regen ever drops one of the `live` domains, the parity claim is
+    // gone and this fails rather than leaving a hollow site in the switcher.
     const trpReadiness = loadManifest("troy-piqua").readiness;
     expect(trpReadiness).toEqual(loadManifest("urbana").readiness);
     expect(trpReadiness?.tier).toBe("case");
@@ -78,7 +77,10 @@ describe("sites registry — the Watermark network (#304)", () => {
       facility: "seeded",
       places: "live",
       record: "live",
-      story: "seeded",
+      // `story: "seeded"` until #1971, on a leads board and no walk. `inquiry` reads the study
+      // instead, and troy-piqua's answers — so the parity with Urbana now holds on what the two
+      // records support rather than on which of them happened to commit a leads YAML.
+      inquiry: "live",
     });
   });
 
@@ -140,69 +142,46 @@ describe("sites registry — the Watermark network (#304)", () => {
   });
 });
 
-describe("editorial story states — live vs coming-soon vs hidden (#1526/#1527)", () => {
-  it("Lima's walk is readable (live), Fort Wayne's and Findlay's stay `comingSoon`, and no story anywhere `hidden`", () => {
-    // Three in-line stories: Lima's project-bosc, Fort Wayne's project-zodiac, Findlay's flagpole.
-    // Lima's record is finished, so its walk is readable. Fort Wayne's is held while its record is
-    // finished. Findlay's is held for a DIFFERENT reason (#1466) — its record IS finished (all five
-    // readiness domains live) but the site is not yet `selectable`, and promotion is a manual,
-    // parity-gated `data/sites.yaml` edit. Same held state, two different reasons to be in it.
+describe("the surviving walk — one method demo, not a per-site obligation (#1971)", () => {
+  it("Lima hosts the only registered walk, and it is readable", () => {
+    // #1970 absorbed Fort Wayne's project-zodiac, Findlay's flagpole and Bowling Green's
+    // project-accordion into their sites' impact studies — the study owns the narrative spine now.
+    // Lima's survives standalone as the network's ONE worked example of reading a record document
+    // by document. A new site does not owe the network a walk; that expectation is what #1968
+    // retired, and this assertion is where its return would be caught.
+    expect(storyHostSites().map((s) => s.slug)).toEqual(["lima"]);
     const lima = siteForSlug("lima")?.stories ?? [];
-    const ftw = siteForSlug("fort-wayne")?.stories ?? [];
-    const fin = siteForSlug("findlay")?.stories ?? [];
     expect(lima.map((s) => s.codename)).toEqual(["project-bosc"]);
-    expect(ftw.map((s) => s.codename)).toEqual(["project-zodiac"]);
-    expect(fin.map((s) => s.codename)).toEqual(["flagpole"]);
-    expect(lima.every((s) => !s.comingSoon)).toBe(true);
-    expect(ftw.every((s) => s.comingSoon === true)).toBe(true);
-    expect(fin.every((s) => s.comingSoon === true)).toBe(true);
-    // The silent `hidden` state is unused today — every registered story is either live or coming-soon.
-    expect(SITES.every((s) => (s.stories ?? []).every((r) => !r.hidden))).toBe(true);
-  });
-
-  it("emits story routes on REGISTRATION, not on `selectable` (#1466)", () => {
-    // The route gate that used to be `selectable`. Findlay is the first non-selectable site to
-    // register a walk, and its peer home renders a teaser pointing at /stories/<codename>/ — so
-    // gating the routes on switchability would have made that teaser a dead link.
-    expect(siteForSlug("findlay")?.selectable).toBe(false);
-    expect(siteRegistersStory("findlay", "flagpole")).toBe(true);
-    // Registration is readability-blind: it holds for the held walks and the readable one alike.
-    expect(siteRegistersStory("lima", "project-bosc")).toBe(true);
-    expect(siteRegistersStory("fort-wayne", "project-zodiac")).toBe(true);
-    // …but it is still a REGISTRY check, so unregistered MDX and typo'd codenames emit nothing.
-    expect(siteRegistersStory("findlay", "project-bosc")).toBe(false);
-    expect(siteRegistersStory("urbana", "flagpole")).toBe(false);
-    // Bowling Green is the second non-selectable host (#1441) and the second held walk whose
-    // codename is the DEVELOPER's, not ours — recovered from the township's own executive-session
-    // minutes, as Zodiac was from a permit caption.
-    expect(siteForSlug("bowling-green")?.selectable).toBe(false);
-    expect(siteRegistersStory("bowling-green", "project-accordion")).toBe(true);
-    expect(
-      storyHostSites()
-        .map((s) => s.slug)
-        .sort(),
-    ).toEqual(["bowling-green", "findlay", "fort-wayne", "lima"]);
-  });
-
-  it("surfacedStories returns Lima's, comingSoonStories returns Fort Wayne's — the states are distinguishable", () => {
-    // Lima: readable — surfaced, and NOT coming-soon.
+    expect(lima.every((s) => !s.comingSoon && !s.hidden)).toBe(true);
     expect(surfacedStories("lima").map((r) => r.codename)).toEqual(["project-bosc"]);
     expect(comingSoonStories("lima")).toHaveLength(0);
     expect(storyComingSoon("lima", "project-bosc")).toBe(false);
+  });
 
-    // Fort Wayne: held — excluded from every readable surface, but advertised (teaser) + interstitial-gated.
-    expect(surfacedStories("fort-wayne")).toHaveLength(0);
-    expect(comingSoonStories("fort-wayne").map((r) => r.codename)).toEqual(["project-zodiac"]);
-    expect(storyComingSoon("fort-wayne", "project-zodiac")).toBe(true);
-    // title/dek stay on the ref so the teaser + interstitial can render them.
-    expect(comingSoonStories("fort-wayne")[0]?.title.length).toBeGreaterThan(0);
-    expect(comingSoonStories("fort-wayne")[0]?.dek.length).toBeGreaterThan(0);
+  it("the absorbed walks register nothing, on any surface", () => {
+    // Absorbed, not hidden: their prose ships as study notes under `src/content/study/<slug>/`,
+    // and the registry must not still advertise a codename whose chapters are gone — that is
+    // precisely the state `walk.test.ts` refuses to resolve.
+    for (const slug of ["fort-wayne", "findlay", "bowling-green"]) {
+      expect(siteForSlug(slug)?.stories ?? [], `${slug} still registers a walk`).toHaveLength(0);
+      expect(surfacedStories(slug)).toHaveLength(0);
+      expect(comingSoonStories(slug)).toHaveLength(0);
+    }
+    expect(siteRegistersStory("fort-wayne", "project-zodiac")).toBe(false);
+    expect(siteRegistersStory("findlay", "flagpole")).toBe(false);
+    expect(siteRegistersStory("bowling-green", "project-accordion")).toBe(false);
+  });
 
-    // A site with no registered story is neither surfaced nor coming-soon (nothing to advertise).
+  it("registration is still a REGISTRY check, and the held/hidden states still exist unused", () => {
+    // The `comingSoon` + `hidden` mechanisms survive in code for the next walk that needs holding
+    // (#1526/#1527); nothing registers them today, and that is a state, not a deletion.
+    expect(siteRegistersStory("lima", "project-bosc")).toBe(true);
+    expect(siteRegistersStory("urbana", "flagpole")).toBe(false);
+    expect(siteRegistersStory("lima", "nope")).toBe(false);
+    expect(SITES.every((s) => (s.stories ?? []).every((r) => !r.hidden && !r.comingSoon))).toBe(true);
+    // A site with no registered walk is neither surfaced nor coming-soon (nothing to advertise).
     expect(surfacedStories("urbana")).toHaveLength(0);
-    expect(comingSoonStories("urbana")).toHaveLength(0);
     expect(storyComingSoon("urbana", "project-bosc")).toBe(false);
-    expect(storyComingSoon("lima", "nope")).toBe(false);
   });
 });
 
@@ -397,15 +376,19 @@ describe("siteRollup / networkRollup — the directory's per-site record depth (
     // Every registered site is counted exactly once — either at a tier, or as unbuilt.
     expect(tiered + net.unbuilt).toBe(SITES.length);
     expect(net.unbuilt).toBeGreaterThan(0);
-    // Lima and Findlay (#1466). The READINESS tier is computed from domain activation, so a second
-    // site reaching it is the model working, not a backdoor — `is_reference_site`, the
-    // network-global-host ROLE, is a different axis and stays Lima's alone (asserted below).
-    expect(net.byTier.reference).toBe(2);
+    // Four now: Lima, Findlay (#1466), and — since #1971 dropped the retired `story` domain from
+    // the tier vector — fort-wayne and wpafb. Neither of those two gained a source; both already
+    // carried all four record-bearing domains live, and the only thing holding them at `case` was
+    // a domain that measured whether someone had authored a walk. (#1457 was literally an issue to
+    // flip fort-wayne to `reference` by committing a leads YAML.) The READINESS tier is domain
+    // activation, so sites reaching it is the model working, not a backdoor — `is_reference_site`,
+    // the network-global-host ROLE, is a different axis and stays Lima's alone (asserted below).
+    expect(net.byTier.reference).toBe(4);
     expect(
       SITES.filter((s) => siteRollup(s.slug).tier === "reference")
         .map((s) => s.slug)
         .sort(),
-    ).toEqual(["findlay", "lima"]);
+    ).toEqual(["findlay", "fort-wayne", "lima", "wpafb"]);
     // The sums are the per-site rollups, so the ledger and the scorecard can never disagree.
     const built = SITES.map((s) => siteRollup(s.slug)).filter((r) => r.tier !== null);
     expect(net.documents).toBe(built.reduce((n, r) => n + (r.documents ?? 0), 0));

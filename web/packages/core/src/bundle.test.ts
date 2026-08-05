@@ -5,7 +5,7 @@ import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 
 const tmpDirs: string[] = [];
 
-function manifestWith(feeds: object[], contractVersion = "1.4"): object {
+function manifestWith(feeds: object[], contractVersion = "2.0.0"): object {
   return {
     bundle_version: "test",
     contract_version: contractVersion,
@@ -76,7 +76,7 @@ describe("bundle resolution + JSON feeds", () => {
     const m = await loadBundleModule(dir);
 
     expect(m.bundleDir()).toBe(dir);
-    expect(m.loadManifest().contract_version).toBe("1.4");
+    expect(m.loadManifest().contract_version).toBe("2.0.0");
     expect(m.hasFeed("things")).toBe(true);
     expect(m.hasFeed("absent")).toBe(false);
     expect(m.loadFeed("things")).toEqual([{ a: 1 }, { a: 2 }]);
@@ -110,16 +110,20 @@ describe("NDJSON feeds", () => {
 });
 
 describe("contract-version guard", () => {
+  // EXPECTED_CONTRACT_MAJOR went 1 -> 2 in #1971 (the `story` -> `inquiry` rename), so the two
+  // cases swap sides. `1.9` is now the STALE major — which is exactly the bundle this guard has to
+  // reject, because a contract-1 manifest still carries `readiness.domains.story` and every
+  // section keyed on the renamed domain would silently read undefined.
   it("fails fast when the bundle's contract major differs", async () => {
-    const dir = makeBundle(manifestWith([], "2.0"), {});
+    const dir = makeBundle(manifestWith([], "1.9"), {});
     const m = await loadBundleModule(dir);
     expect(() => m.loadManifest()).toThrow(/incompatible/);
   });
 
   it("accepts a matching major with a different minor", async () => {
-    const dir = makeBundle(manifestWith([], "1.9"), {});
+    const dir = makeBundle(manifestWith([], "2.9"), {});
     const m = await loadBundleModule(dir);
-    expect(m.loadManifest().contract_version).toBe("1.9");
+    expect(m.loadManifest().contract_version).toBe("2.9");
   });
 });
 

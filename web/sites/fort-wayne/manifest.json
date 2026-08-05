@@ -1,18 +1,18 @@
 {
   "site": "fort-wayne",
   "bundle_version": "1.0.0",
-  "contract_version": "1.55.0",
-  "generated_at": "2026-08-05T20:47:09+00:00",
+  "contract_version": "2.0.0",
+  "generated_at": "2026-08-05T22:08:25+00:00",
   "feed_count": 34,
   "row_total": 429,
   "readiness": {
-    "tier": "case",
+    "tier": "reference",
     "domains": {
       "backdrop": "live",
       "facility": "live",
       "places": "live",
       "record": "live",
-      "story": "seeded"
+      "inquiry": "live"
     }
   },
   "facility": {

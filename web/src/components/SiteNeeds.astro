@@ -12,22 +12,19 @@
  */
 import { SECTION_META, coolingMethodUndisclosed, lockedSections } from "@watermark/core/readiness";
 import { withSite } from "@watermark/core/site";
-import { comingSoonStories } from "@watermark/core/sites";
 
 interface Props {
   slug: string;
 }
 const { slug } = Astro.props as Props;
 
-// A `comingSoon` editorial story is HELD, not a gap (#1526) — it advertises itself as a teaser, so
-// it must not read as "seeking a source." Drop the `story` need when the site has a coming-soon walk.
-const heldStory = comingSoonStories(slug).length > 0;
-const needs = lockedSections(slug)
-  .filter((s) => !(s === "story" && heldStory))
-  .map((s) => ({
-    label: SECTION_META[s].label,
-    holds: SECTION_META[s].holds,
-  }));
+// `story` is filtered out upstream now (`NEVER_A_NEED` in readiness.ts, #1971): a guided walk is
+// no longer something a site owes the network, so it must never read as "seeking a source." This
+// used to be a `comingSoon` check here, which only suppressed the ask for the three held walks.
+const needs = lockedSections(slug).map((s) => ({
+  label: SECTION_META[s].label,
+  holds: SECTION_META[s].holds,
+}));
 // The cooling-method disclosure lead (#1057): a facility on the record with no disclosed
 // cooling method means every water number is a bracketed range — the single most valuable
 // source a visitor could contribute here is the disclosure itself.

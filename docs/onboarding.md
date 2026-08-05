@@ -19,11 +19,14 @@ no fabrication risk. Once a site has them and runs `watermark export`, it bundle
 tier** and renders a real watershed + economy page. Readiness itself is **computed in Python at
 every `watermark export`** (`watermark.site.readiness`) and written into the bundle
 `manifest.json` as a `readiness` block: the five domains (**backdrop, facility, places, record,
-story**), each `absent | seeded | live`, plus a derived **tier** (`stub → backdrop → case →
+inquiry**), each `absent | seeded | live`, plus a derived **tier** (`stub → backdrop → case →
 reference`). It **rises when a source lands and falls when one dries up** — you never re-run
 `onboard` to recompute it. The floor is always pulled; **above the floor lights up only on its
-own evidence** (a disclosed facility, committed parcel geometry, an extracted corpus, a
-registered story) — never scaffolded. The **blocking checklist below governs promotion**
+own evidence** (a disclosed facility, committed parcel geometry, an extracted corpus, a study
+that answers) — never scaffolded. The **tier is derived from the four record-bearing domains
+only**: `inquiry` is reported and never gates it
+([#1971](https://github.com/watermark-directory/the-watermark-directory/issues/1971)).
+The **blocking checklist below governs promotion**
 (step 5), **not** readiness: a registered site is renderable at whatever tier its data earns
 long before it is `selectable`.
 
@@ -123,7 +126,7 @@ watermark onboard <slug> --offline  # cached/committed fixtures only (hermetic)
   (`data/reference/subdivisions/<slug>/subdivisions.yaml` — `meta.site` + `subdivisions: []`) and
   a house-style README, so the site has a place to enumerate its meeting-holding bodies and a
   prompt to discover them (`watermark.civic`). Idempotent — a curated registry is never
-  clobbered. It's **evidence-gated**: an empty registry does **not** flip the `record`/`story`
+  clobbered. It's **evidence-gated**: an empty registry does **not** flip the `record`/`inquiry`
   readiness domains live ([#1220](https://github.com/watermark-directory/the-watermark-directory/issues/1220)).
 - prints a step table + the **blocking review checklist** (step 4).
 
@@ -186,7 +189,7 @@ before promotion:
    county's meeting-holding bodies from a committed roster (grounded facts + `grounded_from`),
    then run `watermark --site <slug> subdivisions discover` and fold the confirmed `publishing:`
    platforms in **by hand** (discovery is read-only). An empty registry does not make
-   `record`/`story` live.
+   `record`/`inquiry` live.
 6. Self-research first pass reviewed (`watermark onboard <slug> --research`; triage the proposals — see below).
 7. Promotion is a separate manual edit (step 5).
 
@@ -300,21 +303,33 @@ under a `<slug>/` subdir. Scaffold these — Fort Wayne's are the worked example
 An empty/absent store yields a legitimately-empty feed — never Lima's. Every curated record
 cites a committed source; **never fabricate a person, place, or exhibit** (chain of custody).
 
-## Bringing a site's story live
+## The narrative: a site's study, not a walk
 
-A site's *story* is the MDX `stories` collection under
-`web/src/content/stories/<slug>/<codename>/` — `_home.mdx` (the on-ramp) plus one
-`<chapter>.mdx` per chapter (a frontmatter spine + a prose body). Fort Wayne's scaffold is
-`stories/fort-wayne/project-zodiac/` (chapters in draft, `live: false`). The story **routes are
-gated to `selectable` sites**, so a draft story is schema-validated but **never rendered** until
-the site is promoted (step 5). To bring it live:
+**A new site does not owe the network a guided walk.** That expectation was retired by
+[#1968](https://github.com/watermark-directory/the-watermark-directory/issues/1968) — it had made
+hand-authored MDX the price of a site's fifth readiness domain, and it produced ten open issues
+asking sites for prose their corpora could not yet cite.
 
-1. **Write the prose.** Replace each scaffold body; anchor every chapter's `anchorRecordRels` to
-   the site's committed records (the backlinks the library shows). Re-add the record-teardown
-   islands / bundle-count imports as in `stories/lima/project-bosc/`. Keep figures cited.
-2. **Set chapters `live: true`** as each is finished (it gates that chapter's wayfinding links).
-3. **Register the story** on the site's `web/packages/core/src/sites.ts` entry (`stories: [{ codename,
-   title, dek }]`) so the switcher/nav surface it.
-4. **Promote** (step 5 above): the parity-gated `status: "live"` + `selectable: true` flip makes
-   every `network/[site]/…` route — including the story — render for the site. No new page files
-   are needed; the existing routes emit for the newly-selectable site automatically.
+A site's narrative is its **impact study** (`/network/<slug>/study/`). The study is site-generic
+and **never locks**: every registered site builds all fifteen chapters from the day it has a
+bundle, and a chapter with no record renders the gap *as a finding* — "a real impact study would
+report X; the record needed to compute it has not been produced" — rather than a barren page. So
+there is nothing to "bring live." The work is to land sources; the study reports what they say.
+
+To deepen it, add a **study note**: `web/src/content/study/<slug>/<chapter>.mdx`, frontmatter
+`chapter` / `live` / `updated`, body prose. A note *enriches* a chapter; it never creates one (the
+spine is the `STUDY_CHAPTERS` registry in `@watermark/core/study`). Notes are optional per site and
+per chapter — Lima carries a complete set, a new peer may carry none — and `_cover.mdx` is the
+study's opening abstract. Cite with `<Cite record="…">` / `<Cite document="…">`; an unresolvable
+citation fails `src/content/study.notes.test.ts` by name.
+
+The **`inquiry`** readiness domain measures whether that study *answers*: a substantive chapter
+count, plus at least one of the two corpus-keyed chapters (`assembly` / `governance`) substantive.
+It rises when the site's own records land. It cannot be raised by writing prose, and it does not
+gate the tier.
+
+**The one surviving walk** is Lima's `project-bosc`
+(`web/src/content/stories/lima/project-bosc/`), kept as the network's single worked example of
+reading a record one document at a time — a teaching artifact, not a template every site fills in.
+Fort Wayne's, Findlay's and Bowling Green's were absorbed into their studies by
+[#1970](https://github.com/watermark-directory/the-watermark-directory/issues/1970).

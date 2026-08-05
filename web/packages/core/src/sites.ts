@@ -153,35 +153,20 @@ export interface NetworkSite {
 // would walk is real — the CRA resolution, the seller-name rezonings, the contested 2026 roll call
 // — so the story is advertised rather than hidden.
 const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
+  // ONE walk survives (#1971, epic #1968). Fort Wayne's Project Zodiac, Findlay's Flagpole and
+  // Bowling Green's Project Accordion were ABSORBED into their sites' impact studies (#1970) —
+  // the study owns the spine now, and their prose ships as study notes under
+  // `src/content/study/<slug>/`. All three were `comingSoon`, so nothing readable was removed.
+  //
+  // Lima's is deliberately kept standalone as the network's METHOD DEMO: one worked example of
+  // reading a record document by document, which is a teaching artifact rather than a per-site
+  // obligation. A new site does NOT owe the network a walk — that expectation is exactly what
+  // #1968 retired.
   lima: [
     {
       codename: DEFAULT_STORY_CODENAME,
       title: "Project BOSC",
       dek: "Project BOSC — read the record one document at a time, no prior knowledge.",
-    },
-  ],
-  "fort-wayne": [
-    {
-      codename: "project-zodiac",
-      title: "Project Zodiac",
-      dek: "Project Zodiac — a $2B Google data center in Fort Wayne, read from the records.",
-      comingSoon: true,
-    },
-  ],
-  findlay: [
-    {
-      codename: "flagpole",
-      title: "Flagpole",
-      dek: "Flagpole — Findlay impounds the Blanchard, augments it, discharges into it, and floods from it, and a 150 MW load arrived above town before any government had a rule for it.",
-      comingSoon: true,
-    },
-  ],
-  "bowling-green": [
-    {
-      codename: "project-accordion",
-      title: "Project Accordion",
-      dek: "Project Accordion — a data center was on Wood County's public record nineteen months before its operator's name was; read the resolutions that made it.",
-      comingSoon: true,
     },
   ],
 };

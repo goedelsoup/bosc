@@ -123,13 +123,33 @@ describe("the coverage declaration", () => {
     // The family was retired by fixing the axis, not by reclassifying it: search shards on what a
     // site publishes rather than on whether it can be switched into. A family reappearing over a
     // peer's story routes would mean the shard list had regressed to `selectable`.
-    const peer = SITES.find((s) => !s.selectable && comingSoonStories(s.slug).length > 0);
-    expect(peer, "no peer publishes a walk — this asserts nothing").toBeDefined();
-    const root = `${siteBase(peer!.slug)}/stories/${comingSoonStories(peer!.slug)[0].codename}/`;
-    const claimed = COVERAGE_FAMILIES.filter((f) => new RegExp(f.pattern).test(root));
-    expect(claimed.map((f) => f.label)).toEqual([]);
-    // …and that root really is indexed, which is what makes leaving it undeclared correct.
-    expect(buildSiteSearchIndex(peer!.slug).map((d) => d.url)).toContain(root);
+    // No peer publishes a walk since #1971 — the three were absorbed into their impact studies
+    // (#1970) — so the check runs against the surviving walk instead of a peer's. The property is
+    // the same one either way: a walk root is INDEXED, never excused by a coverage family. If a
+    // peer ever registers a walk again, the first assertion below starts binding on it too.
+    for (const site of SITES.filter((s) => !s.selectable && (s.stories ?? []).length > 0)) {
+      const ref = (site.stories ?? [])[0];
+      const peerRoot = `${siteBase(site.slug)}/stories/${ref.codename}/`;
+      expect(COVERAGE_FAMILIES.filter((f) => new RegExp(f.pattern).test(peerRoot))).toEqual([]);
+      expect(buildSiteSearchIndex(site.slug).map((d) => d.url)).toContain(peerRoot);
+    }
+    // The surviving walk is Lima's, and it is READABLE rather than held — so its chapters are
+    // separate indexed destinations and the "one row at the root" shape of a held walk does not
+    // apply. What carries over unchanged is the half that matters: no coverage family may excuse a
+    // walk route, and its interior really is in the index rather than declared away.
+    const walk = SITES.flatMap((s) => surfacedStories(s.slug).map((ref) => ({ s, ref })));
+    expect(walk.length, "no walk is registered at all — this asserts nothing").toBeGreaterThan(0);
+    for (const { s: site, ref } of walk) {
+      const root = `${siteBase(site.slug)}/stories/${ref.codename}/`;
+      expect(COVERAGE_FAMILIES.filter((f) => new RegExp(f.pattern).test(root)).map((f) => f.label)).toEqual(
+        [],
+      );
+      const indexed = buildSiteSearchIndex(site.slug).map((d) => d.url);
+      expect(
+        indexed.filter((u) => u.startsWith(root)).length,
+        `${site.slug}/${ref.codename}: the walk is excused rather than indexed`,
+      ).toBeGreaterThan(0);
+    }
   });
 
   it("no longer excuses a held story's interior — the routes are gone, not declared (#1894)", () => {
@@ -139,8 +159,12 @@ describe("the coverage declaration", () => {
     // page linked either, which makes them orphans rather than represented content. #1894 stopped
     // building them. What must hold now is that nothing excuses them back into existence, and that
     // the story ROOT — the row a reader searching the walk's name lands on — is still indexed.
+    // Nothing is held since #1971: the three `comingSoon` walks were absorbed rather than
+    // eventually published. The loop is empty and the emptiness is asserted, so this cannot rot
+    // into a test that quietly checks nothing — and the readable half below still binds on Lima,
+    // which is where the "chapters are separate destinations" half of the property lives anyway.
     const held = SITES.flatMap((s) => comingSoonStories(s.slug).map((ref) => ({ s, ref })));
-    expect(held.length, "no story is held — this asserts nothing").toBeGreaterThan(0);
+    expect(held).toEqual([]);
     for (const { s, ref } of held) {
       const root = `${siteBase(s.slug)}/stories/${ref.codename}/`;
       const claims = (route: string) =>

@@ -345,5 +345,19 @@ notes: >-
   REFUSAL (Mansfield) is a governance record with no facility behind it. Same
   `StudyChapterModel`, two more rows: no schema refresh, and it adds no new committed upstream —
   the records were already committed and already catalogued.
+  The manifest's readiness block renames its fifth domain `story` -> `inquiry` and replaces its
+  predicate (issue 1971, epic 1968, contract **2.0.0** — MAJOR, a breaking rename of a manifest
+  field, with no compatibility alias because an alias would preserve the removed domain under a
+  new name). The old predicate was `slug in STORY_SLUGS and leads > 0`: a hand-maintained mirror of
+  a TypeScript overlay of MDX directories, and the only domain whose signal was whether a human had
+  authored prose. It also gated the tier, so a site could raise its tier by committing a leads YAML
+  and registering a walk nobody could open, and could not raise it with a worked corpus.
+  `inquiry` reads this same export's `impact-study` verdicts — whether the study ANSWERS — under
+  two conditions: a substantive chapter count, AND at least one of the two corpus-keyed chapters
+  (`assembly`/`governance`) substantive, because most chapters derive from connector pulls and a
+  count alone lets a zero-record site out-score a worked corpus. The TIER now derives from the four
+  record-bearing domains only; `inquiry` is reported and never gates, which promotes fort-wayne and
+  wpafb to `reference` and demotes nothing. Adds no new committed upstream — it is a projection
+  over feeds this export already assembled.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

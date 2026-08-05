@@ -12,7 +12,7 @@ from __future__ import annotations
 import json
 from collections.abc import Callable
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import pytest
 from jsonschema.validators import Draft202012Validator
@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
 # The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
 # the fresh-export assertions below pin it so a bump lands here in one place.
-_CV = "1.55.0"
+_CV = "2.0.0"
 # The per-site offline bundles (#727): a full `watermark export` per registered site, the
 # committed input the Astro build reads with no Python step (`web/sites/<slug>/`).
 COMMITTED_BUNDLES = REPO_ROOT / "web" / "sites"
@@ -613,6 +613,18 @@ def test_wpafb_committed_bundle_is_fresh(wpafb_bundle: Path) -> None:
     }, f"committed wpafb records feed drifted, got {sorted(committed_records)}"
 
 
+def _impact_study_rows(bundle_dir: Path) -> list[dict[str, Any]]:
+    """The bundle's shipped ``impact-study`` rows ([] when the feed is absent)."""
+    manifest = _manifest(bundle_dir)
+    ref = next((f for f in manifest["feeds"] if f["name"] == "impact-study"), None)
+    if ref is None:
+        return []
+    return cast(
+        "list[dict[str, Any]]",
+        json.loads((bundle_dir / ref["path"]).read_text(encoding="utf-8")),
+    )
+
+
 def test_every_committed_bundle_readiness_matches_its_own_feed_counts() -> None:
     """Every committed bundle's ``readiness`` block must be the one its **own** feed counts imply
     (#1770) — the standing, whole-fleet half of the drift guard.
@@ -651,7 +663,14 @@ def test_every_committed_bundle_readiness_matches_its_own_feed_counts() -> None:
             offenders.append(f"{slug}: committed bundle for a slug not in watermark.sites.SITES")
             continue
         feed_counts = {f["name"]: f["count"] for f in manifest["feeds"]}
-        implied = compute_readiness(get_profile(slug), feed_counts)
+        # `inquiry` (#1971) reads the study's own verdicts, so the recompute needs the shipped
+        # `impact-study` feed as well as the counts. That makes this guard STRONGER than it was:
+        # a bundle whose readiness block disagrees with the study rows sitting beside it in the
+        # same directory now fails here, which is precisely the drift a stale re-export produces.
+        study_statuses = {
+            row["chapter"]: row["model"]["status"] for row in _impact_study_rows(bundle_dir)
+        }
+        implied = compute_readiness(get_profile(slug), feed_counts, study_statuses)
         if implied != manifest["readiness"]:
             offenders.append(f"{slug}: committed {manifest['readiness']} != implied {implied}")
 
@@ -720,13 +739,10 @@ def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -
     S-1: 30 MW energized / 150 MW contracted — ``it_load_grounding`` is ``disclosure``), an
     instrument-grounded load, not a screening bracket — so it lifts the domain, not merely seeds it.
 
-    ``story`` went ``seeded`` -> ``live`` in #1466: the committed per-site leads board
-    (``data/site/findlay/leads.yaml``) was already one signal, and registering the ``flagpole`` walk
-    in ``STORY_SLUGS`` + the ``sites.ts`` overlay supplies the other. Note the deliberate divergence
-    from the frontend: the walk is ``comingSoon`` (Findlay is not yet ``selectable``, and promotion
-    is a manual, parity-gated ``data/sites.yaml`` edit), so ``readiness.ts``'s ``story`` FACET stays
-    locked while the DOMAIN reads live — readiness measures the evidence, the facet measures
-    readability. Fort Wayne is the same shape one signal short (registered story, no leads feed).
+    ``inquiry`` (``story`` until #1971) is live on the STUDY. The old domain read live here on a
+    registered ``flagpole`` walk plus a leads board — while that walk was ``comingSoon`` and could
+    not be opened, so the domain claimed a narrative no reader could reach. It now reads Findlay's
+    own study verdicts, and the walk itself was absorbed into that study by #1970.
 
     ``reference`` here is the computed READINESS tier and is NOT ``is_reference_site``, the
     network-global-host role (routed-hydrograph, hypothesis matrix, catalog, concepts, the ``docs/``
@@ -743,8 +759,11 @@ def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -
     # The disclosed SiteFacility's [verified] filed load disclosure (SEC S-1) grades facility live —
     # instrument-grounded documentary depth, not its demand-pressure feed (#1630 / #1459).
     assert domains["facility"] == "live"
-    # ``story`` is live on BOTH signals: the registered ``flagpole`` walk + the leads board (#1466).
-    assert domains["story"] == "live"
+    # ``inquiry`` is live on the STUDY, not on a walk (#1971): Findlay's study answers 9 of its 15
+    # chapters and its governance chapter is grounded in the site's own records (2026-Ohio-405, the
+    # certified canvass, proposed §1521). The ``flagpole`` walk it used to be scored on was
+    # ``comingSoon`` — registered but unopenable — and is now absorbed into that study (#1970).
+    assert domains["inquiry"] == "live"
     # ``places`` is live off COMMITTED campus geometry, not scaffolding (#1462): the eight Allen
     # Township parcels standing in three One Energy vehicles (One Energy Enterprises LLC, OEE XX
     # LLC, OEE XXX LAND LLC) — 108.65 ac CAMA / 105.873 ac planar, ``reference/findlay/
@@ -869,7 +888,7 @@ def test_urbana_record_domain_publishes_its_worked_corpus(urbana_bundle: Path) -
     assert filing["source_doc_rel"] in {e["rel"] for c in docs for e in c["entries"]}
 
 
-def test_wpafb_exports_at_case_tier(wpafb_bundle: Path) -> None:
+def test_wpafb_exports_at_reference_tier(wpafb_bundle: Path) -> None:
     """WPAFB's floor (economics-baseline, consumer-energy, rsei, grid) is committed, and three
     above-floor domains are live off real evidence.
 
@@ -879,21 +898,30 @@ def test_wpafb_exports_at_case_tier(wpafb_bundle: Path) -> None:
     enclave seam (#1664), and neither is scaffolding: ``facility`` is the installation itself,
     graded ``live`` because that same filed FFA is its instrument grounding (documentary depth,
     #1630 — no IT load is invented for a base); ``places`` is the DoD MIRTA boundary, the only
-    land path an enclave off the county tax rolls can ever have. ``story`` stays ``absent`` —
-    WPAFB is not in ``STORY_SLUGS`` and nothing here changes that. The tier stays ``case``
-    (``reference`` needs all five). Its own test rather than the backdrop parametrize group,
-    which asserts everything above the floor stays unscaffolded."""
+    land path an enclave off the county tax rolls can ever have.
+
+    The tier is ``reference`` since #1971, and WPAFB is one of the two sites that rename promotes.
+    Nothing about its record changed: all four record-bearing domains were already live, and the
+    only thing holding it at ``case`` was the retired ``story`` domain — which a federal
+    installation was never going to satisfy, because nobody was ever going to author a guided walk
+    for it. Its own test rather than the backdrop parametrize group, which asserts everything above
+    the floor stays unscaffolded."""
     out = wpafb_bundle
     manifest = _manifest(out)
     assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
-    assert readiness["tier"] == "case", f"wpafb should be a Case site, got {readiness}"
+    assert readiness["tier"] == "reference", f"wpafb should be a Reference site, got {readiness}"
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
     assert domains["record"] == "live"
     assert domains["facility"] == "live"
     assert domains["places"] == "live"
-    assert domains["story"] == "absent", "wpafb story must not scaffold"
+    # Was ``story: absent`` — WPAFB registers no walk and never will. ``inquiry`` reads its study
+    # instead, which answers over the SSA + CERCLA FFA record its enclave carries. Dropping the
+    # domain from the tier vector is what takes this site ``case`` -> ``reference`` (#1971): all
+    # four record-bearing domains were already live, and only the walk gate was holding it.
+    assert domains["inquiry"] == "live"
+    assert readiness["tier"] == "reference", "wpafb rises when the walk gate goes"
 
     # The facility is the ENCLAVE, not a data center: the `facility` feed row must say so, and
     # the campus columns must be absent rather than null-as-undisclosed. Its enclave detail is a
@@ -951,10 +979,10 @@ def test_troy_piqua_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> 
     assert domains["facility"] == "seeded"
     assert domains["places"] == "live"  # committed J5 "Project Klondike" campus assemblage (#1483)
     assert domains["record"] == "live"
-    # ``story`` is ``seeded``: the site's curated leads board (data/site/troy-piqua/leads.yaml, #1485)
-    # ships as the ``leads`` feed, but troy-piqua is not yet in ``STORY_SLUGS`` — a registered story
-    # is a separate, later editorial call. Leads-only ⇒ seeded (the Findlay/Defiance precedent).
-    assert domains["story"] == "seeded"
+    # ``inquiry`` is live on the study (#1971). Note what stopped mattering: the curated leads board
+    # (data/site/troy-piqua/leads.yaml, #1485) no longer feeds any domain, and the absent walk no
+    # longer holds one down. The domain now moves only when the site's own record does.
+    assert domains["inquiry"] == "live"
 
     # ``record`` is live because the site owns exactly its three real, in-scope extractions
     # (#1484) — the NPDES permit, its fact sheet, and the DMR — not scaffolding: assert the
@@ -987,13 +1015,11 @@ def test_sidney_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None
     readiness behaving as the STANDING property it is — it rose because sources landed, twice,
     independently.
 
-    ``story`` moved third, and only halfway, on #1381: the committed per-site leads board
-    (``data/site/sidney/leads.yaml``) ships as the ``leads`` feed, which is ONE of the domain's two
-    signals. Sidney is not in ``STORY_SLUGS`` — registering a walk needs MDX chapters that resolve
-    in the story store (``walk.test.ts`` asserts every ``StoryRef`` does), and that is deferred to
-    its own editorial sub-issue. Leads-only ⇒ ``seeded``, the same shape troy-piqua carries. This is
-    the honest reading and it is the point of pinning it: the board is real evidence of open
-    threads, and it is not a walk.
+    ``inquiry`` (``story`` until #1971) is live on the study. Under the old predicate Sidney sat at
+    ``seeded`` on its leads board alone, and #1947 was opened to lift it by authoring a Project Rey
+    walk — an issue whose own body conceded the corpus could not yet cite the public fight that walk
+    would have narrated. That is the shape epic #1968 retired: the domain asked for prose the record
+    could not support, while the record itself read live. It now moves on the record.
 
     What did NOT move is equally the point, and pinning it here is what makes this a guard:
     ``facility`` stays ``seeded`` because the #1630 downgrade still holds — AWS discloses no floor
@@ -1010,8 +1036,10 @@ def test_sidney_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None
     assert domains["facility"] == "seeded"  # disclosed but screening-only → seeded (#1630)
     assert domains["places"] == "live"  # committed campus geometry (#1379)
     assert domains["record"] == "live"  # WWTP permit + DMR >= RECORD_LIVE_THRESHOLD (#1383)
-    # Leads board committed (#1381), no registered walk ⇒ one signal of two ⇒ seeded, not live.
-    assert domains["story"] == "seeded"
+    # ``inquiry`` live on the study (#1971). #1947 asked Sidney to author a Project Rey walk to lift
+    # this domain — while its own issue body conceded the corpus could not yet cite the public fight
+    # that walk would narrate. That issue closes with the epic; the record lifted the domain instead.
+    assert domains["inquiry"] == "live"
 
     # The board is the site's OWN, not Lima's, and it carries the evidence discipline a lead
     # store owes: every row `[open]` or `[inference]`, never `verified` (#796).
@@ -1061,7 +1089,7 @@ def test_wilmington_exports_at_case_tier_on_committed_corridor_geometry(
     assert domains["facility"] == "seeded"  # disclosed but screening-only → seeded (#1630)
     assert domains["places"] == "live"  # committed corridor geometry (#1470)
     assert domains["record"] == "live"  # oepa/wilmington permits, in scope since #1405
-    assert domains["story"] == "absent"
+    assert domains["inquiry"] == "live"  # the study answers; no walk was ever needed (#1971)
 
     # The geometry that activated the domain is the corridor itself, and it stays legible as two
     # kinds of claim rather than one campus.
@@ -1094,11 +1122,11 @@ def test_bowling_green_exports_at_case_tier_on_committed_assembly_geometry(
     competitor's colo 4.83 miles away in another jurisdiction. A reader who sums the acreage of
     this feed gets a number that describes no thing.
 
-    ``story`` then went absent -> live in #1441, on both of its signals at once: the site's own
-    curated leads board (``data/site/bowling-green/leads.yaml``) and the ``project-accordion`` walk
-    registered in ``STORY_SLUGS`` + the ``sites.ts`` overlay. Like Findlay's, the walk is
-    ``comingSoon``, so the frontend's story FACET stays locked while the DOMAIN reads live —
-    readiness measures the evidence, the facet measures readability.
+    ``inquiry`` (``story`` until #1971) stays live here, on a better signal. The old domain counted
+    a ``project-accordion`` walk whose four chapters were every one of them ``live: false`` — held
+    content, registered but unpublished. The new one counts what the site's own records ground: its
+    ``assembly`` and ``governance`` chapters both read ``data``, off the twelve-parcel Liames
+    register and seven local-legislation instruments. The walk was absorbed into that study (#1970).
 
     What did NOT move is the point that survives. ``facility`` stays ``seeded``: the #1630
     downgrade holds, because the campus IT load is still the disclosed ~180 MW peak carried as
@@ -1117,7 +1145,11 @@ def test_bowling_green_exports_at_case_tier_on_committed_assembly_geometry(
     assert domains["facility"] == "seeded"  # ~180 MW peak is [reference], not an instrument (#1630)
     assert domains["places"] == "live"  # committed land-assembly geometry (#1436)
     assert domains["record"] == "live"  # the 2PD00009 water instruments (#1439) + the #1438 ingest
-    assert domains["story"] == "live"  # registered walk + the site's own leads board (#1441)
+    # Still live, on a different and better signal (#1971): its ``assembly`` and ``governance``
+    # chapters both read ``data`` off the site's OWN records — the twelve-parcel Liames register and
+    # seven local-legislation instruments — rather than off a ``project-accordion`` walk whose four
+    # chapters were all ``live: false`` and which #1970 absorbed into this study.
+    assert domains["inquiry"] == "live"
 
     # The #1438 governance ingest, asserted by genre rather than by count alone: seven acts of a
     # local legislative body (a county CRA resolution, four township roll calls, a township
@@ -1233,7 +1265,12 @@ def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     assert domains["facility"] == "seeded"  # announced-ceiling bracket, not a disclosure (#1630)
     assert domains["places"] == "live"  # committed campus geometry (#1403)
     assert domains["record"] == "live"  # the 2PD00006 permit + fact sheet, in scope since #1405
-    assert domains["story"] == "absent"
+    # THE regression pin for epic #1968. Van Wert read ``story: absent`` while carrying three merged
+    # investigations (#1401/#1407/#1408) — a transmission docket, an incentive package, a referendum
+    # killed at 68 signatures — because it had registered no MDX walk and committed no leads YAML.
+    # It read a verdict vector byte-identical to springfield's, a site with zero records. Under
+    # ``inquiry`` its own record answers, and it does not.
+    assert domains["inquiry"] == "live"
 
     # The records that activated the domain are this site's OEPA instruments — read from the
     # site-attributed subtree that mirrors their source at data/documents/oepa/van-wert/. The
@@ -1300,7 +1337,10 @@ def test_ottawa_places_activates_on_a_brownfield_not_a_campus_siting(
     assert domains["record"] == "live"  # the 2PD00028 instruments + the water watch (#1422)
     # Committing land grounds no load — and here there is no facility to ground at all.
     assert domains["facility"] == "absent"
-    assert domains["story"] == "absent"
+    # ``seeded``, and honestly so: Ottawa's study IS record-backed (its four records ground the
+    # corpus-keyed chapters) but answers only 7 of 15 chapters — under the live bar. The domain
+    # reports the depth of the record rather than rounding it up.
+    assert domains["inquiry"] == "seeded"
 
     # Two contiguous parcels, two UNRELATED owners — a broken-up works, not one holding.
     ref = _feeds_by_name(bundle)["geo/campus"]
