@@ -23,7 +23,7 @@ export type StorySourceFormat = "dsl" | "mdx-data";
 export type StoryModeration = "ok" | "removed";
 
 /** The Walk owner (#1092) — user-owned for this feature; the `site` case is the editorial path. */
-export interface WalkOwner {
+export interface ContentOwner {
   kind: "site" | "user";
   id: string;
 }
@@ -115,7 +115,7 @@ async function insertRefs(tx: PgLike, storyId: string, refs: WalkRef[]): Promise
 }
 
 /** A user's own Stories, newest first. Owner-scoped by construction. */
-export async function listStories(db: PgLike, owner: WalkOwner): Promise<StoryRow[]> {
+export async function listStories(db: PgLike, owner: ContentOwner): Promise<StoryRow[]> {
   return db.query<StoryRow>(
     `SELECT ${STORY_COLUMNS} FROM stories WHERE owner_kind = $1 AND owner_id = $2 ORDER BY updated_at DESC`,
     [owner.kind, owner.id],
@@ -125,7 +125,7 @@ export async function listStories(db: PgLike, owner: WalkOwner): Promise<StoryRo
 /** One owner-scoped Walk + its refs, or `null` if it isn't the owner's / doesn't exist. */
 export async function getStory(
   db: PgLike,
-  owner: WalkOwner,
+  owner: ContentOwner,
   id: string,
 ): Promise<{ story: StoryRow; refs: WalkRef[] } | null> {
   const rows = await db.query<StoryRow>(
@@ -148,7 +148,7 @@ export async function getStory(
  */
 export async function createStory(
   db: PgLike,
-  owner: WalkOwner,
+  owner: ContentOwner,
   id: string,
   write: StoryWrite,
   now: string,
@@ -193,7 +193,7 @@ export async function createStory(
  */
 export async function updateStory(
   db: PgLike,
-  owner: WalkOwner,
+  owner: ContentOwner,
   id: string,
   write: StoryWrite,
   now: string,
@@ -234,7 +234,7 @@ export async function updateStory(
 }
 
 /** Delete an owner's Walk (refs cascade). Returns whether a row was removed. */
-export async function deleteStory(db: PgLike, owner: WalkOwner, id: string): Promise<boolean> {
+export async function deleteStory(db: PgLike, owner: ContentOwner, id: string): Promise<boolean> {
   const rows = await db.query<{ id: string }>(
     "DELETE FROM stories WHERE id = $1 AND owner_kind = $2 AND owner_id = $3 RETURNING id",
     [id, owner.kind, owner.id],
