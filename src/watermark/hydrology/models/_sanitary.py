@@ -79,6 +79,25 @@ class DetentionDesign(BaseModel):
     full_buildout_storage_acft: float | None = None
     tier: Literal["tier1-swmm"] = "tier1-swmm"
 
+    @property
+    def has_full_buildout(self) -> bool:
+        """Whether the full-buildout bound is reportable — *every* field of it, or none.
+
+        ``run_tier1`` writes the block atomically, but a pre-#1614 artifact carries none of
+        it and a hand-edited one could carry part. Renderers gate on this rather than on the
+        two headline fields, so a half-populated block can't reach a format string.
+        """
+        return all(
+            v is not None
+            for v in (
+                self.full_buildout_imperv_pct,
+                self.full_buildout_peak_cfs,
+                self.full_buildout_controlled_peak_cfs,
+                self.full_buildout_orifice_diam_ft,
+                self.full_buildout_storage_acft,
+            )
+        )
+
 
 class SanitaryPlant(BaseModel):
     """A WWTP's document-cited sanitary design flows (the grounded sanitary basis)."""

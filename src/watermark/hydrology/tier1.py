@@ -680,7 +680,8 @@ def tier1_findings(result: Tier1Result) -> list[HydroFinding]:
         )
         # The blanket-paved bound is a separate, explicitly-labeled reading — the peer of the
         # Tier-0 screen's full_buildout_peak_cfs, not a second estimate of the same project.
-        if d.full_buildout_peak_cfs is not None and d.full_buildout_storage_acft is not None:
+        if d.has_full_buildout:
+            assert d.full_buildout_storage_acft is not None  # has_full_buildout
             findings.append(
                 HydroFinding(
                     "BOSC campus",
