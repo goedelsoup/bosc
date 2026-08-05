@@ -1,7 +1,7 @@
 {
   "site": "new-albany",
   "catalog_version": "fffc6c95c58f75587e9750a8a19247f730efc7064774d634cde3903ace1d662c",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:new-albany:7q10",
@@ -880,7 +880,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

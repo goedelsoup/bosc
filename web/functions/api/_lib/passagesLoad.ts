@@ -20,8 +20,16 @@ export interface PassageRow {
   page: number;
   /** Sub-page heading when known; null for plain page chunks. */
   section: string | null;
-  /** The page's text-layer extraction (verbatim; garbled OCR for scans). */
+  /** The page's extracted text (verbatim; garbled OCR for scans). */
   text: string;
+  /**
+   * Which read produced `text` (#1966): the embedded text layer, OCR of the rendered page where
+   * that text layer was unusable (a broken `ToUnicode` CMap decoding to raw glyph indices), or —
+   * where OCR couldn't read it either — the readable remainder of a damaged text layer, which is a
+   * locator only and must not be quoted.
+   * Optional — a bundle exported before contract 1.54.0 omits it; treat absent as `"pdf_text"`.
+   */
+  method?: "pdf_text" | "ocr" | "pdf_text_damaged";
 }
 
 // Keyed by resolved URL so a different indexUrl (e.g. a per-site override) doesn't return

@@ -1,7 +1,7 @@
 {
   "site": "hamilton-middletown",
   "catalog_version": "bed79e463b56859cc7fc0375bb26417b53ba8eb7542e533393825fa61ea5dcec",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:hamilton-middletown:7q10",
@@ -896,7 +896,7 @@
       "kind": "dataset",
       "site": "hamilton-middletown",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

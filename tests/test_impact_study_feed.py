@@ -29,7 +29,7 @@ from watermark.site.impact_study import (
 )
 from watermark.site.readiness import State
 
-_CV = "1.53.0"
+_CV = "1.54.0"
 
 _CHAPTER_IDS = [
     "method",

@@ -1,7 +1,7 @@
 {
   "site": "coshocton",
   "catalog_version": "6f6c70b94e097e832a18623dc856696cfe533fdf6e5e0f4e386f846900bcb445",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:coshocton:7q10",
@@ -880,7 +880,7 @@
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

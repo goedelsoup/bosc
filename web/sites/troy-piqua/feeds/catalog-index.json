@@ -1,7 +1,7 @@
 {
   "site": "troy-piqua",
   "catalog_version": "fa083e622460fac6a37a88edc433d29f8b9b6ccc71b3a91bfb16a96ad11ffcf3",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:troy-piqua:7q10",
@@ -896,7 +896,7 @@
       "kind": "dataset",
       "site": "troy-piqua",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

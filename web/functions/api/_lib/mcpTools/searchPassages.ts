@@ -56,11 +56,19 @@ interface PassageHit {
   page: number;
   section: string | null;
   text: string;
+  /** Which read produced `text` (#1966) — `"pdf_text"` (the source's own text layer), `"ocr"` (the
+   * rendered page, where that text layer was unusable), or `"pdf_text_damaged"` (broken and
+   * unrepairable). Carried onto the hit so the verbatim claim under `citation` below is qualified
+   * at the point a consumer reads the quote. */
+  method: "pdf_text" | "ocr" | "pdf_text_damaged";
   score: number;
   /** Structured provenance (#1584). This is the one tool whose `citation.quote` is populated:
-   * the excerpt IS the source document's own text layer, so it is genuinely verbatim — with the
-   * standing caveat that on a scan the text layer is garbled OCR (a locator, not a transcription).
-   * The quote is a bounded lead excerpt; `text` below stays the full page. */
+   * on a `pdf_text` hit the excerpt IS the source document's own text layer, so it is genuinely
+   * verbatim — with the standing caveat that on a scan that text layer is garbled OCR (a locator,
+   * not a transcription). On an `ocr` hit it is this platform's own read of the rendered page, and
+   * on a `pdf_text_damaged` one it is a partial read that must not be quoted at all — which is why
+   * `method` rides alongside. The quote is a bounded lead excerpt; `text` below stays the full
+   * page. */
   citation: McpCitation;
 }
 
@@ -171,6 +179,7 @@ export async function handleSearchPassages(
       page: row.page,
       section: row.section,
       text: row.text,
+      method: row.method ?? "pdf_text", // pre-1.54 bundles omit it — see PassageRow.method
       score: roundScore(h.score),
       citation: passageCitation(row),
     });

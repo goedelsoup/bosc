@@ -1,7 +1,7 @@
 {
   "site": "sandusky",
   "catalog_version": "d3689a18f982f1577aa169a99fafd6853eb2494b654f950f945208d41e68b6bd",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:sandusky:7q10",
@@ -880,7 +880,7 @@
       "kind": "dataset",
       "site": "sandusky",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

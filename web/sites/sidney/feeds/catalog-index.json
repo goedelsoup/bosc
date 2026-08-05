@@ -1,7 +1,7 @@
 {
   "site": "sidney",
   "catalog_version": "61ee95d97bc18fa94df6d0896428127a2464bc4bd93043f4b887c11bc10fe43b",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:sidney:7q10",
@@ -896,7 +896,7 @@
       "kind": "dataset",
       "site": "sidney",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

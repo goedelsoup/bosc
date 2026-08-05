@@ -1,7 +1,7 @@
 {
   "site": "wilmington",
   "catalog_version": "7eb7e30bddefe2a1f26e5e66ace896a3c9cbbf5a2343006c98c81b75e28517b6",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:wilmington:7q10",
@@ -896,7 +896,7 @@
       "kind": "dataset",
       "site": "wilmington",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {
