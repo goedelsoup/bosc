@@ -51,6 +51,22 @@
     }
   },
   {
+    "chapter": "assembly",
+    "facility_key": "cmh-232",
+    "lead_ids": [],
+    "model": {
+      "id": "assembly",
+      "facilityKey": "cmh-232",
+      "status": "partial",
+      "statusReasons": [
+        "the record carries no conveyance instrument — the land history has not been produced for this site"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
     "chapter": "water-supply",
     "facility_key": "cmh-232",
     "lead_ids": [],
@@ -279,6 +295,22 @@
       "caveats": [
         "Disclosed investment: $3.0B — the operator's own announcement, not an instrument; the abatement agreement that would price the trade is not on the record."
       ]
+    }
+  },
+  {
+    "chapter": "governance",
+    "facility_key": "cmh-232",
+    "lead_ids": [],
+    "model": {
+      "id": "governance",
+      "facilityKey": "cmh-232",
+      "status": "partial",
+      "statusReasons": [
+        "the record carries no legislative instrument and no minutes — the decision path has not been produced for this site"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
     }
   },
   {

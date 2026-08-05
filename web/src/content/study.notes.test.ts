@@ -79,14 +79,14 @@ const notes: Note[] = walk(ROOT).map((rel) => {
   };
 });
 
-/** Every note Lima's study is expected to carry — its 13 chapters plus the cover abstract.
+/** Every note Lima's study is expected to carry — its 15 chapters plus the cover abstract.
  *  Asserted as a SET, not a count: deleting a chapter note must fail here, and a count of
- *  ">= 13" would happily pass with a peer site's notes making up the difference. */
+ *  ">= 15" would happily pass with a peer site's notes making up the difference. */
 const LIMA_NOTES = [
   "_cover",
-  ...["method", "project"],
+  ...["method", "project", "assembly"],
   ...["water-supply", "discharge", "heat", "groundwater", "stormwater", "air"],
-  ...["labor", "power", "fiscal", "balance", "missing"],
+  ...["labor", "power", "fiscal", "governance", "balance", "missing"],
 ].map((c) => `lima/${c}`);
 
 const note = (id: string): Note => {
@@ -96,10 +96,10 @@ const note = (id: string): Note => {
 };
 
 describe(`study notes — wiring (${notes.length} notes)`, () => {
-  it("carries Lima's complete authored set — 13 chapters plus the cover", () => {
+  it("carries Lima's complete authored set — 15 chapters plus the cover", () => {
     const ids = new Set(notes.map((n) => n.id));
     expect(LIMA_NOTES.filter((id) => !ids.has(id))).toEqual([]);
-    expect(LIMA_NOTES).toHaveLength(14);
+    expect(LIMA_NOTES).toHaveLength(16);
   });
 
   it.each(notes.map((n) => n.id))("%s — id resolves to a chapter, frontmatter agrees", (id) => {
@@ -120,7 +120,7 @@ describe(`study notes — wiring (${notes.length} notes)`, () => {
  * the unit suite, so a bad citation is caught before anyone waits on a build.
  *
  * The second assertion is the regression pin on the finding itself, and it is deliberately
- * demanded of the reference build rather than of every site: all thirteen of Lima's chapters
+ * demanded of the reference build rather than of every site: all of Lima's chapters
  * had zero outbound links into the record, and Lima is the one site whose corpus is deep
  * enough that "this chapter cites nothing" is always a defect rather than a gap. A peer's
  * thinner note is covered by the resolution gate above and by `study.evidence.test.ts`.
@@ -134,7 +134,7 @@ describe("study notes — authored citations resolve", () => {
     expect(unresolved, `${id}: <Cite> targets absent from site "${n.site}"`).toEqual([]);
   });
 
-  it("all thirteen Lima chapters link into the record", () => {
+  it("all fifteen Lima chapters link into the record", () => {
     const bare = LIMA_NOTES.filter((id) => id !== "lima/_cover").filter(
       (id) => citeSpecsInNote(note(id).rawBody).length === 0,
     );
@@ -183,18 +183,18 @@ const PINS: Pin[] = [
   // --- the cover + balance quote the verdict summary the SAME page renders in its header ---
   {
     note: "lima/_cover",
-    claim: "Twelve of its thirteen chapters",
+    claim: "Fourteen of its fifteen chapters",
     expected: () =>
-      studyStatusSummary("lima").data === 12 && studyStatusSummary("lima").total === 13
-        ? "Twelve of its thirteen chapters"
+      studyStatusSummary("lima").data === 14 && studyStatusSummary("lima").total === 15
+        ? "Fourteen of its fifteen chapters"
         : null,
   },
   {
     note: "lima/balance",
-    claim: "Twelve of Lima's thirteen chapters",
+    claim: "Fourteen of Lima's fifteen chapters",
     expected: () =>
-      studyStatusSummary("lima").data === 12 && studyStatusSummary("lima").total === 13
-        ? "Twelve of Lima's thirteen chapters"
+      studyStatusSummary("lima").data === 14 && studyStatusSummary("lima").total === 15
+        ? "Fourteen of Lima's fifteen chapters"
         : null,
   },
   {

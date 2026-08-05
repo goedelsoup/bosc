@@ -37,6 +37,29 @@
     }
   },
   {
+    "chapter": "assembly",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "assembly",
+      "facilityKey": null,
+      "status": "gap",
+      "statusReasons": [
+        "the recorded deeds and the option or purchase instruments for the campus parcels — none produced into this record."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "how the project's land was assembled — the conveyance chain, the buyers of record, and the dates.",
+          "missingRecord": "the recorded deeds and the option or purchase instruments for the campus parcels — none produced into this record.",
+          "producer": "the county recorder and auditor — recorded instruments are public records",
+          "leadIds": null
+        }
+      ],
+      "caveats": []
+    }
+  },
+  {
     "chapter": "water-supply",
     "facility_key": null,
     "lead_ids": [],
@@ -203,6 +226,29 @@
       ],
       "stats": [],
       "gaps": [],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "governance",
+    "facility_key": null,
+    "lead_ids": [],
+    "model": {
+      "id": "governance",
+      "facilityKey": null,
+      "status": "gap",
+      "statusReasons": [
+        "the legislative instruments and meeting minutes of the deciding bodies — none produced into this record."
+      ],
+      "stats": [],
+      "gaps": [
+        {
+          "wouldScreen": "the public decisions that approved or refused the project — the ordinances, resolutions, roll-call votes, and the minutes that carry them.",
+          "missingRecord": "the legislative instruments and meeting minutes of the deciding bodies — none produced into this record.",
+          "producer": "the municipal clerk, the township trustees, and the county commissioners — R.C. 149.43 records",
+          "leadIds": null
+        }
+      ],
       "caveats": []
     }
   },

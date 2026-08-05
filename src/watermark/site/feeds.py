@@ -602,7 +602,23 @@ from watermark.sites import (
 #     invariant that holds for every row and every method: no C0 control byte ever ships.
 #   Existing rows gain a key (defaulted, so a pre-1.54 artifact still loads); a pre-1.54
 #   passages.schema.json rejects it — MINOR, back-compatible for data, schema refresh required.
-CONTRACT_VERSION = "1.54.0"
+# 1.55.0: the study grows the two chapters that read the RECORD (#1969, epic #1968). `impact-study`
+#   goes 13 rows to 15 per site — `assembly` (Part I, after `project`) and `governance` (Part III,
+#   after `fiscal`). No model changes: same `StudyChapterModel`, two more rows, so a pre-1.55
+#   impact-study.schema.json still validates every row.
+#   They exist because none of the thirteen keyed on the extracted corpus. `data` came from
+#   `method`/`labor`/`missing` (methodology, QCEW baseline, absence register) and `partial` from the
+#   facility profile + grid backdrop, so **van-wert (case tier, 6 records) and springfield (backdrop
+#   tier, 0 records) shipped identical verdict vectors** — 3 data / 4 partial / 6 gap. A study that
+#   cannot tell a worked record from a floor-only pull cannot carry a readiness signal, which is
+#   what #1971 needs it to do.
+#   Both screen the site's OWN records feed by group — `assembly` on `land-assembly`/`deeds`,
+#   `governance` on `local-legislation`/`litigation` (plus `meetings` as an optional status
+#   signal) — and NEITHER is `project_dependent`: speculative assembly precedes the announcement
+#   (the Lima story), and Mansfield carries a governance record with no facility at all, so a
+#   project gate would read the corpus's first documented REFUSAL as "nothing to say here".
+#   MINOR, back-compatible: additive rows, no schema refresh.
+CONTRACT_VERSION = "1.55.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

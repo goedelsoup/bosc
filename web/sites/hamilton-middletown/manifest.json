@@ -1,10 +1,10 @@
 {
   "site": "hamilton-middletown",
   "bundle_version": "1.0.0",
-  "contract_version": "1.54.0",
-  "generated_at": "2026-08-05T19:41:42+00:00",
+  "contract_version": "1.55.0",
+  "generated_at": "2026-08-05T20:49:19+00:00",
   "feed_count": 29,
-  "row_total": 398,
+  "row_total": 400,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -215,7 +215,7 @@
       "media_type": "application/json",
       "schema": "schemas/impact-study.schema.json",
       "kind": "collection",
-      "count": 13
+      "count": 15
     },
     {
       "name": "catalog-index",

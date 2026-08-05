@@ -141,6 +141,11 @@ class _ChapterDef:
 _NA_REASON = "No disclosed project — this chapter is computed the day one is on the record."
 
 # The chapters whose screens the balance chapter aggregates (feed-shaped verdicts only).
+# The record groups the two corpus-keyed chapters screen on (`study.ts` `ASSEMBLY_GROUPS` /
+# `GOVERNANCE_GROUPS`).
+_ASSEMBLY_GROUPS = ("land-assembly", "deeds")
+_GOVERNANCE_GROUPS = ("local-legislation", "litigation")
+
 _SCREEN_CHAPTER_IDS = (
     "water-supply",
     "discharge",
@@ -170,6 +175,24 @@ _CHAPTERS: tuple[_ChapterDef, ...] = (
             ),
         ),
         probe="project",
+    ),
+    _ChapterDef(
+        id="assembly",
+        # Corpus-keyed, not facility-keyed (#1969), and deliberately NOT project_dependent:
+        # speculative assembly PRECEDES the announcement, which is the shape of the Lima story.
+        required_feeds=("records",),
+        gap=StudyGap(
+            would_screen=(
+                "how the project's land was assembled — the conveyance chain, "
+                "the buyers of record, and the dates."
+            ),
+            missing_record=(
+                "the recorded deeds and the option or purchase instruments for the campus "
+                "parcels — none produced into this record."
+            ),
+            producer="the county recorder and auditor — recorded instruments are public records",
+        ),
+        probe="assembly",
     ),
     # --- Part II · The environment ---
     _ChapterDef(
@@ -302,6 +325,29 @@ _CHAPTERS: tuple[_ChapterDef, ...] = (
         derive="fiscal",
     ),
     _ChapterDef(
+        id="governance",
+        # Corpus-keyed and deliberately NOT project_dependent (#1969): Mansfield carries a
+        # governance record and no facility at all, and a project gate would read the corpus's
+        # first documented REFUSAL as "nothing to say here".
+        required_feeds=("records",),
+        optional_feeds=("meetings",),
+        gap=StudyGap(
+            would_screen=(
+                "the public decisions that approved or refused the project — the ordinances, "
+                "resolutions, roll-call votes, and the minutes that carry them."
+            ),
+            missing_record=(
+                "the legislative instruments and meeting minutes of the deciding bodies — "
+                "none produced into this record."
+            ),
+            producer=(
+                "the municipal clerk, the township trustees, and the county commissioners — "
+                "R.C. 149.43 records"
+            ),
+        ),
+        probe="governance",
+    ),
+    _ChapterDef(
         id="balance",
         gap=StudyGap(
             would_screen="the whole trade on one sheet — headroom given against benefits documented.",
@@ -404,6 +450,17 @@ def _feed_rows(ctx: _Ctx, name: str) -> int:
     return ctx.counts.get(name, 0)
 
 
+def _record_group_rows(ctx: _Ctx, groups: tuple[str, ...]) -> int:
+    """Rows in the site's OWN records feed carrying any of ``groups`` (`study.ts`
+    ``recordGroupRows``) — the corpus-keyed primitive `assembly` / `governance` screen on.
+
+    A raw read, matching the TS side: the frontend's readiness-gated ``citeGroups`` is the
+    tempting reuse there, but a verdict that ran through a gate this projector cannot see would
+    break parity the first time a site's record facet locked with rows on disk.
+    """
+    return sum(1 for r in _rows(ctx, "records") if r.get("group") in groups)
+
+
 def _resolve_facility(ctx: _Ctx) -> dict[str, Any] | None:
     """The primary campus row (`resolveStudyFacility` with no key — the v1 emission)."""
     rows = _rows(ctx, "facility")
@@ -446,6 +503,20 @@ def _probes(d: _ChapterDef, ctx: _Ctx, facility: dict[str, Any] | None) -> list[
                 "candidate archetypes, not an estimate"
             ]
         return []
+    if d.probe == "assembly":
+        if _record_group_rows(ctx, _ASSEMBLY_GROUPS) > 0:
+            return []
+        return [
+            "the record carries no conveyance instrument — the land history has not been "
+            "produced for this site"
+        ]
+    if d.probe == "governance":
+        if _record_group_rows(ctx, _GOVERNANCE_GROUPS) > 0 or _feed_rows(ctx, "meetings") > 0:
+            return []
+        return [
+            "the record carries no legislative instrument and no minutes — the decision path "
+            "has not been produced for this site"
+        ]
     if d.probe == "power":
         if facility is None:
             return [
@@ -857,8 +928,65 @@ def _compose_fiscal(_ctx: _Ctx, facility: dict[str, Any] | None) -> _Composition
     return _Composition(caveats=tuple(caveats))
 
 
+def _compose_assembly(ctx: _Ctx, _facility: dict[str, Any] | None) -> _Composition:
+    """The conveyance count (`study.ts` `COMPOSERS.assembly`).
+
+    Counts ONLY rows in the groups the chapter declares, so a ``verified`` stat exists exactly
+    where the frontend's ``citeGroups`` can resolve a destination for it — the citation
+    invariant holds by construction rather than by a listed exemption.
+    """
+    rows = _record_group_rows(ctx, _ASSEMBLY_GROUPS)
+    if rows == 0:
+        return _EMPTY
+    return _Composition(
+        stats=(
+            StudyStat(
+                label="Conveyance instruments",
+                value=str(rows),
+                evidence="verified",
+                basis="grounded",
+                sub="recorded deeds and assembly instruments on this site's record",
+            ),
+        ),
+        caveats=(
+            "A conveyance chain on the record is what was produced, not what exists — an "
+            "assembly can run through options, nominees, and unrecorded agreements that no "
+            "recorder's index will show.",
+        ),
+    )
+
+
+def _compose_governance(ctx: _Ctx, _facility: dict[str, Any] | None) -> _Composition:
+    """The legislative-instrument count (`study.ts` `COMPOSERS.governance`).
+
+    ``meetings`` is a STATUS signal for this chapter, never a stat: a minutes count has no
+    destination in the evidence annex's three bands, so asserting one as ``verified`` would be
+    a provenance claim the page cannot honour.
+    """
+    instruments = _record_group_rows(ctx, _GOVERNANCE_GROUPS)
+    if instruments == 0:
+        return _EMPTY
+    return _Composition(
+        stats=(
+            StudyStat(
+                label="Legislative instruments",
+                value=str(instruments),
+                evidence="verified",
+                basis="grounded",
+                sub="resolutions, ordinances, and filed court instruments on this site's record",
+            ),
+        ),
+        caveats=(
+            "An instrument on the record says what was enacted, not what was decided — the "
+            "deliberation that produced it lives in minutes and audio that are separate records.",
+        ),
+    )
+
+
 _COMPOSERS: Mapping[str, Callable[[_Ctx, dict[str, Any] | None], _Composition]] = {
     "project": _compose_project,
+    "assembly": _compose_assembly,
+    "governance": _compose_governance,
     "water-supply": _compose_water_supply,
     "discharge": _compose_discharge,
     "heat": _compose_heat,
@@ -899,7 +1027,7 @@ def build_impact_study(
     feed_counts: Mapping[str, int],
     facility_domain: State,
 ) -> list[ImpactStudyItem]:
-    """Project the assembled feeds into the ``impact-study`` rows — 13 chapters, always.
+    """Project the assembled feeds into the ``impact-study`` rows — 15 chapters, always.
 
     ``payloads_by_feed`` maps feed name → serialized rows (collections) / object payload;
     ``feed_counts`` maps feed name → manifest row count (the status derivation reads counts,

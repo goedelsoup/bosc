@@ -51,6 +51,33 @@
     }
   },
   {
+    "chapter": "assembly",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "assembly",
+      "facilityKey": "urbana-technology-hub",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Conveyance instruments",
+          "value": "1",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "recorded deeds and assembly instruments on this site's record",
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "A conveyance chain on the record is what was produced, not what exists — an assembly can run through options, nominees, and unrecorded agreements that no recorder's index will show."
+      ]
+    }
+  },
+  {
     "chapter": "water-supply",
     "facility_key": "urbana-technology-hub",
     "lead_ids": [],
@@ -278,6 +305,33 @@
       ],
       "caveats": [
         "Disclosed investment: $1.0B — the operator's own announcement, not an instrument; the abatement agreement that would price the trade is not on the record."
+      ]
+    }
+  },
+  {
+    "chapter": "governance",
+    "facility_key": "urbana-technology-hub",
+    "lead_ids": [],
+    "model": {
+      "id": "governance",
+      "facilityKey": "urbana-technology-hub",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Legislative instruments",
+          "value": "1",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "resolutions, ordinances, and filed court instruments on this site's record",
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "An instrument on the record says what was enacted, not what was decided — the deliberation that produced it lives in minutes and audio that are separate records."
       ]
     }
   },

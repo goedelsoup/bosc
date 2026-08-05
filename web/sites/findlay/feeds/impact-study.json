@@ -49,6 +49,22 @@
     }
   },
   {
+    "chapter": "assembly",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "assembly",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "partial",
+      "statusReasons": [
+        "the record carries no conveyance instrument — the land history has not been produced for this site"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
     "chapter": "water-supply",
     "facility_key": "findlay-megawatt-hub-mwhub-01",
     "lead_ids": [],
@@ -269,6 +285,33 @@
         }
       ],
       "caveats": []
+    }
+  },
+  {
+    "chapter": "governance",
+    "facility_key": "findlay-megawatt-hub-mwhub-01",
+    "lead_ids": [],
+    "model": {
+      "id": "governance",
+      "facilityKey": "findlay-megawatt-hub-mwhub-01",
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Legislative instruments",
+          "value": "1",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "resolutions, ordinances, and filed court instruments on this site's record",
+          "source": null,
+          "warn": null
+        }
+      ],
+      "gaps": [],
+      "caveats": [
+        "An instrument on the record says what was enacted, not what was decided — the deliberation that produced it lives in minutes and audio that are separate records."
+      ]
     }
   },
   {

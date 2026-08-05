@@ -21,8 +21,10 @@ import Power from "./chapters/Power.astro";
 import Stormwater from "./chapters/Stormwater.astro";
 import WaterSupply from "./chapters/WaterSupply.astro";
 
-/** Bespoke sections by chapter id — every screened chapter + the annex; only the two
- *  front-matter chapters (method / project) remain on the generic renderer. */
+/** Bespoke sections by chapter id — every screened chapter + the annex. Four ride the generic
+ *  renderer: the two front-matter chapters (method / project) and the two corpus-keyed ones
+ *  (assembly / governance, #1969), whose screen is a record count plus the site's authored note —
+ *  a bespoke conveyance-chain / roll-call section is the natural follow-up, not a blocker. */
 export const CHAPTER_SECTIONS: Record<string, typeof DefaultChapterSection> = {
   "water-supply": WaterSupply,
   discharge: Discharge,

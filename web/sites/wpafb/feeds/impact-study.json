@@ -39,6 +39,22 @@
     }
   },
   {
+    "chapter": "assembly",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "assembly",
+      "facilityKey": "wright-patterson-afb",
+      "status": "partial",
+      "statusReasons": [
+        "the record carries no conveyance instrument — the land history has not been produced for this site"
+      ],
+      "stats": [],
+      "gaps": [],
+      "caveats": []
+    }
+  },
+  {
     "chapter": "water-supply",
     "facility_key": "wright-patterson-afb",
     "lead_ids": [],
@@ -245,6 +261,22 @@
           "leadIds": null
         }
       ],
+      "caveats": []
+    }
+  },
+  {
+    "chapter": "governance",
+    "facility_key": "wright-patterson-afb",
+    "lead_ids": [],
+    "model": {
+      "id": "governance",
+      "facilityKey": "wright-patterson-afb",
+      "status": "partial",
+      "statusReasons": [
+        "the record carries no legislative instrument and no minutes — the decision path has not been produced for this site"
+      ],
+      "stats": [],
+      "gaps": [],
       "caveats": []
     }
   },

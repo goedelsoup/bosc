@@ -333,5 +333,17 @@ notes: >-
   vision extractor's top-level `source_path`, so a structured read of a filed instrument links to
   the instrument. Adds no new committed upstream — the extractions were already committed and
   already catalogued; what changed is that the feed publishes them.
+  The `impact-study` feed grows from 13 rows to 15 (issue 1969, epic 1968, contract 1.55.0):
+  `assembly` (Part I) and `governance` (Part III) are the first study chapters whose verdict is
+  keyed on the site's own EXTRACTED RECORD rather than on a connector pull or the facility profile.
+  They exist because none of the original thirteen was: `data` came from `method`/`labor`/`missing`
+  and `partial` from the facility profile + grid backdrop, so van-wert (a worked corpus of 6
+  records) and springfield (zero records) shipped byte-identical verdict vectors. Both screen the
+  `records` feed by group — `assembly` on `land-assembly`/`deeds`, `governance` on
+  `local-legislation`/`litigation` with `meetings` as an optional status signal — and neither is
+  project-dependent, because speculative assembly precedes the announcement and a documented
+  REFUSAL (Mansfield) is a governance record with no facility behind it. Same
+  `StudyChapterModel`, two more rows: no schema refresh, and it adds no new committed upstream —
+  the records were already committed and already catalogued.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
