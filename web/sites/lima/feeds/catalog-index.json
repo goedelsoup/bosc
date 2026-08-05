@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "884914b64ebca371f8bd9978f342076eb768d72c2b5f9cf73078737b967739a6",
-  "contract_version": "1.52.0",
+  "catalog_version": "a6a1043587f24fa96f7f8857e9e18b7c605f4ecc402425620b275a0d4adb0ea1",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -753,6 +753,14 @@
       "site": "lima",
       "local_id": "bowling-green-grid",
       "title": "Bowling Green — Grid Posture (two grids, the Toledo Edison sheets, the pending FirstEnergy DCT, the muni island)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:bowling-green-record",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "bowling-green-record",
+      "title": "Bowling Green — the governance record (CRA Resolution 23-01249, the seller-name rezonings, the contested 2026 roll call, the Liames land assembly)",
       "feed": "catalog"
     },
     {
@@ -3268,6 +3276,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:legal/prr-mandamus/school-district-notice-resolution.notice.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "legal/prr-mandamus/school-district-notice-resolution.notice.yaml",
+      "title": "Authorizing notice to the Elida Local School District and Apollo Career Center that the Commissioners seek to enter a CRA Agreement with Bistrozzi, LLC and will consider the same agreement on July 10, 2025 or thereafter.",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/2DP00130.npdes.yaml",
       "kind": "record",
       "site": "lima",
@@ -3632,7 +3648,7 @@
       "kind": "record",
       "site": "lima",
       "local_id": "regulatory/ohc000006-construction-stormwater-gp.yaml",
-      "title": "ohc000006-construction-stormwater-gp",
+      "title": "General Permit Authorization for Stormwater Discharges Associated with Construction Activity under the NPDES",
       "feed": "records"
     },
     {

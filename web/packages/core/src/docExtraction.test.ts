@@ -160,10 +160,21 @@ describe("the join, against the committed Lima bundle", () => {
     expect(counts.commissioners).toEqual([0, 995]);
   });
 
-  it("counts distinct documents, not records — 4 records name no source file", () => {
-    expect(records.length).toBe(56);
-    expect(records.filter((r) => !r.source_doc_rel).length).toBe(4);
-    // 52 records with a source, and today no document backs two of them.
+  it("counts distinct documents, not records — 5 records name no source file", () => {
+    // 56 -> 57 at contract 1.53.0 (#1438). The new `local-legislation` genre claims a `resolution:`
+    // payload block, and Lima's corpus already held one that nothing had ever claimed: Allen County
+    // Resolution #494-25, the Commissioners' own authorization of the CRA school-district notice to
+    // Elida and Apollo Career Center. It was a real, cited, recorder-stamped extraction that the
+    // records taxonomy had no bucket for — the same failure mode #1724 fixed for Urbana, found here
+    // by a genre added for another site entirely.
+    expect(records.length).toBe(57);
+    // 4 -> 5 with it, and this one is NOT a connector-sourced record: it carries its source under
+    // `provenance.source_path`, an envelope shape `_source_ref` does not resolve (it reads a
+    // top-level `source_path` or a `source.file`). So the document join is lost even though the
+    // PDF is catalogued. Pre-existing and out of scope here; the count is pinned so a later fix to
+    // `_source_ref` shows up as a deliberate change rather than drift.
+    expect(records.filter((r) => !r.source_doc_rel).length).toBe(5);
+    // Still 52 distinct source documents — the new record adds no join, which is the point above.
     expect(index.size).toBe(52);
   });
 });

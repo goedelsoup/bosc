@@ -1,7 +1,7 @@
 {
   "site": "bowling-green",
-  "catalog_version": "d8a4846a6262b98a4aa226409772cbb868ae0d45816cbec875caa31400462c0e",
-  "contract_version": "1.52.0",
+  "catalog_version": "76e20ec7f884c8f5ecbe05d9cc93af4c4da22283ddc8eaa1a06999e287ae1f3f",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:bowling-green:7q10",
@@ -644,6 +644,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:bowling-green:bowling-green-record",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "bowling-green-record",
+      "title": "Bowling Green — the governance record (CRA Resolution 23-01249, the seller-name rezonings, the contested 2026 roll call, the Liames land assembly)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:bowling-green:bowling-green-water-watch",
       "kind": "dataset",
       "site": "bowling-green",
@@ -1114,6 +1122,214 @@
       "local_id": "npdes:2PD00009",
       "title": "Bowling Green Water Pollution Control",
       "feed": "entities"
+    },
+    {
+      "handle": "lead:bowling-green:ABBOTT-TIMELINE-SLIP",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "ABBOTT-TIMELINE-SLIP",
+      "title": "Abbott's $536M nutrition plant is committed and has not broken ground",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:APOLLO-GAS-SUPPLY",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "APOLLO-GAS-SUPPLY",
+      "title": "Where does Apollo's gas come from, and under which unfiled lateral cases?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:APOLLO-NO-HEARINGS",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "APOLLO-NO-HEARINGS",
+      "title": "Why was a 350 MW power plant certified with no public hearings?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:CAMPUS-BACKUP-GENSETS",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "CAMPUS-BACKUP-GENSETS",
+      "title": "The data center has its own backup generators and no permit for them is in the corpus",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:CITY-ELECTRIC-EASEMENT-582",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "CITY-ELECTRIC-EASEMENT-582",
+      "title": "Why was the municipal utility pursuing an electric easement at the campus corner?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:CONSTRUCTION-DEWATERING",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "CONSTRUCTION-DEWATERING",
+      "title": "A resident raised campus dewatering at the rezoning hearing and the applicant had no answer",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:CRA-AGREEMENT-COVENANTS",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "CRA-AGREEMENT-COVENANTS",
+      "title": "The executed CRA agreement and the three school compensation agreements are unread",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:DEED-CHAIN-GRANTORS",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "DEED-CHAIN-GRANTORS",
+      "title": "Who sold the 775 acres, and when did the first deed record?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:DROUGHT-TOLEDO-INTERCONNECT",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "DROUGHT-TOLEDO-INTERCONNECT",
+      "title": "A city that wholesales water to its neighbours is studying how to buy some from Toledo",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:FIRSTENERGY-INFRASTRUCTURE-SPEND",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "FIRSTENERGY-INFRASTRUCTURE-SPEND",
+      "title": "A behind-the-meter campus says it is paying for transmission lines",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:LIAMES-BENEFICIAL-OWNERSHIP",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "LIAMES-BENEFICIAL-OWNERSHIP",
+      "title": "Liames, LLC's organizers, statutory agent and formation date are unread",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:MIDDLETON-REFERENDUM",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "MIDDLETON-REFERENDUM",
+      "title": "The referendum window on the thirteen-parcel rezoning closed on or about 2026-08-06",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:OPPIDAN-END-USER",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "OPPIDAN-END-USER",
+      "title": "Who is the end user of the Oppidan colocation building in the city?",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:PHASE-2-EVIDENCE",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "PHASE-2-EVIDENCE",
+      "title": "The campus is designed for at least five buildings, and only two are on a schedule",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:THIRTEEN-PARCEL-OWNERSHIP",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "THIRTEEN-PARCEL-OWNERSHIP",
+      "title": "Five of the thirteen rezoned parcels stood in other names in the county's own layer",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:TOWNSHIP-MORATORIUM-WAVE",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "TOWNSHIP-MORATORIUM-WAVE",
+      "title": "Seven townships have adopted data-center moratoriums and none of the resolutions is in the corpus",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:WATER-50K-VS-600K",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "WATER-50K-VS-600K",
+      "title": "Meta's announced water figure and the district's design commitment differ by twelve times",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:bowling-green:WCPC-TALLIES",
+      "kind": "lead",
+      "site": "bowling-green",
+      "local_id": "WCPC-TALLIES",
+      "title": "Both county planning commission tallies on the 2026 rezonings are press, not record",
+      "feed": "leads"
+    },
+    {
+      "handle": "record:bowling-green:bowling-green/commissioners/2023-09-28-liames-cra.resolution.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "bowling-green/commissioners/2023-09-28-liames-cra.resolution.yaml",
+      "title": "Wood County Commissioners Resolution 23-01249 — Authorize Community Reinvestment Area Agreement between Liames LLC and Wood County, Ohio, 2023-09-28",
+      "feed": "records"
+    },
+    {
+      "handle": "record:bowling-green:bowling-green/land-assembly.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "bowling-green/land-assembly.yaml",
+      "title": "Meta \"Bowling Green Data Center\" / \"Project Accordion\" — SR-582 between SR-25 and I-75, Middleton Township, adjacent the FirstEnergy Mercer Road substation",
+      "feed": "records"
+    },
+    {
+      "handle": "record:bowling-green:bowling-green/middleton-township/2023-03-29-getz-rezoning.resolution.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "bowling-green/middleton-township/2023-03-29-getz-rezoning.resolution.yaml",
+      "title": "Middleton Township Trustees — rezoning of approximately 80 acres from A-1 Agricultural to M-1 Industrial, applicant Tim Getz, 2023-03-29",
+      "feed": "records"
+    },
+    {
+      "handle": "record:bowling-green:bowling-green/middleton-township/2023-05-03-busch-rezoning.resolution.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "bowling-green/middleton-township/2023-05-03-busch-rezoning.resolution.yaml",
+      "title": "Middleton Township Trustees — rezoning of approximately 44 acres from A-1 Agricultural to M-1 Industrial, owned by the Busch family, 2023-05-03",
+      "feed": "records"
+    },
+    {
+      "handle": "record:bowling-green:bowling-green/middleton-township/2023-09-20-cra-support.resolution.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "bowling-green/middleton-township/2023-09-20-cra-support.resolution.yaml",
+      "title": "Middleton Township Trustees — statement of support for the Liames LLC Community Reinvestment Area application to the Wood County Commissioners, 2023-09-20",
+      "feed": "records"
+    },
+    {
+      "handle": "record:bowling-green:bowling-green/middleton-township/2024-2025-adjacent-rezonings.resolution.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "bowling-green/middleton-township/2024-2025-adjacent-rezonings.resolution.yaml",
+      "title": "Middleton Township Trustees — campus-adjacent rezoning matters, 2024-11-20 and 2025-09-09 (one approved, three withdrawn)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:bowling-green:bowling-green/middleton-township/2026-07-07-liames-rezoning.resolution.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "bowling-green/middleton-township/2026-07-07-liames-rezoning.resolution.yaml",
+      "title": "Middleton Township Trustees — action on Application 2026041 (Liames, LLC), rezoning thirteen parcels in Section 19 to M-1 Light Industrial, 2026-07-07",
+      "feed": "records"
+    },
+    {
+      "handle": "record:bowling-green:bowling-green/planning-commission/2026-liames-and-schaller-rezoning-applications.resolution.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "bowling-green/planning-commission/2026-liames-and-schaller-rezoning-applications.resolution.yaml",
+      "title": "Wood County Planning Commission — the Liames LLC thirteen-parcel and A. Schaller Limited Partnership rezoning applications, Middleton Township Section 19, 2026",
+      "feed": "records"
     },
     {
       "handle": "record:bowling-green:oepa/bowling-green/2PD00009.fs.npdes.yaml",

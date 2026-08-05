@@ -1,0 +1,334 @@
+# Capture / alias manifest — Middleton Township (Wood County, OH) governance record,
+# issue #1438 (the record domain), epic #1433 readiness(bowling-green).
+#
+# Eleven documents: ten sets of trustees' minutes spanning 2023-03-29 → 2026-07-07, and
+# one letter from Meta Platforms read into the trustees' record on 2026-01-07.
+#
+# Raw bytes are never edited and every file keeps the name the township's own server
+# served it under — INCLUDING two names that are demonstrably wrong (see
+# meta.misnamed_sources). Renaming them here would destroy the very thing a chain of
+# custody exists to preserve: what the public body actually published.
+#
+# The `content_verified` date is read from each file's OWN text layer — the dateline the
+# township printed in its heading — never from the filename, the URL or the fetch time.
+#
+# evidence: native_text = the PDF text layer (pdftotext -layout) confirms the identity
+#           and date quoted below. Every file in this collection is digitally generated
+#           and carries a text layer; none required OCR.
+meta:
+  subject: >-
+    The Middleton Township trustees' own record of the Meta / "Project Accordion" data-center
+    campus — the executive session that first names the codename (2023-07-19), the township's
+    support for the Liames CRA application (2023-09-20), the two 2023 seller-name rezonings that
+    put campus-area land in M-1 before Liames' name appears anywhere in this record, the
+    campus-adjacent 2024-2025 matters (one granted with no known buyer, three withdrawn on the
+    eve of their hearings), the January 2025 site-plan review that puts a two-building
+    construction schedule on the record, and the contested 2026-07-07 rezoning of thirteen
+    parcels whose roll call the press reported backwards.
+  collection: bowling-green/middleton-township/
+  captured_by: issue #1438 (the record domain), epic #1433, readiness(bowling-green)
+  generated_at: '2026-08-05'
+  policy: non-destructive — as-served bytes, as-served filename, no exceptions taken.
+  served_from: >-
+    https://www.middletontownship.com/meeting_minutes/ (the current-year page) and
+    https://www.middletontownship.com/minutes-archive-2/ (the archive), both plain
+    server-rendered HTML indexes of /wp-content/uploads/<yyyy>/<mm>/ PDFs. No login, no
+    challenge, no rate limit encountered. 115 minutes files are published for 2023-2026;
+    the eleven below are the subset this issue reads. The full sweep is recorded in the
+    extractions so a later reader knows the negatives were searched, not assumed.
+
+  misnamed_sources: >-
+    TWO OF THESE FILENAMES ARE WRONG AT THE SOURCE AND ARE KEPT ANYWAY.
+    (1) `05032022-special_buschrezone.pdf` is the meeting of **2023**-05-03, not 2022-05-03.
+    Its own heading reads "Wednesday, May 3, 2023"; May 3 was a Wednesday in 2023 and a
+    Tuesday in 2022; and the minutes recite Wood County Planning Commission approval on
+    2023-03-07 and Middleton Township Zoning Commission approval on 2023-04-12, both of
+    which postdate the filename's year. The township also filed it in its 2023/08 upload
+    directory. A date read from this filename is off by a year in the direction that would
+    put a campus-adjacent rezoning BEFORE the assembly began rather than during it.
+    (2) `0909025_specialrezone.pdf` is missing a digit: the meeting is 2025-09-**09**
+    ("Tuesday, September 9, 2025"), so a naive parse of the stem yields 0909-02-5 or
+    2025-09-09 depending on how it guesses. Neither file is renamed; the canonical name is
+    recorded beside it here, which is what the alias manifest is for.
+
+  date_on_the_face_warning: >-
+    THE META LETTER PRINTS THE WRONG YEAR ON ITS OWN FACE. `Meta-Middleton-Township-Letter-010726.pdf`
+    opens "January 7, 2025". It is a 2026 document: it says "On April 9, 2025, Meta was excited
+    to announce we were joining the Wood County community" (past tense, and that announcement is
+    dated); it footnotes a Meta sustainability index published 2025-10 and a water-benefit report
+    revised 2025-08-21; it says the Community Action Grants program launched in Bowling Green
+    "late last year" with awards to be announced "in early Spring"; and the trustees' minutes of
+    2026-01-07 record the chairman reading a Meta letter into the record that evening. Its PDF
+    Title metadata reads "1/7 Middleton Township Letter" and the township filed it under
+    /wp-content/uploads/2026/01/. `content_verified` below is 2026-01-07, derived from the
+    content, per the repo's rule that a date comes from the text layer and not from a filename,
+    a URL or outside knowledge.
+
+documents:
+  - filename: 07192023.pdf
+    canonical: middleton-township-trustees-minutes-2023-07-19.pdf
+    title: Middleton Township Trustees, regular meeting minutes, 2023-07-19
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2023/11/07192023.pdf
+    sha256: 1390f8b291ad4d048bfeaf7a4159656030b75de916e1ef51a2b1c0d7fa7da3f0
+    bytes: 211139
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-08-05'
+    content_verified: '2023-07-19'   # heading: "Middleton Township Trustees / Wednesday, July 19, 2023"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The earliest appearance of the codename in this township's record. The trustees moved
+      into executive session at 9:02 a.m. "for the purpose of hearing a presentation by
+      Project Accordion personnel with regard to information on economic development review
+      pursuant to ORC 121.22 (G) (8)" and returned at 10:45 a.m. — 1h43m. That is the
+      economic-development exemption to Ohio's Sunshine Law, so the substance is lawfully
+      unminuted; what the record establishes is the DATE and the COUNTERPARTY, seven weeks
+      before the first Liames deed of 2023-09-05.
+
+  - filename: 09202023.pdf
+    canonical: middleton-township-trustees-minutes-2023-09-20.pdf
+    title: Middleton Township Trustees, regular meeting minutes, 2023-09-20
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2023/11/09202023.pdf
+    sha256: 93a637d43ed3e0151c0775b9fd479461929cae9a5f919207f06bcfa6d3a3b464
+    bytes: 211149
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-08-05'
+    content_verified: '2023-09-20'   # heading: "Wednesday, September 20, 2023"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The township's own resolution of support for the CRA application, eight days before the
+      county acted on it, and the record in which Wood County Economic Development executive
+      director Wade Gottschalk describes the project on a public agenda as "a $750M investment
+      in the township for a data center by a Fortune 200 company" — the end use and the scale
+      stated in public in September 2023, nineteen months before the 2025-04-09 operator reveal.
+      Also records that Eastwood's school board had already approved and that Otsego and Penta
+      were still to meet.
+
+  - filename: 03292023_special_getzrezone.pdf
+    canonical: middleton-township-trustees-special-minutes-2023-03-29-getz-rezoning.pdf
+    title: >-
+      Middleton Township Trustees, special meeting minutes, 2023-03-29 — rezoning of
+      approximately 80 acres, A-1 Agricultural to M-1 Industrial (owner Tim Getz)
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2023/05/03292023_special_getzrezone.pdf
+    sha256: e1db703f7f0701ca520288737b0889f4b8783be0eb8efbe565d7b4c20d437629
+    bytes: 170839
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-08-05'
+    content_verified: '2023-03-29'   # heading: "Wednesday, March 29, 2023"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      One of the seller-name rezonings. Approved 3-0. The applicant of record is the property
+      owner, Tim Getz, represented by a realtor; Liames LLC does not appear, because Liames did
+      not yet exist on any Wood County deed. The stated rationale is already shaped by the
+      campus: "by utilizing the acreage in question the concerns about road access onto Mercer
+      Road could have less impact."
+
+  - filename: 05032022-special_buschrezone.pdf
+    canonical: middleton-township-trustees-special-minutes-2023-05-03-busch-rezoning.pdf
+    title: >-
+      Middleton Township Trustees, special meeting minutes, 2023-05-03 — rezoning of
+      approximately 44 acres, A-1 Agricultural to M-1 Industrial (Busch family)
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2023/08/05032022-special_buschrezone.pdf
+    sha256: 4bd2153f025d5dc24d8f85cf94b58d393095d3b8457190b0a617e69f619f6f0a
+    bytes: 167189
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-08-05'
+    content_verified: '2023-05-03'   # heading: "Wednesday, May 3, 2023" — see meta.misnamed_sources
+    evidence: native_text
+    status: downloaded
+    note: >-
+      THE FILENAME'S YEAR IS WRONG — this is 2023, not 2022; see meta.misnamed_sources.
+      A second seller-name rezoning, approved with trustee Fred Vetter ABSTAINING. Vetter
+      abstained again on the 2024-11-20 Busch rezoning and did not abstain on the 2026-07-07
+      Liames rezoning. The abstentions are recorded here as a fact of the roll call; this
+      corpus asserts no reason for them, because the minutes state none.
+
+  - filename: 01152025.pdf
+    canonical: middleton-township-trustees-minutes-2025-01-15.pdf
+    title: Middleton Township Trustees, regular meeting minutes, 2025-01-15
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2025/04/01152025.pdf
+    sha256: 02e9322554fc2912562d9fc3df1b8acc7b0c4f38f9fdf077079fd1956ea1368d
+    bytes: 232401
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-08-05'
+    content_verified: '2025-01-15'   # heading: "Wednesday, January 15, 2025"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The site-plan review record, and the single most load-bearing document in this
+      collection after the 2026-07-07 hearing. The zoning inspector reports that the Zoning
+      Commission "approved all but the landscape plans during the Barge Design Solutions site
+      plan review," and then gives a build sequence: warehouses "first planned to be
+      constructed by April 2026," the administration building "by October 2026," "the data
+      center completed by the end of 2026," and — verbatim — "The second data center is
+      scheduled for completion April/May 2027." A two-building program is on the township's
+      public record in January 2025. It also records the Board of Zoning Appeals denying a
+      Project Accordion variance on exterior building materials, and a right-of-way easement
+      "being pursued by the City of Bowling Green for electric lines at St. Rt. 25 and 582."
+
+  - filename: 11202024_special_rezone_Busch.pdf
+    canonical: middleton-township-trustees-special-minutes-2024-11-20-busch-rezoning.pdf
+    title: >-
+      Middleton Township Trustees, special meeting minutes, 2024-11-20 (7:30 p.m.) — rezoning
+      of approximately 91 acres, A-1 Agricultural to M-1 Light Industrial (Victoria Busch)
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2025/04/11202024_special_rezone_Busch.pdf
+    sha256: f66f192a4080fd6a7adf774ae7da4581c2e08e30af633803aee6a5adf8882465
+    bytes: 179027
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-08-05'
+    content_verified: '2024-11-20'   # heading: "Wednesday, November 20, 2024 7:30 p.m."
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Names the parcels (J36-611-290000008000 and J36-611-290000007000) and records that the
+      seller was represented by "Rex Hoffman, Wood County Port Authority," who stated on the
+      record that "no buyers are known for the property." Approved 2-0, Vetter abstaining.
+      NOT part of the Liames assemblage: neither parcel appears in the committed
+      data/reference/bowling-green/parcel-assemblage.geojson.
+
+  - filename: 11202024_special_rezone_STD1.pdf
+    canonical: middleton-township-trustees-special-minutes-2024-11-20-sdt1-rezoning-withdrawn.pdf
+    title: >-
+      Middleton Township Trustees, special meeting minutes, 2024-11-20 (7:00 p.m.) — rezoning
+      of approximately 68 acres withdrawn (SDT1 Properties, LLC)
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2025/04/11202024_special_rezone_STD1.pdf
+    sha256: 62784a1030345337a74225852218b6812f2a2a0d025988ab915f8f7de9316ddf
+    bytes: 162809
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-08-05'
+    content_verified: '2024-11-20'   # heading: "Wednesday, November 20, 2024 7:00 p.m."
+    evidence: native_text
+    status: downloaded
+    note: >-
+      A withdrawal, thirty minutes before the Busch hearing the same evening and again with
+      the Port Authority representing. The applicant's name is rendered BOTH ways inside this
+      one page — "SDT1 Properties, LLC" in the legal notice recital and "STD1" in the
+      representative's line, and the township's own filename says STD1. Both spellings are
+      carried verbatim in the extraction; neither is corrected, because the record does not
+      say which is the registered name and the Ohio Secretary of State search that would
+      settle it is access-blocked.
+
+  - filename: 0909025_specialrezone.pdf
+    canonical: middleton-township-trustees-special-minutes-2025-09-09-eckel-speck-rezonings-withdrawn.pdf
+    title: >-
+      Middleton Township Trustees, special meeting minutes, 2025-09-09 — two rezonings
+      withdrawn (Eckel Trustees ~75 acres, Speck Trustee ~37 acres)
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2025/10/0909025_specialrezone.pdf
+    sha256: 36d33f3d655f0fc6509b8dfb61705bf34c28824a248928333088b23b292db15a
+    bytes: 110701
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-08-05'
+    content_verified: '2025-09-09'   # heading: "Tuesday, September 9, 2025" — see meta.misnamed_sources
+    evidence: native_text
+    status: downloaded
+    note: >-
+      THE FILENAME IS MISSING A DIGIT (0909025); see meta.misnamed_sources. Two A-1 to M-1
+      rezoning requests withdrawn by letter effective 2025-09-08, the day before the hearing.
+      These are the applications the 2026-01-07 minutes refer to when they record that "the
+      most recent rezoning applications were pulled by the applicants and to date have not
+      been resubmitted."
+
+  - filename: 01072026.pdf
+    canonical: middleton-township-trustees-minutes-2026-01-07.pdf
+    title: Middleton Township Trustees, regular meeting minutes, 2026-01-07
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2026/01/01072026.pdf
+    sha256: 54d4f5c0e4b9ab8db0043a241bd467d81e03af185d3848b2e696b2f379cef759
+    bytes: 224580
+    content_type: application/pdf
+    pages: 3
+    fetched_at: '2026-08-05'
+    content_verified: '2026-01-07'   # heading: "Wednesday, January 7, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The public meeting at which the Meta letter below was read aloud in full, and the longest
+      run of resident comment in this collection. It also carries three things no secondary
+      source had: a letter from Wood County Prosecutor Paul Dobson stating his office was
+      "currently researching the requirements" for a township data-center moratorium; the
+      assistant prosecuting attorney's statement that Meta paid for "the water tower at the
+      Northwestern Water and Sewer District site" and donated "$13M ... to the sewer line
+      installation"; and her confirmation, in answer to a direct question, that the campus
+      ponds are "for retention only and not for cooling." A trustee also asked whether Williams
+      had contacted the township about the power plant.
+
+  - filename: 07072026_specialrezoning.pdf
+    canonical: middleton-township-trustees-special-minutes-2026-07-07-liames-rezoning-hearing.pdf
+    title: >-
+      Middleton Township Trustees, special meeting minutes, 2026-07-07 — R.C. 519.12 hearing on
+      Application 2026041 (Liames, LLC), thirteen parcels rezoned to M-1 Light Industrial
+    issuer: Board of Trustees, Middleton Township, Wood County, Ohio
+    source_url: https://www.middletontownship.com/wp-content/uploads/2026/07/07072026_specialrezoning.pdf
+    sha256: ccc845dfff73b9972f3376f831e7fb6f4d4df80d16b338781e940cfca82fec3f
+    bytes: 304966
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-08-05'
+    content_verified: '2026-07-07'   # heading: "Tuesday, July 7, 2026 6:30 p.m."
+    evidence: native_text
+    status: downloaded
+    note: >-
+      THE INSTRUMENT THIS COLLECTION EXISTS FOR, and it does not say what the press said it
+      says. It names all thirteen parcel numbers (secondary reporting named eight). It names the
+      application (2026041), the applicant's engineer (Barge Design Solutions), the applicant's
+      counsel (Chris Ingram, Vorys) and the township's (Julie Dannon/Donnan, Brosius, Johnson &
+      Griggs — spelled both ways on the same page). And the roll call is on a motion "to approve
+      the recommendation of the Middleton Township Zoning Commission," which had voted to DENY:
+      Moulton NO, Petrea YES, Vetter NO. Reported as "2-1 in favour," it is on its face 1-2
+      against a denial. The outcome is the same and the minutes state it — "It is noted the
+      application was approved for rezoning" — but the vote as recorded is the inverse of the
+      vote as reported, and Petrea, reported as the dissenter, is the one who voted YES.
+
+  - filename: Meta-Middleton-Township-Letter-010726.pdf
+    canonical: meta-platforms-letter-to-middleton-township-trustees-2026-01-07.pdf
+    title: >-
+      Letter, Meta Global Infrastructure Team to the Middleton Township Trustees — water use,
+      energy, air quality, construction activities, jobs and community development at the
+      Bowling Green Data Center
+    issuer: Meta Platforms, Inc. ("The Meta Global Infrastructure Team")
+    source_url: https://www.middletontownship.com/wp-content/uploads/2026/01/Meta-Middleton-Township-Letter-010726.pdf
+    served_by: Middleton Township (the township publishes it; it is a company document in a public record)
+    sha256: 9955dd80d63488d3c66a70de629a7b6a01c19405ecddb2e181b000b327e6d856
+    bytes: 173132
+    content_type: application/pdf
+    pages: 3
+    fetched_at: '2026-08-05'
+    content_verified: '2026-01-07'   # see meta.date_on_the_face_warning — the letter prints 2025
+    evidence: native_text
+    status: downloaded
+    note: >-
+      A COMPANY DOCUMENT, NOT A GOVERNMENT ONE. Everything in it is Meta's own account of Meta
+      and stays [reference] however specific it is; what the township record establishes is that
+      it was sent and read. It is nonetheless the primary source for the closed-loop dry-cooler
+      claim this repo has carried from press since #1435 — "the data center will use a
+      closed-loop, liquid-cooled system with dry coolers. This cooling system requires no
+      operational water" — and it adds an operational-water framing found nowhere else
+      ("less than what approximately two full-service restaurants use annually"), a flat "No
+      ground water will be used," the 2-million-gallon elevated tank and the Middleton Pike
+      water/sewer upgrades as Meta-funded, "847 megawatts of new renewable energy" supported in
+      Ohio, JE Dunn as general contractor with six named Ohio trade partners, and — the line
+      that matters against the profile — that Meta "runs its BACKUP GENERATORS as minimally as
+      possible" and is "working to fuel all on site generators with renewable diesel." The
+      campus therefore has its own gensets, distinct from the Apollo plant; their count and
+      rating remain [open], which is why SiteFacility.genset_count/genset_mw stay None.
+      IT CONTAINS NO PHASE-2 ANNOUNCEMENT. Issue #1438, issue #1441 and this repo's own
+      register have all called it "Meta's 2026-01-07 Phase-2 letter"; the letter is a
+      community-impact letter and the word does not appear in it. See the extraction.

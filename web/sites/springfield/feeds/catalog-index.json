@@ -1,7 +1,7 @@
 {
   "site": "springfield",
   "catalog_version": "f138cf31c4de9095202b11034dd6bb631db24a69ed31b6771fa3165dc39413a9",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:springfield:7q10",
@@ -680,7 +680,7 @@
       "kind": "dataset",
       "site": "springfield",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -688,7 +688,7 @@
       "kind": "dataset",
       "site": "springfield",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

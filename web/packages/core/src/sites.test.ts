@@ -172,11 +172,16 @@ describe("editorial story states — live vs coming-soon vs hidden (#1526/#1527)
     // …but it is still a REGISTRY check, so unregistered MDX and typo'd codenames emit nothing.
     expect(siteRegistersStory("findlay", "project-bosc")).toBe(false);
     expect(siteRegistersStory("urbana", "flagpole")).toBe(false);
+    // Bowling Green is the second non-selectable host (#1441) and the second held walk whose
+    // codename is the DEVELOPER's, not ours — recovered from the township's own executive-session
+    // minutes, as Zodiac was from a permit caption.
+    expect(siteForSlug("bowling-green")?.selectable).toBe(false);
+    expect(siteRegistersStory("bowling-green", "project-accordion")).toBe(true);
     expect(
       storyHostSites()
         .map((s) => s.slug)
         .sort(),
-    ).toEqual(["findlay", "fort-wayne", "lima"]);
+    ).toEqual(["bowling-green", "findlay", "fort-wayne", "lima"]);
   });
 
   it("surfacedStories returns Lima's, comingSoonStories returns Fort Wayne's — the states are distinguishable", () => {

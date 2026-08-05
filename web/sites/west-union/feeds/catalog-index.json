@@ -1,7 +1,7 @@
 {
   "site": "west-union",
   "catalog_version": "752e8597a79254f62b8cd53ce8810919db357e6042a09fa1a0010f8ef85da8cb",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:west-union:7q10",
@@ -672,7 +672,7 @@
       "kind": "dataset",
       "site": "west-union",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -680,7 +680,7 @@
       "kind": "dataset",
       "site": "west-union",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

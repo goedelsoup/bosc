@@ -1,0 +1,147 @@
+# Middleton Township Trustees — the three campus-adjacent rezoning matters of 2024-2025 that
+# were NOT approved as filed: one granted over a seller with no known buyer, and three
+# applications withdrawn on the eve of their hearings. Issue #1438, epic #1433.
+#
+# These are kept together because they are one phenomenon, not three events: between November
+# 2024 and September 2025, four separate landowners around the Meta campus brought ~271 acres of
+# A-1 land to M-1 and three of the four pulled out. The withdrawals are the applications the
+# 2026-01-07 minutes mean when they record that "the most recent rezoning applications were
+# pulled by the applicants and to date have not been resubmitted to the zoning commission."
+#
+# Tags per CLAUDE.md: [verified] = printed in these minutes; [open] = not established.
+
+as_of: '2026-08-05'
+site: bowling-green
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1438'
+epic: 'watermark-directory/the-watermark-directory#1433'
+
+source:
+  instrument: township-trustees-minutes
+  file: data/documents/bowling-green/middleton-township/11202024_special_rezone_Busch.pdf
+  sha256: f66f192a4080fd6a7adf774ae7da4581c2e08e30af633803aee6a5adf8882465
+  content_verified: text-layer
+  companion_files:
+    - path: data/documents/bowling-green/middleton-township/11202024_special_rezone_STD1.pdf
+      sha256: 62784a1030345337a74225852218b6812f2a2a0d025988ab915f8f7de9316ddf
+    - path: data/documents/bowling-green/middleton-township/0909025_specialrezone.pdf
+      sha256: 36d33f3d655f0fc6509b8dfb61705bf34c28824a248928333088b23b292db15a
+pages_read: [0]
+
+resolution:
+  instrument: >-
+    Middleton Township Trustees — campus-adjacent rezoning matters, 2024-11-20 and 2025-09-09
+    (one approved, three withdrawn)
+  body: Board of Trustees, Middleton Township, Wood County, Ohio
+  body_kind: township_trustees
+  subject_matter: zoning
+  statute: R.C. 519.12                       # [inference]
+  outcome: mixed
+
+  matters:
+    - id: BUSCH-91AC-2024
+      meeting_date: '2024-11-20'
+      convened: '19:30'
+      adjourned: '19:35'
+      applicant: Victoria Busch
+      represented_by: >-
+        "Rex Hoffman, Wood County Port Authority and representative for Victoria Busch"
+        [verified] — note the county journal of 2023-09-28 renders the surname "Huffman";
+        both spellings are carried and neither is corrected.
+      acres_approx: 91
+      parcels: ['J36-611-290000008000', 'J36-611-290000007000']
+      from_zoning: A-1 Agricultural
+      to_zoning: M-1 Light Industrial
+      outcome: approved
+      vote:
+        motion_moved_by: Michael Moulton
+        motion_seconded_by: Donald E. Cromley
+        roll_call:
+          - {trustee: Donald E. Cromley, vote: 'YES'}
+          - {trustee: Michael Moulton, vote: 'YES'}
+          - {trustee: Fred E. Vetter, vote: abstain}
+        tally: 2-0-1
+      recommendations:
+        - {body: Wood County Planning Commission, recommendation: approve}
+        - {body: Middleton Township Zoning Commission, recommendation: approve}
+      disclosure:
+        tag: '[verified]'
+        statement_verbatim: >-
+          "Rex Hoffman, Wood County Port Authority and representative for Victoria Busch stated
+          no buyers are known for the property."
+        note: >-
+          NINETY-ONE ACRES REZONED TO LIGHT INDUSTRIAL WITH NO BUYER ON THE RECORD, brought by a
+          public port authority acting for a private seller. Recorded as stated. Whether a buyer
+          later appeared is [open] — neither parcel is in the committed
+          data/reference/bowling-green/parcel-assemblage.geojson, which carries only the twelve
+          Liames parcels plus the Schaller, Apollo-situs and Oppidan tracts.
+
+    - id: SDT1-68AC-2024
+      meeting_date: '2024-11-20'
+      convened: '19:00'
+      adjourned: '19:20'
+      applicant: SDT1 Properties, LLC
+      applicant_name_variants: ['SDT1 Properties, LLC', 'STD1']
+      applicant_name_note: >-
+        BOTH SPELLINGS APPEAR ON THE SAME PAGE — "SDT1 Properties, LLC" in the legal-notice
+        recital and "representative for STD1" in the appearance line; the township's own filename
+        says STD1. The registered name is [open] and the Ohio Secretary of State search that
+        would settle it is access-blocked (see record-watch.yaml). Neither is corrected.
+      represented_by: Rex Hoffman, Wood County Port Authority
+      acres_approx: 68
+      parcels:
+        - 'J36-611-200000016500'
+        - 'J36-611-200000015000'
+        - 'J36-611-200401010000'
+        - 'J36-611-200401011000'
+        - 'J36-611-200401012000'
+      from_zoning: A-1 Agricultural
+      to_zoning: M-1 Light Industrial
+      outcome: withdrawn
+      outcome_detail: >-
+        [verified] "Rex Hoffman, Wood County Port Authority and representative for STD1 stated
+        the application for rezoning is being withdrawn." The county planning commission had
+        recommended approval; the township zoning commission had not. "The Trustees took no
+        action." Withdrawn AT the hearing, after both recommendation bodies had ruled.
+      location_note: >-
+        [verified] from the 2024-08-21 minutes, when the application was first reported:
+        "approximately 67 acres on multiple parcels on St. Rt. 582 east of Interstate 75." The
+        acreage is given as ~67 there and ~68 in the legal notice three months later.
+
+    - id: ECKEL-SPECK-2025
+      meeting_date: '2025-09-09'
+      convened: '19:05'
+      adjourned: '19:08'
+      applicants:
+        - {name: Eckel Trustees, acres_approx: 75}
+        - {name: Speck Trustee, acres_approx: 37}
+      from_zoning: A-1 Agricultural
+      to_zoning: M-1 Light Industrial
+      parcels: null                            # [open] — no parcel numbers in these minutes
+      outcome: withdrawn
+      outcome_detail: >-
+        [verified] The zoning inspector "provided the Trustees with two separate letters from the
+        property owners who have requested rezoning ... Each letter stated intent to withdraw the
+        rezoning request effective Monday, September 8, 2025" — the day before the hearing. The
+        legal notice had been published in the Sentinel-Tribune on 2025-08-27. The trustees moved
+        to accept the withdrawals; the meeting ran three minutes.
+      note: >-
+        These are the two applications the 2026-01-07 minutes describe as "pulled by the
+        applicants and to date have not been resubmitted to the zoning commission." Why they were
+        pulled is [open] — the letters are not published and the minutes give no reason.
+
+  aggregate:
+    tag: '[inference]'
+    statement: >-
+      91 + 68 + 75 + 37 = 271 acres of A-1 land brought toward M-1 by four separate landowners
+      around this campus between August 2024 and September 2025, of which 91 were rezoned and
+      180 were withdrawn before a vote. Arithmetic on [verified] figures; the figures are the
+      minutes' own approximations ("approximately"), so the total is approximate too.
+    do_not_read_as: >-
+      NOT a Meta land assembly. None of these four applicants is Liames, none of the named
+      parcels is in the committed assemblage, and the only one with a stated buyer position said
+      there was none. What the pattern establishes is a market forming around a disclosed campus,
+      which is a different and weaker claim than assembly — and it is the weaker claim this
+      corpus makes.
+
+  confidence: high

@@ -154,6 +154,13 @@ def test_story_states() -> None:
     assert domain_states(findlay, _counts(leads=44))["story"] == "live"
     # And it is genuinely two-signal: drop the leads board and it falls back to seeded.
     assert domain_states(findlay, _counts())["story"] == "seeded"
+    # Bowling Green joined on both signals at once in #1441 — the ``project-accordion`` walk in the
+    # overlay and the site's own leads board — and is the same held-walk shape as Findlay: the
+    # DOMAIN is live on the evidence while the frontend facet stays locked on ``comingSoon``.
+    bg = SITES["bowling-green"]
+    assert "bowling-green" in STORY_SLUGS
+    assert domain_states(bg, _counts(leads=18))["story"] == "live"
+    assert domain_states(bg, _counts())["story"] == "seeded"
     # Leads only, no registered story → seeded (Urbana's record/leads case).
     urbana = SITES["urbana"]
     assert "urbana" not in STORY_SLUGS

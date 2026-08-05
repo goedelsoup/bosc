@@ -1,7 +1,7 @@
 {
   "site": "wpafb",
   "catalog_version": "ec1bddef465bb0e549a6e0e752da3ab441b20ec51e49851b52800d09c562c0c0",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:wpafb:7q10",
@@ -688,7 +688,7 @@
       "kind": "dataset",
       "site": "wpafb",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "wpafb",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

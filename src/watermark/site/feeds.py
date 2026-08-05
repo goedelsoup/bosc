@@ -569,7 +569,24 @@ from watermark.sites import (
 #     interrogative by `watermark hypotheses check`, so a claim cannot creep back into the slot.
 #   Existing rows gain a key; a pre-1.52 schema rejects it — MINOR, back-compatible for data,
 #   schema refresh required.
-CONTRACT_VERSION = "1.52.0"
+# 1.53.0: the `records` feed's closed RecordGroup enum gains `local-legislation` — an act of a
+#   LOCAL legislative body, journalled in its own minutes (#1438, epic #1433). Bowling Green's
+#   record is the first in the fleet that arrives almost entirely in this form, because the
+#   instruments that made that campus are municipal-scale: Wood County Commissioners' Resolution
+#   23-01249 authorizing a 75% / 15-year Community Reinvestment Area exemption; the Middleton
+#   Township trustees' R.C. 519.12 roll calls rezoning the land, two of them in the SELLERS' names
+#   before the buyer's name appears anywhere in that township's record; the Wood County Planning
+#   Commission's recommendations one step upstream of each. No existing group fits: `plans` is a
+#   plan document, `finance` (`award:`) is a grant or contract award, `deeds` and `land-assembly`
+#   are conveyances, and filing a zoning roll call under the nearest of those would present a
+#   land-use act as something it is not — the misfiling this enum exists to prevent. The
+#   discriminator is deliberately the ACT and not its subject: a rezoning and a tax abatement are
+#   the same kind of instrument voted by different boards, so the subject rides in the payload's
+#   own `subject_matter` rather than fragmenting the genre. Its payload key is `resolution:`,
+#   which nothing in the corpus previously used. Enum growth is additive for feed READERS (a
+#   pre-1.53 records.json stays valid) but a pre-1.53 records.schema.json rejects the new group
+#   value — MINOR, back-compatible for data, schema refresh required.
+CONTRACT_VERSION = "1.53.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -581,6 +598,7 @@ RecordGroup = Literal[
     "labor",
     "land-assembly",
     "litigation",
+    "local-legislation",
     "permits-epa",
     "permits-idem",
     "permits-npdes",

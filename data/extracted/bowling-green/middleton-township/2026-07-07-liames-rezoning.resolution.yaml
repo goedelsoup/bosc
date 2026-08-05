@@ -1,0 +1,343 @@
+# Middleton Township Trustees, 2026-07-07 — the R.C. 519.12 hearing on Application 2026041
+# (Liames, LLC), thirteen parcels rezoned R-4 Residential / A-1 Agricultural to M-1 Light
+# Industrial. Issue #1438 (the record domain), epic #1433 readiness(bowling-green).
+#
+# TAG VOCABULARY (per CLAUDE.md / evidentiary-discipline):
+#   [verified]  — printed in the township's own approved minutes, read from the PDF text layer.
+#   [reference] — secondary reporting, carried because the repo already carries it and this
+#                 instrument now contradicts or refines it. Never promoted here.
+#   [inference] — reasoned from [verified] facts, labelled, with the reasoning shown.
+#   [open]      — not established by any captured source. Do not assert.
+#
+# WHY THIS FILE EXISTS AS ITS OWN RECORD. The repo has carried this vote since #1436 as
+# "Middleton Township Trustees granted it anyway, 2-1 on 2026-07-07 — Mike Moulton and Fred
+# Vetter in favor, Melissa Petrea against," sourced to the Sentinel-Tribune and BG Independent
+# News. The minutes record the opposite roll call on a differently-framed motion, reaching the
+# same outcome. Both halves of that sentence matter and the difference is not pedantry: it is
+# the difference between two trustees voting FOR a rezoning and two trustees voting AGAINST
+# their own zoning commission.
+
+as_of: '2026-08-05'
+site: bowling-green
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1438'
+epic: 'watermark-directory/the-watermark-directory#1433'
+
+source:
+  instrument: township-trustees-minutes
+  file: data/documents/bowling-green/middleton-township/07072026_specialrezoning.pdf
+  sha256: ccc845dfff73b9972f3376f831e7fb6f4d4df80d16b338781e940cfca82fec3f
+  content_verified: text-layer
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    Middleton Township Trustees — action on Application 2026041 (Liames, LLC), rezoning
+    thirteen parcels in Section 19 to M-1 Light Industrial, 2026-07-07
+  body: Board of Trustees, Middleton Township, Wood County, Ohio
+  body_kind: township_trustees
+  subject_matter: zoning
+  statute: R.C. 519.12                       # [inference] — the minutes recite the county-planning
+                                             # + township-zoning-commission recommendation sequence
+                                             # and the 30-day referendum window that only 519.12
+                                             # prescribes; the section number is not printed.
+  meeting_date: '2026-07-07'                 # [verified] heading
+  meeting_kind: special                      # [verified] "called the special meeting to order"
+  convened: '18:30'                          # [verified]
+  adjourned: '19:18'                         # [verified]
+  application_no: '2026041'                  # [verified] "a hearing for the above-stated purpose
+                                             # from Application 2026041"
+  legal_notice: >-
+    Published in the Sentinel-Tribune, 2026-06-20, and read into the record by the Fiscal
+    Officer.                                                                 # [verified]
+  outcome: approved
+  outcome_note: >-
+    [verified] — the minutes state it in terms: "It is noted the application was approved for
+    rezoning. The application will be filed with the Wood County Recorder and also sent to the
+    Wood County Planning Commission."
+
+  # -----------------------------------------------------------------------------------------
+  # THE ROLL CALL — the reason this record exists.
+  # -----------------------------------------------------------------------------------------
+  vote:
+    motion: >-
+      "to approve the recommendation of the Middleton Township Zoning Commission for the purpose
+      of rezoning thirteen (13) parcels to M-1 based on the details noted in the application"
+    motion_moved_by: Michael Moulton
+    motion_seconded_by: Melissa S. Petrea
+    the_recommendation_being_approved: deny   # [verified] — the MTZC "voted on June 10, 2026, to
+                                              # deny the request", stated earlier in the same minutes
+    roll_call:
+      - trustee: Michael Moulton
+        vote: 'NO'
+      - trustee: Melissa S. Petrea
+        vote: 'YES'
+      - trustee: Fred E. Vetter
+        vote: 'NO'
+    tally: 1-2                                 # [verified] as recorded
+    effect: >-
+      [verified] The motion was to ADOPT the zoning commission's recommendation, and that
+      recommendation was to DENY. It failed 1-2, and the minutes record the rezoning as approved.
+    press_discrepancy: >-
+      SECONDARY REPORTING HAS THIS BACKWARDS AND SO DID THIS REPO. The register carried
+      "trustees granted it anyway, 2-1 ... Mike Moulton and Fred Vetter in favor, Melissa Petrea
+      against" [reference]. On the face of the minutes the vote is 1-2, and the single YES is
+      PETREA — the trustee reported as the dissenter. Both accounts agree on the outcome and on
+      who was on which side of it; they disagree on the direction of the question. A reader
+      given only the press number would state the tally, the majority and the dissenter's name
+      wrongly while stating the result rightly. The minutes are the record.
+      WHY THIS READING AND NOT THE OBVIOUS ONE. The motion text can be read a second way — "approve
+      the recommendation ... for the purpose of rezoning" as simply "approve the rezoning" — but
+      that reading does not survive its own roll call: 1-2 would then have DEFEATED the rezoning,
+      and the next sentence of the same minutes says it was approved. Only the reading above is
+      self-consistent with the outcome the minutes state. What is NOT resolved is WHY the question
+      was put that way: a deliberate procedural device, an error at the meeting, or a clerical
+      error in the minutes are all live, the minutes give no reason, and none is asserted. The
+      Wood County Recorder's copy of the filed rezoning would corroborate the outcome but not the
+      framing. [open]
+
+  # -----------------------------------------------------------------------------------------
+  # THE THIRTEEN PARCELS — printed in the legal notice, verbatim, in the minutes' own order.
+  # This closes an [open] the register has carried since #1436: the record had named eight.
+  # -----------------------------------------------------------------------------------------
+  parcels:
+    printed_as: >-
+      The minutes print the auditor's full dashed form (J34-/J36- district prefix + 3-digit map
+      + 12 digits). The committed parcel layer stores the 15-digit remainder — see the
+      deed_id_regex caveat on WOOD_PARCEL_SCHEMA — so both forms are carried.
+    from_zoning: [R-4 Residential, A-1 Agricultural]     # [verified]
+    to_zoning: M-1 Light Industrial                      # [verified]
+    stated_purpose: >-
+      "construction logistics" — the applicant's own words, as recited by the Wood County
+      Planning Commission's 2026-06-02 agenda; at the hearing counsel framed it as creating
+      "a contiguous M1 zoning for the parcels owned by Liames, LLC".      # [verified]
+    list:
+      - auditor_id: J34-611-190000008000
+        parcel_id: '611190000008000'
+        acres: 1.59
+        cama_deeded_name: LIAMES LLC
+      - auditor_id: J34-611-190000009000
+        parcel_id: '611190000009000'
+        acres: 1.01
+        cama_deeded_name: LIAMES LLC
+      - auditor_id: J34-611-190000010000
+        parcel_id: '611190000010000'
+        acres: 1.01
+        cama_deeded_name: SIMON JAY
+      - auditor_id: J34-611-190000022000
+        parcel_id: '611190000022000'
+        acres: 2.05
+        cama_deeded_name: PINE APARTMENTS LTD
+      - auditor_id: J34-611-190000025000
+        parcel_id: '611190000025000'
+        acres: 0.5
+        cama_deeded_name: LIAMES LLC
+      - auditor_id: J34-611-190000026000
+        parcel_id: '611190000026000'
+        acres: 1.0
+        cama_deeded_name: P&J THAYER FAMILY LIMITED PARTNERSH
+      - auditor_id: J34-611-190000027000
+        parcel_id: '611190000027000'
+        acres: 2.0
+        cama_deeded_name: P&J THAYER FAMILY LTD
+      - auditor_id: J34-611-190000028000
+        parcel_id: '611190000028000'
+        acres: 4.39
+        cama_deeded_name: P&J THAYER FAMILY LTD
+      - auditor_id: J36-611-190000033000
+        parcel_id: '611190000033000'
+        acres: 3.89
+        cama_deeded_name: LIAMES LLC
+      - auditor_id: J36-611-190000034000
+        parcel_id: '611190000034000'
+        acres: 2.0
+        cama_deeded_name: LIAMES LLC
+      - auditor_id: J36-611-190000036001
+        parcel_id: '611190000036001'
+        acres: 3.33
+        cama_deeded_name: LIAMES LLC
+      - auditor_id: J36-611-190000035000
+        parcel_id: '611190000035000'
+        acres: 1.53
+        cama_deeded_name: LIAMES LLC
+      - auditor_id: J36-611-190000037000
+        parcel_id: '611190000037000'
+        acres: 7.52
+        cama_deeded_name: LIAMES LLC
+    acreage_reconciliation: >-
+      [verified] The thirteen deeded acreages sum to 31.820 — the Wood County Planning
+      Commission's "approximately 31.82 acres" to the hundredth. The 31.82 figure had been
+      carried as press [reference]; it is now a measurement against the auditor's own layer.
+      The eight Liames-name parcels carry 21.37 ac and the other five 10.45 ac.
+    ownership_caveat: >-
+      FIVE OF THE THIRTEEN DO NOT STAND IN LIAMES' NAME IN THE COUNTY'S PARCEL LAYER, AND THAT
+      IS A STATEMENT ABOUT JULY 2025, NOT ABOUT THE HEARING. The `cama_deeded_name` above is
+      from a live query of Wood County's Vision_Parcels layer on 2026-08-05, which returned the
+      same 73,839 rows and the same maximum Sale_Date of 2025-07-25 that #1436 recorded — zero
+      rows transfer after that date, so the layer has not been refreshed in more than a year and
+      any transfer after 2025-07-25 is invisible to it. Applicant's counsel told the trustees the
+      parcels are "owned by Liames, LLC" and that "structures on the properties have been razed."
+      Two readings survive and neither is adopted: the five transferred after the snapshot, or
+      Liames applied over land it does not hold of record (which R.C. 519.12 permits — an
+      application is not limited to owners). The Wood County Recorder is the instrument that
+      settles it, and it is logged as a blocked route in record-watch.yaml. What IS established
+      is the identity of the five: an individual owner served as SIMON JAY (1.01 ac,
+      owner-occupied — the tax mailing address IS the situs, which is what identifies it as a
+      residence rather than a holding entity; the layer serves an individual's name without
+      saying which token is the surname, so it is carried as served and never re-ordered),
+      Pine Apartments Ltd (2.05 ac at 21332 Dixie, CAMA use class 401), and the P&J Thayer
+      Family Limited Partnership (three parcels, 7.39 ac). The register previously carried these
+      five as [open].
+
+  # -----------------------------------------------------------------------------------------
+  # THE RECOMMENDATION CHAIN the trustees were acting on.
+  # -----------------------------------------------------------------------------------------
+  recommendations:
+    - body: Wood County Planning Commission
+      date: '2026-06-02'
+      recommendation: approve
+      note: >-
+        [verified] as recited by the zoning inspector in these minutes ("voted on June 2, 2026,
+        in favor of the rezoning request"). The 6-2 tally is [reference] press; the Planning
+        Commission's own minutes for 2026-06-02 were not published at capture time. Its AGENDA
+        is captured at data/documents/bowling-green/planning-commission/.
+    - body: Middleton Township Zoning Commission
+      date: '2026-06-10'
+      recommendation: deny
+      note: >-
+        [verified] "the Middleton Township Zoning Commission (MTZC) voted on June 10, 2026, to
+        deny the request." The 0-4 tally the register carries is [reference] press.
+
+  # -----------------------------------------------------------------------------------------
+  # WHO WAS IN THE ROOM — professional participants, [verified] from the attendance recital.
+  # -----------------------------------------------------------------------------------------
+  appearances:
+    applicant_engineer: Barge Design Solutions        # named in the legal notice as the filer
+    applicant_counsel:
+      name: Chris Ingram, Esq.
+      firm: Vorys                                     # printed "Vorys Law Firm"
+      note: >-
+        The same firm that appeared for the applicant before the county commissioners on the CRA
+        in September 2023, where the minutes name "Chris Knezevic of Vorys". Two different
+        lawyers, one firm, across three years and two boards — [verified] on each name
+        separately; no claim is made that they are the same person.
+    township_counsel:
+      name: Julie Dannon, Esq.
+      firm: Brosius, Johnson & Griggs
+      note: >-
+        THE MINUTES SPELL HER NAME TWO WAYS ON THE SAME PAGE — "Julie Dannon, Esq." in the
+        attendance recital and "Julie Donnan, Esq." / "Ms. Donnan" in the review section. Both
+        are carried verbatim; neither is corrected, because the record does not say which is
+        right.
+    township_zoning_inspector: Kip McDowell
+    fiscal_officer: Laurie L. Limes
+
+  # -----------------------------------------------------------------------------------------
+  # PUBLIC COMMENT — recorded because a hearing's comment record IS the instrument's substance.
+  # -----------------------------------------------------------------------------------------
+  public_comment:
+    format: >-
+      Three minutes per speaker, questions gathered and answered together. [verified]
+    township_residents:
+      - name: Patricia Fugee
+        of: Dowling Road
+        concern: the concrete plant, future use of the properties if rezoned, buffering for Dowling Road
+      - name: Tim Hainen
+        of: Devils Hole Road
+        concern: >-
+          that the rezoning is unnecessary and "would set a precedent to allow M-1 next to
+          residential and for future development south of St. Rt. 582"
+    non_township_residents:
+      - name: Leatra Harper
+        representing: Fresh Water Accountability
+        concern: >-
+          "the companies do not know what they are doing with the land and the complex does not
+          need to get any bigger"; stated the group is fundraising and "plans to employer [sic]
+          lawyers to help assist with their efforts to stop the growth"
+        note: >-
+          THE REGISTER CARRIES A "Leslie Harper" AS THE REFERENDUM DRIVE'S COORDINATOR, sourced
+          to press [reference]. The primary record here says Leatra Harper, of Fresh Water
+          Accountability. That is a likely identification of the same person and it is NOT made
+          here — the two names are recorded side by side and the identity stays [open], because
+          nothing in the corpus links the speaker at this hearing to the petition organizer.
+      - name: Chris Coultrip
+        of: Thompson Road, Perrysburg Township
+        concern: limiting the megawatts; the ODNR dewatering process
+      - name: John Zanfardino
+        of: Cambridge Boulevard, Bowling Green
+        concern: the 'devastation' of the development; that trustees should vote with citizen sentiment
+      - name: Beth Cole
+        of: Dowling Road
+        concern: opposition to future development; stated the concrete plant sits on A-1 land
+      - name: Kathy deAlmeida
+        of: Lyn Road, Bowling Green
+        concern: acreage owned and buffer zones; that the parcels could be zoned to keep a parklike setting
+
+  # -----------------------------------------------------------------------------------------
+  # DISCLOSED FACTS the hearing put on the record and no secondary source carries.
+  # -----------------------------------------------------------------------------------------
+  disclosures:
+    - id: ADDITIONAL-NW-PARCEL
+      tag: '[verified]'
+      statement: >-
+        Applicant's counsel "informed the Board that an additional parcel is currently being
+        reviewed by the Wood County Planning Commission for rezoning from A-1 to M-1 that is
+        located at the northwest corner of the complex."
+      reads_on: >-
+        The A. Schaller Limited Partnership 39.265-acre application, docketed by the county for
+        the SAME EVENING (WCPC agenda item 4.b, 2026-07-07). The two boards were sitting on the
+        two halves of this assembly at the same hour.
+    - id: MERCER-ROAD-NOT-USED
+      tag: '[verified]'
+      statement: >-
+        An exhibit shown at the hearing "shows constraints on St. Rt. 25, noting retention ponds
+        in place, development standards in place due to the M-1 zoning and noted that MERCER ROAD
+        IS NOT BEING UTILIZED FOR THIS PROJECT."
+      reads_on: >-
+        The 2023-03-29 Getz rezoning was argued on the ground that using that acreage would mean
+        "the concerns about road access onto Mercer Road could have less impact." Three years
+        apart, the same road, the same answer.
+    - id: PETREA-PARCELS-NOT-IN-PLAN
+      tag: '[verified]'
+      statement: >-
+        "Mrs. Petrea also stated the initial plans for the data center complex do not include the
+        parcels under review."
+      reads_on: >-
+        A trustee's characterization, not a company statement — but it is consistent with the
+        applicant's own stated purpose ("construction logistics") and with the register's reading
+        that these thirteen are a fringe, not campus core.
+    - id: DEWATERING-UNFAMILIAR
+      tag: '[verified]'
+      statement: >-
+        A resident raised "the ODNR dewatering process"; the minutes record that "Mr. Ingram
+        noted he was not familiar with the dewatering concept."
+      reads_on: >-
+        Construction dewatering is an ODNR/Ohio EPA matter that this repo tracks at other sites.
+        No dewatering instrument for this campus is in the corpus. [open]
+    - id: ODOT-CONTROLS-ENTRANCES
+      tag: '[verified]'
+      statement: >-
+        Trustee Vetter stated "that ODOT, not the township has control over the design or
+        location of the entrances and new entrances may be needed to help with the traffic flow".
+    - id: FIRSTENERGY-ENFORCEMENT
+      tag: '[verified]'
+      statement: >-
+        "Discussion was held with regard to the FirstEnergy power facility and the continued work
+        by the township to enforce the township zoning regulations."
+      reads_on: >-
+        A township enforcement posture toward a FirstEnergy facility, unresolved in these
+        minutes. Note the register's separate finding that the FirstEnergy/ATSI transmission
+        tract (72.43 ac, 22105 Mercer Rd) shares a 0.0 m boundary with the assembly. What the
+        "continued work" is, and whether it is the substation or something else, is [open].
+
+  confidence: high
+  warnings:
+    - >-
+      The tally recorded here (1-2 against a denial recommendation) is the inverse of the tally
+      in circulation (2-1 in favour). Cite this record, not the press number.
+    - >-
+      `cama_deeded_name` on the five non-Liames parcels is a ~2025-07-25 snapshot, not a
+      statement about who owned them at the 2026-07-07 hearing.
+    - >-
+      The R.C. 519.12 referendum window on this action closed on or about 2026-08-06 and its
+      outcome was NOT captured. See record-watch.yaml → MIDDLETON-REFERENDUM.

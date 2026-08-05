@@ -140,7 +140,7 @@ LEADS_FEED = "leads"
 # *evidence* (a walk exists over this record), while the frontend's story facet gates on
 # ``surfacedStories`` and so stays locked until the walk is actually readable. Fort Wayne and Findlay
 # are both held (``comingSoon``) and both belong here.
-STORY_SLUGS: frozenset[str] = frozenset({"lima", "fort-wayne", "findlay"})
+STORY_SLUGS: frozenset[str] = frozenset({"lima", "fort-wayne", "findlay", "bowling-green"})
 
 # Every manifest feed name this module keys a domain on — the single enumerable coupling to the
 # exporter's feed spec (``watermark.site.export``). ``export.py`` shares these very constants for

@@ -227,7 +227,7 @@ const SEARCH_FILTERS_PROP = {
       document_type: {
         type: "string",
         description:
-          "Document genre, the axis `feed` can't express (a `records` feed spans all of these): permits-npdes, permits-epa, permits-sos, deeds, land-assembly, enforcement, litigation, finance, labor, plans, opc — plus timeline categories (epa_permit_action, county_resolution, deed_recorded, …) and meeting kinds (minutes).",
+          "Document genre, the axis `feed` can't express (a `records` feed spans all of these): permits-npdes, permits-epa, permits-sos, deeds, land-assembly, enforcement, litigation, local-legislation, finance, labor, plans, opc — plus timeline categories (epa_permit_action, county_resolution, deed_recorded, …) and meeting kinds (minutes).",
       },
       entity: {
         type: "string",

@@ -1,7 +1,7 @@
 {
   "site": "coshocton",
   "catalog_version": "6f6c70b94e097e832a18623dc856696cfe533fdf6e5e0f4e386f846900bcb445",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:coshocton:7q10",
@@ -672,7 +672,7 @@
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -680,7 +680,7 @@
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {

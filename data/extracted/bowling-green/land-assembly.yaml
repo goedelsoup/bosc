@@ -1,0 +1,417 @@
+# Liames, LLC — Wood County land-assembly register (the Meta "Bowling Green Data Center" /
+# "Project Accordion" campus, Middleton Township). Issue #1438, epic #1433.
+#
+# THIS IS A COMPILED CHAIN, NOT A DEED READ. Every conveyance below comes from the Wood County
+# auditor's Vision CAMA layer — the county's own transfer record — not from a recorder deed
+# image. The `land-assembly` record genre exists for exactly this distinction (see
+# watermark.site.records): a per-deed vision read of a recorder PDF is `deeds`; a register
+# sourced to a CAMA layer is this. What that means in practice is stated in `limitations` and it
+# is the single most important thing on this page: THE CAMA KEEPS ONLY THE LAST CONVEYANCE PER
+# PARCEL, so this register is a snapshot of who holds what, not the history of how it moved.
+#
+# TAG VOCABULARY (per CLAUDE.md / evidentiary-discipline):
+#   [verified]  — read directly from the county's Vision_Parcels layer (grantee, deeded acreage,
+#                 transfer date, consideration, instrument code, conveyance number).
+#   [reference] — public reporting or a company statement. A lead, never a finding.
+#   [inference] — arithmetic or reasoning over [verified] values, shown.
+#   [open]      — not in the corpus. The grantors, the recorder instrument numbers, and every
+#                 conveyance before the surviving one are all here.
+#
+# SEPARATION (the #1438 acceptance criterion, and the standing rule of this repo): this register
+# is kept STRICTLY SEPARATE from the Allen-County / Lima Bistrozzi land-assembly graph and from
+# Urbana's. No entity, parcel or relationship here cross-references either. There is no
+# evidentiary link between Wood County and Allen County and none is manufactured.
+
+as_of: '2026-08-05'
+site: bowling-green
+strengthens: [record, places]
+issue: 'watermark-directory/the-watermark-directory#1438'
+epic: 'watermark-directory/the-watermark-directory#1433'
+county: Wood County, OH (FIPS 39173)
+assembly: >-
+  Meta "Bowling Green Data Center" / "Project Accordion" — SR-582 between SR-25 and I-75,
+  Middleton Township, adjacent the FirstEnergy Mercer Road substation
+
+source:
+  instrument: county-auditor-cama
+  layer: Services_for_Web_Apps/Vision_Parcels MapServer layer 0 (auditor CAMA join)
+  url: https://wcohiogis.woodcountyohio.gov/server/rest/services/Services_for_Web_Apps/Vision_Parcels/MapServer/0
+  fields_used:
+    [Name, Owner_Name, Deeded_Name, Land_Acres, Sale_Date, Transfer_Price, Qualified,
+     Instrument_Code, Conveyance__, Deed_Number, District, Street_Number, Street_Name,
+     Primary_Use, Legal_Description]
+  pulled: '2026-08-05'
+  committed_as: data/reference/bowling-green/parcel-assemblage.geojson   # #1436, same layer
+  layer_vintage:
+    tag: '[verified]'
+    max_sale_date: '2025-07-25'
+    rows: 73839
+    rows_after_max: 0
+    note: >-
+      PROBED FROM THE DATA, because the server publishes no `editingInfo`. A max-of-Sale_Date
+      statistic over all 73,839 rows returns 2025-07-25 and a count of rows transferring after
+      that date returns zero — the same two numbers #1436 recorded, unchanged a year later. EVERY
+      NEGATIVE IN THIS FILE IS THEREFORE A STATEMENT ABOUT JULY 2025, not about the pull date. A
+      conveyance recorded after 2025-07-25 is invisible here and its absence means nothing.
+
+# ---------------------------------------------------------------------------------------------
+# THE ASSEMBLY — twelve parcels deeded to LIAMES, LLC, whose union is a single polygon.
+# ---------------------------------------------------------------------------------------------
+conveyances:
+  - id: middleton-160
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    grantor: null                       # [open]
+    parcels: ['611300000001000']
+    parcel_id_auditor: J36-611-300000001000
+    acres: 160.0
+    consideration_usd: 0
+    conveyance_date: '2023-11-14'
+    instrument_code: QC                 # quitclaim
+    conveyance_number: '0'
+    deed_number: '1588'
+    valid_sale: U                       # the auditor's arms-length flag: U = not qualified
+    situs: 12279 MIDDLETON
+    legal_description: NE
+    notes: >-
+      The earliest conveyance surviving in the CAMA for this assembly, and a $0 quitclaim. Paired
+      with `middleton-74` on the same day.
+
+  - id: middleton-74
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    grantor: null                       # [open]
+    parcels: ['611300000002000']
+    parcel_id_auditor: J36-611-300000002000
+    acres: 74.65
+    consideration_usd: 2923960
+    conveyance_date: '2023-11-14'
+    instrument_code: LW                 # limited warranty
+    conveyance_number: '1750'
+    deed_number: null
+    valid_sale: Q                       # qualified / arms-length
+    situs: 12499 MIDDLETON
+    legal_description: "ENW LESS N280' W442' LESS 1.66A PT & L"
+    notes: >-
+      The largest single arms-length consideration in the register and the only one before 2024.
+      $2,923,960 / 74.65 ac = $39,169/ac. [inference] on the rate.
+
+  - id: mercer-322
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    grantor: null                       # [open] — but see `consolidation` below
+    parcels: ['611190000003500']
+    parcel_id_auditor: J36-611-190000003500
+    acres: 322.5
+    consideration_usd: 0
+    conveyance_date: '2025-04-09'
+    instrument_code: QC
+    conveyance_number: '0'
+    deed_number: '0519'
+    valid_sale: Q
+    situs: 0 MERCER
+    legal_description: 322.50A PT COM NECOR NE
+    notes: >-
+      A CONSOLIDATION, NOT A PURCHASE. #1436 established that this parcel and `dixie-196` are
+      2025-04-09 consolidations of eleven predecessor tracts, quitclaimed at $0 — and that the
+      consolidation ERASED those eleven tracts' purchase prices from the CAMA. The date is the
+      same day as Meta's public announcement.
+
+  - id: dixie-196
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    grantor: null                       # [open]
+    parcels: ['611190000029510']
+    parcel_id_auditor: J34-611-190000029510
+    acres: 196.5
+    consideration_usd: 0
+    conveyance_date: '2025-04-09'
+    instrument_code: QC
+    conveyance_number: '0'
+    deed_number: '0520'
+    valid_sale: Q
+    situs: 0 DIXIE
+    legal_description: "196.50A PT COM 757.74' W SECOR SW"
+    notes: The second of the two 2025-04-09 consolidations. Legacy CAMA id J34-02506-00.
+
+  - id: mercer-7-52
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    parcels: ['611190000037000']
+    parcel_id_auditor: J36-611-190000037000
+    acres: 7.52
+    consideration_usd: 650000
+    conveyance_date: '2024-11-22'
+    instrument_code: WD
+    conveyance_number: '1937'
+    valid_sale: U
+    situs: 21443 MERCER
+    notes: One of the thirteen parcels rezoned 2026-07-07.
+
+  - id: dixie-1-59
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    parcels: ['611190000008000']
+    parcel_id_auditor: J34-611-190000008000
+    acres: 1.59
+    consideration_usd: 450000
+    conveyance_date: '2024-09-04'
+    instrument_code: WD
+    conveyance_number: '1424'
+    valid_sale: U
+    situs: 21698 DIXIE
+    notes: One of the thirteen parcels rezoned 2026-07-07.
+
+  - id: middleton-2-00
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    parcels: ['611190000034000']
+    parcel_id_auditor: J36-611-190000034000
+    acres: 2.0
+    consideration_usd: 615000
+    conveyance_date: '2025-05-01'
+    instrument_code: WD
+    conveyance_number: '0617'
+    valid_sale: U
+    situs: 12018 MIDDLETON
+    notes: One of the thirteen parcels rezoned 2026-07-07.
+
+  - id: dixie-0-50
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    parcels: ['611190000025000']
+    parcel_id_auditor: J34-611-190000025000
+    acres: 0.5
+    consideration_usd: 315000
+    conveyance_date: '2025-05-02'
+    instrument_code: LW
+    conveyance_number: '0627'
+    valid_sale: U
+    situs: 21186 DIXIE
+    notes: >-
+      One of the thirteen parcels rezoned 2026-07-07. $630,000/ac — the highest rate in the
+      register by an order of magnitude, and the smallest parcel. [inference] on the rate.
+
+  - id: mercer-1-53
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    parcels: ['611190000035000']
+    parcel_id_auditor: J36-611-190000035000
+    acres: 1.53
+    consideration_usd: 472500
+    conveyance_date: '2025-05-23'
+    instrument_code: WD
+    conveyance_number: '0778'
+    valid_sale: U
+    situs: 21067 MERCER
+    notes: One of the thirteen parcels rezoned 2026-07-07.
+
+  - id: dixie-1-01
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    parcels: ['611190000009000']
+    parcel_id_auditor: J34-611-190000009000
+    acres: 1.01
+    consideration_usd: 475000
+    conveyance_date: '2025-05-27'
+    instrument_code: WD
+    conveyance_number: '0782'
+    valid_sale: U
+    situs: 21630 DIXIE
+    notes: One of the thirteen parcels rezoned 2026-07-07.
+
+  - id: middleton-3-89
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    parcels: ['611190000033000']
+    parcel_id_auditor: J36-611-190000033000
+    acres: 3.89
+    consideration_usd: 450000
+    conveyance_date: '2025-07-15'
+    instrument_code: WD
+    conveyance_number: '1131'
+    valid_sale: U
+    situs: 12090 MIDDLETON
+    notes: One of the thirteen parcels rezoned 2026-07-07.
+
+  - id: mercer-3-33
+    grantee: LIAMES LLC
+    grantee_tag: verified
+    parcels: ['611190000036001']
+    parcel_id_auditor: J36-611-190000036001
+    acres: 3.33
+    consideration_usd: 570000
+    conveyance_date: '2025-07-21'
+    instrument_code: LW
+    conveyance_number: '1170'
+    valid_sale: U
+    situs: 21123 MERCER
+    notes: >-
+      The LATEST conveyance in the register, and it is four days before the CAMA layer's own
+      maximum Sale_Date. The assembly may well have continued; this layer cannot see it.
+
+# ---------------------------------------------------------------------------------------------
+# TOTALS AND THE ONE ARITHMETIC TRAP.
+# ---------------------------------------------------------------------------------------------
+totals:
+  parcels: 12
+  deeded_acres: 775.02                  # [verified] sum of Land_Acres over the twelve
+  planar_acres: 774.878                 # [verified] #1436 measurement; union is ONE polygon
+  consideration_sum_usd: 6921460        # [inference] arithmetic over the [verified] figures
+  consideration_is_a_floor:
+    tag: '[verified]'
+    note: >-
+      NEVER PRESENT $6,921,460 AS WHAT THE ASSEMBLY COST. The CAMA keeps only the last conveyance
+      per parcel, and the two 2025-04-09 consolidations that carry 519 of the 775 acres are $0
+      quitclaims which erased eleven predecessor tracts' purchase prices. The sum is a floor on a
+      fraction. The register's own press figure — >$800M investment — is a different quantity
+      again (land plus buildings plus equipment) and the two must never be compared.
+  first_deed_date:
+    cama_earliest: '2023-11-14'
+    press_earliest: '2023-09-05'
+    tag: '[reference]'
+    note: >-
+      THE REGISTER CARRIES "Deeds recorded from 2023-09-05" AND THE CAMA DOES NOT CORROBORATE IT.
+      The earliest surviving conveyance here is 2023-11-14. That is not a contradiction: a
+      September 2023 deed into a tract later folded into the 2025-04-09 consolidation would have
+      been overwritten. The 2023-09-05 date stays [reference] and the discrepancy is recorded
+      rather than reconciled, because the recorder's chronological index is the only thing that
+      can settle it.
+
+# ---------------------------------------------------------------------------------------------
+# THE THIRTEEN REZONED PARCELS — five of which are NOT in the assembly, as of July 2025.
+# ---------------------------------------------------------------------------------------------
+rezoned_2026_07_07:
+  application: '2026041'
+  acres_total: 31.82                    # [verified] county agenda; reconciles to the sum below
+  in_liames_name: 8
+  in_liames_name_acres: 21.37
+  not_in_liames_name: 5
+  not_in_liames_name_acres: 10.45
+  others_of_record:
+    - deeded_name: SIMON JAY
+      parcel: '611190000010000'
+      acres: 1.01
+      last_conveyance: '2020-02-18'
+      consideration_usd: 0
+      instrument_code: LW
+      situs: 21600 DIXIE
+      mailing: 21600 N DIXIE HWY, BOWLING GREEN OH
+      note: >-
+        Owner-occupied of record — the tax mailing address IS the situs. The only one of the five
+        that reads as a residence rather than a holding entity.
+    - deeded_name: PINE APARTMENTS LTD
+      parcel: '611190000022000'
+      acres: 2.05
+      last_conveyance: '2001-12-13'
+      consideration_usd: 0
+      primary_use: '401'
+      situs: 21332 DIXIE
+      mailing: 121 E WOOSTER ST, BOWLING GREEN OH
+      note: >-
+        CAMA use class 401 — the only non-511 parcel among the thirteen. The register's
+        description of "former homes and a strip of motel rooms, since razed" is [reference]
+        press; this row is the only instrument-side signal of a multi-unit residential use among
+        them, and it does not confirm the motel.
+    - deeded_name: P&J THAYER FAMILY LIMITED PARTNERSH
+      parcel: '611190000026000'
+      acres: 1.0
+      last_conveyance: '2004-10-15'
+      consideration_usd: 147500
+      situs: 21154 DIXIE
+      mailing: 18039 N DIXIE HWY, BOWLING GREEN OH
+    - deeded_name: P&J THAYER FAMILY LTD
+      parcel: '611190000027000'
+      acres: 2.0
+      last_conveyance: '2003-10-22'
+      consideration_usd: 355000
+      situs: 21108 DIXIE
+      mailing: 18039 N DIXIE HWY, BOWLING GREEN OH
+      note: One conveyance, two parcels — the $355,000 covers this and 611190000028000 together.
+    - deeded_name: P&J THAYER FAMILY LTD
+      parcel: '611190000028000'
+      acres: 4.39
+      last_conveyance: '2003-10-22'
+      consideration_usd: 355000
+      primary_use: '599'
+      situs: 13090 MIDDLETON
+      mailing: 18039 N DIXIE HWY, BOWLING GREEN OH
+  finding:
+    tag: '[verified]'
+    statement: >-
+      Liames LLC applied to rezone thirteen parcels of which five, carrying 10.45 of the 31.82
+      acres, stood in three other names in the county's parcel layer — a family partnership with
+      three of them, an apartment company, and an owner-occupier.
+    and_the_caveat: >-
+      AS OF ~2025-07-25, WHICH IS ELEVEN MONTHS BEFORE THE APPLICATION WAS DOCKETED. Applicant's
+      counsel told the trustees the parcels are "owned by Liames, LLC" and that the structures on
+      them "have been razed." Two readings survive and NEITHER is adopted: (a) the five
+      transferred after the CAMA snapshot, which is entirely ordinary and would make counsel's
+      statement correct; (b) the application ran over land Liames did not hold of record, which
+      R.C. 519.12 permits. This corpus previously carried the five as unnamed and the gap as "the
+      CAMA layer's ~2025-07 vintage, not a research gap"; that reading survives, and the five are
+      now named. The Wood County Recorder's chronological index closes it. [open]
+  name_collision_warning: >-
+    P&J THAYER FAMILY LTD and P&J THAYER FAMILY LIMITED PARTNERSHIP are served as two distinct
+    `Deeded_Name` strings for what is almost certainly one partnership; they are carried
+    separately because the layer serves them separately. Separately, #1436 flagged a LIMES family
+    (Dale Limes LLC, Limes Real Estate Holdings LLC) holding several hundred acres on Devils Hole
+    Road — one letter from LIAMES. Add to that list the Middleton Township FISCAL OFFICER, whose
+    name is Laurie L. Limes and who signs every set of minutes in this collection. Three
+    same-sounding names in one township record; no relationship among them is asserted, and the
+    reason to write this down is that a name-match search WILL conflate them.
+
+# ---------------------------------------------------------------------------------------------
+neighbours:
+  # Committed in data/reference/bowling-green/parcel-assemblage.geojson, not part of the assembly.
+  - parcel: '611190000006000'
+    deeded_name: A SCHALLER LIMITED PARTNERSHIP
+    acres: 64.55
+    last_conveyance: '1999-12-23'
+    role: rezoning_pending
+    note: >-
+      Under contract to Liames LLC for construction parking; 39.265 of the 64.55 acres before the
+      Wood County Planning Commission on 2026-07-07, township action pending. A holding unmoved
+      since 1999 selling into the construction phase.
+  - parcel: '611200000011000'
+    deeded_name: JJJ FAMILY PROPERTIES LLC
+    acres: 79.07
+    last_conveyance: '2008-12-22'
+    role: apollo_permit_situs
+    note: >-
+      The situs of record for the Apollo Power Generation Facility permits. Will-Power OH, LLC
+      owns NO land in Wood County (#1436) and Apollo's 146.84-acre project area reconciles to no
+      parcel group — the plant sits on land it does not own of record, which is itself [open].
+  - parcel: '511210000002003'
+    deeded_name: CLOP BOWLING GREEN OH LLC
+    acres: 11.8
+    last_conveyance: '2025-02-03'
+    consideration_usd: 1105000
+    role: oppidan_colo
+    note: >-
+      The Oppidan colocation site, 4.83 mi from the campus, in the City of Bowling Green. A
+      SEPARATE PROJECT — see the register's standing warning against conflating the two.
+
+limitations:
+  - >-
+    NO RECORDER INSTRUMENT WAS READ. Every row here is the auditor's transfer record, not a deed.
+    Grantors, recorder instrument numbers, deed book/page and the full chronological chain are
+    all [open]. The Wood County Recorder publishes an electronic index from 1980 (Fidlar AVA,
+    https://ohwood.fidlar.com/OHWood/AvaWeb/); it is an Angular single-page application that
+    serves no server-rendered search and exposes no discoverable API path, so it was NOT
+    retrievable by script. That is a per-source negative, not an absence — see
+    record-watch.yaml → WOOD-COUNTY-RECORDER.
+  - >-
+    THE CAMA KEEPS ONLY THE LAST CONVEYANCE PER PARCEL. Everything before it is gone from this
+    source by construction. The two consolidations erased eleven tracts' prices.
+  - >-
+    THE LAYER'S VINTAGE IS ~2025-07-25 and has not advanced in a year. Nothing here is a
+    statement about 2026.
+  - >-
+    LIAMES, LLC'S OWN REGISTRATION IS [open]. The Ohio Secretary of State business search returns
+    HTTP 403 to automated retrieval (re-probed 2026-08-05), so the entity's organizers, agent and
+    formation date are unread. The register's caution stands: a tax-billing address at 1 META WAY
+    is not ownership of the LLC, and the Meta attribution rests on Meta's own 2025-04-09
+    announcement and its 2026-01-07 letter to the trustees, not on a corporate filing.
+
+confidence: high

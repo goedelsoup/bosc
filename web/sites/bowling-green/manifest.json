@@ -1,10 +1,10 @@
 {
   "site": "bowling-green",
   "bundle_version": "1.0.0",
-  "contract_version": "1.52.0",
-  "generated_at": "2026-08-05T12:13:12+00:00",
-  "feed_count": 33,
-  "row_total": 521,
+  "contract_version": "1.53.0",
+  "generated_at": "2026-08-05T14:05:58+00:00",
+  "feed_count": 35,
+  "row_total": 602,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -12,7 +12,7 @@
       "facility": "seeded",
       "places": "live",
       "record": "live",
-      "story": "absent"
+      "story": "live"
     }
   },
   "facility": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 5
+      "count": 13
     },
     {
       "name": "timeline",
@@ -110,6 +110,14 @@
       "schema": "schemas/exhibits.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "leads",
+      "path": "feeds/leads.json",
+      "media_type": "application/json",
+      "schema": "schemas/leads.schema.json",
+      "kind": "collection",
+      "count": 18
     },
     {
       "name": "rsei",
@@ -229,7 +237,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 57
+      "count": 58
     },
     {
       "name": "geo/campus",
@@ -246,6 +254,14 @@
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
       "count": 148
+    },
+    {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 18
     },
     {
       "name": "impact-study",
@@ -269,7 +285,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 87
+      "count": 105
     },
     {
       "name": "corpus-nodes",
@@ -277,7 +293,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 87
+      "count": 105
     },
     {
       "name": "ask-embeddings",

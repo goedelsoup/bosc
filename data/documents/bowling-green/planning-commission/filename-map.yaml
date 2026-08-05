@@ -1,0 +1,105 @@
+# Capture / alias manifest — Wood County Planning Commission, issue #1438 (the record
+# domain), epic #1433 readiness(bowling-green).
+#
+# Two agendas. Under R.C. 519.12 a township rezoning runs through the county planning
+# commission BEFORE the township zoning commission and the trustees, so these are the
+# upstream half of the same instrument chain the Middleton Township minutes complete.
+#
+# Raw bytes are never edited. Neither URL carries a filename — the Agenda Center serves
+# every document from /AgendaCenter/ViewFile/Agenda/<id> — but both responses carry a
+# `Content-Disposition: inline; filename=...` header, and THAT is the served name, so it
+# is kept verbatim, spaces and all, rather than invented.
+#
+# evidence: native_text = the PDF text layer confirms the identity and date quoted below.
+meta:
+  subject: >-
+    The county's own statement of what Liames LLC applied for and what A. Schaller Limited
+    Partnership applied for — the thirteen parcels "totaling approximately 31.82 acres" for
+    "construction logistics," and the 39.265-acre parcel Liames is in contract to buy for
+    construction parking.
+  collection: bowling-green/planning-commission/
+  captured_by: issue #1438 (the record domain), epic #1433, readiness(bowling-green)
+  generated_at: '2026-08-05'
+  policy: >-
+    non-destructive — as-served bytes, and the as-served filename taken from the response's
+    Content-Disposition header because the URL path carries none. That is a documented
+    derivation of the served name, not a rename.
+  served_from: >-
+    https://woodcountyohio.gov/AgendaCenter (CivicEngage), category "Planning Commission".
+    Its full-text search is the route that found these: a query for "Liames" across all
+    categories returns exactly these two agendas and nothing else in the county's index.
+    Queries for "Meta", "moratorium", "tax increment", "Oppidan", "Abbott" and "Accordion"
+    return nothing at all across the same index, which is a statement about the INDEX and
+    not about the county's record — the commissioners' own minutes are demonstrably not
+    covered by it (see the sibling bowling-green/commissioners/filename-map.yaml).
+
+documents:
+  - filename: >-
+      June 2 2026 WOOD COUNTY PLANNING COMMISSION REGULARLY SCHEDULED MEETING AGENDA updated 5-26-2026 at 405pm.pdf
+    canonical: wood-county-planning-commission-agenda-2026-06-02-liames-thirteen-parcel-rezoning.pdf
+    title: >-
+      Wood County Planning Commission Agenda, June 2, 2026 (updated 5/26/2026 4:05 p.m.),
+      with the attached parcel map — item 6.b, the Liames LLC application to rezone thirteen
+      parcels in Section 19 of Middleton Township
+    issuer: Wood County Planning Commission
+    source_url: https://woodcountyohio.gov/AgendaCenter/ViewFile/Agenda/_06022026-557
+    served_by: Wood County, Ohio (CivicEngage Agenda Center)
+    sha256: 317b729870be34179cb60e8d860f213985a41c6c1fd694e2d16a52f40ca392cc
+    bytes: 18332068
+    content_type: application/pdf
+    pages: 3
+    fetched_at: '2026-08-05'
+    content_verified: '2026-06-02'   # p0 heading: "June 2, 2026 ... Tuesday, June 2, 2026 ... 5:30 pm"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      18 MB for three pages because pages 2-3 are the attached rasterized parcel map, "with
+      parcels to be rezoned outlined in red" — the county's own drawing of the thirteen, and
+      the reason these bytes are held rather than cited live. Item 6.b, verbatim: "Liames LLC
+      has submitted an application to rezone thirteen parcels totaling approximately 31.82
+      acres in Section 19 of Middleton Township from an R-4 Residential and A-1 Agricultural
+      zoning classification to an M-1 Industrial zoning classification. Applicant has stated
+      that the rezoning is for 'construction logistics.' All parcels are located north of
+      State Route 582."
+      TWO CORRECTIONS TO THIS REPO'S REGISTER FALL OUT OF THAT SENTENCE. The 31.82-acre figure
+      had been carried as press [reference]; it is the county's own, and it reconciles to the
+      hundredth against the sum of the thirteen parcels' deeded acreage in the auditor CAMA.
+      And the press split — "eight on the east side of SR-25 and five on the west side of
+      Mercer Rd" — is not what the county says: it says all thirteen are north of SR-582,
+      which is compatible but is the statement the instrument actually makes.
+      The agenda is the APPLICATION as docketed, not the vote; the 6-2 recommendation of
+      2026-06-02 is recorded in the township's 2026-07-07 minutes, and the Planning
+      Commission's own minutes for that meeting were not published at capture time.
+
+  - filename: Wood County Planning Commission Agenda 7-7-2026.pdf
+    canonical: wood-county-planning-commission-agenda-2026-07-07-schaller-rezoning.pdf
+    title: >-
+      Wood County Planning Commission Agenda, July 7, 2026 — item 4.b, the A. Schaller Limited
+      Partnership application to rezone a 39.265-acre parcel in Section 19 of Middleton Township
+    issuer: Wood County Planning Commission
+    source_url: https://woodcountyohio.gov/AgendaCenter/ViewFile/Agenda/_07072026-589
+    served_by: Wood County, Ohio (CivicEngage Agenda Center)
+    sha256: 36041179815fbbb1bfa4b1908d9fa1bb4a631efb6222485713e7c003ed610c6e
+    bytes: 144176
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-08-05'
+    content_verified: '2026-07-07'   # p0 heading: "July 7, 2026 ... Tuesday, July 7, 2026, at 5:30 p.m."
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Item 4.b, verbatim: "A. Schaller Limited Partnership has submitted an application to
+      rezone a 39.265 acre parcel of land in Section 19 of Middleton Township from an A-1
+      Agricultural zoning classification to an M-1 Industrial zoning classification. The
+      application states that the applicant is in contract with Liames LLC to sell the subject
+      parcel and that Liames LLC intends to use the parcel for construction parking. The parcel
+      is located north of State Route 582 on the east side of State Route 25."
+      This is the county's confirmation of the #1436 finding, from the docket rather than from
+      press: the applicant is the SELLER, the buyer is under contract and named, and the use is
+      construction parking. Note the county rezones a 39.265-acre PARCEL, while the auditor
+      CAMA carries the Schaller holding (611190000006000) at 64.55 deeded acres — the
+      application is over a part, and which part is [inference] in #1436, not [verified] here.
+      Township action was still pending at capture; the applicant's counsel told the trustees
+      on 2026-07-07 that "an additional parcel is currently being reviewed by the Wood County
+      Planning Commission for rezoning from A-1 to M-1 that is located at the northwest corner
+      of the complex," which is the same item seen from the other side of the same evening.

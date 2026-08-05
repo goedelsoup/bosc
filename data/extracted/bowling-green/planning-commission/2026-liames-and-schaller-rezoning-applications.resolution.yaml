@@ -1,0 +1,144 @@
+# Wood County Planning Commission — the two 2026 Middleton Township applications as the county
+# docketed them: Liames LLC's thirteen parcels (agenda 2026-06-02, item 6.b) and A. Schaller
+# Limited Partnership's 39.265 acres (agenda 2026-07-07, item 4.b). Issue #1438, epic #1433.
+#
+# Under R.C. 519.12 a township rezoning is referred to the county planning commission before the
+# township's own zoning commission and trustees act, so these are the upstream half of the
+# instrument chain the Middleton Township minutes complete. What the county's docket adds that
+# the township's minutes do not: the county's OWN statement of the acreage and of where the
+# parcels are, and — on the June agenda — a rasterized map with the thirteen outlined in red.
+#
+# Tags per CLAUDE.md: [verified] = printed on the county's own agenda; [reference] = press;
+# [inference] = reasoned, shown; [open] = not established.
+
+as_of: '2026-08-05'
+site: bowling-green
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1438'
+epic: 'watermark-directory/the-watermark-directory#1433'
+
+source:
+  instrument: county-planning-commission-agenda
+  file: >-
+    data/documents/bowling-green/planning-commission/June 2 2026 WOOD COUNTY PLANNING COMMISSION
+    REGULARLY SCHEDULED MEETING AGENDA updated 5-26-2026 at 405pm.pdf
+  sha256: 317b729870be34179cb60e8d860f213985a41c6c1fd694e2d16a52f40ca392cc
+  content_verified: text-layer
+  companion_files:
+    - path: data/documents/bowling-green/planning-commission/Wood County Planning Commission Agenda 7-7-2026.pdf
+      sha256: 36041179815fbbb1bfa4b1908d9fa1bb4a631efb6222485713e7c003ed610c6e
+pages_read: [0]
+
+resolution:
+  instrument: >-
+    Wood County Planning Commission — the Liames LLC thirteen-parcel and A. Schaller Limited
+    Partnership rezoning applications, Middleton Township Section 19, 2026
+  body: Wood County Planning Commission
+  body_kind: county_planning_commission
+  subject_matter: zoning
+  statute: R.C. 519.12                       # [inference] — the county-referral step
+  outcome: recommended
+
+  what_this_is_and_is_not: >-
+    AN AGENDA IS THE APPLICATION AS DOCKETED, NOT THE VOTE. The commission's own minutes for
+    2026-06-02 and 2026-07-07 were not published at capture time, so the tallies below come from
+    elsewhere and are graded accordingly. What the agenda itself [verified]s is the applicant,
+    the parcel count, the acreage, the from/to classifications, the stated purpose and the
+    location — every one of which the register previously carried from press.
+
+  matters:
+    - id: LIAMES-THIRTEEN
+      agenda_date: '2026-06-02'
+      agenda_item: 6.b
+      agenda_note: >-
+        The agenda was reissued — its own title line reads "AGENDA - UPDATED WITH ATTACHED MAP
+        (5/26/2026 4:05 P.M.)". The map is pages 1-2 of the PDF and is the county's own drawing
+        of the thirteen parcels "outlined in red"; it is why this three-page file is 18 MB.
+      applicant: Liames LLC
+      parcel_count: 13
+      acres_stated: 31.82
+      from_zoning: [R-4 Residential, A-1 Agricultural]
+      to_zoning: M-1 Industrial
+      location: Section 19, Middleton Township
+      stated_purpose: construction logistics
+      text_verbatim: >-
+        "Liames LLC has submitted an application to rezone thirteen parcels totaling
+        approximately 31.82 acres in Section 19 of Middleton Township from an R-4 Residential and
+        A-1 Agricultural zoning classification to an M-1 Industrial zoning classification.
+        Applicant has stated that the rezoning is for 'construction logistics.' All parcels are
+        located north of State Route 582. See attached map with parcels to be rezoned outlined in
+        red."
+      recommendation: approve
+      recommendation_tally: 6-2
+      recommendation_tally_tag: '[reference]'
+      recommendation_tally_note: >-
+        The 6-2 is press (BG Independent News / Sentinel-Tribune, via the register). The township
+        trustees' 2026-07-07 minutes [verified] only that the WCPC "voted on June 2, 2026, in
+        favor of the rezoning request", without a tally. The commission's own minutes would close
+        it and were not published at capture.
+      corrections:
+        - was: >-
+            "approximately 31.82 ac" carried as a press [reference] figure in
+            data/extracted/bowling-green/data-centers.md.
+          now: >-
+            [verified] — it is the county's own docketed figure, and it reconciles to the
+            hundredth against the sum of the thirteen parcels' deeded acreage in the Wood County
+            auditor CAMA (31.820). A press number became a measurement.
+        - was: >-
+            "eight on the east side of SR-25 and five on the west side of Mercer Rd" —
+            [reference] press, and flagged in the register as uncheckable because the record
+            named only eight of the thirteen.
+          now: >-
+            The county says "All parcels are located north of State Route 582." That is
+            compatible with the press split but it is not the same statement, and it is the one
+            the instrument makes. The east/west split remains [reference] and is now checkable
+            against the thirteen situs addresses recorded in the township rezoning extraction
+            (Dixie, Middleton and Mercer frontages) — a check this issue does not perform,
+            because it needs the parcel geometry, not the address strings. [open]
+
+    - id: SCHALLER-39AC
+      agenda_date: '2026-07-07'
+      agenda_item: 4.b
+      applicant: A. Schaller Limited Partnership
+      parcel_count: 1
+      acres_stated: 39.265
+      from_zoning: A-1 Agricultural
+      to_zoning: M-1 Industrial
+      location: Section 19, Middleton Township — north of SR-582, east side of SR-25
+      stated_purpose: construction parking
+      buyer_of_record: Liames LLC (in contract to purchase)
+      text_verbatim: >-
+        "A. Schaller Limited Partnership has submitted an application to rezone a 39.265 acre
+        parcel of land in Section 19 of Middleton Township from an A-1 Agricultural zoning
+        classification to an M-1 Industrial zoning classification. The application states that
+        the applicant is in contract with Liames LLC to sell the subject parcel and that Liames
+        LLC intends to use the parcel for construction parking. The parcel is located north of
+        State Route 582 on the east side of State Route 25."
+      recommendation: approve
+      recommendation_tally: 6-2
+      recommendation_tally_tag: '[reference]'
+      township_action: pending
+      township_action_note: >-
+        [verified] — at the trustees' hearing the same evening, applicant's counsel "informed the
+        Board that an additional parcel is currently being reviewed by the Wood County Planning
+        Commission for rezoning from A-1 to M-1 that is located at the northwest corner of the
+        complex." Two boards, two halves of one assembly, one evening. No township vote on the
+        Schaller parcel is in the corpus. [open]
+      acreage_vs_parcel:
+        tag: '[verified]'
+        note: >-
+          THE COUNTY REZONES A PART, NOT THE PARCEL. The auditor CAMA carries the Schaller
+          holding (611190000006000, J34-611-190000006000) at 64.55 DEEDED acres; the application
+          is over 39.265 of them. #1436 identified the part as the parcel's 39.621-acre eastern
+          portion — an [inference] there, and it stays [inference]; the agenda names no part.
+      seller_note: >-
+        This is the same A. Schaller Limited Partnership already carried in
+        data/reference/bowling-green/parcel-assemblage.geojson with parcel_role
+        `rezoning_pending`, whose last recorded conveyance is 1999-12-23. A family partnership
+        holding since the last century, selling into the campus's construction phase.
+
+  confidence: high
+  warnings:
+    - >-
+      Both 6-2 tallies are press, not instrument. The Wood County Planning Commission's own
+      minutes for 2026-06-02 and 2026-07-07 are the pull; see record-watch.yaml → WCPC-MINUTES.

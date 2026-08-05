@@ -1,0 +1,88 @@
+# Middleton Township Trustees, 2023-09-20 — resolution of support for the Liames LLC Community
+# Reinvestment Area application, eight days before the county acted on it. Issue #1438, epic #1433.
+#
+# THE EARLIEST PUBLIC STATEMENT OF THE PROJECT'S END USE AND SCALE that this corpus holds. On a
+# township agenda in September 2023, the county's economic-development director describes "a
+# $750M investment in the township for a data center by a Fortune 200 company" — nineteen months
+# before the 2025-04-09 Meta announcement. Tags per CLAUDE.md.
+
+as_of: '2026-08-05'
+site: bowling-green
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1438'
+epic: 'watermark-directory/the-watermark-directory#1433'
+
+source:
+  instrument: township-trustees-minutes
+  file: data/documents/bowling-green/middleton-township/09202023.pdf
+  sha256: 93a637d43ed3e0151c0775b9fd479461929cae9a5f919207f06bcfa6d3a3b464
+  content_verified: text-layer
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    Middleton Township Trustees — statement of support for the Liames LLC Community Reinvestment
+    Area application to the Wood County Commissioners, 2023-09-20
+  body: Board of Trustees, Middleton Township, Wood County, Ohio
+  body_kind: township_trustees
+  subject_matter: tax_incentive
+  meeting_date: '2023-09-20'
+  meeting_kind: regular
+  outcome: approved
+
+  vote:
+    motion_verbatim: >-
+      "to state their support of the Community Reinvestment Area Application as provided to the
+      Wood County Commissioners for a 75% tax abatement for 15 years, with the school districts
+      being awarded in full, as applied for by Liames LLC for a data center"
+    motion_moved_by: Michael Moulton
+    motion_seconded_by: Donald E. Cromley
+    roll_call_recorded: false
+    tally_verbatim: Motion approved.
+
+  disclosures:
+    - id: END-USE-DISCLOSED-2023
+      tag: '[verified]'
+      statement_verbatim: >-
+        "[The] Community Reinvestment Area (CRA) application that will be presented to the Wood
+        County Commissioners on September 28. The application provides a 75% tax abatement for 15
+        years and was applied for by Liames LLC for a Data Center on the rezoned properties within
+        the CRA boundaries. Mr. Gottschalk noted it is a $750M investment in the township for a
+        data center by a Fortune 200 company."
+      speaker: Wade Gottschalk, Wood County Economic Development executive director
+      note: >-
+        THREE THINGS ARE ESTABLISHED HERE THAT THE REGISTER PREVIOUSLY CARRIED AS PRESS. (1) The
+        end use — "a Data Center" — is stated on a township agenda on 2023-09-20. (2) The
+        $750M figure, which the register carries as a "[reference] pro-forma / DCD framing," is
+        the county's own economic-development director speaking at a public meeting; that it was
+        SAID is [verified], the figure itself remains a projection and stays [reference], but its
+        provenance is now a public body's minutes rather than trade press. (3) The properties
+        were ALREADY REZONED by 2023-09-20 — "on the rezoned properties within the CRA
+        boundaries" — which is the township's own confirmation that the seller-name rezonings of
+        March and May 2023 preceded the assembly's public phase.
+        Note also "Fortune 200 company": the county knew the counterparty's scale and did not
+        name it. Meta was Fortune 200 in 2023; so were roughly two hundred others, and no
+        identification is made from this line.
+    - id: SCHOOL-SEQUENCE
+      tag: '[verified]'
+      statement_verbatim: >-
+        "Eastwood School Board met with regard to the funding to the schools and approved their
+        support. Otsego School Board meets soon to review the data as well as Penta Vocational
+        Center."
+      note: >-
+        Establishes the order: Eastwood first, Otsego and Penta still to come, all three before
+        the county's 2023-09-28 vote. "Penta Vocational Center" here and "Penta Career Center" in
+        the county journal are the same body under two renderings; both are carried.
+    - id: SCHOOLS-MADE-WHOLE
+      tag: '[verified]'
+      statement: >-
+        The township's motion conditions its support on "the school districts being awarded in
+        full" — a schools-made-whole framing in the township's own words. What "in full" means in
+        the executed compensation agreements is [open].
+
+  confidence: high
+  warnings:
+    - >-
+      Every figure here is a statement made by a promoter at a public meeting. The minutes verify
+      that it was said. They do not verify the investment total, and no agreement in the corpus
+      states it.

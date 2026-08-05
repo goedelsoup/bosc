@@ -1,7 +1,7 @@
 {
   "site": "bryan",
   "catalog_version": "9681dd65e96cd89a98b8e7cca061afb88541bfdd9ec65abeba26ce97ba8a5e14",
-  "contract_version": "1.52.0",
+  "contract_version": "1.53.0",
   "atoms": [
     {
       "handle": "concept:bryan:7q10",
@@ -688,7 +688,7 @@
       "kind": "dataset",
       "site": "bryan",
       "local_id": "eia",
-      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "title": "Balancing-Authority Interchange Aggregates (EIA-930)",
       "feed": "catalog"
     },
     {
@@ -696,7 +696,7 @@
       "kind": "dataset",
       "site": "bryan",
       "local_id": "eia-consumer-energy",
-      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "title": "OH Consumer Energy-Cost Baseline (EIA API v2)",
       "feed": "catalog"
     },
     {
