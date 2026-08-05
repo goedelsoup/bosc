@@ -41,6 +41,12 @@ The air half of this instrument is **not** here — it mirrors its own source ag
 | [`findlay/megawatt-hub-interconnection.gap.yaml`](findlay/megawatt-hub-interconnection.gap.yaml) | The **+300 MW "standalone interconnection site"**: the claim's provenance (one sentence in a withdrawn Form S-1) and the per-source negative for its instrument, including the Hancock-Wood cooperative re-check. |
 | [`findlay/behind-the-meter-generation.yaml`](findlay/behind-the-meter-generation.yaml) | One Power's Hancock County behind-the-meter fleet — 15.0 MW of Wind for Industry at three manufacturers' plants, Whirlpool's Net Zero project, the hub's digital substation — against Schedule DCT's netting and interconnection-agreement obligations. |
 
+### `van-wert/` — Van Wert County transmission (issue #1408)
+
+| File | Subject |
+|---|---|
+| [`van-wert/van-wert-haviland-138kv.project.yaml`](van-wert/van-wert-haviland-138kv.project.yaml) | The **Van Wert–Haviland line**, OPSB **25-0697-EL-BLN** (filed 2025-08-25, approved 2025-11-21, unbuilt) read through **26-0729-EL-BLN**, the route-adjustment LON of 2026-07-27. A 10.9-mile 69 kV rebuild as double circuit *designed* at 138 kV and *initially operated at 69 kV*, $45,877,232 recovered through the FERC formula rate and allocated to the AEP Zone. Its Statement of Need names the **Van Wert Mega Site** and counts **30 requests for transmission service** there in the past year; its affected-properties table carries a transmission easement across committed campus parcel `17-034718.0000`. Names no data center, no QTS entity and no megawatt figure. |
+
 **Discipline notes.**
 
 - The PJM 2026 record establishes a `[verified]` region-wide authorization for
@@ -71,6 +77,20 @@ The air half of this instrument is **not** here — it mirrors its own source ag
   hidden. It also **corrects the case number** that issue #1437, this repo's site
   profile and OPSB's own press release all had wrong — the docket is `-EL-BLN`, the
   letter-of-notification track, not `-EL-BGN`.
+- The Van Wert record turns a **blocked route into a served one without pretending
+  they are the same thing.** `dis.puc.state.oh.us` refused automated retrieval for a
+  fourth time (244-byte "Request Rejected"), so the filings were taken from **the
+  applicant's own project site**, which publishes the complete Letter of
+  Notification and the statutory public notice. That is a primary instrument — the
+  filing itself, with its own cover date and case caption — but it is *the
+  applicant's copy*, and it cannot show what the Board did with it, who intervened,
+  or what Staff said. Case status stays behind the block and nothing is inferred
+  from it. The record also **keeps the two halves of the Mega Site finding
+  together**: AEP's own Statement of Need names the site (retiring a press-only
+  linkage), and the same 612 pages contain zero occurrences of "QTS" or "data
+  center" (so the campus load stays ungrounded and the facility domain stays
+  `seeded`). A transmission easement across a campus parcel is a **crossing**, not
+  an interconnection, and is recorded as such.
 - The Findlay set also **corrects issue #1464's own research notes** where the
   primary text does not support them — the `~$2.2M` is the line project alone
   (the station is $8.7M), the ten wind turbines sit behind Whirlpool's, Ball
