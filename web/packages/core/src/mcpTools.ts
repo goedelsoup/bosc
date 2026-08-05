@@ -322,7 +322,7 @@ const CITATION: JsonSchema = {
     section: str("Sub-page heading within the source, where one is recorded."),
     source_url: str("Absolute URL at which the cited source can be inspected."),
     quote: str(
-      "VERBATIM source text, truncated to a lead excerpt. Populated only by search_passages, whose text IS the document's own text layer; a search_corpus snippet is a window over the record's FLATTENED FIELDS and is deliberately never presented as a quote.",
+      "VERBATIM source text, truncated to a lead excerpt. Populated only by search_passages, whose text is the document's own text layer — check that hit's `method`, since a page whose text layer was broken carries an OCR read instead and one that could not be re-read at all must not be quoted. A search_corpus snippet is a window over the record's FLATTENED FIELDS and is deliberately never presented as a quote.",
     ),
     note: str(
       "Free-text provenance the source records instead of a path — a projected fact's ProvenancedValue citation. For most facts this is the ONLY provenance there is.",
@@ -383,11 +383,28 @@ const SEARCH_PASSAGES_HIT: JsonSchema = {
     title: str("Source document catalog name."),
     page: int("1-indexed printed page number."),
     section: nullable("string", "Sub-page heading, or null."),
-    text: str("The page's text-layer excerpt (verbatim; garbled OCR for scans)."),
+    text: str("The page's excerpt (verbatim; garbled OCR for scans)."),
+    method: {
+      type: "string",
+      enum: ["pdf_text", "ocr", "pdf_text_damaged"],
+      description:
+        "Which read produced `text`: `pdf_text` (the document's own text layer — the verbatim case), `ocr` (this platform's read of the rendered page, used where the text layer was broken), or `pdf_text_damaged` (broken and unrepairable — a locator only, do NOT quote it).",
+    },
     score: num("Hybrid (BM25 + vector RRF) relevance score."),
     citation: CITATION,
   },
-  required: ["id", "document_id", "collection", "title", "page", "section", "text", "score", "citation"],
+  required: [
+    "id",
+    "document_id",
+    "collection",
+    "title",
+    "page",
+    "section",
+    "text",
+    "method",
+    "score",
+    "citation",
+  ],
 };
 
 const TIMELINE_EVENT: JsonSchema = {
@@ -609,7 +626,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_passages",
     description:
-      "Page-level excerpt search over PUBLISHED source PDFs — returns the exact supporting page(s) with a citation, not a whole record. Use when you need the verbatim passage behind a claim (a permit condition, a board vote, a dollar figure) plus a page cite — especially for PDFs, where one relevant page shouldn't require pulling the full extracted document. This is the deeper peer of search_corpus: search_corpus finds WHICH item is relevant; search_passages finds WHICH PAGE says it. Ranking fuses semantic (vector) similarity with BM25, degrading to keyword-only when query embeddings are unavailable. Scoped to the public-publish allowlist, so it covers only documents whose bytes are publicly served — not the whole corpus. Narrow to specific documents with document_ids (the document_id / rel from search_corpus or get_documents). Returns page excerpts (id, document_id, page, section, title, text, score, citation). This is the one tool whose `citation.quote` is populated — the excerpt IS the document's own text layer, so it is genuinely verbatim (a bounded lead excerpt; the hit's `text` carries the full page). The text is the PDF text layer verbatim — for scanned pages that is garbled OCR, so treat it as a locator for the cited page, not a transcription; open the page itself with get_document. By default pages from a byte-identical duplicate document are collapsed to the canonical copy (deduplicate:\"none\" to disable); draft/final page variants are always kept distinct. Size knobs: max_results, max_tokens, max_tokens_per_result (trims the excerpt), cursor, intent.",
+      "Page-level excerpt search over PUBLISHED source PDFs — returns the exact supporting page(s) with a citation, not a whole record. Use when you need the verbatim passage behind a claim (a permit condition, a board vote, a dollar figure) plus a page cite — especially for PDFs, where one relevant page shouldn't require pulling the full extracted document. This is the deeper peer of search_corpus: search_corpus finds WHICH item is relevant; search_passages finds WHICH PAGE says it. Ranking fuses semantic (vector) similarity with BM25, degrading to keyword-only when query embeddings are unavailable. Scoped to the public-publish allowlist, so it covers only documents whose bytes are publicly served — not the whole corpus. Narrow to specific documents with document_ids (the document_id / rel from search_corpus or get_documents). Returns page excerpts (id, document_id, page, section, title, text, method, score, citation). This is the one tool whose `citation.quote` is populated — on a `method: \"pdf_text\"` hit the excerpt IS the document's own text layer, so it is genuinely verbatim (a bounded lead excerpt; the hit's `text` carries the full page). The text is the PDF text layer verbatim — for scanned pages that is garbled OCR, so treat it as a locator for the cited page, not a transcription; open the page itself with get_document. ALWAYS read `method` before quoting: a handful of pages come from source PDFs whose font mapping is broken, and those carry either an `ocr` read (this platform's, not the document's) or, where even that failed, a `pdf_text_damaged` partial that is a locator only and must never be quoted. By default pages from a byte-identical duplicate document are collapsed to the canonical copy (deduplicate:\"none\" to disable); draft/final page variants are always kept distinct. Size knobs: max_results, max_tokens, max_tokens_per_result (trims the excerpt), cursor, intent.",
     inputSchema: {
       type: "object",
       properties: {

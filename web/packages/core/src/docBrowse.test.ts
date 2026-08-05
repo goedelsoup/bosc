@@ -97,7 +97,7 @@ describe("summarizeCollections — against the committed Lima corpus", () => {
 
   it("summarizes all 21 collections", () => {
     expect(summaries).toHaveLength(21);
-    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3247);
+    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3250);
   });
 
   it("finds the one production that is half the catalog", () => {

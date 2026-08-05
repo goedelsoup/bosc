@@ -2,9 +2,15 @@
 
 The builder tests are pure (no corpus load) — they pin the publish-allowlist scope (only
 ``published`` PDFs are indexed, so no non-published source text ever ships), the page-cite grammar
-(``{document_id}#p{page}``, 1-indexed), the image-only-page skip, and graceful degradation when a
-source PDF can't be opened. One integration test exports a real Lima bundle and asserts both the
-``passages`` and ``passage-embeddings`` feeds emit against their schemas at the right contract.
+(``{document_id}#p{page}``, 1-indexed), the image-only-page skip, graceful degradation when a
+source PDF can't be opened, and the broken-``ToUnicode`` OCR fallback (#1966). One integration test
+exports a real Lima bundle and asserts both the ``passages`` and ``passage-embeddings`` feeds emit
+against their schemas at the right contract.
+
+The OCR fallback is exercised through the injected :data:`~watermark.site.passages.OcrPage` seam, so
+the suite never shells out to tesseract (same discipline as ``test_civic_indexer``); the fixture PDF
+it runs against is generated, not committed — a hand-assembled page whose ``ToUnicode`` CMap is
+shifted down by ``0x1D``, which reproduces the real permits' damage byte-for-byte.
 """
 
 from __future__ import annotations
@@ -14,18 +20,26 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from watermark.civic.indexer import OcrUnavailableError
 from watermark.config import Settings
 from watermark.site.feeds import PassageItem
 from watermark.site.passages import (
     _published_pdf_entries,
+    artifact_path,
     build_passages,
+    has_broken_text_layer,
     load_committed_passages,
     write_committed_passages,
 )
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.53.0"
+_CV = "1.54.0"
+
+# The exact bytes `July 1, 2026` decodes to through a ToUnicode CMap shifted down by 0x1D — the
+# start date of van-wert's final effluent limitations as pypdf reads it out of
+# `data/documents/oepa/van-wert/2PD00006.f8aaad0a.pdf` (#1966).
+_BROKEN_JULY = "-XO\\\x03\x14\x0f\x03\x15\x13\x15\x19"
 
 
 def _doc(
@@ -43,8 +57,30 @@ def _collection(entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [{"slug": "c", "title": "C", "entries": entries}]
 
 
-def _write_text_pdf(path: Path, pages: list[str]) -> None:
-    """Hand-assemble a minimal multi-page PDF whose pages carry a real text layer."""
+def _broken_tounicode(pages: list[str], shift: int) -> bytes:
+    """A ``ToUnicode`` CMap that maps every code used to ``code - shift`` — the real defect (#1966).
+
+    A subset font whose CMap maps character codes to raw *glyph indices* is exactly this: an offset
+    table. Codes that land below 0x20 decode to C0 control bytes (the detectable half of the damage)
+    and the rest decode to other printable characters (the silent half).
+    """
+    codes = sorted({ord(c) for text in pages for c in text})
+    entries = "".join(f"<{c:02X}> <{c - shift:04X}>\n" for c in codes)
+    return (
+        "/CIDInit /ProcSet findresource begin\n12 dict begin\nbegincmap\n"
+        "/CMapName /Shifted def\n/CMapType 2 def\n"
+        "1 begincodespacerange\n<00> <FF>\nendcodespacerange\n"
+        f"{len(codes)} beginbfchar\n{entries}endbfchar\n"
+        "endcmap\nCMapName currentdict /CMap defineresource pop\nend\nend"
+    ).encode()
+
+
+def _write_text_pdf(path: Path, pages: list[str], *, unicode_shift: int | None = None) -> None:
+    """Hand-assemble a minimal multi-page PDF whose pages carry a real text layer.
+
+    ``unicode_shift`` attaches a deliberately broken ``ToUnicode`` CMap (see
+    :func:`_broken_tounicode`), so the text layer decodes shifted down by that many code points.
+    """
     objs: list[bytes] = []
 
     def obj(body: bytes) -> int:
@@ -52,7 +88,14 @@ def _write_text_pdf(path: Path, pages: list[str]) -> None:
         return len(objs)
 
     page_ids: list[int] = []
-    font_id = obj(b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>")
+    if unicode_shift is None:
+        font_id = obj(b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>")
+    else:
+        cmap = _broken_tounicode(pages, unicode_shift)
+        cmap_id = obj(b"<< /Length %d >>\nstream\n%b\nendstream" % (len(cmap), cmap))
+        font_id = obj(
+            b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /ToUnicode %d 0 R >>" % cmap_id
+        )
     # Reserve the Pages node id (filled after pages exist).
     pages_id = obj(b"")
     for text in pages:
@@ -164,6 +207,138 @@ def test_published_pdf_entries_filters_correctly() -> None:
     assert _published_pdf_entries(feed) == [("a.pdf", "A")]
 
 
+# --- the broken-ToUnicode OCR fallback (#1966) ---------------------------------------------
+def _broken_doc(tmp_path: Path) -> tuple[Path, list[dict[str, Any]]]:
+    """A published PDF whose page 1 has a shifted CMap and whose page 2 is clean."""
+    docs = tmp_path / "documents"
+    _write_text_pdf(docs / "oepa/shifted.pdf", ["July 1, 2026"], unicode_shift=0x1D)
+    _write_text_pdf(docs / "oepa/clean.pdf", ["July 1, 2026"])
+    return docs, _collection(
+        [_doc("oepa/shifted.pdf", published=True), _doc("oepa/clean.pdf", published=True)]
+    )
+
+
+def test_shifted_cmap_reproduces_the_real_damage(tmp_path: Path) -> None:
+    """The fixture is a regression fixture only if it decodes to what the real permits decode to:
+    `July 1, 2026` → `-XO\\` plus C0 control bytes, every code shifted down by 0x1D. The detector
+    fires on it and not on the same string read through an intact font."""
+    import pypdf
+
+    docs, _ = _broken_doc(tmp_path)
+    broken = pypdf.PdfReader(str(docs / "oepa/shifted.pdf"), strict=False).pages[0].extract_text()
+    clean = pypdf.PdfReader(str(docs / "oepa/clean.pdf"), strict=False).pages[0].extract_text()
+    assert _BROKEN_JULY in broken
+    assert has_broken_text_layer(broken)
+    assert "July 1, 2026" in clean
+    assert not has_broken_text_layer(clean)
+
+
+def test_broken_page_falls_back_to_ocr(tmp_path: Path) -> None:
+    """A page whose text layer trips the detector is re-read WHOLE by OCR and says so; a clean page
+    in the same run keeps its text layer untouched."""
+    docs, feed = _broken_doc(tmp_path)
+    calls: list[tuple[str, int]] = []
+
+    def fake_ocr(path: Path, index: int) -> str:
+        calls.append((path.name, index))
+        return "During the period beginning July 1, 2026,\x0c"  # tesseract ends a page with \x0c
+
+    passages = build_passages(feed, docs, ocr_page=fake_ocr)
+    by_doc = {p.document_id: p for p in passages}
+    assert calls == [("shifted.pdf", 0)], "only the damaged page is re-read"
+    repaired = by_doc["oepa/shifted.pdf"]
+    assert repaired.method == "ocr"
+    assert "July 1, 2026" in repaired.text
+    # The whole page is replaced — no shifted remnant survives, and the form feed tesseract appends
+    # is stripped so the OCR read can't trip the detector it was called in to clear.
+    assert "-XO\\" not in repaired.text
+    assert not has_broken_text_layer(repaired.text)
+    assert by_doc["oepa/clean.pdf"].method == "pdf_text"
+
+
+def test_ocr_unavailable_degrades_to_the_readable_remainder(tmp_path: Path) -> None:
+    """No tesseract → the page is kept, not dropped, but says its read is damaged and ships the
+    readable remainder with the undecodable bytes gone. The binary is probed once per run, not once
+    per damaged page."""
+    docs = tmp_path / "documents"
+    _write_text_pdf(docs / "oepa/shifted.pdf", ["July 1, 2026", "July 2, 2026"], unicode_shift=0x1D)
+    feed = _collection([_doc("oepa/shifted.pdf", published=True)])
+    calls = 0
+
+    def unavailable(path: Path, index: int) -> str:
+        nonlocal calls
+        calls += 1
+        raise OcrUnavailableError("the tesseract binary is not on PATH")
+
+    passages = build_passages(feed, docs, ocr_page=unavailable)  # must not raise
+    assert calls == 1
+    assert [p.page for p in passages] == [1, 2]
+    assert {p.method for p in passages} == {"pdf_text_damaged"}
+    assert not any(has_broken_text_layer(p.text) for p in passages)
+    assert "-XO\\" in passages[0].text  # the silently-shifted half survives; hence the marker
+
+
+def test_unrenderable_page_is_kept_as_a_damaged_locator(tmp_path: Path) -> None:
+    """A page OCR can't read — wilmington's `1MP00060.pdf` p. 127 renders blank — is not dropped: a
+    partial locator beats a hole in the index, and `pdf_text_damaged` is what says not to quote
+    it."""
+    docs, feed = _broken_doc(tmp_path)
+
+    def blank(path: Path, index: int) -> str:
+        return "   "
+
+    passages = build_passages(feed, docs, ocr_page=blank)
+    shifted = next(p for p in passages if p.document_id == "oepa/shifted.pdf")
+    assert shifted.method == "pdf_text_damaged"
+    assert not has_broken_text_layer(shifted.text)
+
+
+def test_ocr_fallback_can_be_disabled(tmp_path: Path) -> None:
+    """`ocr_page=None` is the text-layer-only read — still scrubbed and still flagged, because the
+    page is damaged whether or not anyone tried to repair it."""
+    docs, feed = _broken_doc(tmp_path)
+    passages = build_passages(feed, docs, ocr_page=None)
+    by_doc = {p.document_id: p for p in passages}
+    assert by_doc["oepa/shifted.pdf"].method == "pdf_text_damaged"
+    assert by_doc["oepa/clean.pdf"].method == "pdf_text"
+
+
+# --- the committed artifact's standing guarantees (#1966) -----------------------------------
+def _committed() -> list[PassageItem]:
+    settings = Settings(data_dir=REPO_ROOT / "data")
+    passages = load_committed_passages(settings)
+    assert passages, f"committed artifact missing: {artifact_path(settings)}"
+    return passages
+
+
+def test_committed_artifact_ships_no_control_bytes() -> None:
+    """The emit invariant, checked on the real artifact: `data/site/passages.ndjson` is what every
+    bundle's `passages` feed is filtered from, so a control byte here reaches the public feed."""
+    broken = [p.id for p in _committed() if has_broken_text_layer(p.text)]
+    assert not broken, f"{len(broken)} passage(s) carry control bytes, e.g. {broken[:3]}"
+
+
+def test_committed_artifact_reads_the_van_wert_effluent_dates() -> None:
+    """The reported defect itself (#1966). Part I.A of van-wert's `*WD` modification opens with the
+    date its final effluent limitations begin; through the permit's broken CMap that date extracted
+    as `-XO\\` plus control bytes, which is unfindable by anyone searching for it."""
+    page3 = next(p for p in _committed() if p.id == "oepa/van-wert/2PD00006.f8aaad0a.pdf#p3")
+    assert page3.method == "ocr"
+    assert "July 1, 2026" in page3.text
+    assert _BROKEN_JULY not in page3.text
+
+
+def test_committed_artifact_repairs_all_but_the_unrenderable_page() -> None:
+    """A regen without tesseract turns every repaired page back into a damaged one — which is a
+    silent revert of this fix, so it is pinned. The one exception is wilmington `1MP00060.pdf`
+    p. 127, which pdfium renders as a blank raster: there is nothing for OCR to read."""
+    by_method: dict[str, list[str]] = {}
+    for p in _committed():
+        by_method.setdefault(p.method, []).append(p.id)
+    assert len(by_method.get("ocr", [])) >= 49
+    assert by_method.get("pdf_text_damaged", []) == ["oepa/wilmington/1MP00060.pdf#p127"]
+
+
 # --- the committed artifact ----------------------------------------------------------------
 def test_committed_passages_round_trip(tmp_path: Path) -> None:
     """`write_committed_passages` → `load_committed_passages` preserves the rows; a missing artifact
@@ -182,8 +357,34 @@ def test_committed_passages_round_trip(tmp_path: Path) -> None:
         )
     ]
     write_committed_passages(items, settings)
-    assert (tmp_path / "site" / "passages.ndjson").is_file()
+    artifact = tmp_path / "site" / "passages.ndjson"
+    assert artifact.is_file()
     assert load_committed_passages(settings) == items
+    assert json.loads(artifact.read_text(encoding="utf-8"))["method"] == "pdf_text"
+
+
+def test_pre_1_54_artifact_still_loads(tmp_path: Path) -> None:
+    """`method` is defaulted, not required, so a passages.ndjson written before contract 1.54.0
+    (no `method` key) still reads — the export degrades to "text layer" rather than failing."""
+    settings = Settings(data_dir=tmp_path)
+    artifact = artifact_path(settings)
+    artifact.parent.mkdir(parents=True, exist_ok=True)
+    artifact.write_text(
+        json.dumps(
+            {
+                "id": "oepa/p.pdf#p1",
+                "document_id": "oepa/p.pdf",
+                "collection": "oepa",
+                "title": "p.pdf",
+                "page": 1,
+                "section": None,
+                "text": "effluent limit",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    assert [p.method for p in load_committed_passages(settings)] == ["pdf_text"]
 
 
 # --- integration: the real Lima export -----------------------------------------------------

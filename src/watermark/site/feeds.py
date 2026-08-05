@@ -586,7 +586,23 @@ from watermark.sites import (
 #   which nothing in the corpus previously used. Enum growth is additive for feed READERS (a
 #   pre-1.53 records.json stays valid) but a pre-1.53 records.schema.json rejects the new group
 #   value — MINOR, back-compatible for data, schema refresh required.
-CONTRACT_VERSION = "1.53.0"
+# 1.54.0: a `passages` row says which read produced its text (#1966). One additive field on
+#   `PassageItem`:
+#   * `method` (`PassageMethod`, `pdf_text` | `ocr` | `pdf_text_damaged`, default `pdf_text`) — the
+#     embedded text layer, OCR of the rendered page, or a text layer that was broken and could not
+#     be re-read. It exists because the text layer is not always merely noisy: two OEPA permits
+#     embed subset fonts whose `ToUnicode` CMap maps character codes to raw GLYPH INDICES, and
+#     pypdf decodes those runs faithfully into nonsense — `July 1, 2026`, the start date of
+#     van-wert's final effluent limitations, extracted as `-XO\` followed by C0 control bytes,
+#     every code shifted down by 0x1D. Those control bytes are only the detectable half: codes
+#     landing on a printable character shift silently onto other printable characters, so such a
+#     page is re-read WHOLE by OCR rather than patched. 50 rows across two documents change read
+#     (49 to `ocr`; wilmington's `1MP00060.pdf` p. 127 renders blank, so it degrades to
+#     `pdf_text_damaged`); `method` is what lets a consumer see that they did. `text` also gains an
+#     invariant that holds for every row and every method: no C0 control byte ever ships.
+#   Existing rows gain a key (defaulted, so a pre-1.54 artifact still loads); a pre-1.54
+#   passages.schema.json rejects it — MINOR, back-compatible for data, schema refresh required.
+CONTRACT_VERSION = "1.54.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -1585,6 +1601,16 @@ class AskEmbeddingEntry(BaseModel):
 
 
 # --- passages feed (issue #1589, epic #1579 Phase 3) --------------------------
+PassageMethod = Literal["pdf_text", "ocr", "pdf_text_damaged"]
+"""Which read produced a :class:`PassageItem`'s text (#1966).
+
+``pdf_text`` — the embedded text layer. ``ocr`` — this platform's read of the rendered page, used
+where that text layer was broken. ``pdf_text_damaged`` — the text layer was broken *and* OCR could
+not replace it (a page pdfium renders blank), so what survives is the readable remainder with the
+undecodable bytes dropped: searchable as a locator, never quotable, and a standing lead for a
+better copy of that source."""
+
+
 class PassageItem(BaseModel):
     """One page-level passage from a *published* source PDF — a page-cited excerpt (#1589).
 
@@ -1594,9 +1620,16 @@ class PassageItem(BaseModel):
 
     ``document_id`` is the source document's ``DocumentItem.rel`` (path relative to
     ``data/documents``) — the join key to the ``documents`` feed and ``get_document``. ``text`` is
-    the pypdf text-layer extraction verbatim; for a scanned document it is garbled OCR (per the root
-    CLAUDE.md, never trust its digits), so treat it as a **locator** for the cited page, not a
-    transcription. Image-only pages (no text layer) carry no excerpt and are omitted from the feed.
+    normally the pypdf text-layer extraction verbatim; for a scanned document it is garbled OCR (per
+    the root CLAUDE.md, never trust its digits), so treat it as a **locator** for the cited page, not
+    a transcription. Image-only pages (no text layer) carry no excerpt and are omitted from the feed.
+
+    ``method`` says which read produced ``text`` (#1966). It is ``ocr`` for a page whose *text layer*
+    was unusable — a source PDF with a broken ``ToUnicode`` CMap decodes to raw glyph indices, so the
+    whole page is re-read from the rendered image instead — and ``pdf_text_damaged`` where that
+    re-read was impossible too. A consumer that cares about the distinction (an exact-string cite,
+    say) can tell the reads apart without guessing. ``text`` never carries a C0 control byte
+    whatever the method: an undecodable byte is dropped rather than shipped.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -1609,7 +1642,10 @@ class PassageItem(BaseModel):
     # Sub-page heading when known; page chunks carry none today. Required-but-nullable (the builder
     # always emits it, `null` for unknown) so the feed contract matches the web `PassageRow` shape.
     section: str | None
-    text: str  # the page's text-layer extraction (capped), verbatim
+    text: str  # the page's extracted text (capped), verbatim
+    # How `text` was read. Defaulted (not required) so a pre-1.54 committed passages.ndjson still
+    # loads; the builder always sets it explicitly, so the emitted feed always carries the key.
+    method: PassageMethod = "pdf_text"
 
 
 class PassageEmbeddingEntry(BaseModel):

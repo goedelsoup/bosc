@@ -1,7 +1,7 @@
 {
   "site": "wpafb",
   "catalog_version": "ec1bddef465bb0e549a6e0e752da3ab441b20ec51e49851b52800d09c562c0c0",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:wpafb:7q10",
@@ -896,7 +896,7 @@
       "kind": "dataset",
       "site": "wpafb",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

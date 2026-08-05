@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "35b5cdbfec2eb29879c6454b915239e67f04796b3894a569bbe46d5c8e4dcbab",
-      "size_bytes": 304873,
+      "sha256": "d9517f6572a6bafd9f99dc93c53cebc0d853d9700cc31383ed37364530c5c821",
+      "size_bytes": 335938,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -1928,7 +1928,7 @@
   },
   {
     "id": "odd-tca-minutes",
-    "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+    "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
     "scope": "reference",
     "collection": "odd",
     "status": "reviewed",
@@ -1942,7 +1942,7 @@
     "site_scope": "state:OH",
     "cadence": "on-demand",
     "ttl_days": null,
-    "last_refreshed": "2026-06-29",
+    "last_refreshed": "2026-08-05",
     "tags": [
       "odd",
       "tca",
@@ -1973,14 +1973,24 @@
         "relpath": "documents/odd/tca/Meeting_Minutes_TCA_3.30.2026.pdf",
         "media_type": "application/pdf",
         "lfs": true
+      },
+      {
+        "relpath": "documents/odd/tca/TCA_Meeting_Minutes_6.1.2026.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/odd/tca/Meeting_Minutes_TCA_6.29.2026.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "648ed41712af089ef2eab13fad98ee7ac109eccc7b39887a2249de2948d85b42",
-      "size_bytes": 790174,
+      "sha256": "b0a63ca19ddcb264175bbbd47438a7e77012316a0fe4c1700a0e45a2b6f1725d",
+      "size_bytes": 1188175,
       "lfs_materialized": true,
-      "file_count": 4,
+      "file_count": 6,
       "stale": false,
       "asof": null
     },

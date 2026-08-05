@@ -1,6 +1,6 @@
 {
   "additionalProperties": false,
-  "description": "One page-level passage from a *published* source PDF — a page-cited excerpt (#1589).\n\nThe unit the ``search_passages`` MCP tool returns instead of a whole extracted record: one\nrelevant permit page shouldn't require pulling the full extraction. Scoped to the default-deny\npublic-publish allowlist (#280) so no non-published source text ever ships in the bundle.\n\n``document_id`` is the source document's ``DocumentItem.rel`` (path relative to\n``data/documents``) — the join key to the ``documents`` feed and ``get_document``. ``text`` is\nthe pypdf text-layer extraction verbatim; for a scanned document it is garbled OCR (per the root\nCLAUDE.md, never trust its digits), so treat it as a **locator** for the cited page, not a\ntranscription. Image-only pages (no text layer) carry no excerpt and are omitted from the feed.",
+  "description": "One page-level passage from a *published* source PDF — a page-cited excerpt (#1589).\n\nThe unit the ``search_passages`` MCP tool returns instead of a whole extracted record: one\nrelevant permit page shouldn't require pulling the full extraction. Scoped to the default-deny\npublic-publish allowlist (#280) so no non-published source text ever ships in the bundle.\n\n``document_id`` is the source document's ``DocumentItem.rel`` (path relative to\n``data/documents``) — the join key to the ``documents`` feed and ``get_document``. ``text`` is\nnormally the pypdf text-layer extraction verbatim; for a scanned document it is garbled OCR (per\nthe root CLAUDE.md, never trust its digits), so treat it as a **locator** for the cited page, not\na transcription. Image-only pages (no text layer) carry no excerpt and are omitted from the feed.\n\n``method`` says which read produced ``text`` (#1966). It is ``ocr`` for a page whose *text layer*\nwas unusable — a source PDF with a broken ``ToUnicode`` CMap decodes to raw glyph indices, so the\nwhole page is re-read from the rendered image instead — and ``pdf_text_damaged`` where that\nre-read was impossible too. A consumer that cares about the distinction (an exact-string cite,\nsay) can tell the reads apart without guessing. ``text`` never carries a C0 control byte\nwhatever the method: an undecodable byte is dropped rather than shipped.",
   "properties": {
     "id": {
       "title": "Id",
@@ -35,6 +35,16 @@
     },
     "text": {
       "title": "Text",
+      "type": "string"
+    },
+    "method": {
+      "default": "pdf_text",
+      "enum": [
+        "pdf_text",
+        "ocr",
+        "pdf_text_damaged"
+      ],
+      "title": "Method",
       "type": "string"
     }
   },

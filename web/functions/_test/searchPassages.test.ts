@@ -397,3 +397,34 @@ describe("handleSearchPassages structured citations (#1584)", () => {
     expect((hit?.citation as Record<string, unknown>).page).toBe(12);
   });
 });
+
+describe("handleSearchPassages extraction method (#1966)", () => {
+  // A page whose source PDF has a broken ToUnicode CMap is re-read by OCR at extract time, so its
+  // `quote` is this platform's read of the rendered page rather than the document's own text
+  // layer. `method` is what lets a consumer of the quote tell the two apart.
+  const OCR_ROW: PassageRow = {
+    id: "oepa/van-wert/2PD00006.pdf#p3",
+    document_id: "oepa/van-wert/2PD00006.pdf",
+    collection: "oepa",
+    title: "2PD00006.pdf",
+    page: 3,
+    section: null,
+    text: "During the period beginning July 1, 2026, phosphorus monitoring is required.",
+    method: "ocr",
+  };
+  const route = (rows: PassageRow[]): FetchRoute => ({
+    test: (url) => url.pathname === "/feeds/passages.json",
+    respond: () => jsonResponse(200, rows),
+  });
+
+  it("carries the row's method onto the hit", async () => {
+    const { results } = await envelope({ query: "phosphorus" }, {}, [route([OCR_ROW, ...PASSAGES])]);
+    const hit = results.find((r) => r.id === OCR_ROW.id);
+    expect(hit?.method).toBe("ocr");
+  });
+
+  it("reads a pre-1.54.0 bundle's method-less row as the text layer", async () => {
+    const { results } = await envelope({ query: "phosphorus" });
+    expect(results.every((r) => r.method === "pdf_text")).toBe(true);
+  });
+});

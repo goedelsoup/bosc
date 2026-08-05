@@ -1,7 +1,7 @@
 {
   "site": "portsmouth",
   "catalog_version": "e49e6253cc40dfbae5a7daedb15a989cc097f6bbd8c9ac7bda158435bafe9bef",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:portsmouth:7q10",
@@ -880,7 +880,7 @@
       "kind": "dataset",
       "site": "portsmouth",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

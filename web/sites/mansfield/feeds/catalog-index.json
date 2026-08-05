@@ -1,7 +1,7 @@
 {
   "site": "mansfield",
   "catalog_version": "d57f541cce3eebaae340a9960f6431ffead0667c2f45535a438edfc22237388b",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:mansfield:7q10",
@@ -888,7 +888,7 @@
       "kind": "dataset",
       "site": "mansfield",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

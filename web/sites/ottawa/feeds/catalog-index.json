@@ -1,7 +1,7 @@
 {
   "site": "ottawa",
   "catalog_version": "61f80e0f49a34b20b44a848e04c118b6946466a65b56640ca1d1a929bae6d3bb",
-  "contract_version": "1.53.0",
+  "contract_version": "1.54.0",
   "atoms": [
     {
       "handle": "concept:ottawa:7q10",
@@ -912,7 +912,7 @@
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "odd-tca-minutes",
-      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Jun 2026)",
       "feed": "catalog"
     },
     {

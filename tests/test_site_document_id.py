@@ -75,7 +75,10 @@ def test_ambiguous_glyphs_never_appear() -> None:
 
 def test_no_collision_across_the_committed_corpus() -> None:
     rels = _lima_rels()
-    assert len(rels) == 3247, "a corpus change belongs in review, not a silent collision"
+    # 3247 → 3250 (#1966): refreshing the lagging committed Lima bundle surfaced three `odd/`
+    # documents it predated — the DeWine tax-exemption-pause release and two Ohio Tax Credit
+    # Authority minutes. Reviewed: all 3250 handles are distinct.
+    assert len(rels) == 3250, "a corpus change belongs in review, not a silent collision"
     assert len({document_id(rel) for rel in rels}) == len(rels)
 
 

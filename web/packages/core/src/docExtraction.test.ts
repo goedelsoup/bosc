@@ -140,9 +140,9 @@ describe("the join, against the committed Lima bundle", () => {
     expect(dangling).toEqual([]);
   });
 
-  it("extracts 52 of 3,247 documents — 1.6% of the corpus", () => {
+  it("extracts 52 of 3,250 documents — 1.6% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
-    expect(entries.length).toBe(3247);
+    expect(entries.length).toBe(3250);
     expect(countExtracted(entries, index)).toBe(52);
   });
 
