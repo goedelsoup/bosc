@@ -174,8 +174,8 @@ operating:
       longitude: -83.57152
   totals:
     tag: '[inference]'
-    county_operating_nameplate_mw: 916.6
-    arithmetic: 32 + 33 + 16.5 + (198.9 x 4 = 795.6) + 20 + 12 + 3.1 + 1.4 + 1.0 = 916.6
+    county_operating_nameplate_mw: 914.6
+    arithmetic: 32 + 33 + 16.5 + (198.9 x 4 = 795.6) + 20 + 12 + 3.1 + 1.4 + 1.0 = 914.6
     amp_owned_in_city_mw: 81.5
     amp_owned_in_city_arithmetic: 32 (Bowling Green Peaking) + 33 (CT1) + 16.5 (CT2) = 81.5 MW of AMP combustion turbines
     caution: >-
@@ -306,6 +306,19 @@ the_absence_of_apollo:
     Massachusetts solar array. This is a 350 MW net / 491 MW gross gas plant with an OPSB
     certificate (25-0973-EL-BLN, approved 2026-02-03), a final Ohio EPA permit to install
     (P0139272, issued 2026-06-02) and an in-service schedule its applicant put at mid-2027.
+  what_is_sourced_where: >-
+    EIA-860M IS CITED ONLY FOR THE ABSENCE. Every affirmative fact about Apollo in this
+    block is [verified] elsewhere in this corpus and is cross-referenced rather than
+    re-derived — none of it rests on the federal inventory, which by hypothesis does not
+    carry the plant at all. Capacity (350 MW net certified / 491 MW gross at design
+    conditions), the certificate and its approval date, Conditions 14/15/16, and the
+    applicant's in-service schedule are transcribed with page cites at
+    data/extracted/grid/bowling-green/apollo-power-generation-facility.yaml (#1437) from the
+    OPSB Staff Report of Investigation committed at
+    data/documents/grid/bowling-green/power-siting-board-ohio-020326.pdf. The final permit
+    to install P0139272 (issued 2026-06-02) is transcribed at
+    data/extracted/oepa/bowling-green/P0139272.pti.yaml from the Ohio EPA DAPC chain
+    committed under data/documents/oepa/bowling-green/air/.
   two_readings_and_neither_is_asserted:
     - id: OUT-OF-SCOPE
       reading: >-
@@ -315,6 +328,19 @@ the_absence_of_apollo:
         Part IV or Part VI, and Condition 16 requires a PJM new service request plus
         supplemental Board approval before any export. A plant built to serve exactly one
         customer behind the fence may simply not be a reporting entity.
+      certificate_conditions_source: >-
+        Conditions 15 and 16 quoted verbatim at
+        data/extracted/grid/bowling-green/apollo-power-generation-facility.yaml/grid_posture
+        (#1437), from the committed OPSB Staff Report. [verified]
+      the_part_that_is_open:
+        tag: '[open]'
+        statement: >-
+          EIA's own scope rule is asserted from the form's general description, NOT from a
+          captured EIA instruction document. Form EIA-860's filing instructions and its
+          definition of a reportable plant were not retrieved in this pass, so whether a
+          purely behind-the-meter generator is in or out of scope is NOT established — only
+          that it is plausible on the face of the certificate's prohibition. Retrieve the
+          EIA-860 instructions before this reading is treated as anything but a hypothesis.
     - id: REPORTING-LAG
       reading: >-
         EIA-860M is a preliminary monthly inventory that picks projects up as respondents

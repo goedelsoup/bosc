@@ -211,13 +211,24 @@ points, so this file is not the place they get re-derived:
   controversy. The sheet that reaches a *behind-the-meter* campus is **Electric Service Regulations
   §II.G**, already in force, which counts a 500 kW capacity change **"including the effects of the
   addition of onsite generation."** `[verified]`
-- **The muni island, corrected against EIA-860M (June 2026):** the four **1.8 MW** wind turbines
-  (7.2 MW, Ohio's first commercial wind farm) were **retired March 2025** — the repower watch closes
-  as a **retirement**, with **10–12 MW of replacement solar** authorized by the **Board of Public
-  Utilities on 2026-03-23** to run **"behind the meter for the city."** The solar facility is
-  **20 MW, COD January 2017** — the **20-not-125 MW** correction is now `[verified]` federally.
-  AMP's combustion turbines in the city are **81.5 MW** across two plants, and a **12 MW battery**
-  has been operating since **May 2023** that no prior record here mentions.
+- **The muni island, corrected against EIA-860M (June 2026).** Three separate solar facts here —
+  do not merge them:
+  - *The existing array* — the **Bowling Green Solar Facility, 20 MW nameplate, COD January 2017**
+    (EIA plant 60622, `DG AMP Solar Bowling Green`). `[verified]` The **20-not-125 MW** correction
+    applies to **this facility only**: the ~125 MW figure is a conflation with AMP's multi-site
+    Solar Phase II programme, and EIA carries exactly one solar generator at Bowling Green.
+    The correction is now `[verified]` federally, where it had been `[reference]`.
+  - *The replacement build, a different and later thing* — **10–12 MW** across two sites, authorized
+    by the **Board of Public Utilities on 2026-03-23** to run **"behind the meter for the city,"**
+    Eitri Foundry as preferred partner, construction Q4 2026, in service **spring 2027**.
+    `[reference]` — BG Independent reporting a public meeting whose **minutes were not read**.
+  - *What it replaces* — the four **1.8 MW** wind turbines (7.2 MW plant total, Ohio's first
+    commercial wind farm) **retired March 2025** `[verified]`, closing the repower watch as a
+    **retirement**. The city's *entitlement* to that plant is `[open]` (3.6 / "4.1" / "~4" MW are
+    all in circulation), so the replacement ratio is a range of **2.4–3.3×**, never one figure —
+    and a nameplate range at that, not an energy comparison.
+  - AMP's combustion turbines in the city are **81.5 MW** across two plants, and a **12 MW battery**
+    has been operating since **May 2023** that no prior record here mentions.
 - **Juliet Energy is 50 MW nameplate**, not "~62–65 MW AC," and was due in service **July 2026**.
   `[verified]` **Troy Energy** is **4 × 198.9 = 795.6 MW** of existing simple-cycle CTs with **no
   planned addition in the federal inventory**; the combined-cycle conversion is a **PJM queue
