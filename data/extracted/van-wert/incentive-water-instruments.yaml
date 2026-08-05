@@ -111,7 +111,9 @@ whats_new:
     FELL SHORT. 255 valid signatures against 323 required, so no city question reaches the
     2026-11-03 ballot; because the part-petitions were already filed with the Board of Elections,
     signatures cannot be added to them. `[reference]` (VW Independent, 2026-07-27, quoting Board
-    of Elections Director Pam Henderson.) The certificate itself is not in the corpus.
+    of Elections Director Pam Henderson.) The certificate itself is not in the corpus. ISSUE 1408
+    CARRIES THE FULLER ACCOUNT and is the one to cite — the 2026-07-18 filing date, Ordinance
+    26-05-029 as the specific target, the statutes, and the initiative-vs-referendum mechanism.
 
 - date: '2026-07-13'
   finding: >-
@@ -618,18 +620,27 @@ transmission_line_correction:
   source: 'data/documents/van-wert/council/5.27.26.pdf p. 1'
   read_at: 300 and 450 DPI, identical
   bears_on: >-
-    The register carries OPSB 25-0697-EL-BLN — the AEP Ohio Transco Van Wert-Haviland 138 kV
-    letter of notification — as the transmission instrument associated with this load, with two
-    unreconciled cost figures ($45M in the register, "$72 million" from a County Commissioner's
-    written comment). The City's Safety-Service Director states on the record that the
-    Haviland-to-Van Wert line project is NOT related to the data center and has been in planning
-    for about three years. That does not settle what the LON covers, and one official's
-    characterization is not a filing — but it is the only primary-source statement in the corpus
-    on the question, and it cuts against attributing that line, or its cost, to this campus.
+    When this was written the corpus carried OPSB 25-0697-EL-BLN as a bare case number behind a
+    bot-blocked docket, with two unreconciled cost figures ($45M and a County Commissioner's "$72
+    million"), so the Safety-Service Director's statement was the only primary-source evidence on
+    the question and it read as cutting against attributing the line to this campus.
+  superseded_in_part_by_1408: >-
+    ISSUE 1408 COMMITTED THE FILING ITSELF THE SAME DAY (data/extracted/grid/van-wert/
+    van-wert-haviland-138kv.project.yaml), and it narrows this statement rather than confirming
+    it. THE TWO AGREE ON THE ENGINEERING: the LON's driver is a PJM baseline thermal-criteria
+    violation on a line of 1926 wooden monopoles, not a campus interconnection — which is what
+    "not related" means at that level. THEY DO NOT AGREE ON ABSENCE: AEP's Statement of Need names
+    the Van Wert Mega Site twice and counts 30 requests for transmission service there in the past
+    year, so the campus is *in* the filing. And the cost question this statement seemed to bear on
+    is now settled by the instrument, not by it — $45,877,232 for the whole project, so the $45M
+    figure is not a subset and the $72M stays [open]. What survives here is the narrow reading:
+    the City's own officer told Council this rebuild is not campus-built infrastructure. What does
+    NOT survive is reading it as the campus being absent from the project's justification.
   the_kilovolt_figure: >-
-    The approved minutes read "135-kilovolt" at both 300 and 450 DPI. Every other source in the
-    corpus, including the OPSB case caption, says 138 kV. A minutes typo is the likeliest reading
-    and is `[inference]`; what is `[verified]` is what the minutes print.
+    The approved minutes read "135-kilovolt" at both 300 and 450 DPI. That matches NEITHER figure
+    in the instrument: per 1408 the project is an existing 69 kV line rebuilt as a double circuit
+    DESIGNED at 138 kV and initially OPERATED at 69 kV. So "135" is a minutes error on any
+    reading, which is `[inference]`; what is `[verified]` is what the minutes print.
 
 # ── Per-source negatives from this pass ───────────────────────────────────────
 # Recorded as negatives against a named route, never as absences.

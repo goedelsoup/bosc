@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "628c6bcd835174d1e415f25001041e8b9831fca068150b1aaada34974131477f",
+  "catalog_version": "0f8fac5fb1f3d9fde768d03c3d258bd82367041126a83777524dc4413546e1db",
   "contract_version": "1.53.0",
   "atoms": [
     {
@@ -1073,6 +1073,14 @@
       "site": "van-wert",
       "local_id": "van-wert-mega-site-instruments",
       "title": "Van Wert — Mega Site Primary-Instrument Set (City Ordinances, Public Hearing, Council Minutes)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:van-wert-regulatory-watch",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "van-wert-regulatory-watch",
+      "title": "Van Wert — Standing Pre-Construction Watch (air PTI, OPSB, 401/404, ballot threads, ECHO, PJM)",
       "feed": "catalog"
     },
     {

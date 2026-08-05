@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-05T17:28:15.929315+00:00'
+reconciled_at: '2026-08-05T18:56:34.399270+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -212,8 +212,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: ec66306e4eb6d02bc5d293a1aa85f06248b0f8ce01c66a4f8c6cebbc8566cce5
-    size_bytes: 321243
+    sha256: d9517f6572a6bafd9f99dc93c53cebc0d853d9700cc31383ed37364530c5c821
+    size_bytes: 335938
     lfs_materialized: true
     file_count: 13
     missing: []
@@ -262,8 +262,8 @@ entries:
     site_scope: site:troy-piqua
   data-centers-van-wert:
     exists: true
-    sha256: 2c67bfd815d977bc1bdda85be9e22582a2e2902e655def9eb4f676a24d57c449
-    size_bytes: 65232
+    sha256: 24359279611b3934e87216d72f8c527f1cc97f3763f20d0f98e2c678239834cb
+    size_bytes: 79927
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -1502,8 +1502,8 @@ entries:
     site_scope: site:van-wert
   van-wert-incentive-water-instruments:
     exists: true
-    sha256: 8bfe22684e4f746649b38b2ed5ea8ac492a48a08c7fcb347dcb097d568b92e9f
-    size_bytes: 66086
+    sha256: c4a11520b517299acedfa8f004c6710be8b65f05b33eff472481ddeb9b852c84
+    size_bytes: 68019
     lfs_materialized: true
     file_count: 2
     missing: []
@@ -1512,8 +1512,18 @@ entries:
     site_scope: site:van-wert
   van-wert-mega-site-instruments:
     exists: true
-    sha256: dcbf7c39bd57d57d9b89d6be496b4d7dd118b3c2c7333c72de4b010e9dc9c17c
-    size_bytes: 72066
+    sha256: cebe5cc3620ef2fcf1c522bbb2a2fc4fdac06784d69917b3c3865d7bf9f7021b
+    size_bytes: 74520
+    lfs_materialized: true
+    file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:van-wert
+  van-wert-regulatory-watch:
+    exists: true
+    sha256: 813d6c9b47596c7471624d066802df4621b5556725d2ff9986e388883c9e1049
+    size_bytes: 67605
     lfs_materialized: true
     file_count: 2
     missing: []
@@ -1522,8 +1532,8 @@ entries:
     site_scope: site:van-wert
   van-wert-water-watch:
     exists: true
-    sha256: 9755b33f09693cf6f2a85c65102c20d024b70a9af510e93e60a581ec2f9a7b47
-    size_bytes: 93253
+    sha256: 1351b4cda41358b754e8d4bb4caae07165685c4f420053f8332c740756e263df
+    size_bytes: 95802
     lfs_materialized: true
     file_count: 3
     missing: []

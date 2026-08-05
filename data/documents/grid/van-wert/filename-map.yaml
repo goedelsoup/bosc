@@ -1,0 +1,116 @@
+# Capture / alias manifest — the Van Wert–Haviland transmission project, Ohio Power Siting Board,
+# issue #1408 (epic #1267). First documents in the `grid/van-wert/` collection.
+#
+# Raw bytes are never edited. Both documents come from AEP Ohio Transmission's own project site,
+# which is the route that finally opened this docket: PUCO/OPSB's Docketing Information System
+# refuses automated retrieval (recorded three times in this corpus — #1437, #1464, #1401 — and
+# again on 2026-08-05), but the applicant publishes the filings itself under
+# https://aeptransmission.com/Ohio/VanWert-Haviland/. Those PDFs sit behind an Akamai check that
+# returns 403 to a bare request and 200 with a browser User-Agent AND a Referer of the project
+# page. That two-header requirement is the whole trick; note it before concluding a file is gone.
+#
+# The `content_verified` date is read from each file's OWN text layer, never from the URL, the
+# link text, the PDF metadata, or the fetch time.
+meta:
+  subject: >-
+    Ohio Power Siting Board Case No. 26-0729-EL-BLN — the Van Wert–Haviland 138 kV Transmission
+    Line ADJUSTMENT Project, AEP Ohio Transmission Company, Inc., filed 2026-07-27 under the
+    accelerated Letter-of-Notification track (OAC 4906-6-05); and its statutory public notice
+  collection: grid/van-wert/
+  captured_by: issue #1408 (epic #1267, readiness(van-wert) — the standing pre-construction watch)
+  generated_at: '2026-08-05'
+  policy: >-
+    non-destructive — as-served bytes. The applicant's site serves these with spaces in the
+    filenames; the committed names are hyphenated for a filesystem's sake and the as-served name
+    is recorded beside each. Nothing else is altered.
+
+  why_this_collection_exists: >-
+    This is the FIRST transmission instrument in the corpus for Van Wert. Until now the only
+    grid artifact for this site was a case NUMBER (25-0697-EL-BLN) carried from press coverage,
+    with its docket unreachable and its connection to the Mega Site asserted by reporters rather
+    than by any filing. The Adjustment LON breaks that: AEP's own Statement of Need names the Van
+    Wert Mega Site directly, and the affected-properties table names a committed campus parcel.
+
+  scope_warning: >-
+    NAMING THE MEGA SITE IS NOT SIZING THE CAMPUS. This filing names no data center, no QTS
+    entity, and no megawatt figure — the strings "QTS" and "data center" appear on none of the
+    LON's 612 pages. Its stated engineering driver is a PJM baseline thermal-criteria violation
+    (PJM project b3359), and the Mega Site enters as load-growth context, not as an
+    interconnection customer. Nothing here grounds the campus's load, and this document must
+    never be read as a proxy for it — the same error the Findlay record refused to make when a
+    new 138 kV station was available to stand in for a missing load instrument, and the same one
+    the Sidney record refused for the AES 6694 reroute.
+
+  identifiers:
+    opsb_case_adjustment: 26-0729-EL-BLN
+    opsb_case_original: 25-0697-EL-BLN      # filed 2025-08-25, APPROVED by OPSB 2025-11-21, unbuilt
+    pjm_baseline_project: b3359
+    pjm_supplemental_project: s3142
+    applicant: AEP Ohio Transmission Company, Inc.
+    project_page: https://aeptransmission.com/Ohio/VanWert-Haviland/
+
+documents:
+- filename: VanWert-Haviland-Adjustment-PublicNotice.pdf
+  as_received_name: Van Wert-Haviland 138 kV Transmission Line Adjustment Project - Public Notice.pdf
+  canonical_name: >-
+    NOTICE OF PROPOSED MAJOR UTILITY FACILITY — Van Wert–Haviland 138 kV Transmission Line
+    Adjustment Project, OPSB Case No. 26-0729-EL-BLN. The statutory notice under OAC 4906-6-08.
+    1 p., single sheet with an area map.
+  issuer: AEP Ohio (AEP Ohio Transmission Company, Inc.)
+  source_url: https://aeptransmission.com/Ohio/VanWert-Haviland/docs/Van%20Wert-Haviland%20138%20kV%20Transmission%20Line%20Adjustment%20Project%20-%20Public%20Notice.pdf
+  sha256: aaaedc1b1975f8360bab78eb2e6177cbe00f6f8df5a9968ee6276ea5aea2bd47
+  bytes: 144481
+  content_type: application/pdf
+  pages: 1
+  fetched_at: '2026-08-05'
+  content_verified: null
+  evidence: >-
+    native_text — the sheet prints NO date of its own anywhere in its text layer. Its PDF
+    /CreationDate metadata reads 2026-07-22 and the server's Last-Modified header reads
+    2026-07-30, but neither is a text-layer date and NEITHER IS THE PUBLICATION DATE, which is
+    what actually matters here: the notice states that OPSB accepts motions to intervene "up to
+    10 days following the publication date of this notice", and publication is in a newspaper of
+    general circulation, not on this website. The intervention deadline is therefore [open] and
+    must not be computed from any of these three timestamps. The LON says the notice would issue
+    within 7 days of the 2026-07-27 filing, which brackets publication to on or before
+    2026-08-03 — a bracket, not a date.
+  status: downloaded
+  note: >-
+    Small and load-bearing. It states, in the applicant's own words, that 25-0697-EL-BLN was
+    "previously approved"; that this filing adjusts the approved route "to reconfigure the
+    transmission line's entry into the station"; and that construction is planned for fall 2026
+    through early 2028. It also prints the service list — the officials OPSB regulations required
+    be served — which is the cleanest roster of Van Wert County and township officeholders in the
+    corpus and independently corroborates two names the City legislative record already carries
+    (County Commissioner Thad Lichtensteiger, whose written comment is quoted in
+    data/extracted/van-wert/mega-site-instruments.yaml, and Mayor Kenneth Markward).
+
+not_pulled:
+- what: The Adjustment Project Letter of Notification itself — the 612-page filing.
+  as_received_name: Van Wert-Haviland 138 kV Transmission Line Adjustment Project - Letter of Notification.pdf
+  source_url: https://aeptransmission.com/Ohio/VanWert-Haviland/docs/Van%20Wert-Haviland%20138%20kV%20Transmission%20Line%20Adjustment%20Project%20-%20Letter%20of%20Notification.pdf
+  sha256: d5914b163f10aaa46d8adf9d298be7eae7ee5f463f9d738893afcb490ab97e24
+  bytes: 88737026
+  pages: 612
+  content_verified: '2026-07-27'   # cover page, p. 0 of the text layer: "July 27, 2026"
+  read_at: '2026-08-05'
+  why: >-
+    88.7 MB — a thirty-fold outlier against the largest binary this corpus holds, and 600 of its
+    612 pages are map exhibits and blank easement forms. The nine narrative pages that carry every
+    finding were read in full and are transcribed, page-cited, into
+    data/extracted/grid/van-wert/van-wert-haviland-138kv.project.yaml. The sha256 above pins
+    exactly which bytes were read, so the transcription is checkable and the pull is reproducible
+    on demand; this is the same treatment the Sidney record gave the 20 MB sanitary-sewer plan set.
+  how_to_pull: >-
+    curl -L -A '<browser UA>' -e 'https://aeptransmission.com/Ohio/VanWert-Haviland/' '<source_url>'
+    — both headers are required; without the Referer the CDN answers 403.
+- what: The ORIGINAL project's Letter of Notification, Case No. 25-0697-EL-BLN.
+  as_received_name: LON_VanWert-Haviland_20250825_FINAL.pdf
+  source_url: https://aeptransmission.com/Ohio/VanWert-Haviland/docs/LON_VanWert-Haviland_20250825_FINAL.pdf
+  why: >-
+    Not fetched in this pass. The Adjustment LON restates the original's Statement of Need
+    verbatim and gives its cost, length, approval date and PJM driver, so the original adds
+    scope detail (the full route) rather than new findings. It stays on the pull list — it is the
+    document that would settle whether the campus easement predates the Mega Site's 2026
+    annexation, which the Adjustment LON cannot answer. Its as-served name carries the filing
+    date 2025-08-25, which the Adjustment LON independently confirms in its text.

@@ -155,18 +155,27 @@ The Board of Commissioners publishes agendas (not journal entries) as a single p
 
 ## Two corrections this pass makes to the register
 
-**1. The Van Wert–Haviland transmission line, on the City's record, is not this campus's.** On
+**1. The City called the Van Wert–Haviland transmission line "not related to the Data Center."** On
 2026-05-27 Safety-Service Director Jay C. Fleming told Council that AEP "has been planning a power
 line upgrade **for about 3 years ago**" (the minutes' own phrasing) between the Haviland facility
 and the substation behind the street department, running a "135-kilovolt" line down Dutch John
-Road "to help Industrial Park along with the city's electrical backbone" — and **"Fleming reiterated this project was not related to the
-Data Center."** `[verified]` (`5.27.26.pdf` p. 1, identical at 300 and 450 DPI.) The register
-carries OPSB **25-0697-EL-BLN** (the AEP Ohio Transco Van Wert–Haviland 138 kV letter of
-notification) as the transmission instrument for this load, with two unreconciled cost figures
-($45M and a commissioner's "$72 million"). One official's characterization is not a filing and does
-not settle what the LON covers, but it is the only primary-source statement in the corpus on the
-question and it cuts against attributing that line or its cost to this campus. (The minutes print
-"135"; every other source says 138 kV. A minutes typo is the likeliest reading — `[inference]`.)
+Road "to help Industrial Park along with the city's electrical backbone" — and **"Fleming
+reiterated this project was not related to the Data Center."** `[verified]` (`5.27.26.pdf` p. 1,
+identical at 300 and 450 DPI.) When this was written the corpus held OPSB **25-0697-EL-BLN** only
+as a bare case number behind a bot-blocked docket, so this was the only primary-source evidence on
+the question.
+
+**#1408 committed the filing itself the same day, and it narrows this rather than confirming it.**
+The two agree on the engineering: the LON's driver is a **PJM baseline thermal-criteria violation**
+on a line of 1926 wooden monopoles, not a campus interconnection. They do not agree on absence —
+AEP's Statement of Need **names the Van Wert Mega Site twice** and counts **30 requests for
+transmission service** there in the past year. And the cost question this seemed to bear on is
+settled by the instrument instead: **$45,877,232** for the whole project, so the $45M half is not a
+subset and the commissioner's "$72 million" stays `[open]`. What survives is the narrow reading —
+the City's own officer told Council this rebuild is not campus-built infrastructure. What does not
+survive is reading it as the campus being absent from the project's justification. (The minutes'
+"135 kV" matches neither figure in the LON — a 69 kV line rebuilt at 138 kV design — so it is a
+minutes error on any reading, `[inference]`.)
 
 **2. The City's franchise with the campus's utility was cut from 50 years to 10.** Ordinance
 **26-02-010** grants Ohio Power a franchise in the City's streets as "an extension of the agreement
@@ -185,7 +194,10 @@ and none is inferred here.
   against 323 required**, so no city question reaches the 2026-11-03 ballot; signatures cannot be
   added because the part-petitions were already filed. `[reference]` (VW Independent 2026-07-27,
   quoting Board of Elections Director Pam Henderson.) The Board's own certificate is not in the
-  corpus.
+  corpus. **#1408 carries the fuller account** — the 2026-07-18 filing date, that the target was
+  Ordinance **26-05-029** specifically, the statutes cited, and why the mechanism was an
+  *initiative* rather than a referendum. Cite that one; this line is the same event seen from this
+  pass's sweep.
 - **The operator's page carries boilerplate from another market.** Its economy answer says the
   project will "support services and community programs throughout **Richmond County**" — Augusta,
   Georgia, not Van Wert County, Ohio. `[verified]` as to what the page says. Same species as the
