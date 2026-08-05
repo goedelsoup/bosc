@@ -22,6 +22,12 @@
 # The old /directory tree → its new homes. Specific sub-paths first, then the coming-soon catch-all.
 /directory/hypotheses   /research/hypotheses                                                   301
 /directory/basin        /basin                                                                 301
+# The locked-screen preview was retired with the rest of the dev surface (#1894). Its legacy
+# address has to stay AHEAD of the catch-all below: `/directory/*` would rewrite it to
+# `/network/locked-preview`, and no site is registered under that slug, so the 301 would land on a
+# 404. The network index is the nearest live thing — it lists every site and its status, which is
+# what the preview was illustrating.
+/directory/locked-preview  /network                                                            301
 /directory/*            /network/:splat                                                         301
 /directory              /                                                                      301
 
