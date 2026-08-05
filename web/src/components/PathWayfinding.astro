@@ -5,27 +5,27 @@
  * always offers an exit. Dots link to the live chapters; the current step is
  * widened and outlined. SSR-only, no JS.
  *
- * Story-parameterized (#724/#732): the caller passes the active `story` (the chapter shell
+ * Walk-parameterized (#724/#732): the caller passes the active `story` (the chapter shell
  * resolves it from the route), so the bar renders whatever site's walk it's on — no Lima-pinned
  * default that could leak Lima's story onto another site (#1256).
  */
-import { type Story, chapterHref, storyContentsHref } from "@watermark/core/walk";
+import { type Walk, chapterHref, walkContentsHref } from "@watermark/core/walk";
 
 interface Props {
   /** 1-based current step. */
   step: number;
   /** The story being walked. */
-  story: Story;
+  story: Walk;
   /** Where "leave" goes (defaults to the story's table of contents). */
   leaveHref?: string;
 }
 const { step, story, leaveHref } = Astro.props;
 const chapters = story.chapters;
 const total = chapters.length;
-const leave = leaveHref ?? storyContentsHref(story);
+const leave = leaveHref ?? walkContentsHref(story);
 ---
 
-<nav class="walk-bar" aria-label={`Story — step ${step} of ${total}`}>
+<nav class="walk-bar" aria-label={`Walk — step ${step} of ${total}`}>
   <span class="walk-bar-label">On the story</span>
   <div class="walk-dots">
     {

@@ -7,7 +7,7 @@ import { intEnv } from "./env";
 import { json, requireEnabled } from "./http";
 import { type Hyperdrive, hyperdrivePg } from "./pg";
 import { type KVLike, checkRateLimit } from "./ratelimit";
-import type { PgLike, StoryOwner, StoryRef, StoryRow, StoryStatus } from "./storiesStore";
+import type { PgLike, WalkOwner, WalkRef, StoryRow, StoryStatus } from "./storiesStore";
 
 export interface StoriesEnv extends AuthEnv {
   /** Kill switch (feature flag). Absent/≠"true" → 503, feature ships dark. */
@@ -64,7 +64,7 @@ export async function guardStoriesAdmin(
 
 /**
  * The publish gate (#1098): publishing is gated behind early access initially — a `standard` user
- * can save drafts but not make a Story public. Returns a 403 Response to block, or `null` to allow.
+ * can save drafts but not make a Walk public. Returns a 403 Response to block, or `null` to allow.
  * Drafts are always allowed.
  */
 export function publishGate(ctx: AuthContext, status: StoryStatus): Response | null {
@@ -80,7 +80,7 @@ export async function guardStories(
   request: Request,
   env: StoriesEnv,
 ): Promise<
-  { ok: true; owner: StoryOwner; db: PgLike; ctx: AuthContext } | { ok: false; response: Response }
+  { ok: true; owner: WalkOwner; db: PgLike; ctx: AuthContext } | { ok: false; response: Response }
 > {
   const disabled = requireEnabled(env.STORIES_ENABLED, () => json(503, { error: "stories not enabled" }));
   if (disabled) return { ok: false, response: disabled };
@@ -128,8 +128,8 @@ export function storySummary(row: StoryRow) {
   };
 }
 
-/** The full Story: the summary + the source, the parsed SDM, and the cited refs. */
-export function storyDetail(row: StoryRow, refs: StoryRef[]) {
+/** The full Walk: the summary + the source, the parsed SDM, and the cited refs. */
+export function storyDetail(row: StoryRow, refs: WalkRef[]) {
   return {
     ...storySummary(row),
     source_format: row.source_format,
@@ -140,11 +140,11 @@ export function storyDetail(row: StoryRow, refs: StoryRef[]) {
 }
 
 /**
- * The **public** projection of a shared Story (#1098) — only what a public reader needs to render:
+ * The **public** projection of a shared Walk (#1098) — only what a public reader needs to render:
  * no owner id, no editable source, no internal ids. `site` scopes the render catalog; the disclosure
  * copy is added by the reader, not the server.
  */
-export function publicStory(row: StoryRow, refs: StoryRef[]) {
+export function publicStory(row: StoryRow, refs: WalkRef[]) {
   return {
     share_id: row.share_id,
     site: row.site,

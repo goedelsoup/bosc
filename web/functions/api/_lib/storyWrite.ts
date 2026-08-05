@@ -1,4 +1,4 @@
-// The server-side Story write path (#1095): compile the submitted source against the runtime
+// The server-side Walk write path (#1095): compile the submitted source against the runtime
 // catalog and derive the persistable `StoryWrite` (SDM + refs). This is the "compile-once" half of
 // the compile-once-store-run-many split — it runs the #1094 compiler server-side (never trusts a
 // client-supplied SDM), so every handle is validated against the live catalog before persist.
@@ -12,7 +12,7 @@ import {
   dslFormat,
   mdxDataFormat,
 } from "@watermark/core/storyCompile";
-import type { StoryRef, StorySourceFormat, StoryStatus, StoryWrite } from "./storiesStore";
+import type { WalkRef, StorySourceFormat, StoryStatus, StoryWrite } from "./storiesStore";
 
 const FORMATS: Record<StorySourceFormat, StoryFormat> = {
   dsl: dslFormat,
@@ -70,9 +70,9 @@ export function parseStoryInput(
 }
 
 /**
- * Compile + validate a submitted Story into a `StoryWrite`. Runs the #1094 pipeline
+ * Compile + validate a submitted Walk into a `StoryWrite`. Runs the #1094 pipeline
  * (parse → assertNoCode → sanitize → resolveHandles → lowerToSDM); a dangling/unknown handle or any
- * unsafe construct is an author-facing error, so a Story with a bad ref is rejected at save.
+ * unsafe construct is an author-facing error, so a Walk with a bad ref is rejected at save.
  */
 export function buildStoryWrite(
   input: StoryWriteInput,
@@ -81,7 +81,7 @@ export function buildStoryWrite(
   const result = compileStory(input.source_text, FORMATS[input.source_format], catalog);
   if (!result.ok) return { ok: false, errors: result.errors };
 
-  const refs: StoryRef[] = sdmAtomBlocks(result.doc).map((b, i) => ({
+  const refs: WalkRef[] = sdmAtomBlocks(result.doc).map((b, i) => ({
     ord: i,
     handle: b.handle,
     kind: b.kind,

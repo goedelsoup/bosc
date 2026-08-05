@@ -1,7 +1,7 @@
 // The Databricks Lakebase (Postgres) store for user-authored Stories (epic #1090 / #1095) —
 // owner-scoped CRUD with transactional writes. Every write that touches `stories` + `story_refs`
-// runs inside `db.begin(...)`, one atomic Postgres transaction, so a Story and its refs can never
-// drift (a half-written Story with stale refs is impossible).
+// runs inside `db.begin(...)`, one atomic Postgres transaction, so a Walk and its refs can never
+// drift (a half-written Walk with stale refs is impossible).
 //
 // Kept driver-agnostic: a minimal `PgLike` slice (query + begin) over parameterized `$n` SQL, so the
 // same store runs against postgres.js/Hyperdrive in production (functions/api/_lib/pg.ts) and an
@@ -22,14 +22,14 @@ export type StorySourceFormat = "dsl" | "mdx-data";
 /** The admin moderation flag (#1098). A public read requires `ok`; `removed` is an admin takedown. */
 export type StoryModeration = "ok" | "removed";
 
-/** The Story owner (#1092) — user-owned for this feature; the `site` case is the editorial path. */
-export interface StoryOwner {
+/** The Walk owner (#1092) — user-owned for this feature; the `site` case is the editorial path. */
+export interface WalkOwner {
   kind: "site" | "user";
   id: string;
 }
 
 /** One cited catalog atom (a `story_refs` row) — the thin snapshot for graceful degradation. */
-export interface StoryRef {
+export interface WalkRef {
   ord: number;
   handle: string;
   kind: string;
@@ -72,7 +72,7 @@ export interface StoryReport {
   created_at: string;
 }
 
-/** The write payload — the compiled, validated Story a Function persists (no id/timestamps). */
+/** The write payload — the compiled, validated Walk a Function persists (no id/timestamps). */
 export interface StoryWrite {
   site: string;
   slug: string;
@@ -83,7 +83,7 @@ export interface StoryWrite {
   source_text: string;
   sdm_json: string;
   catalog_version: string;
-  refs: StoryRef[];
+  refs: WalkRef[];
 }
 
 const STORY_COLUMNS =
@@ -105,7 +105,7 @@ function publishState(
 }
 
 /** Insert every ref for a story inside a transaction — refs are replaced wholesale, not diffed. */
-async function insertRefs(tx: PgLike, storyId: string, refs: StoryRef[]): Promise<void> {
+async function insertRefs(tx: PgLike, storyId: string, refs: WalkRef[]): Promise<void> {
   for (const r of refs) {
     await tx.query(
       "INSERT INTO story_refs (story_id, ord, handle, kind, title) VALUES ($1, $2, $3, $4, $5)",
@@ -115,26 +115,26 @@ async function insertRefs(tx: PgLike, storyId: string, refs: StoryRef[]): Promis
 }
 
 /** A user's own Stories, newest first. Owner-scoped by construction. */
-export async function listStories(db: PgLike, owner: StoryOwner): Promise<StoryRow[]> {
+export async function listStories(db: PgLike, owner: WalkOwner): Promise<StoryRow[]> {
   return db.query<StoryRow>(
     `SELECT ${STORY_COLUMNS} FROM stories WHERE owner_kind = $1 AND owner_id = $2 ORDER BY updated_at DESC`,
     [owner.kind, owner.id],
   );
 }
 
-/** One owner-scoped Story + its refs, or `null` if it isn't the owner's / doesn't exist. */
+/** One owner-scoped Walk + its refs, or `null` if it isn't the owner's / doesn't exist. */
 export async function getStory(
   db: PgLike,
-  owner: StoryOwner,
+  owner: WalkOwner,
   id: string,
-): Promise<{ story: StoryRow; refs: StoryRef[] } | null> {
+): Promise<{ story: StoryRow; refs: WalkRef[] } | null> {
   const rows = await db.query<StoryRow>(
     `SELECT ${STORY_COLUMNS} FROM stories WHERE id = $1 AND owner_kind = $2 AND owner_id = $3`,
     [id, owner.kind, owner.id],
   );
   const story = rows[0];
   if (!story) return null;
-  const refs = await db.query<StoryRef>(
+  const refs = await db.query<WalkRef>(
     "SELECT ord, handle, kind, title FROM story_refs WHERE story_id = $1 ORDER BY ord",
     [id],
   );
@@ -142,13 +142,13 @@ export async function getStory(
 }
 
 /**
- * Create a Story + its refs atomically. `id`/`now` are injected (the Function mints the UUID and
+ * Create a Walk + its refs atomically. `id`/`now` are injected (the Function mints the UUID and
  * timestamp) so the store stays pure/testable. The whole write is one transaction, so a ref-insert
- * failure (e.g. the unique-slug constraint) rolls the Story insert back too.
+ * failure (e.g. the unique-slug constraint) rolls the Walk insert back too.
  */
 export async function createStory(
   db: PgLike,
-  owner: StoryOwner,
+  owner: WalkOwner,
   id: string,
   write: StoryWrite,
   now: string,
@@ -186,14 +186,14 @@ export async function createStory(
 }
 
 /**
- * Update an owner's Story and **replace** its refs atomically. Returns `false` when the Story
+ * Update an owner's Walk and **replace** its refs atomically. Returns `false` when the Walk
  * isn't the owner's (ownership is checked first, and the UPDATE is owner-scoped as defense in
  * depth). The UPDATE + refs DELETE/INSERT run in one transaction, so the refs can never outlive a
- * failed Story update.
+ * failed Walk update.
  */
 export async function updateStory(
   db: PgLike,
-  owner: StoryOwner,
+  owner: WalkOwner,
   id: string,
   write: StoryWrite,
   now: string,
@@ -233,8 +233,8 @@ export async function updateStory(
   return true;
 }
 
-/** Delete an owner's Story (refs cascade). Returns whether a row was removed. */
-export async function deleteStory(db: PgLike, owner: StoryOwner, id: string): Promise<boolean> {
+/** Delete an owner's Walk (refs cascade). Returns whether a row was removed. */
+export async function deleteStory(db: PgLike, owner: WalkOwner, id: string): Promise<boolean> {
   const rows = await db.query<{ id: string }>(
     "DELETE FROM stories WHERE id = $1 AND owner_kind = $2 AND owner_id = $3 RETURNING id",
     [id, owner.kind, owner.id],
@@ -245,28 +245,28 @@ export async function deleteStory(db: PgLike, owner: StoryOwner, id: string): Pr
 // --- public read + moderation (#1098) -------------------------------------------------------
 
 /**
- * Resolve a **published, un-removed** Story by its public `share_id` — the only path a Story is
- * reachable without auth. An unpublished (draft) or admin-removed Story returns `null` (not reachable),
+ * Resolve a **published, un-removed** Walk by its public `share_id` — the only path a Walk is
+ * reachable without auth. An unpublished (draft) or admin-removed Walk returns `null` (not reachable),
  * so a stale share URL leaks nothing. Owner-agnostic by design (anyone with the link may read).
  */
 export async function getPublicStory(
   db: PgLike,
   shareId: string,
-): Promise<{ story: StoryRow; refs: StoryRef[] } | null> {
+): Promise<{ story: StoryRow; refs: WalkRef[] } | null> {
   const rows = await db.query<StoryRow>(
     `SELECT ${STORY_COLUMNS} FROM stories WHERE share_id = $1 AND status = 'published' AND moderation = 'ok'`,
     [shareId],
   );
   const story = rows[0];
   if (!story) return null;
-  const refs = await db.query<StoryRef>(
+  const refs = await db.query<WalkRef>(
     "SELECT ord, handle, kind, title FROM story_refs WHERE story_id = $1 ORDER BY ord",
     [story.id],
   );
   return { story, refs };
 }
 
-/** Admin takedown / restore: flip a Story's moderation flag by id. Returns whether a row changed. */
+/** Admin takedown / restore: flip a Walk's moderation flag by id. Returns whether a row changed. */
 export async function setModeration(db: PgLike, id: string, moderation: StoryModeration): Promise<boolean> {
   const rows = await db.query<{ id: string }>(
     "UPDATE stories SET moderation = $1 WHERE id = $2 RETURNING id",
@@ -275,14 +275,14 @@ export async function setModeration(db: PgLike, id: string, moderation: StoryMod
   return rows.length > 0;
 }
 
-/** Look up a Story id by its share_id (any status) — the report endpoint resolves the target this way
+/** Look up a Walk id by its share_id (any status) — the report endpoint resolves the target this way
  *  without leaking whether it's currently published. */
 export async function storyIdForShareId(db: PgLike, shareId: string): Promise<string | null> {
   const rows = await db.query<{ id: string }>("SELECT id FROM stories WHERE share_id = $1", [shareId]);
   return rows[0]?.id ?? null;
 }
 
-/** File a report against a Story (the public flag → admin review queue). */
+/** File a report against a Walk (the public flag → admin review queue). */
 export async function insertReport(
   db: PgLike,
   report: { id: string; storyId: string; shareId: string; reason: string; detail: string; now: string },
@@ -316,15 +316,15 @@ export async function resolveReport(db: PgLike, reportId: string): Promise<boole
 
 // --- revalidation (#1099) -------------------------------------------------------------------
 
-/** One Story the revalidation job needs to re-check: its stored SDM + its cited refs. */
+/** One Walk the revalidation job needs to re-check: its stored SDM + its cited refs. */
 export interface RevalidationTarget {
   id: string;
   catalog_version: string;
   sdm_json: string;
-  refs: StoryRef[];
+  refs: WalkRef[];
 }
 
-/** Every Story not yet validated against the current catalog_version (the job's work-list). Skips
+/** Every Walk not yet validated against the current catalog_version (the job's work-list). Skips
  *  stories already at the current version, so a no-op pass after a non-bump touches nothing. */
 export async function storiesToRevalidate(db: PgLike, currentVersion: string): Promise<RevalidationTarget[]> {
   const rows = await db.query<{ id: string; catalog_version: string; sdm_json: string }>(
@@ -333,7 +333,7 @@ export async function storiesToRevalidate(db: PgLike, currentVersion: string): P
   );
   const out: RevalidationTarget[] = [];
   for (const r of rows) {
-    const refs = await db.query<StoryRef>(
+    const refs = await db.query<WalkRef>(
       "SELECT ord, handle, kind, title FROM story_refs WHERE story_id = $1 ORDER BY ord",
       [r.id],
     );
@@ -348,14 +348,14 @@ export async function storiesToRevalidate(db: PgLike, currentVersion: string): P
 }
 
 /**
- * Apply a revalidation result to one Story atomically: rewrite the (possibly-healed) SDM + refs, mark
+ * Apply a revalidation result to one Walk atomically: rewrite the (possibly-healed) SDM + refs, mark
  * it checked against `catalogVersion` at `now`, and set/clear the `stale` flag. One `batch`, so the
  * refs never drift from the SDM.
  */
 export async function applyStoryRevalidation(
   db: PgLike,
   id: string,
-  args: { sdmJson: string; refs: StoryRef[]; catalogVersion: string; stale: boolean; now: string },
+  args: { sdmJson: string; refs: WalkRef[]; catalogVersion: string; stale: boolean; now: string },
 ): Promise<void> {
   await db.begin(async (tx) => {
     await tx.query(

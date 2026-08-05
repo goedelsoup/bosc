@@ -10,9 +10,9 @@ import Icon from "~/components/Icon.astro";
 import SiteLocked from "~/components/SiteLocked.astro";
 import StoryTeaser from "~/components/story/StoryTeaser.astro";
 import Base from "~/layouts/Base.astro";
-import { siteHref, storyHref } from "@watermark/core/base";
+import { siteHref, walkUrl } from "@watermark/core/base";
 import { LIMA_SLUG } from "@watermark/core/routes";
-import { type NetworkSite, comingSoonSites, comingSoonStories } from "@watermark/core/sites";
+import { type NetworkSite, comingSoonSites, comingSoonWalks } from "@watermark/core/sites";
 
 export function getStaticPaths() {
   return comingSoonSites().map((site) => ({ params: { site: site.slug }, props: { site } }));
@@ -30,9 +30,9 @@ const issueUrl = site.issue
 // selectable site, so without this a registered walk here would be silent (i.e. `hidden` in all but
 // name). The teaser's target is the real, emitted coming-soon interstitial — the story routes gate
 // on registration rather than `selectable` — so this advertises without leaking any chapter prose.
-// Slug-parameterized `storyHref`, not the ambient `withStory`, because this route renders one
+// Slug-parameterized `walkUrl`, not the ambient `withStory`, because this route renders one
 // arbitrary peer rather than the active site.
-const heldStory = comingSoonStories(site.slug)[0];
+const heldStory = comingSoonWalks(site.slug)[0];
 
 // The build phase, in this page's vocabulary. A `tracking` site is the earliest phase — a
 // GitHub-tracked candidate with no scaffold yet, so this is a "watch" page rather than a build gauge.
@@ -165,7 +165,7 @@ const doors = [
           <StoryTeaser
             title={heldStory.title}
             dek={heldStory.dek}
-            href={storyHref(site.slug, heldStory.codename, "")}
+            href={walkUrl(site.slug, heldStory.codename, "")}
           />
         </section>
       ) : null

@@ -2,7 +2,7 @@
 #
 # The network DIRECTORY is the root `/` now (it lists every watershed-point site). The live
 # site (Lima) lives at /network/american-sugar-creek-allen-co; coming-soon sites at /network/<slug>;
-# the live site's investigation is a *story* at /stories/project-bosc (guided walk, flattened
+# the live site's investigation is the *walk* at /walk/project-bosc (guided walk, flattened
 # chapters); research moved to /research/hypotheses. These keep every old, deployed URL working.
 #
 # NETWORK-GLOBAL pages live at the root and are NOT rewritten — /about, /about-me, /wiki/*, /ask,
@@ -38,21 +38,27 @@
 /network/:site/environment/   /network/:site/lens/environment                                  301
 /network/:site/economy/       /network/:site/lens/economy                                      301
 
-# /bosc -> /network/<id>, and the story moved to /stories/project-bosc (chapters flattened).
-/bosc/start             /network/american-sugar-creek-allen-co/stories/project-bosc            301
-/bosc/intro             /network/american-sugar-creek-allen-co/stories/project-bosc            301
-/bosc/walk              /network/american-sugar-creek-allen-co/stories/project-bosc/contents   301
-/bosc/walk/*            /network/american-sugar-creek-allen-co/stories/project-bosc/:splat     301
+# /bosc -> /network/<id>, and the walk moved to /walk/project-bosc (#1972; chapters flattened).
+/bosc/start             /network/american-sugar-creek-allen-co/walk/project-bosc            301
+/bosc/intro             /network/american-sugar-creek-allen-co/walk/project-bosc            301
+/bosc/walk              /network/american-sugar-creek-allen-co/walk/project-bosc/contents   301
+/bosc/walk/*            /network/american-sugar-creek-allen-co/walk/project-bosc/:splat     301
 /bosc                   /network/american-sugar-creek-allen-co/                                301
 /bosc/*                 /network/american-sugar-creek-allen-co/:splat                          301
 
 # Even-older root-level legacy URLs (pre-/bosc) — straight to the new paths.
-/start                  /network/american-sugar-creek-allen-co/stories/project-bosc            301
+/start                  /network/american-sugar-creek-allen-co/walk/project-bosc            301
 /timeline               /network/american-sugar-creek-allen-co/timeline                        301
 /site/*                 /network/american-sugar-creek-allen-co/site/:splat                     301
 /watershed/*            /network/american-sugar-creek-allen-co/environment/:splat                301
 /reports/*              /network/american-sugar-creek-allen-co/reports/:splat                  301
-/walk/*                 /network/american-sugar-creek-allen-co/stories/project-bosc/:splat     301
+/walk/*                 /network/american-sugar-creek-allen-co/walk/project-bosc/:splat     301
+
+# The editorial walk left the `/stories/` namespace it shared with the reader-composed Story
+# (#1972, epic #1968). Keyed to the CODENAME, never a bare `/stories/*` wildcard — that would
+# swallow the UGC pages (compose|mine|read|grab-demo) that legitimately still live there.
+/network/:site/stories/project-bosc      /network/:site/walk/project-bosc            301
+/network/:site/stories/project-bosc/*    /network/:site/walk/project-bosc/:splat     301
 
 # Docs moved to the network-global `/docs/` build (#1304): the long-form prose is one root build,
 # not per-site. The old `/docs/* → per-site` rewrite is gone (it now points nowhere and would shadow

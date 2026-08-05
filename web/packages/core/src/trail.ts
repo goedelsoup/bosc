@@ -198,15 +198,27 @@ const SITE_CHILDREN: Record<string, TrailNode> = {
     },
   },
   site: { label: "The record", slash: true, children: RECORD_CHILDREN },
+  // The reader-composed **Walk** (#1090). Since #1972 this namespace is the UGC subsystem's
+  // alone — the editorial walk moved to `/walk/` below, so a breadcrumb no longer has to mean two
+  // unrelated things depending on which child it lands in.
   stories: {
-    label: "The story",
+    label: "Stories",
     leafOnly: true,
     children: {
       compose: { label: "Compose a story" },
       "grab-demo": { label: "Grab a fact" },
       mine: { label: "Your stories" },
       read: { label: "Read" },
-      // <codename>/ is the story home; its label is the story title, which the page supplies.
+    },
+  },
+  // The editorial walk (#1972). `leafOnly` because `/network/<site>/walk` is a pure namespace with
+  // no landing of its own — the codename below carries the name that matters, exactly as
+  // `/stories` did for it before the split.
+  walk: {
+    label: "The story",
+    leafOnly: true,
+    children: {
+      // <codename>/ is the walk home; its label is the walk title, which the page supplies.
       [PARAM]: {
         label: humanize,
         slash: true,

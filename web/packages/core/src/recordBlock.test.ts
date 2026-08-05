@@ -77,9 +77,9 @@ describe("recordToBlock", () => {
 
   it("carries the record→chapter walk backlink now that Lima's story is readable (#1526)", () => {
     // The active site under vitest is Lima; its Project BOSC walk is readable, so it surfaces its story
-    // and `activeStoryAnchorFor` resolves. A record that anchors a chapter therefore carries `seenIn`
+    // and `activeWalkAnchorFor` resolves. A record that anchors a chapter therefore carries `seenIn`
     // AND a `walk` connect chip. (The anchor-resolution mechanism itself is covered in walk.test via
-    // `storyAnchorFor` / `activeStoryAnchorFor`; aedg roundabouts OPC anchors the `cost` chapter.)
+    // `walkAnchorForIn` / `activeWalkAnchorFor`; aedg roundabouts OPC anchors the `cost` chapter.)
     const anchored = recordToBlock(baseRecord({ rel: "aedg/roundabouts.summary.opc.yaml", group: "aedg" }));
     expect(anchored.seenIn?.ch).toBe("05");
     expect(anchored.seenIn?.label).toBe("What it costs the public");

@@ -1,12 +1,12 @@
 /**
  * The hydrated catalog resolver (epic #1090 / #1093) — the **pure, runtime-safe core**: the handle
  * grammar, the closed kind set, the `Catalog` shape, and `resolveHandle`. No `node:fs` / `import.
- * meta.glob`, so this module is safe to import in a Cloudflare Worker (the Story write-path Function,
+ * meta.glob`, so this module is safe to import in a Cloudflare Worker (the Walk write-path Function,
  * #1095) as well as at build time. The build-time loader + web-only overlay live in `./catalogBuild`.
  *
  * Handle grammar: `<kind>:<site>:<localId>`, where `localId` reuses each source feed's **existing**
  * stable key — no new ids are minted. Resolution is a *pointer*, not a copy: an atom names the live
- * feed row it addresses, so a Story cites the record without ever forking it (chain of custody).
+ * feed row it addresses, so a Walk cites the record without ever forking it (chain of custody).
  */
 
 /** The closed catalog kind set — one render component + one resolver branch each (#1093). Must

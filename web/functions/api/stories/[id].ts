@@ -1,8 +1,8 @@
-// GET    /api/stories/:id — the authenticated user's Story (source + parsed SDM + refs).
-// PUT    /api/stories/:id — recompile + validate + transactionally replace the Story and its refs.
-// DELETE /api/stories/:id — delete the Story (refs cascade).
+// GET    /api/stories/:id — the authenticated user's Walk (source + parsed SDM + refs).
+// PUT    /api/stories/:id — recompile + validate + transactionally replace the Walk and its refs.
+// DELETE /api/stories/:id — delete the Walk (refs cascade).
 //
-// All owner-scoped (#1092): a Story that isn't the caller's reads as 404, never leaks. Ships dark
+// All owner-scoped (#1092): a Walk that isn't the caller's reads as 404, never leaks. Ships dark
 // behind STORIES_ENABLED; requires the STORIES_HYPERDRIVE binding (Lakebase/Postgres) + a valid Cognito Bearer token.
 
 import { loadCatalogAsset } from "../_lib/catalogAsset";

@@ -77,8 +77,8 @@ import { facetAvailable, facetOffered, RECORD_FACETS, sectionStatus, type Record
 import { scopedReference } from "./reference";
 import { REPORT_PAGES } from "./reports";
 import { groupLabel } from "./records";
-import { LIMA_SLUG, siteBase, storyBase } from "./routes";
-import { comingSoonStories, SITES, siteBadge, siteForSlug, siteState, type NetworkSite } from "./sites";
+import { LIMA_SLUG, siteBase, walkBase } from "./routes";
+import { comingSoonWalks, SITES, siteBadge, siteForSlug, siteState, type NetworkSite } from "./sites";
 import { STUDY_CHAPTERS, studyHref } from "./study";
 import { NETWORK_NOUNS } from "./taxonomy";
 import type { TagKind } from "./teardown";
@@ -130,7 +130,7 @@ export interface SearchShardRef {
  * decision about what the network advertises belongs.
  */
 function shipsOwnRows(site: NetworkSite): boolean {
-  return site.selectable || comingSoonStories(site.slug).length > 0;
+  return site.selectable || comingSoonWalks(site.slug).length > 0;
 }
 
 /**
@@ -408,15 +408,15 @@ function wikiRows(): SearchDoc[] {
  * search row would undo.
  */
 function storyRows(site: NetworkSite): SearchDoc[] {
-  const held = comingSoonStories(site.slug);
+  const held = comingSoonWalks(site.slug);
   if (held.length === 0) return [];
   const section = getSection("story").label;
   return held.map((ref) => ({
     title: `${ref.title} — coming soon`,
-    url: `${storyBase(site.slug, ref.codename)}/`,
+    url: `${walkBase(site.slug, ref.codename)}/`,
     section,
     text: blob("the story, a guided walk, coming soon — held while it is finished", ref.dek),
-    kind: "Story",
+    kind: "Walk",
     site: site.slug,
   }));
 }

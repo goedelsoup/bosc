@@ -7,7 +7,7 @@
  * `/network/<id>` so they're clean siblings, and an investigation is a *story* beneath a
  * site (so a site can host several over time — `/network/<id>/stories/<codename>`).
  *
- * The parameterized core (`siteBase`/`storyBase`) keys off the registry `slug` (the same
+ * The parameterized core (`siteBase`/`walkBase`) keys off the registry `slug` (the same
  * key the Python `bosc.sites` peer uses for facility maps, grouping, …). Lima is the one
  * site whose URL id differs from its slug (`lima` → `american-sugar-creek-allen-co`, the
  * historical re-root); every other site's URL id IS its slug. This map is the only place
@@ -54,18 +54,24 @@ export function slugForSiteId(id: string): string {
 }
 
 /**
- * A story's URL root (`<siteBase>/stories/<codename>`) — a site can host several stories.
- * `storyBase("lima", "project-bosc")` → the Project BOSC story root.
+ * A walk's URL root (`<siteBase>/walk/<codename>`) — a site can host several walks.
+ * `walkBase("lima", "project-bosc")` → the Project BOSC walk root.
+ *
+ * **`/walk/`, not `/stories/`, since #1972** (epic #1968). The editorial walk and the
+ * reader-composed **Walk** (#1090 — `/stories/compose|mine|read`) shared one route namespace and
+ * one noun while being unrelated systems: one is a curated teaching artifact the project authors,
+ * the other is user-generated content a reader assembles. `Walk` now means only the latter.
+ * Old `/stories/<codename>/…` paths redirect (`public/_redirects`).
  */
-export function storyBase(slug: string, codename: string): string {
-  return `${siteBase(slug)}/stories/${codename}`;
+export function walkBase(slug: string, codename: string): string {
+  return `${siteBase(slug)}/walk/${codename}`;
 }
 
 /** The live reference site's URL root (was `/bosc`). The Lima specialization of `siteBase`. */
 export const SITE_BASE = siteBase(LIMA_SLUG);
 
-/** The Project BOSC story under that site — the Lima specialization of `storyBase`. */
-export const STORY_BASE = storyBase(LIMA_SLUG, DEFAULT_STORY_CODENAME);
+/** The Project BOSC walk under that site — the Lima specialization of `walkBase`. */
+export const WALK_BASE = walkBase(LIMA_SLUG, DEFAULT_STORY_CODENAME);
 
 /**
  * Build a Lima-site URL with NO deploy-base prefix — the Astro-free peer of `withSite()`
@@ -82,5 +88,5 @@ export function siteUrl(path = ""): string {
 
 /** The story-root peer of `siteUrl()` — `storyUrl("/water")` → the flattened chapter path. */
 export function storyUrl(path = ""): string {
-  return `${STORY_BASE}${path}`;
+  return `${WALK_BASE}${path}`;
 }
