@@ -27,25 +27,14 @@ export default defineConfig({
   base: process.env.BASE_PATH || undefined,
   // The sitemap needs an absolute `site`; only register it in production builds
   // where SITE_URL is set (locally / in CI it'd warn and emit nothing useful).
-  // Keep the `noindex` routes out of the sitemap too: the internal component galleries
-  // and the unlinked launch/locked previews aren't content (#593).
+  // Keep the `noindex` route out of the sitemap too (#593). One entry left: #1894 retired the
+  // component galleries and the locked preview from the production artifact — a route that isn't
+  // built needs no filter — and `/pre-launch` is the standalone landing the Pages middleware
+  // rewrites `/` to when `preLaunch` is on, so it ships and stays out of the sitemap.
   integrations: [
     react(),
     mdx(),
-    ...(site
-      ? [
-          sitemap({
-            filter: (page) =>
-              ![
-                "/site/icon-showcase",
-                "/site/chart-showcase",
-                "/site/teardown-showcase",
-                "/pre-launch",
-                "/locked-preview",
-              ].some((p) => page.includes(p)),
-          }),
-        ]
-      : []),
+    ...(site ? [sitemap({ filter: (page) => !page.includes("/pre-launch") })] : []),
   ],
   markdown: {
     // Shiki's default theme is github-dark; the site chrome is light (and

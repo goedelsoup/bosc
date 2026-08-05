@@ -8,10 +8,10 @@ import Base from "~/layouts/Base.astro";
 import StoriesDisabled from "~/components/StoriesDisabled.astro";
 import MyStories from "@watermark/viz/islands/stories/MyStories.tsx";
 import { withSite } from "@watermark/core/site";
-import { activeSite, selectableSitePaths, siteForSlug } from "@watermark/core/sites";
-import { storiesUiEnabled } from "@watermark/core/storiesFlag";
+import { activeSite, siteForSlug } from "@watermark/core/sites";
+import { storiesUiEnabled, storyToolPaths } from "@watermark/core/storiesFlag";
 
-export const getStaticPaths = selectableSitePaths;
+export const getStaticPaths = storyToolPaths;
 
 const { slug } = Astro.props as { slug: string };
 const site = siteForSlug(slug) ?? activeSite();

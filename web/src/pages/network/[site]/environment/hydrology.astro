@@ -15,6 +15,7 @@ import type {
 import type { FigureStatData } from "@watermark/core/viz";
 import { hasLegalDoc } from "@watermark/core/legal";
 import { withSite } from "@watermark/core/site";
+import { siteRouteOffered } from "@watermark/core/readiness";
 import { fmtRanged } from "@watermark/core/format";
 import { COOLING_MODEL_LABELS } from "@watermark/core/study";
 import { buildThermal } from "@watermark/core/thermal";
@@ -24,6 +25,11 @@ import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 // (#1886) — a peer must not link into the reference build's filings, so it is gated on THIS
 // site's corpus actually carrying the memo.
 const { slug } = Astro.props as { slug: string };
+// The load report is a `reports`-section page; a peer whose section is locked no longer builds it
+// (#1894), so the cross-link is offered on the same terms the page is.
+const loadReport = siteRouteOffered(slug, "/reports/the-load-and-the-grid")
+  ? withSite("/reports/the-load-and-the-grid")
+  : null;
 
 const scenarios = hasFeed("hydrology-scenarios") ? loadFeed<ScenarioResult[]>("hydrology-scenarios") : [];
 
@@ -287,8 +293,12 @@ const thermalOverCriterion = thermal?.meta.permits_over_daily_max_criterion ?? [
                   The IT load is inferred from the facility's <strong>[verified]</strong> air-permit
                   backup capacity (N+1), then carried through the cooling archetype's water math — one
                   derivation, not two headlines. The disclosed MW range widens the consumptive bracket.
-                  {" "}
-                  <a href={withSite("/reports/the-load-and-the-grid")}>the load and the grid →</a>
+                  {loadReport && (
+                    <Fragment>
+                      {" "}
+                      <a href={loadReport}>the load and the grid →</a>
+                    </Fragment>
+                  )}
                 </p>
               </div>
             )}

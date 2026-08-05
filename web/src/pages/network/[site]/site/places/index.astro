@@ -1,65 +1,56 @@
 ---
-import { selectableSitePaths } from "@watermark/core/sites";
-export const getStaticPaths = selectableSitePaths;
+import { availableFacetPaths } from "@watermark/core/readiness";
+// The declared facet gate (#1886), at the ROUTE since #1894 — a site with no per-place profiles
+// doesn't build this page, rather than building one that renders a lock no door links to and no
+// search row names. NOTE the facet is narrower than the `places` DOMAIN: a site can have committed
+// campus/footprint geometry — which lights the domain and draws the map — without any per-place
+// PROFILE. So what's withheld here is the profiles specifically, and the section stays open
+// elsewhere; claiming a site "has no places" when its parcel assemblage is committed would be the
+// mirror-image error to the one #1886 fixed.
+export const getStaticPaths = () => availableFacetPaths("places");
 import Base from "~/layouts/Base.astro";
-import SectionLocked from "~/components/SectionLocked.astro";
+import { facetAvailable } from "@watermark/core/readiness";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { PlaceItem } from "@watermark/core/feeds";
-import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
 import { withSite } from "@watermark/core/site";
 
-// The declared facet gate (#1886). NOTE it is narrower than the `places` DOMAIN: a site can have
-// committed campus/footprint geometry — which lights the domain and draws the map — without any
-// per-place PROFILE. So the lock here asks for the profiles specifically, and the section stays
-// open elsewhere; claiming a site "has no places" when its parcel assemblage is committed would
-// be the mirror-image error to the one this issue fixes.
 const { slug } = Astro.props as { slug: string };
-const facet = RECORD_FACETS.places;
-const locked = !facetAvailable(slug, "places");
-
 const places = hasFeed("places") ? loadFeed<PlaceItem[]>("places") : [];
 const sorted = [...places].sort((a, b) => a.name.localeCompare(b.name));
+// Places and people are separate facets and a site can open one without the other — Fort Wayne
+// has parcels and no curated profiles. The sibling link is offered only where that page exists.
+const peopleHref = facetAvailable(slug, "people") ? withSite("/site/people/") : null;
 ---
 
 <Base title="Places & parcels" section="site">
   <article class="prose">
     <p>
-      <a href={withSite("/site/")}>← The record</a> ·
-      <a href={withSite("/site/people/")}>People</a>
+      <a href={withSite("/site/")}>← The record</a>
+      {peopleHref && (
+        <Fragment> · <a href={peopleHref}>People</a></Fragment>
+      )}
     </p>
     <h1>Places &amp; parcels</h1>
-    {!locked && (
-      <p class="section-lead">
-        The geographic detail behind the entity graph — the campus, the corridor sites,
-        and the parcels the record turns on. {places.length} profile(s).
-      </p>
-    )}
-    {
-      locked ? (
-        <SectionLocked
-          section={facet.section}
-          label={facet.label}
-          holds="individual place profiles — the parcels, facilities, and waters the record locates, each with a page of its own"
-        />
-      ) : (
-        <table>
-          <thead>
-            <tr><th>Place</th><th>Kind</th><th>Parcels</th><th>Also known as</th></tr>
-          </thead>
-          <tbody>
-            {sorted.map((p) => (
-              <tr>
-                <td>
-                  <a href={`${withSite("/site/places/")}${p.slug}/`}>{p.name}</a>
-                </td>
-                <td>{p.kind}</td>
-                <td>{p.parcels.length || "—"}</td>
-                <td class="card-meta">{p.aliases.slice(0, 3).join(", ") || "—"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )
-    }
+    <p class="section-lead">
+      The geographic detail behind the entity graph — the campus, the corridor sites,
+      and the parcels the record turns on. {places.length} profile(s).
+    </p>
+    <table>
+      <thead>
+        <tr><th>Place</th><th>Kind</th><th>Parcels</th><th>Also known as</th></tr>
+      </thead>
+      <tbody>
+        {sorted.map((p) => (
+          <tr>
+            <td>
+              <a href={`${withSite("/site/places/")}${p.slug}/`}>{p.name}</a>
+            </td>
+            <td>{p.kind}</td>
+            <td>{p.parcels.length || "—"}</td>
+            <td class="card-meta">{p.aliases.slice(0, 3).join(", ") || "—"}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </article>
 </Base>

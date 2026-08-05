@@ -37,6 +37,12 @@ const records = hasFeed("records") ? loadFeed<RecordItem[]>("records") : [];
 const flagged = flaggedRecords(records);
 const span = recordSpan(timeline);
 const latest = facetAvailable(slug, "timeline") ? recentEvents(timeline, 3) : [];
+// The lede's CTA and its event rows both land on `/timeline`, which a site with no dated events no
+// longer builds (#1894) — so the deep link is offered on exactly the terms the page is. Same for
+// the transcription-warning link into `/site/records/`: the count comes from the feed, the page
+// comes from the facet, and a site can carry the one without opening the other.
+const timelineHref = facetAvailable(slug, "timeline") ? withSite("/timeline") : null;
+const recordsHref = facetAvailable(slug, "records") ? withSite("/site/records/") : null;
 const exported = isoDate(manifest.generated_at);
 const year = (iso: string): string => iso.slice(0, 4);
 const empty = nFiles === 0 && records.length === 0 && timeline.length === 0;
@@ -181,8 +187,8 @@ const doors = allDoors.filter((d) => d.facet === undefined || facetAvailable(slu
         ? "Nothing has been ingested for this site yet — no source documents, no extractions, no dated events. That's the honest state, not a placeholder: the doors below open as each facet lands, and a document you hold is the fastest way to open the first one."
         : null}
       cite={`Counted from this site's own documents / records / timeline feeds${exported ? `, exported ${exported}` : ""}. Nothing here is carried over from another site.`}
-      href={withSite("/timeline")}
-      cta="Open the timeline"
+      href={timelineHref}
+      cta={timelineHref ? "Open the timeline" : null}
     >
       <p class="hublede-say">
         <span class="num">{num(nFiles)}</span> source files across{" "}
@@ -197,10 +203,10 @@ const doors = allDoors.filter((d) => d.facet === undefined || facetAvailable(slu
             "."
           )
         }
-        {flagged.length > 0 && (
+        {flagged.length > 0 && recordsHref && (
           <Fragment>
             {" "}
-            <a href={withSite("/site/records/")}>
+            <a href={recordsHref}>
               {num(flagged.length)} of those records carry a transcription warning
             </a>{" "}
             — read them against the page they came off.
@@ -208,13 +214,13 @@ const doors = allDoors.filter((d) => d.facet === undefined || facetAvailable(slu
         )}
       </p>
       {
-        latest.length > 0 && (
+        latest.length > 0 && timelineHref && (
           <ul class="hublede-list">
             {latest.map((e) => (
               <li class="hublede-item">
                 <span class="hublede-item-k">{e.date}</span>
                 <span class="hublede-item-b">
-                  <a class="hublede-item-t" href={withSite("/timeline")}>
+                  <a class="hublede-item-t" href={timelineHref}>
                     {e.title}
                   </a>
                   <span class="hublede-item-m">

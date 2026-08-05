@@ -1,23 +1,18 @@
 ---
 import Base from "~/layouts/Base.astro";
-import SectionLocked from "~/components/SectionLocked.astro";
 import Timeline from "~/components/Timeline.astro";
 import type { TimelineItem } from "@watermark/core/viz";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import { evidenceKind, type TimelineEntry } from "@watermark/core/feeds";
-import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
+import { availableFacetPaths } from "@watermark/core/readiness";
 import { activeStoryAnchorFor } from "@watermark/core/walk";
 import { withStory } from "@watermark/core/site";
-import { selectableSitePaths } from "@watermark/core/sites";
 
-// One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
-export const getStaticPaths = selectableSitePaths;
-
-// The declared facet gate (#1886) — the `timeline` section already locked in the nav and the
-// needs board, but the page itself rendered a headline claiming an argument over zero events.
-const { slug } = Astro.props as { slug: string };
-const facet = RECORD_FACETS.timeline;
-const locked = !facetAvailable(slug, "timeline");
+// The declared facet gate (#1886) — the `timeline` section already locked in the nav and the needs
+// board, but the page itself rendered a headline claiming an argument over zero events. At the ROUTE
+// since #1894: a site with no dated events builds no page, rather than one whose lock no door links
+// and no search row names.
+export const getStaticPaths = () => availableFacetPaths("timeline");
 
 const entries = hasFeed("timeline") ? loadFeed<TimelineEntry[]>("timeline") : [];
 const isDated = (e: TimelineEntry): boolean => /^\d{4}/.test(e.date);
@@ -44,27 +39,18 @@ const items: TimelineItem[] = ordered.map((e) => {
   section="timeline"
   description="Every dated event in the record, ordered — confidentiality first, the public reveal last."
 >
-  {locked ? (
-    <article class="prose">
-      <h1>Timeline</h1>
-      <SectionLocked section={facet.section} label={facet.label} />
-    </article>
-  ) : (
-    <>
-      <article class="prose">
-        <h1>How the record was assembled — and withheld</h1>
-        <p class="section-lead">
-          {entries.length} events, cause → consequence — each traceable to the
-          extraction that supplied it, the evidence node colored by its citation.
-          Every beat carries its standing: verified events are sourced; open events
-          mark where the record is still being fought for. The <strong>order is the
-          argument</strong>: the confidentiality went on before the public ever heard
-          the name.
-        </p>
-      </article>
-      <div class="rb-list">
-        <Timeline events={items} />
-      </div>
-    </>
-  )}
+  <article class="prose">
+    <h1>How the record was assembled — and withheld</h1>
+    <p class="section-lead">
+      {entries.length} events, cause → consequence — each traceable to the
+      extraction that supplied it, the evidence node colored by its citation.
+      Every beat carries its standing: verified events are sourced; open events
+      mark where the record is still being fought for. The <strong>order is the
+      argument</strong>: the confidentiality went on before the public ever heard
+      the name.
+    </p>
+  </article>
+  <div class="rb-list">
+    <Timeline events={items} />
+  </div>
 </Base>

@@ -62,6 +62,71 @@ const INLINE_IMAGE_SEGMENT = /^image[0-9a-f]{4,}\.(?:png|jpe?g|gif|bmp)$/i;
  */
 const TRAILLESS_ROUTES = new Set(["", "pre-launch"]);
 
+/**
+ * The deploy budget (#1894). Cloudflare Pages caps a deployment at **20,000 files** and **25 MiB
+ * per file**; there is no documented cap on the total, but upload time is real and the artifact is
+ * what every deploy pushes.
+ *
+ * Measured at **3,962 files / 315 MB** when this landed, of which Lima is 3,394 files (86%) and
+ * 280 MB (89%) — so "a site" costs anywhere between 3 files and 3,400 depending on its corpus, and
+ * the only unit worth quoting headroom in is a Lima-sized one.
+ *
+ * Against the Pages cap that is **four more Lima-sized sites**. Against this budget it is about
+ * two-thirds of one — deliberately. The budget is ~1.5× the current build and ~30% of the cap:
+ * loose enough that ordinary work never touches it, tight enough that onboarding a site with a real
+ * corpus raises it in a reviewed diff. That is the whole point of a budget under the limit; the
+ * alternative is discovering the cap on a deploy, after review, on main.
+ *
+ * Raising these numbers is a legitimate edit — that is what a budget is for. Raising them without
+ * saying what got bigger is not, which is why the guard prints the measurement either way.
+ *
+ * **This is the CI build, which is not byte-identical to production.** The offline gate reads the
+ * committed fixtures under `web/sites/` (`WATERMARK_BUNDLE_DIR=sites`) while a deploy exports the
+ * slugs in `astro.config.ts`, so per-site CONTENT can differ. The route SET is the same either way
+ * (it comes from the `sites.ts` registry, not the bundle list), which is what the file count is
+ * mostly made of — so the count is a faithful guard and the byte total is a close approximation.
+ */
+const FILE_BUDGET = 6_000;
+const SIZE_BUDGET = 420 * 1024 * 1024;
+/** Cloudflare's own per-file hard limit — not a budget, an upload failure. */
+const PAGES_MAX_FILE_BYTES = 25 * 1024 * 1024;
+/** Cloudflare's own per-deployment file cap, quoted so the headroom below is checkable. */
+const PAGES_MAX_FILES = 20_000;
+
+/**
+ * Routes that ship with **no inbound internal link, on purpose** (#1894, guard 9).
+ *
+ * Everything else the build emits must be linked from some other built page. That is a deliberately
+ * blunt rule, and the register is what keeps it honest: an entry has to say why the page exists
+ * without a way in, and the guard fails if a declared pattern stops matching anything — so a
+ * decision can't outlive the route it was made about.
+ *
+ * This is NOT the same register as `nav.ts`'s contextual leaves. Those ARE linked, from body copy
+ * rather than from the chrome, and guard 6b proves it. These are linked from nothing at all.
+ *
+ * A future entrant worth naming now: a **`hidden` story** (#1256) publishes routes and advertises
+ * nothing — "reachable by direct URL, just not advertised" — so its chapters would land here. None
+ * is registered today, and writing a speculative pattern would be asserting a decision nobody has
+ * made. If one is registered, this guard will fail, and the right fix is a line here saying so.
+ */
+const UNLINKED_BY_DESIGN = [
+  {
+    pattern: /^account(\/|$)/,
+    why:
+      "The auth flow. Sign-in, the OAuth callback, sign-out, unsubscribe and the admin console are " +
+      "arrived at by redirect, from an email, or by an operator who already knows the address — " +
+      "there is nothing to link them FROM, and a public link to a sign-out is not a feature.",
+  },
+  {
+    pattern: /^pre-launch$/,
+    why:
+      "The pre-go-live landing. Unlinked is the point: `functions/_middleware.ts` rewrites `/` to it " +
+      "when `preLaunch` is on in deploy/features.yaml and redirects every other route to `/`, so it " +
+      "is the only page a reader sees. It must ship even while the flag is off, or flipping the " +
+      "switch would serve a 404 as the front door.",
+  },
+];
+
 if (!existsSync(DIST)) {
   console.error(`check-routes: no ${DIST}/ — run \`astro build\` first.`);
   process.exit(2);
@@ -481,6 +546,175 @@ checkContextualLeaves();
     `check-routes: one switcher panel on ${chromed.toLocaleString("en-US")} chromed pages · ` +
       `${rowsPerPage} site rows each`,
   );
+}
+
+// ------------------------------------------------- 8. the deploy budget (#1894)
+//
+// "A CI check asserts file count and artifact size against a committed budget." The cap this is
+// really about is Cloudflare's 20,000 files per deployment, which the build has no way of noticing
+// until a deploy fails — and a deploy fails after review, after merge, on main.
+//
+// Counted over EVERY file in `dist/`, not just the routes: the `_astro` bundle, the search shards,
+// the per-site catalogs and the `public/` passthrough all upload, and the cap does not care which
+// of them is a page. `du` and `find` on the same tree are the reproduction.
+{
+  const files = [];
+  const walk = (dir) => {
+    for (const entry of readdirSync(dir)) {
+      const p = join(dir, entry);
+      const s = statSync(p);
+      if (s.isDirectory()) walk(p);
+      else files.push({ path: p, size: s.size });
+    }
+  };
+  walk(DIST);
+  const bytes = files.reduce((n, f) => n + f.size, 0);
+  const mb = (n) => `${(n / 1024 / 1024).toFixed(0)} MB`;
+
+  if (files.length > FILE_BUDGET) {
+    failures.push(
+      `${files.length.toLocaleString("en-US")} files in ${DIST}/, over the ` +
+        `${FILE_BUDGET.toLocaleString("en-US")}-file budget (Cloudflare Pages caps a deployment at ` +
+        `${PAGES_MAX_FILES.toLocaleString("en-US")}). Either the build grew a route family it ` +
+        "shouldn't have, or the network gained a site and the budget in check-routes.mjs needs " +
+        "raising — with a note saying which.",
+    );
+  }
+  if (bytes > SIZE_BUDGET) {
+    failures.push(
+      `${DIST}/ is ${mb(bytes)}, over the ${mb(SIZE_BUDGET)} artifact budget. Every deploy uploads ` +
+        "this. Find what got bigger before raising the number.",
+    );
+  }
+  // Not a budget — Cloudflare refuses the upload outright above this.
+  const oversize = files.filter((f) => f.size > PAGES_MAX_FILE_BYTES);
+  if (oversize.length > 0) {
+    failures.push(
+      `${oversize.length} file(s) over the Pages ${mb(PAGES_MAX_FILE_BYTES)} per-file limit — the ` +
+        `deploy will be REJECTED, not merely slow:\n` +
+        oversize
+          .slice(0, 5)
+          .map((f) => `      ${mb(f.size)}  ${relative(DIST, f.path)}`)
+          .join("\n"),
+    );
+  }
+  const headroom = Math.floor((PAGES_MAX_FILES - files.length) / Math.max(1, files.length));
+  console.log(
+    `check-routes: deploy ${files.length.toLocaleString("en-US")} files · ${mb(bytes)} · ` +
+      `budget ${FILE_BUDGET.toLocaleString("en-US")} / ${mb(SIZE_BUDGET)} · ` +
+      `${headroom} more build(s) this size fit under the Pages ${PAGES_MAX_FILES.toLocaleString("en-US")}-file cap`,
+  );
+}
+
+// ------------------------------- 9. every built route is reachable from another page (#1894)
+//
+// The acceptance criterion: "no orphaned non-auth route in the production build". Eight non-auth
+// routes had zero inbound links when #1894 was written and fifty-five by the time it was worked —
+// the difference is not rot, it is two sites being promoted, because most of them were routes a
+// gate had already closed. `site/index.astro` stopped drawing a locked facet's door (#1886) and
+// `search.ts` stopped indexing its row (#1908), and both were right; what neither could do is stop
+// the page from being built. A lock nobody can reach asks nobody for anything.
+//
+// So this is the third consumer of every gate in `readiness.ts`, asserted from the outside: if the
+// door is gone and the row is gone, the route has to be gone too. It is also the only guard that
+// can catch the reverse — a real page that quietly loses its last link.
+//
+// `check-links.mjs` proves every href RESOLVES; this proves every route is POINTED AT. They are
+// opposite directions over the same edge set and neither implies the other.
+{
+  // Both spellings of every route: Astro emits a route whose param carries a URL-special character
+  // (the as-received public-record filenames with `#`, `&`, `%`) percent-encoded in the directory
+  // name, while most hrefs are written literally. Indexing both ends the encoding question here
+  // rather than at every lookup.
+  const key = (r) => (r.endsWith("/") ? r.slice(0, -1) : r);
+  const inbound = new Map();
+  const alias = new Map();
+  for (const { route } of all) {
+    const k = key(route);
+    inbound.set(k, 0);
+    alias.set(k, k);
+  }
+  // Decoded spellings in a SECOND pass, and never over a real route: if some site ever emits both
+  // `A %26 B` and `A & B`, the literal directory has to keep its own name, and only the spelling
+  // nothing occupies becomes an alias.
+  for (const k of [...inbound.keys()]) {
+    try {
+      const decoded = decodeURIComponent(k);
+      if (decoded !== k && !alias.has(decoded)) alias.set(decoded, k);
+    } catch {
+      // A malformed escape sequence is not decodable; the as-written key still stands.
+    }
+  }
+
+  // The same entity decode `check-links.mjs` does, and load-bearing for the same reason: the PRR
+  // production tree has directories like `Contracts & Agreements`, whose href is emitted `&#38;`.
+  // Undecoded, that `#` reads as a fragment delimiter and truncates the target to `Contracts &` —
+  // so the link would go uncounted and the container it points at would be reported an orphan.
+  // Numeric/named first, `&amp;` LAST, so `&amp;#38;` isn't decoded twice.
+  const decodeEntities = (s) =>
+    s
+      .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+      .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(Number.parseInt(h, 16)))
+      .replace(/&quot;/g, '"')
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&amp;/g, "&");
+
+  const EXTERNAL = /^(https?:|mailto:|tel:|data:|javascript:|#)/i;
+  for (const { file, route } of all) {
+    const html = readFileSync(file, "utf-8");
+    const self = key(route);
+    for (const m of html.matchAll(/href="([^"]*)"/g)) {
+      const raw = decodeEntities(m[1].trim());
+      if (!raw || EXTERNAL.test(raw) || raw.startsWith("//") || !raw.startsWith("/")) continue;
+      const target = key(raw.split(/[?#]/)[0].replace(/^\//, ""));
+      let k = alias.get(target);
+      if (k === undefined) {
+        try {
+          k = alias.get(decodeURIComponent(target));
+        } catch {
+          k = undefined;
+        }
+      }
+      // A page linking ITSELF proves nothing — the canonical link, the trail's own leaf and the
+      // switcher's current-site row all point home on every page, which would make every route
+      // its own referrer and this guard vacuous.
+      if (k === undefined || k === self) continue;
+      inbound.set(k, inbound.get(k) + 1);
+    }
+  }
+
+  const orphans = [...inbound]
+    .filter(([, n]) => n === 0)
+    .map(([r]) => r)
+    .sort();
+  const undeclared = orphans.filter((r) => !UNLINKED_BY_DESIGN.some((d) => d.pattern.test(r)));
+  if (undeclared.length > 0) {
+    failures.push(
+      `${undeclared.length} built route(s) are linked from no other page. Link them, stop building ` +
+        "them, or declare them in check-routes.mjs's UNLINKED_BY_DESIGN with the reason:\n" +
+        undeclared
+          .slice(0, 10)
+          .map((r) => `      /${r}`)
+          .join("\n"),
+    );
+  }
+  // A declaration that no longer matches an orphan is a decision about a route that has since been
+  // linked or deleted. Left standing it would silently excuse the NEXT route that matches it.
+  const stale = UNLINKED_BY_DESIGN.filter((d) => !orphans.some((r) => d.pattern.test(r)));
+  if (stale.length > 0) {
+    failures.push(
+      `${stale.length} UNLINKED_BY_DESIGN entr(ies) match no orphan in this build — the route is ` +
+        `linked or gone, so the exemption should be too:\n` +
+        stale.map((d) => `      ${d.pattern}`).join("\n"),
+    );
+  }
+  if (undeclared.length === 0 && stale.length === 0) {
+    console.log(
+      `check-routes: every route reachable · ${orphans.length} declared unlinked ` +
+        `(${UNLINKED_BY_DESIGN.length} rule${UNLINKED_BY_DESIGN.length === 1 ? "" : "s"})`,
+    );
+  }
 }
 
 if (failures.length === 0) {

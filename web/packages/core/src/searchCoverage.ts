@@ -31,9 +31,8 @@
 
 import { runWithSite } from "./bundle";
 import { contextualLeaves } from "./nav";
-import { storyBase } from "./routes";
 import { searchShardRefs } from "./search";
-import { comingSoonStories, SITES } from "./sites";
+import { SITES } from "./sites";
 
 /** How a family of built routes relates to the search index. */
 export type CoverageVerdict = "not-content" | "represented" | "gap";
@@ -52,44 +51,30 @@ export interface CoverageFamily {
 }
 
 /**
- * The **interior** routes of every held story — its table of contents and its chapters — as one
- * `represented` family (#1907).
+ * A held story's **interior** routes were declared here as a `represented` family (#1907), on the
+ * reading that a `comingSoon` story serves the identical `StoryComingSoon` interstitial at its
+ * contents page and every chapter, so indexing all eight of Findlay's would put eight
+ * near-identical "coming soon" results in one result set. That was true and it is why the family
+ * existed.
  *
- * A held story (`comingSoon`, #1526) serves the identical `StoryComingSoon` interstitial at every
- * one of its routes: the on-ramp, `contents`, and each chapter. Search indexes it once, at the
- * story root (`storyRows` in `search.ts`), and the rest of its routes hold nothing that row doesn't
- * reach — which is what `represented` means. Indexing all eight of Findlay's would put eight
- * near-identical "coming soon" results in one result set.
+ * #1894 removed the routes instead, which is the stronger form of the same argument. Eleven interior
+ * routes across Findlay and Fort Wayne were built, excused from the search denominator here, and
+ * linked from nothing — the walk's own chapter list is not rendered while it is held, the catalog
+ * drops its atoms (`catalogBuild.ts`) and a record shows no walk chip (`recordBlock.ts`). A route
+ * that is unreachable AND unindexed is not represented by anything; it is an orphan with a
+ * declaration in front of it. The story ROOT still builds, still carries the interstitial, and is
+ * still indexed as `<title> — coming soon` (`storyRows`), which is what a reader searching the
+ * walk's name was ever going to find.
  *
- * Derived from the registry rather than written out, for the reason `searchShardRefs()` is: the
- * story root differs from the slug for the reference site (`lima` → `american-sugar-creek-allen-co`),
- * and a story that goes readable must stop being represented here on the same edit that makes its
- * chapters real prose — not whenever someone remembers this list. Returns NO family when nothing is
- * held, because an empty alternation (`^(?:)/[^/]+/$`) would quietly exclude every two-segment route
- * in the build.
+ * Nothing replaces this in the denominator: with the interiors unbuilt there is nothing to excuse,
+ * and if they ever come back unindexed the coverage number will fall and say so — which is the
+ * behaviour a `represented` family was suppressing.
  *
- * A `hidden` story (#1256) is deliberately not covered: it publishes routes and advertises nothing,
- * so its chapters would surface as undeclared misses and the build would say so. That is the right
- * failure — "reachable by direct URL, just not advertised" is a decision about what the network
- * advertises, and it belongs in this file, written down, rather than pre-guessed here.
+ * The `hidden` story (#1256) case is unchanged and still deliberately undeclared: it publishes
+ * routes and advertises nothing, so its chapters would surface as undeclared misses and the build
+ * would say so. See `check-routes.mjs` guard 9, which is where that decision now has to be written
+ * down if a hidden story is ever registered.
  */
-function heldStoryInteriors(): CoverageFamily[] {
-  const roots = SITES.flatMap((s) => comingSoonStories(s.slug).map((ref) => storyBase(s.slug, ref.codename)));
-  if (roots.length === 0) return [];
-  return [
-    {
-      pattern: `^(?:${roots.join("|")})/[^/]+/$`,
-      label: "A held story's interior routes",
-      verdict: "represented",
-      note:
-        "#1907. A `comingSoon` story serves ONE interstitial — title, dek, 'nothing in the walk " +
-        "is readable yet' — at every route it emits, so its contents page and its chapters hold " +
-        "nothing their story root doesn't. That root IS indexed, as `<title> — coming soon` " +
-        "(`storyRows`, kind `Story`), which is where a reader searching the walk's name lands. " +
-        "The chapters return to the denominator on the edit that makes them readable.",
-    },
-  ];
-}
 
 export const COVERAGE_FAMILIES: CoverageFamily[] = [
   {
@@ -111,31 +96,26 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
       "arrived at by redirect.",
   },
   {
-    pattern: "^/showcase/.*$",
-    label: "Component showcases",
-    verdict: "not-content",
-    note:
-      "Design galleries for the chart, icon, and teardown primitives — developer surface, " +
-      "deliberately excluded from the sitemap already (`astro.config.ts`), and slated for " +
-      "retirement in #1894.",
-  },
-  {
     pattern: "^/network/[^/]+/stories/(compose|mine|read|grab-demo)/$",
     label: "Story composer",
     verdict: "not-content",
     note:
       "The user-authored stories surface (#1090), dark behind `STORIES_ENABLED`. These are tools " +
       "for making a story, not published record; the story a site actually publishes is indexed " +
-      "chapter by chapter.",
+      "chapter by chapter. Since #1894 they are built only when the flag is ON, so today this " +
+      "family matches nothing — it is kept for the build that flips it, not as a live exclusion.",
   },
   {
-    pattern: "^/(pre-launch|locked-preview)/$",
-    label: "Build-state landings",
+    pattern: "^/pre-launch/$",
+    label: "The pre-launch landing",
     verdict: "not-content",
     note:
-      "The pre-go-live landing and the locked-section preview. Both sit outside the nav and the " +
-      "layout on purpose (`pre-launch` bypasses `Base.astro` entirely, and is one of the two " +
-      "routes `check-routes.mjs` exempts from the breadcrumb trail).",
+      "The pre-go-live landing the Pages middleware rewrites `/` to when `preLaunch` is on. It " +
+      "sits outside the nav and the layout on purpose — it bypasses `Base.astro` entirely, and is " +
+      "one of the two routes `check-routes.mjs` exempts from the breadcrumb trail. The component " +
+      "galleries and the locked preview used to be declared here beside it; #1894 retired them " +
+      "from the production artifact instead, which is the stronger answer — an unbuilt route " +
+      "needs no exclusion.",
   },
   {
     pattern: "^/search/$",
@@ -143,7 +123,6 @@ export const COVERAGE_FAMILIES: CoverageFamily[] = [
     verdict: "not-content",
     note: "Search finding itself is noise in every result set that contains the word.",
   },
-  ...heldStoryInteriors(),
   {
     pattern: "^/network/[^/]+/submit/$",
     label: "The site-tier submit form",

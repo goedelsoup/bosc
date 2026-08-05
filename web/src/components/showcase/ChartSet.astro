@@ -1,0 +1,164 @@
+---
+/**
+ * Chart set — component preview (#306, ported from the Claude Design "Chart Set" board).
+ * The seven record-grammar primitives, each shown once. Figures are illustrative
+ * sample data (not findings); real per-page integrations (records / reports /
+ * watershed) follow. The components are pure SSR SVG — this page reads with JS off.
+ *
+ * The gallery body only; the frame (and the dev-only route gate) is `pages/showcase/[gallery].astro`.
+ */
+import BarChart from "~/components/charts/BarChart.astro";
+import BulletChart from "~/components/charts/BulletChart.astro";
+import DonutChart from "~/components/charts/DonutChart.astro";
+import LineChart from "~/components/charts/LineChart.astro";
+import RankedBarChart from "~/components/charts/RankedBarChart.astro";
+import Sparkline from "~/components/charts/Sparkline.astro";
+import StackedBar from "~/components/charts/StackedBar.astro";
+import Waterfall from "~/components/charts/Waterfall.astro";
+import GaugeBar from "~/components/charts/GaugeBar.astro";
+---
+
+<p class="td-showcase-lead">
+  Seven SSR-SVG primitives, one palette. <strong>Forest carries the data;</strong> the evidence
+  colors stay reserved for evidence. Every figure is monospace and provenance-first — a chart
+  here is just another way to show a number you can check. No JavaScript, no charting library.
+</p>
+
+<div class="chart-grid">
+  <BarChart
+    title="Records added per year"
+    data={[
+      { label: "2019", value: 6 },
+      { label: "2020", value: 9 },
+      { label: "2021", value: 14 },
+      { label: "2022", value: 11 },
+      { label: "2023", value: 19 },
+      { label: "2024", value: 24 },
+      { label: "2025", value: 31 },
+      { label: "2026", value: 13 },
+    ]}
+    max={32}
+    caption="Illustrative data · in a real chart the caption names the finding the bars carry."
+  />
+  <RankedBarChart
+    title="Acquired parcels, by acreage"
+    unit="ac"
+    legend
+    data={[
+      { label: "Parcel 2", value: 92 },
+      { label: "Parcel 5", value: 78 },
+      { label: "Parcel 3", value: 64 },
+      { label: "Parcel 4", value: 55 },
+      { label: "Parcel 6", value: 46 },
+      { label: "Parcel 1", value: 5, withheld: true },
+    ]}
+    max={100}
+  />
+</div>
+
+<div class="chart-grid">
+  <LineChart
+    title="Cumulative acreage assembled"
+    max={350}
+    endLabel="340.2 ac"
+    refs={[{ value: 340, label: "340-ac site footprint", color: "#1f6f4a" }]}
+    evidence="verified"
+    caption="Illustrative cumulative series against a reference line · sample values, not a finding."
+    data={[
+      { label: "'19", value: 5 },
+      { label: "'20", value: 5 },
+      { label: "'21", value: 60 },
+      { label: "'22", value: 152 },
+      { label: "'23", value: 241 },
+      { label: "'24", value: 300 },
+      { label: "'25", value: 335 },
+      { label: "'26", value: 340.2 },
+    ]}
+  />
+  <DonutChart
+    title="The corpus by source"
+    centerLabel="records"
+    slices={[
+      { label: "Emails · FOIA", value: 96 },
+      { label: "Permits & filings", value: 78 },
+      { label: "Other records", value: 58 },
+      { label: "Deeds & instruments", value: 52 },
+      { label: "Dated aerials", value: 34 },
+    ]}
+  />
+</div>
+
+<div class="chart-grid chart-grid--full">
+  <BulletChart
+    title="Ottawa River — cooling draw against the design low flow"
+    scaleLabel="scale · cubic feet per second"
+    unit="cfs"
+    marker={0.2}
+    rows={[
+      { label: "Design low flow · 7Q10", value: 0.2, evidence: "verified", evidenceNote: "USGS" },
+      { label: "Cooling draw · modeled", value: 4.85, fill: "#9a6a14", evidence: "inference", evidenceNote: "permit calc" },
+    ]}
+    note="The red mark is the available low flow. The modeled draw is roughly 24× larger — the comparison is the whole story."
+  />
+</div>
+
+<div class="chart-grid chart-grid--full">
+  <StackedBar
+    title="Evidence status across a sample record set"
+    segments={[
+      { label: "verified", value: 196, kind: "verified" },
+      { label: "inference", value: 78, kind: "inference" },
+      { label: "open", value: 44, kind: "open" },
+    ]}
+  />
+</div>
+
+<div class="chart-grid chart-grid--full">
+  <figure class="chart-card">
+    <figcaption class="chart-head">
+      <span class="chart-kicker">Sparkline · inline</span>
+      <span class="chart-title">A trend small enough to sit in a record row</span>
+    </figcaption>
+    <div class="chart-sparkrow">
+      <span class="chart-sparkrow-label">
+        <span class="chart-sparkrow-name">FOIA requests filed</span>
+        <span class="chart-sparkrow-sub">monthly · 2025</span>
+      </span>
+      <Sparkline values={[2, 3, 3, 5, 4, 6, 8, 7, 9, 12, 10, 14]} />
+      <span class="chart-sparkrow-val">14</span>
+    </div>
+    <div class="chart-sparkrow">
+      <span class="chart-sparkrow-label">
+        <span class="chart-sparkrow-name">Documents released</span>
+        <span class="chart-sparkrow-sub">monthly · 2025</span>
+      </span>
+      <Sparkline values={[4, 9, 12, 20, 31, 44, 60, 88, 119, 150, 182, 209]} color="#5fa07f" />
+      <span class="chart-sparkrow-val">209</span>
+    </div>
+  </figure>
+</div>
+
+<div class="chart-grid">
+  <Waterfall
+    title="Intake minus what returns · cfs"
+    steps={[
+      { label: "intake", value: 7.0, kind: "base" },
+      { label: "returned", value: 2.15, kind: "down" },
+      { label: "consumed", value: 4.85, kind: "result" },
+    ]}
+    note="Reads as an equation — the amber bar is the irreversible loss."
+  />
+  <GaugeBar
+    title="Year-end against the cap"
+    value={3470}
+    cap={3200}
+    unit="af"
+    label="of the annual permit cap"
+  />
+</div>
+
+<p class="chart-caption" style="margin-top:1.4rem;">
+  Figures shown are illustrative sample data for the preview, not findings; each primitive takes
+  plain data props and an evidence tag, so a chart carries its provenance exactly like the figures
+  it visualizes.
+</p>

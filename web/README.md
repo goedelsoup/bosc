@@ -64,9 +64,23 @@ pnpm run preview   # serve the built dist/ locally
 ```
 
 This project is a mise monorepo subproject: from anywhere, `mise run //web:check`
-runs the full gate (Biome + types + vitest + build + link check), `mise run //web:dev`
-starts the dev server, and `mise run //web:<task>` reaches `test`/`lint`/`build`/`fmt`/
-`preview`. Inside `web/`, a bare `mise run <task>` works too (see [`web/mise.toml`](mise.toml)).
+runs the full gate (Biome + types + vitest + build + link check + route check),
+`mise run //web:dev` starts the dev server, and `mise run //web:<task>` reaches
+`test`/`lint`/`build`/`fmt`/`preview`. Inside `web/`, a bare `mise run <task>` works
+too (see [`web/mise.toml`](mise.toml)).
+
+The last two steps read `dist/` rather than the source, and answer opposite questions.
+[`check-links.mjs`](scripts/check-links.mjs) proves every emitted href **resolves**;
+[`check-routes.mjs`](scripts/check-routes.mjs) holds nine budgets on the shape of the build —
+route depth, machine exhaust kept out of the URL space, document page weight, breadcrumb
+coverage, one permalink per routable document, search coverage, contextual-leaf reachability,
+the **deploy budget** (file count and total bytes against Cloudflare Pages' 20,000-file and
+25 MiB-per-file limits) and the **orphan guard** (every built route is pointed at by another,
+or declared unlinked with a reason). The last two land with
+[#1894](https://github.com/watermark-directory/the-watermark-directory/issues/1894); their
+failure branches are exercised against synthetic trees in
+[`src/lib/checkRoutes.test.ts`](src/lib/checkRoutes.test.ts), because a budget nobody has
+watched fail is only a guess that it works.
 
 In CI, the `frontend` job in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 does the same against the sample bundle (pure Node — no uv/LFS). It's path-filtered:
@@ -205,6 +219,30 @@ TOC rail, and the search index).
   selectable site, whose module docstring states the merge rule. Before it, a party carried only by
   a peer had no page anywhere — and the cross-site view is the whole reason the graph is
   network-global. The glossary and the curated inventories genuinely do build once, and say so.
+- **A route is not a page unless something can reach it**
+  ([#1894](https://github.com/watermark-directory/the-watermark-directory/issues/1894)). A gate that
+  closes a destination has to close all three of its consumers — the **door** that links it, the
+  **row** that indexes it, and the **route** that emits it. Missing the third is invisible from
+  inside the source and produces a page reachable from nowhere and findable by nothing: 17 record
+  facets and report companions rendering a lock, 16 story-authoring routes behind a dark feature
+  flag, 11 interior routes of a held walk. So the readiness gates carry their own
+  `getStaticPaths` — `availableFacetPaths` / `openSectionPaths` beside #1908's `offeredFacetPaths`
+  — and `siteRouteOffered` answers the same question for a hand-written cross-link, so a paragraph
+  can't point at a page this site doesn't build. `check-routes.mjs` **guard 9** asserts it against
+  `dist/`: every built route is linked from another built page, or declared in `UNLINKED_BY_DESIGN`
+  with a reason. Two entries qualify today — the auth flow and `/pre-launch`, which the Pages
+  middleware rewrites `/` to. `check-links.mjs` proves every href resolves; guard 9 proves every
+  route is pointed at. Neither implies the other.
+- **Development surfaces build in development.** The three component galleries
+  (`/showcase/charts` · `/showcase/icons` · `/showcase/teardown`) are how a change to a shared
+  primitive gets looked at, and they are not part of the deployed site: `showcase/[gallery].astro`
+  is one dynamic route whose `getStaticPaths` returns `[]` outside `astro dev`. A static `.astro`
+  page always emits, so `getStaticPaths` is the only place a page can decline to exist — which is
+  also how the story-authoring routes wait for `stories: true` in `deploy/features.yaml`
+  (`storyToolPaths`). Note that Astro **hoists** `getStaticPaths` out of the component, so it must
+  `import` what it reads ([`lib/showcase.ts`](src/lib/showcase.ts)) rather than close over a
+  frontmatter `const` — a closed-over binding throws in `astro dev` and is *invisible* in a
+  production build, where the `[]` branch short-circuits before ever touching it.
 - **Positional wayfinding is derived from the route**
   ([#1889](https://github.com/watermark-directory/the-watermark-directory/issues/1889), declared in
   [`trail.ts`](packages/core/src/trail.ts)): `Base.astro` resolves a breadcrumb trail from

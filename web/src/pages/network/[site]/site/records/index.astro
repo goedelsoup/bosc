@@ -1,25 +1,21 @@
 ---
-import { selectableSitePaths } from "@watermark/core/sites";
-export const getStaticPaths = selectableSitePaths;
+import { availableFacetPaths } from "@watermark/core/readiness";
+// The facet gate (#1886), declared in `RECORD_FACETS` rather than left to emerge from the fact that
+// this page happens to read a per-site feed. At the ROUTE since #1894: an empty `records` feed means
+// no page, not a page rendering a lock that no door links and no search row names.
+export const getStaticPaths = () => availableFacetPaths("records");
 import EvidenceLegend from "~/components/EvidenceLegend.astro";
 import DonutChart from "~/components/charts/DonutChart.astro";
 import HubLede from "~/components/HubLede.astro";
-import SectionLocked from "~/components/SectionLocked.astro";
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { RecordItem } from "@watermark/core/feeds";
 import { flaggedRecords } from "@watermark/core/hubLede";
-import { RECORD_FACETS, facetAvailable } from "@watermark/core/readiness";
 import { groupLabel, groupsOf } from "@watermark/core/records";
 import { siteHref, withSite } from "@watermark/core/site";
 import { LIMA_SLUG } from "@watermark/core/routes";
 
-// The facet gate (#1886), declared in `RECORD_FACETS` rather than left to emerge from the fact
-// that this page happens to read a per-site feed: an empty `records` feed reads as a lock + an
-// ask for the source, never as a working section with nothing in it.
 const { slug } = Astro.props as { slug: string };
-const facet = RECORD_FACETS.records;
-const locked = !facetAvailable(slug, "records");
 
 const records = hasFeed("records") ? loadFeed<RecordItem[]>("records") : [];
 const groups = groupsOf(records);
@@ -33,21 +29,6 @@ const biggest = [...byGroup].sort((a, b) => b.value - a.value)[0] ?? null;
 ---
 
 <Base title="Records" section="site" rail={false}>
-  {locked ? (
-    <div class="hub">
-      <div class="hub-head">
-        <div>
-          <div class="hub-eyebrow">The record · records</div>
-          <h1>Records</h1>
-        </div>
-      </div>
-      <SectionLocked
-        section={facet.section}
-        label={facet.label}
-        holds="structured extractions of its own — the deeds, permits, filings, and estimates read from its corpus"
-      />
-    </div>
-  ) : (
   <div class="hub">
     <div class="hub-head">
       <div>
@@ -114,5 +95,4 @@ const biggest = [...byGroup].sort((a, b) => b.value - a.value)[0] ?? null;
     </p>
     <EvidenceLegend />
   </div>
-  )}
 </Base>

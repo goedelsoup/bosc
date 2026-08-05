@@ -14,7 +14,6 @@ import { fileURLToPath } from "node:url";
 import { getEntry, render } from "astro:content";
 import PathWayfinding from "~/components/PathWayfinding.astro";
 import { STORY_COMPONENTS } from "~/components/story";
-import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
 import { siteBase } from "@watermark/core/routes";
 import { siteRegistersStory, storyComingSoon } from "@watermark/core/sites";
@@ -37,8 +36,13 @@ export async function getStaticPaths() {
     if (typeof (entry.data as { step?: unknown }).step !== "number") continue; // skip the home
     const [slug, codename, chapter] = String(entry.id).split("/");
     // Gate on story REGISTRATION, not switchability (#1466) — see `siteRegistersStory`. A held
-    // (`comingSoon`) chapter still emits its URL; only the render target differs, so links resolve.
+    // (`comingSoon`) story emits its ROOT and nothing below it (#1894): the chapter route used to
+    // emit anyway and serve the interstitial, on the reasoning that "links resolve, not 404" — but
+    // measured against the build, no link, no menu and no search row pointed at any of them. What
+    // the URL bought was a page nobody could arrive at. The prose is still never placed; now the
+    // address isn't either, until the edit that makes the chapter readable.
     if (!slug || !codename || !siteRegistersStory(slug, codename)) continue;
+    if (storyComingSoon(slug, codename)) continue;
     const siteId = siteBase(slug).replace("/network/", "");
     const literal = fileURLToPath(
       new URL(`../../../${siteId}/stories/${codename}/${chapter}.astro`, import.meta.url),
@@ -52,10 +56,6 @@ export async function getStaticPaths() {
 const { slug, codename, chapter } = Astro.props as { slug: string; codename: string; chapter: string };
 // getStaticPaths only emits registered, present entries.
 const story = storyFor(slug, codename) as Story;
-// A `comingSoon` story (#1526) holds its content: the chapter route serves the interstitial, and the
-// chapter body (`<Content />`) is never placed, so no narrative prose is reachable by direct URL
-// (#1529). The URL is still emitted (links resolve, not 404); only the render target differs.
-const held = storyComingSoon(slug, codename);
 const entry = await getEntry("stories", `${slug}/${codename}/${chapter}`);
 if (!entry || !("step" in entry.data)) {
   throw new Error(`Story chapter not found: ${slug}/${codename}/${chapter}`);
@@ -102,69 +102,54 @@ const articleLd = Astro.site
     }
   : null;
 ---
+<Base
+  title={pageTitle}
+  section="story"
+  description={fm.description}
+  prevHref={prevHref}
+  nextHref={nextHref}
+  trailLabels={trailLabels}
+  trailLeaf={ch.title}
+>
+  {articleLd && <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(articleLd)} />}
+  <div class="walk-chapter-page">
+    <PathWayfinding step={step} story={story} />
 
-{
-  held ? (
-    <Base
-      title={`${story.title} — coming soon`}
-      section="story"
-      description={story.dek}
-      trailLabels={trailLabels}
-      trailLeaf={ch.title}
-    >
-      <StoryComingSoon title={story.title} dek={story.dek} slug={slug} />
-    </Base>
-  ) : (
-    <Base
-      title={pageTitle}
-      section="story"
-      description={fm.description}
-      prevHref={prevHref}
-      nextHref={nextHref}
-      trailLabels={trailLabels}
-      trailLeaf={ch.title}
-    >
-      {articleLd && <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(articleLd)} />}
-      <div class="walk-chapter-page">
-        <PathWayfinding step={step} story={story} />
+    <div class="walk-chapter-eyebrow">{fm.eyebrow ?? `Chapter ${step} of ${total} · the story`}</div>
+    <h1 class="walk-chapter-h1">{ch.title}</h1>
 
-        <div class="walk-chapter-eyebrow">{fm.eyebrow ?? `Chapter ${step} of ${total} · the story`}</div>
-        <h1 class="walk-chapter-h1">{ch.title}</h1>
+    <Content components={STORY_COMPONENTS} />
 
-        <Content components={STORY_COMPONENTS} />
+    {studyTarget && studyPart && (
+      <p class="walk-studylink">
+        The finding this chapter teaches toward →{" "}
+        <a href={withSite(`/study/${studyTarget.id}`)}>{studyLabel}</a>
+      </p>
+    )}
 
-        {studyTarget && studyPart && (
-          <p class="walk-studylink">
-            The finding this chapter teaches toward →{" "}
-            <a href={withSite(`/study/${studyTarget.id}`)}>{studyLabel}</a>
-          </p>
-        )}
-
-        <nav class="walk-nav" aria-label="Chapter navigation">
-          {
-            prev?.live ? (
-              <a class="walk-nav-link walk-nav-prev" href={chapterHref(story, prev.slug)}>← {prev.step}. {prev.title}</a>
-            ) : prev ? (
-              <span class="walk-nav-link walk-nav-prev is-disabled" title="Drafting">← {prev.step}. {prev.title}</span>
-            ) : (
-              <a class="walk-nav-link walk-nav-prev" href={storyHomeHref(story)}>← Start here</a>
-            )
-          }
-          <a class="walk-nav-leave" href={storyContentsHref(story)}>All chapters</a>
-          {
-            next?.live ? (
-              <a class="walk-nav-link walk-nav-next" href={chapterHref(story, next.slug)}>{next.step}. {next.title} →</a>
-            ) : next ? (
-              <span class="walk-nav-link walk-nav-next is-disabled" title="Drafting">{next.step}. {next.title} →</span>
-            ) : (
-              <a class="walk-nav-link walk-nav-next" href={storyHomeHref(story)}>↺ Start the story over</a>
-            )
-          }
-        </nav>
-      </div>
-    </Base>
-  )
-}
+    <nav class="walk-nav" aria-label="Chapter navigation">
+      {
+        prev?.live ? (
+          <a class="walk-nav-link walk-nav-prev" href={chapterHref(story, prev.slug)}>← {prev.step}. {prev.title}</a>
+        ) : prev ? (
+          <span class="walk-nav-link walk-nav-prev is-disabled" title="Drafting">← {prev.step}. {prev.title}</span>
+        ) : (
+          <a class="walk-nav-link walk-nav-prev" href={storyHomeHref(story)}>← Start here</a>
+        )
+      }
+      <a class="walk-nav-leave" href={storyContentsHref(story)}>All chapters</a>
+      {
+        next?.live ? (
+          <a class="walk-nav-link walk-nav-next" href={chapterHref(story, next.slug)}>{next.step}. {next.title} →</a>
+        ) : next ? (
+          <span class="walk-nav-link walk-nav-next is-disabled" title="Drafting">{next.step}. {next.title} →</span>
+        ) : (
+          <a class="walk-nav-link walk-nav-next" href={storyHomeHref(story)}>↺ Start the story over</a>
+        )
+      }
+    </nav>
+  </div>
+</Base>
 
 <style>
   .walk-studylink {
