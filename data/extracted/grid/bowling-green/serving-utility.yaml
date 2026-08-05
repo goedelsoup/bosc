@@ -221,10 +221,11 @@ the_muni_could_not_serve_the_campus:
   tag: '[inference]'
   statement: >-
     The campus's modelled facility draw of 238.5 MW (180 MW IT x PUE 1.325) is roughly
-    2.9 times ALL of the AMP-owned generating capacity physically sited in the City of
+    2.1 times ALL of the AMP-owned generating capacity physically sited in the City of
     Bowling Green after the 2025 wind retirement (81.5 MW of combustion turbines + 20 MW
-    of solar + a 12 MW battery = 113.5 MW nameplate), and its annual consumption of
-    ~1,880 GWh is ~3.6 times the city's entire 2024 retail sales of 518.2 GWh.
+    of solar + a 12 MW battery = 113.5 MW nameplate) — and roughly 2.9 times the
+    dispatchable combustion-turbine nameplate alone. Its annual consumption of ~1,880 GWh
+    is ~3.6 times the city's entire 2024 retail sales of 518.2 GWh.
   arithmetic: 238.5 / 113.5 = 2.10x on nameplate incl. solar and storage; 238.5 / 81.5 = 2.93x on dispatchable CT nameplate; 1880.3 / 518.2 = 3.63x on annual energy
   why_this_is_an_inference_and_stays_one: >-
     Three reasons, each of which would independently prevent this from being a finding.

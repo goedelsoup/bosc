@@ -228,11 +228,18 @@ replacement_solar:
       reached for the same structure in the same county in the same eighteen months is worth
       recording; it is not evidence that either influenced the other and nothing here says
       it is.
-  cross_check_note: >-
-    The wind farm was ~4 MW to the city; the replacement is 10-12 MW. The city is replacing
-    a retired resource with two-and-a-half to three times its capacity — but solar and wind
-    have different capacity factors, so this is not an energy comparison and must not be
-    written as one.
+  cross_check_note:
+    tag: '[open]'
+    statement: >-
+      The replacement is 10-12 MW against a retired wind entitlement that this file records
+      as UNRESOLVED — 3.6, "4.1" or "approximately 4" MW, see portfolio/wind/the_share_conflict.
+      So the replacement ratio is a RANGE, not a figure: taking the extremes of both
+      unresolved quantities gives 10/4.1 = 2.4x at the low end and 12/3.6 = 3.3x at the
+      high end. Quote the range or nothing; picking a single multiple here would silently
+      resolve the entitlement conflict that the paragraph above declines to resolve.
+    caution: >-
+      Solar and wind have different capacity factors, so this is a NAMEPLATE comparison and
+      not an energy comparison, and must not be written as one.
   watch: >-
     Q4 2026 construction start and spring 2027 in-service. The lease and the Eitri Foundry
     agreement are BPU documents and should be requestable; see

@@ -499,8 +499,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "521eb83eac58630e4cab7600f1af897b13e05918b09d731da977c653c7f2fb4f",
-      "size_bytes": 91444,
+      "sha256": "ef15ca24e71dcc393671eef89cfd0ab2bbd9449d2e44daa6cef19ee6515f62ac",
+      "size_bytes": 95223,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -826,8 +826,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6f59701156058b84c7544755f2dc567050be2247e903e7fda91b520ca0383c1f",
-      "size_bytes": 289791,
+      "sha256": "3024f595002042779e79d4536da4f47357b18315f2a30dfc542485f077cf0811",
+      "size_bytes": 290878,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -7380,8 +7380,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "209412180288c8c14459a36fb365d76bbe790cd22115474b1c9da7826d374090",
-      "size_bytes": 186950,
+      "sha256": "4127152c22a82b65664b2d6f8f7d23e15583c5c752ae93abed7122054854257f",
+      "size_bytes": 188102,
       "lfs_materialized": true,
       "file_count": 21,
       "stale": false,
@@ -7696,7 +7696,7 @@
   },
   {
     "id": "hydrology-swmm",
-    "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
+    "title": "Tier-1 EPA SWMM5 Input Decks (Pre / As-Permitted / Full-Buildout / Detention / Sanitary)",
     "scope": "reference",
     "collection": "hydrology",
     "status": "reviewed",
@@ -7720,7 +7720,17 @@
     ],
     "storage": [
       {
+        "relpath": "reference/hydrology/swmm/tier1-detention-full-buildout.inp",
+        "media_type": "application/octet-stream",
+        "lfs": false
+      },
+      {
         "relpath": "reference/hydrology/swmm/tier1-detention.inp",
+        "media_type": "application/octet-stream",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/swmm/tier1-full-buildout.inp",
         "media_type": "application/octet-stream",
         "lfs": false
       },
@@ -7742,10 +7752,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "894b14da8fa27e461df932bea3d2686380b0721699756ea2af59be04858985b4",
-      "size_bytes": 22642,
+      "sha256": "4f0618baeadeac3ba35188d50008dc683240f09a532808485c7a99c28d088796",
+      "size_bytes": 33981,
       "lfs_materialized": true,
-      "file_count": 4,
+      "file_count": 6,
       "stale": false,
       "asof": null
     },
