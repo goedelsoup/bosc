@@ -543,7 +543,7 @@ def _render_tier1_swmm(emit: Callable[[str], None], settings: Settings) -> None:
         "input deck is committed under `data/reference/hydrology/swmm/` so anyone can re-run "
         "them in EPA SWMM.\n"
     )
-    if d.full_buildout_peak_cfs is not None and d.full_buildout_storage_acft is not None:
+    if d.has_full_buildout:
         emit(
             f"\nBuilt out — the whole parcel at the blanket {d.full_buildout_imperv_pct:g}% "
             "impervious assumption, the Tier-0 screen's `full_buildout` bound rather than the "

@@ -91,17 +91,12 @@ def test_stormwater_inp_grounds_slope_and_s_perv() -> None:
     assert next(ln for ln in grounded.splitlines() if ln.startswith("S1 0.015")).split()[4] == "0.1"
 
 
-def test_post_imperv_is_driven_by_the_declared_footprint() -> None:
+def test_post_imperv_is_driven_by_the_declared_footprint(hydro_settings: Settings) -> None:
     """WS-14 (#1614): the as-permitted post deck's %Imperv is the footprint's declaration."""
     from watermark.hydrology.stormwater import load_site_footprint
     from watermark.hydrology.tier1 import _FULL_BUILDOUT_IMPERV, _post_imperv_pct
 
-    settings = Settings(
-        data_dir=Path(__file__).resolve().parents[1] / "data",
-        hydro_offline=True,
-        hydro_fixtures_dir=Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "hydrology",
-    )
-    fp = load_site_footprint(settings)
+    fp = load_site_footprint(hydro_settings)
     assert fp is not None, "Lima's committed footprint is the input this drives from"
 
     # 115 of ~340 ac declared permanently impervious -> ~34%, the Tier-0 composite's basis —

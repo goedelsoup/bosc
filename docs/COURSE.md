@@ -353,9 +353,11 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    for the 25-yr storm, SWMM finds the **as-permitted** footprint (imperviousness driven by
    the declared impervious acreage, WS-14 / #1614) at **post 436 vs pre 169 cfs**, held by a
    **~20 ac-ft** basin, with the blanket-paved **full-buildout bound** a separate deck at
-   **657 cfs / ~45 ac-ft**. **Sanitary wet-weather surcharge:** dry-weather base + RDII gives a **~18.6 MGD**
-   storm peak that **exceeds both** documented plant peak capacities (American II 3.6,
-   Shawnee II 12.6 MGD) — i.e. SSO risk, tying to the 1996 consent decree. The engine is a
+   **657 cfs / ~45 ac-ft**. **Sanitary wet-weather surcharge:** dry-weather base + RDII gives a
+   **~18.6 MGD** storm peak, judged only against the plants that actually receive campus flow
+   (FM-1 → American Bath + American II, FM-2 → City of Lima; **Shawnee II is excluded — no
+   campus routing**). It **exceeds** American II's documented wet-weather headroom of 2.4 MGD
+   (peak 3.6 − permitted average 1.2) — i.e. SSO risk, tying to the 1996 consent decree. The engine is a
    native extension that may not load (it gets `Killed: 9` under macOS hardened runtime on
    some wheels — ad-hoc `codesign` the swmm-toolkit dylibs to clear it); everything
    **degrades gracefully** via a subprocess availability probe (tests skip, CLI reports
@@ -385,8 +387,10 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    **permitted average / peak hydraulic** design flows — American II 1.2/3.6, Shawnee II
    3.0/12.6 MGD (peaking factors 3.0x, 4.2x) — from the OEPA NPDES permits + watch-items;
    American Bath's peak is **omitted** (uncited, not guessed). The surcharge now compares the
-   campus's wet-weather contribution against each plant's **documented wet-weather headroom**
-   (peak − average): 16.9 MGD vs American II's 2.4 and Shawnee II's 9.6 MGD. The campus dry
+   campus's wet-weather contribution against each **receiving** plant's **documented
+   wet-weather headroom** (peak − average): 18.6 MGD vs American II's 2.4 MGD. (Shawnee II's
+   9.6 MGD headroom is tabulated but not judged — #1159 restricted the comparison to plants
+   the routing table shows actually receive campus flow, and Shawnee II receives none.) The campus dry
    base is the **document-cited 2.5 MGD FM-2** discharge (RDII R stays a flagged assumption).
    The decisive context is regulatory and now surfaces as a finding: the collection system is
    already under a **2005 OEPA mandate to eliminate all SSO bypassing by 2015**, with **$11.8M**

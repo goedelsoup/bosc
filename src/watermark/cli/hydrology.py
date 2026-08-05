@@ -1106,7 +1106,7 @@ def tier1(
             f"({d.basin_area_acres:g} ac, {d.orifice_diam_ft:g} ft orifice) holds the release to "
             f"{d.controlled_peak_cfs:,.0f} cfs"
         )
-        if d.full_buildout_peak_cfs is not None and d.full_buildout_storage_acft is not None:
+        if d.has_full_buildout:
             console.print(
                 f"  [dim]full-buildout bound ({d.full_buildout_imperv_pct:g}% imperv over the "
                 f"whole parcel, assumption): {d.full_buildout_peak_cfs:,.0f} cfs -> "
