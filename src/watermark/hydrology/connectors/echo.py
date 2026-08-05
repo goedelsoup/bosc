@@ -3,7 +3,8 @@
 Pulls the inventory of CWA-permitted facilities in a watershed from ECHO's Clean
 Water Act REST services (``cwa_rest_services``) at ``echodata.epa.gov``. Used to
 build verified per-basin inventories of wastewater dischargers (the Maumee, Great
-Miami, and Scioto today; a basin is a :class:`Basin` registry entry, never hardcoded).
+Miami, Little Miami, Scioto, and Ohio Brush Creek today; a basin is a :class:`Basin`
+registry entry, never hardcoded).
 
 A basin is a set of USGS HUC-8 subbasins (e.g. the Maumee's seven in
 :data:`MAUMEE_HUC8S`, the Scioto's three in :data:`SCIOTO_HUC8S`). ECHO is queried one
@@ -104,6 +105,38 @@ SCIOTO_HUC8S: dict[str, str] = {
     "05060003": "Paint",
 }
 
+# The Ohio Brush Creek basin (subregion 0509): a single HUC-8 cataloging unit, 05090201
+# "Ohio Brush-Whiteoak" — the network's first **direct-to-Ohio-River** branch (West Union /
+# Adams County, #1117/#1120), draining straight to the Ohio with no Scioto or Miami loop.
+#
+# ⚠️ THIS HUC-8 IS NOT A WATERSHED, and the slug is a part naming a whole in a way no other
+# registered basin's is. `maumee` covers the St. Joseph, St. Marys, Tiffin, Auglaize and
+# Blanchard because those are all Maumee *drainage* — one river's tree. 05090201 is a WBD
+# **two-bank Ohio River corridor unit**: 67 HUC-12s and 5,439 km² running ~150 river miles
+# from Ninemile Creek at the Cincinnati metro edge (Campbell Co KY / Clermont Co OH) east to
+# Kinniconick Creek (Lewis Co KY), spanning BOTH banks and therefore both states. Ohio Brush
+# Creek proper is 16 of those 67 HUC-12s (HUC-10s ...0103/04/05, incl. Beasley Fork
+# 050902010505, West Union's own receiver); Whiteoak Creek is 7 more, and Eagle, Straight,
+# Twelvemile, Tenmile, Fourmile, Bracken, Cabin and Kinniconick Creeks account for the rest.
+# Every one of them reaches the Ohio on its own — they are SIBLINGS of Ohio Brush Creek, not
+# its headwaters. The observed pull bears this out: 168 of 261 facilities are Kentucky
+# permits, and Campbell County KY alone supplies 111.
+#
+# A HUC-8 is the finest unit ECHO's `p_huc` query accepts, so all of it comes with the pull
+# and belongs in the inventory. What none of it may do is borrow Ohio Brush Creek's low flow.
+# `basin._match_low_flow` is the guard — it keys the mainstem lookup on the PRIMARY
+# receiving-water name, so only a receiver that names Ohio Brush Creek matches its gage — and
+# `mainstem-gages.yaml` deliberately withholds a bare "brush creek" alias for the same reason
+# (this pull contains a Campbell County KY "BRUSH CRK" that such an alias would have
+# misrouted 90 river miles to the West Union gage). The slug is retained because it names the
+# NETWORK's basin group, which is the site's own drainage: it is what `SiteProfile.basin`,
+# `data/sites.yaml`'s `basin_major` and the frontend `placement.ts` row already carry. The
+# caveats on the Basin below carry the discrepancy into the emitted file, so a reader of the
+# inventory is never left to infer the scope from the filename.
+OHIO_BRUSH_CREEK_HUC8S: dict[str, str] = {
+    "05090201": "Ohio Brush-Whiteoak",
+}
+
 
 @dataclass(frozen=True)
 class Basin:
@@ -171,7 +204,45 @@ LITTLE_MIAMI = Basin(
         "screen relies on the downstream Little Miami integrator at Milford.",
     ),
 )
-BASINS: dict[str, Basin] = {b.slug: b for b in (MAUMEE, GREAT_MIAMI, LITTLE_MIAMI, SCIOTO)}
+OHIO_BRUSH_CREEK = Basin(
+    slug="ohio-brush-creek",
+    huc8s=OHIO_BRUSH_CREEK_HUC8S,
+    watershed=(
+        "Ohio Brush Creek — 1 HUC-8 subbasin (05090201 Ohio Brush-Whiteoak), subregion 0509 "
+        "(direct to the Ohio River)"
+    ),
+    subject="Ohio Brush Creek-watershed NPDES wastewater dischargers",
+    file_stem="ohio-brush-creek-wwtp",
+    caveats=(
+        "SCOPE IS WIDER THAN THE NAME. HUC-8 05090201 'Ohio Brush-Whiteoak' is a two-bank Ohio "
+        "River corridor unit, not one watershed: 67 HUC-12s running ~150 river miles from "
+        "Ninemile Creek at the Cincinnati metro edge east to Kinniconick Creek. Ohio Brush Creek "
+        "proper is 16 of those 67; Whiteoak Creek is 7 more. The rest (Eagle, Straight, "
+        "Twelvemile, Tenmile, Fourmile, Bracken, Cabin, Kinniconick) are SIBLING direct-to-Ohio "
+        "drainages — a discharger on one is neither upstream nor downstream of one on Ohio Brush "
+        "Creek, and must never borrow its 7Q10. Only a receiving water naming Ohio Brush Creek "
+        "matches that gage; a bare 'Brush Creek' does not (this pull holds a Campbell County KY "
+        "'BRUSH CRK' ~90 river miles away).",
+        "The unit spans BOTH banks, so it is majority-Kentucky: 168 of 261 facilities carry KY "
+        "permits (Campbell 111, Lewis 22, Mason 22, Bracken 11, Pendleton 2) against 93 Ohio ones "
+        "(Clermont 20, Brown 15, Adams 11, Scioto 3, Highland 1, and 43 for which ECHO returned "
+        "no county at all). Cross-check Ohio EPA for the Ohio side and Kentucky DOW for the "
+        "Kentucky side; neither agency's list is reflected here beyond what ECHO federalizes.",
+        "receiving_water is null for 118 of 261 rows, and for every Adams County POTW that is "
+        "not on the Ohio River mainstem — Peebles, Seaman, West Union (OH0028088) and "
+        "Winchester. So the four plants nearest the network's watershed point are exactly the "
+        "ones ECHO cannot place. The assimilative screen keys on that field, so an unnamed "
+        "receiver reports as unmatched, never as unaffected. The gap closes only through cited "
+        "entries in the curated receiving-water overlay, never by inference from a facility's "
+        "name or county.",
+        "Whiteoak, Eagle, Straight and Beasley Fork are ungaged for a defensible low-flow "
+        "statistic (no NWIS daily-discharge record meeting the 20-climatic-year floor), so their "
+        "dischargers stay unscreened rather than screening against a proxy.",
+    ),
+)
+BASINS: dict[str, Basin] = {
+    b.slug: b for b in (MAUMEE, GREAT_MIAMI, LITTLE_MIAMI, SCIOTO, OHIO_BRUSH_CREEK)
+}
 
 # Merged HUC-8 -> name map for the per-HUC fetch display label (any registered basin).
 _HUC8_NAMES: dict[str, str] = {
@@ -179,6 +250,7 @@ _HUC8_NAMES: dict[str, str] = {
     **GREAT_MIAMI_HUC8S,
     **LITTLE_MIAMI_HUC8S,
     **SCIOTO_HUC8S,
+    **OHIO_BRUSH_CREEK_HUC8S,
 }
 
 # Result columns to request, selected *by ObjectName* against the verified

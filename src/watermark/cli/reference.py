@@ -19,7 +19,9 @@ from watermark.cli._base import (
 @app.command(name="npdes")
 def npdes(
     basin: str = typer.Option(
-        "maumee", "--basin", help="Watershed slug (maumee | great-miami | little-miami | scioto)."
+        "maumee",
+        "--basin",
+        help="Watershed slug (maumee | great-miami | little-miami | scioto | ohio-brush-creek).",
     ),
     offline: bool = typer.Option(
         False, "--offline", help="Use cached ECHO responses only; never touch the network."

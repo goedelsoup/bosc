@@ -465,3 +465,16 @@ streams:
     citation: LP3 7Q10 from USGS 03262700 (Great Miami River at Troy OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+  ohio river:
+    seven_q10_cfs: 9463.62
+    source: derived
+    gage: '03216600'
+    gage_name: OHIO RIVER AT GREENUP DAM NEAR GREENUP, KY
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - ohio river
+    - ohio rv
+    citation: LP3 7Q10 from USGS 03216600 (OHIO RIVER AT GREENUP DAM NEAR GREENUP, KY), 44 climatic years
+      1980-2024 (gage value; screening proxy for the discharge reach)
+    confidence: medium

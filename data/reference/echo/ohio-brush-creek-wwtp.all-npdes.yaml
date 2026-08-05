@@ -1,0 +1,5299 @@
+meta:
+  subject: Ohio Brush Creek-watershed NPDES wastewater dischargers
+  scope: all active CWA-permitted dischargers
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Ohio Brush Creek — 1 HUC-8 subbasin (05090201 Ohio Brush-Whiteoak), subregion
+    0509 (direct to the Ohio River)
+  huc8s:
+    05090201: Ohio Brush-Whiteoak
+  dedup_key: FRS RegistryID
+  count: 261
+  caveats:
+  - ECHO's CWA facility service has no CWNS column; the POTW flag rests on CWPFacilityTypeIndicator.
+  - Facilities link to HUCs via WATERS (FacDerivedHuc); a permit that didn't geocode
+    can be missed.
+  - design_flow_mgd is null where ECHO returned no value; it is never estimated.
+  - 'SCOPE IS WIDER THAN THE NAME. HUC-8 05090201 ''Ohio Brush-Whiteoak'' is a two-bank
+    Ohio River corridor unit, not one watershed: 67 HUC-12s running ~150 river miles
+    from Ninemile Creek at the Cincinnati metro edge east to Kinniconick Creek. Ohio
+    Brush Creek proper is 16 of those 67; Whiteoak Creek is 7 more. The rest (Eagle,
+    Straight, Twelvemile, Tenmile, Fourmile, Bracken, Cabin, Kinniconick) are SIBLING
+    direct-to-Ohio drainages — a discharger on one is neither upstream nor downstream
+    of one on Ohio Brush Creek, and must never borrow its 7Q10. Only a receiving water
+    naming Ohio Brush Creek matches that gage; a bare ''Brush Creek'' does not (this
+    pull holds a Campbell County KY ''BRUSH CRK'' ~90 river miles away).'
+  - 'The unit spans BOTH banks, so it is majority-Kentucky: 168 of 261 facilities
+    carry KY permits (Campbell 111, Lewis 22, Mason 22, Bracken 11, Pendleton 2) against
+    93 Ohio ones (Clermont 20, Brown 15, Adams 11, Scioto 3, Highland 1, and 43 for
+    which ECHO returned no county at all). Cross-check Ohio EPA for the Ohio side
+    and Kentucky DOW for the Kentucky side; neither agency''s list is reflected here
+    beyond what ECHO federalizes.'
+  - receiving_water is null for 118 of 261 rows, and for every Adams County POTW that
+    is not on the Ohio River mainstem — Peebles, Seaman, West Union (OH0028088) and
+    Winchester. So the four plants nearest the network's watershed point are exactly
+    the ones ECHO cannot place. The assimilative screen keys on that field, so an
+    unnamed receiver reports as unmatched, never as unaffected. The gap closes only
+    through cited entries in the curated receiving-water overlay, never by inference
+    from a facility's name or county.
+  - Whiteoak, Eagle, Straight and Beasley Fork are ungaged for a defensible low-flow
+    statistic (no NWIS daily-discharge record meeting the 20-climatic-year floor),
+    so their dischargers stay unscreened rather than screening against a proxy.
+facilities:
+- frs_registry_id: '110072227430'
+  name: 1862 GLT PROJECT (M230307) - PHASE 1
+  npdes_id: OHGC16562
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011203
+  county: null
+  latitude: 38.915833
+  longitude: -84.249722
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072219997'
+  name: 8050 AYERS ROAD
+  npdes_id: OHGC03234
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 39.043333
+  longitude: -84.338889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072223535'
+  name: '8062'
+  npdes_id: OHGC09986
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 39.040833
+  longitude: -84.338611
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071923124'
+  name: 9-952.00; CID 254100
+  npdes_id: KYR10T301
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SALT LICK CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.572703
+  longitude: -83.433085
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110011017522'
+  name: ABERDEEN WWTP
+  npdes_id: OH0023825
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.385
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: BROWN
+  latitude: 38.65549
+  longitude: -83.76394
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006354523'
+  name: ADAMS COUNTY LANDFILL
+  npdes_id: OH0104159
+  npdes_ids_secondary:
+  - OHP000203
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010505
+  county: ADAMS
+  latitude: 38.77618
+  longitude: -83.5522
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072221003'
+  name: ADAMS COUNTY ODOT GARAGE
+  npdes_id: OHGZ00022
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010702
+  county: null
+  latitude: 38.789026
+  longitude: -83.558004
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009679749'
+  name: ADAMS COUNTY WATER CO INC
+  npdes_id: OH0031810
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010601
+  county: ADAMS
+  latitude: 38.710036
+  longitude: -83.521256
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110030769041'
+  name: AJ JOLLY SCHOOL
+  npdes_id: KY0027707
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0065
+  design_flow_missing: false
+  receiving_water: YOUNG CREEK, YOUNG CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.9132
+  longitude: -84.26409
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 8
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071708097'
+  name: ALEXANDRIA KUBOTA
+  npdes_id: KYR10S340
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TUG CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.9825
+  longitude: -84.375556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070919143'
+  name: ALTURA ESTATES
+  npdes_id: KYR10R345
+  npdes_ids_secondary:
+  - KYR10P148
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SD1 MS4
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.033058
+  longitude: -84.415542
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072083628'
+  name: AM07 PHASE 4 PIPELINE REPLACEMENT PROJECT
+  npdes_id: KYR10U006
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: POOLES CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.025212
+  longitude: -84.377879
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064275699'
+  name: AMY TISCHNER RESIDENCE
+  npdes_id: KYG400298
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.01008
+  longitude: -84.33953
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072223941'
+  name: ANDERSON VALLEY
+  npdes_id: OHGC08495
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902021406
+  county: null
+  latitude: 39.07017
+  longitude: -84.35839
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072225329'
+  name: ASHBURN WOODS
+  npdes_id: OHGC04308
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011203
+  county: null
+  latitude: 38.95654
+  longitude: -84.16683
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071370163'
+  name: AUGUSTA DISTILLERY
+  npdes_id: KYR10R061
+  npdes_ids_secondary:
+  - KY0113573
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.2441
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011102
+  county: BRACKEN
+  latitude: 38.774586
+  longitude: -83.999458
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071513797'
+  name: AUGUSTA DISTILLERY WAREHOUSE DEVELOPMENT
+  npdes_id: KYR10R767
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BRACKEN CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011101
+  county: BRACKEN
+  latitude: 38.72
+  longitude: -83.96028
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070250368'
+  name: AUGUSTA REGIONAL SEWER AUTHORITY WWTP
+  npdes_id: KY0112500
+  npdes_ids_secondary:
+  - KYR10O374
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.69
+  design_flow_missing: false
+  receiving_water: LOCUST CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011105
+  county: BRACKEN
+  latitude: 38.708611
+  longitude: -84.049444
+  compliance_status: null
+  informal_enf_count: 9
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009744036'
+  name: AUGUSTA WTP
+  npdes_id: KYG640008
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.03
+  design_flow_missing: false
+  receiving_water: OHIO RIVER, OHIO RIVER / LITTLE TURTLE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011102
+  county: BRACKEN
+  latitude: 38.773204
+  longitude: -84.012088
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110003220835'
+  name: BERRY FILM PRODUCTS COMPANY, INC.
+  npdes_id: KYR004759
+  npdes_ids_secondary:
+  - KY0000361
+  - KYR10G144
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0
+  design_flow_missing: false
+  receiving_water: BRACKEN CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: '051001011102'
+  county: BRACKEN
+  latitude: 38.77229
+  longitude: -83.99671
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070711583'
+  name: BEULAH HOSKINS RESIDENCE
+  npdes_id: KYG402758
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011205
+  county: CAMPBELL
+  latitude: 38.91894
+  longitude: -84.33004
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071377441'
+  name: BEVINS SAND AND GRAVEL
+  npdes_id: KYG840403
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAWRENCE CREEK, UNNAMED TRIBUTARY 1
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: MASON
+  latitude: 38.670556
+  longitude: -83.813611
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009935455'
+  name: BLACK OAK INDUSTRIAL PARK
+  npdes_id: KY0112755
+  npdes_ids_secondary:
+  - KY0092061
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.064
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010207
+  county: LEWIS
+  latitude: 38.59991
+  longitude: -83.27849
+  compliance_status: null
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071408143'
+  name: BLACK OAK WAREHOUSE STORAGE EXPANSION
+  npdes_id: KYR10R354
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010207
+  county: LEWIS
+  latitude: 38.59964
+  longitude: -83.275673
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071277245'
+  name: BOB OSHAUGHNESSY RESIDENCE
+  npdes_id: KYG403089
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.00403
+  longitude: -84.37941
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070051861'
+  name: BOB OSHAUGNESSY RESIDENCE
+  npdes_id: KYG402512
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.00405
+  longitude: -84.37904
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110037480990'
+  name: BONNIE MORRISON & TERRY GAST RESIDENCE
+  npdes_id: KYG400496
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.04454
+  longitude: -84.43216
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110022905668'
+  name: BRIAN SIMS RESIDENCE
+  npdes_id: KYG401864
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: UT / OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.04139
+  longitude: -84.43118
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110004719653'
+  name: BROWN COUNTY LANDFILL
+  npdes_id: OH0109193
+  npdes_ids_secondary:
+  - OHGC18695
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011002
+  county: BROWN
+  latitude: 38.89689
+  longitude: -83.903255
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072225876'
+  name: BROWN COUNTY ODOT GARAGE
+  npdes_id: OHGZ00033
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010803
+  county: null
+  latitude: 38.86007
+  longitude: -83.87786
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009935865'
+  name: BROWN FAMILY INVESTMENT PROPERTY
+  npdes_id: KY0090603
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.003
+  design_flow_missing: false
+  receiving_water: UT / OHIO RIVER, UT OF THE OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.88681
+  longitude: -84.24619
+  compliance_status: null
+  informal_enf_count: 5
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072223014'
+  name: BUCK CANYON LLC
+  npdes_id: OHGC18334
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010601
+  county: null
+  latitude: 38.65449
+  longitude: -83.67088
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110008365116'
+  name: 'BULK PLANT INC - VANCEBURG #58'
+  npdes_id: KY0039420
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0
+  design_flow_missing: false
+  receiving_water: SALT LICK CREEK, SALT LICK CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010208
+  county: LEWIS
+  latitude: 38.597778
+  longitude: -83.325556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070596949'
+  name: CALIFORNIA MARKETPLACE
+  npdes_id: KY0112852
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0012
+  design_flow_missing: false
+  receiving_water: UT TO FLAGG SPRING CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.87203
+  longitude: -84.26201
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009051587'
+  name: CAMP SPRINGS TAVERN
+  npdes_id: KY0034479
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0006
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK / UT, UT TO FOUR MILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.99288
+  longitude: -84.36282
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000379554'
+  name: CARMEUSE LIME - BLANK RIVER OPERATION
+  npdes_id: KY0045284
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.004
+  design_flow_missing: false
+  receiving_water: GOOSE CREEK, OHIO RIVER, STEPSTONE CREEK, UNDERGROUND MINE, UT
+    TO JIMMIE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: PENDLETON
+  latitude: 38.83745
+  longitude: -84.24302
+  compliance_status: null
+  informal_enf_count: 9
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110043813219'
+  name: CARMEUSE LIME - MAYSVILLE OPERATION
+  npdes_id: KY0090387
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0
+  design_flow_missing: false
+  receiving_water: CABIN CREEK, CABIN CRK, CARBIN CREEK, UT TO BRAIDS RUN
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.622778
+  longitude: -83.666111
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 5
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072223538'
+  name: CCWRD WHITE OAK LIFT STATION
+  npdes_id: OHGC03999
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011206
+  county: null
+  latitude: 39.032105
+  longitude: -84.247192
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056139959'
+  name: CHARLES & JUDITH HEILMAN RESIDENCE
+  npdes_id: KYG402210
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.01256
+  longitude: -84.38556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110063925329'
+  name: CHARLES & RITA NOBLE RESIDENCE
+  npdes_id: KYG401429
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: UT / OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.04165
+  longitude: -84.43124
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064265334'
+  name: CHESTNUT LANE MHP
+  npdes_id: OH0105473
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011204
+  county: CLERMONT
+  latitude: 38.980984
+  longitude: -84.230411
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056137666'
+  name: CHRIS MCGILL RESIDENCE
+  npdes_id: KYG402195
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.960736
+  longitude: -84.358232
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110069339166'
+  name: CLARK UNDERWOOD RESIDENCE
+  npdes_id: KYG402461
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.88111
+  longitude: -84.24417
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072229844'
+  name: CLEPPER & GLEN ESTE DEVELOPMENT
+  npdes_id: OHGC18048
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902021305
+  county: null
+  latitude: 39.06502
+  longitude: -84.27928
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064450507'
+  name: CLOSE TO HOME CENTER
+  npdes_id: OH0137502
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.015
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010402
+  county: BROWN
+  latitude: 38.98897
+  longitude: -83.72007
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110038194469'
+  name: CONTINENTAL SILVER GROVE LLC
+  npdes_id: KYR003550
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: CAMPBELL
+  latitude: 39.03672
+  longitude: -84.39019
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072220579'
+  name: COPELAND EXT. NORTH 69KV TRANSMISSION
+  npdes_id: OHGC11557
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010702
+  county: null
+  latitude: 38.809722
+  longitude: -83.5875
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072229584'
+  name: COPELAND EXTENSION SOUTH 69KV REBUILD
+  npdes_id: OHGC11452
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010702
+  county: null
+  latitude: 38.79377
+  longitude: -83.56136
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072223455'
+  name: COPELAND SUBSTATION EXPANSION
+  npdes_id: OHGC10991
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010702
+  county: null
+  latitude: 38.79377
+  longitude: -83.56136
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110032816852'
+  name: COROPLAST LLC
+  npdes_id: KYR003301
+  npdes_ids_secondary:
+  - KYR002202
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: FISH GUT BRANCH
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010207
+  county: LEWIS
+  latitude: 38.59976
+  longitude: -83.27326
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072228801'
+  name: CRESTVIEW MOBILE HOME PARK
+  npdes_id: OHGC04588
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010902
+  county: null
+  latitude: 39.003634
+  longitude: -83.800758
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006681590'
+  name: DANIEL SAUNDERS RESIDENCE
+  npdes_id: KYG400405
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: FLAGG SPRING CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.87473
+  longitude: -84.28506
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070367939'
+  name: DAVID DUVALL RESIDENCE
+  npdes_id: KYG402613
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.87256
+  longitude: -84.23877
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006762645'
+  name: DAVID HOLLAENDER RESIDENCE
+  npdes_id: KYG400288
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: LICK BR
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.959501
+  longitude: -84.356857
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070078827'
+  name: DAVID RODGERS RESIDENCE
+  npdes_id: KYG402518
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.98417
+  longitude: -84.32587
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110066877053'
+  name: DAVID V SCHWIEGERAHT RESIDENCE
+  npdes_id: KYG402428
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.01397
+  longitude: -84.3644
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110030443704'
+  name: DEANN & DOUGLAS KIEFER RESIDENCE
+  npdes_id: KYG402037
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.01848
+  longitude: -84.33727
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006681368'
+  name: DENNIS KRAMER RESIDENCE
+  npdes_id: KYG400283
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER / UT
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.907311
+  longitude: -84.347398
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110024585787'
+  name: DENNIS RATH RESIDENCE
+  npdes_id: KYG401926
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TUG FORK CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.00907
+  longitude: -84.38024
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072113976'
+  name: DOLLAR GENERAL
+  npdes_id: KYR10U178
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BRACKEN CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011101
+  county: BRACKEN
+  latitude: 38.753493
+  longitude: -83.888196
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009743741'
+  name: DONALD & BARBARA GILB RESIDENCE
+  npdes_id: KYG401076
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: BARRS BRANCH CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.928085
+  longitude: -84.360728
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009963511'
+  name: DONALD & DIANE GILLESPIE RESIDENCE
+  npdes_id: KYG400132
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK / UT
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.9925
+  longitude: -84.361111
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: 1
+  queried_huc8: 05090201
+- frs_registry_id: '110070502332'
+  name: DONALD MEYER RESIDENCE
+  npdes_id: KYG402638
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.01587
+  longitude: -84.35698
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110020067826'
+  name: DOUG WASH RESIDENCE
+  npdes_id: KYG401723
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.94086
+  longitude: -84.29136
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072221385'
+  name: DUKE ENERGY 1862 GLT (M230307) - PHASE 2
+  npdes_id: OHGC16563
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011201
+  county: null
+  latitude: 38.9075
+  longitude: -84.085556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009962843'
+  name: EAMON MUELLER RESIDENCE
+  npdes_id: KYG400439
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TEN MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.99265
+  longitude: -84.33129
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110012142127'
+  name: EAST KENTUCKY POWER COOP - SPURLOCK STATION
+  npdes_id: KY0022250
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 27.4
+  design_flow_missing: false
+  receiving_water: LAWRENCE CREEK, OHIO RIVER, OUTFALL 001, PLANT INTAKE FROM OHIO
+    RIVER, UT OF LAWRENCE CREEK, UT TO LAWRENCE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: MASON
+  latitude: 38.700097
+  longitude: -83.817506
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110013680837'
+  name: EASTERN REGIONAL STP
+  npdes_id: KYL105031
+  npdes_ids_secondary:
+  - KY0105031
+  ownership: POTW
+  facility_type: POTW
+  permit_type: Associated Permit Record
+  design_flow_mgd: 4.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: '051001011305'
+  county: CAMPBELL
+  latitude: 38.94797
+  longitude: -84.37049
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110067648861'
+  name: EATON ASPHALT PAVING CO., INC.- PLANT NO. 6
+  npdes_id: KYG110006
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: CABIN CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.61946
+  longitude: -83.662581
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072221766'
+  name: EIGHT MILE TOWNHOMES
+  npdes_id: OHGC10245
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 39.07402
+  longitude: -84.32251
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110069211640'
+  name: EILEEN LONG RESIDENCE
+  npdes_id: KYG402458
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.98646
+  longitude: -84.37105
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000379787'
+  name: EMERSON ELECTRIC CO
+  npdes_id: KY0100196
+  npdes_ids_secondary:
+  - KYR000187
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.216
+  design_flow_missing: false
+  receiving_water: GOOSE CREEK, GOOSE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.642557
+  longitude: -83.737931
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009963655'
+  name: EMILY SCHUBERT RESIDENCE
+  npdes_id: KYG400091
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: 4 MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.0097
+  longitude: -84.36956
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110008986749'
+  name: ENGLE PROPERTIES LLC
+  npdes_id: KY0101745
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.003
+  design_flow_missing: false
+  receiving_water: FLAGG SPRING CRK, UT TO FLAGG SPRING CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.88633
+  longitude: -84.2601
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056519664'
+  name: FELICITY PLASTICS MANUFACTURING INC.
+  npdes_id: OH0151667
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011106
+  county: CLERMONT
+  latitude: 38.84452
+  longitude: -84.14554
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064265708'
+  name: FELICITY WATER TREATMENT PLANT
+  npdes_id: OH0127051
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011104
+  county: CLERMONT
+  latitude: 38.789228
+  longitude: -84.09527
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006345268'
+  name: FELICITY WWTP
+  npdes_id: OH0024597
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.25
+  design_flow_missing: false
+  receiving_water: BEAR CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011106
+  county: CLERMONT
+  latitude: 38.83216
+  longitude: -84.10261
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072112817'
+  name: FERNLEAF AMRP
+  npdes_id: KYR10U192
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SOUTH FORK LAWRENCE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: MASON
+  latitude: 38.64483
+  longitude: -83.746018
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072224757'
+  name: FORMER BECKJORD GENERATING STATION
+  npdes_id: OHGC01987
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 38.944387
+  longitude: -84.27347
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110017701771'
+  name: FRANCES BERKEMEYER RESIDENCE
+  npdes_id: KYG401673
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: UT / TENMILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.00043
+  longitude: -84.32721
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006762262'
+  name: FRANK & ANNE MAYNARD RESIDENCE
+  npdes_id: KYG400364
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TWELVE MILE CRK / UT
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.88807
+  longitude: -84.32475
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110024585750'
+  name: FRANK & JAMIE SHOEMAKER RESIDENCE
+  npdes_id: KYG401924
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.87326
+  longitude: -84.28228
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072232783'
+  name: FREEDOM STOCKYARDS
+  npdes_id: KYR10U775
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: GROG BRANCH
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010602
+  county: LEWIS
+  latitude: 38.551372
+  longitude: -83.579557
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009962987'
+  name: G SUE WELLS RESIDENCE
+  npdes_id: KYG400396
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TEN MILE CRK / UT
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.0071
+  longitude: -84.33314
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009936267'
+  name: GARRISON QUINCY KY O HEIGHTS
+  npdes_id: KY0086517
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.006
+  design_flow_missing: false
+  receiving_water: BEVINS CREEK, BEVINS CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.608333
+  longitude: -83.178889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110016752593'
+  name: GARRISON REGIONAL WWTP
+  npdes_id: KY0105422
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.114
+  design_flow_missing: false
+  receiving_water: OHIO RIVER, OHIO RV
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010207
+  county: LEWIS
+  latitude: 38.618278
+  longitude: -83.157722
+  compliance_status: null
+  informal_enf_count: 5
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006681545'
+  name: GARY WILSON RESIDENCE
+  npdes_id: KYG400453
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TWELVE MILE CRK / UT / OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.91053
+  longitude: -84.34877
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072224660'
+  name: GEORGETOWN ACGP STREETSCAPE IMPROVEMENTS
+  npdes_id: OHGC18104
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011003
+  county: null
+  latitude: 38.86597
+  longitude: -83.90432
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006700249'
+  name: GEORGETOWN WWTP
+  npdes_id: OH0021300
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.1
+  design_flow_missing: false
+  receiving_water: TOWN RUN
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011003
+  county: BROWN
+  latitude: 38.8523
+  longitude: -83.91
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009963174'
+  name: GLENFORD MOREHEAD RESIDENCE
+  npdes_id: KYG400271
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: FLAGG SPRING CRK / UT
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.876882
+  longitude: -84.293388
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072228075'
+  name: GLOVER MEADOWS SUBDIVISION SECTIONS 1 & 2
+  npdes_id: OHGC00766
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011001
+  county: null
+  latitude: 39.021389
+  longitude: -83.906667
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071223903'
+  name: GRANDVIEW AA COMMERCIAL DEVELOPMENT
+  npdes_id: KYR10R706
+  npdes_ids_secondary:
+  - KYR10O551
+  - KYR10U828
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SD1- ALEXANDRIA MS4
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.959676
+  longitude: -84.344051
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064645923'
+  name: HAROLD JOHNSON RESIDENCE
+  npdes_id: KYG402402
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: BRACKEN
+  latitude: 38.771913
+  longitude: -84.142196
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072158106'
+  name: HCC STORM WATER POLLUTION PREVENTION PLAN
+  npdes_id: KYR10U430
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: THREEMILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.06256
+  longitude: -84.45274
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110037452663'
+  name: HEIDELBERG MATERIALS MIDWEST AGG INC
+  npdes_id: OH0122785
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010401
+  county: BROWN
+  latitude: 39.00947
+  longitude: -83.69439
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110011016738'
+  name: HI-VIEW ESTATES MOBILE HOME PARK
+  npdes_id: OH0049191
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0378
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011204
+  county: CLERMONT
+  latitude: 38.96615
+  longitude: -84.16502
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006647441'
+  name: HICKORY STICKS GOLF CLUB
+  npdes_id: KY0102521
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0032
+  design_flow_missing: false
+  receiving_water: TWELVE MILE CRK / UT, UT TO TWELVE MILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.95482
+  longitude: -84.30059
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072227892'
+  name: HIG-73-21.04 PID 119769
+  npdes_id: OHGC17186
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010305
+  county: null
+  latitude: 39.059167
+  longitude: -83.528889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072222883'
+  name: HIGHLAND 2 AND HIGHLAND 4 SOLAR PROJECT
+  npdes_id: OHGC06154
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010902
+  county: null
+  latitude: 39.07693
+  longitude: -83.76937
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110024560278'
+  name: HIGHLAND CO SOUTHWEST WWTP
+  npdes_id: OH0137499
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0
+  design_flow_missing: false
+  receiving_water: WHITEOAK CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010902
+  county: HIGHLAND
+  latitude: 39.035005
+  longitude: -83.741228
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072232058'
+  name: HILLSBORO - MAYSVILLLE 138KV STR. 78-237 EP
+  npdes_id: OHGC19002
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010902
+  county: null
+  latitude: 39.028404
+  longitude: -83.701054
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006355639'
+  name: HILLTOP ESTATES MHC
+  npdes_id: OH0049204
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011204
+  county: CLERMONT
+  latitude: 38.97948
+  longitude: -84.25403
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009935348'
+  name: HOLLY HILL CHILDRENS HOME
+  npdes_id: KY0093254
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: PAINTER CRK / UT / OHIO RIVER, UT TO PAINTER RUN
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.93263
+  longitude: -84.28768
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110004662286'
+  name: HONDA EAST - NEW SHOWROOM & SERVICE BUILDING
+  npdes_id: OHGC15745
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: CLERMONT
+  latitude: 39.070588
+  longitude: -84.304228
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000379812'
+  name: INTERNATIONAL PAPER CO
+  npdes_id: KY0094463
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 4.28
+  design_flow_missing: false
+  receiving_water: OHIO RIVER, UT TO LAWRENCE CREEK, UT TO OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: MASON
+  latitude: 38.69004
+  longitude: -83.80226
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009963147'
+  name: JACK TARVIN RESIDENCE
+  npdes_id: KYG400268
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.02092
+  longitude: -84.3802
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071404695'
+  name: JACOB & CHELSEY THOMAS RESIDENCE
+  npdes_id: KYG404024
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.98737
+  longitude: -84.37556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056140215'
+  name: JACOB N STORY RESIDENCE
+  npdes_id: KYG402224
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.93115
+  longitude: -84.32033
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071070409'
+  name: JAMES BUSH RESIDENCE
+  npdes_id: KYG402911
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011203
+  county: CAMPBELL
+  latitude: 38.95486
+  longitude: -84.29782
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070054498'
+  name: JAMES F OCHSNER RESIDENCE
+  npdes_id: KYG402517
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.98755
+  longitude: -84.33863
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009961951'
+  name: JAMES MEYER RESIDENCE
+  npdes_id: KYG400751
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.99824
+  longitude: -84.36324
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056140830'
+  name: JAY & KRISTA YENTER RESIDENCE
+  npdes_id: KYG402182
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.938141
+  longitude: -84.322637
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009963281'
+  name: JENNIFER VENNEMAN & ANDREW STEFFEN RESIDENCE
+  npdes_id: KYG400304
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TWELVE MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.95351
+  longitude: -84.33654
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009743108'
+  name: JENNY RUSSELL RESIDENCE
+  npdes_id: KYG400287
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TEN MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.9914
+  longitude: -84.33589
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070517985'
+  name: JIM LACKEY RESIDENCE
+  npdes_id: KYG402586
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.941477
+  longitude: -84.330134
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009961005'
+  name: JOAN VERST RESIDENCE
+  npdes_id: KYG401024
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: DUCK CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.0286
+  longitude: -84.42854
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110008977795'
+  name: JOHN & MARY ANN DOYLE RESIDENCE
+  npdes_id: KYG401282
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.009722
+  longitude: -84.365278
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006800211'
+  name: JOHN MALLERY RESIDENCE
+  npdes_id: KYG400708
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TWELVE MILE CRK / UT
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.90824
+  longitude: -84.29907
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110037482471'
+  name: JOHN PERRY RESIDENCE
+  npdes_id: KYG402075
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: RUSSELL FORK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.88997
+  longitude: -84.30915
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006761879'
+  name: JOHN SCHMIDT RESIDENCE
+  npdes_id: KYG400553
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OWL CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.00954
+  longitude: -84.39558
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009743377'
+  name: JON & TRACY LIEBER RESIDENCE
+  npdes_id: KYG400490
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.856111
+  longitude: -84.285556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070227440'
+  name: JON SEXTON RESIDENCE
+  npdes_id: KYG402582
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.98874
+  longitude: -84.34692
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056140885'
+  name: JOSEPH BRENT HAY RESIDENCE
+  npdes_id: KYG402185
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: BRACKEN
+  latitude: 38.705
+  longitude: -84.0825
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110055100581'
+  name: JUSTIN FAHLBUSH RESIDENCE
+  npdes_id: KYG402241
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.000833
+  longitude: -84.392222
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110015722681'
+  name: KATHY SCHELLINGER RESIDENCE
+  npdes_id: KYG402108
+  npdes_ids_secondary:
+  - KYG401568
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: UT / FOUR MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.01373
+  longitude: -84.36445
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072222635'
+  name: KELLOGG AVENUE LANDSCAPE ENHANCEMENTS
+  npdes_id: OHGC07284
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 39.061389
+  longitude: -84.420833
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009743037'
+  name: KEVIN & MADELINE RUMKER RESIDENCE
+  npdes_id: KYG400133
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER / UT
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.01927
+  longitude: -84.3373
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072228312'
+  name: KINGFISHER DEVELOPMENT LLC - STUART
+  npdes_id: OHGC12004
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: null
+  latitude: 38.641584
+  longitude: -83.684561
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000591841'
+  name: KINGFISHER KILLEN LLC
+  npdes_id: OH0060046
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010601
+  county: ADAMS
+  latitude: 38.6903
+  longitude: -83.4803
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000741920'
+  name: KINGFISHER STUART
+  npdes_id: OH0004316
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: ADAMS
+  latitude: 38.6971
+  longitude: -83.78276
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110008991065'
+  name: KIRK & BEVERLY DANIELS RESIDENCE
+  npdes_id: KYG401231
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TWELVE MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011205
+  county: CAMPBELL
+  latitude: 38.91899
+  longitude: -84.32934
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071403074'
+  name: KYTC ITEM NO. 6-9026
+  npdes_id: KYR10R297
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011102
+  county: BRACKEN
+  latitude: 38.766473
+  longitude: -84.057287
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072228115'
+  name: 'KYTC PROJECT:  ITEM 9-9036.00'
+  npdes_id: KYR10U799
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: KINNICONICK CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.670328
+  longitude: -83.08819
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006349255'
+  name: LAKE WAYNOKA
+  npdes_id: OHG8P0032
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010802
+  county: BROWN
+  latitude: 38.92565
+  longitude: -83.78427
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006344857'
+  name: LAKESIDE ESTATES MHP
+  npdes_id: OH0046817
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: FERGUSON RUN
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011204
+  county: CLERMONT
+  latitude: 38.951093
+  longitude: -84.233438
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006763467'
+  name: LANCE BOOTH RESIDENCE
+  npdes_id: KYG400099
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: BRUSH CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.94862
+  longitude: -84.36778
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071177960'
+  name: LANDING @ BEAR CREEK
+  npdes_id: OH0151271
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BEAR CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011106
+  county: CLERMONT COUNTY
+  latitude: 38.801707
+  longitude: -84.173959
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056139441'
+  name: LARRY GIESMAN RESIDENCE
+  npdes_id: KYG402160
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.89275
+  longitude: -84.30638
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071428272'
+  name: LEWIS CO SPLASH PAD
+  npdes_id: KY0113689
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.248
+  design_flow_missing: false
+  receiving_water: SAND BRANCH
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.60383
+  longitude: -83.26806
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071726154'
+  name: LEWIS CO STATE MAINTENANCE GARAGE
+  npdes_id: KYR004687
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SALT LICK CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010208
+  county: LEWIS
+  latitude: 38.594942
+  longitude: -83.34585
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071506591'
+  name: LEWIS COUNTY CAREER & TECHNICAL CENTER
+  npdes_id: KYR10R784
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SALT LICK CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010208
+  county: LEWIS
+  latitude: 38.599744
+  longitude: -83.345169
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009933536'
+  name: 'LEWIS COUNTY SD #1'
+  npdes_id: KY0102601
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.25
+  design_flow_missing: false
+  receiving_water: GROG BR, GROG BRANCH
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010602
+  county: LEWIS
+  latitude: 38.55608
+  longitude: -83.57661
+  compliance_status: null
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110069994927'
+  name: LINDA WOLFZORN RESIDENCE
+  npdes_id: KYG402480
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.91369
+  longitude: -84.35028
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009962996'
+  name: LORI & ROGER VERMILLION RESIDENCE
+  npdes_id: KYG400398
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER / FOUR MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.01317
+  longitude: -84.38403
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110046578985'
+  name: MACA PLASTICS-SALAMON AIRPORT
+  npdes_id: OH0135194
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0063
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010502
+  county: ADAMS
+  latitude: 38.856324
+  longitude: -83.563307
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071223082'
+  name: MADDEN SAWMILL
+  npdes_id: KYR004497
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LITTLE BRANCH
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.574148
+  longitude: -83.453077
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110038080395'
+  name: MAGO CONSTRUCTION CO LLC - FOSTER PLANT
+  npdes_id: KYG110058
+  npdes_ids_secondary:
+  - KYR003375
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIBUTARY 1
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: BRACKEN
+  latitude: 38.811667
+  longitude: -84.228889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110008645332'
+  name: MANCHESTER WWTP
+  npdes_id: OH0020842
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010601
+  county: ADAMS
+  latitude: 38.68799
+  longitude: -83.61795
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110046299803'
+  name: MARK MARSOLAIS RESIDENCE
+  npdes_id: KYG401439
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.001667
+  longitude: -84.398333
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110045093536'
+  name: MASON CO STATE MAINTENANCE GARAGE
+  npdes_id: KYR004678
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAWRENCE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.6234
+  longitude: -83.81625
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071865121'
+  name: MASON COUNTY HIGH SCHOOL SOFTBALL BASEBALL RENOVATION
+  npdes_id: KYR10S887
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: CLARKS RUN
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.621072
+  longitude: -83.813177
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006810825'
+  name: MATT & MOIRA FREY RESIDENCE
+  npdes_id: KYG400404
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.02415
+  longitude: -84.3493
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110040939777'
+  name: MAYSVILLE MATERIALS CO
+  npdes_id: KYG110049
+  npdes_ids_secondary:
+  - KYR003064
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER, UNNAMED TRIBUTARY 1
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.636389
+  longitude: -83.723333
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070741276'
+  name: MAYSVILLE SLOPE STABILIZATION
+  npdes_id: KYR10O431
+  npdes_ids_secondary:
+  - KYR10O357
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.64483
+  longitude: -83.746018
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000761104'
+  name: MAYSVILLE STP
+  npdes_id: KY0020257
+  npdes_ids_secondary:
+  - KYL020257
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.4
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: MASON
+  latitude: 38.68653
+  longitude: -83.78868
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006750738'
+  name: MEADOWCREST MHP
+  npdes_id: KY0075931
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.004
+  design_flow_missing: false
+  receiving_water: STONE LICK BR, UT OF STONE LICK BRANCH
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.59837
+  longitude: -83.67242
+  compliance_status: null
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072230821'
+  name: MEDICAL OFFICE BUILDING - ADAMS COUNTY REGIONAL MEDICAL CENTER - MT. ORAB
+  npdes_id: OHGC16715
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902021103
+  county: null
+  latitude: 39.051086
+  longitude: -83.941909
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009963094'
+  name: MICHAEL ORTH RESIDENCE
+  npdes_id: KYG400344
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: WILLOW CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.965556
+  longitude: -84.333889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056140670'
+  name: MICHAEL WATERS RESIDENCE
+  npdes_id: KYG402172
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.919761
+  longitude: -84.282234
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000392879'
+  name: MILACRON INC - MT ORAB
+  npdes_id: OHP000105
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011001
+  county: BROWN
+  latitude: 39.032649
+  longitude: -83.92816
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070370151'
+  name: MIRANDA SHELTER RESIDENCE
+  npdes_id: KYG402617
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.91892
+  longitude: -84.34809
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070563383'
+  name: MISSY JO HOLLINGSWORTH RESIDENCE
+  npdes_id: KYG402673
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.97574
+  longitude: -84.35217
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000379803'
+  name: MITSUBISHI ELECTRIC AUTOMOTIVE AMERICA INC
+  npdes_id: KYR003674
+  npdes_ids_secondary:
+  - KYR002121
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAWRENCE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.64683
+  longitude: -83.83256
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110022164049'
+  name: MONROE ELEM SCH
+  npdes_id: OH0040517
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011203
+  county: CLERMONT
+  latitude: 38.93128
+  longitude: -84.20365
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006344704'
+  name: MOSCOW VILLAGE
+  npdes_id: OH0096571
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.024
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011107
+  county: CLERMONT
+  latitude: 38.858242
+  longitude: -84.231525
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056983643'
+  name: NELSON BROTHERS LLC
+  npdes_id: KY0111759
+  npdes_ids_secondary:
+  - KYR003850
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0
+  design_flow_missing: false
+  receiving_water: UNNAMED STORMWATER DITCH, WETLAND ADJACENT TO THE OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010204
+  county: LEWIS
+  latitude: 38.624785
+  longitude: -83.128676
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071092826'
+  name: NEW MASON COUNTY MIDDLE SCHOOL
+  npdes_id: KYR10P608
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAWRENCE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.622154
+  longitude: -83.811617
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064649028'
+  name: NEW RICHMOND DEVELOPMENT CORP
+  npdes_id: OH0009865
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER, POND RUN CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: CLERMONT
+  latitude: 38.9914
+  longitude: -84.29757
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072231061'
+  name: NEW RICHMOND DEVELOPMENT CORP LLC
+  npdes_id: OHGC16798
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 39.004167
+  longitude: -84.279444
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110039726204'
+  name: NEW RICHMOND WWTP
+  npdes_id: OH0021156
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.1
+  design_flow_missing: false
+  receiving_water: OHIO RIVER, TWELVE MILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011204
+  county: CLERMONT
+  latitude: 38.960784
+  longitude: -84.288645
+  compliance_status: Effluent - Non-monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064595344'
+  name: NINE MILE CREEK WWTP
+  npdes_id: OH0049361
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: '050600011602'
+  county: CLERMONT
+  latitude: 39.030114
+  longitude: -84.306352
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009937168'
+  name: NORTHERN KENTUCKY SADDLE CLUB
+  npdes_id: KY0076139
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.001
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK, FOURMILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.98692
+  longitude: -84.36418
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110013307992'
+  name: NORTHERN KENTUCKY WATER DISTRICT SUBDISTRICT 'O' - ELLIOTT ROAD
+  npdes_id: KYR10S787
+  npdes_ids_secondary:
+  - KYR10E903
+  - KYR10S784
+  - KYR10S789
+  - KYR10S790
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: NORTH FORK GRASSY CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.06335
+  longitude: -84.45366
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006276403'
+  name: ODNR - SHAWNEE STATE PARK LODGE & CABINS
+  npdes_id: OH0037885
+  npdes_ids_secondary:
+  - OH0037877
+  - OH0048305
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.04
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010201
+  county: SCIOTO
+  latitude: 38.741355
+  longitude: -83.19685
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110045050699'
+  name: PAUL & MICHELE RANEY RESIDENCE
+  npdes_id: KYG402315
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.88772
+  longitude: -84.32388
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006681581'
+  name: PAUL MALONEY RESIDENCE
+  npdes_id: KYG400401
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.925832
+  longitude: -84.365658
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006824286'
+  name: PAUL RITTER RESIDENCE
+  npdes_id: KYG400993
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: COPPERS CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.00469
+  longitude: -84.35841
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064573901'
+  name: PAUL SEE RESIDENCE
+  npdes_id: KYG402413
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.956805
+  longitude: -84.318404
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006660684'
+  name: PIERCE UNION BATAVIA WTP
+  npdes_id: OH0040711
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011206
+  county: CLERMONT
+  latitude: 39.01066
+  longitude: -84.30028
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009963325'
+  name: RAYMOND & BETTY WISE RESIDENCE
+  npdes_id: KYG400215
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.992222
+  longitude: -84.361111
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009935062'
+  name: REITMAN AUTO PARTS & SALES INC
+  npdes_id: KY0096105
+  npdes_ids_secondary:
+  - KYR001391
+  - KYR004053
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK, FOURMILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.9951
+  longitude: -84.36362
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006762459'
+  name: RICHARD & MARGARET BOESCH RESIDENCE
+  npdes_id: KYG400325
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.86453
+  longitude: -84.29741
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009961363'
+  name: RICHARD MCKEWEN RESIDENCE
+  npdes_id: KYG400953
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: DUCK CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.04018
+  longitude: -84.43085
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006681199'
+  name: RICHARD VENNEMANN RESIDENCE
+  npdes_id: KYG400127
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TWELVE MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.9607
+  longitude: -84.357726
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006350297'
+  name: RIPLEY SEWAGE TREATMENT PLANT
+  npdes_id: OH0020966
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010804
+  county: BROWN
+  latitude: 38.74046
+  longitude: -83.842885
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072223551'
+  name: RIVER DAYS CAMPGROUND PHASE 2
+  npdes_id: OHGC18318
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 38.972035
+  longitude: -84.289606
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110021115791'
+  name: RIVER SAND & GRAVEL
+  npdes_id: KYG840239
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010210
+  county: LEWIS
+  latitude: 38.650278
+  longitude: -83.366667
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072227593'
+  name: RIVER VIEW BLUFFS
+  npdes_id: OHGC04517
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011204
+  county: null
+  latitude: 38.96913
+  longitude: -84.28181
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072224362'
+  name: RIVERFRONT RV PARK
+  npdes_id: OHGC11681
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011204
+  county: null
+  latitude: 38.960034
+  longitude: -84.288757
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110015317218'
+  name: ROB DAWN RESIDENCE
+  npdes_id: KYG401499
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.92657
+  longitude: -84.28705
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110067576144'
+  name: ROBERT WOJTOWICZ RESIDENCE
+  npdes_id: KYG402452
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.951127
+  longitude: -84.313625
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070560951'
+  name: ROBIN MUSKOPF RESIDENCE
+  npdes_id: KYG402666
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.01749
+  longitude: -84.37182
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006762618'
+  name: ROGER & MARLENE CARL RESIDENCE
+  npdes_id: KYG400275
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: LOCUST CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: BRACKEN
+  latitude: 38.702778
+  longitude: -84.076111
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006760656'
+  name: ROGER HECK RESIDENCE
+  npdes_id: KYG400859
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.9075
+  longitude: -84.288333
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070079880'
+  name: ROME VILLAGE WWTP
+  npdes_id: OH0145017
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.018
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010209
+  county: SCIOTO COUNTY
+  latitude: 38.667271
+  longitude: -83.377962
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110045097612'
+  name: ROY GARIFFO RESIDENCE
+  npdes_id: KYG400171
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TWELVE MILE CRK / UT
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.90702
+  longitude: -84.34729
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064428454'
+  name: RUSSELL PARNELL RESIDENCE
+  npdes_id: KYG402403
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.013056
+  longitude: -84.365278
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110011016836'
+  name: RUSSELLVILLE WWTP
+  npdes_id: OH0048682
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.085
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010701
+  county: BROWN
+  latitude: 38.8723
+  longitude: -83.7832
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070027748'
+  name: RYAN & TAMARA CLINE RESIDENCE
+  npdes_id: KYG402494
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.876094
+  longitude: -84.297394
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072227052'
+  name: SAGE GARDENS APARTMENTS
+  npdes_id: OHGC19044
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011002
+  county: null
+  latitude: 38.87776
+  longitude: -83.90084
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009688775'
+  name: SARDINIA WWTP
+  npdes_id: OH0020729
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010902
+  county: BROWN
+  latitude: 39.004
+  longitude: -83.8097
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009937140'
+  name: SAXONY VILLAGE APTS
+  npdes_id: KY0075914
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.014
+  design_flow_missing: false
+  receiving_water: OHIO RIVER / UT, UT OF OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.70407
+  longitude: -83.03676
+  compliance_status: null
+  informal_enf_count: 6
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072227025'
+  name: SCI-52-15.06 PID 114303
+  npdes_id: OHGC11809
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010202
+  county: null
+  latitude: 38.713889
+  longitude: -83.055556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072225605'
+  name: SEAMAN TO WEST UNION 69KV TRANSMISSION PROJECT
+  npdes_id: OHGC08483
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010404
+  county: null
+  latitude: 38.9373
+  longitude: -83.56383
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071405150'
+  name: SHORTCUT STORAGE
+  npdes_id: KYR10R191
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: FLAGG SPRING CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.87236
+  longitude: -84.26196
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071401576'
+  name: SHORTCUT STORAGE - BORROW SITE
+  npdes_id: KYR10R192
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: FLAGG SPRING CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.870514
+  longitude: -84.262797
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072134015'
+  name: SILVER GROVE 41 DISTRIBUTION REBUILD PROJECT
+  npdes_id: KYR10U200
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: FOURMILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.025212
+  longitude: -84.377879
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072230534'
+  name: SINKING SPRINGS-SOUTH LUCASVILLE 138KV LINE
+  npdes_id: OHGC06378
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010304
+  county: null
+  latitude: 39.06415
+  longitude: -83.45252
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072221142'
+  name: SLIM SALLEE MEMORIAL PARK
+  npdes_id: OHGC17587
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011003
+  county: null
+  latitude: 38.78887
+  longitude: -83.96354
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071822479'
+  name: SMRP - MAPLE ROAD
+  npdes_id: KYR10S700
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010605
+  county: MASON
+  latitude: 38.64483
+  longitude: -83.746018
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009051667'
+  name: ST JOSEPH PARISH
+  npdes_id: KY0075752
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0014
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK, UT TO FOURMILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.99598
+  longitude: -84.3632
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110013860090'
+  name: STANDARD SUPPLY CO
+  npdes_id: KYG110186
+  npdes_ids_secondary:
+  - KYR001687
+  - KYR003055
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIBUTARY 1
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.64032
+  longitude: -83.75232
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056138807'
+  name: STEPHEN SMITH RESIDENCE
+  npdes_id: KYG402348
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.012833
+  longitude: -84.406583
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110020061564'
+  name: STEVEN OSTERHAGE RESIDENCE
+  npdes_id: KYG401720
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TUG CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.9931
+  longitude: -84.38067
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009962941'
+  name: STEVEN PAUL RESIDENCE
+  npdes_id: KYG400380
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TEN MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.991667
+  longitude: -84.333611
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072225824'
+  name: STREET EXTENSION OF APPLE STREET WEST
+  npdes_id: OHGC19191
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011001
+  county: null
+  latitude: 39.03202
+  longitude: -83.91705
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009933965'
+  name: STS PETER & PAUL ELEMENTARY SCHOOL
+  npdes_id: KY0101010
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0035
+  design_flow_missing: false
+  receiving_water: TWELVE MILE CREEK, TWELVE MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.87542
+  longitude: -84.316036
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072231614'
+  name: STUART - POINT O SAG REMEDIATION
+  npdes_id: OHGC18710
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010505
+  county: null
+  latitude: 38.773611
+  longitude: -83.492099
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072222604'
+  name: STUART TO SEAMAN LAYDOWN YARD
+  npdes_id: OHGC05263
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010403
+  county: null
+  latitude: 38.929938
+  longitude: -83.566614
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000591271'
+  name: SUPERIOR COMPOSITES CO LLC
+  npdes_id: KY0100528
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0
+  design_flow_missing: false
+  receiving_water: SHAWNEE CRK / UT / OHIO RIVER, UT OF SAND BRANCH
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010207
+  county: LEWIS
+  latitude: 38.601111
+  longitude: -83.274167
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071668669'
+  name: SUTTON'S LANDING
+  npdes_id: KYR10S228
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAWRENCE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.640625
+  longitude: -83.827944
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006824400'
+  name: TALIA E MCOWEN RESIDENCE
+  npdes_id: KYG401226
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: UT / TWELVE MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: PENDLETON
+  latitude: 38.84893
+  longitude: -84.28556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006698902'
+  name: TALL TIMBERS MHP
+  npdes_id: OH0123323
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BRIGGS RUN (TRIBUTARY OF TWELVE MILE CREEK), BRIGGS RUN - TRIB
+    OF 12 MILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011204
+  county: CLERMONT
+  latitude: 38.99249
+  longitude: -84.19942
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006700392'
+  name: TATE MONROE WATER ASSN
+  npdes_id: OH0010677
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011203
+  county: CLERMONT
+  latitude: 38.93304
+  longitude: -84.24909
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110029526350'
+  name: TATE MONROE WATER ASSOCIATION STU 2
+  npdes_id: OH0137570
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011107
+  county: CLERMONT
+  latitude: 38.83199
+  longitude: -84.2311
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110020159308'
+  name: TERRY PARNELL JR RESIDENCE
+  npdes_id: KYG401767
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: UNNAMED TRIBUTARY
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.01453
+  longitude: -84.36431
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070602957'
+  name: THE NATIONAL LIME & STONE COMPANY
+  npdes_id: OH0148865
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010210
+  county: ADAMS COUNTY
+  latitude: 38.638114
+  longitude: -83.325398
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110001629907'
+  name: THE STANLEY WORKS INC
+  npdes_id: OHP000146
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010802
+  county: BROWN
+  latitude: 38.88957
+  longitude: -83.88712
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056350381'
+  name: THE WELLS GROUP LLC
+  npdes_id: KYG110151
+  npdes_ids_secondary:
+  - KYR003479
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIBUTARY 1
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010208
+  county: LEWIS
+  latitude: 38.59585
+  longitude: -83.32249
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110056140803'
+  name: THOMAS LEE & LORI STARRETT RESIDENCE
+  npdes_id: KYG402180
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.8735
+  longitude: -84.28127
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110063868863'
+  name: TIM BEITING RESIDENCE
+  npdes_id: KYG402398
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.00172
+  longitude: -84.36186
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006763010'
+  name: TIM FULLER RESIDENCE
+  npdes_id: KYG400182
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OWL CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.016638
+  longitude: -84.401022
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110015608902'
+  name: TIM HARDEN RESIDENCE
+  npdes_id: KYG401545
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: TEN MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.99172
+  longitude: -84.33502
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009961826'
+  name: TOM CONNLEY RESIDENCE
+  npdes_id: KYG400816
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: 0.0005
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 38.988889
+  longitude: -84.358056
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071878306'
+  name: TONY PALARIE CAMPGROUND
+  npdes_id: KYR10S956
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BRIARY CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.444075
+  longitude: -83.369917
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071539290'
+  name: TOWER PARK ATHLETIC COMPLEX
+  npdes_id: KYR10R827
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.063977
+  longitude: -84.445553
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006660639'
+  name: TRADEWINDS MHP
+  npdes_id: OH0035921
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIBUTARY OF TEN MILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011206
+  county: CLERMONT
+  latitude: 38.99483
+  longitude: -84.21603
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110070021452'
+  name: TRAM CONSTRUCTION INC
+  npdes_id: KYR004222
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BEVINS CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.609167
+  longitude: -83.172222
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071711311'
+  name: TYLER ROTH PROPERTY
+  npdes_id: KY0091171
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0015
+  design_flow_missing: false
+  receiving_water: UT TO FOUR MILE CREEK, UT TO FOUR MILE CRK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: CAMPBELL
+  latitude: 39.0125
+  longitude: -84.371944
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006749714'
+  name: VALOR-MAYSVILLE BULK PLANT
+  npdes_id: KYR003959
+  npdes_ids_secondary:
+  - KY0091359
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.65973
+  longitude: -83.77804
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110064260151'
+  name: VANCEBURG STP
+  npdes_id: KY0021512
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.41
+  design_flow_missing: false
+  receiving_water: OHIO RIVER
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: LEWIS
+  latitude: 38.608333
+  longitude: -83.321389
+  compliance_status: null
+  informal_enf_count: 8
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072222831'
+  name: VANDALIA RENTAL
+  npdes_id: OHGC03328
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 39.072669
+  longitude: -84.298295
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072222846'
+  name: VENUE EAST
+  npdes_id: OHGC16048
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 39.05557
+  longitude: -84.41684
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110008641103'
+  name: VILLAGE OF HIGGINSPORT
+  npdes_id: OH0134091
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.065
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011102
+  county: BROWN
+  latitude: 38.79251
+  longitude: -83.96278
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072224290'
+  name: VILLAGE OF MANCHESTER WATERLINE PHASE 2
+  npdes_id: OHGC09259
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010601
+  county: null
+  latitude: 38.69115
+  longitude: -83.61256
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009822996'
+  name: VILLAGE OF MT. ORAB WWTP
+  npdes_id: OH0026646
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.18
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011001
+  county: BROWN
+  latitude: 38.99321
+  longitude: -83.92009
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110004685047'
+  name: VILLAGE OF PEEBLES WASTEWATER PLANT
+  npdes_id: OH0026964
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.42
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010501
+  county: ADAMS
+  latitude: 38.94724
+  longitude: -83.41558
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009152825'
+  name: VILLAGE OF SEAMAN WASTEWATER TREATMENT PLANT
+  npdes_id: OH0027341
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.18
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010404
+  county: ADAMS
+  latitude: 38.947658
+  longitude: -83.570292
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072227741'
+  name: VOLKSWAGEN - BEECHMONT
+  npdes_id: OHGC01849
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011208
+  county: null
+  latitude: 39.07303
+  longitude: -84.33221
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110000874894'
+  name: WALD MANUFACTURING INC
+  npdes_id: KY0000477
+  npdes_ids_secondary:
+  - KYR500010
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.216
+  design_flow_missing: false
+  receiving_water: LIMESTONE CRK, UT TO LIMESTONE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.638889
+  longitude: -83.747222
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009677402'
+  name: WAYNOKA PROPERTY OWNERS ASSOCIATION
+  npdes_id: OHGC06466
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010802
+  county: BROWN
+  latitude: 38.92565
+  longitude: -83.78427
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110039783721'
+  name: WAYNOKA REGIONAL W & SD
+  npdes_id: OH0115771
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010802
+  county: BROWN
+  latitude: 38.93893
+  longitude: -83.79544
+  compliance_status: Effluent - Non-monthly Average Limit
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110071238665'
+  name: WEAVERS LLC
+  npdes_id: OH0151432
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED INTERMITTENT TRIBUTARY TO WORLEY RUN
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010202
+  county: SCIOTO COUNTY
+  latitude: 38.703056
+  longitude: -83.088056
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072225345'
+  name: WEST UNION TO POPLAR FLATS 69KV
+  npdes_id: OHGC10993
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010601
+  county: null
+  latitude: 38.75
+  longitude: -83.591944
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009822843'
+  name: WEST UNION WWTP
+  npdes_id: OH0028088
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.7
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010505
+  county: ADAMS
+  latitude: 38.7883
+  longitude: -83.54301
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110013811704'
+  name: WESTERN LEWIS RECTORVILLE WATER DISTRICT
+  npdes_id: KY0113646
+  npdes_ids_secondary:
+  - KY0105091
+  - KYG640070
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.005
+  design_flow_missing: false
+  receiving_water: KENNEDY CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.634973
+  longitude: -83.715632
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110040608955'
+  name: WESTERN MASON COUNTY SANITATION DISTRICT
+  npdes_id: KYP000081
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: Individual State Issued Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: DOWNING DRIVE, MAYSVILLE STP
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: null
+  county: MASON
+  latitude: 38.645682
+  longitude: -83.761365
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110072226143'
+  name: WHITE OAK HIGH SCHOOL
+  npdes_id: OHGC17237
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010902
+  county: null
+  latitude: 39.04138
+  longitude: -83.7473
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110006354355'
+  name: WINCHESTER WASTEWATER TREATMENT PLANT
+  npdes_id: OH0028142
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.17
+  design_flow_missing: false
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902010402
+  county: ADAMS
+  latitude: 38.93926
+  longitude: -83.64104
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201
+- frs_registry_id: '110009935295'
+  name: YUNG FARM ESTATES SUBDIVISION
+  npdes_id: KY0092843
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: FOUR MILE CRK / UT, UT TO FOUR MILE CREEK
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011207
+  county: CAMPBELL
+  latitude: 39.016667
+  longitude: -84.364167
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: 1
+  queried_huc8: 05090201
+- frs_registry_id: '110000392860'
+  name: ZIMMER POWER COMPANY LLC
+  npdes_id: OH0048836
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: 05090201
+  huc8_name: Ohio Brush-Whiteoak
+  huc12: 050902011107
+  county: CLERMONT
+  latitude: 38.86083
+  longitude: -84.22379
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: 05090201

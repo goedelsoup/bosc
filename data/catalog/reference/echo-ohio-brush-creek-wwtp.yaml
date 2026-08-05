@@ -1,0 +1,43 @@
+id: echo-ohio-brush-creek-wwtp
+title: Ohio Brush Creek-basin NPDES discharger inventory (EPA ECHO)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: npdes --basin ohio-brush-creek
+  connector_ref: watermark.hydrology.connectors.echo
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  external_url: https://echo.epa.gov/tools/web-services
+license: U.S. Government work (public domain)
+access_tier: throttled
+site_scope: basin:ohio-brush-creek
+storage:
+- relpath: reference/echo/ohio-brush-creek-wwtp.all-npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/ohio-brush-creek-wwtp.huc-counts.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/ohio-brush-creek-wwtp.potw.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+  ttl_days: 180
+provenance: connector
+schema_ref: watermark.hydrology.connectors.echo.Facility
+tags:
+- npdes
+- cwa
+- ohio-brush-creek
+- ohio-river
+- wastewater
+notes: >-
+  Inventory of active CWA-permitted dischargers across HUC-8 05090201, the network's first
+  direct-to-Ohio-River branch (West Union / Adams County, #1120), deduplicated by FRS Registry ID;
+  every value is ECHO-returned and nulls are genuine. SCOPE IS WIDER THAN THE NAME: 05090201
+  "Ohio Brush-Whiteoak" is a two-bank Ohio River corridor unit, so the pull is majority-Kentucky
+  (168 of 261 facilities, Campbell County alone 111) and Ohio Brush Creek proper is 16 of its 67
+  HUC-12s. receiving_water is null for 118 of 261 rows including four of the five Adams County
+  POTWs, so most of the inventory is unscreenable until a cited overlay closes that gap. See
+  data/reference/echo/README.md.
