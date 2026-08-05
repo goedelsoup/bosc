@@ -47,7 +47,9 @@ preserved.
 ## The Van Wert / QTS negative (#1407)
 
 **No application, award or agenda item naming Van Wert, QTS, QTS Realty Trust Inc. or QTS Van Wert
-LLC appears in any 2026 minute in this collection.** That is the state half of the incentive
+LLC appears in the four 2026 minutes read** — 2026-03-30, 2026-06-01 and 2026-06-29 from this
+collection, plus **2026-04-27**, which was read from the DAM and *not* committed because it carries
+no data-center item of any kind; it is cited there by URL and read date. That is the state half of the incentive
 negative recorded in
 [`data/extracted/van-wert/incentive-water-instruments.yaml`](../../../extracted/van-wert/incentive-water-instruments.yaml).
 The 2026-07-27 minutes are not yet published — the Authority approves minutes at the *following*

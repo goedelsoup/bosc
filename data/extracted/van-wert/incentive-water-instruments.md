@@ -40,7 +40,7 @@ agreements were signed on or after that date is the single highest-value re-chec
 | City of Van Wert legislation + minutes (WordPress REST media index, 298 items) | Ord. `26-07-040`; minutes 2026-07-13 | **No** enterprise zone, CRA, PILOT, TIF, JEDD or development agreement `[verified]` |
 | Van Wert County Commissioners (published 2026 agenda index, 63 meeting dates) | 2026-08-06 | **Zero** enterprise-zone / abatement / CRA / TIF / QTS entries `[verified]` |
 | Lincolnview Local BOE (BoardDocs, 12 meetings) | 2026-07-22 | **No** data-center agenda item at any 2026 meeting `[verified]` |
-| Ohio Tax Credit Authority minutes (Ohio DAM) | 2026-06-29 | **No** Van Wert / QTS item in any 2026 meeting `[verified]` |
+| Ohio Tax Credit Authority minutes (Ohio DAM) | 2026-06-29 | **No** Van Wert / QTS item in the four 2026 meetings read `[verified]` |
 | ODD tax-incentive export (committed, `data/reference/odd/tax_incentives.csv`) | pulled 2026-06-28 | **Zero** QTS rows statewide; 8 Van Wert County rows, newest approved 2022-06-22 `[verified]` |
 
 Each route's blind spot is written down in the YAML. The important ones: the City posts minutes
@@ -99,7 +99,7 @@ Three things this pass adds:
    proposed development." That converts "no capacity study found" into a records request with a
    subject line — the joint QTS / City engineering capacity analysis, held by the City Engineer or
    the Safety-Service Director. **Priority-1 pull.**
-2. **The 660,000-gallon figure is the City's number, not the operator's.** QTS declines to state a
+2. **The ~660,000-gallon figure is the City's number, not the operator's.** QTS declines to state a
    fill volume at all: "The total initial charging volume can vary widely … it's hard to predict
    the exact amount of water needed." Every figure in the corpus's fill-vs-annual dispute traces to
    a City official or to a citizen quoting the dead city microsite. That materially weakens reading
@@ -157,9 +157,9 @@ The Board of Commissioners publishes agendas (not journal entries) as a single p
 
 **1. The Van Wert–Haviland transmission line, on the City's record, is not this campus's.** On
 2026-05-27 Safety-Service Director Jay C. Fleming told Council that AEP "has been planning a power
-line upgrade for about 3 years" between the Haviland facility and the substation behind the street
-department, running a "135-kilovolt" line down Dutch John Road "to help Industrial Park along with
-the city's electrical backbone" — and **"Fleming reiterated this project was not related to the
+line upgrade **for about 3 years ago**" (the minutes' own phrasing) between the Haviland facility
+and the substation behind the street department, running a "135-kilovolt" line down Dutch John
+Road "to help Industrial Park along with the city's electrical backbone" — and **"Fleming reiterated this project was not related to the
 Data Center."** `[verified]` (`5.27.26.pdf` p. 1, identical at 300 and 450 DPI.) The register
 carries OPSB **25-0697-EL-BLN** (the AEP Ohio Transco Van Wert–Haviland 138 kV letter of
 notification) as the transmission instrument for this load, with two unreconciled cost figures

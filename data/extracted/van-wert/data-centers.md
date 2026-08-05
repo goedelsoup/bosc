@@ -200,10 +200,10 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   **25-0697-EL-BLN**, the AEP Ohio Transco Van Wert–Haviland 138 kV line. The two may cover
   different scopes; neither is established. `[open]`
 - **…and the City says that line is not this campus's (#1407).** Safety-Service Director Jay C.
-  Fleming to Council, 2026-05-27: AEP "has been planning a power line upgrade **for about 3
-  years**" between the Haviland facility and the substation behind the street department, running a
-  "135-kilovolt" line down Dutch John Road "to help Industrial Park along with the city's
-  electrical backbone" — and "**Fleming reiterated this project was not related to the Data
+  Fleming to Council, 2026-05-27: AEP "has been planning a power line upgrade **for about 3 years
+  ago**" (the minutes' own phrasing) between the Haviland facility and the substation behind the
+  street department, running a "135-kilovolt" line down Dutch John Road "to help Industrial Park
+  along with the city's electrical backbone" — and "**Fleming reiterated this project was not related to the Data
   Center.**" `[verified]` (`5.27.26.pdf` p. 1, identical at 300 and 450 DPI.) One official's
   characterization is not a filing and does not settle what the LON covers, but it is the only
   primary-source statement in the corpus on the question and it cuts against attributing that line,
@@ -273,7 +273,8 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   read as written, applying to *new* requests. `[verified]` The **2026-06-29** meeting, the first
   wholly under it, approved seven projects and **zero** data-center exemptions. `[verified]` **No
   application, award or agenda item naming Van Wert, QTS, QTS Realty Trust Inc. or QTS Van Wert
-  LLC appears in any 2026 minute**, and the committed ODD tax-incentive export (pulled 2026-06-28)
+  LLC appears in the four 2026 minutes read** (2026-03-30, 2026-04-27, 2026-06-01, 2026-06-29 —
+  three committed, the fourth cited in place), and the committed ODD tax-incentive export (pulled 2026-06-28)
   carries **zero QTS rows statewide** and eight Van Wert County rows whose newest approval is
   **2022-06-22**. `[verified]` One trap recorded so it is not re-sprung: a Van Wert item *does*
   appear on the 2026-06-29 agenda — **"Van Wert Forward II"**, a Transformational Mixed-Use

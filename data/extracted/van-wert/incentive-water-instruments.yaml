@@ -176,7 +176,16 @@ city_incentive_thread:
     tag: '[verified]'
     route: vanwert.org open WordPress REST media index, enumerated 2026-08-05
     window: every item uploaded 2026-05-12 .. 2026-07-29 (39 items)
-    ordinances_read: ['26-05-032', '25-06-028', '26-06-033 (draft + update)', '26-06-034', '26-06-035', '26-07-036', '26-07-037', '26-07-038', '26-07-039', '26-07-040']
+    ordinances_read: ['26-05-032', '25-06-028 [sic]', '26-06-033 (draft + update)', '26-06-034', '26-06-035', '26-07-036', '26-07-037', '26-07-038', '26-07-039', '26-07-040']
+    numbering_note: >-
+      "25-06-028" is not a typo in this record — it is the number the CITY posted. The 2027 tax
+      budget reached the upload tree three times under three numbers, two of them carrying a
+      2025-series prefix in June 2026: `25-06-028-DRAFT.pdf` (uploaded 2026-06-05, its own header
+      reading "ORDINANCE Number: 25-06-028") and `26-06-033-DRAFT.pdf` / `26-06-033-UPDATE.pdf`
+      (uploaded 2026-06-22, the DRAFT's header reading "ORDINANCE Number: 25-06-033"). All three
+      are the same measure — accepting the Budget Commission's amounts and rates for the fiscal
+      year commencing 2027-01-01 — and all three were read. The as-posted numbers are kept because
+      they are what a reader searching the City's archive will find.
     minutes_read: ['2026-05-27', '2026-06-08', '2026-06-08 council of the whole', '2026-07-13', '2026-07-13 public hearing']
     result: >-
       NO enterprise-zone agreement, NO Community Reinvestment Area agreement, NO PILOT, NO tax
@@ -259,9 +268,23 @@ state_thread:
     route: Ohio DAM (dam.assets.ohio.gov), the same open, unauthenticated, scriptable route as the Ohio EPA permit DAM
     meetings_read: ['2026-03-30', '2026-04-27', '2026-06-01', '2026-06-29']
     read_on: '2026-08-05'
+    meetings_committed: ['2026-03-30', '2026-06-01', '2026-06-29']   # data/documents/odd/tca/
+    meetings_read_in_place:
+    - date: '2026-04-27'
+      url: 'https://dam.assets.ohio.gov/image/upload/development.ohio.gov/about/taxcreditminutes/Meeting_Minutes_TCA_4.27.2026.pdf'
+      read: '2026-08-05'
+      note: >-
+        Read from the DAM and not committed — it carries no data-center item of any kind and no
+        Van Wert or QTS string, so it adds nothing to the corpus beyond the negative recorded
+        here. Cited by URL and read date so the negative below is traceable to every meeting it
+        claims to cover; pull the file if that negative is ever load-bearing.
     result: >-
       No application, award, exemption or agenda item naming Van Wert, QTS, QTS Realty Trust or
-      QTS Van Wert LLC appears in any 2026 meeting minute. `[verified]`
+      QTS Van Wert LLC appears in any of the four 2026 meeting minutes read — the three committed
+      above and the 2026-04-27 minute read in place. `[verified]` NOT covered by that statement:
+      the 2026-01-28 minute (committed from an earlier pass, not re-read here), the unpublished
+      2026-07-27 minute, and any 2026 meeting outside the 3.30 → 4.27 → 6.1 → 6.29 → 7.27 chain
+      these minutes name for each other.
     the_last_exemption:
       grantee: Cologix, Inc
       approved: '2026-06-01'
@@ -367,9 +390,6 @@ water_thread:
       the Safety-Service Director. It is the priority-1 pull on this thread.
 
   what_the_city_record_actually_says:
-    reading: >-
-      Four statements, no reconciliation, and the newest one withdraws the number rather than
-      settling it. The corpus's fill-vs-annual ambiguity (issue 1409 / B2 1682) is not narrowing.
     entries:
     - date: '2026-04-21'
       who: Jay C. Fleming, Safety-Service Director
