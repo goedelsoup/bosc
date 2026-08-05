@@ -1,18 +1,18 @@
 {
   "site": "wpafb",
   "bundle_version": "1.0.0",
-  "contract_version": "1.55.0",
-  "generated_at": "2026-08-05T21:06:03+00:00",
+  "contract_version": "2.0.0",
+  "generated_at": "2026-08-05T22:20:13+00:00",
   "feed_count": 32,
   "row_total": 466,
   "readiness": {
-    "tier": "case",
+    "tier": "reference",
     "domains": {
       "backdrop": "live",
       "facility": "live",
       "places": "live",
       "record": "live",
-      "story": "absent"
+      "inquiry": "live"
     }
   },
   "facility": {

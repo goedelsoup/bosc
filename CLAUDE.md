@@ -142,14 +142,25 @@ so it is *reconciled* with them, not a competing index (the `/ask` feed stays ca
   activation, not Lima-shape-matching** (#1220): a site is defined by the **domains that
   actually have a story there**, not by its deficits against Lima's taxonomy. It is computed
   **in Python at export** (`watermark.site.readiness`) and written into `manifest.json` as a
-  `readiness` block — the five domains (**backdrop, facility, places, record, story**), each
+  `readiness` block — the five domains (**backdrop, facility, places, record, inquiry**), each
   `absent | seeded | live`, plus a derived **tier** (`stub → backdrop → case → reference`). It
   is a **standing property recomputed at every `watermark export`**: it rises when a source
   lands and falls when one dries up — never an onboard-time snapshot. The **floor is always
   pulled** (backdrop = the coordinate/FIPS/state-keyed connectors — economics-baseline,
   consumer-energy, RSEI); **above the floor triggers on evidence, never scaffolds** (facility on
   a disclosed permit + its feed, places on committed campus/footprint **or federal-enclave**
-  geometry, record on extracted `records`/`documents`, story on a registered story + leads). The frontend
+  geometry, record on extracted `records`/`documents`, inquiry on the site's own **`impact-study`
+  verdicts**). **`inquiry` was `story` until #1971 (epic #1968), and the rename is the point:** its
+  predicate was a registered MDX walk + a leads feed — the only domain whose signal was *authored
+  prose* — so van-wert read `absent` while carrying three merged investigations, and findlay read
+  `live` for a walk that was `comingSoon` and could not be opened. It now asks whether the site's
+  study **answers**: a substantive chapter count **and** at least one of the two corpus-keyed
+  chapters (`assembly`/`governance`) substantive, because most chapters derive from connector pulls
+  and a count alone lets a zero-record site out-score a worked corpus. **The tier is derived from
+  the four record-bearing domains only** — `inquiry` is reported and never gates, so a walk is no
+  longer the price of a site's tier and a guided walk is never a "need" on a peer's board. Lima's
+  `project-bosc` is the network's ONE surviving walk, kept as a method demo, not a per-site
+  obligation. The frontend
   (`web/packages/core/src/readiness.ts`) is a **thin reader** of the block: primary sections gate on their
   parent domain, leaf facets add a feed/registry check so an active domain never opens an empty
   page, and it surfaces a needs/leads board for the locked ones. `is_reference_site` survives

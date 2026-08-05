@@ -63,7 +63,7 @@ function makeBundle(slug: string, feeds: Feeds): string {
   const entries = Object.entries(feeds).filter(([, rows]) => rows != null);
   const manifest = {
     bundle_version: "test",
-    contract_version: "1.27",
+    contract_version: "2.0.0",
     generated_at: "2026-01-01T00:00:00Z",
     feed_count: entries.length,
     row_total: entries.reduce((a, [, rows]) => a + (rows as unknown[]).length, 0),

@@ -1,8 +1,8 @@
 {
   "site": "troy-piqua",
   "bundle_version": "1.0.0",
-  "contract_version": "1.55.0",
-  "generated_at": "2026-08-05T21:02:21+00:00",
+  "contract_version": "2.0.0",
+  "generated_at": "2026-08-05T22:17:03+00:00",
   "feed_count": 34,
   "row_total": 488,
   "readiness": {
@@ -12,7 +12,7 @@
       "facility": "seeded",
       "places": "live",
       "record": "live",
-      "story": "seeded"
+      "inquiry": "live"
     }
   },
   "facility": {

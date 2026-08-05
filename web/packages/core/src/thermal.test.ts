@@ -75,7 +75,7 @@ function makeBundle(payload: object | null): string {
     join(dir, "manifest.json"),
     JSON.stringify({
       bundle_version: "test",
-      contract_version: "1.41.0",
+      contract_version: "2.0.0",
       generated_at: "2026-01-01T00:00:00Z",
       feed_count: feeds.length,
       row_total: feeds.length,

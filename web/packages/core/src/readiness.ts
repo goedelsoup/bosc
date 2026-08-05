@@ -46,7 +46,10 @@ import { selectableSitePaths, surfacedStories } from "./sites";
 export type { DomainState, SiteTier } from "./bundle";
 
 /** The five activation domains (`bosc.site.readiness.Domain`). */
-export type Domain = "backdrop" | "facility" | "places" | "record" | "story";
+/** The five readiness domains. `inquiry` was `story` until #1971 (epic #1968): its predicate was
+ *  a registered MDX walk plus a leads feed — the only domain whose signal was authored prose — and
+ *  it now reads the site's own `impact-study` verdicts. It is REPORTED, never a tier gate. */
+export type Domain = "backdrop" | "facility" | "places" | "record" | "inquiry";
 
 /**
  * The live reference build (Lima) hosts the network-global content — the `docs/` narrative that
@@ -135,7 +138,7 @@ export const SECTION_META: Record<ReadinessSection, { label: string; holds: stri
  *  < 1.17.0) or a synthetic fixture omits it: sections lock (degrade), nothing crashes. */
 const ABSENT_READINESS: Readiness = {
   tier: "stub",
-  domains: { backdrop: "absent", facility: "absent", places: "absent", record: "absent", story: "absent" },
+  domains: { backdrop: "absent", facility: "absent", places: "absent", record: "absent", inquiry: "absent" },
 };
 
 /** The site's computed readiness block, read straight from its bundle manifest (#1220). */
@@ -235,10 +238,12 @@ function hasEnough(section: ReadinessSection, slug: string): boolean {
       // the section only for the filings its OWN corpus carries, never the reference build's.
       return domainPresent(slug, "record") && scopedLegal(slug).length > 0;
     case "story":
-      // The guided walk needs a *surfaced* (readable) story — registered in the `sites.ts` overlay
-      // and neither `hidden` (#1256) nor `comingSoon` (#1526). A leads-only story domain (Urbana)
-      // has no walk to open; the editorial walks are `comingSoon`, so this facet locks and their
-      // story tab/hub CTA render as a "— coming soon" marker + teaser instead of a readable door.
+      // The guided walk needs a *surfaced* (readable) walk — registered in the `sites.ts` overlay
+      // and neither `hidden` (#1256) nor `comingSoon` (#1526). Since #1971 only Lima registers one
+      // (the network's method demo; the other three were absorbed into their impact studies by
+      // #1970), so this facet opens there and locks everywhere else — and a peer's narrative now
+      // lives in its study, which never locks. Note this is the SECTION `story`, not the readiness
+      // domain of that name: that domain is `inquiry` now, and nothing here reads it.
       return surfacedStories(slug).length > 0;
     case "leads":
       // The leads board is feed-driven per site (#796); the reference build also hosts the
@@ -275,8 +280,24 @@ export function siteReadiness(slug: string): Record<ReadinessSection, SectionSta
 
 /** The sections currently locked for a site (empty for a site whose domains are all lit). */
 export function lockedSections(slug: string): ReadinessSection[] {
-  return (Object.keys(SECTION_META) as ReadinessSection[]).filter((s) => sectionStatus(slug, s) === "locked");
+  return (Object.keys(SECTION_META) as ReadinessSection[]).filter(
+    (s) => sectionStatus(slug, s) === "locked" && !NEVER_A_NEED.has(s),
+  );
 }
+
+/**
+ * Sections that lock without being a **need** (#1971).
+ *
+ * The needs board asks a site for the source that would open a locked section. `story` stopped
+ * being that kind of lock when epic #1968 retired the walk as a per-site obligation: only Lima
+ * registers one now, as the network's method demo, and a peer's narrative lives in its impact
+ * study, which never locks at all. Listing it here would have every peer's board ask for a guided
+ * walk nobody owes — the precise expectation the epic removed, re-entering through the needs UI.
+ *
+ * It is deliberately NOT dropped from `SECTION_META` or `ReadinessSection`: Lima still has the
+ * section, the nav still resolves it, and `sectionStatus` still answers for it honestly.
+ */
+const NEVER_A_NEED: ReadonlySet<ReadinessSection> = new Set<ReadinessSection>(["story"]);
 
 // --- the record facets: declared scope, enforced gating (#1886) ---------------------------
 //

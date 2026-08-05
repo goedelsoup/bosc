@@ -90,12 +90,17 @@ describe("a partial peer (Fort Wayne)", () => {
     expect(sectionStatus("fort-wayne", "legal")).toBe("locked");
   });
 
-  it("reports the full locked set", () => {
-    // `story` is locked too now — its walk is held coming-soon (#1526), not open. `legal` joined
-    // the set at #1886: it is a real gap on a peer, and the needs board now asks for it.
+  it("reports the full locked set, and never asks a peer for a walk", () => {
+    // `legal` joined the set at #1886: it is a real gap on a peer, and the needs board asks for it.
+    // `story` is DELIBERATELY absent (#1971). Its section still locks — `sectionStatus` says so
+    // below — but a guided walk stopped being something a site owes the network when epic #1968
+    // retired the per-site walk, so it must never surface as a need. This is the assertion that
+    // catches that expectation creeping back in through the needs UI.
     expect(lockedSections("fort-wayne").sort()).toEqual(
-      ["contacts", "exhibits", "leads", "legal", "people", "reports", "story", "timeline"].sort(),
+      ["contacts", "exhibits", "leads", "legal", "people", "reports", "timeline"].sort(),
     );
+    expect(sectionStatus("fort-wayne", "story")).toBe("locked");
+    expect(lockedSections("fort-wayne")).not.toContain("story");
   });
 });
 
@@ -104,7 +109,10 @@ describe("domain activation (manifest readiness block)", () => {
   it("reads the tier straight from each site's manifest", () => {
     // The Python tier (bosc.site.readiness.site_tier) written at export — the frontend is a reader.
     expect(siteTier("lima")).toBe("reference");
-    expect(siteTier("fort-wayne")).toBe("case");
+    // Fort Wayne rose `case` -> `reference` in #1971 without gaining a source: all four
+    // record-bearing domains were already live, and the only thing holding it was the retired
+    // `story` domain, which #1457 proposed clearing by committing a leads YAML.
+    expect(siteTier("fort-wayne")).toBe("reference");
     // Urbana is a Case site after the Highland55 land-assembly sourcing (#1328): the floor plus a
     // committed parcel footprint (`places` live) was already enough, and the tier is unmoved by
     // `record` going seeded (#1642) and then live on its published extractions (#1724) — one
@@ -114,7 +122,7 @@ describe("domain activation (manifest readiness block)", () => {
 
   it("exposes the five domain states from the manifest", () => {
     const lima = siteDomainStates("lima");
-    for (const d of ["backdrop", "facility", "places", "record", "story"] as const) {
+    for (const d of ["backdrop", "facility", "places", "record", "inquiry"] as const) {
       expect(lima[d]).toBe("live"); // Lima: every domain lit
     }
     const urbana = siteDomainStates("urbana");
@@ -284,7 +292,7 @@ const LIVE = {
   facility: "seeded",
   places: "absent",
   record: "absent",
-  story: "absent",
+  inquiry: "absent",
 } as const;
 
 /** A minimal per-site bundle: a `hydrology-scenarios` feed + a `readiness` block (backdrop live by
@@ -313,7 +321,7 @@ function makePeerBundle(
     JSON.stringify({
       site: slug,
       bundle_version: "test",
-      contract_version: "1.17.0",
+      contract_version: "2.0.0",
       generated_at: "2026-01-01T00:00:00Z",
       feed_count: feeds.length,
       row_total: scenarios.length,
@@ -381,7 +389,13 @@ describe("a Backdrop-staged peer (floor data only)", () => {
   it("opens environment + economy off the backdrop domain, locks the above-floor domains", async () => {
     const backdropOnly = {
       tier: "backdrop",
-      domains: { backdrop: "live", facility: "absent", places: "absent", record: "absent", story: "absent" },
+      domains: {
+        backdrop: "live",
+        facility: "absent",
+        places: "absent",
+        record: "absent",
+        inquiry: "absent",
+      },
     };
     const root = makePeerBundle("backdrop-peer", [], backdropOnly);
     const r = await loadReadiness(root);
@@ -406,7 +420,7 @@ describe("a Backdrop-staged peer (floor data only)", () => {
       JSON.stringify({
         site: "legacy",
         bundle_version: "test",
-        contract_version: "1.16.0",
+        contract_version: "2.0.0",
         generated_at: "2026-01-01T00:00:00Z",
         feed_count: 0,
         row_total: 0,

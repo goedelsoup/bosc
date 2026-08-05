@@ -111,9 +111,9 @@ const onRecord = DATA_SECTIONS.filter((s) => isAvailable(slug, s)).map((s) => {
 });
 
 // "Help us source it" — the locked sections are the gaps; the board itself is `<SiteNeeds>`, so
-// here we only need the count for the hero pill + the section guard. A held (`comingSoon`) story is
-// advertised, not a gap (#1526), so it's excluded from the count exactly as `SiteNeeds` excludes it.
-const needsCount = lockedSections(slug).filter((s) => !(s === "story" && comingSoonStory)).length;
+// here we only need the count for the hero pill + the section guard. `story` is excluded upstream
+// now (`NEVER_A_NEED`, #1971): a guided walk is not something a peer owes, so it can't be a gap.
+const needsCount = lockedSections(slug).length;
 
 // The impact study — THE reframe for a thin peer (the promotion pass): its missing sections
 // stop being deficits and become the study's named findings. The rollup is real per-site.
