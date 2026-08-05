@@ -2,9 +2,9 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "1.52.0",
-  "generated_at": "2026-08-04T16:44:00+00:00",
-  "feed_count": 31,
-  "row_total": 488,
+  "generated_at": "2026-08-05T12:57:56+00:00",
+  "feed_count": 35,
+  "row_total": 789,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -12,7 +12,7 @@
       "facility": "seeded",
       "places": "live",
       "record": "live",
-      "story": "absent"
+      "story": "seeded"
     }
   },
   "facility": {
@@ -110,6 +110,14 @@
       "schema": "schemas/exhibits.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "leads",
+      "path": "feeds/leads.json",
+      "media_type": "application/json",
+      "schema": "schemas/leads.schema.json",
+      "kind": "collection",
+      "count": 21
     },
     {
       "name": "rsei",
@@ -232,12 +240,28 @@
       "count": 88
     },
     {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 19
+    },
+    {
       "name": "impact-study",
       "path": "feeds/impact-study.json",
       "media_type": "application/json",
       "schema": "schemas/impact-study.schema.json",
       "kind": "collection",
       "count": 13
+    },
+    {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 219
     },
     {
       "name": "catalog-index",
@@ -253,7 +277,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 100
+      "count": 121
     },
     {
       "name": "corpus-nodes",
@@ -261,13 +285,21 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 100
+      "count": 121
     },
     {
       "name": "ask-embeddings",
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }
