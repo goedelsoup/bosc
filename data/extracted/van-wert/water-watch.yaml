@@ -427,6 +427,33 @@ cso_schedule:
       schedule events have been recorded "unachieved and not reported" since 2024 (see
       `noncompliance.permit_schedule_violations`), so the base rate for this obligation being met
       on time is not good, and it is now testable against a dated deadline.
+    narrowed_2026_08_05:
+      tag: '[verified]'
+      by: issue 1408 (the standing pre-construction watch)
+      what_was_learned: >-
+        A FILING LANDED ON THIS DATE AND IT IS NOT THIS MILESTONE. Ohio EPA's eDocument portal
+        carries an "NPDES Permit Compliance Schedule Update" for 2PD00006*WD, certified under
+        penalty of law by Gregory Reinhart, WWTP Superintendent, and submitted 2026-07-28 — four
+        days ahead of the deadline (data/documents/oepa/van-wert/edoc-4208904.pdf, with its
+        twelve-month monitoring attachment edoc-4208905.pdf). Its "Permit Compliance Schedules
+        Completed" table has exactly ONE row: "Submit First Annual Report", scheduled 2026-08-01,
+        completed 2026-07-28.
+      the_disambiguation: >-
+        The *WD modification put TWO milestones on 2026-08-01 — event 90199 (Submit First Annual
+        Report, the New Effluent Limit Schedule) and event 3099 (Begin Construction, this CSO
+        schedule). This register and the permit extraction both carry them, but a reader could
+        easily take "the 2026-08-01 deadline" as one obligation. It is two, and the one the City
+        met early is the REPORTING one: the filing's attachment is precisely what 90199 requires
+        — twelve months of influent and effluent data, Jul-2025 through Jun-2026, for silver,
+        dissolved hexavalent chromium, pentachlorophenol and selenium.
+      what_is_still_open: >-
+        Event 3099. This filing's silence on it is NOT evidence that construction did not begin —
+        it was submitted four days BEFORE the milestone, and the permit's own notification window
+        runs 14 days AFTER commencing, to roughly 2026-08-15. Too early to tell. Re-run the eDoc
+        query on or after 2026-08-17: County = VAN WERT, Program = NPDES, Secondary ID 2PD00006,
+        keyword COMPLIANCE SCHEDULE UPDATE. A second update reporting event 3099 is what closes
+        this; its continued absence after mid-August is what makes the base-rate concern above
+        into a finding rather than a worry.
 
 combined_sewer_overflows:
   tag: '[verified]'
@@ -871,7 +898,13 @@ other_permits_on_the_reach:
 instruments_to_pull:
 - item: Whether CSO construction began by the 2026-08-01 milestone, and the 14-day notification.
   why: The first enforceable date the *WD modification created; testable now.
-  route: Ohio EPA NWDO file review / STREAMS event record for 2PD00006, event code 3099.
+  route: >-
+    Ohio EPA eDocument portal — County = VAN WERT, Program = NPDES, Secondary ID 2PD00006,
+    keyword COMPLIANCE SCHEDULE UPDATE. This is the route that answers it, and it is scriptable:
+    the same query surfaced the 2026-07-28 filing that satisfied the OTHER milestone falling on
+    2026-08-01 (see `cso_schedule.watch_item.narrowed_2026_08_05`). Failing that, Ohio EPA NWDO
+    file review / the STREAMS event record for event code 3099.
+  next_check: '2026-08-17'   # the permit's 14-day post-commencement notification window closes ~2026-08-15
 - item: The CSO Long Term Control Plan Compliance Assistance Plan itself, and its approval date.
   why: The issued permit prints "[approval pending]" and two different submission dates.
   route: Ohio EPA NWDO; the City of Van Wert Safety-Service Director.

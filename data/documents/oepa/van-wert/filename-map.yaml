@@ -90,3 +90,67 @@ documents:
     itself prints it (221593), the comment window, and the outfall 001 coordinate
     (40.8882410 N, -84.58437518 W, 4,000,000 GPD). See
     data/extracted/oepa/van-wert/2PD00006.36a58063.npdes.yaml.
+
+# ── Added by issue #1408 (standing pre-construction watch), 2026-08-05 ────────
+# A DIFFERENT ROUTE from the two DAM rows above. These come from Ohio EPA's eDocument public
+# portal, which serves documents by numeric document ID with no filename in the response (no
+# Content-Disposition header), so the docid IS the as-served identity — the same naming rule the
+# `stormwater/` sibling manifest uses. They are 2PD00006 documents (the CITY's plant), which is
+# why they are filed here and not under `stormwater/`.
+- filename: edoc-4208904.pdf
+  canonical_name: >-
+    NPDES Permit Compliance Schedule Update — Van Wert WWTP, permit 2PD00006*WD / OH0027910,
+    reporting the "Submit First Annual Report" milestone complete. Application ID 25915346. 1 p.
+  content_verified_date: '2026-07-28'   # "Date: 07/28/2026" and "Submission Date: 07/28/2026", printed on p. 1 of the text layer
+  permit_id: 2PD00006
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4208904
+  edoc_docid: 4208904
+  edoc_doc_type: Report
+  edoc_program: NPDES
+  edoc_keyword: COMPLIANCE SCHEDULE UPDATE
+  sha256: 0f20a1dbb4bd80a404cb3c4760f2c8b1e38104f9c4da1256d3b61f7830f66f4a
+  bytes: 7626
+  content_type: application/pdf
+  fetched_at: '2026-08-05'
+  status: downloaded
+  note: >-
+    THE FILING THAT DISAMBIGUATES 2026-08-01. The *WD modification put TWO milestones on that
+    single date — event code 90199 ("Submit First Annual Report", the New Effluent Limit
+    Schedule) and event code 3099 ("Begin Construction", the CSO schedule). This filing, certified
+    under penalty of law by Gregory Reinhart, WWTP Superintendent, four days early, reports
+    exactly ONE of them complete: the annual report. Its "Permit Compliance Schedules Completed"
+    table has a single row. The CSO construction milestone is not reported here. Do not read this
+    document as evidence that CSO construction began — and do not read its silence as evidence
+    that it did not; the permit's own 14-day notification window for 3099 had not closed when this
+    was captured. See data/extracted/van-wert/regulatory-watch.yaml.
+- filename: edoc-4208905.pdf
+  canonical_name: >-
+    Attachment to the compliance schedule update above — "2026 NPDES Permit Compliance Schedule
+    Update Part 2", the twelve-month influent/effluent monitoring table the 90199 milestone
+    requires (Jul-2025 through Jun-2026). 2 pp.
+  content_verified_date: null
+  permit_id: 2PD00006
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4208905
+  edoc_docid: 4208905
+  edoc_doc_type: Report
+  edoc_program: NPDES
+  edoc_keyword: COMPLIANCE SCHEDULE UPDATE
+  sha256: 2406674b0070ab9897ac12b4a307bce7626d0236f8b3bb4cf929473215523151
+  bytes: 5682
+  content_type: application/pdf
+  fetched_at: '2026-08-05'
+  status: downloaded
+  evidence: >-
+    native_text — the sheet carries NO date of its own in its text layer, so none is recorded. It
+    is bound to edoc-4208904 by that filing's own "Additional Information attachment(s)" field,
+    which names `2026 NPDES Permit Compliance Schedule Update Part 2.xlsx`, and by the portal
+    serving both under the same docid group and the same COMPLIANCE SCHEDULE UPDATE keyword. Its
+    date is [open]; do not date it from its parent.
+  note: >-
+    The portal serves this as PDF; the parent filing names the attachment as an `.xlsx`, so the
+    served bytes are a portal-side rendering of a spreadsheet, not the submitted file. Content:
+    silver, dissolved hexavalent chromium, pentachlorophenol and selenium, influent and effluent,
+    twelve months. Every cell reads `AA` except effluent pentachlorophenol for Jul-25, which reads
+    `AH`. The permittee's own conclusion is printed beneath: "All results have been non-detect,
+    therefore, we believe we will be in compliance with our permit". The `AA`/`AH` codes are Ohio
+    EPA reporting codes and are NOT decoded here — reading `AH` as a detection would be a guess.

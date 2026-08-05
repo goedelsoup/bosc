@@ -1,0 +1,95 @@
+id: van-wert-regulatory-watch
+title: Van Wert — Standing Pre-Construction Watch (air PTI, OPSB, 401/404, ballot threads, ECHO, PJM)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Seven routes, run 2026-08-05 and recorded separately. (1) Ohio EPA's eDocument public portal
+    (edocpub.epa.ohio.gov), scripted, by Entity Name ("QTS", 35 documents statewide), by County x
+    Program (VAN WERT x AIR PERMIT, 328 documents, newest 2026-08-04; VAN WERT x 401 WETLANDS,
+    4 documents; VAN WERT x NPDES) and by Secondary ID (2GC08872, 3 documents). That NPDES sweep
+    surfaced two previously unheld documents — the Van Wert WWTP's NPDES Permit Compliance
+    Schedule Update of 2026-07-28 and its twelve-month influent/effluent attachment, both now
+    carried under data/documents/oepa/van-wert/ as edoc-4208904.pdf and edoc-4208905.pdf.
+    (2) EPA ECHO dfr_rest_services.get_dfr for OH0027910, read 2026-08-05 against ICIS-NPDES
+    extract 2026-07-31. (3) EPA Envirofacts ICIS_PERMIT, PERMIT_NAME/CONTAINING/QTS (31 rows, of
+    which 3 are Ohio — all Licking/Franklin, none the Van Wert coverage, recorded as a
+    propagation-lag hazard rather than a negative). (4) AEP Ohio Transmission's own
+    project site, which serves the Letter of Notification and public notice for OPSB Case No.
+    26-0729-EL-BLN that the docketing system will not; the notice is committed under
+    data/documents/grid/van-wert/ and the 88.7 MB LON is sha256-pinned and read rather than
+    carried. (5) A direct probe of dis.puc.state.oh.us for 25-0697-EL-BLN, recorded as an access
+    failure. (6) PJM's published Expedited Interconnection Track and BYONG rules. (7) Local and
+    statewide press for the two ballot threads, which is the only public account of the Van Wert
+    County Board of Elections certification of 2026-07-27 and is carried as [reference].
+license: Public record (state environmental permits, an OPSB siting filing, agency notices) plus cited press
+access_tier: public
+site_scope: site:van-wert
+storage:
+- relpath: extracted/van-wert/regulatory-watch.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/grid/van-wert/van-wert-haviland-138kv.project.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: monthly
+provenance: document
+tags:
+- regulatory-watch
+- npdes
+- stormwater
+- air-permit
+- permit-to-install
+- opsb
+- transmission
+- pjm
+- ballot
+- data-center
+- qts
+- van-wert
+- van-wert-county
+notes: >-
+  Issue #1408 (under epic #1267) — the standing pre-construction watch, run 2026-08-05 against
+  nine threads whose negatives were dated 2026-07-10. Five moved, two decisively, and the value
+  is as much in the routed negatives as in the finds.
+  What changed. (1) THE OPSB THREAD BROKE OPEN. The corpus had carried 25-0697-EL-BLN as a bare
+  case number, its docket bot-blocked and its link to the Mega Site asserted by press. The
+  applicant publishes what the docket will not: 25-0697-EL-BLN was APPROVED 2025-11-21 and is
+  unbuilt, a second case 26-0729-EL-BLN was filed 2026-07-27 adjusting the approved route, and
+  AEP's own Statement of Need names the Van Wert Mega Site and counts "30 requests for
+  transmission service" there in the past year — the first quantification of interest in the site
+  from anyone but its developers. A committed QTS campus parcel (17-034718.0000) carries a
+  transmission easement in the filing's affected-properties table. The instrument also corrects
+  the corpus twice: the cost is $45,877,232 (settling the $45M half of a $45M-vs-$72M conflict,
+  and showing it recovered through the FERC formula rate and allocated to the AEP Zone, not to a
+  developer), and the line is a 69 kV rebuild DESIGNED at 138 kV but INITIALLY OPERATED AT 69 kV
+  — so calling it a 138 kV line describes its rating, not its service voltage. What the filing
+  refuses is as important: "QTS" and "data center" appear on none of its 612 pages, so it does
+  not ground the campus load and the facility domain stays `seeded`.
+  (2) THE LOCAL BALLOT THREAD IS DECIDED, by a different mechanism than the issue predicted. Not
+  a referendum but an INITIATIVE, filed 2026-07-18 against Ordinance 26-05-029 (the definitional
+  amendment, which is the one opponents identified as load-bearing), certified insufficient
+  2026-07-27 at 255 valid signatures against 323 required, with no cure available because the
+  petitions had already been submitted. [reference] throughout — the certification itself is a
+  BOE record and is not in this corpus.
+  (3) THE AIR PTI IS A VERIFIED NEGATIVE with a one-day-old positive control: 328 Van Wert County
+  air-permit documents, the newest dated 2026-08-04, and not one for the campus — against the
+  applicant's own NOI certifying `PTI: YET_TO_APPLY`. (4) THE PJM THREAD WAS WATCHING THE WRONG
+  INSTRUMENT. The Expedited Interconnection Track opened 2026-07-31 but is a GENERATION track
+  (250 MW UCAP minimum, 10 requests a year, sunsets end-2027); a data center is load and can
+  never enter it. The load-side rule is BYONG, and the structural consequence is that this campus
+  will never have a public PJM queue entry — the watchable artifact is an AEP filing.
+  (5) THE ECHO RECHECK FOUND NOTHING AND THE REASON IS THE FINDING: the ICIS extract advanced to
+  2026-07-31 while the compliance window still ends 2026-03-31, so Q2 2026 DMRs have not posted
+  and a naive recheck would have read fresher data as newer quarters.
+  The most consequential small find is a date disambiguation. Permit 2PD00006*WD put TWO
+  milestones on 2026-08-01 — event 90199 "Submit First Annual Report" and event 3099 "Begin
+  Construction" on the CSO schedule. The 2026-07-28 filing reports exactly one complete, and it
+  is the annual report; its attachment is precisely the twelve-month dataset 90199 requires. So
+  the milestone the City met early was the reporting one. Whether CSO construction began stays
+  [open] with a dated next check of 2026-08-17, because the permit's 14-day notification window
+  had not closed. Route hazards are recorded alongside — chiefly that a naively-posted eDoc
+  search returns the UNFILTERED grid and reads like a search that matched everything rather than
+  one that never ran.

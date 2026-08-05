@@ -53,6 +53,25 @@ ingested, and the lines they ground cite them. Every figure is cited; none is fa
 > instrument-grade, dated statement of that negative. The attached site map is the **first site plan
 > in the corpus**.
 >
+> **Standing pre-construction watch opened (2026-08-05, #1408):** the nine regulatory threads
+> around this campus now have a dated, routed register —
+> `data/extracted/van-wert/regulatory-watch.yaml`. Five of the nine moved in the four weeks since
+> the issue was written. **The OPSB thread broke open**: the corpus had carried `25-0697-EL-BLN`
+> as a bare case number behind a blocked docket, and AEP Ohio Transmission's *own project site*
+> serves the filings the docket will not. That case was **approved 2025-11-21** and is unbuilt; a
+> **second case, `26-0729-EL-BLN`, was filed 2026-07-27** adjusting the approved route; and AEP's
+> Statement of Need **names the Van Wert Mega Site**, counting **30 requests for transmission
+> service** there in the past year — so the site-to-project link is no longer press-made. A
+> transmission easement crosses committed campus parcel **`17-034718.0000`**. But the filing names
+> **no data center, no QTS entity and no megawatt figure** across all 612 pages, so it does not
+> ground the campus load. Read into
+> `data/extracted/grid/van-wert/van-wert-haviland-138kv.project.yaml`. **The local ballot thread
+> is decided** — an *initiative* (not the referendum the issue expected) against Ordinance
+> 26-05-029, certified **insufficient 2026-07-27** at 255 valid signatures against 323 required.
+> **The air PTI is a verified negative** against a one-day-old positive control. **The PJM thread
+> was watching the wrong instrument** (see below). Corrections this pass makes to the lines below
+> are marked `(#1408)`.
+>
 > **Profile pin (2026-07-13, revised 2026-08-03, #1402):** the campus below is registered as a
 > `SiteFacility` on the Van Wert `SiteProfile` (the #1327 Urbana precedent) — the 500 MW is carried
 > as a `[reference]` bracket (never a disclosure; QTS declines to state capacity), with closed-loop-dry
@@ -171,11 +190,59 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   signed agreement — an 18% conversion, and the first primary-source AEP Ohio pipeline figure in
   this corpus. The tariff he describes matches PUCO **24-508-EL-ATA** (approved 2025-07-09); the
   case number is not printed and the identification is ours. `[inference]`
-- **Transmission cost — two figures, unreconciled.** County Commissioner Thad Lichtensteiger's
-  written comment puts Thor's upgrade cost at "**$72 million**" `[reference]`
-  (`5.4.26-Public-Hearing-1.pdf` p. 15), unsourced; the register carries **$45M** for OPSB
-  **25-0697-EL-BLN**, the AEP Ohio Transco Van Wert–Haviland 138 kV line. The two may cover
-  different scopes; neither is established. `[open]`
+- **The Mega Site's demand, counted by the utility (#1408).** AEP's own OPSB Statement of Need
+  reports that the Van Wert Mega Site "has seen a significant increase in requests for service
+  over the past several years, with **30 requests for transmission service received in the past
+  year**", that "many of the prospective customers cannot be served by the existing Van Wert area
+  69 kV network because the load request is too large", and that the site "has been certified in
+  Ohio's **Job Ready** program and has been aggressively marketed." `[verified]` This is the first
+  quantification of interest in the Mega Site from anyone other than its developers. It is **not**
+  thirty data centers, thirty signed customers, or a megawatt figure — "requests for service" is an
+  inquiry count, and the filing gives no names, sizes or year boundaries.
+- **PJM — the campus will never appear in a queue, and the watch was aimed wrong (#1408).**
+  PJM's **Expedited Interconnection Track** opened for requests on **2026-07-31**, but it is a
+  **generation** track: large new or uprated capacity resources offering ≥250 MW of unforced
+  capacity, capped at 10 requests a year through 2027, sunsetting end-2027. A data center is
+  **load** and cannot enter it. `[reference]` The load-side rule is **BYONG** — any facility adding
+  ≥50 MW at a single point of interconnection must supply its own incremental generation or accept
+  being curtailed first in a shortage. `[reference]` (Both from PJM's own newsroom describing its
+  own filings — self-published, not the tariff; the FERC-accepted tariff sheets are the pull that
+  would make these `[verified]`.) At the announced 500 MW bracket this campus
+  sits ten times over that threshold, and whether QTS intends on-site generation or is accepting
+  curtailment risk is `[open]` — its only related disclosure points away from a generation build
+  (emergency-only generators, tested monthly, no PTI applied for). The structural consequence:
+  **large load is not a queue item**; it reaches PJM through the transmission owner's planning
+  process, which is exactly what the `b3359`/`s3142` numbers on the Van Wert–Haviland rebuild are.
+  So the watchable artifact for this campus's load is an **AEP filing**, not a PJM queue row — and
+  the cleanest named pull is AEP Ohio's **2025 Long-Term Forecast Report**, pages 49 and 76–77,
+  which the LON cites as its own Appendix B.
+- **Transmission cost — one figure now instrument-grounded (#1408).** County Commissioner Thad
+  Lichtensteiger's written comment puts Thor's upgrade cost at "**$72 million**" `[reference]`
+  (`5.4.26-Public-Hearing-1.pdf` p. 15), unsourced. The other figure is now the instrument's own:
+  AEP's Letter of Notification states **$45,877,232**, a Class 4 estimate for the **entire**
+  Van Wert–Haviland project including the 2026 adjustment, "consistent with the estimate included
+  in the original OPSB application." `[verified]` So the $45M half is settled and is not a
+  subset. The $72M is neither confirmed nor refuted — it may cover distribution, substation or
+  campus-side works that are not this line — and stays `[open]`.
+- **Who pays for the transmission line (#1408).** The same filing states that "Project costs will
+  be recovered in the Company's Federal Energy Regulatory Commission formula rate (Attachment
+  H-20 to the PJM Open Access Transmission Tariffs) and **allocated to the AEP Zone**."
+  `[verified]` That is transmission ratepayers, not a developer. It does not yet contradict QTS's
+  "no cost to existing ratepayers" claim — this is a baseline reliability rebuild AEP justifies on
+  a PJM thermal violation, while QTS's claim is about its own interconnection works — but AEP also
+  justifies the line by the Mega Site's load growth, so whether any Mega-Site-driven scope sits
+  inside a ratepayer-recovered project is a live question. `[inference]`, and a lead rather than a
+  finding: the instrument that would answer it is the campus's interconnection or service
+  agreement, which is not on the record.
+- **The transmission project, corrected (#1408).** It is **not a "138 kV rebuild"** in the sense
+  the register implied. AEP is rebuilding the existing single-circuit **69 kV** line as a **double
+  circuit designed at 138 kV and *initially operated at 69 kV***, ~10.9 miles, wooden monopoles
+  from **1926** replaced with steel. `[verified]` On energization it is still a 69 kV line; when
+  it is cut over to 138 kV, and on what instrument, is `[open]`. Its engineering driver is a **PJM
+  baseline thermal-criteria violation** in the 2026 RTEP summer model (PJM project **b3359**,
+  supplemental **s3142**), not a campus interconnection. Construction is planned for **October
+  2026 → March 2028** — press at the original filing said 2025 to late 2026, a slip of roughly
+  fifteen months at the far end.
 - **Jobs:** >1,500 construction over the 5–6 year build (local building-trades unions);
   ~200 permanent full-time (q.com official; local coverage says 200–250). `[verified]`/`[reference]`.
 
@@ -331,7 +398,7 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   other three into the Little Auglaize → Auglaize → Maumee is `[inference]` pending an NHD/NLDI
   trace and is a live lead, not a settled path.
 
-### Regulatory record (status as of 2026-07-02; #1401 lines dated 2026-08-03)
+### Regulatory record (status as of 2026-07-02; #1401 lines dated 2026-08-03; #1408 lines 2026-08-05)
 
 - **Annexation + zoning — the instrument, replacing the press summary (#1401):** **901.698 ± ac**
   annexed from Hoaglin, Pleasant and Ridge Townships (Ord. 26-05-028), plus the I-2 code amendment
@@ -390,7 +457,14 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   tested monthly; emergency generators <500 hr/yr may fall under permit-by-rule, otherwise a
   PTI/PTIO is required — whether one is required here is `[open]`, and the certification promises
   no filing. **This is the single instrument that would lift the facility domain to `live`**, so
-  re-run the eDoc sweep on cadence.
+  re-run the eDoc sweep on cadence. **Re-swept 2026-08-05 (#1408): still nothing** — and now
+  against a one-day-old positive control. A County = VAN WERT × Program = AIR PERMIT query returns
+  **328 documents whose newest is dated 2026-08-04**, a preliminary proposed Title IV permit for
+  the Robert P. Mone Plant handled by the same DAPC **Northwest District Office** that would take
+  a Mega Site application. The route surfaces Van Wert air permits within a day of signature, so
+  the zero is a zero. `[verified negative]` One possibility must not be read as delay: if the
+  generators stay under 500 hr/yr, **no PTI may ever issue**, and the facility domain would then
+  need a different instrument entirely. `[open]`
 - **NPDES / construction stormwater — the campus's first state permit (#1402).** Coverage
   **`2GC08872*AG`** under general permit **OHC000006** was approved **2026-07-30**, effective the
   same day, expiring 2028-04-22 (the general permit's own cycle date, not a project milestone).
@@ -402,6 +476,21 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   coverage produced one, so this is a live watch. The NOI answers "NO" to both an individual 401
   WQC and an isolated-wetlands permit while answering **`YET_TO_APPLY`** on the USACE nationwide
   permit — applicant assertions on a form, not agency determinations.
+  **Re-checked 2026-08-05 by Secondary ID (#1408): the family is still exactly three documents**,
+  so **no co-permittee NOI has been filed** and the general contractor is still `[open]` — worth
+  weekly checking, because the applicant's own filed project start was 2026-08-03. `[verified
+  negative]`
+- **401 / 404 — a dated negative and a structural warning (#1408).** A County = VAN WERT ×
+  Program = 401 WETLANDS sweep returns **four documents for the entire county**, none of them the
+  campus: three for the Van Wert Airport Runway Expansion (2024) and one for Van Wert Reservoir #3
+  (2013). `[verified negative]` The airport rows are the positive control and they also settle the
+  district — that project's eDoc facility name carries its Corps identifier in line,
+  `(LRB-2024-00952)`, so Van Wert County sits in the USACE **Buffalo District**. The warning:
+  **a nationwide-permit verification is never public-noticed.** An individual 401 or 404 would be;
+  an NWP verification is a letter from the district to the applicant. QTS's FAQ says stream impact
+  falls below the individual-permit threshold `[reference]`, which points at exactly the branch
+  that leaves no watchable trace. **Do not read continued silence here as continued absence** — the
+  only route to an NWP verification is a FOIA to USACE Buffalo.
 - **NPDES / operating discharge:** Ohio EPA's draft general NPDES permit for data centers, **OHD000001**
   (public hearing 2025-12-17, comment period closed **2026-01-16** — non-contact cooling water,
   cooling-tower/boiler blowdown, low-volume wastewater, industrial stormwater), was **WITHDRAWN
@@ -443,9 +532,30 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   BG** annual creek yield — are the same figures independently committed in `water-watch.yaml`
   from the City's own utilities publications. Its arithmetic elsewhere does not survive checking
   (it conflates MW with MWh). `[verified]` as to what was submitted.
-- **Statewide:** a citizen effort is gathering signatures for a constitutional amendment to prohibit
-  data centers consuming >25 MW; lawmakers heard data-center opposition (June 3, 2026) but
-  enacted no moratorium. `[reference]` (advocacy).
+- **Local ballot effort — filed, and defeated on signatures (#1408).** On **2026-07-18** city
+  resident **Joe Jared** filed initiative petitions to place a repeal of **Ordinance 26-05-029**
+  — the definitional amendment that created "Data Center" in the Van Wert code — on the
+  **2026-11-03** ballot, prohibiting data centers in industrial zones with a narrow exception for
+  data processing "accessory to and located on the same site as a corporate headquarters." On
+  **2026-07-27** the Van Wert County Board of Elections certified the petition **insufficient**:
+  **323 valid signatures required, 255 obtained**, 68 short. Because the petitions had already
+  been submitted, signatures cannot be added to them. `[reference]` (VW Independent, quoting BOE
+  Director Pam Henderson and reproducing City Auditor Erika Blackmore's presentation of the
+  certification; statutes cited R.C. 731.28, 731.34, 3501.11(K), 3501.38.) Two things are worth
+  noting. First, the **mechanism**: this was an *initiative*, not a referendum — consistent with
+  the emergency clauses having foreclosed the referendum route, though no instrument in this
+  corpus states that, so it stays `[open]`. Second, **which ordinance opponents targeted**: not
+  the annexation and not the site-specific rezoning, but 26-05-029. The BOE's own certification
+  and the filed part petitions are not in this corpus — they are the R.C. 149.43 pull that would
+  make these figures `[verified]` and would give the per-signature invalidation reasons.
+- **Statewide:** Conserve Ohio's proposed constitutional amendment prohibiting data centers with
+  peak load above **25 MW** **missed the 2026 ballot** and is retargeting **2027** (#1408). It
+  needed **413,000+** valid signatures from at least 44 of 88 counties by **2026-07-01** and had
+  collected **over 70,000** as of 2026-06-18 — roughly 17%; the group said "We are not going to be
+  submitting this year." `[reference]` Lawmakers heard data-center opposition (June 3, 2026) but
+  enacted no moratorium. `[reference]` Any figure in this campus's plausible range is an order of
+  magnitude above 25 MW, so the measure would reach it — two ballot cycles away, against a filed
+  campus completion date of 2030-08-03. Watch annually, not quarterly.
 - **Litigation:** none specific to the Van Wert project found. `[open]`
 
 ## 2 — No other confirmed Van Wert County activity pinned yet
@@ -486,7 +596,25 @@ standard as of 2026-07-02. `[open]` — re-sweep on the next pass.
    requires each additional operator at the site to file its own co-permittee NOI (Sidney's
    identical coverage produced one), so the general contractor is `[open]`. The City grading permit
    is the network's trigger for moving the facility from `confirmed` to `construction`, and the
-   applicant's filed start date is 2026-08-03.
+   applicant's filed start date is 2026-08-03. **Still nothing as of 2026-08-05** (#1408) — the
+   `2GC08872` family is exactly three documents. Check weekly through August; this is the cheapest
+   route to the contractor's identity.
+3b. **AEP Ohio's 2025 Long-Term Forecast Report, pages 49 and 76–77** — new from #1408, and the
+   highest-value pull this watch surfaced. AEP's own Letter of Notification cites it as Appendix B
+   for PJM projects `b3359` and `s3142`. It is the utility's forward statement of load in this
+   zone and the most likely public document to carry a Van Wert load figure — the thing the campus
+   itself will not disclose. Route: a PUCO filing (blocked docket) or AEP's own regulatory
+   publications.
+3c. **The original OPSB 25-0697-EL-BLN Letter of Notification** — new from #1408. Its
+   affected-properties table would date AEP's transmission easement across campus parcel
+   `17-034718.0000` against the June 2026 deeds; the adjustment LON cannot, because its own
+   asterisk footnote misnames the case it refers to. Route:
+   `aeptransmission.com/Ohio/VanWert-Haviland/docs/LON_VanWert-Haviland_20250825_FINAL.pdf`
+   (UA + Referer).
+3d. **Van Wert County Board of Elections certification of 2026-07-27 + the filed part petitions**
+   — new from #1408. Everything the register carries on the local ballot thread is `[reference]`
+   from press; the certification is the record, and the part petitions carry the per-signature
+   invalidation reasons. Route: R.C. 149.43 request to the Van Wert County BOE.
 4. **Ohio EPA / EPA ECHO** — the facility-discharge half, **re-aimed** (#1883): there is no
    notice-of-intent to look for, because OHD000001 was withdrawn 2026-07-21 and will never issue.
    Ask instead for an **individual** NPDES permit or application naming the QTS campus, and — since
@@ -523,6 +651,17 @@ standard as of 2026-07-02. `[open]` — re-sweep on the next pass.
   **The CAMPUS's own permit** — construction-phase only. Includes the corpus's first site plan.
 - **Campus parcel geometry (#1403)** — `data/reference/van-wert/parcel-assemblage.geojson`,
   `data/extracted/van-wert/bosc-site-footprint.yaml`.
+- **OPSB 26-0729-EL-BLN, the Van Wert–Haviland adjustment (#1408)** —
+  `data/documents/grid/van-wert/` (manifest: `filename-map.yaml`; the statutory public notice
+  committed, the 612-page Letter of Notification sha256-pinned and read rather than carried).
+  Extraction: `data/extracted/grid/van-wert/van-wert-haviland-138kv.project.yaml`. **AEP's
+  instrument**, not the campus's — it names the Mega Site but names no data center.
+- **Van Wert WWTP compliance schedule update, 2026-07-28 (#1408)** —
+  `data/documents/oepa/van-wert/edoc-4208904.pdf` (+ its monitoring attachment
+  `edoc-4208905.pdf`). Reports the "Submit First Annual Report" milestone complete; disambiguates
+  the two obligations the *WD modification put on 2026-08-01. **The CITY's plant**, not the campus.
+- **Standing pre-construction watch (#1408)** — `data/extracted/van-wert/regulatory-watch.yaml`.
+  Nine threads, each with route, date, result, positive control and next check.
 
 **Route note for future Van Wert legislation:** `vanwert.org/ordinances/` is a rolling window of
 pending items only — the May 2026 ordinances had already dropped off it by 2026-08-03. The site's
@@ -537,6 +676,30 @@ Wert air permit was established rather than assumed. Search by Entity Name ("QTS
 serves documents with **no `Content-Disposition`**, so the numeric docid is the as-served identity
 and the committed files are named `edoc-<docid>.pdf`. Re-run it on cadence: the air PTI is the
 instrument that would move this site's facility domain.
+
+**Route note — how to actually script the eDoc portal, and the trap in it (#1408).** It is
+ASP.NET WebForms, and it fails toward a *plausible wrong answer*. Posting the hidden fields plus
+the one criterion you care about returns the **unfiltered** landing grid with "Search returned
+more than the maximum allowed results" — which reads like a search that matched everything rather
+than a search that never ran. The criteria bind only if the form is serialized **faithfully**:
+every input, and every `<select>`'s selected option, including the per-row `ddlConn` connectors
+whose default is `Or`. **Verify by checking that your search term echoes back in the response's
+own `txtValue` attribute before believing any count.** Two more: the grid defaults to **10 rows
+per page** (a 35-hit query reports 10 until `DocHitList_CurrentPageSize` is set to 600 and
+re-posted with `__EVENTTARGET`), and the permit identifier `2GC08872` lives in **Secondary ID**,
+not "Package/Permit Number" — searching it as a package number returns zero, a false negative for
+a permit family that is in this corpus. Row-id map: `111` Secondary ID, `106` Entity Name,
+`104` County, `109` Program, `121` Package/Permit Number.
+
+**Route note for OPSB filings (#1408).** PUCO's docketing system (`dis.puc.state.oh.us`) is
+WAF-blocked and returns HTTP **200** with a 244-byte "Request Rejected" body — a naive client sees
+a 200 and may read the empty page as an empty docket. **Check the body length.** The workaround
+that works: **AEP Ohio Transmission publishes its own filings** under `aeptransmission.com/ohio/`,
+indexed at `/ohio/filings.php`, and that is where both Van Wert cases were found in full. The PDFs
+need a browser User-Agent **and** a Referer of the project page; a bare request and a
+UA-only request both get 403, which reads like a missing file. Its limit is real: it is the
+applicant's copy, so it shows the filing but never the Board's disposition, the service list, or
+Staff's report — case *status* stays behind the block.
 
 ### Secondary / press
 
