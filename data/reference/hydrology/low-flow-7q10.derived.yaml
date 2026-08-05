@@ -5,13 +5,20 @@ meta:
     in low-flow-7q10.yaml. Each value is the 7Q10 AT THE GAGE, a proxy for a direct-discharge reach on
     that mainstem; a discharger on a tributary is screened only against that tributary's own cited/derived
     7Q10, never this one. Regenerate with `watermark derive-low-flows`.
-  cited_annotations: 'An entry''s `published` / `regulation` / `cross_check_gages` blocks (and the `confidence_reason`
-    a regulated gage carries) are NOT derived — they are copied verbatim from the curated data/reference/hydrology/mainstem-gages.yaml
-    so a screening denominator is never read without the published statistic beside it (#1458). Edit them
-    THERE, not here; this file is regenerated. `regulation.status: regulated` is what demotes an entry''s
-    confidence to `low` — the gage is measuring managed flow (storage releases, diversions, upstream effluent),
-    not the stream''s own assimilative capacity, and where the gage sits BELOW the outfall being screened
-    it is partly measuring that discharge itself.'
+  cited_annotations: 'An entry''s `note` / `published` / `regulation` / `cross_check_gages` blocks (and
+    the `confidence_reason` a regulated gage carries) are NOT derived — they are copied verbatim from
+    the curated data/reference/hydrology/mainstem-gages.yaml so a screening denominator is never read
+    without the published statistic, or the reservations on the gage choice, beside it (#1458, #1120).
+    Edit them THERE, not here; this file is regenerated. `regulation.status: regulated` is what demotes
+    an entry''s confidence to `low` — the gage is measuring managed flow (storage releases, diversions,
+    upstream effluent), not the stream''s own assimilative capacity, and where the gage sits BELOW the
+    outfall being screened it is partly measuring that discharge itself.'
+  basin_scope: 'An entry may carry `basins` (also copied from mainstem-gages.yaml): the basin slugs whose
+    POTW inventories this denominator may serve. Absent means unrestricted, which is right for a name
+    that means one river network-wide. It is set where the gage''s conservatism argument is geographic
+    and therefore local — ''Ohio River'' is a receiving water in every Ohio tributary basin''s inventory,
+    at reaches hundreds of river miles apart, so one gage keyed to the bare name would overstate dilution
+    everywhere but the basin it was chosen for (#1120).'
 streams:
   maumee river:
     seven_q10_cfs: 114.15
@@ -217,6 +224,23 @@ streams:
     citation: LP3 7Q10 from USGS 03245500 (Little Miami River at Milford OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+    note: 'The mainstem proxy is the long-record Milford gage (03245500, DA 1203 mi² — NWIS published
+      drain_area_va, 2026-08-01; an earlier uncited "1664 mi²" here was wrong by +38% and is corrected,
+      #1472). Todd Fork (Wilmington''s receiving water) has no CURRENTLY REPORTING gage, so Todd Fork
+      dischargers stay unscreened (no_7q10) rather than being proxied to a river 15x their drainage area
+      (that would badly overstate dilution). Todd Fork is not unmeasured, though: the discontinued 03244000
+      (near Roachester, DA 219 mi²) holds 21 complete climatic years of daily discharge 1952-1974, giving
+      an LP3 7Q10 of 0.1654 cfs — DAR-transferred to 0.0597 cfs just below the Lytle Creek confluence
+      and 0.0068 cfs at the outfall itself, i.e. the Wilmington WWTP''s reach is ~99.9% effluent at design
+      low flow. RESOLVED (#886): that statistic is no longer only a manual characterization. The OUTFALL-REACH
+      value is committed as the `lytle creek` entry in low-flow-7q10.yaml — a `source: derived`, `confidence:
+      low` entry admitted under that file''s verified-negative exception (Ohio EPA computed no low flow
+      for this reach at all), with the 1952-1974 record period stated in its citation so the asof vintage
+      discipline (#1644) is satisfied by DISCLOSURE rather than by omission. Nothing changes HERE: this
+      table drives the derived at-gage mainstem proxies, and 03244000 is still absent from it — its record
+      predates the 1980 derivation window, and a 219 mi² at-gage value is not the 9.0 mi² outfall reach.
+      Todd Fork itself remains no_7q10 in the basin screen; only Lytle Creek at the outfall is keyed.
+      Full method: data/extracted/wilmington/low-flow-screen.md §2.3-2.6.'
   greenville creek:
     seven_q10_cfs: 11.34
     source: derived
@@ -281,6 +305,20 @@ streams:
     citation: LP3 7Q10 from USGS 03237500 (Ohio Brush Creek near West Union OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+    note: 'Ohio Brush Creek basin (subregion 0509, HUC-8 05090201 "Ohio Brush-Whiteoak", direct to the
+      Ohio River — the network''s first non-Lake-Erie / non-glaciated Appalachian branch, West Union #1117).
+      The only substantive active gage on the creek is Ohio Brush Creek near West Union (03237500, DA
+      387 mi², daily discharge since 1926); the West Fork gages (03237400 Lawshe, 03237295 Peebles) are
+      trivial/short-record and are omitted rather than proxied. Non-colliding aliases only: a bare "brush
+      creek" would capture ECHO''s unrelated Maumee-basin "BRUSH CREEK" receiving water (a different stream)
+      and misroute it to this southern-Ohio gage. The 05090201 pull (#1120) proved that guard load-bearing
+      a second time: it returned a Campbell County KY "BRUSH CRK" (KYG400099, 38.9486 N 84.3678 W) nearly
+      a degree of longitude west of this gage (38.8037 N 83.4210 W, NWIS site record) and on the far side
+      of the Ohio, which a bare alias would have screened against it. NB: no facility in the committed
+      05090201 inventory names Ohio Brush Creek as its receiving water at all — including the West Union
+      WWTP itself, whose ECHO receiving_water is null and whose documented receiver (Beasley Fork) is
+      ungaged. This entry is therefore a denominator standing ready, not one in use; see data/reference/echo/README.md
+      (#1120).'
   mad river at dayton:
     seven_q10_cfs: 178.05
     source: derived
@@ -413,6 +451,19 @@ streams:
       note: 'Supersedes the 8.98 cfs LP3 cross-check the Findlay↔Ottawa comparison used to carry for this
         gage: 10.8 cfs is the PUBLISHED value, and it is published as regulated flow. Downstream of Gilboa
         yet slightly LOWER than it — another sign these are managed releases, not a drainage-area progression.'
+    note: Blanchard River (Auglaize subtree, HUC-8 04100008) — the network's only along-one-river pair,
+      Findlay (upstream) + Ottawa (downstream), both discharge here (#414/#417). The only long-record
+      daily-discharge gage on the Blanchard is near Findlay (04189000, DA 346 mi², 44 climatic yr). The
+      at-Ottawa gage (04189260) has ~14 yr — below the 20-yr floor, so it is omitted here (carried as
+      a cross-check below); the at-Glandorf gage (04189500) has no daily-discharge record in the modern
+      window. So this one gage is the only derivable Blanchard denominator. ⚠️ READ `regulation` AND `cross_check_gages`
+      BEFORE USING IT (#1458). This gage is regulated AND sits BELOW the Findlay WPCC's own outfall, so
+      its low flow is neither natural nor independent of the discharge it was being used to screen; the
+      unregulated Blanchard and Eagle Creek gages publish 7Q10s of 0-0.03 cfs, and Ohio EPA's own design
+      low flow at the Findlay outfall is 0.21 cfs. The old reading of the 14-yr Ottawa gage — "the low
+      flow barely grows over the reach, so one shared denominator is basin-representative" — was an artifact
+      of comparing two REGULATED gages to each other and does not survive; both plants are now screened
+      on their own fact-sheet denominators (low-flow-7q10.yaml, `permits:`).
   little miami river near oldtown:
     seven_q10_cfs: 10.1
     source: derived
@@ -426,6 +477,12 @@ streams:
     citation: LP3 7Q10 from USGS 03240000 (Little Miami River near Oldtown OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+    note: 'Upstream Xenia reach (DA 129 mi², NWIS published). This gage NO LONGER anchors the Wilmington
+      at-site 7Q10: the Milford/Oldtown mainstem bracket was retired as the anchor in #1472 once Todd
+      Fork''s own historical gage (03244000) was found to carry 21 climatic years of daily discharge —
+      a 219 -> 79 mi² transfer down the same stream beats a 1203 -> 79 mi² transfer off a different one.
+      Oldtown remains a screening gage in its own right and keeps its non-colliding alias so it does not
+      capture ECHO''s bare "little miami river" (aliased to Milford above).'
   maumee river near defiance:
     seven_q10_cfs: 139.24
     source: derived
@@ -439,6 +496,17 @@ streams:
     citation: LP3 7Q10 from USGS 04192500 (Maumee River near Defiance OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+    note: 'Defiance reach (#391). The basin-wide "MAUMEE RIVER" ECHO screen proxy is the mouth-ward Waterville
+      gage (04193500, DA 6330 mi²) — but it sits ~50 river-miles DOWNSTREAM of the Defiance WWTP outfall
+      (OH0024899), so it is the wrong denominator for the actual discharge reach. The honest at-reach
+      mainstem denominator is the Maumee-near-Defiance gage (04192500, DA 5545 mi²): it sits just EAST/downstream
+      of the city and — per NWIS drainage areas — ALREADY INCLUDES the Auglaize (its 5545 mi² > Waterville''s
+      6330 minus the Tiffin), so it is the mainstem BELOW the Auglaize confluence, not above it. No confluence
+      SUM is synthesized here (that would double-count the Auglaize, unlike the ungaged Fort Wayne junction).
+      Counter- intuitively the near-Defiance 7Q10 comes out HIGHER than Waterville''s, so the reach-specific
+      dilution is slightly LOOSER, not tighter — the honest number regardless (see ONBOARDING.md). Non-colliding
+      aliases only: a bare "maumee river" would capture ECHO''s basin-wide receiving water (already aliased
+      to the Waterville proxy above).'
   auglaize river near defiance:
     seven_q10_cfs: 17.97
     source: derived
@@ -452,6 +520,9 @@ streams:
     citation: LP3 7Q10 from USGS 04191500 (Auglaize River near Defiance OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+    note: The Auglaize-near-Defiance gage (04191500, DA 2318 mi²) is the tributary-arm denominator for
+      a discharger on the Auglaize just above the junction. Non-colliding alias so a bare "auglaize river"
+      is not captured (that is the Fort Jennings proxy above).
   great miami river at troy:
     seven_q10_cfs: 44.75
     source: derived
@@ -475,6 +546,37 @@ streams:
     aliases:
     - ohio river
     - ohio rv
+    basins:
+    - ohio-brush-creek
     citation: LP3 7Q10 from USGS 03216600 (OHIO RIVER AT GREENUP DAM NEAR GREENUP, KY), 44 climatic years
       1980-2024 (gage value; screening proxy for the discharge reach)
     confidence: medium
+    note: 'Ohio River at Greenup Dam near Greenup KY (03216600, drainage area 62,000 mi² per the USGS
+      site record; daily discharge 1968-10-01 to present — 44 complete climatic years inside the 1980-2024
+      derivation window). CHOSEN FOR BEING CONSERVATIVE, not for being close. The gage sits at 38.6467
+      N, 82.8604 W (NWIS site record), which is EAST of — upstream of — every one of the 261 facilities
+      in the committed 05090201 inventory: the easternmost of them is at 83.0368 W. Each therefore lies
+      below this gage on a river that only gains drainage area downstream, so the denominator UNDER-states
+      what their own reach carries, giving a smaller dilution ratio and a screen that cannot overstate
+      dilution. The downstream alternative (03277200 Markland Dam, a record that covers the window just
+      as well) would invert that: every facility in the unit is above Markland, so its larger drainage
+      area would overstate dilution for all of them. Maysville (03238000), the gage physically inside
+      the reach, has no daily discharge after 1980-10-26 and cannot support an LP3 fit in the modern window.
+      Three things a reader is owed. (1) This mainstem is NAVIGATION-REGULATED — the gage is at a US Army
+      Corps lock and dam, as its own name says, and Meldahl and Markland sit below it. `regulation` is
+      left UNSET because this table''s rule (see meta.cited_annotations) is that the block carries a cited
+      third-party classification quoting its instrument, and no such published judgment for this gage
+      has been read into the corpus; per meta.cited_annotations_gap an unannotated gage means "not yet
+      read against the published record", never "unregulated". Read this denominator as regulated in fact
+      and unannotated on the record. (2) One gage stands for the whole of the unit''s river frontage,
+      so a dilution ratio here is a magnitude check — is this discharge one part in a hundred or one in
+      a hundred thousand — and never a reach-specific assimilative finding. (3) The conservatism argument
+      above is GEOGRAPHIC, and it holds only for the HUC-8 whose frontage lies below this gage. "OHIO
+      RIVER" is a receiving water in every Ohio tributary basin''s inventory — the Muskingum and Mahoning
+      basins reach the Ohio hundreds of river miles upstream of Greenup, where the river carries a fraction
+      of the drainage area gaged here — so serving this denominator on the bare name network-wide would
+      commit exactly the overstatement the gage was chosen to avoid. `basins: [ohio-brush-creek]` is that
+      restriction, and it is also what leaves room for a second, differently positioned Ohio River gage
+      to be registered for another basin later without the two colliding on the same alias. Aliases stay
+      tight for the same reason: "ut / ohio river" and "ohio river / ut" are UNNAMED TRIBUTARIES of the
+      Ohio, not the Ohio, and neither surface form is registered here, so neither matches.'

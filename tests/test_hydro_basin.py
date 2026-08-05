@@ -95,7 +95,10 @@ def test_basin_screen_follows_active_basin(data_settings: Settings) -> None:
     screen = basin.check_basin_assimilative(settings=springfield)
     c = screen.coverage
     assert c.total == 81  # the committed great-miami POTW inventory
-    assert c.screened == len(screen.checks) == 18
+    # 17 since #1120: the Hamilton WRF (OH0025445, 32 MGD) reads "GREAT MIAMI RIVER, TWO MILE
+    # CREEK" in ECHO — two different waters, and nothing in ECHO says which carries the design
+    # flow — so `_match_low_flow` refuses it instead of crediting the larger of the two.
+    assert c.screened == len(screen.checks) == 17
     assert c.screened + c.no_receiving_water + c.no_7q10 + c.no_design_flow == c.total
     # Screened denominators are Great Miami basin streams only — no Maumee stream leaks in.
     # Greenville Creek + Stillwater River added when Darke County gages (03264000/03265000)
@@ -136,9 +139,10 @@ def test_headwaters_confluence_derived(data_settings: Settings) -> None:
 
 
 def test_fort_wayne_wwtp_unscreened_by_discipline(data_settings: Settings) -> None:
-    # The Fort Wayne WWTP discharges to "Baldwin Ditch, Maumee R …"; its PRIMARY receiver is an
-    # ungaged ditch, so it is correctly left unscreened (omit, don't guess) — the headwaters 7Q10
-    # is a documented at-mainstem proxy, never auto-credited to a Baldwin Ditch discharger.
+    # The Fort Wayne WWTP discharges to "Baldwin Ditch, Maumee R …" — an ungaged ditch AND a
+    # gaged mainstem, with nothing in ECHO saying which carries the 74 MGD. It is correctly left
+    # unscreened (omit, don't guess): the headwaters 7Q10 is a documented at-mainstem proxy,
+    # never auto-credited to a Baldwin Ditch discharger.
     lookup = basin.ScreenLowFlows(by_name=basin.load_derived_low_flows(settings=data_settings))
     fac = {
         "name": "FORT WAYNE WWTP",
@@ -152,13 +156,76 @@ def test_fort_wayne_wwtp_unscreened_by_discipline(data_settings: Settings) -> No
 
 
 def test_screen_omits_tributary_compounds(data_settings: Settings) -> None:
-    # A discharger whose PRIMARY receiver is a ditch must not borrow a downstream
-    # mainstem's larger 7Q10 (that would overstate dilution). Omit, don't guess.
+    # A receiving water naming TWO different waters is refused, whichever order they are in:
+    # ECHO's field is a permit-level aggregate over every outfall, so it does not say which
+    # water carries the design flow, and crediting the larger would overstate dilution into a
+    # false "ok". Reading only the first form made the guard an accident of list order (#1120).
     lookup = basin.load_derived_low_flows(settings=data_settings)
     assert basin._match_low_flow("Baldwin Ditch, Maumee River", lookup) is None
+    assert basin._match_low_flow("Maumee River, Baldwin Ditch", lookup) is None
     assert basin._match_low_flow("Maumee River", lookup) is not None
-    # The St. Joseph typo/synonym compound still matches on its primary form.
+    # One water under two surface forms still matches — but only because BOTH forms are
+    # registered aliases of that gage, which is the only reviewed way to say they are one water.
     assert basin._match_low_flow("ST JOSEPH R, ST JOSEPH RIVER", lookup) is not None
+    assert basin._match_low_flow("AUGLAIZE RIVER, AUGLAZE RIVER", lookup) is not None
+    # An unregistered second form is, by construction, a second water.
+    assert basin._match_low_flow("MAUMEE RIVER, MAUMEE RIVER (LOWER)", lookup) is None
+
+
+def test_west_union_screens_the_ohio_brush_creek_inventory() -> None:
+    # #1120: west-union is the first direct-to-Ohio site, screening HUC-8 05090201 — a two-bank
+    # Ohio River corridor unit, not a watershed. Pinned because a typo in the basin slug, the
+    # HUC-8 or the file_stem does not raise: `_inventory_path` falls back to a conventional name
+    # and an absent file screens an empty set, silently reverting this to 0/0.
+    west_union = Settings(data_dir=REPO_ROOT / "data", site="west-union")
+    screen = basin.check_basin_assimilative(settings=west_union)
+    c = screen.coverage
+    assert c.total == 23  # the committed ohio-brush-creek POTW inventory
+    assert c.screened == len(screen.checks) == 5
+    assert c.no_receiving_water == 13  # ECHO carries no CWPStateWaterBodyName
+    assert c.no_7q10 == 5
+    assert c.no_design_flow == 0
+    assert c.screened + c.no_receiving_water + c.no_7q10 + c.no_design_flow == c.total
+    # Every screened row is on the Ohio River mainstem itself; no sibling tributary of Ohio
+    # Brush Creek borrows a denominator it has no claim to.
+    assert {ch.receiving_water.upper() for ch in screen.checks} == {"OHIO RIVER"}
+    assert all(ch.flag == "ok" for ch in screen.checks)
+    # New Richmond WWTP (OH0021156, 1.1 MGD) reads "OHIO RIVER, TWELVE MILE CREEK" — two waters,
+    # so it is refused rather than credited with the Ohio's 9,463 cfs at 5,560:1.
+    assert "NEW RICHMOND WWTP" not in {ch.discharger for ch in screen.checks}
+    # The West Union WWTP itself is unscreened: ECHO has no receiving water for it.
+    assert "WEST UNION WWTP" not in {ch.discharger for ch in screen.checks}
+
+
+def test_ohio_river_denominator_is_scoped_to_its_own_basin(data_settings: Settings) -> None:
+    # The Greenup Dam gage is conservative only for the HUC-8 whose river frontage lies below
+    # it. "OHIO RIVER" is a receiving water in every Ohio tributary basin's inventory, at
+    # reaches hundreds of river miles apart, so the entry declares `basins:` and the shared
+    # derived table serves it to that basin alone (#1120).
+    west_union = Settings(data_dir=REPO_ROOT / "data", site="west-union")
+    ohio = basin.load_derived_low_flows(settings=west_union)[basin._norm("ohio river")]
+    assert ohio.source == "derived"
+    assert ohio.value == pytest.approx(9463.62, abs=1.0)  # USGS 03216600 LP3 7Q10
+    # `data_settings` is Lima — a Maumee site, which must not see it at all.
+    assert basin._norm("ohio river") not in basin.load_derived_low_flows(settings=data_settings)
+    # An unscoped entry is still shared, so the scoping is opt-in, not a per-basin partition.
+    assert basin._norm("maumee river") in basin.load_derived_low_flows(settings=data_settings)
+
+
+def test_gage_note_reaches_the_file_the_screen_reads(data_settings: Settings) -> None:
+    # A gage's note states why THIS gage and what the choice costs; the screen reads the derived
+    # file, never the curated table, so the note is copied across with the cited blocks (#1120).
+    import yaml as _yaml
+
+    path = REPO_ROOT / "data" / "reference" / "hydrology" / "low-flow-7q10.derived.yaml"
+    streams = _yaml.safe_load(path.read_text(encoding="utf-8"))["streams"]
+    curated = basin.load_mainstem_gages(settings=data_settings)
+    for river, spec in curated.items():
+        if spec.note is None or river.lower() not in streams:
+            continue
+        assert streams[river.lower()]["note"] == spec.note
+    assert "NAVIGATION-REGULATED" in streams["ohio river"]["note"]
+    assert streams["ohio river"]["basins"] == ["ohio-brush-creek"]
 
 
 def test_gage_schema_rejects_malformed_reference_data() -> None:

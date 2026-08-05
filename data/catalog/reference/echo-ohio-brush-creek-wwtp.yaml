@@ -36,8 +36,10 @@ notes: >-
   Inventory of active CWA-permitted dischargers across HUC-8 05090201, the network's first
   direct-to-Ohio-River branch (West Union / Adams County, #1120), deduplicated by FRS Registry ID;
   every value is ECHO-returned and nulls are genuine. SCOPE IS WIDER THAN THE NAME: 05090201
-  "Ohio Brush-Whiteoak" is a two-bank Ohio River corridor unit, so the pull is majority-Kentucky
-  (168 of 261 facilities, Campbell County alone 111) and Ohio Brush Creek proper is 16 of its 67
-  HUC-12s. receiving_water is null for 118 of 261 rows including four of the five Adams County
-  POTWs, so most of the inventory is unscreenable until a cited overlay closes that gap. See
-  data/reference/echo/README.md.
+  "Ohio Brush-Whiteoak" is a WBD cataloging unit spanning both banks of the Ohio River, so the
+  pull is majority-Kentucky and the creeks inside it are siblings of Ohio Brush Creek rather than
+  its headwaters — none may borrow its 7Q10. Most rows carry no receiving_water at all, including
+  four of the five Adams County POTWs, so most of the inventory is unscreenable until a cited
+  overlay closes that gap; the headline counts for a given pull are dated in
+  data/reference/echo/README.md rather than restated here, and no HUC-12 count or area is
+  asserted anywhere (no WBD extract for 05090201 is committed).

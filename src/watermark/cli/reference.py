@@ -14,15 +14,17 @@ from watermark.cli._base import (
     repo_fixtures_dir,
     wrote,
 )
+from watermark.hydrology.connectors.echo import BASINS as _ECHO_BASINS
+
+# Rendered from the registry, not retyped: `resolve_basin` already reports `sorted(BASINS)` on
+# an unknown slug, and a help text that drifts from it advertises a basin the CLI will reject
+# (or hides one it accepts). Registering a basin must not be a two-place edit.
+_BASIN_HELP = f"Watershed slug ({' | '.join(sorted(_ECHO_BASINS))})."
 
 
 @app.command(name="npdes")
 def npdes(
-    basin: str = typer.Option(
-        "maumee",
-        "--basin",
-        help="Watershed slug (maumee | great-miami | little-miami | scioto | ohio-brush-creek).",
-    ),
+    basin: str = typer.Option("maumee", "--basin", help=_BASIN_HELP),
     offline: bool = typer.Option(
         False, "--offline", help="Use cached ECHO responses only; never touch the network."
     ),

@@ -7,6 +7,7 @@ the inventory-row shaping — none of which may fabricate values ECHO didn't sen
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pytest
@@ -48,8 +49,33 @@ def test_basin_registry_and_resolve() -> None:
     # The Scioto is its three HUC-8s (Upper/Lower Scioto + Paint).
     assert list(echo.SCIOTO_HUC8S) == ["05060001", "05060002", "05060003"]
     assert echo.SCIOTO.file_stem == "scioto-wwtp"
+    # Ohio Brush Creek (#1120) is the single direct-to-Ohio HUC-8. Pinned here because nothing
+    # else fails on a typo: `basin._inventory_path` falls back to `<basin>-wwtp.potw.yaml` and a
+    # missing file screens an empty set, so a wrong slug/HUC-8/file_stem would silently revert
+    # west-union's basin screen to 0/0 rather than raise.
+    assert echo.resolve_basin("ohio-brush-creek") is echo.OHIO_BRUSH_CREEK
+    assert list(echo.OHIO_BRUSH_CREEK_HUC8S) == ["05090201"]
+    assert echo.OHIO_BRUSH_CREEK.file_stem == "ohio-brush-creek-wwtp"
     with pytest.raises(echo.EchoError, match="unknown basin"):
         echo.resolve_basin("muskingum")
+
+
+def test_huc8_names_cover_every_registered_basin() -> None:
+    # The per-HUC display label is DERIVED from the registry, not a second hand-kept copy: an
+    # omitted subbasin would not raise, it would write the raw HUC code into the committed
+    # huc-counts.yaml `name:` field (`_HUC8_NAMES.get(huc8, huc8)`).
+    for basin in echo.BASINS.values():
+        for huc8, name in basin.huc8s.items():
+            assert echo._HUC8_NAMES[huc8] == name
+
+
+def test_basin_caveats_carry_no_pull_specific_counts() -> None:
+    # Caveats are re-stamped verbatim into every regenerated file, so a count typed into one is
+    # republished as current by the next quarterly pull. Dated headline counts belong in
+    # data/reference/echo/README.md, under the pull date that produced them.
+    for basin in echo.BASINS.values():
+        for caveat in basin.caveats:
+            assert not re.search(r"\d+\s+of\s+\d+", caveat), (basin.slug, caveat)
 
 
 def test_fetch_blanchard_from_fixture(hydro_settings: Settings) -> None:

@@ -52,7 +52,7 @@ nodes:
     huc8: "04100005"  # Upper Maumee (St. Joseph + St. Marys form the Maumee at Fort Wayne)
     drainage_path: [Maumee River]
     regime: diluted_mainstem
-    wwtp_npdes: [IN0032191]  # Fort Wayne WPC Plant -> Baldwin Ditch -> Maumee (ECHO lists the ditch as primary)
+    wwtp_npdes: [IN0032191]  # Fort Wayne WPC Plant -> Baldwin Ditch -> Maumee (ECHO names both, so unscreened)
     citation: "SiteProfile fort-wayne; ECHO IN0032191 receiving 'Baldwin Ditch, Maumee River'."
   defiance:
     huc8: "04100009"  # Lower Maumee — the Maumee/Auglaize/Tiffin confluence collector
