@@ -1,6 +1,6 @@
 // GET  /api/stories — list the authenticated user's own Stories (summaries, newest first).
-// POST /api/stories — create a Story: compile the source against the live catalog, validate every
-//                     handle, and transactionally persist the Story + its refs.
+// POST /api/stories — create a Walk: compile the source against the live catalog, validate every
+//                     handle, and transactionally persist the Walk + its refs.
 //
 // User-owned by construction (#1092). Ships dark behind STORIES_ENABLED; requires the
 // STORIES_HYPERDRIVE binding (Lakebase/Postgres) + a valid Cognito Bearer token. Mirrors the

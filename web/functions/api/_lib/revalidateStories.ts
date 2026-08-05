@@ -1,12 +1,12 @@
 // The catalog revalidation job (#1099) — "a scheduled job over one table". Ties the pure core
-// (`@watermark/core/revalidate`) to the Lakebase (Postgres) store: walk every Story not yet validated against the current
+// (`@watermark/core/revalidate`) to the Lakebase (Postgres) store: walk every Walk not yet validated against the current
 // catalog_version, re-resolve its cited handles, auto-heal renamed ones (rewrite refs + SDM), and
 // flag the rest `stale` so the author is nudged. Idempotent: a second pass over the same catalog is a
 // no-op (healed handles now resolve; still-dangling stay flagged; up-to-date stories are skipped).
 
 import type { StoryDocument } from "@watermark/core/sdm";
 import { type RenameMap, remapSdmHandles, revalidateHandles } from "@watermark/core/revalidate";
-import { type PgLike, type StoryRef, applyStoryRevalidation, storiesToRevalidate } from "./storiesStore";
+import { type PgLike, type WalkRef, applyStoryRevalidation, storiesToRevalidate } from "./storiesStore";
 
 export interface RevalidationSummary {
   /** Stories inspected (those behind the current catalog_version). */
@@ -15,7 +15,7 @@ export interface RevalidationSummary {
   healed: number;
   /** Stories flagged stale (≥1 unhealed dangling handle). */
   flagged: number;
-  /** The flagged Story ids (for an admin follow-up / author notification). */
+  /** The flagged Walk ids (for an admin follow-up / author notification). */
   flaggedIds: string[];
 }
 
@@ -44,7 +44,7 @@ export async function revalidateAll(
     const healMap: Record<string, string> = Object.fromEntries(result.heals.map((h) => [h.from, h.to]));
 
     // Rewrite refs (thin snapshot preserved, only the handle moves) + the stored SDM for healed handles.
-    const newRefs: StoryRef[] = target.refs.map((r) =>
+    const newRefs: WalkRef[] = target.refs.map((r) =>
       healMap[r.handle] ? { ...r, handle: healMap[r.handle] } : r,
     );
     let sdmJson = target.sdm_json;

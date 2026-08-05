@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { storyFor } from "./walk";
+import { walkFor } from "./walk";
 
 // Framework guardrails for the `stories` MDX collection (#742). These lock the invariants the
 // #733 source-flip relies on: the collection is the single source of the story spine, every
@@ -9,7 +9,7 @@ import { storyFor } from "./walk";
 // imports only). CI fails on a broken/incomplete story or an off-vocabulary chapter import.
 
 /** Raw text of every chapter + on-ramp MDX, keyed by collection-relative path. */
-const RAW = import.meta.glob("../../../src/content/stories/**/*.mdx", {
+const RAW = import.meta.glob("../../../src/content/walk/**/*.mdx", {
   eager: true,
   query: "?raw",
   import: "default",
@@ -31,7 +31,7 @@ interface Parsed {
 function parse(path: string, raw: string): Parsed {
   const fm = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
   const parts = path.split("/");
-  const i = parts.lastIndexOf("stories");
+  const i = parts.lastIndexOf("walk");
   const fileSlug = parts[parts.length - 1].replace(/\.mdx$/, "");
   const body = fm ? fm[2] : raw;
   const imports = [...body.matchAll(/^\s*import\s+[^;]*?from\s+["']([^"']+)["']/gm)].map((m) => m[1]);
@@ -93,8 +93,8 @@ describe("story completeness (#742)", () => {
   it("chapter steps are contiguous 1..N and each slug matches its filename", () => {
     for (const key of STORY_KEYS) {
       const [site, codename] = key.split("/");
-      const story = storyFor(site, codename);
-      expect(story, `${key} must resolve via storyFor`).toBeDefined();
+      const story = walkFor(site, codename);
+      expect(story, `${key} must resolve via walkFor`).toBeDefined();
       if (!story) continue;
       expect(story.chapters.map((c) => c.step)).toEqual(story.chapters.map((_, idx) => idx + 1));
       for (const ch of story.chapters) {
@@ -109,7 +109,7 @@ describe("story completeness (#742)", () => {
   it("every live chapter's anchor records resolve to a committed extraction", () => {
     for (const key of STORY_KEYS) {
       const [site, codename] = key.split("/");
-      const story = storyFor(site, codename);
+      const story = walkFor(site, codename);
       if (!story) continue;
       for (const [rel, anchor] of Object.entries(story.anchors)) {
         // An anchor is only reachable for a *live* chapter; skip drafts.
@@ -123,7 +123,7 @@ describe("story completeness (#742)", () => {
 
 describe("story spine parity snapshot (#742)", () => {
   it("the Lima project-bosc spine is stable (catches shell/spine regressions)", () => {
-    expect(storyFor("lima", "project-bosc")).toMatchSnapshot();
+    expect(walkFor("lima", "project-bosc")).toMatchSnapshot();
   });
 });
 

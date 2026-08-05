@@ -71,7 +71,7 @@ describe("a partial peer (Fort Wayne)", () => {
   });
 
   it("holds its story as coming-soon (locked facet) even though one is registered", () => {
-    // FW carries the Project Zodiac StoryRef, but it's `comingSoon` (#1526) — so the story facet
+    // FW carries the Project Zodiac WalkRef, but it's `comingSoon` (#1526) — so the story facet
     // locks: a visible teaser + interstitial stands in for the readable walk, not an open on-ramp.
     expect(sectionStatus("fort-wayne", "story")).toBe("locked");
   });

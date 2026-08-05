@@ -1,7 +1,7 @@
 ---
 /**
  * The story table-of-contents shell (#724/#732) — the chapter index for every selectable site's
- * story, driven by the `Story` model (the chapter list is `StoryChapters`, hrefs come from the
+ * story, driven by the `Walk` model (the chapter list is `StoryChapters`, hrefs come from the
  * story helpers). The framing copy is generic story-TOC boilerplate; a future pass can move the
  * story-specific bits (the lead, the meta) to data for the multi-site network.
  */
@@ -11,13 +11,13 @@ import StoryChapters from "~/components/story/StoryChapters.astro";
 import Base from "~/layouts/Base.astro";
 import { siteBase } from "@watermark/core/routes";
 import { siteHref } from "@watermark/core/site";
-import { storyComingSoon, storyHostSites } from "@watermark/core/sites";
-import { type Story, chapterHref, storyFor, storyHomeHref } from "@watermark/core/walk";
+import { walkComingSoon, walkHostSites } from "@watermark/core/sites";
+import { type Walk, chapterHref, walkFor, walkHomeHref } from "@watermark/core/walk";
 
 export async function getStaticPaths() {
   const paths = [];
-  // Every site that REGISTERS a story, not every selectable one (#1466) — see `siteRegistersStory`.
-  for (const site of storyHostSites()) {
+  // Every site that REGISTERS a story, not every selectable one (#1466) — see `siteRegistersWalk`.
+  for (const site of walkHostSites()) {
     const siteId = siteBase(site.slug).replace("/network/", "");
     for (const ref of site.stories ?? []) {
       // A held story publishes its ROOT and nothing below it (#1894). It used to emit this page and
@@ -25,7 +25,7 @@ export async function getStaticPaths() {
       // Fort Wayne that no page linked and no search row pointed at, on the reasoning that a URL
       // that resolves beats a 404. Nothing was resolving them. The root carries the interstitial,
       // is in the nav and is indexed; the interior returns on the edit that makes the prose real.
-      if (storyComingSoon(site.slug, ref.codename)) continue;
+      if (walkComingSoon(site.slug, ref.codename)) continue;
       const literal = fileURLToPath(
         new URL(`../../../${siteId}/stories/${ref.codename}/contents.astro`, import.meta.url),
       );
@@ -40,7 +40,7 @@ export async function getStaticPaths() {
 }
 
 const { slug, codename } = Astro.props as { slug: string; codename: string };
-const story = storyFor(slug, codename) as Story;
+const story = walkFor(slug, codename) as Walk;
 const firstSlug = story.chapters[0]?.slug ?? "";
 // Counted, not written down. This route renders for EVERY registered story on every host site, and
 // the copy used to say "six chapters" and "all six are live" — true of Lima's walk and of nothing
@@ -60,7 +60,7 @@ const trailLabels = { [codename]: story.title };
   trailLabels={trailLabels}
 >
   <div class="walk-onramp">
-    <p><a href={storyHomeHref(story)}>← Start here</a></p>
+    <p><a href={walkHomeHref(story)}>← Start here</a></p>
     <div class="walk-kicker">Watermark · story</div>
     <h1>The story, chapter by chapter</h1>
     <p class="walk-onramp-lead">

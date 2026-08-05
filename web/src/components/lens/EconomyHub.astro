@@ -17,7 +17,7 @@ import { sectorEmployment, topSectors } from "@watermark/core/hubLede";
 import { facilityLoadAvailable, siteRouteOffered } from "@watermark/core/readiness";
 import { withBase, withSite } from "@watermark/core/site";
 import type { FigureStatData } from "@watermark/core/viz";
-import { activeStory, chapterHref } from "@watermark/core/walk";
+import { activeWalk, chapterHref } from "@watermark/core/walk";
 
 const { slug } = Astro.props as { slug: string };
 const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
@@ -76,7 +76,7 @@ const ledeFigures: FigureStatData[] = [
 //    drops it rather than presenting a screening bracket as a settled campus load.
 //  - The cost-of-opacity chapter is THIS site's own (#1256), present only when its surfaced story
 //    actually carries one, so it never leaks into Lima's.
-const story = activeStory();
+const story = activeWalk();
 const costChapter = story?.chapters.find((c) => c.slug === "cost");
 const related: { label: string; href: string; note: string }[] = [
   // Two gates: the site has to have a load worth reading, AND it has to build the companion at all

@@ -32,11 +32,11 @@ export type SiteStatus = "live" | "building" | "queued" | "tracking";
 /**
  * A story a site hosts — the lightweight registry reference (#724/#729). It names the story
  * (codename + title) for the switcher / nav; the full reading path (chapters, anchors) lives
- * in the story store keyed by `(site.slug, codename)` — `storyFor` in `./walk` today, the MDX
+ * in the story store keyed by `(site.slug, codename)` — `walkFor` in `./walk` today, the MDX
  * `stories` collection later (#730).
  */
-export interface StoryRef {
-  /** Story codename — the URL segment under the site's `stories/` and the store key. */
+export interface WalkRef {
+  /** Walk codename — the URL segment under the site's `stories/` and the store key. */
   codename: string;
   /** Display title, e.g. "Project BOSC". */
   title: string;
@@ -46,7 +46,7 @@ export interface StoryRef {
    * Hidden from every *surface* (switcher, site hub, story catalog, atoms) while its content,
    * `/stories/<codename>` routes, and this metadata are all retained (#1256). This is the
    * "hidden, not removed" state — the story stays reachable by direct URL and its title/dek keep
-   * feeding the reader pages; it just isn't advertised anywhere. `surfacedStories` filters these
+   * feeding the reader pages; it just isn't advertised anywhere. `surfacedWalks` filters these
    * out; `storyMetaFor` (title/dek lookup) deliberately still reads them.
    */
   hidden?: boolean;
@@ -54,9 +54,9 @@ export interface StoryRef {
    * "Coming soon" — advertised as coming, but not readable (#1526). The distinct, *visible* peer of
    * `hidden`: where `hidden` silently unsurfaces a story (no teaser, still reachable by direct URL),
    * `comingSoon` does the opposite — the story is **advertised** as a visible teaser (title + dek +
-   * a coming-soon badge, `comingSoonStories`) but its content is **held** (the `/stories/<codename>`
-   * routes serve a coming-soon interstitial, not the narrative; `storyComingSoon`). Like `hidden`, a
-   * `comingSoon` story contributes **no readable surfaces**: `surfacedStories` excludes it, so no
+   * a coming-soon badge, `comingSoonWalks`) but its content is **held** (the `/stories/<codename>`
+   * routes serve a coming-soon interstitial, not the narrative; `walkComingSoon`). Like `hidden`, a
+   * `comingSoon` story contributes **no readable surfaces**: `surfacedWalks` excludes it, so no
    * catalog atoms, no record/timeline → chapter backlinks, and the story readiness facet locks. Its
    * MDX content, routes, and title/dek all stay intact. `hidden` wins if both are set (silent beats
    * advertised).
@@ -115,7 +115,7 @@ export interface NetworkSite {
   /** Why a `locked` site is sealed — drives the request-access dek. */
   lockReason?: "sourcing" | "legal" | "embargo";
   /** The stories this site hosts, in display order. Absent until a site has one (#724). */
-  stories?: readonly StoryRef[];
+  stories?: readonly WalkRef[];
 }
 
 // TypeScript-only overlays — stories live here, not in the YAML identity registry (#1027).
@@ -123,16 +123,16 @@ export interface NetworkSite {
 // are authored here because they reference story codemnames + prose that aren't site-identity.
 //
 // A story surfaces (in the switcher, the hub, the catalog/atoms, the record backlinks) only when
-// it's registered here AND readable — neither `hidden` nor `comingSoon` — see `surfacedStories`.
+// it's registered here AND readable — neither `hidden` nor `comingSoon` — see `surfacedWalks`.
 // Two "not-readable" states share this overlay: `hidden` (#1256) unsurfaces a story *silently*
 // (reachable by direct URL, no teaser); `comingSoon` (#1526) unsurfaces it *visibly* (a teaser
 // advertises title/dek, the routes serve an interstitial). Both keep the story's content, its
 // `/stories/<codename>` routes, the `WALK_*` guard, and its title/dek intact.
 //
 // Lima's Project BOSC walk is now *readable* — its record is finished, so it surfaces (switcher,
-// hub, catalog/atoms, record backlinks); `surfacedStories("lima")` returns it, `comingSoonStories`
+// hub, catalog/atoms, record backlinks); `surfacedWalks("lima")` returns it, `comingSoonWalks`
 // does not. Fort Wayne's Project Zodiac stays `comingSoon` (#1526): held behind a visible teaser
-// while its record is finished — `comingSoonStories("fort-wayne")` returns it, `surfacedStories`
+// while its record is finished — `comingSoonWalks("fort-wayne")` returns it, `surfacedWalks`
 // does not. Findlay's Flagpole is `comingSoon` for a different reason (#1466): its record IS
 // finished (all five readiness domains live), but the site is not yet `selectable`, and promotion
 // is a manual, parity-gated edit to `data/sites.yaml`. Held rather than hidden so the walk is
@@ -152,7 +152,7 @@ export interface NetworkSite {
 // ~180 MW is a disclosed [reference] figure with no instrument behind it (#1630). The record it
 // would walk is real — the CRA resolution, the seller-name rezonings, the contested 2026 roll call
 // — so the story is advertised rather than hidden.
-const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
+const WALKS: Partial<Record<string, readonly WalkRef[]>> = {
   // ONE walk survives (#1971, epic #1968). Fort Wayne's Project Zodiac, Findlay's Flagpole and
   // Bowling Green's Project Accordion were ABSORBED into their sites' impact studies (#1970) —
   // the study owns the spine now, and their prose ships as study notes under
@@ -188,7 +188,7 @@ export const SITES: readonly NetworkSite[] = sitesRegistry.sites.map(
     selectable: entry.selectable,
     href: entry.slug === "lima" ? SITE_BASE : `/network/${entry.slug}`,
     ...(entry.issue !== null ? { issue: entry.issue } : {}),
-    ...(STORIES[entry.slug] ? { stories: STORIES[entry.slug] } : {}),
+    ...(WALKS[entry.slug] ? { stories: WALKS[entry.slug] } : {}),
   }),
 );
 
@@ -560,7 +560,7 @@ export function siteForSlug(slug: string): NetworkSite | undefined {
  * while its content, routes, and metadata stay intact. Metadata lookups (`storyMetaFor`) read the
  * raw `site.stories` instead, so a not-readable story keeps its title/dek for its teaser.
  */
-export function surfacedStories(slug: string): readonly StoryRef[] {
+export function surfacedWalks(slug: string): readonly WalkRef[] {
   return siteForSlug(slug)?.stories?.filter((s) => !s.hidden && !s.comingSoon) ?? [];
 }
 
@@ -576,23 +576,23 @@ export function surfacedStories(slug: string): readonly StoryRef[] {
  * routes, that teaser became a dead link the moment a non-selectable site registered a walk, which
  * Findlay's `flagpole` (#1466) is the first to do.
  */
-export function siteRegistersStory(slug: string, codename: string): boolean {
+export function siteRegistersWalk(slug: string, codename: string): boolean {
   return (siteForSlug(slug)?.stories ?? []).some((s) => s.codename === codename);
 }
 
 /** Every site registering at least one story, in registry order — the story routes' path source. */
-export function storyHostSites(): readonly NetworkSite[] {
+export function walkHostSites(): readonly NetworkSite[] {
   return SITES.filter((s) => (s.stories?.length ?? 0) > 0);
 }
 
 /**
  * The stories a site advertises as **coming soon** (#1526) — the visible-teaser peer of
- * {@link surfacedStories}. These are *not* readable (excluded from every readable surface above)
+ * {@link surfacedWalks}. These are *not* readable (excluded from every readable surface above)
  * but *are* advertised: the site home renders their title/dek as a teaser card, and their routes
  * serve a coming-soon interstitial. `hidden` still wins — a `hidden` story is silent, never a
  * coming-soon teaser — so this excludes it.
  */
-export function comingSoonStories(slug: string): readonly StoryRef[] {
+export function comingSoonWalks(slug: string): readonly WalkRef[] {
   return siteForSlug(slug)?.stories?.filter((s) => s.comingSoon && !s.hidden) ?? [];
 }
 
@@ -601,8 +601,8 @@ export function comingSoonStories(slug: string): readonly StoryRef[] {
  * (#1529). The story pages render the held-content interstitial (not the narrative) when this is
  * true for the resolved `(slug, codename)`.
  */
-export function storyComingSoon(slug: string, codename: string): boolean {
-  return comingSoonStories(slug).some((s) => s.codename === codename);
+export function walkComingSoon(slug: string, codename: string): boolean {
+  return comingSoonWalks(slug).some((s) => s.codename === codename);
 }
 
 /**

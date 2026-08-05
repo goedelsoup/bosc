@@ -1,11 +1,11 @@
-// Unit tests for the Lakebase (Postgres) Story store (#1095/#1098) against an in-memory Postgres
+// Unit tests for the Lakebase (Postgres) Walk store (#1095/#1098) against an in-memory Postgres
 // (pglite) with the committed schema — so owner-scoping, ref replacement, FK cascade, unique
 // constraints, the `begin()` transaction rollback, and the sharing/moderation rails are all
 // exercised on the real engine (Postgres) production uses.
 
 import { describe, expect, it } from "vitest";
 import {
-  type StoryOwner,
+  type WalkOwner,
   type StoryWrite,
   createStory,
   deleteStory,
@@ -22,8 +22,8 @@ import {
 import { revalidateAll } from "@watermark/functions/api/_lib/revalidateStories";
 import { fakePg } from "./_routeHarness";
 
-const owner: StoryOwner = { kind: "user", id: "user-1" };
-const other: StoryOwner = { kind: "user", id: "user-2" };
+const owner: WalkOwner = { kind: "user", id: "user-1" };
+const other: WalkOwner = { kind: "user", id: "user-2" };
 const NOW = "2026-07-03T00:00:00.000Z";
 const SHARE = "share-abc";
 
@@ -31,7 +31,7 @@ function write(over: Partial<StoryWrite> = {}): StoryWrite {
   return {
     site: "lima",
     slug: "my-story",
-    title: "My Story",
+    title: "My Walk",
     dek: "a dek",
     status: "draft",
     source_format: "dsl",
@@ -51,7 +51,7 @@ describe("stories store — CRUD", () => {
     const db = await fakePg();
     await createStory(db, owner, "s1", write(), NOW, SHARE);
     const got = await getStory(db, owner, "s1");
-    expect(got?.story.title).toBe("My Story");
+    expect(got?.story.title).toBe("My Walk");
     expect(got?.story.status).toBe("draft");
     expect(got?.refs.map((r) => r.handle)).toEqual(["record:lima:a", "entity:lima:b"]);
   });
@@ -99,7 +99,7 @@ describe("stories store — owner scoping", () => {
     expect(await updateStory(db, other, "s1", write({ title: "hijack" }), NOW, SHARE)).toBe(false);
     expect(await deleteStory(db, other, "s1")).toBe(false);
     // The real owner's story is untouched.
-    expect((await getStory(db, owner, "s1"))?.story.title).toBe("My Story");
+    expect((await getStory(db, owner, "s1"))?.story.title).toBe("My Walk");
   });
 });
 
@@ -167,7 +167,7 @@ describe("stories store — sharing (#1098)", () => {
   it("resolves a published story by share_id, but not a draft or unpublished one", async () => {
     const db = await fakePg();
     await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
-    expect((await getPublicStory(db, "share-1"))?.story.title).toBe("My Story");
+    expect((await getPublicStory(db, "share-1"))?.story.title).toBe("My Walk");
     // unpublish → no longer publicly reachable
     await updateStory(db, owner, "s1", write({ status: "draft" }), NOW, "x");
     expect(await getPublicStory(db, "share-1")).toBeNull();

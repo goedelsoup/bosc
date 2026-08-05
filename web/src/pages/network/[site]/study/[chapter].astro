@@ -31,7 +31,7 @@ import {
   studyChapterModel,
 } from "@watermark/core/study";
 import { withSite } from "@watermark/core/site";
-import { activeStory, chapterHref } from "@watermark/core/walk";
+import { activeWalk, chapterHref } from "@watermark/core/walk";
 
 export function getStaticPaths() {
   return withSitePaths(
@@ -71,8 +71,8 @@ const evidence = studyChapterEvidence(chapterId, slug, {
 
 // The walk↔study cross-link, study side (one hop, never an inline): the surfaced story's
 // chapter that teaches toward this study chapter. A held (`comingSoon`) or absent walk
-// simply renders no link — `activeStory()` already excludes it.
-const story = activeStory();
+// simply renders no link — `activeWalk()` already excludes it.
+const story = activeWalk();
 const walkCh = story?.chapters.find((c) => c.studySection === chapterId && c.live) ?? null;
 ---
 
