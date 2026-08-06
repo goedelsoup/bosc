@@ -23,17 +23,18 @@ searched:
 
 PJM **Transmission Expansion Advisory Committee — Dayton Supplemental Projects** (the AES Ohio
 local-plan large-load filings) enumerate AES Ohio's disclosed data-center *customer requests* by
-serving substation. The 2026-02-03 filing (and the surrounding cycle) name the following — **none
-in Champaign County / Urbana / Urbana Township**:
+serving substation. Across the M-3 cycle they name the following — **none in Champaign County /
+Urbana / Urbana Township**. The per-row filing differs, so it is given per row rather than
+collectively:
 
-| Serving substation | Location (county) | Disclosed load ramp (verbatim) |
-|---|---|---|
-| Eldean | **Piqua, OH** (Miami Co.) | 12/2027 45 MW · 12/2028 205 MW · 12/2029 440 MW · 12/2030 600 MW (+ a 365→600→870→1140 MW→1400 MW alt.) |
-| Stuart | **Adams County, OH** | 11/2028 100 MW · 07/2029 400 MW · 10/2030 700 MW · 10/2031 1100 MW · 03/2032 **1300 MW** |
-| Darby | **Marysville, OH** (Union Co.) | 5/2030 270 MW · 11/2031 540 MW · 5/2033 800 MW |
-| Airport | **Tipp City, OH** (Miami Co.) | 03/2028 20 MW · 03/2029 160 MW · 03/2030 300 MW |
-| Fayette | **Jeffersonville, OH** (Fayette Co.) | 35 MW (2026) · 480 MW (2028) · 1.5 GW (2031) |
-| Clinton | **Wilmington, OH** (Clinton Co.) | 35 MW · 100 MW (2028) · 300 MW (2029) · 500 MW (2030) |
+| Serving substation | Location (county) | Disclosed load ramp (verbatim) | Filing |
+|---|---|---|---|
+| Eldean | **Piqua, OH** (Miami Co.) | 12/2027 45 MW · 12/2028 205 MW · 12/2029 440 MW · 12/2030 600 MW (+ a 365→600→870→1140 MW→1400 MW alt.) | 20260203 item 06 (Dayton-2025-007) |
+| Stuart | **Adams County, OH** | 11/2028 100 MW · 07/2029 400 MW · 10/2030 700 MW · 10/2031 1100 MW · 03/2032 **1300 MW** | 20260203 item 06 (Dayton-2026-001) |
+| Darby | **Marysville, OH** (Union Co.) | 5/2030 270 MW · 11/2031 540 MW · 5/2033 800 MW | **uncited** — in neither committed deck |
+| Airport | **Tipp City, OH** (Miami Co.) | 03/2028 20 MW · 03/2029 160 MW · 03/2030 300 MW | **uncited** — in neither committed deck |
+| Fayette | **Jeffersonville, OH** (Fayette Co.) | 35 MW (2026) · 480 MW (2028) · 1.5 GW (2031) | 20260707 item 11 (Dayton-2025-001) |
+| Clinton | **Wilmington, OH** (Clinton Co.) | 35 MW · 100 MW (2028) · 300 MW (2029) · 500 MW (2030) | 20260707 item 11 (Dayton-2025-002) |
 
 Source: PJM TEAC Dayton Supplemental Projects decks; corroborated by the
 [PJM PC/TEAC Feb. 3 2026 brief](https://www.rtoinsider.com/125312-pjm-pc-teac-020326/).
@@ -159,7 +160,8 @@ Any of these **replaces the bracket with the disclosed load** and **flips the en
 
 ## Sources
 
-- PJM TEAC 2026-02-03 Dayton Supplemental Projects (item 06) — <https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260203/20260203-item-06---dayton-supplemental-projects.pdf>
+- PJM TEAC 2026-02-03 Dayton Supplemental Projects (item 06) — the Eldean and Stuart rows — <https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260203/20260203-item-06---dayton-supplemental-projects.pdf>
+- PJM TEAC 2026-07-07 Dayton Supplemental Projects (item 11) — the Fayette and Clinton rows — <https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260707/20260707-item-11---dayton-supplemental-projects.pdf>
 - PJM PC/TEAC brief, 2026-02-03 — <https://www.rtoinsider.com/125312-pjm-pc-teac-020326/>
 - interconnection.fyi — Woodstock Solar (AE2-342), Champaign County, OH — <https://www.interconnection.fyi/project/pjm-ae2-342>
 - US-EPA ECHO air (ICIS-AIR/AFS) `air_rest_services`, spatial query near 40.0887,-83.7611 — retrieved 2026-07-10

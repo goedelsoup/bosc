@@ -5,8 +5,9 @@ status: reviewed
 producer:
   kind: manual
   source: >-
-    Eleven captured sources across four routes, plus four blocked routes recorded as per-source
-    negatives. INTERCONNECTION: PJM's own Transmission Expansion Advisory Committee "Dayton
+    Eleven captured sources across four routes, plus five blocked-or-negative routes recorded as
+    per-source negatives (PUCO DIS, the opsb.ohio.gov pretty-URL case pages, wnewsj.com,
+    journal-news.com, and PJM's own 2025 TEAC materials). INTERCONNECTION: PJM's Transmission Expansion Advisory Committee "Dayton
     Supplemental Projects" decks for all three 2026 meetings (2026-02-03 item 06, 2026-05-08 item
     05, 2026-07-07 item 11), retrieved 2026-08-06 from pjm.com and read from their PDF text
     layers. The 2026-07-07 deck carries M-3 Need Dayton-2025-002 (the Clinton Substation /
@@ -106,8 +107,10 @@ notes: >-
   data/reference/eia/wilmington/demand-pressure.yaml is 402.6 MW central on a 162.7-696.1 band, so
   the utility's own request lands inside it. A site-plan screen built here and a transmission
   request filed there converge without either having seen the other. (5) THE ISSUE'S SECOND
-  INSTRUMENT IS RETIRED. The "Clinton 345kV Substation Extension" is OPSB 21-0679-EL-BNR — LON
-  filed July 2021, approved August 2021, built from October 2021, IN SERVICE JUNE 2022 — and its
+  INSTRUMENT IS RETIRED. The "Clinton 345kV Substation Extension" is OPSB 21-0679-EL-BNR —
+  Construction Notice filed July 2021 (the archived page's own schedule row says "File Letter of
+  Notification Application", but the -BNR suffix is the Construction Notice track and the suffix
+  governs), approved August 2021, built from October 2021, IN SERVICE JUNE 2022 — and its
   stated need is 69 kV loading and reliability, maintenance-outage flexibility, and ensuring
   "deliverability of the planned solar generation expansions along the Stuart-Clinton 345kV
   corridor". It belongs on the same side of the issue's own guardrail as Lynchburg. The AES page
@@ -138,7 +141,7 @@ notes: >-
   Clinton County parcel 070-03-34-10-0001-00, King Rd, Clark Township, 9.582 ac, conveyed to
   Dayton Power & Light 2024-07-30, legal description "AES OHIO EAST FORK SUBSTATION LOT 1". It
   appears on no captured AES project page and in no PJM deck read here; purpose, voltage and case
-  number all [open]. (12) FOUR BLOCKED ROUTES, RECORDED AS NEGATIVES NOT ABSENCES.
+  number all [open]. (12) FIVE BLOCKED-OR-NEGATIVE ROUTES, RECORDED AS NEGATIVES NOT ABSENCES.
   dis.puc.state.oh.us refused again — 245-byte "Request Rejected" plain, 7,554-byte F5/BIG-IP
   bobcmn JavaScript challenge with browser headers — the SIXTH confirmation in this repo, so the
   25-0871 docket is unsearched and nothing is inferred from its silence. opsb.ohio.gov's pretty
@@ -146,7 +149,13 @@ notes: >-
   which is a trap worth knowing. wnewsj.com returns 403 for all three articles issue 1469 relies
   on, so its items 3 and 5 (the "working with AWS for more than a year" statement, the
   transmission cost-allocation posture, the reported doubling of residential bills) remain
-  [reference] and unchecked here. The journal-news.com ranking URL returns 404. (13) THE REPO
+  [reference] and unchecked here. The journal-news.com ranking URL returns 404. And PJM's own
+  2025 TEAC materials are NOT SERVED — the TEAC page lists Dayton Supplemental items for 2026
+  only and constructed 2025 URLs return the site's HTML not-found page — so the Need Meeting of
+  2025-02-04 and the Solution Meeting of 2025-04-01, where Dayton-2025-002's ORIGINAL ramp and
+  costs were first presented, are not in hand; the deltas recorded here are read from
+  struck-through values on the 2026-07-07 slides, i.e. the applicant showing its own revisions.
+  (13) THE REPO
   CONTRADICTED ITSELF and both sides are reconciled: data/extracted/wilmington/data-centers.md
   carried the press misattribution while data/extracted/urbana/facility-power-instrument-search.md
   already had both counties right — though that file cited the 2026-02-03 deck, which contains
