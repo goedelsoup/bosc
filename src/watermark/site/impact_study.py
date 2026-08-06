@@ -467,6 +467,36 @@ def _resolve_facility(ctx: _Ctx) -> dict[str, Any] | None:
     return next((r for r in rows if r.get("is_primary")), rows[0] if rows else None)
 
 
+def _chapter_gap(d: _ChapterDef, ctx: _Ctx, facility: dict[str, Any] | None) -> StudyGap:
+    """A chapter's gap framing, narrowed to what is ACTUALLY missing for this site (#1983).
+
+    ``_ChapterDef.gap`` is written for the common case, which for ``water-supply`` is a facility
+    that discloses neither its cooling method nor a water quantity. A facility that DOES disclose
+    the method (West Union / Buck Canyon: hybrid/adiabatic, ~97% air, from Amazon's own brochure)
+    would otherwise be told the method is missing — asserting an absence the record contradicts.
+    The gap is narrowed to the quantity, which is the half genuinely `[open]`.
+
+    ``off`` is deliberately NOT a disclosed method here: it means there is no cooling-water load
+    to quantify at all (a federal enclave — WPAFB), so narrowing the gap to "no quantity" would
+    assert a missing figure that the archetype says cannot exist.
+    """
+    if (
+        d.id == "water-supply"
+        and facility is not None
+        and facility.get("cooling_model") not in (None, "off")
+        and not _cooling_undisclosed(ctx, facility)
+    ):
+        return d.gap.model_copy(
+            update={
+                "missing_record": (
+                    "a metered, contracted or permit-grounded water quantity — the cooling "
+                    "method is disclosed here, but no quantity is."
+                )
+            }
+        )
+    return d.gap
+
+
 def _cooling_undisclosed(ctx: _Ctx, facility: dict[str, Any] | None) -> bool:
     """`study.ts` `coolingUndisclosed`: the scenario rows' probe (#1057) OR the facility row."""
     if facility is not None and facility.get("cooling_model") == "unknown":
@@ -493,6 +523,15 @@ def _probes(d: _ChapterDef, ctx: _Ctx, facility: dict[str, Any] | None) -> list[
     if d.probe == "project":
         if ctx.facility_domain == "live":
             return []
+        # A facility whose load is entirely `[open]` has no bracket to describe (#1983): saying
+        # "a screening bracket" would assert a figure the record does not carry. West Union /
+        # Buck Canyon is the first — the campus is disclosed, but the only MW on the record is
+        # filed for an unnamed customer, so `SiteFacility.it_load_mw` is None.
+        if facility is not None and facility.get("it_load_mw") is None:
+            return [
+                "the facility is disclosed but its IT load is not instrument-grounded — no "
+                "instrument on the record states it"
+            ]
         return [
             "the IT load on the record is a screening bracket, not an instrument-grounded figure"
         ]
@@ -585,7 +624,7 @@ def _availability(d: _ChapterDef, ctx: _Ctx) -> tuple[StudyChapterStatus, list[s
     present = [f for f in d.required_feeds if _feed_rows(ctx, f) > 0]
     optional_present = [f for f in d.optional_feeds if _feed_rows(ctx, f) > 0]
     if not present and not optional_present:
-        return ("gap", [d.gap.missing_record])
+        return ("gap", [_chapter_gap(d, ctx, facility).missing_record])
     if len(present) < len(d.required_feeds):
         # `any_required` feeds are alternatives (either groundwater screen suffices).
         if d.any_required and present:
@@ -1050,7 +1089,11 @@ def build_impact_study(
         lead_ids = list(STUDY_GAP_LEADS.get(site, {}).get(d.id, ()))
         # The chapter-level gap framing renders whenever the chapter IS the finding; the
         # curated joins ride every gap that carries none of its own (one board, one ask).
-        gaps = [d.gap, *composed.gaps] if status == "gap" else list(composed.gaps)
+        gaps = (
+            [_chapter_gap(d, ctx, facility), *composed.gaps]
+            if status == "gap"
+            else list(composed.gaps)
+        )
         gaps = [
             g.model_copy(update={"lead_ids": list(lead_ids)}) if lead_ids and not g.lead_ids else g
             for g in gaps

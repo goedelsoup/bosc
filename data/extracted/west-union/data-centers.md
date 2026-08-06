@@ -7,9 +7,16 @@ discipline: `[verified]` = a cited primary instrument or an authoritative agency
 
 **This sweep had never been run.** #1983 was written on the premise that Adams County carried
 "no disclosed project" and that the premise had never been tested. It has now been tested, and
-**the premise is wrong**: there is a disclosed data-center campus in Adams County, it is
-Amazon Web Services, and at the load its serving utility has filed for it would be the largest
-single data-center load on the Ohio public record.
+**the premise is wrong**: there is a disclosed data-center campus in Adams County, and Adams
+County's own government domain names its operator as **Amazon Web Services** `[verified]`.
+
+Separately, AES Ohio has filed a PJM load request **near its Stuart Substation in Adams County
+for an unnamed customer**, ramping to **1,300 MW by 03/2032** `[verified]` — which, if built,
+would be the largest single data-center load on the Ohio public record. **The filing names no
+customer, and no instrument joins it to the AWS campus.** That the two are the same project is a
+strong but unfiled **`[inference]`** — see "The evidentiary spine" below, which is the finding of
+this register. Nothing here should be read as Amazon having disclosed a megawatt figure; it has
+not.
 
 Nothing in this register is in the BOSC corpus yet — no source document under
 `data/documents/` is cited below. This records the *verified public record* and names the
@@ -396,8 +403,13 @@ are now *applicable and unanswered* rather than *not applicable*. **The tier is 
 1. **PJM TEAC deck, 2026-02-03, Dayton Supplemental** — ingest the `Dayton-2026-001` slide as
    the load instrument of record. Highest value: it is primary, dated, and already in hand.
 2. **Ohio EPA construction NOI `0GC04922*AG`** — the NOI itself, its site map and the approval
-   letter, via the Ohio EPA eDocument portal (an open scriptable route). The site map would be
-   the **first campus geometry** for this site and would activate `places`.
+   letter. The site map would be the **first campus geometry** for this site and would activate
+   `places`. ⚠️ **The Ohio EPA eDocument portal route is `[open]` but METHOD-BLOCKED** — the
+   search could not be driven programmatically on 2026-08-05 and its controls came back
+   byte-identical (see "The eDocument portal route is METHOD-BLOCKED" above). Treat the route as
+   blocked, **not** as an open scriptable one, until a query actually returns the NOI or the site
+   map; until then nothing may be concluded about what the portal holds. The fallback routes are
+   named in that section.
 3. **USACE NWP 39 verification, 2026-02-18** — the Huntington District file, for the 68 Yards
    LLC applicant identity, the jurisdictional determination and the 11 special conditions.
 4. **Adams County auditor / recorder** — the Buck Canyon parcels: IDs, acreage, the 2024 deed

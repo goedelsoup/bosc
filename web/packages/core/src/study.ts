@@ -260,6 +260,38 @@ export function resolveStudyFacility(slug: string, facilityKey?: string): Facili
 /** Whether the resolved facility's cooling method is on the record. Reads BOTH the scenario
  *  rows (#1057's probe) and the facility row itself, so a site with a facility but no
  *  scenarios yet (fort-wayne) still names the disclosure as its water chapter's ask. */
+/**
+ * A chapter's gap framing, narrowed to what is ACTUALLY missing for this site (#1983).
+ *
+ * `StudyChapterDef.gap` is written for the common case, which for `water-supply` is a facility
+ * that discloses neither its cooling method nor a water quantity. A facility that DOES disclose
+ * the method (West Union / Buck Canyon: hybrid/adiabatic, ~97% air, from Amazon's own brochure)
+ * would otherwise be told the method is missing — asserting an absence the record contradicts.
+ * The gap is narrowed to the quantity, which is the half genuinely `[open]`.
+ *
+ * `off` is deliberately NOT a disclosed method here: it means there is no cooling-water load to
+ * quantify at all (a federal enclave — WPAFB), so narrowing the gap to "no quantity" would assert
+ * a missing figure that the archetype says cannot exist.
+ *
+ * Mirrors `watermark.site.impact_study._chapter_gap` — change the two together or not at all.
+ */
+function chapterGap(def: StudyChapterDef, slug: string, facility: FacilityItem | null): StudyGapFinding {
+  if (
+    def.id === "water-supply" &&
+    facility &&
+    facility.cooling_model != null &&
+    facility.cooling_model !== "off" &&
+    !coolingUndisclosed(slug, facility)
+  ) {
+    return {
+      ...def.gap,
+      missingRecord:
+        "a metered, contracted or permit-grounded water quantity — the cooling method is disclosed here, but no quantity is.",
+    };
+  }
+  return def.gap;
+}
+
 function coolingUndisclosed(slug: string, facility: FacilityItem | null): boolean {
   return coolingMethodUndisclosed(slug) || facility?.cooling_model === "unknown";
 }
@@ -351,10 +383,20 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
       "plans",
     ],
     datasets: ["gleif"],
-    probe: (slug) =>
-      facilityState(slug) === "live"
-        ? []
-        : ["the IT load on the record is a screening bracket, not an instrument-grounded figure"],
+    probe: (slug) => {
+      if (facilityState(slug) === "live") return [];
+      // A facility whose load is entirely `[open]` has no bracket to describe (#1983): saying
+      // "a screening bracket" would assert a figure the record does not carry. West Union /
+      // Buck Canyon is the first — the campus is disclosed, but the only MW on the record is
+      // filed for an unnamed customer, so `SiteFacility.it_load_mw` is None.
+      const facility = resolveStudyFacility(slug);
+      if (facility && facility.it_load_mw == null) {
+        return [
+          "the facility is disclosed but its IT load is not instrument-grounded — no instrument on the record states it",
+        ];
+      }
+      return ["the IT load on the record is a screening bracket, not an instrument-grounded figure"];
+    },
   },
   {
     id: "assembly",
@@ -724,7 +766,7 @@ export function chapterAvailability(
   const present = def.requiredFeeds.filter((f) => feedRows(slug, f) > 0);
   const optionalPresent = (def.optionalFeeds ?? []).filter((f) => feedRows(slug, f) > 0);
   if (present.length === 0 && optionalPresent.length === 0) {
-    return { status: "gap", reasons: [def.gap.missingRecord] };
+    return { status: "gap", reasons: [chapterGap(def, slug, facility).missingRecord] };
   }
   if (present.length < def.requiredFeeds.length) {
     // `anyRequired` feeds are alternatives (either groundwater screen suffices).
@@ -791,8 +833,8 @@ export function composeStudyChapterModel(id: string, slug: string, facilityKey?:
   // the same attachment rule the Python projector applies, so a partially-shipped feed
   // (a row missing for one chapter) still composes consistently with its siblings.
   const leadIds = studyGapLeads(slug, id, facilityKey);
-  const gaps = (status === "gap" ? [def.gap, ...composed.gaps] : composed.gaps).map((g) =>
-    leadIds.length > 0 && (g.leadIds?.length ?? 0) === 0 ? { ...g, leadIds: [...leadIds] } : g,
+  const gaps = (status === "gap" ? [chapterGap(def, slug, facility), ...composed.gaps] : composed.gaps).map(
+    (g) => (leadIds.length > 0 && (g.leadIds?.length ?? 0) === 0 ? { ...g, leadIds: [...leadIds] } : g),
   );
   return {
     id,
