@@ -2,20 +2,26 @@
   "site": "west-union",
   "bundle_version": "1.0.0",
   "contract_version": "2.0.0",
-  "generated_at": "2026-08-05T22:18:56+00:00",
-  "feed_count": 28,
-  "row_total": 397,
+  "generated_at": "2026-08-06T02:09:30+00:00",
+  "feed_count": 31,
+  "row_total": 399,
   "readiness": {
     "tier": "backdrop",
     "domains": {
       "backdrop": "live",
-      "facility": "absent",
+      "facility": "seeded",
       "places": "absent",
       "record": "seeded",
-      "inquiry": "seeded"
+      "inquiry": "live"
     }
   },
-  "facility": null,
+  "facility": {
+    "status": "confirmed",
+    "count": 1,
+    "primary_name": "Buck Canyon",
+    "primary_operator": "Amazon Web Services (AWS)",
+    "primary_end_use": "hyperscale"
+  },
   "feeds": [
     {
       "name": "records",
@@ -138,6 +144,14 @@
       "count": 1
     },
     {
+      "name": "facility",
+      "path": "feeds/facility.json",
+      "media_type": "application/json",
+      "schema": "schemas/facility.schema.json",
+      "kind": "collection",
+      "count": 1
+    },
+    {
       "name": "network",
       "path": "feeds/network.json",
       "media_type": "application/json",
@@ -191,7 +205,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 54
+      "count": 55
     },
     {
       "name": "facts",
@@ -208,6 +222,14 @@
       "schema": "schemas/impact-study.schema.json",
       "kind": "collection",
       "count": 15
+    },
+    {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 0
     },
     {
       "name": "catalog-index",
@@ -238,6 +260,14 @@
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }

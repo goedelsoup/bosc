@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "752e8597a79254f62b8cd53ce8810919db357e6042a09fa1a0010f8ef85da8cb",
+  "catalog_version": "990b05a522214711ec1f6d71196d14415c71f9a21fe1d27e6437894ad9f898ca",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -649,6 +649,14 @@
       "site": "west-union",
       "local_id": "data-centers",
       "title": "Per-Site Data-Center Activity Register",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:data-centers-west-union",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "data-centers-west-union",
+      "title": "West Union / Adams County OH — Data-Center Activity Register",
       "feed": "catalog"
     },
     {

@@ -114,15 +114,73 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d9517f6572a6bafd9f99dc93c53cebc0d853d9700cc31383ed37364530c5c821",
-      "size_bytes": 335938,
+      "sha256": "ae78934027b8e11c77327a75440e114bd00f735f6f1c5ca14d76966611685705",
+      "size_bytes": 361925,
       "lfs_materialized": true,
-      "file_count": 13,
+      "file_count": 14,
       "stale": false,
       "asof": null
     },
     "citation": {
       "source": "BOSC site-onboarding discovery — verified public-record register of per-site data-center activity (Columbus/New Albany/Springfield)",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "data-centers-west-union",
+    "title": "West Union / Adams County OH — Data-Center Activity Register",
+    "scope": "extracted",
+    "collection": "west-union",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Adams County official AWS page (amazon.adamscountyoh.gov) + its project brochure; PJM TEAC Dayton Supplemental deck 2026-02-03 (Need Dayton-2026-001); Ohio EPA DSW Construction + Industrial NOI general-permit lists (report date 2026-08-05); USACE Nationwide Permit 39 verification 2026-02-18 (via The People's Defender); WCPO I-Team (2026); Ohio Capital Journal / Ballotpedia (Conserve Ohio amendment)",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:west-union",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "data-center",
+      "amazon",
+      "aws",
+      "buck-canyon",
+      "68-yards",
+      "stuart-station",
+      "killen-station",
+      "aes-ohio",
+      "pjm-teac",
+      "adams-county",
+      "west-union",
+      "ohio-river",
+      "sweep"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/west-union/data-centers.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "a7cf0db38d7c89307575cd703a951ee36fe77978a82de2e428549bdd0a4579b5",
+      "size_bytes": 25987,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Adams County official AWS page (amazon.adamscountyoh.gov) + its project brochure; PJM TEAC Dayton Supplemental deck 2026-02-03 (Need Dayton-2026-001); Ohio EPA DSW Construction + Industrial NOI general-permit lists (report date 2026-08-05); USACE Nationwide Permit 39 verification 2026-02-18 (via The People's Defender); WCPO I-Team (2026); Ohio Capital Journal / Ballotpedia (Conserve Ohio amendment)",
       "source_kind": "reference",
       "page": null,
       "pages": null,

@@ -2541,6 +2541,23 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
         fac = next((f for f in profile.facilities if f.name == candidate.facility), None)
         if fac is None:  # pragma: no cover - the candidate list is built from these facilities
             continue
+        # A cohort member whose IT load is entirely `[open]` cannot be reconciled: every figure
+        # here is derived from the load (predicted makeup/evaporation/blowdown), so there is
+        # nothing to measure a claim against. It is dropped from the RECONCILIATION, not from A2's
+        # coverage cohort — the two ask different questions, and its OHD000001 row stands on the
+        # disclosed archetype alone. West Union / Buck Canyon (#1983) is the first such facility:
+        # Amazon discloses the cooling MECHANISM (hybrid/adiabatic, 97% air) but no load, and the
+        # only MW on the record is AES Ohio's PJM filing for an unnamed customer. Reconciling it
+        # would mean inventing the load — exactly what `_predicted_basis` refuses below, and the
+        # reason that refusal stays a hard error rather than becoming a soft fallback.
+        if fac.cooling_model is not CoolingModelType.OFF and fac.it_load_mw is None:
+            log.info(
+                "cooling_reconcile.candidate_skipped_open_load",
+                site=candidate.site,
+                facility=fac.name,
+                cooling_model=fac.cooling_model.value,
+            )
+            continue
         site_settings = _site_settings(candidate.site, settings)
         makeup, blowdown_pv, warm_ratio = _documented_water(candidate, settings)
         records.append(
