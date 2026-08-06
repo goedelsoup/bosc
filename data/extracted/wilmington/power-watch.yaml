@@ -10,7 +10,7 @@
 # CAMPUS side, and the watch is shaped by that asymmetry. AES Ohio has told PJM,
 # in a filing, exactly how much load it has been asked to deliver at its Clinton
 # Substation and when — 35 MW in January 2028 rising to 500 MW in January 2030 —
-# and has priced $275.9M of Clinton-end transmission to serve it. What no captured
+# and has priced $283.9M of Clinton-end transmission to serve it. What no captured
 # record does is say WHO the customer is. Two disclosed data-center corridors sit
 # within a mile of that substation. Until an instrument joins the request to one
 # of them, the campus's IT load stays a screening [inference] and this file tracks
@@ -106,7 +106,7 @@ delta_since_previous_check:
       new 345kV breakers (ring bus) ... [verified — AES Ohio project page]",
       listed as instrument 2 of the power thread.
     now: >-
-      That project is OPSB 21-0679-EL-BNR: LON filed July 2021, approved August
+      That project is OPSB 21-0679-EL-BNR: Construction Notice filed July 2021, approved August
       2021, built from October 2021, **in service June 2022**. Its stated need is
       69 kV loading and reliability, maintenance-outage flexibility, and ensuring
       "deliverability of the planned solar generation expansions along the

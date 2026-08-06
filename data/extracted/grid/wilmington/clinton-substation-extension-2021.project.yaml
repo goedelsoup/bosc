@@ -98,10 +98,24 @@ need_statement:
 schedule:
   tag: '[verified]'
   source: archived project page, "Estimated project schedule"
-  lon_application_filed: '2021-07'
+  construction_notice_filed: '2021-07'
   opsb_approval: '2021-08'
   construction_begins: '2021-10'
   project_in_service: '2022-06'
+  filing_label_tension:
+    tag: '[verified]'
+    statement: >-
+      The archived schedule's own July 2021 row reads, verbatim, "File Letter of
+      Notification Application with Ohio Power Siting Board (OPSB)" — but the case
+      number the same page gives is 21-0679-EL-**BNR**, which is the Construction
+      Notice track, not the Letter of Notification (-BLN) track. The key above is
+      named for the SUFFIX, not for the applicant's prose. Bowling Green #1437 hit
+      the same class of error from the other direction and settled it the same
+      way: the docket's own case designation is the authority over a publisher's
+      description of it, including the applicant's and including OPSB's own. Do
+      not "correct" this back to an LON on the strength of the archived page's
+      wording; do not silently drop the wording either, which is why it is quoted
+      here rather than paraphrased away.
   finding: >-
     Every milestone predates the Wilmington data-center corridor. The AWS Cosler
     Farm campus was disclosed in November 2025 (data/extracted/wilmington/
