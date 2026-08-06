@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 from filelock import FileLock
 
-from watermark.config import Settings
+from watermark.config import Settings, get_settings
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 EXTRACTED = REPO_ROOT / "data" / "extracted"
@@ -48,13 +48,24 @@ def _hermetic_settings_env() -> Iterator[None]:
         for raw in dotenv.read_text(encoding="utf-8").splitlines():
             line = raw.strip()
             if line and not line.startswith("#") and "=" in line:
-                names.add(line.split("=", 1)[0].strip())
+                # `export FOO=bar` is valid dotenv and shell-sourceable, so a developer's file
+                # may carry it. Without the strip the name would read `export FOO` and the real
+                # `FOO` would survive the scrub — the leak this fixture exists to close.
+                key = line.split("=", 1)[0].strip().removeprefix("export ").strip()
+                if key:
+                    names.add(key)
 
     # ``None`` records "absent before the session" so teardown can delete a name a test added,
     # rather than only restoring the ones that happened to exist — a true restore, not a merge.
     saved = {name: os.environ.pop(name, None) for name in names}
     previous_env_file = Settings.model_config.get("env_file")
     Settings.model_config["env_file"] = None
+    # `get_settings` is `lru_cache(maxsize=1)`, so one early call would pin an env-enriched
+    # Settings for the whole session and this fixture would silently do nothing. Nothing calls
+    # it at collection time today (verified: the cache is empty when the session starts), so
+    # this clear is a guard against that becoming true, not a live bug. Cleared again after
+    # `env_file` is restored so the cached instance matches the config that built it.
+    get_settings.cache_clear()
     try:
         yield
     finally:
@@ -64,6 +75,7 @@ def _hermetic_settings_env() -> Iterator[None]:
                 os.environ.pop(name, None)
             else:
                 os.environ[name] = value
+        get_settings.cache_clear()
 
 
 # --- the collected suite, before sharding (#1772) --------------------------------------------
