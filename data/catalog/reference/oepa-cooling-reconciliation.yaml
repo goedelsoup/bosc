@@ -16,7 +16,7 @@ storage:
     media_type: application/x-yaml
 refresh:
   cadence: on-demand
-  last_refreshed: '2026-07-11'
+  last_refreshed: '2026-08-06'
 provenance: derived
 schema_ref: watermark.hydrology.cooling_reconcile.ReconciliationRecord
 depends_on:
@@ -136,5 +136,17 @@ notes: >-
   that will never issue. They now name the two instruments that survive the 2026-07-21 withdrawal:
   an INDIVIDUAL NPDES permit + DMR on a direct-discharge path, and the City's industrial-user (IU)
   / pretreatment permit + sewer-use agreement on a sanitary-sewer route (a sewer-discharging campus
-  holds no NPDES permit at all). Depends on `oepa-ohd000001-coverage` (the A2 blowdown-coverage
+  holds no NPDES permit at all). **A cohort member whose IT load is entirely `[open]` is excluded
+  from this artifact** (#1983): every figure here is IT-load-parameterized, so with no load there
+  is nothing to measure a claim against, and the generic loop skips it with a logged reason rather
+  than deriving one. That is NOT the `prediction_refused` slot, which records a facility that IS
+  reconciled but whose archetype account is underivable (Intel's fab); an open-load facility
+  produces no row at all. West Union / Buck Canyon (AWS, Adams County) is the first: Amazon
+  discloses the cooling MECHANISM (hybrid/adiabatic, ~97% air) but no load, and the only MW on the
+  record — AES Ohio's PJM TEAC Need `Dayton-2026-001`, ramping to 1,300 MW by 03/2032 — is filed
+  for an UNNAMED customer, so `SiteFacility.it_load_mw` is deliberately `None`. It remains in A2's
+  `oepa-ohd000001-coverage` cohort, which keys on the disclosed archetype alone and asks a
+  different question (permit coverage, not water quantity). `_predicted_basis` keeps its hard
+  refusal on a load-less archetype — that guard is what stops such a facility silently inheriting
+  Lima's 275 MW basis. Depends on `oepa-ohd000001-coverage` (the A2 blowdown-coverage
   resolution it reads). See data/reference/oepa/README.md.

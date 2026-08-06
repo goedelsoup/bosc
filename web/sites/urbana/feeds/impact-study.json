@@ -86,13 +86,13 @@
       "facilityKey": "urbana-technology-hub",
       "status": "gap",
       "statusReasons": [
-        "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here."
+        "a metered, contracted or permit-grounded water quantity — the cooling method is disclosed here, but no quantity is."
       ],
       "stats": [],
       "gaps": [
         {
           "wouldScreen": "how much water this project consumes at buildout — monthly, against the receiving water's cited design low flows.",
-          "missingRecord": "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here.",
+          "missingRecord": "a metered, contracted or permit-grounded water quantity — the cooling method is disclosed here, but no quantity is.",
           "producer": "the water utility's contract, a wastewater permit application, or the operator's cooling-plant spec",
           "leadIds": null
         }

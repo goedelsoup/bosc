@@ -281,7 +281,7 @@ treatment chemistry — a constructed calibration vector, not documented Intel d
 
 ### `oepa-cooling-reconciliation` — Cooling-cycling reconciliation — closed-loop cohort water account
 
-Source: watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry) · License: Public records (Ohio state government) · Access: public · Site scope: state:OH · Refresh: on-demand, last 2026-07-11
+Source: watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry) · License: Public records (Ohio state government) · Access: public · Site scope: state:OH · Refresh: on-demand, last 2026-08-06
 
 Regenerate: `watermark cooling-reconcile --write`
 
