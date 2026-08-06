@@ -55,14 +55,30 @@ documents:
     notes: Pretreatment Compliance Inspection; 5 categorical industrial users.
 
   - edoc_id: "3858492"
+    also_edoc_id: "3858493"  # same bytes, published twice — see notes
     filename: 3858492.pdf
-    canonical: oepa-1pd00011-urbana-wpcf-nov-2025-10.pdf
-    type: npdes-nov
+    sha256: "61c9e81800c8511be024bd65f5943050cf0825858734669eb3a82fedd561f30e"
+    canonical: oepa-1pd00011-urbana-wpcf-nov-rov-2025-10.pdf
+    type: npdes-nov-rov
     permit: 1PD00011
     facility: City of Urbana WRF (OH0027880)
     letter_date: "2025-10-07"
+    resolved_date: "2025-09-30"
+    status: resolved
     content_verified: text-layer
-    notes: Notice of Violation — Significant Non-Compliance (SNC) under pretreatment program.
+    notes: >
+      Combined Notice of Violation / RESOLUTION of Violation — Significant Non-Compliance (SNC)
+      under the pretreatment program. Not an open enforcement item: the letter is captioned
+      "Notice of Violation / Resolution of Violation" and resolves itself on p. 2 — the one cited
+      violation (late Q4-2024 Quarterly Industrial User Violation Report; ORC 6111.07(A), OAC
+      3745-3-03(C), permit Part II.W.10) was a Level I Reportable Non-compliance, which is what
+      triggered the SNC categorization, and OEPA DSW received the QIUVR 2025-09-30 — a week before
+      the letter issued. Ohio EPA's eDoc index publishes these exact bytes under TWO docids:
+      3858492 (doc type "NOV") and 3858493 (doc type "ROV or RTC"). Both were fetched 2026-08-06
+      and are byte-identical to this file (SHA-256 61c9e818…), so the resolution instrument the
+      standing watch (#1355) was waiting on is this file, already in corpus. The as-received
+      filename stays 3858492.pdf per chain of custody; 3858493 is recorded here as an alias, not
+      committed as a duplicate byte-identical file.
 
   - edoc_id: "2663158"
     filename: 2663158.pdf
@@ -139,8 +155,17 @@ documents:
     permit: 1GQ00062
     facility: City of Urbana (MS4)
     letter_date: "2026-01-05"
+    status: open
     content_verified: text-layer
-    notes: NPDES Municipal Stormwater (MS4) Notice of Violation.
+    notes: >
+      NPDES Municipal Stormwater (MS4) Notice of Violation, from a 2025-12-17 MS4 program audit;
+      cites five violations of permit OHQ000004 (SWMP not updated, storm sewer system map not
+      updated, no objective SWP3 review tool, construction inspections not monthly, …), each
+      closing with a request for a written plan of corrective action. OPEN as of the 2026-08-06
+      re-check (#1355): the document carries no resolution language (zero occurrences of
+      "Resolution" / "resolved" / "Return to Compliance" across its 36 pages) and it is the newest
+      document under secondary ID 1GQ00062 in the Ohio EPA eDoc index — no paired ROV/RTC has been
+      filed. Contrast 3858492 above, which resolved itself on issue.
 
   # The issued 2020-cycle permit + fact sheet. Not eDoc-sourced: these come from Ohio EPA's
   # published permits document library (dam.assets.ohio.gov/.../Portals/35/permits/doc/), which
