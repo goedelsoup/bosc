@@ -41,6 +41,18 @@ The air half of this instrument is **not** here — it mirrors its own source ag
 | [`findlay/megawatt-hub-interconnection.gap.yaml`](findlay/megawatt-hub-interconnection.gap.yaml) | The **+300 MW "standalone interconnection site"**: the claim's provenance (one sentence in a withdrawn Form S-1) and the per-source negative for its instrument, including the Hancock-Wood cooperative re-check. |
 | [`findlay/behind-the-meter-generation.yaml`](findlay/behind-the-meter-generation.yaml) | One Power's Hancock County behind-the-meter fleet — 15.0 MW of Wind for Industry at three manufacturers' plants, Whirlpool's Net Zero project, the hub's digital substation — against Schedule DCT's netting and interconnection-agreement obligations. |
 
+### `wilmington/` — Clinton County power instruments (issue #1469)
+
+| File | Subject |
+|---|---|
+| [`wilmington/clinton-delivery-point.interconnection.yaml`](wilmington/clinton-delivery-point.interconnection.yaml) | **PJM M-3 Need Dayton-2025-002** — AES Ohio's disclosed customer request "in the vicinity of its Clinton Substation near Wilmington, OH", ramping 35 MW (1/2028) to **500 MW** (1/2030), and the $589.8M two-need solution portfolio priced around it. Establishes that the widely repeated **"1.5 GW" is Fayette County's**, not Wilmington's — it is Need Dayton-2025-001 at the Fayette Substation in Jeffersonville, one slide earlier in the same deck. Locates the Clinton Substation on the county parcel record and measures it against the committed corridor geometry. |
+| [`wilmington/fayette-clinton-345kv.project.yaml`](wilmington/fayette-clinton-345kv.project.yaml) | The **Fayette to Clinton 345 kV line**, OPSB **25-0871-EL-BLN**, read from the statutory service copy the City of Wilmington published: LON submitted 2026-03-19, ~29 miles single-circuit on double-circuit-capable monopoles, 200-ft ROW. Carries the three conflicting lengths (29 / 30 / 27 mi), the qualitative need statement that names no customer and no megawatt, and the seven intervention petitions of 2026-04-03. |
+| [`wilmington/clinton-substation-extension-2021.project.yaml`](wilmington/clinton-substation-extension-2021.project.yaml) | The **retired premise**: the "Clinton 345kV Substation Extension" issue #1469 lists as a data-center instrument is OPSB **21-0679-EL-BNR**, **in service June 2022**, needed for 69 kV reliability and for solar deliverability along the Stuart–Clinton corridor. Recovered from a single Wayback capture after AES unpublished the page. |
+
+The standing watch is at [`../wilmington/power-watch.yaml`](../wilmington/power-watch.yaml),
+and the campus register it corrects is
+[`../wilmington/data-centers.md`](../wilmington/data-centers.md) §4.
+
 ### `van-wert/` — Van Wert County transmission (issue #1408)
 
 | File | Subject |
@@ -91,6 +103,28 @@ The air half of this instrument is **not** here — it mirrors its own source ag
   center" (so the campus load stays ungrounded and the facility domain stays
   `seeded`). A transmission easement across a campus parcel is a **crossing**, not
   an interconnection, and is recorded as such.
+- The Wilmington set **inverts its own issue's central premise and says so in the
+  record.** Issue #1469 carried the "1.5 GW" as a Wilmington figure known only
+  from press analysis, and asked for the underlying PJM filing. The filing exists
+  — PJM's TEAC Dayton Supplemental deck of 2026-07-07 — and it puts the 1.5 GW at
+  the **Fayette** Substation in Jeffersonville, **Fayette County**, one slide
+  before the Wilmington need, which is **500 MW**. AES Ohio's own project pages
+  attach the same 1.5 GW to "the Jeffersonville, Ohio area" in its own words. The
+  repo had carried the error on one side of its corpus (`wilmington/`) while
+  already holding the right counties on the other (`urbana/`), so the two
+  contradicted each other; both are reconciled against the deck and the Urbana
+  file's own source attribution is corrected in place. The set also **retires the
+  issue's second instrument** — the Clinton substation extension is a completed
+  2021-22 reliability-and-solar project, not a data-center one — and keeps the
+  guardrail it was given while refining it: Lynchburg remains generation-side
+  context, but the existing Clinton–Lynchburg 345 kV line is being *relocated* as
+  a priced line item of the customer solution, which is a relation worth stating
+  rather than collapsing in either direction. What it does **not** do is close the
+  facility domain. Need Dayton-2025-002 names a substation and a city and never a
+  customer; the Clinton Substation parcel is 53 m from an Ardent/TAC petitioned
+  tract and 1.03 mi from the nearest AWS holding, so the 500 MW is not
+  attributable to either campus and the campus IT load stays a screening
+  `[inference]` — the Van Wert shape, answered the Van Wert way.
 - The Findlay set also **corrects issue #1464's own research notes** where the
   primary text does not support them — the `~$2.2M` is the line project alone
   (the station is $8.7M), the ten wind turbines sit behind Whirlpool's, Ball

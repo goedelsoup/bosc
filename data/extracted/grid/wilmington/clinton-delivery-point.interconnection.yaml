@@ -1,0 +1,432 @@
+# Structured interconnection record — the Clinton Substation delivery point,
+# Union Township, Clinton County, Ohio.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Source bytes: data/documents/grid/wilmington/ (see that dir's filename-map.yaml).
+meta:
+  subject: >-
+    PJM M-3 Need Dayton-2025-002 — AES Ohio's disclosed large-load customer
+    request at its Clinton Substation near Wilmington, Ohio, its 35/100/300/500
+    MW ramp, the transmission solution selected for it, and the question the
+    filing does NOT answer: which of the two Clinton-County data-center corridors
+    the load belongs to
+  kind: grid-interconnection-need
+  captured_for: issue 1469 (epic 1277, readiness(wilmington) — the power instruments)
+  extracted_at: '2026-08-06'
+  method: >-
+    Direct read of the PDF text layer of PJM's own Transmission Expansion
+    Advisory Committee "Dayton Supplemental Projects" decks for all three 2026
+    meetings (2026-02-03, 2026-05-08, 2026-07-07). The Wilmington need appears in
+    the 2026-07-07 deck only; the other two are captured to establish that as a
+    read result rather than a lucky find. Nothing here is taken from press or
+    from a docket search.
+  sources:
+    primary:
+      - file: data/documents/grid/wilmington/20260707-item-11---dayton-supplemental-projects.pdf
+        slides: 3, 4, 5, 6
+      - file: data/documents/grid/wilmington/20260203-item-06---dayton-supplemental-projects.pdf
+      - file: data/documents/grid/wilmington/20260508-item-05---dayton-supplemental-projects.pdf
+    index:
+      - url: https://www.pjm.com/committees-and-groups/committees/teac
+
+# --- The disclosed load ramp -------------------------------------------------
+need:
+  tag: '[verified]'
+  need_number: Dayton-2025-002
+  transmission_zone: Dayton (AES Ohio)
+  project_driver: Customer Request
+  assumption_reference: Dayton Local Plan Assumptions
+  model: 2024 RTEP Series, 2029 Summer Case
+  problem_statement_verbatim: >-
+    "AES Ohio has a customer request for service in the vicinity of its Clinton
+    Substation near Wilmington, OH."
+  process_stage:
+    need_meeting: '2025-02-04'
+    solution_meeting_first: '2025-04-01'
+    solution_meeting_latest: '2026-07-07'
+    note: >-
+      Stated on the 2026-07-07 slide itself ("Previously Presented: Need Meeting
+      2/04/2025, Solution Meeting 04/01/2025"). The M-3 stakeholder process gives
+      ten days from each meeting for comments. The February 2025 and April 2025
+      decks were NOT retrieved — PJM's TEAC materials page serves only the
+      current year's items and the constructed 2025 URLs returned the site's HTML
+      not-found page, so the ORIGINAL ramp and the ORIGINAL costs are [open]. The
+      2026-07-07 slides show revisions in place (struck-through value followed by
+      its replacement), which is how the deltas below are known.
+  load_ramp:
+    tag: '[verified]'
+    units: MW
+    header_verbatim: 'Requested In Service Date / Total Requested New Load'
+    steps:
+      - in_service: '2028-01'
+        total_requested_new_load_mw: 35
+      - in_service: '2028-04'
+        total_requested_new_load_mw: 100
+      - in_service: '2029-01'
+        total_requested_new_load_mw: 300
+      - in_service: '2030-01'
+        total_requested_new_load_mw: 500
+    source: 2026-07-07 deck, slide 4
+    reading_note: >-
+      "Total Requested New Load" is CUMULATIVE, not incremental — the column is a
+      running total at each requested in-service date, terminating at 500 MW in
+      January 2030. It is a request for TRANSMISSION SERVICE at a delivery point,
+      i.e. facility demand at the meter, and it is NOT an IT load: a data
+      center's IT load is its facility demand divided by PUE. Do not copy 500 MW
+      into an IT-load field.
+
+# --- The load figure the record does NOT support ------------------------------
+the_1_5_gw_is_fayette_county:
+  tag: '[verified]'
+  statement: >-
+    The widely repeated "1.5 GW at Wilmington" is a MISPLACED figure. The same
+    2026-07-07 deck carries a second need one slide earlier — Dayton-2025-001,
+    "AES Ohio has a customer request for service in the vicinity of its Fayette
+    Substation in Jeffersonville, OH" — whose ramp is 9/2026 35 MW, 9/2028 480
+    MW, 1/2031 1.5 GW. Jeffersonville is in FAYETTE County, roughly 27 miles
+    north-east of Wilmington and in a different watershed. The 1.5 GW belongs to
+    that request, not to this one.
+  corroboration:
+    - tag: '[reference]'
+      source: >-
+        data/documents/grid/wilmington/2026-08-06-fayette-customer-east-345kv-transmission-line-project.aes-ohio.html
+        and its West sibling
+      statement: >-
+        AES Ohio's own project pages for the two Fayette customer-feed cases
+        (OPSB 25-0742-EL-BLN and 25-0743-EL-BLN) each say the project "is a
+        necessary upgrade to support 1.5 gigawatts of load growth in the
+        Jeffersonville, Ohio area" and "involves necessary upgrades to serve a
+        new data center customer near AES Ohio's Fayette Substation in
+        Jeffersonville, Ohio." Self-published, so [reference] — but it is the
+        applicant attaching the figure to the same county PJM does.
+    - tag: '[reference]'
+      source: data/documents/grid/wilmington/FAYETT1.pdf, p. 1
+      statement: >-
+        "The existing AES Fayette substation is next to the Amazon Web Services /
+        Amazon Data Services Inc. (AWS) construction site in Fayette County."
+        A third source, landowner-side and secondary, placing an AWS construction
+        site at the FAYETTE end of the line.
+  what_the_press_said:
+    tag: '[reference]'
+    statement: >-
+      A February 2026 Dayton-market analysis of AES Ohio's PJM filings ranked
+      Ohio's largest proposed data-center loads and placed "a 1.5 GW data center
+      in Wilmington" second, behind 2 GW at Mt. Orab and ahead of the 1.3 GW
+      Adams County request (Need Dayton-2026-001, Stuart Substation — the
+      West Union thread, #1983). The 1.3 GW and 2 GW figures check out against
+      the decks; the "Wilmington" label on the 1.5 GW does not. The article
+      itself was NOT retrieved — journal-news.com returned HTTP 404 for the URL
+      the issue cites and the wcpo.com mirror was not fetched — so this is
+      recorded from search-engine summaries and is the weakest claim in this
+      file. It is included because the misattribution it seeded is what the rest
+      of this record corrects, not because the ranking is relied on.
+  correction_to_the_repo:
+    tag: '[verified]'
+    statement: >-
+      This repo carried the error on BOTH sides of its own corpus, and they
+      contradicted each other. data/extracted/wilmington/data-centers.md called
+      the 1.5 GW "press analysis of PJM filings" for the Wilmington campus, while
+      data/extracted/urbana/facility-power-instrument-search.md already had the
+      correct county in a table row ("Fayette | Jeffersonville, OH (Fayette Co.)
+      | 35 MW (2026) . 480 MW (2028) . 1.5 GW (2031)") AND the correct Wilmington
+      row ("Clinton | Wilmington, OH (Clinton Co.) | 35 MW . 100 MW (2028) .
+      300 MW (2029) . 500 MW (2030)"). Both are corrected against the deck here.
+      The Urbana file's CITATION is also wrong and is corrected in place: it
+      attributes its six-row table to the 2026-02-03 deck, which contains only
+      the Eldean and Stuart needs — the Clinton and Fayette rows are in the
+      2026-07-07 deck.
+
+# --- What is being built for it ----------------------------------------------
+selected_solution:
+  tag: '[verified]'
+  covers_needs: [Dayton-2025-001, Dayton-2025-002]
+  status: Engineering            # slide shows "Conceptual" struck through, replaced by "Engineering"
+  projected_in_service: '2031-01'
+  total_estimated_transmission_cost_usd: 589800000   # $480 M struck through, replaced by $589.8 M
+  total_cost_previous_usd: 480000000
+  source: 2026-07-07 deck, slides 5-6
+  cost_note: >-
+    The two needs are solved as ONE portfolio and priced as one total, so no part
+    of the $589.8M is attributable to the Wilmington request alone. The
+    Clinton-end line items below sum to $275.9M, but that is arithmetic on a
+    shared solution, not an allocation — how the cost is assigned between the
+    Fayette and Clinton customers, and how much of it the customers reimburse
+    versus the AES Ohio zone, is [open]. Compare Van Wert (#1408), where the
+    LON stated the recovery mechanism outright; no such statement was captured
+    here.
+  clinton_end:
+    - item: Clinton Substation expansion
+      scope: >-
+        Expand the Clinton 345 kV substation to accommodate the additional 345 kV
+        line, 2 customer feeds, one 300-MVAR capacitor (two steps of 150 MVAR)
+      projected_isd: '2028-12-31'      # 1/2028 struck through
+      projected_isd_previous: '2028-01'
+      estimated_cost_usd: 65400000     # $75 M struck through
+      estimated_cost_previous_usd: 75000000
+      reactive_addition:
+        scope: one 150-MVAR STATCOM   # "a new 250 MVAR Static VAR Compensator" struck through
+        scope_previous: a new 250-MVAR Static VAR Compensator
+        projected_isd: '2030-12-01'
+    - item: Customer Service Lines from Clinton 1 & 2
+      scope: >-
+        Establish two ~2-mile 345 kV single-circuit feeds to the customer
+        substation from AES's Clinton substation, 2-1024.5 ACAR conductor strung
+        with OPGW
+      projected_isd: '2028-12-31'      # 1/30/2028 struck through
+      projected_isd_previous: '2028-01-30'
+      estimated_cost_usd: 20000000
+      note: >-
+        THE joining instrument, and the one that names a customer substation
+        without naming a customer. Two feeds at Clinton against four at Fayette
+        ("Customer Service Lines from Fayette 1-4", $9M), which tracks the 500 MW
+        / 1.5 GW split. "The customer substation" is singular.
+    - item: Clinton - Fayette 345 kV line
+      scope: >-
+        Construct an ~27-mile 345 kV single circuit from Clinton substation to
+        Fayette substation, 2-1024.5 ACAR conductor strung with OPGW
+      ratings_mva: {SN: 1263, SE: 1561, WN: 1750, WE: 1954}
+      projected_isd: '2030-01-18'      # 12/1/2031 struck through
+      projected_isd_previous: '2031-12-01'
+      estimated_cost_usd: 187000000    # $100 M struck through
+      estimated_cost_previous_usd: 100000000
+      note: >-
+        This is OPSB case 25-0871-EL-BLN — see
+        fayette-clinton-345kv.project.yaml. PJM says ~27 miles; the LON served on
+        the City says ~29; AES's own fact sheet says ~30. Recorded, not
+        reconciled. The cost nearly doubled between solution meetings while the
+        in-service date moved almost two years EARLIER.
+    - item: Relocate the existing Clinton - Lynchburg 345 kV line
+      projected_isd: '2028-04-30'
+      estimated_cost_usd: 3200000
+    - item: Relocate the existing Clinton - Greene 345 kV line
+      projected_isd: '2028-04-30'
+      estimated_cost_usd: 8300000
+  fayette_end:
+    - item: Fayette Substation expansion
+      scope: >-
+        Expand the Fayette 345 kV substation to breaker-and-a-half to accommodate
+        the additional 345 kV lines and the customer feeds; plus a 300-MVAR
+        capacitor (two steps of 150 MVAR), ISD 2030-01-01
+      projected_isd: '2026-10-30'
+      estimated_cost_usd: 51900000     # $48 M struck through
+    - item: Atlanta Substation reconfiguration
+      scope: >-
+        Reconfigure the Atlanta 345 kV substation into a breaker-and-a-half
+        arrangement to accommodate the 2 additional 345 kV lines
+      projected_isd: '2029-04-13'      # 9/1/2030 struck through
+      estimated_cost_usd: 24300000     # $36 M struck through
+    - item: Atlanta - Fayette 1 & 2
+      scope: >-
+        Construct an ~25-mile 345 kV DOUBLE circuit line from Atlanta substation
+        to Fayette substation
+      projected_isd: '2029-04-13'      # 10/30/2026 struck through
+      estimated_cost_usd: 220700000    # $192 M struck through
+    - item: Customer Service Lines from Fayette 1-4
+      scope: >-
+        Establish four ~0.5-mile 345 kV feeds to the customer substations from
+        AES's Fayette substation
+      projected_isd: '2026-09-15'      # 9/1/2030 struck through
+      estimated_cost_usd: 9000000
+  reconciles_the_applicant_contradiction:
+    tag: '[verified]'
+    statement: >-
+      AES Ohio's live Fayette-Clinton project page lists the associated projects
+      as expansion of the Fayette substation and the **Atlanta** substation,
+      while its own fact sheets of October 2025 and March 2026 list Fayette and
+      the **Clinton** substation. That looked like an error in one of them. PJM's
+      solution slide shows it is neither: Fayette, Atlanta AND Clinton are all in
+      the same selected solution. The web page and the fact sheet each name a
+      true subset of a three-substation scope.
+  alternatives_considered:
+    tag: '[verified]'
+    source: 2026-07-07 deck, slide 6
+    items:
+      - 'Alternative 1: a second circuit between Clinton and Fayette — not selected because adding a Static VAR Compensator at Clinton is more cost effective.'
+      - 'Alternative 2: a single circuit from Atlanta to Fayette — not selected because it would require significant reactive support at both Clinton and Fayette and causes overloads on the nearby AEP system.'
+      - 'Alternative 3: adding a Static VAR Compensator at Fayette — not selected since it would require significantly more reactive support than at Clinton.'
+
+# --- Where the delivery point is ---------------------------------------------
+clinton_substation_location:
+  tag: '[verified]'
+  parcel_number: 270-12-10-35-0000-00
+  listed_name: DAYTON POWER & LIGHT COMPANY
+  location_address_as_filed: US 68
+  acres: 25.29
+  land_use: OTHER COMMERCIAL STRUCTURES
+  district: UNION TWP-WILMINGTON CSD
+  legal_description: MS 1096
+  appraised_total_100_usd: 255400
+  parcel_centroid: {lat: 39.39796, lon: -83.85464}
+  source: >-
+    Clinton County GIS / auditor CAMA join
+    (services1.arcgis.com/tAhcHWpOD9ygNPbJ ... cntyparcelsRealPropData_gdb/0),
+    the same layer SiteProfile.parcels_url points at, queried 2026-08-06.
+  address_discrepancy:
+    tag: '[open]'
+    statement: >-
+      AES Ohio's archived project page gives the substation's address as "46 E
+      Dalton Rd, east of SR-68". The county's parcel layer has NO parcel at 46 E
+      Dalton Rd — the E Dalton Rd addresses in that block run 80, 94, 124, 140,
+      168, 209, 256, 346, 351, 404, 420 and 476 — and the DP&L parcel in the same
+      270-12-10 block carries the location address "US 68". "46 E Dalton Rd" is
+      most likely a service/mailing address rather than a CAMA situs address, but
+      that is not established; the parcel identification here rests on ownership,
+      acreage, land use and position, not on the address matching.
+  corroboration:
+    tag: '[reference]'
+    statement: >-
+      OpenStreetMap way/36923781 is tagged name="Clinton Substation",
+      substation=transmission, voltage="345000;69000", centred 39.39745,
+      -83.85468 — 57 m from the parcel centroid, and its footprint is the fenced
+      equipment yard inside the 25.29-acre parcel. Crowd-sourced, so [reference],
+      but it independently supplies the name and confirms the substation carries
+      BOTH 345 kV and 69 kV, which is what a 345/69 kV transformer station is.
+      The route map on page 1 of the LON served on the City also places Clinton
+      Substation south-west of Wilmington, consistent with this position.
+  proximity:
+    tag: '[verified — derived from the geometry]'
+    method: >-
+      Minimum vertex-to-vertex great-circle distance between the substation
+      parcel polygon (county CAMA, above) and each feature of the committed
+      corridor geometry data/reference/wilmington/parcel-assemblage.geojson.
+    to_ardent_tac_petitioned_tracts:
+      nearest_parcel: 285-13-02-02-0000-00
+      nearest_owner: JUNE 11 2001 RALPH LARRY ROBERTS
+      corridor_role: petitioned_rezoning
+      acres: 190.065
+      distance_m: 52.7
+      distance_mi: 0.033
+    to_aws_campus_holdings:
+      nearest_parcel: 285-13-02-01-0000-00
+      nearest_owner: AMAZON DATA SERVICES INC
+      corridor_role: campus_holding
+      acres: 471.609
+      distance_m: 1655.8
+      distance_mi: 1.029
+    reading_note: >-
+      State this precisely or not at all. The substation parcel very nearly abuts
+      a tract in the ARDENT/TAC petitioned-rezoning corridor — the second campus,
+      whose operator, investment and MW are all [open] — and is just over a mile
+      from the nearest AWS-owned Cosler Farm holding. "The 345 kV terminus is
+      next door to the AWS campus" is NOT true and must not be written.
+
+# --- The gap that keeps this from closing the facility domain -----------------
+attribution_gap:
+  tag: '[open]'
+  statement: >-
+    Need Dayton-2025-002 names a SUBSTATION and a CITY. It does not name a
+    customer, a company, a parcel, or a campus. Two disclosed data-center
+    corridors sit within about a mile of the Clinton Substation — the AWS Cosler
+    Farm campus (Amazon Data Services, Inc., ~471 ac, $4B, 1,920,299 sq ft
+    disclosed) and the Ardent/TAC rezoning corridor (~545 ac, every figure
+    undisclosed) — and nothing in any captured record says which one the 500 MW
+    request belongs to, or whether it is split between them.
+  why_it_matters: >-
+    This is the same shape as Van Wert #1408, where AEP's Statement of Need named
+    the Mega Site but the 612 pages contained no occurrence of "QTS" or "data
+    center", and the facility domain correctly stayed `seeded`; and the same
+    shape as West Union #1983, where a $10B campus and a 1.3 GW request existed
+    but no instrument joined the operator to the load. A 500 MW figure copied
+    into the AWS campus's power basis would be an [inference] wearing a
+    [verified] tag.
+  what_would_close_it:
+    - The LON application for 25-0871-EL-BLN itself, or the Clinton customer-feed
+      cases' applications, if their affected-property tables or need statements
+      name the served parcels (the Van Wert route — the applicant's own site, or
+      a local government's service copy).
+    - An interconnection or facilities agreement, or an AES Ohio rate case /
+      Long-Term Forecast Report exhibit, naming the customer at Clinton.
+    - A Southwest Ohio Air Quality Agency permit-to-install for the campus, whose
+      genset fleet would size the backup and imply the load independently.
+    - A subsequent TEAC deck that splits Dayton-2025-002 or renames its customer.
+  what_can_be_said_now:
+    tag: '[inference]'
+    statement: >-
+      The 500 MW request is more likely the AWS Cosler Farm campus than the
+      Ardent/TAC corridor — AWS has a disclosed build, an announced investment,
+      a site plan and construction activity, and a first energization of January
+      2028 requires a customer already building, whereas Ardent/TAC is known by a
+      rezoning ordinance and nothing else. This is reasoning, it is labelled as
+      reasoning, and it does not move any figure into the facility's power basis.
+
+# --- What the 500 MW does to the existing screening bracket -------------------
+reconciliation_with_the_screening_bracket:
+  tag: '[inference]'
+  statement: >-
+    The repo's Wilmington IT-load bracket is a floor-area SCREENING inference —
+    144.0 MW low, ~312 MW central, 480.1 MW high — from the disclosed 1,920,299
+    sq ft site plan at 75-250 W/sq ft, corroborated by a $4B investment screen
+    (#1468, #1641 D2). The derived facility draw published in
+    data/reference/eia/wilmington/demand-pressure.yaml is 402.6 MW central with a
+    162.7-696.1 MW band (IT x PUE 1.13-1.45).
+  finding: >-
+    AES Ohio's disclosed 500 MW terminal request falls INSIDE that derived
+    facility-draw band and about 24% above its central value. Reading it back
+    through the same PUE band gives an implied IT load of roughly 345 MW (at PUE
+    1.45) to 442 MW (at PUE 1.13) — inside the screening bracket's upper half and
+    below its 480.1 MW high. Two independent methods — a floor-area screen the
+    repo built from a site plan, and a utility's own transmission-service request
+    — agree to within the width of the bracket.
+  what_this_does_not_license: >-
+    It does not license replacing the screening bracket with 500 MW. The 500 MW
+    is facility demand at a delivery point, not IT load; it is a REQUEST, not
+    installed capacity; its terminal year is 2030, not today; and per
+    `attribution_gap` above it is not tied to this campus by any record. The
+    profile's it_load_source stays SCREENING. What changes is the citation, which
+    now names this instrument instead of repeating a misplaced "1.5 GW".
+
+# --- Routes tried ------------------------------------------------------------
+blocked_and_negative_routes:
+  - route: PUCO / OPSB Docketing Information System (dis.puc.state.oh.us)
+    tag: '[verified]'
+    result: blocked
+    detail: >-
+      Probed 2026-08-06. A plain request for CaseRecord.aspx?CaseNo=25-0871-EL-BLN
+      returns HTTP 200 with a 245-byte "Request Rejected ... Your support ID is"
+      body; the same request with full browser headers returns a 7,554-byte
+      F5/BIG-IP `bobcmn` JavaScript bot challenge. This is the SIXTH confirmation
+      of this block in this repo (Findlay #1464, Bowling Green #1437, Van Wert
+      #1408 x2, and here). The docket is UNSEARCHED, not empty — no inference may
+      be drawn from its silence.
+  - route: opsb.ohio.gov pretty-URL case pages
+    tag: '[verified]'
+    result: facade
+    detail: >-
+      https://opsb.ohio.gov/cases/25-0871-EL-BLN returns HTTP 200 and 197 KB,
+      which looks like a served docket until it is read: the body is an IBM
+      WebSphere Portal shell whose content region says "No content found for:
+      ohio content english/opsb/cases/25-0871-EL-BLN". It proxies nothing and is
+      not an alternative route to DIS. Recorded because the 200 status is a trap.
+  - route: PJM TEAC 2025 meeting materials
+    tag: '[verified]'
+    result: not served
+    detail: >-
+      PJM's TEAC materials page lists Dayton Supplemental decks for 2026 only
+      (2026-02-03, 2026-05-08, 2026-07-07). Constructed 2025 URLs on the same
+      pattern returned the site's HTML not-found page rather than a PDF. So the
+      Need Meeting of 2025-02-04 and the Solution Meeting of 2025-04-01 — where
+      Dayton-2025-002's ORIGINAL ramp and costs were presented — are not in hand.
+  - route: Wilmington News Journal (wnewsj.com)
+    tag: '[verified]'
+    result: blocked
+    detail: >-
+      All three wnewsj articles the issue cites — the 2026-02-06 AES council
+      presentation, the 2026-03-04 rate-impact piece and the 2026-04-28
+      intervention story — return HTTP 403 to both curl with browser headers and
+      to the agent's own fetcher. The issue's claims that AES said it had been
+      "working with AWS for more than a year" and that residential bills roughly
+      doubled year-over-year therefore remain [reference] and UNVERIFIED here.
+      Blocked, not absent.
+  - route: journal-news.com "biggest power guzzlers" article
+    tag: '[verified]'
+    result: 'not found (HTTP 404)'
+    detail: >-
+      The URL issue #1469 gives for the PJM-queue ranking returns HTTP 404. The
+      same story ID resolves under daytondailynews.com and wcpo.com in search
+      results; neither mirror was retrieved. The ranking is recorded above as
+      [reference] on that basis and nothing rests on it.

@@ -114,10 +114,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d9517f6572a6bafd9f99dc93c53cebc0d853d9700cc31383ed37364530c5c821",
-      "size_bytes": 335938,
+      "sha256": "9c93fab911b2bffc7397f2ed75489fc2a3ea67c64ba43ea686e69b64a62b709f",
+      "size_bytes": 371435,
       "lfs_materialized": true,
-      "file_count": 13,
+      "file_count": 14,
       "stale": false,
       "asof": null
     },
@@ -171,8 +171,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "c309ed627411910a1ec71150648e61e5e01e4d980c5ec208cb62b52045e96d1f",
-      "size_bytes": 25485,
+      "sha256": "6e7c3a26f6f9ee7aa89c144ab1461257b455f4cc2d195dac4fa3920cf31becad",
+      "size_bytes": 29150,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -530,8 +530,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "820e8698bb23de7967cd98685c2e8b905d79ef270b3323af2e674a8be31e46c2",
-      "size_bytes": 25936,
+      "sha256": "8e6b38d1528c6e1026921c8e7d8ba7d7760f6f72b93da956009d473279169eb4",
+      "size_bytes": 28575,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -539,6 +539,89 @@
     },
     "citation": {
       "source": "Onboarding self-research pass (data/research/onboard-wilmington-*/findings.md); SiteProfile plant_receiving (WWTP NPDES OH0028134, cited); basin._MAINSTEM_GAGES Little Miami brackets. The drainage areas the DAR interpolation multiplies (USGS StreamStats / NWIS) are to-pull — not yet in the corpus.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "wilmington-power-instruments",
+    "title": "Wilmington — the AES Ohio 345 kV build-out, PJM M-3 Need Dayton-2025-002 + OPSB 25-0871-EL-BLN (Extractions)",
+    "scope": "extracted",
+    "collection": "grid",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Eleven captured sources across four routes, plus four blocked routes recorded as per-source negatives. INTERCONNECTION: PJM's own Transmission Expansion Advisory Committee \"Dayton Supplemental Projects\" decks for all three 2026 meetings (2026-02-03 item 06, 2026-05-08 item 05, 2026-07-07 item 11), retrieved 2026-08-06 from pjm.com and read from their PDF text layers. The 2026-07-07 deck carries M-3 Need Dayton-2025-002 (the Clinton Substation / Wilmington load ramp), Need Dayton-2025-001 (the Fayette Substation / Jeffersonville ramp) and the joint priced solution; the other two decks are committed because they establish that the Wilmington need appears in the July cycle ONLY, which is a read result rather than a lucky find. SITING: the statutory service copy of AES Ohio's Letter of Notification for OPSB case 25-0871-EL-BLN, obtained from the CITY OF WILMINGTON's own website (wilmingtonohio.gov, served via storage.googleapis.com/proudcity) rather than from the applicant — the custody chain runs through the local government that was served, and is stated in data/documents/grid/wilmington/filename-map.yaml. It is a two-page scan with NO text layer; its identity, dateline and text were read off a 200-DPI render, never from OCR digits or from its filename. APPLICANT MATERIAL: AES Ohio's Fayette-Clinton fact sheet (March 2026), project-need board and FAQ, plus its Fayette Customer East and West project pages — the last two captured because they are where AES, in its own words, attaches the \"1.5 GW\" to Jeffersonville. ARCHIVED: the AES Clinton 345kV Substation Extension project page, recovered from the Internet Archive's single 2023-03-30 capture after the live URL was unpublished (HTTP 403 Drupal \"Access denied\"). SECONDARY: a landowner-side consultancy's public information packet on the intervention filings, tagged [reference] throughout and used only as a finding aid to a docket the PUCO block keeps out of reach. GEOMETRY: the Clinton Substation was located on the Clinton County auditor's CAMA parcel layer — the same layer SiteProfile.parcels_url points at — and measured against the committed corridor geometry at data/reference/wilmington/parcel-assemblage.geojson; OpenStreetMap way/36923781 corroborates the name and voltages as [reference]. No vision extraction pass was run beyond the render read of the two-page service letter.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:wilmington",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "opsb",
+      "puco",
+      "siting",
+      "letter-of-notification",
+      "transmission",
+      "345kv",
+      "pjm",
+      "teac",
+      "m3-process",
+      "interconnection",
+      "large-load",
+      "aes-ohio",
+      "dayton-power-and-light",
+      "substation",
+      "data-center",
+      "aws",
+      "amazon",
+      "wilmington",
+      "clinton-county",
+      "fayette-county",
+      "jeffersonville",
+      "intervention",
+      "access-blocked"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/grid/wilmington/clinton-delivery-point.interconnection.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/grid/wilmington/fayette-clinton-345kv.project.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/grid/wilmington/clinton-substation-extension-2021.project.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/wilmington/power-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "ba167efc84f34e22448fef1a00e44804b924a5589dd908ec230a3415333a322e",
+      "size_bytes": 67654,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Eleven captured sources across four routes, plus four blocked routes recorded as per-source negatives. INTERCONNECTION: PJM's own Transmission Expansion Advisory Committee \"Dayton Supplemental Projects\" decks for all three 2026 meetings (2026-02-03 item 06, 2026-05-08 item 05, 2026-07-07 item 11), retrieved 2026-08-06 from pjm.com and read from their PDF text layers. The 2026-07-07 deck carries M-3 Need Dayton-2025-002 (the Clinton Substation / Wilmington load ramp), Need Dayton-2025-001 (the Fayette Substation / Jeffersonville ramp) and the joint priced solution; the other two decks are committed because they establish that the Wilmington need appears in the July cycle ONLY, which is a read result rather than a lucky find. SITING: the statutory service copy of AES Ohio's Letter of Notification for OPSB case 25-0871-EL-BLN, obtained from the CITY OF WILMINGTON's own website (wilmingtonohio.gov, served via storage.googleapis.com/proudcity) rather than from the applicant — the custody chain runs through the local government that was served, and is stated in data/documents/grid/wilmington/filename-map.yaml. It is a two-page scan with NO text layer; its identity, dateline and text were read off a 200-DPI render, never from OCR digits or from its filename. APPLICANT MATERIAL: AES Ohio's Fayette-Clinton fact sheet (March 2026), project-need board and FAQ, plus its Fayette Customer East and West project pages — the last two captured because they are where AES, in its own words, attaches the \"1.5 GW\" to Jeffersonville. ARCHIVED: the AES Clinton 345kV Substation Extension project page, recovered from the Internet Archive's single 2023-03-30 capture after the live URL was unpublished (HTTP 403 Drupal \"Access denied\"). SECONDARY: a landowner-side consultancy's public information packet on the intervention filings, tagged [reference] throughout and used only as a finding aid to a docket the PUCO block keeps out of reach. GEOMETRY: the Clinton Substation was located on the Clinton County auditor's CAMA parcel layer — the same layer SiteProfile.parcels_url points at — and measured against the committed corridor geometry at data/reference/wilmington/parcel-assemblage.geojson; OpenStreetMap way/36923781 corroborates the name and voltages as [reference]. No vision extraction pass was run beyond the render read of the two-page service letter.",
       "source_kind": "reference",
       "page": null,
       "pages": null,
@@ -2266,7 +2349,7 @@
     "site_scope": "state:OH",
     "cadence": "on-demand",
     "ttl_days": null,
-    "last_refreshed": "2026-07-11",
+    "last_refreshed": "2026-08-06",
     "tags": [
       "oepa",
       "npdes",
@@ -2343,8 +2426,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "b7cb1fadd57009ca92c4cbb371182d7141ea7ea3e72482c77742e9e90ffb167d",
-      "size_bytes": 14340,
+      "sha256": "2a70dd340cc5d6363b72f09e9bf11800f649b010fb5f0868db1ca168e0ecbeb2",
+      "size_bytes": 18502,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -3097,7 +3180,7 @@
     "producer_kind": "manual",
     "command": null,
     "connector_ref": null,
-    "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132)",
+    "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132). Clinton Substation added at #1469 — parcel geometry from the Clinton County auditor's CAMA layer (parcel 270-12-10-35-0000-00, DAYTON POWER & LIGHT COMPANY, 25.29 ac; centroid 39.39796, -83.85464), corroborated by OpenStreetMap way/36923781 (name=\"Clinton Substation\", substation=transmission, voltage=\"345000;69000\") 57 m away.",
     "external_url": null,
     "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
     "access_tier": "public",
@@ -3110,7 +3193,10 @@
       "gis",
       "geojson",
       "wwtp",
-      "infrastructure"
+      "infrastructure",
+      "substation",
+      "transmission",
+      "pjm"
     ],
     "storage": [
       {
@@ -3121,15 +3207,15 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9d8f9904a56c8b020dee930eb90a51ebbe1fc145ed0c49994be3e4aa546771ea",
-      "size_bytes": 644,
+      "sha256": "511301efbdc97b26df2094bd90678e775278b36e732d7811381eaa9c7e379d60",
+      "size_bytes": 1998,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132)",
+      "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132). Clinton Substation added at #1469 — parcel geometry from the Clinton County auditor's CAMA layer (parcel 270-12-10-35-0000-00, DAYTON POWER & LIGHT COMPANY, 25.29 ac; centroid 39.39796, -83.85464), corroborated by OpenStreetMap way/36923781 (name=\"Clinton Substation\", substation=transmission, voltage=\"345000;69000\") 57 m away.",
       "source_kind": "reference",
       "page": null,
       "pages": null,

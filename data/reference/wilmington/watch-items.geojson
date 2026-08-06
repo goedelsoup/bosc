@@ -18,6 +18,24 @@
           39.4391
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "clinton-substation",
+        "title": "Clinton Substation (AES Ohio)",
+        "type": "infrastructure",
+        "priority": "high",
+        "status": "active",
+        "summary": "AES Ohio 345/69 kV transmission substation and the delivery point for PJM M-3 Need Dayton-2025-002 — AES Ohio's disclosed customer request for 35 MW (1/2028) rising to 500 MW (1/2030) \"in the vicinity of its Clinton Substation near Wilmington, OH\" (PJM TEAC Dayton Supplemental, 2026-07-07). Eastern terminus of the ~29-mile Fayette–Clinton 345 kV line, OPSB 25-0871-EL-BLN (LON submitted 2026-03-19). A $65.4M expansion for the additional line, two customer feeds and a 300-MVAR capacitor is projected in service 2028-12-31, with two ~2-mile 345 kV feeds to an unnamed \"customer substation\" ($20M). The filing names a substation and a city, never a customer: the parcel is 53 m from the nearest Ardent/TAC petitioned-rezoning tract and 1.03 mi from the nearest AWS Cosler Farm holding, so the 500 MW is not attributable to either campus on the present record. Land: DP&L parcel 270-12-10-35-0000-00, 25.29 ac, Union Twp (Clinton County auditor CAMA)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.85464,
+          39.39796
+        ]
+      }
     }
   ]
 }

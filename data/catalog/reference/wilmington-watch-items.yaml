@@ -4,8 +4,13 @@ scope: reference
 status: reviewed
 producer:
   kind: manual
-  source: Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and
-    ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132)
+  source: >-
+    Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and
+    ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132).
+    Clinton Substation added at #1469 — parcel geometry from the Clinton County auditor's
+    CAMA layer (parcel 270-12-10-35-0000-00, DAYTON POWER & LIGHT COMPANY, 25.29 ac;
+    centroid 39.39796, -83.85464), corroborated by OpenStreetMap way/36923781
+    (name="Clinton Substation", substation=transmission, voltage="345000;69000") 57 m away.
 license: Public record (Ohio R.C. 149.43 / U.S. Government work)
 access_tier: public
 site_scope: site:wilmington
@@ -22,8 +27,20 @@ tags:
 - geojson
 - wwtp
 - infrastructure
-notes: Per-site watch-items GeoJSON for Wilmington; consumed by balance._default_watch_items()
-  as the site-specific override (takes precedence over the Lima periplus import). Current
-  content is one feature — the Wilmington WWTP (id=wilmington-wwtp, 3.0 MGD design flow,
-  outfall 001 → Lytle Creek RM 6.83). ECHO coordinates [verified via FRS Registry ID
-  110000760686]; address 475 S Nelson Ave confirmed from Ohio EPA 1PD00013*QD fact sheet.
+- substation
+- transmission
+- pjm
+notes: >-
+  Per-site watch-items GeoJSON for Wilmington; consumed by balance._default_watch_items() as
+  the site-specific override (takes precedence over the Lima periplus import). TWO features.
+  (1) The Wilmington WWTP (id=wilmington-wwtp, 3.0 MGD design flow, outfall 001 → Lytle Creek
+  RM 6.83). ECHO coordinates [verified via FRS Registry ID 110000760686]; address 475 S Nelson
+  Ave confirmed from Ohio EPA 1PD00013*QD fact sheet. (2) Clinton Substation
+  (id=clinton-substation), added at #1469 — AES Ohio's 345/69 kV station and the delivery
+  point named in PJM M-3 Need Dayton-2025-002 for a 35 MW → 500 MW customer request, and the
+  eastern terminus of the Fayette–Clinton 345 kV line (OPSB 25-0871-EL-BLN). Its position is
+  from the county auditor's parcel polygon, not from the LON's route map, which is a raster at
+  county scale with no georeference — no route geometry is derived from that map, since a
+  traced line would be fabricated. The line route itself is therefore NOT a feature here and
+  stays [open] pending the application's exhibits, which are behind the PUCO DIS block.
+
