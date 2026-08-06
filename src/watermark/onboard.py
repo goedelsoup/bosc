@@ -113,7 +113,7 @@ def _civic_registry_stub(prof: SiteProfile) -> str:
         "# name/type/governing_body/meeting_schedule/office, each with `grounded_from`), then run\n"
         f"# `watermark --site {prof.slug} subdivisions discover` and fold the confirmed\n"
         "# `publishing:` platforms in BY HAND — discovery is read-only (see civic/CLAUDE.md).\n"
-        "# An empty registry is honest: it does NOT make the record/story domains live.\n"
+        "# An empty registry is honest: it does NOT make the record domain live.\n"
         "meta:\n"
         f"  site: {prof.slug}\n"
         f"  subject: {prof.place} political subdivisions — public-meeting records registry\n"
@@ -158,8 +158,8 @@ def _civic_readme_body(prof: SiteProfile) -> str:
         'registry is honest, never a finding of "publishes nothing."\n'
         "- `publishing.platform: unknown` = *not yet looked*, never *publishes nothing*; a null "
         "`records_url` is never evidence of withholding.\n"
-        "- An empty/seeded registry does **not** flip the `record`/`story` readiness domains "
-        "live (#1220) — those rise only when meetings are actually ingested and summarized.\n\n"
+        "- An empty/seeded registry does **not** flip the `record` readiness domain "
+        "live (#1220) — it rises only when meetings are actually ingested and summarized.\n\n"
         "## Populate\n\n"
         "Enumerate bodies by hand from a committed roster, then "
         f"`watermark --site {slug} subdivisions discover` and fold the confirmed platforms in. "
@@ -344,7 +344,7 @@ def render_onboarding_doc(report: OnboardReport) -> str:
         "- [ ] **Data-center activity** — extracted permits/records + entity graph "
         "(corpus extraction; seed proposals via `watermark onboard --research`, #247)\n"
         "- [ ] **Civic records** — per-site subdivisions registry + meeting minutes/agendas "
-        "(feeds record/story; scaffolded empty, evidence-gated)\n"
+        "(feeds record; scaffolded empty, evidence-gated)\n"
         "- [ ] **Per-jurisdiction GIS** — parcels/zoning connector (the known lift; see docs/onboarding.md)\n\n"
         "## Last onboard run\n\n"
         "| step | status | output |\n|---|---|---|\n" + rows + "\n\n"
@@ -501,8 +501,8 @@ def _exec_civic_scaffold(settings: Settings, prof: SiteProfile) -> OnboardStep:
     a prompt to discover them. Resolves the path through ``civic.registry_path`` (not a hardcoded
     slug), so a peer slug-scopes and the reference build keeps its flat legacy layout. Never
     clobbers a curated registry: an existing registry (or README) is left untouched. Scaffolding
-    an empty registry does NOT flip the ``record``/``story`` readiness domains live (#1220) —
-    those rise only when meetings are actually ingested and summarized.
+    an empty registry does NOT flip the ``record`` readiness domain live (#1220) — it rises
+    only when meetings are actually ingested and summarized.
     """
     from watermark.civic.registry import registry_path
 
@@ -680,9 +680,11 @@ def _review_checklist(slug: str) -> list[str]:
         f"Civic registry: enumerate the county's meeting-holding bodies for {slug!r} from a "
         f"committed roster into data/reference/subdivisions/{slug}/subdivisions.yaml; run "
         f"`watermark --site {slug} subdivisions discover` and fold confirmed platforms in BY HAND "
-        "(discovery is read-only). An empty registry does not make record/story live.",
+        "(discovery is read-only). An empty registry does not make record live.",
         "Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/).",
-        f"PROMOTION IS A SEPARATE MANUAL EDIT: flip status->live + selectable->true for {slug!r} in "
-        "web/packages/core/src/sites.ts, parity-gated. onboard never auto-promotes; only one live build "
-        "(/bosc) exists today.",
+        f"PROMOTION IS A SEPARATE MANUAL EDIT: flip status: live + selectable: true for {slug!r} in "
+        "data/sites.yaml (the identity SSOT), then run `watermark sites sync` to regenerate the "
+        "frontend registry. NOTHING under web/ is hand-edited to promote a site. Parity-gated; "
+        "onboard never auto-promotes. Promotion is what publishes the site's inner pages at all — "
+        "an un-promoted site serves only its landing page, however complete its bundle is.",
     ]

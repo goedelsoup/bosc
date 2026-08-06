@@ -208,7 +208,7 @@ describe("site build phases — the four-phase clock (#308 dictate B)", () => {
 });
 
 describe("promotion gate — the onboarding review invariant (#326)", () => {
-  // `bosc onboard` proposes; promotion to a selectable build is a manual, parity-gated edit here.
+  // `watermark onboard` proposes; promotion to a selectable build is a manual, parity-gated edit here.
   // These encode the gate: a `selectable` site is one under active build — `live` (parity-complete)
   // or `building` (an early build state, e.g. Lima post-#1256) — and only ever those. A `queued` or
   // `tracking` site can't slip selectable without the deliberate promotion.

@@ -71,13 +71,13 @@ function siteScopeLabel(scope: string): string {
     <p class="cat-lead">
       Every dataset under the <code>data/</code> tree, in the open — what it is, where it came from,
       its license and access tier, and whether the committed copy is current. Generated from the
-      registry (<code>bosc catalog</code>) and its reconcile snapshot; the legible successor to the
+      registry (<code>watermark catalog</code>) and its reconcile snapshot; the legible successor to the
       hand-maintained corpus-completeness audit.
     </p>
 
     {
       items.length === 0 ? (
-        <p class="cat-stub">No data catalog is available yet — run <code>bosc export</code>.</p>
+        <p class="cat-stub">No data catalog is available yet — run <code>watermark export</code>.</p>
       ) : (
         <>
           {/* Stats strip */}
@@ -220,7 +220,7 @@ function siteScopeLabel(scope: string): string {
           <p class="cat-foot">
             <code>fresh</code> = within refresh cadence · <code>LFS</code> = Git LFS pointer not
             materialized (expected in CI, not missing) · reconcile snapshot from{" "}
-            <code>bosc catalog reconcile</code> · drift gated by <code>bosc catalog check</code>
+            <code>watermark catalog reconcile</code> · drift gated by <code>watermark catalog check</code>
           </p>
         </>
       )
