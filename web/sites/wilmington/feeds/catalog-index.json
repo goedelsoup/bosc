@@ -1,6 +1,6 @@
 {
   "site": "wilmington",
-  "catalog_version": "7eb7e30bddefe2a1f26e5e66ace896a3c9cbbf5a2343006c98c81b75e28517b6",
+  "catalog_version": "7a9bf6c129c6d1eeb071e1ce0f6829cdcc4aa9f01950efc2592df6e6641b2de3",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -1041,6 +1041,14 @@
       "site": "wilmington",
       "local_id": "wilmington",
       "title": "Wilmington (Clinton Co., OH) Low-Flow Screen & Onboarding Record",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:wilmington-power-instruments",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "wilmington-power-instruments",
+      "title": "Wilmington — the AES Ohio 345 kV build-out, PJM M-3 Need Dayton-2025-002 + OPSB 25-0871-EL-BLN (Extractions)",
       "feed": "catalog"
     },
     {

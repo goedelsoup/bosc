@@ -1,0 +1,362 @@
+# Capture / alias manifest — Wilmington (Clinton County) power instruments, issue #1469.
+#
+# Web-captured primary evidence for the AES Ohio 345 kV build-out that the
+# Wilmington campus corridor sits inside: PJM's own Transmission Expansion
+# Advisory Committee (TEAC) Dayton Supplemental Projects decks — the M-3
+# filings that state each AES Ohio large-load customer request's MW ramp — plus
+# the statutory service copy of AES Ohio's Letter of Notification for OPSB case
+# 25-0871-EL-BLN, captured from the CITY OF WILMINGTON's own website rather than
+# from the applicant, and AES Ohio's self-published project material.
+#
+# ROUTE NOTE (the reason the docket itself is not here). PUCO/OPSB's docketing
+# system `dis.puc.state.oh.us` refused automated retrieval again on 2026-08-06 —
+# the sixth confirmation in this repo: a plain request returns a 245-byte
+# "Request Rejected" page and a full-browser-header request returns a 7,554-byte
+# F5/BIG-IP `bobcmn` JavaScript bot challenge. `opsb.ohio.gov/cases/<case-no>`
+# answers HTTP 200 but is a WebSphere Portal facade that renders
+# "No content found for: ohio content english/opsb/cases/25-0871-EL-BLN" — it
+# proxies nothing. So the LON APPLICATION ITSELF (route maps, the full need
+# statement, the service list, the seven intervenors' petitions, Staff's report,
+# the Board's entry) was NOT obtained. That is a BLOCKED ROUTE, not an absence:
+# nothing may be inferred from its silence. What is here is the service copy the
+# applicant mailed to the City under O.A.C. 4906-6-07 and the City published.
+#
+# The `content_verified` date is read from each file's OWN content — a cover
+# page, a printed slide date, a printed month, or the PDF's embedded
+# CreationDate/ModDate — never from the URL, the filename, or the fetch time.
+#
+# evidence: native_text   = PDF text layer (pypdf) confirms the identity + date
+#           vision_read   = no text layer; identity + date read off a 200-DPI render
+#           pdf_metadata  = the body prints no date; the embedded PDF date is used
+#           as_captured   = HTML served as-is; the page prints no publication date
+meta:
+  subject: >-
+    Wilmington / Clinton County power instruments — the PJM M-3 Need
+    Dayton-2025-002 load ramp at the Clinton Substation delivery point, the
+    Fayette-Clinton 345 kV Letter of Notification (OPSB 25-0871-EL-BLN), and the
+    Fayette-end material that shows where the widely-repeated "1.5 GW" actually
+    belongs (issue #1469)
+  collection: grid/wilmington/
+  captured_by: 'issue #1469 (epic #1277, readiness(wilmington) — facility/power domain)'
+  generated_at: '2026-08-06'
+  policy: non-destructive — as-served bytes, as-served filenames.
+
+documents:
+  # --- The interconnection instrument (primary) --------------------------------
+  - filename: 20260707-item-11---dayton-supplemental-projects.pdf
+    canonical: pjm-teac-dayton-supplemental-2026-07-07.pdf
+    title: >-
+      PJM Transmission Expansion Advisory Committee — Dayton Supplemental
+      Projects, 7 July 2026 (item 11)
+    issuer: PJM Interconnection, L.L.C. / AES Ohio (Dayton Transmission Zone)
+    source_url: https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260707/20260707-item-11---dayton-supplemental-projects.pdf
+    landing_page: https://www.pjm.com/committees-and-groups/committees/teac
+    sha256: 82a2f364e21d91ffaaf82ddd8e43cc94b12bcaede8c1e171c178abff7952e791
+    bytes: 1085941
+    content_type: application/pdf
+    pages: 11
+    fetched_at: '2026-08-06T13:12:00Z'
+    content_verified: '2026-07-07'   # slide 1: "July 7th, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      THE instrument this issue was opened to find, and it answers the load
+      question in the opposite direction from the issue's premise. Slide 4
+      states Need Number **Dayton-2025-002**: "AES Ohio has a customer request
+      for service in the vicinity of its Clinton Substation near Wilmington,
+      OH", with the ramp 1/2028 35 MW, 4/2028 100 MW, 1/2029 300 MW, 1/2030
+      **500 MW**. Slide 3 states Need Number **Dayton-2025-001** for the
+      Fayette Substation in Jeffersonville, OH — 9/2026 35 MW, 9/2028 480 MW,
+      1/2031 **1.5 GW**. The "1.5 GW" that press analysis (and this repo's own
+      Wilmington register) attached to WILMINGTON is the FAYETTE COUNTY row.
+      Slides 5-6 carry the joint selected solution for both needs with costs and
+      in-service dates, showing prior values struck through and replaced — the
+      Clinton Substation expansion ($75M -> $65.4M), two ~2-mile 345 kV customer
+      service feeds from Clinton ($20M), the ~27-mile Clinton-Fayette single
+      circuit ($100M -> $187M), relocation of the Clinton-Lynchburg and
+      Clinton-Greene 345 kV lines, and a total of $480M -> **$589.8M** with a
+      projected in-service of 01/2031 and status moving Conceptual ->
+      Engineering. Both needs were first presented at the Need Meeting of
+      2025-02-04 and a Solution Meeting of 2025-04-01.
+  - filename: 20260203-item-06---dayton-supplemental-projects.pdf
+    canonical: pjm-teac-dayton-supplemental-2026-02-03.pdf
+    title: >-
+      PJM Transmission Expansion Advisory Committee — Dayton Supplemental
+      Projects, 3 February 2026 (item 06)
+    issuer: PJM Interconnection, L.L.C. / AES Ohio (Dayton Transmission Zone)
+    source_url: https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260203/20260203-item-06---dayton-supplemental-projects.pdf
+    landing_page: https://www.pjm.com/committees-and-groups/committees/teac
+    sha256: 100c95702a59a431fbee8b187d8c6b07976e0471384fd720584a82c1d4188bc9
+    bytes: 1293704
+    content_type: application/pdf
+    pages: 12
+    fetched_at: '2026-08-06T13:12:00Z'
+    content_verified: '2026-02-03'   # slide 1: "Feb 3rd, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Captured as a PER-SOURCE NEGATIVE and as a correction. This is the filing
+      `data/extracted/urbana/facility-power-instrument-search.md` cites for its
+      six-row table of AES Ohio large-load requests — but the deck contains only
+      TWO needs, Dayton-2025-007 (Eldean Substation, Piqua) and Dayton-2026-001
+      (Stuart Substation, Adams County). The Clinton, Fayette, Darby and Airport
+      rows are NOT in it; they come from other meetings in the M-3 cycle. The
+      Wilmington row is in the 2026-07-07 deck above. Kept so the corrected
+      citation can be checked against the document that does not support it.
+  - filename: 20260508-item-05---dayton-supplemental-projects.pdf
+    canonical: pjm-teac-dayton-supplemental-2026-05-08.pdf
+    title: >-
+      PJM Transmission Expansion Advisory Committee — Dayton Supplemental
+      Projects, 8 May 2026 (item 05)
+    issuer: PJM Interconnection, L.L.C. / AES Ohio (Dayton Transmission Zone)
+    source_url: https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260508/20260508-item-05---dayton-supplemental-projects.pdf
+    landing_page: https://www.pjm.com/committees-and-groups/committees/teac
+    sha256: 50da0adc5d838dc22fd6f837b1d51baa627b15d970dccf081a8fc6c4f2e79c81
+    bytes: 676207
+    content_type: application/pdf
+    pages: 11
+    fetched_at: '2026-08-06T13:12:00Z'
+    content_verified: '2026-05-08'   # slide 1: "May 8th, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The third and last 2026 Dayton Supplemental deck PJM's TEAC page serves.
+      Carries only Need Dayton-2025-007 (Eldean Substation, Piqua — the
+      Troy-Piqua site's thread) and its two-phase Concord/Brown solution. No
+      Clinton, Wilmington, Fayette or Jeffersonville content. Captured so the
+      claim "the Wilmington ramp appears once, in the 2026-07-07 cycle" rests on
+      all three 2026 decks being read rather than on one being found.
+
+  # --- The siting instrument, served on the City (primary) ---------------------
+  - filename: >-
+      2d28e900-service-of-letter-notification-fayette-to-clinton-345-kv-transmission-line-project-puco-case-25-0871-el-bln.pdf
+    canonical: aes-ohio-service-of-lon-to-local-officials-25-0871-EL-BLN.pdf
+    title: >-
+      Service of Letter of Notification to Local Public Officials — Fayette to
+      Clinton 345 kV Transmission Line Project, PUCO Case No. 25-0871-EL-BLN
+    issuer: The Dayton Power and Light Company d/b/a AES Ohio
+    source_url: https://storage.googleapis.com/proudcity/wilmingtonoh/2026/04/2d28e900-service-of-letter-notification-fayette-to-clinton-345-kv-transmission-line-project-puco-case-25-0871-el-bln.pdf
+    landing_page: https://wilmingtonohio.gov/aes-notification-fayette-to-clinton-345-kv-transmission-line-project/
+    sha256: 5e898309523426d2ea7bbf540445ffea8ebcc7e94287c9ee01c836fcf19cfe94
+    bytes: 686469
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-08-06T13:10:00Z'
+    content_verified: '2026-03-20'   # letter dateline: "March 20, 2026"
+    evidence: vision_read
+    status: downloaded
+    note: >-
+      A scanned two-page letter with NO text layer — identity and dates were read
+      off a 200-DPI render, not from the filename or the City's post date. The
+      as-served filename keeps the City's CDN hash prefix `2d28e900-`; it is not
+      cleaned up. Addressed to Bob Osborn, President, Wilmington City Council,
+      124 Lookout Ct.; signed Mary Ann Kabel, Corporate Communications Director,
+      AES. States that "On March 19, 2026, AES Ohio submitted a Letter of
+      Notification to the Ohio Power Siting Board (OPSB) (PUCO Case Number
+      25-0871-EL-BLN)" under O.A.C. Rule 4906-6-07, enclosing the Notification on
+      a USB flash drive, and lists the public-viewing locations (Jeffersonville
+      Community, New Vienna, Sabina and Wilmington Public libraries, and OPSB in
+      Columbus). Describes "approximately **29 miles** of new single-circuit 345
+      kV line connecting the Fayette Substation in Jeffersonville, Ohio to the
+      Clinton Substation near Wilmington, Ohio", which "will introduce an
+      additional source into the region" and is "part of the necessary upgrades
+      to support the increased capacity requirements driven by load growth from
+      large customer projects in the area." Page 1 carries a route overview map
+      (raster) showing the line leaving Fayette Substation near Octa, running
+      south past Milledgeville and Sabina, then west-southwest around the south
+      side of Wilmington into Clinton Substation. The map is NOT digitized here —
+      a route traced off a raster would be fabricated geometry.
+
+  # --- The applicant's own project material (self-published) --------------------
+  - filename: AES-Ohio-Fayette-Clinton-Project-Need-Oct-25.pdf
+    canonical: aes-ohio-fayette-clinton-project-need.pdf
+    title: Fayette - Clinton 345kV Transmission Line Overview ("Project need" board)
+    issuer: AES Ohio
+    source_url: https://www.aes-ohio.com/sites/aesohio/files/2025-11/AES-Ohio-Fayette-Clinton-Project-Need-Oct-25.pdf
+    landing_page: https://www.aes-ohio.com/fayette-clinton-345kV-transmission-line-project
+    sha256: b8a1ddb7d61ffc6a925d0f0b50ed3b37d7dced3ad827c244fdc962cd2f5219d2
+    bytes: 2339215
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-08-06T13:05:00Z'
+    content_verified: '2025-10-20'   # embedded /ModDate D:20251020 (body prints no date)
+    evidence: pdf_metadata
+    status: downloaded
+    note: >-
+      The open-house board the issue calls "the need statement". Its whole
+      statement of need is qualitative — "driven by large customer projects in
+      the area", "the latest load requests necessitate significant additional
+      transmission support by 2031" — and it names NO customer, NO megawatt
+      figure and NO data center. That negative is the point: the load figure the
+      issue hoped to find here is in PJM's M-3 deck, not in AES's siting
+      material. Lists the associated projects as expansion of the Fayette AND
+      the **Clinton** transmission substations. Embedded /CreationDate is
+      2025-03-31 and /ModDate 2025-10-20; the body prints no date at all, so the
+      filename's "Oct-25" is corroborated by metadata rather than trusted.
+  - filename: fayette_to_clinton_345_kv_project_fact_sheet.pdf
+    canonical: aes-ohio-fayette-clinton-fact-sheet-2026-03.pdf
+    title: Fayette - Clinton 345kV Transmission Line Project fact sheet (March 2026)
+    issuer: AES Ohio
+    source_url: https://www.aes-ohio.com/sites/aesohio/files/2026-03/fayette_to_clinton_345_kv_project_fact_sheet.pdf
+    landing_page: https://www.aes-ohio.com/fayette-clinton-345kV-transmission-line-project
+    sha256: 851109ccc6edba5f94a1a68972fafa2badc2d5d00b27130bff500603e9aa4d75
+    bytes: 574730
+    content_type: application/pdf
+    pages: 3
+    fetched_at: '2026-08-06T13:05:00Z'
+    content_verified: '2026-03'   # printed in the page header: "March 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      The current fact sheet, issued the same month as the LON. Says
+      "approximately 30 miles"; the LON served on the City says "approximately
+      29 miles"; PJM's solution slide says "~ 27-mile". Three lengths from three
+      documents — recorded, not reconciled. Lists the associated projects as the
+      **Fayette** and **Clinton** substation expansions, which is what makes the
+      live project webpage's "Atlanta" bullet look like an error until PJM's
+      solution set shows that Fayette, Atlanta AND Clinton are all in scope.
+      Structures: self-supporting steel poles 115-195 ft, ~200 ft ROW easement.
+  - filename: FAQ-Fayette-Clinton-AES-Ohio-Nov-2025.pdf
+    canonical: aes-ohio-fayette-clinton-faq-2025-11.pdf
+    title: Fayette - Clinton 345kV Transmission Line Project — Frequently Asked Questions
+    issuer: AES Ohio
+    source_url: https://www.aes-ohio.com/sites/aesohio/files/2025-11/FAQ-Fayette-Clinton-AES-Ohio-Nov-2025.pdf
+    landing_page: https://www.aes-ohio.com/fayette-clinton-345kV-transmission-line-project
+    sha256: 88f15a72481ed690cd8401c7fc8b1230113e7b079920955ef64112913e6f23c6
+    bytes: 154281
+    content_type: application/pdf
+    pages: 4
+    fetched_at: '2026-08-06T13:05:00Z'
+    content_verified: '2025-11-12'   # embedded /CreationDate D:20251112 (body prints no date)
+    evidence: pdf_metadata
+    status: downloaded
+    note: >-
+      Carries the two-regulator statement in AES's own words — "The project is
+      subject to approval by PJM Interconnection, LLC (PJM), the regional
+      transmission organization ... Additionally, the project is also subject to
+      approval by the Ohio Power Siting Board (OPSB). AES Ohio expects to seek
+      routing approval from the OPSB in the spring of 2026" — which is why the
+      PJM M-3 record and the OPSB docket are two halves of one instrument and
+      neither substitutes for the other. Also: ROW width 200 ft, spans 700-1000
+      ft, construction 2028-2030, entry on private land for survey under O.R.C.
+      4933.15, and payment only to owners requiring an easement.
+
+  # --- Docket activity, third-party summary (reference) -------------------------
+  - filename: FAYETT1.pdf
+    canonical: tsa-group-public-information-packet-25-0871-interventions-2026-04-07.pdf
+    title: >-
+      Public Information Packet — Interventions Filed in Ohio Power Siting Board
+      Case No. 25-0871-EL-BLN, Fayette to Clinton 345 kV Transmission Line
+      Project (April 7, 2026)
+    issuer: Transmission Siting Alternatives Group, Ltd. (TSA Group Consulting)
+    source_url: https://tsagroupconsulting.com/wp-content/uploads/2026/04/FAYETT1.pdf
+    landing_page: https://tsagroupconsulting.com/projects/ohio/fayette-clinton-345kv-transmission-line-project/
+    sha256: da104eaba092684aadc9591291cb6e13d56792cb4fe2d6e5bc86293b4b17c418
+    bytes: 98827
+    content_type: application/pdf
+    pages: 3
+    fetched_at: '2026-08-06T13:08:00Z'
+    content_verified: '2026-04-07'   # cover: "April 7, 2026"
+    evidence: native_text
+    status: downloaded
+    note: >-
+      NOT a primary record and must never be cited as one. TSA Group is a
+      LANDOWNER-SIDE compensation consultancy that solicits easement clients on
+      the same page ("contact us for a free, no-obligation consultation to secure
+      your rightful compensation"), and the packet's own closing paragraph says
+      it "summarizes public information about the filed documents for public
+      information reference only." It is captured as a FINDING AID to the docket
+      the PUCO block keeps out of reach: it dates the public notice to
+      2026-03-25 and the intervention filings to 2026-04-03, counts seven
+      petitioners (three farm-owning families directly crossed, East Clinton
+      Local School District, Jasper Township, the Village of Milledgeville and
+      the Village of Sabina), names one counsel for all of them (Hector Garcia
+      Santana, Columbus), and reports the line as "29-mile, customer-driven" with
+      "double-circuit monopole structures ... support[ing] a single-circuit
+      line" on "primarily ... greenfield farmland". Its one attribution sentence
+      is the reason it is here at all: "The existing AES Fayette substation is
+      next to the Amazon Web Services / Amazon Data Services Inc. (AWS)
+      construction site in Fayette County" — a THIRD source placing the AWS
+      construction site at the FAYETTE end. Every figure in it needs the
+      underlying petition before it can be promoted past [reference].
+
+  # --- The applicant's own web pages (self-published) ---------------------------
+  - filename: 2026-08-06-fayette-customer-east-345kv-transmission-line-project.aes-ohio.html
+    canonical: aes-ohio-fayette-customer-east-345kv-project-page.html
+    title: Fayette Customer East 345 kV transmission line project — AES Ohio project page
+    issuer: AES Ohio
+    source_url: https://www.aes-ohio.com/Fayette-Customer-East-345kV-Transmission-Line-Project
+    landing_page: https://www.aes-ohio.com/transmission-improvements
+    sha256: 97bef6f1ba0fcac1d35b1aae9a40461901ff10cd5319367b07756d57d76bab9c
+    bytes: 65248
+    content_type: text/html
+    fetched_at: '2026-08-06T13:02:00Z'
+    content_verified: null   # the page prints no publication or revision date
+    evidence: as_captured
+    status: downloaded
+    note: >-
+      Captured because it is where AES Ohio, in its own words, ties the 1.5 GW to
+      a county: "The proposed Fayette to Customer East 345kV transmission line
+      project is a necessary upgrade to support **1.5 gigawatts of load growth in
+      the Jeffersonville, Ohio area** ... The proposed project involves necessary
+      upgrades to serve a **new data center customer near AES Ohio's Fayette
+      Substation in Jeffersonville, Ohio**." Two ~0.4-mile single-circuit 345 kV
+      lines from Fayette Substation to a 345 kV delivery point on Fent Road,
+      Jefferson Township, FAYETTE County. OPSB case 25-0742-EL-BLN; LON filed
+      August 2025, OPSB approval November 2025, construction begun 2026-01-06,
+      in-service September 2026. The page prints no publication date, so
+      content_verified is null rather than back-filled from the capture.
+  - filename: 2026-08-06-fayette-customer-west-345kv-transmission-line-project.aes-ohio.html
+    canonical: aes-ohio-fayette-customer-west-345kv-project-page.html
+    title: Fayette Customer West 345kV transmission line project — AES Ohio project page
+    issuer: AES Ohio
+    source_url: https://www.aes-ohio.com/Fayette-Customer-West-345kV-Transmission-Line-Project
+    landing_page: https://www.aes-ohio.com/transmission-improvements
+    sha256: be1d3e732709c3b1e33e114e4325b72d367356382d83b16632e8dfc56ae33f6e
+    bytes: 65410
+    content_type: text/html
+    fetched_at: '2026-08-06T13:02:00Z'
+    content_verified: null   # the page prints no publication or revision date
+    evidence: as_captured
+    status: downloaded
+    note: >-
+      The sibling page, kept because it repeats the same 1.5 GW / Jeffersonville
+      attribution independently and is a SEPARATE OPSB case — 25-0743-EL-BLN.
+      Two 345 kV lines of ~0.3 and ~0.2 miles from Fayette Substation to a 345 kV
+      delivery point west of Fent Road. Together, East and West are four customer
+      feeds at the Fayette end, which is what PJM's solution slide prices as
+      "Customer Service Lines from Fayette 1-4". The Clinton end gets two.
+  - filename: 2023-03-30-clinton-345kv-substation-extension-project.aes-ohio.wayback.html
+    canonical: aes-ohio-clinton-345kv-substation-extension-project-page-2023.html
+    title: >-
+      Clinton 345kV Substation Extension Project — AES Ohio project page, as
+      archived 2023-03-30
+    issuer: AES Ohio (captured via the Internet Archive Wayback Machine)
+    source_url: http://web.archive.org/web/20230330020204/https://www.aes-ohio.com/clinton-345kv-substation-extension-project
+    landing_page: https://www.aes-ohio.com/clinton-345kv-substation-extension-project
+    sha256: bd7431d3d2bbb020eca5540edffbc8e119422d20ac3a19c20f960e6a7adaabab
+    bytes: 90997
+    content_type: text/html
+    fetched_at: '2026-08-06T13:15:00Z'
+    content_verified: '2023-03-30'   # Wayback capture stamp; page footer "Copyright (c) 2009-2023"
+    evidence: as_captured
+    status: downloaded
+    note: >-
+      The URL issue #1469 cites as its source for instrument 2 is DEAD — the live
+      page returns a Drupal "Access denied" (HTTP 403, canonical rewritten to the
+      site root, `noindex`), i.e. the node is unpublished, not blocked by a WAF.
+      The Wayback Machine holds exactly ONE capture of it, from 2023-03-30, and
+      that capture retires the premise: the Clinton 345 kV substation extension
+      described there — "a second 345/69kV transformer ... three 345kV breakers
+      to establish a ring bus, 69kV circuit breakers" — is OPSB case
+      **21-0679-EL-BNR**, with a schedule of LON filed July 2021, OPSB approval
+      August 2021, construction October 2021 and **project in-service June
+      2022**. Its stated need is 69 kV operational loading and reliability,
+      maintenance-outage flexibility, and ensuring "deliverability of the planned
+      solar generation expansions along the Stuart-Clinton 345kV corridor" — the
+      same generation-side posture as Lynchburg, which the issue itself fences
+      off from the load thread. It also carries the "46 E Dalton Rd, east of
+      SR-68" address the issue quotes. This is a COMPLETED 2021-22 reliability
+      and solar-deliverability project, not a data-center power instrument; the
+      CURRENT Clinton substation expansion is a different scope, priced in PJM's
+      2026-07-07 solution slide, and its own OPSB case number is [open].

@@ -73,7 +73,7 @@ Per-site onboarding tree for the Wilmington watershed point (basin: little-miami
 
 ### `wilmington-watch-items` — Wilmington site watch-items (WWTP infrastructure geometry)
 
-Source: Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132) · License: Public record (Ohio R.C. 149.43 / U.S. Government work) · Access: public · Site scope: site:wilmington · Refresh: static
+Source: Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132). Clinton Substation added at #1469 — parcel geometry from the Clinton County auditor's CAMA layer (parcel 270-12-10-35-0000-00, DAYTON POWER & LIGHT COMPANY, 25.29 ac; centroid 39.39796, -83.85464), corroborated by OpenStreetMap way/36923781 (name="Clinton Substation", substation=transmission, voltage="345000;69000") 57 m away. · License: Public record (Ohio R.C. 149.43 / U.S. Government work) · Access: public · Site scope: site:wilmington · Refresh: static
 
 | file | type | lfs |
 | --- | --- | --- |

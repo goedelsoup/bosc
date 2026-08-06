@@ -1,0 +1,145 @@
+# Structured project record — the Clinton 345 kV Substation Extension,
+# OPSB case 21-0679-EL-BNR, Union Township, Clinton County, Ohio.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such, arithmetic shown
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Source bytes: data/documents/grid/wilmington/ (see that dir's filename-map.yaml).
+#
+# WHY THIS FILE EXISTS. Issue #1469 lists the "Clinton 345kV Substation Extension"
+# as instrument 2 of Wilmington's data-center power thread — a second 345/69 kV
+# transformer and three 345 kV breakers in a ring bus at 46 E Dalton Rd, tagged
+# [verified] against the AES Ohio project page, and asks for it as a candidate
+# watch-items entry "alongside the line route". The scope description is accurate.
+# The framing is not. This project was filed in July 2021, approved in August
+# 2021, built starting October 2021 and placed IN SERVICE IN JUNE 2022 — three and
+# a half years before the AWS Cosler Farm campus was disclosed in November 2025 —
+# and its stated need is 69 kV reliability and SOLAR deliverability. It belongs on
+# the same side of the issue's own separation guardrail as Lynchburg. This record
+# retires it from the load thread rather than deleting the entry, because "the
+# search found nothing" and "the search found a completed reliability project"
+# are different results and only one of them is true.
+meta:
+  subject: >-
+    The Clinton 345 kV substation extension — a completed 2021-22 AES Ohio
+    reliability and solar-deliverability project, wrongly carried in issue #1469
+    as a current data-center power instrument
+  kind: grid-siting-project
+  captured_for: issue 1469 (epic 1277, readiness(wilmington) — the power instruments)
+  extracted_at: '2026-08-06'
+  status_of_project: completed (in service June 2022, per the applicant's own schedule)
+  method: >-
+    The live AES Ohio project page issue #1469 cites returns HTTP 403 with a
+    Drupal "Access denied" body (canonical rewritten to the site root, noindex) —
+    the node is unpublished, not WAF-blocked. The Internet Archive holds exactly
+    one capture of that URL, 2023-03-30, and this record is read from it.
+  sources:
+    self_published_archived:
+      - file: data/documents/grid/wilmington/2023-03-30-clinton-345kv-substation-extension-project.aes-ohio.wayback.html
+        original_url: https://www.aes-ohio.com/clinton-345kv-substation-extension-project
+        archived: '2023-03-30'
+  caveat: >-
+    A 2023 archived copy of a self-published page is the ONLY captured source for
+    this project. The OPSB docket for 21-0679-EL-BNR is behind the PUCO block, so
+    the case's actual disposition, the as-built scope and the true in-service date
+    are unconfirmed — what is recorded below is the applicant's own schedule as it
+    stood in March 2023, by which time every milestone was already in the past.
+
+# --- The case ----------------------------------------------------------------
+opsb_case:
+  tag: '[verified]'
+  case_no: 21-0679-EL-BNR
+  instrument: Construction Notice
+  applicant: AES Ohio (The Dayton Power and Light Company)
+  source: archived project page, "Where can I get more information?" — "The Case Number for AES Ohio's Clinton 345 kV Extension Project is 21-0679-EL-BNR."
+  note: >-
+    A -BNR suffix is the Construction Notice track, distinct from the -BLN Letter
+    of Notification the 2026 Fayette-Clinton line was filed under. Two different
+    cases, two different tracks, five years apart, at the same substation.
+
+# --- Scope, verbatim ----------------------------------------------------------
+project:
+  tag: '[verified]'
+  verbatim: >-
+    "AES Ohio plans to install a second 345/69kV transformer at the Clinton
+    Substation, located in Wilmington, Ohio. This will also require the addition
+    of three 345kV breakers to establish a ring bus, 69kV circuit breakers, and
+    associated equipment."
+  location_as_stated: 46 E Dalton Rd, east of SR-68, Wilmington, Clinton County, Ohio
+  location_note: >-
+    This is the source of the "46 E Dalton Rd" address in issue #1469. The Clinton
+    County parcel layer has no parcel at that address; the DP&L substation parcel
+    (270-12-10-35-0000-00, 25.29 ac) carries the location address "US 68". See
+    clinton-delivery-point.interconnection.yaml, clinton_substation_location.
+
+# --- Why: the part the issue dropped ------------------------------------------
+need_statement:
+  tag: '[verified]'
+  verbatim: >-
+    "The project is needed to relieve operational loading and reliability
+    concerns on the 69kV system in the area. Also, the project will help improve
+    operational flexibility through the addition of the second transformer and
+    line allowing AES Ohio to take outages in the area for maintenance while
+    keeping a source into the Wilmington area. This project is also needed to
+    help ensure deliverability of the planned solar generation expansions along
+    the Stuart-Clinton 345kV corridor."
+  finding: >-
+    Three stated drivers — 69 kV loading and reliability, maintenance-outage
+    flexibility, and SOLAR GENERATION DELIVERABILITY along the Stuart-Clinton 345
+    kV corridor. Not one of them is load growth, a large customer, or a data
+    center. This is the same generation-side posture that issue #1469 correctly
+    fences off in the case of the Lynchburg 345 kV substation; the fence belongs
+    around this project too.
+
+# --- Schedule: the decisive fact ----------------------------------------------
+schedule:
+  tag: '[verified]'
+  source: archived project page, "Estimated project schedule"
+  lon_application_filed: '2021-07'
+  opsb_approval: '2021-08'
+  construction_begins: '2021-10'
+  project_in_service: '2022-06'
+  finding: >-
+    Every milestone predates the Wilmington data-center corridor. The AWS Cosler
+    Farm campus was disclosed in November 2025 (data/extracted/wilmington/
+    data-centers.md); the Ardent/TAC rezoning passed in February 2026; the
+    Fayette-Clinton 345 kV LON was filed in March 2026. This substation extension
+    was energized in June 2022. A project cannot be an instrument of a campus
+    that was announced three and a half years after it was switched on.
+
+# --- The correction -----------------------------------------------------------
+correction_to_issue_body:
+  tag: '[verified]'
+  issue_said: >-
+    "**Clinton 345kV Substation Extension** — second 345/69kV transformer + three
+    new 345kV breakers (ring bus) at the existing Clinton Substation, 46 E Dalton
+    Rd, Wilmington. `[verified — AES Ohio project page]`", listed as instrument 2
+    of the facility domain's power-instrument thread, with an acceptance
+    criterion to record it "alongside the line route".
+  the_record_says: >-
+    The scope quotation is exact and the [verified] tag on the scope is fair. What
+    is wrong is the tense and the thread. It is a completed 2021-22 project
+    (21-0679-EL-BNR, in service June 2022) whose need statement is 69 kV
+    reliability and solar deliverability, and the source page for it has since
+    been unpublished.
+  what_replaces_it: >-
+    There IS a current Clinton substation expansion, and it is a different scope
+    with a different driver: PJM's 2026-07-07 TEAC solution slide prices
+    "Clinton Substation: Expand the Clinton 345 kV substation to accommodate the
+    additional 345 kV line, 2 customer feeds, one 300-MVAR capacitor (two steps of
+    150 MVAR)" at $65.4M with a projected in-service of 2028-12-31, plus a
+    150-MVAR STATCOM by 2030-12-01. THAT is the data-center-driven substation
+    work. Its own OPSB case number and project page are [open] — AES's fact sheet
+    says the substation expansions have "separate Ohio Power Siting Board (OPSB)
+    filings and project websites", and neither has been found.
+  how_this_was_missed: >-
+    The issue's research refresh read a live project page and a scope description
+    that matched the current build-out's shape, and did not read the schedule
+    block underneath it. The schedule is what dates a utility project page; the
+    scope paragraph never does. Worth carrying forward as a reading habit for the
+    other sites' AES/AEP project-page pulls — Findlay #1464 hit the mirror image
+    of this, where a filing stated a PLAN and the in-service confirmation did not
+    exist, and logged it as [open] rather than "in service".

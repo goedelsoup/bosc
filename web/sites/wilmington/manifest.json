@@ -2,9 +2,9 @@
   "site": "wilmington",
   "bundle_version": "1.0.0",
   "contract_version": "2.0.0",
-  "generated_at": "2026-08-05T22:19:34+00:00",
+  "generated_at": "2026-08-06T13:39:49+00:00",
   "feed_count": 32,
-  "row_total": 529,
+  "row_total": 531,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 2
     },
     {
       "name": "exhibits",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 58
+      "count": 59
     },
     {
       "name": "geo/campus",

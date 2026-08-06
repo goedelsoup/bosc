@@ -235,14 +235,50 @@ itself is on record `[open — the 2026-07-11 web sweep found none; an auditable
 Authority tenant roster / permit index) is still to-run]`; its large-load draw remains
 worth tracking but is a separate thread.
 
-## 4 — Grid / power context (→ #1469)
+## 4 — Grid / power context (worked at #1469)
 
-- `[verified — AES Ohio project pages]` AES Ohio filed OPSB **25-0871-EL-BLN**: the
-  **Fayette–Clinton ~30-mi 345kV** line plus the **Clinton Substation 345/69kV** extension.
-- `[reference]` The "**1.5 GW**" figure in circulation is press analysis of PJM filings
-  (DDN/Journal-News), **not a document in hand** — do not promote it past `[reference]`.
+Full records: [`../grid/wilmington/`](../grid/wilmington/) (the interconnection need, the
+siting case, and the retired substation premise) and
+[`power-watch.yaml`](power-watch.yaml) (the standing watch).
+
+- `[verified — service copy of the LON, published by the City of Wilmington]` AES Ohio
+  submitted a Letter of Notification to the OPSB on **2026-03-19**, PUCO case
+  **25-0871-EL-BLN**, for "approximately **29 miles** of new single-circuit 345 kV line
+  connecting the Fayette Substation in Jeffersonville, Ohio to the Clinton Substation near
+  Wilmington, Ohio." AES's own fact sheet says ~30 miles and PJM's solution slide says ~27;
+  three documents, three lengths, recorded and not reconciled.
+- `[verified — PJM TEAC Dayton Supplemental, 2026-07-07]` **Wilmington's own disclosed load
+  is 500 MW, not 1.5 GW.** PJM M-3 Need **Dayton-2025-002** — "AES Ohio has a customer
+  request for service in the vicinity of its Clinton Substation near Wilmington, OH" — ramps
+  **35 MW (1/2028) → 100 MW (4/2028) → 300 MW (1/2029) → 500 MW (1/2030)**. This is *total
+  requested new load* at a delivery point, i.e. facility demand, **not** IT load.
+- `[verified — same deck, previous slide]` **The "1.5 GW" is Fayette County's.** Need
+  **Dayton-2025-001** — "in the vicinity of its Fayette Substation in **Jeffersonville, OH**"
+  — ramps 35 MW (9/2026) → 480 MW (9/2028) → **1.5 GW (1/2031)**. AES Ohio's own project
+  pages for the two Fayette customer-feed cases (OPSB 25-0742/25-0743-EL-BLN) say it in its
+  own words: "1.5 gigawatts of load growth in the **Jeffersonville, Ohio area**", serving "a
+  new data center customer near AES Ohio's Fayette Substation in Jeffersonville, Ohio."
+  **This entry previously repeated the press misattribution of that figure to Wilmington; it
+  was wrong and is corrected here.**
+- `[verified — PJM]` The two needs share one priced solution: **$589.8M** total (revised up
+  from $480M), projected in service **01/2031**, status Conceptual → **Engineering**. The
+  Clinton-end items are the substation expansion ($65.4M, ISD 2028-12-31), two ~2-mile 345 kV
+  **customer feeds** ($20M), the Clinton–Fayette line ($187M, revised up from $100M with its
+  ISD pulled *earlier* to 2030-01-18), and relocation of the Clinton–Lynchburg ($3.2M) and
+  Clinton–Greene ($8.3M) 345 kV lines.
+- `[open]` **No instrument joins the 500 MW to a campus.** The filing names a substation and
+  a city — never Amazon, Ardent, TAC, or a parcel. The Clinton Substation parcel is **53 m**
+  from the nearest Ardent/TAC petitioned-rezoning tract (§2) and **1.03 mi** from the nearest
+  AWS-owned Cosler Farm holding (§1). The campus IT load therefore stays a screening
+  `[inference]`; see [`power-watch.yaml`](power-watch.yaml) for what would close the join.
+- `[verified]` The **Clinton 345 kV Substation Extension** (second 345/69 kV transformer,
+  three 345 kV breakers, ring bus) is **not** a data-center instrument: it is OPSB
+  **21-0679-EL-BNR**, **in service June 2022**, needed for 69 kV loading and reliability and
+  for "deliverability of the planned solar generation expansions along the Stuart–Clinton
+  345kV corridor." The AES page describing it has since been unpublished.
 - `[reported — WYSO]` AES Ohio coordinated with Amazon for over a year on capacity before
-  public disclosure.
+  public disclosure. Not re-verified at #1469 — wnewsj.com, which carries the parallel City
+  Council account, returns HTTP 403 to automated retrieval.
 
 ## 5 — Ballot threads
 
@@ -324,8 +360,16 @@ worth tracking but is a separate thread.
   · <https://rivers.gov/river/little-miami>
 - SWOAQA jurisdiction (Butler, Clermont, Clinton, Hamilton, Warren counties):
   <https://www.southwestohioair.org/>
-- The "1.5 GW" press analysis of PJM filings (Wilmington ranked by load):
+- The "1.5 GW" press ranking of PJM filings — **the source of the misattribution corrected in
+  §4**; it labelled the Fayette-County figure "Wilmington". The URL issue #1469 cites
+  (journal-news.com) returns HTTP 404; this daytondailynews.com mirror of the same story ID
+  was not retrieved either:
   <https://www.daytondailynews.com/news/proposed-data-center-could-be-one-of-ohios-biggest-power-guzzlers/PIHRA4ZAGJC75OTEGK5EPR3VIY/>
+- The instruments that replace it — PJM TEAC Dayton Supplemental decks (the M-3 load ramps
+  and the priced solution), captured under `data/documents/grid/wilmington/`:
+  <https://www.pjm.com/committees-and-groups/committees/teac>
+- The Fayette–Clinton 345 kV LON, served on the City and published by it:
+  <https://wilmingtonohio.gov/aes-notification-fayette-to-clinton-345-kv-transmission-line-project/>
 - OHD000001 — **withdrawn 2026-07-21**; Ohio EPA Community Notice (captured in corpus as
   `data/documents/oepa/2026-07-21-ohio-epa-will-not-finalize-data-center-general-permit.npdes-general-permits.html`):
   <https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/npdes-general-permits>

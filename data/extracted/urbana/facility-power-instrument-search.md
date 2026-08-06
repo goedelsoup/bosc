@@ -35,10 +35,26 @@ in Champaign County / Urbana / Urbana Township**:
 | Fayette | **Jeffersonville, OH** (Fayette Co.) | 35 MW (2026) · 480 MW (2028) · 1.5 GW (2031) |
 | Clinton | **Wilmington, OH** (Clinton Co.) | 35 MW · 100 MW (2028) · 300 MW (2029) · 500 MW (2030) |
 
-Source: PJM TEAC, [20260203 Dayton Supplemental Projects](https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260203/20260203-item-06---dayton-supplemental-projects.pdf)
-(item 06); corroborated by the [PJM PC/TEAC Feb. 3 2026 brief](https://www.rtoinsider.com/125312-pjm-pc-teac-020326/).
-The filing's own text names each request "in the vicinity of its **[substation]** substation in
+Source: PJM TEAC Dayton Supplemental Projects decks; corroborated by the
+[PJM PC/TEAC Feb. 3 2026 brief](https://www.rtoinsider.com/125312-pjm-pc-teac-020326/).
+The filings' own text names each request "in the vicinity of its **[substation]** substation in
 **[city, county]**." **Urbana / Champaign County does not appear.** `[verified]`
+
+> **Citation corrected 2026-08-06 (#1469).** This table originally cited the
+> [20260203 deck](https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260203/20260203-item-06---dayton-supplemental-projects.pdf)
+> (item 06) as its single source, qualified only by the parenthetical "and the surrounding
+> cycle". That deck contains **two** needs — Dayton-2025-007 (Eldean) and Dayton-2026-001
+> (Stuart) — and does **not** contain the Fayette or Clinton rows. Those are in the
+> [20260707 deck](https://www.pjm.com/-/media/DotCom/committees-groups/committees/teac/2026/20260707/20260707-item-11---dayton-supplemental-projects.pdf)
+> (item 11), as Needs **Dayton-2025-001** and **Dayton-2025-002**, both first presented at
+> the Need Meeting of 2025-02-04. The Feb, May and July 2026 decks are all committed at
+> `data/documents/grid/wilmington/` with a capture manifest. **The table's figures are
+> correct** — including, notably, both the Fayette/Jeffersonville 1.5 GW and the
+> Clinton/Wilmington 500 MW, which this file had right while
+> `data/extracted/wilmington/data-centers.md` carried the press misattribution of the 1.5 GW
+> to Wilmington. Only the source attribution was wrong. The Darby and Airport rows are from
+> neither committed deck and their filing is **not** re-established here — treat those two
+> rows as uncited pending a read of the cycle that carries them.
 
 ### 1b. Interconnection queue (generation) — Champaign County
 

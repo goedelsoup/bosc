@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-06T03:02:35.517151+00:00'
+reconciled_at: '2026-08-06T13:36:52.982013+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -212,8 +212,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: bd8cd371b567e80d5df85e9323d31ef3d6c2d6dfed842f3d0bff95796fca6b8c
-    size_bytes: 367770
+    sha256: 9c93fab911b2bffc7397f2ed75489fc2a3ea67c64ba43ea686e69b64a62b709f
+    size_bytes: 371435
     lfs_materialized: true
     file_count: 14
     missing: []
@@ -282,8 +282,8 @@ entries:
     site_scope: site:west-union
   data-centers-wilmington:
     exists: true
-    sha256: c309ed627411910a1ec71150648e61e5e01e4d980c5ec208cb62b52045e96d1f
-    size_bytes: 25485
+    sha256: 6e7c3a26f6f9ee7aa89c144ab1461257b455f4cc2d195dac4fa3920cf31becad
+    size_bytes: 29150
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -1482,8 +1482,8 @@ entries:
     site_scope: site:troy-piqua
   urbana:
     exists: true
-    sha256: 87114379b37b05d51220f74e69d9013bee8f43e008df57169e2348380e53e31a
-    size_bytes: 165993
+    sha256: 28d835ef0efc94daa123a64cf034d916f09835f5756ea404a09492727fd02407
+    size_bytes: 167249
     lfs_materialized: true
     file_count: 11
     missing: []
@@ -1580,10 +1580,20 @@ entries:
     asof: null
     stale: false
     site_scope: site:wilmington
+  wilmington-power-instruments:
+    exists: true
+    sha256: ba167efc84f34e22448fef1a00e44804b924a5589dd908ec230a3415333a322e
+    size_bytes: 67654
+    lfs_materialized: true
+    file_count: 4
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:wilmington
   wilmington-watch-items:
     exists: true
-    sha256: 9d8f9904a56c8b020dee930eb90a51ebbe1fc145ed0c49994be3e4aa546771ea
-    size_bytes: 644
+    sha256: 511301efbdc97b26df2094bd90678e775278b36e732d7811381eaa9c7e379d60
+    size_bytes: 1998
     lfs_materialized: true
     file_count: 1
     missing: []
