@@ -50,14 +50,20 @@ def _hermetic_settings_env() -> Iterator[None]:
             if line and not line.startswith("#") and "=" in line:
                 names.add(line.split("=", 1)[0].strip())
 
-    saved = {name: os.environ.pop(name) for name in names if name in os.environ}
+    # ``None`` records "absent before the session" so teardown can delete a name a test added,
+    # rather than only restoring the ones that happened to exist — a true restore, not a merge.
+    saved = {name: os.environ.pop(name, None) for name in names}
     previous_env_file = Settings.model_config.get("env_file")
     Settings.model_config["env_file"] = None
     try:
         yield
     finally:
         Settings.model_config["env_file"] = previous_env_file
-        os.environ.update(saved)
+        for name, value in saved.items():
+            if value is None:
+                os.environ.pop(name, None)
+            else:
+                os.environ[name] = value
 
 
 # --- the collected suite, before sharding (#1772) --------------------------------------------
