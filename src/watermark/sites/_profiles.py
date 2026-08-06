@@ -1790,11 +1790,13 @@ _URBANA = SiteProfile(
     # source "USGS gage 03267000, 1997 flow document". This is the design low flow OEPA uses
     # for the Mad River wasteload allocation; it supersedes the earlier [derived] LP3 value
     # (53.67 cfs, 1980-2024). The 2025-cycle renewal (app eDoc 3832476, filed 2025-05-29) had
-    # not issued as of the 2026-07-10 re-check (#1355) — OEPA doc library still serves the 2020
-    # issuance byte-identical, ECHO reports the permit "Expired" — permit in administrative
-    # continuance past its 2025-11-30 expiry, so the 2020 fact sheet (corpus:
-    # oepa/urbana/1PD00011.fs.pdf) is the effective instrument. Re-verify this passby if/when the
-    # renewal issues and its fact sheet revises the 7Q10.
+    # still not issued as of the 2026-08-06 re-check (#1355), on three checks — OEPA doc library
+    # still serves the 2020 issuance byte-identical, ECHO (ICIS-NPDES extract 2026-07-31) reports
+    # the permit "Expired", and eDoc carries no Permit doc under 1PD00011 after the 2025-09-19
+    # application package — so the permit remains in administrative continuance past its
+    # 2025-11-30 expiry and the 2020 fact sheet (corpus: oepa/urbana/1PD00011.fs.pdf) is the
+    # effective instrument. Re-verify this passby if/when the renewal issues and its fact sheet
+    # revises the 7Q10.
     passby_primary_cfs=35.0,
     passby_secondary_cfs=0.0,  # [open]
     # facility CONFIRMED (#1327) — the "Urbana Technology Hub" data-center campus, corner of
