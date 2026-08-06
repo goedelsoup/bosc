@@ -203,9 +203,18 @@ site cannot slip live without the deliberate two-field change.
 Once the site reaches parity, flip `status: "live"` + `selectable: true` for it in
 [`data/sites.yaml`](../data/sites.yaml) — the identity SSOT — then run `watermark sites sync` so
 the generated frontend registry carries it. Both fields are YAML-authoritative; nothing in
-`web/` is hand-edited to promote a site. **Note the single-live-build constraint:** today only Lima is a
-built site (re-rooted under `/bosc`); standing up a *second* live build at its own root is a
-deeper, separate cutover, not part of routine onboarding.
+`web/` is hand-edited to promote a site. **Note the single-live-build constraint:** only Lima is a
+built site at its *own root* (re-rooted under `/bosc`); standing up a *second* root build is a
+deeper, separate cutover, not part of routine onboarding. Promoting a peer to `selectable` is not
+that cutover — it publishes the site's inner pages under `/network/<slug>/…`, which Fort Wayne,
+Urbana and Troy-Piqua already do.
+
+**Promotion is what publishes a site at all.** `selectableSitePaths()` in
+[`web/packages/core/src/sites.ts`](../web/packages/core/src/sites.ts) drives `getStaticPaths` for
+every `network/[site]/…` route, so an un-promoted site serves only its landing page no matter how
+complete its bundle is. A site sitting at `case` or `reference` tier while non-selectable has
+committed, merged investigation that no reader can reach — treat that as a backlog item, not a
+steady state.
 
 ## What's shared vs. per-site vs. the known lift
 

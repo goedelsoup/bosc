@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -16,6 +17,47 @@ from watermark.config import Settings
 REPO_ROOT = Path(__file__).resolve().parents[1]
 EXTRACTED = REPO_ROOT / "data" / "extracted"
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
+
+
+# --- hermetic Settings: a developer's `.env` must not reach the suite -------------------------
+# `Settings` picks up `.env` by TWO independent routes, and both are live on a configured
+# machine:
+#
+#   1. `mise.toml`'s ``[env] _.file = ".env"`` injects the file into the process environment,
+#      so `mise run check` hands pytest whatever the developer configured.
+#   2. ``SettingsConfigDict(env_file=".env")`` in `watermark.config` reads the file *off disk*
+#      at construction time — which survives a scrubbed process environment entirely.
+#
+# Route 2 is the one that bites: unsetting ``AWS_REGION`` in the environment does nothing,
+# because the next ``Settings()`` just re-reads it from the file. CI has no `.env`, so the
+# suite is green there and red locally, and the tests that catch it are precisely the ones
+# asserting a credential or region is *absent* — `test_store_from_settings_requires_credentials`,
+# `test_settings_expose_greenops_knobs_with_safe_defaults`, and the agent's base-key fallback.
+# That made `mise run check` — the gate the root CLAUDE.md says to run before declaring done —
+# unpassable for anyone who had filled in `.env`.
+#
+# Both routes are closed for the session so the local gate means what CI means. Route 1 is
+# closed by name, using `.env`'s own keys as the definition of "what mise injected", so a
+# shell-exported override is scrubbed too rather than only the file's copy.
+@pytest.fixture(autouse=True, scope="session")
+def _hermetic_settings_env() -> Iterator[None]:
+    """Neutralize the repo-root `.env` for the whole session (both routes), then restore it."""
+    dotenv = REPO_ROOT / ".env"
+    names: set[str] = set()
+    if dotenv.exists():
+        for raw in dotenv.read_text(encoding="utf-8").splitlines():
+            line = raw.strip()
+            if line and not line.startswith("#") and "=" in line:
+                names.add(line.split("=", 1)[0].strip())
+
+    saved = {name: os.environ.pop(name) for name in names if name in os.environ}
+    previous_env_file = Settings.model_config.get("env_file")
+    Settings.model_config["env_file"] = None
+    try:
+        yield
+    finally:
+        Settings.model_config["env_file"] = previous_env_file
+        os.environ.update(saved)
 
 
 # --- the collected suite, before sharding (#1772) --------------------------------------------

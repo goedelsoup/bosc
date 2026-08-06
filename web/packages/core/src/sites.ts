@@ -6,9 +6,16 @@
  * cross-references between them are real. Lima is the live reference build; the basin
  * sites come online incrementally.
  *
- * Only a `selectable` site can be switched into (today: Lima alone). Every other site —
- * including Fort Wayne, a live facility we can onboard fast but haven't built yet — routes
- * to its coming-soon page (#305) and is never rendered as a switchable destination.
+ * Only a `selectable` site can be switched into — today Lima, Fort Wayne, Urbana and
+ * Troy-Piqua. Every other site routes to its coming-soon page (#305) and is never rendered
+ * as a switchable destination.
+ *
+ * ⚠️ `selectable` is a far heavier gate than "appears in the switcher": {@link selectableSitePaths}
+ * drives `getStaticPaths` for every `network/[site]/…` route, so a non-selectable site publishes
+ * NO inner pages at all — only its landing. Nine sites currently bundle at `case` or `reference`
+ * tier without being selectable (findlay and wpafb have all five readiness domains live), which
+ * means their merged, committed investigation is unreachable in the built site. Promotion is a
+ * manual, parity-gated edit to `data/sites.yaml` — see docs/onboarding.md §5.
  */
 
 /** Site BUILD lifecycle — our progress assembling the *website* (a separate clock from the data
@@ -173,7 +180,7 @@ const WALKS: Partial<Record<string, readonly WalkRef[]>> = {
 
 /** The single source of truth for the switcher, the coming-soon pages, and the basin map.
  *  Order is the display order in the switcher — driven by `data/sites.yaml` order (#1027).
- *  Run `bosc sites sync` to regenerate `sites-registry.json` when the YAML changes. */
+ *  Run `watermark sites sync` to regenerate `sites-registry.json` when the YAML changes. */
 export const SITES: readonly NetworkSite[] = sitesRegistry.sites.map(
   (entry): NetworkSite => ({
     slug: entry.slug,
@@ -285,8 +292,11 @@ export function comingSoonFrom(sites: readonly NetworkSite[]): NetworkSite[] {
  * `getStaticPaths` entries for the `network/[site]/…` routes (#724/#734): one per *selectable*
  * site, keyed by its URL id (`siteBase(slug)` minus `/network/`), with the registry `slug` passed
  * as a prop so a page can thread it into `siteHref(slug, …)` / `loadFeed(name, slug)` (#739).
- * Today that's Lima alone, so these routes reproduce the live build; a second selectable site
- * (#740) gets its own build with no new page files.
+ * Today that's Lima, Fort Wayne, Urbana and Troy-Piqua; each additional selectable site gets its
+ * own build with no new page files (#740).
+ *
+ * This function IS the publication gate: a site absent from this list has no inner pages built,
+ * however complete its bundle is. See the `selectable` note in the module header.
  */
 export function selectableSitePaths(): Array<{ params: { site: string }; props: { slug: string } }> {
   return selectablePathsFrom(SITES);

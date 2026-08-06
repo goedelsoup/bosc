@@ -207,7 +207,7 @@ export function loadManifest(slug: string = activeSite()): Manifest {
     throw new Error(
       `Bundle contract_version "${manifest.contract_version}" (site "${slug}") is incompatible ` +
         `with this frontend (expected major ${EXPECTED_CONTRACT_MAJOR}). Regenerate with a ` +
-        `matching \`bosc export\`, or bump EXPECTED_CONTRACT_MAJOR in src/lib/bundle.ts.`,
+        `matching \`watermark export\`, or bump EXPECTED_CONTRACT_MAJOR in src/lib/bundle.ts.`,
     );
   }
   cachedManifests.set(slug, manifest);
