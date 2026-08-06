@@ -1,0 +1,60 @@
+id: data-centers-west-union
+title: West Union / Adams County OH — Data-Center Activity Register
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: Adams County official AWS page (amazon.adamscountyoh.gov) + its project brochure;
+    PJM TEAC Dayton Supplemental deck 2026-02-03 (Need Dayton-2026-001); Ohio EPA DSW
+    Construction + Industrial NOI general-permit lists (report date 2026-08-05); USACE
+    Nationwide Permit 39 verification 2026-02-18 (via The People's Defender); WCPO I-Team
+    (2026); Ohio Capital Journal / Ballotpedia (Conserve Ohio amendment)
+license: public record / public domain
+access_tier: public
+site_scope: site:west-union
+storage:
+- relpath: extracted/west-union/data-centers.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- amazon
+- aws
+- buck-canyon
+- 68-yards
+- stuart-station
+- killen-station
+- aes-ohio
+- pjm-teac
+- adams-county
+- west-union
+- ohio-river
+- sweep
+notes: 'First Adams County sweep (2026-08-05, #1983). It INVERTS the issue premise: a disclosed
+  AWS campus exists — $10B / 500 jobs on the county''s own adamscountyoh.gov domain — on the
+  1,016-ac former DP&L landfill north of the retired J.M. Stuart Station, Sprigg Twp (1022
+  Ginger Ridge Rd, Manchester). Instruments: USACE NWP 39 verification 2026-02-18 (applicant
+  68 Yards LLC; 12 buildings; 1,893 lf stream + 0.06 ac wetland; 3 cemeteries buffered) and
+  Ohio EPA construction NOI 0GC04922*AG issued 2026-06-08 (applicant Derek Harmon / Buck
+  Canyon LLC; 535.0 ac disturbance). Load: PJM TEAC Need Dayton-2026-001 (2026-02-03) — AES
+  Ohio customer request at Stuart Substation, 100 MW 11/2028 ramping to 1,300 MW 03/2032,
+  NEED stage only, no solution or cost (unlike Marysville $168M and Tipp City $25.8M in the
+  same deck). CENTRAL CAVEAT: no instrument names both AWS and the 1,300 MW — the link is
+  [inference]; 68 Yards vs Buck Canyon affiliation is [open]. Cooling is Ohio River (~19.7
+  Mgal/yr, air-cooled ~97% of year, evaporative <3%); domestic 40,000 gpd max from ACRWD.
+  ROUTE-BLIND FINDING: the campus drains via Elk Run/Carter Hollow to the Ohio River
+  mainstem, NOT the profile-screened ohio-brush-creek gage 03237500. Governance: county and
+  township essentially unzoned (Sprigg voluntary moratorium 2026-03-02 has no land-use force;
+  Monroe forming a zoning commission), so no local approval is in the project path; the
+  Conserve Ohio 25 MW constitutional ban FAILED to qualify (~70k of 413,488 by 2026-06-18,
+  signatures retained, targeting 2027). Drove SiteProfile.facility () -> a SiteFacility
+  (Buck Canyon / AWS / hyperscale / hybrid_adiabatic, $10B), readiness.facility absent ->
+  seeded and inquiry seeded -> live; tier unchanged (backdrop). it_load_mw is deliberately
+  None (load entirely [open]) so no fabricated campus draw is published. Open: deed/parcel
+  IDs, SOS registrations (#1950 blocked), air PTI, Ohio River intake authorization,
+  receiving POTW, Ohio River 7Q10 — plus the 0GC04922*AG NOI + SITE MAP, whose eDocument
+  portal route is METHOD-BLOCKED (positive/negative controls returned byte-identical default
+  grids), so its absence is [open] and never a documented negative.'

@@ -1,11 +1,11 @@
 [
   {
     "chapter": "method",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "method",
-      "facilityKey": null,
+      "facilityKey": "buck-canyon",
       "status": "data",
       "statusReasons": [],
       "stats": [],
@@ -15,34 +15,38 @@
   },
   {
     "chapter": "project",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "project",
-      "facilityKey": null,
-      "status": "gap",
+      "facilityKey": "buck-canyon",
+      "status": "partial",
       "statusReasons": [
-        "a disclosed project — none is on the record at this site yet; the day one is, this chapter names it."
+        "the IT load on the record is a screening bracket, not an instrument-grounded figure"
       ],
-      "stats": [],
-      "gaps": [
+      "stats": [
         {
-          "wouldScreen": "the project this study screens — its operator, scale, load, and cooling design.",
-          "missingRecord": "a disclosed project — none is on the record at this site yet; the day one is, this chapter names it.",
-          "producer": "the operator's own filings — a permit application, a rezoning, an interconnection request",
-          "leadIds": null
+          "label": "Cooling",
+          "value": "hybrid adiabatic",
+          "unit": null,
+          "evidence": "inference",
+          "basis": null,
+          "sub": "an operator claim — a claim is not an instrument",
+          "source": null,
+          "warn": null
         }
       ],
+      "gaps": [],
       "caveats": []
     }
   },
   {
     "chapter": "assembly",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "assembly",
-      "facilityKey": null,
+      "facilityKey": "buck-canyon",
       "status": "partial",
       "statusReasons": [
         "the record carries no conveyance instrument — the land history has not been produced for this site"
@@ -54,27 +58,34 @@
   },
   {
     "chapter": "water-supply",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "water-supply",
-      "facilityKey": null,
-      "status": "na",
+      "facilityKey": "buck-canyon",
+      "status": "gap",
       "statusReasons": [
-        "No disclosed project — this chapter is computed the day one is on the record."
+        "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here."
       ],
       "stats": [],
-      "gaps": [],
+      "gaps": [
+        {
+          "wouldScreen": "how much water this project consumes at buildout — monthly, against the receiving water's cited design low flows.",
+          "missingRecord": "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here.",
+          "producer": "the water utility's contract, a wastewater permit application, or the operator's cooling-plant spec",
+          "leadIds": null
+        }
+      ],
       "caveats": []
     }
   },
   {
     "chapter": "discharge",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "discharge",
-      "facilityKey": null,
+      "facilityKey": "buck-canyon",
       "status": "partial",
       "statusReasons": [
         "baseline context only — the project-side record has not been produced"
@@ -88,75 +99,103 @@
   },
   {
     "chapter": "heat",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "heat",
-      "facilityKey": null,
-      "status": "na",
+      "facilityKey": "buck-canyon",
+      "status": "gap",
       "statusReasons": [
-        "No disclosed project — this chapter is computed the day one is on the record."
+        "a thermal characterization for this project — none exists on the record."
       ],
       "stats": [],
-      "gaps": [],
+      "gaps": [
+        {
+          "wouldScreen": "how much heat the discharge adds to a reach screened against Ohio's numeric temperature criterion at its design low flows.",
+          "missingRecord": "a thermal characterization for this project — none exists on the record.",
+          "producer": "the NPDES application's thermal load sheet, or the permit's §316(a) demonstration",
+          "leadIds": null
+        }
+      ],
       "caveats": []
     }
   },
   {
     "chapter": "groundwater",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "groundwater",
-      "facilityKey": null,
-      "status": "na",
+      "facilityKey": "buck-canyon",
+      "status": "gap",
       "statusReasons": [
-        "No disclosed project — this chapter is computed the day one is on the record."
+        "a well survey and any dewatering record — neither has been produced."
       ],
       "stats": [],
-      "gaps": [],
+      "gaps": [
+        {
+          "wouldScreen": "the wells within the drawdown radius, and whether construction dewatering was permitted and where the water went.",
+          "missingRecord": "a well survey and any dewatering record — neither has been produced.",
+          "producer": "state well logs, a dewatering permit, and the contractor's discharge records",
+          "leadIds": null
+        }
+      ],
       "caveats": []
     }
   },
   {
     "chapter": "stormwater",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "stormwater",
-      "facilityKey": null,
-      "status": "na",
+      "facilityKey": "buck-canyon",
+      "status": "gap",
       "statusReasons": [
-        "No disclosed project — this chapter is computed the day one is on the record."
+        "the site grading and drainage plan — requested, not produced."
       ],
       "stats": [],
-      "gaps": [],
+      "gaps": [
+        {
+          "wouldScreen": "the runoff a campus-scale impervious surface adds to the design storm, routed down the reach.",
+          "missingRecord": "the site grading and drainage plan — requested, not produced.",
+          "producer": "the site plan's grading/drainage sheets and the construction stormwater permit (NOI)",
+          "leadIds": null
+        }
+      ],
       "caveats": []
     }
   },
   {
     "chapter": "air",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "air",
-      "facilityKey": null,
-      "status": "na",
+      "facilityKey": "buck-canyon",
+      "status": "gap",
       "statusReasons": [
-        "No disclosed project — this chapter is computed the day one is on the record."
+        "an air-permit application for this project — none is on the record."
       ],
       "stats": [],
-      "gaps": [],
+      "gaps": [
+        {
+          "wouldScreen": "the dispersion footprint of the campus's permitted backup-generator fleet.",
+          "missingRecord": "an air-permit application for this project — none is on the record.",
+          "producer": "the state air permit application (PTI/Title V) and its emissions tables",
+          "leadIds": null
+        }
+      ],
       "caveats": []
     }
   },
   {
     "chapter": "labor",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "labor",
-      "facilityKey": null,
+      "facilityKey": "buck-canyon",
       "status": "data",
       "statusReasons": [],
       "stats": [
@@ -179,14 +218,14 @@
   },
   {
     "chapter": "power",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "power",
-      "facilityKey": null,
+      "facilityKey": "buck-canyon",
       "status": "partial",
       "statusReasons": [
-        "no disclosed campus load to size against the grid — the backdrop stands on its own"
+        "the campus load is a screening bracket — the demand-pressure read is withheld until an instrument grounds it"
       ],
       "stats": [
         {
@@ -200,7 +239,14 @@
           "warn": null
         }
       ],
-      "gaps": [],
+      "gaps": [
+        {
+          "wouldScreen": "the campus's share of the serving utility's, balancing authority's, and state's annual load, from a grounded load figure.",
+          "missingRecord": "an instrument that grounds the IT load — an air permit or an interconnection filing; the load on the record is a screening bracket.",
+          "producer": "the state air-permit file or the RTO interconnection queue",
+          "leadIds": null
+        }
+      ],
       "caveats": [
         "Grid foundation layer (#94): per-site grid backdrop only. This site has no documented data-center facility, so there is no campus load to express as a share — the utility/BA/state denominators are real connector-sourced data, but the campus load share awaits the site's facility disclosure (the data-center dimension onboarding does not capture)."
       ]
@@ -208,27 +254,36 @@
   },
   {
     "chapter": "fiscal",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "fiscal",
-      "facilityKey": null,
-      "status": "na",
+      "facilityKey": "buck-canyon",
+      "status": "gap",
       "statusReasons": [
-        "No disclosed project — this chapter is computed the day one is on the record."
+        "no fiscal instrument is on the record"
       ],
       "stats": [],
-      "gaps": [],
-      "caveats": []
+      "gaps": [
+        {
+          "wouldScreen": "what tax revenue is being traded away and for how long, before the trade is approved.",
+          "missingRecord": "the abatement agreement, the school-board resolution, and the county auditor's abatement report — all public records, none produced into this record.",
+          "producer": "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
+          "leadIds": null
+        }
+      ],
+      "caveats": [
+        "Disclosed investment: $10.0B — the operator's own announcement, not an instrument; the abatement agreement that would price the trade is not on the record."
+      ]
     }
   },
   {
     "chapter": "governance",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "governance",
-      "facilityKey": null,
+      "facilityKey": "buck-canyon",
       "status": "partial",
       "statusReasons": [
         "the record carries no legislative instrument and no minutes — the decision path has not been produced for this site"
@@ -240,14 +295,14 @@
   },
   {
     "chapter": "balance",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "balance",
-      "facilityKey": null,
-      "status": "na",
+      "facilityKey": "buck-canyon",
+      "status": "partial",
       "statusReasons": [
-        "No disclosed project — this chapter is computed the day one is on the record."
+        "synthesizes the screened chapters — 1 on the record, 2 partial, 5 gap"
       ],
       "stats": [],
       "gaps": [],
@@ -256,11 +311,11 @@
   },
   {
     "chapter": "missing",
-    "facility_key": null,
+    "facility_key": "buck-canyon",
     "lead_ids": [],
     "model": {
       "id": "missing",
-      "facilityKey": null,
+      "facilityKey": "buck-canyon",
       "status": "data",
       "statusReasons": [],
       "stats": [],

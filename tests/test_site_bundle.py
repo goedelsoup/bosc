@@ -695,7 +695,18 @@ def test_every_committed_bundle_readiness_matches_its_own_feed_counts() -> None:
 _BACKDROP_ABOVE_FLOOR: dict[str, dict[str, str]] = {
     # The 1993 Adams County consent order on the Village WWTP's NPDES 0PC00019*CD (#1278) — one
     # in-scope `enforcement` record, so the domain SEEDS. `live` needs RECORD_LIVE_THRESHOLD (2).
-    "west-union": {"record": "seeded"},
+    #
+    # `facility` seeds on the Buck Canyon / AWS campus disclosed by the #1983 sweep. Its
+    # instruments: Adams County's OWN government domain names the operator
+    # (amazon.adamscountyoh.gov — $10B, 500 jobs, June 2026), the USACE Nationwide Permit 39
+    # verification of 2026-02-18 gives the twelve-building scope in Sprigg Township, and Ohio EPA
+    # construction-stormwater coverage `0GC04922*AG` (issued 2026-06-08) puts 535.0 ac of
+    # disturbance on the state record. It SEEDS rather than lifts because the load is deliberately
+    # `[open]`: the only MW figure — AES Ohio's PJM TEAC Need `Dayton-2026-001`, 100 MW (11/2028)
+    # ramping to 1,300 MW (03/2032) — is filed for an UNNAMED customer, so no instrument joins the
+    # operator to the load and `it_load_mw` stays None rather than publishing an unattributable
+    # campus draw. See data/extracted/west-union/data-centers.md.
+    "west-union": {"record": "seeded", "facility": "seeded"},
 }
 
 

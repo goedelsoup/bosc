@@ -3915,8 +3915,103 @@ _WEST_UNION = SiteProfile(
     supply_gage_secondary="TODO",  # [open] no second active gage on Ohio Brush Creek
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
-    # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
-    facilities=(),  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
+    # grid / facility — a DISCLOSED campus with a deliberately [open] load (#1983).
+    facilities=(
+        SiteFacility(
+            name="Buck Canyon",
+            # The instruments call the project "Buck Canyon" (USACE "Buck Canyon Site Project";
+            # Ohio EPA facility name "Buck Canyon LLC"). Amazon has NOT published a project name
+            # for it, so the site's own regulatory identity is used rather than inventing one.
+            status=FacilityLifecycle.CONFIRMED,
+            # `confirmed`, not `construction`: the network's trigger for that stage is a grading
+            # or building permit (the Sidney precedent — an IDENTICAL OHC000006 construction
+            # coverage did NOT move it; the City grading permit did). Adams County has no county
+            # zoning and the township none in force, so no local grading/building permit will
+            # ever exist here — the stage must move on an observed groundbreaking instead, and
+            # the county's own page still says earthwork is only "expected to begin in 2026".
+            operator="Amazon Web Services (AWS)",
+            operator_citation=(
+                "[verified] Amazon Web Services, named by ADAMS COUNTY ITSELF on its own "
+                "government domain — amazon.adamscountyoh.gov, an `adamscountyoh.gov` subdomain "
+                "carrying the county's Amazon project page and its 'Amazon Data Center Overview, "
+                "Adams County, Ohio' brochure (June 2026). That is the county's publication, not "
+                "a vendor microsite, which is why the operator is [verified] while the LOAD "
+                "below is not. ⚠️ No filed instrument names Amazon: the USACE Nationwide Permit "
+                "39 verification (2026-02-18) names **68 Yards, LLC**, and the Ohio EPA "
+                "construction-stormwater coverage **0GC04922*AG** (issued 2026-06-08, 535.0 ac "
+                "disturbance, 1022 Ginger Ridge Rd, Manchester) names **Derek Harmon / Buck "
+                "Canyon LLC**. Whether those two are the same interest, affiliates, or "
+                "applicant-vs-landowner is [open] — the Ohio SoS chain that would relate them is "
+                "unpulled (#1950). See data/extracted/west-union/data-centers.md."
+            ),
+            end_use=DcEndUse.HYPERSCALE,
+            end_use_citation=(
+                "[reference] hyperscale — AWS runs its own cloud workloads (the canonical "
+                "operator-runs-own-workloads case, docs/end-use-and-workloads.md), not a "
+                "landlord/colocation model. Amazon's own Adams County brochure describes serving "
+                "'millions of customers' off its own platform. No instrument states the end use."
+            ),
+            # ⚠️ THE LOAD IS DELIBERATELY [open] — do not fill this in from the 1,300 MW.
+            #
+            # The only megawatt figure on the record is AES Ohio's PJM TEAC filing of 2026-02-03,
+            # Need `Dayton-2026-001`: "AES Ohio has a customer request for service in the vicinity
+            # of its Stuart Substation in Adams County, OH", ramping 100 MW (11/2028) → 400 →
+            # 700 → 1,100 → **1,300 MW (03/2032)**. That filing names **no customer** — AES Ohio
+            # declined to identify the operator — so attributing it to AWS is an [inference],
+            # strong but unfiled. It is exactly the kind of number this repo refuses to key into
+            # a profile: `it_load_mw` feeds arithmetic (facility_draw = IT x PUE, then the
+            # demand-pressure share of state retail), and that math would publish, as structured
+            # data, a load Amazon has never disclosed and no instrument attributes to it.
+            #
+            # So the load stays entirely [open] (the model's explicit affordance — see
+            # SiteProfile.has_facility_power_basis): `derive_power_basis` returns None, the grid
+            # stack emits the county/AEP-zone backdrop with load_share=None, and the
+            # demand-pressure command skips cleanly rather than sizing a fabricated campus.
+            # The full ramp table, with its [inference] framing, lives in the register.
+            #
+            # Fill this in — as ItLoadGrounding.PERMIT or DISCLOSURE — when an instrument names
+            # BOTH the operator and the load: an Ohio EPA air permit-to-install for the gensets,
+            # a PJM `Dayton-2026-001` Solution-stage presentation, or an AES Ohio load contract.
+            it_load_mw=None,
+            it_load_citation=None,
+            it_load_source=None,
+            # No air permit exists — so no genset count, no rating, no N+1 derivation. Amazon
+            # states the generators are Tier 4 and run "less than 10 hours per generator per
+            # year" but discloses neither a count nor a per-engine rating.
+            facility_type="hyperscale data-center campus — twelve buildings (USACE NWP 39 scope)",
+            disclosed_investment_usd=10_000_000_000.0,
+            disclosure_citation=(
+                "[verified] '$10B planned investment in Adams County' and '500 planned jobs' — "
+                "Adams County's own Amazon page and brochure (amazon.adamscountyoh.gov, June "
+                "2026). The twelve-building scope is [verified] from the USACE Nationwide Permit "
+                "39 verification of 2026-02-18 ('twelve buildings, internal roadways, five "
+                "stormwater basins, and utility infrastructure'), north and east of Ginger Ridge "
+                "Road, west of U.S. Route 52, Sprigg Township. GROSS FLOOR AREA IS [open] — it is "
+                "not disclosed anywhere, so no floor-area screening bracket is available here "
+                "(unlike Urbana #1327 / Troy-Piqua #1482 / Bowling Green #1435)."
+            ),
+            # Cooling: a DISCLOSED archetype, which is rare on this network — Amazon states the
+            # mechanism directly rather than leaving it to a bracket.
+            cooling_model=CoolingModelType.HYBRID_ADIABATIC,
+            cooling_model_citation=(
+                "[reference] hybrid/adiabatic — dry cooling with seasonal evaporative assist, "
+                "disclosed by Amazon in its Adams County brochure (amazon.adamscountyoh.gov, "
+                "June 2026): 'we will rely on outside natural air cooling for about 97% of the "
+                "year and only use water-based cooling during the hottest periods, which is less "
+                "than 3% of annual operations', reducing electricity demand 25-35% at summer "
+                "peak. Cooling water comes from the OHIO RIVER — ~19.7 million gallons per year "
+                "(~54,000 GPD average) — with domestic water capped at 40,000 GPD from the Adams "
+                "County Regional Water District. ⚠️ This is an operator disclosure, not a permit: "
+                "no Ohio River intake authorization (USACE §10 / ODNR registration / ORSANCO) has "
+                "been located, and the receiving POTW for the campus's sanitary discharge is "
+                "[open]. ⚠️ The withdrawal is on the OHIO RIVER MAINSTEM and the site's "
+                "jurisdictional streams are Elk Run and Carter Hollow — NOT Ohio Brush Creek, "
+                "which this profile's basin and gage 03237500 screen. A dilution screen on that "
+                "gage answers the wrong question for this facility (see the register)."
+            ),
+            cooling_model_source="reference",
+        ),
+    ),
     serving_utility_citation=(  # [reference] not corpus
         "Adams County, OH is predominantly served by Adams Rural Electric Cooperative, Inc. — EIA-861 "
         "#118 [verified] against the primary EIA-861 2024 Service_Territory file (utility 'Adams Rural "
