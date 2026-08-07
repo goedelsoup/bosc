@@ -4,6 +4,7 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import rehypeDocLinks from "@watermark/core/rehype-doc-links";
 import { SITE_BASE } from "@watermark/core/routes";
+import { SITES } from "@watermark/core/sites";
 import { watermarkBundle } from "./plugins/watermark-bundle";
 
 // Static build (the default). `site`/`base` come from the environment so the
@@ -21,6 +22,18 @@ const site = process.env.SITE_URL || undefined;
 // watershed sites are clean siblings; the migrated markdown's doc/reference cross-links resolve
 // there. SITE_BASE is the single source of truth (src/lib/routes.ts).
 const limaBase = `${base}${SITE_BASE}`;
+
+// The sites the build exports a content bundle for — DERIVED from the identity registry's
+// `selectable` flag (data/sites.yaml -> sites-registry.json), never a hand-kept list.
+//
+// `selectable` already means exactly this: "a site whose full build is deployed". It is the same
+// flag `selectableSitePaths` uses to plan `getStaticPaths` for every `network/[site]/…` route, so
+// deriving here makes the two structurally incapable of disagreeing. A hardcoded list could — and
+// did: troy-piqua was promoted to `selectable` (#1876) without being added, and because the
+// committed `web/sites/` fixtures are an explicit `WATERMARK_BUNDLE_DIR` opt-in (set only by
+// `mise run //web:check`) and NOT a fallback, the Pages build planned troy-piqua's routes and then
+// died in `loadManifest` with "No content bundle found". Promotion is now the only edit needed.
+const exportSites = SITES.filter((s) => s.selectable).map((s) => s.slug);
 
 export default defineConfig({
   site,
@@ -46,7 +59,7 @@ export default defineConfig({
   vite: {
     plugins: [
       watermarkBundle({
-        sites: ["lima", "urbana", "fort-wayne"],
+        sites: exportSites,
         cmd: ["uv", "run", "watermark"],
       }),
     ],

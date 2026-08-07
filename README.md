@@ -158,7 +158,7 @@ break**: sections lock and surface a needs board rather than faking a value.
 
 The site builds in two tiers. The **data tier** ([`watermark.site`](src/watermark/site/),
 `watermark export`) emits a typed content bundle — JSON feeds plus a
-`manifest.json` stamped with `CONTRACT_VERSION` (currently **1.15.0**) — from the
+`manifest.json` stamped with `CONTRACT_VERSION` (currently **2.0.0**) — from the
 extracted corpus. The **presentation tier** ([`web/`](web/)) is an Astro + MDX
 static site that reads that bundle at build time; deck.gl map and graph views are
 the only React islands, and charts are a hand-rolled SVG library. The frontend
