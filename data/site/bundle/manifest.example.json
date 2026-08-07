@@ -1,10 +1,27 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.3.0",
-  "generated_at": "2026-06-10T00:00:00+00:00",
-  "feed_count": 24,
-  "row_total": 522,
+  "contract_version": "2.0.0",
+  "generated_at": "2026-08-07T00:00:00+00:00",
+  "feed_count": 56,
+  "row_total": 4180,
+  "readiness": {
+    "tier": "reference",
+    "domains": {
+      "backdrop": "live",
+      "facility": "live",
+      "places": "live",
+      "record": "live",
+      "inquiry": "live"
+    }
+  },
+  "facility": {
+    "status": "construction",
+    "count": 1,
+    "primary_name": "Project BOSC",
+    "primary_operator": "Google (developer of record)",
+    "primary_end_use": null
+  },
   "feeds": [
     {
       "name": "records",
@@ -12,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 51
+      "count": 57
     },
     {
       "name": "timeline",
@@ -20,7 +37,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 135
+      "count": 164
     },
     {
       "name": "entities",
@@ -28,7 +45,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 70
+      "count": 72
     },
     {
       "name": "relationships",
@@ -36,7 +53,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 72
+      "count": 70
     },
     {
       "name": "people",
@@ -52,7 +69,7 @@
       "media_type": "application/json",
       "schema": "schemas/concepts.schema.json",
       "kind": "collection",
-      "count": 6
+      "count": 77
     },
     {
       "name": "places",
@@ -92,7 +109,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 16
+      "count": 21
     },
     {
       "name": "exhibits",
@@ -101,6 +118,22 @@
       "schema": "schemas/exhibits.schema.json",
       "kind": "collection",
       "count": 7
+    },
+    {
+      "name": "leads",
+      "path": "feeds/leads.json",
+      "media_type": "application/json",
+      "schema": "schemas/leads.schema.json",
+      "kind": "collection",
+      "count": 29
+    },
+    {
+      "name": "contacts",
+      "path": "feeds/contacts.json",
+      "media_type": "application/json",
+      "schema": "schemas/contacts.schema.json",
+      "kind": "collection",
+      "count": 3
     },
     {
       "name": "rsei",
@@ -127,12 +160,172 @@
       "count": 1
     },
     {
+      "name": "consumer-energy",
+      "path": "feeds/consumer-energy.json",
+      "media_type": "application/json",
+      "schema": "schemas/consumer-energy.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "grid",
+      "path": "feeds/grid.json",
+      "media_type": "application/json",
+      "schema": "schemas/grid.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "economics-demand-pressure",
+      "path": "feeds/economics-demand-pressure.json",
+      "media_type": "application/json",
+      "schema": "schemas/economics-demand-pressure.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "energy-burden",
+      "path": "feeds/energy-burden.json",
+      "media_type": "application/json",
+      "schema": "schemas/energy-burden.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "economics-scenarios",
+      "path": "feeds/economics-scenarios.json",
+      "media_type": "application/json",
+      "schema": "schemas/economics-scenarios.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "facility",
+      "path": "feeds/facility.json",
+      "media_type": "application/json",
+      "schema": "schemas/facility.schema.json",
+      "kind": "collection",
+      "count": 1
+    },
+    {
+      "name": "network",
+      "path": "feeds/network.json",
+      "media_type": "application/json",
+      "schema": "schemas/network.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "greenops",
+      "path": "feeds/greenops.json",
+      "media_type": "application/json",
+      "schema": "schemas/greenops.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "routed-hydrograph",
+      "path": "feeds/routed-hydrograph.json",
+      "media_type": "application/json",
+      "schema": "schemas/routed-hydrograph.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "hypotheses",
+      "path": "feeds/hypotheses.json",
+      "media_type": "application/json",
+      "schema": "schemas/hypotheses.schema.json",
+      "kind": "collection",
+      "count": 3
+    },
+    {
+      "name": "hypothesis-assessments",
+      "path": "feeds/hypothesis-assessments.json",
+      "media_type": "application/json",
+      "schema": "schemas/hypothesis-assessments.schema.json",
+      "kind": "collection",
+      "count": 12
+    },
+    {
       "name": "hydrology-scenarios",
       "path": "feeds/hydrology-scenarios.json",
       "media_type": "application/json",
       "schema": "schemas/hydrology-scenarios.schema.json",
       "kind": "collection",
       "count": 2
+    },
+    {
+      "name": "air-scenarios",
+      "path": "feeds/air-scenarios.json",
+      "media_type": "application/json",
+      "schema": "schemas/air-scenarios.schema.json",
+      "kind": "collection",
+      "count": 3
+    },
+    {
+      "name": "air-dispersion",
+      "path": "feeds/air-dispersion.json",
+      "media_type": "application/json",
+      "schema": "schemas/air-dispersion.schema.json",
+      "kind": "collection",
+      "count": 2
+    },
+    {
+      "name": "air-dispersion-field",
+      "path": "feeds/air-dispersion-field.json",
+      "media_type": "application/json",
+      "schema": "schemas/air-dispersion-field.schema.json",
+      "kind": "collection",
+      "count": 2
+    },
+    {
+      "name": "water-seasonal-field",
+      "path": "feeds/water-seasonal-field.json",
+      "media_type": "application/json",
+      "schema": "schemas/water-seasonal-field.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "reach-network",
+      "path": "feeds/reach-network.json",
+      "media_type": "application/json",
+      "schema": "schemas/reach-network.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "drawdown",
+      "path": "feeds/drawdown.json",
+      "media_type": "application/json",
+      "schema": "schemas/drawdown.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "dewatering",
+      "path": "feeds/dewatering.json",
+      "media_type": "application/json",
+      "schema": "schemas/dewatering.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "thermal",
+      "path": "feeds/thermal.json",
+      "media_type": "application/json",
+      "schema": "schemas/thermal.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "catalog",
+      "path": "feeds/catalog.json",
+      "media_type": "application/json",
+      "schema": "schemas/catalog.schema.json",
+      "kind": "collection",
+      "count": 164
     },
     {
       "name": "geo/campus",
@@ -197,6 +390,112 @@
       "schema": "schemas/geo.schema.json",
       "kind": "geojson",
       "count": 1
+    },
+    {
+      "name": "geo/dewatering",
+      "path": "feeds/geo/dewatering.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 54
+    },
+    {
+      "name": "facts",
+      "path": "feeds/facts.json",
+      "media_type": "application/json",
+      "schema": "schemas/facts.schema.json",
+      "kind": "collection",
+      "count": 167
+    },
+    {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 28
+    },
+    {
+      "name": "impact-study",
+      "path": "feeds/impact-study.json",
+      "media_type": "application/json",
+      "schema": "schemas/impact-study.schema.json",
+      "kind": "collection",
+      "count": 15
+    },
+    {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 1105
+    },
+    {
+      "name": "catalog-index",
+      "path": "feeds/catalog-index.json",
+      "media_type": "application/json",
+      "schema": "schemas/catalog-index.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "corpus-index",
+      "path": "feeds/corpus-index.json",
+      "media_type": "application/json",
+      "schema": "schemas/corpus-index.schema.json",
+      "kind": "collection",
+      "count": 199
+    },
+    {
+      "name": "corpus-nodes",
+      "path": "feeds/corpus-nodes.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/corpus-nodes.schema.json",
+      "kind": "collection",
+      "count": 199
+    },
+    {
+      "name": "ask-embeddings",
+      "path": "feeds/ask-embeddings.json",
+      "media_type": "application/json",
+      "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 442
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
+      "kind": "collection",
+      "count": 1105
+    }
+  ],
+  "exports": [
+    {
+      "name": "corpus-graph.ttl",
+      "path": "exports/corpus.ttl",
+      "media_type": "text/turtle",
+      "format": "turtle",
+      "node_count": 199,
+      "edge_count": 414
+    },
+    {
+      "name": "corpus-graph.jsonld",
+      "path": "exports/corpus.jsonld",
+      "media_type": "application/ld+json",
+      "format": "jsonld",
+      "node_count": 199,
+      "edge_count": 414
+    },
+    {
+      "name": "corpus-graph.graphml",
+      "path": "exports/corpus.graphml",
+      "media_type": "application/graphml+xml",
+      "format": "graphml",
+      "node_count": 199,
+      "edge_count": 414
     }
   ]
 }
