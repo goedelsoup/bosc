@@ -146,7 +146,12 @@ def test_dewatering_finding_is_surfaced(hydro_settings: Settings) -> None:
     )
     cap = next(f for f in dd.drawdown_findings(r) if f.check == "drawdown-aquifer-capacity")
     assert cap.ok is False  # cannot sustain
-    assert "DEWATERS" in cap.detail and "municipal surface water" in cap.detail
+    # The verdict names the BRACKET's deep end and reports the central estimate beside it
+    # (#1997): unqualified "DEWATERS the aquifer" reads as a prediction, and at a small
+    # stress — Sidney's contracted 0.013 MGD — that would be a wild overclaim off a wide
+    # literature-K bracket rather than a finding.
+    assert "DEWATERING bound" in cap.detail and "municipal surface water" in cap.detail
+    assert "central estimate" in cap.detail and "BRACKET's deep end" in cap.detail
 
 
 def test_sustainable_scenario_does_not_dewater(hydro_settings: Settings) -> None:

@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-11T22:23:26.854531+00:00'
+reconciled_at: '2026-08-11T23:32:21.762114+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -1220,6 +1220,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:lima
+  ohio-waterwells-shelby:
+    exists: true
+    sha256: f912e493f7e395e6d429dc295b9da829a65096b1b5cf9e2b80a56e22ce9c2508
+    size_bytes: 530408
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:sidney
   onboard-bundle:
     exists: true
     sha256: null
@@ -1400,6 +1410,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  sidney-groundwater:
+    exists: true
+    sha256: 99cc6f976cdf4e9693b68a39095646f96c2f1a60c9505470063635b0149a8184
+    size_bytes: 11355
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:sidney
   sidney-incentive-instruments:
     exists: true
     sha256: 6afbe95e3535f5d490e8973395495dbc018387f151dc00e56c19990b195afacb

@@ -167,6 +167,7 @@ def cooling_makeup_scenario(
     high_mgd: float | None,
     duration_days: float = 365.0,
     material: str | None = None,
+    makeup_basis: str | None = None,
 ) -> DrawdownScenario:
     """The headline hypothetical: the campus cooling makeup, *as if* pumped from groundwater.
 
@@ -175,15 +176,24 @@ def cooling_makeup_scenario(
     baked in here, so no site's figure leaks into another's and no uncertainty band is fabricated.
     The campus actually draws this as treated municipal (surface) water -- the note records that
     this is a hypothetical groundwater stress, not a documented withdrawal.
+
+    ``makeup_basis`` names WHERE the stress came from and defaults to Lima's committed buildout
+    scenario, which is where it came from for the only site that had one when this was written.
+    A caller resolving the makeup some other way must say so (#1997): the citation is the reader's
+    only route back to the figure, and one that points at a committed artifact holding a
+    *different* number is worse than no citation at all.
     """
     dom = params.dominant()
     mat = (material or (dom.material if dom else "LIMESTONE")).upper()
+    basis = (
+        makeup_basis
+        or "Campus cooling makeup (buildout central, data/scenarios/buildout.scenario.yaml)"
+    )
     pumping = ProvenancedValue.assume(
         round(makeup_mgd, 3),
         "MGD",
-        "Campus cooling makeup (buildout central, data/scenarios/buildout.scenario.yaml) framed "
-        "as a HYPOTHETICAL groundwater pumping stress. The campus draws municipal SURFACE water; "
-        "no on-site production well or withdrawal permit is on record ([open]).",
+        f"{basis} framed as a HYPOTHETICAL groundwater pumping stress. The campus draws municipal "
+        "SURFACE water; no on-site production well or withdrawal permit is on record ([open]).",
         low=low_mgd,
         high=high_mgd,
     )
@@ -208,25 +218,49 @@ def site_cooling_makeup_scenario(
 ) -> DrawdownScenario:
     """The cooling-makeup scenario for the ACTIVE SITE (makeup from its cooling basis, or override).
 
-    Resolves the campus cooling makeup (MGD + any committed uncertainty band) from the active
-    site's :func:`~watermark.hydrology.cooling.derive_cooling_basis` — the SITES / active-profile
-    framework — so no Lima figure is hardcoded and no band is fabricated. ``makeup_mgd`` overrides
-    the resolved value (a bare figure, no band) for a sensitivity sweep.
+    Resolves the campus cooling makeup (MGD + any committed uncertainty band), most-grounded
+    first, mirroring :func:`watermark.hydrology.scenario.buildout_scenario` (#1995/#1997):
+
+    1. an explicit ``makeup_mgd`` — a sensitivity sweep, no band;
+    2. the facility's **stated** makeup, where the record carries one;
+    3. the active site's :func:`~watermark.hydrology.cooling.derive_cooling_basis` demand.
+
+    Rung 2 matters here for the same reason it mattered there, and the consequence is larger.
+    Where the cooling method is undisclosed, ``makeup_demand`` holds the evaporative UPPER-BOUND
+    ENVELOPE, which the basis itself tags ``assumption`` and labels "NOT an estimate" — and
+    ``headline_makeup()`` returns ``None`` precisely so a caller cannot publish it as one. This
+    function read straight past that guard. At Sidney that meant screening a 3.59 MGD stress
+    (which dewaters the aquifer, 116 ft of apex drawdown) against a campus whose CONTRACTED
+    makeup is 0.0126 MGD — 285x smaller, on the record, and drawn from municipal surface water.
+    A stated quantity beats an envelope; the envelope is the sweep, not the site.
     """
     settings = settings or get_settings()
     if makeup_mgd is not None:
         return cooling_makeup_scenario(
-            params, makeup_mgd=makeup_mgd, low_mgd=None, high_mgd=None, material=material
+            params,
+            makeup_mgd=makeup_mgd,
+            low_mgd=None,
+            high_mgd=None,
+            material=material,
+            makeup_basis="Cooling makeup supplied as an explicit sensitivity override",
         )
     from watermark.hydrology.cooling import derive_cooling_basis
+    from watermark.hydrology.scenario import _stated_cooling_account
 
-    makeup = derive_cooling_basis(settings).makeup_demand
+    stated = _stated_cooling_account(settings)
+    if stated is not None:
+        makeup = stated[0]
+        basis = f"Campus cooling makeup, STATED on the record — {makeup.citation}"
+    else:
+        makeup = derive_cooling_basis(settings).makeup_demand
+        basis = f"Campus cooling makeup ({makeup.source}) — {makeup.citation}"
     return cooling_makeup_scenario(
         params,
         makeup_mgd=makeup.value,
         low_mgd=makeup.low,
         high_mgd=makeup.high,
         material=material,
+        makeup_basis=basis,
     )
 
 
@@ -418,9 +452,13 @@ def drawdown_findings(result: DrawdownResult) -> list[HydroFinding]:
             detail=(
                 (
                     f"Hypothetical {result.scenario.pumping_mgd.value:g} MGD groundwater pumping "
-                    "DEWATERS the aquifer: the low-transmissivity end of the bracket drives apex "
-                    f"drawdown past the {result.saturated_thickness_ft:g} ft saturated thickness -- "
-                    "it cannot sustain this rate; the campus is on municipal surface water."
+                    "reaches the DEWATERING bound: the low-transmissivity end of the bracket "
+                    f"drives apex drawdown to the {result.saturated_thickness_ft:g} ft saturated "
+                    f"thickness (central estimate {s.value:g} ft, bracket "
+                    f"{s.low_or_value:g}-{s.high_or_value:g}). The verdict is the BRACKET's deep "
+                    "end, not the central case -- which is what makes it a bound on the 'area "
+                    "well concerns' rather than a prediction. The campus is on municipal surface "
+                    "water; no on-site production well is on record."
                 )
                 if result.dewaters
                 else (

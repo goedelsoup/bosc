@@ -1,0 +1,45 @@
+id: sidney-groundwater
+title: Sidney / Shelby County OH — groundwater and the aquifer-scope resolution
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Ohio DNR well-log census (R.C. 1521.05, reference/ohio-waterwells/shelby.csv); the
+    original Federal Register notice 53 FR 15876 (govinfo package FR-1988-05-04, page
+    images); the U.S. EPA national Sole Source Aquifer layer and Ohio EPA's SWAP and
+    hydro/Aquifers MapServers; EPA SDWIS for PWSID OH7501214; the City of Sidney's
+    Consumer Confidence Reports and Comprehensive Plan
+license: public record / public domain
+access_tier: public
+site_scope: site:sidney
+storage:
+- relpath: extracted/sidney/groundwater.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- groundwater
+- aquifer
+- sole-source-aquifer
+- wellfield
+- drawdown
+- sidney
+notes: >-
+  Resolves lead AQUIFER-SCOPE (issue 1997), which existed because issue 1379 REFUTED the
+  "sole-source-aquifer campus" framing and the two questions that framing confused — where the
+  wells are, and whether a designation covers them — had never been answered separately. Answer:
+  a designated sole-source aquifer (the Buried Valley Aquifer System, 53 FR 15876, 1988) covers
+  7.07% of Shelby County; the City's Washington Township well field is 97% inside it; its Great
+  Miami bedrock well field is entirely outside; and the CAMPUS is 1.68 miles outside with zero
+  overlap — a second, independent refutation of the original framing, from a federal boundary
+  dataset rather than from soils. ⚠️ The Federal Register notice both NAMES Shelby County among
+  the nine BVAS counties and EXCLUDES part of it, so the county list cannot answer the question;
+  only geometry can, and that is the trap the original claim fell into. Also records a new
+  finding — the campus sits inside the City of PIQUA's surface-water source protection area — and
+  a dated negative: no dewatering record exists for this project, so the study's groundwater
+  chapter carries the well survey alone. Every external claim was re-retrieved and recomputed by
+  an adversarial verifier; the six that did not survive are recorded in the document rather than
+  dropped, two of them because they are traps a future check would otherwise repeat.

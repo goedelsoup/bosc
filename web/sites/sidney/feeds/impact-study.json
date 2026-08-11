@@ -167,19 +167,10 @@
     "model": {
       "id": "groundwater",
       "facilityKey": "cmh-232",
-      "status": "gap",
-      "statusReasons": [
-        "a well survey and any dewatering record — neither has been produced."
-      ],
+      "status": "data",
+      "statusReasons": [],
       "stats": [],
-      "gaps": [
-        {
-          "wouldScreen": "the wells within the drawdown radius, and whether construction dewatering was permitted and where the water went.",
-          "missingRecord": "a well survey and any dewatering record — neither has been produced.",
-          "producer": "state well logs, a dewatering permit, and the contractor's discharge records",
-          "leadIds": null
-        }
-      ],
+      "gaps": [],
       "caveats": []
     }
   },
@@ -354,7 +345,7 @@
       "facilityKey": "cmh-232",
       "status": "partial",
       "statusReasons": [
-        "synthesizes the screened chapters — 3 on the record, 2 partial, 3 gap"
+        "synthesizes the screened chapters — 4 on the record, 2 partial, 2 gap"
       ],
       "stats": [],
       "gaps": [],

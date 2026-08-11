@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-11T22:23:26.854531+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-11T23:32:21.762114+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **168** catalogued datasets — **167** reviewed.
-- **168** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **170** catalogued datasets — **169** reviewed.
+- **170** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -42,7 +42,7 @@ Snapshot reconciled: **2026-08-11T22:23:26.854531+00:00**. Regenerate with `wate
 | extracted | recorder | 1 | 1 | 0 | 0 |
 | extracted | regulatory | 2 | 2 | 0 | 0 |
 | extracted | shawnee-township | 1 | 1 | 0 | 0 |
-| extracted | sidney | 4 | 4 | 0 | 0 |
+| extracted | sidney | 5 | 5 | 0 | 0 |
 | extracted | toledo | 1 | 1 | 0 | 0 |
 | extracted | troy-piqua | 2 | 2 | 0 | 0 |
 | extracted | urbana | 1 | 1 | 0 | 0 |
@@ -74,7 +74,7 @@ Snapshot reconciled: **2026-08-11T22:23:26.854531+00:00**. Regenerate with `wate
 | reference | odot | 1 | 1 | 0 | 0 |
 | reference | oepa | 3 | 3 | 0 | 0 |
 | reference | ohio-water-withdrawal | 4 | 4 | 0 | 0 |
-| reference | ohio-waterwells | 2 | 2 | 0 | 0 |
+| reference | ohio-waterwells | 3 | 3 | 0 | 0 |
 | reference | orc | 2 | 2 | 0 | 0 |
 | reference | periplus | 1 | 1 | 0 | 0 |
 | reference | pjm | 1 | 1 | 0 | 0 |
@@ -110,7 +110,7 @@ Snapshot reconciled: **2026-08-11T22:23:26.854531+00:00**. Regenerate with `wate
 | piketon | 53 | 36 | 17 |
 | portsmouth | 54 | 37 | 17 |
 | sandusky | 53 | 36 | 17 |
-| sidney | 60 | 51 | 9 |
+| sidney | 62 | 53 | 9 |
 | springfield | 54 | 44 | 10 |
 | toledo | 58 | 46 | 12 |
 | troy-piqua | 59 | 50 | 9 |

@@ -2,9 +2,9 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "2.0.0",
-  "generated_at": "2026-08-11T22:25:19+00:00",
-  "feed_count": 36,
-  "row_total": 828,
+  "generated_at": "2026-08-11T23:34:26+00:00",
+  "feed_count": 37,
+  "row_total": 831,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -224,12 +224,20 @@
       "count": 1
     },
     {
+      "name": "drawdown",
+      "path": "feeds/drawdown.json",
+      "media_type": "application/json",
+      "schema": "schemas/drawdown.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
       "name": "catalog",
       "path": "feeds/catalog.json",
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 60
+      "count": 62
     },
     {
       "name": "geo/campus",
