@@ -735,5 +735,69 @@
     "source_doc_rel": null,
     "source_doc_render_class": null,
     "source_doc_published": false
+  },
+  {
+    "rel": "oepa/sidney/4158406.plan.yaml",
+    "group": "plans",
+    "title": "Public Sanitary Sewer Relocation Plan",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "project_name": "Public Sanitary Sewer Relocation Plan",
+      "site_address": "2388 West Millcreek Road, Sidney, Ohio 45365",
+      "project_no": "25-0003-1276",
+      "discipline": "Civil — public sanitary sewer relocation (plan, profile and demolition)",
+      "phase": "Permit",
+      "status": "PERMIT, revision 0",
+      "date": "2026-03-09",
+      "scale": "1 inch = 250 feet (cover); 1 inch = 150 feet (demolition plan)",
+      "prepared_by": [
+        {
+          "name": "Advanced Civil Design, Inc.",
+          "discipline": "Civil engineer of record",
+          "location": "781 Science Blvd, Suite 100, Gahanna, OH 43230",
+          "contact": "James D. Whitacre",
+          "phone": "614.428.7750"
+        },
+        {
+          "name": "Smart Services",
+          "discipline": "Environmental consultant",
+          "location": "88 W Church Street, Newark, OH 43055",
+          "contact": "Mitchell Strain",
+          "phone": "740.345.4700"
+        }
+      ],
+      "key_features": [
+        "Sheet list, 8 sheets: cover (1/8), general notes and details, general notes, demolition plan, and four profile sheets",
+        "Benchmarks BM#1-BM#4; vertical datum NAVD 1988",
+        "Site context drawn: W. Millcreek Rd, S. Vandemark Rd and the railroad",
+        "Anti-infiltration/inflow barrier detail (general notes sheet)",
+        "Ohio Utilities Protection Service call-before-you-dig notice (800-362-2764 / 8-1-1)"
+      ],
+      "summary": "The approved drawing package for relocating a public sanitary sewer at the AWS campus site. It establishes WHO designed the work and WHEN it was sealed and approved, and it draws the site's road and rail context — but it carries no building layout, no mechanical or electrical scope, and no process-water information of any kind.",
+      "note": "The titleblock is Amazon's own standard template and carries empty fields for MECHANICAL ENGINEER, ELECTRICAL ENGINEER, STRUCTURAL ENGINEER and ARCHITECT — this package is civil-only, and those disciplines are not in it. The same template stamps every sheet CONFIDENTIAL and references the county's \"COMMERCIAL PARTIAL PERMITTING PROCESS FOR SHELL BUILDINGS\" policy, which is [inference] the permitting track this campus is being built under: shell first, tenant build-out later."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/sidney/4158406.plan.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/4158406.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
   }
 ]
