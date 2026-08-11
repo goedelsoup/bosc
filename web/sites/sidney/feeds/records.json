@@ -35,7 +35,31 @@
       "what_this_instrument_does_not_establish": [
         "THE ABATEMENT TERMS ARE NOT IN THIS RESOLUTION. It authorizes the City Manager to sign \"the agreement that is on file with the City Clerk\" and states no percentage, no term, no PILOT and no clawback. The 30-year 100% real-property exemption, the $46,000,000/14-year PILOT and the separate $4,000,000 initial payment are terms of the EXECUTED agreement, read in #1380 and carried in `incentive-instruments.yaml`. Do not cite this resolution for any of them.",
         "The agreement \"on file with the City Clerk\" is incorporated by reference and not attached to the resolution page."
-      ]
+      ],
+      "terms_are_in": {
+        "file": "data/documents/sidney/council/80-25 - Authorizing a CRA Agreement - Amazon Data Services Inc_202601141342191793.pdf",
+        "pages": "2-29",
+        "pages_carry": "the executed CRA Agreement + Exhibits A-E; the Exhibit E PILOT schedule is on p29",
+        "structured_read": "data/extracted/sidney/incentive-instruments.yaml → `cra_agreement` (`exemption`, `payments.pilot`, `payments.initial_payment`)",
+        "sections": [
+          {
+            "term": "PILOT cap — $46,000,000 over 14 years",
+            "cite": "§7(b)"
+          },
+          {
+            "term": "PILOT year-by-year schedule",
+            "cite": "Exhibit E"
+          },
+          {
+            "term": "condition precedent — the exemption is conditioned on the separate Development Agreement (Res. 27-26)",
+            "cite": "§34"
+          },
+          {
+            "term": "30-year / 100% exemption per Building, and the separate $4,000,000 initial payment",
+            "cite": "no section recorded in the structured read — cite the block, not a section"
+          }
+        ]
+      }
     },
     "approximate_paths": [],
     "citation": {
@@ -91,7 +115,23 @@
       "what_this_instrument_does_not_establish": [
         "THE SPLIT IS NOT IN THIS RESOLUTION. The $21,220,529 to Sidney City Schools and $3,779,471 to Upper Valley Career Center are terms of the EXECUTED agreement (#1380), not of this act, which states no figure at all. Do not cite this resolution for the amounts.",
         "Also not here: the R.C. 3735.671, 5709.83 and 5715.27 notice WAIVERS the two boards made. Those are in the agreement (§3.1 of the executed instrument), not in the authorizing resolution."
-      ]
+      ],
+      "terms_are_in": {
+        "file": "data/documents/sidney/council/81-25 - Authorizing Development Agreement with Sidney City Schools and Upper Valley - Amazon Data Services_202601141342204952.pdf",
+        "pages": "2-8",
+        "pages_carry": "the executed Development Agreement + Exhibit A; the distribution schedule is on p8",
+        "structured_read": "data/extracted/sidney/incentive-instruments.yaml → `revenue_sharing.development_agreement_with_school_boards`",
+        "sections": [
+          {
+            "term": "the boards' irrevocable consents and the R.C. 3735.671 / 5709.83 / 5715.27 notice waivers",
+            "cite": "§3.1"
+          },
+          {
+            "term": "the $21,220,529 SCSD / $3,779,471 UVCC distribution schedule",
+            "cite": "Exhibit A"
+          }
+        ]
+      }
     },
     "approximate_paths": [],
     "citation": {
@@ -207,7 +247,23 @@
       "what_this_instrument_does_not_establish": [
         "NONE OF THE WATER FIGURES ARE IN THIS RESOLUTION. The 1.0 MGD peak-withdrawal ceiling, the 4.6M gal/yr projected withdrawal, the 3.44M gal/yr consumption, the 390,493 gpd reserved sewer capacity and the ten-year bar on creating a data-center water rate class are all terms of the EXECUTED agreement read in #1380. This act states none of them and must not be cited for them.",
         "It is also not a withdrawal permit or an NPDES instrument. It authorizes a municipal service contract; the campus holds no discharge permit of its own."
-      ]
+      ],
+      "terms_are_in": {
+        "file": "data/documents/sidney/council/26-26 - Authorize Water and Sewer Service Agreement - Amazon Web Services.pdf",
+        "pages": "2-11",
+        "pages_carry": "the executed Water and Wastewater Service Agreement; the 5.60% capacity reservation is on p11",
+        "structured_read": "data/extracted/sidney/incentive-instruments.yaml → `water_and_wastewater_service_agreement` (`reserved_capacity`, `rate_class_covenant`)",
+        "sections": [
+          {
+            "term": "the ten-year bar on creating a data-center water or sewer rate class",
+            "cite": "§2.1"
+          },
+          {
+            "term": "1.0 MGD / 694 gpm cooling ceiling, 14,000 gpd potable, 390,493 gpd sewer, 4.6M gal/yr projected",
+            "cite": "no section recorded in the structured read — cite the `reserved_capacity` block, not a section"
+          }
+        ]
+      }
     },
     "approximate_paths": [],
     "citation": {
@@ -265,7 +321,23 @@
       },
       "what_this_instrument_does_not_establish": [
         "THE ROAD MONEY AND THE PARCEL RECITALS ARE NOT IN THIS RESOLUTION. The up-to-$8.0M Millcreek Road reconstruction and the five predecessor parcels recited in Exhibit A are in the EXECUTED agreement and its exhibits (#1380 / #1379), which follow on pages 2-31 of this same PDF and are read in `incentive-instruments.yaml`. This act states neither."
-      ]
+      ],
+      "terms_are_in": {
+        "file": "data/documents/sidney/council/27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf",
+        "pages": "2-31",
+        "pages_carry": "the executed Development Agreement + Exhibits; the Project Summary is on p2 and Exhibit E on p31",
+        "structured_read": "data/extracted/sidney/incentive-instruments.yaml → `development_agreement`",
+        "sections": [
+          {
+            "term": "the five predecessor parcels recited for the Project Site",
+            "cite": "Exhibit A"
+          },
+          {
+            "term": "the up-to-$8.0M Millcreek Road reconstruction",
+            "cite": "no section recorded in the structured read — cite the block, not a section"
+          }
+        ]
+      }
     },
     "approximate_paths": [],
     "citation": {

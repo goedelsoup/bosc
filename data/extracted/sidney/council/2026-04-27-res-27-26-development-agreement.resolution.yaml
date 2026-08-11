@@ -77,6 +77,20 @@ resolution:
       agreement and its exhibits (#1380 / #1379), which follow on pages 2-31 of this same PDF and
       are read in `incentive-instruments.yaml`. This act states neither.
 
+  # WHERE THOSE TERMS ACTUALLY ARE (#2007 review). Any figure restated above is traceable to the
+  # instrument that states it, so a reader can follow it without ever treating this ACT as its
+  # source. The executed agreement is bound into THIS SAME PDF, after the resolution pages read
+  # here — it is not a separate document, which is why `pages_read` above stops at the act.
+  terms_are_in:
+    file: data/documents/sidney/council/27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf
+    pages: '2-31'                     # 0-based, of 32; `pages_read` above is the ACT (0-1) only
+    pages_carry: the executed Development Agreement + Exhibits; the Project Summary is on p2 and Exhibit E on p31
+    structured_read: 'data/extracted/sidney/incentive-instruments.yaml → `development_agreement`'
+    sections:
+      - term: the five predecessor parcels recited for the Project Site
+        cite: 'Exhibit A'
+      - term: the up-to-$8.0M Millcreek Road reconstruction
+        cite: 'no section recorded in the structured read — cite the block, not a section'
   confidence: high
   warnings:
     - >-
