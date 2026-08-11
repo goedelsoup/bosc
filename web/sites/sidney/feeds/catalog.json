@@ -475,14 +475,19 @@
         "relpath": "extracted/oepa/sidney/DSW401252256W.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/4214600.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "04b733f2f11f1150129d056d68c4cdcdd14fb880dadcf2ec34f7b67832b0a96e",
-      "size_bytes": 26723,
+      "sha256": "3d02f0b5a0b6ce4e704b96cde0589949a0176c3c8b1fc1757e68847393c51cd4",
+      "size_bytes": 35978,
       "lfs_materialized": true,
-      "file_count": 8,
+      "file_count": 9,
       "stale": false,
       "asof": null
     },
@@ -623,8 +628,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8d0ad598b2db9a99865918ce073a10afb1e2496d0e81603337e52369ce017e80",
-      "size_bytes": 46056,
+      "sha256": "cbb369c7e7a67f98c571727a9ecb76795f106113c2b86830ec1c68f4e85a0504",
+      "size_bytes": 65727,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,

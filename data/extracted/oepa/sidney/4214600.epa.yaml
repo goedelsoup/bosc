@@ -1,0 +1,146 @@
+# Ohio EPA DAPC — administrative-completeness acknowledgment for air permit application
+# P0141118, "CMH232 Campus", Shelby County. eDocument 4214600. Issue #1998, epic #1275.
+#
+# ⚠️ THIS DOCUMENT RETIRES A COMMITTED `[verified negative]`. The standing watch recorded, on
+# 2026-07-31, that there was NO Ohio EPA air permit-to-install, draft, public notice or
+# application on the record for this campus under any of its three known names, and that the
+# zero was a controlled zero (the same query shape returns 19 Amazon air-permit documents
+# statewide). That was correct on its date and has been overtaken by events: the application
+# was RECEIVED 2026-08-03, three days after the check. Record it as superseded, not as an error
+# — a dated negative that later turns positive is the watch working, not the watch failing.
+#
+# TAG VOCABULARY: [verified] printed in this letter's own text layer · [inference] reasoned and
+# labelled · [open] not established by this document.
+
+doc_id: edoc-4214600-air-pti-p0141118-administratively-complete
+source_path: data/documents/oepa/sidney/4214600.pdf
+kind: epa
+pages_read: [0, 1]
+dpi: 0
+# ⚠️ `dpi: 0` = NO PAGE WAS RASTERIZED. A hand read of the letter's own native text layer
+# (pypdf, 2,192 + 1,807 characters); nothing was OCR'd. The corpus's established convention for
+# a non-render read — stated rather than left to be inferred (contrast #2001).
+source_text_excerpt: >-
+  Northwest District Office 347 N. Dunbridge Road Bowling Green, Ohio 43402 — August 4, 2026 —
+  Laura Markman, CMH232 Campus, 13820 Sunrise Valley Dr., Herndon, Virginia 20171 —
+  Re: Shelby County / CMH232 Campus / Facility ID # 0375015024 / P0141118 received on 08/03/2026
+
+action:
+  agency: Ohio EPA, Division of Air Pollution Control — Northwest District Office
+  program: Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO), air pollution sources
+  permit_no: P0141118                     # [verified] the application number, NOT a permit number
+  action: incomplete                      # see `action_note` — "administratively complete", not approvable
+  action_date: '2026-08-04'               # [verified] the letter date
+  plans_received_date: '2026-08-03'       # [verified] "P0141118 received on 08/03/2026"
+  expiration_date: null
+  applicant: CMH232 Campus                # [verified] as addressed; the letter names no corporate entity
+  applicant_address: 13820 Sunrise Valley Dr., Herndon, Virginia 20171
+  contact_name: Laura Markman
+  contact_email: null                     # [open] — the addressee's email is not printed
+  contact_firm: null
+  project_name: CMH232 Campus
+  site_address: null                      # [open] — the letter states the COUNTY only, never a street address
+  parcel_ids: []
+  confidence: high
+  warnings:
+    - >-
+      `action: incomplete` is the closest value in the vocabulary and is imprecise here. The
+      letter says the application IS "preliminarily and administratively complete" — and says in
+      the same breath that this "does not imply that the application is approvable, only that all
+      of the necessary material has been submitted in order to continue the review." So it is
+      neither an approval nor a rejection: it is a filed, docketed application entering technical
+      review. Read `action_note` before quoting this field.
+    - >-
+      Clean native text layer, nothing OCR'd, nothing rendered. What is absent here is absent from
+      a two-page administrative letter — which is a weak absence, not a strong one. It is the
+      DRAFT permit, not this, that would carry the emission-unit inventory.
+  note: >-
+    Ohio EPA's Northwest District Office (Bowling Green) informing the applicant that air permit
+    application P0141118 for "CMH232 Campus" in Shelby County, received 2026-08-03, is
+    preliminarily and administratively complete and is entering technical review. Signed Mohammad
+    Smidi (419.373.3118, mohammad.smidi@epa.ohio.gov); ec Jennifer Delbecq and Mark Barber, DAPC.
+
+action_note: >-
+  [verified] The letter is an ADMINISTRATIVE-COMPLETENESS acknowledgment, and it disclaims
+  approvability in its own words. The sequence it describes: technical review → terms and
+  conditions (or a denial discussion) → Central Office DAPC review → a draft or final permit.
+  So a draft permit has NOT issued, and this document is the receipt for an application, not a
+  permit.
+
+# ── The identity this document establishes, which is what makes it findable ──────────────────
+identity:
+  air_facility_id: '0375015024'
+  tag: '[verified]'
+  note: >-
+    A NEW registry, and not the one this campus was already known by: its NPDES/FRS registry is
+    110072226204, which carries NPDES as its only program system. An Ohio EPA air facility is
+    keyed on its own id, so the air record was never going to appear as a second program row on
+    the water registry — which is why the pre-2026-08 FRS negative was a structural finding
+    rather than an empirical one.
+  filed_name: CMH232 Campus
+  filed_name_note: >-
+    [verified] A FOURTH name for this campus, and it is spelled differently from the third. The
+    AIR program files it UNHYPHENATED — "CMH232 Campus" — while the 401/wetlands program files
+    "CMH-232" (30 documents). The hyphenated key returns ZERO against the air program. The other
+    two names are "Sidney Data Center Campus" (Division of Surface Water) and "Amazon Data
+    Services, Inc." (the permittee on the stormwater NOI). None of them is "Project Galaxy",
+    which in Ohio EPA's records belongs to a different Amazon campus in Fayette County.
+
+jurisdiction_confirmed:
+  tag: '[verified]'
+  note: >-
+    The letterhead reads "Northwest District Office, 347 N. Dunbridge Road, Bowling Green, Ohio
+    43402" — which VINDICATES the committed jurisdiction block of regulatory-watch.yaml verbatim.
+    That block was reasoned from Ohio EPA's own district table on 2026-07-31: Shelby County air
+    permitting is NWDO and explicitly NOT RAPCA (Dayton), even though the same campus's SURFACE
+    WATER permit names the Southwest District Office. Two programs, two districts, one county —
+    now confirmed by an instrument rather than by a table.
+
+# ── What this document does NOT establish, which is most of what was hoped for ───────────────
+what_this_does_not_establish:
+  - what: The campus's IT load, in megawatts
+    status: '[open]'
+    note: >-
+      No megawatt, kW, generator, engine, emission-unit, fuel or cooling term appears on either
+      page. The letter does not even state whether the application is being reviewed as a MAJOR
+      new source or a minor one — the distinction its own processing-time estimate turns on.
+      Six state and federal instruments have now issued or been filed for this project and not
+      one states a load. `SiteFacility.it_load_mw` stays the investment-scaled screening bracket
+      and the genset fields stay None.
+  - what: The generator count and per-unit ratings
+    status: '[open]'
+    note: >-
+      This is the acknowledgment, not the permit. The document that names emission units is the
+      DRAFT FOR PUBLIC COMMENT, which has not issued — a Secondary-ID search on air facility
+      0375015024 returns this one document and nothing else.
+  - what: A cooling design
+    status: '[open]'
+    note: >-
+      Unchanged by this pull, and not the kind of document that would carry one. See
+      4158406.plan.yaml for the other dated negative on that question.
+
+# ── The one thing it does add: a dated clock ─────────────────────────────────────────────────
+processing_window:
+  tag: '[verified]'
+  verbatim: >-
+    "final determinations (issued permit or denial of application) concerning applications that
+    do not involve major new sources, major modifications, or other complex permitting scenarios
+    are typically issued in approximately 60 – 120 days. Final determinations for major new
+    sources, major modifications, or other complex permits are advised to expect 120 – 180 days
+    for final determinations."
+  from_receipt: '2026-08-03'
+  non_major_window: '2026-10-02 to 2026-12-01'
+  major_window: '2026-12-01 to 2027-01-30'
+  caveat: >-
+    [inference] These are the letter's own estimates arithmetic'd from the receipt date, and the
+    letter itself calls them "only an estimate" and urges caution. Two things they are NOT: a
+    scheduled date, and the date of the useful document. The DRAFT precedes the final, so the
+    draft — the one that names generator count and ratings — should appear BEFORE these windows
+    open. Early October 2026 is a floor to start watching, not a deadline.
+  site_prep_note: >-
+    [verified] The letter cites OAC 3745-31-33, "Site preparation activities prior to obtaining a
+    final permit-to-install or PTIO": some site preparation may proceed before issuance. So
+    observed construction activity at this campus is NOT evidence that an air permit exists —
+    a trap worth stating, because the earthwork has been under way since 2025-12-05.
+
+confidence: high

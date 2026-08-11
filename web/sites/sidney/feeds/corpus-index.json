@@ -55,6 +55,17 @@
     "updated": "2026-08-01"
   },
   {
+    "id": "artifact/cmh232-campus",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "CMH232 Campus",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/george-igel",
     "node_class": "artifact",
     "kind": "entity",
@@ -75,6 +86,17 @@
     "links_in": 1,
     "lines": 12,
     "updated": "2026-07-31"
+  },
+  {
+    "id": "artifact/laura-markman",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Laura Markman",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
   },
   {
     "id": "artifact/marcus-moan",
@@ -138,7 +160,7 @@
     "label": "Sidney",
     "scope": "site",
     "links_out": 3,
-    "links_in": 38,
+    "links_in": 40,
     "lines": 13,
     "updated": null
   },
@@ -1318,6 +1340,17 @@
     "links_in": 0,
     "lines": 14,
     "updated": "2026-08-01"
+  },
+  {
+    "id": "relation/cmh232-campus--represented-by--laura-markman",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CMH232 CAMPUS represented_by LAURA MARKMAN",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
   },
   {
     "id": "relation/george-igel--operates--npdes-1gc10596",

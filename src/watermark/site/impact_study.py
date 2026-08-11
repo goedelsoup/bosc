@@ -480,6 +480,21 @@ def _chapter_gap(d: _ChapterDef, ctx: _Ctx, facility: dict[str, Any] | None) -> 
     to quantify at all (a federal enclave — WPAFB), so narrowing the gap to "no quantity" would
     assert a missing figure that the archetype says cannot exist.
     """
+    # Same rule on the air axis (#1998): the chapter's gap says "an air-permit application for
+    # this project — none is on the record", which stops being true the moment one is FILED. An
+    # application is not a permit and the chapter rightly stays `gap` — the dispersion screen
+    # needs the emission-unit inventory that only the draft carries — but telling a reader
+    # nothing has been filed, on a site whose own record holds the agency's acknowledgment
+    # letter, asserts an absence the corpus contradicts.
+    if d.id == "air" and _air_application_filed(ctx):
+        return d.gap.model_copy(
+            update={
+                "missing_record": (
+                    "a DRAFT permit or public notice — an air-permit application is on the "
+                    "record here, but the document that names the generator fleet has not issued."
+                )
+            }
+        )
     if (
         d.id == "water-supply"
         and facility is not None
@@ -495,6 +510,24 @@ def _chapter_gap(d: _ChapterDef, ctx: _Ctx, facility: dict[str, Any] | None) -> 
             }
         )
     return d.gap
+
+
+def _air_application_filed(ctx: _Ctx) -> bool:
+    """`study.ts` `airApplicationFiled` — the site's own record holds an air-program filing.
+
+    Read off the `permits-epa` record group and keyed on the agency naming its AIR division,
+    which is how the corpus distinguishes an air action from the surface-water and 401 actions
+    that share that group. Deliberately narrow: it answers "has anything been FILED", never "has
+    a permit issued" — those are different documents and only the second closes the chapter.
+    """
+    for r in _rows(ctx, "records"):
+        if r.get("group") != "permits-epa":
+            continue
+        fields = r.get("fields")
+        agency = str((fields or {}).get("agency") or "") if isinstance(fields, dict) else ""
+        if "air pollution control" in agency.lower():
+            return True
+    return False
 
 
 def _cooling_undisclosed(ctx: _Ctx, facility: dict[str, Any] | None) -> bool:

@@ -269,3 +269,31 @@ documents:
     Andrea Kilbourne documents that the required mitigation-credit purchase is
     complete. Consultant Clune Consulting Services. Do not merge with the Amazon
     permit 251911W — different applicant, different ID.
+- filename: 4214600.pdf
+  edoc_id: '4214600'
+  permit_id: P0141118
+  canonical: oepa-air-pti-p0141118-cmh232-campus-administratively-complete-2026-08-04.pdf
+  type: air-permit-correspondence
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4214600
+  sha256: f990496b4481935f4d451c53cf65b864329e58b5bc6ee8086221e844343a769b
+  bytes: 197614
+  content_type: application/pdf
+  fetched_at: '2026-08-11T21:20:00+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    THE FIRST AIR-PROGRAM DOCUMENT FOR THIS CAMPUS, and the instrument that retired the
+    committed `[verified negative]` on the air PTI (#1998). Ohio EPA DAPC Northwest District
+    Office (Bowling Green) to Laura Markman, "CMH232 Campus", 13820 Sunrise Valley Dr.,
+    Herndon VA: application P0141118, received 2026-08-03, determined "preliminarily and
+    administratively complete" 2026-08-04 — which the letter itself says "does not imply that
+    the application is approvable". Signed Mohammad Smidi; ec Jennifer Delbecq, Mark Barber.
+    Air facility ID 0375015024 — a NEW registry, distinct from the campus's NPDES registry
+    110072226204. ⚠️ A FOURTH filed name: the AIR program spells it "CMH232 Campus",
+    unhyphenated; the hyphenated "CMH-232" is the 401/wetlands key and returns 0 here.
+    ⚠️ It states NO load: no megawatt, generator, engine, emission-unit, fuel or cooling term
+    appears in either page, and it does not say whether the application is being reviewed as
+    major or minor. What it does add is a dated clock — the letter's own 60-120 day
+    (non-major) / 120-180 day (major) processing estimates from the 2026-08-03 receipt — and
+    a note that OAC 3745-31-33 lets site preparation proceed before issuance, so construction
+    activity is not evidence of a permit.
