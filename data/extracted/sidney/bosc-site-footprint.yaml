@@ -102,8 +102,13 @@ dominant_hsg:
 
 receiving_water: >-
   Great Miami River watershed (HUC-8 05080001, upper Great Miami headwaters), the same basin the
-  Sidney WWTP (NPDES 1PV00037 / OH0027421) discharges to at outfall 001. The campus sits on the
-  moraine upland west of the Great Miami mainstem, in the Millcreek Road drainage.
+  Sidney WWTP (NPDES 1PD00009*SD / application OH0027421) discharges to at outfall 001. The campus
+  sits on the moraine upland west of the Great Miami mainstem, in the Millcreek Road drainage.
+  ⚠️ This line read "NPDES 1PV00037" until #1996. That number is NOT this plant: 1PV00037*ED is
+  Hidden Valley MHP (Alexander R. Reck), 5880 State Route 29 East, 0.015 MGD to TAWAWA CREEK at
+  RM 3.3, application OH0040657 — also Sidney, also Shelby County, which is exactly what made the
+  wrong number look right. It is the leak class regulatory-watch.yaml already warns about. The
+  application number OH0027421 beside it was always correct; the permit number was not.
   ⚠️ [verified] THE CAMPUS STRADDLES A DRAINAGE DIVIDE, and this record used to say the receptor
   was one tributary "vs." the mainstem. It is neither, and it is not one receptor: USGS NLDI snaps
   interior points of this footprint's own parcel geometry to TWO NHDPlus catchments — 3983192,

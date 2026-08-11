@@ -226,11 +226,23 @@ def test_committed_peer_tables_are_geometry_grade(hydro_settings: Settings) -> N
     that HAS committed its tables loads its own, keyed to its own topology — and does not
     thereby acquire a routed storm model. Every peer set committed so far is geometry-grade
     (``catchments: {}``, the #1364 rule), so the routed-hydrograph feed must still self-skip.
+
+    Selected on ANY of :data:`_REACH_TABLES`, then asserted COMPLETE — deliberately the same
+    predicate the test above negates, so the two partition every peer between them. Selecting on
+    ``reaches.yaml`` alone left a hole: a site that committed only a topology or only a nav plan
+    was excluded from the test above (which needs *none* of them) and silently skipped by this
+    one, so a half-landed reach set would have been checked by neither.
     """
     hydro_dir = hydro_settings.reference_dir / "hydrology"
-    peers = [s for s in SITES if s != "lima" and (hydro_dir / s / "reaches.yaml").is_file()]
+    peers = [
+        s
+        for s in SITES
+        if s != "lima" and any((hydro_dir / s / f).is_file() for f in _REACH_TABLES)
+    ]
     assert peers, "expected at least one peer reach table (fort-wayne, sidney)"
     for slug in peers:
+        missing = [f for f in _REACH_TABLES if not (hydro_dir / slug / f).is_file()]
+        assert not missing, f"{slug} committed a PARTIAL reach set — missing {missing}"
         settings = hydro_settings.model_copy(update={"site": slug})
         table = hr.load_reaches(settings=settings)
         assert table is not None, slug
