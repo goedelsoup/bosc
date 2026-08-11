@@ -341,8 +341,13 @@ def _load_scenarios(settings: Settings) -> list[ScenarioResult]:
 
     Per-site (#762): the committed scenarios are Lima's (the Ottawa-River loop); a sibling
     site reads its own ``scenarios/<slug>/`` (absent today → an empty feed, not Lima's).
+
+    The location comes from :func:`watermark.hydrology.scenario.scenarios_dir` rather than being
+    re-derived here — this reader and that module's writer disagreeing is exactly the #1995 bug.
     """
-    sdir = site_scoped_path(settings.data_dir / "scenarios", settings.site, is_dir=True)
+    from watermark.hydrology.scenario import scenarios_dir
+
+    sdir = scenarios_dir(settings)
     if not sdir.is_dir():
         return []
     out: list[ScenarioResult] = []

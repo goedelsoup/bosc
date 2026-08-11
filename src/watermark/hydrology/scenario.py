@@ -15,6 +15,8 @@ self-auditing (every number keeps its provenance tag).
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import yaml
 
 from watermark.config import Settings, get_settings
@@ -43,7 +45,7 @@ from watermark.hydrology.model import (
 )
 from watermark.hydrology.units import mgd_to_cfs
 from watermark.logging import get_logger
-from watermark.sites import CoolingModelType, active_profile
+from watermark.sites import CoolingModelType, active_profile, site_scoped_path
 
 log = get_logger(__name__)
 
@@ -335,10 +337,37 @@ def evaluate_seasonal(
     )
 
 
+def scenarios_dir(settings: Settings | None = None) -> Path:
+    """The active site's hydrology-scenario store — the ONE definition, read *and* written.
+
+    Lima (the reference layout) keeps the flat committed ``data/scenarios/``; every peer gets
+    ``data/scenarios/<slug>/``, the same ``site_scoped_path`` rule the rest of the per-site
+    curated stores follow (#762).
+
+    This function exists because the reader and the writer used to compute the location
+    **independently and disagree** (#1995). ``watermark.site.export._load_scenarios`` already
+    read the slug subdir, while :func:`write_scenario` wrote the bare ``settings.scenarios_dir``
+    — so ``watermark --site <peer> scenario --write`` did two wrong things at once: it
+    OVERWROTE Lima's committed ``buildout.scenario.yaml`` (the artifact Lima's cooling figures
+    are regression-locked against), and the peer that ran it still exported an empty
+    ``hydrology-scenarios`` feed, because its own reader was looking somewhere else. That is
+    why no peer site has ever carried the feed.
+
+    Note the sibling convention deliberately NOT changed here: air scenarios
+    (:func:`watermark.air.scenario.write_scenario`) live flat with a ``<slug>.air-`` filename
+    PREFIX, and their reader (``_load_air_scenarios``) and ``watermark.ledger`` both glob that
+    prefix off the same flat dir. Reader and writer already agree there, so it is correct as it
+    stands — two conventions, each internally consistent, is not the bug; one convention split
+    across a reader and a writer was.
+    """
+    settings = settings or get_settings()
+    return site_scoped_path(settings.data_dir / "scenarios", settings.site, is_dir=True)
+
+
 def write_scenario(result: ScenarioResult, *, settings: Settings | None = None) -> str:
     """Persist a scenario result as a committed, self-auditing YAML artifact."""
     settings = settings or get_settings()
-    out_dir = settings.scenarios_dir
+    out_dir = scenarios_dir(settings)
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{result.scenario.name}.scenario.yaml"
     # mode="json" so CoolingModelType serializes as its value (safe_dump rejects enums).
