@@ -5,12 +5,22 @@ import { availableFacetPaths } from "@watermark/core/readiness";
 // and since the record index drops a locked facet's door and search skips its row, that page was
 // reachable from nowhere and findable by nothing. The ask survives where it is actually read —
 // the needs board on the record index, beside the doors that did open.
-export const getStaticPaths = () => availableFacetPaths("exhibits");
+export function getStaticPaths() {
+  return availableFacetPaths("exhibits");
+}
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { ExhibitItem } from "@watermark/core/feeds";
 
-const exhibits = hasFeed("exhibits") ? loadFeed<ExhibitItem[]>("exhibits") : [];
+// ⚠️ `Astro.props` FIRST, and the slug passed EXPLICITLY (#2005). With an arrow-form
+// `getStaticPaths` and no other `Astro` reference, Astro's compiler hoists this whole frontmatter
+// to MODULE scope, where it evaluates ONCE for the entire build — outside the middleware's
+// `runWithSite`, so ambient reads silently fall back to Lima and every site renders Lima's data.
+// The function declaration above keeps it per-render; this destructure is also the tripwire (it
+// throws at build if it is ever hoisted again) and the explicit slug makes the reads correct
+// regardless of what the compiler decides to hoist.
+const { slug } = Astro.props as { slug: string };
+const exhibits = hasFeed("exhibits", slug) ? loadFeed<ExhibitItem[]>("exhibits", slug) : [];
 ---
 
 <Base title="Exhibits" section="site">

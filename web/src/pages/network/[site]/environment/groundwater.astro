@@ -3,7 +3,9 @@ import { offeredFacetPaths } from "@watermark/core/readiness";
 // Built only where the Environment/Land landing offers this door (#1908): the leaf route,
 // the door and the search row share ONE gate (`lenses.ts` declares it, `facetOffered` reads
 // it), so this page can no longer exist on a site whose landing correctly withholds it.
-export const getStaticPaths = () => offeredFacetPaths("/environment/groundwater");
+export function getStaticPaths() {
+  return offeredFacetPaths("/environment/groundwater");
+}
 import Base from "~/layouts/Base.astro";
 import StudyAnnexBanner from "~/components/study/StudyAnnexBanner.astro";
 import AquiferSection from "~/components/charts/AquiferSection.astro";
@@ -17,7 +19,15 @@ const fmt = (v: ProvenancedValue): string => fmtRanged(v);
 // The hypothetical cone (#well-drawdown): a Theis screen over the ODNR census. Its headline is the
 // inverse finding — a hyperscale groundwater stress dewaters the aquifer, corroborating the campus's
 // reliance on municipal surface water. Gated on the feed (reference-only today).
-const drawdown = hasFeed("drawdown") ? loadFeed<DrawdownReport>("drawdown") : null;
+// ⚠️ `Astro.props` FIRST, and the slug passed EXPLICITLY (#2005). With an arrow-form
+// `getStaticPaths` and no other `Astro` reference, Astro's compiler hoists this whole frontmatter
+// to MODULE scope, where it evaluates ONCE for the entire build — outside the middleware's
+// `runWithSite`, so ambient reads silently fall back to Lima and every site renders Lima's data.
+// The function declaration above keeps it per-render; this destructure is also the tripwire (it
+// throws at build if it is ever hoisted again) and the explicit slug makes the reads correct
+// regardless of what the compiler decides to hoist.
+const { slug } = Astro.props as { slug: string };
+const drawdown = hasFeed("drawdown", slug) ? loadFeed<DrawdownReport>("drawdown", slug) : null;
 const ddFt = drawdown?.drawdown_at_well_ft.value ?? 0;
 const ddRadius = drawdown?.radius_of_influence_ft.value ?? null;
 const ddPumping = drawdown?.scenario.pumping_mgd.value ?? null;
@@ -34,7 +44,7 @@ const ddCaption =
     : `${ddWellsN?.toLocaleString("en-US") ?? "—"} domestic census wells within the ${ddRadius?.toLocaleString("en-US") ?? "—"} ft radius of influence, for a hypothetical ${ddPumping ?? "—"} MGD groundwater stress. The campus draws municipal surface water; no groundwater withdrawal is on record.`;
 
 // The DOCUMENTED wellfield (#well-drawdown): a superposition of Cooper-Jacob cones over the census.
-const dewatering = hasFeed("dewatering") ? loadFeed<DewateringReport>("dewatering") : null;
+const dewatering = hasFeed("dewatering", slug) ? loadFeed<DewateringReport>("dewatering", slug) : null;
 const dwOver5 = dewatering
   ? dewatering.impacted_wells.filter((w) => (w.composite_drawdown_ft.value ?? 0) > 5).length
   : 0;

@@ -41,6 +41,7 @@ run = [
   "pnpm run build",       # astro build against sites/ (offline, no Python)
   "pnpm run check:links", # internal-link check over the build
   "pnpm run check:routes", # route depth / page-weight / document-permalink budgets (#1887)
+  "pnpm run check:site-scope", # no site publishes another site's record under its URL (#2005)
 ]
 
 [tasks.test]

@@ -2,7 +2,9 @@
 import { openSectionPaths } from "@watermark/core/readiness";
 // Only where the section is open (#1894): a locked peer built this route to render the identical
 // generic "Reports" lock, seven times over. Its index still builds and still carries that lock.
-export const getStaticPaths = () => openSectionPaths("reports");
+export function getStaticPaths() {
+  return openSectionPaths("reports");
+}
 /**
  * OPC scenario explorer — the interactive companion to the Cost chapter, and the native
  * successor to the retired marimo `opc_scenario.py` notebook (the evaluation lives at
@@ -20,7 +22,15 @@ import { fmtUsdFull } from "@watermark/core/money";
 import { opcScenarioFromRecords, sourceProgramTotal } from "@watermark/core/opcScenario";
 import { withSite, withStory } from "@watermark/core/site";
 
-const records = hasFeed("records") ? loadFeed<RecordItem[]>("records") : [];
+// ⚠️ `Astro.props` FIRST, and the slug passed EXPLICITLY (#2005). With an arrow-form
+// `getStaticPaths` and no other `Astro` reference, Astro's compiler hoists this whole frontmatter
+// to MODULE scope, where it evaluates ONCE for the entire build — outside the middleware's
+// `runWithSite`, so ambient reads silently fall back to Lima and every site renders Lima's data.
+// The function declaration above keeps it per-render; this destructure is also the tripwire (it
+// throws at build if it is ever hoisted again) and the explicit slug makes the reads correct
+// regardless of what the compiler decides to hoist.
+const { slug } = Astro.props as { slug: string };
+const records = hasFeed("records", slug) ? loadFeed<RecordItem[]>("records", slug) : [];
 const scenario = opcScenarioFromRecords(records);
 
 // SSR fallback: the source figures at the source's own contingency convention (the no-JS
