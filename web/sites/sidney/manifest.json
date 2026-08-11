@@ -2,9 +2,9 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "2.0.0",
-  "generated_at": "2026-08-11T21:23:47+00:00",
+  "generated_at": "2026-08-11T22:25:19+00:00",
   "feed_count": 36,
-  "row_total": 834,
+  "row_total": 828,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -45,7 +45,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 18
+      "count": 17
     },
     {
       "name": "relationships",
@@ -53,7 +53,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 13
+      "count": 12
     },
     {
       "name": "people",
@@ -285,7 +285,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 128
+      "count": 126
     },
     {
       "name": "corpus-nodes",
@@ -293,7 +293,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 128
+      "count": 126
     },
     {
       "name": "ask-embeddings",

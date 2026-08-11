@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "ca5f993a7e4f81f14fae06a3e5d684723ea4261152e2a59ed87744f5c5536a3c",
+  "catalog_version": "b7eca8e8f9d2fad1bcac0ccbbae73a4eac5162244752bcb9a13d81c02718bb09",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -1124,14 +1124,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:sidney:CMH232 CAMPUS",
-      "kind": "entity",
-      "site": "sidney",
-      "local_id": "CMH232 CAMPUS",
-      "title": "CMH232 Campus",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:sidney:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "sidney",
@@ -1560,7 +1552,7 @@
       "kind": "timeline",
       "site": "sidney",
       "local_id": "P0141118",
-      "title": "Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO), air pollution sources P0141118 — incomplete (CMH232 Campus)",
+      "title": "Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO), air pollution sources P0141118 — application (CMH232 Campus)",
       "feed": "timeline"
     }
   ]
