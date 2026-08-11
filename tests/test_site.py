@@ -57,7 +57,7 @@ def test_corpus_feeds_are_site_scoped_not_lima_bound() -> None:
     # The cross-document corpus (timeline/entities/relationships derive from this): every Fort
     # Wayne artifact sits under its own scope — no Lima recorder/oepa/commissioners records.
     fw_corpus = load_corpus(fw)
-    fw_rels = [rel for group in vars(fw_corpus).values() for rel, _ in group]
+    fw_rels = fw_corpus.rel_paths()
     assert fw_rels, "expected Fort Wayne to have at least one in-scope extraction"
     bad_rels = [
         r for r in fw_rels if not (r.startswith("fort-wayne/") or r.startswith("idem/fort-wayne/"))

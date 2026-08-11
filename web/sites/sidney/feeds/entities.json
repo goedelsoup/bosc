@@ -120,6 +120,29 @@
     "federal_obligations": null
   },
   {
+    "key": "npdes:1PD00009",
+    "display": "City of Sidney WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Sidney WWTP"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/sidney/1PD00009.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "CITY OF SIDNEY",
     "display": "City of Sidney",
     "kind": "government",
@@ -131,6 +154,7 @@
     ],
     "signals": [],
     "roles": {
+      "applicant": 1,
       "epa_applicant": 1
     },
     "parcels": [],
@@ -138,6 +162,7 @@
       "201 W Poplar Street, Sidney, OH 45365"
     ],
     "sources": [
+      "oepa/sidney/1PD00009.npdes.yaml",
       "oepa/sidney/DSW401252256W.epa.yaml"
     ],
     "lei": null,
@@ -279,6 +304,29 @@
     "addresses": [],
     "sources": [
       "oepa/sidney/1PV00037.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "GREAT MIAMI RIVER",
+    "display": "Great Miami River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Great Miami River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/sidney/1PD00009.npdes.yaml"
     ],
     "lei": null,
     "uei": null,

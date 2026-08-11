@@ -417,7 +417,17 @@ class NpdesPermit(_Extracted):
     facility_name: str | None = None
     permit_no: str | None = None  # Ohio EPA permit no, e.g. 2PH00006*LD
     permit_action: str | None = None  # renewal | modification | new | draft
-    applicant: str | None = None
+    # Ohio EPA writes the party as "Applicant" on a fact sheet and "Permittee" in the permit
+    # body; they are the same party, and #1994's Sidney read kept the permit's own word
+    # (`permittee: City of Sidney`). Re-keying the DATA to `applicant:` would erase the source's
+    # vocabulary to suit a model — so the MODEL learns the synonym instead, and the entity
+    # graph's `operates` edge stops depending on which face page a transcriber was reading.
+    # `applicant` wins when both are present. NOT aliased: `applicant_of_record`, which on that
+    # same file is a DIFFERENT party ("Mayor and Council, City of Sidney") — folding it in would
+    # misattribute the operator.
+    applicant: str | None = Field(
+        default=None, validation_alias=AliasChoices("applicant", "permittee")
+    )
     application_no: str | None = None  # e.g. OH0037338
     public_notice_no: str | None = None
     public_notice_date: str | None = None
@@ -760,6 +770,192 @@ class DeedExtraction(DocExtraction):
 
 class NpdesExtraction(DocExtraction):
     permit: NpdesPermit
+
+
+# The corpus root, as it appears inside a committed extraction's source reference.
+_DOC_ANCHOR = "data/documents/"
+
+# The four keys that exist ONLY because a page was rasterized and handed to the vision model
+# (``watermark.agent.extractor.StructuredExtractor``) — i.e. ``DocExtraction``'s required set,
+# written out literally rather than derived from ``model_fields[...].is_required()`` so that
+# adding a required field to ``DocExtraction`` cannot silently re-route committed transcriptions
+# into a genre they were never checked against.
+RENDER_ENVELOPE_KEYS = frozenset({"doc_id", "source_path", "kind", "dpi"})
+
+
+class SourceRef(BaseModel):
+    """One committed source document a hand transcription was read from.
+
+    Normalized on READ from the conventions already committed under ``data/extracted/**``; the
+    artifacts keep their own bytes. Each convention carries something the others do not — a
+    sha256 digest, a reading order, a role name — and ``data/extracted/**`` is reviewed
+    evidence, not a schema's scratch space, so nothing is rewritten to make a model happy.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    path: str  # repo-relative, under data/documents/
+    role: str | None = None  # the key it was filed under: "permit", "draft_pn_and_fact_sheet"
+    sha256: str | None = None  # chain-of-custody digest, where the artifact recorded one
+    url: str | None = None  # where the bytes were captured from
+
+
+def _coerce_source_refs(raw: Any, role: str | None = None) -> list[SourceRef]:
+    """Normalize the committed provenance conventions to one list.
+
+    ``{name: {path, sha256, url}}`` (``oepa/sidney/1PD00009.npdes.yaml`` — a permit AND its
+    draft-PN fact sheet, each with a digest), ``[path, path]``
+    (``regulatory/ohc000006-construction-stormwater-gp.yaml``), and a bare string are all
+    accepted. Nothing is invented from any of them: a convention that records no digest yields
+    a ``SourceRef`` with no digest.
+    """
+    out: list[SourceRef] = []
+    if isinstance(raw, str):
+        out.append(SourceRef(path=raw, role=role))
+    elif isinstance(raw, dict):
+        for name, body in raw.items():
+            if isinstance(body, str):
+                out.append(SourceRef(path=body, role=str(name)))
+            elif isinstance(body, dict) and isinstance(body.get("path"), str):
+                out.append(SourceRef(**{**body, "role": str(name)}))
+    elif isinstance(raw, list):
+        for item in raw:
+            out.extend(_coerce_source_refs(item, role))
+    return out
+
+
+class TranscribedExtraction(BaseModel):
+    """Provenance envelope for a HAND TRANSCRIPTION — the peer of :class:`DocExtraction`.
+
+    ``DocExtraction``'s ``doc_id`` / ``kind`` / ``dpi`` describe a page RENDERED at a DPI and
+    sent to the vision model. A transcription was never rendered, so those fields have **no true
+    value**, and this envelope declares none of them: a synthetic ``doc_id`` or a ``dpi: 300``
+    would assert a method that did not happen, which the corpus's chain-of-custody rule forbids
+    ("prefer omission over invention", root ``CLAUDE.md``).
+
+    Declaring nothing is not enough on its own, though, or this is ``extra="allow"`` with extra
+    steps. So it requires the assertion a transcription CAN honestly make in place of the render
+    assertion it cannot: **at least one committed source under ``data/documents/``**. That is
+    exactly the join a dropped file loses (#1994), and requiring it stops this envelope from
+    becoming a validation bypass for any dict that happens to key ``permit:``.
+
+    It also refuses a render receipt outright. The tree already contains the failure this
+    prevents: ``oepa/van-wert/2GC08872.approval.npdes.yaml`` opens "HAND-READ, not a vision
+    extraction … nothing was OCR'd" and then carries ``dpi: 150``, because the type it was
+    written against demanded one. A transcription carrying a partial receipt is either a real
+    render whose extractor died mid-write (route it to ``npdes`` and let it fail loudly) or a
+    false receipt — never a thing this class should quietly accept.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    kind: str | None = None  # the file's own self-description, e.g. `general_permit`
+    source_path: str | None = None  # the primary instrument, when the file names one
+    sources: list[SourceRef] = Field(default_factory=list)
+
+    @model_validator(mode="before")
+    @classmethod
+    def _gather_sources(cls, data: Any) -> Any:
+        if not isinstance(data, dict) or data.get("sources"):
+            return data
+        found: list[SourceRef] = []
+        # The block is read FIRST so a role and a digest survive when `source_path` names the
+        # same file — Sidney names its permit in both places, and only `meta.sources` has the
+        # sha256.
+        for block in ("meta", "provenance"):
+            if isinstance(body := data.get(block), dict):
+                found.extend(_coerce_source_refs(body.get("sources")))
+        if isinstance(data.get("source_path"), str):
+            found.append(SourceRef(path=data["source_path"], role="source_path"))
+        # First mention of a path wins, which is why the blocks are read before `source_path`:
+        # the richer reference (role + digest) is the one that survives.
+        seen: set[str] = set()
+        uniq: list[SourceRef] = []
+        for ref in found:
+            if ref.path in seen:
+                continue
+            seen.add(ref.path)
+            uniq.append(ref)
+        return {**data, "sources": [s.model_dump() for s in uniq]}
+
+    @model_validator(mode="after")
+    def _requires_a_committed_source(self) -> TranscribedExtraction:
+        if not any(s.path.startswith(_DOC_ANCHOR) for s in self.sources):
+            raise ValueError(
+                "a transcription must name at least one committed source under "
+                "data/documents/ (meta.sources, provenance.sources, or a top-level "
+                "source_path) — see TranscribedExtraction"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _carries_no_render_receipt(self) -> TranscribedExtraction:
+        extra = self.__pydantic_extra__ or {}
+        asserted = sorted(
+            k for k in ("doc_id", "dpi", "pages_read", "image_pages_read") if k in extra
+        )
+        if asserted:
+            raise ValueError(
+                f"asserts a vision render ({', '.join(asserted)}) but was classified as a hand "
+                "transcription. A render receipt is all-or-nothing: if a page really was "
+                "rasterized, carry the full DocExtraction envelope; if it was hand-read from a "
+                "text layer, omit doc_id/dpi/pages_read entirely. Do NOT invent a dpi to satisfy "
+                "a schema."
+            )
+        return self
+
+
+class NpdesTranscription(TranscribedExtraction):
+    permit: NpdesPermit
+
+
+class InstrumentProvenance(BaseModel):
+    """Provenance block on a framework instrument read from its own text layer.
+
+    A statewide general permit routinely has MORE THAN ONE source (the permit and its Response
+    to Comments), which a single ``source_path`` cannot express at all.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    sources: StrList = Field(default_factory=list)
+    content_verified: str | None = None
+    evidence: str | None = None
+
+    @model_validator(mode="after")
+    def _at_least_one_source(self) -> InstrumentProvenance:
+        if not self.sources:
+            raise ValueError("provenance.sources must name at least one source document")
+        return self
+
+
+class GeneralPermit(_Extracted):
+    """A statewide / framework general permit — the instrument a site's coverage is issued
+    *under*, not a facility discharge record (Ohio EPA OHC000006, the construction stormwater
+    GP). It has no facility, no applicant and no receiving water BY CONSTRUCTION, and that is
+    the point of the separate type: routed to :class:`NpdesPermit` it is one transcribed
+    ``facility_name`` away from registering ``npdes:OHC000006`` as a discharger, putting a
+    rulemaking instrument in the same namespace as the Lima WWTP.
+    """
+
+    permit_no: str
+    title: str | None = None
+    issuing_agency: str | None = None
+    effective_date: str | None = None
+    expiration_date: str | None = None
+    authority: str | None = None
+    note: str | None = None
+
+
+class GeneralPermitExtraction(BaseModel):
+    """A framework general permit transcribed from its own (clean, non-OCR) text layer."""
+
+    model_config = ConfigDict(extra="allow")
+
+    kind: Literal["general_permit"]
+    subject: str
+    provenance: InstrumentProvenance
+    permit: GeneralPermit
 
 
 class DmrMeta(BaseModel):

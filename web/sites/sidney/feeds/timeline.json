@@ -1,5 +1,27 @@
 [
   {
+    "date": "2022-11-07",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PD00009*SD (City of Sidney WWTP) — public notice",
+    "ref": "1PD00009*SD",
+    "parties": [
+      "City of Sidney",
+      "City of Sidney WWTP"
+    ],
+    "detail": "action renewal; receiving Great Miami River at River Mile 128.68",
+    "source": "oepa/sidney/1PD00009.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/sidney/1PD00009.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2025-12-10",
     "category": "epa_permit_action",
     "title": "401 Water Quality Certification and Isolated Wetland Permitting Unit DSW401251911W (Ohio EPA ID No. 251911W); Application ID: 461193445 — application (CMH-232)",

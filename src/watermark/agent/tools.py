@@ -126,28 +126,6 @@ def _reference_only(tool: str) -> dict[str, Any] | None:
     )
 
 
-def _load_all_permits(
-    settings: Any,
-) -> list[tuple[str, Any]]:
-    """Return ``(relpath, NpdesExtraction)`` pairs for every *.npdes.yaml in the corpus.
-
-    Used to annotate ``discharges_to`` edges with ``stream_network`` so the agent can
-    verify basin attribution without a separate ``read_extraction`` call per permit.
-    """
-    from watermark.models import NpdesExtraction
-
-    results = []
-    for path in sorted(settings.extracted_dir.rglob("*.npdes.yaml")):
-        try:
-            data = yaml.safe_load(path.read_text(encoding="utf-8"))
-            ex = NpdesExtraction.model_validate(data)
-            rel = path.relative_to(settings.extracted_dir).as_posix()
-            results.append((rel, ex))
-        except Exception:
-            pass
-    return results
-
-
 def _resolve(filename: str | None, pattern: str = "*.yaml") -> Path | None:
     """Resolve an extraction within the ACTIVE SITE's corpus scope (#424/#1504).
 
@@ -337,19 +315,20 @@ async def entities(_args: dict[str, Any]) -> dict[str, Any]:
     if not graph.entities:
         return _scoped("No entities found under data/extracted.")
 
-    # Pre-load stream_network from every NPDES extraction so discharges_to edges can
-    # be annotated with the basin chain. This prevents the agent from attributing a
-    # permit from a different basin (e.g. Great Miami) to the active site's receiving
-    # waters (e.g. Little Miami / Lytle Creek). LAMP permits have receiving_water=null
-    # and will not have a discharges_to edge at all — they are excluded by construction.
-    _stream_network_by_source: dict[str, str] = {}
-    try:
-        for rel_path, pex in _load_all_permits(settings):
-            sn = pex.permit.stream_network
-            if sn:
-                _stream_network_by_source[rel_path] = sn
-    except Exception:
-        pass  # annotation is best-effort; never block the main output
+    # Annotate `discharges_to` edges with the permit's basin chain so the agent cannot
+    # attribute a Great Miami permit to a Little Miami site. LAMP permits have
+    # receiving_water=null and get no discharges_to edge at all — excluded by construction.
+    #
+    # This reads the corpus ALREADY LOADED above, which is site-scoped (#762/#780). The old
+    # `_load_all_permits` helper re-globbed the whole extracted tree UNSCOPED — contradicting
+    # the SCOPE NOTE printed a few lines below — and swallowed every failure twice (a per-file
+    # `except Exception: pass` plus a bare `except` around the loop), so a permit that failed to
+    # validate vanished from the annotation map with no trace at all (#1994).
+    _stream_network_by_source: dict[str, str] = {
+        rel_path: pex.permit.stream_network
+        for rel_path, pex in corpus.permits
+        if pex.permit.stream_network
+    }
 
     # The Lima reference graph is whole-corpus (all sites' permits); for any other site
     # load_corpus() scopes to that site's own extractions so the cross-basin attribution

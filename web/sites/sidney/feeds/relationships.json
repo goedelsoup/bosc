@@ -30,6 +30,26 @@
     "relation_basis": null
   },
   {
+    "src": "CITY OF SIDNEY",
+    "rel": "operates",
+    "dst": "npdes:1PD00009",
+    "date": "",
+    "ref": "1PD00009*SD",
+    "source": "oepa/sidney/1PD00009.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PD00009",
+    "rel": "discharges_to",
+    "dst": "GREAT MIAMI RIVER",
+    "date": "",
+    "ref": "1PD00009*SD",
+    "source": "oepa/sidney/1PD00009.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "ALEXANDER RECK DBA HIDDEN VALLEY MHP",
     "rel": "operates",
     "dst": "npdes:1PV00037",

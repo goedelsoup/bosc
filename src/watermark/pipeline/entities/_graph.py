@@ -210,6 +210,11 @@ def build_entity_graph(
                         )
                     )
 
+    # `corpus.general_permits` is deliberately NOT read here. A statewide framework instrument
+    # (OHC000006, the construction stormwater GP) is not a discharger: registering it would put a
+    # rulemaking instrument in the `npdes:<no>` namespace alongside the Lima WWTP. It is claimed
+    # and validated by the loader so it stops being silently dropped (#1994) — not so it can
+    # produce edges it has no business producing.
     for rel, pex in corpus.permits:
         p = pex.permit
         facility_key = ""

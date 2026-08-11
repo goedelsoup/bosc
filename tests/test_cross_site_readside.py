@@ -377,3 +377,42 @@ def test_power_basis_traces_to_the_active_facilitys_permit_not_lima(
     # Lima still carries its own permit.
     lima = derive_power_basis(settings=lima_settings)
     assert lima is not None and "P0138965" in (lima.it_load.citation or "")
+
+
+def test_every_published_npdes_record_is_claimed_by_the_corpus_loader() -> None:
+    """A file `records.py` publishes as `permits-npdes` must be claimed by the corpus loader too.
+
+    This encodes the #1994 SYMPTOM rather than its mechanism, which is what makes it durable:
+    `watermark.site.records` reads raw dicts, so a permit kept publishing into the `records`
+    feed while the model-driven layer (timeline, entity graph, yidam mirror) had silently
+    dropped it. "Published in the feed" and "absent from the graph" must never both be true of
+    the same file again, whatever the next cause turns out to be.
+
+    One-directional and scoped to the one group that HAS a corpus peer: the site tier's
+    taxonomy is deliberately wider (#1724), so a record group with no corpus equivalent is not
+    a defect. The claimed set is a three-way union because the two layers disagree on taxonomy
+    without disagreeing on presence — `oepa/lima-wwtp-OH0026069.dmr.yaml` is `permits-npdes` to
+    `records.py` and `npdes_dmr` to the corpus, which is a difference, not a drop.
+    """
+    from watermark.pipeline.corpus import load_corpus
+    from watermark.site.records import load_records
+    from watermark.sites import active_profile, effective_corpus_scope
+
+    for slug in ("lima", "sidney"):
+        settings = Settings(data_dir=REPO_ROOT / "data", site=slug)
+        scope = effective_corpus_scope(active_profile(settings))
+        published = {
+            r.rel
+            for r in load_records(settings.extracted_dir, scope=scope)
+            if r.group == "permits-npdes"
+        }
+        corpus = load_corpus(settings)
+        claimed = (
+            {rel for rel, _ in corpus.permits}
+            | {rel for rel, _ in corpus.dmr_records}
+            | {rel for rel, _ in corpus.general_permits}
+        )
+        assert not published - claimed, (
+            f"{slug}: published into the `records` feed but invisible to the corpus layer — "
+            f"it looks present and is not: {sorted(published - claimed)}"
+        )
