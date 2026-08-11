@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "35c183e1c235e9e12203f7e3bb684a9151e3fb89045825209a08ed3c957e2a40",
+  "catalog_version": "8d9d839351dbdeb56a69a85cadd396b9e3e73d7b01987fd8c44e0c867a025a66",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -1017,6 +1017,14 @@
       "site": "sidney",
       "local_id": "sidney-regulatory-watch",
       "title": "Sidney — Standing Regulatory Watch (air PTI, construction stormwater, OH0027421, PUCO 25-958-EL-AIR, site plan)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:sidney-watch-items",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "sidney-watch-items",
+      "title": "Sidney site watch-items (WWTP infrastructure geometry)",
       "feed": "catalog"
     },
     {
