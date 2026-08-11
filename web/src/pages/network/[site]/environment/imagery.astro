@@ -25,7 +25,7 @@ import { withBase } from "@watermark/core/site";
 // throws at build if it is ever hoisted again) and the explicit slug makes the reads correct
 // regardless of what the compiler decides to hoist.
 const { slug } = Astro.props as { slug: string };
-const feed = hasFeed("geo/imagery", slug) ? loadImagery() : null;
+const feed = hasFeed("geo/imagery", slug) ? loadImagery(slug) : null;
 const wayback = feed?.meta?.wayback;
 const releases: WaybackRelease[] = wayback?.releases ?? [];
 const aoi = feed?.features ?? [];

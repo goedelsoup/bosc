@@ -29,9 +29,9 @@ import type { Prior, UncertainOutcome } from "./uncertainty";
 const FEED = "economics-scenarios";
 
 /** The active site's scenario bands, or `null` where no abatement instrument is on the record. */
-export function economicScenarios(): EconomicScenarios | null {
-  if (!hasFeed(FEED)) return null;
-  const feed = loadFeed<EconomicScenarios>(FEED);
+export function economicScenarios(slug?: string): EconomicScenarios | null {
+  if (!hasFeed(FEED, slug)) return null;
+  const feed = loadFeed<EconomicScenarios>(FEED, slug);
   // Present-but-empty is not publishable: a feed with no corners is not a band (the Python
   // exporter already drops it, so this is belt-and-braces for a hand-written fixture).
   if (!feed.profiles?.length || !feed.lines?.length) return null;
