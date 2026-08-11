@@ -6,7 +6,7 @@ producer:
   kind: connector
   command: reaches --write
   connector_ref: watermark.hydrology.connectors.nldi
-  source: USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages)
+  source: USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages; Sidney's mainstem + Loramie gages plus two campus-drainage snaps)
   external_url: https://api.water.usgs.gov/nldi
 license: U.S. Government work (public domain)
 access_tier: public
@@ -28,6 +28,18 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: reference/hydrology/reaches/fort-wayne.geojson
+  media_type: application/geo+json
+  lfs: false
+- relpath: reference/hydrology/sidney/reach-nav.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/hydrology/sidney/network.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/hydrology/sidney/reaches.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/hydrology/reaches/sidney.geojson
   media_type: application/geo+json
   lfs: false
 refresh:
@@ -55,3 +67,10 @@ notes: >-
   than routing an all-zero storm; committing cited CN/Tc/area catchments is what would light it.
   The NLDI responses are recorded under tests/fixtures/hydrology/nldi/, so `watermark --site
   fort-wayne reaches --offline --write` (with hydro_fixtures_dir set) regenerates byte-identically.
+  Sidney is the second peer set (issue 1996) and also geometry-grade. It differs from Fort Wayne
+  in what its anchors ARE: two of its four navigated lines are snapped not from a gage but from
+  points INSIDE the committed campus parcel assemblage, because NLDI resolves those points to two
+  different NHDPlus catchments — the campus straddles a drainage divide, and its runoff reaches the
+  Great Miami by Mill Branch on one side and by Mill Creek -> Loramie Creek on the other. Neither is
+  the reach the WWTP outfall discharges to. So for this site the reach map carries a substantive
+  finding, not only display geometry.

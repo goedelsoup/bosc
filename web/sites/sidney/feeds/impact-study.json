@@ -160,19 +160,10 @@
     "model": {
       "id": "stormwater",
       "facilityKey": "cmh-232",
-      "status": "gap",
-      "statusReasons": [
-        "the site grading and drainage plan — requested, not produced."
-      ],
+      "status": "data",
+      "statusReasons": [],
       "stats": [],
-      "gaps": [
-        {
-          "wouldScreen": "the runoff a campus-scale impervious surface adds to the design storm, routed down the reach.",
-          "missingRecord": "the site grading and drainage plan — requested, not produced.",
-          "producer": "the site plan's grading/drainage sheets and the construction stormwater permit (NOI)",
-          "leadIds": null
-        }
-      ],
+      "gaps": [],
       "caveats": []
     }
   },
@@ -333,7 +324,7 @@
       "facilityKey": "cmh-232",
       "status": "partial",
       "statusReasons": [
-        "synthesizes the screened chapters — 1 on the record, 2 partial, 5 gap"
+        "synthesizes the screened chapters — 2 on the record, 2 partial, 4 gap"
       ],
       "stats": [],
       "gaps": [],

@@ -2769,7 +2769,26 @@ _SIDNEY = SiteProfile(
     pre_cover="cropland",
     post_cover="developed_campus",
     developed_pervious_cover="open_space",
-    noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
+    # [reference] The 24-hr row of this site's OWN committed corridor DDF,
+    # data/reference/hydrology/sidney/atlas14-corridor-ddf.yaml (NOAA Atlas-14 PDS point query at
+    # 40.2842/-84.1558, the design_lat/lon above) — transcribed here so `stormwater._resolve_storm`
+    # has an offline depth for this site instead of failing. #1996 closed the "[open] pending the
+    # NOAA Atlas-14 pull" this carried: the onboard corridor-DDF step had already run and the
+    # committed table was sitting unread, because _resolve_storm reads only this dict (unlike
+    # roundabout._storm_depths, which reads the DDF first and falls back to here).
+    # ⚠️ FIVE return periods, not the ten Lima and the other peers carry. The corridor-DDF pull
+    # captures 2/10/25/50/100-yr only; 1/5/200/500/1000-yr are NOT in it and are deliberately NOT
+    # interpolated — a request for one still fails loudly naming the missing (site, return period)
+    # key, which is the #1604 rule. Everything the stormwater chain actually asks for is here: the
+    # 2-yr channel-forming surrogate (tier0-parameters.yaml), the 25-yr design storm and the
+    # 10/25/100-yr discharge set.
+    noaa_fallback_24h_depth_in={
+        2: 2.63,
+        10: 3.73,
+        25: 4.44,
+        50: 5.03,
+        100: 5.66,
+    },
     # [verified] committed #1379 — the single consolidated parcel 26-03-201-002 deeded to Amazon
     # Data Services, Inc. (243.092 ac CAMA / 235.468 ac planar) + its footprint record.
     parcels_relpath="reference/sidney/parcel-assemblage.geojson",

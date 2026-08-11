@@ -101,13 +101,28 @@ dominant_hsg:
   confidence: high
 
 receiving_water: >-
-  [inference] Great Miami River watershed (HUC-8 05080001, upper Great Miami headwaters), the same
-  basin the Sidney WWTP (NPDES 1PV00037 / OH0027421) discharges to at outfall 001. The campus sits
-  on the moraine upland west of the Great Miami mainstem, in the Millcreek Road drainage; the
-  specific stormwater receptor (a Great Miami tributary vs. the mainstem) is [open] pending the
-  construction stormwater permit. DISTINCT from the SANITARY pathway, which the record does close:
-  all facility wastewater goes to the Sidney municipal sanitary sewer -> OH0027421 -> Great Miami
-  River (sidneyoh.com/526, [verified]). This is the CONSTRUCTION/site-runoff pathway.
+  Great Miami River watershed (HUC-8 05080001, upper Great Miami headwaters), the same basin the
+  Sidney WWTP (NPDES 1PV00037 / OH0027421) discharges to at outfall 001. The campus sits on the
+  moraine upland west of the Great Miami mainstem, in the Millcreek Road drainage.
+  ⚠️ [verified] THE CAMPUS STRADDLES A DRAINAGE DIVIDE, and this record used to say the receptor
+  was one tributary "vs." the mainstem. It is neither, and it is not one receptor: USGS NLDI snaps
+  interior points of this footprint's own parcel geometry to TWO NHDPlus catchments — 3983192,
+  GNIS "Mill Branch", which reaches the Great Miami mainstem ~10.1 km BELOW the Sidney gage and
+  ~7.9 km below the WWTP outfall; and 3983206, an unnamed headwater flowing to GNIS "Mill Creek"
+  and into Loramie Creek ~0.6 km above the Lockington gage, rejoining the Great Miami 16.5 km
+  below the gage. A 7x7 grid over the assemblage put ~64% of interior points in the first and ~33%
+  in the second (~3% unresolved at the shared boundary of EPA's SIMPLIFIED catchment polygons), so
+  the split is real but its SHARE is [inference], not a measurement. Committed as the reach network
+  in data/reference/hydrology/sidney/ (#1996).
+  ⚠️ [open] STILL OPEN, and the distinction matters: NHDPlus catchments are the NATURAL drainage
+  divide. Where the GRADED campus actually discharges — its outfall count, locations and basins —
+  is fixed by the construction stormwater permit (Ohio EPA Rule 5 / NPDES OHC000005) and the site
+  grading and drainage plan, neither of which is in the corpus. Regrading routinely moves runoff
+  across a divide like this one. So: the ground drains two ways [verified]; the site is permitted
+  to discharge somewhere [open].
+  DISTINCT from the SANITARY pathway, which the record does close: all facility wastewater goes to
+  the Sidney municipal sanitary sewer -> OH0027421 -> Great Miami River (sidneyoh.com/526,
+  [verified]). This is the CONSTRUCTION/site-runoff pathway.
 
 notes:
   - 'Holding = 1 parcel / 1 owner (Amazon Data Services, Inc.) / 243.092 ac CAMA deeded (235.468 ac planar): 26-03-201-002, situs 1151 S Vandemark Rd, land use 110 "Agricultural vacant land (CAUV)", tax district 01 (Clinton Twp / Sidney Corp / Sidney CSD), conveyed 2025-11-24 for $5,621,490 at OR2329/454. All [verified] from the Shelby County auditor CAMA (SCEO Parcels layer 0, tax year 2025).'
