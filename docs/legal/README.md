@@ -10,6 +10,7 @@ and their reviewed reads under [`data/extracted/legal/`](../../data/extracted/le
 |---|---|
 | `mandamus-analysis.md` | Analysis behind the PRR mandamus — its §IV timeline events trace to specific commissioners-minutes resolutions. |
 | `proponent-analysis.md` | A neutral read of the four proponent submissions (Google, QTS, Data Center Coalition, …) to the Ohio data-center committee. |
+| `sidney-records-requests.md` | Drafted (unsent) R.C. 149.43 requests for the seven municipal instruments the Sidney campus record still lacks, with the friction each is expected to meet. |
 
 ## Conventions
 
