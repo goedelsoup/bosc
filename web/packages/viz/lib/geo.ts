@@ -26,8 +26,8 @@ export function loadGeo(name: string): FeatureCollection {
 
 /** The `geo/imagery` feed, typed (the Wayback ladder + AOI footprints) — so the
  *  slider page reads it without an `as unknown as` cast (#585). */
-export function loadImagery(): ImageryFeed {
-  return loadFeed<ImageryFeed>("geo/imagery");
+export function loadImagery(slug?: string): ImageryFeed {
+  return loadFeed<ImageryFeed>("geo/imagery", slug);
 }
 
 /** The corridor + watershed map's source: every geo layer feed merged into one

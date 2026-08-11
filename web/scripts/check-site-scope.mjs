@@ -68,8 +68,10 @@ if (!existsSync(NETWORK)) {
   process.exit(1);
 }
 
-// route (path below the site root) -> content hash -> [site, …]
+// route (path below the site root) -> content hash -> [site, …], plus one sample region per hash
+// so the empty-state exemption can inspect what actually collided.
 const byRoute = new Map();
+const regionByHash = new Map();
 for (const site of readdirSync(NETWORK)) {
   const siteDir = join(NETWORK, site);
   if (!statSync(siteDir).isDirectory()) continue;
@@ -78,6 +80,7 @@ for (const site of readdirSync(NETWORK)) {
     if (region === null) continue; // no prose article (redirects, shells) — nothing to compare
     const route = relative(siteDir, file).replace(/(^|\/)index\.html$/, "") || "(root)";
     const hash = createHash("md5").update(region).digest("hex");
+    if (!regionByHash.has(hash)) regionByHash.set(hash, region);
     if (!byRoute.has(route)) byRoute.set(route, new Map());
     const bySite = byRoute.get(route);
     if (!bySite.has(hash)) bySite.set(hash, []);
@@ -85,14 +88,43 @@ for (const site of readdirSync(NETWORK)) {
   }
 }
 
+/**
+ * An EMPTY state — the page rendered its "nothing on the record here yet" stub.
+ *
+ * Two sites that both have nothing to show legitimately render the same words, so this collision
+ * carries no data and is not a leak. Without the exemption the guard cries wolf the first time a
+ * second site lacks a feed whose page still builds — `economy/economics-baseline` builds for EVERY
+ * selectable site and stubs when the feed is absent, so that is one promotion away, and a guard
+ * that fails spuriously gets switched off.
+ *
+ * `stub-note` is the shared empty-state class (`site.css`), used by economics-baseline, thermal,
+ * grid and the walk contents. Deliberately NOT silent: an allowed collision is still printed, so a
+ * real leak that happens to carry a stub somewhere on the page leaves a trail rather than
+ * vanishing. The exemption says "this region contains an empty state", which is weaker than "this
+ * region is only an empty state" — printing is what keeps that gap honest.
+ */
+const isEmptyState = (region) => region.includes('class="stub-note"');
+
 const leaks = [];
+const allowedEmpty = [];
 for (const [route, bySite] of byRoute) {
   if (SITE_INVARIANT_ROUTES.has(route)) continue;
-  for (const [, sites] of bySite) {
+  for (const [hash, sites] of bySite) {
     // A route built for only one site cannot leak; identical content across two or more can only
     // mean it was resolved once.
-    if (sites.length > 1) leaks.push({ route, sites: sites.sort() });
+    if (sites.length < 2) continue;
+    (isEmptyState(regionByHash.get(hash)) ? allowedEmpty : leaks).push({
+      route,
+      sites: sites.sort(),
+    });
   }
+}
+
+for (const { route, sites } of allowedEmpty.sort((a, b) => a.route.localeCompare(b.route))) {
+  console.log(
+    `check-site-scope: /network/<site>/${route} — identical EMPTY state across ` +
+      `${sites.join(", ")} (allowed: carries a stub-note, so no site's data is on the page).`,
+  );
 }
 
 if (leaks.length > 0) {
@@ -118,5 +150,6 @@ const compared = [...byRoute.values()].reduce(
 );
 console.log(
   `check-site-scope: clean — ${compared} per-site page(s) across ${routes} route(s); ` +
-    "no two sites share a content region.",
+    "no two sites share a content region carrying data" +
+    (allowedEmpty.length > 0 ? ` (${allowedEmpty.length} empty-state collision(s) allowed).` : "."),
 );

@@ -35,7 +35,15 @@ import { withBase, withSite } from "@watermark/core/site";
 // here off the `economics-scenarios` feed. A site with no such agreement on the record has no
 // feed: everything below reads null and the page asks for that site's agreement rather than
 // pricing its build off another county's mills.
-const scenarios = economicScenarios();
+// ⚠️ `Astro.props` FIRST, and the slug passed EXPLICITLY (#2005). With an arrow-form
+// `getStaticPaths` and no other `Astro` reference, Astro's compiler hoists this whole frontmatter
+// to MODULE scope, where it evaluates ONCE for the entire build — outside the middleware's
+// `runWithSite`, so ambient reads silently fall back to Lima and every site renders Lima's data.
+// The function declaration above keeps it per-render; this destructure is also the tripwire (it
+// throws at build if it is ever hoisted again) and the explicit slug makes the reads correct
+// regardless of what the compiler decides to hoist.
+const { slug } = Astro.props as { slug: string };
+const scenarios = economicScenarios(slug);
 const lines = scenarios?.lines ?? null;
 const profiles = scenarios?.profiles ?? null;
 const constants = ledgerConstants(scenarios);
@@ -49,14 +57,6 @@ const jobs = promisedJobs(scenarios);
 // The county employment baseline the promised jobs is read against — the `economics-baseline` feed's
 // cited `total_employment` (QCEW, self-dating via `asof`), replacing a hand-copied constant that
 // had gone a vintage stale (#1642, E2).
-// ⚠️ `Astro.props` FIRST, and the slug passed EXPLICITLY (#2005). With an arrow-form
-// `getStaticPaths` and no other `Astro` reference, Astro's compiler hoists this whole frontmatter
-// to MODULE scope, where it evaluates ONCE for the entire build — outside the middleware's
-// `runWithSite`, so ambient reads silently fall back to Lima and every site renders Lima's data.
-// The function declaration above keeps it per-render; this destructure is also the tripwire (it
-// throws at build if it is ever hoisted again) and the explicit slug makes the reads correct
-// regardless of what the compiler decides to hoist.
-const { slug } = Astro.props as { slug: string };
 const eb = hasFeed("economics-baseline", slug)
   ? loadFeed<EconomicBaseline>("economics-baseline", slug)
   : null;
