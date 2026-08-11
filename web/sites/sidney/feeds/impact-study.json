@@ -73,20 +73,43 @@
     "model": {
       "id": "water-supply",
       "facilityKey": "cmh-232",
-      "status": "gap",
+      "status": "partial",
       "statusReasons": [
-        "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here."
+        "cooling method undisclosed — the water figures are a bracketed range across candidate archetypes, not an estimate"
       ],
-      "stats": [],
+      "stats": [
+        {
+          "label": "Worst-case consumptive draw",
+          "value": "0.015",
+          "unit": "cfs",
+          "evidence": "inference",
+          "basis": "modeled",
+          "sub": "scenario: buildout",
+          "source": "derived",
+          "warn": null
+        },
+        {
+          "label": "Receiving low flow (7Q10)",
+          "value": "24",
+          "unit": "cfs",
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Great Miami River",
+          "source": "document",
+          "warn": null
+        }
+      ],
       "gaps": [
         {
-          "wouldScreen": "how much water this project consumes at buildout — monthly, against the receiving water's cited design low flows.",
-          "missingRecord": "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here.",
-          "producer": "the water utility's contract, a wastewater permit application, or the operator's cooling-plant spec",
+          "wouldScreen": "a single consumptive-draw figure against the receiving water's low-flow floor.",
+          "missingRecord": "any record of how the facility rejects heat — a water contract, a wastewater permit, or a cooling-plant spec; until one surfaces, the water figures stay a bracketed range across candidate archetypes.",
+          "producer": "the water utility, the wastewater permit file, or the operator's own engineering disclosure",
           "leadIds": null
         }
       ],
-      "caveats": []
+      "caveats": [
+        "The draw is set against the receiving water's cited design low flow as a worst-case, basin-scale bound — a screening comparison, not a withdrawal claim."
+      ]
     }
   },
   {
@@ -96,15 +119,22 @@
     "model": {
       "id": "discharge",
       "facilityKey": "cmh-232",
-      "status": "partial",
-      "statusReasons": [
-        "baseline context only — the project-side record has not been produced"
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Tightest chronic dilution",
+          "value": "2.2×",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Sidney WWTP → Great Miami River (Sidney WWTP outfall, RM 128.68)",
+          "source": null,
+          "warn": false
+        }
       ],
-      "stats": [],
       "gaps": [],
-      "caveats": [
-        "Only the receiving water's existing burden is on the record here — the project-side discharge screen renders the day a characterization is filed."
-      ]
+      "caveats": []
     }
   },
   {
@@ -324,7 +354,7 @@
       "facilityKey": "cmh-232",
       "status": "partial",
       "statusReasons": [
-        "synthesizes the screened chapters — 2 on the record, 2 partial, 4 gap"
+        "synthesizes the screened chapters — 3 on the record, 2 partial, 3 gap"
       ],
       "stats": [],
       "gaps": [],

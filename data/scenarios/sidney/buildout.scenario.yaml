@@ -1,0 +1,279 @@
+scenario:
+  name: buildout
+  description: Data-center campus cooling draw (unknown) on the municipal supply.
+  cooling_model: unknown
+  cooling_demand:
+    value: 0.0126
+    unit: MGD
+    source: document
+    citation: '[verified] City of Sidney / Amazon Web Services, Inc. Water and Wastewater
+      Service Agreement (Execution Version), authorized by Resolution 26-26 adopted
+      2026-04-27, Sec. 1.1 reserved capacity: cooling water 1.0 MGD maximum at 694
+      gpm with 4,600,000 gallons PROJECTED ANNUAL VOLUME = ~12,603 gpd = 0.0126 MGD.
+      The 1.0 MGD is a reserved CEILING (14.3% of the City''s 7 MGD plant, and what
+      the impact-fee schedule prices), not a demand — modelling the ceiling as the
+      draw would overstate the intake ~79x. Structured read: data/extracted/sidney/incentive-instruments.yaml
+      (`water_and_wastewater_service_agreement.reserved_capacity`); resolution record:
+      data/extracted/sidney/council/2026-04-27-res-26-26-water-and-wastewater-service.resolution.yaml
+      (#1380 / #2003).'
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  consumptive_fraction:
+    value: 0.7476190476190476
+    unit: fraction
+    source: derived
+    citation: 'consumption is the difference between the stated makeup (0.0126 MGD)
+      and the stated return (0.00318 MGD), both on the record — see the makeup citation.
+      NOT a cooling-model efficiency: it says what this account returns, not how the
+      heat is rejected.'
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+  basis:
+    cooling_model: unknown
+    it_load:
+      value: 251.4
+      unit: MW
+      source: derived
+      citation: '[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/air-permit
+        MW stays [open]. Re-checked 2026-07-31 (#1383) and still absent: Ohio EPA''s
+        eDocument portal returns ZERO air-permit documents for Shelby County under
+        any of the three names this campus is filed as (''Sidney Data Center Campus'',
+        ''CMH-232'', ''Amazon Data Services''), and EPA''s FRS carries the site with
+        NPDES as its ONLY program system — while the same query shape returns 19 Amazon
+        air-permit documents statewide (including the Licking County CMH050 draft,
+        public notice and permit), so the zero is a zero and not a broken search.
+        The state permits that HAVE issued for this project — construction stormwater
+        1GC10596*AG, isolated-wetland authorization 251911W, sanitary-sewer PTI DSWPTI-260517,
+        the City''s own road wetland permit 252256W, and AES''s adjacent transmission-reroute
+        coverage 1GC11112*AG — carry no megawatt field at all. See data/extracted/sidney/regulatory-watch.yaml.
+        AWS discloses NEITHER a gross floor area NOR a load for this campus, so the
+        floor-area screen used elsewhere in the network (Urbana #1327 / Troy-Piqua
+        / Bowling Green) has no input; this brackets instead off the ONE disclosed
+        hard figure — the $3 billion campus investment (sidneyoh.com/526; Data Center
+        Dynamics Oct 2025) — divided by a hyperscale critical-IT construction-cost
+        band of ~$8.5-20M per MW-IT ([reference] industry cost norm, NOT a Sidney
+        disclosure): $20M/MW -> 150 MW low, ~353 MW high ($8.5M/MW), ~251 MW central
+        (MW-midpoint; watermark.facility.screening — #1641 D2). $3B spans land + shell
+        + all phases (screen runs high) while it is a multi-year campus (near-term
+        load runs low), the two roughly offsetting to an order-of-magnitude ~150-350
+        MW. Corroborated (not a second source): comparable disclosed AWS-Ohio hyperscale-campus
+        interconnections sit ~100-250 MW/campus (interconnection.fyi [reference],
+        a DIFFERENT Amazon campus in Franklin County — not Sidney''s figure). Replace
+        with the disclosed load the moment an OEPA air PTI or a PJM interconnection
+        filing names this campus''s MW.'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    wue: null
+    cycles_of_concentration: null
+    consumptive_fraction:
+      value: 0.8
+      unit: fraction
+      source: assumption
+      citation: cooling method undisclosed — evaporative (CoC-1)/CoC upper-bound envelope,
+        NOT an estimate; the lower-bound archetype consumes ~0
+      confidence: low
+      asof: null
+      low: null
+      high: null
+    makeup_demand:
+      value: 3.59
+      unit: MGD
+      source: assumption
+      citation: cooling method undisclosed — evaporative upper-bound envelope (251.4
+        MW x 1.8 L/kWh / evap fraction); NOT an estimate
+      confidence: low
+      asof: null
+      low: null
+      high: null
+    consumptive_low:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: 'closed_loop_dry lower bound — cooling method undisclosed; sealed
+        closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial
+        fill + minor leakage makeup only)'
+      confidence: low
+      asof: null
+      low: null
+      high: null
+    consumptive_high:
+      value: 4.03
+      unit: MGD
+      source: derived
+      citation: evaporative_tower upper bound — cooling method undisclosed; 352.9
+        MW (high IT) x 1.8 L/kWh (power x WUE) — exceeds the disclosed-blowdown bound
+      confidence: low
+      asof: null
+      low: null
+      high: null
+    makeup_high: null
+    method: 'cooling method undisclosed — bracketed range: closed_loop_dry (low) to
+      evaporative_tower (high); no single consumptive estimate exists'
+    method_disclosed: false
+    is_bracketed: true
+    seasonal_months: null
+cooling_model: unknown
+consumptive_loss:
+  value: 0.014574894840555552
+  unit: cfs
+  source: derived
+  citation: 0.0126 MGD x 0.747619 consumptive (scenario buildout)
+  confidence: medium
+  asof: null
+  low: null
+  high: null
+receiving_7q10:
+  value: 24.0
+  unit: cfs
+  source: document
+  citation: 'Ohio EPA "Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022"
+    (permit 1PD00009*SD, application OH0027421), Table 14 "Instream Conditions and
+    Discharger Flow", printed p.32 — GMR above Sidney, 7Q10 annual 24.0 cfs, USGS
+    gage #03261500, 1927-2021 data. Read from the source PDF text layer (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf,
+    0-based page 80), digits clean; structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml.'
+  confidence: high
+  asof: null
+  low: null
+  high: null
+receiving_summer_30q10:
+  value: 29.0
+  unit: cfs
+  source: document
+  citation: 'summer 30Q10 — Ohio EPA "Fact Sheet for NPDES Permit Renewal, City of
+    Sidney WWTP, 2022" (permit 1PD00009*SD, application OH0027421), Table 14 "Instream
+    Conditions and Discharger Flow", printed p.32 — GMR above Sidney, 7Q10 annual
+    24.0 cfs, USGS gage #03261500, 1927-2021 data. Read from the source PDF text layer
+    (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf, 0-based page 80), digits clean;
+    structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml. (The fact sheet''s
+    own mixing assumption for the GMR and its tributaries is 100% average / 100% maximum
+    (stream-to-discharge ratio), not the 25% carried on the Maumee entries here. Sidney
+    WWTP outfall 001 design flow is 10.83 cfs (7.0 MGD) per the same table, so the
+    chronic dilution at this outfall is 24.0 / 10.83 = 2.22:1 — `tight` under the
+    cited 1.0/10.0 screening bands, NOT the `ok` the derived proxy reported. Loramie
+    Creek at Mouth (3.43 cfs) and Rush Creek at mouth (0.82 cfs) are given in the
+    same table and are the site''s other cited receiving waters; neither is bound
+    here because neither carries this outfall. #1992)'
+  confidence: high
+  asof: null
+  low: null
+  high: null
+receiving_1q10:
+  value: 19.4
+  unit: cfs
+  source: document
+  citation: 'driest-day 1Q10 — Ohio EPA "Fact Sheet for NPDES Permit Renewal, City
+    of Sidney WWTP, 2022" (permit 1PD00009*SD, application OH0027421), Table 14 "Instream
+    Conditions and Discharger Flow", printed p.32 — GMR above Sidney, 7Q10 annual
+    24.0 cfs, USGS gage #03261500, 1927-2021 data. Read from the source PDF text layer
+    (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf, 0-based page 80), digits clean;
+    structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml. (The fact sheet''s
+    own mixing assumption for the GMR and its tributaries is 100% average / 100% maximum
+    (stream-to-discharge ratio), not the 25% carried on the Maumee entries here. Sidney
+    WWTP outfall 001 design flow is 10.83 cfs (7.0 MGD) per the same table, so the
+    chronic dilution at this outfall is 24.0 / 10.83 = 2.22:1 — `tight` under the
+    cited 1.0/10.0 screening bands, NOT the `ok` the derived proxy reported. Loramie
+    Creek at Mouth (3.43 cfs) and Rush Creek at mouth (0.82 cfs) are given in the
+    same table and are the site''s other cited receiving waters; neither is bound
+    here because neither carries this outfall. #1992)'
+  confidence: high
+  asof: null
+  low: null
+  high: null
+receiving_live: null
+receiving_water_name: Great Miami River
+campus_routed_discharge: null
+balance:
+  nodes:
+  - node:
+      id: sidney-wwtp
+      name: Sidney WWTP
+      role: wwtp
+      receiving_water: Great Miami River (Sidney WWTP outfall, RM 128.68)
+      lat: 40.2709
+      lon: -84.15031
+    inflow: null
+    consumptive_use: null
+    return_flow:
+      value: 10.830601261559329
+      unit: cfs
+      source: document
+      citation: 'sidney-wwtp (7.0 MGD design) — Ohio EPA "Fact Sheet for NPDES Permit
+        Renewal, City of Sidney WWTP, 2022" for NPDES 1PD00009*SD / application OH0027421,
+        City of Sidney WWTP, 1091 Children''s Home Road — outfall 001 to the Great
+        Miami River at RM 128.68; Table 14 "Instream Conditions and Discharger Flow"
+        (printed p.32) gives the outfall 001 design flow as 10.83 cfs (7.0 MGD) and
+        the reach 7Q10 as 24.0 cfs annual (GMR above Sidney, USGS gage #03261500,
+        1927-2021). Permit effective 2023-01-01, expires 2027-12-31. Source data/documents/oepa/sidney/1PD00009.c43b66fd.pdf
+        (0-based page 80, read off the text layer); structured read data/extracted/oepa/sidney/1PD00009.npdes.yaml.
+        [verified]'
+      confidence: high
+      asof: null
+      low: null
+      high: null
+    stormwater: null
+  tier: tier0
+  warnings:
+  - no abstraction node configured for site 'sidney'; the water balance omits the
+    intake reach.
+assimilative:
+- receiving_water: Great Miami River (Sidney WWTP outfall, RM 128.68)
+  discharger: Sidney WWTP
+  design_low_flow:
+    value: 24.0
+    unit: cfs
+    source: document
+    citation: 'Ohio EPA "Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP,
+      2022" (permit 1PD00009*SD, application OH0027421), Table 14 "Instream Conditions
+      and Discharger Flow", printed p.32 — GMR above Sidney, 7Q10 annual 24.0 cfs,
+      USGS gage #03261500, 1927-2021 data. Read from the source PDF text layer (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf,
+      0-based page 80), digits clean; structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml.'
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  discharge:
+    value: 10.830601261559329
+    unit: cfs
+    source: document
+    citation: 'sidney-wwtp (7.0 MGD design) — Ohio EPA "Fact Sheet for NPDES Permit
+      Renewal, City of Sidney WWTP, 2022" for NPDES 1PD00009*SD / application OH0027421,
+      City of Sidney WWTP, 1091 Children''s Home Road — outfall 001 to the Great Miami
+      River at RM 128.68; Table 14 "Instream Conditions and Discharger Flow" (printed
+      p.32) gives the outfall 001 design flow as 10.83 cfs (7.0 MGD) and the reach
+      7Q10 as 24.0 cfs annual (GMR above Sidney, USGS gage #03261500, 1927-2021).
+      Permit effective 2023-01-01, expires 2027-12-31. Source data/documents/oepa/sidney/1PD00009.c43b66fd.pdf
+      (0-based page 80, read off the text layer); structured read data/extracted/oepa/sidney/1PD00009.npdes.yaml.
+      [verified]'
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  upstream_returns: null
+  dilution_ratio: 2.2159434569142853
+  flag: tight
+  effluent_credited_ratio: null
+  effluent_credited_flag: null
+  acute_low_flow:
+    value: 19.4
+    unit: cfs
+    source: document
+    citation: '1Q10 (acute design flow) — Ohio EPA "Fact Sheet for NPDES Permit Renewal,
+      City of Sidney WWTP, 2022" (permit 1PD00009*SD, application OH0027421), Table
+      14 "Instream Conditions and Discharger Flow", printed p.32 — GMR above Sidney,
+      7Q10 annual 24.0 cfs, USGS gage #03261500, 1927-2021 data. Read from the source
+      PDF text layer (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf, 0-based page
+      80), digits clean; structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml.'
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  acute_dilution_ratio: 1.791220961005714
+  acute_flag: tight
+  detail: Great Miami River (Sidney WWTP outfall, RM 128.68) 7Q10 24.00 cfs vs discharge
+    10.83 cfs -> 2.22:1 chronic dilution (tight); acute 1Q10 19.40 cfs -> 1.79:1 (tight)

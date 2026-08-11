@@ -25,6 +25,7 @@ from watermark.site.impact_study import (
     _js_num,
     _js_round,
     _js_to_fixed,
+    _stat_decimals,
     build_impact_study,
 )
 from watermark.site.readiness import State
@@ -316,3 +317,23 @@ def test_lima_fiscal_gap_carries_the_curated_joins(lima_bundle: Path) -> None:
     fiscal = next(r for r in rows if r["chapter"] == "fiscal")
     assert fiscal["lead_ids"] == ["PRR-04", "GH-35"]
     assert fiscal["model"]["gaps"][0]["leadIds"] == ["PRR-04", "GH-35"]
+
+
+def test_a_real_figure_never_renders_as_zero() -> None:
+    """One decimal, unless that would erase the figure (#1995) — the peer of `statDecimals`.
+
+    Sidney's contracted cooling draw is 0.0146 cfs (3.44M gal/yr, stated in an executed service
+    agreement). At one decimal its headline stat read "0 cfs", which a reader takes as *no draw*
+    rather than *a very small one*. Everything at the scale this study was built on is untouched,
+    which is why no committed bundle's stats moved when this landed.
+    """
+    assert _stat_decimals(24.0) == 1
+    assert _stat_decimals(0.2) == 1
+    assert _stat_decimals(0.05) == 1  # rounds to 0.1, still visible
+    assert _stat_decimals(0.0) == 1  # a real zero stays a zero
+    assert _stat_decimals(None) == 1
+    assert _stat_decimals(0.0146) == 3
+    assert _stat_decimals(-0.0146) == 3
+    assert _stat_decimals(0.00061) == 5
+    assert _fmt_ranged(0.0146, None, None, _stat_decimals(0.0146), "cfs") == "0.015 cfs"
+    assert _fmt_ranged(4.85, None, None, _stat_decimals(4.85), "cfs") == "4.9 cfs"

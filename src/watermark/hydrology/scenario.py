@@ -43,6 +43,7 @@ from watermark.hydrology.model import (
     ScenarioResult,
     SeasonalWithdrawal,
 )
+from watermark.hydrology.solver.parameters import round_sig
 from watermark.hydrology.units import mgd_to_cfs
 from watermark.logging import get_logger
 from watermark.sites import CoolingModelType, active_profile, site_scoped_path
@@ -61,6 +62,54 @@ def baseline_scenario() -> Scenario:
     )
 
 
+def _ratio(value: float) -> float:
+    """A low-flow multiple, rounded so a real ratio never publishes as zero (#1995).
+
+    The convention is one decimal, which is right for the multiples this network was built on —
+    Lima's cooling draw is a sizeable fraction of the Ottawa's 7Q10. Sidney is three orders of
+    magnitude the other way (a contracted 0.0146 cfs against a 24.0 cfs reach), and one decimal
+    rounds that to ``0.0``: a screen that reads as *no draw at all* rather than as a very small
+    one, which is a different claim and the wrong one. Anything that would vanish keeps two
+    significant figures instead; every value at the old scale is unchanged, so no committed
+    artifact moves.
+    """
+    rounded = round(value, 1)
+    return rounded if rounded else round_sig(value, 2)
+
+
+def _stated_cooling_account(
+    settings: Settings | None,
+) -> tuple[ProvenancedValue, ProvenancedValue | None] | None:
+    """The active facility's STATED cooling water account, if the record carries one (#1995).
+
+    Returns ``(makeup, consumptive_fraction | None)`` — both ``document``-provenanced and
+    carrying the facility's own citation — or ``None`` when nothing is stated.
+
+    The fraction comes back only when the record states **both** sides of the account, because
+    it is the *difference* that is the consumption: makeup less what returns to the sewer as
+    blowdown. With a stated makeup and no stated blowdown the fraction is left to the archetype,
+    which pairs a ``document`` intake with an ``assumption`` fraction — legible from the source
+    tags, and better than inventing a return the record does not describe.
+    """
+    facility = active_profile(settings or get_settings()).facility
+    if facility is None or facility.makeup_mgd is None or facility.makeup_citation is None:
+        return None
+    makeup = ProvenancedValue.from_document(facility.makeup_mgd, "MGD", facility.makeup_citation)
+    if facility.blowdown_mgd is None or facility.makeup_mgd <= 0:
+        return makeup, None
+    frac = ProvenancedValue.derived(
+        (facility.makeup_mgd - facility.blowdown_mgd) / facility.makeup_mgd,
+        "fraction",
+        citation=(
+            f"consumption is the difference between the stated makeup ({facility.makeup_mgd:g} "
+            f"MGD) and the stated return ({facility.blowdown_mgd:g} MGD), both on the record — "
+            f"see the makeup citation. NOT a cooling-model efficiency: it says what this "
+            f"account returns, not how the heat is rejected."
+        ),
+    )
+    return makeup, frac
+
+
 def buildout_scenario(
     *,
     cooling_demand_mgd: float | None = None,
@@ -71,13 +120,34 @@ def buildout_scenario(
 ) -> Scenario:
     """Data-center buildout with the site facility's cooling-archetype consumptive draw.
 
-    Defaults to the sourced :class:`CoolingBasis` derived for the facility's
-    ``cooling_model`` (#1056); ``cooling_model`` overrides the archetype for
-    sensitivity runs, and explicit ``cooling_demand_mgd`` / ``consumptive_fraction``
-    override the knobs (and are then tagged as assumptions).
+    Resolution order for the intake, most-grounded first (#1995):
+
+    1. an explicit ``cooling_demand_mgd`` — a sensitivity sweep, tagged an assumption;
+    2. the facility's **stated** ``makeup_mgd`` — a contracted or permitted withdrawal on the
+       record, tagged ``document`` with its own citation;
+    3. the sourced :class:`CoolingBasis` derived for the facility's ``cooling_model`` (#1056).
+
+    Rung 2 is the one that is new, and it exists because Sidney inverts the network's usual
+    shape: a campus that discloses no MW and no floor area, on top of an executed municipal
+    service agreement that states the gallons outright. Deriving its water from the
+    investment-scaled IT-load screen would stack an ``[inference]`` on an ``[inference]`` when
+    the number is simply on the record. A stated quantity beating a derivation is the ordinary
+    rule; what this adds is that the resulting scenario CARRIES that provenance, so the
+    committed artifact cites the instrument rather than reading as a scenario knob someone typed.
+
+    ``cooling_model`` overrides the archetype for sensitivity runs. The derived basis is still
+    built and still rides on ``Scenario.basis`` when a stated makeup wins — it becomes the
+    cross-check rather than the source, which is the comparison a reader most wants.
     """
     basis = basis or derive_cooling_basis(settings, cooling_model=cooling_model)
-    if cooling_demand_mgd is None:
+    stated = _stated_cooling_account(settings)
+    if cooling_demand_mgd is not None:
+        cooling_demand = ProvenancedValue.assume(
+            cooling_demand_mgd, "MGD", why="campus cooling intake — scenario override"
+        )
+    elif stated is not None:
+        cooling_demand = stated[0]
+    else:
         # Honesty guard (CLAUDE.md): a bracketed (undisclosed-method) basis carries the
         # evaporative envelope in `makeup_demand` for plumbing completeness, but it is not
         # an estimate — don't default the scenario knob to it. Require an explicit demand.
@@ -89,16 +159,14 @@ def buildout_scenario(
                 "defaulting to the bracket envelope"
             )
         cooling_demand = makeup_pv
-    else:
-        cooling_demand = ProvenancedValue.assume(
-            cooling_demand_mgd, "MGD", why="campus cooling intake — scenario override"
-        )
-    if consumptive_fraction is None:
-        frac = basis.consumptive_fraction
-    else:
+    if consumptive_fraction is not None:
         frac = ProvenancedValue.assume(
             consumptive_fraction, "fraction", why="consumptive fraction — scenario override"
         )
+    elif stated is not None and stated[1] is not None:
+        frac = stated[1]
+    else:
+        frac = basis.consumptive_fraction
     return Scenario(
         name="buildout",
         description=(
@@ -143,9 +211,14 @@ def evaluate(
                 if not w.startswith(CAMPUS_COOLING_DERIVED_WARNING_PREFIX)
             ]
 
-    receiving_water = active_profile(settings).receiving_water_name
-    receiving_7q10 = low_flow_for(receiving_water, settings=settings)
-    summer_30q10, one_q10 = seasonal_low_flows(receiving_water, settings=settings)
+    profile = active_profile(settings)
+    # The NAME is the site's display prose; the KEY is the cited reach it screens against, and on
+    # a river carrying more than one cited reach they are not the same string (#1995) — see
+    # `SiteProfile.receiving_low_flow_key`. Look up on the key, report under the name.
+    receiving_water = profile.receiving_water_name
+    low_flow_key = profile.receiving_low_flow_key or receiving_water
+    receiving_7q10 = low_flow_for(low_flow_key, settings=settings)
+    summer_30q10, one_q10 = seasonal_low_flows(low_flow_key, settings=settings)
     receiving_live = _receiving_live(settings=settings, live=live)
 
     # The campus's own routed industrial discharge (Lima's FM-2), read portably off the demand
@@ -222,7 +295,7 @@ def diff(baseline: ScenarioResult, scenario: ScenarioResult) -> ScenarioDiff:
         consumptive_increase_cfs=round(increase, 3),
         receiving_water_name=scenario.receiving_water_name,
         receiving_7q10_cfs=q7,
-        multiple_of_7q10=round(multiple, 1) if multiple is not None else None,
+        multiple_of_7q10=_ratio(multiple) if multiple is not None else None,
     )
 
 
@@ -263,7 +336,8 @@ def evaluate_seasonal(
     # The warm-season assist rate; the seasonal headline for a hybrid facility.
     warm_cfs = mgd_to_cfs(basis.consumptive_high.value) if (hybrid and basis) else consumptive_cfs
 
-    rw = receiving_water or active_profile(settings).receiving_water_name
+    prof = active_profile(settings)
+    rw = receiving_water or prof.receiving_low_flow_key or prof.receiving_water_name
     clim = climate.load_climatology(settings=settings)
     precip = clim.get("PRECTOTCORR") if clim is not None else None
     if clim is None or precip is None:
@@ -328,9 +402,9 @@ def evaluate_seasonal(
         annual_7q10_cfs=annual_7q10,
         summer_30q10_cfs=summer_30q10,
         one_q10_cfs=one_q10,
-        annual_multiple=round(annual_cfs / annual_7q10, 1) if annual_7q10 > 0 else None,
+        annual_multiple=_ratio(annual_cfs / annual_7q10) if annual_7q10 > 0 else None,
         summer_multiple=(
-            round((warm_cfs if hybrid else consumptive_cfs) / summer_30q10, 1)
+            _ratio((warm_cfs if hybrid else consumptive_cfs) / summer_30q10)
             if summer_30q10 and summer_30q10 > 0
             else None
         ),

@@ -2,9 +2,9 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "2.0.0",
-  "generated_at": "2026-08-11T19:02:18+00:00",
+  "generated_at": "2026-08-11T20:16:14+00:00",
   "feed_count": 36,
-  "row_total": 813,
+  "row_total": 823,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -205,7 +205,7 @@
       "media_type": "application/json",
       "schema": "schemas/hydrology-scenarios.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "air-scenarios",
@@ -245,7 +245,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 88
+      "count": 96
     },
     {
       "name": "open-questions",
