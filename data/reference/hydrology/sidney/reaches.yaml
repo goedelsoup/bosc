@@ -1,0 +1,136 @@
+# Reach table — Sidney (the upper Great Miami headwaters), #1996. GEOMETRY-GRADE.
+#
+# The peer of Lima's reaches.yaml, deliberately WITHOUT contributing catchments: no cited
+# CN/Tc/area screening set has been authored for this basin, so `catchments: {}` and the
+# routed-hydrograph feed self-skips (the #1364 present-but-empty rule) rather than routing an
+# all-zero storm. What IS here: the per-reach channel lengths the reach-nav cut uses (derived
+# from the navigated NHDPlus centerline arc lengths — see each citation) and the schema-required
+# slopes, which are placeholders and feed no computation today.
+
+meta:
+  subject: Reach lengths for the Sidney reach-network centerline cut (geometry-grade)
+  tier: tier0
+  method: >-
+    Proportional-cut lengths for watermark.hydrology.reach_geometry: each reach's length is the
+    arc length of its own navigated NHDPlus centerline (reaches/sidney.geojson), so the committed
+    ratio reproduces the navigated cut deterministically. No storm-routing parameters are
+    authored (catchments: {}) — this table supports the reach-network map, not a hydrograph model.
+  caveats:
+    - "Geometry-grade: no contributing catchments, no routed storm model — the routed-hydrograph feed self-skips for this site."
+    - "Slopes are SCHEMA PLACEHOLDERS, not gradient claims: the Reach model requires the field, nothing reads it while catchments is empty, and no reach here was surveyed or derived from elevations. A routed model for this site must replace every one of them with a cited value before it computes anything."
+    - "Lengths are HALF the story of a cut: because reach_geometry cuts a navigated line by these lengths' RATIOS, editing one length moves a reach BOUNDARY. Re-run `watermark --site sidney reaches --write` and write the reported km back after any edit, or the committed geojson and this table drift apart."
+
+catchments: {}
+
+reaches:
+  # --- The Great Miami mainstem, split at the real gage point --------------------------------
+  great-miami-head:
+    length_ft:
+      value: 27894.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: Great Miami River above USGS 03261500 at Sidney (8.50 km arc; the gage point anchors the head/reach split, not a length ratio). Regenerate: watermark --site sidney reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0005
+      unit: ft/ft
+      source: assumption
+      citation: "schema placeholder — not a measured or derived gradient; feeds no computation (catchments: {})"
+      confidence: low
+  great-miami-sidney:
+    length_ft:
+      value: 53182.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: Great Miami River, USGS 03261500 to the Loramie Creek confluence (16.21 km arc; carries the WWTP outfall at RM 128.68 and the Mill Branch junction). Regenerate: watermark --site sidney reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0005
+      unit: ft/ft
+      source: assumption
+      citation: "schema placeholder — not a measured or derived gradient; feeds no computation (catchments: {})"
+      confidence: low
+
+  # --- Mill Branch (the campus's eastern drainage) -------------------------------------------
+  mill-branch-head:
+    length_ft:
+      value: 3379.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: Mill Branch, the campus headwater flowline comid 3983192 (1.03 km arc; the real 3983192/3984434 junction anchors the head/confluence cut). Regenerate: watermark --site sidney reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0005
+      unit: ft/ft
+      source: assumption
+      citation: "schema placeholder — not a measured or derived gradient; feeds no computation (catchments: {})"
+      confidence: low
+  mill-branch-confluence:
+    length_ft:
+      value: 20653.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: Mill Branch, comid 3984434 to the Great Miami River (6.30 km arc; the line is trimmed AT the committed junction vertex — see reach-nav confluence_point). Regenerate: watermark --site sidney reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0005
+      unit: ft/ft
+      source: assumption
+      citation: "schema placeholder — not a measured or derived gradient; feeds no computation (catchments: {})"
+      confidence: low
+
+  # --- Mill Creek (the campus's western drainage) --------------------------------------------
+  mill-creek-head:
+    length_ft:
+      value: 12182.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: the unnamed campus headwater flowline comid 3983206 (3.71 km arc; its junction with GNIS Mill Creek anchors the head/confluence cut). Regenerate: watermark --site sidney reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0005
+      unit: ft/ft
+      source: assumption
+      citation: "schema placeholder — not a measured or derived gradient; feeds no computation (catchments: {})"
+      confidence: low
+  mill-creek-confluence:
+    length_ft:
+      value: 19829.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: Mill Creek, comids 3984502 + 3983364 to Loramie Creek (6.04 km arc; trimmed at the committed junction vertex ~0.6 km above the Lockington gage). Regenerate: watermark --site sidney reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0005
+      unit: ft/ft
+      source: assumption
+      citation: "schema placeholder — not a measured or derived gradient; feeds no computation (catchments: {})"
+      confidence: low
+
+  # --- Loramie Creek ------------------------------------------------------------------------
+  loramie-head:
+    length_ft:
+      value: 74606.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: Loramie Creek above USGS 03262000 at Lockington, navigated toward USGS 03261950 near Newport (22.74 km arc; the Lockington gage anchors the head/confluence cut). Regenerate: watermark --site sidney reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0005
+      unit: ft/ft
+      source: assumption
+      citation: "schema placeholder — not a measured or derived gradient; feeds no computation (catchments: {})"
+      confidence: low
+  loramie-confluence:
+    length_ft:
+      value: 10696.0
+      unit: ft
+      source: derived
+      citation: "derived — NLDI-navigated NHDPlus centerline arc length: Loramie Creek, USGS 03262000 to the Great Miami River (3.26 km arc; trimmed at the committed junction vertex). Regenerate: watermark --site sidney reaches --write"
+      confidence: medium
+    slope:
+      value: 0.0005
+      unit: ft/ft
+      source: assumption
+      citation: "schema placeholder — not a measured or derived gradient; feeds no computation (catchments: {})"
+      confidence: low

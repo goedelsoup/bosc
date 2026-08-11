@@ -21,6 +21,11 @@ from watermark.hydrology.model import (
     ReachTable,
 )
 from watermark.hydrology.solver.routing import route
+from watermark.sites import SITES
+
+# The three per-site tables a peer commits to have a reach network at all (reach-nav.yaml is
+# the navigation plan, not a loader input, so a site carrying only that one still loads nothing).
+_REACH_TABLES = ("reaches.yaml", "network.yaml", "reach-nav.yaml")
 
 
 def _pv(value: float, unit: str) -> ProvenancedValue:
@@ -188,14 +193,52 @@ def test_peer_tables_resolve_slug_scoped_never_limas(hydro_settings: Settings) -
     """#1806: a peer's loaders resolve reference/hydrology/<slug>/ — with Lima's legacy
     files committed right there in the shared dir, a peer without its OWN tables must load
     NOTHING (the inheritance leak the slug-scoping closes), and Lima's pins still resolve
-    the legacy paths byte-identically."""
-    peer = hydro_settings.model_copy(update={"site": "sidney"})
-    assert hr._reaches_path(peer).parts[-3:] == ("hydrology", "sidney", "reaches.yaml")
+    the legacy paths byte-identically.
+
+    The peer is RESOLVED, not named. ``sidney`` was hardcoded here until #1996 committed its
+    reach network, at which point this failed for the best possible reason — a site had gained
+    the very tables the test relied on it lacking. Picking the first registered site with no
+    committed tables keeps the assertion about the slug-scoping RULE rather than about one
+    site's data state, so the next peer to commit a reach network moves the example instead of
+    breaking the test.
+    """
+    hydro_dir = hydro_settings.reference_dir / "hydrology"
+    slug = next(
+        (
+            s
+            for s in SITES
+            if s != "lima" and not any((hydro_dir / s / f).is_file() for f in _REACH_TABLES)
+        ),
+        None,
+    )
+    assert slug is not None, "every registered peer now commits its own reach tables"
+    peer = hydro_settings.model_copy(update={"site": slug})
+    assert hr._reaches_path(peer).parts[-3:] == ("hydrology", slug, "reaches.yaml")
     assert hr.load_reaches(settings=peer) is None
     assert hr.network.load_topology(settings=peer) == []
     assert hr.build_routed_hydrograph(settings=peer, live=False) is None
     lima = hr._reaches_path(hydro_settings)
     assert lima.parts[-3:] == ("reference", "hydrology", "reaches.yaml")
+
+
+def test_committed_peer_tables_are_geometry_grade(hydro_settings: Settings) -> None:
+    """The other half of #1806, which the slug-scoping test above can no longer cover: a peer
+    that HAS committed its tables loads its own, keyed to its own topology — and does not
+    thereby acquire a routed storm model. Every peer set committed so far is geometry-grade
+    (``catchments: {}``, the #1364 rule), so the routed-hydrograph feed must still self-skip.
+    """
+    hydro_dir = hydro_settings.reference_dir / "hydrology"
+    peers = [s for s in SITES if s != "lima" and (hydro_dir / s / "reaches.yaml").is_file()]
+    assert peers, "expected at least one peer reach table (fort-wayne, sidney)"
+    for slug in peers:
+        settings = hydro_settings.model_copy(update={"site": slug})
+        table = hr.load_reaches(settings=settings)
+        assert table is not None, slug
+        node_ids = {n.id for n in hr.network.load_topology(settings=settings)}
+        assert node_ids, slug
+        assert set(table.reaches) <= node_ids, slug
+        assert not table.catchments, f"{slug} committed catchments — see #1364 before routing"
+        assert hr.build_routed_hydrograph(settings=settings, live=False) is None, slug
 
 
 def test_geometry_grade_table_skips_the_routed_feed(tmp_path, hydro_settings: Settings) -> None:  # type: ignore[no-untyped-def]

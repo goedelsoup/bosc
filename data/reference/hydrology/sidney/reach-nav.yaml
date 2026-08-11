@@ -1,0 +1,116 @@
+# Reach-network navigation plan — Sidney (the upper Great Miami headwaters), #1996.
+#
+# The companion to this directory's network.yaml (topology) and reaches.yaml (reach lengths).
+# Those carry NO coordinates, so the reach-network's map geometry is navigated from the USGS
+# NLDI NHDPlus flowline network (watermark.hydrology.connectors.nldi) and stitched per reach
+# by watermark.hydrology.reach_geometry. `watermark --site sidney reaches --write` reads this
+# plan and writes data/reference/hydrology/reaches/sidney.geojson.
+#
+# DISCIPLINE (Lima's, and Fort Wayne's before this one): the geometry is verbatim NHDPlus
+# (real river lines). The only modeling choice is where one navigated line is CUT into its
+# named model reaches — done by those reaches' own reaches.yaml length RATIOS (a proportional
+# cut of the real arc length), so no reach boundary is asserted as an NHDPlus segment break.
+#
+# ⚠️ WHY THIS SITE HAS FOUR NAVIGATED LINES AND NOT ONE. Issue #1996 planned the mainstem plus
+# the two Loramie Creek gages. Navigating it turned up something the plan did not anticipate and
+# that the stormwater chapter is precisely about: **the campus straddles a drainage divide.**
+# NLDI snaps interior points of the committed parcel assemblage
+# (data/reference/sidney/parcel-assemblage.geojson, the AWS "Project Galaxy" campus, #1379) to
+# TWO different NHDPlus catchments —
+#
+#   * 3983192 "Mill Branch"  -> the Great Miami River ~10.1 km BELOW the Sidney gage
+#   * 3983206 (unnamed head) -> "Mill Creek" -> Loramie Creek ~0.6 km ABOVE the Lockington gage
+#
+# — so campus runoff does not reach one receiving water, it splits between two, and NEITHER of
+# them is the reach the WWTP outfall discharges to. A reach map that drew only the mainstem and
+# Loramie would have been geometrically correct and substantively misleading. Both tributaries
+# are therefore navigated from a point INSIDE the campus, which is what makes the drainage claim
+# a snapped fact rather than a reading of a road name.
+#
+# TAG VOCABULARY: [verified] returned by a cited service or printed in a cited document ·
+# [inference] reasoned and labelled · [open] not established.
+
+meta:
+  site: sidney
+  subject: Reach-network centerline navigation plan (Sidney — the upper Great Miami headwaters)
+  source: >-
+    USGS NLDI (Network-Linked Data Index) over the NHDPlus flowline network. The Great Miami
+    mainstem is navigated from USGS gage 03261500 (Great Miami River at Sidney); Loramie Creek
+    from USGS gage 03262000 (Loramie Creek at Lockington) upstream toward USGS 03261950 (Loramie
+    Creek near Newport) — the three nwis_sites on the sidney SiteProfile. Mill Branch and Mill
+    Creek are snapped from points inside the committed campus parcel assemblage. Gage
+    coordinates via NLDI `linked-data/nwissite/USGS-<id>`; GNIS stream names via EPA WATERS
+    NHDPlus_NP21/NHDSnapshot_NP21 (COMID -> GNIS_NAME). HUC-8 05080001 (Upper Great Miami).
+  crs: WGS84 (EPSG:4326)
+  caveats:
+    - "Centerline geometry is verbatim NHDPlus, display-only — no reprojection or simplification."
+    - "Reach boundaries are a proportional cut by reaches.yaml lengths, not NHDPlus breaks."
+    - "Tier-0 screening geometry for the reach-network map; not a calibrated hydraulic network."
+    - "Geometry-grade only: no contributing catchments are authored (reaches.yaml catchments: {}), so no routed storm model exists for this site yet."
+    - "Extent is a SCREENING extent, not a basin: the network stops at the Loramie Creek confluence, ~16.5 km below the Sidney gage. Everything below that is the Troy-Piqua node's reach (#1274), not this one's."
+
+# Orients every reach so flow direction reads downstream (the vertex nearest this point is
+# last). The Loramie Creek / Great Miami River confluence — this network's outlet, and the
+# NHDPlus junction vertex shared by the mainstem's and Loramie's navigated lines. [verified]
+outlet_anchor: [-84.241463102, 40.188575096]
+
+# The Great Miami mainstem — navigated from the [verified] gage 03261500 (Great Miami River at
+# Sidney), split at the real gage point. ABOVE the gage is the reach the permit's cited 7Q10
+# characterizes ("GMR above Sidney, USGS gage #03261500", 24.0 cfs annual — 1PD00009 fact sheet
+# Table 14). BELOW is the reach that receives the Sidney WWTP outfall at RM 128.68, ~2.2 km down,
+# then Mill Branch at ~10.1 km, and ends at the Loramie confluence at 16.48 km.
+#
+# ⚠️ downstream_km 16.5 is not a round number chosen for tidiness: NLDI returns whole flowlines,
+# and both 16.0 and 16.5 return the same ten, the last (comid 3983452) TERMINATING at the Loramie
+# junction vertex. 17.0 adds comid 3983476, which is already Loramie's water. So this distance
+# lands the mainstem exactly on the confluence with no trim and no double-draw. [verified]
+mainstem:
+  gage: USGS-03261500
+  gage_point: [-84.149943, 40.2869942]  # NLDI gage location — the head/reach split anchor
+  upstream_km: 8.0   # ~8.5 km of river above the gage, toward Port Jefferson (a stated screening extent)
+  downstream_km: 16.5  # gage -> the Loramie Creek confluence, exactly (see the note above)
+  above_gage: [great-miami-head]
+  below_gage: great-miami-sidney
+
+tributaries:
+  # --- Mill Branch: the campus's EASTERN drainage, to the Great Miami directly ----------------
+  # Anchored inside the committed parcel assemblage rather than on the stream: the point of this
+  # entry is that THIS GROUND drains here. NLDI snaps (-84.192, 40.269) to NHDPlus catchment
+  # 3983192, whose flowline is GNIS "Mill Branch" [verified]. UM returns that flowline alone (it
+  # is the headwater), so the head/confluence cut lands on the real 3983192/3984434 junction.
+  - head: mill-branch-head
+    confluence: mill-branch-confluence
+    anchor: [-84.192, 40.269]  # a point inside the AWS campus assemblage, east of the divide
+    upstream_km: 2.0
+    downstream_km: 8.0
+    # Trim at the Mill Branch / Great Miami junction: DM 8 km runs 0.7 km past it, down the
+    # mainstem, which the mainstem reach already draws. Same idiom as Fort Wayne's St. Joseph.
+    confluence_point: [-84.2052994, 40.224185795]  # NHDPlus junction vertex [verified]
+
+  # --- Mill Creek: the campus's WESTERN drainage, to Loramie Creek --------------------------
+  # NLDI snaps (-84.2, 40.268) — also inside the assemblage, ~700 m west of the Mill Branch
+  # anchor — to catchment 3983206, an UNNAMED headwater flowline that flows to GNIS "Mill Creek"
+  # (comids 3984502 + 3983364) and into Loramie Creek. The campus's own address, 2388 West
+  # Millcreek Road, is named for this creek.
+  - head: mill-creek-head
+    confluence: mill-creek-confluence
+    anchor: [-84.2, 40.268]  # a point inside the AWS campus assemblage, west of the divide
+    upstream_km: 2.0
+    downstream_km: 10.0
+    # Trim at the Mill Creek / Loramie Creek junction — the upstream terminus of comid 3984508,
+    # the Lockington gage's own flowline, so the junction sits ~0.6 km ABOVE that gage.
+    confluence_point: [-84.247172706, 40.215760596]  # NHDPlus junction vertex [verified]
+
+  # --- Loramie Creek: the first major dilution input below the site -------------------------
+  # Anchored at the [verified] gage 03262000 (Lockington) — the gage nearest the confluence, and
+  # so the one whose record characterizes what Loramie actually delivers to the Great Miami at
+  # this network's outlet. upstream_km 23 navigates to the DOWNSTREAM TERMINUS of comid 3984740,
+  # the flowline USGS 03261950 (near Newport) sits on — i.e. the head reach runs Lockington to
+  # ~0.3 km short of the Newport gage, and 24 km would overshoot it by 2.5 km. Stated, not
+  # rounded away: the third profile gage bounds this reach, it does not sit exactly on its end.
+  - head: loramie-head
+    confluence: loramie-confluence
+    anchor: [-84.2441116, 40.21449409]  # USGS 03262000 Loramie Creek at Lockington OH (NLDI)
+    upstream_km: 23.0
+    downstream_km: 4.0
+    confluence_point: [-84.241463102, 40.188575096]  # the Loramie / Great Miami junction vertex [verified]

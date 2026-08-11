@@ -1,0 +1,59 @@
+{
+  "params": {
+    "snap": "POINT(-84.244112 40.214494)"
+  },
+  "fetched_at": "2026-08-11T18:49:37.310089+00:00",
+  "payload": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              -84.247172706,
+              40.215760596
+            ],
+            [
+              -84.2453821,
+              40.215304896
+            ],
+            [
+              -84.244785003,
+              40.214985296
+            ],
+            [
+              -84.244545504,
+              40.214413799
+            ],
+            [
+              -84.244034603,
+              40.211967394
+            ],
+            [
+              -84.243645005,
+              40.210824296
+            ],
+            [
+              -84.243166305,
+              40.209932797
+            ],
+            [
+              -84.242538907,
+              40.209247299
+            ]
+          ]
+        },
+        "properties": {
+          "identifier": "3984508",
+          "navigation": "https://api.water.usgs.gov/nldi/linked-data/comid/3984508/navigation",
+          "source": "comid",
+          "sourceName": "NHDPlus comid",
+          "comid": 3984508
+        },
+        "id": 3984508
+      }
+    ]
+  }
+}

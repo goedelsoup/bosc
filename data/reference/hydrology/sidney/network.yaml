@@ -1,0 +1,130 @@
+# Confluence topology — Sidney (the upper Great Miami headwaters), #1996.
+#
+# The magnitude-free peer of Lima's network.yaml: structure only (each node's kind, the stream
+# it sits on, and the node it drains into). NO flow magnitudes live here — the topology never
+# fabricates a number, and no node carries a `low_flow` / `balance_return` / `consumptive`
+# pointer, so nothing in this file can be resolved into a routed flow term. The reach ids key
+# the reaches.yaml table and the reach-nav.yaml navigation plan.
+#
+# Geometry-grade (#1806/#1996): this topology + the reach lengths support the reach-network
+# centerline map. No contributing catchments are authored (reaches.yaml catchments: {}), so
+# there is NO routed storm model for this site yet — the routed-hydrograph feed correctly
+# self-skips and the study's §II routed table stays absent, honestly.
+#
+# THE SHAPE OF THIS NETWORK, which is not the shape #1996 expected. Four navigated lines, not
+# two: the AWS campus straddles a drainage divide, so its runoff enters the Great Miami by two
+# different routes and neither is the reach the WWTP outfall discharges to. See reach-nav.yaml
+# for the snapped evidence. Read downstream, the mainstem passes, in order:
+#
+#   Sidney gage 03261500 -> WWTP outfall 001 (RM 128.68, ~2.2 km) -> Mill Branch (~10.1 km)
+#   -> Loramie Creek (16.5 km, the screening outlet)
+#
+# so the campus's EASTERN runoff joins the river ~7.9 km BELOW the municipal outfall that carries
+# its sanitary load, and its WESTERN runoff bypasses that stretch of mainstem altogether.
+#
+# EXTENT is a screening extent, not a basin: this network stops at the Loramie confluence. The
+# Great Miami below it is the Troy-Piqua node's reach (#1274), not this one's.
+
+meta:
+  site: sidney
+  subject: Confluence topology — Great Miami River at Sidney, with Mill Branch, Mill Creek and Loramie Creek
+  source: >-
+    USGS GNIS / NHDPlus stream naming (EPA WATERS NHDPlus_NP21 COMID -> GNIS_NAME) over the
+    NLDI-navigated flowline network; the three [verified] USGS gages on the sidney SiteProfile
+    (03261500 Great Miami River at Sidney, 03262000 Loramie Creek at Lockington, 03261950
+    Loramie Creek near Newport). Campus drainage from NLDI catchment membership of points
+    inside data/reference/sidney/parcel-assemblage.geojson. HUC-8 05080001 (Upper Great Miami).
+  caveats:
+    - "Cited topology only — confluence ORDER is the single modeling choice; no magnitudes."
+    - "The Sidney WWTP outfall (NPDES 1PD00009*SD, outfall 001, RM 128.68) is NOT a node: it sits inside great-miami-sidney. Its flow terms live in data/reference/hydrology/sidney/routing.yaml, which is where the balance reads them (#1995) — modelling it here would put a magnitude in a magnitude-free file."
+    - "NHDPlus catchment membership is the NATURAL drainage divide. Where the graded campus actually discharges is set by its construction stormwater permit (Rule 5 / OHC000005), which is not in the corpus — see the footprint's receiving_water [open]."
+
+nodes:
+  # --- The Great Miami mainstem -------------------------------------------------------------
+  - id: great-miami-head
+    name: Great Miami River above the Sidney gage
+    kind: headwater
+    downstream: great-miami-sidney
+    receiving_water: Great Miami River
+    citation: >-
+      USGS 03261500 Great Miami River at Sidney OH — the reach the permit's cited design low flow
+      characterizes: "GMR above Sidney, USGS gage #03261500, 1927-2021", 7Q10 24.0 cfs annual
+      (Ohio EPA fact sheet for NPDES 1PD00009*SD, Table 14, printed p.32)
+  - id: great-miami-sidney
+    name: Great Miami River, Sidney gage to the Loramie Creek confluence
+    kind: gage
+    downstream: great-miami-outlet
+    receiving_water: Great Miami River
+    citation: >-
+      The at-site mainstem reach (profile nwis_sites [verified] 03261500). Receives the Sidney
+      WWTP outfall 001 at RM 128.68 (~2.2 km below the gage) and then Mill Branch (~10.1 km);
+      ends at the Loramie Creek junction, NHDPlus comid 3983452 -> 3983476.
+
+  # --- Mill Branch: the campus's EASTERN drainage, straight to the mainstem -------------------
+  - id: mill-branch-head
+    name: Mill Branch at the campus (NHDPlus catchment 3983192)
+    kind: headwater
+    downstream: mill-branch-confluence
+    receiving_water: Mill Branch
+    citation: >-
+      NLDI snaps a point inside the committed AWS campus assemblage (-84.192, 40.269;
+      data/reference/sidney/parcel-assemblage.geojson) to NHDPlus catchment 3983192, GNIS
+      "Mill Branch" — a headwater flowline (NLDI UM returns it alone) [verified]
+  - id: mill-branch-confluence
+    name: Mill Branch to the Great Miami River
+    kind: confluence
+    downstream: great-miami-sidney
+    receiving_water: Mill Branch
+    citation: >-
+      NHDPlus: Mill Branch (comid 3984434) joins the Great Miami River at
+      (-84.205299, 40.224186), ~10.1 km below the Sidney gage and ~7.9 km below the WWTP outfall
+
+  # --- Mill Creek: the campus's WESTERN drainage, to Loramie Creek ---------------------------
+  - id: mill-creek-head
+    name: The unnamed Mill Creek headwater at the campus (NHDPlus catchment 3983206)
+    kind: headwater
+    downstream: mill-creek-confluence
+    receiving_water: Mill Creek
+    citation: >-
+      NLDI snaps a point inside the committed AWS campus assemblage (-84.2, 40.268), ~700 m west
+      of the Mill Branch anchor, to NHDPlus catchment 3983206 — a headwater flowline carrying NO
+      GNIS name, which flows to GNIS "Mill Creek" [verified]. The campus's own retired situs
+      address, 2388 W. Millcreek Road, is named for this creek.
+  - id: mill-creek-confluence
+    name: Mill Creek to Loramie Creek
+    kind: confluence
+    downstream: loramie-head
+    receiving_water: Mill Creek
+    citation: >-
+      NHDPlus: Mill Creek (comids 3984502 + 3983364) joins Loramie Creek at
+      (-84.247173, 40.215761) — the upstream terminus of comid 3984508, so the junction is
+      ~0.6 km ABOVE the Lockington gage and its record includes this water
+
+  # --- Loramie Creek: the first major dilution input below the site --------------------------
+  - id: loramie-head
+    name: Loramie Creek above the Lockington gage
+    kind: headwater
+    downstream: loramie-confluence
+    receiving_water: Loramie Creek
+    citation: >-
+      USGS 03262000 Loramie Creek at Lockington OH; the reach is navigated upstream to the
+      flowline USGS 03261950 (Loramie Creek near Newport) sits on — the third profile gage
+      bounds this reach ~0.3 km above its head, it does not sit exactly on its end
+  - id: loramie-confluence
+    name: Loramie Creek to the Great Miami River
+    kind: confluence
+    downstream: great-miami-outlet
+    receiving_water: Loramie Creek
+    citation: >-
+      NHDPlus: Loramie Creek joins the Great Miami River at (-84.241463, 40.188575), 3.3 km
+      below the Lockington gage and 16.5 km below the Sidney gage — the major local tributary
+      (Lockington Dam, a Miami Conservancy District dry dam, lies just above the gage)
+
+  # --- The screening outlet ------------------------------------------------------------------
+  - id: great-miami-outlet
+    name: Great Miami River below the Loramie confluence (screening outlet)
+    kind: outlet
+    receiving_water: Great Miami River
+    citation: >-
+      Screening outlet — where this site's reach assessment stops, not a basin terminus. Below
+      here the mainstem is the Troy-Piqua watershed point's reach (#1274).
