@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-11T03:24:51.242686+00:00'
+reconciled_at: '2026-08-11T03:59:05.468653+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -662,10 +662,10 @@ entries:
     site_scope: lima-legacy
   hydrology:
     exists: true
-    sha256: 85a9c582cd4a41739c604431bc6b6ffb5b227792f5bbe8c709e6c99957ea217d
-    size_bytes: 190335
+    sha256: a4ed6161b79ec57a674cc16d1d6a404f3062446feca917018f6a6d9314de623d
+    size_bytes: 193517
     lfs_materialized: true
-    file_count: 22
+    file_count: 23
     missing: []
     asof: null
     stale: false
@@ -1416,6 +1416,16 @@ entries:
     size_bytes: 46056
     lfs_materialized: true
     file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:sidney
+  sidney-watch-items:
+    exists: true
+    sha256: f55c92e610908c764777b3fc0662a6b660314c590631eeb80d31f49eeaff3682
+    size_bytes: 1580
+    lfs_materialized: true
+    file_count: 1
     missing: []
     asof: null
     stale: false

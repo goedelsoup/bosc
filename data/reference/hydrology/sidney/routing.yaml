@@ -1,0 +1,41 @@
+# Discharge routing for the Sidney, OH watershed point (#1995).
+#
+# One plant, one outfall, one receiving reach. Two things this file supplies, both
+# load-bearing:
+#
+# 1. The STRUCTURED `design_flow_mgd` that `watermark.hydrology.balance` reads as the numerator
+#    of the assimilative screen (WS-22, issue 1622). Without it the balance falls back to a
+#    regex over the watch-items summary prose, logging `hydro.design_flow.regex_fallback` — and
+#    a load-bearing number must not be sourced by regex over prose.
+#
+# 2. The `receiving_water` NAME, which is how `assimilative.check_assimilative` looks the cited
+#    design low flow up. That lookup runs both sides through `lowflow._normalize`, which
+#    deliberately strips an "at …" suffix — so the natural-reading "Great Miami River at River
+#    Mile 128.68" would collapse to the bare "great miami river", which in the cited table is
+#    NOT this reach: the bare name belongs to the basin screen's DERIVED Hamilton mainstem proxy
+#    (407.67 cfs). Crediting this outfall with that denominator overstates its available dilution
+#    by ~17x and turns a `tight` screen into an `ok` one; that is precisely the error #1992 fixed
+#    on the basin-screen side, and the same trap on the balance side.
+#
+#    So the name here is the REACH KEY verbatim — the permit-scoped entry added in #1992,
+#    `great miami river (sidney wwtp outfall, rm 128.68)`, bound to `permits: [OH0027421,
+#    1PD00009]`. `_normalize` leaves a parenthesized reach suffix intact, so it resolves exactly
+#    and cannot collide with the bare river. This is the naming convention the Blanchard's two
+#    cited reaches (#1458) established; Sidney is the first routing table to exercise it.
+#
+# No `bosc_routing` block: the BOSC forcemains are a Lima-loop object and a sibling site never
+# inherits them (#829).
+#
+# WHICH design flow. The committed value is the permitted AVERAGE design flow, 7.0 MGD (10.83
+# cfs in the fact sheet's own units). The 13.5 MGD peak hydraulic capacity is deliberately not
+# the modelled value: the assimilative screen characterises the discharge on record against a
+# design LOW flow, and pairing a peak-wet-weather discharge with a 7Q10 would screen a condition
+# that does not co-occur.
+
+wwtp_receiving:
+  sidney-wwtp:
+    receiving_water: "Great Miami River (Sidney WWTP outfall, RM 128.68)"
+    design_flow_mgd: 7.0  # permitted average design flow; peak hydraulic is 13.5 (not modelled)
+    status: confirmed
+    confidence: high
+    citation: 'Ohio EPA "Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022" for NPDES 1PD00009*SD / application OH0027421, City of Sidney WWTP, 1091 Children''s Home Road — outfall 001 to the Great Miami River at RM 128.68; Table 14 "Instream Conditions and Discharger Flow" (printed p.32) gives the outfall 001 design flow as 10.83 cfs (7.0 MGD) and the reach 7Q10 as 24.0 cfs annual (GMR above Sidney, USGS gage #03261500, 1927-2021). Permit effective 2023-01-01, expires 2027-12-31. Source data/documents/oepa/sidney/1PD00009.c43b66fd.pdf (0-based page 80, read off the text layer); structured read data/extracted/oepa/sidney/1PD00009.npdes.yaml. [verified]'

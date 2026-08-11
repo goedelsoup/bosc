@@ -418,6 +418,54 @@ def test_check_skips_uncited_receiving_water(hydro_settings: Settings) -> None:
     assert assimilative_findings(checks)  # the tributary checks still produced findings
 
 
+def test_sidney_reach_screens_against_its_own_outfall_not_the_mainstem_proxy(
+    hydro_settings_for: Callable[[str], Settings],
+) -> None:
+    """Sidney's balance screens the reach Ohio EPA computed, not the river's basin proxy (#1995).
+
+    This is the trap the reach-keyed naming exists for. ``lowflow._normalize`` deliberately
+    strips an "at …" suffix, so the natural-reading "Great Miami River at River Mile 128.68"
+    would collapse to the bare "great miami river" — which in the basin screen's derived table
+    is the **Hamilton mainstem proxy, 407.67 cfs**, three river-basins' worth of drainage below
+    this outfall. Screened against that, a 7.0 MGD plant reads ~37:1 and ``ok``; screened against
+    the regulator's own 24.0 cfs at this outfall it reads 2.22:1 and ``tight``. A 17x
+    overstatement of available dilution, and the same error #1992 fixed on the basin-screen side.
+
+    So the routing table names the REACH KEY verbatim, and this test pins the consequence.
+    """
+    settings = hydro_settings_for("sidney")
+    balance = build_water_balance(settings=settings, live=False)
+    plants = balance.by_role("wwtp")
+    assert len(plants) == 1  # Sidney's own watch-items, never Lima's periplus graph
+    wwtp = plants[0]
+    assert wwtp.node.receiving_water == "Great Miami River (Sidney WWTP outfall, RM 128.68)"
+    assert wwtp.return_flow is not None
+    # 7.0 MGD from routing.yaml's structured design_flow_mgd — and 10.83 cfs is the fact
+    # sheet's OWN stated conversion for outfall 001, so the repo's mgd_to_cfs and Ohio EPA's
+    # agree to the printed precision. A regex fallback here would drop the permit citation.
+    assert wwtp.return_flow.value == pytest.approx(10.83, abs=5e-3)
+    assert "1PD00009" in (wwtp.return_flow.citation or "")
+    assert not balance.warnings  # structured flow ⇒ no regex fallback, no "expansion" warning
+
+    checks = check_assimilative(
+        balance,
+        lowflow.load_low_flows(settings=settings),
+        lowflow.load_acute_low_flows(settings=settings),
+    )
+    assert len(checks) == 1
+    check = checks[0]
+    assert check.design_low_flow.value == pytest.approx(24.0)
+    assert check.design_low_flow.source == "document"  # the fact sheet's, not a derivation
+    assert check.dilution_ratio == pytest.approx(2.216, abs=1e-3)
+    assert check.flag == "tight"
+    # The acute pair is the sharper finding and must not be lost: the same table's 1Q10 of
+    # 19.4 cfs leaves 1.79:1 — under two to one on a single-day floor.
+    assert check.acute_dilution_ratio == pytest.approx(1.791, abs=1e-3)
+    # The guard, stated as an assertion rather than a comment: the bare river name is a
+    # DIFFERENT denominator and must never be what this outfall resolves to.
+    assert check.design_low_flow.value != pytest.approx(407.67)
+
+
 def test_wilmington_reach_is_screened_end_to_end(
     hydro_settings_for: Callable[[str], Settings],
 ) -> None:
