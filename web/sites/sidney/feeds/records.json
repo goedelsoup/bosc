@@ -357,6 +357,50 @@
     "source_doc_published": false
   },
   {
+    "rel": "oepa/sidney/4214600.epa.yaml",
+    "group": "permits-epa",
+    "title": "CMH232 Campus",
+    "confidence": "high",
+    "warnings": [
+      "`action: incomplete` is the closest value in the vocabulary and is imprecise here. The letter says the application IS \"preliminarily and administratively complete\" — and says in the same breath that this \"does not imply that the application is approvable, only that all of the necessary material has been submitted in order to continue the review.\" So it is neither an approval nor a rejection: it is a filed, docketed application entering technical review. Read `action_note` before quoting this field.",
+      "Clean native text layer, nothing OCR'd, nothing rendered. What is absent here is absent from a two-page administrative letter — which is a weak absence, not a strong one. It is the DRAFT permit, not this, that would carry the emission-unit inventory."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Air Pollution Control — Northwest District Office",
+      "program": "Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO), air pollution sources",
+      "permit_no": "P0141118",
+      "action": "incomplete",
+      "action_date": "2026-08-04",
+      "plans_received_date": "2026-08-03",
+      "expiration_date": null,
+      "applicant": "CMH232 Campus",
+      "applicant_address": "13820 Sunrise Valley Dr., Herndon, Virginia 20171",
+      "contact_name": "Laura Markman",
+      "contact_email": null,
+      "contact_firm": null,
+      "project_name": "CMH232 Campus",
+      "site_address": null,
+      "parcel_ids": [],
+      "note": "Ohio EPA's Northwest District Office (Bowling Green) informing the applicant that air permit application P0141118 for \"CMH232 Campus\" in Shelby County, received 2026-08-03, is preliminarily and administratively complete and is entering technical review. Signed Mohammad Smidi (419.373.3118, mohammad.smidi@epa.ohio.gov); ec Jennifer Delbecq and Mark Barber, DAPC."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/sidney/4214600.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/4214600.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "oepa/sidney/DSW401251911W.epa.yaml",
     "group": "permits-epa",
     "title": "CMH-232",

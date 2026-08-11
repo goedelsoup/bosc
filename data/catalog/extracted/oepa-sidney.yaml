@@ -39,6 +39,9 @@ storage:
 - relpath: extracted/oepa/sidney/DSW401252256W.epa.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/sidney/4214600.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -60,7 +63,12 @@ notes: 'Three permittees; the Sidney WWTP is NOT among them — its extraction i
   disturbed), the 2025-12-05 Director''s approval, and the 2026-04-22 co-permittee approval
   for George J. Igel & Co., Inc.; surface-water PTI DSWPTI-260517 for the sanitary sewer
   relocation (2026-06-16); and the 401/isolated-wetland application 251911W under Amazon''s
-  own project name CMH-232. (2) The City of Sidney''s OWN isolated-wetland permit 252256W for
+  own project name CMH-232; and — added 2026-08-11 (issue 1998) — the campus''s FIRST
+  AIR-program document, eDoc 4214600, Ohio EPA DAPC Northwest District Office
+  acknowledging air PTI/PTIO application P0141118 as administratively complete
+  2026-08-04 (received 2026-08-03), filed under a FOURTH name, the unhyphenated "CMH232
+  Campus", on its own air facility id 0375015024. It retired the standing watch''s
+  `[verified negative]` on the air PTI and states no load. (2) The City of Sidney''s OWN isolated-wetland permit 252256W for
   the W. Millcreek/Fair Road work — different permittee, do not merge with 251911W. (3)
   Hidden Valley MHP permit 1PV00037*ED, renewal effective 2025-09-01 through 2030-08-31,
   receiving Tawawa Creek at River Mile 3.3; outfalls 1PV00037001 (final treated effluent

@@ -206,13 +206,13 @@
       "facilityKey": "cmh-232",
       "status": "gap",
       "statusReasons": [
-        "an air-permit application for this project — none is on the record."
+        "a DRAFT permit or public notice — an air-permit application is on the record here, but the document that names the generator fleet has not issued."
       ],
       "stats": [],
       "gaps": [
         {
           "wouldScreen": "the dispersion footprint of the campus's permitted backup-generator fleet.",
-          "missingRecord": "an air-permit application for this project — none is on the record.",
+          "missingRecord": "a DRAFT permit or public notice — an air-permit application is on the record here, but the document that names the generator fleet has not issued.",
           "producer": "the state air permit application (PTI/Title V) and its emissions tables",
           "leadIds": null
         }

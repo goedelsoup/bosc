@@ -276,6 +276,19 @@ export function resolveStudyFacility(slug: string, facilityKey?: string): Facili
  * Mirrors `watermark.site.impact_study._chapter_gap` — change the two together or not at all.
  */
 function chapterGap(def: StudyChapterDef, slug: string, facility: FacilityItem | null): StudyGapFinding {
+  // Same rule on the air axis (#1998): the chapter's gap says "an air-permit application for this
+  // project — none is on the record", which stops being true the moment one is FILED. An
+  // application is not a permit and the chapter rightly stays `gap` — the dispersion screen needs
+  // the emission-unit inventory only the draft carries — but telling a reader nothing has been
+  // filed, on a site whose own record holds the agency's acknowledgment letter, asserts an
+  // absence the corpus contradicts.
+  if (def.id === "air" && airApplicationFiled(slug)) {
+    return {
+      ...def.gap,
+      missingRecord:
+        "a DRAFT permit or public notice — an air-permit application is on the record here, but the document that names the generator fleet has not issued.",
+    };
+  }
   if (
     def.id === "water-supply" &&
     facility &&
@@ -306,6 +319,25 @@ function coolingUndisclosed(slug: string, facility: FacilityItem | null): boolea
  * Telling a reader those figures are a bracket would be false — the bracket is the cross-check
  * sitting beside them, not the headline (#1995).
  */
+/**
+ * The site's own record holds an air-program filing — the peer of `_air_application_filed` in
+ * `watermark/site/impact_study.py`, and it must stay identical to it (parity suite).
+ *
+ * Read off the `permits-epa` group and keyed on the agency naming its AIR division, which is how
+ * the corpus separates an air action from the surface-water and 401 actions sharing that group.
+ * Deliberately narrow: it answers "has anything been FILED", never "has a permit issued" (#1998).
+ */
+function airApplicationFiled(slug: string): boolean {
+  if (feedRows(slug, "records") === 0) return false;
+  return loadFeed<RecordItem[]>("records", slug).some(
+    (r) =>
+      r.group === "permits-epa" &&
+      String((r.fields as Record<string, unknown> | undefined)?.agency ?? "")
+        .toLowerCase()
+        .includes("air pollution control"),
+  );
+}
+
 function contractedDemand(slug: string): boolean {
   if (feedRows(slug, "hydrology-scenarios") === 0) return false;
   return loadFeed<ScenarioResult[]>("hydrology-scenarios", slug).some(
