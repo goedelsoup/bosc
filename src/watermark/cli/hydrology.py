@@ -1083,7 +1083,11 @@ def hydro_hypotheses(
         "basin); routing overrides re-label which forcemains are built, not the dilution math.[/]"
     )
     if write:
-        out_dir = settings.scenarios_dir
+        # Site-scoped for the same reason the scenario writer is (#1995): the filename carries no
+        # slug, so a peer writing the flat dir would overwrite whichever site wrote it last.
+        from watermark.hydrology.scenario import scenarios_dir
+
+        out_dir = scenarios_dir(settings)
         out_dir.mkdir(parents=True, exist_ok=True)
         path = out_dir / "hypotheses.comparison.yaml"
         path.write_text(

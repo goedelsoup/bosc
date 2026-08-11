@@ -11,6 +11,7 @@ from watermark.config import Settings
 from watermark.hydrology import report, scenario
 from watermark.hydrology.lowflow import OEPA_SUMMER_MONTHS, low_flow_for, summer_season_months
 from watermark.pipeline.hydrology import run_scenarios
+from watermark.sites import SITES
 
 
 def test_ottawa_7q10_now_cited(hydro_settings: Settings) -> None:
@@ -73,6 +74,40 @@ def test_write_scenario_is_self_auditing(hydro_settings: Settings, tmp_path: Pat
     # The default cooling demand is now the sourced basis (derived), not a bare guess.
     assert data["scenario"]["cooling_demand"]["source"] == "derived"
     assert data["scenario"]["basis"]["it_load"]["source"] == "derived"  # N+1 inference (#1697)
+
+
+def test_scenario_store_is_site_scoped_and_reader_writer_agree(tmp_path: Path) -> None:
+    """A peer's scenario write lands in its OWN dir, where its own exporter looks (#1995).
+
+    The bug this locks: the writer used the bare ``settings.scenarios_dir`` while the exporter's
+    reader used the slug subdir. ``watermark --site <peer> scenario --write`` therefore
+    overwrote **Lima's** committed ``buildout.scenario.yaml`` — the artifact Lima's cooling
+    figures are regression-locked against (``tests/test_hydro_cooling.py``) — and still exported
+    an empty feed for the peer, because its reader was looking somewhere else entirely.
+
+    Asserted for every registered site, not just one: a slug added later is covered by
+    construction rather than by someone remembering to extend this list.
+    """
+    from watermark.site.export import _load_scenarios
+
+    lima_dir = scenario.scenarios_dir(Settings(data_dir=tmp_path, site="lima"))
+    assert lima_dir == tmp_path / "scenarios"  # the reference layout keeps the flat store
+
+    seen: dict[Path, str] = {}
+    for slug in SITES:
+        s = Settings(data_dir=tmp_path, site=slug)
+        write_dir = scenario.scenarios_dir(s)
+        # The exporter's reader must resolve the same directory the writer just chose, or the
+        # feed stays empty however many scenarios were written.
+        s.data_dir.joinpath("scenarios", slug).mkdir(parents=True, exist_ok=True)
+        assert _load_scenarios(s) == []  # empty, not an exception, and not Lima's
+        # No two sites may share a store: the scenario filename is just the scenario NAME
+        # (`buildout.scenario.yaml`), so a shared directory is a silent overwrite, not a merge.
+        assert write_dir not in seen, f"{slug} shares its scenario store with {seen.get(write_dir)}"
+        seen[write_dir] = slug
+        if slug != "lima":
+            assert write_dir == tmp_path / "scenarios" / slug
+            assert write_dir != lima_dir
 
 
 def test_report_renders_all_sections(hydro_settings: Settings) -> None:
