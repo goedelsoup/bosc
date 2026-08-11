@@ -304,13 +304,24 @@
     "model": {
       "id": "governance",
       "facilityKey": "cmh-232",
-      "status": "partial",
-      "statusReasons": [
-        "the record carries no legislative instrument and no minutes — the decision path has not been produced for this site"
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Legislative instruments",
+          "value": "5",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "resolutions, ordinances, and filed court instruments on this site's record",
+          "source": null,
+          "warn": null
+        }
       ],
-      "stats": [],
       "gaps": [],
-      "caveats": []
+      "caveats": [
+        "An instrument on the record says what was enacted, not what was decided — the deliberation that produced it lives in minutes and audio that are separate records."
+      ]
     }
   },
   {

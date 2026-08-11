@@ -1,0 +1,82 @@
+# City of Sidney Council, 2026-04-27 — Resolution No. 26-26, authorizing the Water and Wastewater
+# Service Agreement with Amazon Web Services, Inc. Issue #2003, epic #1275.
+# See the sibling 80-25 file for why these acts are filed separately from the compiled register.
+#
+# TAG VOCABULARY: [verified] printed on the City's RECORD OF ORDINANCES page · [inference] reasoned
+# and labelled · [open] not established by this instrument.
+
+as_of: '2026-08-11'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#2003'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/council/26-26 - Authorize Water and Sewer Service Agreement - Amazon Web Services.pdf
+  sha256: 6da592e4ac075657d64cb788c1d8a9d02f71ce3df9609de02e39c22bb57bb38a
+  content_verified: text-layer
+  read_note: >-
+    HAND-READ from the PDF's own native text layer (pypdf, ~1,142 characters on page 0); nothing was
+    OCR'd and no page was rendered.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Sidney Resolution No. 26-26 — authorizing the City Manager to enter into a Water and
+    Wastewater Service Agreement with Amazon Web Services, Inc., passed 2026-04-27
+  resolution_no: '26-26'
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: utility_service_agreement
+  adopted: '2026-04-27'                       # [verified] "Passed this 27th day of April 2026"
+  journal_pages: ['0089', '0090']             # [verified]
+  title_verbatim: >-
+    A RESOLUTION AUTHORIZING THE CITY MANAGER TO ENTER INTO A WATER AND WASTEWATER SERVICE AGREEMENT
+    WITH AMAZON WEB SERVICES, INC.
+  outcome: approved
+  statute: null                               # [open] — the page cites only R.C. 121.22.
+
+  operative_text_verbatim: >-
+    SECTION 1. That the City Manager be, and he is hereby authorized and directed to enter into a
+    Water and Wastewater Service Agreement with Amazon Web Services, Inc. in accordance with the
+    agreement that is on file with the City Clerk.
+
+  counterparty:
+    name: Amazon Web Services, Inc.
+    note: >-
+      [verified] Amazon WEB Services here, where the 2025 CRA chain (80-25 / 81-25 / 82-25) names
+      Amazon DATA Services. The City legislated the water agreement with the operator entity and the
+      abatement with the developer entity.
+
+  filename_vs_instrument:
+    city_filename: '26-26 - Authorize Water and Sewer Service Agreement - Amazon Web Services.pdf'
+    instrument_title: A WATER AND WASTEWATER SERVICE AGREEMENT
+    note: >-
+      [verified] The City's own upload name says "Water and Sewer"; the instrument says "Water and
+      Wastewater". Immaterial here, but recorded because a filename is not evidence of its contents —
+      the same trap that put a wrong grading-permit date into this site's register (#1380, where
+      5-14-2026 was the filename and 2026-05-15 the signature block).
+
+  vote:
+    roll_call_recorded: false
+    note: >-
+      [open] Enacting clause, passage date and Attest line only. Roll call is in the 2026-04-27
+      Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.
+    signatories: null                         # [open] — ink signatures
+
+  what_this_instrument_does_not_establish:
+    - >-
+      NONE OF THE WATER FIGURES ARE IN THIS RESOLUTION. The 1.0 MGD peak-withdrawal ceiling, the
+      4.6M gal/yr projected withdrawal, the 3.44M gal/yr consumption, the 390,493 gpd reserved sewer
+      capacity and the ten-year bar on creating a data-center water rate class are all terms of the
+      EXECUTED agreement read in #1380. This act states none of them and must not be cited for them.
+    - >-
+      It is also not a withdrawal permit or an NPDES instrument. It authorizes a municipal service
+      contract; the campus holds no discharge permit of its own.
+
+  confidence: high
+  warnings:
+    - >-
+      Clean native text layer, no OCR; the embedded font substitutes some letter pairs
+      ("cmmnittees"). This instrument contains no figures.

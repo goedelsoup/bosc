@@ -18,6 +18,27 @@ storage:
 - relpath: extracted/sidney/incentive-instruments.yaml
   media_type: application/x-yaml
   lfs: false
+# The five authorizing ACTS, one file per instrument (issue 2003), read from the same source PDFs
+# as the register above — same producer, same license, same site scope, same provenance class, so
+# they belong to this dataset rather than a new one. Split out because `watermark.site.records`
+# yields ONE record per file: the register can only ever publish as a single row, and a compilation
+# is honestly neither a legislative act nor a conveyance. These publish as `local-legislation`,
+# which is what the impact study's `governance` chapter reads.
+- relpath: extracted/sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2025-10-27-res-81-25-schools-development-agreement.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2025-10-27-res-82-25-income-tax-sharing.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2026-04-27-res-26-26-water-and-wastewater-service.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: on-demand
 provenance: document

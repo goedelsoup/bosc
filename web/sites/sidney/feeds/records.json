@@ -1,5 +1,290 @@
 [
   {
+    "rel": "sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Resolution No. 80-25 — authorizing the City Manager to enter into a Community Reinvestment Area Agreement with Amazon Data Services, Inc., passed 2025-10-27",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer, no OCR — but the scan is of a bound journal and the embedded font substitutes some letter pairs (see `transcription_note`). Figures are not affected: this instrument contains none."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Resolution No. 80-25 — authorizing the City Manager to enter into a Community Reinvestment Area Agreement with Amazon Data Services, Inc., passed 2025-10-27",
+      "resolution_no": "80-25",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "tax_incentive",
+      "adopted": "2025-10-27",
+      "journal_pages": [
+        "0341",
+        "0342"
+      ],
+      "title_verbatim": "A RESOLUTION AUTHORIZING THE CITY MANAGER TO ENTER INTO A COMMUNITY REINVESTMENT AREA AGREEMENT WITH AMAZON DATA SERVICES, INC.",
+      "outcome": "approved",
+      "statute": "R.C. 3735.65-3735.70",
+      "operative_text_verbatim": "SECTION 1. That the City Manager be, and he is hereby authorized and directed to enter into a Cmmnunity Reinvestment Area Agreement with AMAZON DATA SERVICES, INC, in accordance with the agreement that is on file with the City Clerk.",
+      "transcription_note": "\"Cmmnunity\" is the text layer's rendering of \"Community\" — an artefact of the scanned form's embedded font, not a misspelling in the instrument. Quoted as extracted rather than silently repaired; the same substitution recurs across all five resolutions (\"cmmnittees\", \"detennined\").",
+      "counterparty": {
+        "name": "Amazon Data Services, Inc.",
+        "note": "[verified] This resolution names Amazon DATA Services, Inc. Its 2026 sibling Res. 27-26 names Amazon WEB Services, Inc. Both entities are real and both appear across this record; see `entity_mismatch` in the register's `legislative_chain`."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "note": "[open] The RECORD OF ORDINANCES page carries the enacting clause, the passage date and the Attest line ONLY — no motion, no second, no roll call, no vote tally. This is the form of the instrument, not a gap in the read: a Sidney resolution page does not journal its own vote. The roll call lives in the Council MINUTES for 2025-10-27, which are not in the corpus. That is lead `COUNCIL-MINUTES` (`data/site/sidney/leads.yaml`) and the R.C. 149.43 ask in #1998.",
+        "signatories": null
+      },
+      "what_this_instrument_does_not_establish": [
+        "THE ABATEMENT TERMS ARE NOT IN THIS RESOLUTION. It authorizes the City Manager to sign \"the agreement that is on file with the City Clerk\" and states no percentage, no term, no PILOT and no clawback. The 30-year 100% real-property exemption, the $46,000,000/14-year PILOT and the separate $4,000,000 initial payment are terms of the EXECUTED agreement, read in #1380 and carried in `incentive-instruments.yaml`. Do not cite this resolution for any of them.",
+        "The agreement \"on file with the City Clerk\" is incorporated by reference and not attached to the resolution page."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/council/80-25 - Authorizing a CRA Agreement - Amazon Data Services Inc_202601141342191793.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2025-10-27-res-81-25-schools-development-agreement.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Resolution No. 81-25 — authorizing the City Manager to enter into a Development Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding the Community Reinvestment Area tax abatement for Amazon Data Services, Inc., passed 2025-10-27",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer, no OCR; the embedded font substitutes some letter pairs, including in the title (see `transcription_note`). This instrument contains no figures."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Resolution No. 81-25 — authorizing the City Manager to enter into a Development Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding the Community Reinvestment Area tax abatement for Amazon Data Services, Inc., passed 2025-10-27",
+      "resolution_no": "81-25",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "tax_incentive",
+      "adopted": "2025-10-27",
+      "journal_pages": [
+        "0343",
+        "0344"
+      ],
+      "title_verbatim": "A RESOLUTION AUTHORIZING THE CITY MANAGER TO ENTER INTO A DEVELOPMENT AGREEMENT WITH THE SIDNEY CITY SCHOOLS AND UPPER VALLEY CAREER CENTER BOARDS OF EDUCATION REGARDING COMM.1JNITY REINVESTMENT AREA TAX ABATEMENT FOR AMAZON DATA SERVICES, INC.",
+      "outcome": "approved",
+      "statute": "R.C. 3735.65-3735.70",
+      "transcription_note": "\"COMM.1JNITY\" is the text layer's rendering of \"COMMUNITY\" in the title, and \"co1mnittees\" appears in Section 2 — artefacts of the scanned form's embedded font, quoted as extracted rather than silently repaired.",
+      "operative_text_verbatim": "SECTION 1. That the City Manager be and he is hereby authorized and directed to enter into a Development Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding a CRA Tax Abatement for Amazon Data Services, Inc.",
+      "counterparties": [
+        "Sidney City Schools Board of Education",
+        "Upper Valley Career Center Board of Education"
+      ],
+      "beneficiary_named": "Amazon Data Services, Inc.",
+      "vote": {
+        "roll_call_recorded": false,
+        "note": "[open] Same form as its siblings: enacting clause, passage date and Attest line only. The roll call is in the Council minutes for 2025-10-27, which are not in the corpus — lead `COUNCIL-MINUTES`, and the R.C. 149.43 ask in #1998.",
+        "signatories": null
+      },
+      "what_this_instrument_does_not_establish": [
+        "THE SPLIT IS NOT IN THIS RESOLUTION. The $21,220,529 to Sidney City Schools and $3,779,471 to Upper Valley Career Center are terms of the EXECUTED agreement (#1380), not of this act, which states no figure at all. Do not cite this resolution for the amounts.",
+        "Also not here: the R.C. 3735.671, 5709.83 and 5715.27 notice WAIVERS the two boards made. Those are in the agreement (§3.1 of the executed instrument), not in the authorizing resolution."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-10-27-res-81-25-schools-development-agreement.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/council/81-25 - Authorizing Development Agreement with Sidney City Schools and Upper Valley - Amazon Data Services_202601141342204952.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2025-10-27-res-82-25-income-tax-sharing.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Resolution No. 82-25 — authorizing the City Manager to enter into an Income Tax Sharing Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding the Community Reinvestment Area tax abatement for Amazon Data Services, Inc., passed 2025-10-27",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer, no OCR; the embedded font substitutes some letter pairs elsewhere on the page. This instrument contains no figures."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Resolution No. 82-25 — authorizing the City Manager to enter into an Income Tax Sharing Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding the Community Reinvestment Area tax abatement for Amazon Data Services, Inc., passed 2025-10-27",
+      "resolution_no": "82-25",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "revenue_sharing",
+      "adopted": "2025-10-27",
+      "journal_pages": [
+        "0345",
+        "0346"
+      ],
+      "title_verbatim": "A RESOLUTION AUTHORIZING THE CITY MANAGER TO ENTER INTO AN INCOME TAX SHARING AGREEMENT WITH THE SIDNEY CITY SCHOOLS AND UPPER VALLEY CAREER CENTER BOARDS OF EDUCATION REGARDING COMMUNITY REINVESTMENT AREA TAX ABATEMENT FOR AMAZON DATA SERVICES, INC.",
+      "outcome": "approved",
+      "statute": null,
+      "operative_text_verbatim": "SECTION 1. That the City Manager be and he is hereby authorized and directed to enter into an Income Tax Sharing Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding a CRA Tax Abatement for Amazon Data Services, Inc.",
+      "counterparties": [
+        "Sidney City Schools Board of Education",
+        "Upper Valley Career Center Board of Education"
+      ],
+      "beneficiary_named": "Amazon Data Services, Inc.",
+      "relationship_to_81_25": {
+        "note": "[verified] TWO SEPARATE INSTRUMENTS, PASSED THE SAME DAY, TO THE SAME TWO BOARDS. 81-25 authorizes a DEVELOPMENT agreement; 82-25 authorizes an INCOME TAX SHARING agreement. Their titles are otherwise near-identical, which makes them easy to conflate — they are not alternates or a re-passage, and a citation to one is not a citation to the other."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "note": "[open] Enacting clause, passage date and Attest line only. Roll call is in the 2025-10-27 Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.",
+        "signatories": null
+      },
+      "what_this_instrument_does_not_establish": [
+        "No rate, no term, no revenue figure and no allocation between the two boards appears in this resolution. Those are terms of the executed agreement (#1380). Do not cite this act for them."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-10-27-res-82-25-income-tax-sharing.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/council/82-25 - Authorizing Income Tax Sharing Agreement - Sidney City Schools and Upper Valley - Amazon Data Services_202601141345054883.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2026-04-27-res-26-26-water-and-wastewater-service.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Resolution No. 26-26 — authorizing the City Manager to enter into a Water and Wastewater Service Agreement with Amazon Web Services, Inc., passed 2026-04-27",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer, no OCR; the embedded font substitutes some letter pairs (\"cmmnittees\"). This instrument contains no figures."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Resolution No. 26-26 — authorizing the City Manager to enter into a Water and Wastewater Service Agreement with Amazon Web Services, Inc., passed 2026-04-27",
+      "resolution_no": "26-26",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "utility_service_agreement",
+      "adopted": "2026-04-27",
+      "journal_pages": [
+        "0089",
+        "0090"
+      ],
+      "title_verbatim": "A RESOLUTION AUTHORIZING THE CITY MANAGER TO ENTER INTO A WATER AND WASTEWATER SERVICE AGREEMENT WITH AMAZON WEB SERVICES, INC.",
+      "outcome": "approved",
+      "statute": null,
+      "operative_text_verbatim": "SECTION 1. That the City Manager be, and he is hereby authorized and directed to enter into a Water and Wastewater Service Agreement with Amazon Web Services, Inc. in accordance with the agreement that is on file with the City Clerk.",
+      "counterparty": {
+        "name": "Amazon Web Services, Inc.",
+        "note": "[verified] Amazon WEB Services here, where the 2025 CRA chain (80-25 / 81-25 / 82-25) names Amazon DATA Services. The City legislated the water agreement with the operator entity and the abatement with the developer entity."
+      },
+      "filename_vs_instrument": {
+        "city_filename": "26-26 - Authorize Water and Sewer Service Agreement - Amazon Web Services.pdf",
+        "instrument_title": "A WATER AND WASTEWATER SERVICE AGREEMENT",
+        "note": "[verified] The City's own upload name says \"Water and Sewer\"; the instrument says \"Water and Wastewater\". Immaterial here, but recorded because a filename is not evidence of its contents — the same trap that put a wrong grading-permit date into this site's register (#1380, where 5-14-2026 was the filename and 2026-05-15 the signature block)."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "note": "[open] Enacting clause, passage date and Attest line only. Roll call is in the 2026-04-27 Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.",
+        "signatories": null
+      },
+      "what_this_instrument_does_not_establish": [
+        "NONE OF THE WATER FIGURES ARE IN THIS RESOLUTION. The 1.0 MGD peak-withdrawal ceiling, the 4.6M gal/yr projected withdrawal, the 3.44M gal/yr consumption, the 390,493 gpd reserved sewer capacity and the ten-year bar on creating a data-center water rate class are all terms of the EXECUTED agreement read in #1380. This act states none of them and must not be cited for them.",
+        "It is also not a withdrawal permit or an NPDES instrument. It authorizes a municipal service contract; the campus holds no discharge permit of its own."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2026-04-27-res-26-26-water-and-wastewater-service.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/council/26-26 - Authorize Water and Sewer Service Agreement - Amazon Web Services.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Resolution No. 27-26 — authorizing the City Manager to enter into a Development Agreement with Amazon Web Services, Inc., passed 2026-04-27",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer, no OCR; the embedded font substitutes some letter pairs (\"detennined\"). This instrument contains no figures."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Resolution No. 27-26 — authorizing the City Manager to enter into a Development Agreement with Amazon Web Services, Inc., passed 2026-04-27",
+      "resolution_no": "27-26",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "development_agreement",
+      "adopted": "2026-04-27",
+      "journal_pages": [
+        "0091",
+        "0092"
+      ],
+      "title_verbatim": "A RESOLUTION AUTHORIZING THE CITY MANAGER TO ENTER INTO A DEVELOPMENT AGREEMENT WITH AMAZON WEB SERVICES, INC.",
+      "outcome": "approved",
+      "statute": null,
+      "operative_text_verbatim": "SECTION 1. That the City Manager be, and he is hereby authorized and directed to enter into a Development Agreement with Amazon Web Services, Inc. in accordance with the agreement that is on file with the City Clerk.",
+      "counterparty": {
+        "name": "Amazon Web Services, Inc.",
+        "entity_mismatch": "[verified] THE ACT AND THE AGREEMENT NAME DIFFERENT COMPANIES. This resolution authorizes an agreement with Amazon WEB Services, Inc.; the agreement it authorizes names Amazon DATA Services, Inc., a Delaware corporation, as \"Developer\" in its own Project Summary and signature block (#1380). Both entities are real and both appear elsewhere in this record, so this is not a transcription slip in one direction — the City legislated one counterparty and executed with another. Recorded, not resolved."
+      },
+      "filename_vs_instrument": {
+        "city_filename": "27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf",
+        "instrument_title": "A DEVELOPMENT AGREEMENT",
+        "note": "[verified] The City's own upload name inserts \"Infrastructure\"; the instrument's title and Section 1 both say \"a Development Agreement\" with no such qualifier. Recorded because a filename is not evidence of its contents, and because \"Infrastructure Development Agreement\" is the phrase the register and local coverage use — it comes from the City's file name, not from the act."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "note": "[open] Enacting clause, passage date and Attest line only. Roll call is in the 2026-04-27 Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.",
+        "signatories": null
+      },
+      "what_this_instrument_does_not_establish": [
+        "THE ROAD MONEY AND THE PARCEL RECITALS ARE NOT IN THIS RESOLUTION. The up-to-$8.0M Millcreek Road reconstruction and the five predecessor parcels recited in Exhibit A are in the EXECUTED agreement and its exhibits (#1380 / #1379), which follow on pages 2-31 of this same PDF and are read in `incentive-instruments.yaml`. This act states neither."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/council/27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "oepa/sidney/DSW401251911W.epa.yaml",
     "group": "permits-epa",
     "title": "CMH-232",

@@ -1,0 +1,81 @@
+# City of Sidney Council, 2025-10-27 — Resolution No. 81-25, authorizing the Development Agreement
+# with the two school boards regarding the CRA tax abatement. Issue #2003, epic #1275.
+# See the sibling 80-25 file for why these acts are filed separately from the compiled register.
+#
+# TAG VOCABULARY: [verified] printed on the City's RECORD OF ORDINANCES page · [inference] reasoned
+# and labelled · [open] not established by this instrument.
+
+as_of: '2026-08-11'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#2003'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/council/81-25 - Authorizing Development Agreement with Sidney City Schools and Upper Valley - Amazon Data Services_202601141342204952.pdf
+  sha256: 78a532e7600954c81c3bf1f277104db4d3b64b5e7acec7995ce214dcd617e286
+  content_verified: text-layer
+  read_note: >-
+    HAND-READ from the PDF's own native text layer (pypdf, ~1,195 characters on page 0); nothing was
+    OCR'd and no page was rendered.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Sidney Resolution No. 81-25 — authorizing the City Manager to enter into a Development
+    Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education
+    regarding the Community Reinvestment Area tax abatement for Amazon Data Services, Inc.,
+    passed 2025-10-27
+  resolution_no: '81-25'
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: tax_incentive
+  adopted: '2025-10-27'                       # [verified] "Passed this 27th day of October, 2025."
+  journal_pages: ['0343', '0344']             # [verified]
+  title_verbatim: >-
+    A RESOLUTION AUTHORIZING THE CITY MANAGER TO ENTER INTO A DEVELOPMENT AGREEMENT WITH THE SIDNEY
+    CITY SCHOOLS AND UPPER VALLEY CAREER CENTER BOARDS OF EDUCATION REGARDING COMM.1JNITY
+    REINVESTMENT AREA TAX ABATEMENT FOR AMAZON DATA SERVICES, INC.
+  outcome: approved
+  statute: R.C. 3735.65-3735.70               # [inference] — the CRA statute the abatement runs
+                                              # under; this page cites only R.C. 121.22.
+  transcription_note: >-
+    "COMM.1JNITY" is the text layer's rendering of "COMMUNITY" in the title, and "co1mnittees"
+    appears in Section 2 — artefacts of the scanned form's embedded font, quoted as extracted
+    rather than silently repaired.
+
+  operative_text_verbatim: >-
+    SECTION 1. That the City Manager be and he is hereby authorized and directed to enter into a
+    Development Agreement with the Sidney City Schools and Upper Valley Career Center Boards of
+    Education regarding a CRA Tax Abatement for Amazon Data Services, Inc.
+
+  counterparties:
+    - Sidney City Schools Board of Education
+    - Upper Valley Career Center Board of Education
+  beneficiary_named: Amazon Data Services, Inc.   # [verified] named in the title and Section 1 as
+                                                  # the party the abatement is FOR — it is not a
+                                                  # party to the agreement this resolution authorizes.
+
+  vote:
+    roll_call_recorded: false
+    note: >-
+      [open] Same form as its siblings: enacting clause, passage date and Attest line only. The roll
+      call is in the Council minutes for 2025-10-27, which are not in the corpus — lead
+      `COUNCIL-MINUTES`, and the R.C. 149.43 ask in #1998.
+    signatories: null                         # [open] — ink signatures; the text layer has only "Attest:"
+
+  what_this_instrument_does_not_establish:
+    - >-
+      THE SPLIT IS NOT IN THIS RESOLUTION. The $21,220,529 to Sidney City Schools and $3,779,471 to
+      Upper Valley Career Center are terms of the EXECUTED agreement (#1380), not of this act, which
+      states no figure at all. Do not cite this resolution for the amounts.
+    - >-
+      Also not here: the R.C. 3735.671, 5709.83 and 5715.27 notice WAIVERS the two boards made. Those
+      are in the agreement (§3.1 of the executed instrument), not in the authorizing resolution.
+
+  confidence: high
+  warnings:
+    - >-
+      Clean native text layer, no OCR; the embedded font substitutes some letter pairs, including in
+      the title (see `transcription_note`). This instrument contains no figures.
