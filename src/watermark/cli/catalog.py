@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import typer
+from rich.markup import escape
 from rich.table import Table
 
 from watermark.cli._base import (
@@ -432,13 +433,22 @@ def catalog_producer_check_cmd(
     for f in result.findings:
         table.add_row(f.connector_ref, f.source, ", ".join(f.expected_entries))
     console.print(table)
+    # `\[` escapes a literal bracket for Rich, which otherwise reads `[catalog-waiver: …]` as a
+    # style tag and prints NOTHING — so the gate's own remediation hint came out as "or add ``
+    # to a commit message", and a waived run logged "waived — " with the reason swallowed. The
+    # reason is free text that can itself contain brackets, hence `escape` rather than a second
+    # backslash.
     if result.status == "waived":
-        console.print(f"\n[yellow]waived[/] — [catalog-waiver: {result.detail}] (logged for audit)")
+        console.print(
+            f"\n[yellow]waived[/] — \\[catalog-waiver: {escape(result.detail or '')}] "
+            "(logged for audit)"
+        )
         return
     console.print(
         f"\n[red]{len(result.findings)} producer(s) changed without a catalog update.[/] "
         "Update the entry (`watermark catalog backfill --apply` then review) or add "
-        "`[catalog-waiver: <reason>]` to a commit message."
+        "`\\[catalog-waiver: <reason>]` to a commit message (one line — the matcher is not "
+        "DOTALL)."
     )
     raise typer.Exit(1)
 

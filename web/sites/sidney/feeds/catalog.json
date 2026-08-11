@@ -114,10 +114,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d9517f6572a6bafd9f99dc93c53cebc0d853d9700cc31383ed37364530c5c821",
-      "size_bytes": 335938,
+      "sha256": "9c93fab911b2bffc7397f2ed75489fc2a3ea67c64ba43ea686e69b64a62b709f",
+      "size_bytes": 371435,
       "lfs_materialized": true,
-      "file_count": 13,
+      "file_count": 14,
       "stale": false,
       "asof": null
     },
@@ -2113,8 +2113,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5291ce440bc0e1377050ab42863f5669553b5628ea71580ce2fd16405b60fc61",
-      "size_bytes": 32637,
+      "sha256": "9c96252f115d8d9ad79b3ca12b7901a3d099998a697716a878782ffe3f504814",
+      "size_bytes": 32636,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -2380,7 +2380,7 @@
     "site_scope": "state:OH",
     "cadence": "on-demand",
     "ttl_days": null,
-    "last_refreshed": "2026-07-11",
+    "last_refreshed": "2026-08-06",
     "tags": [
       "oepa",
       "npdes",
@@ -2457,8 +2457,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "b7cb1fadd57009ca92c4cbb371182d7141ea7ea3e72482c77742e9e90ffb167d",
-      "size_bytes": 14340,
+      "sha256": "2a70dd340cc5d6363b72f09e9bf11800f649b010fb5f0868db1ca168e0ecbeb2",
+      "size_bytes": 18502,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -2968,6 +2968,56 @@
       "confidence": "medium",
       "note": "watermark rsei",
       "verified": true
+    }
+  },
+  {
+    "id": "sidney-watch-items",
+    "title": "Sidney site watch-items (WWTP infrastructure geometry)",
+    "scope": "reference",
+    "collection": "sidney",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022\" (permit 1PD00009*SD / application OH0027421) and the ECHO Great Miami POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.2709, -84.15031, FRS Registry ID 110002345597)",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
+    "access_tier": "public",
+    "site_scope": "site:sidney",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "sidney",
+      "gis",
+      "geojson",
+      "wwtp",
+      "infrastructure"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/sidney/watch-items.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "f55c92e610908c764777b3fc0662a6b660314c590631eeb80d31f49eeaff3682",
+      "size_bytes": 1580,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022\" (permit 1PD00009*SD / application OH0027421) and the ECHO Great Miami POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.2709, -84.15031, FRS Registry ID 110002345597)",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

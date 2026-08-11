@@ -66,11 +66,14 @@ def hydro(
 
 @app.command(name="basin-screen")
 def basin_screen() -> None:
-    """Basin-wide low-flow assimilative screen over the ECHO Maumee POTW inventory.
+    """Basin-wide low-flow assimilative screen over the active site's ECHO POTW inventory.
 
-    Extends the Lima-loop screen to every basin POTW, using the cited 7Q10s plus the
-    derived mainstem 7Q10s (`watermark derive-low-flows`). Dischargers on ungaged tributaries
-    or with no receiving water in ECHO are reported, not screened (omit, don't guess).
+    The inventory is selected by `SiteProfile.basin`, so a Great Miami site screens against the
+    Great Miami POTWs and never the Maumee ones. Extends the Lima-loop screen to every basin
+    POTW, using the cited 7Q10s plus the derived mainstem 7Q10s (`watermark derive-low-flows`),
+    and preferring a permit-scoped cited value at the outfall over any name match (#1458).
+    Dischargers on ungaged tributaries or with no receiving water in ECHO are reported, not
+    screened (omit, don't guess).
     """
     from watermark.hydrology.basin import check_basin_assimilative
 
@@ -1083,7 +1086,11 @@ def hydro_hypotheses(
         "basin); routing overrides re-label which forcemains are built, not the dilution math.[/]"
     )
     if write:
-        out_dir = settings.scenarios_dir
+        # Site-scoped for the same reason the scenario writer is (#1995): the filename carries no
+        # slug, so a peer writing the flat dir would overwrite whichever site wrote it last.
+        from watermark.hydrology.scenario import scenarios_dir
+
+        out_dir = scenarios_dir(settings)
         out_dir.mkdir(parents=True, exist_ok=True)
         path = out_dir / "hypotheses.comparison.yaml"
         path.write_text(

@@ -594,7 +594,11 @@ def _match_low_flow(
 
 
 def load_dischargers(*, settings: Settings | None = None) -> list[dict[str, Any]]:
-    """The basin POTW inventory (EPA ECHO Maumee dischargers), or ``[]`` if absent."""
+    """The active site's basin POTW inventory (EPA ECHO dischargers), or ``[]`` if absent.
+
+    Which basin is :func:`_inventory_path`'s call, keyed on ``SiteProfile.basin`` — this is not
+    the Maumee-only inventory it was before the network went multi-basin.
+    """
     return _load_dischargers(settings or get_settings())
 
 

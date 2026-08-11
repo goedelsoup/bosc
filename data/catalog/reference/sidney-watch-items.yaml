@@ -1,0 +1,35 @@
+id: sidney-watch-items
+title: Sidney site watch-items (WWTP infrastructure geometry)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: Derived from Ohio EPA "Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP,
+    2022" (permit 1PD00009*SD / application OH0027421) and the ECHO Great Miami POTW
+    inventory; coordinates from EPA FRS (ECHO lat/lon 40.2709, -84.15031, FRS Registry ID
+    110002345597)
+license: Public record (Ohio R.C. 149.43 / U.S. Government work)
+access_tier: public
+site_scope: site:sidney
+storage:
+- relpath: reference/sidney/watch-items.geojson
+  media_type: application/geo+json
+  lfs: false
+refresh:
+  cadence: static
+provenance: reference
+tags:
+- sidney
+- gis
+- geojson
+- wwtp
+- infrastructure
+notes: Per-site watch-items GeoJSON for Sidney; consumed by balance._default_watch_items()
+  as the site-specific override (takes precedence over the Lima periplus import) and
+  un-gates hydrology_balance via balance.has_site_watch_items (#829/#1995). One feature —
+  the Sidney WWTP (id=sidney-wwtp, matching the profile's plant_receiving key; 7.0 MGD
+  average design flow, outfall 001 → Great Miami River at RM 128.68, NPDES 1PD00009*SD /
+  OH0027421). The summary states exactly ONE "N MGD" token on purpose — the 13.5 MGD peak
+  hydraulic is omitted because balance._design_mgd's prose fallback reads a second token as
+  a flow EXPANSION. The structured design flow it actually uses is in the companion
+  reference/hydrology/sidney/routing.yaml.
