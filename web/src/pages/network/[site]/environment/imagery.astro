@@ -3,7 +3,9 @@ import { offeredFacetPaths } from "@watermark/core/readiness";
 // Built only where the Environment/Land landing offers this door (#1908): the leaf route,
 // the door and the search row share ONE gate (`lenses.ts` declares it, `facetOffered` reads
 // it), so this page can no longer exist on a site whose landing correctly withholds it.
-export const getStaticPaths = () => offeredFacetPaths("/environment/imagery");
+export function getStaticPaths() {
+  return offeredFacetPaths("/environment/imagery");
+}
 import BeforeAfterSlider from "~/components/BeforeAfterSlider.astro";
 import ImagerySlider from "@watermark/viz/islands/ImagerySlider.tsx";
 import Base from "~/layouts/Base.astro";
@@ -15,7 +17,15 @@ import { withBase } from "@watermark/core/site";
 // Build-time: read the imagery feed so the page server-renders a real
 // before/during/after view (dated Wayback tiles over the AOI centroid) plus the
 // release table — the no-JS fallback and a plain data view under the deck island.
-const feed = hasFeed("geo/imagery") ? loadImagery() : null;
+// ⚠️ `Astro.props` FIRST, and the slug passed EXPLICITLY (#2005). With an arrow-form
+// `getStaticPaths` and no other `Astro` reference, Astro's compiler hoists this whole frontmatter
+// to MODULE scope, where it evaluates ONCE for the entire build — outside the middleware's
+// `runWithSite`, so ambient reads silently fall back to Lima and every site renders Lima's data.
+// The function declaration above keeps it per-render; this destructure is also the tripwire (it
+// throws at build if it is ever hoisted again) and the explicit slug makes the reads correct
+// regardless of what the compiler decides to hoist.
+const { slug } = Astro.props as { slug: string };
+const feed = hasFeed("geo/imagery", slug) ? loadImagery() : null;
 const wayback = feed?.meta?.wayback;
 const releases: WaybackRelease[] = wayback?.releases ?? [];
 const aoi = feed?.features ?? [];

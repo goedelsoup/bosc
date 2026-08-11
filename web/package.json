@@ -17,6 +17,7 @@
     "check:viz": "tsc -p packages/viz/tsconfig.json",
     "check:links": "node scripts/check-links.mjs",
     "check:routes": "node scripts/check-routes.mjs",
+    "check:site-scope": "node scripts/check-site-scope.mjs",
     "gen:icons": "node scripts/gen-icons.mjs",
     "test": "vitest run",
     "lint": "biome ci src functions scripts packages",

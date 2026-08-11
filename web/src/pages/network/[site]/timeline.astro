@@ -12,9 +12,12 @@ import { withStory } from "@watermark/core/site";
 // board, but the page itself rendered a headline claiming an argument over zero events. At the ROUTE
 // since #1894: a site with no dated events builds no page, rather than one whose lock no door links
 // and no search row names.
-export const getStaticPaths = () => availableFacetPaths("timeline");
+export function getStaticPaths() {
+  return availableFacetPaths("timeline");
+}
 
-const entries = hasFeed("timeline") ? loadFeed<TimelineEntry[]>("timeline") : [];
+const { slug } = Astro.props as { slug: string };
+const entries = hasFeed("timeline", slug) ? loadFeed<TimelineEntry[]>("timeline", slug) : [];
 const isDated = (e: TimelineEntry): boolean => /^\d{4}/.test(e.date);
 const dated = entries.filter(isDated).sort((a, b) => a.date.localeCompare(b.date));
 const ordered = [...dated, ...entries.filter((e) => !isDated(e))];
