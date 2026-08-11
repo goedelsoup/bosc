@@ -519,6 +519,22 @@ class SiteFacility(BaseModel):
     # site's own power-derived consumptive as the high bound (no Lima FM-2 leak).
     blowdown_mgd: float | None = None
     blowdown_citation: str | None = None
+    # The intake peer of ``blowdown_mgd``: a cooling MAKEUP withdrawal the record states outright
+    # — a contracted service quantity, a permitted withdrawal, an operator disclosure (#1995).
+    # Sidney is the network's inverse case and the reason this exists: AWS discloses no MW and no
+    # floor area there, but the City's executed water/wastewater service agreement puts hard
+    # `[verified]` gallons on the record, so the water chapter can be driven from the INSTRUMENT
+    # instead of from an investment-scaled IT-load screen — sizing water off `it_load_mw` there
+    # would stack an `[inference]` on an `[inference]`.
+    #
+    # A stated quantity BEATS a derivation (:func:`watermark.hydrology.scenario.buildout_scenario`
+    # reads it before the archetype basis), which is the ordinary evidentiary rule and not a new
+    # one. Two things it deliberately does NOT do: it does not select or close the cooling
+    # archetype — Sidney's stays ``unknown``, because a volume is not a method, and the
+    # makeup:blowdown ratio only ever BRACKETS the design (#1679/A3) — and it does not become the
+    # cross-check, which is still the derived basis, now carried alongside on ``Scenario.basis``.
+    makeup_mgd: float | None = None
+    makeup_citation: str | None = None
     # Cooling archetype (#1054): selected per site, never hardcoded. The default is
     # ``unknown`` — a disclosed facility whose cooling method is not on record must NOT
     # silently inherit the water-intensive evaporative model (it gets a bracketed range
@@ -616,6 +632,7 @@ class SiteFacility(BaseModel):
             ("gross_floor_area_sqft", self.gross_floor_area_sqft),
             ("disclosed_investment_usd", self.disclosed_investment_usd),
             ("blowdown_mgd", self.blowdown_mgd),
+            ("makeup_mgd", self.makeup_mgd),
             ("wue_l_per_kwh", self.wue_l_per_kwh),
             ("cycles_of_concentration", self.cycles_of_concentration),
             ("heat_reject_multiplier", self.heat_reject_multiplier),
@@ -733,6 +750,12 @@ class SiteFacility(BaseModel):
         # disclosed discharge for this facility"), mislabelling a real disclosure as a sweep input.
         _require_together(
             ("blowdown_mgd", self.blowdown_mgd), ("blowdown_citation", self.blowdown_citation)
+        )
+        # The makeup withdrawal is the one figure that can override the derived cooling basis
+        # outright (#1995), so an uncited one would put an unattributable number at the head of
+        # the site's water chapter — exactly the value a reader most needs to trace.
+        _require_together(
+            ("makeup_mgd", self.makeup_mgd), ("makeup_citation", self.makeup_citation)
         )
         _require_together(
             ("wue_l_per_kwh", self.wue_l_per_kwh), ("wue_citation", self.wue_citation)
@@ -1158,6 +1181,19 @@ class SiteProfile(BaseModel):
     # co-extensive with it. Never substitute one for the other.
     toxic_corridor_bbox: tuple[float, float, float, float]  # lat_min, lat_max, lon_min, lon_max
     receiving_water_name: str = ""  # authoritative in data/sites.yaml; filled by _fill_from_yaml
+    # The key this site's receiving REACH is cited under in low-flow-7q10.yaml, when that is not
+    # the display name above (#1995). Left ``None`` almost everywhere: the two coincide.
+    #
+    # They part company wherever one river carries more than one cited reach, which is the
+    # #1458/#1992 permit-scoped convention — Sidney's outfall sits on a reach whose cited 7Q10 is
+    # 24.0 cfs, while the bare "Great Miami River" key belongs to the basin screen's DERIVED
+    # Hamilton mainstem proxy at 407.67 cfs. Reading the display name as a lookup key there
+    # credits the outfall with ~17x the dilution it has (the defect #1992 fixed on the basin
+    # side). Splitting them is what lets the identity field stay readable prose — the toxics
+    # corridor and the thermal screen both render it — while the low-flow lookup gets the exact
+    # reach; folding the qualifier into the name instead would put "Great Miami River (Sidney
+    # WWTP outfall, RM 128.68)" into every sentence that names the river.
+    receiving_low_flow_key: str | None = None
 
     # --- Water-balance routing fallback (hydrology/balance.py) ---------------------------
     plant_receiving: dict[str, tuple[str, str]]  # fid -> (receiving water, citation)

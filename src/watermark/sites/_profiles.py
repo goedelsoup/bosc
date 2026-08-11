@@ -2809,6 +2809,12 @@ _SIDNEY = SiteProfile(
     # excludes Anna Engine Plant (~40.37) and GKN/Airstream (~40.44) in Anna/Jackson Center,
     # and Ross Aluminum Avon Div (~40.253) south of Sidney proper. (lat_min, lat_max, lon_min, lon_max)
     toxic_corridor_bbox=(40.268, 40.308, -84.210, -84.140),
+    # #1995: the display name is "Great Miami River"; the CITED reach this site screens against is
+    # the permit-scoped entry #1992 added — 24.0 cfs annual 7Q10, bound to OH0027421 / 1PD00009.
+    # The bare river key resolves to the basin screen's derived Hamilton mainstem proxy (407.67
+    # cfs), so without this the scenario either screened against ~17x the dilution this outfall
+    # has or, as it actually did, reported no committed 7Q10 at all. Same key routing.yaml uses.
+    receiving_low_flow_key="Great Miami River (Sidney WWTP outfall, RM 128.68)",
     plant_receiving={
         "sidney-wwtp": (
             "Great Miami River",
@@ -2964,17 +2970,55 @@ _SIDNEY = SiteProfile(
                 "discharge force main. See data/extracted/sidney/data-centers.md and "
                 "data/extracted/sidney/regulatory-watch.yaml."
             ),
+            # THE CONTRACTED WATER ACCOUNT (#1995) — both sides of it, stated in an executed
+            # instrument. This is the network's inverse case: no MW and no floor area are
+            # disclosed here, so the IT-load screen above is an [inference], while the GALLONS are
+            # [verified]. `buildout_scenario` therefore drives the water chapter from these rather
+            # than from that screen, which would stack an inference on an inference.
+            # ⚠️ 4,600,000 gal/yr is the WITHDRAWAL, not the consumption — the register carried it
+            # as "projected cooling-water consumption" and `incentive-instruments.yaml`
+            # (`corrections_to_the_register`) corrects it. Consumption is the DIFFERENCE, 3,440,000
+            # gal/yr, because 1,160,000 returns to the sanitary sewer. Reading 4.6M as consumption
+            # overstates this campus's net basin loss by ~34% (0.0195 cfs vs 0.0146).
+            makeup_mgd=0.0126,  # 4,600,000 gal/yr / 365 = ~12,603 gpd
+            makeup_citation=(
+                "[verified] City of Sidney / Amazon Web Services, Inc. Water and Wastewater "
+                "Service Agreement (Execution Version), authorized by Resolution 26-26 adopted "
+                "2026-04-27, Sec. 1.1 reserved capacity: cooling water 1.0 MGD maximum at 694 gpm "
+                "with 4,600,000 gallons PROJECTED ANNUAL VOLUME = ~12,603 gpd = 0.0126 MGD. The "
+                "1.0 MGD is a reserved CEILING (14.3% of the City's 7 MGD plant, and what the "
+                "impact-fee schedule prices), not a demand — modelling the ceiling as the draw "
+                "would overstate the intake ~79x. Structured read: "
+                "data/extracted/sidney/incentive-instruments.yaml "
+                "(`water_and_wastewater_service_agreement.reserved_capacity`); resolution record: "
+                "data/extracted/sidney/council/2026-04-27-res-26-26-water-and-wastewater-service"
+                ".resolution.yaml (#1380 / #2003)."
+            ),
+            blowdown_mgd=0.00318,  # 1,160,000 gal/yr / 365 = ~3,178 gpd
+            blowdown_citation=(
+                "[verified] Same instrument, Sec. 1.1 reserved capacity — sewer discharge 390,493 "
+                "gpd maximum at 716 gpm gravity, with 1,160,000 gallons PROJECTED ANNUAL VOLUME = "
+                "~3,178 gpd = 0.00318 MGD. Again the 390,493 gpd is the reserved ceiling (5.60% of "
+                "the 7 MGD WWTP); the projected volume is the flow. This return is what makes the "
+                "consumption 3,440,000 gal/yr rather than 4,600,000. NOTE it goes to the SANITARY "
+                "SEWER, not to surface water — there is no NPDES discharge to meter here, so this "
+                "figure is a contracted projection and not a DMR reading."
+            ),
             # Cooling archetype (#1054): UNKNOWN — the register discloses WATER FIGURES, not a cooling
             # DESIGN, so the method is not on record (a disclosed facility with an undisclosed method
             # gets a bracketed range, never the water-intensive evaporative default). Not asserted.
+            # The makeup:blowdown ratio back-solves to ~3.97 cycles of concentration — the signature
+            # of a closed-loop evaporative tower — but a ratio BRACKETS a design and does not close
+            # it (#1679/A3), so `cycles_of_concentration` is left unset and the archetype stands.
             cooling_model=CoolingModelType.UNKNOWN,
             cooling_model_source="reference",
             cooling_model_citation=(
                 "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed "
                 "range). The Res 26-26 water/sewer agreement (adopted 2026-04-27; sidneyoh.com/526) "
                 "discloses a 1.0 MGD peak-withdrawal ceiling (694 gpm) and a projected 4.6M gal/yr "
-                "(~12,600 GPD avg) cooling-water CONSUMPTION; that consumption is <1.3% of the 1.0 MGD "
-                "ceiling, consistent with a largely closed-loop/dry design rather than an evaporative "
+                "(~12,603 GPD avg) cooling-water WITHDRAWAL, of which 1.16M gal/yr (~3,178 GPD) "
+                "returns to the sanitary sewer; the withdrawal is <1.3% of the 1.0 MGD ceiling, "
+                "consistent with a largely closed-loop/dry design rather than an evaporative "
                 "tower — but AWS has not stated the cooling design, so this is NOT selected as "
                 "closed_loop_dry. Facility wastewater returns to the Sidney sanitary sewer -> "
                 "1PD00009*SD / OH0027421 -> Great Miami River at RM 128.68; the City states flatly "
@@ -2982,10 +3026,13 @@ _SIDNEY = SiteProfile(
                 "the campus's own stormwater NOI answers 'Individual NPDES: NO', so there is no "
                 "surface-water cooling discharge to permit here — which is also why Ohio EPA's "
                 "abandonment of the draft data-center general permit OHD000001 (Community Notice "
-                "2026-07-21) changes nothing for this site. Net consumptive draw ~= 0.0195 cfs avg "
-                "vs the CITED regulatory Great Miami 7Q10 of 24.0 cfs (0.08%) — [inference] from the "
-                "cited water figures (see data/extracted/sidney/data-centers.md, 'Water / hydrology "
-                "hook'); the passby is now the fact-sheet value, not a derivation (#1383)."
+                "2026-07-21) changes nothing for this site. Net consumptive draw ~= 0.0146 cfs avg "
+                "(3.44M gal/yr = withdrawal less the return) vs the CITED regulatory Great Miami "
+                "7Q10 of 24.0 cfs — 0.061%, [inference] from the cited water figures (see "
+                "data/extracted/sidney/data-centers.md, 'Water / hydrology hook'); the passby is "
+                "now the fact-sheet value, not a derivation (#1383). ⚠️ This read 0.0195 cfs / "
+                "0.08% until #1995, from treating the 4.6M gal/yr withdrawal as the consumption; "
+                "`incentive-instruments.yaml` had already corrected the register on that point."
             ),
         ),
     ),

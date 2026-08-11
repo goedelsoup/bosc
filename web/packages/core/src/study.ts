@@ -867,6 +867,23 @@ const LOAD_INSTRUMENT_GAP: StudyGapFinding = {
   producer: "the state air-permit file or the RTO interconnection queue",
 };
 
+/**
+ * One decimal, unless that would render a real figure as 0 — the peer of `_stat_decimals` in
+ * `watermark/site/impact_study.py`, and it must stay identical to it (the parity suite pins the
+ * two derivations equal).
+ *
+ * Every headline stat rounds to one decimal, which suits the magnitudes this study was built on.
+ * Sidney's contracted cooling draw is 0.0146 cfs (3.44M gal/yr, `[verified]` in an executed
+ * service agreement) and renders as **"0 cfs"** — a reader takes that as *no draw*, which is a
+ * different claim from *a very small one* and the wrong one (#1995). A value that would vanish
+ * keeps two significant figures instead. Nothing at the old scale moves.
+ */
+export function statDecimals(value: number | null | undefined): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) return 1;
+  if (value === 0 || Math.round(Math.abs(value) * 10) / 10 !== 0) return 1;
+  return 1 - Math.floor(Math.log10(Math.abs(value)));
+}
+
 function pvStat(
   label: string,
   pv: ProvenancedValue | null | undefined,
@@ -876,7 +893,7 @@ function pvStat(
   if (pv == null || pv.value == null) return null;
   return {
     label,
-    value: fmtRanged({ value: pv.value, low: pv.low, high: pv.high }, 1),
+    value: fmtRanged({ value: pv.value, low: pv.low, high: pv.high }, statDecimals(pv.value)),
     unit: pv.unit ?? undefined,
     evidence,
     source: pv.source ?? undefined,

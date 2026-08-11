@@ -642,6 +642,23 @@ def _availability(d: _ChapterDef, ctx: _Ctx) -> tuple[StudyChapterStatus, list[s
 # --- composers ------------------------------------------------------------------------------
 
 
+def _stat_decimals(value: object) -> int:
+    """`study.ts` `statDecimals` — one decimal, unless that would render a real figure as 0.
+
+    Every headline stat rounds to one decimal, which suits the magnitudes this study was built
+    on. Sidney's contracted cooling draw is 0.0146 cfs (3.44M gal/yr, `[verified]` in an executed
+    service agreement) and renders as **"0 cfs"** — a reader takes that as *no draw*, which is a
+    different claim from *a very small one* and the wrong one (#1995). A value that would vanish
+    keeps two significant figures instead. Nothing at the old scale moves, so no committed
+    bundle's stats change.
+    """
+    if not isinstance(value, int | float) or isinstance(value, bool):
+        return 1
+    if value == 0 or round(abs(float(value)), 1) != 0:
+        return 1
+    return 1 - math.floor(math.log10(abs(float(value))))
+
+
 def _pv_stat(
     label: str,
     pv: Mapping[str, Any] | None,
@@ -659,7 +676,9 @@ def _pv_stat(
         return None
     return StudyStat(
         label=label,
-        value=_fmt_ranged(pv.get("value"), pv.get("low"), pv.get("high"), 1),
+        value=_fmt_ranged(
+            pv.get("value"), pv.get("low"), pv.get("high"), _stat_decimals(pv.get("value"))
+        ),
         unit=pv.get("unit"),
         evidence=evidence,
         basis=basis,

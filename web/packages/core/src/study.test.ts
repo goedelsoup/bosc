@@ -11,6 +11,7 @@ import {
   type ImpactStudyFeedRow,
   STUDY_CHAPTERS,
   STUDY_PARTS,
+  statDecimals,
   studyChapter,
   studyChapterModel,
   studyGapLeads,
@@ -308,5 +309,30 @@ describe("the impact-study feed seam — a shipped feed is preferred wholesale",
     const m = studyChapterModel("power", "seamtest");
     expect(m.statusReasons).toEqual(["from the shipped feed"]);
     expect(m.status).toBe("data");
+  });
+});
+
+describe("statDecimals — a real figure never renders as zero (#1995)", () => {
+  // Must stay identical to `_stat_decimals` in watermark/site/impact_study.py; the parity
+  // suite pins the two derivations equal over every committed bundle.
+  it("keeps one decimal at the scale the study was built on", () => {
+    expect(statDecimals(24.0)).toBe(1);
+    expect(statDecimals(0.2)).toBe(1);
+    expect(statDecimals(0.05)).toBe(1); // rounds to 0.1 — still visible
+  });
+
+  it("does not disturb a real zero, or a non-number", () => {
+    expect(statDecimals(0)).toBe(1);
+    expect(statDecimals(null)).toBe(1);
+    expect(statDecimals(undefined)).toBe(1);
+    expect(statDecimals(Number.NaN)).toBe(1);
+  });
+
+  it("keeps two significant figures for a value that would vanish", () => {
+    // Sidney's contracted cooling draw: 0.0146 cfs read "0 cfs" at one decimal, which a reader
+    // takes as no draw at all rather than as a very small one.
+    expect(statDecimals(0.0146)).toBe(3);
+    expect(statDecimals(-0.0146)).toBe(3);
+    expect(statDecimals(0.00061)).toBe(5);
   });
 });
