@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 import yaml
+from pydantic import ValidationError
 
 from watermark.config import Settings
 from watermark.models import (
@@ -14,12 +15,14 @@ from watermark.models import (
     DeedExtraction,
     NpdesExtraction,
     NpdesPermit,
+    NpdesTranscription,
     OPCMeta,
     OPCSummary,
     SosExtraction,
     SubEstimate,
 )
-from watermark.pipeline.corpus import _classify, load_corpus
+from watermark.pipeline.corpus import DECLINED, _classify, load_corpus
+from watermark.sites import WHOLE_TREE
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -223,3 +226,138 @@ def test_legacy_opc_detail_loads_as_estimate(tmp_path: Path) -> None:
     # The ~ approximate marker is coerced to an int for computation.
     assert est.section("ROADWAY").line_items[0].quantity == 2490
     assert est.markups[0].rate == 0.25
+
+
+# --- #1994: the claimed-then-dropped guard, and the classifier's positive shape tests --------
+
+_MINIMAL_DMR_PAYLOAD = {
+    "meta": {"subject": "DMR pull"},
+    "permit": {"npdes_id": "OH0027421", "window": "2023-01-01..2023-12-31"},
+    "discharge_summary": {},
+}
+
+
+def test_no_committed_extraction_is_claimed_then_dropped() -> None:
+    """`_classify` claiming a file and its model then rejecting it is a DEFECT (#1994).
+
+    The two originals — `oepa/sidney/1PD00009.npdes.yaml` and
+    `regulatory/ohc000006-construction-stormwater-gp.yaml` — were found by a hand sweep months
+    after they were committed, because the drop was one WARNING among eighty-one. A dropped file
+    still publishes into the `records` feed, so it LOOKS PRESENT AND IS NOT.
+
+    Whole-tree, not per-site: validity is a property of the FILE, and a per-site sweep would be
+    blind to any path no registered site's scope claims (and 26x slower).
+    """
+    corpus = load_corpus(Settings(data_dir=REPO_ROOT / "data"), scope=WHOLE_TREE)
+    assert not corpus.rejected, (
+        "the corpus classifier claimed these committed artifacts and their models rejected "
+        "them — they are silently absent from the timeline, entity graph and yidam mirror "
+        "while `records.py` still publishes them:\n"
+        + "\n".join(f"  {r.kind:>18}  {r.rel}\n{' ' * 22}{r.error}" for r in corpus.rejected)
+        + "\n\nFix the artifact or route the kind to a model that fits. Do NOT invent "
+        "`doc_id`/`dpi`/`source_path` to make a transcription validate as a vision render."
+    )
+
+
+def test_classify_does_not_claim_a_bare_meta_block_as_an_opc_summary() -> None:
+    """The `or "meta" in data` fallthrough claimed 72 files; ONE was an OPC summary (#1994).
+
+    The other 71 — meeting indexes, `commissioners/minutes/filename-map.yaml`, water-watch
+    reports, PRR response indexes — validated because `OPCSummary` defaults every field, and
+    were inert only because `timeline._opc_events` skips a summary with no `meta.date`. The
+    first artifact to key a `date` under `meta:` would have put a fabricated "OPC estimate"
+    event on a water-watch report's timeline.
+    """
+    assert (
+        _classify({"meta": {"subject": "Van Wert water watch", "checked_on": "2026-07-01"}})
+        == DECLINED
+    )
+    assert _classify({"meta": {"kind": "idem"}, "permit_number": "WQC001454"}) == DECLINED
+    # The real shape still classifies — an OPC summary is identified by what it is.
+    assert _classify({"sub_estimates": [], "meta": {"date": "2025-07-11"}}) == "opc_summary"
+
+
+def test_every_loaded_opc_summary_is_actually_an_opc_summary() -> None:
+    settings = Settings(data_dir=REPO_ROOT / "data", site="lima")
+    summaries = load_corpus(settings).summaries
+    assert summaries, "the reference build must still load its one real OPC summary"
+    for rel, _ in summaries:
+        raw = yaml.safe_load((settings.extracted_dir / rel).read_text(encoding="utf-8"))
+        assert "sub_estimates" in raw, f"{rel} is not an OPC summary"
+
+
+def test_classify_separates_a_transcription_from_a_render_from_a_framework_permit() -> None:
+    render = {
+        "doc_id": "n",
+        "source_path": "x.pdf",
+        "kind": "npdes",
+        "dpi": 150,
+        "permit": {"permit_no": "2PH00006"},
+    }
+    assert _classify(render) == "npdes"
+    # A render extraction that ALSO carries a `provenance:` block stays a render — the real
+    # `oepa/ottawa/2PD00028.npdes.yaml` shape; the envelope test runs first.
+    assert _classify({**render, "provenance": {"extractor": "reviewed"}}) == "npdes"
+    # Both committed transcription conventions.
+    assert (
+        _classify(
+            {
+                "permit": {"permit_no": "1PD00009*SD"},
+                "meta": {"sources": {"permit": {"path": "data/documents/a.pdf"}}},
+            }
+        )
+        == "npdes_transcribed"
+    )
+    assert (
+        _classify(
+            {
+                "kind": "general_permit",
+                "permit": {"permit_no": "OHC000006"},
+                "provenance": {"sources": ["data/documents/b.pdf"]},
+            }
+        )
+        == "general_permit"
+    )
+    # A DMR pull carries `meta:` too — the ordering is the guarantee, not the accident.
+    assert _classify(_MINIMAL_DMR_PAYLOAD) == "npdes_dmr"
+    # Neither shape: MALFORMED, not a third genre. It must fail loudly rather than be
+    # reclassified into the loose envelope — that trades a silent drop for a silent mislabel.
+    assert _classify({"permit": {"permit_no": "X"}}) == "npdes"
+
+
+def test_transcription_envelope_requires_a_committed_source() -> None:
+    with pytest.raises(ValidationError, match="data/documents/"):
+        NpdesTranscription.model_validate(
+            {"permit": {"permit_no": "X"}, "meta": {"sources": ["my-notes.txt"]}}
+        )
+
+
+def test_transcription_envelope_refuses_a_render_receipt() -> None:
+    """A transcription may not assert a render it did not perform (#1994).
+
+    `oepa/van-wert/2GC08872.approval.npdes.yaml` opens "HAND-READ, not a vision extraction …
+    nothing was OCR'd" and then carries `dpi: 150`, because the type it was written against
+    demanded a receipt. Removing the field is not enough — the pressure has to be unsatisfiable.
+    """
+    with pytest.raises(ValidationError, match="all-or-nothing"):
+        NpdesTranscription.model_validate(
+            {
+                "permit": {"permit_no": "X"},
+                "dpi": 150,
+                "meta": {"sources": ["data/documents/a.pdf"]},
+            }
+        )
+
+
+def test_source_path_does_not_shadow_its_own_digest() -> None:
+    """The block is read first, so the role + sha256 survive when source_path names the file."""
+    ex = NpdesTranscription.model_validate(
+        {
+            "source_path": "data/documents/a.pdf",
+            "meta": {"sources": {"permit": {"path": "data/documents/a.pdf", "sha256": "abc"}}},
+            "permit": {},
+        }
+    )
+    assert [(s.path, s.role, s.sha256) for s in ex.sources] == [
+        ("data/documents/a.pdf", "permit", "abc")
+    ]

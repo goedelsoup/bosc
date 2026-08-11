@@ -21,14 +21,17 @@ import yaml
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.models import (
+    RENDER_ENVELOPE_KEYS,
     DeedExtraction,
     DmrExtraction,
     EpaExtraction,
     Estimate,
     EstimateSection,
+    GeneralPermitExtraction,
     LineItem,
     MarkupLine,
     NpdesExtraction,
+    NpdesTranscription,
     OPCSummary,
     PageExtraction,
     PlanExtraction,
@@ -125,6 +128,27 @@ def assert_meeting_layout_depth(rel: str) -> None:
 
 
 @dataclass(frozen=True)
+class CorpusReject:
+    """A file the classifier CLAIMED and the model then REJECTED — a defect, not noise."""
+
+    rel: str
+    kind: str
+    error: str
+
+
+class CorpusValidationError(RuntimeError):
+    """Raised by ``load_corpus(strict=True)`` when any claimed artifact failed its model."""
+
+    def __init__(self, rejects: list[CorpusReject]) -> None:
+        self.rejects = rejects
+        super().__init__(
+            f"{len(rejects)} committed extraction(s) were claimed by the corpus classifier "
+            "and then rejected by their model:\n"
+            + "\n".join(f"  {r.kind:>18}  {r.rel}\n{' ' * 22}{r.error}" for r in rejects)
+        )
+
+
+@dataclass(frozen=True)
 class Corpus:
     """All committed extractions, grouped by genre and tagged with their path.
 
@@ -133,7 +157,18 @@ class Corpus:
     """
 
     deeds: list[tuple[str, DeedExtraction]] = field(default_factory=list)
-    permits: list[tuple[str, NpdesExtraction]] = field(default_factory=list)
+    # Both envelopes declare `.permit`, which is all either consumer (`timeline._npdes_events`,
+    # `entities._graph`) touches — the union costs them nothing.
+    permits: list[tuple[str, NpdesExtraction | NpdesTranscription]] = field(default_factory=list)
+    general_permits: list[tuple[str, GeneralPermitExtraction]] = field(default_factory=list)
+    # Files the classifier CLAIMED and the model then REJECTED. They are still dropped from the
+    # typed buckets — deliberately; one malformed artifact must not blind the whole layer — but
+    # #1994 showed a WARNING log is not a report: a permit can sit in the `records` feed looking
+    # present while it is absent from every model-driven feed. Recording them lets a test assert
+    # the drop set is empty instead of grepping logs.
+    rejected: list[CorpusReject] = field(default_factory=list)
+    # Files no arm of `_classify` claimed. Expected and numerous (~81); kept only for counting.
+    declined: list[str] = field(default_factory=list)
     dmr_records: list[tuple[str, DmrExtraction]] = field(default_factory=list)
     filings: list[tuple[str, SosExtraction]] = field(default_factory=list)
     actions: list[tuple[str, EpaExtraction]] = field(default_factory=list)
@@ -153,20 +188,97 @@ class Corpus:
             + len(self.plans)
             + len(self.estimates)
             + len(self.summaries)
+            + len(self.general_permits)
         )
+        # `rejected`/`declined` are deliberately NOT counted — they hold no models.
 
     def is_empty(self) -> bool:
         return len(self) == 0
 
+    def rel_paths(self) -> list[str]:
+        """Every loaded artifact's path, across all genres.
 
-def _classify(data: Any) -> str | None:
+        Exists so a caller never has to iterate ``vars(corpus).values()`` and unpack each field
+        as a ``(rel, model)`` pair — an idiom that broke the moment #1994 added ``rejected``
+        (dataclasses) and ``declined`` (bare strings) beside the typed buckets. Loaded artifacts
+        only: a rejected or declined file is deliberately absent, because this answers "what did
+        the corpus take in", which is exactly the question a scope assertion is asking.
+        """
+        return [
+            rel
+            for group in (
+                self.deeds,
+                self.permits,
+                self.general_permits,
+                self.dmr_records,
+                self.filings,
+                self.actions,
+                self.wetlands,
+                self.plans,
+                self.estimates,
+                self.summaries,
+            )
+            for rel, _ in group
+        ]
+
+
+# The sentinel `_classify` returns for a file the corpus layer does not model. It is NOT
+# `None`: "the loader never reached a decision" and "the loader decided this is not an
+# extraction" must not be the same observation (#1994).
+DECLINED = "_declined"
+
+
+def _has_render_envelope(data: dict[str, Any]) -> bool:
+    """Whether ``data`` was written by an extractor rather than transcribed by a person.
+
+    Every render extraction is constructed as a ``DocExtraction`` subclass in Python and
+    serialized by ``DocExtraction.to_yaml`` (``model_dump``), so all four required fields are
+    present by construction — verified across every committed render extraction, including the
+    older ones that predate ``image_pages_read`` (#613) and omit that key entirely. That is why
+    this tests only the REQUIRED four: they are precisely the fields whose absence would fail
+    ``NpdesExtraction`` anyway.
+    """
+    return RENDER_ENVELOPE_KEYS.issubset(data)
+
+
+def _has_transcription_provenance(data: dict[str, Any]) -> bool:
+    """Whether ``data`` carries a hand transcription's own provenance block.
+
+    Two committed conventions, both accepted: ``meta.sources`` (a mapping of named sources, each
+    with path + sha256 + url) and ``provenance.sources`` (a list of paths). This is a POSITIVE
+    signal, deliberately — routing on "no render envelope" alone would let a genuinely malformed
+    extractor output be silently reclassified as a transcription and loosely validated, trading a
+    silent drop for a silent mislabel, which is the failure the DMR discriminator exists to
+    prevent. A ``provenance:`` block WITHOUT ``sources`` is not this: ``oepa/ottawa/
+    2PD00028.npdes.yaml`` has one (extractor/tags/summary) and is a full render extraction.
+    """
+    return any(
+        isinstance(body := data.get(block), dict) and body.get("sources")
+        for block in ("meta", "provenance")
+    )
+
+
+def _classify(data: Any) -> str:
     """Identify an extraction by its top-level keys (shape, not filename).
 
-    Returns one of ``deed`` / ``npdes`` / ``npdes_dmr`` / ``opc_page`` / ``opc_summary``,
-    or ``None`` for anything that isn't a recognized extraction.
+    Returns ``deed`` / ``npdes`` / ``npdes_transcribed`` / ``npdes_dmr`` / ``general_permit`` /
+    ``sos`` / ``epa`` / ``wetland`` / ``plan`` / ``opc_page`` / ``opc_detail_legacy`` /
+    ``opc_summary``, or :data:`DECLINED`.
+
+    **Every arm is a positive shape test, and that is the point.** This used to end
+    ``if "sub_estimates" in data or "meta" in data: return "opc_summary"``. Because
+    :class:`~watermark.models.OPCSummary` defaults every field, *any* mapping with a ``meta:``
+    block validated — so **71 of the 72** files that reached that arm (meeting indexes,
+    ``commissioners/minutes/filename-map.yaml``, ``van-wert/water-watch.yaml``, grid project
+    files, PRR response indexes) loaded into ``corpus.summaries`` as construction cost estimates.
+    Nothing broke only because ``timeline._opc_events`` skips a summary with no ``meta.date`` and
+    exactly one file in the tree has one — the real estimate. The first rename of an
+    ``extracted_at`` / ``checked_on`` / ``generated_at`` key to ``date`` would put a fabricated
+    "OPC estimate: …" event on a water-watch report's timeline (#1994). An OPC summary is now
+    identified by ``sub_estimates:``, which is what an OPC summary is.
     """
     if not isinstance(data, dict):
-        return None
+        return DECLINED
     if "deed" in data:
         return "deed"
     if "permit" in data:
@@ -187,7 +299,29 @@ def _classify(data: Any) -> str | None:
             and "window" in permit_block
             and isinstance(data.get("discharge_summary"), dict)
         )
-        return "npdes_dmr" if is_dmr_pull else "npdes"
+        # The DMR test runs FIRST and stays first: a DMR pull carries a top-level `meta:` and
+        # would otherwise reach the transcription test below. (It has no `meta.sources`, so it
+        # would fail that test too — but the ordering is the guarantee, not the accident.)
+        if is_dmr_pull:
+            return "npdes_dmr"
+        # A permit read three ways, discriminated in the same idiom as the DMR split above
+        # (#1994). The render envelope is checked first because it is the only one of the three
+        # that is satisfied BY CONSTRUCTION for anything the extractor writes.
+        if _has_render_envelope(data):
+            return "npdes"
+        # A STATEWIDE general permit is a framework instrument, not a facility discharge record:
+        # no facility, no receiving water, no public-notice date, and its provenance is a
+        # `provenance:` block over SEVERAL source PDFs. Routed to `npdes` it was rejected for a
+        # `doc_id`/`dpi`/`source_path` describing a vision render that never happened — and the
+        # rejection was a WARNING nobody read. Name the genre instead of mis-routing it.
+        if data.get("kind") == "general_permit" and isinstance(data.get("provenance"), dict):
+            return "general_permit"
+        if _has_transcription_provenance(data):
+            return "npdes_transcribed"
+        # Neither: an incomplete render envelope with no transcription provenance is MALFORMED,
+        # not a third genre. It routes to `npdes` and fails validation loudly, where
+        # `Corpus.rejected` and its gate report it by name.
+        return "npdes"
     if "filing" in data:
         return "sos"
     if "action" in data:
@@ -200,9 +334,9 @@ def _classify(data: Any) -> str | None:
         return "opc_page"
     if "estimate_template" in data:
         return "opc_detail_legacy"
-    if "sub_estimates" in data or "meta" in data:
+    if "sub_estimates" in data:
         return "opc_summary"
-    return None
+    return DECLINED
 
 
 def _estimate_from_legacy_page(
@@ -270,18 +404,44 @@ def _load_legacy_opc_detail(rel: str, data: dict[str, Any], corpus: Corpus) -> N
         )
 
 
-def load_corpus(settings: Settings | None = None) -> Corpus:
+def validate_npdes(data: Any) -> NpdesExtraction | NpdesTranscription | None:
+    """Validate a ``permit:``-keyed payload against the envelope its own shape declares.
+
+    The single place that decides render-vs-transcription, so no second reader of a
+    ``*.npdes.yaml`` off disk can ever disagree with the corpus loader about what a permit is —
+    which is how ``agent.tools._load_all_permits`` came to swallow a valid permit whole (#1994).
+    """
+    kind = _classify(data)
+    if kind == "npdes":
+        return NpdesExtraction.model_validate(data)
+    if kind == "npdes_transcribed":
+        return NpdesTranscription.model_validate(data)
+    return None
+
+
+def load_corpus(
+    settings: Settings | None = None,
+    *,
+    scope: CorpusScopeArg | None = None,
+    strict: bool = False,
+) -> Corpus:
     """Load and validate every extraction under ``data/extracted`` into a Corpus.
 
-    Files that fail to parse or validate are logged and skipped (the corpus is a
-    best-effort view; one malformed artifact must not blind the whole layer).
+    ``scope`` overrides the active site's corpus scope — pass :data:`watermark.sites.WHOLE_TREE`
+    to audit every committed artifact in one pass, which the #1994 gate does because *validity is
+    a property of the file*: a per-site sweep is blind to any path no registered site's scope
+    claims.
+
+    Files that fail to parse or validate are recorded and skipped (the corpus is a best-effort
+    view; one malformed artifact must not blind the whole layer). ``strict=True`` turns a
+    rejection into :class:`CorpusValidationError` instead.
     """
     settings = settings or get_settings()
     extracted = settings.extracted_dir
     # Per-site corpus scope (#762/#780): a non-Lima site reads only its own extracted collections,
     # so the cross-document feeds (timeline/entities/relationships) never inherit Lima's records.
     # The effective scope defaults to the site's own slug when unset (only Lima is whole-tree).
-    scope = effective_corpus_scope(active_profile(settings))
+    scope = scope if scope is not None else effective_corpus_scope(active_profile(settings))
     corpus = Corpus()
     if not extracted.exists():
         log.warning("corpus.no_extracted_dir", path=str(extracted))
@@ -300,8 +460,12 @@ def load_corpus(settings: Settings | None = None) -> Corpus:
         try:
             if kind == "deed":
                 corpus.deeds.append((rel, DeedExtraction.model_validate(data)))
-            elif kind == "npdes":
-                corpus.permits.append((rel, NpdesExtraction.model_validate(data)))
+            elif kind in ("npdes", "npdes_transcribed"):
+                validated = validate_npdes(data)
+                if validated is not None:
+                    corpus.permits.append((rel, validated))
+            elif kind == "general_permit":
+                corpus.general_permits.append((rel, GeneralPermitExtraction.model_validate(data)))
             elif kind == "npdes_dmr":
                 corpus.dmr_records.append((rel, DmrExtraction.model_validate(data)))
             elif kind == "sos":
@@ -318,10 +482,28 @@ def load_corpus(settings: Settings | None = None) -> Corpus:
                 _load_legacy_opc_detail(rel, data, corpus)
             elif kind == "opc_summary":
                 corpus.summaries.append((rel, OPCSummary.model_validate(data)))
-            else:
-                log.warning("corpus.unrecognized", path=rel)
-        except Exception as exc:  # validation errors are per-file; keep loading the rest
-            log.warning("corpus.invalid", path=rel, kind=kind, error=str(exc).splitlines()[0])
+            else:  # kind is DECLINED
+                corpus.declined.append(rel)
+                # DEBUG, not WARNING. ~81 files land here on every single load, and two ERRORs
+                # buried in eighty-one WARNINGs is indistinguishable from zero ERRORs — which is
+                # exactly how #1994 survived long enough to be found by a hand sweep.
+                log.debug("corpus.declined", path=rel)
+        except Exception as exc:
+            # A file the classifier CLAIMED and the model then REJECTED is a defect, not noise.
+            # The artifact is real, reviewed and committed; the drop makes it invisible to the
+            # timeline, the entity graph and the yidam mirror while `watermark.site.records`
+            # (which reads raw dicts) keeps publishing it into the `records` feed — so it LOOKS
+            # PRESENT AND IS NOT (#1994).
+            detail = str(exc).splitlines()[0]
+            corpus.rejected.append(CorpusReject(rel=rel, kind=kind, error=detail))
+            log.error(
+                "corpus.invalid",
+                path=rel,
+                kind=kind,
+                error=detail,
+                hint="the classifier claimed this file; either fix the artifact or teach "
+                "_classify to route it to a model that fits — do NOT invent envelope fields",
+            )
 
     log.info(
         "corpus.loaded",
@@ -334,5 +516,16 @@ def load_corpus(settings: Settings | None = None) -> Corpus:
         plans=len(corpus.plans),
         estimates=len(corpus.estimates),
         summaries=len(corpus.summaries),
+        general_permits=len(corpus.general_permits),
+        declined=len(corpus.declined),
+        rejected=len(corpus.rejected),
     )
+    if corpus.rejected:
+        log.error(
+            "corpus.rejected",
+            count=len(corpus.rejected),
+            paths=[r.rel for r in corpus.rejected],
+        )
+        if strict:
+            raise CorpusValidationError(corpus.rejected)
     return corpus
