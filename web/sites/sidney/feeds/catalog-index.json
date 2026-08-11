@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "8d9d839351dbdeb56a69a85cadd396b9e3e73d7b01987fd8c44e0c867a025a66",
+  "catalog_version": "71d1d9965854d1d4e86e5e7f2a609d6514eabf63ad24ef7d2c55e3caf9e33c05",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -1441,6 +1441,46 @@
       "site": "sidney",
       "local_id": "oepa/sidney/DSWPTI-260517.epa.yaml",
       "title": "SIDNEY DATA CENTER CAMPUS — Public Sanitary Sewer Relocation, 2388 West Millcreek Rd",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml",
+      "title": "City of Sidney Resolution No. 80-25 — authorizing the City Manager to enter into a Community Reinvestment Area Agreement with Amazon Data Services, Inc., passed 2025-10-27",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2025-10-27-res-81-25-schools-development-agreement.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-10-27-res-81-25-schools-development-agreement.resolution.yaml",
+      "title": "City of Sidney Resolution No. 81-25 — authorizing the City Manager to enter into a Development Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding the Community Reinvestment Area tax abatement for Amazon Data Services, Inc., passed 2025-10-27",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2025-10-27-res-82-25-income-tax-sharing.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-10-27-res-82-25-income-tax-sharing.resolution.yaml",
+      "title": "City of Sidney Resolution No. 82-25 — authorizing the City Manager to enter into an Income Tax Sharing Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding the Community Reinvestment Area tax abatement for Amazon Data Services, Inc., passed 2025-10-27",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2026-04-27-res-26-26-water-and-wastewater-service.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2026-04-27-res-26-26-water-and-wastewater-service.resolution.yaml",
+      "title": "City of Sidney Resolution No. 26-26 — authorizing the City Manager to enter into a Water and Wastewater Service Agreement with Amazon Web Services, Inc., passed 2026-04-27",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml",
+      "title": "City of Sidney Resolution No. 27-26 — authorizing the City Manager to enter into a Development Agreement with Amazon Web Services, Inc., passed 2026-04-27",
       "feed": "records"
     },
     {

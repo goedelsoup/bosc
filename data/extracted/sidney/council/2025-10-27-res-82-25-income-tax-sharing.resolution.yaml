@@ -1,0 +1,79 @@
+# City of Sidney Council, 2025-10-27 — Resolution No. 82-25, authorizing the Income Tax Sharing
+# Agreement with the two school boards. Issue #2003, epic #1275.
+# See the sibling 80-25 file for why these acts are filed separately from the compiled register.
+#
+# TAG VOCABULARY: [verified] printed on the City's RECORD OF ORDINANCES page · [inference] reasoned
+# and labelled · [open] not established by this instrument.
+
+as_of: '2026-08-11'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#2003'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/council/82-25 - Authorizing Income Tax Sharing Agreement - Sidney City Schools and Upper Valley - Amazon Data Services_202601141345054883.pdf
+  sha256: 321b0a567990924c334b7cc31c0110b9eda30c9e64aae98ccc8c48499e7402d6
+  content_verified: text-layer
+  read_note: >-
+    HAND-READ from the PDF's own native text layer (pypdf, ~1,155 characters on page 0); nothing was
+    OCR'd and no page was rendered.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Sidney Resolution No. 82-25 — authorizing the City Manager to enter into an Income Tax
+    Sharing Agreement with the Sidney City Schools and Upper Valley Career Center Boards of
+    Education regarding the Community Reinvestment Area tax abatement for Amazon Data Services,
+    Inc., passed 2025-10-27
+  resolution_no: '82-25'
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: revenue_sharing
+  adopted: '2025-10-27'                       # [verified] "Passed this 27th day of October, 2025."
+  journal_pages: ['0345', '0346']             # [verified]
+  title_verbatim: >-
+    A RESOLUTION AUTHORIZING THE CITY MANAGER TO ENTER INTO AN INCOME TAX SHARING AGREEMENT WITH THE
+    SIDNEY CITY SCHOOLS AND UPPER VALLEY CAREER CENTER BOARDS OF EDUCATION REGARDING COMMUNITY
+    REINVESTMENT AREA TAX ABATEMENT FOR AMAZON DATA SERVICES, INC.
+  outcome: approved
+  statute: null                               # [open] — the page cites only R.C. 121.22. An income-tax
+                                              # sharing agreement with a school district is commonly
+                                              # made under R.C. 5709.82, but this instrument does not
+                                              # say so and it is not inferred here.
+
+  operative_text_verbatim: >-
+    SECTION 1. That the City Manager be and he is hereby authorized and directed to enter into an
+    Income Tax Sharing Agreement with the Sidney City Schools and Upper Valley Career Center Boards
+    of Education regarding a CRA Tax Abatement for Amazon Data Services, Inc.
+
+  counterparties:
+    - Sidney City Schools Board of Education
+    - Upper Valley Career Center Board of Education
+  beneficiary_named: Amazon Data Services, Inc.
+
+  relationship_to_81_25:
+    note: >-
+      [verified] TWO SEPARATE INSTRUMENTS, PASSED THE SAME DAY, TO THE SAME TWO BOARDS. 81-25
+      authorizes a DEVELOPMENT agreement; 82-25 authorizes an INCOME TAX SHARING agreement. Their
+      titles are otherwise near-identical, which makes them easy to conflate — they are not
+      alternates or a re-passage, and a citation to one is not a citation to the other.
+
+  vote:
+    roll_call_recorded: false
+    note: >-
+      [open] Enacting clause, passage date and Attest line only. Roll call is in the 2025-10-27
+      Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.
+    signatories: null                         # [open] — ink signatures
+
+  what_this_instrument_does_not_establish:
+    - >-
+      No rate, no term, no revenue figure and no allocation between the two boards appears in this
+      resolution. Those are terms of the executed agreement (#1380). Do not cite this act for them.
+
+  confidence: high
+  warnings:
+    - >-
+      Clean native text layer, no OCR; the embedded font substitutes some letter pairs elsewhere on
+      the page. This instrument contains no figures.

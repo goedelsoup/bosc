@@ -1,0 +1,84 @@
+# City of Sidney Council, 2026-04-27 — Resolution No. 27-26, authorizing the Development Agreement
+# with Amazon Web Services, Inc. Issue #2003, epic #1275.
+# See the sibling 80-25 file for why these acts are filed separately from the compiled register.
+#
+# TAG VOCABULARY: [verified] printed on the City's RECORD OF ORDINANCES page · [inference] reasoned
+# and labelled · [open] not established by this instrument.
+
+as_of: '2026-08-11'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#2003'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/council/27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf
+  sha256: ec32b7b722f98deffa592ebe5013336da90a530a5f14bc110b76ea9c13125a26
+  content_verified: text-layer
+  read_note: >-
+    HAND-READ from the PDF's own native text layer (pypdf, ~1,110 characters on page 0); nothing was
+    OCR'd and no page was rendered. 32 pages — the resolution occupies pages 0-1 and the executed
+    agreement and its exhibits follow; only the resolution is read here.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Sidney Resolution No. 27-26 — authorizing the City Manager to enter into a Development
+    Agreement with Amazon Web Services, Inc., passed 2026-04-27
+  resolution_no: '27-26'
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: development_agreement
+  adopted: '2026-04-27'                       # [verified] "Passed this 27th day of April 2026"
+  journal_pages: ['0091', '0092']             # [verified]
+  title_verbatim: >-
+    A RESOLUTION AUTHORIZING THE CITY MANAGER TO ENTER INTO A DEVELOPMENT AGREEMENT WITH AMAZON WEB
+    SERVICES, INC.
+  outcome: approved
+  statute: null                               # [open] — the page cites only R.C. 121.22.
+
+  operative_text_verbatim: >-
+    SECTION 1. That the City Manager be, and he is hereby authorized and directed to enter into a
+    Development Agreement with Amazon Web Services, Inc. in accordance with the agreement that is on
+    file with the City Clerk.
+
+  counterparty:
+    name: Amazon Web Services, Inc.
+    entity_mismatch: >-
+      [verified] THE ACT AND THE AGREEMENT NAME DIFFERENT COMPANIES. This resolution authorizes an
+      agreement with Amazon WEB Services, Inc.; the agreement it authorizes names Amazon DATA
+      Services, Inc., a Delaware corporation, as "Developer" in its own Project Summary and
+      signature block (#1380). Both entities are real and both appear elsewhere in this record, so
+      this is not a transcription slip in one direction — the City legislated one counterparty and
+      executed with another. Recorded, not resolved.
+
+  filename_vs_instrument:
+    city_filename: '27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf'
+    instrument_title: A DEVELOPMENT AGREEMENT
+    note: >-
+      [verified] The City's own upload name inserts "Infrastructure"; the instrument's title and
+      Section 1 both say "a Development Agreement" with no such qualifier. Recorded because a
+      filename is not evidence of its contents, and because "Infrastructure Development Agreement"
+      is the phrase the register and local coverage use — it comes from the City's file name, not
+      from the act.
+
+  vote:
+    roll_call_recorded: false
+    note: >-
+      [open] Enacting clause, passage date and Attest line only. Roll call is in the 2026-04-27
+      Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.
+    signatories: null                         # [open] — ink signatures
+
+  what_this_instrument_does_not_establish:
+    - >-
+      THE ROAD MONEY AND THE PARCEL RECITALS ARE NOT IN THIS RESOLUTION. The up-to-$8.0M Millcreek
+      Road reconstruction and the five predecessor parcels recited in Exhibit A are in the EXECUTED
+      agreement and its exhibits (#1380 / #1379), which follow on pages 2-31 of this same PDF and
+      are read in `incentive-instruments.yaml`. This act states neither.
+
+  confidence: high
+  warnings:
+    - >-
+      Clean native text layer, no OCR; the embedded font substitutes some letter pairs
+      ("detennined"). This instrument contains no figures.

@@ -16,6 +16,19 @@ Per-site onboarding tree for the Sidney watershed point (basin: great-miami), sc
 Two defects that are the platform's, not this site's. Both are recorded here rather than worked
 around, because a workaround would misfile evidence.
 
+- **Update (#2003):** the five authorizing RESOLUTIONS are now published in their own right, as
+  instrument-level `resolution:` extractions under `council/` — they classify as
+  `local-legislation`, which is what the impact study's `governance` chapter reads, and that
+  chapter moved `partial` -> `data`. This does not close the gap below: the register itself is
+  still `corpus.unrecognized`, so the executed AGREEMENTS (their terms, the PILOT schedule, the
+  reserved sewer capacity) remain unreachable. The acts and the agreements are different
+  instruments and only the acts have been split out.
+- **`assembly` still cannot be lit, and should not be.** The register's `land_acquisition:` block
+  recites three O.R. 2329 deeds from an agreement's *Exhibit A*, and records that the grantors,
+  instrument numbers and per-deed consideration are UNREAD. Publishing it as a conveyance register
+  would assert a chain the corpus does not hold. That chapter stays `partial` until the deeds are
+  pulled from the Shelby County Recorder (#1998).
+
 - **`incentive-instruments.yaml` is not published as a record.** `watermark.site.records`
   classifies an extraction by its payload block, and no group claims an executed municipal
   incentive/service agreement — so the single most important document set at this site loads as
