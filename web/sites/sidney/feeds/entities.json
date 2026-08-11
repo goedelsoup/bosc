@@ -239,31 +239,6 @@
     "federal_obligations": null
   },
   {
-    "key": "CMH232 CAMPUS",
-    "display": "CMH232 Campus",
-    "kind": "individual",
-    "classification": "individual",
-    "relation_class": null,
-    "relation_basis": null,
-    "variants": [
-      "CMH232 Campus"
-    ],
-    "signals": [],
-    "roles": {
-      "epa_applicant": 1
-    },
-    "parcels": [],
-    "addresses": [
-      "13820 Sunrise Valley Dr., Herndon, Virginia 20171"
-    ],
-    "sources": [
-      "oepa/sidney/4214600.epa.yaml"
-    ],
-    "lei": null,
-    "uei": null,
-    "federal_obligations": null
-  },
-  {
     "key": "LAURA MARKMAN",
     "display": "Laura Markman",
     "kind": "individual",

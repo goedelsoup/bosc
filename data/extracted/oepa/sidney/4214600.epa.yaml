@@ -29,11 +29,18 @@ action:
   agency: Ohio EPA, Division of Air Pollution Control — Northwest District Office
   program: Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO), air pollution sources
   permit_no: P0141118                     # [verified] the application number, NOT a permit number
-  action: incomplete                      # see `action_note` — "administratively complete", not approvable
+  action: application                     # see `action_note` — an application received and docketed
   action_date: '2026-08-04'               # [verified] the letter date
   plans_received_date: '2026-08-03'       # [verified] "P0141118 received on 08/03/2026"
   expiration_date: null
-  applicant: CMH232 Campus                # [verified] as addressed; the letter names no corporate entity
+  # ⚠️ [open] — DELIBERATELY NULL. The letter names no legal applicant: it is addressed to a
+  # PERSON, "Laura Markman", over a facility line, "CMH232 Campus", at an Amazon office address.
+  # Putting the facility name here made the entity graph publish "CMH232 CAMPUS" as an INDIVIDUAL
+  # — a data-center campus rendered as a person, carrying an office address as its own. The
+  # applicant of record is almost certainly Amazon Data Services, Inc., which is the permittee on
+  # every other instrument at this campus, but THIS document does not say so and an inference is
+  # not a field value. The facility name lives in `project_name`, where it belongs.
+  applicant: null
   applicant_address: 13820 Sunrise Valley Dr., Herndon, Virginia 20171
   contact_name: Laura Markman
   contact_email: null                     # [open] — the addressee's email is not printed
@@ -44,12 +51,13 @@ action:
   confidence: high
   warnings:
     - >-
-      `action: incomplete` is the closest value in the vocabulary and is imprecise here. The
-      letter says the application IS "preliminarily and administratively complete" — and says in
-      the same breath that this "does not imply that the application is approvable, only that all
-      of the necessary material has been submitted in order to continue the review." So it is
-      neither an approval nor a rejection: it is a filed, docketed application entering technical
-      review. Read `action_note` before quoting this field.
+      `action: application`, NOT `incomplete`. The vocabulary's `incomplete` would say the
+      opposite of what happened: the letter states the application IS "preliminarily and
+      administratively complete". It is also not an approval — the same sentence adds that this
+      "does not imply that the application is approvable, only that all of the necessary material
+      has been submitted in order to continue the review." What it records is a filed, docketed
+      application entering technical review, which is what `application` means here. Read
+      `action_note` before quoting the field either way.
     - >-
       Clean native text layer, nothing OCR'd, nothing rendered. What is absent here is absent from
       a two-page administrative letter — which is a weak absence, not a strong one. It is the

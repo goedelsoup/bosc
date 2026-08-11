@@ -492,7 +492,14 @@ def _chapter_gap(d: _ChapterDef, ctx: _Ctx, facility: dict[str, Any] | None) -> 
                 "missing_record": (
                     "a DRAFT permit or public notice — an air-permit application is on the "
                     "record here, but the document that names the generator fleet has not issued."
-                )
+                ),
+                # The producer moves with the gap. Naming "the air permit application" as what
+                # would close this reads as a document nobody has requested, on a site where it
+                # was filed weeks ago — it sends a reader to the wrong instrument.
+                "producer": (
+                    "the Ohio EPA draft permit or public notice for the pending application, "
+                    "and its emission-unit inventory"
+                ),
             }
         )
     if (
