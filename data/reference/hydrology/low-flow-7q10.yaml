@@ -103,7 +103,34 @@ streams:
       mixing_pct_avg: 25
       design_flow_cfs: 13.46
       acute_dilution_ratio: 2.9
-      note: "keyed 'upper great miami river' (not the bare 'great miami river') on purpose: the bare name is the basin-screen's derived Hamilton mainstem proxy (407.67 cfs, low-flow-7q10.derived.yaml) and must not be overridden by this Sidney/Piqua-reach value. The Piqua WWTP design flow 8.7 MGD (13.46 cfs) leaves ~1.8:1 chronic dilution against this 7Q10; the fact sheet's own acute (1Q10) downstream dilution ratio is 2.9:1 (39.96 cfs downstream 1Q10 / 13.46 cfs). #829"
+      note: "keyed 'upper great miami river' (not the bare 'great miami river') on purpose: the bare name is the basin-screen's derived Hamilton mainstem proxy (407.67 cfs, low-flow-7q10.derived.yaml) and must not be overridden by this Sidney/Piqua-reach value. The Piqua WWTP design flow 8.7 MGD (13.46 cfs) leaves ~1.8:1 chronic dilution against this 7Q10; the fact sheet's own acute (1Q10) downstream dilution ratio is 2.9:1 (39.96 cfs downstream 1Q10 / 13.46 cfs). NOT bound by `permits:` — see the Sidney entry below, which is. Binding 1PD00008 here would move the Piqua WWTP's screen from 30.29:1 to 1.78:1, and that is Troy-Piqua's call to make deliberately (#1274), not a side effect of Sidney's. #829"
+
+  # ── The upper Great Miami's cited reach at Sidney's own outfall (#1992) ────────────────────
+  # Same 24.0 cfs figure as `upper great miami river` above, and that is corroboration rather
+  # than duplication: two Ohio EPA fact sheets in the same joint allocation study (Sidney, Piqua
+  # and Troy are allocated as interactive dischargers) independently state "GMR above Sidney"
+  # from USGS 03261500 over 1927-2021. The difference is WHERE each is binding. For Piqua the
+  # value sits upstream of the outfall and is conservative; for Sidney it is the reach the
+  # discharge actually enters, so it is bound here by `permits:` and nowhere else.
+  #
+  # This exists because the basin screen was crediting the SIDNEY WWTP with the derived Hamilton
+  # mainstem proxy (407.67 cfs) — 37.64:1, flagged `ok`. The regulator's own denominator at this
+  # outfall is 24.0 cfs against a 10.83 cfs design flow: 2.22:1, `tight`. A 17x overstatement of
+  # available dilution, and exactly the failure mode `permits:` was added for (#1458).
+  great miami river (sidney wwtp outfall, rm 128.68):
+    seven_q10_cfs: 24.0
+    source: document
+    permits: ["OH0027421", "1PD00009"]
+    citation: "Ohio EPA \"Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022\" (permit 1PD00009*SD, application OH0027421), Table 14 \"Instream Conditions and Discharger Flow\", printed p.32 — GMR above Sidney, 7Q10 annual 24.0 cfs, USGS gage #03261500, 1927-2021 data. Read from the source PDF text layer (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf, 0-based page 80), digits clean; structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml."
+    confidence: high
+    context:
+      one_q10_cfs: 19.4
+      thirty_q10_summer_cfs: 29.0
+      thirty_q10_winter_cfs: 67.2
+      harmonic_mean_cfs: 119.2
+      mixing_pct_avg: 100
+      design_flow_cfs: 10.83
+      note: "The fact sheet's own mixing assumption for the GMR and its tributaries is 100% average / 100% maximum (stream-to-discharge ratio), not the 25% carried on the Maumee entries here. Sidney WWTP outfall 001 design flow is 10.83 cfs (7.0 MGD) per the same table, so the chronic dilution at this outfall is 24.0 / 10.83 = 2.22:1 — `tight` under the cited 1.0/10.0 screening bands, NOT the `ok` the derived proxy reported. Loramie Creek at Mouth (3.43 cfs) and Rush Creek at mouth (0.82 cfs) are given in the same table and are the site's other cited receiving waters; neither is bound here because neither carries this outfall. #1992"
 
   town creek:
     seven_q10_cfs: 0.16

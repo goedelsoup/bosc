@@ -2,9 +2,9 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "2.0.0",
-  "generated_at": "2026-08-05T22:15:07+00:00",
-  "feed_count": 33,
-  "row_total": 572,
+  "generated_at": "2026-08-11T03:16:35+00:00",
+  "feed_count": 35,
+  "row_total": 791,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -256,6 +256,14 @@
       "count": 15
     },
     {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 219
+    },
+    {
       "name": "catalog-index",
       "path": "feeds/catalog-index.json",
       "media_type": "application/json",
@@ -284,6 +292,14 @@
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }

@@ -26,11 +26,28 @@ Living record for the Sidney watershed point (basin: great-miami), scaffolded by
 
 ## Review gate (blocking)
 
-- [ ] Every written reference value is reviewed against a cited source (no fabricated values).
+- [x] Every written reference value is reviewed against a cited source (no fabricated values). **(#1992 — audited 2026-08-10.)** The connector outputs under `data/reference/*/sidney/` are regenerable and cited by construction; the audit therefore targeted the hand-authored values — the `SiteProfile` knobs and citation strings, which are what the exported `facility` feed publishes.
+
+  **Four `[verified]` figures in `_SIDNEY`'s facility citations were stale**, all of them figures #1380 had already corrected in `incentive-instruments.yaml`'s own `corrections_to_the_register` block without the correction propagating back into the profile:
+
+  | field | was | now |
+  |---|---|---|
+  | CRA legislation | "Res 18-25" | **Res. 69-25**, adopted 2025-09-08, city-wide — "Res. 18-25 of October 2025" does not exist |
+  | PILOT | "$50M PILOT over 15 yr" | **$46,000,000 over 14 years** (CRA Agmt §7(b) + Exh. E) **plus** a separate one-time **$4,000,000** (§8); schools' half divides $21,220,529 SCSD / $3,779,471 UVCC |
+  | grading permit | issued 2026-05-14 (×4 sites in the profile, plus a cross-reference in Van Wert's) | signed **2026-05-15** — 5-14-2026 is the City's upload *filename*, which is not evidence of a date |
+  | coverage→permit interval | 160 days | **161 days** — derived from the date above, so it moved with it |
+
+  Also annotated rather than changed: the disclosed address "2388 W. Millcreek Road" is kept as the address **as disclosed**, with the note that the situs was retired by the Lot 7658 Consolidation Plat and the parcel of record is now `26-03-201-002` / 1151 S Vandemark Rd (#1379).
+
+  Everything else held. The `[open]`s are honestly marked and stay `[open]` — the campus MW, the zoning district, `noaa_fallback_24h_depth_in`, the cooling design.
 - [x] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation. **(#1379 — the profile was updated: `[inference]` "B" → `[verified]` "D".** The old inference argued from the Great Miami buried-valley sole-source aquifer, but the campus sits ~2 mi west of the valley on the Wisconsinan end moraine — Blount / Glynwood silt loams, HSG D at 62 of 64 sampled points. Same surface-vs-aquifer correction as Urbana and Troy·Piqua.)
-- [ ] basin-screen coverage is sane for this site's receiving waters.
+- [x] basin-screen coverage is sane for this site's receiving waters. **(#1992 — checked 2026-08-10.)** The screen runs the **Great Miami** inventory (`data/reference/echo/great-miami-wwtp.potw.yaml`, 81 POTWs), selected by `SiteProfile.basin` — not the Maumee one; the 129-discharger figure in the run table below is the pre-multi-basin number and is stale. Coverage is 17 of 81 screened (0 violation, 5 tight, 12 ok), 39 unscreenable for no receiving water in ECHO and 25 for an ungaged tributary — reported, not guessed.
+
+  **The check found a real defect, now fixed.** The SIDNEY WWTP was screening at **37.64:1 `ok`** against the *derived* Hamilton mainstem proxy (407.67 cfs), because the cited value that belongs at this outfall was not bound to this permit. Ohio EPA's own denominator for outfall 1PD00009001 is the **24.0 cfs** annual 7Q10 for "GMR above Sidney" (USGS 03261500, 1927–2021; fact sheet Table 14, printed p.32, read off the source PDF text layer) against the fact sheet's own 10.83 cfs (7.0 MGD) design flow — **2.22:1, `tight`**. A 17× overstatement of available dilution. Fixed by a permit-scoped entry (`permits: ["OH0027421", "1PD00009"]`) in `data/reference/hydrology/low-flow-7q10.yaml`, the #1458 mechanism. The bare `great miami river` key still resolves to the derived proxy — verified, so no other discharger moved.
+
+  Follow-up, deliberately **not** taken here: the neighbouring `upper great miami river` entry carries the same 24.0 cfs from Piqua's own fact sheet (1PD00008) and is likewise unbound, so the PIQUA WWTP still screens at 30.29:1 against the proxy rather than ~1.78:1. That is Troy·Piqua's call to make deliberately (#1274), not a side effect of Sidney's promotion.
 - [x] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md). **(#1379 — `shelby_gis` parcels + `sidney_gis` zoning.)**
-- [ ] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/).
+- [x] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/). **(Satisfied 2026-06-22 — this box was simply never ticked; see the Self-research section below, which records the run, its cost, and all five proposals filed as sub-issues of #481. Reconciled in #1992.)**
 - [ ] PROMOTION IS A SEPARATE MANUAL EDIT: flip status->live + selectable->true for 'sidney' in web/src/lib/sites.ts, parity-gated. onboard never auto-promotes; only one live build (/bosc) exists today.
 
 ## Self-research (Phase 5; #247) — 2026-06-22
