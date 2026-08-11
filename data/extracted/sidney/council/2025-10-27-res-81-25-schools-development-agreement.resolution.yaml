@@ -74,6 +74,20 @@ resolution:
       Also not here: the R.C. 3735.671, 5709.83 and 5715.27 notice WAIVERS the two boards made. Those
       are in the agreement (§3.1 of the executed instrument), not in the authorizing resolution.
 
+  # WHERE THOSE TERMS ACTUALLY ARE (#2007 review). Any figure restated above is traceable to the
+  # instrument that states it, so a reader can follow it without ever treating this ACT as its
+  # source. The executed agreement is bound into THIS SAME PDF, after the resolution pages read
+  # here — it is not a separate document, which is why `pages_read` above stops at the act.
+  terms_are_in:
+    file: data/documents/sidney/council/81-25 - Authorizing Development Agreement with Sidney City Schools and Upper Valley - Amazon Data Services_202601141342204952.pdf
+    pages: '2-8'                     # 0-based, of 9; `pages_read` above is the ACT (0-1) only
+    pages_carry: the executed Development Agreement + Exhibit A; the distribution schedule is on p8
+    structured_read: 'data/extracted/sidney/incentive-instruments.yaml → `revenue_sharing.development_agreement_with_school_boards`'
+    sections:
+      - term: the boards' irrevocable consents and the R.C. 3735.671 / 5709.83 / 5715.27 notice waivers
+        cite: '§3.1'
+      - term: the $21,220,529 SCSD / $3,779,471 UVCC distribution schedule
+        cite: 'Exhibit A'
   confidence: high
   warnings:
     - >-

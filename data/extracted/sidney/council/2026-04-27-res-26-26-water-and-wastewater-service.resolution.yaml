@@ -75,6 +75,20 @@ resolution:
       It is also not a withdrawal permit or an NPDES instrument. It authorizes a municipal service
       contract; the campus holds no discharge permit of its own.
 
+  # WHERE THOSE TERMS ACTUALLY ARE (#2007 review). Any figure restated above is traceable to the
+  # instrument that states it, so a reader can follow it without ever treating this ACT as its
+  # source. The executed agreement is bound into THIS SAME PDF, after the resolution pages read
+  # here — it is not a separate document, which is why `pages_read` above stops at the act.
+  terms_are_in:
+    file: data/documents/sidney/council/26-26 - Authorize Water and Sewer Service Agreement - Amazon Web Services.pdf
+    pages: '2-11'                     # 0-based, of 12; `pages_read` above is the ACT (0-1) only
+    pages_carry: the executed Water and Wastewater Service Agreement; the 5.60% capacity reservation is on p11
+    structured_read: 'data/extracted/sidney/incentive-instruments.yaml → `water_and_wastewater_service_agreement` (`reserved_capacity`, `rate_class_covenant`)'
+    sections:
+      - term: the ten-year bar on creating a data-center water or sewer rate class
+        cite: '§2.1'
+      - term: 1.0 MGD / 694 gpm cooling ceiling, 14,000 gpd potable, 390,493 gpd sewer, 4.6M gal/yr projected
+        cite: 'no section recorded in the structured read — cite the `reserved_capacity` block, not a section'
   confidence: high
   warnings:
     - >-

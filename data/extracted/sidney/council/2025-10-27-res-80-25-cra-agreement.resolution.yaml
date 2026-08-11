@@ -92,6 +92,24 @@ resolution:
       The agreement "on file with the City Clerk" is incorporated by reference and not attached to
       the resolution page.
 
+  # WHERE THOSE TERMS ACTUALLY ARE (#2007 review). Any figure restated above is traceable to the
+  # instrument that states it, so a reader can follow it without ever treating this ACT as its
+  # source. The executed agreement is bound into THIS SAME PDF, after the resolution pages read
+  # here — it is not a separate document, which is why `pages_read` above stops at the act.
+  terms_are_in:
+    file: data/documents/sidney/council/80-25 - Authorizing a CRA Agreement - Amazon Data Services Inc_202601141342191793.pdf
+    pages: '2-29'                     # 0-based, of 30; `pages_read` above is the ACT (0-1) only
+    pages_carry: the executed CRA Agreement + Exhibits A-E; the Exhibit E PILOT schedule is on p29
+    structured_read: 'data/extracted/sidney/incentive-instruments.yaml → `cra_agreement` (`exemption`, `payments.pilot`, `payments.initial_payment`)'
+    sections:
+      - term: PILOT cap — $46,000,000 over 14 years
+        cite: '§7(b)'
+      - term: PILOT year-by-year schedule
+        cite: 'Exhibit E'
+      - term: condition precedent — the exemption is conditioned on the separate Development Agreement (Res. 27-26)
+        cite: '§34'
+      - term: 30-year / 100% exemption per Building, and the separate $4,000,000 initial payment
+        cite: 'no section recorded in the structured read — cite the block, not a section'
   confidence: high
   warnings:
     - >-

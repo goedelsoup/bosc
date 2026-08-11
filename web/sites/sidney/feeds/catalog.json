@@ -527,14 +527,39 @@
         "relpath": "extracted/sidney/incentive-instruments.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-10-27-res-81-25-schools-development-agreement.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-10-27-res-82-25-income-tax-sharing.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2026-04-27-res-26-26-water-and-wastewater-service.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "9840bb0df2d33aa0f7d9bcad4f33874afc52669eb4d1600571266657bec32417",
-      "size_bytes": 49653,
+      "sha256": "4d12c1f012ecb8dc56e8ce0e7e2959ab37c5b8c771dee0ca5424a20e3dd77ff9",
+      "size_bytes": 72457,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 6,
       "stale": false,
       "asof": null
     },
