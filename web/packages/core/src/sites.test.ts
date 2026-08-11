@@ -84,6 +84,30 @@ describe("sites registry — the Watermark network (#304)", () => {
     });
   });
 
+  it("promotes Sidney to selectable on Troy-Piqua parity — the record is the gate, not the walk (#1992)", () => {
+    const sid = SITES.find((s) => s.slug === "sidney");
+    expect(sid?.selectable).toBe(true);
+    expect(sid?.status).toBe("live");
+    // Same readiness shape as Troy-Piqua and Urbana, and promoted on the same reasoning. Sidney
+    // reaches it by a different route: its `inquiry` is live off a study its OWN corpus grounds
+    // (the executed City instruments, #1380), never off an authored walk — #1947 was closed
+    // precisely because the walk it asked for was not what the domain measures.
+    const sidReadiness = loadManifest("sidney").readiness;
+    expect(sidReadiness).toEqual(loadManifest("troy-piqua").readiness);
+    expect(sidReadiness?.tier).toBe("case");
+    expect(sidReadiness?.domains).toEqual({
+      backdrop: "live",
+      // A deliberate resting state, not a gap to close: Ohio EPA's eDocument portal returns ZERO
+      // air-permit documents for this campus under any of its three filed names while the same
+      // query shape returns 19 Amazon air-permit documents statewide, so the zero is a zero. No
+      // instrument grounds the load and no document discloses the cooling design (#1630).
+      facility: "seeded",
+      places: "live",
+      record: "live",
+      inquiry: "live",
+    });
+  });
+
   it("routes every site under /network/<slug>; Lima uses its canonical watershed name", () => {
     for (const s of SITES) {
       if (s.slug === ACTIVE_SITE_SLUG) expect(s.href).toBe("/network/american-sugar-creek-allen-co");
@@ -91,11 +115,12 @@ describe("sites registry — the Watermark network (#304)", () => {
     }
   });
 
-  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, Fort Wayne, or Troy-Piqua), each carrying a tracking issue", () => {
+  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, Fort Wayne, Troy-Piqua, or Sidney), each carrying a tracking issue", () => {
     const soon = comingSoonSites();
     expect(soon.some((s) => s.slug === ACTIVE_SITE_SLUG)).toBe(false);
     expect(soon.some((s) => s.slug === "fort-wayne")).toBe(false); // Fort Wayne is now selectable (#741)
     expect(soon.some((s) => s.slug === "troy-piqua")).toBe(false); // Troy-Piqua is now selectable (#1872)
+    expect(soon.some((s) => s.slug === "sidney")).toBe(false); // Sidney is now selectable (#1992)
     expect(soon.map((s) => s.slug)).toEqual([
       "defiance",
       "findlay",
@@ -108,7 +133,6 @@ describe("sites registry — the Watermark network (#304)", () => {
       "xenia",
       "wpafb",
       "hamilton-middletown",
-      "sidney",
       "greenville",
       "wilmington",
       "west-union",

@@ -956,7 +956,7 @@ _VAN_WERT = SiteProfile(
             # Land assembled / annexed / zoned / deeded, and now authorized to disturb ground — but
             # NOT yet `construction`. The network's trigger for that stage is a grading or building
             # permit (the Sidney precedent, whose IDENTICAL OHC000006 stormwater coverage issued
-            # 2025-12-05 and did NOT move it — the City grading permit of 2026-05-14 did). Van Wert's
+            # 2025-12-05 and did NOT move it — the City grading permit of 2026-05-15 did). Van Wert's
             # equivalent City permit is not in the corpus, so the stage stays `confirmed` and the
             # grading permit is the watch (#1408). NOTE the press "groundbreaking Q4 2026" is now
             # contradicted by the applicant's own filing: the NOI gives a project start of
@@ -2852,12 +2852,14 @@ _SIDNEY = SiteProfile(
             # project identifier on its Ohio EPA §401 filings: stable, machine-readable, and free
             # of the codename collision.
             key="cmh-232",
-            status=FacilityLifecycle.CONSTRUCTION,  # grading permit 2026-05-14; groundbreaking ~Jan 2026
+            status=FacilityLifecycle.CONSTRUCTION,  # grading permit signed 2026-05-15; groundbreaking ~Jan 2026
             operator="Amazon Web Services, Inc. (operator); Amazon Data Services, Inc. (developer)",
             operator_citation=(
                 "[verified] City of Sidney FAQ (sidneyoh.com/526) + Data Center Dynamics (Oct 2025) — "
-                "Amazon's $3B campus, locally called 'Project Galaxy'; grading permit issued "
-                "2026-05-14. Ohio EPA permits it as 'Sidney Data Center Campus' / 'CMH-232' "
+                "Amazon's $3B campus, locally called 'Project Galaxy'; grading permit signed "
+                "2026-05-15 (#1380 — the permit's own signature block; 5-14-2026 is the City's "
+                "upload FILENAME, which is not evidence of a date). Ohio EPA permits it as "
+                "'Sidney Data Center Campus' / 'CMH-232' "
                 "(#1383) — the codename is not a search key, see disclosure_citation."
             ),
             end_use=DcEndUse.HYPERSCALE,
@@ -2911,17 +2913,32 @@ _SIDNEY = SiteProfile(
                 "Center Dynamics 'Amazon secures tax break for $3bn data center campus in Sidney, "
                 "Ohio' (Oct 2025). Amazon Data Services, Inc. (developer) / Amazon Web Services, Inc. "
                 "(operator); $3B campus at 2388 W. Millcreek Road (NW corner of Vandemark & Millcreek "
-                "Roads), Sidney. Status: UNDER CONSTRUCTION — grading permit issued 2026-05-14, "
+                "Roads), Sidney — the address AS DISCLOSED; that situs was retired by the Lot 7658 "
+                "Consolidation Plat (V37 P50) and the parcel of record is now 26-03-201-002, situs "
+                "1151 S Vandemark Rd (#1379). Status: UNDER CONSTRUCTION — grading permit signed "
+                "2026-05-15, "
                 "groundbreaking ~January 2026, site plan under City-staff review as of June 2026; "
                 "operations target 2028-12-31 (CRA Agreement 80-25 deadline). ~75 long-term jobs by "
-                "2030 / $6.75M annual payroll; 30-yr 100% CRA real-property abatement (Res 18-25); "
-                "$50M PILOT over 15 yr; up to $8.0M AWS Millcreek Road reconstruction (Res 27-26, "
-                "adopted 2026-04-27). SITE EXTENT now permit-sourced (#1383): Amazon Data Services' "
+                "2030 / $6.75M annual payroll. INCENTIVE TERMS RESTATED FROM THE EXECUTED "
+                "INSTRUMENTS (#1380 — the three figures below were carried here from the FAQ and an "
+                "advocacy site, and all three were wrong): the CRA designating legislation is "
+                "Resolution 69-25, adopted 2025-09-08, CITY-WIDE — there is no 'Res. 18-25 of "
+                "October 2025', which is why it was never findable; the abatement agreement is "
+                "Res. 80-25 of 2025-10-27, 30-yr 100% real-property, per Building, with no "
+                "exemption commencing after TY2035 or extending past TY2065. The PILOT is capped at "
+                "$46,000,000 over 14 years (CRA Agreement Sec. 7(b) + Exhibit E) PLUS a separate "
+                "one-time $4,000,000 initial payment (Sec. 8) — together the '$50M' the press "
+                "reported, but never '$50M over 15 years'; the schools' half divides $21,220,529 "
+                "SCSD / $3,779,471 UVCC, not '$25M to Sidney'. Up to $8.0M AWS Millcreek Road "
+                "reconstruction (Res 27-26, "
+                "adopted 2026-04-27). Structured read: data/extracted/sidney/"
+                "incentive-instruments.yaml (`corrections_to_the_register`). "
+                "SITE EXTENT now permit-sourced (#1383): Amazon Data Services' "
                 "own Ohio EPA filings state 236.7 acres 'of agricultural and residential land' "
                 "converted (401 application, project name CMH-232) and 230.7 acres of total land "
                 "disturbance (construction-stormwater NOI); coverage 1GC10596*AG under general "
-                "permit OHC000006 ran effective 2025-12-05, 160 days (a little over five months) "
-                "before the City's grading permit of 2026-05-14. NAMING: Ohio EPA files this campus as 'Sidney Data Center Campus' and "
+                "permit OHC000006 ran effective 2025-12-05, 161 days (a little over five months) "
+                "before the City's grading permit of 2026-05-15. NAMING: Ohio EPA files this campus as 'Sidney Data Center Campus' and "
                 "'CMH-232', never as 'Project Galaxy' — that name in Ohio EPA's own records belongs "
                 "to a DIFFERENT Amazon Data Services campus at 1000 Innovation Way, Jeffersonville "
                 "(Fayette County), which does hold an individual NPDES permit and a cooling-water "

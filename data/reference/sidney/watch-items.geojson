@@ -1,0 +1,24 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "sidney-wwtp",
+        "title": "Sidney WWTP",
+        "type": "infrastructure",
+        "priority": "high",
+        "status": "active",
+        "summary": "City of Sidney WWTP (NPDES 1PD00009*SD / OH0027421), 1091 Children's Home Road; outfall 001 to the Great Miami River at RM 128.68 (→ Ohio River; HUC-8 05080001, Upper Great Miami). Average design flow 7.0 MGD [Ohio EPA \"Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022\", Table 14, printed p.32 — outfall 001 design 10.83 cfs (7.0 MGD)]. Serves Sidney, Port Jefferson, the Mill Creek Subdivision and the Honda of America plant at Anna; allocated jointly with the Piqua and Troy WWTPs as interactive dischargers. WLA design low flow: GMR-above-Sidney 7Q10 24.0 cfs (USGS 03261500, 1927-2021) — the permit-scoped cited value, not the derived Hamilton mainstem proxy.",
+        "note": "Peak hydraulic design is 13.5 MGD and is deliberately NOT stated above: `balance._design_mgd` falls back to a regex over this prose when no structured value is present, and a second `N MGD` token reads as a flow EXPANSION and raises a spurious warning. The structured, document-cited 7.0 comes from data/reference/hydrology/sidney/routing.yaml, which wins outright — this prose is the fallback, kept unambiguous so the fallback would also be correct."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.15031,
+          40.2709
+        ]
+      }
+    }
+  ]
+}

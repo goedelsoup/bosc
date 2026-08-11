@@ -113,7 +113,26 @@ def test_basin_screen_follows_active_basin(data_settings: Settings) -> None:
         "STILLWATER RIVER",
         "LORAMIE CREEK",
     }
-    assert all(ch.design_low_flow.source == "derived" for ch in screen.checks)
+    # Every denominator is the derived at-gage screening proxy EXCEPT the Sidney WWTP, which is
+    # the basin's one permit-scoped cited value (#1992). Before it was bound, this line read
+    # `all(... == "derived")` — which recorded that no cited Great Miami value existed, not that
+    # none should. Sidney's outfall now resolves through `permits:` to Ohio EPA's own figure.
+    by_source = {ch.discharger: ch.design_low_flow.source for ch in screen.checks}
+    assert by_source["SIDNEY WWTP"] == "document"
+    assert all(src == "derived" for name, src in by_source.items() if name != "SIDNEY WWTP")
+    # And the cited value is the one the regulator computed AT that outfall — 24.0 cfs (fact
+    # sheet 1PD00009, Table 14) against the 10.83 cfs design flow — not the 407.67 cfs derived
+    # Hamilton mainstem proxy, which would have overstated available dilution by 17x and read
+    # `ok` instead of `tight`. This is the #1458 failure mode; assert the band, not just the source.
+    sidney = next(ch for ch in screen.checks if ch.discharger == "SIDNEY WWTP")
+    assert sidney.design_low_flow.value == pytest.approx(24.0)
+    assert sidney.dilution_ratio == pytest.approx(2.216, abs=0.01)
+    assert sidney.flag == "tight"
+    # The bare river name still belongs to the derived proxy — a permit-scoped value must never
+    # leak into the name-keyed lookup every OTHER discharger on this river reads.
+    assert basin.build_low_flow_lookup(settings=springfield)[
+        basin._norm("great miami river")
+    ].value == pytest.approx(407.67)
     # The City of Springfield WWTP is in the inventory but ECHO has no receiving water for it,
     # so it is reported unscreened (omit, don't guess) — not silently dropped.
     assert c.no_receiving_water >= 1
