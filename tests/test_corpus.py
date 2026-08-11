@@ -248,7 +248,7 @@ def test_no_committed_extraction_is_claimed_then_dropped() -> None:
     Whole-tree, not per-site: validity is a property of the FILE, and a per-site sweep would be
     blind to any path no registered site's scope claims (and 26x slower).
     """
-    corpus = load_corpus(Settings(data_dir=REPO_ROOT / "data"), scope=WHOLE_TREE)
+    corpus = load_corpus(Settings(data_dir=REPO_ROOT / "data", site="lima"), scope=WHOLE_TREE)
     assert not corpus.rejected, (
         "the corpus classifier claimed these committed artifacts and their models rejected "
         "them — they are silently absent from the timeline, entity graph and yidam mirror "

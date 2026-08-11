@@ -947,12 +947,23 @@ class GeneralPermit(_Extracted):
     note: str | None = None
 
 
-class GeneralPermitExtraction(BaseModel):
-    """A framework general permit transcribed from its own (clean, non-OCR) text layer."""
+class GeneralPermitExtraction(TranscribedExtraction):
+    """A framework general permit transcribed from its own (clean, non-OCR) text layer.
 
-    model_config = ConfigDict(extra="allow")
+    Inherits :class:`TranscribedExtraction` rather than restating its own envelope, because it
+    is one: a text-layer read with no render behind it. That inheritance is the whole point —
+    as a bare model it enforced only "``provenance.sources`` is non-empty", so it accepted a
+    source that names no committed file *and* a fabricated render receipt
+    (``dpi``/``doc_id``/``pages_read``) sitting beside a document whose entire premise is that
+    nothing was rasterized. Its sibling ``NpdesTranscription`` refused both, and there is no
+    reason the framework-instrument genre should be the loose one.
 
-    kind: Literal["general_permit"]
+    ``_gather_sources`` already reads a ``provenance.sources`` list, so the multi-source shape a
+    general permit needs (the permit **and** its Response to Comments) is preserved exactly;
+    what changes is that each of those sources must now anchor under ``data/documents/``.
+    """
+
+    kind: Literal["general_permit"]  # narrows the base's `str | None`
     subject: str
     provenance: InstrumentProvenance
     permit: GeneralPermit

@@ -76,7 +76,9 @@ def test_write_scenario_is_self_auditing(hydro_settings: Settings, tmp_path: Pat
     assert data["scenario"]["basis"]["it_load"]["source"] == "derived"  # N+1 inference (#1697)
 
 
-def test_scenario_store_is_site_scoped_and_reader_writer_agree(tmp_path: Path) -> None:
+def test_scenario_store_is_site_scoped_and_reader_writer_agree(
+    hydro_settings: Settings, tmp_path: Path
+) -> None:
     """A peer's scenario write lands in its OWN dir, where its own exporter looks (#1995).
 
     The bug this locks: the writer used the bare ``settings.scenarios_dir`` while the exporter's
@@ -85,29 +87,66 @@ def test_scenario_store_is_site_scoped_and_reader_writer_agree(tmp_path: Path) -
     figures are regression-locked against (``tests/test_hydro_cooling.py``) — and still exported
     an empty feed for the peer, because its reader was looking somewhere else entirely.
 
+    The assertion is a **round trip**, not an empty read. Checking that a fresh per-site
+    directory reads back empty proves only that the reader is not returning Lima's; it would
+    stay green if the reader and the writer drifted apart again, because two different empty
+    directories both read empty. Writing a real result and reading *that* back is what actually
+    pins the two to the same path.
+
     Asserted for every registered site, not just one: a slug added later is covered by
     construction rather than by someone remembering to extend this list.
     """
     from watermark.site.export import _load_scenarios
 
-    lima_dir = scenario.scenarios_dir(Settings(data_dir=tmp_path, site="lima"))
+    # Evaluated once, offline, against the committed fixtures — the per-site loop is about
+    # WHERE a result is stored, so it needs one real `ScenarioResult`, not one per site.
+    result = scenario.evaluate(scenario.buildout_scenario(), settings=hydro_settings, live=True)
+
+    def site_settings(slug: str) -> Settings:
+        # Constructed, never `hydro_settings.model_copy(update={"site": …})`: the profile fill
+        # (`PROFILE_SETTINGS_FIELDS`) runs at construction only, so a copied Settings keeps the
+        # ORIGINAL site's knobs under the new slug — verified, and silent. `data_dir` is the
+        # tmp tree so this test can never write into the repo's own `data/scenarios/`, which is
+        # the very clobber it exists to prevent.
+        return Settings(
+            data_dir=tmp_path,
+            site=slug,
+            hydro_offline=hydro_settings.hydro_offline,
+            hydro_fixtures_dir=hydro_settings.hydro_fixtures_dir,
+        )
+
+    lima_dir = scenario.scenarios_dir(site_settings("lima"))
     assert lima_dir == tmp_path / "scenarios"  # the reference layout keeps the flat store
 
     seen: dict[Path, str] = {}
     for slug in SITES:
-        s = Settings(data_dir=tmp_path, site=slug)
+        s = site_settings(slug)
         write_dir = scenario.scenarios_dir(s)
-        # The exporter's reader must resolve the same directory the writer just chose, or the
-        # feed stays empty however many scenarios were written.
-        s.data_dir.joinpath("scenarios", slug).mkdir(parents=True, exist_ok=True)
-        assert _load_scenarios(s) == []  # empty, not an exception, and not Lima's
         # No two sites may share a store: the scenario filename is just the scenario NAME
         # (`buildout.scenario.yaml`), so a shared directory is a silent overwrite, not a merge.
         assert write_dir not in seen, f"{slug} shares its scenario store with {seen.get(write_dir)}"
         seen[write_dir] = slug
+
+        written = Path(scenario.write_scenario(result, settings=s))
+        assert written.parent == write_dir
+        # The round trip: the exporter's reader must resolve the directory the writer just used.
+        loaded = _load_scenarios(s)
+        assert [r.scenario.name for r in loaded] == [result.scenario.name], (
+            f"{slug}: wrote {written} but the exporter's reader returned {loaded!r} — the "
+            "reader and the writer have drifted apart again (#1995)"
+        )
+
         if slug != "lima":
             assert write_dir == tmp_path / "scenarios" / slug
             assert write_dir != lima_dir
+
+    # The bug, stated directly: every registered site wrote the SAME scenario name, and the
+    # reference store still holds exactly one file. Under the old writer all of them landed
+    # here, each overwriting the last, and Lima's committed artifact was whichever peer ran most
+    # recently. (Lima is in `SITES`, so the one file is its own legitimate write.)
+    assert [p.name for p in sorted(lima_dir.glob("*.scenario.yaml"))] == [
+        f"{result.scenario.name}.scenario.yaml"
+    ]
 
 
 def test_report_renders_all_sections(hydro_settings: Settings) -> None:

@@ -396,9 +396,16 @@ def test_every_published_npdes_record_is_claimed_by_the_corpus_loader() -> None:
     """
     from watermark.pipeline.corpus import load_corpus
     from watermark.site.records import load_records
-    from watermark.sites import active_profile, effective_corpus_scope
+    from watermark.sites import _get_identity, active_profile, effective_corpus_scope
 
-    for slug in ("lima", "sidney"):
+    # Derived from the registry, not enumerated: `data/sites.yaml` already knows which sites
+    # publish, so a site promoted later inherits this coverage instead of waiting for someone
+    # to remember to extend a literal list. (`SiteProfile` carries no `selectable` — that field
+    # lives on the `SiteEntry` identity row, which `_get_identity` returns.)
+    selectable_slugs = sorted(e.slug for e in _get_identity().values() if e.selectable)
+    assert selectable_slugs, "expected at least one selectable site in data/sites.yaml"
+
+    for slug in selectable_slugs:
         settings = Settings(data_dir=REPO_ROOT / "data", site=slug)
         scope = effective_corpus_scope(active_profile(settings))
         published = {

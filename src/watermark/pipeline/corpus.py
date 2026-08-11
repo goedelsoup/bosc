@@ -404,19 +404,24 @@ def _load_legacy_opc_detail(rel: str, data: dict[str, Any], corpus: Corpus) -> N
         )
 
 
-def validate_npdes(data: Any) -> NpdesExtraction | NpdesTranscription | None:
-    """Validate a ``permit:``-keyed payload against the envelope its own shape declares.
+def validate_npdes(kind: str, data: Any) -> NpdesExtraction | NpdesTranscription:
+    """Validate a ``permit:``-keyed payload against the envelope ``kind`` names.
 
     The single place that decides render-vs-transcription, so no second reader of a
     ``*.npdes.yaml`` off disk can ever disagree with the corpus loader about what a permit is —
     which is how ``agent.tools._load_all_permits`` came to swallow a valid permit whole (#1994).
+
+    ``kind`` is the caller's already-computed :func:`_classify` result rather than a second
+    call on the same data: re-classifying was not just redundant, it opened a seam where this
+    function could reach a different verdict than the branch that dispatched to it. Raises on
+    any other ``kind`` — a mismatch is a programming error and belongs in ``Corpus.rejected``
+    with everything else the loader could not take in, never silently skipped.
     """
-    kind = _classify(data)
     if kind == "npdes":
         return NpdesExtraction.model_validate(data)
     if kind == "npdes_transcribed":
         return NpdesTranscription.model_validate(data)
-    return None
+    raise ValueError(f"validate_npdes called with kind={kind!r}, not a permit kind")
 
 
 def load_corpus(
@@ -461,9 +466,7 @@ def load_corpus(
             if kind == "deed":
                 corpus.deeds.append((rel, DeedExtraction.model_validate(data)))
             elif kind in ("npdes", "npdes_transcribed"):
-                validated = validate_npdes(data)
-                if validated is not None:
-                    corpus.permits.append((rel, validated))
+                corpus.permits.append((rel, validate_npdes(kind, data)))
             elif kind == "general_permit":
                 corpus.general_permits.append((rel, GeneralPermitExtraction.model_validate(data)))
             elif kind == "npdes_dmr":
