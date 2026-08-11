@@ -112,7 +112,7 @@ export const REFERENCE: ReferenceDataset[] = [
     title: "Ohio water-well-log census (Ohio DNR)",
     blurb:
       "The R.C. 1521.05 contractor well logs — the county well census and the campus construction-dewatering wellfield behind the groundwater screens.",
-    catalogIds: ["ohio-waterwells-allen", "lima-campus-dewatering"],
+    catalogIds: ["ohio-waterwells-allen", "ohio-waterwells-shelby", "lima-campus-dewatering"],
   },
   {
     repo: "hydrology/wbd/README.md",

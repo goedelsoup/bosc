@@ -1,9 +1,10 @@
 ---
-scope: site:lima
+scope: network
 scope_note: >-
-  The committed censuses are Allen County's well census and the Lima campus dewatering wellfield,
-  both owned by the reference build alone. The R.C. 1521.05 source and the pull method are
-  statewide: a peer that pulls its own county's census registers it and gets its own page.
+  What the R.C. 1521.05 well-log database is, how a county census is pulled out of it, what the
+  columns mean and where the logs are unreliable — all true wherever the connector is pointed.
+  The county, the well population and every headline figure are the reading site's own, and each
+  site's are written up beside this file under instances/.
 ---
 
 # Ohio water-well-log census (Ohio DNR, Division of Water Resources)
@@ -59,28 +60,10 @@ A flat well census is naturally tabular, so it lands as **CSV** (one row per wel
 provenance in this README) — the EPA-ECHO reference-dataset convention, not the
 nested-YAML shape the WWFRP registry needs.
 
-- [**`allen.csv`**](allen.csv) — Allen County, OH (the Lima reference build). 6,864
-  logged wells.
-
-## Headline (Allen County, last pull)
-
-**6,864** logged wells (all record-type `W`, well). Completion dates span
-**1925 → 2020**. All 6,864 carry coordinates (NAD83); locational quality varies —
-1,061 surveyed GPS, 2,626 digitized, 2,360 address-geocoded, 37 digital-map, 770
-unrecorded (see caveat 3).
-
-By **use** (top): 5,808 Domestic · 331 Monitor · 105 Public/Semi-Public · 47
-Agric/Irrig · 21 Commercial · 17 Municipal · 10 Industrial · 5 Heating/Cooling ·
-493 unrecorded. **5,808 domestic wells is the private-well population behind the
-"area well concerns."**
-
-By **aquifer**: 4,441 Limestone · 1,216 Gravel · 376 Sand & Gravel · 160 Shale ·
-101 Sand · 158 unrecorded — a bedrock-carbonate-dominated system, consistent with
-the Lima area's limestone aquifer.
-
-Reported ranges (p50 / p90): **total depth** 70 / 160 ft (max 1,310) · **static
-water level** 27 / 59 ft below surface (n=6,331) · **test yield** 15 / 25 gpm
-(n=5,833).
+One CSV per county, named for the county (`allen.csv`, `shelby.csv`), plus any committed
+campus dewatering wellfield. Which counties are committed, and what each census contains,
+is in the per-site notes under `instances/` — this file is about the source, not about a
+place.
 
 ## Known gaps & caveats (read before using)
 
@@ -186,7 +169,7 @@ Source: Ohio DNR Water Well Locator (waterwells.ohiodnr.gov) — well-log export
 | --- | --- | --- |
 | `reference/ohio-waterwells/lima-campus-dewatering.csv` | text/csv | no |
 
-### `ohio-waterwells-allen` — Allen County, OH water-well-log census (Ohio DNR)
+### `ohio-waterwells-allen` — Ohio DNR water-well-log census — Allen
 
 Source: Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05 (contractor completion/sealing logs), public ArcGIS MapServer (layer 0) · License: Ohio public record · Access: public · Site scope: site:lima · Refresh: annual (ttl 365d)
 
@@ -196,7 +179,7 @@ Regenerate: `watermark waterwells --county Allen`
 | --- | --- | --- |
 | `reference/ohio-waterwells/allen.csv` | text/csv | no |
 
-### `ohio-waterwells-shelby` — Shelby County, OH water-well-log census (Ohio DNR)
+### `ohio-waterwells-shelby` — Ohio DNR water-well-log census — Shelby
 
 Source: Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05 (contractor completion/sealing logs), public ArcGIS MapServer (layer 0) · License: Ohio public record · Access: public · Site scope: site:sidney · Refresh: annual (ttl 365d)
 
