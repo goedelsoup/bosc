@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "b7eca8e8f9d2fad1bcac0ccbbae73a4eac5162244752bcb9a13d81c02718bb09",
+  "catalog_version": "8174deba63f382ff1cf7c8cd8beca88c9c67e2016728f3a9664e9e864a0f2f22",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -940,6 +940,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:sidney:ohio-waterwells-shelby",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "ohio-waterwells-shelby",
+      "title": "Shelby County, OH water-well-log census (Ohio DNR)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:sidney:onboard-bundle",
       "kind": "dataset",
       "site": "sidney",
@@ -1001,6 +1009,14 @@
       "site": "sidney",
       "local_id": "rsei-inventory",
       "title": "Shelby County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:sidney-groundwater",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "sidney-groundwater",
+      "title": "Sidney / Shelby County OH — groundwater and the aquifer-scope resolution",
       "feed": "catalog"
     },
     {

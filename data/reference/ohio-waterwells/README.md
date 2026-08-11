@@ -196,4 +196,14 @@ Regenerate: `watermark waterwells --county Allen`
 | --- | --- | --- |
 | `reference/ohio-waterwells/allen.csv` | text/csv | no |
 
+### `ohio-waterwells-shelby` — Shelby County, OH water-well-log census (Ohio DNR)
+
+Source: Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05 (contractor completion/sealing logs), public ArcGIS MapServer (layer 0) · License: Ohio public record · Access: public · Site scope: site:sidney · Refresh: annual (ttl 365d)
+
+Regenerate: `watermark waterwells --county Shelby`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/ohio-waterwells/shelby.csv` | text/csv | no |
+
 <!-- catalog:end -->

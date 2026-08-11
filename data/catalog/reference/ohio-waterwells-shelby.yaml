@@ -1,0 +1,46 @@
+id: ohio-waterwells-shelby
+title: Shelby County, OH water-well-log census (Ohio DNR)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: waterwells --county Shelby
+  connector_ref: watermark.hydrology.connectors.ohio_waterwells
+  source: >-
+    Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05
+    (contractor completion/sealing logs), public ArcGIS MapServer (layer 0)
+  external_url: https://waterwells.ohiodnr.gov/
+license: Ohio public record
+access_tier: public
+site_scope: site:sidney
+storage:
+- relpath: reference/ohio-waterwells/shelby.csv
+  media_type: text/csv
+  lfs: false
+refresh:
+  cadence: annual
+  ttl_days: 365
+provenance: connector
+schema_ref: watermark.hydrology.connectors.ohio_waterwells.WaterWellInventory
+tags:
+- waterwells
+- groundwater
+- ohio-dnr
+- aquifer
+- drawdown
+- sidney
+notes: >-
+  Every ODNR-logged water well in Shelby County, OH (the Sidney watershed point) — 3,776
+  wells, one CSV row each: use type, aquifer, total depth, static water level, reported test
+  yield, casing, coordinates. Pulled for issue 1997. Use mix: 2,036 DOMESTIC, 1,367
+  unclassified, 152 AGRIC/IRRIG, 84 MONITOR, 23 PUBLIC/SEMI-PUB, 22 OBSERVATION, 13
+  MUNICIPAL, 13 DRY/NO WATER, 10 HTG/COOLING, 10 INDUSTRIAL. Same discipline as the Allen
+  sibling: a driller figure is [verified] for WHAT THE LOG STATES and no more (the logs are
+  self-reported), there is NO pumping-water-level column so specific capacity /
+  transmissivity / a drawdown cone are [inference], and owner/name/street columns are not
+  ingested (private-resident PII). ⚠️ This census is the groundwater chapter's whole basis at
+  Sidney — the `dewatering` half has no route, because no dewatering record has been produced
+  for this project and the profile commits no dewatering wellfield. It is also NOT evidence
+  about the campus's own aquifer setting: the campus sits ~2 mi west of the Great Miami
+  buried valley on the Wisconsinan end moraine (HSG D, issue 1379), and the sole-source-aquifer
+  framing that once attached to it is REFUTED. See data/reference/ohio-waterwells/README.md.
