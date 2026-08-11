@@ -380,3 +380,87 @@ def test_a_real_ratio_never_publishes_as_zero(hydro_settings: Settings) -> None:
     s = _sidney(hydro_settings)
     _, _build, delta = run_scenarios(settings=s, live=False)
     assert delta.multiple_of_7q10 is not None and delta.multiple_of_7q10 > 0
+
+
+def test_an_unbalanced_water_account_is_refused_and_never_derived(
+    hydro_settings: Settings,
+) -> None:
+    """A return larger than the intake is not a negative consumption — it is a bad pair (#1995).
+
+    Consumption is makeup LESS the return, so blowdown > makeup makes the consumed share negative
+    and `buildout_scenario` would publish a campus putting water back into the basin, as `derived`
+    provenance off two `[verified]` figures. Refused where the pair is authored; the composer
+    falls back to the archetype rather than computing from an account that does not balance.
+    """
+    from watermark.hydrology.scenario import _stated_cooling_account
+    from watermark.sites import SITES, SiteFacility
+
+    with pytest.raises(ValueError, match="exceeds makeup_mgd"):
+        SiteFacility(
+            name="Stub",
+            status="confirmed",
+            makeup_mgd=0.01,
+            makeup_citation="stub",
+            blowdown_mgd=0.02,
+            blowdown_citation="stub",
+        )
+
+    # And the belt to that suspender: a pair that reached the composer anyway yields no fraction.
+    profile = SITES["sidney"]
+    facility = profile.facility
+    assert facility is not None
+    unbalanced = profile.model_copy(
+        update={
+            "facilities": (
+                facility.model_copy(update={"blowdown_mgd": facility.makeup_mgd * 2}),
+                *profile.facilities[1:],
+            )
+        }
+    )
+    with patch.dict(SITES, {"sidney": unbalanced}):
+        stated = _stated_cooling_account(_sidney(hydro_settings))
+    assert stated is not None and stated[1] is None
+
+
+def test_an_archetype_sweep_suspends_the_stated_account(hydro_settings: Settings) -> None:
+    """Asking "what if this were a tower?" must not answer with the real contract's gallons.
+
+    The stated account describes the design the facility actually contracted for. An explicit
+    `cooling_model` is a request to model a DIFFERENT design, so it falls through to that
+    archetype's own derived demand — otherwise a sweep would silently leave the water unmoved.
+    """
+    s = _sidney(hydro_settings)
+    contracted = scenario.buildout_scenario(settings=s)
+    assert contracted.cooling_demand.source == "document"
+
+    swept = scenario.buildout_scenario(cooling_model="evaporative_tower", settings=s)
+    assert swept.cooling_model.value == "evaporative_tower"
+    assert swept.cooling_demand.source != "document"
+    assert swept.cooling_demand.value > contracted.cooling_demand.value
+
+
+def test_a_seasonal_citation_states_its_own_value(hydro_settings: Settings) -> None:
+    """A citation may never assert a number other than the one it supports (#1995).
+
+    A stream's `citation` is ONE pointer shared by every statistic in its table, and Sidney's
+    spells out "7Q10 annual 24.0 cfs" — so the 29.0 cfs summer 30Q10 was shipping a citation
+    asserting 24.0. A reader checking the value against its own citation found a different
+    number, which is the one thing a citation must not do.
+    """
+    from watermark.hydrology.lowflow import load_acute_low_flows, seasonal_low_flows
+
+    s = _sidney(hydro_settings)
+    key = SITES["sidney"].receiving_low_flow_key
+    assert key is not None
+    summer, one = seasonal_low_flows(key, settings=s)
+    assert summer is not None and one is not None
+    assert summer.value == pytest.approx(29.0)
+    assert (summer.citation or "").startswith("summer 30Q10 29 cfs —")
+    assert one.value == pytest.approx(19.4)
+    assert (one.citation or "").startswith("driest-day 1Q10 19.4 cfs —")
+
+    from watermark.hydrology.lowflow import _normalize
+
+    acute = load_acute_low_flows(settings=s)[_normalize(key)]
+    assert acute.value == pytest.approx(19.4)
+    assert (acute.citation or "").startswith("1Q10 (acute design flow) 19.4 cfs —")

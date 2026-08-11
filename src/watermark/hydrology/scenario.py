@@ -95,7 +95,15 @@ def _stated_cooling_account(
     if facility is None or facility.makeup_mgd is None or facility.makeup_citation is None:
         return None
     makeup = ProvenancedValue.from_document(facility.makeup_mgd, "MGD", facility.makeup_citation)
-    if facility.blowdown_mgd is None or facility.makeup_mgd <= 0:
+    # A return larger than the intake would make the consumed share NEGATIVE and publish it as
+    # `derived` — a campus putting water back into the basin. `SiteFacility` refuses that pair at
+    # construction, so this is the belt to that suspender: fall back to the archetype rather than
+    # compute a fraction from an account that does not balance.
+    if (
+        facility.blowdown_mgd is None
+        or facility.makeup_mgd <= 0
+        or facility.blowdown_mgd > facility.makeup_mgd
+    ):
         return makeup, None
     frac = ProvenancedValue.derived(
         (facility.makeup_mgd - facility.blowdown_mgd) / facility.makeup_mgd,
@@ -135,12 +143,16 @@ def buildout_scenario(
     rule; what this adds is that the resulting scenario CARRIES that provenance, so the
     committed artifact cites the instrument rather than reading as a scenario knob someone typed.
 
-    ``cooling_model`` overrides the archetype for sensitivity runs. The derived basis is still
-    built and still rides on ``Scenario.basis`` when a stated makeup wins — it becomes the
-    cross-check rather than the source, which is the comparison a reader most wants.
+    ``cooling_model`` overrides the archetype for sensitivity runs, and **a sweep suspends rung
+    2**: the stated account describes the design the facility actually contracted for, so asking
+    "what if this were an evaporative tower?" and then answering with the real account's gallons
+    would model neither. An explicit archetype therefore falls through to its own derived demand.
+    Without one, the derived basis is still built and still rides on ``Scenario.basis`` when a
+    stated makeup wins — it becomes the cross-check rather than the source, which is the
+    comparison a reader most wants (Sidney's contracted 0.0126 MGD against a 0-4.03 MGD envelope).
     """
     basis = basis or derive_cooling_basis(settings, cooling_model=cooling_model)
-    stated = _stated_cooling_account(settings)
+    stated = None if cooling_model is not None else _stated_cooling_account(settings)
     if cooling_demand_mgd is not None:
         cooling_demand = ProvenancedValue.assume(
             cooling_demand_mgd, "MGD", why="campus cooling intake — scenario override"
@@ -375,7 +387,9 @@ def evaluate_seasonal(
         # Hybrid (#1058): the evaporative assist is a physical response to atmospheric demand,
         # so it runs in the ET0 > precip (growing-season) months — independent of the floor switch.
         month_cfs = (warm_cfs if is_growing else 0.0) if hybrid else consumptive_cfs
-        multiple = round(month_cfs / floor, 1) if floor and floor > 0 else None
+        # Same precision rule as the annual/summer multiples below — a month's draw is the same
+        # quantity at the same scale, so it must not vanish where they survive (#1995).
+        multiple = _ratio(month_cfs / floor) if floor and floor > 0 else None
         months.append(
             MonthlyWithdrawal(
                 month=m,

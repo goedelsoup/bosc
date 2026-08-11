@@ -45,10 +45,10 @@ receiving_summer_30q10:
   value: 1.6
   unit: cfs
   source: document
-  citation: summer 30Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.),
-    Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 (Ottawa
-    mainstem at Lima nearly dries at design low flow (1Q10 = 0 cfs) — heavily abstracted
-    upstream for Lima's water supply)
+  citation: summer 30Q10 1.6 cfs — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+    Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+    (Ottawa mainstem at Lima nearly dries at design low flow (1Q10 = 0 cfs) — heavily
+    abstracted upstream for Lima's water supply)
   confidence: high
   asof: null
   low: null
@@ -57,10 +57,10 @@ receiving_1q10:
   value: 0.0
   unit: cfs
   source: document
-  citation: driest-day 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.),
-    Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 (Ottawa
-    mainstem at Lima nearly dries at design low flow (1Q10 = 0 cfs) — heavily abstracted
-    upstream for Lima's water supply)
+  citation: driest-day 1Q10 0 cfs — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+    Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+    (Ottawa mainstem at Lima nearly dries at design low flow (1Q10 = 0 cfs) — heavily
+    abstracted upstream for Lima's water supply)
   confidence: high
   asof: null
   low: null
@@ -235,8 +235,8 @@ assimilative:
     value: 0.0
     unit: cfs
     source: document
-    citation: 1Q10 (acute design flow) — Ohio EPA NPDES fact sheet 2IG00001 (Lima
-      Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100,
+    citation: 1Q10 (acute design flow) 0 cfs — Ohio EPA NPDES fact sheet 2IG00001
+      (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100,
       1989-2021
     confidence: high
     asof: null
@@ -278,8 +278,9 @@ assimilative:
     value: 0.016
     unit: cfs
     source: document
-    citation: 1Q10 (acute design flow) — Ohio EPA NPDES fact sheet 2PH00007 (American
-      Bath WWTP), Stream Flows table — USGS Gauge 04186500 adjusted for drainage area
+    citation: 1Q10 (acute design flow) 0.016 cfs — Ohio EPA NPDES fact sheet 2PH00007
+      (American Bath WWTP), Stream Flows table — USGS Gauge 04186500 adjusted for
+      drainage area
     confidence: high
     asof: null
     low: null
@@ -319,8 +320,8 @@ assimilative:
     value: 0.6
     unit: cfs
     source: document
-    citation: 1Q10 (acute design flow) — Ohio EPA NPDES fact sheet 2PH00006 (American
-      II WWTP), Stream Flows table — USGS Station 04187500
+    citation: 1Q10 (acute design flow) 0.6 cfs — Ohio EPA NPDES fact sheet 2PH00006
+      (American II WWTP), Stream Flows table — USGS Station 04187500
     confidence: high
     asof: null
     low: null
@@ -372,8 +373,8 @@ assimilative:
     value: 0.0
     unit: cfs
     source: document
-    citation: 1Q10 (acute design flow) — Ohio EPA NPDES fact sheet 2IG00001 (Lima
-      Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100,
+    citation: 1Q10 (acute design flow) 0 cfs — Ohio EPA NPDES fact sheet 2IG00001
+      (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100,
       1989-2021
     confidence: high
     asof: null

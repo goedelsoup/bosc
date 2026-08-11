@@ -48,20 +48,20 @@ receiving_summer_30q10:
   value: 29.0
   unit: cfs
   source: document
-  citation: 'summer 30Q10 — Ohio EPA "Fact Sheet for NPDES Permit Renewal, City of
-    Sidney WWTP, 2022" (permit 1PD00009*SD, application OH0027421), Table 14 "Instream
-    Conditions and Discharger Flow", printed p.32 — GMR above Sidney, 7Q10 annual
-    24.0 cfs, USGS gage #03261500, 1927-2021 data. Read from the source PDF text layer
-    (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf, 0-based page 80), digits clean;
-    structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml. (The fact sheet''s
-    own mixing assumption for the GMR and its tributaries is 100% average / 100% maximum
-    (stream-to-discharge ratio), not the 25% carried on the Maumee entries here. Sidney
-    WWTP outfall 001 design flow is 10.83 cfs (7.0 MGD) per the same table, so the
-    chronic dilution at this outfall is 24.0 / 10.83 = 2.22:1 — `tight` under the
-    cited 1.0/10.0 screening bands, NOT the `ok` the derived proxy reported. Loramie
-    Creek at Mouth (3.43 cfs) and Rush Creek at mouth (0.82 cfs) are given in the
-    same table and are the site''s other cited receiving waters; neither is bound
-    here because neither carries this outfall. #1992)'
+  citation: 'summer 30Q10 29 cfs — Ohio EPA "Fact Sheet for NPDES Permit Renewal,
+    City of Sidney WWTP, 2022" (permit 1PD00009*SD, application OH0027421), Table
+    14 "Instream Conditions and Discharger Flow", printed p.32 — GMR above Sidney,
+    7Q10 annual 24.0 cfs, USGS gage #03261500, 1927-2021 data. Read from the source
+    PDF text layer (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf, 0-based page
+    80), digits clean; structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml.
+    (The fact sheet''s own mixing assumption for the GMR and its tributaries is 100%
+    average / 100% maximum (stream-to-discharge ratio), not the 25% carried on the
+    Maumee entries here. Sidney WWTP outfall 001 design flow is 10.83 cfs (7.0 MGD)
+    per the same table, so the chronic dilution at this outfall is 24.0 / 10.83 =
+    2.22:1 — `tight` under the cited 1.0/10.0 screening bands, NOT the `ok` the derived
+    proxy reported. Loramie Creek at Mouth (3.43 cfs) and Rush Creek at mouth (0.82
+    cfs) are given in the same table and are the site''s other cited receiving waters;
+    neither is bound here because neither carries this outfall. #1992)'
   confidence: high
   asof: null
   low: null
@@ -70,20 +70,20 @@ receiving_1q10:
   value: 19.4
   unit: cfs
   source: document
-  citation: 'driest-day 1Q10 — Ohio EPA "Fact Sheet for NPDES Permit Renewal, City
-    of Sidney WWTP, 2022" (permit 1PD00009*SD, application OH0027421), Table 14 "Instream
-    Conditions and Discharger Flow", printed p.32 — GMR above Sidney, 7Q10 annual
-    24.0 cfs, USGS gage #03261500, 1927-2021 data. Read from the source PDF text layer
-    (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf, 0-based page 80), digits clean;
-    structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml. (The fact sheet''s
-    own mixing assumption for the GMR and its tributaries is 100% average / 100% maximum
-    (stream-to-discharge ratio), not the 25% carried on the Maumee entries here. Sidney
-    WWTP outfall 001 design flow is 10.83 cfs (7.0 MGD) per the same table, so the
-    chronic dilution at this outfall is 24.0 / 10.83 = 2.22:1 — `tight` under the
-    cited 1.0/10.0 screening bands, NOT the `ok` the derived proxy reported. Loramie
-    Creek at Mouth (3.43 cfs) and Rush Creek at mouth (0.82 cfs) are given in the
-    same table and are the site''s other cited receiving waters; neither is bound
-    here because neither carries this outfall. #1992)'
+  citation: 'driest-day 1Q10 19.4 cfs — Ohio EPA "Fact Sheet for NPDES Permit Renewal,
+    City of Sidney WWTP, 2022" (permit 1PD00009*SD, application OH0027421), Table
+    14 "Instream Conditions and Discharger Flow", printed p.32 — GMR above Sidney,
+    7Q10 annual 24.0 cfs, USGS gage #03261500, 1927-2021 data. Read from the source
+    PDF text layer (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf, 0-based page
+    80), digits clean; structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml.
+    (The fact sheet''s own mixing assumption for the GMR and its tributaries is 100%
+    average / 100% maximum (stream-to-discharge ratio), not the 25% carried on the
+    Maumee entries here. Sidney WWTP outfall 001 design flow is 10.83 cfs (7.0 MGD)
+    per the same table, so the chronic dilution at this outfall is 24.0 / 10.83 =
+    2.22:1 — `tight` under the cited 1.0/10.0 screening bands, NOT the `ok` the derived
+    proxy reported. Loramie Creek at Mouth (3.43 cfs) and Rush Creek at mouth (0.82
+    cfs) are given in the same table and are the site''s other cited receiving waters;
+    neither is bound here because neither carries this outfall. #1992)'
   confidence: high
   asof: null
   low: null
@@ -121,9 +121,7 @@ balance:
       high: null
     stormwater: null
   tier: tier0
-  warnings:
-  - no abstraction node configured for site 'sidney'; the water balance omits the
-    intake reach.
+  warnings: []
 assimilative:
 - receiving_water: Great Miami River (Sidney WWTP outfall, RM 128.68)
   discharger: Sidney WWTP
@@ -166,12 +164,12 @@ assimilative:
     value: 19.4
     unit: cfs
     source: document
-    citation: '1Q10 (acute design flow) — Ohio EPA "Fact Sheet for NPDES Permit Renewal,
-      City of Sidney WWTP, 2022" (permit 1PD00009*SD, application OH0027421), Table
-      14 "Instream Conditions and Discharger Flow", printed p.32 — GMR above Sidney,
-      7Q10 annual 24.0 cfs, USGS gage #03261500, 1927-2021 data. Read from the source
-      PDF text layer (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf, 0-based page
-      80), digits clean; structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml.'
+    citation: '1Q10 (acute design flow) 19.4 cfs — Ohio EPA "Fact Sheet for NPDES
+      Permit Renewal, City of Sidney WWTP, 2022" (permit 1PD00009*SD, application
+      OH0027421), Table 14 "Instream Conditions and Discharger Flow", printed p.32
+      — GMR above Sidney, 7Q10 annual 24.0 cfs, USGS gage #03261500, 1927-2021 data.
+      Read from the source PDF text layer (data/documents/oepa/sidney/1PD00009.c43b66fd.pdf,
+      0-based page 80), digits clean; structured read at data/extracted/oepa/sidney/1PD00009.npdes.yaml.'
     confidence: high
     asof: null
     low: null

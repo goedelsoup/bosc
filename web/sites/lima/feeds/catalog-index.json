@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "0892bdde4996b488801c91db6df945967cb2e9a77be24548afd534e8ee55ebe0",
+  "catalog_version": "14f989e877ce2a7e4e7274c512daafbce99746ed6aa8d8f71064569acca5d6c1",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -860,6 +860,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:data-centers-west-union",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "data-centers-west-union",
+      "title": "West Union / Adams County OH — Data-Center Activity Register",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:data-centers-wilmington",
       "kind": "dataset",
       "site": "lima",
@@ -900,6 +908,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:defiance-wwtp-record",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "defiance-wwtp-record",
+      "title": "Defiance — NPDES 2PD00013 Permit Set + the Two Enforcement Actions (Extractions)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:dewatering-discharge",
       "kind": "dataset",
       "site": "lima",
@@ -937,6 +953,14 @@
       "site": "lima",
       "local_id": "echo-maumee-receiving-water",
       "title": "Curated receiving-water overlay for the Maumee ECHO NPDES inventory",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:echo-ohio-brush-creek-wwtp",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "echo-ohio-brush-creek-wwtp",
+      "title": "Ohio Brush Creek-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {
@@ -1756,6 +1780,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:sidney-watch-items",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "sidney-watch-items",
+      "title": "Sidney site watch-items (WWTP infrastructure geometry)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:subdivisions",
       "kind": "dataset",
       "site": "lima",
@@ -1889,6 +1921,14 @@
       "site": "lima",
       "local_id": "wilmington",
       "title": "Wilmington (Clinton Co., OH) Low-Flow Screen & Onboarding Record",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:wilmington-power-instruments",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "wilmington-power-instruments",
+      "title": "Wilmington — the AES Ohio 345 kV build-out, PJM M-3 Need Dayton-2025-002 + OPSB 25-0871-EL-BLN (Extractions)",
       "feed": "catalog"
     },
     {

@@ -757,6 +757,21 @@ class SiteFacility(BaseModel):
         _require_together(
             ("makeup_mgd", self.makeup_mgd), ("makeup_citation", self.makeup_citation)
         )
+        # The two sides of a stated water account must balance: consumption is makeup LESS the
+        # return, so a return exceeding the intake makes the consumed share negative and
+        # `buildout_scenario` would publish a campus that puts water back into the basin — as
+        # `derived` provenance, off two `[verified]` figures. Refused where the pair is authored,
+        # so no scenario can be built from it.
+        if (
+            self.makeup_mgd is not None
+            and self.blowdown_mgd is not None
+            and self.blowdown_mgd > self.makeup_mgd
+        ):
+            raise ValueError(
+                f"blowdown_mgd ({self.blowdown_mgd:g}) exceeds makeup_mgd ({self.makeup_mgd:g}) — "
+                "a cooling account cannot return more than it withdraws; check which figure is "
+                "the projected VOLUME and which is a reserved ceiling"
+            )
         _require_together(
             ("wue_l_per_kwh", self.wue_l_per_kwh), ("wue_citation", self.wue_citation)
         )
